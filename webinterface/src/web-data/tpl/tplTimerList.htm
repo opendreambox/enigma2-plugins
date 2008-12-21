@@ -2,24 +2,7 @@
 						<table id="contentTable" style="width: 100%;">
 							<tr style="width:100%;">
 								<td style="width:100%;">
-									<table style="text-align: left; width: 100%; border: 1px solid #000" border="0" cellpadding="0" cellspacing="0">
-<!--
-									<tr class="tListHead" style="background-color: #DDD">
-											<td colspan="2" rowspan="1" class="tListSName">Title</td>
-											<td colspan="2" rowspan="1" class="tListService">Channel</td>
-										</tr>
-										<tr class="tListItem">
-											<td colspan="1" rowspan="1" class="tListRepeat">Frequency</td>
-											<td colspan="1" rowspan="1" class="tListBegin">Start</td>
-											<td colspan="1" rowspan="1" class="tListType">Action</td>
-											<td colspan="1" rowspan="2" class="tListOption">Options</td>
-										</tr>
-										<tr class="tListItem">
-											<td class="tListDuration">Duration</td>
-											<td class="tListEnd">End</td>
-											<td class="tListAfter">Afterevent</td>
-										</tr>
--->							
+									<table style="text-align: left; width: 100%; border: 1px solid #000" border="0" cellpadding="0" cellspacing="0">				
 										{for t in timer}
 										<tr class="tListHead" style="background-color: #DDD">
 											<td colspan="2" rowspan="1" style="color: #${t.color};" class="tListSName" title="${t.description}, ${t.descriptionextended}">${t.title}</td>

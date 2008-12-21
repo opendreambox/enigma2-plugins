@@ -187,7 +187,7 @@ function loadTimerFormNow() {
 	loadTimerFormChannels();
 }
 
-function loadTimerFormSeconds(justplay,begin,end,repeated,channel,channelName,name,description,afterEvent,deleteOldOnSave,eit) {
+function loadTimerFormSeconds(justplay, begin, end, repeated, channel, channelName, name, description, afterEvent, deleteOldOnSave, eit) {
 	debug('justplay:'+justplay+' begin:'+begin+' end:'+end+' repeated:'+repeated+' channel:'+channel+' name:'+name+' description:'+description+' afterEvent:'+afterEvent+' deleteOldOnSave:'+deleteOldOnSave);
 	var start = new Date(Number(begin)*1000);
 	addTimerEditFormArray["syear"] = start.getFullYear();
