@@ -172,17 +172,14 @@
 ******************/		
 	.sListSName a{
 		display: block;
+		margin: 1px;
 		color: #485052;
 	}
 	
-	.sListSName:hover{
+	.sListSName a:hover{
 		background-color:#CCC;
 		color: #485052;
 		display: block;
-	}
-	
-	.sListSName {
-		width: 735px;
 	}
 	
 	.header{
