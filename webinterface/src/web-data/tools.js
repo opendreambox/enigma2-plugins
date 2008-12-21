@@ -1374,14 +1374,18 @@ function switchNav(mode){
 		break;
 	
 	case "Movies":
-		//processTpl('tplNavRadio', null, 'navContent');
-		
 		setContentHd('Movies');
 		setAjaxLoad('contentMain');
 		loadMovieList('');
 		break;
 		
 	case "Timer":
+		//The Navigation
+		setAjaxLoad('navContent');
+		processTpl('tplNavTimer', null, 'navContent');
+		setNavHd('Timer');
+		
+		//The Timerlist
 		setContentHd('Timer');
 		setAjaxLoad('contentMain');
 		loadTimerList();

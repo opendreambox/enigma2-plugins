@@ -362,7 +362,7 @@ function loadTimerForm(){
 				}
 		};
 	data = namespace;
-	processTpl('tplTimerAdd', data, 'contentMain');
+	processTpl('tplTimerEdit', data, 'contentMain');
 	/*
 	var listerHtml = RND(tplAddTimerForm, namespace);
 	$('BodyContent').innerHTML = listerHtml;
