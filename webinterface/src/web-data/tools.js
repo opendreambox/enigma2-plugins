@@ -996,15 +996,15 @@ function incomingAbout(request) {
 			var hddfree		= hdddata.getElementsByTagName("free").item(0).firstChild.data;
 
 			namespace = {
-				'enigmaVersion': xml.getElementsByTagName('e2enigmaversion').item(0).firstChild.data
-
+				'model' : xml.getElementsByTagName('e2model').item(0).firstChild.data	
+				,'enigmaVersion': xml.getElementsByTagName('e2enigmaversion').item(0).firstChild.data
+				,'fpVersion': fptext
+				,'webifversion': xml.getElementsByTagName('e2webifversion').item(0).firstChild.data				
 				,'lanDHCP': xml.getElementsByTagName('e2landhcp').item(0).firstChild.data
 				,'lanIP': xml.getElementsByTagName('e2lanip').item(0).firstChild.data
 				,'lanNetmask': xml.getElementsByTagName('e2lanmask').item(0).firstChild.data
 				,'lanGateway': xml.getElementsByTagName('e2langw').item(0).firstChild.data
 
-				,'fpVersion': fptext
-				,'webifversion': xml.getElementsByTagName('e2webifversion').item(0).firstChild.data
 //					,'tunerInfo': tunerinfo
 				,'hddmodel': hddmodel
 				,'hddcapacity': hddcapacity

@@ -28,21 +28,6 @@ var tplRecordingFooter   = '<hr><br><table style="text-align: left; width: 100%;
     tplRecordingFooter  += '</td></tr>';
     tplRecordingFooter  += '</tbody></table>';
 
-//Volume Template
-var tplVolumePanel  = "<img onclick='volumeUp()' src='/webdata/gfx/arrow_up.png'>";
-	tplVolumePanel += "<img onclick='volumeDown()' src='/webdata/gfx/arrow_down.png'>";
-	tplVolumePanel += "<img id='volume1' onclick='volumeSet(10)' src='/webdata/gfx/led_off.png'>";
-	tplVolumePanel += "<img id='volume2' onclick='volumeSet(20)' src='/webdata/gfx/led_off.png'>";
-	tplVolumePanel += "<img id='volume3' onclick='volumeSet(30)' src='/webdata/gfx/led_off.png'>";
-	tplVolumePanel += "<img id='volume4' onclick='volumeSet(40)' src='/webdata/gfx/led_off.png'>";
-	tplVolumePanel += "<img id='volume5' onclick='volumeSet(50)' src='/webdata/gfx/led_off.png'>";
-	tplVolumePanel += "<img id='volume6' onclick='volumeSet(60)' src='/webdata/gfx/led_off.png'>";
-	tplVolumePanel += "<img id='volume7' onclick='volumeSet(70)' src='/webdata/gfx/led_off.png'>";
-	tplVolumePanel += "<img id='volume8' onclick='volumeSet(80)' src='/webdata/gfx/led_off.png'>";
-	tplVolumePanel += "<img id='volume9' onclick='volumeSet(90)' src='/webdata/gfx/led_off.png'>";
-	tplVolumePanel += "<img id='volume10' onclick='volumeSet(100)' src='/webdata/gfx/led_off.png'>";
-	tplVolumePanel += "<img id='speaker' onclick='volumeMute()' src='/webdata/gfx/speak_on.png'>";
-
 //Signal Template
 var tplSignalPanel  = '<table width="100%" id="SignalPanelTable">';
 	tplSignalPanel += '<tr><td style="background-color: #DDDDDD;">dB</td><td style="background-color: #DDDDDD;"><div id="SNRdB">N/A</div></td></tr>';
@@ -50,52 +35,6 @@ var tplSignalPanel  = '<table width="100%" id="SignalPanelTable">';
 	tplSignalPanel += '<tr><td style="background-color: #DDDDDD;">AGC</td><td style="background-color: #DDDDDD;"><div id="AGC">N/A</div></td></tr>';
 	tplSignalPanel += '<tr><td style="background-color: #DDDDDD;">BER</td><td style="background-color: #DDDDDD;"><div id="BER">N/A</div></td></tr>';
 	tplSignalPanel += '</table>';
-
-var tplAddTimerForm  = '<table border=0 cellpadding=0 cellspacing=10>';
-	tplAddTimerForm += '<tr><td colspan="3">Action:</td>';
-	tplAddTimerForm += '<td colspan="3">';
-	tplAddTimerForm += '<select name="justplay" id="justplay" size="1">';
-	tplAddTimerForm += '%(justplay)';
-	tplAddTimerForm += '</select></td></tr>';
-	tplAddTimerForm += '<tr><td colspan="3">&nbsp;</td>';
-	tplAddTimerForm += '<td colspan="3">Note: For recurring events start/end day/month are not required.</td></tr>';
-	tplAddTimerForm += '<tr><td colspan="3">Start:</td>';
-	tplAddTimerForm += '<td colspan="3"><select name="syear" size="1" id="syear" onchange="javascript:addTimerFormChangeTime(\'syear\');">%(syear)</select>.';
-	tplAddTimerForm += '<select name="smonth" id="smonth" size="1" onchange="javascript:addTimerFormChangeTime(\'smonth\');">%(smonth)</select>.';
-	tplAddTimerForm += '<select name="sday" id="sday" size="1" onchange="javascript:addTimerFormChangeTime(\'sday\');">%(sday)</select>';
-	tplAddTimerForm += '&nbsp;-&nbsp;<select name="shour" id="shour" size="1" onchange="javascript:addTimerFormChangeTime(\'shour\');">%(shour)</select>';
-	tplAddTimerForm += ':<select name="smin" id="smin" size="1" onchange="javascript:addTimerFormChangeTime(\'smin\');">%(smin)</select></td></tr>';
-	tplAddTimerForm += '<tr><td colspan="3">End:</td>';
-	tplAddTimerForm += '<td colspan="3"><select name="eyear" id="eyear" size="1" onchange="javascript:addTimerFormChangeTime(\'eyear\');">%(eyear)</select>.';
-	tplAddTimerForm += '<select name="emonth" id="emonth" size="1" onchange="javascript:addTimerFormChangeTime(\'emonth\');">%(emonth)</select>.';
-	tplAddTimerForm += '<select name="eday" id="eday" size="1" onchange="javascript:addTimerFormChangeTime(\'eday\');">%(eday)</select>';
-	tplAddTimerForm += '&nbsp;-&nbsp;<select name="ehour" id="ehour" size="1" onchange="javascript:addTimerFormChangeTime(\'ehour\');">%(ehour)</select>';
-	tplAddTimerForm += ':<select name="emin" id="emin" size="1" onchange="javascript:addTimerFormChangeTime(\'emin\');">%(emin)</select></td></tr>';
-	tplAddTimerForm += '<tr><td colspan="3">&nbsp;</td><td colspan="3">Note: For one-time events the "days" field doesn\'t have to be specified.</td></tr>';
-	tplAddTimerForm += '<tr><td colspan="3">Days:</td><td colspan="3">%(repeated)';
-	tplAddTimerForm += '<tr><td colspan="3">Channel:</td><td>';
-	tplAddTimerForm += '<p><input type="radio" id="tvradio" name="tvradio" value="tv" checked onchange="javascript:addTimerFormChangeType();"">TV</p>';
-	tplAddTimerForm += '<p><input type="radio" name="tvradio" value="radio" onchange="javascript:addTimerFormChangeType();">Radio</p><td>';
-	tplAddTimerForm += '<p>Channel:</p>';
-	tplAddTimerForm += '<select name="channel" id="channel" size="1" onchange="timerFormExtendChannellist($(\'channel\').options[$(\'channel\').selectedIndex].value)">%(channel)</select></td></tr>';
-	tplAddTimerForm += '<tr><td colspan="3">Name:</td>';
-	tplAddTimerForm += '<td colspan="3"><input name="name" id="name" type="text" size="100" maxlength="100" style="color: #000000;" value="%(name)"></td></tr>';
-	tplAddTimerForm += '<tr><td colspan="3">Description:</td>';
-	tplAddTimerForm += '<td colspan="3"><input name="descr" id="descr" type="text" size="100" maxlength="100" style="color: #000000;" value="%(description)"></td></tr>';
-	tplAddTimerForm += '<tr><td colspan="3">After event do:</td>';
-	tplAddTimerForm += '<td colspan="3"><select id="after_event" name="after_event" size="1">%(afterEvent)</select></td></tr>';
-	tplAddTimerForm += '<tr>&nbsp;&nbsp;</tr>';
-	tplAddTimerForm += '<tr><td colspan="3">&nbsp;</td><td colspan="3">';
-	tplAddTimerForm += '<input name="deleteOldOnSave" id="deleteOldOnSave" type="hidden" value="%(deleteOldOnSave)">';
-	tplAddTimerForm += '<input name="channelOld" id="channelOld" type="hidden" value="%(channelOld)">';
-	tplAddTimerForm += '<input name="beginOld" id="beginOld" type="hidden" value="%(beginOld)">';
-	tplAddTimerForm += '<input name="endOld" id="endOld" type="hidden" value="%(endOld)">';
-	tplAddTimerForm += '<input name="eventID" id="eventID" type="hidden" value="%(eventID)">';
-	tplAddTimerForm += 	'<button onclick="sendAddTimer();">Add/Save</button></td></tr></table>';
-
-var tplAddTimerFormOptions = '<option value="%(value)" %(selected)>%(txt)</option>';
-
-var tplAddTimerFormCheckbox = '<input type="checkbox" id="%(id)" name="%(name)" value="%(value)" %(checked)>&nbsp;%(txt)&nbsp;&nbsp;';
 
 
 var tplExtraHiddenFunctions  = '<ul style="list-style-type:disc">';
