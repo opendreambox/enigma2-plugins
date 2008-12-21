@@ -30,12 +30,12 @@
 	}
 
 	#bannerLeft{
-		width: 880px;
+		width: 800px;
 		float: left;
 	}
 	
 	#bannerRight{
-		width: 100px;
+		width: 180px;
 		text-align: right;
 		height: 60px;
 		float: left;

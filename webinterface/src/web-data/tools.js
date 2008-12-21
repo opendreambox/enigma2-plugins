@@ -498,23 +498,22 @@ function setBodyMainContent(domId){
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 function initVolumePanel(){
-	$('VolumePanel').innerHTML = tplVolumePanel;
 	getVolume(); 
 }
 function getVolume(){
-	doRequest(url_getvolume,handleVolumeRequest, false);
+	doRequest(url_getvolume, handleVolumeRequest, false);
 }
 function volumeSet(val){
-	doRequest(url_setvolume+val,handleVolumeRequest, false);
+	doRequest(url_setvolume+val, handleVolumeRequest, false);
 }
 function volumeUp(){
-	doRequest(url_volumeup,handleVolumeRequest, false);
+	doRequest(url_volumeup, handleVolumeRequest, false);
 }
 function volumeDown(){
-	doRequest(url_volumedown,handleVolumeRequest, false);
+	doRequest(url_volumedown, handleVolumeRequest, false);
 }
 function volumeMute(){
-	doRequest(url_volumemute,handleVolumeRequest, false);
+	doRequest(url_volumemute, handleVolumeRequest, false);
 }
 function handleVolumeRequest(request){
 	if (request.readyState == 4) {
@@ -525,15 +524,15 @@ function handleVolumeRequest(request){
 		
 		for (var i = 1; i <= 10; i++)		{
 			if ( (newvalue/10)>=i){
-				$("volume"+i).src = "/webdata/gfx/led_on.png";
+				$("volume"+i).src = "/webdata/img/led_on.png";
 			}else{
-				$("volume"+i).src = "/webdata/gfx/led_off.png";
+				$("volume"+i).src = "/webdata/img/led_off.png";
 			}
 		}
 		if (mute == "False"){
-			$("speaker").src = "/webdata/gfx/speak_on.png";
+			$("speaker").src = "/webdata/img/speak_on.png";
 		}else{
-			$("speaker").src = "/webdata/gfx/speak_off.png";
+			$("speaker").src = "/webdata/img/speak_off.png";
 		}
 	}    	
 }
@@ -1411,6 +1410,8 @@ function init(){
 	setAjaxLoad('contentMain');
 	
 	fetchTpl('tplServiceListEPGItem');
-	initChannelList();
 	reloadNav('tplNavTv', 'TeleVision');
+	
+	initChannelList();
+	initVolumePanel();
 }

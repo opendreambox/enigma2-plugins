@@ -1,39 +1,9 @@
 Version = '$Header$';
 // EPG Templates
 var tplUpdateStreamReaderIE = '<iframe id="UpdateStreamReaderIEFixIFrame" src="%(url_updates)" height="0" width="0" scrolling="none" frameborder="0">no iframe support!</iframe>';
-var tplEPGListHeader = '<table width="100%" border="0" cellspacing="1" cellpadding="0">';
 
-var tplEPGListItem  = '<tr style="background-color: #DDDDDD;">';
-	tplEPGListItem += '<td width="10%">%(date)</td>';
-	tplEPGListItem += '<td width="30%">%(servicename)</td>';
-	tplEPGListItem += '<td>%(title)</td>';
-	tplEPGListItem += '</tr>';
-
-	tplEPGListItem += '<tr style="background-color: #DDDDDD;">';
-	tplEPGListItem += '<td>%(starttime)</td>';
-	tplEPGListItem += '<td>%(duration) min.</td>';
-	tplEPGListItem += '<td>%(description)</td>';
-	tplEPGListItem += '</tr>';
-
-	tplEPGListItem += '<tr style="background-color: #DDDDDD;">';
-	tplEPGListItem += '<td valign="top">%(endtime)</td>';
-	tplEPGListItem += '<td colspan="2"rowspan="2" id="extdescription%(number)">%(extdescriptionSmall)</td>';
-	tplEPGListItem += '</tr>';
-
-	tplEPGListItem +='<tr style="background-color: #DDDDDD;"><td>';
-	tplEPGListItem +='<a target="_blank" ><img src="/webdata/gfx/timer.png" title="add to Timers" border="0" onclick=" if( parentPin( \'%(servicereference)\' ) ) { addTimerByID(\'%(servicereference)\',\'%(eventid)\',\'0\'); }"></a>&nbsp;&nbsp;';
-	tplEPGListItem +='<a target="_blank" ><img src="/webdata/gfx/zap.png" title="add zap to Timers" border="0" onclick="if ( parentPin( \'%(servicereference)\' ) ) { addTimerByID(\'%(servicereference)\',\'%(eventid)\',\'1\'); }"></a>&nbsp;&nbsp;';
-	tplEPGListItem +='<a target="_blank" ><img src="/webdata/gfx/edit.gif" title="edit and add timer" border="0" onclick="loadTimerFormSeconds(0,\'%(start)\',\'%(end)\',0,\'%(servicereference)\',\'%(servicename)\',\'%(title)\',\'%(description)\',\'0\',0,\'%(eventid)\');"></a><br/>';
-	tplEPGListItem +='<a target="_blank" href="/web/epgsearch.rss?search=%(title)" ><img src="/webdata/gfx/feed.png" title="RSS-Feed for this Title" border="0"></a><br/>';
-	tplEPGListItem +='<a target="_blank" href="http://www.imdb.com/find?s=all&amp;q=%(titleESC)" ><img src="/webdata/gfx/world.png" title="search IMDb" border="0"></a><br/>';
-	tplEPGListItem +='</td></tr>';
-	tplEPGListItem += '<tr style="background-color: #AAAAAA;">';
-	tplEPGListItem += '<td colspan="3">&nbsp;</td>';
-	tplEPGListItem += '</tr>';
 
 var tplEPGListItemExtend  = '%(shortTxt) ...<a nohref onclick="setComplete(\'extdescription%(number)\',\'%(txt)\');">more</a>';
-
-var tplEPGListFooter = "</table>";
 
 var tplRecordingFooter   = '<hr><br><table style="text-align: left; width: 100%; height: 178px;" border="0" cellpadding="2" cellspacing="2"><tbody>';
     tplRecordingFooter  += '<tr><td style="vertical-align: top;">';
