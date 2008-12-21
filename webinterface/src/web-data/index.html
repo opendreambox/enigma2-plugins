@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional"
+       "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+	<title>Dreambox WebControl</title>
+	
+	<script type="text/javascript" src="webdata/lib/prototype-1.6.0.2.js"></script>
+	<script type="text/javascript" src="webdata/lib/shadedborder.js"></script>
+	<script type="text/javascript" src="webdata/lib/trimpath-template-1.0.38.js"></script>
+
+	
+	<!-- our stuff //-->
+	<script type="text/javascript" src="/webdata/objects.js" ></script>
+	<script type="text/javascript" src="/webdata/config.js" ></script>
+	<script type="text/javascript" src="/webdata/tools.js" ></script>
+	<script type="text/javascript" src="/webdata/timer.js" ></script>
+	
+	<link href="/webdata/style.css" type="text/css" rel="stylesheet">
+	<link rel="shortcut icon" type="webdata/image/x-icon" href="/webdata/gfx/favicon.ico">
+
+	<!-- Live RSS Feeds //-->
+	<link rel="alternate" type="application/rss+xml" title="Movie List" href="/web/movielist.rss?tag" >
+
+
+	<script language="javascript" type="text/javascript">
+		
+		if (!window.$) {
+			window.$ = function(id) { return document.getElementById(id); }
+		}
+		
+		function getWinSize(win) 
+		{ 
+			if(!win) win = window; 
+			var s = new Object(); 
+			if(typeof win.innerWidth != 'undefined') 
+			{ 
+				s.width = win.innerWidth; 
+				s.height = win.innerHeight; 
+			} 
+			else 
+			{ 
+				 var obj = getBody(win); 
+				 s.width = parseInt(obj.clientWidth); 
+				 s.height = parseInt(obj.clientHeight); 
+			} 
+			return s; 
+		} 
+
+		function getBody(w) 
+		{ 
+			return (w.document.compatMode && w.document.compatMode == "CSS1Compat") ? w.document.documentElement : w.document.body || null; 
+		} 
+		
+		function setMaxHeight(element){
+			var slc = $(element);
+			size = getWinSize();
+			slc.style.maxHeight = size.height - 160+"px";
+		}
+
+	</script>
+</head>
+<body onResize="setMaxHeight('contentMain')">
+	<div id="container">
+		<div id="banner">
+			<div id="bannerLeft">
+				<div id="bannerText" style="font-size: 24px;"><img src="/webdata/img/dreamboxweb.png" alt="Dreambox Web"></div>
+				<ul id="mainMenu">
+					<li><a href="#" onClick="switchNav('TV')">TeleVision</a></li>
+					<li><a href="#" onClick="switchNav('Radio')">Radio</a></li>
+					<li><a href="#" onClick="switchNav('Movies')">Movies</a></li>
+					<li><a href="#" onClick="switchNav('Timer')">Timer</a></li>
+					<li><a href="#">MediaPlayer</a></li>
+					<li><a href="#" onClick="switchNav('Extras')">Extras</a></li>
+				</ul>
+			</div>
+			<div id="bannerRight">
+				<!--<img src="webdata/img/dmm.gif" alt="dmm.png">-->
+			</div>
+		</div>
+		<div id="main">
+			<div id="navContainer">
+				<div id="nav">
+					<div id="navHd" class="header"><div>SubNav</div></div>
+					<div id="navContent">loading...</div>
+				</div>
+				<div id="navSearch">
+					<div id="searchHd" class="header"><div>EPG-Search</div></div>
+					<div class="boxContent"><input type="text" id="epgsearch"/></div>
+				</div>
+			</div>
+			<div id="content">
+				<div id="contentHd" class="header"><div>Content</div></div>
+				<div id="contentMain">
+				</div>
+			</div>	
+		</div>
+		</div>
+	</div>
+	<script language="javascript" type="text/javascript">	
+		
+		setMaxHeight('contentMain');		
+		/****************
+		Rounded Corners 
+		*****************/
+		var menuBorder = RUZEE.ShadedBorder.create({ corner:5, border: 1 });
+
+		var buttons = $('mainMenu').getElementsByTagName("li");
+
+		for (var i=0; i < buttons.length; ++i) {			
+			menuBorder.render(buttons[i]);
+		}
+
+		var bannerBorder = RUZEE.ShadedBorder.create({corner:5, shadow:10});
+		bannerBorder.render('banner');
+
+		var contentBorder = RUZEE.ShadedBorder.create({corner:5, border: 2, shadow:10});
+		contentBorder.render('nav');
+		contentBorder.render('navSearch');
+		contentBorder.render('content');
+
+		var hdBorder = RUZEE.ShadedBorder.create({corner:5, edges:"tlr"});
+		hdBorder.render('navHd');
+		hdBorder.render('searchHd');
+		hdBorder.render('contentHd');
+		
+		function setNavHd(content){
+			set("navHd", "<div>"+content+"</div>");
+			hdBorder.render('navHd');
+		}
+		
+		function setContentHd(content){
+			set("contentHd", "<div>"+content+"</div>");
+			hdBorder.render('contentHd');
+		}
+		
+		function getAjaxLoad(){
+			return ('<div>loading...</div>');
+		}
+		
+		init();
+	</script>
+
+</body>
+</html>

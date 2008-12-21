@@ -1,364 +1,386 @@
-/*
-.rtop, .rbottom{display:block}
-.rtop *, .rbottom *{display: block; height: 1px; overflow: hidden}
-.r1{margin: 0 5px}
-.r2{margin: 0 3px}
-.r3{margin: 0 2px}
-.r4{margin: 0 1px; height: 2px}
+	body{
+		font-family: Tahoma;
+		font-size: 14px;
+		font-weight: bold;
+		color: #fff;
+		text-align: center;
+		background-color: #555
+	}
+	
+	a, a:visited, a:active{
+		color: #FFF;
+		text-decoration: none;
+	}
+/***********************
+ BANNER with MainMenu
+ ***********************/
+
+	#banner{
+		width: 1000px;
+		height: 70px;
+		background: #111;
+		padding-left: 5px;
+		margin-bottom: 8px;
+	}
+
+	#banner, #banner .sb-inner { background:#111 }
+	#banner .sb-border { background: #FFF }
+	#bannerText{
+		margin-bottom: 10px;
+	}
+
+	#bannerLeft{
+		width: 880px;
+		float: left;
+	}
+	
+	#bannerRight{
+		width: 100px;
+		text-align: right;
+		height: 60px;
+		float: left;
+	}
+	
+	#bannerRight img{
+		padding-top: 5px;
+	}
+	
+	#mainMenu{
+		background-color: #485052;
+		text-align: center;
+		overflow:hidden; 
+		background: #111; 
+		margin: 0; 
+		padding: 0; 
+		width: 850px;
+	}
+
+	#mainMenu li{
+		list-style: none;
+		float: left;
+		width: 130px;
+		height: 21px;
+		margin-left: 2px;
+	}
+	#mainMenu li .sb-border { background:#485052; }
+	#mainMenu li, #mainMenu li .sb-inner { background-color: #485052; }
+
+	#mainMenu a{ display:block; padding: 1px; }
+
+	#mainMenu li:hover, #mainMenu li:hover .sb-inner { background: #AAA; }
+	#mainMenu li.hover, #mainMenu li.hover .sb-inner { background: #AAA; }
+
+/***************
+ Upper Left Nav
+ ***************/
+
+	#navContainer{
+		float:left;
+		width: 160px;
+	}
+	 
+	#nav{
+		width: 100%;
+		height: 250px;
+		background: #111;
+		padding-left: 5px;
+	}
+
+	#nav, #nav .sb-inner { 
+		background:#FFF; 
+		padding-left: 2px;
+		padding-right: 2px;
+	}
+	#nav .sb-border { background:#111; }
+
+	#navHd, #navHd .sb-inner{
+		background: #111;
+		text-align: center;
+	}
+	
+	#navContent{
+		color: #485052;
+		padding-left: 5px;
+	}
+
+	#navSearch{
+		width: 100%;
+		height: 61px;
+		background: #111;
+		padding-left: 5px;
+	}
+
+	#navSearch, #navSearch .sb-inner { 
+		background:#FFF; 
+		padding-left: 2px;
+		padding-right: 2px;
+	}
+	#navSearch .sb-border { background:#111; }
+
+	#searchHd, #searchHd .sb-inner{
+		background: #111;
+		text-align: center;
+	}
+
+/**************
+ Content
+ **************/
+	#content{
+		float: left;
+		color: #485052;
+		background: #111;
+		width: 833px;
+		min-height: 308px;
+		margin-left: 8px;
+	}
+
+	#content, #content .sb-inner { background:#FFF; padding: 2px}
+	#content .sb-border { background:#111; }
+
+	#contentHd, #contentHd .sb-inner{
+		background: #111;
+		color: #fff;
+	}
+
+	#epgsearch{ width: 128px; }
+	
+	.boxContent{
+		padding: 3px;	
+	}
+	
+/*****************
+* Subnavigation
+******************/	
+	.navTable{
+		width: 100%;
+	}
+	
+	.navTable a, .navTable a:visited, .navTable a:active{
+		color: #485052;
+		text-decoration: none;
+		display: block;
+	}
+	
+	.navTable a:hover{
+		background-color:#CCC;
+		color: #485052;
+		display: block;
+	}
+	
+/*****************
+* ServiceList
+******************/		
+	.sListSName a{
+		display: block;
+		color: #485052;
+	}
+	
+	.sListSName:hover{
+		background-color:#CCC;
+		color: #485052;
+		display: block;
+	}
+	
+	.sListSName {
+		width: 735px;
+	}
+	
+	.header{
+		padding-top: 2px;
+		padding-left: 4px;
+		padding-right: 4px;
+		display:block;
+		height: 22px;
+	}
+
+	#container {
+		margin: 0 auto;   /* align for good browsers */
+		text-align: left; /* counter the body center */
+		width: 1005px;
+	}
+
+	#contentTable{
+		scrollbar: auto;
+		width: 785px;
+	}
+	
+	#contentTable div{
+		width: auto;
+		overflow: auto;
+	}
+
+	#contentMain{
+		padding: 8px;
+		margin-bottom: 5px;
+	}
+
+	#contentMain {
+		clear: both;
+		/*overflow-x: hidden;*/
+		overflow-y: auto;
+		width: 815px;
+	}
+
+	/*
+	html>body #contentMain div{
+		overflow: hidden;
+		width: 785px;
+	}
 */
-body { 	
-	text-align:left;
-	vertical-align: top;
-	margin:0px; 
-	font-family:Arial,sans-serif;
-	font-size: 14px;
-	background-color:#EEEEEE;
-	color:#444444;
-	cursor: default;
-}
+	#contentMain div table {
+		float: left;
+		width: 799px;
+	}
+	
+	.sListItem{
+		border-bottom: 2px solid #CCC;
+		width: 780px;
+	}
 
-a:link { color:#444444; }
-a:visited { color:#444444; }
-a:active { color:#444444; }
+/*****************
+* ServiceList EPG
+******************/		
+	.epgStart{
+		width: 50px;		
+	}
+	
+	.epgTitle{
+		width: 680px;
+		border-right: 1px solid #CCC;
+		border-left: 1px solid #CCC;
+	}
+	
+	.epgLength{
+		width: 50px;
+		text-align: right;
+	}
+	
+	.mStart{
+		width: 160px;		
+	}
+	
+	.mTitle{
+		width: 550px;
+		border-right: 1px solid #CCC;
+		border-left: 1px solid #CCC;
+	}
+	
+	.mLength{
+		width: 70px;
+		text-align: right;
+	}
+	
+/*****************
+* About
+******************/	
+	
+	.aboutHeader {
+		width:100%;
+		color:#FFF;
+		font-weight:bold;
+		background-color:#111;
+	}
 
-hr{ border: 1px solid #BBBBBB; 
-	margin-left: 3px;
-	margin-right: 3px;
-}
+	.about {
+		border: 1px solid #CCC;
+		width: 100%;
+		margin: 0px;
+		padding: 0px;
+	}
 
-form{
-	margin: 0px;
-	padding: 0px;
-}
+	.fullwidth {
+		width: 100%;
+	}
 
-/**************************************************************
-Make the ServiceList Table scrollable**************************
-***************************************************************/
+	.aboutSection{
+		width:100%;
+		margin: 0 0 0 0;
+	}
 
-/* define height and width of scrollable area. Add 16px to width for scrollbar          */
-div.BodyContentChannellist {
-	clear: both;
-	border: 1px solid #000;
-	height: 450px;
-	overflow: auto;
-	margin: 0 9 0;
-/*	width: 780px; */
-}
+	.aboutSectionLeft{
+		width:50%;
+		vertical-align: top;
+	}
 
+	.aboutSectionRight{
+		width:50%;
+		vertical-align: top;
+	}
 
-/* Reset overflow value to hidden for all non-IE browsers. */
-html>body div.BodyContentChannellist {
-	overflow: hidden;
-	width: 780px;
-}
+	.aboutElement{
+		float: none;
+	}
 
-/* define width of table. IE browsers only                 */
-div.BodyContentChannellist table {
-	float: left;
-	width: 760px;
-}
+	.aboutElementLeft{
+		font-weight:bold;
+		width: 50%;
+		text-align: left;
+	}
 
-/* define width of table. Add 16px to width for scrollbar.           */
-/* All other non-IE browsers.                                        */
-html>body div.BodyContentChannellist table {
-	width: 780px;
-}
-
-/* set table header to a fixed position. WinIE 6.x only                                       */
-/* In WinIE 6.x, any element with a position property set to relative and is a child of       */
-/* an element that has an overflow property set, the relative value translates into fixed.    */
-/* Ex: parent element DIV with a class of tableContainer has an overflow property set to auto */
-thead.fixedHeader tr {
-	position: relative
-}
-
-/* set THEAD element to have block level attributes. All other non-IE browsers            */
-/* this enables overflow to work on TBODY element. All other non-IE, non-Mozilla browsers */
-html>body thead.fixedHeader tr {
-	display: block
-}
-
-/* make the TH elements pretty */
-thead.fixedHeader th {
-	background: #0066CC;
-	border: 0px;
-	font-weight: normal;
-	padding: 4px 3px;
-	text-align: left
-}
-
-/* make the A elements pretty. makes for nice clickable headers                */
-thead.fixedHeader a, thead.fixedHeader a:link, thead.fixedHeader a:visited {
-	color: #FFF;
-	display: block;
-	text-decoration: none;
-	width: 100%
-}
-
-/* make the A elements pretty. makes for nice clickable headers                */
-/* WARNING: swapping the background on hover may cause problems in WinIE 6.x   */
-thead.fixedHeader a:hover {
-	color: #FFF;
-	display: block;
-	text-decoration: underline;
-	width: 100%
-}
-
-/* define the table content to be scrollable                                              */
-/* set TBODY element to have block level attributes. All other non-IE browsers            */
-/* this enables overflow to work on TBODY element. All other non-IE, non-Mozilla browsers */
-/* induced side effect is that child TDs no longer accept width: auto                     */
-html>body tbody.scrollContent {
-	display: block;
-	height: 422px;
-	overflow: auto;
-	width: 100%;
-}
-
-/* make TD elements pretty. Provide alternating classes for striping the table */
-/* http://www.alistapart.com/articles/zebratables/                             */
-
-
-tbody.scrollContent td, tbody.scrollContent tr.normalRow td {
-	background: #FFF;
-	border-bottom: none;
-	border-left: none;
-	border-right: 1px solid #CCC;
-	border-top: 1px solid #DDD;
-	padding: 2px 3px 3px 4px
-}
-
-/* define width of TH elements: 1st, 2nd, and 3rd respectively.          */
-/* Add 16px to last TH for scrollbar padding. All other non-IE browsers. */
-/* http://www.w3.org/TR/REC-CSS2/selector.html#adjacent-selectors        */
-html>body thead.fixedHeader th {
-	width: 780px; 
-}
-
-/* define width of TD elements: 1st, 2nd, and 3rd respectively.          */
-/* All other non-IE browsers.                                            */
-/* http://www.w3.org/TR/REC-CSS2/selector.html#adjacent-selectors        */
-html>body tbody.scrollContent td {
-	width: 764px; 
-}
-
-/****************************************
-normal stylesheet-stuff******************
-*****************************************/
-
-#Main{
-	padding: 0;
-	width:920px;
-	height:700px; 
+	.aboutElementRight{
+		width: 50%;
+	}
+	
+	.w200h50{
+		width: 200px;
+		height: 50px;
+	}
+	
+	
+/*****************
+* Timer
+******************/		
+	.tListSName{
+	width: 180px;
 	text-align: left;
-	margin: 2 2 2;
-	vertical-align: top;
-	cursor: default;
-}
-
-#Content{
-	vertical-align: top;
-	border: 1px solid #006699; 
-	float: left;
-	background-color: #FFFFFF;
-	width: 800px;
-	height: 99%;	 
-}
-
-#CurrentService { 
-	font-family:Arial,sans-serif;
-	font-size:14px;
-	font-weight:bold;
-	
-	float:left;
-	background-color: #0066CC;
-	color: #FFFFFF;
-	
-	width:50%;
-	height:20px;
-}
-#VolumePanel { 
-	font-family:Arial,sans-serif;
-	font-size:14px;
-	font-weight:bold;
-	
-	float:left;
-	background-color: #0066CC;
-	color: #FFFFFF;
-	
-	width:25%;
-	height:20px;
-}
-
-#CurrentTime { 
-	font-family:Arial,sans-serif;
-	font-size:14px;
-	font-weight:bold;
-	
-	float:left;
-	text-align:right;
-	background-color: #0066CC;
-	color: #FFFFFF;
-	
-	width:20%;
-	height: 20px;
-}
-#SignalPanel { 
-	font-family:Arial,sans-serif;
-	font-size:14px;
-	font-weight:bold;
-	
-	float:left;
-
-	background-color: #0066CC;
-	color: #FFFFFF;
-	text-align:right;
-
-	width:5%;
-	height:20px;
-}
-
-
-#ServiceInfo{
-	width:800px;
-	height: 20px;
-	border-bottom: 1px solid #000000;
-	float:none;
-	clear:both;
-	padding: 0 0 0;
-	margin: 0 0 0;
-	background-color: #0066CC;
-}
-
-#nav{
-	vertical-align: top;
-	border-top: 1px solid #006699;
-	border-left: 1px solid #006699;
-	border-bottom: 1px solid #006699; 
-	float: left;
-	padding: 0;
-	margin: 0;
-	height:99%;
-	width: 117px;
-}
-
-#navTable{
-	background-color: #99CCFF;
-	vertical-align: middle;
-	font-size: 14px;
-	font-weight: bold;
-	width: 100%;
-	margin:0 0 0 0;
-	padding:0 0 0 0;
-}
-
-#NavHd{
-	background-color: #0066CC;
-	color: #FFFFFF;
-	font-size:10px;
-	font-weight: bold;
-	height: 20px;
-	vertical-align: middle;
-}
-#RequestIndicator{
-	display: inline;
-	vertical-align: middle;
-	font-size:14px;
-	font-weight: bold;
-	height:20px;
-}
-
-#EventNowNext{
-}
-
-#updates{
-	visibility: hidden;
-}
-
-.navMenuPanel{
-	background-color: #BBBBBB;
-}
-.navMenuHeader{
-	font-size: 14px;
-	border-top: 1px solid #000000;
-	height: 20px;
-}
-
-.navMenuContent{
-	font-size: 12px;
-	background-color: #EEEEEE;
-	border: 0px;
-}
-.navMenuItem{
-	font-size: 12px;
-}
-
-.divblock{
-	width:100%;
-	float:none;
-	clear:both;
-}
-
-.event{
-	font-size:12px;
-	width:100%;
-	font-weight:bold;
-	background-color: #DDEEFF;
-	margin-bottom: 1px;
-	cursor:help;
-}
-.eventRA{
-	font-size:12px;
-	width:100%;
-	font-weight:bold;
-	text-align:right;
-	background-color: #DDEEFF;
-	margin-bottom: 1px;
-	cursor:help;
-}
-.eventExtDesc{
-	color: #777777;
-	background-color: #FFFFFF;
-	font-size:12px;
-	margin-bottom: 1px;
-	width:100%;
-}
-
-.bgMain{
-	background-color: #FFFFFF;
-	width: 100%;
-}
-.sListHeader{
-	float:left;
-	width:50%;
-}
-.sListSearch{
-	float:left;
-	width:50%;
-	text-align: right;
-}
-form.sListSearch{
-	text-align: right;
-}
-.sListSName{
-	float:left;
-	width:700px;
-}
-
-a.sListSLink{
-	display: block;
-	width:700px;
-	text-decoration: none;
-}
-
-a.sListSLink:hover{
-	background-color: #DDDDDD;
-}
-
-.sListExt{
-	float:left;
-	width:55px;
-	text-align: right;
-}
-
-
+	}
+	.tListItem{
+		background-color: #EEE;
+	}
+	.tListTitle{
+		width: 150px;
+		text-align: left;
+	}
+	.tListDescr{
+		width: 150px;
+		text-align: left;
+	}
+	.tListRepeat{
+		width: 70px;
+		text-align: left;
+	}
+	.tListDuration{
+		width: 70px;
+		text-align: left;
+	}
+	.tListBegin{
+		width: 100px;
+		text-align: left;
+	}
+	.tListEnd{
+		width: 100px;
+		text-align: left;
+	}
+	.tListAfter{
+		width: 85px;
+		text-align: left;
+	}
+	.tListOption{
+		width: 80px;
+		text-align: center;
+	}
+	#TimerColor0 {
+		color: #000000;
+	}
+	#TimerColor1 {
+		color: #00BCBC;
+		background-color: #DDD;
+	}
+	#TimerColor2 {
+		color: #9F1919;
+		background-color: #DDD;
+	}
+	#TimerColor3 {
+		color: #00BCBC;
+		background-color: #DDD;
+	}

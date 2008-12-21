@@ -1,0 +1,41 @@
+
+						<table id="contentTable">
+							{for m in movies}
+							<tr>
+								<td>
+									<table class="sListItem">
+										<tr>
+											<td>										
+												<div class="sListSName">
+													<a href="#" id="${m.servicereference}" onclick="{ zap(this.id); }" class="sListSLink">
+														${m.title } - ${m.description} (${m.servicename})
+													</a>
+												</div>
+											</td>
+										</tr>
+										<tr class="mListDetail" id="" style="">
+											<td class="mListDetailItem">
+												<table cellspacing="0">
+													<tr>
+														<td class="mStart">${m.time}</td>
+														<td class="mTitle">${m.descriptionextended}</td>
+														<td class="mLength">${m.length}</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							{forelse}
+							<tr>
+								<td>
+									<table>
+										<tr>
+											<td>No Movies to Display</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							{/for}		
+						</table>

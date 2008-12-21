@@ -1,229 +1,204 @@
-var url_getvolume = '/web/vol?set=state'; 
-var url_setvolume = '/web/vol?set=set'; // plus new value eq. set=set15
-var url_volumeup = '/web/vol?set=up';
-var url_volumedown = '/web/vol?set=down';
-var url_volumemute = '/web/vol?set=mute';
+// $Header$
 
-var url_epgservice = "/web/epgservice?ref="; // plus serviceRev
-var url_epgsearch = "/web/epgsearch?search="; // plus serviceRev
-var url_epgnownext = "/web/epgnownext?ref="; // plus serviceRev
+var doRequestMemory = new Object();
+var doRequestMemorySave = new Object();
 
-var url_fetchchannels = "/web/fetchchannels?ServiceListBrowse="; // plus encoded serviceref
+var templates = new Array();
 
-var url_updates= "/web/updates";
+var mediaPlayerStarted = false;
 
-var DBG = false;
-
-/**
-*
-*  UTF-8 data encode / decode
-*  http://www.webtoolkit.info/
-*
-**/
-
-var Utf8 = {
-
-    // public method for url encoding
-    encode : function (string) {
-        string = string.replace(/\r\n/g,"\n");
-        var utftext = "";
-
-        for (var n = 0; n < string.length; n++) {
-
-            var c = string.charCodeAt(n);
-
-            if (c < 128) {
-                utftext += String.fromCharCode(c);
-            }
-            else if((c > 127) && (c < 2048)) {
-                utftext += String.fromCharCode((c >> 6) | 192);
-                utftext += String.fromCharCode((c & 63) | 128);
-            }
-            else {
-                utftext += String.fromCharCode((c >> 12) | 224);
-                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-                utftext += String.fromCharCode((c & 63) | 128);
-            }
-
-        }
-
-        return utftext;
-    },
-
-    // public method for url decoding
-    decode : function (utftext) {
-        var string = "";
-        var i = 0;
-        var c = c1 = c2 = 0;
-
-        while ( i < utftext.length ) {
-
-            c = utftext.charCodeAt(i);
-
-            if (c < 128) {
-                string += String.fromCharCode(c);
-                i++;
-            }
-            else if((c > 191) && (c < 224)) {
-                c2 = utftext.charCodeAt(i+1);
-                string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
-                i += 2;
-            }
-            else {
-                c2 = utftext.charCodeAt(i+1);
-                c3 = utftext.charCodeAt(i+2);
-                string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
-                i += 3;
-            }
-
-        }
-
-        return string;
-    }
-
-}
+// Get Settings
+var settings = null;
+var parentControlList = null;
 
 // UpdateStreamReader
 var UpdateStreamReaderNextReadPos = 0;
-var UpdateStreamReaderPollTimer;
-UpdateStreamReaderRequest = null;
+var UpdateStreamReaderPollTimer = null;
+var UpdateStreamReaderPollTimerCounter = 0;
+var UpdateStreamReaderRetryCounter = 0;
+var UpdateStreamReaderRetryLimit = 10
+var UpdateStreamReaderRequest = null;
+
+//var UpdateStreamReaderPollTimerCounterTwisted = 0;
+
 function UpdateStreamReaderStart(){
 	var ua = navigator.userAgent;
+	
 	if(navigator.userAgent.indexOf("MSIE") >=0) {
-		debug("UpdateStreamReader IE Fix *IE sucks*");
-		$('UpdateStreamReaderIEFixPanel').innerHTML = '<iframe id="UpdateStreamReaderIEFixIFrame" src="'+url_updates+'" height="0" width="0" scrolling="none" frameborder="0">no iframe support!</iframe>';
+		debug("UpdateStreamReader IE Fix");
+
+		var namespace = { 	
+					'url_updates': url_updates
+		};
+		$('UpdateStreamReaderIEFixPanel').innerHTML = RND(tplUpdateStreamReaderIE, namespace);
+		
 	}else {
-		debug("UpdateStreamReader Start");
 		UpdateStreamReaderNextReadPos = 0;
 		allMessages = "";
-		UpdateStreamReaderRequest =new XMLHttpRequest();
-		UpdateStreamReaderRequest.onload = UpdateStreamReaderOnLoad;
+		UpdateStreamReaderRequest = new XMLHttpRequest();
 		UpdateStreamReaderRequest.onerror = UpdateStreamReaderOnError;
 		UpdateStreamReaderRequest.open("GET", url_updates, true);
  		UpdateStreamReaderRequest.send(null);
-		UpdateStreamReaderPollTimer = setInterval(UpdateStreamReaderLatestResponse, 500);
+		UpdateStreamReaderPollTimer = setInterval(UpdateStreamReaderLatestResponse, 1000);
 	}
 }
   
 function UpdateStreamReaderLatestResponse() {
+	UpdateStreamReaderPollTimerCounter++;
+	
+	if(UpdateStreamReaderPollTimerCounter > 30) {
+		clearInterval(UpdateStreamReaderPollTimer);
+		UpdateStreamReaderRequest.abort();
+		UpdateStreamReaderRequest = null;
+		UpdateStreamReaderPollTimerCounter = 0;
+		UpdateStreamReaderStart();
+		
+//		UpdateStreamReaderPollTimerCounterTwisted++;
+		return;
+	}
 	var allMessages = UpdateStreamReaderRequest.responseText;
 	do {
 		var unprocessed = allMessages.substring(UpdateStreamReaderNextReadPos);
 		var messageXMLEndIndex = unprocessed.indexOf("\n");
+		
 		if (messageXMLEndIndex!=-1) {
+			//reset RetryCounter, if it was a reconnect, it succeeded!
+			UpdateStreamReaderRetryCounter = 0;
+			
 			var endOfFirstMessageIndex = messageXMLEndIndex + "\n".length;
 			var anUpdate = unprocessed.substring(0, endOfFirstMessageIndex);
-			anUpdate = anUpdate.replace(/<div id="scriptzone"\/>/,'');
-			anUpdate = anUpdate.replace(/<script>parent./, '');
-			anUpdate = anUpdate.replace(/<\/script>\n/, '');
-			anUpdate = Utf8.decode(anUpdate);
+	
+			var re = new RegExp("<script>parent\.(.*)</script>");
+			anUpdate = re.exec(anUpdate);
 
-			//debug(Utf8.decode(anUpdate))
-			eval(anUpdate);
+			if(anUpdate != null){
+				if (anUpdate.length == 2){
+					eval(anUpdate[1]);
+				}
+			}
+			
 			UpdateStreamReaderNextReadPos += endOfFirstMessageIndex;
+		}
+		if(UpdateStreamReaderNextReadPos > 65000){
+			UpdateStreamReaderRequest.abort();
+			UpdateStreamReaderRequest = null;
+			UpdateStreamReaderPollTimerCounter = 0;
+			UpdateStreamReaderStart();
+			messageXMLEndIndex = -1;
 		}
 	} while (messageXMLEndIndex != -1);
 }
 
-function UpdateStreamReaderOnLoad(){
-	window.clearInterval(UpdateStreamReaderPollTimer);
-	debug("UpdateStreamReaderOnLoad");
-	Dialog.confirm(
-		"Live Update Stream ends!<br><br>You will not receive any Update from Enigma2.<br>Should I reconnect?",
-		 {windowParameters: {width:300, className: "alphacube"},
-			okLabel: "reconnect",
-			buttonClass: "myButtonClass",
-			cancel: function(win) {debug("cancel confirm panel")},
-			ok: function(win) {UpdateStreamReaderStart(); return true;}
-			}
-		);
-}
 function UpdateStreamReaderOnError(){
-	// TODO: change this, because it will be called on 'PageUnload' while the request is still running
-	debug("UpdateStreamReaderOnError");
 	window.clearInterval(UpdateStreamReaderPollTimer);
-	Dialog.confirm(
-		"Live Update Stream has an Error!<br><br>You will not receive any Update from Enigma2.<br>Should I try to reconnect?",
-		 {windowParameters: {width:300, className: "alphacube"},
-			 okLabel: "reconnect",
-			 buttonClass: "myButtonClass",
-			 cancel: function(win) {debug("cancel confirm panel")},
-			 ok: function(win) {UpdateStreamReaderStart(); return true;}
+	UpdateStreamReaderRetryCounter += 1;
+	
+	debug("UpdateStreamReaderOnError: ErrorCount "+UpdateStreamReaderRetryCounter);
+	
+	if(UpdateStreamReaderRetryCounter >= UpdateStreamReaderRetryLimit){
+		debug("UpdateStreamReaderOnError: RetryLimit reached!");
+		
+		UpdateStreamReaderRetryCounter = 0;
+		
+		Dialog.confirm(
+			"Live Update Stream has an Error!<br><br>You will not receive any Updates from Enigma2.<br>Should I try to reconnect?",
+			{	
+				windowParameters: {width:300, className: windowStyle},
+				okLabel: "reconnect",
+				buttonClass: "myButtonClass",
+				cancel: function(win) {debug("cancel confirm panel")},
+				ok: function(win) {UpdateStreamReaderStart(); return true;}
 			}
 		);
+	} else {
+		setTimeout("UpdateStreamReaderStart()", 5000);
+	}
 }
-
 //end UpdateStreamReader
-
-
-function openWindow(title, inner, width, height, id){
-			if(id == null) id = new Date().toUTCString();
-			
-			//debug(id);
-			var win = new Window(id, {className: "alphacube", title: title, width: width, height: height});
-			win.getContent().innerHTML = inner;
-			win.setDestroyOnClose();
-			win.showCenter();
-			debug("opening Window: "+title);
-			return win;
+function setWindowContent(window, html){
+	window.document.write(html);
+	window.document.close();
 }
 
+
+function openPopup(title, html, width, height, x, y){
+	debug("opening Window: "+title);
+	
+	var popup = window.open('about:blank',title,'width='+width+',height='+height+',left='+x+',top='+y+',screenX='+x+',screenY='+y);
+	try {
+		setWindowContent(popup, html);
+		return popup;
+	} catch(e){
+		alert("Please disable your Popup-Blocker for Enigma2 WebControl to work flawlessly!");
+		return null;
+	}
+}
+	
 function messageBox(t, m){
-	Dialog.alert(m, {windowParameters: {title: t, className: "alphacube", width:200}, okLabel: "Close"});
+	alert(m);
 }
 
-function getHTTPObject( ){
-    var xmlHttp = false;
-            
-    // try to create a new instance of the xmlhttprequest object        
-    try{
-        // Internet Explorer
-        if( window.ActiveXObject ){
-            for( var i = 5; i; i-- ){
-                try{
-                    // loading of a newer version of msxml dll (msxml3 - msxml5) failed
-                    // use fallback solution
-                    // old style msxml version independent, deprecated
-                    if( i == 2 ){
-                        xmlHttp = new ActiveXObject( "Microsoft.XMLHTTP" );    
-                    }
-                    // try to use the latest msxml dll
-                    else{
-                        
-                        xmlHttp = new ActiveXObject( "Msxml2.XMLHTTP." + i + ".0" );
-                    }
-                    break;
-                }
-                catch( excNotLoadable ){                        
-                    xmlHttp = false;
-                }
-            }
-        }
-        // Mozilla, Opera und Safari
-        else if( window.XMLHttpRequest ){
-            xmlHttp = new XMLHttpRequest();
-        }
-    }
-    // loading of xmlhttp object failed
-    catch( excNotLoadable ){
-        xmlHttp = false;
-    }
-    return xmlHttp ;
+function fetchTpl(tplName, callback){
+	url = "/webdata/tpl/"+tplName+".htm";
+		new Ajax.Request(url,
+			{
+				asynchronous: true,
+				method: 'GET',
+				requestHeaders: ['Pragma', 'no-cache', 'Cache-Control', 'must-revalidate', 'If-Modified-Since', 'Sat, 1 Jan 2000 00:00:00 GMT'],
+				onException: function(o, e){ throw(e); },				
+				onSuccess: function(request){
+								saveTpl(request, tplName)
+									if(callback != null){
+										callback();
+									}
+							},
+				onComplete: requestFinished 
+			});
 }
 
-//RND Template Function
-function RND(tmpl, ns) {
-	var fn = function(w, g) {
-	  g = g.split("|");
-	  var cnt = ns[g[0]];
+function saveTpl(request, tplName){
+	templates[tplName] = request.responseText;
+}
 
-	  //Support for filter functions
-	  for(var i=1; i < g.length; i++) {
-		cnt = eval(g[i])(cnt);
-	  }
-	  return cnt || w;
-	};
-	return tmpl.replace(/%\(([A-Za-z0-9_|.]*)\)/g, fn);
+
+function processTpl(tplName, data, domElement, callback){
+	url = "/webdata/tpl/"+tplName+".htm";
+		new Ajax.Request(url,
+			{
+				asynchronous: true,
+				method: 'GET',
+				requestHeaders: ['Pragma', 'no-cache', 'Cache-Control', 'must-revalidate', 'If-Modified-Since', 'Sat, 1 Jan 2000 00:00:00 GMT'],
+				onException: function(o, e){ throw(e); },				
+				onSuccess: function(request){
+								renderTpl(request.responseText, data, domElement)
+								if(callback != null) callback();
+							},
+				onComplete: requestFinished 
+			});
+}
+
+function renderTpl(tpl, data, domElement) {
+	var result = tpl.process(data);
+	$(domElement).innerHTML = result;
+}
+
+var currentBouquet = bouquetsTv;
+function getBouquetEpg(){
+	loadServiceEPGNowNext(currentBouquet);
+}
+
+function d2h(nr, len){
+
+		hex = parseInt(nr).toString(16).toUpperCase();
+		if(len > 0){
+			try{
+				while(hex.length < len){
+					hex = "0"+hex;
+				}
+			} 
+			catch(e){}
+		} 
+		return hex;
 }
 
 function debug(text){
@@ -233,20 +208,41 @@ function debug(text){
 		} catch (windowNotPresent) {}
 	}
 }
-
 function showhide(id){
- 	o = document.getElementById(id).style;
+ 	o = $(id).style;
  	o.display = (o.display!="none")? "none":"";
 }
-
-function set(what, value){
-	//debug(what+"-"+value);
-	element = parent.document.getElementById(what);
+function set(element, value){
+	if(element == "CurrentService") {
+		if(value.search(/^MP3 File:/) != -1) {
+			value = value.replace(/.*\//, '');
+		}
+	}
+	element = parent.$(element);
+	if(value.length > 550) {
+		value = value.substr(0,550) + "[...]";
+	}
 	if (element){
 		element.innerHTML = value;
 	}
 	if(navigator.userAgent.indexOf("MSIE") >=0) {
-		elementscript= $('UpdateStreamReaderIEFixIFrame').document.getElementById('scriptzone');
+		try{
+			elementscript= $('UpdateStreamReaderIEFixIFrame').$('scriptzone');
+			if(elementscript){
+				elementscript.innerHTML = ""; // deleting set() from page, to keep the page short and to save memory			
+			}
+		}
+		catch(e){}
+	}
+}
+function setComplete(element, value){
+	//debug(element+"-"+value);
+	element = parent.$(element);
+	if (element){
+		element.innerHTML = value;
+	}
+	if(navigator.userAgent.indexOf("MSIE") >=0) {
+		elementscript= $('UpdateStreamReaderIEFixIFrame').$('scriptzone');
 		if(elementscript){
 			elementscript.innerHTML = ""; // deleting set() from page, to keep the page short and to save memory			
 		}
@@ -254,14 +250,13 @@ function set(what, value){
 }
 // requestindikator
 var requestcounter = 0;
-
 function requestIndicatorUpdate(){
-	//debug(requestcounter+" open requests");
+	/*debug(requestcounter+" open requests");
 	if(requestcounter>=1){
 		$('RequestIndicator').style.display = "inline";
 	}else{
 		$('RequestIndicator').style.display = "none";
-	}
+	}*/
 }
 function requestStarted(){
 	requestcounter +=1;
@@ -272,240 +267,228 @@ function requestFinished(){
 	requestIndicatorUpdate();
 }
 // end requestindikator
-
-function doRequest(url, readyFunction){
-	//debug("requesting "+url);
+function doRequest(url, readyFunction, save){
 	requestStarted();
-	new Ajax.Request(url,
-		{
-			method: 'get',
-			requestHeaders: ['Pragma', 'no-cache', 'Cache-Control', 'must-revalidate', 'If-Modified-Since', 'Sat, 1 Jan 2000 00:00:00 GMT'],
-			onSuccess: readyFunction,
-			onComplete: requestFinished 
-		});
+	doRequestMemorySave[url] = save;
+	debug("doRequest: Requesting: "+url);
+//	if(save == true && typeof(doRequestMemory[url]) != "undefined") {
+		//readyFunction(doRequestMemory[url]);
+//	} else {
+		debug("doRequest: loading");
+		new Ajax.Request(url,
+			{
+				asynchronous: true,
+				method: 'GET',
+				requestHeaders: ['Pragma', 'no-cache', 'Cache-Control', 'must-revalidate', 'If-Modified-Since', 'Sat, 1 Jan 2000 00:00:00 GMT'],
+				onException: function(o,e){ throw(e); },				
+				onSuccess: function (transport, json) {
+							if(typeof(doRequestMemorySave[url]) != "undefined") {
+								if(doRequestMemorySave[url]) {
+									debug("doRequest: saving request"); 
+									doRequestMemory[url] = transport;
+								}
+							}
+							readyFunction(transport);
+						},
+				onComplete: requestFinished 
+			});
+//	}
 }
 
 function getXML(request){
 	if (document.implementation && document.implementation.createDocument){
-		debug("using responseXML");
 		var xmlDoc = request.responseXML
 	}
 	else if (window.ActiveXObject){
-		debug("Creating XML for IE");
 		var xmlInsert = document.createElement('xml');
 
 		xmlInsert.setAttribute('innerHTML',request.responseText);
 		xmlInsert.setAttribute('id','_MakeAUniqueID');
 		document.body.appendChild(xmlInsert);
-		xmlDoc = document.getElementById('_MakeAUniqueID');
-		document.body.removeChild(document.getElementById('_MakeAUniqueID'));
+		xmlDoc = $('_MakeAUniqueID');
+		document.body.removeChild($('_MakeAUniqueID'));
 	} else {
 		debug("Your Browser Sucks!");
 	}
 	return xmlDoc;
 }
+function parentPin(servicereference) {
+    debug ("parentPin: parentControlList");
+	servicereference = decodeURIComponent(servicereference);
+	if(parentControlList == null || String(getSettingByName("config.ParentalControl.configured")) != "true") {
+		return true;
+	}
+	//debug("parentPin " + parentControlList.length);
+	if(getParentControlByRef(servicereference) == servicereference) {
+		if(String(getSettingByName("config.ParentalControl.type.value")) == "whitelist") {
+			debug("parentPin leaving here 1");
+			return true;
+		}
+	} else {
+		debug("parentPin leaving here 2");
+		return true;
+	}
+	debug("going to ask for PIN");
 
-function zap(li){
-	var url = "/web/zap?ZapTo=" + escape(li.id);
-	//debug("requesting "+url);
-	new Ajax.Request( url,
-		{
-			method: 'get' 				
-		});
+	var userInput = prompt('ParentControll was switch on.<br> Please enter PIN','PIN');
+	if (userInput != '' && userInput != null) {
+		if(String(userInput) == String(getSettingByName("config.ParentalControl.servicepin.0")) ) {
+			return true;
+		} else {
+			return parentPin(servicereference);
+		}
+	} else {
+		return false;
+	}
 }
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+function zap(servicereference){
+	new Ajax.Request( "/web/zap?sRef=" + servicereference, 
+						{
+							asynchronous: true,
+							method: 'get'
+						}
+					);
+	setTimeout("getSubServices()", 5000);
+}
+
 //++++       SignalPanel                           ++++
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-function initSignalPanel(){
-	$('SignalPanel').innerHTML = tplSignalPanelButton;
-}
 function openSignalDialog(){
-	openWindow("Signal Info",tplSignalPanel, 215, 75);
+	openPopup("Signal Info",tplSignalPanel, 215, 100,620,40);
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 //++++ EPG functions                               ++++
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++
-var EPGList = Class.create();
-EPGList.prototype = {
-	//contructor
-	initialize: function(){
-		debug("init class EPGList");
-	},
-	getBySearchString: function(string){
-		debug("requesting "+ url_epgsearch+string);
-		doRequest(url_epgsearch+string,this.incomingEPGrequest);
-		
-	},
-	getByServiceReference: function(serviceRef){
-		doRequest(url_epgservice+serviceRef,this.incomingEPGrequest);
-	},
-	
-	
-	renderTable: function(epglist){
-		debug("rendering Table with "+epglist.length+" events");
-		var html = tplEPGListHeader;
-		for (var i=0; i < epglist.length; i++){
-			try{
-				var item = epglist[i];
-				
-				//Create JSON Object for Template
-				var namespace = { 	'date': item.getTimeDay(), 
-									'servicename': item.getServiceName(), 
-									'title': item.getTitle(),
-									'titleESC': escape(item.getTitle()),
-									'starttime': item.getTimeStartString(), 
-									'duration': (item.getDuration()/60000), 
-									'description': item.getDescription(), 
-									'endtime': item.getTimeEndString(), 
-									'extdescription': item.getDescriptionExtended()
-								};
-				//Fill template with data and add id to our result
-				html += RND(tplEPGListItem, namespace);
-			} catch (blubb) {
-				//debug("Error rendering: "+blubb);
-			}
-		}
-		
-		html += tplEPGListFooter;
-		//element.innerHTML = html;
-		openWindow("Electronic Program Guide", html, 900, 500);
-		
-	},
-	incomingEPGrequest: function(request){
-		debug("incoming request" +request.readyState);		
-		if (request.readyState == 4)
-		{
-			var EPGItems = getXML(request).getElementsByTagName("e2eventlist").item(0).getElementsByTagName("e2event");
-			
-			debug("have "+EPGItems.length+" e2events");
-			if(EPGItems.length > 0){
-			
-				epglist = new Array();
-				for(var i=0; i < EPGItems.length; i++){		
-					epglist.push(new EPGEvent(EPGItems.item(i)));
-				}
-				debug("Calling prototype.renderTable(epglist)");
-				EPGList.prototype.renderTable(epglist);
-				
-			} else {
-				messageBox('No Items found!', 'Sorry but i could not find any EPG Content containing your search value');
-			}
-			
-		}
-	}
-	
+function loadEPGBySearchString(string){
+		doRequest(url_epgsearch+escape(string),incomingEPGrequest, false);
+}
+function loadEPGByServiceReference(servicereference){
+		doRequest(url_epgservice+servicereference,incomingEPGrequest, false);
 }
 
-function EPGEvent(element){	
-	// parsing values from xml-element
-	try{
-		this.eventID = element.getElementsByTagName('e2eventid').item(0).firstChild.data;
-		this.startTime = element.getElementsByTagName('e2eventstart').item(0).firstChild.data;
-		this.duration = element.getElementsByTagName('e2eventduration').item(0).firstChild.data;
-		this.title = element.getElementsByTagName('e2eventtitle').item(0).firstChild.data;
-		this.serviceRef = element.getElementsByTagName('e2eventservicereference').item(0).firstChild.data;
-		this.serviceName = element.getElementsByTagName('e2eventservicename').item(0).firstChild.data;
-	} catch (e) {
-		debug("EPGEvent parsing Error");
-	}	
-	try{
-		this.description = element.getElementsByTagName('e2eventdescription').item(0).firstChild.data;
-	} catch (e) {	this.description= 'N/A';	}
-	
-	try{
-		this.descriptionE = element.getElementsByTagName('e2eventdescriptionextended').item(0).firstChild.data;
-	} catch (e) {	this.descriptionE = 'N/A';	}
+var epgListData = {};
+function incomingEPGrequest(request){
+	debug("incoming request" +request.readyState);		
+	if (request.readyState == 4){
+		var EPGItems = new EPGList(getXML(request)).getArray(true);
+		debug("have "+EPGItems.length+" e2events");
+		if(EPGItems.length > 0){			
+			var namespace = new Array();
+			for (var i=0; i < EPGItems.length; i++){
+				try{
+					var item = EPGItems[i];				
+					namespace[i] = {	
+						'date': item.getTimeDay(),
+						'eventid': item.getEventId(),
+						'servicereference': item.getServiceReference(),
+						'servicename': quotes2html(item.getServiceName()),
+						'title': quotes2html(item.getTitle()),
+						'titleESC': escape(item.getTitle()),
+						'starttime': item.getTimeStartString(), 
+						'duration': Math.ceil(item.getDuration()/60000), 
+						'description': quotes2html(item.getDescription()),
+						'endtime': item.getTimeEndString(), 
+						'extdescription': quotes2html(item.getDescriptionExtended()),
+						'number': String(i),
+//						'extdescriptionSmall': quotes2html(item.getDescriptionExtended()),
+						'start': item.getTimeBegin(),
+						'end': item.getTimeEnd()
+					};
+					
+				} catch (blubb) { debug("Error rendering: "+blubb);	}
+			}
+			
+			epgListData = {epg : namespace};
+			fetchTpl('tplEpgList', showEpgList);
+		} else {
+			messageBox('No Items found!', 'Sorry but I could not find any EPG Content containing your search value');
+		}
+	}
+}
 
+var EPGListWindow = '';
+
+function showEpgList(){
+	html = templates['tplEpgList'].process(epgListData);
 	
-	this.getEventId = function ()
-	{
-		return this.eventID;
+	if (!EPGListWindow.closed && EPGListWindow.location) {
+		setWindowContent(EPGListWindow, html);
+	} else {
+		EPGListWindow = openPopup("Electronic Program Guide", html, 900, 500,50,60);
 	}
-	this.getTimeStart = function ()
-	{
-		var date = new Date(parseInt(this.startTime)*1000);
-		return date;
+}
+
+function extdescriptionSmall(txt,num) {
+	if(txt.length > 410) {
+		var shortTxt = txt.substr(0,410);
+		txt = txt.replace(/\'\'/g, '&quot;');
+		txt = txt.replace(/\\/g, '\\\\');
+		txt = txt.replace(/\'/g, '\\\'');
+		txt = txt.replace(/\"/g, '&quot;');
+		var smallNamespace = { 'txt':txt,'number':num, 'shortTxt':shortTxt};
+		return RND(tplEPGListItemExtend, smallNamespace);
+	} else {
+		return txt;
 	}
-	this.getTimeStartString = function ()
-	{
-		var h = this.getTimeStart().getHours();
-		var m = this.getTimeStart().getMinutes();
-		if (m < 10){
-			m="0"+m;
+}	
+
+/////////////////////////
+
+function loadServiceEPGNowNext(servicereference){
+	var url = url_epgnow+servicereference;
+	doRequest(url, incomingServiceEPGNowNext, false);
+}
+
+function incomingServiceEPGNowNext(request){
+	if(request.readyState == 4){
+		var epgevents = getXML(request).getElementsByTagName("e2eventlist").item(0).getElementsByTagName("e2event");
+		for (var c=0; c < epgevents.length; c++){
+			var epgEvt = new EPGEvent(epgevents.item(c));
+			
+			if (epgEvt.getEventId() != 'None'){
+				buildServiceListEPGItem(epgEvt,"NOW");
+			}
 		}
-		return h+":"+m;
 	}
-	this.getTimeDay = function ()
-	{
-		var Wochentag = new Array("So", "Mo", "Di", "Mi", "Do", "Fr", "Sa");
-		var wday = Wochentag[this.getTimeStart().getDay()];
-		var day = this.getTimeStart().getDate();
-		var month = this.getTimeStart().getMonth()+1;
-		var year = this.getTimeStart().getFullYear();
-		
-		return wday+".&nbsp;"+day+"."+month+"."+year;
-	}
-	this.getTimeEnd = function ()
-	{
-		var date = new Date((parseInt(this.startTime)+parseInt(this.duration))*1000);
-		return date;
-	}
-	this.getTimeEndString = function ()
-	{
-		var h = this.getTimeEnd().getHours();
-		var m = this.getTimeEnd().getMinutes();
-		if (m < 10){
-			m="0"+m;
-		}
-		return h+":"+m;
-	}
-	this.getDuration = function ()
-	{
-		return  new Date(parseInt(this.duration)*1000);
-	}
-	this.getTitle = function ()
-	{
-		return this.title;
-	}
-	this.getDescription = function ()
-	{
-		return this.description;
-	}
-	this.getDescriptionExtended = function ()
-	{
-		return this.descriptionE;
-	}
-	this.getServiceReference = function ()
-	{
-		return this.serviceRef;
-	}
-	this.getServiceName = function ()
-	{
-		return this.serviceName.replace(" ","&nbsp;");
-	}
-}//END class EPGEvent
+}
+function buildServiceListEPGItem(epgevent, type){
+	var e = $(type+epgevent.getServiceReference());
+		try{
+			var namespace = { 	
+				'starttime': epgevent.getTimeStartString(), 
+				'title': epgevent.getTitle(), 
+				'length': Math.ceil(epgevent.duration/60) 
+			};
+			var data = {epg : namespace};
+			//e.innerHTML = RND(tplServiceListEPGItem, namespace);
+			
+			if(templates['tplServiceListEPGItem'] != null){
+				renderTpl(templates['tplServiceListEPGItem'], data, type + epgevent.getServiceReference());
+			} else {
+				debug("EPGItem: tplServiceListEPGItem N/A");
+			}
+		} catch (e) {
+			debug("EPGItem: Error rendering: " + e);
+		}	
+}
+///////////////////
+
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++
 //++++ GUI functions                               ++++
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 var currentBodyMainElement = null
 
-function setBodyMainContent(newelementname){
-	newelement =document.getElementById(newelementname);
+function setBodyMainContent(domId){
+	domElement =$(domId);
 	if(currentBodyMainElement != null){
-		currentBodyMainElement.style.display = "none";
-		
+		currentBodyMainElement.style.display = "none";		
 	}
-	newelement.style.display = "";
-	currentBodyMainElement = newelement;
+	domElement.style.display = "";
+	currentBodyMainElement = domElement;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -515,28 +498,23 @@ function setBodyMainContent(newelementname){
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 function initVolumePanel(){
-	document.getElementById('VolumePanel').innerHTML = tplVolumePanel;
+	$('VolumePanel').innerHTML = tplVolumePanel;
 	getVolume(); 
 }
-function getVolume()
-{
-	doRequest(url_getvolume,handleVolumeRequest);
+function getVolume(){
+	doRequest(url_getvolume,handleVolumeRequest, false);
 }
-function volumeSet(newvalue)
-{
-	doRequest(url_setvolume+newvalue,handleVolumeRequest);
+function volumeSet(val){
+	doRequest(url_setvolume+val,handleVolumeRequest, false);
 }
-function volumeUp()
-{
-	doRequest(url_volumeup,handleVolumeRequest);
+function volumeUp(){
+	doRequest(url_volumeup,handleVolumeRequest, false);
 }
-function volumeDown()
-{
-	doRequest(url_volumedown,handleVolumeRequest);	
+function volumeDown(){
+	doRequest(url_volumedown,handleVolumeRequest, false);
 }
-function volumeMute()
-{
-	doRequest(url_volumemute,handleVolumeRequest);
+function volumeMute(){
+	doRequest(url_volumemute,handleVolumeRequest, false);
 }
 function handleVolumeRequest(request){
 	if (request.readyState == 4) {
@@ -545,8 +523,7 @@ function handleVolumeRequest(request){
 		var mute = b.item(0).getElementsByTagName('e2ismuted').item(0).firstChild.data;
 		debug("volume"+newvalue+";"+mute);
 		
-		for (var i = 1; i <= 10; i++)
-		{
+		for (var i = 1; i <= 10; i++)		{
 			if ( (newvalue/10)>=i){
 				$("volume"+i).src = "/webdata/gfx/led_on.png";
 			}else{
@@ -560,124 +537,872 @@ function handleVolumeRequest(request){
 		}
 	}    	
 }
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++
-//++++ bouquet managing functions                  ++++
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+var bouquetsMemory = new Object();
+
 function initChannelList(){
-	debug("init ChannelList");	
-
-	//refreshChannellist('Favourites (TV)', '1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.favourites.tv" ORDER BY bouquet');
-	var url = url_fetchchannels+encodeURIComponent('1:7:1:0:0:0:0:0:0:0:(type == 1) || (type == 17) || (type == 195) || (type == 25)FROM BOUQUET "bouquets.tv" ORDER BY bouquet');
-	doRequest(url, incomingTVBouquetList);
-
-	var url = url_fetchchannels+encodeURIComponent('1:7:2:0:0:0:0:0:0:0:(type == 2)FROM BOUQUET "bouquets.radio" ORDER BY bouquet');
-	doRequest(url, incomingRadioBouquetList);
-
-	var url = url_fetchchannels+encodeURIComponent('1:7:1:0:0:0:0:0:0:0:(type == 1) || (type == 17) || (type == 195) || (type == 25) FROM PROVIDERS ORDER BY name');
-	doRequest(url, incomingProviderTVBouquetList);
-
-	var url = url_fetchchannels+encodeURIComponent('1:7:2:0:0:0:0:0:0:0:(type == 2) FROM PROVIDERS ORDER BY name');
-	doRequest(url, incomingProviderRadioBouquetList);
+	//debug("init ChannelList");	
+	var url = url_getServices+encodeURIComponent(bouquetsTv);
+	currentBouquet = bouquetsTv;
+	doRequest(url, incomingBouquetListInitial, true);
 }
 
-function loadBouquet(servicereference){ 
-	debug("loading bouquet with "+servicereference);	
-	doRequest(url_fetchchannels+servicereference, incomingChannellist);
+
+var loadedChannellist = new Object();
+function loadBouquet(servicereference, name){ 
+	debug("loading bouquet with "+servicereference);
+
+	currentBouquet = servicereference;
+	
+	
+	setContentHd(name);
+	setAjaxLoad('contentMain');
+	
+	debug("loadBouquet " + typeof(loadedChannellist[servicereference]));
+	if(typeof(loadedChannellist[servicereference]) == "undefined") {
+		doRequest(url_getServices+servicereference, incomingChannellist, true);
+	} else {
+		incomingChannellist();
+	}
 }
 
-function incomingTVBouquetList(request){
+function incomingBouquetListInitial(request){
 	if (request.readyState == 4) {
-		var list0 = e2servicelistToArray(getXML(request));
+		var list0 = new ServiceList(getXML(request)).getArray();
 		debug("have "+list0.length+" TV Bouquet ");	
-		$('accordionMenueBouquetContentTV').innerHTML = renderBouquetTable(list0,tplBouquetListItem);
-		
+
 		//loading first entry of TV Favorites as default for ServiceList
-		loadBouquet(list0[0][1]);
+		loadBouquet(list0[0].getServiceReference(), list0[0].getServiceName());
+
+		bouquetsMemory["bouquetsTv"] = list0;
 	}
 }
-function incomingRadioBouquetList(request){
-	if (request.readyState == 4) {
-		var list1 = e2servicelistToArray(getXML(request));
-		debug("have "+list1.length+" Radio Bouquet ");	
-		$('accordionMenueBouquetContentRadio').innerHTML = renderBouquetTable(list1,tplBouquetListItem);
-	}	
-}
-function incomingProviderTVBouquetList(request){
-	if (request.readyState == 4) {
-		var list2 = e2servicelistToArray(getXML(request));
-		debug("have "+list2.length+" TV Provider Bouquet ");	
-		$('accordionMenueBouquetContentProviderTV').innerHTML = renderBouquetTable(list2,tplBouquetListItem);
-	}	
-}
-function incomingProviderRadioBouquetList(request){
-	if (request.readyState == 4) {
-		var list2 = e2servicelistToArray(getXML(request));
-		debug("have "+list2.length+" Radio Provider Bouquet ");	
-		$('accordionMenueBouquetContentProviderRadio').innerHTML = renderBouquetTable(list2,tplBouquetListItem);
-	}	
-}
 
-function e2servicelistToArray(xml){
-	var b = xml.getElementsByTagName("e2servicelist").item(0).getElementsByTagName("e2service");
-	var list = new Array();
-	for ( var i=0; i < b.length; i++){
-		var bRef = escape(b.item(i).getElementsByTagName('e2servicereference').item(0).firstChild.data.replace('&quot;', '"'));
-		var bName = b.item(i).getElementsByTagName('e2servicename').item(0).firstChild.data;
-		var listitem = new Array(bName,bRef);
-		list.push(listitem)
+function incomingBouquetList(request){
+	if (request.readyState == 4) {
+		var list0 = new ServiceList(getXML(request)).getArray();
+		debug("have "+list0.length+" TV Bouquet ");	
+		renderBouquetTable(list0, 'contentMain');
 	}
-	return list
 }
 
-function renderBouquetTable(bouquet,template){
-	var html = tplBouquetListHeader;
-	for (var i=0; i < bouquet.length; i++){
+function renderBouquetTable(list, target){
+	debug("renderBouquetTable with "+list.length+" Bouquets");	
+	
+	var namespace = new Array();
+	if (list.length < 1) alert("NO BOUQUETS!");
+	for (var i=0; i < list.length; i++){
 		try{
-			var item = bouquet[i];
-			
-			//Create JSON Object for Template
-			var namespace = {
-				'bouquetname': item[0], 
-				'servicereference': item[1] 
-				};
-			
-			html += RND(template, namespace);
-		} catch (blubb) {}
+			var bouquet = list[i];
+			namespace[i] = {
+				'servicereference': bouquet.getServiceReference(), 
+				'bouquetname': bouquet.getServiceName()
+			};
+		} catch (blubb) { alert("Error rendering!"); }
 	}
-	html += tplBouquetListFooter;
-	return html;
+	var data = { 
+		services : namespace 
+	};
+	
+	processTpl('tplBouquetList', data, 'contentMain');
 }	
 
 function incomingChannellist(request){
-	if(request.readyState == 4){
-
-		services = getXML(request).getElementsByTagName("e2servicelist").item(0).getElementsByTagName("e2service");
-		
-		listerHtml 	= tplServiceListHeader;
-		
+	var services = null;
+	if(request.readyState == 4) {
+		services = new ServiceList(getXML(request)).getArray();
 		debug("got "+services.length+" Services");
-		
-		for ( var i = 0; i < (services.length ); i++){
-			sRef = services.item(i).getElementsByTagName('e2servicereference').item(0).firstChild.data;
-			sName = services.item(i).getElementsByTagName('e2servicename').item(0).firstChild.data;
-				
-			var namespace = { 	'serviceref': sRef,
-								'servicerefESC': escape(sRef), 
-								'servicename': sName 
-							};
-							
-			listerHtml += RND(tplServiceListItem, namespace);
-			
+	}
+	if(services != null) {
+		var namespace = new Array();
+		for ( var i = 0; i < services.length ; i++){
+			var service = services[i];
+			namespace[i] = { 	
+				'servicereference': service.getServiceReference(),
+				'servicename': service.getServiceName()
+			};
 		}
+		var data = { 
+			services : namespace 
+		};
 		
-		listerHtml += tplServiceListFooter;
-		document.getElementById('BodyContentChannellist').innerHTML = listerHtml;
-		setBodyMainContent('BodyContentChannellist');
+		processTpl('tplServiceList', data, 'contentMain', getBouquetEpg);
+
+	}
+}
+// Movies
+function loadMovieList(tag){
+	debug("loading movies by tag '"+tag+"'");
+	doRequest(url_movielist+tag, incomingMovieList, false);
+}
+
+function incomingMovieList(request){
+	if(request.readyState == 4){
+		var movies = new MovieList(getXML(request)).getArray();
+		debug("have "+movies.length+" movies");
+		namespace = new Array();	
+		for ( var i = 0; i < movies.length; i++){
+			var movie = movies[i];
+			namespace[i] = { 	
+				'servicereference': movie.getServiceReference(),
+				'servicename': movie.getServiceName() ,
+				'title': movie.getTitle(), 
+				'description': movie.getDescription(), 
+				'descriptionextended': movie.getDescriptionExtended(),
+				'filelink': String(movie.getFilename()).substr(17,movie.getFilename().length),
+				'filename': String(movie.getFilename()),
+				'filesize': movie.getFilesizeMB(),
+				'tags': movie.getTags().join(', ') ,
+				'length': movie.getLength() ,
+				'time': movie.getTimeDay()+"&nbsp;"+ movie.getTimeStartString()
+			};
+		}
+		data = { movies : namespace }
+		processTpl('tplMovieList', data, 'contentMain');
+	}		
+}
+
+function delMovieFile(file,servicename,title,description) {
+	debug("delMovieFile: file("+file+"),servicename("+servicename+"),title("+title+"),description("+description+")");
+	var result = confirm(
+		"Selected timer:\n"
+		+"Servicename: "+servicename+"\n"
+		+"Title: "+title+"\n"
+		+"Description: "+description+"\n"
+		+"Are you sure that you want to delete the Timer?"
+	);
+
+	if(result){
+		debug("delMovieFile ok confirm panel"); 
+		doRequest(url_moviefiledelete+"?filename="+file, incomingDelMovieFileResult, false); 
+		return true;
+	}
+	else{
+		debug("delMovieFile cancel confirm panel");
+		return false;
+	}
+}
+function incomingDelMovieFileResult(request) {
+	debug("incomingDelMovieFileResult");
+	if(request.readyState == 4){
+		var delresult = new SimpleXMLResult(getXML(request));
+		if(delresult.getState()){
+			loadMovieList('');
+		}else{
+			messageBox("Deletion Error","Reason: "+delresult.getStateText());
+		}
+	}		
+}
+
+
+// send Messages
+function showMessageSendForm(){
+		$('BodyContent').innerHTML = tplMessageSendForm;
+}
+var MessageAnswerPolling;
+function sendMessage(messagetext,messagetype,messagetimeout){
+	if(!messagetext){
+		messagetext = $('MessageSendFormText').value;
+	}	
+	if(!messagetimeout){
+		messagetimeout = $('MessageSendFormTimeout').value;
+	}	
+	if(!messagetype){
+		var index = $('MessageSendFormType').selectedIndex;
+		messagetype = $('MessageSendFormType').options[index].value;
+	}	
+	if(ownLazyNumber(messagetype) == 0){
+		new Ajax.Request(url_message+'?text='+messagetext+'&type='+messagetype+'&timeout='+messagetimeout, { asynchronous: true, method: 'get' });
+		MessageAnswerPolling = setInterval(getMessageAnswer, ownLazyNumber(messagetimeout)*1000);
+	} else {
+		doRequest(url_message+'?text='+messagetext+'&type='+messagetype+'&timeout='+messagetimeout, incomingMessageResult, false);
+	}
+}
+function incomingMessageResult(request){
+
+	if(request.readyState== 4){
+		var b = getXML(request).getElementsByTagName("e2message");
+		var result = b.item(0).getElementsByTagName('e2result').item(0).firstChild.data;
+		var resulttext = b.item(0).getElementsByTagName('e2resulttext').item(0).firstChild.data;
+		if (result=="True"){
+			messageBox('Message sent: ' + resulttext);//'message send successfully! it appears on TV-Screen');
+		}else{
+			messageBox('Message NOT sent: ' + resulttext);
+		}
+	}		
+}
+function getMessageAnswer() {
+	doRequest(url_messageanswer, incomingMessageResult, false);
+	clearInterval(MessageAnswerPolling);
+}
+// RemoteControl Code
+function loadAndOpenWebRemote(){
+	fetchTpl('tplWebRemote', openWebRemote);
+}
+
+var webRemoteWindow = '';
+function openWebRemote(){
+	
+	if (!webRemoteWindow.closed && webRemoteWindow.location) {
+		setWindowContent(webRemoteWindow, templates['tplWebRemote']);
+	} else {
+		webRemoteWindow = openPopup('WebRemote', templates['tplWebRemote'], 250, 640);
+	}
+	
+}
+
+function sendRemoteControlRequest(command){
+	doRequest(url_remotecontrol+'?command='+command, incomingRemoteControlResult, false);
+//	if($('getScreen').checked) {
+//		openGrabPicture();
+//	}
+}
+function openGrabPicture() {
+	if($('BodyContent').innerHTML != tplRCGrab) {
+		$('BodyContent').innerHTML = tplRCGrab;
+	}
+	debug("openGrabPicture");
+	var buffer = new Image();
+	var downloadStart;
+
+	buffer.onload = function () { debug("image zugewiesen"); $('grabPageIMG').src = buffer.src; return true;};
+	buffer.onerror = function (meldung) { debug("reload grab image failed"); return true;};
+
+	downloadStart = new Date().getTime();
+	buffer.src = '/grab?' + downloadStart;
+	$('grabPageIMG').height(400);
+	tplRCGrab = $('BodyContent').innerHTML;
+}
+function incomingRemoteControlResult(request){
+	if(request.readyState == 4){
+		var b = getXML(request).getElementsByTagName("e2remotecontrol");
+		var result = b.item(0).getElementsByTagName('e2result').item(0).firstChild.data;
+		var resulttext = b.item(0).getElementsByTagName('e2resulttext').item(0).firstChild.data;
+	} else {
+		$('rcWindow').innerHTML = "<h1>some unknown error</h1>" + tplRemoteControlForm;
+	}
+}
+
+function getDreamboxSettings(){
+	doRequest(url_settings, incomingGetDreamboxSettings, false);
+}
+function incomingGetDreamboxSettings(request){
+	if(request.readyState == 4){
+		settings = new Settings(getXML(request)).getArray();
+	}
+	debug ("starte getParentControl " + getSettingByName("config.ParentalControl.configured"));
+	if(String(getSettingByName("config.ParentalControl.configured")) == "true") {
+		getParentControl();
+	}
+}
+function getSettingByName(txt) {
+	debug("getSettingByName ("+txt+")");
+	for(i = 0; i < settings.length; i++) {
+		debug("("+settings[i].getSettingName()+") (" +settings[i].getSettingValue()+")");
+		if(String(settings[i].getSettingName()) == String(txt)) {
+			return settings[i].getSettingValue().toLowerCase();
+		} 
+	}
+	return "";
+}
+function getParentControl() {
+	doRequest(url_parentcontrol, incomingParentControl, false);
+}
+function incomingParentControl(request) {
+	if(request.readyState == 4){
+		parentControlList = new ServiceList(getXML(request)).getArray();
+		debug("parentControlList got "+parentControlList.length + " services");
+	}
+}
+function getParentControlByRef(txt) {
+	debug("getParentControlByRef ("+txt+")");
+	for(i = 0; i < parentControlList.length; i++) {
+		debug("("+parentControlList[i].getClearServiceReference()+")");
+		if(String(parentControlList[i].getClearServiceReference()) == String(txt)) {
+			return parentControlList[i].getClearServiceReference();
+		} 
+	}
+	return "";
+}
+function ownLazyNumber(num) {
+	if(isNaN(num)){
+		return 0;
+	} else {
+		return Number(num);
+	}
+}
+
+function getSubServices() {
+	doRequest(url_subservices,incomingSubServiceRequest, false);
+}
+
+//var SubServicePoller = setInterval(getSubServices, 15000);
+var subServicesInsertedList = new Object();
+
+function incomingSubServiceRequest(request){
+	if(request.readyState == 4){
+		var services = new ServiceList(getXML(request)).getArray();
+		debug("got "+services.length+" SubServices");
+		
+		if(services.length > 1) {
+			
+			first = services[0];
+			var mainChannellist = loadedChannellist[String($('mainServiceRef').value)];
+
+			last = false
+			var namespace = new Array();
+			
+			//we already have the main service in our servicelist so we'll start with the second element
+			for ( var i = 1; i < services.length ; i++){
+				var reference = services[i];
+				namespace[i] = { 	
+					'servicereference': reference.getServiceReference(),
+					'servicename': reference.getServiceName()
+				};
+			}
+			data = { subs : namespace };
+			
+			//TODO 'tplSubServices'
+			processTpl('tplSubServices', data, $('SUB'+first.getServiceReference));
+			
+			subServicesInsertedList[String(first.getServiceReference())] = services;
+			loadedChannellist[$('mainServiceRef').value] = mainChannellist;
+		}
+	}
+}
+// Array.insert( index, value ) - Insert value at index, without overwriting existing keys
+Array.prototype.insert = function( j, v ) {
+ if( j>=0 ) {
+  var a = this.slice(), b = a.splice( j );
+  a[j] = v;
+  return a.concat( b );
+ }
+}
+// Array.splice() - Remove or replace several elements and return any deleted elements
+if( typeof Array.prototype.splice==='undefined' ) {
+ Array.prototype.splice = function( a, c ) {
+  var i = 0, e = arguments, d = this.copy(), f = a, l = this.length;
+  if( !c ) { c = l - a; }
+  for( i; i < e.length - 2; i++ ) { this[a + i] = e[i + 2]; }
+  for( a; a < l - c; a++ ) { this[a + e.length - 2] = d[a - c]; }
+  this.length -= c - e.length + 2;
+  return d.slice( f, f + c );
+ };
+}
+function writeTimerListNow() {
+	new Ajax.Request( url_timerlistwrite, { asynchronous: true, method: 'get' });
+}
+function recordingPushed() {
+	doRequest(url_timerlist, incomingRecordingPushed, false);
+}
+function incomingRecordingPushed(request) {
+	if(request.readyState == 4){
+		var timers = new TimerList(getXML(request)).getArray();
+		debug("have "+timers.length+" timer");
+		
+		var aftereventReadable = new Array ('Nothing', 'Standby', 'Deepstandby/Shutdown');
+		var justplayReadable = new Array('record', 'zap');
+		var OnOff = new Array('on', 'off');
+		
+		var namespace = new Array();
+		
+		for ( var i = 0; i <timers.length; i++){
+			var timer = timers[i];
+
+			if(ownLazyNumber(timer.getDontSave()) == 1) {
+				var beginDate = new Date(Number(timer.getTimeBegin())*1000);
+				var endDate = new Date(Number(timer.getTimeEnd())*1000);
+				namespace[i] = {
+				'servicereference': timer.getServiceReference(),
+				'servicename': timer.getServiceName() ,
+				'title': timer.getName(), 
+				'description': timer.getDescription(), 
+				'descriptionextended': timer.getDescriptionExtended(), 
+				'begin': timer.getTimeBegin(),
+				'beginDate': beginDate.toLocaleString(),
+				'end': timer.getTimeEnd(),
+				'endDate': endDate.toLocaleString(),
+				'state': timer.getState(),
+				'duration': Math.ceil((timer.getDuration()/60)),
+				'repeated': timer.getRepeated(),
+				'repeatedReadable': repeatedReadable(timer.getRepeated()),
+				'justplay': timer.getJustplay(),
+				'justplayReadable': justplayReadable[Number(timer.getJustplay())],
+				'afterevent': timer.getAfterevent(),
+				'aftereventReadable': aftereventReadable[Number(timer.getAfterevent())],
+				'disabled': timer.getDisabled(),
+				'onOff': OnOff[Number(timer.getDisabled())],
+				'color': colorTimerListEntry( timer.getState() )
+				};
+			}
+		}
+		data = { recordings : namespace };
+		openPopup("Record Now", 'tplTimerListItem', data, 900, 500, "Record now window");
+	}
+}
+
+function recordingPushedDecision(recordNowNothing,recordNowUndefinitely,recordNowCurrent) {
+	var recordNow = recordNowNothing;
+	recordNow = (recordNow == "") ? recordNowUndefinitely: recordNow;
+	recordNow = (recordNow == "") ? recordNowCurrent: recordNow;
+	if(recordNow != "nothing" && recordNow != "") {
+		doRequest(url_recordnow+"?recordnow="+recordNow, incomingTimerAddResult, false);
+	}
+}
+
+function ifChecked(rObj) {
+	if(rObj.checked) {
+		return rObj.value;
+	} else {
+		return "";
+	}
+}
+function showAbout() {
+	doRequest(url_about, incomingAbout, false);
+}
+function incomingAbout(request) {
+	if(request.readyState == 4){
+		debug("incomingAbout returned");
+		var aboutEntries = getXML(request).getElementsByTagName("e2abouts").item(0).getElementsByTagName("e2about");
+
+		var xml = aboutEntries.item(0);
+		
+		var namespace = {};
+		var ns = new Array();
+		
+		try{
+			var fptext = "V"+xml.getElementsByTagName('e2fpversion').item(0).firstChild.data;
+			
+			
+			var nims = xml.getElementsByTagName('e2tunerinfo').item(0).getElementsByTagName("e2nim");
+			debug("nims: "+nims.length);
+			for(var i = 0; i < nims.length; i++){
+				
+				name = nims.item(i).getElementsByTagName("name").item(0).firstChild.data;
+				type = nims.item(i).getElementsByTagName("type").item(0).firstChild.data;
+				debug(name);
+				debug(type);
+				ns[i] = { 'name' : name, 'type' : type};
+				
+			}
+			
+			
+			var hdddata = xml.getElementsByTagName('e2hddinfo').item(0);
+			
+			var hddmodel 	= hdddata.getElementsByTagName("model").item(0).firstChild.data;
+			var hddcapacity = hdddata.getElementsByTagName("capacity").item(0).firstChild.data;
+			var hddfree		= hdddata.getElementsByTagName("free").item(0).firstChild.data;
+
+			namespace = {
+				'enigmaVersion': xml.getElementsByTagName('e2enigmaversion').item(0).firstChild.data
+
+				,'lanDHCP': xml.getElementsByTagName('e2landhcp').item(0).firstChild.data
+				,'lanIP': xml.getElementsByTagName('e2lanip').item(0).firstChild.data
+				,'lanNetmask': xml.getElementsByTagName('e2lanmask').item(0).firstChild.data
+				,'lanGateway': xml.getElementsByTagName('e2langw').item(0).firstChild.data
+
+				,'fpVersion': fptext
+				,'webifversion': xml.getElementsByTagName('e2webifversion').item(0).firstChild.data
+//					,'tunerInfo': tunerinfo
+				,'hddmodel': hddmodel
+				,'hddcapacity': hddcapacity
+				,'hddfree': hddfree
+				
+				,'serviceName': xml.getElementsByTagName('e2servicename').item(0).firstChild.data
+				,'serviceProvider': xml.getElementsByTagName('e2serviceprovider').item(0).firstChild.data
+				,'serviceAspect': xml.getElementsByTagName('e2serviceaspect').item(0).firstChild.data
+				,'serviceVideosize': xml.getElementsByTagName('e2servicevideosize').item(0).firstChild.data
+				,'serviceNamespace': xml.getElementsByTagName('e2servicenamespace').item(0).firstChild.data
+				
+				,'vPidh': '0x'+d2h(xml.getElementsByTagName('e2vpid').item(0).firstChild.data, 4)
+				 ,'vPid': ownLazyNumber(xml.getElementsByTagName('e2vpid').item(0).firstChild.data)
+				,'aPidh': '0x'+d2h(xml.getElementsByTagName('e2apid').item(0).firstChild.data, 4)
+				 ,'aPid': ownLazyNumber(xml.getElementsByTagName('e2apid').item(0).firstChild.data)
+				,'pcrPidh': '0x'+d2h(xml.getElementsByTagName('e2pcrid').item(0).firstChild.data, 4)
+				 ,'pcrPid': ownLazyNumber(xml.getElementsByTagName('e2pcrid').item(0).firstChild.data)
+				,'pmtPidh': '0x'+d2h(xml.getElementsByTagName('e2pmtpid').item(0).firstChild.data, 4)
+				 ,'pmtPid': ownLazyNumber(xml.getElementsByTagName('e2pmtpid').item(0).firstChild.data)
+				,'txtPidh': '0x'+d2h(xml.getElementsByTagName('e2txtpid').item(0).firstChild.data, 4)
+				 ,'txtPid': ownLazyNumber(xml.getElementsByTagName('e2txtpid').item(0).firstChild.data)
+				,'tsidh': '0x'+d2h(xml.getElementsByTagName('e2tsid').item(0).firstChild.data, 4)
+				 ,'tsid': ownLazyNumber(xml.getElementsByTagName('e2tsid').item(0).firstChild.data)
+				,'onidh': '0x'+d2h(xml.getElementsByTagName('e2onid').item(0).firstChild.data, 4)
+				 ,'onid': ownLazyNumber(xml.getElementsByTagName('e2onid').item(0).firstChild.data)
+				,'sidh': '0x'+d2h(xml.getElementsByTagName('e2sid').item(0).firstChild.data, 4)
+				 ,'sid': ownLazyNumber(xml.getElementsByTagName('e2sid').item(0).firstChild.data)
+			};				  
+		} catch (e) {
+			debug("About parsing Error" + e);
+		}
+
+		data = { about : namespace,
+				 tuner : ns};
+		processTpl('tplAbout', data, 'contentMain');
+	}
+}
+function quotes2html(txt) {
+	txt = txt.replace(/"/g, '&quot;');
+	return txt.replace(/'/g, "\\\'");
+}
+
+// Spezial functions, mostly for testing purpose
+function openHiddenFunctions(){
+	openPopup("Extra Hidden Functions",tplExtraHiddenFunctions,300,100,920,0);
+}
+function restartUpdateStream() {
+	clearInterval(UpdateStreamReaderPollTimer);
+	UpdateStreamReaderRequest.abort();
+	UpdateStreamReaderRequest = null;
+	UpdateStreamReaderPollTimerCounter = 0;
+	UpdateStreamReaderStart();
+}
+function startDebugWindow() {
+	DBG = true;
+	debugWin = openPopup("DEBUG", "", 300, 300,920,140, "debugWindow");
+}
+function restartTwisted() {
+	new Ajax.Request( "/web/restarttwisted", { asynchronous: true, method: "get" })
+}
+//MediaPlayer
+function loadMediaPlayer(directory){
+	debug("loading loadMediaPlayer");
+	doRequest(url_mediaplayerlist+directory, incomingMediaPlayer, false);
+}
+function incomingMediaPlayer(request){
+	if(request.readyState == 4){
+		var files = new FileList(getXML(request)).getArray();
+		debug(getXML(request));
+		debug("have "+files.length+" entry in mediaplayer filelist");
+		listerHtml 	= tplMediaPlayerHeader;
+
+		root = files[0].getRoot();
+		if (root != "playlist") {
+			listerHtml 	= RND(tplMediaPlayerHeader, {'root': root});
+			if(root != '/') {
+				re = new RegExp(/(.*)\/(.*)\/$/);
+				re.exec(root);
+				newroot = RegExp.$1+'/';
+				if(newroot == '//') {
+					newroot = '/';
+				}
+				listerHtml += RND(tplMediaPlayerItemBody, 
+					{'root': root
+					, 'servicereference': newroot
+					,'exec': 'loadMediaPlayer'
+					,'exec_description': 'change to directory ../'
+					,'color': '000000'
+					,'root': newroot
+					,'name': '..'});
+			}
+		}
+		for ( var i = 0; i <files.length; i++){
+			var file = files[i];
+			if(file.getNameOnly() == 'None') {
+				continue;
+			}
+			var exec = 'loadMediaPlayer';
+			var exec_description = 'change to directory' + file.getServiceReference();
+			var color = '000000';
+			if (file.getIsDirectory() == "False") {
+				exec = 'playFile';
+				exec_description = 'play file';
+				color = '00BCBC';
+			}
+			var namespace = {
+				'servicereference': file.getServiceReference()
+				,'exec': exec
+				,'exec_description': exec_description
+				,'color': color
+				,'root': file.getRoot()
+				,'name': file.getNameOnly()
+			};
+			listerHtml += tplMediaPlayerItemHead;
+			listerHtml += RND(tplMediaPlayerItemBody, namespace);
+			if (file.getIsDirectory() == "False") {
+				listerHtml += RND(tplMediaPlayerItemIMG, namespace);
+			}
+			listerHtml += tplMediaPlayerItemFooter;
+		}
+		if (root == "playlist") {
+			listerHtml += tplMediaPlayerFooterPlaylist;
+		}
+		listerHtml += tplMediaPlayerFooter;
+		$('BodyContent').innerHTML = listerHtml;
+		var sendMediaPlayerTMP = sendMediaPlayer;
+		sendMediaPlayer = false;
+		setBodyMainContent('BodyContent');
+		sendMediaPlayer = sendMediaPlayerTMP;
+	}		
+}
+function playFile(file,root) {
+	debug("loading playFile");
+	mediaPlayerStarted = true;
+	new Ajax.Request( url_mediaplayerplay+file+"&root="+root, { asynchronous: true, method: 'get' });
+}
+function sendMediaPlayer(command) {
+	debug("loading sendMediaPlayer");
+	new Ajax.Request( url_mediaplayercmd+command, { asynchronous: true, method: 'get' });
+}
+function openMediaPlayerPlaylist() {
+	debug("loading openMediaPlayerPlaylist");
+	doRequest(url_mediaplayerlist+"playlist", incomingMediaPlayer, false);
+}
+function writePlaylist() {
+	debug("loading writePlaylist");
+	filename = prompt("Please enter a name for the playlist", "");
+	if(filename != "") {
+		new Ajax.Request( url_mediaplayerwrite+filename, { asynchronous: true, method: 'get' });
+	}
+}
+
+function sendPowerState(newState){
+	new Ajax.Request( url_powerstate+'?newstate='+newState, { asynchronous: true, method: 'get' });
+}
+function loadFileBrowser(directory,types){
+	debug("loading loadFileBrowser");
+	doRequest(url_filelist+directory+"&types="+types, incomingFileBrowser, false);	
+}
+function incomingFileBrowser(request){
+	if(request.readyState == 4){
+		var files = new FileList(getXML(request)).getArray();
+		debug(getXML(request));
+		debug("have "+files.length+" entry in filelist");
+		listerHtml 	= tplFileBrowserHeader;
+		root = files[0].getRoot();
+		listerHtml 	= RND(tplFileBrowserHeader, {'root': root});
+		if(root != '/') {
+			re = new RegExp(/(.*)\/(.*)\/$/);
+			re.exec(root);
+			newroot = RegExp.$1+'/';
+			if(newroot == '//') {
+				newroot = '/';
+			}
+			listerHtml += RND(tplFileBrowserItemBody, 
+				{'root': root
+				, 'servicereference': newroot
+				,'exec': 'loadFileBrowser'
+				,'exec_description': 'change to directory ../'
+				,'color': '000000'
+				,'root': newroot
+				,'name': '..'});
+		}
+		for ( var i = 0; i <files.length; i++){
+			var file = files[i];
+			if(file.getNameOnly() == 'None') {
+				continue;
+			}
+			var exec = 'loadFileBrowser';
+			var exec_description = 'change to directory' + file.getServiceReference();
+			var color = '000000';
+			if (file.getIsDirectory() == "False") {
+				exec = '';
+				exec_description = 'do Nothing';
+				color = '00BCBC';
+			}
+			var namespace = {
+				'servicereference': file.getServiceReference()
+				,'exec': exec
+				,'exec_description': exec_description
+				,'color': color
+				,'root': file.getRoot()
+				,'name': file.getNameOnly()
+			};
+			listerHtml += tplFileBrowserItemHead;
+			listerHtml += RND(tplFileBrowserItemBody, namespace);
+			if (file.getIsDirectory() == "False") {
+				listerHtml += RND(tplFileBrowserItemIMG, namespace);
+			}
+			listerHtml += tplFileBrowserItemFooter;
+		}
+		listerHtml += RND(tplFileBrowserFooter, {'root': root});
+		$('BodyContent').innerHTML = listerHtml;
+		setBodyMainContent('BodyContent');
+	}		
+}
+function delFile(file,root) {
+	debug("loading loadMediaPlayer");
+	doRequest(url_delfile+root+file, incomingDelFileResult, false);
+}
+function incomingDelFileResult(request) {
+	debug("incomingDelFileResult");
+	if(request.readyState == 4){
+		var delresult = new SimpleXMLResult(getXML(request));
+		if(delresult.getState()){
+			loadFileBrowser($('path').value);
+		}else{
+			messageBox("Deletion Error","Reason: "+delresult.getStateText());
+		}
+	}		
+}
+
+// Notes
+function showNotes(){
+	debug("loading notes");
+	doRequest(url_notelist, incomingNoteList, false);
+}
+
+function incomingNoteList(request){
+	if(request.readyState == 4){
+		var notes = new NoteList(getXML(request)).getArray();
+		debug("have "+notes.length+" movies");
+		listerHtml 	= tplNotesListHeader;		
+		for ( var i = 0; i <notes.length; i++){
+			var note = notes[i];
+			var namespace = { 	
+				'name': note.filename,
+				'size': note.size,
+				'ctime': note.getCTime(),
+				'mtime': note.getMTime()
+			};
+			listerHtml += RND(tplNotesListItem, namespace);
+		}
+		listerHtml += tplNotesListFooter;
+		$('BodyContent').innerHTML = listerHtml;
+		setBodyMainContent('BodyContent');
+		
+	}		
+}
+function showNote(name){
+	debug("loading note "+name);
+	doRequest(url_note+name, incomingNote, false);
+}
+
+function incomingNote(request){
+	if(request.readyState == 4){
+		var note = new Note(getXML(request));
+		var namespace = { 	
+				'name': note.filename,
+				'size': note.size,
+				'content': note.content,
+				'ctime': note.getCTime(),
+				'mtime': note.getMTime()
+			};
+		var html = RND(tplNote, namespace);
+		openPopup("Note '"+note.filename+"'", html, 400, 300,50,60);
+	}		
+}
+function saveNote(formid){
+	var nameold = $(formid+'_name').value;
+	var namenew = $(formid+'_namenew').value;
+	var content = $(formid+'_content').value;
+	debug("loading notes"+nameold+namenew+content);
+	doRequest(url_notelist+"?save="+nameold+"&namenew="+namenew+"&content="+content, incomingNoteSavedResult, false);	
+	Windows.closeAll();
+	
+}
+function incomingNoteSavedResult(request){
+	if(request.readyState == 4){
+		var note = new Note(getXML(request));
+		if (note.saved == "True"){
+			showNote(note.filename);
+			showNotes();
+		}
+	}
+}
+function createNote(){
+		doRequest(url_notelist+"?create=new", incomingNoteCreateResult, false);
+}
+
+function incomingNoteCreateResult(request){
+	if(request.readyState == 4){
+		showNotes();
+	}
+}
+
+function getBouquets(type){
+	setAjaxLoad('contentMain');
+	
+	var contentHeader = "";
+	switch(type){
+		case bouquetsTv:
+			contentHeader = "Bouquets (TV)";
+			break;
+		case providerTv:
+			contentHeader = "Provider (TV)";
+			break;
+		case bouquetsRadio:
+			contentHeader = "Bouquets (Radio)";
+			break;
+		case providerRadio:
+			contentHeader = "Provider (Radio)";
+			break;
+	}
+	setContentHd(contentHeader);
+	
+	var url = url_getServices+encodeURIComponent(type);
+	doRequest(url, incomingBouquetList, true);
+}
+
+function setAjaxLoad(targetElement){
+	$(targetElement).innerHTML = getAjaxLoad();
+}
+
+function openExtra(extra){
+	switch(extra){
+
+		case "power":
+			setAjaxLoad('contentMain');
+			processTpl('tplPower', null, 'contentMain');
+			setContentHd('PowerControl');
+			break;
+	
+		case "about":
+			setAjaxLoad('contentMain');
+			showAbout();
+			setContentHd('About');
+			break;
+		
+		case "message":
+			setAjaxLoad('contentMain');
+			processTpl('tplSendMessage', null, 'contentMain');
+			setContentHd('Send a Message');
+			break;		
+	}
+}
+
+function switchNav(mode){
+	switch(mode){
+	case "TV":
+		setAjaxLoad('navContent');
+		processTpl('tplNavTv', null, 'navContent');
+		setNavHd('TeleVision');
+		break;
+	case "Radio":
+		setAjaxLoad('navContent');
+		processTpl('tplNavRadio', null, 'navContent');
+		setNavHd('Radio');
+		break;
+	
+	case "Movies":
+		//processTpl('tplNavRadio', null, 'navContent');
+		
+		setContentHd('Movies');
+		setAjaxLoad('contentMain');
+		loadMovieList('');
+		break;
+		
+	case "Timer":
+		setContentHd('Timer');
+		setAjaxLoad('contentMain');
+		loadTimerList();
+		break;
+	
+	case "Extras":
+		setAjaxLoad('navContent');
+		processTpl('tplNavExtras', null, 'navContent');
+		setNavHd('Extras');
+		break;
 	}
 }
 
 
 
-
+function init(){
+	setAjaxLoad('navContent');
+	setAjaxLoad('contentMain');
+	
+	fetchTpl('tplServiceListEPGItem');
+	initChannelList();
+	processTpl('tplNavTv', null, 'navContent');
+	setNavHd('TeleVision');
+}
