@@ -633,6 +633,9 @@ function incomingChannellist(request){
 // Movies
 function loadMovieList(tag){
 	debug("loading movies by tag '"+tag+"'");
+	if(typeof(tag) == 'undefined'){
+		tag = '';
+	}
 	doRequest(url_movielist+tag, incomingMovieList, false);
 }
 
@@ -1333,6 +1336,26 @@ function getBouquets(type){
 	doRequest(url, incomingBouquetList, true);
 }
 
+function reloadNav(template, title){
+		setAjaxLoad('navContent');
+		processTpl(template, null, 'navContent');
+		setNavHd(title);
+}
+
+function loadContentDynamic(fnc, title){
+	setAjaxLoad('contentMain');
+	setContentHd(title);
+	fnc();
+}
+
+function loadContentStatic(template, title){
+	setAjaxLoad('contentMain');
+	setContentHd(title);
+	processTpl(template, null, 'contentMain');
+}
+
+
+
 function setAjaxLoad(targetElement){
 	$(targetElement).innerHTML = getAjaxLoad();
 }
@@ -1341,21 +1364,15 @@ function openExtra(extra){
 	switch(extra){
 
 		case "power":
-			setAjaxLoad('contentMain');
-			processTpl('tplPower', null, 'contentMain');
-			setContentHd('PowerControl');
+			loadContentStatic('tplPower', 'PowerControl');
 			break;
 	
 		case "about":
-			setAjaxLoad('contentMain');
-			showAbout();
-			setContentHd('About');
+			loadContentDynamic(showAbout, 'About');
 			break;
 		
 		case "message":
-			setAjaxLoad('contentMain');
-			processTpl('tplSendMessage', null, 'contentMain');
-			setContentHd('Send a Message');
+			loadContentStatic('tplSendMessage', 'Send a Message');
 			break;		
 	}
 }
@@ -1363,38 +1380,26 @@ function openExtra(extra){
 function switchNav(mode){
 	switch(mode){
 	case "TV":
-		setAjaxLoad('navContent');
-		processTpl('tplNavTv', null, 'navContent');
-		setNavHd('TeleVision');
+		reloadNav('tplNavTv', 'TeleVision');
 		break;
 	case "Radio":
-		setAjaxLoad('navContent');
-		processTpl('tplNavRadio', null, 'navContent');
-		setNavHd('Radio');
+		reloadNav('tplNavRadio', 'Radio');
 		break;
 	
 	case "Movies":
-		setContentHd('Movies');
-		setAjaxLoad('contentMain');
-		loadMovieList('');
+		loadContentDynamic(loadMovieList, 'Movies');
 		break;
 		
 	case "Timer":
 		//The Navigation
-		setAjaxLoad('navContent');
-		processTpl('tplNavTimer', null, 'navContent');
-		setNavHd('Timer');
+		reloadNav('tplNavTimer', 'Timer');
 		
 		//The Timerlist
-		setContentHd('Timer');
-		setAjaxLoad('contentMain');
-		loadTimerList();
+		loadContentDynamic(loadTimerList, 'Timer');
 		break;
 	
 	case "Extras":
-		setAjaxLoad('navContent');
-		processTpl('tplNavExtras', null, 'navContent');
-		setNavHd('Extras');
+		reloadNav('tplNavExtras', 'Extras');
 		break;
 	}
 }
@@ -1407,6 +1412,5 @@ function init(){
 	
 	fetchTpl('tplServiceListEPGItem');
 	initChannelList();
-	processTpl('tplNavTv', null, 'navContent');
-	setNavHd('TeleVision');
+	reloadNav('tplNavTv', 'TeleVision');
 }
