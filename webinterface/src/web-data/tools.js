@@ -124,7 +124,7 @@ function setWindowContent(window, html){
 function openPopup(title, html, width, height, x, y){
 	debug("opening Window: "+title);
 	
-	var popup = window.open('about:blank',title,'width='+width+',height='+height+',left='+x+',top='+y+',screenX='+x+',screenY='+y);
+	var popup = window.open('about:blank',title,'scrollbars=yes, width='+width+',height='+height+',left='+x+',top='+y+',screenX='+x+',screenY='+y);
 	try {
 		setWindowContent(popup, html);
 		return popup;
@@ -199,6 +199,11 @@ function d2h(nr, len){
 			catch(e){}
 		} 
 		return hex;
+}
+
+function quotes2html(txt) {
+	txt = txt.replace(/"/g, '&quot;');
+	return txt.replace(/'/g, "\\\'");
 }
 
 function debug(text){
@@ -362,6 +367,7 @@ function openSignalDialog(){
 function loadEPGBySearchString(string){
 		doRequest(url_epgsearch+escape(string),incomingEPGrequest, false);
 }
+
 function loadEPGByServiceReference(servicereference){
 		doRequest(url_epgservice+servicereference,incomingEPGrequest, false);
 }
@@ -432,8 +438,6 @@ function extdescriptionSmall(txt,num) {
 	}
 }	
 
-/////////////////////////
-
 function loadServiceEPGNowNext(servicereference){
 	var url = url_epgnow+servicereference;
 	doRequest(url, incomingServiceEPGNowNext, false);
@@ -451,6 +455,7 @@ function incomingServiceEPGNowNext(request){
 		}
 	}
 }
+
 function buildServiceListEPGItem(epgevent, type){
 	var e = $(type+epgevent.getServiceReference());
 		try{
@@ -471,7 +476,7 @@ function buildServiceListEPGItem(epgevent, type){
 			debug("EPGItem: Error rendering: " + e);
 		}	
 }
-///////////////////
+
 
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -500,21 +505,27 @@ function setBodyMainContent(domId){
 function initVolumePanel(){
 	getVolume(); 
 }
+
 function getVolume(){
 	doRequest(url_getvolume, handleVolumeRequest, false);
 }
+
 function volumeSet(val){
 	doRequest(url_setvolume+val, handleVolumeRequest, false);
 }
+
 function volumeUp(){
 	doRequest(url_volumeup, handleVolumeRequest, false);
 }
+
 function volumeDown(){
 	doRequest(url_volumedown, handleVolumeRequest, false);
 }
+
 function volumeMute(){
 	doRequest(url_volumemute, handleVolumeRequest, false);
 }
+
 function handleVolumeRequest(request){
 	if (request.readyState == 4) {
 		var b = getXML(request).getElementsByTagName("e2volume");
@@ -629,6 +640,7 @@ function incomingChannellist(request){
 
 	}
 }
+
 // Movies
 function loadMovieList(tag){
 	debug("loading movies by tag '"+tag+"'");
@@ -684,6 +696,7 @@ function delMovieFile(file,servicename,title,description) {
 		return false;
 	}
 }
+
 function incomingDelMovieFileResult(request) {
 	debug("incomingDelMovieFileResult");
 	if(request.readyState == 4){
@@ -701,6 +714,7 @@ function incomingDelMovieFileResult(request) {
 function showMessageSendForm(){
 		$('BodyContent').innerHTML = tplMessageSendForm;
 }
+
 var MessageAnswerPolling;
 function sendMessage(messagetext,messagetype,messagetimeout){
 	if(!messagetext){
@@ -720,6 +734,7 @@ function sendMessage(messagetext,messagetype,messagetimeout){
 		doRequest(url_message+'?text='+messagetext+'&type='+messagetype+'&timeout='+messagetimeout, incomingMessageResult, false);
 	}
 }
+
 function incomingMessageResult(request){
 
 	if(request.readyState== 4){
@@ -733,10 +748,12 @@ function incomingMessageResult(request){
 		}
 	}		
 }
+
 function getMessageAnswer() {
 	doRequest(url_messageanswer, incomingMessageResult, false);
 	clearInterval(MessageAnswerPolling);
 }
+
 // RemoteControl Code
 function loadAndOpenWebRemote(){
 	fetchTpl('tplWebRemote', openWebRemote);
@@ -759,6 +776,7 @@ function sendRemoteControlRequest(command){
 //		openGrabPicture();
 //	}
 }
+
 function openGrabPicture() {
 	if($('BodyContent').innerHTML != tplRCGrab) {
 		$('BodyContent').innerHTML = tplRCGrab;
@@ -775,6 +793,7 @@ function openGrabPicture() {
 	$('grabPageIMG').height(400);
 	tplRCGrab = $('BodyContent').innerHTML;
 }
+
 function incomingRemoteControlResult(request){
 	if(request.readyState == 4){
 		var b = getXML(request).getElementsByTagName("e2remotecontrol");
@@ -788,6 +807,7 @@ function incomingRemoteControlResult(request){
 function getDreamboxSettings(){
 	doRequest(url_settings, incomingGetDreamboxSettings, false);
 }
+
 function incomingGetDreamboxSettings(request){
 	if(request.readyState == 4){
 		settings = new Settings(getXML(request)).getArray();
@@ -797,6 +817,7 @@ function incomingGetDreamboxSettings(request){
 		getParentControl();
 	}
 }
+
 function getSettingByName(txt) {
 	debug("getSettingByName ("+txt+")");
 	for(i = 0; i < settings.length; i++) {
@@ -807,15 +828,18 @@ function getSettingByName(txt) {
 	}
 	return "";
 }
+
 function getParentControl() {
 	doRequest(url_parentcontrol, incomingParentControl, false);
 }
+
 function incomingParentControl(request) {
 	if(request.readyState == 4){
 		parentControlList = new ServiceList(getXML(request)).getArray();
 		debug("parentControlList got "+parentControlList.length + " services");
 	}
 }
+
 function getParentControlByRef(txt) {
 	debug("getParentControlByRef ("+txt+")");
 	for(i = 0; i < parentControlList.length; i++) {
@@ -826,6 +850,7 @@ function getParentControlByRef(txt) {
 	}
 	return "";
 }
+
 function ownLazyNumber(num) {
 	if(isNaN(num)){
 		return 0;
@@ -872,31 +897,46 @@ function incomingSubServiceRequest(request){
 		}
 	}
 }
+
 // Array.insert( index, value ) - Insert value at index, without overwriting existing keys
 Array.prototype.insert = function( j, v ) {
- if( j>=0 ) {
-  var a = this.slice(), b = a.splice( j );
-  a[j] = v;
-  return a.concat( b );
- }
+	if( j>=0 ) {
+		var a = this.slice(), b = a.splice( j );
+		a[j] = v;
+		return a.concat( b );
+	}
 }
+
 // Array.splice() - Remove or replace several elements and return any deleted elements
 if( typeof Array.prototype.splice==='undefined' ) {
- Array.prototype.splice = function( a, c ) {
-  var i = 0, e = arguments, d = this.copy(), f = a, l = this.length;
-  if( !c ) { c = l - a; }
-  for( i; i < e.length - 2; i++ ) { this[a + i] = e[i + 2]; }
-  for( a; a < l - c; a++ ) { this[a + e.length - 2] = d[a - c]; }
-  this.length -= c - e.length + 2;
-  return d.slice( f, f + c );
- };
+	Array.prototype.splice = function( a, c ) {
+		var i = 0, e = arguments, d = this.copy(), f = a, l = this.length;
+	
+		if( !c ) { 
+			c = l - a; 
+		}
+		
+		for( i; i < e.length - 2; i++ ) { 
+			this[a + i] = e[i + 2]; 
+		}
+		
+		for( a; a < l - c; a++ ) { 
+			this[a + e.length - 2] = d[a - c]; 
+		}
+		this.length -= c - e.length + 2;
+	
+		return d.slice( f, f + c );
+	};
 }
+
 function writeTimerListNow() {
 	new Ajax.Request( url_timerlistwrite, { asynchronous: true, method: 'get' });
 }
+
 function recordingPushed() {
 	doRequest(url_timerlist, incomingRecordingPushed, false);
 }
+
 function incomingRecordingPushed(request) {
 	if(request.readyState == 4){
 		var timers = new TimerList(getXML(request)).getArray();
@@ -959,9 +999,21 @@ function ifChecked(rObj) {
 		return "";
 	}
 }
+
+//About
+/*
+ * Show About Information in contentMain
+ */
 function showAbout() {
 	doRequest(url_about, incomingAbout, false);
 }
+
+/*
+ * Handles an incoming request for /web/about
+ * Parses the Data, and calls everything needed to render the 
+ * Template using the parsed data and set the result into contenMain
+ * @param request - the XHR
+ */
 function incomingAbout(request) {
 	if(request.readyState == 4){
 		debug("incomingAbout returned");
@@ -1042,10 +1094,7 @@ function incomingAbout(request) {
 		processTpl('tplAbout', data, 'contentMain');
 	}
 }
-function quotes2html(txt) {
-	txt = txt.replace(/"/g, '&quot;');
-	return txt.replace(/'/g, "\\\'");
-}
+
 
 // Spezial functions, mostly for testing purpose
 function openHiddenFunctions(){
@@ -1065,11 +1114,14 @@ function startDebugWindow() {
 function restartTwisted() {
 	new Ajax.Request( "/web/restarttwisted", { asynchronous: true, method: "get" })
 }
+
+
 //MediaPlayer
 function loadMediaPlayer(directory){
 	debug("loading loadMediaPlayer");
 	doRequest(url_mediaplayerlist+directory, incomingMediaPlayer, false);
 }
+
 function incomingMediaPlayer(request){
 	if(request.readyState == 4){
 		var files = new FileList(getXML(request)).getArray();
@@ -1136,19 +1188,23 @@ function incomingMediaPlayer(request){
 		sendMediaPlayer = sendMediaPlayerTMP;
 	}		
 }
+
 function playFile(file,root) {
 	debug("loading playFile");
 	mediaPlayerStarted = true;
 	new Ajax.Request( url_mediaplayerplay+file+"&root="+root, { asynchronous: true, method: 'get' });
 }
+
 function sendMediaPlayer(command) {
 	debug("loading sendMediaPlayer");
 	new Ajax.Request( url_mediaplayercmd+command, { asynchronous: true, method: 'get' });
 }
+
 function openMediaPlayerPlaylist() {
 	debug("loading openMediaPlayerPlaylist");
 	doRequest(url_mediaplayerlist+"playlist", incomingMediaPlayer, false);
 }
+
 function writePlaylist() {
 	debug("loading writePlaylist");
 	filename = prompt("Please enter a name for the playlist", "");
@@ -1157,9 +1213,22 @@ function writePlaylist() {
 	}
 }
 
+//Powerstate
+/*
+ * Sets the Powerstate
+ * @param newState - the new Powerstate
+ * Possible Values (see WebComponents/Sources/PowerState.py)
+ * #-1: get current state
+ * # 0: toggle standby
+ * # 1: poweroff/deepstandby
+ * # 2: rebootdreambox
+ * # 3: rebootenigma
+ */
 function sendPowerState(newState){
 	new Ajax.Request( url_powerstate+'?newstate='+newState, { asynchronous: true, method: 'get' });
 }
+
+//FileBrowser
 function loadFileBrowser(directory,types){
 	debug("loading loadFileBrowser");
 	doRequest(url_filelist+directory+"&types="+types, incomingFileBrowser, false);	
@@ -1311,11 +1380,16 @@ function incomingNoteCreateResult(request){
 	}
 }
 
-function getBouquets(type){
+//Navigation and Content Helper Functions
+/*
+ * Loads all Bouquets for the given enigma2 servicereference and sets the according contentHeader
+ * @param sRef - the Servicereference for the bouquet to load
+ */
+function getBouquets(sRef){
 	setAjaxLoad('contentMain');
-	
+
 	var contentHeader = "";
-	switch(type){
+	switch(sRef){
 		case bouquetsTv:
 			contentHeader = "Bouquets (TV)";
 			break;
@@ -1331,37 +1405,58 @@ function getBouquets(type){
 	}
 	setContentHd(contentHeader);
 	
-	var url = url_getServices+encodeURIComponent(type);
+	var url = url_getServices+encodeURIComponent(sRef);
 	doRequest(url, incomingBouquetList, true);
 }
 
+/*
+ * Loads another navigation template and sets the navigation header
+ * @param template - The name of the template
+ * @param title - The title to set for the navigation
+ */
 function reloadNav(template, title){
 		setAjaxLoad('navContent');
 		processTpl(template, null, 'navContent');
 		setNavHd(title);
 }
 
+/*
+ * Loads dynamic content to $(contentMain) by calling a execution function
+ * @param fnc - The function used to load the content
+ * @param title - The Title to set on the contentpanel
+ */
 function loadContentDynamic(fnc, title){
 	setAjaxLoad('contentMain');
 	setContentHd(title);
 	fnc();
 }
 
+/*
+ * Loads a static template to $(contentMain)
+ * @param template - Name of the Template
+ * @param title - The Title to set on the Content-Panel
+ */
 function loadContentStatic(template, title){
 	setAjaxLoad('contentMain');
 	setContentHd(title);
 	processTpl(template, null, 'contentMain');
 }
 
-
-
+/*
+ * Sets the Loading Notification to the given HTML Element
+ * @param targetElement - The element the Ajax-Loader should be set in
+ */
 function setAjaxLoad(targetElement){
 	$(targetElement).innerHTML = getAjaxLoad();
 }
 
+/*
+ * Opens the given Extra
+ * @param extra - Extra Page as String
+ * Possible Values: power, about, message
+ */
 function openExtra(extra){
 	switch(extra){
-
 		case "power":
 			loadContentStatic('tplPower', 'PowerControl');
 			break;
@@ -1376,35 +1471,43 @@ function openExtra(extra){
 	}
 }
 
+/*
+ * Switches Navigation Modes
+ * @param mode - The Navigation Mode you want to switch to
+ * Possible Values: TV, Radio, Movies, Timer, Extras
+ */
 function switchNav(mode){
 	switch(mode){
-	case "TV":
-		reloadNav('tplNavTv', 'TeleVision');
-		break;
-	case "Radio":
-		reloadNav('tplNavRadio', 'Radio');
-		break;
-	
-	case "Movies":
-		loadContentDynamic(loadMovieList, 'Movies');
-		break;
+		case "TV":
+			reloadNav('tplNavTv', 'TeleVision');
+			break;
 		
-	case "Timer":
-		//The Navigation
-		reloadNav('tplNavTimer', 'Timer');
+		case "Radio":
+			reloadNav('tplNavRadio', 'Radio');
+			break;
 		
-		//The Timerlist
-		loadContentDynamic(loadTimerList, 'Timer');
-		break;
-	
-	case "Extras":
-		reloadNav('tplNavExtras', 'Extras');
-		break;
+		case "Movies":
+			loadContentDynamic(loadMovieList, 'Movies');
+			break;
+			
+		case "Timer":
+			//The Navigation
+			reloadNav('tplNavTimer', 'Timer');
+			
+			//The Timerlist
+			loadContentDynamic(loadTimerList, 'Timer');
+			break;
+		
+		case "Extras":
+			reloadNav('tplNavExtras', 'Extras');
+			break;
 	}
 }
 
 
-
+/*
+ * Does the everything required on initial pageload
+ */
 function init(){
 	setAjaxLoad('navContent');
 	setAjaxLoad('contentMain');
