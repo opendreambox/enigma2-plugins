@@ -703,14 +703,14 @@ function incomingMovieList(request){
 	}		
 }
 
-function delMovieFile(file,servicename,title,description) {
+function delMovieFile(file ,servicename, title, description) {
 	debug("delMovieFile: file("+file+"),servicename("+servicename+"),title("+title+"),description("+description+")");
 	var result = confirm(
 		"Selected timer:\n"
 		+"Servicename: "+servicename+"\n"
 		+"Title: "+title+"\n"
 		+"Description: "+description+"\n"
-		+"Are you sure that you want to delete the Timer?"
+		+"Are you sure want to delete the Movie?"
 	);
 
 	if(result){

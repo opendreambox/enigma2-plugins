@@ -1,25 +1,30 @@
 
 						<table id="contentTable">
-							{for m in movies}
+							{for movie in movies}
 							<tr>
 								<td>
 									<table class="sListItem">
 										<tr>
 											<td>										
 												<div class="sListSName">
-													<a href="#" id="${m.servicereference}" onclick="{ zap(this.id); }" class="sListSLink">
-														${m.title } - ${m.description} (${m.servicename})
+													<a href="#" id="${movie.servicereference}" onclick="{ zap(this.id); }" class="sListSLink">
+														${movie.title } - ${movie.description} (${movie.servicename})
 													</a>
 												</div>
+											</td>
+											<td>
+												<a target="#" onclick="delMovieFile('${movie.filename}','${movie.servicename}','${movie.title}','${movie.description}');">
+													<img src="/webdata/img/delete.png" title="Delete ${movie.title}" border="0">
+												</a>
 											</td>
 										</tr>
 										<tr class="mListDetail" id="" style="">
 											<td class="mListDetailItem">
 												<table cellspacing="0">
 													<tr>
-														<td class="mStart">${m.time}</td>
-														<td class="mTitle">${m.descriptionextended}</td>
-														<td class="mLength">${m.length}</td>
+														<td class="mStart">${movie.time}</td>
+														<td class="mTitle">${movie.descriptionextended}</td>
+														<td class="mLength">${movie.length}</td>
 													</tr>
 												</table>
 											</td>
