@@ -115,6 +115,8 @@ function UpdateStreamReaderOnError(){
 	}
 }
 //end UpdateStreamReader
+
+//Popup And Messagebox Helpers
 function setWindowContent(window, html){
 	window.document.write(html);
 	window.document.close();
@@ -138,6 +140,8 @@ function messageBox(t, m){
 	alert(m);
 }
 
+
+//Template Helpers
 function fetchTpl(tplName, callback){
 	url = "/webdata/tpl/"+tplName+".htm";
 		new Ajax.Request(url,
@@ -206,17 +210,32 @@ function quotes2html(txt) {
 	return txt.replace(/'/g, "\\\'");
 }
 
+
+//Debugging Window
+var debugWin = '';
+
+function loadAndOpenDebug(){
+	fetchTpl('tplDebug', openDebug)
+}
+
+function openDebug(){
+	debugWin = openPopup("Debug", templates['tplDebug'], 500, 300);
+}
+
 function debug(text){
 	if(DBG){
-		try{
-			debugWin.getContent().innerHTML += "DEBUG: "+text+"<br>";
-		} catch (windowNotPresent) {}
+		if(!debugWin.closed && debugWin.location){
+			var inner = debugWin.document.getElementById('debugContent').innerHTML;
+			debugWin.document.getElementById('debugContent').innerHTML = new Date().toLocaleString() + ": "+text+"<br>" + inner;
+		} 
 	}
 }
+
 function showhide(id){
  	o = $(id).style;
  	o.display = (o.display!="none")? "none":"";
 }
+
 function set(element, value){
 	if(element == "CurrentService") {
 		if(value.search(/^MP3 File:/) != -1) {
@@ -240,6 +259,7 @@ function set(element, value){
 		catch(e){}
 	}
 }
+
 function setComplete(element, value){
 	//debug(element+"-"+value);
 	element = parent.$(element);
@@ -253,6 +273,7 @@ function setComplete(element, value){
 		}
 	}
 }
+//AJAX Request Handling
 // requestindikator
 var requestcounter = 0;
 function requestIndicatorUpdate(){
@@ -263,22 +284,27 @@ function requestIndicatorUpdate(){
 		$('RequestIndicator').style.display = "none";
 	}*/
 }
+
 function requestStarted(){
 	requestcounter +=1;
 	requestIndicatorUpdate();
 }
+
 function requestFinished(){
 	requestcounter -=1;
 	requestIndicatorUpdate();
 }
+
 // end requestindikator
 function doRequest(url, readyFunction, save){
 	requestStarted();
 	doRequestMemorySave[url] = save;
 	debug("doRequest: Requesting: "+url);
-//	if(save == true && typeof(doRequestMemory[url]) != "undefined") {
-		//readyFunction(doRequestMemory[url]);
-//	} else {
+/*	
+	if(save == true && typeof(doRequestMemory[url]) != "undefined") {
+		readyFunction(doRequestMemory[url]);
+	} else {
+*/
 		debug("doRequest: loading");
 		new Ajax.Request(url,
 			{
@@ -317,6 +343,7 @@ function getXML(request){
 	}
 	return xmlDoc;
 }
+
 function parentPin(servicereference) {
     debug ("parentPin: parentControlList");
 	servicereference = decodeURIComponent(servicereference);
@@ -1107,10 +1134,12 @@ function restartUpdateStream() {
 	UpdateStreamReaderPollTimerCounter = 0;
 	UpdateStreamReaderStart();
 }
+
 function startDebugWindow() {
 	DBG = true;
 	debugWin = openPopup("DEBUG", "", 300, 300,920,140, "debugWindow");
 }
+
 function restartTwisted() {
 	new Ajax.Request( "/web/restarttwisted", { asynchronous: true, method: "get" })
 }
@@ -1217,7 +1246,7 @@ function writePlaylist() {
 /*
  * Sets the Powerstate
  * @param newState - the new Powerstate
- * Possible Values (see WebComponents/Sources/PowerState.py)
+ * Possible Values (also see WebComponents/Sources/PowerState.py)
  * #-1: get current state
  * # 0: toggle standby
  * # 1: poweroff/deepstandby
@@ -1306,79 +1335,6 @@ function incomingDelFileResult(request) {
 	}		
 }
 
-// Notes
-function showNotes(){
-	debug("loading notes");
-	doRequest(url_notelist, incomingNoteList, false);
-}
-
-function incomingNoteList(request){
-	if(request.readyState == 4){
-		var notes = new NoteList(getXML(request)).getArray();
-		debug("have "+notes.length+" movies");
-		listerHtml 	= tplNotesListHeader;		
-		for ( var i = 0; i <notes.length; i++){
-			var note = notes[i];
-			var namespace = { 	
-				'name': note.filename,
-				'size': note.size,
-				'ctime': note.getCTime(),
-				'mtime': note.getMTime()
-			};
-			listerHtml += RND(tplNotesListItem, namespace);
-		}
-		listerHtml += tplNotesListFooter;
-		$('BodyContent').innerHTML = listerHtml;
-		setBodyMainContent('BodyContent');
-		
-	}		
-}
-function showNote(name){
-	debug("loading note "+name);
-	doRequest(url_note+name, incomingNote, false);
-}
-
-function incomingNote(request){
-	if(request.readyState == 4){
-		var note = new Note(getXML(request));
-		var namespace = { 	
-				'name': note.filename,
-				'size': note.size,
-				'content': note.content,
-				'ctime': note.getCTime(),
-				'mtime': note.getMTime()
-			};
-		var html = RND(tplNote, namespace);
-		openPopup("Note '"+note.filename+"'", html, 400, 300,50,60);
-	}		
-}
-function saveNote(formid){
-	var nameold = $(formid+'_name').value;
-	var namenew = $(formid+'_namenew').value;
-	var content = $(formid+'_content').value;
-	debug("loading notes"+nameold+namenew+content);
-	doRequest(url_notelist+"?save="+nameold+"&namenew="+namenew+"&content="+content, incomingNoteSavedResult, false);	
-	Windows.closeAll();
-	
-}
-function incomingNoteSavedResult(request){
-	if(request.readyState == 4){
-		var note = new Note(getXML(request));
-		if (note.saved == "True"){
-			showNote(note.filename);
-			showNotes();
-		}
-	}
-}
-function createNote(){
-		doRequest(url_notelist+"?create=new", incomingNoteCreateResult, false);
-}
-
-function incomingNoteCreateResult(request){
-	if(request.readyState == 4){
-		showNotes();
-	}
-}
 
 //Navigation and Content Helper Functions
 /*
@@ -1509,6 +1465,10 @@ function switchNav(mode){
  * Does the everything required on initial pageload
  */
 function init(){
+	if(DBG){
+		loadAndOpenDebug();
+	}
+	
 	setAjaxLoad('navContent');
 	setAjaxLoad('contentMain');
 	
