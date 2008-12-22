@@ -1156,11 +1156,13 @@ function incomingMediaPlayer(request){
 		var files = new FileList(getXML(request)).getArray();
 		debug(getXML(request));
 		debug("have "+files.length+" entry in mediaplayer filelist");
-		listerHtml 	= tplMediaPlayerHeader;
+		//listerHtml 	= tplMediaPlayerHeader;
+		
+		var namespace = '';
 
 		root = files[0].getRoot();
 		if (root != "playlist") {
-			listerHtml 	= RND(tplMediaPlayerHeader, {'root': root});
+			namespace = {'root': root};
 			if(root != '/') {
 				re = new RegExp(/(.*)\/(.*)\/$/);
 				re.exec(root);
@@ -1168,52 +1170,61 @@ function incomingMediaPlayer(request){
 				if(newroot == '//') {
 					newroot = '/';
 				}
-				listerHtml += RND(tplMediaPlayerItemBody, 
-					{'root': root
-					, 'servicereference': newroot
-					,'exec': 'loadMediaPlayer'
-					,'exec_description': 'change to directory ../'
-					,'color': '000000'
-					,'root': newroot
-					,'name': '..'});
+				namespace = {
+						'root': root,
+						'servicereference': newroot,
+						'exec': 'loadMediaPlayer',
+						'exec_description': 'Change to directory ../',
+						'color': '000000',
+						'root': newroot,
+						'name': '..'
+				};	
 			}
 		}
+		
+		var itemnamespace = Array();
 		for ( var i = 0; i <files.length; i++){
 			var file = files[i];
 			if(file.getNameOnly() == 'None') {
 				continue;
 			}
 			var exec = 'loadMediaPlayer';
-			var exec_description = 'change to directory' + file.getServiceReference();
-			var color = '000000';
+			var exec_description = 'Change to directory' + file.getServiceReference();
+			var color = '000000';			
+			var isdir = 'true';
+			
 			if (file.getIsDirectory() == "False") {
 				exec = 'playFile';
 				exec_description = 'play file';
 				color = '00BCBC';
+				isdir = 'false';
 			}
-			var namespace = {
-				'servicereference': file.getServiceReference()
-				,'exec': exec
-				,'exec_description': exec_description
-				,'color': color
-				,'root': file.getRoot()
-				,'name': file.getNameOnly()
+			
+			itemnamespace[i] = {
+				'isdir' : isdir,
+				'servicereference': file.getServiceReference(),
+				'exec': exec,
+				'exec_description': exec_description,
+				'color': color,							
+				'root': file.getRoot(),
+				'name': file.getNameOnly()
 			};
-			listerHtml += tplMediaPlayerItemHead;
-			listerHtml += RND(tplMediaPlayerItemBody, namespace);
-			if (file.getIsDirectory() == "False") {
-				listerHtml += RND(tplMediaPlayerItemIMG, namespace);
-			}
-			listerHtml += tplMediaPlayerItemFooter;
+			
 		}
+		/*
 		if (root == "playlist") {
 			listerHtml += tplMediaPlayerFooterPlaylist;
 		}
-		listerHtml += tplMediaPlayerFooter;
-		$('BodyContent').innerHTML = listerHtml;
+		*/
+		
+		data = { mp : namespace,
+				 items: itemnamespace
+		};
+		
+		processTpl('tplMediaPlayer', data, 'contentMain')
 		var sendMediaPlayerTMP = sendMediaPlayer;
 		sendMediaPlayer = false;
-		setBodyMainContent('BodyContent');
+		//setBodyMainContent('BodyContent');
 		sendMediaPlayer = sendMediaPlayerTMP;
 	}		
 }
@@ -1278,13 +1289,13 @@ function incomingFileBrowser(request){
 				newroot = '/';
 			}
 			listerHtml += RND(tplFileBrowserItemBody, 
-				{'root': root
-				, 'servicereference': newroot
-				,'exec': 'loadFileBrowser'
-				,'exec_description': 'change to directory ../'
-				,'color': '000000'
-				,'root': newroot
-				,'name': '..'});
+				{'root': root,
+				'servicereference': newroot,
+				'exec': 'loadFileBrowser',
+				'exec_description': 'change to directory ../',
+				'color': '000000',
+				'root': newroot,
+				'name': '..'});
 		}
 		for ( var i = 0; i <files.length; i++){
 			var file = files[i];
@@ -1300,12 +1311,12 @@ function incomingFileBrowser(request){
 				color = '00BCBC';
 			}
 			var namespace = {
-				'servicereference': file.getServiceReference()
-				,'exec': exec
-				,'exec_description': exec_description
-				,'color': color
-				,'root': file.getRoot()
-				,'name': file.getNameOnly()
+				'servicereference': file.getServiceReference(),
+				'exec': exec,
+				'exec_description': exec_description,
+				'color': color,
+				'root': file.getRoot(),
+				'name': file.getNameOnly()
 			};
 			listerHtml += tplFileBrowserItemHead;
 			listerHtml += RND(tplFileBrowserItemBody, namespace);
@@ -1432,7 +1443,7 @@ function openExtra(extra){
  * @param mode - The Navigation Mode you want to switch to
  * Possible Values: TV, Radio, Movies, Timer, Extras
  */
-function switchNav(mode){
+function switchMode(mode){
 	switch(mode){
 		case "TV":
 			reloadNav('tplNavTv', 'TeleVision');
@@ -1454,6 +1465,10 @@ function switchNav(mode){
 			loadContentDynamic(loadTimerList, 'Timer');
 			break;
 		
+		case "MediaPlayer":
+			loadContentDynamic(loadMediaPlayer, 'MediaPlayer')
+			break;
+			
 		case "Extras":
 			reloadNav('tplNavExtras', 'Extras');
 			break;
