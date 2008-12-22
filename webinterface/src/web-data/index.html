@@ -100,7 +100,12 @@
 				</div>
 				<div id="navSearch">
 					<div id="searchHd" class="header"><div>EPG-Search</div></div>
-					<div class="boxContent"><input type="text" id="epgsearch"/></div>
+					<div class="boxContent">
+						<form onSubmit="loadEPGBySearchString(document.getElementById('epgSearch').value); return false;">
+							<input type="text" id="epgSearch" onfocus="this.value=''" value="Search EPG"/>
+							<input style="vertical-align:middle" type="image" src="/webdata/gfx/search.png" alt="search...">
+						</form>						
+					</div>
 				</div>
 			</div>
 			<div id="content">
