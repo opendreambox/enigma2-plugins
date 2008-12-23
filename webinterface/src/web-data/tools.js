@@ -317,7 +317,7 @@ function requestFinished(){
 function doRequest(url, readyFunction, save){
 	requestStarted();
 	doRequestMemorySave[url] = save;
-	debug("[doRequest] Requesting: "+url);
+//	debug("[doRequest] Requesting: "+url);
 /*	
 	if(save == true && typeof(doRequestMemory[url]) != "undefined") {
 		readyFunction(doRequestMemory[url]);
@@ -332,7 +332,7 @@ function doRequest(url, readyFunction, save){
 				onSuccess: function (transport, json) {
 							if(typeof(doRequestMemorySave[url]) != "undefined") {
 								if(doRequestMemorySave[url]) {
-									debug("[doRequest] saving request"); 
+//									debug("[doRequest] saving request"); 
 									doRequestMemory[url] = transport;
 								}
 							}
@@ -861,7 +861,7 @@ function getScreenShot(what) {
 	}
 	
 	downloadStart = new Date().getTime();
-	buffer.src = '/grab?format=j&r=720&' + what + '&' + downloadStart;
+	buffer.src = '/grab?format=jpg&n=&r=720&' + what + '&' + downloadStart;
 	
 //	$('grabPageIMG').height(400);
 //	tplRCGrab = $('BodyContent').innerHTML;
