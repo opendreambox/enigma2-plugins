@@ -18,12 +18,12 @@ days[6] = 'su';
 // Timer
 function addTimerByID(sRef,eventID,justplay){
 	if(parentPin(sRef)) {
-		debug("addTimerByID\neventID: "+eventID);
+		debug("[addTimerByID] eventID: "+eventID);
 		doRequest(url_timeraddbyeventid+"?sRef="+sRef+"&eventid="+eventID+"&justplay="+justplay, incomingTimerAddResult, false);	
 	}
 }
 function incomingTimerAddResult(request){
-	debug("onTimerAdded");
+	debug("[incomingTimerAddResult] called");
 	if(request.readyState == 4){
 		var addresult = new SimpleXMLResult(getXML(request));
 		if(addresult.getState()){
@@ -41,7 +41,7 @@ function loadTimerList(){
 function incomingTimerList(request){
 	if(request.readyState == 4){
 		var timers = new TimerList(getXML(request)).getArray();
-		debug("have "+timers.length+" timer");
+		debug("[incomingTimerList] Got " + timers.length + " timers");
 
 		var aftereventReadable = new Array ('Nothing', 'Standby', 'Deepstandby/Shutdown');
 		var justplayReadable = new Array('record', 'zap');
@@ -128,7 +128,7 @@ function colorTimerListEntry (state) {
 	}
 }
 function delTimer(sRef,begin,end,servicename,title,description,readyFunction){
-	debug("delTimer: sRef("+sRef+"),begin("+begin+"),end("+end+"),servicename("+servicename+"),title("+title+"),description("+description+")");
+	debug("[delTimer] sRef("+sRef+"),begin("+begin+"),end("+end+"),servicename("+servicename+"),title("+title+"),description("+description+")");
 	var result = confirm(
 		"Selected timer:\n"
 		+"Channel: "+servicename+"\n"
@@ -137,20 +137,20 @@ function delTimer(sRef,begin,end,servicename,title,description,readyFunction){
 		+"Are you sure that you want to delete the Timer?"
 	);
 	if(result){
-		debug("delTimer ok confirm panel"); 
+		debug("[delTimer] ok confirm panel"); 
 		doRequest(url_timerdelete+"?sRef="+sRef+"&begin="+begin+"&end="+end, readyFunction, false);
 		return true;
 	
 	} else {
-		debug("delTimer cancel confirm panel")
+		debug("[delTimer] cancel confirm panel")
 	}
 }
 
 function incomingTimerDelResult(request){
-	debug("onTimerDeleted");
+	debug("[incomingTimerDelResult] called");
 	if(request.readyState == 4){
 		var delresult = new SimpleXMLResult(getXML(request));
-		debug("Lade liste");
+		debug("[incomingTimerDelResult] Loading List");
 		loadTimerList();
 	}		
 }
@@ -183,12 +183,12 @@ function loadTimerFormNow() {
 	addTimerEditFormArray["endOld"] = 0;
 	
 	
-	debug("loadTimerFormNow 2");
+	debug("[loadTimerFormNow] done");
 	loadTimerFormChannels();
 }
 
 function loadTimerFormSeconds(justplay, begin, end, repeated, channel, channelName, name, description, afterEvent, deleteOldOnSave, eit) {
-	debug('justplay:'+justplay+' begin:'+begin+' end:'+end+' repeated:'+repeated+' channel:'+channel+' name:'+name+' description:'+description+' afterEvent:'+afterEvent+' deleteOldOnSave:'+deleteOldOnSave);
+	debug('[loadTimerFormSeconds] justplay: ' + justplay + ',begin: ' + begin + ',end: ' + end + ',repeated: ' + repeated + ',channel: ' + channel + ',name: ' + name +',description: ' + description + ',afterEvent: ' + afterEvent + ',deleteOldOnSave: ' + deleteOldOnSave);
 	var start = new Date(Number(begin)*1000);
 	addTimerEditFormArray["syear"] = start.getFullYear();
 	addTimerEditFormArray["smonth"] = start.getMonth() + 1;
@@ -212,7 +212,7 @@ function loadTimerFormSeconds(justplay, begin, end, repeated, channel, channelNa
 	addTimerEditFormArray["repeated"] = Number(repeated);
 	addTimerEditFormArray["afterEvent"] = Number(afterEvent);
 	
-	debug(justplay+"|"+begin+"|"+end+"|"+repeated+"|"+channel+"|"+name+"|"+description+"|"+afterEvent);
+	debug("[loadTimerFormSeconds]" + justplay + "|" + begin + "|" + end + "|" + repeated + "|"+channel+"|"+name+"|"+description+"|"+afterEvent);
 
 	addTimerEditFormArray["deleteOldOnSave"] = Number(deleteOldOnSave);
 	addTimerEditFormArray["beginOld"] = Number(begin);
@@ -450,12 +450,11 @@ function incomingTimerFormExtendChannellist(request) {
 		services = loadedChannellist[servicereftoloadepgnow];
 	} else if(request.readyState == 4) {
 		services = new ServiceList(getXML(request)).getArray();
-		loadedChannellist[servicereftoloadepgnow] = services;
-		debug("got "+services.length+" Services");
+		loadedChannellist[servicereftoloadepgnow] = services;	
 	}
 	var attachLater = new Object();
 	if(services != null) {
-		debug("incomingTimerFormExtendChannellist " + services.length);
+		debug("[incomingTimerFormExtendChannellist] Got "+services.length+" Services");
 		var selected = $('channel').selectedIndex;
 		for(j = selected; j < $('channel').options.length; j++) {
 			if($('channel').options[j].value == servicereftoloadepgnow) {
@@ -545,7 +544,7 @@ function createOptionListRepeated(Repeated,repeated) {
 	return namespace;
 }
 function sendAddTimer() {
-	debug("sendAddTimer" + "parentChannel:" +$('channel').value);
+	debug("[sendAddTimer]" + "parentChannel:" +$('channel').value);
 	
 	if(parentPin($('channel').value)) {
 		var beginD = new Date(ownLazyNumber($('syear').value), (ownLazyNumber($('smonth').value) - 1), ownLazyNumber($('sday').value), ownLazyNumber($('shour').value), ownLazyNumber($('smin').value));
@@ -615,16 +614,16 @@ function sendAddTimer() {
 }
 
 function cleanTimerListNow(){
-	debug("cleanTimerListNow pushed");
+	debug("[cleanTimerListNow] called");
 	doRequest(url_timerlist, incomingCleanTimerListNow, false);	
 }
 function incomingCleanTimerListNow(request) {
 	if(request.readyState == 4){
 		var timers = new TimerList(getXML(request)).getArray();
-		debug("have "+timers.length+" timer");
+		debug("[cleanTimerListNow] Got "+timers.length+" timer");
 		for ( var i = 0; i <timers.length; i++){
 			var timer = timers[i];
-			debug(timer.getState() + " " + quotes2html(timer.getName()));
+			debug("[cleanTimerListNow]" + timer.getState() + " " + quotes2html(timer.getName()));
 			if(timer.getState() != 0 && timer.getState() != 2) {
 				delTimer(timer.getServiceReference(),timer.getTimeBegin(),timer.getTimeEnd()
 					,quotes2html(timer.getServiceName()),quotes2html(timer.getName()),quotes2html(timer.getDescription()),incomingJustDoNothing);
@@ -633,7 +632,7 @@ function incomingCleanTimerListNow(request) {
 	}
 }
 function incomingJustDoNothing(request){
-	debug("just do nothing");
+	debug("[incomingJustDoNothing] called");
 }
 function sendToggleTimerDisable(justplay,begin,end,repeated,channel,name,description,afterEvent,disabled){
 	disabled = (ownLazyNumber(disabled) == 0) ? 1 : 0;

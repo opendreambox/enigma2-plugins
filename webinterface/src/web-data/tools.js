@@ -93,10 +93,10 @@ function UpdateStreamReaderOnError(){
 	window.clearInterval(UpdateStreamReaderPollTimer);
 	UpdateStreamReaderRetryCounter += 1;
 	
-	debug("UpdateStreamReaderOnError: ErrorCount "+UpdateStreamReaderRetryCounter);
+	debug("[UpdateStreamReaderOnError] ErrorCount "+UpdateStreamReaderRetryCounter);
 	
 	if(UpdateStreamReaderRetryCounter >= UpdateStreamReaderRetryLimit){
-		debug("UpdateStreamReaderOnError: RetryLimit reached!");
+		debug("[UpdateStreamReaderOnError] RetryLimit reached!");
 		
 		UpdateStreamReaderRetryCounter = 0;
 		
@@ -106,7 +106,7 @@ function UpdateStreamReaderOnError(){
 				windowParameters: {width:300, className: windowStyle},
 				okLabel: "reconnect",
 				buttonClass: "myButtonClass",
-				cancel: function(win) {debug("cancel confirm panel")},
+				cancel: function(win) {debug("[UpdateStreamReaderOnError] cancel confirm panel")},
 				ok: function(win) {UpdateStreamReaderStart(); return true;}
 			}
 		);
@@ -132,7 +132,7 @@ function popUpBlockerHint(){
 }
 
 function openPopup(title, html, width, height, x, y){
-	debug("opening Window: "+title);
+	debug("[openPopup] Opening Window: " + title);
 	
 	var popup = window.open('about:blank',title,'scrollbars=yes, width='+width+',height='+height+',left='+x+',top='+y+',screenX='+x+',screenY='+y);
 	try {
@@ -317,13 +317,12 @@ function requestFinished(){
 function doRequest(url, readyFunction, save){
 	requestStarted();
 	doRequestMemorySave[url] = save;
-	debug("doRequest: Requesting: "+url);
+	debug("[doRequest] Requesting: "+url);
 /*	
 	if(save == true && typeof(doRequestMemory[url]) != "undefined") {
 		readyFunction(doRequestMemory[url]);
 	} else {
 */
-		debug("doRequest: loading");
 		new Ajax.Request(url,
 			{
 				asynchronous: true,
@@ -333,7 +332,7 @@ function doRequest(url, readyFunction, save){
 				onSuccess: function (transport, json) {
 							if(typeof(doRequestMemorySave[url]) != "undefined") {
 								if(doRequestMemorySave[url]) {
-									debug("doRequest: saving request"); 
+									debug("[doRequest] saving request"); 
 									doRequestMemory[url] = transport;
 								}
 							}
@@ -357,7 +356,7 @@ function getXML(request){
 		xmlDoc = $('_MakeAUniqueID');
 		document.body.removeChild($('_MakeAUniqueID'));
 	} else {
-		debug("Your Browser Sucks!");
+		debug("[getXML] Your Browser Sucks!");
 	}
 	return xmlDoc;
 }
@@ -371,16 +370,16 @@ function parentPin(servicereference) {
 	//debug("parentPin " + parentControlList.length);
 	if(getParentControlByRef(servicereference) == servicereference) {
 		if(String(getSettingByName("config.ParentalControl.type.value")) == "whitelist") {
-			debug("parentPin leaving here 1");
+			debug("[parentPin] Channel in whitelist");
 			return true;
 		}
 	} else {
-		debug("parentPin leaving here 2");
+		debug("[parentPin] sRef differs ");
 		return true;
 	}
-	debug("going to ask for PIN");
+	debug("[parentPin] Asking for PIN");
 
-	var userInput = prompt('ParentControll was switch on.<br> Please enter PIN','PIN');
+	var userInput = prompt('Parental Control is enabled!<br> Please enter the Parental Control PIN','PIN');
 	if (userInput != '' && userInput != null) {
 		if(String(userInput) == String(getSettingByName("config.ParentalControl.servicepin.0")) ) {
 			return true;
@@ -419,10 +418,10 @@ function loadEPGByServiceReference(servicereference){
 
 var epgListData = {};
 function incomingEPGrequest(request){
-	debug("incoming request" +request.readyState);		
+	debug("[incomingEPGrequest] readyState" +request.readyState);		
 	if (request.readyState == 4){
 		var EPGItems = new EPGList(getXML(request)).getArray(true);
-		debug("have "+EPGItems.length+" e2events");
+		debug("[incomingEPGrequest] got "+EPGItems.length+" e2events");
 		if(EPGItems.length > 0){			
 			var namespace = new Array();
 			for (var i=0; i < EPGItems.length; i++){
@@ -446,7 +445,9 @@ function incomingEPGrequest(request){
 						'end': item.getTimeEnd()
 					};
 					
-				} catch (blubb) { debug("Error rendering: "+blubb);	}
+				} catch (Exception) { 
+					debug("[incomingEPGrequest] Error rendering: " + Exception);	
+				}
 			}
 			
 			epgListData = {epg : namespace};
@@ -515,10 +516,10 @@ function buildServiceListEPGItem(epgevent, type){
 			if(templates['tplServiceListEPGItem'] != null){
 				renderTpl(templates['tplServiceListEPGItem'], data, type + epgevent.getServiceReference());
 			} else {
-				debug("EPGItem: tplServiceListEPGItem N/A");
+				debug("[EPGItem] tplServiceListEPGItem N/A");
 			}
 		} catch (e) {
-			debug("EPGItem: Error rendering: " + e);
+			debug("[EPGItem] Error rendering: " + e);
 		}	
 }
 
@@ -576,7 +577,7 @@ function handleVolumeRequest(request){
 		var b = getXML(request).getElementsByTagName("e2volume");
 		var newvalue = b.item(0).getElementsByTagName('e2current').item(0).firstChild.data;
 		var mute = b.item(0).getElementsByTagName('e2ismuted').item(0).firstChild.data;
-		debug("volume"+newvalue+";"+mute);
+		debug("[handleVolumeRequest] Volume " + newvalue + " | Mute: " + mute);
 		
 		for (var i = 1; i <= 10; i++)		{
 			if ( (newvalue/10)>=i){
@@ -605,7 +606,7 @@ function initChannelList(){
 
 var loadedChannellist = new Object();
 function loadBouquet(servicereference, name){ 
-	debug("loading bouquet with "+servicereference);
+	debug("[loadBouquet] Loading "+servicereference);
 
 	currentBouquet = servicereference;
 	
@@ -613,7 +614,7 @@ function loadBouquet(servicereference, name){
 	setContentHd(name);
 	setAjaxLoad('contentMain');
 	
-	debug("loadBouquet " + typeof(loadedChannellist[servicereference]));
+	debug("[loadBouquet] " + typeof(loadedChannellist[servicereference]));
 	if(typeof(loadedChannellist[servicereference]) == "undefined") {
 		doRequest(url_getServices+servicereference, incomingChannellist, true);
 	} else {
@@ -624,7 +625,7 @@ function loadBouquet(servicereference, name){
 function incomingBouquetListInitial(request){
 	if (request.readyState == 4) {
 		var list0 = new ServiceList(getXML(request)).getArray();
-		debug("have "+list0.length+" TV Bouquet ");	
+		debug("[loadBouquet] Got " + list0.length + " TV Bouquets!");	
 
 		//loading first entry of TV Favorites as default for ServiceList
 		loadBouquet(list0[0].getServiceReference(), list0[0].getServiceName());
@@ -636,13 +637,13 @@ function incomingBouquetListInitial(request){
 function incomingBouquetList(request){
 	if (request.readyState == 4) {
 		var list0 = new ServiceList(getXML(request)).getArray();
-		debug("have "+list0.length+" TV Bouquet ");	
+		debug("[incomingBouquetList] got " + list0.length + " TV Bouquets!");	
 		renderBouquetTable(list0, 'contentMain');		
 	}
 }
 
 function renderBouquetTable(list, target){
-	debug("renderBouquetTable with "+list.length+" Bouquets");	
+	debug("[renderBouquetTable] Rendering " + list.length + " Bouquets");	
 	
 	var namespace = new Array();
 	if (list.length < 1) alert("NO BOUQUETS!");
@@ -653,7 +654,9 @@ function renderBouquetTable(list, target){
 				'servicereference': bouquet.getServiceReference(), 
 				'bouquetname': bouquet.getServiceName()
 			};
-		} catch (blubb) { alert("Error rendering!"); }
+		} catch (e) { 
+			//TODO error handling 
+		}
 	}
 	var data = { 
 		services : namespace 
@@ -666,7 +669,7 @@ function incomingChannellist(request){
 	var services = null;
 	if(request.readyState == 4) {
 		services = new ServiceList(getXML(request)).getArray();
-		debug("got "+services.length+" Services");
+		debug("[incomingChannellist] got "+services.length+" Services");
 	}
 	if(services != null) {
 		var namespace = new Array();
@@ -688,17 +691,17 @@ function incomingChannellist(request){
 
 // Movies
 function loadMovieList(tag){
-	debug("loading movies by tag '"+tag+"'");
 	if(typeof(tag) == 'undefined'){
 		tag = '';
 	}
+	debug("[loadMovieList] Loading movies with tag '"+tag+"'");
 	doRequest(url_movielist+tag, incomingMovieList, false);
 }
 
 function incomingMovieList(request){
 	if(request.readyState == 4){
 		var movies = new MovieList(getXML(request)).getArray();
-		debug("have "+movies.length+" movies");
+		debug("[incomingMovieList] Got "+movies.length+" movies");
 		namespace = new Array();	
 		for ( var i = 0; i < movies.length; i++){
 			var movie = movies[i];
@@ -722,7 +725,9 @@ function incomingMovieList(request){
 }
 
 function delMovieFile(file ,servicename, title, description) {
-	debug("delMovieFile: file("+file+"),servicename("+servicename+"),title("+title+"),description("+description+")");
+	debug("[delMovieFile] File(" + file + "), servicename(" + servicename + ")," +
+			"title(" + title + "), description(" + description + ")");
+	
 	var result = confirm(
 		"Are you sure want to delete the Movie?\n"
 		+"Servicename: "+servicename+"\n"
@@ -731,18 +736,18 @@ function delMovieFile(file ,servicename, title, description) {
 	);
 
 	if(result){
-		debug("delMovieFile ok confirm panel"); 
+		debug("[delMovieFile] ok confirm panel"); 
 		doRequest(url_moviefiledelete+"?filename="+file, incomingDelMovieFileResult, false); 
 		return true;
 	}
 	else{
-		debug("delMovieFile cancel confirm panel");
+		debug("[delMovieFile] cancel confirm panel");
 		return false;
 	}
 }
 
 function incomingDelMovieFileResult(request) {
-	debug("incomingDelMovieFileResult");
+	debug("[incomingDelMovieFileResult] called");
 	if(request.readyState == 4){
 		var delresult = new SimpleXMLResult(getXML(request));
 		if(delresult.getState()){
@@ -818,7 +823,7 @@ function sendRemoteControlRequest(command){
 }
 
 function getScreenShot(what) {
-	debug("getScreenShot");
+	debug("[getScreenShot] called");
 	
 	setAjaxLoad('contentMain');
 	setContentHd('Screenshot');
@@ -828,7 +833,7 @@ function getScreenShot(what) {
 	var data = {};
 	
 	buffer.onload = function () { 
-		debug("image zugewiesen");
+		debug("[getScreenShot] image assigned");
 		
 		data = { img : { src : buffer.src } };
 
@@ -840,7 +845,7 @@ function getScreenShot(what) {
 	};
 	
 	buffer.onerror = function (meldung) { 
-		debug("reload grab image failed"); 
+		debug("[getScreenShot] Loading image failed"); 
 		return true;
 	};
 	switch(what){
@@ -887,7 +892,7 @@ function incomingGetDreamboxSettings(request){
 }
 
 function getSettingByName(txt) {
-	debug("getSettingByName ("+txt+")");
+	debug("[getSettingByName] (" + txt + ")");
 	for(i = 0; i < settings.length; i++) {
 		debug("("+settings[i].getSettingName()+") (" +settings[i].getSettingValue()+")");
 		if(String(settings[i].getSettingName()) == String(txt)) {
@@ -904,14 +909,14 @@ function getParentControl() {
 function incomingParentControl(request) {
 	if(request.readyState == 4){
 		parentControlList = new ServiceList(getXML(request)).getArray();
-		debug("parentControlList got "+parentControlList.length + " services");
+		debug("[incomingParentControl] Got "+parentControlList.length + " services");
 	}
 }
 
 function getParentControlByRef(txt) {
-	debug("getParentControlByRef ("+txt+")");
+	debug("[getParentControlByRef] ("+txt+")");
 	for(i = 0; i < parentControlList.length; i++) {
-		debug("("+parentControlList[i].getClearServiceReference()+")");
+		debug( "[getParentControlByRef] "+parentControlList[i].getClearServiceReference() );
 		if(String(parentControlList[i].getClearServiceReference()) == String(txt)) {
 			return parentControlList[i].getClearServiceReference();
 		} 
@@ -941,7 +946,7 @@ var subServicesInsertedList = new Object();
 function incomingSubServiceRequest(request){
 	if(request.readyState == 4){
 		var services = new ServiceList(getXML(request)).getArray();
-		debug("got "+services.length+" SubServices");
+		debug("[incomingSubServiceRequest] Got " + services.length + " SubServices");
 		
 		if(services.length > 1) {
 			
@@ -1008,7 +1013,7 @@ function recordingPushed() {
 function incomingRecordingPushed(request) {
 	if(request.readyState == 4){
 		var timers = new TimerList(getXML(request)).getArray();
-		debug("have "+timers.length+" timer");
+		debug("[incomingRecordingPushed] Got " + timers.length + " timers");
 		
 		var aftereventReadable = new Array ('Nothing', 'Standby', 'Deepstandby/Shutdown');
 		var justplayReadable = new Array('record', 'zap');
@@ -1084,7 +1089,7 @@ function showAbout() {
  */
 function incomingAbout(request) {
 	if(request.readyState == 4){
-		debug("incomingAbout returned");
+		debug("[incomingAbout] returned");
 		var aboutEntries = getXML(request).getElementsByTagName("e2abouts").item(0).getElementsByTagName("e2about");
 
 		var xml = aboutEntries.item(0);
@@ -1097,13 +1102,13 @@ function incomingAbout(request) {
 			
 			
 			var nims = xml.getElementsByTagName('e2tunerinfo').item(0).getElementsByTagName("e2nim");
-			debug("nims: "+nims.length);
+			debug("[incomingAbout] nims: "+nims.length);
 			for(var i = 0; i < nims.length; i++){
 				
 				name = nims.item(i).getElementsByTagName("name").item(0).firstChild.data;
 				type = nims.item(i).getElementsByTagName("type").item(0).firstChild.data;
-				debug(name);
-				debug(type);
+				debug("[incomingAbout]" + name);
+				debug("[incomingAbout]" + type);
 				ns[i] = { 'name' : name, 'type' : type};
 				
 			}
@@ -1155,7 +1160,7 @@ function incomingAbout(request) {
 				 ,'sid': ownLazyNumber(xml.getElementsByTagName('e2sid').item(0).firstChild.data)
 			};				  
 		} catch (e) {
-			debug("About parsing Error" + e);
+			debug("[incomingAbout] About parsing Error" + e);
 		}
 
 		data = { about : namespace,
@@ -1189,15 +1194,15 @@ function restartTwisted() {
 
 //MediaPlayer
 function loadMediaPlayer(directory){
-	debug("loading loadMediaPlayer");
+	debug("[loadMediaPlayer] called");
 	doRequest(url_mediaplayerlist+directory, incomingMediaPlayer, false);
 }
 
 function incomingMediaPlayer(request){
 	if(request.readyState == 4){
 		var files = new FileList(getXML(request)).getArray();
-		debug(getXML(request));
-		debug("have "+files.length+" entry in mediaplayer filelist");
+		
+		debug("[loadMediaPlayer] Got "+files.length+" entries in mediaplayer filelist");
 		//listerHtml 	= tplMediaPlayerHeader;
 		
 		var namespace = '';
@@ -1272,23 +1277,23 @@ function incomingMediaPlayer(request){
 }
 
 function playFile(file,root) {
-	debug("loading playFile");
+	debug("[playFile] called");
 	mediaPlayerStarted = true;
 	new Ajax.Request( url_mediaplayerplay+file+"&root="+root, { asynchronous: true, method: 'get' });
 }
 
 function sendMediaPlayer(command) {
-	debug("loading sendMediaPlayer");
+	debug("[playFile] loading sendMediaPlayer");
 	new Ajax.Request( url_mediaplayercmd+command, { asynchronous: true, method: 'get' });
 }
 
 function openMediaPlayerPlaylist() {
-	debug("loading openMediaPlayerPlaylist");
+	debug("[playFile] loading openMediaPlayerPlaylist");
 	doRequest(url_mediaplayerlist+"playlist", incomingMediaPlayer, false);
 }
 
 function writePlaylist() {
-	debug("loading writePlaylist");
+	debug("[playFile] loading writePlaylist");
 	filename = prompt("Please enter a name for the playlist", "");
 	if(filename != "") {
 		new Ajax.Request( url_mediaplayerwrite+filename, { asynchronous: true, method: 'get' });
@@ -1312,14 +1317,14 @@ function sendPowerState(newState){
 
 //FileBrowser
 function loadFileBrowser(directory,types){
-	debug("loading loadFileBrowser");
+	debug("[loadFileBrowser] loading loadFileBrowser");
 	doRequest(url_filelist+directory+"&types="+types, incomingFileBrowser, false);	
 }
 function incomingFileBrowser(request){
 	if(request.readyState == 4){
 		var files = new FileList(getXML(request)).getArray();
-		debug(getXML(request));
-		debug("have "+files.length+" entry in filelist");
+
+		debug("[incomingFileBrowser] Got " + files.length + " entry in filelist");
 		listerHtml 	= tplFileBrowserHeader;
 		root = files[0].getRoot();
 		listerHtml 	= RND(tplFileBrowserHeader, {'root': root});
@@ -1373,11 +1378,11 @@ function incomingFileBrowser(request){
 	}		
 }
 function delFile(file,root) {
-	debug("loading loadMediaPlayer");
+	debug("[delFile] called");
 	doRequest(url_delfile+root+file, incomingDelFileResult, false);
 }
 function incomingDelFileResult(request) {
-	debug("incomingDelFileResult");
+	debug("[incomingDelFileResult]");
 	if(request.readyState == 4){
 		var delresult = new SimpleXMLResult(getXML(request));
 		if(delresult.getState()){

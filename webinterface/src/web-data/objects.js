@@ -7,10 +7,10 @@ function EPGList(xml){
 	//debug('init EPGList'+xml);
 	try{
 		this.xmlitems = xml.getElementsByTagName("e2eventlist").item(0).getElementsByTagName("e2event");
-	} catch (e) { debug("EPGList parsing Error");}
+	} catch (e) { debug("[EPGList] parsing Error");}
 	
 	this.getArray = function(sortbytime){
-		debug("sort EPGList by time "+sortbytime);
+		debug("[EPGList] Sort by time "+sortbytime);
 		if (sortbytime == true){
 			var sort1 = new Array();
 			for(var i=0;i<this.xmlitems.length;i++){
@@ -193,11 +193,11 @@ function ServiceList(xml){
 //START class MovieList
 function MovieList(xml){
 	// parsing values from xml-element
-	debug('init MovieList'+xml);
+	debug('[MovieList] init: ' + xml);
 	try{
 		this.xmlitems = xml.getElementsByTagName("e2movielist").item(0).getElementsByTagName("e2movie");
 	} catch (e) {
-		debug("MovieList parsing Error");
+		debug("[MovieList] parsing Error");
 	}
 	this.getArray = function(){
 		var listxy = new Array();
@@ -333,7 +333,7 @@ function TimerList(xml){
 	try{
 		this.xmlitems = xml.getElementsByTagName("e2timerlist").item(0).getElementsByTagName("e2timer");
 	} catch (e) {
-		debug("TimerList parsing Error");
+		debug("[TimerList] parsing Error");
 	}
 	this.getArray = function(){
 		var listxy = new Array();
@@ -561,22 +561,22 @@ function Timer(xml){
 // START SimpleXMLResult ehemals TimerAddResult
 function SimpleXMLResult(xml){
 	// parsing values from xml-element
-	debug('init SimpleXMLResult'+xml);
+	debug('[SimpleXMLResult] init: '+xml);
 	try{
 		this.xmlitems = xml.getElementsByTagName("e2simplexmlresult").item(0);
-		debug(xml.getElementsByTagName("e2simplexmlresult").length);
+		debug("[SimpleXMLResult] count: " + xml.getElementsByTagName("e2simplexmlresult").length);
 	} catch (e) {
-		debug("SimpleXMLResult parsing e2simplexmlresult"+e);
+		debug("[SimpleXMLResult] parsing e2simplexmlresult"+e);
 	}
 	try{
 		this.state = this.xmlitems.getElementsByTagName("e2state").item(0).firstChild.data;
 	} catch (e) {
-		debug("SimpleXMLResult parsing e2state"+e);
+		debug("[SimpleXMLResult] parsing e2state"+e);
 	}
 	try{
 		this.statetext = this.xmlitems.getElementsByTagName("e2statetext").item(0).firstChild.data;
 	} catch (e) {
-		debug("SimpleXMLResult parsing e2statetext"+e);
+		debug("[SimpleXMLResult] parsing e2statetext"+e);
 	}
 	
 	this.getState = function(){
@@ -598,7 +598,7 @@ function Settings(xml){
 	//debug('init ServiceList'+xml);
 	try{
 		this.xmlitems = xml.getElementsByTagName("e2settings").item(0).getElementsByTagName("e2setting");
-		debug(this.xmlitems);
+		debug("[Settings] Number of items: " + this.xmlitems);
 	} catch (e) {
 		//debug("Service parsing Error");
 	}
@@ -637,11 +637,11 @@ function Setting(xml){
 //START class FileList
 function FileList(xml){
 	// parsing values from xml-element
-	debug('init FileList'+xml);
+	debug('[FileList] init: ' + xml);
 	try{
 		this.xmlitems = xml.getElementsByTagName("e2filelist").item(0).getElementsByTagName("e2file");
 	} catch (e) {
-		debug("FileList parsing Error");
+		debug("[FileList] parsing Error");
 	}
 	this.getArray = function(){
 		var listxy = new Array();
@@ -701,7 +701,7 @@ function NoteList(xml){
 	try{
 		this.xmlitems = xml.getElementsByTagName("e2noteslist").item(0).getElementsByTagName("e2note");
 	} catch (e) {
-		debug("NoteList parsing Error");
+		debug("[NoteList] parsing Error");
 	}
 	this.getArray = function(){
 		var listxy = new Array();
