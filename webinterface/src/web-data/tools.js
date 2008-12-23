@@ -798,7 +798,7 @@ function openWebRemote(){
 	if (!webRemoteWindow.closed && webRemoteWindow.location) {
 		setWindowContent(webRemoteWindow, templates['tplWebRemote']);
 	} else {
-		webRemoteWindow = openPopup('WebRemote', templates['tplWebRemote'], 250, 640);
+		webRemoteWindow = openPopup('WebRemote', templates['tplWebRemote'], 250, 670);
 	}
 	
 }
