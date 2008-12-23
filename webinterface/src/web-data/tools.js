@@ -122,6 +122,14 @@ function setWindowContent(window, html){
 	window.document.close();
 }
 
+var popUpBlockerHinted = false;
+
+function popUpBlockerHint(){
+	if(!popUpBlockerHinted){
+		alert("Please disable your Popup-Blocker for enigma2 WebControl to work flawlessly!");
+		popUpBlockerHinted = true;
+	}
+}
 
 function openPopup(title, html, width, height, x, y){
 	debug("opening Window: "+title);
@@ -131,12 +139,12 @@ function openPopup(title, html, width, height, x, y){
 		setWindowContent(popup, html);
 		return popup;
 	} catch(e){
-		alert("Please disable your Popup-Blocker for Enigma2 WebControl to work flawlessly!");
+		popUpBlockerHint();
 		return null;
 	}
 }
 	
-function messageBox(t, m){
+function messageBox(m){
 	alert(m);
 }
 
@@ -211,6 +219,7 @@ function quotes2html(txt) {
 }
 
 
+
 //Debugging Window
 var debugWin = '';
 
@@ -224,10 +233,15 @@ function openDebug(){
 
 function debug(text){
 	if(DBG){
-		if(!debugWin.closed && debugWin.location){
-			var inner = debugWin.document.getElementById('debugContent').innerHTML;
-			debugWin.document.getElementById('debugContent').innerHTML = new Date().toLocaleString() + ": "+text+"<br>" + inner;
-		} 
+		try{
+			if(!debugWin.closed && debugWin.location){
+				var inner = debugWin.document.getElementById('debugContent').innerHTML;
+				debugWin.document.getElementById('debugContent').innerHTML = new Date().toLocaleString() + ": "+text+"<br>" + inner;
+			}
+		} catch (Exception) {
+			popUpBlockerHint()
+		}
+			
 	}
 }
 
@@ -736,12 +750,6 @@ function incomingDelMovieFileResult(request) {
 	}		
 }
 
-
-// send Messages
-function showMessageSendForm(){
-		$('BodyContent').innerHTML = tplMessageSendForm;
-}
-
 var MessageAnswerPolling;
 function sendMessage(messagetext,messagetype,messagetimeout){
 	if(!messagetext){
@@ -763,17 +771,15 @@ function sendMessage(messagetext,messagetype,messagetimeout){
 }
 
 function incomingMessageResult(request){
-
 	if(request.readyState== 4){
-		var b = getXML(request).getElementsByTagName("e2message");
-		var result = b.item(0).getElementsByTagName('e2result').item(0).firstChild.data;
-		var resulttext = b.item(0).getElementsByTagName('e2resulttext').item(0).firstChild.data;
+		var result = getXML(request).getElementsByTagName("e2message").item(0).getElementsByTagName('e2result').item(0).firstChild.data;
+		
 		if (result=="True"){
-			messageBox('Message sent: ' + resulttext);//'message send successfully! it appears on TV-Screen');
-		}else{
-			messageBox('Message NOT sent: ' + resulttext);
+			messageBox('Message sent successfully!');
+			return;
 		}
-	}		
+	}	
+	messageBox('Message NOT sent!');
 }
 
 function getMessageAnswer() {
@@ -799,26 +805,43 @@ function openWebRemote(){
 
 function sendRemoteControlRequest(command){
 	doRequest(url_remotecontrol+'?command='+command, incomingRemoteControlResult, false);
-//	if($('getScreen').checked) {
-//		openGrabPicture();
-//	}
+	if(webRemoteWindow.document.getElementById('getScreen').checked) {
+		getScreenShot();
+	}
 }
 
-function openGrabPicture() {
-	if($('BodyContent').innerHTML != tplRCGrab) {
-		$('BodyContent').innerHTML = tplRCGrab;
-	}
-	debug("openGrabPicture");
+function getScreenShot() {
+	debug("getScreenShot");
+	
+	setAjaxLoad('contentMain');
+	setContentHd('Screenshot');
+	
 	var buffer = new Image();
 	var downloadStart;
+	var data = {};
+	
+	buffer.onload = function () { 
+		debug("image zugewiesen");
+		
+		data = { img : { src : buffer.src } };
 
-	buffer.onload = function () { debug("image zugewiesen"); $('grabPageIMG').src = buffer.src; return true;};
-	buffer.onerror = function (meldung) { debug("reload grab image failed"); return true;};
+		
+		
+		processTpl('tplGrab', data, 'contentMain');
+
+		return true;
+	};
+	
+	buffer.onerror = function (meldung) { 
+		debug("reload grab image failed"); 
+		return true;
+	};
 
 	downloadStart = new Date().getTime();
-	buffer.src = '/grab?' + downloadStart;
-	$('grabPageIMG').height(400);
-	tplRCGrab = $('BodyContent').innerHTML;
+	buffer.src = '/grab?format=j&r=720&' + downloadStart;
+	
+//	$('grabPageIMG').height(400);
+//	tplRCGrab = $('BodyContent').innerHTML;
 }
 
 function incomingRemoteControlResult(request){
@@ -931,7 +954,7 @@ Array.prototype.insert = function( j, v ) {
 		var a = this.slice(), b = a.splice( j );
 		a[j] = v;
 		return a.concat( b );
-	}
+	}ip
 }
 
 // Array.splice() - Remove or replace several elements and return any deleted elements

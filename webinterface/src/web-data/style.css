@@ -28,7 +28,7 @@
 	#bannerText{
 		margin-bottom: 10px;
 		padding-left: 2px;
-		padding-top: 3px;
+		padding-top: 3px;d
 	}
 
 	#bannerLeft{
@@ -144,7 +144,7 @@
 		color: #fff;
 	}
 
-	#epgSearch{ width: 125px; }
+	#epgSearch{ width: 120px; }
 	
 	.boxContent{
 		padding: 3px;	
