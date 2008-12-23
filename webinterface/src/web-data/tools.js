@@ -809,11 +809,15 @@ function openWebRemote(){
 function sendRemoteControlRequest(command){
 	doRequest(url_remotecontrol+'?command='+command, incomingRemoteControlResult, false);
 	if(webRemoteWindow.document.getElementById('getScreen').checked) {
-		getScreenShot();
+		if(webRemoteWindow.document.getElementById('getVideo').checked){
+			getScreenShot();
+		} else {
+			getScreenShot("o");
+		}
 	}
 }
 
-function getScreenShot() {
+function getScreenShot(what) {
 	debug("getScreenShot");
 	
 	setAjaxLoad('contentMain');
@@ -839,9 +843,20 @@ function getScreenShot() {
 		debug("reload grab image failed"); 
 		return true;
 	};
-
+	switch(what){
+		case "o":
+			what = "&o";
+			break;
+		case "v":
+			what = "&v";
+			break;
+		default:
+			what = ""
+			break;
+	}
+	
 	downloadStart = new Date().getTime();
-	buffer.src = '/grab?format=j&r=720&' + downloadStart;
+	buffer.src = '/grab?format=j&r=720&' + what + '&' + downloadStart;
 	
 //	$('grabPageIMG').height(400);
 //	tplRCGrab = $('BodyContent').innerHTML;
