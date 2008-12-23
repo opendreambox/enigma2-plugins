@@ -399,7 +399,7 @@ function zap(servicereference){
 							method: 'get'
 						}
 					);
-	delayedGetSubservices
+	delayedGetSubservices();
 }
 
 //++++       SignalPanel                           ++++
@@ -935,7 +935,7 @@ function delayedGetSubservices(){
 	setTimeout("getSubServices()", 5000);
 }
 
-var SubServicePoller = setInterval(getSubServices, 15000);
+var SubServicePoller = setInterval(getSubServices, 45000);
 var subServicesInsertedList = new Object();
 
 function incomingSubServiceRequest(request){
