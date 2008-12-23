@@ -5,12 +5,22 @@
 								<td>
 									<table class="sListItem">
 										<tr>
-											<td>										
+											<td style="width: 740px;">										
 												<div class="sListSName">
 													<a href="#" id="${movie.servicereference}" onclick="{ zap(this.id); }" class="sListSLink">
-														${movie.title } - ${movie.description} (${movie.servicename})
+														${movie.title} - ${movie.description} (${movie.servicename})
 													</a>
 												</div>
+											</td>
+											<td>
+												<a target="_blank" href="/web/ts.m3u?file=${movie.filelink}">
+													<img src="/webdata/gfx/screen.png" title="Play ${movie.title}" border="0">
+												</a>
+											</td>
+											<td>
+												<a target="_blank" href="/file/?file=${movie.filelink}&root=/hdd/movie/">
+													<img src="/webdata/gfx/save.png" title="Download ${movie.title}" border="0">
+												</a>
 											</td>
 											<td>
 												<a target="#" onclick="delMovieFile('${movie.filename}','${movie.servicename}','${movie.title}','${movie.description}');">
@@ -19,7 +29,7 @@
 											</td>
 										</tr>
 										<tr class="mListDetail" id="" style="">
-											<td class="mListDetailItem">
+											<td colspan="4" class="mListDetailItem">
 												<table cellspacing="0">
 													<tr>
 														<td class="mStart">${movie.time}</td>

@@ -259,13 +259,13 @@
 	}
 	
 	.mTitle{
-		width: 550px;
+		width: 650px;
 		border-right: 1px solid #CCC;
 		border-left: 1px solid #CCC;
 	}
 	
 	.mLength{
-		width: 70px;
+		width: 90px;
 		text-align: right;
 	}
 	

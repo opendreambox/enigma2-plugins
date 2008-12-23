@@ -1,5 +1,4 @@
 * Add Possibilty to grab OSD only (especially for WebRemote)
-* Add Streaming-Button to Movies
 * Add Now/Next & Running Service Information via Polling
 * Decide wether the MediaPlayer Menu should stay and if how.
 * Add Support for Multiple NICs in About

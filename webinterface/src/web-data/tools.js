@@ -191,7 +191,11 @@ function processTpl(tplName, data, domElement, callback){
 
 function renderTpl(tpl, data, domElement) {
 	var result = tpl.process(data);
-	$(domElement).innerHTML = result;
+	try{
+		$(domElement).innerHTML = result;
+	} catch(Exception){
+		debug("[renderTpl] Could not set tpl: " + tpl + " for DOM Element" + domElement);
+	}
 }
 
 var currentBouquet = bouquetsTv;
@@ -395,7 +399,7 @@ function zap(servicereference){
 							method: 'get'
 						}
 					);
-	setTimeout("getSubServices()", 5000);
+	delayedGetSubservices
 }
 
 //++++       SignalPanel                           ++++
@@ -633,7 +637,7 @@ function incomingBouquetList(request){
 	if (request.readyState == 4) {
 		var list0 = new ServiceList(getXML(request)).getArray();
 		debug("have "+list0.length+" TV Bouquet ");	
-		renderBouquetTable(list0, 'contentMain');
+		renderBouquetTable(list0, 'contentMain');		
 	}
 }
 
@@ -678,7 +682,7 @@ function incomingChannellist(request){
 		};
 		
 		processTpl('tplServiceList', data, 'contentMain', getBouquetEpg);
-
+		delayedGetSubservices();
 	}
 }
 
@@ -720,11 +724,10 @@ function incomingMovieList(request){
 function delMovieFile(file ,servicename, title, description) {
 	debug("delMovieFile: file("+file+"),servicename("+servicename+"),title("+title+"),description("+description+")");
 	var result = confirm(
-		"Selected timer:\n"
+		"Are you sure want to delete the Movie?\n"
 		+"Servicename: "+servicename+"\n"
 		+"Title: "+title+"\n"
 		+"Description: "+description+"\n"
-		+"Are you sure want to delete the Movie?"
 	);
 
 	if(result){
@@ -910,10 +913,14 @@ function ownLazyNumber(num) {
 }
 
 function getSubServices() {
-	doRequest(url_subservices,incomingSubServiceRequest, false);
+	doRequest(url_subservices, incomingSubServiceRequest, false);
 }
 
-//var SubServicePoller = setInterval(getSubServices, 15000);
+function delayedGetSubservices(){
+	setTimeout("getSubServices()", 5000);
+}
+
+var SubServicePoller = setInterval(getSubServices, 15000);
 var subServicesInsertedList = new Object();
 
 function incomingSubServiceRequest(request){
@@ -1503,7 +1510,6 @@ function init(){
 	if(DBG){
 		loadAndOpenDebug();
 	}
-	setTimeout("getSubServices()", 5000);
 	
 	setAjaxLoad('navContent');
 	setAjaxLoad('contentMain');
