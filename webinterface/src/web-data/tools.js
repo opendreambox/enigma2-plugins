@@ -924,7 +924,6 @@ function incomingSubServiceRequest(request){
 		if(services.length > 1) {
 			
 			first = services[0];
-			var mainChannellist = loadedChannellist[String($('mainServiceRef').value)];
 
 			last = false
 			var namespace = new Array();
@@ -937,13 +936,10 @@ function incomingSubServiceRequest(request){
 					'servicename': reference.getServiceName()
 				};
 			}
-			data = { subs : namespace };
+			data = { subservices : namespace };
 			
 			//TODO 'tplSubServices'
-			processTpl('tplSubServices', data, $('SUB'+first.getServiceReference));
-			
-			subServicesInsertedList[String(first.getServiceReference())] = services;
-			loadedChannellist[$('mainServiceRef').value] = mainChannellist;
+			processTpl('tplSubServices', data, 'SUB'+first.getServiceReference());
 		}
 	}
 }
@@ -1507,6 +1503,7 @@ function init(){
 	if(DBG){
 		loadAndOpenDebug();
 	}
+	setTimeout("getSubServices()", 5000);
 	
 	setAjaxLoad('navContent');
 	setAjaxLoad('contentMain');

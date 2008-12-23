@@ -7,24 +7,25 @@
 										<tr>
 											<td style="width: 740px;">										
 												<div class="sListSName">
-													<a href="#" id="${s.servicereference}" onclick="{ zap(this.id); }" class="sListSLink">
+													<a href="#" id="${s.servicereference}" onclick="{ zap(this.id); }" class="sListSLink" title="Zap to ${s.servicename}">
 														${s.servicename}
 													</a>
 												</div>
 											</td>
 											<td>
 												<a onclick="if ( parentPin( '${s.servicereference}' ) ) { loadEPGByServiceReference(this.id); }" id="${s.servicereference}">
-													<img src="/webdata/gfx/epg.png" border="0"/>
+													<img src="/webdata/gfx/epg.png" border="0" title="Show EPG for ${s.servicename}"/>
 												</a>
 											</td>
 											<td>
 												<a target="_blank" onclick="return parentPin( '${s.servicereference}' );" href="/web/stream.m3u?ref=${s.servicereference}">
-													<img src="/webdata/gfx/screen.png" title="stream Service" border="0">
+													<img src="/webdata/gfx/screen.png" title="Stream ${s.servicename}" border="0">
 												</a>
 											</td>											
 										</tr>
 										<tr class="sListEPGNow" id="NOW${s.servicereference}" style=""><td></td></tr>
-										<tr id="NEXT${s.servicereference}" style="visibility:collapse;"><td></td></tr>
+										<tr class="sListEPGNext" id="NEXT${s.servicereference}" style="visibility:collapse;"><td></td></tr>
+										<tr class="sListSubService" style=""><td colspan="3" id="SUB${s.servicereference}"></td></tr>
 									</table>
 								</td>
 							</tr>
