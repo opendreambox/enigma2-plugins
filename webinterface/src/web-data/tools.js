@@ -7,114 +7,10 @@ var templates = new Array();
 
 var mediaPlayerStarted = false;
 
-// Get Settings
+// Settings
 var settings = null;
 var parentControlList = null;
 
-// UpdateStreamReader
-var UpdateStreamReaderNextReadPos = 0;
-var UpdateStreamReaderPollTimer = null;
-var UpdateStreamReaderPollTimerCounter = 0;
-var UpdateStreamReaderRetryCounter = 0;
-var UpdateStreamReaderRetryLimit = 10
-var UpdateStreamReaderRequest = null;
-
-//var UpdateStreamReaderPollTimerCounterTwisted = 0;
-
-function UpdateStreamReaderStart(){
-	var ua = navigator.userAgent;
-	
-	if(navigator.userAgent.indexOf("MSIE") >=0) {
-		debug("UpdateStreamReader IE Fix");
-
-		var namespace = { 	
-					'url_updates': url_updates
-		};
-		$('UpdateStreamReaderIEFixPanel').innerHTML = RND(tplUpdateStreamReaderIE, namespace);
-		
-	}else {
-		UpdateStreamReaderNextReadPos = 0;
-		allMessages = "";
-		UpdateStreamReaderRequest = new XMLHttpRequest();
-		UpdateStreamReaderRequest.onerror = UpdateStreamReaderOnError;
-		UpdateStreamReaderRequest.open("GET", url_updates, true);
- 		UpdateStreamReaderRequest.send(null);
-		UpdateStreamReaderPollTimer = setInterval(UpdateStreamReaderLatestResponse, 1000);
-	}
-}
-  
-function UpdateStreamReaderLatestResponse() {
-	UpdateStreamReaderPollTimerCounter++;
-	
-	if(UpdateStreamReaderPollTimerCounter > 30) {
-		clearInterval(UpdateStreamReaderPollTimer);
-		UpdateStreamReaderRequest.abort();
-		UpdateStreamReaderRequest = null;
-		UpdateStreamReaderPollTimerCounter = 0;
-		UpdateStreamReaderStart();
-		
-//		UpdateStreamReaderPollTimerCounterTwisted++;
-		return;
-	}
-	var allMessages = UpdateStreamReaderRequest.responseText;
-	do {
-		var unprocessed = allMessages.substring(UpdateStreamReaderNextReadPos);
-		var messageXMLEndIndex = unprocessed.indexOf("\n");
-		
-		if (messageXMLEndIndex!=-1) {
-			//reset RetryCounter, if it was a reconnect, it succeeded!
-			UpdateStreamReaderRetryCounter = 0;
-			
-			var endOfFirstMessageIndex = messageXMLEndIndex + "\n".length;
-			var anUpdate = unprocessed.substring(0, endOfFirstMessageIndex);
-	
-			var re = new RegExp("<script>parent\.(.*)</script>");
-			anUpdate = re.exec(anUpdate);
-
-			if(anUpdate != null){
-				if (anUpdate.length == 2){
-					eval(anUpdate[1]);
-				}
-			}
-			
-			UpdateStreamReaderNextReadPos += endOfFirstMessageIndex;
-		}
-		if(UpdateStreamReaderNextReadPos > 65000){
-			UpdateStreamReaderRequest.abort();
-			UpdateStreamReaderRequest = null;
-			UpdateStreamReaderPollTimerCounter = 0;
-			UpdateStreamReaderStart();
-			messageXMLEndIndex = -1;
-		}
-	} while (messageXMLEndIndex != -1);
-}
-
-function UpdateStreamReaderOnError(){
-	window.clearInterval(UpdateStreamReaderPollTimer);
-	UpdateStreamReaderRetryCounter += 1;
-	
-	debug("[UpdateStreamReaderOnError] ErrorCount "+UpdateStreamReaderRetryCounter);
-	
-	if(UpdateStreamReaderRetryCounter >= UpdateStreamReaderRetryLimit){
-		debug("[UpdateStreamReaderOnError] RetryLimit reached!");
-		
-		UpdateStreamReaderRetryCounter = 0;
-		
-		Dialog.confirm(
-			"Live Update Stream has an Error!<br><br>You will not receive any Updates from Enigma2.<br>Should I try to reconnect?",
-			{	
-				windowParameters: {width:300, className: windowStyle},
-				okLabel: "reconnect",
-				buttonClass: "myButtonClass",
-				cancel: function(win) {debug("[UpdateStreamReaderOnError] cancel confirm panel")},
-				ok: function(win) {UpdateStreamReaderStart(); return true;}
-			}
-		);
-	} else {
-		setTimeout("UpdateStreamReaderStart()", 5000);
-	}
-}
-//end UpdateStreamReader
 
 //Popup And Messagebox Helpers
 function setWindowContent(window, html){
@@ -194,7 +90,7 @@ function renderTpl(tpl, data, domElement) {
 	try{
 		$(domElement).innerHTML = result;
 	} catch(Exception){
-		debug("[renderTpl] Could not set tpl: " + tpl + " for DOM Element" + domElement);
+		debug("[renderTpl] Could not find DOM Element " + domElement);
 	}
 }
 
