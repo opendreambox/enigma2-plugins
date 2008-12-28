@@ -56,7 +56,7 @@
 		function setMaxHeight(element){
 			var slc = $(element);
 			size = getWinSize();
-			slc.style.maxHeight = size.height - 160+"px";
+			slc.style.maxHeight = size.height - 200+"px";
 		}
 
 	</script>
@@ -91,6 +91,14 @@
 				<img id='volume10' onclick='volumeSet(100)' src='/webdata/img/led_off.png' title="Volume to 100%" alt="100%">
 				<img id='speaker' onclick='volumeMute()' src='/webdata/img/speak_on.png'  title="Mute" alt="Mute">
 			</div>
+		</div>
+		<div id="current">
+			<table id="currentTable">
+				<tr>
+					<td id="currentName">N/A</td>
+					<td id="currentDuration">N/A</td>
+				</tr>	
+			</table>
 		</div>
 		<div id="main">
 			<div id="navContainer">
@@ -132,6 +140,7 @@
 
 		var bannerBorder = RUZEE.ShadedBorder.create({corner:5, shadow:10});
 		bannerBorder.render('banner');
+		bannerBorder.render('current');
 
 		var contentBorder = RUZEE.ShadedBorder.create({corner:5, border: 2, shadow:10});
 		contentBorder.render('nav');

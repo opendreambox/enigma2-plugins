@@ -3,6 +3,8 @@
 var DBG = true;
 DBG = false;
 
+var url_getcurrent = '/web/getcurrent';
+
 var url_getvolume = '/web/vol?set=state'; 
 var url_setvolume = '/web/vol?set=set'; // plus new value eg: set=set15
 var url_volumeup = '/web/vol?set=up';

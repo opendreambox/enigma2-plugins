@@ -828,6 +828,7 @@ function ownLazyNumber(num) {
 	}
 }
 
+
 function getSubServices() {
 	doRequest(url_subservices, incomingSubServiceRequest, false);
 }
@@ -835,9 +836,6 @@ function getSubServices() {
 function delayedGetSubservices(){
 	setTimeout("getSubServices()", 5000);
 }
-
-var SubServicePoller = setInterval(getSubServices, 45000);
-var subServicesInsertedList = new Object();
 
 function incomingSubServiceRequest(request){
 	if(request.readyState == 4){
@@ -986,9 +984,9 @@ function showAbout() {
 function incomingAbout(request) {
 	if(request.readyState == 4){
 		debug("[incomingAbout] returned");
-		var aboutEntries = getXML(request).getElementsByTagName("e2abouts").item(0).getElementsByTagName("e2about");
+		var xml = getXML(request).getElementsByTagName("e2abouts").item(0).getElementsByTagName("e2about");
 
-		var xml = aboutEntries.item(0);
+		xml = xml.item(0);
 		
 		var namespace = {};
 		var ns = new Array();
@@ -1278,7 +1276,7 @@ function delFile(file,root) {
 	doRequest(url_delfile+root+file, incomingDelFileResult, false);
 }
 function incomingDelFileResult(request) {
-	debug("[incomingDelFileResult]");
+	debug("[incomingDelFileResult called]");
 	if(request.readyState == 4){
 		var delresult = new SimpleXMLResult(getXML(request));
 		if(delresult.getState()){
@@ -1289,6 +1287,34 @@ function incomingDelFileResult(request) {
 	}		
 }
 
+
+function getCurrent(){
+//	debug("[getCurrent] called")
+	doRequest(url_getcurrent, incomingCurrent, false)
+}
+
+function incomingCurrent(request){
+//	debug("[incomingCurrent called]");
+	if(request.readyState == 4){
+		try{
+			var xml = getXML(request).getElementsByTagName("e2currentserviceinformation").item(0);
+			
+			var servicereference = xml.getElementsByTagName('e2servicereference').item(0).firstChild.data;
+			var servicename = xml.getElementsByTagName('e2servicename').item(0).firstChild.data;
+			var currentname = xml.getElementsByTagName('e2eventname').item(0).firstChild.data;
+			var currentduration	= xml.getElementsByTagName('e2eventduration').item(0).firstChild.data;
+			
+			if(servicereference.length > 0){
+				set('currentName', servicename + ' - ' + currentname );
+				set('currentDuration', currentduration);
+			} else {
+				set('currentName', 'N/A');
+				set('currentDuration', 'N/A');
+			}
+		} catch (e){}
+		
+	}
+}
 
 //Navigation and Content Helper Functions
 /*
@@ -1419,9 +1445,22 @@ function switchMode(mode){
 }
 
 
+
+
+function updateItems(){
+	getCurrent();
+}
+
+function updateItemsLazy(){
+	getSubServices();
+	getBouquetEpg();
+}
 /*
  * Does the everything required on initial pageload
  */
+var updateItemsPoller = setInterval(updateItems, 5000);
+var updateItemsLazyPoller = setInterval(updateItemsLazy, 60000);
+
 function init(){
 	if(DBG){
 		loadAndOpenDebug();
@@ -1435,4 +1474,6 @@ function init(){
 	
 	initChannelList();
 	initVolumePanel();
+	
+	updateItems();
 }
