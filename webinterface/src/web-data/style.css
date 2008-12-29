@@ -27,6 +27,10 @@
 	.fullwidth {
 		width: 100%;
 	}
+	
+	.center {
+		text-align: center;
+	}
 
 
 /***********************
@@ -166,6 +170,28 @@
 		background: #000;
 		text-align: center;
 	}
+	
+	
+	#navVolume{
+		width: 100%;
+		height: 75px;
+		background: #000;
+		padding-left: 0px;
+	}
+
+	#navVolume, #navVolume .sb-inner { 
+		background:#FFF; 
+		padding-left: 2px;
+		padding-right: 2px;
+	}
+	#navVolume .sb-border { background:#000; }
+
+	#volHd, #volHd .sb-inner{
+		background: #000;
+		text-align: center;
+	}
+	
+	
 
 /**************
  Content

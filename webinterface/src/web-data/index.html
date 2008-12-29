@@ -76,20 +76,7 @@
 				</ul>
 			</div>
 			<div id="bannerRight">
-				<!-- Volume Panel -->
-				<img onclick='volumeUp()' src='/webdata/img/arrow_up.png'  title="Volume Up" alt="Up">
-				<img onclick='volumeDown()' src='/webdata/img/arrow_down.png'  title="Volume Down" alt="Down">
-				<img id='volume1' onclick='volumeSet(10)' src='/webdata/img/led_off.png' title="Volume to 10%" alt="10%">
-				<img id='volume2' onclick='volumeSet(20)' src='/webdata/img/led_off.png' title="Volume to 20%" alt="20%">
-				<img id='volume3' onclick='volumeSet(30)' src='/webdata/img/led_off.png' title="Volume to 30%" alt="30%">
-				<img id='volume4' onclick='volumeSet(40)' src='/webdata/img/led_off.png' title="Volume to 40%" alt="40%">
-				<img id='volume5' onclick='volumeSet(50)' src='/webdata/img/led_off.png' title="Volume to 50%" alt="50%">
-				<img id='volume6' onclick='volumeSet(60)' src='/webdata/img/led_off.png' title="Volume to 60%" alt="60%">
-				<img id='volume7' onclick='volumeSet(70)' src='/webdata/img/led_off.png' title="Volume to 70%" alt="70%">
-				<img id='volume8' onclick='volumeSet(80)' src='/webdata/img/led_off.png' title="Volume to 80%" alt="80%">
-				<img id='volume9' onclick='volumeSet(90)' src='/webdata/img/led_off.png' title="Volume to 90%" alt="90%">
-				<img id='volume10' onclick='volumeSet(100)' src='/webdata/img/led_off.png' title="Volume to 100%" alt="100%">
-				<img id='speaker' onclick='volumeMute()' src='/webdata/img/speak_on.png'  title="Mute" alt="Mute">
+				<!-- Volume Panel -->			
 			</div>
 		</div>
 		<div id="current">
@@ -105,6 +92,26 @@
 				<div id="nav">
 					<div id="navHd" class="header"><div>SubNav</div></div>
 					<div id="navContent">loading...</div>
+				</div>
+				<div id="navVolume">
+					<div id="volHd" class="header"><div>Volume</div></div>
+					<span class="boxContent center" style="width: 100%; display:block;">
+						<img id='volume1' onclick='volumeSet(10)' src='/webdata/img/led_off.png' title="Volume to 10%" alt="10%">
+						<img id='volume2' onclick='volumeSet(20)' src='/webdata/img/led_off.png' title="Volume to 20%" alt="20%">
+						<img id='volume3' onclick='volumeSet(30)' src='/webdata/img/led_off.png' title="Volume to 30%" alt="30%">
+						<img id='volume4' onclick='volumeSet(40)' src='/webdata/img/led_off.png' title="Volume to 40%" alt="40%">
+						<img id='volume5' onclick='volumeSet(50)' src='/webdata/img/led_off.png' title="Volume to 50%" alt="50%">
+						<img id='volume6' onclick='volumeSet(60)' src='/webdata/img/led_off.png' title="Volume to 60%" alt="60%">
+						<img id='volume7' onclick='volumeSet(70)' src='/webdata/img/led_off.png' title="Volume to 70%" alt="70%">
+						<img id='volume8' onclick='volumeSet(80)' src='/webdata/img/led_off.png' title="Volume to 80%" alt="80%">
+						<img id='volume9' onclick='volumeSet(90)' src='/webdata/img/led_off.png' title="Volume to 90%" alt="90%">
+						<img id='volume10' onclick='volumeSet(100)' src='/webdata/img/led_off.png' title="Volume to 100%" alt="100%">
+						<br>
+						<img onclick='volumeUp()' src='/webdata/img/arrow_up.png'  title="Volume Up" alt="Up">
+						<img onclick='volumeDown()' src='/webdata/img/arrow_down.png'  title="Volume Down" alt="Down">
+						<img id='speaker' onclick='volumeMute()' src='/webdata/img/speak_on.png'  title="Mute" alt="Mute">
+						<br>						
+					</span>
 				</div>
 				<div id="navSearch">
 					<div id="searchHd" class="header"><div>EPG-Search</div></div>
@@ -145,11 +152,13 @@
 		var contentBorder = RUZEE.ShadedBorder.create({corner:5, border: 2, shadow:10});
 		contentBorder.render('nav');
 		contentBorder.render('navSearch');
+		contentBorder.render('navVolume');
 		contentBorder.render('content');
 
 		var hdBorder = RUZEE.ShadedBorder.create({corner:5, edges:"tlr"});
 		hdBorder.render('navHd');
 		hdBorder.render('searchHd');
+		hdBorder.render('volHd');
 		hdBorder.render('contentHd');
 		
 		function setNavHd(content){
