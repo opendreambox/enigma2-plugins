@@ -11,6 +11,19 @@
 		color: #FFF;
 		text-decoration: none;
 	}
+
+/***********************
+ GENERAL
+ ***********************/
+
+	.odd{
+		background-color: #FFF;
+	}
+	.even{
+		background-color: #DDD;
+	}
+
+
 /***********************
  BANNER with MainMenu
  ***********************/
@@ -199,7 +212,7 @@
 ******************/		
 	.sListSName a{
 		display: block;
-		margin: 1px;
+		margin: 0px;
 		color: #485052;
 	}
 	
@@ -211,6 +224,8 @@
 	
 	.sListEPGItem{
 		font-size:12px;
+		margin: 0px;
+		padding: 0px;
 	}
 	
 	.header{
@@ -261,7 +276,7 @@
 	}
 	
 	.sListItem{
-		border-bottom: 2px solid #CCC;
+		/*border-bottom: 2px solid #CCC;*/
 		width: 780px;
 	}
 
@@ -274,8 +289,8 @@
 	
 	.epgTitle{
 		width: 680px;
-		border-right: 1px solid #CCC;
-		border-left: 1px solid #CCC;
+/*		border-right: 1px solid #CCC;
+		border-left: 1px solid #CCC; */
 	}
 	
 	.epgLength{
@@ -289,8 +304,8 @@
 	
 	.mTitle{
 		width: 650px;
-		border-right: 1px solid #CCC;
-		border-left: 1px solid #CCC;
+/*		border-right: 1px solid #CCC;
+		border-left: 1px solid #CCC; */
 	}
 	
 	.mLength{

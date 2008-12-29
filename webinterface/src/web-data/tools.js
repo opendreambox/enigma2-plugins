@@ -592,11 +592,17 @@ function incomingChannellist(request){
 	}
 	if(services != null) {
 		var namespace = new Array();
+		var cssclass = "even";
+		
 		for ( var i = 0; i < services.length ; i++){
+			
+			cssclass = cssclass == 'even' ? 'odd' : 'even';
+			
 			var service = services[i];
 			namespace[i] = { 	
 				'servicereference': service.getServiceReference(),
-				'servicename': service.getServiceName()
+				'servicename': service.getServiceName(),
+				'class' : cssclass
 			};
 		}
 		var data = { 
