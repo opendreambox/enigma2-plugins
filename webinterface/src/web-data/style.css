@@ -19,8 +19,13 @@
 	.odd{
 		background-color: #FFF;
 	}
+	
 	.even{
 		background-color: #DDD;
+	}
+	
+	.fullwidth {
+		width: 100%;
 	}
 
 
@@ -335,10 +340,6 @@
 		padding: 0px;
 	}
 
-	.fullwidth {
-		width: 100%;
-	}
-
 	.aboutSection{
 		width:100%;
 		margin: 0 0 0 0;
@@ -377,57 +378,83 @@
 /*****************
 * Timer
 ******************/		
+	.tListItemTable{
+		width: 100%;
+	}
+
+	.tListHead{
+		/*background-color: #DDD; */
+	}
+
 	.tListSName{
-	width: 180px;
-	text-align: left;
+		text-align: left;
 	}
+
 	.tListItem{
-		background-color: #EEE;
+/*		background-color: #EEE; */
+		font-weight: normal;
+		font-size: 12px;
 	}
+	
 	.tListTitle{
 		width: 150px;
 		text-align: left;
 	}
+	
 	.tListDescr{
 		width: 150px;
 		text-align: left;
 	}
+	
 	.tListRepeat{
 		width: 70px;
 		text-align: left;
 	}
+	
 	.tListDuration{
 		width: 70px;
 		text-align: left;
 	}
+	
 	.tListBegin{
 		width: 100px;
 		text-align: left;
 	}
+	
 	.tListEnd{
 		width: 100px;
 		text-align: left;
 	}
+	
 	.tListAfter{
 		width: 85px;
 		text-align: left;
 	}
+	
 	.tListOption{
 		width: 80px;
 		text-align: center;
 	}
-	#TimerColor0 {
+	
+	.timerState0 {
 		color: #000000;
 	}
-	#TimerColor1 {
+	
+	.timerState1 {
 		color: #00BCBC;
-		background-color: #DDD;
 	}
-	#TimerColor2 {
-		color: #9F1919;
-		background-color: #DDD;
+	
+	.timerState2 {
+		color: #990000;
 	}
-	#TimerColor3 {
-		color: #00BCBC;
-		background-color: #DDD;
+	
+	.timerState3 {
+		color: #000099;		
+	}
+	
+/*****************
+* EPG List
+******************/			
+	.epgListItem{
+		font-size:12px;
 	}

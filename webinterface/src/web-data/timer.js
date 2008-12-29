@@ -47,12 +47,16 @@ function incomingTimerList(request){
 		var justplayReadable = new Array('record', 'zap');
 		
 		var namespace = [];
+		var cssclass = "even";
+		
 		for ( var i = 0; i < timers.length; i++){
 			var timer = timers[i];
 			var beginDate = new Date(Number(timer.getTimeBegin())*1000);
 			var endDate = new Date(Number(timer.getTimeEnd())*1000);
 			
 			var enDis = timer.getToggleDisabledIMG() == "on" ? "Disable Timer" : "Enable Timer";
+			
+			cssclass = cssclass == 'even' ? 'odd' : 'even';
 			
 			namespace[i] = { 	
 				'servicereference': timer.getServiceReference(),
@@ -61,9 +65,9 @@ function incomingTimerList(request){
 				'description': quotes2html(timer.getDescription()),
 				'descriptionextended': quotes2html(timer.getDescriptionExtended()),
 				'begin': timer.getTimeBegin(),
-				'beginDate': beginDate.toLocaleString(),
+				'beginDate': dateToString(beginDate),
 				'end': timer.getTimeEnd(),
-				'endDate': endDate.toLocaleString(),
+				'endDate': dateToString(endDate),
 				'state': timer.getState(),
 				'duration': Math.ceil((timer.getDuration()/60)),
 				'repeated': timer.getRepeated(),
@@ -75,7 +79,7 @@ function incomingTimerList(request){
 				'disabled': timer.getDisabled(),
 				'onOff': timer.getToggleDisabledIMG(),
 				'enDis': timer.getToggleDisabledText(),
-				'color': timer.getColor()
+				'class': cssclass
 			};			
 		}
 		data = { timer : namespace };
