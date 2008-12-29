@@ -152,6 +152,16 @@ function showhide(id){
  	o.display = (o.display!="none")? "none":"";
 }
 
+function show(id){
+	try{
+		$(id).style.display = "";
+	} catch(e) {};
+}
+
+function hide(id){
+	$(id).style.display = "none";
+}
+
 function set(element, value){
 	if(element == "CurrentService") {
 		if(value.search(/^MP3 File:/) != -1) {
@@ -430,7 +440,7 @@ function buildServiceListEPGItem(epgevent, type){
 			
 			var id = type + epgevent.getServiceReference();
 			
-			$(id).style.visibility='visible';
+			show(id);
 			
 			if(templates['tplServiceListEPGItem'] != null){
 				renderTpl(templates['tplServiceListEPGItem'], data, id);
@@ -625,10 +635,16 @@ function loadMovieList(tag){
 
 function incomingMovieList(request){
 	if(request.readyState == 4){
+		
 		var movies = new MovieList(getXML(request)).getArray();
 		debug("[incomingMovieList] Got "+movies.length+" movies");
 		namespace = new Array();	
+		
+		var cssclass = "even";
+		
 		for ( var i = 0; i < movies.length; i++){
+			cssclass = cssclass == 'even' ? 'odd' : 'even';
+			
 			var movie = movies[i];
 			namespace[i] = { 	
 				'servicereference': movie.getServiceReference(),
@@ -641,7 +657,8 @@ function incomingMovieList(request){
 				'filesize': movie.getFilesizeMB(),
 				'tags': movie.getTags().join(', ') ,
 				'length': movie.getLength() ,
-				'time': movie.getTimeDay()+"&nbsp;"+ movie.getTimeStartString()
+				'time': movie.getTimeDay()+"&nbsp;"+ movie.getTimeStartString(),
+				'class' : cssclass
 			};
 		}
 		data = { movies : namespace }
@@ -888,8 +905,10 @@ function incomingSubServiceRequest(request){
 			}
 			data = { subservices : namespace };
 			
-			//TODO 'tplSubServices'
-			processTpl('tplSubServices', data, 'SUB'+first.getServiceReference());
+			
+			var id = 'SUB'+first.getServiceReference();
+			show(id);
+			processTpl('tplSubServices', data, id);
 		}
 	}
 }

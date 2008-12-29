@@ -2,19 +2,19 @@
 						<table id="contentTable">
 							{for movie in movies}
 							<tr>
-								<td>
+								<td class="${movie.class}" >
 									<table class="sListItem">
 										<tr>
 											<td style="width: 740px;">										
 												<div class="sListSName">
-													<a href="#" id="${movie.servicereference}" onclick="{ zap(this.id); }" class="sListSLink">
+													<a href="#" id="${movie.servicereference}" onclick="{ zap(this.id); }" class="sListSLink" title="Play ${movie.title}">
 														${movie.title} - ${movie.description} (${movie.servicename})
 													</a>
 												</div>
 											</td>
 											<td>
 												<a target="_blank" href="/web/ts.m3u?file=${movie.filelink}">
-													<img src="/webdata/gfx/screen.png" title="Play ${movie.title}" border="0">
+													<img src="/webdata/gfx/screen.png" title="Stream ${movie.title}" border="0">
 												</a>
 											</td>
 											<td>
@@ -28,7 +28,7 @@
 												</a>
 											</td>
 										</tr>
-										<tr class="mListDetail" id="" style="">
+										<tr class="mListDetail">
 											<td colspan="4" class="mListDetailItem">
 												<table cellspacing="0">
 													<tr>

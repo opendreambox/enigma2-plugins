@@ -212,7 +212,7 @@
 ******************/		
 	.sListSName a{
 		display: block;
-		margin: 0px;
+		margin-right: 5px;
 		color: #485052;
 	}
 	
@@ -289,13 +289,19 @@
 	
 	.epgTitle{
 		width: 680px;
-/*		border-right: 1px solid #CCC;
-		border-left: 1px solid #CCC; */
 	}
 	
 	.epgLength{
 		width: 50px;
 		text-align: right;
+	}
+	
+	
+/*****************
+* MovieList EPG
+******************/	
+	.mListDetail{
+		font-size: 12px;
 	}
 	
 	.mStart{
@@ -304,8 +310,6 @@
 	
 	.mTitle{
 		width: 650px;
-/*		border-right: 1px solid #CCC;
-		border-left: 1px solid #CCC; */
 	}
 	
 	.mLength{
