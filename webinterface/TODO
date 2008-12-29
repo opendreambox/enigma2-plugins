@@ -1,3 +1,8 @@
-* Add Now/Next & Running Service Information via Polling
+* Finish "Current Service" Stuff
 * Decide wether the MediaPlayer Menu should stay and if how.
 * Add Support for Multiple NICs in About
+* Add own Section on the Left side for Volume Control
+* Readd Signalpanel
+* add box dependent remote control picture (for dm8000)
+* rename "extra" to "boxcontrol"
+* add new button "info" and move "about" from "extra" to "info"

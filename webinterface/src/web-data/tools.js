@@ -39,7 +39,8 @@ function openPopup(title, html, width, height, x, y){
 		return null;
 	}
 }
-	
+
+
 function messageBox(m){
 	alert(m);
 }
@@ -63,6 +64,7 @@ function fetchTpl(tplName, callback){
 				onComplete: requestFinished 
 			});
 }
+
 
 function saveTpl(request, tplName){
 	templates[tplName] = request.responseText;
@@ -122,8 +124,6 @@ function quotes2html(txt) {
 
 function dateToString(date){
 
-	
-	
 	var dateString = "";
 	
 	dateString += date.getFullYear();
