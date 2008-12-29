@@ -51,6 +51,7 @@ var url_messageanswer = "/web/messageanswer?getanswer=now";
 
 var url_powerstate = "/web/powerstate"; // plus new powerstate
 var url_remotecontrol = "/web/remotecontrol"; // plus command
+var url_signal = "/web/signal";
 
 var url_notelist = "/notes";
 var url_note = "/notes?show="; //plus filename

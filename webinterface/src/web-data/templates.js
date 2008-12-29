@@ -44,8 +44,6 @@ var tplExtraHiddenFunctions  = '<ul style="list-style-type:disc">';
 	tplExtraHiddenFunctions += '<li><div onclick="startDebugWindow();">Start Debug-Window</div></li>';
 	tplExtraHiddenFunctions += '</ul>'
 
-var tplRCGrab  = '<IMG id="grabPageIMG" src=""/ height="400" alt="loading image">';
-
 var tplMediaPlayerHeader  = '<div class="BodyContentChannellist">\n<table border="0" cellpadding="0" cellspacing="0" class="BodyContentChannellist">\n';
 	tplMediaPlayerHeader += '<thead class="fixedHeader">\n';
 	tplMediaPlayerHeader += '<tr>\n';

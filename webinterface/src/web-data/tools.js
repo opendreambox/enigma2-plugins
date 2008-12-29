@@ -48,21 +48,27 @@ function messageBox(m){
 
 //Template Helpers
 function fetchTpl(tplName, callback){
-	url = "/webdata/tpl/"+tplName+".htm";
-		new Ajax.Request(url,
-			{
-				asynchronous: true,
-				method: 'GET',
-				requestHeaders: ['Pragma', 'no-cache', 'Cache-Control', 'must-revalidate', 'If-Modified-Since', 'Sat, 1 Jan 2000 00:00:00 GMT'],
-				onException: function(o, e){ throw(e); },				
-				onSuccess: function(request){
-								saveTpl(request, tplName)
-									if(callback != null){
-										callback();
-									}
-							},
-				onComplete: requestFinished 
-			});
+	if(templates[tplName] == null){
+		url = "/webdata/tpl/"+tplName+".htm";
+			new Ajax.Request(url,
+				{
+					asynchronous: true,
+					method: 'GET',
+					requestHeaders: ['Pragma', 'no-cache', 'Cache-Control', 'must-revalidate', 'If-Modified-Since', 'Sat, 1 Jan 2000 00:00:00 GMT'],
+					onException: function(o, e){ throw(e); },				
+					onSuccess: function(request){
+									saveTpl(request, tplName);
+										if(callback != null){
+											callback();
+										}
+								},
+					onComplete: requestFinished 
+				});
+	} else {
+		if(callback != null){
+			callback();
+		}
+	}
 }
 
 
@@ -333,10 +339,53 @@ function zap(servicereference){
 }
 
 //++++       SignalPanel                           ++++
-function openSignalDialog(){
-	openPopup("Signal Info",tplSignalPanel, 215, 100,620,40);
+var signalWin = '';
+var signalPanelData = {};
+var signalPanelUpdatePoller = '';
+
+function updateSignalPanel(){
+	
+	html = templates['tplSignalPanel'].process(signalPanelData)
+	if (!signalWin.closed && signalWin.location) {
+		setWindowContent(signalWin, html);
+	} else {
+		clearInterval(signalPanelUpdatePoller);
+		signalPanelUpdatePoller = '';
+	}
 }
 
+
+
+function incomingSignalPanel(request){
+	var namespace = {};
+	
+	if (request.readyState == 4){
+		var xml = getXML(request).getElementsByTagName("e2frontendstatus").item(0);
+		namespace = {
+			snrdb : xml.getElementsByTagName('e2snrdb').item(0).firstChild.data,
+			snr : xml.getElementsByTagName('e2snr').item(0).firstChild.data,
+			ber : xml.getElementsByTagName('e2ber').item(0).firstChild.data,
+			acg : xml.getElementsByTagName('e2acg').item(0).firstChild.data
+		}				
+	}
+	
+	signalPanelData = { signal : namespace };
+	fetchTpl('tplSignalPanel', updateSignalPanel); 	
+}
+
+function openSignalPanel(){
+	if (!(!signalWin.closed && signalWin.location)){
+		signalWin = openPopup('Signal Panel', '', 220, 120);
+		if(signalPanelUpdatePoller == ''){
+			signalPanelUpdatePoller = setInterval(reloadSignalPanel, 5000);
+		}
+	}
+	reloadSignalPanel();
+}
+
+function reloadSignalPanel(){
+	doRequest(url_signal, incomingSignalPanel, false)
+}
 
 //++++ EPG functions                               ++++
 function loadEPGBySearchString(string){
@@ -1545,6 +1594,8 @@ function init(){
 	
 	initChannelList();
 	initVolumePanel();
+	
+//	TODO openSignalPanel();
 	
 	updateItems();
 }
