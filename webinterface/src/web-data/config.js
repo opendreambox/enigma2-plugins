@@ -14,6 +14,7 @@ var url_volumemute = '/web/vol?set=mute';
 var url_epgservice = "/web/epgservice?sRef="; // plus serviceRef
 var url_epgsearch = "/web/epgsearch?search="; // plus serviceRef
 var url_epgnow = "/web/epgnow?bRef="; // plus bouquetRev
+var url_epgnext = "/web/epgnext?bRef="; // plus bouquetRev
 
 var url_getServices = "/web/getservices?sRef="; // plus serviceref
 var url_subservices = "/web/subservices"; // subservices for current service

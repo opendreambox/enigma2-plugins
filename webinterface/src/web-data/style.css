@@ -209,6 +209,10 @@
 		display: block;
 	}
 	
+	.sListEPGItem{
+		font-size:12px;
+	}
+	
 	.header{
 		padding-top: 2px;
 		padding-left: 4px;

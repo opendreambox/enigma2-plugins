@@ -95,8 +95,10 @@ function renderTpl(tpl, data, domElement) {
 }
 
 var currentBouquet = bouquetsTv;
+
 function getBouquetEpg(){
 	loadServiceEPGNowNext(currentBouquet);
+	loadServiceEPGNowNext(currentBouquet, true);
 }
 
 function d2h(nr, len){
@@ -165,7 +167,7 @@ function set(element, value){
 	}
 	if(navigator.userAgent.indexOf("MSIE") >=0) {
 		try{
-			elementscript= $('UpdateStreamReaderIEFixIFrame').$('scriptzone');
+			elementscript = $('UpdateStreamReaderIEFixIFrame').$('scriptzone');
 			if(elementscript){
 				elementscript.innerHTML = ""; // deleting set() from page, to keep the page short and to save memory			
 			}
@@ -180,7 +182,7 @@ function setComplete(element, value){
 	if (element){
 		element.innerHTML = value;
 	}
-	if(navigator.userAgent.indexOf("MSIE") >=0) {
+	if(navigator.userAgent.indexOf("MSIE") >= 0) {
 		elementscript= $('UpdateStreamReaderIEFixIFrame').$('scriptzone');
 		if(elementscript){
 			elementscript.innerHTML = ""; // deleting set() from page, to keep the page short and to save memory			
@@ -380,23 +382,40 @@ function extdescriptionSmall(txt,num) {
 	}
 }	
 
-function loadServiceEPGNowNext(servicereference){
-	var url = url_epgnow+servicereference;
-	doRequest(url, incomingServiceEPGNowNext, false);
-}
-
-function incomingServiceEPGNowNext(request){
+function incomingServiceEPGNowNext(request, type){
 	if(request.readyState == 4){
 		var epgevents = getXML(request).getElementsByTagName("e2eventlist").item(0).getElementsByTagName("e2event");
 		for (var c=0; c < epgevents.length; c++){
 			var epgEvt = new EPGEvent(epgevents.item(c));
 			
 			if (epgEvt.getEventId() != 'None'){
-				buildServiceListEPGItem(epgEvt,"NOW");
+				buildServiceListEPGItem(epgEvt, type);
 			}
 		}
 	}
 }
+
+function incomingServiceEPGNow(request){
+	incomingServiceEPGNowNext(request, 'NOW');
+}
+
+function incomingServiceEPGNext(request){
+	incomingServiceEPGNowNext(request, 'NEXT');
+}
+
+function loadServiceEPGNowNext(servicereference, next){
+	var url = url_epgnow+servicereference;
+	
+	if(typeof(next) == 'undefined'){
+		doRequest(url, incomingServiceEPGNow, false);
+	} else {
+		url = url_epgnext+servicereference;
+		doRequest(url, incomingServiceEPGNext, false);
+	}
+	
+	
+}
+
 
 function buildServiceListEPGItem(epgevent, type){
 	var e = $(type+epgevent.getServiceReference());
@@ -1458,7 +1477,7 @@ function updateItemsLazy(){
 /*
  * Does the everything required on initial pageload
  */
-var updateItemsPoller = setInterval(updateItems, 5000);
+var updateItemsPoller = setInterval(updateItems, 7500);
 var updateItemsLazyPoller = setInterval(updateItemsLazy, 60000);
 
 function init(){
