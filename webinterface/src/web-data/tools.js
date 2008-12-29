@@ -428,8 +428,12 @@ function buildServiceListEPGItem(epgevent, type){
 			var data = {epg : namespace};
 			//e.innerHTML = RND(tplServiceListEPGItem, namespace);
 			
+			var id = type + epgevent.getServiceReference();
+			
+			$(id).style.visibility='visible';
+			
 			if(templates['tplServiceListEPGItem'] != null){
-				renderTpl(templates['tplServiceListEPGItem'], data, type + epgevent.getServiceReference());
+				renderTpl(templates['tplServiceListEPGItem'], data, id);
 			} else {
 				debug("[EPGItem] tplServiceListEPGItem N/A");
 			}
