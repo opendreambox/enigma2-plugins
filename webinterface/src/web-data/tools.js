@@ -11,124 +11,50 @@ var mediaPlayerStarted = false;
 var settings = null;
 var parentControlList = null;
 
-
-//Popup And Messagebox Helpers
-function setWindowContent(window, html){
-	window.document.write(html);
-	window.document.close();
-}
-
+// Globals
 var popUpBlockerHinted = false;
+var requestcounter = 0;
 
-function popUpBlockerHint(){
-	if(!popUpBlockerHinted){
-		alert("Please disable your Popup-Blocker for enigma2 WebControl to work flawlessly!");
-		popUpBlockerHinted = true;
-	}
-}
-
-function openPopup(title, html, width, height, x, y){
-	debug("[openPopup] Opening Window: " + title);
-	
-	var popup = window.open('about:blank',title,'scrollbars=yes, width='+width+',height='+height+',left='+x+',top='+y+',screenX='+x+',screenY='+y);
-	try {
-		setWindowContent(popup, html);
-		return popup;
-	} catch(e){
-		popUpBlockerHint();
-		return null;
-	}
-}
-
-
-function messageBox(m){
-	alert(m);
-}
-
-
-
-
-//Template Helpers
-function saveTpl(request, tplName){
-	templates[tplName] = request.responseText;
-}
-
-
-function renderTpl(tpl, data, domElement) {
-//	try{
-		result = tpl.process(data);
-		$(domElement).innerHTML = result;
-//	} catch(e){
-//		debug("[renderTpl] Exception: " + e);
-//	}
-}
-
-
-function fetchTpl(tplName, callback){
-	if(typeof(templates.tplName) == 'undefined') {
-		url = "/webdata/tpl/"+tplName+".htm";
-		options = {
-				asynchronous: true,
-				method: 'GET',
-				requestHeaders: ['Pragma', 'no-cache', 'Cache-Control', 'must-revalidate', 'If-Modified-Since', 'Sat, 1 Jan 2000 00:00:00 GMT'],
-				onException: function(o, e){ throw(e); },				
-				onSuccess: function(request){
-								saveTpl(request, tplName);
-									if(typeof(callback) != 'undefined'){
-										callback();
-									}
-							},
-				onComplete: requestFinished 
-			};
-			
-		request = new Ajax.Request(url, options);
-	} else {
-		if(typeof(callback) != 'undefined'){
-			callback();
-		}
-	}
-}
-
-
-function processTpl(tplName, data, domElement, callback){
-	debug("[processTpl] processing " + tplName);
-	debug("[processTpl] domElement " + domElement);
-	url = "/webdata/tpl/"+tplName+".htm";
-		request = new Ajax.Request(url,
-			{
-				asynchronous: true,
-				method: 'GET',
-				requestHeaders: ['Pragma', 'no-cache', 'Cache-Control', 'must-revalidate', 'If-Modified-Since', 'Sat, 1 Jan 2000 00:00:00 GMT'],
-				onException: function(o, e){ throw(e); },				
-				onSuccess: function(request){								
-								renderTpl(request.responseText, data, domElement);
-								if(typeof(callback) != 'undefined') {
-									callback();
-								}
-							},
-				onComplete: requestFinished 
-			});
-}
+var debugWin = '';
+var signalWin = '';
+var webRemoteWin = '';
+var signalPanelUpdatePoller = '';
+var EPGListWindow = '';
+var MessageAnswerPolling = '';
 
 var currentBouquet = bouquetsTv;
 
-function getBouquetEpg(){
-	loadServiceEPGNowNext(currentBouquet);
-	loadServiceEPGNowNext(currentBouquet, true);
+var signalPanelData = {};
+var epgListData = {};
+var bouquetsMemory = {};
+var loadedChannellist = {};
+
+var updateItemsPoller = setInterval(updateItems, 7500);
+var updateItemsLazyPoller = setInterval(updateItemsLazy, 60000);
+
+
+//General Helpers
+function ownLazyNumber(num) {
+	if(isNaN(num)){
+		return 0;
+	} else {
+		return Number(num);
+	}
 }
+
 
 function d2h(nr, len){
 
-		hex = parseInt(nr, 10).toString(16).toUpperCase();
-		if(len > 0){
-			try{
-				while(hex.length < len){
-					hex = "0"+hex;
-				}
-			} 
-			catch(e){}
+	hex = parseInt(nr, 10).toString(16).toUpperCase();
+	if(len > 0){
+		try{
+			while(hex.length < len){
+				hex = "0"+hex;
+			}
 		} 
-		return hex;
+		catch(e){}
+	} 
+	return hex;
 }
 
 function quotes2html(txt) {
@@ -157,33 +83,6 @@ function dateToString(date){
 	dateString += ":" + minutes;
 	
 	return dateString;
-}
-
-//Debugging Window
-var debugWin = '';
-
-function openDebug(){
-	debugWin = openPopup("Debug", templates.tplDebug, 500, 300);
-}
-
-
-function loadAndOpenDebug(){
-	fetchTpl('tplDebug', openDebug);
-}
-
-
-function debug(text){
-	if(DBG){
-		try{
-			if(!debugWin.closed && debugWin.location){
-				var inner = debugWin.document.getElementById('debugContent').innerHTML;
-				debugWin.document.getElementById('debugContent').innerHTML = new Date().toLocaleString() + ": "+text+"<br>" + inner;
-			}
-		} catch (Exception) {
-			popUpBlockerHint();
-		}
-			
-	}
 }
 
 function showhide(id){
@@ -227,6 +126,7 @@ function set(element, value){
 	}
 }
 
+
 function setComplete(element, value){
 	//debug(element+"-"+value);
 	element = parent.$(element);
@@ -240,9 +140,20 @@ function setComplete(element, value){
 		}
 	}
 }
-//AJAX Request Handling
-// requestindikator
-var requestcounter = 0;
+
+
+/*
+ * Sets the Loading Notification to the given HTML Element
+ * @param targetElement - The element the Ajax-Loader should be set in
+ */
+function setAjaxLoad(targetElement){
+	$(targetElement).innerHTML = getAjaxLoad();
+}
+
+
+//Ajax Request Helpers
+//requestindikator
+
 function requestIndicatorUpdate(){
 	/*debug(requestcounter+" open requests");
 	if(requestcounter>=1){
@@ -261,6 +172,123 @@ function requestFinished(){
 	requestcounter -= 1;
 	requestIndicatorUpdate();
 }
+
+//Popup And Messagebox Helpers
+function messageBox(m){
+	alert(m);
+}
+
+
+function popUpBlockerHint(){
+	if(!popUpBlockerHinted){
+		messageBox("Please disable your Popup-Blocker for enigma2 WebControl to work flawlessly!");
+		popUpBlockerHinted = true;
+	}
+}
+
+function setWindowContent(window, html){
+	window.document.write(html);
+	window.document.close();
+}
+
+function openPopup(title, html, width, height, x, y){
+	var popup = window.open('about:blank',title,'scrollbars=yes, width='+width+',height='+height+',left='+x+',top='+y+',screenX='+x+',screenY='+y);
+	try {
+		setWindowContent(popup, html);
+		return popup;
+	} catch(e){
+		popUpBlockerHint();
+		return null;
+	}
+}
+
+//Template Helpers
+function saveTpl(request, tplName){
+	templates[tplName] = request.responseText;
+}
+
+
+function renderTpl(tpl, data, domElement) {
+//	try{
+		result = tpl.process(data);
+		$(domElement).innerHTML = result;
+//	} catch(e){
+//		debug("[renderTpl] Exception: " + e);
+//	}
+}
+
+function fetchTpl(tplName, callback){
+	if(typeof(templates.tplName) == 'undefined') {
+		url = "/webdata/tpl/"+tplName+".htm";
+		options = {
+				asynchronous: true,
+				method: 'GET',
+				requestHeaders: ['Pragma', 'no-cache', 'Cache-Control', 'must-revalidate', 'If-Modified-Since', 'Sat, 1 Jan 2000 00:00:00 GMT'],
+				onException: function(o, e){ throw(e); },				
+				onSuccess: function(request){
+								saveTpl(request, tplName);
+								if(typeof(callback) != 'undefined'){
+									callback();
+								}
+							},
+				onComplete: requestFinished 
+			};
+			
+		request = new Ajax.Request(url, options);
+	} else {
+		if(typeof(callback) != 'undefined'){
+			callback();
+		}
+	}
+}
+
+
+function processTpl(tplName, data, domElement, callback){
+	url = "/webdata/tpl/"+tplName+".htm";
+		request = new Ajax.Request(url,
+			{
+				asynchronous: true,
+				method: 'GET',
+				requestHeaders: ['Pragma', 'no-cache', 'Cache-Control', 'must-revalidate', 'If-Modified-Since', 'Sat, 1 Jan 2000 00:00:00 GMT'],
+				onException: function(o, e){ throw(e); },				
+				onSuccess: function(request){								
+								renderTpl(request.responseText, data, domElement);
+								if(typeof(callback) != 'undefined') {
+									callback();
+								}
+							},
+				onComplete: requestFinished 
+			});
+}
+
+//Debugging Window
+
+
+function openDebug(){
+	debugWin = openPopup("Debug", templates.tplDebug, 500, 300);
+}
+
+
+function loadAndOpenDebug(){
+	fetchTpl('tplDebug', openDebug);
+}
+
+
+function debug(text){
+	if(DBG){
+		try{
+			if(!debugWin.closed && debugWin.location){
+				var inner = debugWin.document.getElementById('debugContent').innerHTML;
+				debugWin.document.getElementById('debugContent').innerHTML = new Date().toLocaleString() + ": "+text+"<br>" + inner;
+			}
+		} catch (Exception) {
+			popUpBlockerHint();
+		}
+			
+	}
+}
+
+
 
 // end requestindikator
 function doRequest(url, readyFunction, save){
@@ -312,6 +340,32 @@ function getXML(request){
 	return xmlDoc;
 }
 
+
+//Parental Control
+function incomingParentControl(request) {
+	if(request.readyState == 4){
+		parentControlList = new ServiceList(getXML(request)).getArray();
+		debug("[incomingParentControl] Got "+parentControlList.length + " services");
+	}
+}
+
+function getParentControl() {
+	doRequest(url_parentcontrol, incomingParentControl, false);
+}
+
+
+function getParentControlByRef(txt) {
+	debug("[getParentControlByRef] ("+txt+")");
+	for(i = 0; i < parentControlList.length; i++) {
+		debug( "[getParentControlByRef] "+parentControlList[i].getClearServiceReference() );
+		if(String(parentControlList[i].getClearServiceReference()) == String(txt)) {
+			return parentControlList[i].getClearServiceReference();
+		} 
+	}
+	return "";
+}
+
+
 function parentPin(servicereference) {
     debug ("parentPin: parentControlList");
 	servicereference = decodeURIComponent(servicereference);
@@ -342,6 +396,78 @@ function parentPin(servicereference) {
 	}
 }
 
+
+//Settings
+function getSettingByName(txt) {
+	debug("[getSettingByName] (" + txt + ")");
+	for(i = 0; i < settings.length; i++) {
+		debug("("+settings[i].getSettingName()+") (" +settings[i].getSettingValue()+")");
+		if(String(settings[i].getSettingName()) == String(txt)) {
+			return settings[i].getSettingValue().toLowerCase();
+		} 
+	}
+	return "";
+}
+
+
+function incomingGetDreamboxSettings(request){
+	if(request.readyState == 4){
+		settings = new Settings(getXML(request)).getArray();
+	}
+	debug ("starte getParentControl " + getSettingByName("config.ParentalControl.configured"));
+	if(String(getSettingByName("config.ParentalControl.configured")) == "true") {
+		getParentControl();
+	}
+}
+
+
+function getDreamboxSettings(){
+	doRequest(url_settings, incomingGetDreamboxSettings, false);
+}
+
+
+//Subservices
+function incomingSubServiceRequest(request){
+	if(request.readyState == 4){
+		var services = new ServiceList(getXML(request)).getArray();
+		debug("[incomingSubServiceRequest] Got " + services.length + " SubServices");
+		
+		if(services.length > 1) {
+			
+			first = services[0];
+
+			last = false;
+			var namespace = [];
+			
+			//we already have the main service in our servicelist so we'll start with the second element
+			for ( var i = 1; i < services.length ; i++){
+				var reference = services[i];
+				namespace[i] = { 	
+					'servicereference': reference.getServiceReference(),
+					'servicename': reference.getServiceName()
+				};
+			}
+			data = { subservices : namespace };
+			
+			
+			var id = 'SUB'+first.getServiceReference();
+			show(id);
+			processTpl('tplSubServices', data, id);
+		}
+	}
+}
+
+
+function getSubServices() {
+	doRequest(url_subservices, incomingSubServiceRequest, false);
+}
+
+
+function delayedGetSubservices(){
+	setTimeout(getSubServices, 5000);
+}
+
+//zap zap
 function zap(servicereference){
 	request = new Ajax.Request( "/web/zap?sRef=" + servicereference, 
 						{
@@ -352,10 +478,7 @@ function zap(servicereference){
 	delayedGetSubservices();
 }
 
-//++++       SignalPanel                           ++++
-var signalWin = '';
-var signalPanelData = {};
-var signalPanelUpdatePoller = '';
+//SignalPanel
 
 function updateSignalPanel(){	
 	html = templates.tplSignalPanel.process(signalPanelData);
@@ -367,8 +490,6 @@ function updateSignalPanel(){
 		signalPanelUpdatePoller = '';
 	}
 }
-
-
 
 function incomingSignalPanel(request){
 	var namespace = {};
@@ -387,6 +508,10 @@ function incomingSignalPanel(request){
 	fetchTpl('tplSignalPanel', updateSignalPanel); 	
 }
 
+function reloadSignalPanel(){
+	doRequest(url_signal, incomingSignalPanel, false);
+}
+
 function openSignalPanel(){
 	if (!(!signalWin.closed && signalWin.location)){
 		signalWin = openPopup('Signal Panel', '', 220, 120);
@@ -397,20 +522,19 @@ function openSignalPanel(){
 	reloadSignalPanel();
 }
 
-function reloadSignalPanel(){
-	doRequest(url_signal, incomingSignalPanel, false);
+//EPG functions
+
+
+function showEpgList(){
+	html = templates.tplEpgList.process(epgListData);
+	
+	if (!EPGListWindow.closed && EPGListWindow.location) {
+		setWindowContent(EPGListWindow, html);
+	} else {
+		EPGListWindow = openPopup("Electronic Program Guide", html, 900, 500,50,60);
+	}
 }
 
-//++++ EPG functions                               ++++
-function loadEPGBySearchString(string){
-	doRequest(url_epgsearch+escape(string),incomingEPGrequest, false);
-}
-
-function loadEPGByServiceReference(servicereference){
-	doRequest(url_epgservice+servicereference,incomingEPGrequest, false);
-}
-
-var epgListData = {};
 function incomingEPGrequest(request){
 	debug("[incomingEPGrequest] readyState" +request.readyState);		
 	if (request.readyState == 4){
@@ -452,16 +576,12 @@ function incomingEPGrequest(request){
 	}
 }
 
-var EPGListWindow = '';
+function loadEPGBySearchString(string){
+	doRequest(url_epgsearch+escape(string),incomingEPGrequest, false);
+}
 
-function showEpgList(){
-	html = templates.tplEpgList.process(epgListData);
-	
-	if (!EPGListWindow.closed && EPGListWindow.location) {
-		setWindowContent(EPGListWindow, html);
-	} else {
-		EPGListWindow = openPopup("Electronic Program Guide", html, 900, 500,50,60);
-	}
+function loadEPGByServiceReference(servicereference){
+	doRequest(url_epgservice+servicereference,incomingEPGrequest, false);
 }
 
 function extdescriptionSmall(txt,num) {
@@ -477,6 +597,31 @@ function extdescriptionSmall(txt,num) {
 		return txt;
 	}
 }	
+
+function buildServiceListEPGItem(epgevent, type){
+	var e = $(type+epgevent.getServiceReference());
+		try{
+			var namespace = { 	
+				'starttime': epgevent.getTimeStartString(), 
+				'title': epgevent.getTitle(), 
+				'length': Math.ceil(epgevent.duration/60) 
+			};
+			var data = {epg : namespace};
+			//e.innerHTML = RND(tplServiceListEPGItem, namespace);
+			
+			var id = type + epgevent.getServiceReference();
+			
+			show(id);
+			
+			if(templates.tplServiceListEPGItem !== null){
+				renderTpl(templates.tplServiceListEPGItem, data, id);
+			} else {
+				debug("[EPGItem] tplServiceListEPGItem N/A");
+			}
+		} catch (ex) {
+			debug("[EPGItem] Error rendering: " + ex);
+		}	
+}
 
 function incomingServiceEPGNowNext(request, type){
 	if(request.readyState == 4){
@@ -508,66 +653,18 @@ function loadServiceEPGNowNext(servicereference, next){
 		url = url_epgnext+servicereference;
 		doRequest(url, incomingServiceEPGNext, false);
 	}
-	
-	
 }
 
 
-function buildServiceListEPGItem(epgevent, type){
-	var e = $(type+epgevent.getServiceReference());
-		try{
-			var namespace = { 	
-				'starttime': epgevent.getTimeStartString(), 
-				'title': epgevent.getTitle(), 
-				'length': Math.ceil(epgevent.duration/60) 
-			};
-			var data = {epg : namespace};
-			//e.innerHTML = RND(tplServiceListEPGItem, namespace);
-			
-			var id = type + epgevent.getServiceReference();
-			
-			show(id);
-			
-			if(templates.tplServiceListEPGItem !== null){
-				renderTpl(templates.tplServiceListEPGItem, data, id);
-			} else {
-				debug("[EPGItem] tplServiceListEPGItem N/A");
-			}
-		} catch (ex) {
-			debug("[EPGItem] Error rendering: " + ex);
-		}	
+function getBouquetEpg(){
+	loadServiceEPGNowNext(currentBouquet);
+	loadServiceEPGNowNext(currentBouquet, true);
 }
-
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++
 //++++ volume functions                            ++++
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-function initVolumePanel(){
-	getVolume(); 
-}
-
-function getVolume(){
-	doRequest(url_getvolume, handleVolumeRequest, false);
-}
-
-function volumeSet(val){
-	doRequest(url_setvolume+val, handleVolumeRequest, false);
-}
-
-function volumeUp(){
-	doRequest(url_volumeup, handleVolumeRequest, false);
-}
-
-function volumeDown(){
-	doRequest(url_volumedown, handleVolumeRequest, false);
-}
-
-function volumeMute(){
-	doRequest(url_volumemute, handleVolumeRequest, false);
-}
-
 function handleVolumeRequest(request){
 	if (request.readyState == 4) {
 		var b = getXML(request).getElementsByTagName("e2volume");
@@ -590,78 +687,33 @@ function handleVolumeRequest(request){
 	}    	
 }
 
-var bouquetsMemory = {};
 
-function initChannelList(){
-	//debug("init ChannelList");	
-	var url = url_getServices+encodeURIComponent(bouquetsTv);
-	currentBouquet = bouquetsTv;
-	doRequest(url, incomingBouquetListInitial, true);
+function getVolume(){
+	doRequest(url_getvolume, handleVolumeRequest, false);
 }
 
-
-var loadedChannellist = {};
-function loadBouquet(servicereference, name){ 
-	debug("[loadBouquet] Loading "+servicereference);
-
-	currentBouquet = servicereference;
-	
-	
-	setContentHd(name);
-	setAjaxLoad('contentMain');
-	
-	debug("[loadBouquet] " + typeof(loadedChannellist[servicereference]));
-	if(typeof(loadedChannellist[servicereference]) == "undefined") {
-		doRequest(url_getServices+servicereference, incomingChannellist, true);
-	} else {
-		incomingChannellist();
-	}
+function volumeSet(val){
+	doRequest(url_setvolume+val, handleVolumeRequest, false);
 }
 
-function incomingBouquetListInitial(request){
-	if (request.readyState == 4) {
-		var bouquetList = new ServiceList(getXML(request)).getArray();
-		debug("[loadBouquet] Got " + bouquetList.length + " TV Bouquets!");	
-
-		//loading first entry of TV Favorites as default for ServiceList
-		loadBouquet(bouquetList[0].getServiceReference(), bouquetList[0].getServiceName());
-
-		bouquetsMemory.bouquetsTv = bouquetList;
-	}
+function volumeUp(){
+	doRequest(url_volumeup, handleVolumeRequest, false);
 }
 
-function incomingBouquetList(request){
-	if (request.readyState == 4) {
-		var bouquetList = new ServiceList(getXML(request)).getArray();
-		debug("[incomingBouquetList] got " + bouquetList.length + " TV Bouquets!");	
-		renderBouquetTable(bouquetList, 'contentMain');		
-	}
+function volumeDown(){
+	doRequest(url_volumedown, handleVolumeRequest, false);
 }
 
-function renderBouquetTable(list, target){
-	debug("[renderBouquetTable] Rendering " + list.length + " Bouquets");	
-	
-	var namespace = [];
-	if (list.length < 1){
-		alert("NO BOUQUETS!");
-	}
-	for (var i=0; i < list.length; i++){
-		try{
-			var bouquet = list[i];
-			namespace[i] = {
-				'servicereference': bouquet.getServiceReference(), 
-				'bouquetname': bouquet.getServiceName()
-			};
-		} catch (e) { 
-			//TODO error handling 
-		}
-	}
-	var data = { 
-		services : namespace 
-	};
-	
-	processTpl('tplBouquetList', data, 'contentMain');
-}	
+function volumeMute(){
+	doRequest(url_volumemute, handleVolumeRequest, false);
+}
+
+function initVolumePanel(){
+	getVolume(); 
+}
+
+//Channels and Bouquets
+
 
 function incomingChannellist(request){
 	var services = null;
@@ -695,15 +747,83 @@ function incomingChannellist(request){
 	}
 }
 
-// Movies
-function loadMovieList(tag){
-	if(typeof(tag) == 'undefined'){
-		tag = '';
+
+function loadBouquet(servicereference, name){ 
+	debug("[loadBouquet] Loading "+servicereference);
+
+	currentBouquet = servicereference;
+		
+	setContentHd(name);
+	setAjaxLoad('contentMain');
+	
+	debug("[loadBouquet] " + typeof(loadedChannellist[servicereference]));
+	if(typeof(loadedChannellist[servicereference]) == "undefined") {
+		doRequest(url_getServices+servicereference, incomingChannellist, true);
+	} else {
+		incomingChannellist();
 	}
-	debug("[loadMovieList] Loading movies with tag '"+tag+"'");
-	doRequest(url_movielist+tag, incomingMovieList, false);
 }
 
+
+function incomingBouquetListInitial(request){
+	if (request.readyState == 4) {
+		var bouquetList = new ServiceList(getXML(request)).getArray();
+		debug("[loadBouquet] Got " + bouquetList.length + " TV Bouquets!");	
+
+		//loading first entry of TV Favorites as default for ServiceList
+		loadBouquet(bouquetList[0].getServiceReference(), bouquetList[0].getServiceName());
+
+		bouquetsMemory.bouquetsTv = bouquetList;
+	}
+}
+
+
+function renderBouquetTable(list, target){
+	debug("[renderBouquetTable] Rendering " + list.length + " Bouquets");	
+	
+	var namespace = [];
+	if (list.length < 1){
+		alert("NO BOUQUETS!");
+	}
+	for (var i=0; i < list.length; i++){
+		try{
+			var bouquet = list[i];
+			namespace[i] = {
+				'servicereference': bouquet.getServiceReference(), 
+				'bouquetname': bouquet.getServiceName()
+			};
+		} catch (e) { 
+			//TODO error handling 
+		}
+	}
+	var data = { 
+		services : namespace 
+	};
+	
+	processTpl('tplBouquetList', data, 'contentMain');
+}	
+
+
+
+function incomingBouquetList(request){
+	if (request.readyState == 4) {
+		var bouquetList = new ServiceList(getXML(request)).getArray();
+		debug("[incomingBouquetList] got " + bouquetList.length + " TV Bouquets!");	
+		renderBouquetTable(bouquetList, 'contentMain');		
+	}
+}
+
+
+function initChannelList(){
+	//debug("init ChannelList");	
+	var url = url_getServices+encodeURIComponent(bouquetsTv);
+	currentBouquet = bouquetsTv;
+	doRequest(url, incomingBouquetListInitial, true);
+}
+
+
+
+// Movies
 function incomingMovieList(request){
 	if(request.readyState == 4){
 		
@@ -737,6 +857,29 @@ function incomingMovieList(request){
 	}		
 }
 
+
+function loadMovieList(tag){
+	if(typeof(tag) == 'undefined'){
+		tag = '';
+	}
+	debug("[loadMovieList] Loading movies with tag '"+tag+"'");
+	doRequest(url_movielist+tag, incomingMovieList, false);
+}
+
+
+function incomingDelMovieFileResult(request) {
+	debug("[incomingDelMovieFileResult] called");
+	if(request.readyState == 4){
+		var delresult = new SimpleXMLResult(getXML(request));
+		if(delresult.getState()){
+			loadMovieList('');
+		}else{
+			messageBox("Deletion Error","Reason: "+delresult.getStateText());
+		}
+	}		
+}
+
+
 function delMovieFile(file ,servicename, title, description) {
 	debug("[delMovieFile] File(" + file + "), servicename(" + servicename + ")," +
 			"title(" + title + "), description(" + description + ")");
@@ -757,19 +900,26 @@ function delMovieFile(file ,servicename, title, description) {
 	}
 }
 
-function incomingDelMovieFileResult(request) {
-	debug("[incomingDelMovieFileResult] called");
-	if(request.readyState == 4){
-		var delresult = new SimpleXMLResult(getXML(request));
-		if(delresult.getState()){
-			loadMovieList('');
-		}else{
-			messageBox("Deletion Error","Reason: "+delresult.getStateText());
+//Send Messages and Receive the Answer
+
+
+function incomingMessageResult(request){
+	if(request.readyState== 4){
+		var result = getXML(request).getElementsByTagName("e2message").item(0).getElementsByTagName('e2result').item(0).firstChild.data;
+		
+		if (result=="True"){
+			messageBox('Message sent successfully!');
+			return;
 		}
-	}		
+	}	
+	messageBox('Message NOT sent!');
 }
 
-var MessageAnswerPolling;
+function getMessageAnswer() {
+	doRequest(url_messageanswer, incomingMessageResult, false);
+	clearInterval(MessageAnswerPolling);
+}
+
 function sendMessage(messagetext,messagetype,messagetimeout){
 	if(!messagetext){
 		messagetext = $('MessageSendFormText').value;
@@ -789,50 +939,8 @@ function sendMessage(messagetext,messagetype,messagetimeout){
 	}
 }
 
-function incomingMessageResult(request){
-	if(request.readyState== 4){
-		var result = getXML(request).getElementsByTagName("e2message").item(0).getElementsByTagName('e2result').item(0).firstChild.data;
-		
-		if (result=="True"){
-			messageBox('Message sent successfully!');
-			return;
-		}
-	}	
-	messageBox('Message NOT sent!');
-}
 
-function getMessageAnswer() {
-	doRequest(url_messageanswer, incomingMessageResult, false);
-	clearInterval(MessageAnswerPolling);
-}
-
-// RemoteControl Code
-function loadAndOpenWebRemote(){
-	fetchTpl('tplWebRemote', openWebRemote);
-}
-
-var webRemoteWindow = '';
-function openWebRemote(){
-	
-	if (!webRemoteWindow.closed && webRemoteWindow.location) {
-		setWindowContent(webRemoteWindow, templates.tplWebRemote);
-	} else {
-		webRemoteWindow = openPopup('WebRemote', templates.tplWebRemote, 250, 670);
-	}
-	
-}
-
-function sendRemoteControlRequest(command){
-	doRequest(url_remotecontrol+'?command='+command, incomingRemoteControlResult, false);
-	if(webRemoteWindow.document.getElementById('getScreen').checked) {
-		if(webRemoteWindow.document.getElementById('getVideo').checked){
-			getScreenShot();
-		} else {
-			getScreenShot("o");
-		}
-	}
-}
-
+//Screenshots
 function getScreenShot(what) {
 	debug("[getScreenShot] called");
 	
@@ -873,10 +981,10 @@ function getScreenShot(what) {
 	
 	downloadStart = new Date().getTime();
 	buffer.src = '/grab?format=jpg&n=&r=720&' + what + '&' + downloadStart;
-	
-//	$('grabPageIMG').height(400);
-//	tplRCGrab = $('BodyContent').innerHTML;
 }
+
+
+// RemoteControl Code
 
 function incomingRemoteControlResult(request){
 	if(request.readyState == 4){
@@ -884,103 +992,39 @@ function incomingRemoteControlResult(request){
 		var result = b.item(0).getElementsByTagName('e2result').item(0).firstChild.data;
 		var resulttext = b.item(0).getElementsByTagName('e2resulttext').item(0).firstChild.data;
 	} else {
-		$('rcWindow').innerHTML = "<h1>some unknown error</h1>" + tplRemoteControlForm;
+		//TODO Some Error Handling
 	}
 }
 
-function getDreamboxSettings(){
-	doRequest(url_settings, incomingGetDreamboxSettings, false);
-}
-
-function incomingGetDreamboxSettings(request){
-	if(request.readyState == 4){
-		settings = new Settings(getXML(request)).getArray();
-	}
-	debug ("starte getParentControl " + getSettingByName("config.ParentalControl.configured"));
-	if(String(getSettingByName("config.ParentalControl.configured")) == "true") {
-		getParentControl();
-	}
-}
-
-function getSettingByName(txt) {
-	debug("[getSettingByName] (" + txt + ")");
-	for(i = 0; i < settings.length; i++) {
-		debug("("+settings[i].getSettingName()+") (" +settings[i].getSettingValue()+")");
-		if(String(settings[i].getSettingName()) == String(txt)) {
-			return settings[i].getSettingValue().toLowerCase();
-		} 
-	}
-	return "";
-}
-
-function getParentControl() {
-	doRequest(url_parentcontrol, incomingParentControl, false);
-}
-
-function incomingParentControl(request) {
-	if(request.readyState == 4){
-		parentControlList = new ServiceList(getXML(request)).getArray();
-		debug("[incomingParentControl] Got "+parentControlList.length + " services");
-	}
-}
-
-function getParentControlByRef(txt) {
-	debug("[getParentControlByRef] ("+txt+")");
-	for(i = 0; i < parentControlList.length; i++) {
-		debug( "[getParentControlByRef] "+parentControlList[i].getClearServiceReference() );
-		if(String(parentControlList[i].getClearServiceReference()) == String(txt)) {
-			return parentControlList[i].getClearServiceReference();
-		} 
-	}
-	return "";
-}
-
-function ownLazyNumber(num) {
-	if(isNaN(num)){
-		return 0;
+function openWebRemote(){
+	
+	if (!webRemoteWin.closed && webRemoteWin.location) {
+		setWindowContent(webRemoteWin, templates.tplWebRemote);
 	} else {
-		return Number(num);
+		webRemoteWin = openPopup('WebRemote', templates.tplWebRemote, 250, 670);
 	}
+	
 }
 
 
-function getSubServices() {
-	doRequest(url_subservices, incomingSubServiceRequest, false);
+function loadAndOpenWebRemote(){
+	fetchTpl('tplWebRemote', openWebRemote);
 }
 
-function delayedGetSubservices(){
-	setTimeout(getSubServices, 5000);
-}
 
-function incomingSubServiceRequest(request){
-	if(request.readyState == 4){
-		var services = new ServiceList(getXML(request)).getArray();
-		debug("[incomingSubServiceRequest] Got " + services.length + " SubServices");
-		
-		if(services.length > 1) {
-			
-			first = services[0];
-
-			last = false;
-			var namespace = [];
-			
-			//we already have the main service in our servicelist so we'll start with the second element
-			for ( var i = 1; i < services.length ; i++){
-				var reference = services[i];
-				namespace[i] = { 	
-					'servicereference': reference.getServiceReference(),
-					'servicename': reference.getServiceName()
-				};
-			}
-			data = { subservices : namespace };
-			
-			
-			var id = 'SUB'+first.getServiceReference();
-			show(id);
-			processTpl('tplSubServices', data, id);
+function sendRemoteControlRequest(command){
+	doRequest(url_remotecontrol+'?command='+command, incomingRemoteControlResult, false);
+	if(webRemoteWin.document.getElementById('getScreen').checked) {
+		if(webRemoteWin.document.getElementById('getVideo').checked){
+			getScreenShot();
+		} else {
+			getScreenShot("o");
 		}
 	}
 }
+
+
+
 
 // Array.insert( index, value ) - Insert value at index, without overwriting existing keys
 Array.prototype.insert = function( j, v ) {
@@ -1018,10 +1062,7 @@ function writeTimerListNow() {
 	request = new Ajax.Request( url_timerlistwrite, { asynchronous: true, method: 'get' });
 }
 
-function recordingPushed() {
-	doRequest(url_timerlist, incomingRecordingPushed, false);
-}
-
+//Recording
 function incomingRecordingPushed(request) {
 	if(request.readyState == 4){
 		var timers = new TimerList(getXML(request)).getArray();
@@ -1068,6 +1109,12 @@ function incomingRecordingPushed(request) {
 	}
 }
 
+
+function recordingPushed() {
+	doRequest(url_timerlist, incomingRecordingPushed, false);
+}
+
+
 function recordingPushedDecision(recordNowNothing,recordNowUndefinitely,recordNowCurrent) {
 	var recordNow = recordNowNothing;
 	recordNow = (recordNow === "") ? recordNowUndefinitely: recordNow;
@@ -1086,13 +1133,6 @@ function ifChecked(rObj) {
 }
 
 //About
-/*
- * Show About Information in contentMain
- */
-function showAbout() {
-	doRequest(url_about, incomingAbout, false);
-}
-
 /*
  * Handles an incoming request for /web/about
  * Parses the Data, and calls everything needed to render the 
@@ -1181,22 +1221,25 @@ function incomingAbout(request) {
 }
 
 
+/*
+ * Show About Information in contentMain
+ */
+function showAbout() {
+	doRequest(url_about, incomingAbout, false);
+}
+
+
 // Spezial functions, mostly for testing purpose
 function openHiddenFunctions(){
 	openPopup("Extra Hidden Functions",tplExtraHiddenFunctions,300,100,920,0);
 }
-function restartUpdateStream() {
-	clearInterval(UpdateStreamReaderPollTimer);
-	UpdateStreamReaderRequest.abort();
-	UpdateStreamReaderRequest = null;
-	UpdateStreamReaderPollTimerCounter = 0;
-	UpdateStreamReaderStart();
-}
+
 
 function startDebugWindow() {
 	DBG = true;
 	debugWin = openPopup("DEBUG", "", 300, 300,920,140, "debugWindow");
 }
+
 
 function restartTwisted() {
 	request = new Ajax.Request( "/web/restarttwisted", { asynchronous: true, method: "get" });
@@ -1204,10 +1247,11 @@ function restartTwisted() {
 
 
 //MediaPlayer
-function loadMediaPlayer(directory){
-	debug("[loadMediaPlayer] called");
-	doRequest(url_mediaplayerlist+directory, incomingMediaPlayer, false);
+function sendMediaPlayer(command) {
+	debug("[playFile] loading sendMediaPlayer");
+	request = new Ajax.Request( url_mediaplayercmd+command, { asynchronous: true, method: 'get' });
 }
+
 
 function incomingMediaPlayer(request){
 	if(request.readyState == 4){
@@ -1287,21 +1331,25 @@ function incomingMediaPlayer(request){
 	}		
 }
 
+
+function loadMediaPlayer(directory){
+	debug("[loadMediaPlayer] called");
+	doRequest(url_mediaplayerlist+directory, incomingMediaPlayer, false);
+}
+
+
 function playFile(file,root) {
 	debug("[playFile] called");
 	mediaPlayerStarted = true;
 	request = new Ajax.Request( url_mediaplayerplay+file+"&root="+root, { asynchronous: true, method: 'get' });
 }
 
-function sendMediaPlayer(command) {
-	debug("[playFile] loading sendMediaPlayer");
-	request = new Ajax.Request( url_mediaplayercmd+command, { asynchronous: true, method: 'get' });
-}
 
 function openMediaPlayerPlaylist() {
 	debug("[playFile] loading openMediaPlayerPlaylist");
 	doRequest(url_mediaplayerlist+"playlist", incomingMediaPlayer, false);
 }
+
 
 function writePlaylist() {
 	debug("[playFile] loading writePlaylist");
@@ -1310,6 +1358,7 @@ function writePlaylist() {
 		request = new Ajax.Request( url_mediaplayerwrite+filename, { asynchronous: true, method: 'get' });
 	}
 }
+
 
 //Powerstate
 /*
@@ -1326,11 +1375,8 @@ function sendPowerState(newState){
 	request = new Ajax.Request( url_powerstate+'?newstate='+newState, { asynchronous: true, method: 'get' });
 }
 
+
 //FileBrowser
-function loadFileBrowser(directory,types){
-	debug("[loadFileBrowser] loading loadFileBrowser");
-	doRequest(url_filelist+directory+"&types="+types, incomingFileBrowser, false);	
-}
 function incomingFileBrowser(request){
 	if(request.readyState == 4){
 		var files = new FileList(getXML(request)).getArray();
@@ -1388,10 +1434,14 @@ function incomingFileBrowser(request){
 //		setBodyMainContent('BodyContent');
 	}		
 }
-function delFile(file,root) {
-	debug("[delFile] called");
-	doRequest(url_delfile+root+file, incomingDelFileResult, false);
+
+
+function loadFileBrowser(directory,types){
+	debug("[loadFileBrowser] loading loadFileBrowser");
+	doRequest(url_filelist+directory+"&types="+types, incomingFileBrowser, false);	
 }
+
+
 function incomingDelFileResult(request) {
 	debug("[incomingDelFileResult called]");
 	if(request.readyState == 4){
@@ -1405,10 +1455,13 @@ function incomingDelFileResult(request) {
 }
 
 
-function getCurrent(){
-	doRequest(url_getcurrent, incomingCurrent, false);
+function delFile(file,root) {
+	debug("[delFile] called");
+	doRequest(url_delfile+root+file, incomingDelFileResult, false);
 }
 
+
+//Currently Running Service
 function incomingCurrent(request){
 //	debug("[incomingCurrent called]");
 	if(request.readyState == 4){
@@ -1431,6 +1484,12 @@ function incomingCurrent(request){
 		
 	}
 }
+
+
+function getCurrent(){
+	doRequest(url_getcurrent, incomingCurrent, false);
+}
+
 
 //Navigation and Content Helper Functions
 /*
@@ -1494,13 +1553,6 @@ function loadContentStatic(template, title){
 	processTpl(template, null, 'contentMain');
 }
 
-/*
- * Sets the Loading Notification to the given HTML Element
- * @param targetElement - The element the Ajax-Loader should be set in
- */
-function setAjaxLoad(targetElement){
-	$(targetElement).innerHTML = getAjaxLoad();
-}
 
 /*
  * Opens the given Extra
@@ -1574,8 +1626,6 @@ function updateItemsLazy(){
 /*
  * Does the everything required on initial pageload
  */
-var updateItemsPoller = setInterval(updateItems, 7500);
-var updateItemsLazyPoller = setInterval(updateItemsLazy, 60000);
 
 function init(){
 	if(DBG){
