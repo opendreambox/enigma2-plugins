@@ -13,7 +13,7 @@
 												</div>
 											</td>
 											<td>
-												<a onclick="if ( parentPin( '${s.servicereference}' ) ) { loadEPGByServiceReference(this.id); }" id="${s.servicereference}">
+												<a onclick="if ( parentPin( '${s.servicereference}' ) ) { loadEPGByServiceReference( '${s.servicereference}' ); }">
 													<img src="/webdata/gfx/epg.png" border="0" title="Show EPG for ${s.servicename}"/>
 												</a>
 											</td>
@@ -25,7 +25,7 @@
 										</tr>
 										<tr class="sListEPGNow" id="NOW${s.servicereference}" style="display:none;"><td></td></tr>
 										<tr class="sListEPGNext" id="NEXT${s.servicereference}" style="display:none;"><td></td></tr>
-										<tr class="sListSubService" id="SUB${s.servicereference}" style="display:none;"></tr>
+										<tr class="sListSubService" id="SUB${s.servicereference}" style="display:none;"><td></td></tr>
 									</table>
 								</td>
 							</tr>

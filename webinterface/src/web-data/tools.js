@@ -1,9 +1,9 @@
 // $Header$
 
-var doRequestMemory = new Object();
-var doRequestMemorySave = new Object();
+var doRequestMemory = {};
+var doRequestMemorySave = {};
 
-var templates = new Array();
+var templates = [];
 
 var mediaPlayerStarted = false;
 
@@ -46,60 +46,68 @@ function messageBox(m){
 }
 
 
+
+
 //Template Helpers
+function saveTpl(request, tplName){
+	templates[tplName] = request.responseText;
+}
+
+
+function renderTpl(tpl, data, domElement) {
+//	try{
+		result = tpl.process(data);
+		$(domElement).innerHTML = result;
+//	} catch(e){
+//		debug("[renderTpl] Exception: " + e);
+//	}
+}
+
+
 function fetchTpl(tplName, callback){
-	if(templates[tplName] == null){
+	if(typeof(templates.tplName) == 'undefined') {
 		url = "/webdata/tpl/"+tplName+".htm";
-			new Ajax.Request(url,
-				{
-					asynchronous: true,
-					method: 'GET',
-					requestHeaders: ['Pragma', 'no-cache', 'Cache-Control', 'must-revalidate', 'If-Modified-Since', 'Sat, 1 Jan 2000 00:00:00 GMT'],
-					onException: function(o, e){ throw(e); },				
-					onSuccess: function(request){
-									saveTpl(request, tplName);
-										if(callback != null){
-											callback();
-										}
-								},
-					onComplete: requestFinished 
-				});
+		options = {
+				asynchronous: true,
+				method: 'GET',
+				requestHeaders: ['Pragma', 'no-cache', 'Cache-Control', 'must-revalidate', 'If-Modified-Since', 'Sat, 1 Jan 2000 00:00:00 GMT'],
+				onException: function(o, e){ throw(e); },				
+				onSuccess: function(request){
+								saveTpl(request, tplName);
+									if(typeof(callback) != 'undefined'){
+										callback();
+									}
+							},
+				onComplete: requestFinished 
+			};
+			
+		request = new Ajax.Request(url, options);
 	} else {
-		if(callback != null){
+		if(typeof(callback) != 'undefined'){
 			callback();
 		}
 	}
 }
 
 
-function saveTpl(request, tplName){
-	templates[tplName] = request.responseText;
-}
-
-
 function processTpl(tplName, data, domElement, callback){
+	debug("[processTpl] processing " + tplName);
+	debug("[processTpl] domElement " + domElement);
 	url = "/webdata/tpl/"+tplName+".htm";
-		new Ajax.Request(url,
+		request = new Ajax.Request(url,
 			{
 				asynchronous: true,
 				method: 'GET',
 				requestHeaders: ['Pragma', 'no-cache', 'Cache-Control', 'must-revalidate', 'If-Modified-Since', 'Sat, 1 Jan 2000 00:00:00 GMT'],
 				onException: function(o, e){ throw(e); },				
-				onSuccess: function(request){
-								renderTpl(request.responseText, data, domElement)
-								if(callback != null) callback();
+				onSuccess: function(request){								
+								renderTpl(request.responseText, data, domElement);
+								if(typeof(callback) != 'undefined') {
+									callback();
+								}
 							},
 				onComplete: requestFinished 
 			});
-}
-
-function renderTpl(tpl, data, domElement) {
-	var result = tpl.process(data);
-	try{
-		$(domElement).innerHTML = result;
-	} catch(Exception){
-//		debug("[renderTpl] Could not find DOM Element " + domElement);
-	}
 }
 
 var currentBouquet = bouquetsTv;
@@ -111,7 +119,7 @@ function getBouquetEpg(){
 
 function d2h(nr, len){
 
-		hex = parseInt(nr).toString(16).toUpperCase();
+		hex = parseInt(nr, 10).toString(16).toUpperCase();
 		if(len > 0){
 			try{
 				while(hex.length < len){
@@ -142,7 +150,7 @@ function dateToString(date){
 	}
 	dateString += " " + hours;
 	
-	var minutes = date.getMinutes()
+	var minutes = date.getMinutes();
 	if(minutes < 10){
 		minutes = '0' + minutes;
 	}
@@ -154,13 +162,15 @@ function dateToString(date){
 //Debugging Window
 var debugWin = '';
 
-function loadAndOpenDebug(){
-	fetchTpl('tplDebug', openDebug)
+function openDebug(){
+	debugWin = openPopup("Debug", templates.tplDebug, 500, 300);
 }
 
-function openDebug(){
-	debugWin = openPopup("Debug", templates['tplDebug'], 500, 300);
+
+function loadAndOpenDebug(){
+	fetchTpl('tplDebug', openDebug);
 }
+
 
 function debug(text){
 	if(DBG){
@@ -170,7 +180,7 @@ function debug(text){
 				debugWin.document.getElementById('debugContent').innerHTML = new Date().toLocaleString() + ": "+text+"<br>" + inner;
 			}
 		} catch (Exception) {
-			popUpBlockerHint()
+			popUpBlockerHint();
 		}
 			
 	}
@@ -184,11 +194,13 @@ function showhide(id){
 function show(id){
 	try{
 		$(id).style.display = "";
-	} catch(e) {};
+	} catch(e) {}
 }
 
 function hide(id){
-	$(id).style.display = "none";
+	try{
+		$(id).style.display = "none";
+	} catch(e) {}
 }
 
 function set(element, value){
@@ -246,7 +258,7 @@ function requestStarted(){
 }
 
 function requestFinished(){
-	requestcounter -=1;
+	requestcounter -= 1;
 	requestIndicatorUpdate();
 }
 
@@ -260,7 +272,8 @@ function doRequest(url, readyFunction, save){
 		readyFunction(doRequestMemory[url]);
 	} else {
 */
-		new Ajax.Request(url,
+	try{
+		request = new Ajax.Request(url,
 			{
 				asynchronous: true,
 				method: 'GET',
@@ -277,12 +290,13 @@ function doRequest(url, readyFunction, save){
 						},
 				onComplete: requestFinished 
 			});
+	} catch(e) {}
 //	}
 }
 
 function getXML(request){
 	if (document.implementation && document.implementation.createDocument){
-		var xmlDoc = request.responseXML
+		var xmlDoc = request.responseXML;
 	}
 	else if (window.ActiveXObject){
 		var xmlInsert = document.createElement('xml');
@@ -301,7 +315,7 @@ function getXML(request){
 function parentPin(servicereference) {
     debug ("parentPin: parentControlList");
 	servicereference = decodeURIComponent(servicereference);
-	if(parentControlList == null || String(getSettingByName("config.ParentalControl.configured")) != "true") {
+	if(parentControlList === null || String(getSettingByName("config.ParentalControl.configured")) != "true") {
 		return true;
 	}
 	//debug("parentPin " + parentControlList.length);
@@ -317,7 +331,7 @@ function parentPin(servicereference) {
 	debug("[parentPin] Asking for PIN");
 
 	var userInput = prompt('Parental Control is enabled!<br> Please enter the Parental Control PIN','PIN');
-	if (userInput != '' && userInput != null) {
+	if (userInput !== '' && userInput !== null) {
 		if(String(userInput) == String(getSettingByName("config.ParentalControl.servicepin.0")) ) {
 			return true;
 		} else {
@@ -329,7 +343,7 @@ function parentPin(servicereference) {
 }
 
 function zap(servicereference){
-	new Ajax.Request( "/web/zap?sRef=" + servicereference, 
+	request = new Ajax.Request( "/web/zap?sRef=" + servicereference, 
 						{
 							asynchronous: true,
 							method: 'get'
@@ -343,9 +357,9 @@ var signalWin = '';
 var signalPanelData = {};
 var signalPanelUpdatePoller = '';
 
-function updateSignalPanel(){
+function updateSignalPanel(){	
+	html = templates.tplSignalPanel.process(signalPanelData);
 	
-	html = templates['tplSignalPanel'].process(signalPanelData)
 	if (!signalWin.closed && signalWin.location) {
 		setWindowContent(signalWin, html);
 	} else {
@@ -366,7 +380,7 @@ function incomingSignalPanel(request){
 			snr : xml.getElementsByTagName('e2snr').item(0).firstChild.data,
 			ber : xml.getElementsByTagName('e2ber').item(0).firstChild.data,
 			acg : xml.getElementsByTagName('e2acg').item(0).firstChild.data
-		}				
+		};
 	}
 	
 	signalPanelData = { signal : namespace };
@@ -376,7 +390,7 @@ function incomingSignalPanel(request){
 function openSignalPanel(){
 	if (!(!signalWin.closed && signalWin.location)){
 		signalWin = openPopup('Signal Panel', '', 220, 120);
-		if(signalPanelUpdatePoller == ''){
+		if(signalPanelUpdatePoller === ''){
 			signalPanelUpdatePoller = setInterval(reloadSignalPanel, 5000);
 		}
 	}
@@ -384,16 +398,16 @@ function openSignalPanel(){
 }
 
 function reloadSignalPanel(){
-	doRequest(url_signal, incomingSignalPanel, false)
+	doRequest(url_signal, incomingSignalPanel, false);
 }
 
 //++++ EPG functions                               ++++
 function loadEPGBySearchString(string){
-		doRequest(url_epgsearch+escape(string),incomingEPGrequest, false);
+	doRequest(url_epgsearch+escape(string),incomingEPGrequest, false);
 }
 
 function loadEPGByServiceReference(servicereference){
-		doRequest(url_epgservice+servicereference,incomingEPGrequest, false);
+	doRequest(url_epgservice+servicereference,incomingEPGrequest, false);
 }
 
 var epgListData = {};
@@ -403,7 +417,7 @@ function incomingEPGrequest(request){
 		var EPGItems = new EPGList(getXML(request)).getArray(true);
 		debug("[incomingEPGrequest] got "+EPGItems.length+" e2events");
 		if(EPGItems.length > 0){			
-			var namespace = new Array();
+			var namespace = [];
 			for (var i=0; i < EPGItems.length; i++){
 				try{
 					var item = EPGItems[i];				
@@ -441,7 +455,7 @@ function incomingEPGrequest(request){
 var EPGListWindow = '';
 
 function showEpgList(){
-	html = templates['tplEpgList'].process(epgListData);
+	html = templates.tplEpgList.process(epgListData);
 	
 	if (!EPGListWindow.closed && EPGListWindow.location) {
 		setWindowContent(EPGListWindow, html);
@@ -514,33 +528,14 @@ function buildServiceListEPGItem(epgevent, type){
 			
 			show(id);
 			
-			if(templates['tplServiceListEPGItem'] != null){
-				renderTpl(templates['tplServiceListEPGItem'], data, id);
+			if(templates.tplServiceListEPGItem !== null){
+				renderTpl(templates.tplServiceListEPGItem, data, id);
 			} else {
 				debug("[EPGItem] tplServiceListEPGItem N/A");
 			}
-		} catch (e) {
-			debug("[EPGItem] Error rendering: " + e);
+		} catch (ex) {
+			debug("[EPGItem] Error rendering: " + ex);
 		}	
-}
-
-
-
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++
-//++++ GUI functions                               ++++
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-var currentBodyMainElement = null
-
-function setBodyMainContent(domId){
-	domElement =$(domId);
-	if(currentBodyMainElement != null){
-		currentBodyMainElement.style.display = "none";		
-	}
-	domElement.style.display = "";
-	currentBodyMainElement = domElement;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -595,7 +590,7 @@ function handleVolumeRequest(request){
 	}    	
 }
 
-var bouquetsMemory = new Object();
+var bouquetsMemory = {};
 
 function initChannelList(){
 	//debug("init ChannelList");	
@@ -605,7 +600,7 @@ function initChannelList(){
 }
 
 
-var loadedChannellist = new Object();
+var loadedChannellist = {};
 function loadBouquet(servicereference, name){ 
 	debug("[loadBouquet] Loading "+servicereference);
 
@@ -625,29 +620,31 @@ function loadBouquet(servicereference, name){
 
 function incomingBouquetListInitial(request){
 	if (request.readyState == 4) {
-		var list0 = new ServiceList(getXML(request)).getArray();
-		debug("[loadBouquet] Got " + list0.length + " TV Bouquets!");	
+		var bouquetList = new ServiceList(getXML(request)).getArray();
+		debug("[loadBouquet] Got " + bouquetList.length + " TV Bouquets!");	
 
 		//loading first entry of TV Favorites as default for ServiceList
-		loadBouquet(list0[0].getServiceReference(), list0[0].getServiceName());
+		loadBouquet(bouquetList[0].getServiceReference(), bouquetList[0].getServiceName());
 
-		bouquetsMemory["bouquetsTv"] = list0;
+		bouquetsMemory.bouquetsTv = bouquetList;
 	}
 }
 
 function incomingBouquetList(request){
 	if (request.readyState == 4) {
-		var list0 = new ServiceList(getXML(request)).getArray();
-		debug("[incomingBouquetList] got " + list0.length + " TV Bouquets!");	
-		renderBouquetTable(list0, 'contentMain');		
+		var bouquetList = new ServiceList(getXML(request)).getArray();
+		debug("[incomingBouquetList] got " + bouquetList.length + " TV Bouquets!");	
+		renderBouquetTable(bouquetList, 'contentMain');		
 	}
 }
 
 function renderBouquetTable(list, target){
 	debug("[renderBouquetTable] Rendering " + list.length + " Bouquets");	
 	
-	var namespace = new Array();
-	if (list.length < 1) alert("NO BOUQUETS!");
+	var namespace = [];
+	if (list.length < 1){
+		alert("NO BOUQUETS!");
+	}
 	for (var i=0; i < list.length; i++){
 		try{
 			var bouquet = list[i];
@@ -672,8 +669,8 @@ function incomingChannellist(request){
 		services = new ServiceList(getXML(request)).getArray();
 		debug("[incomingChannellist] got "+services.length+" Services");
 	}
-	if(services != null) {
-		var namespace = new Array();
+	if(services !== null) {
+		var namespace = {};
 		var cssclass = "even";
 		
 		for ( var i = 0; i < services.length ; i++){
@@ -693,6 +690,8 @@ function incomingChannellist(request){
 		
 		processTpl('tplServiceList', data, 'contentMain', getBouquetEpg);
 		delayedGetSubservices();
+	} else {
+		debug("[incomingChannellist] services is null");
 	}
 }
 
@@ -710,7 +709,7 @@ function incomingMovieList(request){
 		
 		var movies = new MovieList(getXML(request)).getArray();
 		debug("[incomingMovieList] Got "+movies.length+" movies");
-		namespace = new Array();	
+		namespace = [];	
 		
 		var cssclass = "even";
 		
@@ -733,7 +732,7 @@ function incomingMovieList(request){
 				'class' : cssclass
 			};
 		}
-		data = { movies : namespace }
+		data = { movies : namespace };
 		processTpl('tplMovieList', data, 'contentMain');
 	}		
 }
@@ -742,12 +741,10 @@ function delMovieFile(file ,servicename, title, description) {
 	debug("[delMovieFile] File(" + file + "), servicename(" + servicename + ")," +
 			"title(" + title + "), description(" + description + ")");
 	
-	var result = confirm(
-		"Are you sure want to delete the Movie?\n"
-		+"Servicename: "+servicename+"\n"
-		+"Title: "+title+"\n"
-		+"Description: "+description+"\n"
-	);
+	result = confirm( "Are you sure want to delete the Movie?\n" +
+		"Servicename: "+servicename+"\n" +
+		"Title: "+title+"\n" + 
+		"Description: "+description+"\n");
 
 	if(result){
 		debug("[delMovieFile] ok confirm panel"); 
@@ -784,8 +781,8 @@ function sendMessage(messagetext,messagetype,messagetimeout){
 		var index = $('MessageSendFormType').selectedIndex;
 		messagetype = $('MessageSendFormType').options[index].value;
 	}	
-	if(ownLazyNumber(messagetype) == 0){
-		new Ajax.Request(url_message+'?text='+messagetext+'&type='+messagetype+'&timeout='+messagetimeout, { asynchronous: true, method: 'get' });
+	if(ownLazyNumber(messagetype) === 0){
+		request = new Ajax.Request(url_message+'?text='+messagetext+'&type='+messagetype+'&timeout='+messagetimeout, { asynchronous: true, method: 'get' });
 		MessageAnswerPolling = setInterval(getMessageAnswer, ownLazyNumber(messagetimeout)*1000);
 	} else {
 		doRequest(url_message+'?text='+messagetext+'&type='+messagetype+'&timeout='+messagetimeout, incomingMessageResult, false);
@@ -818,9 +815,9 @@ var webRemoteWindow = '';
 function openWebRemote(){
 	
 	if (!webRemoteWindow.closed && webRemoteWindow.location) {
-		setWindowContent(webRemoteWindow, templates['tplWebRemote']);
+		setWindowContent(webRemoteWindow, templates.tplWebRemote);
 	} else {
-		webRemoteWindow = openPopup('WebRemote', templates['tplWebRemote'], 250, 670);
+		webRemoteWindow = openPopup('WebRemote', templates.tplWebRemote, 250, 670);
 	}
 	
 }
@@ -870,7 +867,7 @@ function getScreenShot(what) {
 			what = "&v";
 			break;
 		default:
-			what = ""
+			what = "";
 			break;
 	}
 	
@@ -952,7 +949,7 @@ function getSubServices() {
 }
 
 function delayedGetSubservices(){
-	setTimeout("getSubServices()", 5000);
+	setTimeout(getSubServices, 5000);
 }
 
 function incomingSubServiceRequest(request){
@@ -964,8 +961,8 @@ function incomingSubServiceRequest(request){
 			
 			first = services[0];
 
-			last = false
-			var namespace = new Array();
+			last = false;
+			var namespace = [];
 			
 			//we already have the main service in our servicelist so we'll start with the second element
 			for ( var i = 1; i < services.length ; i++){
@@ -991,24 +988,25 @@ Array.prototype.insert = function( j, v ) {
 		var a = this.slice(), b = a.splice( j );
 		a[j] = v;
 		return a.concat( b );
-	}ip
-}
+	}
+};
 
 // Array.splice() - Remove or replace several elements and return any deleted elements
 if( typeof Array.prototype.splice==='undefined' ) {
 	Array.prototype.splice = function( a, c ) {
-		var i = 0, e = arguments, d = this.copy(), f = a, l = this.length;
+		var e = arguments, d = this.copy(), f = a, l = this.length;
 	
 		if( !c ) { 
 			c = l - a; 
 		}
 		
-		for( i; i < e.length - 2; i++ ) { 
+		for( i = 0; i < e.length - 2; i++ ) { 
 			this[a + i] = e[i + 2]; 
 		}
 		
-		for( a; a < l - c; a++ ) { 
-			this[a + e.length - 2] = d[a - c]; 
+		
+		for( j = a; j < l - c; j++ ) { 
+			this[j + e.length - 2] = d[j - c]; 
 		}
 		this.length -= c - e.length + 2;
 	
@@ -1017,7 +1015,7 @@ if( typeof Array.prototype.splice==='undefined' ) {
 }
 
 function writeTimerListNow() {
-	new Ajax.Request( url_timerlistwrite, { asynchronous: true, method: 'get' });
+	request = new Ajax.Request( url_timerlistwrite, { asynchronous: true, method: 'get' });
 }
 
 function recordingPushed() {
@@ -1029,11 +1027,11 @@ function incomingRecordingPushed(request) {
 		var timers = new TimerList(getXML(request)).getArray();
 		debug("[incomingRecordingPushed] Got " + timers.length + " timers");
 		
-		var aftereventReadable = new Array ('Nothing', 'Standby', 'Deepstandby/Shutdown');
-		var justplayReadable = new Array('record', 'zap');
-		var OnOff = new Array('on', 'off');
+		var aftereventReadable = ['Nothing', 'Standby', 'Deepstandby/Shutdown'];
+		var justplayReadable = ['record', 'zap'];
+		var OnOff = ['on', 'off'];
 		
-		var namespace = new Array();
+		var namespace = [];
 		
 		for ( var i = 0; i <timers.length; i++){
 			var timer = timers[i];
@@ -1072,9 +1070,9 @@ function incomingRecordingPushed(request) {
 
 function recordingPushedDecision(recordNowNothing,recordNowUndefinitely,recordNowCurrent) {
 	var recordNow = recordNowNothing;
-	recordNow = (recordNow == "") ? recordNowUndefinitely: recordNow;
-	recordNow = (recordNow == "") ? recordNowCurrent: recordNow;
-	if(recordNow != "nothing" && recordNow != "") {
+	recordNow = (recordNow === "") ? recordNowUndefinitely: recordNow;
+	recordNow = (recordNow === "") ? recordNowCurrent: recordNow;
+	if(recordNow !== "nothing" && recordNow !== "") {
 		doRequest(url_recordnow+"?recordnow="+recordNow, incomingTimerAddResult, false);
 	}
 }
@@ -1098,7 +1096,7 @@ function showAbout() {
 /*
  * Handles an incoming request for /web/about
  * Parses the Data, and calls everything needed to render the 
- * Template using the parsed data and set the result into contenMain
+ * Template using the parsed data and set the result into contentMain
  * @param request - the XHR
  */
 function incomingAbout(request) {
@@ -1109,7 +1107,7 @@ function incomingAbout(request) {
 		xml = xml.item(0);
 		
 		var namespace = {};
-		var ns = new Array();
+		var ns = [];
 		
 		try{
 			var fptext = "V"+xml.getElementsByTagName('e2fpversion').item(0).firstChild.data;
@@ -1135,43 +1133,42 @@ function incomingAbout(request) {
 			var hddfree		= hdddata.getElementsByTagName("free").item(0).firstChild.data;
 
 			namespace = {
-				'model' : xml.getElementsByTagName('e2model').item(0).firstChild.data	
-				,'enigmaVersion': xml.getElementsByTagName('e2enigmaversion').item(0).firstChild.data
-				,'fpVersion': fptext
-				,'webifversion': xml.getElementsByTagName('e2webifversion').item(0).firstChild.data	
-				,'lanMac' : xml.getElementsByTagName('e2lanmac').item(0).firstChild.data
-				,'lanDHCP': xml.getElementsByTagName('e2landhcp').item(0).firstChild.data
-				,'lanIP': xml.getElementsByTagName('e2lanip').item(0).firstChild.data
-				,'lanNetmask': xml.getElementsByTagName('e2lanmask').item(0).firstChild.data
-				,'lanGateway': xml.getElementsByTagName('e2langw').item(0).firstChild.data
+				'model' : xml.getElementsByTagName('e2model').item(0).firstChild.data,	
+				'enigmaVersion': xml.getElementsByTagName('e2enigmaversion').item(0).firstChild.data,
+				'fpVersion': fptext,
+				'webifversion': xml.getElementsByTagName('e2webifversion').item(0).firstChild.data,	
+				'lanMac' : xml.getElementsByTagName('e2lanmac').item(0).firstChild.data,
+				'lanDHCP': xml.getElementsByTagName('e2landhcp').item(0).firstChild.data,
+				'lanIP': xml.getElementsByTagName('e2lanip').item(0).firstChild.data,
+				'lanNetmask': xml.getElementsByTagName('e2lanmask').item(0).firstChild.data,
+				'lanGateway': xml.getElementsByTagName('e2langw').item(0).firstChild.data,
 
-//					,'tunerInfo': tunerinfo
-				,'hddmodel': hddmodel
-				,'hddcapacity': hddcapacity
-				,'hddfree': hddfree
+				'hddmodel': hddmodel,
+				'hddcapacity': hddcapacity,
+				'hddfree': hddfree,
 				
-				,'serviceName': xml.getElementsByTagName('e2servicename').item(0).firstChild.data
-				,'serviceProvider': xml.getElementsByTagName('e2serviceprovider').item(0).firstChild.data
-				,'serviceAspect': xml.getElementsByTagName('e2serviceaspect').item(0).firstChild.data
-				,'serviceVideosize': xml.getElementsByTagName('e2servicevideosize').item(0).firstChild.data
-				,'serviceNamespace': xml.getElementsByTagName('e2servicenamespace').item(0).firstChild.data
+				'serviceName': xml.getElementsByTagName('e2servicename').item(0).firstChild.data,
+				'serviceProvider': xml.getElementsByTagName('e2serviceprovider').item(0).firstChild.data,
+				'serviceAspect': xml.getElementsByTagName('e2serviceaspect').item(0).firstChild.data,
+				'serviceVideosize': xml.getElementsByTagName('e2servicevideosize').item(0).firstChild.data,
+				'serviceNamespace': xml.getElementsByTagName('e2servicenamespace').item(0).firstChild.data,
 				
-				,'vPidh': '0x'+d2h(xml.getElementsByTagName('e2vpid').item(0).firstChild.data, 4)
-				 ,'vPid': ownLazyNumber(xml.getElementsByTagName('e2vpid').item(0).firstChild.data)
-				,'aPidh': '0x'+d2h(xml.getElementsByTagName('e2apid').item(0).firstChild.data, 4)
-				 ,'aPid': ownLazyNumber(xml.getElementsByTagName('e2apid').item(0).firstChild.data)
-				,'pcrPidh': '0x'+d2h(xml.getElementsByTagName('e2pcrid').item(0).firstChild.data, 4)
-				 ,'pcrPid': ownLazyNumber(xml.getElementsByTagName('e2pcrid').item(0).firstChild.data)
-				,'pmtPidh': '0x'+d2h(xml.getElementsByTagName('e2pmtpid').item(0).firstChild.data, 4)
-				 ,'pmtPid': ownLazyNumber(xml.getElementsByTagName('e2pmtpid').item(0).firstChild.data)
-				,'txtPidh': '0x'+d2h(xml.getElementsByTagName('e2txtpid').item(0).firstChild.data, 4)
-				 ,'txtPid': ownLazyNumber(xml.getElementsByTagName('e2txtpid').item(0).firstChild.data)
-				,'tsidh': '0x'+d2h(xml.getElementsByTagName('e2tsid').item(0).firstChild.data, 4)
-				 ,'tsid': ownLazyNumber(xml.getElementsByTagName('e2tsid').item(0).firstChild.data)
-				,'onidh': '0x'+d2h(xml.getElementsByTagName('e2onid').item(0).firstChild.data, 4)
-				 ,'onid': ownLazyNumber(xml.getElementsByTagName('e2onid').item(0).firstChild.data)
-				,'sidh': '0x'+d2h(xml.getElementsByTagName('e2sid').item(0).firstChild.data, 4)
-				 ,'sid': ownLazyNumber(xml.getElementsByTagName('e2sid').item(0).firstChild.data)
+				'vPidh': '0x'+d2h(xml.getElementsByTagName('e2vpid').item(0).firstChild.data, 4),
+				'vPid': ownLazyNumber(xml.getElementsByTagName('e2vpid').item(0).firstChild.data),
+				'aPidh': '0x'+d2h(xml.getElementsByTagName('e2apid').item(0).firstChild.data, 4),
+				'aPid': ownLazyNumber(xml.getElementsByTagName('e2apid').item(0).firstChild.data),
+				'pcrPidh': '0x'+d2h(xml.getElementsByTagName('e2pcrid').item(0).firstChild.data, 4),
+				'pcrPid': ownLazyNumber(xml.getElementsByTagName('e2pcrid').item(0).firstChild.data),
+				'pmtPidh': '0x'+d2h(xml.getElementsByTagName('e2pmtpid').item(0).firstChild.data, 4),
+				'pmtPid': ownLazyNumber(xml.getElementsByTagName('e2pmtpid').item(0).firstChild.data),
+				'txtPidh': '0x'+d2h(xml.getElementsByTagName('e2txtpid').item(0).firstChild.data, 4),
+				'txtPid': ownLazyNumber(xml.getElementsByTagName('e2txtpid').item(0).firstChild.data),
+				'tsidh': '0x'+d2h(xml.getElementsByTagName('e2tsid').item(0).firstChild.data, 4),
+				'tsid': ownLazyNumber(xml.getElementsByTagName('e2tsid').item(0).firstChild.data),
+				'onidh': '0x'+d2h(xml.getElementsByTagName('e2onid').item(0).firstChild.data, 4),
+				'onid': ownLazyNumber(xml.getElementsByTagName('e2onid').item(0).firstChild.data),
+				'sidh': '0x'+d2h(xml.getElementsByTagName('e2sid').item(0).firstChild.data, 4),
+				'sid': ownLazyNumber(xml.getElementsByTagName('e2sid').item(0).firstChild.data)
 			};				  
 		} catch (e) {
 			debug("[incomingAbout] About parsing Error" + e);
@@ -1202,7 +1199,7 @@ function startDebugWindow() {
 }
 
 function restartTwisted() {
-	new Ajax.Request( "/web/restarttwisted", { asynchronous: true, method: "get" })
+	request = new Ajax.Request( "/web/restarttwisted", { asynchronous: true, method: "get" });
 }
 
 
@@ -1237,7 +1234,7 @@ function incomingMediaPlayer(request){
 						'exec': 'loadMediaPlayer',
 						'exec_description': 'Change to directory ../',
 						'color': '000000',
-						'root': newroot,
+						'newroot': newroot,
 						'name': '..'
 				};	
 			}
@@ -1282,7 +1279,7 @@ function incomingMediaPlayer(request){
 				 items: itemnamespace
 		};
 		
-		processTpl('tplMediaPlayer', data, 'contentMain')
+		processTpl('tplMediaPlayer', data, 'contentMain');
 		var sendMediaPlayerTMP = sendMediaPlayer;
 		sendMediaPlayer = false;
 		//setBodyMainContent('BodyContent');
@@ -1293,12 +1290,12 @@ function incomingMediaPlayer(request){
 function playFile(file,root) {
 	debug("[playFile] called");
 	mediaPlayerStarted = true;
-	new Ajax.Request( url_mediaplayerplay+file+"&root="+root, { asynchronous: true, method: 'get' });
+	request = new Ajax.Request( url_mediaplayerplay+file+"&root="+root, { asynchronous: true, method: 'get' });
 }
 
 function sendMediaPlayer(command) {
 	debug("[playFile] loading sendMediaPlayer");
-	new Ajax.Request( url_mediaplayercmd+command, { asynchronous: true, method: 'get' });
+	request = new Ajax.Request( url_mediaplayercmd+command, { asynchronous: true, method: 'get' });
 }
 
 function openMediaPlayerPlaylist() {
@@ -1309,8 +1306,8 @@ function openMediaPlayerPlaylist() {
 function writePlaylist() {
 	debug("[playFile] loading writePlaylist");
 	filename = prompt("Please enter a name for the playlist", "");
-	if(filename != "") {
-		new Ajax.Request( url_mediaplayerwrite+filename, { asynchronous: true, method: 'get' });
+	if(filename !== "") {
+		request = new Ajax.Request( url_mediaplayerwrite+filename, { asynchronous: true, method: 'get' });
 	}
 }
 
@@ -1326,7 +1323,7 @@ function writePlaylist() {
  * # 3: rebootenigma
  */
 function sendPowerState(newState){
-	new Ajax.Request( url_powerstate+'?newstate='+newState, { asynchronous: true, method: 'get' });
+	request = new Ajax.Request( url_powerstate+'?newstate='+newState, { asynchronous: true, method: 'get' });
 }
 
 //FileBrowser
@@ -1355,7 +1352,7 @@ function incomingFileBrowser(request){
 				'exec': 'loadFileBrowser',
 				'exec_description': 'change to directory ../',
 				'color': '000000',
-				'root': newroot,
+				'newroot': newroot,
 				'name': '..'});
 		}
 		for ( var i = 0; i <files.length; i++){
@@ -1388,7 +1385,7 @@ function incomingFileBrowser(request){
 		}
 		listerHtml += RND(tplFileBrowserFooter, {'root': root});
 		$('BodyContent').innerHTML = listerHtml;
-		setBodyMainContent('BodyContent');
+//		setBodyMainContent('BodyContent');
 	}		
 }
 function delFile(file,root) {
@@ -1409,8 +1406,7 @@ function incomingDelFileResult(request) {
 
 
 function getCurrent(){
-//	debug("[getCurrent] called")
-	doRequest(url_getcurrent, incomingCurrent, false)
+	doRequest(url_getcurrent, incomingCurrent, false);
 }
 
 function incomingCurrent(request){
@@ -1555,7 +1551,7 @@ function switchMode(mode){
 			break;
 		
 		case "MediaPlayer":
-			loadContentDynamic(loadMediaPlayer, 'MediaPlayer')
+			loadContentDynamic(loadMediaPlayer, 'MediaPlayer');
 			break;
 			
 		case "Extras":

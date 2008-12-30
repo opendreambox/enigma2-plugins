@@ -6,7 +6,7 @@
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type">
 	<title>Dreambox WebControl</title>
 	
-	<script type="text/javascript" src="webdata/lib/prototype-1.6.0.2.js"></script>
+	<script type="text/javascript" src="webdata/lib/prototype-1.6.0.3.js"></script>
 	<script type="text/javascript" src="webdata/lib/shadedborder.js"></script>
 	<script type="text/javascript" src="webdata/lib/trimpath-template-1.0.38.js"></script>
 
@@ -54,9 +54,11 @@
 		} 
 		
 		function setMaxHeight(element){
-			var slc = $(element);
-			size = getWinSize();
-			slc.style.maxHeight = size.height - 200+"px";
+			try{			
+				var slc = $(element);
+				size = getWinSize();
+				slc.style.maxHeight = size.height - 200+"px";
+			} catch (e) {}
 		}
 
 	</script>
@@ -99,7 +101,7 @@
 				</div>
 				<div id="navVolume">
 					<div id="volHd" class="header"><div>Volume</div></div>
-					<span class="boxContent center" style="width: 100%; display:block;">
+					<span class="boxContent center" style="width: 94%; display:block;">
 						<img id='volume1' onclick='volumeSet(10)' src='/webdata/img/led_off.png' title="Volume to 10%" alt="10%">
 						<img id='volume2' onclick='volumeSet(20)' src='/webdata/img/led_off.png' title="Volume to 20%" alt="20%">
 						<img id='volume3' onclick='volumeSet(30)' src='/webdata/img/led_off.png' title="Volume to 30%" alt="30%">
@@ -120,7 +122,7 @@
 				<div id="navSearch">
 					<div id="searchHd" class="header"><div>EPG-Search</div></div>
 					<div class="boxContent">
-						<form onSubmit="loadEPGBySearchString(document.getElementById('epgSearch').value); return false;">
+						<form action="" onSubmit="loadEPGBySearchString(document.getElementById('epgSearch').value); return false;">
 							<input type="text" id="epgSearch" onfocus="this.value=''" value="Search EPG"/>
 							<input style="vertical-align:middle" type="image" src="/webdata/gfx/search.png" alt="search..." title="Search EPG for term">
 						</form>						
@@ -129,15 +131,11 @@
 			</div>
 			<div id="content">
 				<div id="contentHd" class="header"><div>Content</div></div>
-				<div id="contentMain">
-				</div>
+				<div id="contentMain">...</div>
 			</div>	
 		</div>
-		</div>
 	</div>
-	<script language="javascript" type="text/javascript">	
-		
-		setMaxHeight('contentMain');		
+	<script language="javascript" type="text/javascript">			
 		/****************
 		Rounded Corners 
 		*****************/
@@ -178,6 +176,8 @@
 		function getAjaxLoad(){
 			return ('<div>loading...</div>');
 		}
+		
+		setMaxHeight('contentMain');		
 		
 		init();
 	</script>
