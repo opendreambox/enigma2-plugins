@@ -29,9 +29,6 @@ var epgListData = {};
 var bouquetsMemory = {};
 var loadedChannellist = {};
 
-var updateItemsPoller = setInterval(updateItems, 7500);
-var updateItemsLazyPoller = setInterval(updateItemsLazy, 60000);
-
 
 //General Helpers
 function ownLazyNumber(num) {
@@ -45,7 +42,7 @@ function ownLazyNumber(num) {
 
 function d2h(nr, len){
 
-	hex = parseInt(nr, 10).toString(16).toUpperCase();
+	var hex = parseInt(nr, 10).toString(16).toUpperCase();
 	if(len > 0){
 		try{
 			while(hex.length < len){
@@ -57,10 +54,11 @@ function d2h(nr, len){
 	return hex;
 }
 
+
 function quotes2html(txt) {
-	txt = txt.replace(/"/g, '&quot;');
-	return txt.replace(/'/g, "\\\'");
+	return txt.replace(/'/g, "\\'").replace(/"/g, '&quot;');
 }
+
 
 function dateToString(date){
 
@@ -85,10 +83,12 @@ function dateToString(date){
 	return dateString;
 }
 
+
 function showhide(id){
- 	o = $(id).style;
+ 	var o = $(id).style;
  	o.display = (o.display!="none")? "none":"";
 }
+
 
 function show(id){
 	try{
@@ -96,11 +96,13 @@ function show(id){
 	} catch(e) {}
 }
 
+
 function hide(id){
 	try{
 		$(id).style.display = "none";
 	} catch(e) {}
 }
+
 
 function set(element, value){
 	if(element == "CurrentService") {
@@ -117,7 +119,7 @@ function set(element, value){
 	}
 	if(navigator.userAgent.indexOf("MSIE") >=0) {
 		try{
-			elementscript = $('UpdateStreamReaderIEFixIFrame').$('scriptzone');
+			var elementscript = $('UpdateStreamReaderIEFixIFrame').$('scriptzone');
 			if(elementscript){
 				elementscript.innerHTML = ""; // deleting set() from page, to keep the page short and to save memory			
 			}
@@ -209,32 +211,32 @@ function saveTpl(request, tplName){
 
 
 function renderTpl(tpl, data, domElement) {
-//	try{
-		result = tpl.process(data);
-		$(domElement).innerHTML = result;
-//	} catch(e){
-//		debug("[renderTpl] Exception: " + e);
-//	}
+	var result = tpl.process(data);
+	$(domElement).innerHTML = result;
 }
+
 
 function fetchTpl(tplName, callback){
 	if(typeof(templates.tplName) == 'undefined') {
-		url = "/webdata/tpl/"+tplName+".htm";
-		options = {
+		var url = "/webdata/tpl/"+tplName+".htm";
+		var options = {
 				asynchronous: true,
 				method: 'GET',
 				requestHeaders: ['Pragma', 'no-cache', 'Cache-Control', 'must-revalidate', 'If-Modified-Since', 'Sat, 1 Jan 2000 00:00:00 GMT'],
-				onException: function(o, e){ throw(e); },				
-				onSuccess: function(request){
-								saveTpl(request, tplName);
-								if(typeof(callback) != 'undefined'){
+				onException: function(o, e){ 
+								debug("[fetchTpl] exception "+ e); 
+								throw(e); 
+							},				
+				onSuccess: function(transport){
+								saveTpl(transport, tplName);
+								if(typeof(callback) == 'function'){
 									callback();
 								}
 							},
 				onComplete: requestFinished 
 			};
 			
-		request = new Ajax.Request(url, options);
+		var request = new Ajax.Request(url, options);
 	} else {
 		if(typeof(callback) != 'undefined'){
 			callback();
@@ -242,20 +244,29 @@ function fetchTpl(tplName, callback){
 	}
 }
 
+function incomingProcessTpl(request, data, domElement, callback){
+	if(request.readyState == 4){
+		renderTpl(request.responseText, data, domElement);
+		if(typeof(callback) == 'function') {
+			callback();
+		}
+	}
+}
 
 function processTpl(tplName, data, domElement, callback){
-	url = "/webdata/tpl/"+tplName+".htm";
-		request = new Ajax.Request(url,
+	var url = "/webdata/tpl/"+tplName+".htm";
+		var request = new Ajax.Request(url,
 			{
 				asynchronous: true,
 				method: 'GET',
 				requestHeaders: ['Pragma', 'no-cache', 'Cache-Control', 'must-revalidate', 'If-Modified-Since', 'Sat, 1 Jan 2000 00:00:00 GMT'],
-				onException: function(o, e){ throw(e); },				
-				onSuccess: function(request){								
-								renderTpl(request.responseText, data, domElement);
-								if(typeof(callback) != 'undefined') {
-									callback();
-								}
+				onException: function(o, e){ 
+								debug("[processTpl] exception " + e);
+								debug("[processTpl] exception " + typeof(o));
+								throw(e); 
+							},				
+				onSuccess: function(transport){
+								incomingProcessTpl(transport, data, domElement, callback);
 							},
 				onComplete: requestFinished 
 			});
@@ -301,7 +312,7 @@ function doRequest(url, readyFunction, save){
 	} else {
 */
 	try{
-		request = new Ajax.Request(url,
+		var request = new Ajax.Request(url,
 			{
 				asynchronous: true,
 				method: 'GET',
@@ -356,7 +367,7 @@ function getParentControl() {
 
 function getParentControlByRef(txt) {
 	debug("[getParentControlByRef] ("+txt+")");
-	for(i = 0; i < parentControlList.length; i++) {
+	for(var i = 0; i < parentControlList.length; i++) {
 		debug( "[getParentControlByRef] "+parentControlList[i].getClearServiceReference() );
 		if(String(parentControlList[i].getClearServiceReference()) == String(txt)) {
 			return parentControlList[i].getClearServiceReference();
@@ -400,7 +411,7 @@ function parentPin(servicereference) {
 //Settings
 function getSettingByName(txt) {
 	debug("[getSettingByName] (" + txt + ")");
-	for(i = 0; i < settings.length; i++) {
+	for(var i = 0; i < settings.length; i++) {
 		debug("("+settings[i].getSettingName()+") (" +settings[i].getSettingValue()+")");
 		if(String(settings[i].getSettingName()) == String(txt)) {
 			return settings[i].getSettingValue().toLowerCase();
@@ -412,7 +423,7 @@ function getSettingByName(txt) {
 
 function incomingGetDreamboxSettings(request){
 	if(request.readyState == 4){
-		settings = new Settings(getXML(request)).getArray();
+		var settings = new Settings(getXML(request)).getArray();
 	}
 	debug ("starte getParentControl " + getSettingByName("config.ParentalControl.configured"));
 	if(String(getSettingByName("config.ParentalControl.configured")) == "true") {
@@ -434,9 +445,9 @@ function incomingSubServiceRequest(request){
 		
 		if(services.length > 1) {
 			
-			first = services[0];
+			var first = services[0];
 
-			last = false;
+			var last = false;
 			var namespace = [];
 			
 			//we already have the main service in our servicelist so we'll start with the second element
@@ -447,7 +458,7 @@ function incomingSubServiceRequest(request){
 					'servicename': reference.getServiceName()
 				};
 			}
-			data = { subservices : namespace };
+			var data = { subservices : namespace };
 			
 			
 			var id = 'SUB'+first.getServiceReference();
@@ -469,7 +480,7 @@ function delayedGetSubservices(){
 
 //zap zap
 function zap(servicereference){
-	request = new Ajax.Request( "/web/zap?sRef=" + servicereference, 
+	var request = new Ajax.Request( "/web/zap?sRef=" + servicereference, 
 						{
 							asynchronous: true,
 							method: 'get'
@@ -481,7 +492,7 @@ function zap(servicereference){
 //SignalPanel
 
 function updateSignalPanel(){	
-	html = templates.tplSignalPanel.process(signalPanelData);
+	var html = templates.tplSignalPanel.process(signalPanelData);
 	
 	if (!signalWin.closed && signalWin.location) {
 		setWindowContent(signalWin, html);
@@ -526,7 +537,7 @@ function openSignalPanel(){
 
 
 function showEpgList(){
-	html = templates.tplEpgList.process(epgListData);
+	var html = templates.tplEpgList.process(epgListData);
 	
 	if (!EPGListWindow.closed && EPGListWindow.location) {
 		setWindowContent(EPGListWindow, html);
@@ -584,19 +595,19 @@ function loadEPGByServiceReference(servicereference){
 	doRequest(url_epgservice+servicereference,incomingEPGrequest, false);
 }
 
-function extdescriptionSmall(txt,num) {
-	if(txt.length > 410) {
-		var shortTxt = txt.substr(0,410);
-		txt = txt.replace(/\'\'/g, '&quot;');
-		txt = txt.replace(/\\/g, '\\\\');
-		txt = txt.replace(/\'/g, '\\\'');
-		txt = txt.replace(/\"/g, '&quot;');
-		var smallNamespace = { 'txt':txt,'number':num, 'shortTxt':shortTxt};
-		return RND(tplEPGListItemExtend, smallNamespace);
-	} else {
-		return txt;
-	}
-}	
+//function extdescriptionSmall(txt,num) {
+//	if(txt.length > 410) {
+//		var shortTxt = txt.substr(0,410);
+//		txt = txt.replace(/\'\'/g, '&quot;');
+//		txt = txt.replace(/\\/g, '\\\\');
+//		txt = txt.replace(/\'/g, '\\\'');
+//		txt = txt.replace(/\"/g, '&quot;');
+//		var smallNamespace = { 'txt':txt,'number':num, 'shortTxt':shortTxt};
+//		return RND(tplEPGListItemExtend, smallNamespace);
+//	} else {
+//		return txt;
+//	}
+//}	
 
 function buildServiceListEPGItem(epgevent, type){
 	var e = $(type+epgevent.getServiceReference());
@@ -731,9 +742,9 @@ function incomingChannellist(request){
 			
 			var service = services[i];
 			namespace[i] = { 	
-				'servicereference': service.getServiceReference(),
-				'servicename': service.getServiceName(),
-				'class' : cssclass
+				'servicereference' : service.getServiceReference(),
+				'servicename' : service.getServiceName(),
+				'cssclass' : cssclass
 			};
 		}
 		var data = { 
@@ -849,10 +860,10 @@ function incomingMovieList(request){
 				'tags': movie.getTags().join(', ') ,
 				'length': movie.getLength() ,
 				'time': movie.getTimeDay()+"&nbsp;"+ movie.getTimeStartString(),
-				'class' : cssclass
+				'cssclass' : cssclass
 			};
 		}
-		data = { movies : namespace };
+		var data = { movies : namespace };
 		processTpl('tplMovieList', data, 'contentMain');
 	}		
 }
@@ -932,7 +943,8 @@ function sendMessage(messagetext,messagetype,messagetimeout){
 		messagetype = $('MessageSendFormType').options[index].value;
 	}	
 	if(ownLazyNumber(messagetype) === 0){
-		request = new Ajax.Request(url_message+'?text='+messagetext+'&type='+messagetype+'&timeout='+messagetimeout, { asynchronous: true, method: 'get' });
+		var request = new Ajax.Request(url_message+'?text='+messagetext+'&type='+messagetype+'&timeout='+messagetimeout, { asynchronous: true, method: 'get' });
+		
 		MessageAnswerPolling = setInterval(getMessageAnswer, ownLazyNumber(messagetimeout)*1000);
 	} else {
 		doRequest(url_message+'?text='+messagetext+'&type='+messagetype+'&timeout='+messagetimeout, incomingMessageResult, false);
@@ -991,9 +1003,9 @@ function incomingRemoteControlResult(request){
 		var b = getXML(request).getElementsByTagName("e2remotecontrol");
 		var result = b.item(0).getElementsByTagName('e2result').item(0).firstChild.data;
 		var resulttext = b.item(0).getElementsByTagName('e2resulttext').item(0).firstChild.data;
-	} else {
+	} //else {
 		//TODO Some Error Handling
-	}
+//	}
 }
 
 function openWebRemote(){
@@ -1044,12 +1056,12 @@ if( typeof Array.prototype.splice==='undefined' ) {
 			c = l - a; 
 		}
 		
-		for( i = 0; i < e.length - 2; i++ ) { 
+		for( var i = 0; i < e.length - 2; i++ ) { 
 			this[a + i] = e[i + 2]; 
 		}
 		
 		
-		for( j = a; j < l - c; j++ ) { 
+		for( var j = a; j < l - c; j++ ) { 
 			this[j + e.length - 2] = d[j - c]; 
 		}
 		this.length -= c - e.length + 2;
@@ -1059,7 +1071,7 @@ if( typeof Array.prototype.splice==='undefined' ) {
 }
 
 function writeTimerListNow() {
-	request = new Ajax.Request( url_timerlistwrite, { asynchronous: true, method: 'get' });
+	var request = new Ajax.Request( url_timerlistwrite, { asynchronous: true, method: 'get' });
 }
 
 //Recording
@@ -1099,12 +1111,11 @@ function incomingRecordingPushed(request) {
 				'afterevent': timer.getAfterevent(),
 				'aftereventReadable': aftereventReadable[Number(timer.getAfterevent())],
 				'disabled': timer.getDisabled(),
-				'onOff': OnOff[Number(timer.getDisabled())],
-				'color': colorTimerListEntry( timer.getState() )
+				'onOff': OnOff[Number(timer.getDisabled())]
 				};
 			}
 		}
-		data = { recordings : namespace };
+		var data = { recordings : namespace };
 		openPopup("Record Now", 'tplTimerListItem', data, 900, 500, "Record now window");
 	}
 }
@@ -1157,8 +1168,8 @@ function incomingAbout(request) {
 			debug("[incomingAbout] nims: "+nims.length);
 			for(var i = 0; i < nims.length; i++){
 				
-				name = nims.item(i).getElementsByTagName("name").item(0).firstChild.data;
-				type = nims.item(i).getElementsByTagName("type").item(0).firstChild.data;
+				var name = nims.item(i).getElementsByTagName("name").item(0).firstChild.data;
+				var type = nims.item(i).getElementsByTagName("type").item(0).firstChild.data;
 				debug("[incomingAbout]" + name);
 				debug("[incomingAbout]" + type);
 				ns[i] = { 'name' : name, 'type' : type};
@@ -1214,7 +1225,7 @@ function incomingAbout(request) {
 			debug("[incomingAbout] About parsing Error" + e);
 		}
 
-		data = { about : namespace,
+		var data = { about : namespace,
 				 tuner : ns};
 		processTpl('tplAbout', data, 'contentMain');
 	}
@@ -1242,14 +1253,14 @@ function startDebugWindow() {
 
 
 function restartTwisted() {
-	request = new Ajax.Request( "/web/restarttwisted", { asynchronous: true, method: "get" });
+	var request = new Ajax.Request( "/web/restarttwisted", { asynchronous: true, method: "get" });
 }
 
 
 //MediaPlayer
 function sendMediaPlayer(command) {
 	debug("[playFile] loading sendMediaPlayer");
-	request = new Ajax.Request( url_mediaplayercmd+command, { asynchronous: true, method: 'get' });
+	var request = new Ajax.Request( url_mediaplayercmd+command, { asynchronous: true, method: 'get' });
 }
 
 
@@ -1260,15 +1271,15 @@ function incomingMediaPlayer(request){
 		debug("[loadMediaPlayer] Got "+files.length+" entries in mediaplayer filelist");
 		//listerHtml 	= tplMediaPlayerHeader;
 		
-		var namespace = '';
+		var namespace = {};
 
-		root = files[0].getRoot();
+		var root = files[0].getRoot();
 		if (root != "playlist") {
 			namespace = {'root': root};
 			if(root != '/') {
-				re = new RegExp(/(.*)\/(.*)\/$/);
+				var re = new RegExp(/(.*)\/(.*)\/$/);
 				re.exec(root);
-				newroot = RegExp.$1+'/';
+				var newroot = RegExp.$1+'/';
 				if(newroot == '//') {
 					newroot = '/';
 				}
@@ -1319,7 +1330,7 @@ function incomingMediaPlayer(request){
 		}
 		*/
 		
-		data = { mp : namespace,
+		var data = { mp : namespace,
 				 items: itemnamespace
 		};
 		
@@ -1341,7 +1352,7 @@ function loadMediaPlayer(directory){
 function playFile(file,root) {
 	debug("[playFile] called");
 	mediaPlayerStarted = true;
-	request = new Ajax.Request( url_mediaplayerplay+file+"&root="+root, { asynchronous: true, method: 'get' });
+	var request = new Ajax.Request( url_mediaplayerplay+file+"&root="+root, { asynchronous: true, method: 'get' });
 }
 
 
@@ -1353,9 +1364,9 @@ function openMediaPlayerPlaylist() {
 
 function writePlaylist() {
 	debug("[playFile] loading writePlaylist");
-	filename = prompt("Please enter a name for the playlist", "");
+	var filename = prompt("Please enter a name for the playlist", "");
 	if(filename !== "") {
-		request = new Ajax.Request( url_mediaplayerwrite+filename, { asynchronous: true, method: 'get' });
+		var request = new Ajax.Request( url_mediaplayerwrite+filename, { asynchronous: true, method: 'get' });
 	}
 }
 
@@ -1372,87 +1383,87 @@ function writePlaylist() {
  * # 3: rebootenigma
  */
 function sendPowerState(newState){
-	request = new Ajax.Request( url_powerstate+'?newstate='+newState, { asynchronous: true, method: 'get' });
+	var request = new Ajax.Request( url_powerstate+'?newstate='+newState, { asynchronous: true, method: 'get' });
 }
 
 
 //FileBrowser
-function incomingFileBrowser(request){
-	if(request.readyState == 4){
-		var files = new FileList(getXML(request)).getArray();
-
-		debug("[incomingFileBrowser] Got " + files.length + " entry in filelist");
-		listerHtml 	= tplFileBrowserHeader;
-		root = files[0].getRoot();
-		listerHtml 	= RND(tplFileBrowserHeader, {'root': root});
-		if(root != '/') {
-			re = new RegExp(/(.*)\/(.*)\/$/);
-			re.exec(root);
-			newroot = RegExp.$1+'/';
-			if(newroot == '//') {
-				newroot = '/';
-			}
-			listerHtml += RND(tplFileBrowserItemBody, 
-				{'root': root,
-				'servicereference': newroot,
-				'exec': 'loadFileBrowser',
-				'exec_description': 'change to directory ../',
-				'color': '000000',
-				'newroot': newroot,
-				'name': '..'});
-		}
-		for ( var i = 0; i <files.length; i++){
-			var file = files[i];
-			if(file.getNameOnly() == 'None') {
-				continue;
-			}
-			var exec = 'loadFileBrowser';
-			var exec_description = 'change to directory' + file.getServiceReference();
-			var color = '000000';
-			if (file.getIsDirectory() == "False") {
-				exec = '';
-				exec_description = 'do Nothing';
-				color = '00BCBC';
-			}
-			var namespace = {
-				'servicereference': file.getServiceReference(),
-				'exec': exec,
-				'exec_description': exec_description,
-				'color': color,
-				'root': file.getRoot(),
-				'name': file.getNameOnly()
-			};
-			listerHtml += tplFileBrowserItemHead;
-			listerHtml += RND(tplFileBrowserItemBody, namespace);
-			if (file.getIsDirectory() == "False") {
-				listerHtml += RND(tplFileBrowserItemIMG, namespace);
-			}
-			listerHtml += tplFileBrowserItemFooter;
-		}
-		listerHtml += RND(tplFileBrowserFooter, {'root': root});
-		$('BodyContent').innerHTML = listerHtml;
-//		setBodyMainContent('BodyContent');
-	}		
-}
-
-
-function loadFileBrowser(directory,types){
-	debug("[loadFileBrowser] loading loadFileBrowser");
-	doRequest(url_filelist+directory+"&types="+types, incomingFileBrowser, false);	
-}
-
-
-function incomingDelFileResult(request) {
-	debug("[incomingDelFileResult called]");
-	if(request.readyState == 4){
-		var delresult = new SimpleXMLResult(getXML(request));
-		if(delresult.getState()){
-			loadFileBrowser($('path').value);
-		}else{
-			messageBox("Deletion Error","Reason: "+delresult.getStateText());
-		}
-	}		
-}
+//function incomingFileBrowser(request){
+//	if(request.readyState == 4){
+//		var files = new FileList(getXML(request)).getArray();
+//
+//		debug("[incomingFileBrowser] Got " + files.length + " entry in filelist");
+//		listerHtml 	= tplFileBrowserHeader;
+//		root = files[0].getRoot();
+//		listerHtml 	= RND(tplFileBrowserHeader, {'root': root});
+//		if(root != '/') {
+//			re = new RegExp(/(.*)\/(.*)\/$/);
+//			re.exec(root);
+//			newroot = RegExp.$1+'/';
+//			if(newroot == '//') {
+//				newroot = '/';
+//			}
+//			listerHtml += RND(tplFileBrowserItemBody, 
+//				{'root': root,
+//				'servicereference': newroot,
+//				'exec': 'loadFileBrowser',
+//				'exec_description': 'change to directory ../',
+//				'color': '000000',
+//				'newroot': newroot,
+//				'name': '..'});
+//		}
+//		for ( var i = 0; i <files.length; i++){
+//			var file = files[i];
+//			if(file.getNameOnly() == 'None') {
+//				continue;
+//			}
+//			var exec = 'loadFileBrowser';
+//			var exec_description = 'change to directory' + file.getServiceReference();
+//			var color = '000000';
+//			if (file.getIsDirectory() == "False") {
+//				exec = '';
+//				exec_description = 'do Nothing';
+//				color = '00BCBC';
+//			}
+//			var namespace = {
+//				'servicereference': file.getServiceReference(),
+//				'exec': exec,
+//				'exec_description': exec_description,
+//				'color': color,
+//				'root': file.getRoot(),
+//				'name': file.getNameOnly()
+//			};
+//			listerHtml += tplFileBrowserItemHead;
+//			listerHtml += RND(tplFileBrowserItemBody, namespace);
+//			if (file.getIsDirectory() == "False") {
+//				listerHtml += RND(tplFileBrowserItemIMG, namespace);
+//			}
+//			listerHtml += tplFileBrowserItemFooter;
+//		}
+//		listerHtml += RND(tplFileBrowserFooter, {'root': root});
+//		$('BodyContent').innerHTML = listerHtml;
+////		setBodyMainContent('BodyContent');
+//	}		
+//}
+//
+//
+//function loadFileBrowser(directory,types){
+//	debug("[loadFileBrowser] loading loadFileBrowser");
+//	doRequest(url_filelist+directory+"&types="+types, incomingFileBrowser, false);	
+//}
+//
+//
+//function incomingDelFileResult(request) {
+//	debug("[incomingDelFileResult called]");
+//	if(request.readyState == 4){
+//		var delresult = new SimpleXMLResult(getXML(request));
+//		if(delresult.getState()){
+//			loadFileBrowser($('path').value);
+//		}else{
+//			messageBox("Deletion Error","Reason: "+delresult.getStateText());
+//		}
+//	}		
+//}
 
 
 function delFile(file,root) {
@@ -1504,14 +1515,20 @@ function getBouquets(sRef){
 		case bouquetsTv:
 			contentHeader = "Bouquets (TV)";
 			break;
+		
 		case providerTv:
 			contentHeader = "Provider (TV)";
 			break;
+		
 		case bouquetsRadio:
 			contentHeader = "Bouquets (Radio)";
 			break;
+		
 		case providerRadio:
 			contentHeader = "Provider (Radio)";
+			break;
+		
+		default:
 			break;
 	}
 	setContentHd(contentHeader);
@@ -1571,7 +1588,10 @@ function openExtra(extra){
 		
 		case "message":
 			loadContentStatic('tplSendMessage', 'Send a Message');
-			break;		
+			break;
+		
+		default:
+			break;
 	}
 }
 
@@ -1609,6 +1629,8 @@ function switchMode(mode){
 		case "Extras":
 			reloadNav('tplNavExtras', 'Extras');
 			break;
+		default:
+			break;
 	}
 }
 
@@ -1623,6 +1645,9 @@ function updateItemsLazy(){
 	getSubServices();
 	getBouquetEpg();
 }
+
+var updateItemsPoller = setInterval(updateItems, 7500);
+var updateItemsLazyPoller = setInterval(updateItemsLazy, 60000);
 /*
  * Does the everything required on initial pageload
  */

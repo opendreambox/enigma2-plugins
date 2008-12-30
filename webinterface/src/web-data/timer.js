@@ -73,7 +73,7 @@ function incomingTimerList(request){
 				'disabled': timer.getDisabled(),
 				'onOff': timer.getToggleDisabledIMG(),
 				'enDis': timer.getToggleDisabledText(),
-				'class': cssclass
+				'cssclass': cssclass
 			};			
 		}
 		data = { timer : namespace };
@@ -141,6 +141,7 @@ function delTimer(sRef,begin,end,servicename,title,description,readyFunction){
 	} else {
 		debug("[delTimer] cancel confirm panel");
 	}
+	return false;
 }
 
 function incomingTimerDelResult(request){

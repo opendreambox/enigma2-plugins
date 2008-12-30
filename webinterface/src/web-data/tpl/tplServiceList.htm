@@ -1,31 +1,31 @@
 
 						<table id="contentTable">
-							{for s in services}
+							{for service in services}
 							<tr>
-								<td class="${s.class}">
+								<td class="${service.cssclass}">
 									<table class="sListItem">
 										<tr>
 											<td style="width: 740px;">										
 												<div class="sListSName">
-													<a href="#" id="${s.servicereference}" onclick="{ zap(this.id); }" class="sListSLink" title="Zap to ${s.servicename}">
-														${s.servicename}
+													<a href="#" id="${service.servicereference}" onclick="{ zap(thiservice.id); }" class="sListSLink" title="Zap to ${service.servicename}">
+														${service.servicename}
 													</a>
 												</div>
 											</td>
 											<td>
-												<a onclick="if ( parentPin( '${s.servicereference}' ) ) { loadEPGByServiceReference( '${s.servicereference}' ); }">
-													<img src="/webdata/gfx/epg.png" border="0" title="Show EPG for ${s.servicename}"/>
+												<a onclick="if ( parentPin( '${service.servicereference}' ) ) { loadEPGByServiceReference( '${service.servicereference}' ); }">
+													<img src="/webdata/gfx/epg.png" border="0" title="Show EPG for ${service.servicename}"/>
 												</a>
 											</td>
 											<td>
-												<a target="_blank" onclick="return parentPin( '${s.servicereference}' );" href="/web/stream.m3u?ref=${s.servicereference}">
-													<img src="/webdata/gfx/screen.png" title="Stream ${s.servicename}" border="0">
+												<a target="_blank" onclick="return parentPin( '${service.servicereference}' );" href="/web/stream.m3u?ref=${service.servicereference}">
+													<img src="/webdata/gfx/screen.png" title="Stream ${service.servicename}" border="0">
 												</a>
 											</td>											
 										</tr>
-										<tr class="sListEPGNow" id="NOW${s.servicereference}" style="display:none;"><td></td></tr>
-										<tr class="sListEPGNext" id="NEXT${s.servicereference}" style="display:none;"><td></td></tr>
-										<tr class="sListSubService" id="SUB${s.servicereference}" style="display:none;"><td></td></tr>
+										<tr class="sListEPGNow" id="NOW${service.servicereference}" style="display:none;"><td></td></tr>
+										<tr class="sListEPGNext" id="NEXT${service.servicereference}" style="display:none;"><td></td></tr>
+										<tr class="sListSubService" id="SUB${service.servicereference}" style="display:none;"><td></td></tr>
 									</table>
 								</td>
 							</tr>

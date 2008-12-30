@@ -11,7 +11,7 @@ function EPGList(xml){
 	
 	this.getArray = function(sortbytime){
 		debug("[EPGList] Sort by time "+sortbytime);
-		if (sortbytime == true){
+		if (sortbytime === true){
 			var sort1 = [];
 			for(var i=0;i<this.xmlitems.length;i++){
 				var xv = new EPGEvent(this.xmlitems.item(i));
@@ -19,14 +19,14 @@ function EPGList(xml){
 			}
 			sort1.sort(this.sortFunction);
 			var sort2 = [];
-			for(var i=0;i<sort1.length;i++){
+			for(i=0;i<sort1.length;i++){
 				sort2.push(sort1[i][1]);
 			}
 			return sort2;
 		}else{
 			var listxy = [];
-			for (var i=0;i<this.xmlitems.length;i++){
-				var xv = new EPGEvent(this.xmlitems.item(i));
+			for (i=0;i<this.xmlitems.length;i++){
+				xv = new EPGEvent(this.xmlitems.item(i));
 				listxy.push(xv);			
 			}
 			return listxy;
