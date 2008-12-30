@@ -7,7 +7,7 @@
 										<tr>
 											<td style="width: 740px;">										
 												<div class="sListSName">
-													<a href="#" id="${service.servicereference}" onclick="{ zap(thiservice.id); }" class="sListSLink" title="Zap to ${service.servicename}">
+													<a href="#" id="${service.servicereference}" onclick="{ zap(this.id); }" class="sListSLink" title="Zap to ${service.servicename}">
 														${service.servicename}
 													</a>
 												</div>
@@ -24,13 +24,13 @@
 											</td>											
 										</tr>
 										<tr id="trNOW${service.servicereference}" class="sListEPGNow" style="display:none;">
-											<td id="NOW${service.servicereference}"></td>
+											<td id="NOW${service.servicereference}" class="sListEPGItem" colspan="3"></td>
 										</tr>
 										<tr id="trNEXT${service.servicereference}" class="sListEPGNext" style="display:none;">
-											<td id="NEXT${service.servicereference}"></td>
+											<td id="NEXT${service.servicereference}" class="sListEPGItem" colspan="3"></td>
 										</tr>
 										<tr id="trSUB${service.servicereference}" class="sListSubService" style="display:none;">
-											<td id="SUB${service.servicereference}"></td>
+											<td id="SUB${service.servicereference}" colspan="3"></td>
 										</tr>
 									</table>
 								</td>

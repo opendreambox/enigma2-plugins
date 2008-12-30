@@ -468,7 +468,7 @@ function incomingSubServiceRequest(request){
 			
 			
 			var id = 'SUB'+first.getServiceReference();
-			show(id);
+			show('tr' + id);
 			processTpl('tplSubServices', data, id);
 		}
 	}
