@@ -23,9 +23,15 @@
 												</a>
 											</td>											
 										</tr>
-										<tr class="sListEPGNow" id="NOW${service.servicereference}" style="display:none;"><td></td></tr>
-										<tr class="sListEPGNext" id="NEXT${service.servicereference}" style="display:none;"><td></td></tr>
-										<tr class="sListSubService" id="SUB${service.servicereference}" style="display:none;"><td></td></tr>
+										<tr id="trNOW${service.servicereference}" class="sListEPGNow" style="display:none;">
+											<td id="NOW${service.servicereference}"></td>
+										</tr>
+										<tr id="trNEXT${service.servicereference}" class="sListEPGNext" style="display:none;">
+											<td id="NEXT${service.servicereference}"></td>
+										</tr>
+										<tr id="trSUB${service.servicereference}" class="sListSubService" style="display:none;">
+											<td id="SUB${service.servicereference}"></td>
+										</tr>
 									</table>
 								</td>
 							</tr>

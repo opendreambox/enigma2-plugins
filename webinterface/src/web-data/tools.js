@@ -3,7 +3,7 @@
 var doRequestMemory = {};
 var doRequestMemorySave = {};
 
-var templates = [];
+var templates = {};
 
 var mediaPlayerStarted = false;
 
@@ -206,13 +206,19 @@ function openPopup(title, html, width, height, x, y){
 
 //Template Helpers
 function saveTpl(request, tplName){
+	debug("[saveTpl] saving template: " + tplName);
 	templates[tplName] = request.responseText;
 }
 
 
-function renderTpl(tpl, data, domElement) {
+function renderTpl(tpl, data, domElement) {	
 	var result = tpl.process(data);
-	$(domElement).innerHTML = result;
+
+	try{
+		$(domElement).innerHTML = result;
+	}catch(ex){
+		debug("[renderTpl] exception: " + ex);
+	}
 }
 
 
@@ -610,35 +616,34 @@ function loadEPGByServiceReference(servicereference){
 //}	
 
 function buildServiceListEPGItem(epgevent, type){
-	var e = $(type+epgevent.getServiceReference());
-		try{
-			var namespace = { 	
-				'starttime': epgevent.getTimeStartString(), 
-				'title': epgevent.getTitle(), 
-				'length': Math.ceil(epgevent.duration/60) 
-			};
-			var data = {epg : namespace};
-			//e.innerHTML = RND(tplServiceListEPGItem, namespace);
-			
-			var id = type + epgevent.getServiceReference();
-			
-			show(id);
-			
-			if(templates.tplServiceListEPGItem !== null){
-				renderTpl(templates.tplServiceListEPGItem, data, id);
-			} else {
-				debug("[EPGItem] tplServiceListEPGItem N/A");
-			}
-		} catch (ex) {
-			debug("[EPGItem] Error rendering: " + ex);
-		}	
+	var namespace = { 	
+		'starttime': epgevent.getTimeStartString(), 
+		'title': epgevent.getTitle(), 
+		'length': Math.ceil(epgevent.duration/60) 
+	};
+	var data = {epg : namespace};
+	//e.innerHTML = RND(tplServiceListEPGItem, namespace);
+	
+	var id = type + epgevent.getServiceReference();
+	
+	show('tr' + id);
+	
+		if(typeof(templates.tplServiceListEPGItem) == "string"){
+			renderTpl(templates.tplServiceListEPGItem, data, id, true);
+		} else {
+			debug("[buildServiceListEPGItem] tplServiceListEPGItem N/A");
+		}
 }
 
 function incomingServiceEPGNowNext(request, type){
 	if(request.readyState == 4){
 		var epgevents = getXML(request).getElementsByTagName("e2eventlist").item(0).getElementsByTagName("e2event");
-		for (var c=0; c < epgevents.length; c++){
-			var epgEvt = new EPGEvent(epgevents.item(c));
+		for (var c = 0; c < epgevents.length; c++){
+			try{
+				var epgEvt = new EPGEvent(epgevents.item(c));
+			} catch (e){
+				debug("[incomingServiceEPGNowNext]" + e);
+			}
 			
 			if (epgEvt.getEventId() != 'None'){
 				buildServiceListEPGItem(epgEvt, type);
@@ -1665,8 +1670,6 @@ function init(){
 	
 	initChannelList();
 	initVolumePanel();
-	
-//	TODO openSignalPanel();
 	
 	updateItems();
 }
