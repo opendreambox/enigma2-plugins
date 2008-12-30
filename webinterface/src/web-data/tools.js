@@ -194,8 +194,8 @@ function setWindowContent(window, html){
 }
 
 function openPopup(title, html, width, height, x, y){
-	var popup = window.open('about:blank',title,'scrollbars=yes, width='+width+',height='+height+',left='+x+',top='+y+',screenX='+x+',screenY='+y);
 	try {
+		var popup = window.open('about:blank',title,'scrollbars=yes, width='+width+',height='+height);
 		setWindowContent(popup, html);
 		return popup;
 	} catch(e){
@@ -548,7 +548,7 @@ function showEpgList(){
 	if (!EPGListWindow.closed && EPGListWindow.location) {
 		setWindowContent(EPGListWindow, html);
 	} else {
-		EPGListWindow = openPopup("Electronic Program Guide", html, 900, 500,50,60);
+		EPGListWindow = openPopup("EPG", html, 900, 500);
 	}
 }
 
@@ -575,7 +575,6 @@ function incomingEPGrequest(request){
 						'endtime': item.getTimeEndString(), 
 						'extdescription': quotes2html(item.getDescriptionExtended()),
 						'number': String(i),
-//						'extdescriptionSmall': quotes2html(item.getDescriptionExtended()),
 						'start': item.getTimeBegin(),
 						'end': item.getTimeEnd()
 					};
