@@ -1,4 +1,4 @@
-# -*- coding: utf8 -*-
+# -*- coding: utf-8 -*-
 from Plugins.Plugin import PluginDescriptor
 from twisted.web.client import downloadPage
 from enigma import ePicLoad, eServiceReference
