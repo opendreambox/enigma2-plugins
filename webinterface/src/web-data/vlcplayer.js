@@ -93,10 +93,8 @@ function incomingVLCSubservices(request){
 					if(option !== null){
 						option.remove();
 					}
-					option = document.createElement('option');
+					option = new Option(' |- ' + service.getServiceName());
 					option.id =  service.getServiceReference();
-					option.text  = ' |- ';
-					option.text += service.getServiceName();
 					
 					lastoption.insert( { after : option } );
 					
