@@ -4,7 +4,6 @@
 //START class EPGList
 function EPGList(xml){
 	// parsing values from xml-element
-	//debug('init EPGList'+xml);
 	try{
 		this.xmlitems = xml.getElementsByTagName("e2eventlist").item(0).getElementsByTagName("e2event");
 	} catch (e) { debug("[EPGList] parsing Error");}
@@ -49,8 +48,7 @@ function EPGEvent(xml){
 		this.serviceRef = xml.getElementsByTagName('e2eventservicereference').item(0).firstChild.data;
 		this.serviceName = xml.getElementsByTagName('e2eventservicename').item(0).firstChild.data;
 		this.fileName = xml.getElementsByTagName('e2filename').item(0).firstChild.data;
-	} catch (e) {
-	}	
+	} catch (e) {}	
 	try{
 		this.description = xml.getElementsByTagName('e2eventdescription').item(0).firstChild.data;
 	} catch (e) {	this.description= 'N/A';	}
@@ -126,7 +124,6 @@ function EPGEvent(xml){
 //START class Service
 function ServiceReference(xml){	
 	// parsing values from xml-element
-	//debug('init ServiceReference'+xml);
 	try{
 		this.servicereference = xml.getElementsByTagName('e2servicereference').item(0).firstChild.data;
 		this.servicename = xml.getElementsByTagName('e2servicename').item(0).firstChild.data;
@@ -159,7 +156,6 @@ function ServiceReference(xml){
 //START class ServiceList
 function ServiceList(xml){
 	// parsing values from xml-element
-	//debug('init ServiceList'+xml);
 	try{
 		this.xmlitems = xml.getElementsByTagName("e2servicelist").item(0).getElementsByTagName("e2service");
 	} catch (e) {
@@ -182,7 +178,6 @@ function ServiceList(xml){
 //START class MovieList
 function MovieList(xml){
 	// parsing values from xml-element
-	debug('[MovieList] init: ' + xml);
 	try{
 		this.xmlitems = xml.getElementsByTagName("e2movielist").item(0).getElementsByTagName("e2movie");
 	} catch (e) {
@@ -203,7 +198,6 @@ function MovieList(xml){
 //START class Movie
 function Movie(xml){	
 	// parsing values from xml-element
-	//debug('init Movie');
 	try{
 		this.servicereference = xml.getElementsByTagName('e2servicereference').item(0).firstChild.data;
 	} catch (e) {
@@ -342,7 +336,6 @@ function TimerList(xml){
 //START class Timer
 function Timer(xml){	
 	// parsing values from xml-element
-	//debug('init Timer');
 	try{
 		this.servicereference = xml.getElementsByTagName('e2servicereference').item(0).firstChild.data;
 	} catch (e) {
@@ -592,13 +585,11 @@ function Timer(xml){
 		return this.cancled;
 	};	
 }
-// START SimpleXMLResult ehemals TimerAddResult
+// START SimpleXMLResult
 function SimpleXMLResult(xml){
-	// parsing values from xml-element
-	debug('[SimpleXMLResult] init: '+xml);
+	// parsing values from xml-element	
 	try{
 		this.xmlitems = xml.getElementsByTagName("e2simplexmlresult").item(0);
-		debug("[SimpleXMLResult] count: " + xml.getElementsByTagName("e2simplexmlresult").length);
 	} catch (e) {
 		debug("[SimpleXMLResult] parsing e2simplexmlresult"+e);
 	}
@@ -627,12 +618,10 @@ function SimpleXMLResult(xml){
 // END SimpleXMLResult
 
 // START SimpleXMLList
-function SimpleXMLList(xml){
+function SimpleXMLList(xml, tagname){
 	// parsing values from xml-element
-	debug('[SimpleXMLList] init: '+xml);
 	try{
-		this.xmlitems = xml.getElementsByTagName("e2simplexmllist").item(0).getElementsByTagName("e2simplexmlitem");
-		debug("[SimpleXMLList] count: " + xml.getElementsByTagName("e2simplexmllist").length);
+		this.xmlitems = xml.getElementsByTagName(tagname);
 	} catch (e) {
 		debug("[SimpleXMLList] parsing e2simplexmllist"+e);
 	}
@@ -649,7 +638,6 @@ function SimpleXMLList(xml){
 //START class Settings
 function Settings(xml){
 	// parsing values from xml-element
-	//debug('init ServiceList'+xml);
 	try{
 		this.xmlitems = xml.getElementsByTagName("e2settings").item(0).getElementsByTagName("e2setting");
 		debug("[Settings] Number of items: " + this.xmlitems);
@@ -657,12 +645,12 @@ function Settings(xml){
 		//debug("Service parsing Error");
 	}
 	this.getArray = function(){
-		var listxy = [];
+		var list = [];
 		for (var i=0;i<this.xmlitems.length;i++){
 			var xv = new Setting(this.xmlitems.item(i));
-			listxy.push(xv);			
+			list.push(xv);			
 		}
-		return listxy;
+		return list;
 	};
 }
 //END class Settings
@@ -670,7 +658,6 @@ function Settings(xml){
 //START class Setting
 function Setting(xml){	
 	// parsing values from xml-element
-	//debug('init ServiceReference'+xml);
 	try{
 		this.settingvalue = xml.getElementsByTagName('e2settingvalue').item(0).firstChild.data;
 		this.settingname = xml.getElementsByTagName('e2settingname').item(0).firstChild.data;
@@ -691,7 +678,6 @@ function Setting(xml){
 //START class FileList
 function FileList(xml){
 	// parsing values from xml-element
-	debug('[FileList] init: ' + xml);
 	try{
 		this.xmlitems = xml.getElementsByTagName("e2filelist").item(0).getElementsByTagName("e2file");
 	} catch (e) {
@@ -712,7 +698,6 @@ function FileList(xml){
 //START class File
 function File(xml){	
 	// parsing values from xml-element
-	//debug('init Movie');
 	try{
 		this.servicereference = xml.getElementsByTagName('e2servicereference').item(0).firstChild.data;
 	} catch (e) {

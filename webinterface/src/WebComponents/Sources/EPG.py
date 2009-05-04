@@ -2,14 +2,14 @@ from Components.Sources.Source import Source
 from ServiceReference import ServiceReference
 from enigma import eServiceCenter, eServiceReference, eEPGCache
 
-class EPG( Source):
-	BOUQUETNOW=0
-	BOUQUETNEXT=1
-	SERVICENOW=2
-	SERVICENEXT=3
-	SERVICE=4
-	TITLE=5
-	BOUQUET=6
+class EPG(Source):
+	BOUQUETNOW = 0
+	BOUQUETNEXT = 1
+	SERVICENOW = 2
+	SERVICENEXT = 3
+	SERVICE = 4
+	TITLE = 5
+	BOUQUET = 6
 
 	def __init__(self, navcore, func=BOUQUETNOW):
 		self.func = func
@@ -53,7 +53,7 @@ class EPG( Source):
 	def getServiceEPGNext(self, ref):
 		return self.getEPGNowNext(ref, 1, True)
 
-	def getEPGNowNext(self, ref, type, service = False):
+	def getEPGNowNext(self, ref, type, service=False):
 		print "[WebComponents.EPG] getting EPG NOW/NEXT", ref
 
 		if service:
@@ -73,9 +73,9 @@ class EPG( Source):
 			return events
 		return []
 
-	def getEPGofService(self, ref, options = 'IBDTSERN'):
+	def getEPGofService(self, ref, options='IBDTSERN'):
 		print "getting EPG of Service", ref
-		events = self.epgcache.lookupEvent([options ,(ref,0,-1,-1)]);
+		events = self.epgcache.lookupEvent([options , (ref, 0, -1, -1)]);
 		if events:
 			return events
 		return []
@@ -111,11 +111,19 @@ class EPG( Source):
 	def searchEvent(self, needle):
 		print "[WebComponents.EPG] searching EPG: ", needle		
 
-		events = self.epgcache.search(('IBDTSERN',256,eEPGCache.PARTIAL_TITLE_SEARCH,needle,1));
+		events = self.epgcache.search(('IBDTSERN', 256, eEPGCache.PARTIAL_TITLE_SEARCH, needle, 1));
 		if events:
 			return events
 		return []
 
 	list = property(do_func)
-	lut = {"EventID": 0, "TimeStart": 1,"Duration": 2, "Title": 3, "Description": 4, "DescriptionExtended": 5, "ServiceReference": 6, "ServiceName": 7 }
+	lut = {	"EventID": 0,
+			"TimeStart": 1,
+			"Duration": 2,
+			"Title": 3,
+			"Description": 4,
+			"DescriptionExtended": 5,
+			"ServiceReference": 6,
+			"ServiceName": 7 
+		}
 

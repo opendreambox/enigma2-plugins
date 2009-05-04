@@ -16,9 +16,9 @@ class SubServices(Source):
 		list0 = []
 		currentServiceRef = self.session.nav.getCurrentlyPlayingServiceReference()
 		if currentServiceRef is not None:
-			list.append( [currentServiceRef.toString(),
+			list.append([currentServiceRef.toString(),
 						 ServiceReference(currentServiceRef).getServiceName()]
-			)
+						 )
 
 			currentService = self.session.nav.getCurrentService()
 			subservices = currentService and currentService.subServices()
@@ -31,11 +31,11 @@ class SubServices(Source):
 		else:
 			list.append(["N/A", "N/A"])
 
-		print "SubServices is returning list ",list
+		print "SubServices is returning list ", list
 		return list
 
 	list = property(command)
-	lut = {"ServiceReference": 0
-			,"Name": 1
+	lut = {"ServiceReference": 0,
+			"Name": 1
 			}
 
