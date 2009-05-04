@@ -8,7 +8,7 @@ function getNodeContent(xml, nodename, defaultString){
 	try{
 		return node.item(0).firstChild.data;
 	} catch(e){
-		debug('[getNodeContent] Error getting content of node "'+ nodename +'" :: ' + e);
+//		debug('[getNodeContent] Error getting content of node "'+ nodename +'" :: ' + e);
 		if(defaultString !== null) {
 			return defaultString;
 		}
