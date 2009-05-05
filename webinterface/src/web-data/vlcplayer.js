@@ -279,6 +279,7 @@ function initWebTv() {
 	try {
 		set('vlcVolume', vlc.audio.volume);
 	} catch (e) {
+		debug('[initWebTv] Error on initializing WebTv');
 	}
 
 	loadVLCBouquets();
