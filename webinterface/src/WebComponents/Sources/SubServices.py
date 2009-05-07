@@ -6,7 +6,12 @@ class SubServices(Source):
 	def __init__(self, session):
 		Source.__init__(self)
 		self.session = session
-
+	
+	def handleCommand(self, cmd):
+		if cmd is not None:
+			#TODO some logic here
+			pass
+	
 	def command(self):
 		print "SubServices was called"
 		list = []

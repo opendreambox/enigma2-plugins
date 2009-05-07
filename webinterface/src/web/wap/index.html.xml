@@ -12,7 +12,7 @@
 <h1 style="text-align: center;">Static/WAP</h1>
 <h1 style="text-align: center;"><small>Interface</small></h1>
 <br/>
-<div style="text-align: center;">
+<div class="wap" style="text-align: center;">
 <a href="/web/wap/wapremote.html?command=0">Remote Control</a><br/>
 <a href="/web/wap/timerlist.html">Timerlist</a><br/>
 <a href="/web/wap/timeredit.html?name=&amp;description=&amp;dirname=&amp;tags=&amp;justplay=&amp;afterevent=&amp;repeated=&amp;bouquet=&amp;sRef=&amp;ehour=now&amp;shour=now&amp;emin=now&amp;smin=now&amp;day=now&amp;month=now&amp;year=now&amp;end=&amp;begin=&amp;deleteOldOnSave=0&amp;command=add">Add Timer</a><br/>
