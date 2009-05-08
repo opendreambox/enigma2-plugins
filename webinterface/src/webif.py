@@ -169,13 +169,15 @@ class EPGWebScreen(WebScreen):
 		WebScreen.__init__(self, session, request)
 
 		self["EPGTITLE"] = EPG(session, func=EPG.TITLE)
-		self["EPGSERVICE"] = EPG(session, func=EPG.SERVICE)
+		self["EPGSERVICE"] = EPG(session, func=EPG.SERVICE)		
 		self["EPGBOUQUETNOW"] = EPG(session, func=EPG.BOUQUETNOW)
 		self["EPGBOUQUETNEXT"] = EPG(session, func=EPG.BOUQUETNEXT)
 		self["EPGSERVICENOW"] = EPG(session, func=EPG.SERVICENOW)
 		self["EPGSERVICENEXT"] = EPG(session, func=EPG.SERVICENEXT)
 		self["EPGBOUQUET"] = EPG(session, func=EPG.BOUQUET)
 		self["localip"] = RequestData(request, what=RequestData.HOST)
+		
+		self["EPGSERVICEWAP"] = EPG(session, func=EPG.SERVICE, endtm=True)
 
 	def getServiceList(self, sRef):
 		self["ServiceList"].root = sRef
@@ -488,12 +490,20 @@ class SimpleListFiller(Converter):
 					append(str(item).replace("%", "%25").replace("+", "%2B").replace('&', '%26').replace('?', '%3f').replace(' ', '+'))
 				elif filternum == 5:
 					append(quote(str(item)))
+				elif filternum == 6:
+					time = parseint(item) or 0
+					t = localtime(time)
+					append("%02d:%02d" % (t.tm_hour, t.tm_min))
+				elif filternum == 7:
+					time = parseint(item) or 0
+					t = localtime(time)
+					append("%d min" % (time / 60))
 				else:
 					append(str(item))
 		# (this will be done in c++ later!)
 
-		return ''.join(strlist)
-
+		return ''.join(strlist)		
+	
 	text = property(getText)
 		
 				
@@ -537,6 +547,16 @@ class ListFiller(Converter):
 					append(str(item[element]).replace("%", "%25").replace("+", "%2B").replace('&', '%26').replace('?', '%3f').replace(' ', '+'))
 				elif filternum == 5:
 					append(quote(str(item[element])))
+				elif filternum == 6:
+					from time import localtime
+					time = int(float(item[element])) or 0
+					t = localtime(time)
+					append("%02d:%02d" % (t.tm_hour, t.tm_min))
+				elif filternum == 7:
+					from time import localtime
+					time = int(float(item[element])) or 0
+					t = localtime(time)
+					append("%d min" % (time / 60))					
 				else:
 					append(str(item[element]))
 		# (this will be done in c++ later!)
@@ -626,7 +646,7 @@ class webifHandler(ContentHandler):
 
 	def parse_item(self, attrs):
 		if "name" in attrs:
-			filter = {"": 1, "javascript_escape": 2, "xml": 3, "uri": 4, "urlencode": 5}[attrs.get("filter", "")]
+			filter = {"": 1, "javascript_escape": 2, "xml": 3, "uri": 4, "urlencode": 5, "time": 6, "minutes": 7}[attrs.get("filter", "")]
 			self.sub.append(ListItem(attrs["name"], filter))
 		else:
 			assert "macro" in attrs, "e2:item must have a name= or macro= attribute!"

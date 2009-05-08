@@ -10,14 +10,15 @@ class EPG(Source):
 	SERVICE = 4
 	TITLE = 5
 	BOUQUET = 6
-
-	def __init__(self, navcore, func=BOUQUETNOW):
+	
+	def __init__(self, navcore, func=BOUQUETNOW, endtm=False):
 		self.func = func
 		Source.__init__(self)
 		self.navcore = navcore
 		self.epgcache = eEPGCache.getInstance()
-		self.command = None
-
+		self.command = None		
+		self.endtime = endtm
+					
 	def handleCommand(self, cmd):
 		self.command = cmd
 
@@ -77,8 +78,30 @@ class EPG(Source):
 		print "getting EPG of Service", ref
 		events = self.epgcache.lookupEvent([options , (ref, 0, -1, -1)]);
 		if events:
+			if self.endtime:				
+				list = self.insertEndTime(events)
+				return list
+				
 			return events
 		return []
+
+	def insertEndTime(self, events):
+		list = []
+		for event in events:
+			i = 0
+			evt = []
+			end = event[1] + event[2]
+			for item in event:
+				if i == 3:
+					evt.append(end)					
+					i += 1
+											
+				evt.append(item)
+				i += 1
+			
+			list.append(evt)
+		
+		return list
 
 	def getEPGofBouquet(self, param):
 		print "[WebComponents.EPG] getting EPG for Bouquet", param
@@ -115,15 +138,36 @@ class EPG(Source):
 		if events:
 			return events
 		return []
-
+	
+	def getLut(self):
+		if self.endtime:
+			lut = {	
+					"EventID": 0,
+					"TimeStart": 1,
+					"Duration": 2,
+					"TimeEnd": 3,
+					"Title": 4,
+					"Description": 5,
+					"DescriptionExtended": 6,
+					"ServiceReference": 7,
+					"ServiceName": 8 
+				}
+			return lut
+		else:
+			lut = {	
+				"EventID": 0,
+				"TimeStart": 1,
+				"Duration": 2,
+				"Title": 3,
+				"Description": 4,
+				"DescriptionExtended": 5,
+				"ServiceReference": 6,
+				"ServiceName": 7 
+			}
+			
+			return lut
+	
 	list = property(do_func)
-	lut = {	"EventID": 0,
-			"TimeStart": 1,
-			"Duration": 2,
-			"Title": 3,
-			"Description": 4,
-			"DescriptionExtended": 5,
-			"ServiceReference": 6,
-			"ServiceName": 7 
-		}
-
+	
+	lut = property(getLut)
+		
