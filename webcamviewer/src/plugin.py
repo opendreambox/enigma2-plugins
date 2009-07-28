@@ -12,6 +12,7 @@ from Components.ActionMap import ActionMap
 from Components.Label import Label
 from Components.MenuList import MenuList
 from Components.FileList import EXTENSIONS
+from Components.AVSwitch import AVSwitch
 ## configmenu
 from Components.config import config, ConfigSubsection,ConfigSelection,ConfigText,ConfigYesNo
 ####
@@ -28,13 +29,14 @@ import xml.dom.minidom
 ### my
 from WebcamViewConfig import WebcamViewerMenu
 from PictureScreen import PictureScreen
+from WebcamTravel import TravelWebcamviewer
 ###
 myname = "Webcam/Picture Viewer"
 myversion = "1.1"
 
 config.plugins.pictureviewer = ConfigSubsection()
-config.plugins.pictureviewer.slideshowtime = ConfigSelection(default="5000", choices = [("5000", _("5 Sekunden")), ("10000", _("10 Sekunden")), ("20000", _("20 Sekunden")), ("60000", _("1 Minute"))])
-config.plugins.pictureviewer.slideshowmode = ConfigSelection(default="0", choices = [("0", _("normal")), ("1", _("endlos"))])
+config.plugins.pictureviewer.slideshowtime = ConfigSelection(default="5000", choices = [("5000", _("5 Seconds")), ("10000", _("10 Seconds")), ("20000", _("20 Seconds")), ("60000", _("1 Minute"))])
+config.plugins.pictureviewer.slideshowmode = ConfigSelection(default="0", choices = [("0", _("normal")), ("1", _("endless"))])
 #not editable configs
 config.plugins.pictureviewer.slideshowext = ConfigText(default=".3ssl")
 config.plugins.pictureviewer.matchingPattern = ConfigText(default="(?i)^.*\.(jpeg|jpg|jpe|png|bmp|gif)")
@@ -47,7 +49,8 @@ SLIDESHOWMODE_REPEAT = 1
 originalservice = None
 mysession = None
 
-def main1(session, **kwargs):
+
+def startPictureviewer(session, **kwargs):
 	global originalservice, mysession
 	mysession = session
 	originalservice = session.nav.getCurrentlyPlayingServiceReference()
@@ -55,7 +58,7 @@ def main1(session, **kwargs):
 		session.nav.stopService()
 	session.openWithCallback(mainCB, PictureViewer)
 
-def main2(session, **kwargs):
+def startWebcamviewer(session, **kwargs):
 	global originalservice, mysession
 	mysession = session
 	originalservice = session.nav.getCurrentlyPlayingServiceReference()
@@ -79,6 +82,9 @@ def main2(session, **kwargs):
 			MessageBox.TYPE_WARNING
 		)
 
+
+
+
 def mainCB():
 	global originalservice, mysession
 	if config.plugins.pictureviewer.stopserviceonstart.value:
@@ -90,18 +96,43 @@ def Plugins(path, **kwargs):
 							name="PictureViewer",
 							description="browse your local pictures",
 							where = PluginDescriptor.WHERE_PLUGINMENU,
-							fnc = main1,
+							fnc = startPictureviewer,
 							icon="pictureviewer.png"
 			  ),
 			PluginDescriptor(
 							name="WebcamViewer",
 							description="view webcams around the world",
 							where = PluginDescriptor.WHERE_PLUGINMENU,
-							fnc = main2,
+							fnc = startWebcamviewer,
 							icon="webcamviewer.png"
 			)
 		 ]
 	return p
+
+###################
+class ViewerSelectScreen(Screen):
+	skin = ""
+	def __init__(self, session, args = 0):
+		skin =  """<screen position="93,70" size="550,450">
+		<widget name="list" position="0,0" size="550,450"  />
+		</screen>"""
+		self.skin = skin
+		Screen.__init__(self, session)
+		self.slideshowfiles = []
+		self.slideshowfiles.append((_("WebcamViewer"),STARTWEBCAMVIEWER))
+		self.slideshowfiles.append((_("online webcam.travel"),STARTWEBCAMTRAVEL))
+		self["list"] = MenuList(self.slideshowfiles)
+		self["actions"] = ActionMap(["WizardActions", "MenuActions", "DirectionActions", "ShortcutActions"],
+			{
+			 "ok": self.go,
+			 "back": self.close
+			 }, -1)
+
+	def go(self):
+		selection = self["list"].getCurrent()
+		if selection:
+			self.close(self.session,selection[1])
+
 
 ###################
 class Slideshow:
@@ -163,7 +194,7 @@ class PictureViewer(Screen):
 	def __init__(self, session, args = 0):
 		skin =  """<screen position="93,70" size="550,450" title="%s">
 		<widget name="menu" position="1,1" size="275,400"  scrollbarMode="showOnDemand" />
-		<widget name="pixmap" position="550,450" size="275,200" backgroundColor="red" />
+		<widget name="pixmap" position="275,1" size="275,200" backgroundColor="red" />
 		<widget name="slist" position="275,200" size="275,200"  scrollbarMode="showOnDemand" />
 		<widget name="buttonred" position="6,405" size="130,40" backgroundColor="red" valign="center" halign="center" zPosition="2" foregroundColor="white" font="Regular;18" />
 		<widget name="buttongreen" position="142,405" size="130,40" backgroundColor="green" valign="center" halign="center" zPosition="2" foregroundColor="white" font="Regular;18" />
@@ -176,9 +207,6 @@ class PictureViewer(Screen):
 		self.filelist = PictureList(config.plugins.pictureviewer.rootdir.value, matchingPattern = config.plugins.pictureviewer.matchingPattern.value)
 		self["menu"] = self.filelist
 
-		self.picload = ePicLoad()
-		self.picload.PictureData.get().append(self.updateInfoPanelCB)
-		self.picload.setPara((275, 200, 1, 1, False, 1, "#ff000000"))
 		self.preview = Pixmap()
 		self["pixmap"] = self.preview
 
@@ -382,13 +410,17 @@ class PictureViewer(Screen):
 			selectedfile = self["menu"].getSelection()[0]
 		else:
 			selectedfile = self["slist"].l.getCurrentSelection()[1]
+		sc=AVSwitch().getFramebufferScale()
+		self.picload = ePicLoad()
+		self.picload.PictureData.get().append(self.updateInfoPanelCB)
+		self.picload.setPara((self["pixmap"].instance.size().width(), self["pixmap"].instance.size().height(), sc[0], sc[1], False, 1, "#FF000000"))
 		self.picload.startDecode(selectedfile)
+
 
 	def updateInfoPanelCB(self, picInfo = None):
 		ptr = self.picload.getData()
 		if ptr is not None:
 			self["pixmap"].instance.setPixmap(ptr.__deref__())
-			self["pixmap"].move(275,0)
 		else:
 			pass
 
@@ -433,7 +465,9 @@ class WebcamViewer(Screen):
 		menuitemtitle = self["menu"].l.getCurrentSelection()[0]
 		type = selected[0]
 		data = selected[1]
-		if type.startswith("cam"):
+		if menuitemtitle.startswith("webcam.travel"):
+			self.session.openWithCallback(self.cb, TravelWebcamviewer)
+		elif type.startswith("cam"):
 			self.session.open(PictureScreen, menuitemtitle, data)
 		else:
 			self.hide()
@@ -446,6 +480,8 @@ class WebcamViewer(Screen):
 		xloader = XMLloader()
 		self.menutitle = xloader.getScreenXMLTitle(self.xmlnode)
 		data =[]
+		if self.menutitle =="Mainmenu":
+			data.append((_("webcam.travel"), "webcam.travel"))
 		for node in self.xmlnode.childNodes:
 			if node.nodeType != xml.dom.minidom.Element.nodeType or node.tagName != 'menu':
 				continue

@@ -13,7 +13,7 @@ GETTEXT=xgettext
 #MSGFMT = ./msgfmt.py
 MSGFMT = msgfmt
 
-LANGS := de es it tr
+LANGS := de es it nl tr
 LANGPO := $(foreach LANG, $(LANGS),$(LANG).po)
 LANGMO := $(foreach LANG, $(LANGS),$(LANG).mo)
 
@@ -52,6 +52,6 @@ clean-local:
 
 install-data-am: default
 	for lang in $(LANGS); do \
-		mkdir -p $(DESTDIR)$(installdir)/locale/$$lang/LC_MESSAGES; \
-		cp $$lang.mo $(DESTDIR)$(installdir)/locale/$$lang/LC_MESSAGES/$(DOMAIN).mo; \
+		mkdir -p $(DESTDIR)$(installdir)/$$lang/LC_MESSAGES; \
+		cp $$lang.mo $(DESTDIR)$(installdir)/$$lang/LC_MESSAGES/$(DOMAIN).mo; \
 	done

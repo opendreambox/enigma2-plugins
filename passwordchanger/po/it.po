@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: enigma2 plugin passwordchanger italian locale\n"
+"Project-Id-Version: enigma2 - passwordchanger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 09:15+0100\n"
-"PO-Revision-Date: 2008-11-28 09:15+0100\n"
+"POT-Creation-Date: 2009-07-28 22:41+0200\n"
+"PO-Revision-Date: 2009-05-31 02:27+0100\n"
 "Last-Translator: Spaeleus <spaeleus@croci.org>\n"
 "Language-Team: www.linsat.net <spaeleus@croci.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,20 +16,15 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: /home/dario/Plugins/passwordchanger\n"
 
-#: /home/dario/Plugins/passwordchanger/src/plugin.py:46
-#: /home/dario/Plugins/passwordchanger/src/plugin.py:174
-msgid "Password Changer"
-msgstr "Password Changer"
+msgid "Change your ftp and telnet password"
+msgstr "Gestire la password ftp e telnet"
 
-#: /home/dario/Plugins/passwordchanger/src/plugin.py:61
-msgid "Old password:"
-msgstr "Vecchia password: "
+msgid "Could not log in!"
+msgstr "Login impossibile!"
 
-#: /home/dario/Plugins/passwordchanger/src/plugin.py:62
-msgid "New password:"
-msgstr "Nuova password: "
+msgid "Error while setting new password!"
+msgstr "Errore in configurazione della nuova password!"
 
-#: /home/dario/Plugins/passwordchanger/src/plugin.py:73
 msgid ""
 "Incorrect new password!\n"
 "Minimum length: 5\n"
@@ -39,15 +34,11 @@ msgstr ""
 "Lunghezza minima: 5\n"
 "Lunghezza massima: 8"
 
-#: /home/dario/Plugins/passwordchanger/src/plugin.py:148
-msgid "Could not log in!"
-msgstr "Log in impossibile!"
+msgid "New password:"
+msgstr "Nuova password: "
 
-#: /home/dario/Plugins/passwordchanger/src/plugin.py:161
-msgid "Error while setting new password!"
-msgstr "Errore in configurazione nuova password!"
+msgid "Old password:"
+msgstr "Vecchia password: "
 
-#: /home/dario/Plugins/passwordchanger/src/plugin.py:174
-msgid "Change your ftp and telnet password"
-msgstr "Gestire la password ftp e telnet"
-
+msgid "Password Changer"
+msgstr "Password Changer"

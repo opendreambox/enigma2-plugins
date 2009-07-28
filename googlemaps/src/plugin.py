@@ -46,11 +46,11 @@ def applySkinVars(skin,dict):
     return skin
 
 def getURL(x,y,z):
-    url = "http://khm1.google.com/kh?v=32&hl=de&x=%i&y=%i&z=%i"%(x,y,z)
+    url = "http://khm3.google.de/kh/v=40&x=%i&y=%i&z=%i"%(x,y,z)
     return url
 
 def getMapURL(x,y,z):
-    url = "http://mt1.google.com/mt?v=w2t.86&hl=de&x=%i&y=%i&z=%i&s=G"%(x,y,z)
+    url = "http://mt3.google.com/vt/v=w2t.97&hl=de&x=%i&y=%i&z=%i&s=G"%(x,y,z)
     return url
 
 def getMaptilesFromLonLat(lon,lat,zoomlevel):
@@ -287,7 +287,7 @@ class GoogleMapsMainScreen(Screen,HelpableScreen):
     def buildMenuRoot(self):
         list = []
         root = RootFolder()
-        for i in root.getFiles("/usr/lib/enigma2/python/Plugins/Extensions/GoogleMaps/"):
+        for i in root.getFiles(plugin_path):
             l = lambda name,filepath: self.openFolderRoot(name,filepath)
             list.append((i[0],i[1],l))
         self["placeslist"].setList(list)

@@ -162,10 +162,7 @@ class AutoTimer:
 		# We include processed timers as we might search for duplicate descriptions
 		recorddict = {}
 		for timer in NavigationInstance.instance.RecordTimer.timer_list + NavigationInstance.instance.RecordTimer.processed_timers:
-			if not recorddict.has_key(str(timer.service_ref)):
-				recorddict[str(timer.service_ref)] = [timer]
-			else:
-				recorddict[str(timer.service_ref)].append(timer)
+			recorddict.setdefault(str(timer.service_ref), []).append(timer)
 
 		# Iterate Timer
 		for timer in self.getEnabledTimerList():
@@ -179,7 +176,7 @@ class AutoTimer:
 
 			# Search EPG, default to empty list
 			epgcache = eEPGCache.getInstance()
-			ret = epgcache.search(('RI', 100, typeMap[timer.searchType], match, caseMap[timer.searchCase])) or []
+			ret = epgcache.search(('RI', 100, typeMap[timer.searchType], match, caseMap[timer.searchCase])) or ()
 
 			for serviceref, eit in ret:
 				eserviceref = eServiceReference(serviceref)
@@ -228,7 +225,6 @@ class AutoTimer:
 					begin -= config.recording.margin_before.value * 60
 					end += config.recording.margin_after.value * 60
 
-
 				total += 1
 
 				# Append to timerlist and abort if simulating
@@ -243,7 +239,7 @@ class AutoTimer:
 				# Check for double Timers
 				# We first check eit and if user wants us to guess event based on time
 				# we try this as backup. The allowed diff should be configurable though.
-				for rtimer in recorddict.get(serviceref, []):
+				for rtimer in recorddict.get(serviceref, ()):
 					if rtimer.eit == eit or config.plugins.autotimer.try_guessing.value and getTimeDiff(rtimer, begin, end) > ((duration/10)*8):
 						oldExists = True
 
@@ -272,7 +268,7 @@ class AutoTimer:
 						newEntry.service_ref = ServiceReference(serviceref)
 
 						break
-					elif timer.getAvoidDuplicateDescription() == 1 and rtimer.description == description:
+					elif timer.avoidDuplicateDescription == 1 and rtimer.description == description:
 						oldExists = True
 						print "[AutoTimer] We found a timer with same description, skipping event"
 						break
@@ -284,7 +280,7 @@ class AutoTimer:
 						continue
 
 					# We want to search for possible doubles
-					if timer.getAvoidDuplicateDescription() == 2:
+					if timer.avoidDuplicateDescription == 2:
 						# I thinks thats the fastest way to do this, though it's a little ugly
 						try:
 							for list in recorddict.values():
@@ -328,10 +324,7 @@ class AutoTimer:
 					if conflicts is None:
 						timer.decrementCounter()
 						new += 1
-						if recorddict.has_key(serviceref):
-							recorddict[serviceref].append(newEntry)
-						else:
-							recorddict[serviceref] = [newEntry]
+						recorddict.setdefault(serviceref, []).append(newEntry)
 
 		return (total, new, modified, timers)
 

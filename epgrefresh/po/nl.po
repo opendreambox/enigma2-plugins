@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: epgrefresh_nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-09 20:07+0100\n"
+"POT-Creation-Date: 2009-07-28 22:41+0200\n"
 "PO-Revision-Date: 2009-01-09 20:48+0100\n"
 "Last-Translator: gerrit <gerrit@nedlinux.nl>\n"
 "Language-Team: gerrit <fy@li.org>\n"
@@ -15,6 +15,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+msgid "Add to EPGRefresh"
+msgstr ""
 
 msgid "Automated EPGRefresher"
 msgstr "Automatische EPG ververser"
@@ -55,6 +58,9 @@ msgstr "Ook zoeken wanneer de ontvanger in gebruik is"
 msgid "Inherit Services from AutoTimer if available"
 msgstr "Services uit AutoTimer halen wanneer deze beschikbaar is"
 
+msgid "Make AutoTimer parse EPG if available"
+msgstr ""
+
 msgid "New"
 msgstr "Nieuw"
 
@@ -88,6 +94,12 @@ msgstr "Kies zender om te verversen"
 msgid "Shutdown after refresh"
 msgstr "Afsluiten na het verversen"
 
+msgid ""
+"This might have been an automated bootup to refresh the EPG. For this to "
+"happen it is recommmended to put the receiver to Standby.\n"
+"Do you want to do this now?"
+msgstr ""
+
 msgid "Time to stay on service (in m)"
 msgstr "Deze tijd op de service blijven (in min)"
 
@@ -96,4 +108,3 @@ msgstr "Wakker worden uit de diepe standby om EPG te verversen"
 
 msgid "delete"
 msgstr "verwijderen"
-

@@ -251,7 +251,7 @@ class YouTubeEntry():
 					break
 			response.close
 			if m:
-				mrl = "http://www.youtube.com/get_video?video_id=" + quote(self.getYouTubeId()) + "&t=" + quote(re.match (".*[?&]t=([^&]+)", m.group('vid_query')).groups()[0]) + fmt
+				mrl = "http://www.youtube.com/get_video?video_id=" + quote(self.getYouTubeId()) + "&t=" + quote(re.match (".*[?&]t=([^&]+)", m.group('vid_query')).groups()[0]) + "&fmt=" + fmt
 #"&sk=" + quote(re.match (".*[?&]sk=([^&]+)", m.group('vid_query')).groups()[0]) + fmt
 				print "[YTB] Playing ", mrl
 			else:
@@ -479,14 +479,21 @@ class YouTubeInterface():
 
 	def search(self, searchTerms, startIndex = 1, maxResults = 25,
 					orderby = "relevance", time = "all_time", racy = "include", 
-					author = ""):
+					author = "", lr = "", categories = "", sortOrder = "ascending", format = "6"):
 		print "[YTB] YouTubeInterface::search()"
 		query = gdata.youtube.service.YouTubeVideoQuery()
 		query.vq = searchTerms
 		query.orderby = orderby
 		query.racy = racy
+		query.sortorder = sortOrder
+		if lr is not None:
+			query.lr = lr
+		if categories[0] is not None:
+			query.categories = categories
+#		query.time = time
 		query.start_index = startIndex
 		query.max_results = maxResults
+#		query.format = format
 		try:
 			feed = YouTubeFeed(self.ytService.YouTubeQuery(query))
 		except gaierror:

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-17 17:26+0200\n"
+"POT-Creation-Date: 2009-07-28 23:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,32 +16,45 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/plugin.py:16 ../src/plugin.py:27
+#: ../src/NetworkWizard.py:77 ../src/
+msgid "Exit network wizard"
+msgstr ""
+
+#: ../src/plugin.py:19 ../src/plugin.py:28 ../src/
 msgid "Network Wizard"
 msgstr ""
 
-#: ../src/NetworkWizard.py:92
-msgid "No Networks found"
+#: ../src/NetworkWizard.py:205 ../src/NetworkWizard.py:206
+msgid "No networks found"
 msgstr ""
 
-#: ../src/NetworkWizard.py:15
-msgid "WEP"
+#: ../src/NetworkWizard.py:103 ../src/NetworkWizard.py:113
+#: ../src/NetworkWizard.py:123 ../src/NetworkWizard.py:133
+msgid "Please wait while we prepare your network interfaces..."
 msgstr ""
 
-#: ../src/NetworkWizard.py:16 ../src/NetworkWizard.py:24
-msgid "WPA"
+#: ../src/NetworkWizard.py:162 ../src/NetworkWizard.py:182
+msgid "Please wait while we test your network..."
 msgstr ""
 
-#: ../src/NetworkWizard.py:17
-msgid "WPA2"
+#: ../src/NetworkWizard.py:221
+msgid "enter hidden network SSID"
 msgstr ""
 
-#: ../src/NetworkWizard.py:92
+#: ../src/NetworkWizard.py:221 ../src/NetworkWizard.py:222
+msgid "hidden..."
+msgstr ""
+
+#: ../src/NetworkWizard.py:205
 msgid "unavailable"
 msgstr ""
 
 #: ../src/
-msgid "Configure your LAN again"
+msgid "Configure interface"
+msgstr ""
+
+#: ../src/
+msgid "Configure nameservers"
 msgstr ""
 
 #: ../src/
@@ -49,7 +62,7 @@ msgid "Configure your internal LAN"
 msgstr ""
 
 #: ../src/
-msgid "Configure your wireless LAN"
+msgid "Configure your network again"
 msgstr ""
 
 #: ../src/
@@ -57,37 +70,49 @@ msgid "Configure your wireless LAN again"
 msgstr ""
 
 #: ../src/
-msgid "Exit wizard and configure later manually"
-msgstr ""
-
-#: ../src/
 msgid ""
-"Please configure your LAN internet connection by filling out the required "
+"Please configure or verify your Nameservers by filling out the required "
 "values.\n"
 "When you are ready press OK to continue."
 msgstr ""
 
 #: ../src/
 msgid ""
-"Please configure your wireless LAN internet connection by filling out the "
-"required values.\n"
-"When you are done, press OK to continue."
+"Please configure your internet connection by filling out the required "
+"values.\n"
+"When you are ready press OK to continue."
+msgstr ""
+
+#: ../src/
+msgid "Please follow the instructions on the TV"
 msgstr ""
 
 #: ../src/
 msgid ""
-"Please select the wireless LAN network that you want to connect to.\n"
+"Please select the network interface that you want to use for your internet "
+"connection.\n"
 "\n"
 "Please press OK to continue."
 msgstr ""
 
 #: ../src/
-msgid "Restart your wireless interface"
+msgid ""
+"Please select the wireless network that you want to connect to.\n"
+"\n"
+"Please press OK to continue."
+msgstr ""
+
+#: ../src/
+msgid "Select interface"
+msgstr ""
+
+#: ../src/
+msgid "Select wireless network"
 msgstr ""
 
 #: ../src/
 msgid ""
-"Thank you for using the wizard. Your Dreambox is now ready to use.\n"
+"Thank you for using the wizard.\n"
 "Please press OK to continue."
 msgstr ""
 
@@ -95,16 +120,6 @@ msgstr ""
 msgid ""
 "The wireless LAN plugin is not installed!\n"
 "Please install it and choose what you want to do next."
-msgstr ""
-
-#: ../src/
-msgid ""
-"Use the up/down keys on your remote control to select an option. After that, "
-"press OK.\n"
-"\n"
-"\n"
-"\n"
-"Connect to the internet..."
 msgstr ""
 
 #: ../src/
@@ -121,31 +136,15 @@ msgstr ""
 msgid ""
 "Your Dreambox is now ready to use.\n"
 "\n"
-"Your LAN internet connection is working now.\n"
+"Your internet connection is working now.\n"
 "\n"
 "Please press OK to continue."
 msgstr ""
 
 #: ../src/
 msgid ""
-"Your Dreambox is now ready to use.\n"
-"\n"
-"Your wireless LAN internet connection is working now.\n"
-"\n"
-"Please press OK to continue."
-msgstr ""
-
-#: ../src/
-msgid ""
-"Your LAN internet connection is not working!\n"
+"Your internet connection is not working!\n"
 "Please choose what you want to do next."
-msgstr ""
-
-#: ../src/
-msgid ""
-"Your network is restarting.\n"
-"\n"
-"Please press OK to continue."
 msgstr ""
 
 #: ../src/
@@ -154,18 +153,4 @@ msgid ""
 "Have you attached your USB WLAN Stick?\n"
 "\n"
 "Please choose what you want to do next."
-msgstr ""
-
-#: ../src/
-msgid ""
-"Your wireless LAN internet connection is not working!\n"
-"Please choose what you want to do next."
-msgstr ""
-
-#: ../src/
-msgid "via LAN."
-msgstr ""
-
-#: ../src/
-msgid "via wireless LAN."
 msgstr ""

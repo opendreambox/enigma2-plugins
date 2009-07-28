@@ -16,6 +16,7 @@ from time import time
 
 # Plugin Config
 from xml.etree.cElementTree import parse as cet_parse
+from Tools.XMLTools import stringToXML
 from os import path as path
 
 # We want a list of unique services
@@ -90,18 +91,18 @@ class EPGRefresh:
 
 		for service in self.services[0]:
 			ref = ServiceReference(service.sref)
-			list.extend([' <!-- ', ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', ''), ' -->\n'])
+			list.extend([' <!-- ', stringToXML(ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')), ' -->\n'])
 			list.append(' <service')
 			if service.duration is not None:
 				list.extend([' duration="', str(service.duration), '"'])
-			list.extend(['>', service.sref, '</service>\n'])
+			list.extend(['>', stringToXML(service.sref), '</service>\n'])
 		for bouquet in self.services[1]:
 			ref = ServiceReference(bouquet.sref)
-			list.extend([' <!-- ', ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', ''), ' -->\n'])
+			list.extend([' <!-- ', stringToXML(ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')), ' -->\n'])
 			list.append(' <bouquet')
 			if bouquet.duration is not None:
 				list.extend([' duration="', str(bouquet.duration), '"'])
-			list.extend(['>', bouquet.sref, '</bouquet>\n'])
+			list.extend(['>', stringToXML(bouquet.sref), '</bouquet>\n'])
 
 		list.append('\n</epgrefresh>')
 
@@ -215,6 +216,28 @@ class EPGRefresh:
 	def cleanUp(self):
 		config.plugins.epgrefresh.lastscan.value = int(time())
 		config.plugins.epgrefresh.lastscan.save()
+
+		# Eventually force autotimer to parse epg
+		if config.plugins.epgrefresh.parse_autotimer.value:
+			removeInstance = False
+			try:
+				# Import Instance
+				from Plugins.Extensions.AutoTimer.plugin import autotimer
+
+				if autotimer is None:
+					removeInstance = True
+					# Create an instance
+					from Plugins.Extensions.AutoTimer.AutoTimer import AutoTimer
+					autotimer = AutoTimer()
+
+				# Parse EPG
+				autotimer.parseEPG()
+			except Exception, e:
+				print "[EPGRefresh] Could not start AutoTimer:", e
+			finally:
+				# Remove instance if there wasn't one before
+				if removeInstance:
+					autotimer = None
 
 		# shutdown if we're supposed to go to deepstandby and not recording
 		if not self.forcedScan and config.plugins.epgrefresh.afterevent.value \

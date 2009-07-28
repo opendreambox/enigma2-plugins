@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2 rsdownloader plugin Turkish Locale\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-09 18:12+0100\n"
+"POT-Creation-Date: 2009-07-28 23:42+0200\n"
 "PO-Revision-Date: 2009-02-08 13:10+0200\n"
 "Last-Translator: Zülfikar VEYİSOĞLU <zveyis@gmail.com>\n"
 "Language-Team: www.turkeyforum.com/satforum <zveyis@gmail.com>\n"
@@ -13,170 +13,87 @@ msgstr ""
 "X-Poedit-Country: TURKEY\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/plugin.py:25
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSTranslation.py:33
-msgid "RS Downloader"
-msgstr "RS İndirici"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/plugin.py:25
-msgid "Download files from rapidshare in the background"
-msgstr "rapidshare dosya indirmelerini arkaplanda yap"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSListBrowser.py:61
-msgid "Clear"
-msgstr "Temizle"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSListBrowser.py:62
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSConfig.py:49
-msgid "Save"
-msgstr "Kaydet"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSListBrowser.py:63
-msgid "Reload"
-msgstr "Yenile"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSListBrowser.py:64
-msgid "Delete"
-msgstr "Sil"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSListBrowser.py:95
-#, python-format
-msgid "%s saved."
-msgstr "%s kaydedildi."
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSListBrowser.py:97
-#, python-format
-msgid "Error while writing %s!"
-msgstr "%s kaydedilirken hata oluştu!"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSListBrowser.py:121
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSListBrowser.py:123
-msgid "Edit:"
-msgstr "Düzenle:"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:40
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:56
-msgid "Start downloading..."
-msgstr "İndirmeya başla..."
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:41
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:66
-msgid "Show lists..."
-msgstr "Listeleri göster..."
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:42
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:73
-msgid "Show downloads..."
-msgstr "İndirilenleri göster..."
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:43
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:80
-msgid "Show progress..."
-msgstr "İşlemleri göster..."
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:44
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:83
-msgid "Edit configs..."
-msgstr "Ayarlar..."
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:45
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:86
-msgid "Show status..."
-msgstr "Durumu göster..."
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:46
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:92
-msgid "Show log..."
-msgstr "Günlüğü göster..."
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:47
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:95
-msgid "Delete log..."
-msgstr "Günlüğü sil..."
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:48
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:98
-msgid "Use search-engine..."
-msgstr "Arama moturunu kullan..."
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:49
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:105
-msgid "Show info..."
-msgstr "Hakkında..."
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:60
-msgid "Started downloading..."
-msgstr "İndirme başlatıldı..."
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:62
-msgid "Could not start downloading!"
-msgstr "İndirme başlatılamıyor!"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:64
-msgid "Already downloading!"
-msgstr "Zaten indiriliyor!"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:71
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:78
-#, python-format
-msgid "Couldn't find the directory %s!"
-msgstr "%s klasörü bulunamıyor!"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:88
-#, python-format
-msgid "Downloading %s."
-msgstr "%s indiriliyor."
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:90
-msgid "Stopped!"
-msgstr "Durduruldu!"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:99
-msgid "Search http://rapidshare-search-engine.com for:"
-msgstr "http://rapidshare-search-engine.com 'da ara:"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSMain.py:106
-msgid ""
-"RS Downloader\n"
-"by AliAbdul\n"
-"\n"
-"This plugin allows you to download files from rapidshare in the background."
+msgid "Add"
 msgstr ""
-"RS İndirici\n"
-"AliAbdul\n"
-"\n"
-"Bu eklentiyle rapidshare dosya indirmelerini arkaplanda yapabilirsiniz."
 
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSSearch.py:61
+msgid "Add downloads from txt files"
+msgstr ""
+
 #, python-format
 msgid "Added %s to the download-list."
 msgstr "%s indirme listedine eklendi."
 
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSSearch.py:63
+msgid "Allow downloading on friday:"
+msgstr "Cuma günü indirmeye izin ver:"
+
+msgid "Allow downloading on monday:"
+msgstr "Pazartesi günü indirmeye izin ver:"
+
+msgid "Allow downloading on saturday:"
+msgstr "Cumartesi günü indirmeye izin ver:"
+
+msgid "Allow downloading on sunday:"
+msgstr "Pazar günü indirmeye izin ver:"
+
+msgid "Allow downloading on thursday:"
+msgstr "Perşembe günü indirmeye izin ver:"
+
+msgid "Allow downloading on tuesday:"
+msgstr "Salı günü indirmeye izin ver:"
+
+msgid "Allow downloading on wednesday:"
+msgstr "Çarşamba günü indirmeye izin ver:"
+
+msgid "Checking"
+msgstr ""
+
+msgid "Clear finished downloads"
+msgstr ""
+
+msgid "Close plugin"
+msgstr ""
+
+msgid "Config"
+msgstr ""
+
+msgid "Delete"
+msgstr "Sil"
+
+#, python-format
+msgid "Delete %s?"
+msgstr ""
+
+msgid "Delete download"
+msgstr ""
+
+msgid "Delete failed downloads"
+msgstr ""
+
+msgid "Delete log"
+msgstr ""
+
+msgid "Don't download after:"
+msgstr "Sonra indirme yapma:"
+
+msgid "Don't download before:"
+msgstr "Önce indirme yapma:"
+
+msgid "Download files from rapidshare"
+msgstr ""
+
+msgid "Download in the background:"
+msgstr "Dosya indirmelerini arkaplanda yap"
+
+msgid "Downloading"
+msgstr "İndiriliyor"
+
+msgid "Downloads directory:"
+msgstr "İndirilenler klasörü:"
+
 #, python-format
 msgid "Error while adding %s to the download-list!"
 msgstr "%s, indirme listesine eklenirken hata oluştu!"
 
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSSearch.py:73
-msgid ""
-"Error while searching http://rapidshare-search-engine.com!\n"
-"\n"
-"Error: Nothing found, sorry."
-msgstr ""
-"http://rapidshare-search-engine.com 'da arama yapılırken hata oluştu!\n"
-"\n"
-"Hata: Sonuç bulunamadı, üzgünüm."
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSSearch.py:74
-msgid "Nothing found, sorry."
-msgstr "Sonuç bulunamadı, üzgünüm."
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSSearch.py:90
-#, python-format
-msgid "Page %d / %d. Push < > to switch the page..."
-msgstr "Sayfa %d / %d. Sayfa değiştirmek için < > tuşlarını kullanın..."
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSSearch.py:117
 #, python-format
 msgid ""
 "Error while searching http://rapidshare-search-engine.com!\n"
@@ -187,95 +104,162 @@ msgstr ""
 "\n"
 "Hata: %s"
 
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSSearch.py:122
-msgid "Loading previous page... please wait!"
-msgstr "Önceki sayfa yükleniyor... lütfen bekleyin!"
+msgid ""
+"Error while searching http://rapidshare-search-engine.com!\n"
+"\n"
+"Error: Nothing found, sorry."
+msgstr ""
+"http://rapidshare-search-engine.com 'da arama yapılırken hata oluştu!\n"
+"\n"
+"Hata: Sonuç bulunamadı, üzgünüm."
 
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSSearch.py:128
-msgid "Loading next page... please wait!"
-msgstr "Sonraki sayfa yükleniyor... lütfen bekleyin!"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSConfig.py:52
-msgid "Download in the background:"
-msgstr "Dosya indirmelerini arkaplanda yap"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSConfig.py:53
-msgid "Username:"
-msgstr "Kullanıcı adı:"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSConfig.py:54
-msgid "Password:"
-msgstr "Parola:"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSConfig.py:55
-msgid "Lists directory:"
-msgstr "Liste klasörü:"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSConfig.py:56
-msgid "Downloads directory:"
-msgstr "İndirilenler klasörü:"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSConfig.py:57
-msgid "Ignore download times:"
-msgstr "İndirme zamanlayıcılarını yoksay:"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSConfig.py:58
-msgid "Allow downloading on monday:"
-msgstr "Pazartesi günü indirmeye izin ver:"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSConfig.py:59
-msgid "Allow downloading on tuesday:"
-msgstr "Salı günü indirmeye izin ver:"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSConfig.py:60
-msgid "Allow downloading on wednesday:"
-msgstr "Çarşamba günü indirmeye izin ver:"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSConfig.py:61
-msgid "Allow downloading on thursday:"
-msgstr "Perşembe günü indirmeye izin ver:"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSConfig.py:62
-msgid "Allow downloading on friday:"
-msgstr "Cuma günü indirmeye izin ver:"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSConfig.py:63
-msgid "Allow downloading on saturday:"
-msgstr "Cumartesi günü indirmeye izin ver:"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSConfig.py:64
-msgid "Allow downloading on sunday:"
-msgstr "Pazar günü indirmeye izin ver:"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSConfig.py:65
-msgid "Don't download before:"
-msgstr "Önce indirme yapma:"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSConfig.py:66
-msgid "Don't download after:"
-msgstr "Sonra indirme yapma:"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSConfig.py:67
-msgid "Write log:"
-msgstr "Günlüğe yaz:"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSConfig.py:68
-msgid "Reconnect fritz.Box before downloading:"
-msgstr "İndirmeden önce Fritz!Box'a bağlan:"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSProgress.py:30
-msgid "Downloading"
-msgstr "İndiriliyor"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSProgress.py:31
-msgid "Files"
-msgstr "Dosyalar"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSProgress.py:32
-msgid "Downloaded"
-msgstr "İndirilmiş"
-
-#: /home/aliabdul/dream/e2/enigma2-plugins/rsdownloader/src/RSProgress.py:33
 msgid "Failed"
 msgstr "Hatalı"
 
+msgid "Finished"
+msgstr ""
+
+msgid "Ignore download times:"
+msgstr "İndirme zamanlayıcılarını yoksay:"
+
+msgid "Lists directory:"
+msgstr "Liste klasörü:"
+
+msgid "Loading next page... please wait!"
+msgstr "Sonraki sayfa yükleniyor... lütfen bekleyin!"
+
+msgid "Loading previous page... please wait!"
+msgstr "Önceki sayfa yükleniyor... lütfen bekleyin!"
+
+msgid "Maximal downloads:"
+msgstr ""
+
+msgid "Nothing found, sorry."
+msgstr "Sonuç bulunamadı, üzgünüm."
+
+#, python-format
+msgid "Page %d / %d. Push < > to switch the page..."
+msgstr "Sayfa %d / %d. Sayfa değiştirmek için < > tuşlarını kullanın..."
+
+msgid "Password:"
+msgstr "Parola:"
+
+msgid "Please choose a function..."
+msgstr ""
+
+msgid "RS Downloader"
+msgstr "RS İndirici"
+
+msgid "Reconnect fritz.Box before downloading:"
+msgstr "İndirmeden önce Fritz!Box'a bağlan:"
+
+msgid "Restart failed downloads"
+msgstr ""
+
+msgid "Save"
+msgstr "Kaydet"
+
+msgid "Search"
+msgstr ""
+
+msgid "Search http://rapidshare-search-engine.com for:"
+msgstr "http://rapidshare-search-engine.com 'da ara:"
+
+msgid "Show log"
+msgstr ""
+
+msgid "Use search engine"
+msgstr ""
+
+msgid "Username:"
+msgstr "Kullanıcı adı:"
+
+msgid "Waiting"
+msgstr ""
+
+msgid "Write log:"
+msgstr "Günlüğe yaz:"
+
+#~ msgid "%s saved."
+#~ msgstr "%s kaydedildi."
+
+#~ msgid "Already downloading!"
+#~ msgstr "Zaten indiriliyor!"
+
+#~ msgid "Clear"
+#~ msgstr "Temizle"
+
+#~ msgid "Could not start downloading!"
+#~ msgstr "İndirme başlatılamıyor!"
+
+#~ msgid "Couldn't find the directory %s!"
+#~ msgstr "%s klasörü bulunamıyor!"
+
+#~ msgid "Delete log..."
+#~ msgstr "Günlüğü sil..."
+
+#~ msgid "Download files from rapidshare in the background"
+#~ msgstr "rapidshare dosya indirmelerini arkaplanda yap"
+
+#~ msgid "Downloaded"
+#~ msgstr "İndirilmiş"
+
+#~ msgid "Downloading %s."
+#~ msgstr "%s indiriliyor."
+
+#~ msgid "Edit configs..."
+#~ msgstr "Ayarlar..."
+
+#~ msgid "Edit:"
+#~ msgstr "Düzenle:"
+
+#~ msgid "Error while writing %s!"
+#~ msgstr "%s kaydedilirken hata oluştu!"
+
+#~ msgid "Files"
+#~ msgstr "Dosyalar"
+
+#~ msgid ""
+#~ "RS Downloader\n"
+#~ "by AliAbdul\n"
+#~ "\n"
+#~ "This plugin allows you to download files from rapidshare in the "
+#~ "background."
+#~ msgstr ""
+#~ "RS İndirici\n"
+#~ "AliAbdul\n"
+#~ "\n"
+#~ "Bu eklentiyle rapidshare dosya indirmelerini arkaplanda yapabilirsiniz."
+
+#~ msgid "Reload"
+#~ msgstr "Yenile"
+
+#~ msgid "Show downloads..."
+#~ msgstr "İndirilenleri göster..."
+
+#~ msgid "Show info..."
+#~ msgstr "Hakkında..."
+
+#~ msgid "Show lists..."
+#~ msgstr "Listeleri göster..."
+
+#~ msgid "Show log..."
+#~ msgstr "Günlüğü göster..."
+
+#~ msgid "Show progress..."
+#~ msgstr "İşlemleri göster..."
+
+#~ msgid "Show status..."
+#~ msgstr "Durumu göster..."
+
+#~ msgid "Start downloading..."
+#~ msgstr "İndirmeya başla..."
+
+#~ msgid "Started downloading..."
+#~ msgstr "İndirme başlatıldı..."
+
+#~ msgid "Stopped!"
+#~ msgstr "Durduruldu!"
+
+#~ msgid "Use search-engine..."
+#~ msgstr "Arama moturunu kullan..."

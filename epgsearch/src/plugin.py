@@ -1,4 +1,4 @@
-# for localized messages
+# for localized messages  	 
 from . import _
 
 from enigma import eServiceCenter
@@ -12,14 +12,32 @@ config.plugins.epgsearch.history = ConfigSet(choices = [])
 config.plugins.epgsearch.encoding = ConfigText(default = 'ISO8859-15', fixed_size = False)
 
 # Plugin
-from EPGSearch import EPGSearch
+from EPGSearch import EPGSearch, EPGSearchEPGSelection, EPGSelectionInit
 
 # Plugin definition
 from Plugins.Plugin import PluginDescriptor
 
+# Autostart
+def autostart(reason, **kwargs):
+	if "session" in kwargs:
+		try:
+			# for blue key activating in EPGSelection
+			EPGSelectionInit()
+		except:
+			pass
+
 # Mainfunction
 def main(session, *args, **kwargs):
-	session.open(EPGSearch)
+	s = session.nav.getCurrentService()
+	info = s.info()
+	event = info.getEvent(0) # 0 = now, 1 = next
+	name = event and event.getEventName() or ''
+	session.open(EPGSearch, name, False)
+
+# Event Info
+def eventinfo(session, *args, **kwargs):
+	ref = session.nav.getCurrentlyPlayingServiceReference()
+	session.open(EPGSearchEPGSelection, ref, True)
 
 # Movielist
 def movielist(session, service, **kwargs):
@@ -29,17 +47,12 @@ def movielist(session, service, **kwargs):
 
 	session.open(EPGSearch, name)
 
-# Event Info
-def eventinfo(session, servicelist, **kwargs):
-	s = session.nav.getCurrentService()
-	info = s.info()
-	event = info.getEvent(0) # 0 = now, 1 = next
-	name = event and event.getEventName() or ''
-
-	session.open(EPGSearch, name, False)
-
 def Plugins(**kwargs):
 	return [
+		PluginDescriptor(
+			where = PluginDescriptor.WHERE_SESSIONSTART,
+			fnc = autostart,
+		),
 		PluginDescriptor(
 			name = "EPGSearch",
 			description = _("Search EPG"),

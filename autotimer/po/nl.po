@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: autotimer_nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-09 20:07+0100\n"
+"POT-Creation-Date: 2009-07-28 23:41+0200\n"
 "PO-Revision-Date: 2009-01-09 21:16+0100\n"
 "Last-Translator: gerrit <gerrit@nedlinux.nl>\n"
 "Language-Team: gerrit <fy@li.org>\n"
@@ -72,6 +72,9 @@ msgstr "Bouquetten"
 msgid "Cancel"
 msgstr "Annuleren"
 
+msgid "Channel Selection"
+msgstr ""
+
 msgid "Channels"
 msgstr "Kanalen"
 
@@ -119,6 +122,9 @@ msgstr "Omschrijving"
 msgid "Do you really want to delete %s?"
 msgstr "Wilt u %s echt verwijderen?"
 
+msgid "EPG Encoding"
+msgstr ""
+
 msgid "Edit AutoTimer"
 msgstr "AutoTimer bewerken"
 
@@ -164,6 +170,9 @@ msgstr "Einde van tijdsduur"
 msgid "End of after Event Timespan"
 msgstr "Einde van gebeurtenis na tijdsduur"
 
+msgid "Exact match"
+msgstr ""
+
 msgid "Exclude"
 msgstr "Uitsluiten"
 
@@ -179,7 +188,9 @@ msgid ""
 "it's Description.\n"
 "Press BLUE to add a new restriction and YELLOW to remove the selected one."
 msgstr ""
-"Filters zijn een krachtig gereedschap voor het vergelijken van gebeurtenissen. Een AutoTimer kan beperkt worden to bepaalde weekdagen, of alleen overeenkomen met een tekst in bijv. een beschrijving\n"
+"Filters zijn een krachtig gereedschap voor het vergelijken van "
+"gebeurtenissen. Een AutoTimer kan beperkt worden to bepaalde weekdagen, of "
+"alleen overeenkomen met een tekst in bijv. een beschrijving\n"
 "Druk BLAUW om een nieuw filter in te stellen of GEEL om één te verwijderen."
 
 #, python-format
@@ -196,11 +207,14 @@ msgstr "Vrijdag"
 msgid "Guess existing Timer based on Begin/End"
 msgstr "Gok bestaande timer gebaseert op begin/einde"
 
-msgid "Import"
-msgstr "Importeer"
-
 msgid "Import AutoTimer"
 msgstr "Importeren AutoTimer"
+
+msgid "Import existing Timer"
+msgstr ""
+
+msgid "Import from EPG"
+msgstr ""
 
 msgid "Include"
 msgstr "Toevoegen"
@@ -212,8 +226,10 @@ msgid ""
 "Service (inside a Bouquet).\n"
 "Press BLUE to add a new restriction and YELLOW to remove the selected one."
 msgstr ""
-"Het is mogelijk om een AutoTimer te beperken tot bepaalde Services of boeketten of sommige te weigeren.\n"
-"Een gebeurtenis komt alleen overeen met een AutoTimer wanneer het op een specifieke en niet geweigerde Service (binnen een boeket).\n"
+"Het is mogelijk om een AutoTimer te beperken tot bepaalde Services of "
+"boeketten of sommige te weigeren.\n"
+"Een gebeurtenis komt alleen overeen met een AutoTimer wanneer het op een "
+"specifieke en niet geweigerde Service (binnen een boeket).\n"
 "Druk BLAUW voor een nieuwe restrictie of GEEL om één te verwijderen."
 
 msgid "Location"
@@ -324,6 +340,12 @@ msgstr "Zaterdag"
 msgid "Save"
 msgstr "Opslaan"
 
+msgid "Search Type"
+msgstr ""
+
+msgid "Search strictness"
+msgstr ""
+
 msgid "Select a Timer to Import"
 msgstr "Selecteer een timer voor importeren"
 
@@ -342,6 +364,9 @@ msgstr "Stel maximale tijdsduur in"
 msgid "Setup"
 msgstr "Setup"
 
+msgid "Show in Extensionmenu"
+msgstr ""
+
 msgid "Sort AutoTimer"
 msgstr "Sorteer Autotimer"
 
@@ -359,7 +384,8 @@ msgid ""
 "List.\n"
 "Please press OK to continue."
 msgstr ""
-"Bedankt voor het gebruiken van de Wizard. uw nieuwe Autotimer is toegevoegd aan de lijst.\n"
+"Bedankt voor het gebruiken van de Wizard. uw nieuwe Autotimer is toegevoegd "
+"aan de lijst.\n"
 "Druk OK om door te gaan."
 
 msgid ""
@@ -373,7 +399,10 @@ msgid ""
 "The Timespan of an AutoTimer is the first 'advanced' attribute. If a "
 "timespan is specified an event will only match this AutoTimer if it lies "
 "inside of this timespan."
-msgstr "Het Tijdsspan van een AutoTimer is het eerste geavanceerde attribuut. Wanneer een tijdsspan if gespecificeerd, dan zal een gebeurtenis alleen overeenkomen met de AutoTimer indien deze binnen dit tijdsspan ligt."
+msgstr ""
+"Het Tijdsspan van een AutoTimer is het eerste geavanceerde attribuut. "
+"Wanneer een tijdsspan if gespecificeerd, dan zal een gebeurtenis alleen "
+"overeenkomen met de AutoTimer indien deze binnen dit tijdsspan ligt."
 
 msgid "The match attribute is mandatory."
 msgstr "De vergelijkings attribuut is verplicht."
@@ -413,7 +442,8 @@ msgid ""
 msgstr ""
 "Welkom.\n"
 "\n"
-"Deze Wizard helpt u bij het aanmaken van een nieuw AutoTimer door omschrijvingen te geven voor algemene instellingen."
+"Deze Wizard helpt u bij het aanmaken van een nieuw AutoTimer door "
+"omschrijvingen te geven voor algemene instellingen."
 
 msgid "Wizard"
 msgstr "Instelhulp"
@@ -430,7 +460,8 @@ msgid ""
 "in title' is what is looked for in the EPG."
 msgstr ""
 "U kunt hier de basis instellingen doen voor een AutoTimer.\n"
-"Terwijl 'Name' gewoon een normaal leesbare naam is voor de overzichtslijst, 'Match' is een titel waar naar gezocht wordt in de EPG."
+"Terwijl 'Name' gewoon een normaal leesbare naam is voor de overzichtslijst, "
+"'Match' is een titel waar naar gezocht wordt in de EPG."
 
 msgid ""
 "You did not provide a valid 'Match in title' Attribute for your new "
@@ -454,7 +485,8 @@ msgid ""
 "\n"
 "You can go back a step by pressing EXIT on your remote."
 msgstr ""
-"Uw heeft succesvol een AutoTimer geconfigureerd. Wilt u deze aan de lijst toevoegen ?\n"
+"Uw heeft succesvol een AutoTimer geconfigureerd. Wilt u deze aan de lijst "
+"toevoegen ?\n"
 "\n"
 "U kunt één stap terug door de EXIT knop te gebruiken."
 
@@ -476,6 +508,12 @@ msgstr ""
 msgid "auto"
 msgstr "auto"
 
+msgid "case-insensitive search"
+msgstr ""
+
+msgid "case-sensitive search"
+msgstr ""
+
 msgid "delete"
 msgstr "verwijderen"
 
@@ -487,6 +525,9 @@ msgstr "doe niets"
 
 msgid "enable"
 msgstr "inschakelen"
+
+msgid "exact match"
+msgstr ""
 
 msgid "go to deep standby"
 msgstr "ga naar deep standby"
@@ -509,6 +550,9 @@ msgstr "minuten"
 msgid "on Weekday"
 msgstr "op een weekdag"
 
+msgid "partial match"
+msgstr ""
+
 msgid "record"
 msgstr "opnemen"
 
@@ -518,3 +562,5 @@ msgstr "standaard"
 msgid "zap"
 msgstr "kanaal wisselen"
 
+#~ msgid "Import"
+#~ msgstr "Importeer"

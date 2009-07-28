@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: autotimer_fy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-09 20:07+0100\n"
+"POT-Creation-Date: 2009-07-28 23:41+0200\n"
 "PO-Revision-Date: 2009-01-09 20:55+0100\n"
 "Last-Translator: gerrit <gerrit@nedlinux.nl>\n"
 "Language-Team: gerrit <fy@li.org>\n"
@@ -73,6 +73,9 @@ msgstr "Boeketten"
 msgid "Cancel"
 msgstr "Ôfbrekke"
 
+msgid "Channel Selection"
+msgstr ""
+
 msgid "Channels"
 msgstr "Kanalen"
 
@@ -120,6 +123,9 @@ msgstr "Beskriuwing"
 msgid "Do you really want to delete %s?"
 msgstr "Wolle jo wier %s ferwiderje?"
 
+msgid "EPG Encoding"
+msgstr ""
+
 msgid "Edit AutoTimer"
 msgstr "Autotimer bewurkje"
 
@@ -165,6 +171,9 @@ msgstr "Ein fan Tiidsspan"
 msgid "End of after Event Timespan"
 msgstr "Ein fan Tiidsspan nei in barren"
 
+msgid "Exact match"
+msgstr ""
+
 msgid "Exclude"
 msgstr "Utslúte"
 
@@ -180,8 +189,11 @@ msgid ""
 "it's Description.\n"
 "Press BLUE to add a new restriction and YELLOW to remove the selected one."
 msgstr ""
-"In Filter is in kreftig ark foar it fergelykjen fan tiidsbarren. In AutoTimer kin beperkt wurde ta bepaalde wiekdagen of allinne barren mei in bepaalde tekst bijv yn in beskriuwing.\n"
-"Druk BLAU foar in nije filter rigele en GIEL om in selektearre te ferwiderjen."
+"In Filter is in kreftig ark foar it fergelykjen fan tiidsbarren. In "
+"AutoTimer kin beperkt wurde ta bepaalde wiekdagen of allinne barren mei in "
+"bepaalde tekst bijv yn in beskriuwing.\n"
+"Druk BLAU foar in nije filter rigele en GIEL om in selektearre te "
+"ferwiderjen."
 
 #, python-format
 msgid ""
@@ -197,11 +209,14 @@ msgstr "Freed"
 msgid "Guess existing Timer based on Begin/End"
 msgstr "In gok nei in besteand Tiidsbarren besjoen nei Begjin/EinTiid"
 
-msgid "Import"
-msgstr "Ymport"
-
 msgid "Import AutoTimer"
 msgstr "Ymport AutoTimer"
+
+msgid "Import existing Timer"
+msgstr ""
+
+msgid "Import from EPG"
+msgstr ""
 
 msgid "Include"
 msgstr "Ynclusief"
@@ -213,8 +228,10 @@ msgid ""
 "Service (inside a Bouquet).\n"
 "Press BLUE to add a new restriction and YELLOW to remove the selected one."
 msgstr ""
-"It is mooglik om in AutoTimer te beperken ta bepaalde Services of Boeketten of ta wiigerje fan bepaalde items.\n"
-"In barren komt allinne oerien mei in AutoTimer wanneer it in bepaalde en net wiigere Service (yn in boeket).\n"
+"It is mooglik om in AutoTimer te beperken ta bepaalde Services of Boeketten "
+"of ta wiigerje fan bepaalde items.\n"
+"In barren komt allinne oerien mei in AutoTimer wanneer it in bepaalde en net "
+"wiigere Service (yn in boeket).\n"
 "Druk BLAU om in nije foarwaarde en GIEL om in selektearre te ferwiderjen."
 
 msgid "Location"
@@ -325,6 +342,12 @@ msgstr "Sneon"
 msgid "Save"
 msgstr "Opslaan"
 
+msgid "Search Type"
+msgstr ""
+
+msgid "Search strictness"
+msgstr ""
+
 msgid "Select a Timer to Import"
 msgstr "Kies yn tiidsbarren foar ymport"
 
@@ -343,6 +366,9 @@ msgstr "Kies maximaal tiidsspan"
 msgid "Setup"
 msgstr "Ynstellingen"
 
+msgid "Show in Extensionmenu"
+msgstr ""
+
 msgid "Sort AutoTimer"
 msgstr "Sorteer AutoTimer"
 
@@ -360,7 +386,8 @@ msgid ""
 "List.\n"
 "Please press OK to continue."
 msgstr ""
-"Bedankt foar it brûken fan de gûcheler. De nije AutoTimer is tafoege oan de lyst.\n"
+"Bedankt foar it brûken fan de gûcheler. De nije AutoTimer is tafoege oan de "
+"lyst.\n"
 "Druk OK om troch te gean."
 
 msgid ""
@@ -374,7 +401,10 @@ msgid ""
 "The Timespan of an AutoTimer is the first 'advanced' attribute. If a "
 "timespan is specified an event will only match this AutoTimer if it lies "
 "inside of this timespan."
-msgstr "It Tiidsspan fan in AutoTimer is de eerst afansjearre attributen. Ot in tiidsspan opjûn is, sil in tiidbarren allinne oerien komme ot it binnen dit tiidsspan falt."
+msgstr ""
+"It Tiidsspan fan in AutoTimer is de eerst afansjearre attributen. Ot in "
+"tiidsspan opjûn is, sil in tiidbarren allinne oerien komme ot it binnen dit "
+"tiidsspan falt."
 
 msgid "The match attribute is mandatory."
 msgstr "It syk attribuut is ferplicht."
@@ -414,8 +444,8 @@ msgid ""
 msgstr ""
 "Wolkom\n"
 "\n"
-"Dizze gûcheler helpt jo by it meitsjen fan in AutoTimer troch in beskriuwing te jaan "
-"foar algemiene ynstellingen."
+"Dizze gûcheler helpt jo by it meitsjen fan in AutoTimer troch in beskriuwing "
+"te jaan foar algemiene ynstellingen."
 
 msgid "Wizard"
 msgstr "Gûcheler"
@@ -432,15 +462,16 @@ msgid ""
 "in title' is what is looked for in the EPG."
 msgstr ""
 "Hjir kinne standaard ynstellingen foar in AutoTimer dien wurde.\n"
-"'Namme' is in namme dy't yn de lyst toant wurd, 'Match' is een titel wêr nei "
-" sjoen wurd yn de EPG."
+"'Namme' is in namme dy't yn de lyst toant wurd, 'Match' is een titel wêr "
+"nei  sjoen wurd yn de EPG."
 
 msgid ""
 "You did not provide a valid 'Match in title' Attribute for your new "
 "AutoTimer.\n"
 "As this is a mandatory Attribute you cannot continue without doing so."
 msgstr ""
-"Der is gjin jildige opjefte dien foar 'Match in titel', foar de nije AutoTimer.\n"
+"Der is gjin jildige opjefte dien foar 'Match in titel', foar de nije "
+"AutoTimer.\n"
 "Whylst dizze ferplicht is, kinne jo net fjierder sunder ien te jaan."
 
 #, python-format
@@ -457,7 +488,8 @@ msgid ""
 "\n"
 "You can go back a step by pressing EXIT on your remote."
 msgstr ""
-"Der is mei sukses in nije AutoTimer ynstelt. Wolle jo it tafoegje oan de lyst ?\n"
+"Der is mei sukses in nije AutoTimer ynstelt. Wolle jo it tafoegje oan de "
+"lyst ?\n"
 "\n"
 "Jo kinne ien stap wêrom troch de EXIT knop te brûken."
 
@@ -479,6 +511,12 @@ msgstr ""
 msgid "auto"
 msgstr "auto"
 
+msgid "case-insensitive search"
+msgstr ""
+
+msgid "case-sensitive search"
+msgstr ""
+
 msgid "delete"
 msgstr "ferwiderje"
 
@@ -490,6 +528,9 @@ msgstr "neat dwaan"
 
 msgid "enable"
 msgstr "ynskeakelje"
+
+msgid "exact match"
+msgstr ""
 
 msgid "go to deep standby"
 msgstr "gjin nei djip paraatstand"
@@ -512,6 +553,9 @@ msgstr "min"
 msgid "on Weekday"
 msgstr "op wykdei"
 
+msgid "partial match"
+msgstr ""
+
 msgid "record"
 msgstr "opnimme"
 
@@ -521,3 +565,5 @@ msgstr "standert"
 msgid "zap"
 msgstr "knip"
 
+#~ msgid "Import"
+#~ msgstr "Ymport"

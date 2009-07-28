@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: UTF-8 -*-
 from Plugins.Plugin import PluginDescriptor
 from twisted.web.client import downloadPage
 from enigma import ePicLoad, eServiceReference
@@ -114,11 +114,14 @@ class IMDB(Screen):
 			<widget name="stars" position="340,40" size="210,21" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_filled.png" transparent="1" />
 		</screen>"""
 
-	def __init__(self, session, eventName, args = None):
-		self.skin = IMDB.skin
+	def __init__(self, session, eventName, callbackNeeded=False):
 		Screen.__init__(self, session)
 
 		self.eventName = eventName
+		
+		self.callbackNeeded = callbackNeeded
+		self.callbackData = ""
+		self.callbackGenre = ""
 
 		self.dictionary_init()
 
@@ -155,10 +158,10 @@ class IMDB(Screen):
 		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "MovieSelectionActions", "DirectionActions"],
 		{
 			"ok": self.showDetails,
-			"cancel": self.close,
+			"cancel": self.exit,
 			"down": self.pageDown,
 			"up": self.pageUp,
-			"red": self.close,
+			"red": self.exit,
 			"green": self.showMenu,
 			"yellow": self.showDetails,
 			"blue": self.showExtras,
@@ -167,6 +170,12 @@ class IMDB(Screen):
 		}, -1)
 
 		self.getIMDB()
+
+	def exit(self):
+		if self.callbackNeeded:
+			self.close([self.callbackData, self.callbackGenre])
+		else:
+			self.close()
 
 	def dictionary_init(self):
 		syslang = language.getLanguage()
@@ -300,6 +309,15 @@ class IMDB(Screen):
 	def channelSelectionClosed(self, ret = None):
 		if ret:
 			self.eventName = ret
+			self.Page = 0
+			self.resultlist = []
+			self["menu"].hide()
+			self["ratinglabel"].show()
+			self["castlabel"].show()
+			self["detailslabel"].show()
+			self["poster"].hide()
+			self["stars"].hide()
+			self["starsbg"].hide()
 			self.getIMDB()
 
 	def getIMDB(self):
@@ -326,25 +344,30 @@ class IMDB(Screen):
 
 	def html2utf8(self,in_html):
 		htmlentitynumbermask = re.compile('(&#(\d{1,5}?);)')
-		htmlentitynamemask = re.compile('(&(\D{1,5}?);)')
-
-		entities = htmlentitynamemask.finditer(in_html)
+		htmlentityhexmask = re.compile('(&#x([0-9A-Fa-f]{2,2}?);)')
+		htmlentitynamemask = re.compile('(&([^#]\D{1,5}?);)')
 		entitydict = {}
+		entityhexdict = {}
+		entities = htmlentitynamemask.finditer(in_html)
 
 		for x in entities:
 			entitydict[x.group(1)] = x.group(2)
-
 		for key, name in entitydict.items():
 			entitydict[key] = htmlentitydefs.name2codepoint[name]
-
-		entities = htmlentitynumbermask.finditer(in_html)
+		entities = htmlentityhexmask.finditer(in_html)
 
 		for x in entities:
-			entitydict[x.group(1)] = x.group(2)
+			entityhexdict[x.group(1)] = x.group(2)
 
+		for key, name in entityhexdict.items():
+			entitydict[key] = "%d" % int(key[3:5], 16)
+			print "key:", key, "before:", name, "after:", entitydict[key]
+		
+		entities = htmlentitynumbermask.finditer(in_html)
+		for x in entities:
+			entitydict[x.group(1)] = x.group(2)
 		for key, codepoint in entitydict.items():
 			in_html = in_html.replace(key, (unichr(int(codepoint)).encode('latin-1')))
-
 		self.inhtml = in_html.decode('latin-1').encode('utf8')
 
 	def IMDBquery(self,string):
@@ -361,11 +384,8 @@ class IMDB(Screen):
 			if re.search("<title>(?:IMDb.{0,9}Search|IMDb Titelsuche)</title>", self.inhtml):
 				searchresultmask = re.compile("<tr> <td.*?img src.*?>.*?<a href=\".*?/title/(tt\d{7,7})/\".*?>(.*?)</td>", re.DOTALL)
 				searchresults = searchresultmask.finditer(self.inhtml)
-				self.resultlist = []
-				if searchresults:
-					for x in searchresults:
-						self.resultlist.append((self.htmltags.sub('',x.group(2)), x.group(1)))
-					self["menu"].l.setList(self.resultlist)
+				self.resultlist = [(self.htmltags.sub('',x.group(2)), x.group(1)) for x in searchresults]
+				self["menu"].l.setList(self.resultlist)
 				if len(self.resultlist) > 1:
 					self.Page = 1
 					self.showMenu()
@@ -412,8 +432,10 @@ class IMDB(Screen):
 				genres = genremask.finditer(genreblock[0])
 				if genres:
 					Detailstext += "Genre: "
+					self.callbackGenre = ""
 					for x in genres:
 						Detailstext += x.group(1) + " "
+						self.callbackGenre += x.group(1) + " "
 
 			for category in ("director", "creator", "writer", "premiere", "seasons", "country"):
 				if self.generalinfos.group('g_'+category):
@@ -471,6 +493,7 @@ class IMDB(Screen):
 				self["key_blue"].setText(_("Extra Info"))
 
 		self["detailslabel"].setText(Detailstext)
+		self.callbackData = Detailstext
 
 	def IMDBPoster(self,string):
 		self["statusbar"].setText(_("IMDb Details parsed"))

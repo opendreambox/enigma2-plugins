@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tuxbox-enigma 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-17 17:26+0200\n"
+"POT-Creation-Date: 2009-07-28 23:42+0200\n"
 "PO-Revision-Date: 2009-02-06 09:34+0100\n"
 "Last-Translator: WeeGull <weegull@hotmail.com>\n"
 "Language-Team: WeeGull <weegull@hotmail.com>\n"
@@ -19,91 +19,82 @@ msgstr ""
 "X-Poedit-Country: SWEDEN\n"
 "X-Poedit-SourceCharset: iso-8859-15\n"
 
-#: ../src/plugin.py:16
-#: ../src/plugin.py:27
-msgid "Network Wizard"
-msgstr "Nätverksguide"
+msgid "Configure interface"
+msgstr "Konfigurera kort"
 
-#: ../src/NetworkWizard.py:92
-msgid "No Networks found"
-msgstr "Inget nätverk funnet"
+msgid "Configure nameservers"
+msgstr "Konfigurera namnservers"
 
-#: ../src/NetworkWizard.py:15
-msgid "WEP"
-msgstr "WEP"
-
-#: ../src/NetworkWizard.py:16
-#: ../src/NetworkWizard.py:24
-msgid "WPA"
-msgstr "WPA"
-
-#: ../src/NetworkWizard.py:17
-msgid "WPA2"
-msgstr "WPA2"
-
-#: ../src/NetworkWizard.py:92
-msgid "unavailable"
-msgstr "ej tillgänglig"
-
-#: ../src/
-msgid "Configure your LAN again"
-msgstr "Konfigurera ditt LAN igen"
-
-#: ../src/
 msgid "Configure your internal LAN"
 msgstr "Konfigurera ditt interna LAN"
 
-#: ../src/
-msgid "Configure your wireless LAN"
-msgstr "Konfigurera ditt trådlösa LAN"
+msgid "Configure your network again"
+msgstr "Konfigurera ditt nätverk igen"
 
-#: ../src/
 msgid "Configure your wireless LAN again"
 msgstr "Konfigurera ditt trådlösa LAN igen"
 
-#: ../src/
-msgid "Exit wizard and configure later manually"
-msgstr "Avsluta guiden och konfigurera manuellt senare"
+msgid "Exit network wizard"
+msgstr "Avsluta nätverksguiden"
 
-#: ../src/
+msgid "Network Wizard"
+msgstr "Nätverksguide"
+
+msgid "No networks found"
+msgstr ""
+
 msgid ""
-"Please configure your LAN internet connection by filling out the required values.\n"
+"Please configure or verify your Nameservers by filling out the required "
+"values.\n"
 "When you are ready press OK to continue."
 msgstr ""
-"Vänligen konfigurera din LAN anslutning med att fylla i de begärda fälten.\n"
-"När du är klar tryck OK för att fortsätta."
+"Vänligen konfigurera eller bekräfta din namnserver med att fylla i de "
+"begärda fälten.\n"
+"När du är klar tryck OK för att fortsätta"
 
-#: ../src/
 msgid ""
-"Please configure your wireless LAN internet connection by filling out the required values.\n"
-"When you are done, press OK to continue."
+"Please configure your internet connection by filling out the required "
+"values.\n"
+"When you are ready press OK to continue."
 msgstr ""
-"Vänligen konfigurera din trådlösa LAN Internet anslutning med att fylla i de begärda fälten.\n"
-"När du är klar tryck OK för att fortsätta."
 
-#: ../src/
+msgid "Please follow the instructions on the TV"
+msgstr "Vänligen följ instruktionerna på TV:n"
+
 msgid ""
-"Please select the wireless LAN network that you want to connect to.\n"
+"Please select the network interface that you want to use for your internet "
+"connection.\n"
 "\n"
 "Please press OK to continue."
 msgstr ""
-"Vänligen välj trådlöst LAN som du vill ansluta till.\n"
+"Vänligen välj nätverkskort som du vill använda för anslutning till "
+"Internet.\n"
 "\n"
 "Vänligen tryck OK för att fortsätta"
 
-#: ../src/
-msgid "Restart your wireless interface"
-msgstr "Omstarta ditt trådlösa kort"
-
-#: ../src/
 msgid ""
-"Thank you for using the wizard. Your Dreambox is now ready to use.\n"
+"Please select the wireless network that you want to connect to.\n"
+"\n"
 "Please press OK to continue."
 msgstr ""
-"Tack för att du använde guiden. Din Dreambox är nu klar för att användas\n"
-"Vänligen tryck Ok för att fortsätta."
 
-#: ../src/
+msgid "Please wait while we prepare your network interfaces..."
+msgstr "Vänligen vänta medan vi förbereder dina nätverkskort..."
+
+msgid "Please wait while we test your network..."
+msgstr "Vänligen vänta meda vi testar ditt nätverk..."
+
+msgid "Select interface"
+msgstr "Välj kort"
+
+msgid "Select wireless network"
+msgstr "Välj trådlöst nätverk"
+
+msgid ""
+"Thank you for using the wizard.\n"
+"Please press OK to continue."
+msgstr ""
+
 msgid ""
 "The wireless LAN plugin is not installed!\n"
 "Please install it and choose what you want to do next."
@@ -111,80 +102,34 @@ msgstr ""
 "Trådlöst LAN plugin är inte installerad!\n"
 "Vänligen installera den och välj vad du vill göra härnäst."
 
-#: ../src/
-msgid ""
-"Use the up/down keys on your remote control to select an option. After that, press OK.\n"
-"\n"
-"\n"
-"\n"
-"Connect to the internet..."
-msgstr ""
-"Använd upp/ner tangent på din fjärrkontroll för att välja olika möjligheter. Efter det, tryck OK.\n"
-"\n"
-"\n"
-"\n"
-"Anslut till Internet..."
-
-#: ../src/
 msgid ""
 "Welcome.\n"
 "\n"
-"If you want to connect your Dreambox to the Internet, this wizard will guide you through the basic network setup of your Dreambox.\n"
+"If you want to connect your Dreambox to the Internet, this wizard will guide "
+"you through the basic network setup of your Dreambox.\n"
 "\n"
 "Press OK to start configuring your network"
 msgstr ""
 "Välkommen.\n"
 "\n"
-"Om du vill ansluta din Dreambox till Internet, då kommer den här guiden hjälpa dig genom grundläggande konfiguration av din Dreambox.\n"
+"Om du vill ansluta din Dreambox till Internet, då kommer den här guiden "
+"hjälpa dig genom grundläggande konfiguration av din Dreambox.\n"
 "\n"
 "Tryck OK för att starta konfigurationen av ditt nätverk."
 
-#: ../src/
 msgid ""
 "Your Dreambox is now ready to use.\n"
 "\n"
-"Your LAN internet connection is working now.\n"
+"Your internet connection is working now.\n"
 "\n"
 "Please press OK to continue."
 msgstr ""
-"Din Dreambox är nu klar för att användas.\n"
-"\n"
-"Din LAN Internet anslutning fungerar nu.\n"
-"\n"
-"Vänligen tryck OK för att fortsätta."
 
-#: ../src/
 msgid ""
-"Your Dreambox is now ready to use.\n"
-"\n"
-"Your wireless LAN internet connection is working now.\n"
-"\n"
-"Please press OK to continue."
-msgstr ""
-"Din Dreambox är nu klar för att användas.\n"
-"\n"
-"Din trådlösa LAN Internet anslutning fungerar nu.\n"
-"\n"
-"Vänligen tryck OK för att fortsätta."
-
-#: ../src/
-msgid ""
-"Your LAN internet connection is not working!\n"
+"Your internet connection is not working!\n"
 "Please choose what you want to do next."
 msgstr ""
-"Din LAN Internet anslutning fungerar inte!\n"
-"Vänligen välj vad du vill göra härnäst."
 
-#: ../src/
-msgid ""
-"Your network is restarting.\n"
-"\n"
-"Please press OK to continue."
-msgstr ""
-"Ditt nätverk startas om.\n"
-"Vänligen tryck Ok för att fortsätta."
-
-#: ../src/
 msgid ""
 "Your wireless LAN internet connection could not be started!\n"
 "Have you attached your USB WLAN Stick?\n"
@@ -196,60 +141,138 @@ msgstr ""
 "\n"
 "Vänligen välja vad du vill göra härnäst."
 
-#: ../src/
-msgid ""
-"Your wireless LAN internet connection is not working!\n"
-"Please choose what you want to do next."
-msgstr ""
-"Din trådlösa LAN Internet anslutning fungerar inte!\n"
-"Vänligen välj vad du vill göra härnäst."
+msgid "enter hidden network SSID"
+msgstr "ange dold nätverks SSID"
 
-#: ../src/
-msgid "via LAN."
-msgstr "via LAN"
+msgid "hidden..."
+msgstr "dold..."
 
-#: ../src/
-msgid "via wireless LAN."
-msgstr "via trådlöst LAN"
+msgid "unavailable"
+msgstr "ej tillgänglig"
 
-#~ msgid "Configure interface"
-#~ msgstr "Konfigurera kort"
-#~ msgid "Configure nameservers"
-#~ msgstr "Konfigurera namnservers"
-#~ msgid "Configure your network again"
-#~ msgstr "Konfigurera ditt nätverk igen"
-#~ msgid "Exit network wizard"
-#~ msgstr "Avsluta nätverksguiden"
+#~ msgid "Configure your LAN again"
+#~ msgstr "Konfigurera ditt LAN igen"
+
+#~ msgid "Configure your wireless LAN"
+#~ msgstr "Konfigurera ditt trådlösa LAN"
+
+#~ msgid "Exit wizard and configure later manually"
+#~ msgstr "Avsluta guiden och konfigurera manuellt senare"
+
+#~ msgid "No Networks found"
+#~ msgstr "Inget nätverk funnet"
+
 #~ msgid ""
-#~ "Please configure or verify your Nameservers by filling out the required "
+#~ "Please configure your LAN internet connection by filling out the required "
 #~ "values.\n"
 #~ "When you are ready press OK to continue."
 #~ msgstr ""
-#~ "Vänligen konfigurera eller bekräfta din namnserver med att fylla i de "
-#~ "begärda fälten.\n"
-#~ "När du är klar tryck OK för att fortsätta"
-#~ msgid "Please follow the instructions on the TV"
-#~ msgstr "Vänligen följ instruktionerna på TV:n"
+#~ "Vänligen konfigurera din LAN anslutning med att fylla i de begärda "
+#~ "fälten.\n"
+#~ "När du är klar tryck OK för att fortsätta."
+
 #~ msgid ""
-#~ "Please select the network interface that you want to use for your "
-#~ "internet connection.\n"
+#~ "Please configure your wireless LAN internet connection by filling out the "
+#~ "required values.\n"
+#~ "When you are done, press OK to continue."
+#~ msgstr ""
+#~ "Vänligen konfigurera din trådlösa LAN Internet anslutning med att fylla i "
+#~ "de begärda fälten.\n"
+#~ "När du är klar tryck OK för att fortsätta."
+
+#~ msgid ""
+#~ "Please select the wireless LAN network that you want to connect to.\n"
 #~ "\n"
 #~ "Please press OK to continue."
 #~ msgstr ""
-#~ "Vänligen välj nätverkskort som du vill använda för anslutning till "
-#~ "Internet.\n"
+#~ "Vänligen välj trådlöst LAN som du vill ansluta till.\n"
 #~ "\n"
 #~ "Vänligen tryck OK för att fortsätta"
-#~ msgid "Please wait while we prepare your network interfaces..."
-#~ msgstr "Vänligen vänta medan vi förbereder dina nätverkskort..."
-#~ msgid "Please wait while we test your network..."
-#~ msgstr "Vänligen vänta meda vi testar ditt nätverk..."
-#~ msgid "Select interface"
-#~ msgstr "Välj kort"
-#~ msgid "Select wireless network"
-#~ msgstr "Välj trådlöst nätverk"
-#~ msgid "enter hidden network SSID"
-#~ msgstr "ange dold nätverks SSID"
-#~ msgid "hidden..."
-#~ msgstr "dold..."
 
+#~ msgid "Restart your wireless interface"
+#~ msgstr "Omstarta ditt trådlösa kort"
+
+#~ msgid ""
+#~ "Thank you for using the wizard. Your Dreambox is now ready to use.\n"
+#~ "Please press OK to continue."
+#~ msgstr ""
+#~ "Tack för att du använde guiden. Din Dreambox är nu klar för att användas\n"
+#~ "Vänligen tryck Ok för att fortsätta."
+
+#~ msgid ""
+#~ "Use the up/down keys on your remote control to select an option. After "
+#~ "that, press OK.\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "Connect to the internet..."
+#~ msgstr ""
+#~ "Använd upp/ner tangent på din fjärrkontroll för att välja olika "
+#~ "möjligheter. Efter det, tryck OK.\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "Anslut till Internet..."
+
+#~ msgid "WEP"
+#~ msgstr "WEP"
+
+#~ msgid "WPA"
+#~ msgstr "WPA"
+
+#~ msgid "WPA2"
+#~ msgstr "WPA2"
+
+#~ msgid ""
+#~ "Your Dreambox is now ready to use.\n"
+#~ "\n"
+#~ "Your LAN internet connection is working now.\n"
+#~ "\n"
+#~ "Please press OK to continue."
+#~ msgstr ""
+#~ "Din Dreambox är nu klar för att användas.\n"
+#~ "\n"
+#~ "Din LAN Internet anslutning fungerar nu.\n"
+#~ "\n"
+#~ "Vänligen tryck OK för att fortsätta."
+
+#~ msgid ""
+#~ "Your Dreambox is now ready to use.\n"
+#~ "\n"
+#~ "Your wireless LAN internet connection is working now.\n"
+#~ "\n"
+#~ "Please press OK to continue."
+#~ msgstr ""
+#~ "Din Dreambox är nu klar för att användas.\n"
+#~ "\n"
+#~ "Din trådlösa LAN Internet anslutning fungerar nu.\n"
+#~ "\n"
+#~ "Vänligen tryck OK för att fortsätta."
+
+#~ msgid ""
+#~ "Your LAN internet connection is not working!\n"
+#~ "Please choose what you want to do next."
+#~ msgstr ""
+#~ "Din LAN Internet anslutning fungerar inte!\n"
+#~ "Vänligen välj vad du vill göra härnäst."
+
+#~ msgid ""
+#~ "Your network is restarting.\n"
+#~ "\n"
+#~ "Please press OK to continue."
+#~ msgstr ""
+#~ "Ditt nätverk startas om.\n"
+#~ "Vänligen tryck Ok för att fortsätta."
+
+#~ msgid ""
+#~ "Your wireless LAN internet connection is not working!\n"
+#~ "Please choose what you want to do next."
+#~ msgstr ""
+#~ "Din trådlösa LAN Internet anslutning fungerar inte!\n"
+#~ "Vänligen välj vad du vill göra härnäst."
+
+#~ msgid "via LAN."
+#~ msgstr "via LAN"
+
+#~ msgid "via wireless LAN."
+#~ msgstr "via trådlöst LAN"

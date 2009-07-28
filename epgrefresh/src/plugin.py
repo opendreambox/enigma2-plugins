@@ -2,7 +2,7 @@
 from . import _
 
 # Config
-from Components.config import config, ConfigEnableDisable, ConfigNumber, \
+from Components.config import config, ConfigYesNo, ConfigNumber, \
 	ConfigSubsection, ConfigClock
 
 # Calculate default begin/end
@@ -18,16 +18,17 @@ end = mktime((
 )
 
 config.plugins.epgrefresh = ConfigSubsection()
-config.plugins.epgrefresh.enabled = ConfigEnableDisable(default = False)
+config.plugins.epgrefresh.enabled = ConfigYesNo(default = False)
 config.plugins.epgrefresh.begin = ConfigClock(default = int(begin))
 config.plugins.epgrefresh.end = ConfigClock(default = int(end))
 config.plugins.epgrefresh.interval = ConfigNumber(default = 2)
 config.plugins.epgrefresh.delay_standby = ConfigNumber(default = 10)
-config.plugins.epgrefresh.inherit_autotimer = ConfigEnableDisable(default = False)
-config.plugins.epgrefresh.afterevent = ConfigEnableDisable(default = False)
-config.plugins.epgrefresh.force = ConfigEnableDisable(default = False)
-config.plugins.epgrefresh.wakeup = ConfigEnableDisable(default = False)
+config.plugins.epgrefresh.inherit_autotimer = ConfigYesNo(default = False)
+config.plugins.epgrefresh.afterevent = ConfigYesNo(default = False)
+config.plugins.epgrefresh.force = ConfigYesNo(default = False)
+config.plugins.epgrefresh.wakeup = ConfigYesNo(default = False)
 config.plugins.epgrefresh.lastscan = ConfigNumber(default = 0)
+config.plugins.epgrefresh.parse_autotimer = ConfigYesNo(default = False)
 
 del now, begin, end
 
@@ -39,12 +40,39 @@ from EPGRefreshService import EPGRefreshService
 # Plugin definition
 from Plugins.Plugin import PluginDescriptor
 
+def standbyQuestionCallback(session, res = None):
+	if res:
+		from Screens.Standby import Standby
+		session.open(Standby)
+
 # Autostart
 def autostart(reason, **kwargs):
 	if config.plugins.epgrefresh.enabled.value and reason == 0 \
 		and kwargs.has_key("session"):
 
-		epgrefresh.start(kwargs["session"])
+		session = kwargs["session"]
+		if config.plugins.epgrefresh.wakeup.value:
+			now = localtime()
+			begin = int(mktime(
+				(now.tm_year, now.tm_mon, now.tm_mday,
+				config.plugins.epgrefresh.begin.value[0],
+				config.plugins.epgrefresh.begin.value[1],
+				0, now.tm_wday, now.tm_yday, now.tm_isdst)
+			))
+			# booted +- 10min from begin of timespan
+			if abs(time() - begin) < 600:
+				from Screens.MessageBox import MessageBox
+				from Tools.Notifications import AddNotificationWithCallback
+				from Tools.BoundFunction import boundFunction
+				# XXX: we use a notification because this will be suppressed otherwise
+				AddNotificationWithCallback(
+					boundFunction(standbyQuestionCallback, session),
+					MessageBox,
+					_("This might have been an automated bootup to refresh the EPG. For this to happen it is recommmended to put the receiver to Standby.\nDo you want to do this now?"),
+					timeout = 15
+				)
+
+		epgrefresh.start(session)
 
 	elif reason == 1:
 		epgrefresh.stop()
@@ -98,7 +126,6 @@ def Plugins(**kwargs):
 	return [
 		PluginDescriptor(
 			name = "EPGRefresh",
-			description = _("Automated EPGRefresher"),
 			where = [
 				PluginDescriptor.WHERE_AUTOSTART,
 				PluginDescriptor.WHERE_SESSIONSTART
