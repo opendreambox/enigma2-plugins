@@ -1,4 +1,4 @@
-from twisted.web import resource, static, responsecode, http, http_headers
+from twisted.web import resource, static, http
 from twisted.python import util
 
 from Components.config import config
@@ -21,18 +21,18 @@ def addExternalChild(child):
 
 class Toplevel(resource.Resource):
 	addSlash = True
-	def __init__(self,session):
+	def __init__(self, session):
 		self.session = session
 		resource.Resource.__init__(self)
 
-		self.putChild("web", ScreenPage(self.session,util.sibpath(__file__, "web"))) # "/web/*"
+		self.putChild("web", ScreenPage(self.session, util.sibpath(__file__, "web"))) # "/web/*"
 		self.putChild("web-data", static.File(util.sibpath(__file__, "web-data")))
 		self.putChild("file", FileStreamer())
 		self.putChild("grab", GrabResource())
 		self.putChild("ipkg", IPKGResource())
 		self.putChild("play", ServiceplayerResource(self.session))
 		self.putChild("wap", RedirectorResource("/mobile/"))
-		self.putChild("mobile", ScreenPage(self.session,util.sibpath(__file__, "mobile")))
+		self.putChild("mobile", ScreenPage(self.session, util.sibpath(__file__, "mobile")))
 		self.putChild("upload", UploadResource())
 		self.putChild("servicelist", ServiceList(self.session))
 		self.putChild("streamcurrent", RedirecToCurrentStreamResource(session))
@@ -49,23 +49,29 @@ class Toplevel(resource.Resource):
 				self.putChild(child[0], child[1])
 
 
-	def render(self, req):
-		fp = open(util.sibpath(__file__, "web-data/tpl/default")+"/index.html")
+	def render(self, request):
+		fp = open(util.sibpath(__file__, "web-data/tpl/default") + "/index.html")
 		s = fp.read()
 		fp.close()
-		return http.Response(responsecode.OK, {'Content-type': http_headers.MimeType('text', 'html')},stream=s)
+		
+		request.setResponseCode(http.OK)
+		request.setHeader('Content-type', 'text/html; charset=UTF-8')
+		request.write(s)
+		request.finish()
+		#return http.Response(responsecode.OK, {'Content-type': http_headers.MimeType('text', 'html')},stream=s)
 
-	def locateChild(self, request, segments):
-		#print "[WebIf]", request.remoteAddr.host,request.method,request.path,request.args
+	def locateChild(self, request, segments):		
 		return resource.Resource.locateChild(self, request, segments)
 
 class RedirectorResource(resource.Resource):
 	"""
 		this class can be used to redirect a request to a specified uri
 	"""
-	def __init__(self,uri):
+	def __init__(self, uri):
 		self.uri = uri
 		resource.Resource.__init__(self)
-	def render(self, req):
-		return http.RedirectResponse(self.uri)
+	
+	def render(self, request):
+		request.redirect(self.uri)
+		request.finish()		
 

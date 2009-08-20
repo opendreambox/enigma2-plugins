@@ -5,18 +5,18 @@ from os import path as os_path
 class FileStreamer(resource.Resource):
 	addSlash = True
 
-	def render(self, req):
+	def render(self, request):
 		try:
-			w1 = req.uri.split("?")[1]
+			w1 = request.uri.split("?")[1]
 			w2 = w1.split("&")
 			parts = {}
 			for i in w2:
 				w3 = i.split("=")
 				parts[w3[0]] = w3[1]
 		except:
-			req.setResponseCode(http.OK)
-			req.write("no file given with file=???")
-			req.finish()
+			request.setResponseCode(http.OK)
+			request.write("no file given with file=???")
+			request.finish()
 						
 		dir = ""
 		
@@ -46,18 +46,21 @@ class FileStreamer(resource.Resource):
 					header = http_headers.MimeType('image', 'jpeg')
 
 				resp = http.Response(responsecode.OK, {'Content-type': header},stream=s)
-				req.setResponseCode(http.OK)
-				req.setHeader('Content-type', header)
-				req.setHeader('Content-Disposition','attachment; filename="%s"'%filename)
-				req.write(s)
-				req.finish()
+				request.setResponseCode(http.OK)
+				request.setHeader('Content-type', header)
+				request.setHeader('Content-Disposition','attachment; filename="%s"'%filename)
+				request.write(s)
+				request.finish()
 				
 			else:
-				req.setResponseCode(http.OK)
-				req.write("file '%s' was not found"%path)
-				req.finish()				
+				request.setResponseCode(http.OK)
+				request.write("file '%s' was not found"%path)
+				request.finish()				
 		else:
-			req.setResponseCode(http.OK)
-			req.write("no file given with file=???")
-			req.finish()			
+			request.setResponseCode(http.OK)
+			request.write("no file given with file=???")
+			request.finish()			
+
+
+
 

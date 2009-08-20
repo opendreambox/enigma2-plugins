@@ -11,7 +11,7 @@ class GrabResource(resource.Resource):
 	GRAB_BIN = '/usr/bin/grab'
 	SPECIAL_ARGS = ['format', 'filename', 'save']
 
-	def render(self, req):
+	def render(self, request):
 		self.baseCmd = ['/usr/bin/grab', '/usr/bin/grab']
 		self.args = []
 
@@ -22,10 +22,10 @@ class GrabResource(resource.Resource):
 		videoOnly = False
 		save = False
 
-		for key, value in req.args.items():
+		for key, value in request.args.items():
 			if key in GrabResource.SPECIAL_ARGS:
 				if key == 'format':
-					format = req.args['format'][0]
+					format = request.args['format'][0]
 
 					if format == 'png':
 						#-p produce png files instead of bmp
@@ -37,13 +37,14 @@ class GrabResource(resource.Resource):
 						imageformat = format
 						self.args.append('-j')
 						#Quality Setting
-						if req.args.has_key("jpgquali"):
-							self.args.append("%s" %(req.args["jpgquali"][0]) )
+						if request.args.has_key("jpgquali"):
+							self.args.append("%s" %(request.args["jpgquali"][0]) )
 						else:
 							self.args.append('80')
 
 				elif key == 'filename':
-					filename = req.args['filename'][0]
+					filename = request.args['filename'][0]
+
 				elif key == 'save':
 					save = True
 			else:

@@ -9,13 +9,13 @@ class RedirecToCurrentStreamResource(resource.Resource):
 		self.session = session
 		resource.Resource.__init__(self)
 
-	def render(self, req):
+	def render(self, request):
 		currentServiceRef = self.session.nav.getCurrentlyPlayingServiceReference()
 		if currentServiceRef is not None:
 			sref = currentServiceRef.toString()
 		else:
 			sref = "N/A"
 		
-		req.redirect("http://%s:8001/%s"%(req.host,sref))
-		req.finish()
+		request.redirect("http://%s:8001/%s"%(request.host,sref))
+		request.finish()
 

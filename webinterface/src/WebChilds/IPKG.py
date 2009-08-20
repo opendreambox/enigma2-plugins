@@ -25,12 +25,12 @@ class IPKGResource(resource.Resource):
 		else:
 			return self.doIndexPage()
 
-	def buildCmd(self, parms = []):
+	def buildCmd(self, parms=[]):
 		cmd = [IPKGResource.IPKG_PATH, "ipkg", self.command] + parms
-		print "[IPKG.py] cmd: %s" %cmd
+		print "[IPKG.py] cmd: %s" % cmd
 		return cmd
 
-	def execCmd(self, request, parms = []):
+	def execCmd(self, request, parms=[]):
 		cmd = self.buildCmd(parms)
 		
 		request.setResponseCode(http.OK)
@@ -56,7 +56,7 @@ class IPKGResource(resource.Resource):
 			return self.doErrorPage("Missing parameter: file")
 
 	def doIndexPage(self, request):
-		html  = "<html><body>"
+		html = "<html><body>"
 		html += "<h1>Interface to IPKG</h1>"
 		html += "update, ?command=update<br>"
 		html += "upgrade, ?command=upgrade<br>"
