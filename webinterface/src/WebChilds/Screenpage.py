@@ -1,4 +1,4 @@
-from twisted.web2 import resource, stream, responsecode, http, http_headers
+from twisted.web import resource, stream, responsecode, http, http_headers
 
 from Plugins.Extensions.WebInterface import webif
 
@@ -28,22 +28,8 @@ class ScreenPage(resource.Resource):
 		self.path = path
 
 	def render(self, req):
-		#if self.session is not True:
-		#	return http.Response(responsecode.OK, stream="please wait until enigma has booted")
-
-		class myProducerStream(stream.ProducerStream):
-			def __init__(self):
-				stream.ProducerStream.__init__(self)
-				self.closed_callback = None
-
-			def close(self):
-				if self.closed_callback:
-					self.closed_callback()
-					self.closed_callback = None
-				stream.ProducerStream.close(self)
 
 		if os.path.isfile(self.path):
-			s=myProducerStream()
 			webif.renderPage(s, self.path, req, self.session) # login?
 			if self.path.split("/")[-1] in AppTextHeaderFiles:
 				return http.Response(responsecode.OK,{'Content-type': http_headers.MimeType('application', 'text', (('charset', 'UTF-8'),))},stream=s)

@@ -6,8 +6,8 @@ from WebIfConfig import WebIfConfigScreen, initConfig, updateConfig
 from WebChilds.Toplevel import Toplevel
 from twisted.internet import reactor, defer, ssl
 from twisted.internet.error import CannotListenError
-from twisted.web2 import server, channel, http
-from twisted.web2.auth import digest, basic, wrapper
+from twisted.web import server, http
+from twisted.web._auth import digest, basic, wrapper
 from twisted.python.log import startLogging
 from twisted.cred.portal import Portal, IRealm
 from twisted.cred import checkers, credentials, error

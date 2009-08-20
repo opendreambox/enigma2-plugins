@@ -427,7 +427,7 @@ class webifHandler(ContentHandler):
 			screen.doClose()
 		self.screens = [ ]
 
-def renderPage(stream, path, req, session):
+def renderPage(path, req, session):
 	# read in the template, create required screens
 	# we don't have persistense yet.
 	# if we had, this first part would only be done once.
@@ -457,11 +457,11 @@ def renderPage(stream, path, req, session):
 				x.setStream(stream)
 			x.render(stream)
 		else:
-			stream.write(str(x))
+			req.write(str(x))
 
-	def ping(s):
+	def ping(req):
 		from twisted.internet import reactor
-		s.write("\n");
+		req.write("\n");
 		reactor.callLater(3, ping, s)
 
 	# if we met a "StreamingElement", there is at least one
@@ -477,7 +477,7 @@ def renderPage(stream, path, req, session):
 		# in order to detect disconnected clients.
 		# i agree that this "ping" sucks terrible, so better be sure to have something
 		# similar. A "CurrentTime" is fine. Or anything that creates *some* output.
-		ping(stream)
+		ping(req)
 		stream.closed_callback = lambda : streamFinish(handler, stream)
 
 def streamFinish(handler, stream):

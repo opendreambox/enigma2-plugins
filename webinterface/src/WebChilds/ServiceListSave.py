@@ -1,5 +1,5 @@
-from twisted.web2 import resource, http, responsecode, http_headers
-from twisted.web2 import server,fileupload
+from twisted.web import resource, http, responsecode, http_headers
+from twisted.web import server, fileupload
 from enigma import eDVBDB
 import os
 from xml.dom.minidom import parseString as xml_dom_minidom_parseString

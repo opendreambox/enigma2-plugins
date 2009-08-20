@@ -1,4 +1,4 @@
-from twisted.web2 import resource
+from twisted.web import resource
 from ServiceReference import ServiceReference
 
 class RedirecToCurrentStreamResource(resource.Resource):
@@ -15,5 +15,7 @@ class RedirecToCurrentStreamResource(resource.Resource):
 			sref = currentServiceRef.toString()
 		else:
 			sref = "N/A"
-		return http.RedirectResponse("http://%s:8001/%s"%(req.host,sref))
+		
+		req.redirect("http://%s:8001/%s"%(req.host,sref))
+		req.finish()
 

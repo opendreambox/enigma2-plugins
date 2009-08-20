@@ -1,5 +1,5 @@
 from enigma import eServiceReference
-from twisted.web2 import resource, stream, responsecode, http
+from twisted.web import resource, http
 from os import path as os_path
 
 class ServiceplayerResource(resource.Resource):
@@ -17,7 +17,10 @@ class ServiceplayerResource(resource.Resource):
 			output = self.stopServicePlay()
 		else:
 			output = True,"unknown command"
-		return http.Response(responsecode.OK,stream=output[1])
+			
+		request.setResponseCode(http.OK)
+		request.write(output[1])
+		request.finish()		
 
 	def playFile(self,path):
 		print "[ServiceplayerResource] playing file",path

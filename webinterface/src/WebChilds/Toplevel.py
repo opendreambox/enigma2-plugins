@@ -1,4 +1,4 @@
-from twisted.web2 import resource, static, responsecode, http, http_headers
+from twisted.web import resource, static, responsecode, http, http_headers
 from twisted.python import util
 
 from Components.config import config

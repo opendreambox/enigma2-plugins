@@ -1,4 +1,4 @@
-from twisted.web2 import resource, stream, responsecode, http, http_headers
+from twisted.web import resource, http, http_headers
 from urllib import unquote_plus
 from os import path as os_path
 
@@ -14,7 +14,10 @@ class FileStreamer(resource.Resource):
 				w3 = i.split("=")
 				parts[w3[0]] = w3[1]
 		except:
-			return http.Response(responsecode.OK, stream="no file given with file=???")
+			req.setResponseCode(http.OK)
+			req.write("no file given with file=???")
+			req.finish()
+						
 		dir = ""
 		
 		if parts.has_key("root"):
@@ -43,10 +46,18 @@ class FileStreamer(resource.Resource):
 					header = http_headers.MimeType('image', 'jpeg')
 
 				resp = http.Response(responsecode.OK, {'Content-type': header},stream=s)
-				resp.headers.addRawHeader('Content-Disposition','attachment; filename="%s"'%filename)
-				return resp
+				req.setResponseCode(http.OK)
+				req.setHeader('Content-type', header)
+				req.setHeader('Content-Disposition','attachment; filename="%s"'%filename)
+				req.write(s)
+				req.finish()
+				
 			else:
-				return http.Response(responsecode.OK, stream="file '%s' was not found"%path)
+				req.setResponseCode(http.OK)
+				req.write("file '%s' was not found"%path)
+				req.finish()				
 		else:
-			return http.Response(responsecode.OK, stream="no file given with file=???")
+			req.setResponseCode(http.OK)
+			req.write("no file given with file=???")
+			req.finish()			
 
