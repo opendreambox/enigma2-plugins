@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2 - rsdownloader\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-28 22:41+0200\n"
+"POT-Creation-Date: 2009-08-20 10:33+0200\n"
 "PO-Revision-Date: 2009-06-20 13:52+0100\n"
 "Last-Translator: Spaeleus <spaeleus@croci.org>\n"
 "Language-Team: www.linsat.net <spaeleus@croci.org>\n"
@@ -15,6 +15,10 @@ msgstr ""
 "X-Poedit-Basepath: /home/dario/Plugins/rsdownloader\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: /home/dario/Plugins/rsdownloader\n"
+
+#, python-format
+msgid "%s saved."
+msgstr ""
 
 msgid "Add"
 msgstr "Aggiungere"
@@ -47,8 +51,14 @@ msgstr "Consentire download di Martedì:"
 msgid "Allow downloading on wednesday:"
 msgstr "Consentire download di Mercoledì:"
 
+msgid "Already downloading!"
+msgstr ""
+
 msgid "Checking"
 msgstr "Verifica in corso"
+
+msgid "Clear"
+msgstr ""
 
 msgid "Clear finished downloads"
 msgstr "Eliminare i download terminati"
@@ -58,6 +68,13 @@ msgstr "Chiudere il plugin"
 
 msgid "Config"
 msgstr "Config."
+
+msgid "Could not start downloading!"
+msgstr ""
+
+#, python-format
+msgid "Couldn't find the directory %s!"
+msgstr ""
 
 msgid "Delete"
 msgstr "Cancellare"
@@ -75,6 +92,9 @@ msgstr "Cancellare download falliti"
 msgid "Delete log"
 msgstr "Cancellare log"
 
+msgid "Delete log..."
+msgstr ""
+
 msgid "Don't download after:"
 msgstr "Non scaricare dopo le: "
 
@@ -87,11 +107,24 @@ msgstr "Scaricare file da rapidshare"
 msgid "Download in the background:"
 msgstr "Scaricare in background:"
 
+msgid "Downloaded"
+msgstr ""
+
 msgid "Downloading"
 msgstr "Scaricamento in corso"
 
+#, python-format
+msgid "Downloading %s."
+msgstr ""
+
 msgid "Downloads directory:"
 msgstr "Cartella download: "
+
+msgid "Edit configs..."
+msgstr ""
+
+msgid "Edit:"
+msgstr ""
 
 #, python-format
 msgid "Error while adding %s to the download-list!"
@@ -116,8 +149,15 @@ msgstr ""
 "\n"
 "Nessuna corrispondenza trovata!"
 
+#, python-format
+msgid "Error while writing %s!"
+msgstr ""
+
 msgid "Failed"
 msgstr "Fallito"
+
+msgid "Files"
+msgstr ""
 
 msgid "Finished"
 msgstr "Terminato"
@@ -153,8 +193,18 @@ msgstr "Selezionare una funzione..."
 msgid "RS Downloader"
 msgstr "RS Downloader"
 
+msgid ""
+"RS Downloader\n"
+"by AliAbdul\n"
+"\n"
+"This plugin allows you to download files from rapidshare in the background."
+msgstr ""
+
 msgid "Reconnect fritz.Box before downloading:"
 msgstr "Ricollegare la Fritz.Box prima di scaricare: "
+
+msgid "Reload"
+msgstr ""
 
 msgid "Restart failed downloads"
 msgstr "Riavviare download falliti"
@@ -168,11 +218,41 @@ msgstr "Ricercare"
 msgid "Search http://rapidshare-search-engine.com for:"
 msgstr "Ricerca su http://rapidshare-search-engine.com per: "
 
+msgid "Show downloads..."
+msgstr ""
+
+msgid "Show info..."
+msgstr ""
+
+msgid "Show lists..."
+msgstr ""
+
 msgid "Show log"
 msgstr "Mostrare log"
 
+msgid "Show log..."
+msgstr ""
+
+msgid "Show progress..."
+msgstr ""
+
+msgid "Show status..."
+msgstr ""
+
+msgid "Start downloading..."
+msgstr ""
+
+msgid "Started downloading..."
+msgstr ""
+
+msgid "Stopped!"
+msgstr ""
+
 msgid "Use search engine"
 msgstr "Usare motore di ricerca..."
+
+msgid "Use search-engine..."
+msgstr ""
 
 msgid "Username:"
 msgstr "Nome User: "

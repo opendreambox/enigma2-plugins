@@ -8,6 +8,7 @@ SUBDIRS = \
 	epgrefresh \
 	epgsearch \
 	fritzcall \
+	genuinedreambox \
 	googlemaps \
 	httpproxy \
 	imdb \

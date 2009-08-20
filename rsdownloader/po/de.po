@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RSDownloader\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-28 23:42+0200\n"
+"POT-Creation-Date: 2009-08-20 10:33+0200\n"
 "PO-Revision-Date: 2009-06-20 09:40-0000\n"
 "Last-Translator: Nabil Hanna <nabil1978@web.de>\n"
 "Language-Team: Nabil Hanna <nabil1978@web.de>\n"
@@ -15,6 +15,10 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: /home/aliabdul/dream/enigma2-plugins/rsdownloader/"
 "src\n"
+
+#, python-format
+msgid "%s saved."
+msgstr "%s gespeichert."
 
 msgid "Add"
 msgstr "Hinzufügen"
@@ -47,8 +51,14 @@ msgstr "Erlaube das Herunterladen am Dienstag:"
 msgid "Allow downloading on wednesday:"
 msgstr "Erlaube das Herunterladen am Mittwoch:"
 
+msgid "Already downloading!"
+msgstr ""
+
 msgid "Checking"
 msgstr "Prüfe"
+
+msgid "Clear"
+msgstr "Aufräumen"
 
 msgid "Clear finished downloads"
 msgstr "Fertige Downloads entfernen"
@@ -58,6 +68,13 @@ msgstr "Plugin schliessen"
 
 msgid "Config"
 msgstr "Konfig"
+
+msgid "Could not start downloading!"
+msgstr "Konnte das Herunterladen nicht starten!"
+
+#, python-format
+msgid "Couldn't find the directory %s!"
+msgstr "Konnte den Pfad %s nicht finden!"
 
 msgid "Delete"
 msgstr "Lösche"
@@ -75,6 +92,9 @@ msgstr "Fehlgeschlagene Downlaods löschen"
 msgid "Delete log"
 msgstr "Lösche Log"
 
+msgid "Delete log..."
+msgstr ""
+
 msgid "Don't download after:"
 msgstr "Herunterladen nicht nach:"
 
@@ -87,11 +107,24 @@ msgstr "Lade Dateien von rapidshare herunter"
 msgid "Download in the background:"
 msgstr "Im Hintergrund herunter:"
 
+msgid "Downloaded"
+msgstr "Heruntergeladen"
+
 msgid "Downloading"
 msgstr "Herunterladen"
 
+#, python-format
+msgid "Downloading %s."
+msgstr "Lade %s herunter."
+
 msgid "Downloads directory:"
 msgstr "Pfad der Downloads:"
+
+msgid "Edit configs..."
+msgstr "Einstellungen editieren..."
+
+msgid "Edit:"
+msgstr "Editiere:"
 
 #, python-format
 msgid "Error while adding %s to the download-list!"
@@ -116,8 +149,15 @@ msgstr ""
 "\n"
 "Fehler: Nichts gefunden, sorry."
 
+#, python-format
+msgid "Error while writing %s!"
+msgstr "Fehler während dem Schreiben von %s!"
+
 msgid "Failed"
 msgstr "Fehlgeschlagen"
+
+msgid "Files"
+msgstr "Dateien"
 
 msgid "Finished"
 msgstr "Fertig"
@@ -153,8 +193,23 @@ msgstr "Bitte selektiere eine Funktion..."
 msgid "RS Downloader"
 msgstr "RS Downloader"
 
+msgid ""
+"RS Downloader\n"
+"by AliAbdul\n"
+"\n"
+"This plugin allows you to download files from rapidshare in the background."
+msgstr ""
+"RS Downloader\n"
+"von AliAbdul\n"
+"\n"
+"Dieses Plugin erlaubt dir, Dateien von rapidshare im Hintergrund "
+"herunterzuladen."
+
 msgid "Reconnect fritz.Box before downloading:"
 msgstr "fritz.Box vor Download neu verbinden:"
+
+msgid "Reload"
+msgstr "Neu laden"
 
 msgid "Restart failed downloads"
 msgstr "Fehlgeschlagene Downlaods neu starten"
@@ -168,11 +223,41 @@ msgstr "Suchen"
 msgid "Search http://rapidshare-search-engine.com for:"
 msgstr "Durchsuche http://rapidshare-search-engine.com nach:"
 
+msgid "Show downloads..."
+msgstr "Zeige die Downloads..."
+
+msgid "Show info..."
+msgstr "Zeige Info..."
+
+msgid "Show lists..."
+msgstr "Zeige die Listen..."
+
 msgid "Show log"
 msgstr "Zeige Log"
 
+msgid "Show log..."
+msgstr ""
+
+msgid "Show progress..."
+msgstr "Zeige den Fortschritt..."
+
+msgid "Show status..."
+msgstr "Zeige den Status..."
+
+msgid "Start downloading..."
+msgstr "Herunterladen..."
+
+msgid "Started downloading..."
+msgstr ""
+
+msgid "Stopped!"
+msgstr "Gestoppt!"
+
 msgid "Use search engine"
 msgstr "Benutze Suchmaschine"
+
+msgid "Use search-engine..."
+msgstr ""
 
 msgid "Username:"
 msgstr "Benutzername:"
@@ -182,70 +267,3 @@ msgstr "Warte"
 
 msgid "Write log:"
 msgstr "Schreibe Log:"
-
-#~ msgid "%s saved."
-#~ msgstr "%s gespeichert."
-
-#~ msgid "Clear"
-#~ msgstr "Aufräumen"
-
-#~ msgid "Could not start downloading!"
-#~ msgstr "Konnte das Herunterladen nicht starten!"
-
-#~ msgid "Couldn't find the directory %s!"
-#~ msgstr "Konnte den Pfad %s nicht finden!"
-
-#~ msgid "Downloaded"
-#~ msgstr "Heruntergeladen"
-
-#~ msgid "Downloading %s."
-#~ msgstr "Lade %s herunter."
-
-#~ msgid "Edit configs..."
-#~ msgstr "Einstellungen editieren..."
-
-#~ msgid "Edit:"
-#~ msgstr "Editiere:"
-
-#~ msgid "Error while writing %s!"
-#~ msgstr "Fehler während dem Schreiben von %s!"
-
-#~ msgid "Files"
-#~ msgstr "Dateien"
-
-#~ msgid ""
-#~ "RS Downloader\n"
-#~ "by AliAbdul\n"
-#~ "\n"
-#~ "This plugin allows you to download files from rapidshare in the "
-#~ "background."
-#~ msgstr ""
-#~ "RS Downloader\n"
-#~ "von AliAbdul\n"
-#~ "\n"
-#~ "Dieses Plugin erlaubt dir, Dateien von rapidshare im Hintergrund "
-#~ "herunterzuladen."
-
-#~ msgid "Reload"
-#~ msgstr "Neu laden"
-
-#~ msgid "Show downloads..."
-#~ msgstr "Zeige die Downloads..."
-
-#~ msgid "Show info..."
-#~ msgstr "Zeige Info..."
-
-#~ msgid "Show lists..."
-#~ msgstr "Zeige die Listen..."
-
-#~ msgid "Show progress..."
-#~ msgstr "Zeige den Fortschritt..."
-
-#~ msgid "Show status..."
-#~ msgstr "Zeige den Status..."
-
-#~ msgid "Start downloading..."
-#~ msgstr "Herunterladen..."
-
-#~ msgid "Stopped!"
-#~ msgstr "Gestoppt!"

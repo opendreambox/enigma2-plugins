@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2 rsdownloader plugin Turkish Locale\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-28 23:42+0200\n"
+"POT-Creation-Date: 2009-08-20 10:33+0200\n"
 "PO-Revision-Date: 2009-02-08 13:10+0200\n"
 "Last-Translator: Zülfikar VEYİSOĞLU <zveyis@gmail.com>\n"
 "Language-Team: www.turkeyforum.com/satforum <zveyis@gmail.com>\n"
@@ -12,6 +12,10 @@ msgstr ""
 "X-Poedit-Language: Turkish\n"
 "X-Poedit-Country: TURKEY\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+#, python-format
+msgid "%s saved."
+msgstr "%s kaydedildi."
 
 msgid "Add"
 msgstr ""
@@ -44,8 +48,14 @@ msgstr "Salı günü indirmeye izin ver:"
 msgid "Allow downloading on wednesday:"
 msgstr "Çarşamba günü indirmeye izin ver:"
 
+msgid "Already downloading!"
+msgstr "Zaten indiriliyor!"
+
 msgid "Checking"
 msgstr ""
+
+msgid "Clear"
+msgstr "Temizle"
 
 msgid "Clear finished downloads"
 msgstr ""
@@ -55,6 +65,13 @@ msgstr ""
 
 msgid "Config"
 msgstr ""
+
+msgid "Could not start downloading!"
+msgstr "İndirme başlatılamıyor!"
+
+#, python-format
+msgid "Couldn't find the directory %s!"
+msgstr "%s klasörü bulunamıyor!"
 
 msgid "Delete"
 msgstr "Sil"
@@ -72,6 +89,9 @@ msgstr ""
 msgid "Delete log"
 msgstr ""
 
+msgid "Delete log..."
+msgstr "Günlüğü sil..."
+
 msgid "Don't download after:"
 msgstr "Sonra indirme yapma:"
 
@@ -84,11 +104,24 @@ msgstr ""
 msgid "Download in the background:"
 msgstr "Dosya indirmelerini arkaplanda yap"
 
+msgid "Downloaded"
+msgstr "İndirilmiş"
+
 msgid "Downloading"
 msgstr "İndiriliyor"
 
+#, python-format
+msgid "Downloading %s."
+msgstr "%s indiriliyor."
+
 msgid "Downloads directory:"
 msgstr "İndirilenler klasörü:"
+
+msgid "Edit configs..."
+msgstr "Ayarlar..."
+
+msgid "Edit:"
+msgstr "Düzenle:"
 
 #, python-format
 msgid "Error while adding %s to the download-list!"
@@ -113,8 +146,15 @@ msgstr ""
 "\n"
 "Hata: Sonuç bulunamadı, üzgünüm."
 
+#, python-format
+msgid "Error while writing %s!"
+msgstr "%s kaydedilirken hata oluştu!"
+
 msgid "Failed"
 msgstr "Hatalı"
+
+msgid "Files"
+msgstr "Dosyalar"
 
 msgid "Finished"
 msgstr ""
@@ -150,8 +190,22 @@ msgstr ""
 msgid "RS Downloader"
 msgstr "RS İndirici"
 
+msgid ""
+"RS Downloader\n"
+"by AliAbdul\n"
+"\n"
+"This plugin allows you to download files from rapidshare in the background."
+msgstr ""
+"RS İndirici\n"
+"AliAbdul\n"
+"\n"
+"Bu eklentiyle rapidshare dosya indirmelerini arkaplanda yapabilirsiniz."
+
 msgid "Reconnect fritz.Box before downloading:"
 msgstr "İndirmeden önce Fritz!Box'a bağlan:"
+
+msgid "Reload"
+msgstr "Yenile"
 
 msgid "Restart failed downloads"
 msgstr ""
@@ -165,11 +219,41 @@ msgstr ""
 msgid "Search http://rapidshare-search-engine.com for:"
 msgstr "http://rapidshare-search-engine.com 'da ara:"
 
+msgid "Show downloads..."
+msgstr "İndirilenleri göster..."
+
+msgid "Show info..."
+msgstr "Hakkında..."
+
+msgid "Show lists..."
+msgstr "Listeleri göster..."
+
 msgid "Show log"
 msgstr ""
 
+msgid "Show log..."
+msgstr "Günlüğü göster..."
+
+msgid "Show progress..."
+msgstr "İşlemleri göster..."
+
+msgid "Show status..."
+msgstr "Durumu göster..."
+
+msgid "Start downloading..."
+msgstr "İndirmeya başla..."
+
+msgid "Started downloading..."
+msgstr "İndirme başlatıldı..."
+
+msgid "Stopped!"
+msgstr "Durduruldu!"
+
 msgid "Use search engine"
 msgstr ""
+
+msgid "Use search-engine..."
+msgstr "Arama moturunu kullan..."
 
 msgid "Username:"
 msgstr "Kullanıcı adı:"
@@ -180,86 +264,5 @@ msgstr ""
 msgid "Write log:"
 msgstr "Günlüğe yaz:"
 
-#~ msgid "%s saved."
-#~ msgstr "%s kaydedildi."
-
-#~ msgid "Already downloading!"
-#~ msgstr "Zaten indiriliyor!"
-
-#~ msgid "Clear"
-#~ msgstr "Temizle"
-
-#~ msgid "Could not start downloading!"
-#~ msgstr "İndirme başlatılamıyor!"
-
-#~ msgid "Couldn't find the directory %s!"
-#~ msgstr "%s klasörü bulunamıyor!"
-
-#~ msgid "Delete log..."
-#~ msgstr "Günlüğü sil..."
-
 #~ msgid "Download files from rapidshare in the background"
 #~ msgstr "rapidshare dosya indirmelerini arkaplanda yap"
-
-#~ msgid "Downloaded"
-#~ msgstr "İndirilmiş"
-
-#~ msgid "Downloading %s."
-#~ msgstr "%s indiriliyor."
-
-#~ msgid "Edit configs..."
-#~ msgstr "Ayarlar..."
-
-#~ msgid "Edit:"
-#~ msgstr "Düzenle:"
-
-#~ msgid "Error while writing %s!"
-#~ msgstr "%s kaydedilirken hata oluştu!"
-
-#~ msgid "Files"
-#~ msgstr "Dosyalar"
-
-#~ msgid ""
-#~ "RS Downloader\n"
-#~ "by AliAbdul\n"
-#~ "\n"
-#~ "This plugin allows you to download files from rapidshare in the "
-#~ "background."
-#~ msgstr ""
-#~ "RS İndirici\n"
-#~ "AliAbdul\n"
-#~ "\n"
-#~ "Bu eklentiyle rapidshare dosya indirmelerini arkaplanda yapabilirsiniz."
-
-#~ msgid "Reload"
-#~ msgstr "Yenile"
-
-#~ msgid "Show downloads..."
-#~ msgstr "İndirilenleri göster..."
-
-#~ msgid "Show info..."
-#~ msgstr "Hakkında..."
-
-#~ msgid "Show lists..."
-#~ msgstr "Listeleri göster..."
-
-#~ msgid "Show log..."
-#~ msgstr "Günlüğü göster..."
-
-#~ msgid "Show progress..."
-#~ msgstr "İşlemleri göster..."
-
-#~ msgid "Show status..."
-#~ msgstr "Durumu göster..."
-
-#~ msgid "Start downloading..."
-#~ msgstr "İndirmeya başla..."
-
-#~ msgid "Started downloading..."
-#~ msgstr "İndirme başlatıldı..."
-
-#~ msgid "Stopped!"
-#~ msgstr "Durduruldu!"
-
-#~ msgid "Use search-engine..."
-#~ msgstr "Arama moturunu kullan..."
