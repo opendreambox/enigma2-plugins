@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-20 10:33+0200\n"
+"POT-Creation-Date: 2008-06-17 17:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,122 +16,149 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/plugin.py:269
+#: ../src/plugin.py:278
 msgid " Wireless Network(s) found!"
 msgstr ""
 
-#: ../src/plugin.py:80
+#: ../src/plugin.py:126
 msgid "Accesspoint:"
 msgstr ""
 
-#: ../src/plugin.py:84
+#: ../src/plugin.py:130
 msgid "Bitrate:"
 msgstr ""
 
-#: ../src/plugin.py:223
+#: ../src/plugin.py:131
+msgid "Channel:"
+msgstr ""
+
+#: ../src/plugin.py:248
 msgid "Choose a Wireless Network"
 msgstr ""
 
-#: ../src/plugin.py:103 ../src/plugin.py:204
+#: ../src/plugin.py:149 ../src/plugin.py:229 ../src/plugin.py:309
 msgid "Close"
 msgstr ""
 
-#: ../src/plugin.py:205
+#: ../src/plugin.py:230
 msgid "Connect"
 msgstr ""
 
-#: ../src/plugin.py:300
+#: ../src/plugin.py:402
 msgid "Connect to a Wireless Network"
 msgstr ""
 
-#: ../src/Wlan.py:108 ../src/Wlan.py:556
-msgid "Disabled"
+#: ../src/plugin.py:50
+msgid "Edit Wireless Settings"
 msgstr ""
 
-#: ../src/Wlan.py:113 ../src/Wlan.py:560
-msgid "Enabled"
-msgstr ""
-
-#: ../src/Wlan.py:283
+#: ../src/Wlan.py:178
 #, python-format
 msgid "Encrypted: %s"
 msgstr ""
 
-#: ../src/plugin.py:85
-msgid "Encryption:"
+#: ../src/plugin.py:334
+msgid "Encryption"
 msgstr ""
 
-#: ../src/Wlan.py:83 ../src/Wlan.py:85 ../src/Wlan.py:519 ../src/Wlan.py:521
-msgid "Hidden networkname"
+#: ../src/plugin.py:338
+msgid "Encryption Key"
 msgstr ""
 
-#: ../src/Wlan.py:284
+#: ../src/plugin.py:337
+msgid "Encryption Type"
+msgstr ""
+
+#: ../src/plugin.py:306
+msgid "Interface: "
+msgstr ""
+
+#: ../src/Wlan.py:179
 #, python-format
 msgid "Interface: %s"
 msgstr ""
 
-#: ../src/plugin.py:82
+#: ../src/plugin.py:128
 msgid "Link Quality:"
 msgstr ""
 
-#: ../src/plugin.py:156
+#: ../src/plugin.py:185
 msgid "Link:"
 msgstr ""
 
-#: ../src/Wlan.py:282
+#: ../src/Wlan.py:177
 #, python-format
 msgid "Max. Bitrate: %s"
 msgstr ""
 
-#: ../src/Wlan.py:246
+#: ../src/Wlan.py:140
 msgid "N/A"
 msgstr ""
 
-#: ../src/plugin.py:154
+#: ../src/plugin.py:332
+msgid "Network SSID"
+msgstr ""
+
+#: ../src/plugin.py:183 ../src/plugin.py:307
 msgid "Network:"
 msgstr ""
 
-#: ../src/plugin.py:268 ../src/Wlan.py:278
+#: ../src/Wlan.py:173
 msgid "No"
 msgstr ""
 
-#: ../src/Wlan.py:79 ../src/Wlan.py:515 ../src/Wlan.py:538
-msgid "No Connection"
+#: ../src/plugin.py:169
+msgid "No Connection!"
 msgstr ""
 
-#: ../src/plugin.py:148 ../src/plugin.py:149 ../src/plugin.py:150
-#: ../src/plugin.py:151 ../src/plugin.py:152 ../src/plugin.py:153
-msgid "Please wait..."
+#: ../src/plugin.py:305
+msgid "Press OK to activate the settings."
 msgstr ""
 
-#: ../src/plugin.py:206
+#: ../src/plugin.py:231
 msgid "Refresh"
 msgstr ""
 
-#: ../src/plugin.py:81
+#: ../src/plugin.py:127
 msgid "SSID:"
 msgstr ""
 
-#: ../src/plugin.py:83
+#: ../src/plugin.py:48
+msgid "Scan for Wireless Networks"
+msgstr ""
+
+#: ../src/plugin.py:49
+msgid "Show WLAN Status"
+msgstr ""
+
+#: ../src/plugin.py:129
 msgid "Signal Strength:"
 msgstr ""
 
-#: ../src/Wlan.py:280
+#: ../src/Wlan.py:175
 msgid "Signal: "
 msgstr ""
 
-#: ../src/Wlan.py:543 ../src/Wlan.py:554
-msgid "Unsupported"
+#: ../src/Wlan.py:13 ../src/plugin.py:18
+msgid "WEP"
 msgstr ""
 
-#: ../src/plugin.py:300
+#: ../src/Wlan.py:14 ../src/Wlan.py:22 ../src/plugin.py:19 ../src/plugin.py:27
+msgid "WPA"
+msgstr ""
+
+#: ../src/Wlan.py:15 ../src/plugin.py:20
+msgid "WPA2"
+msgstr ""
+
+#: ../src/plugin.py:402
 msgid "Wireless LAN"
 msgstr ""
 
-#: ../src/plugin.py:124
+#: ../src/plugin.py:163
 msgid "Wireless Network State"
 msgstr ""
 
-#: ../src/Wlan.py:278
+#: ../src/Wlan.py:173
 msgid "Yes"
 msgstr ""

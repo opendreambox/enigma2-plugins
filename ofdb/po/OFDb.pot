@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-20 10:33+0200\n"
+"POT-Creation-Date: 2009-02-17 11:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/plugin.py:218
+#: ../src/plugin.py:239
 msgid "Ambiguous results"
 msgstr ""
 
-#: ../src/plugin.py:434
+#: ../src/plugin.py:449
 msgid "Cast: "
 msgstr ""
 
@@ -28,15 +28,15 @@ msgstr ""
 msgid "Channel Selection"
 msgstr ""
 
-#: ../src/plugin.py:315
+#: ../src/plugin.py:327
 msgid "Could't get Eventname"
 msgstr ""
 
-#: ../src/plugin.py:223 ../src/plugin.py:384
+#: ../src/plugin.py:244 ../src/plugin.py:399
 msgid "Details"
 msgstr ""
 
-#: ../src/plugin.py:443
+#: ../src/plugin.py:458
 #, python-format
 msgid "Downloading Movie Poster: %s..."
 msgstr ""
@@ -49,56 +49,56 @@ msgstr ""
 msgid "Lookup"
 msgstr ""
 
-#: ../src/plugin.py:368 ../src/plugin.py:369
+#: ../src/plugin.py:383 ../src/plugin.py:384
 msgid "No OFDb match."
 msgstr ""
 
-#: ../src/plugin.py:436
+#: ../src/plugin.py:451
 msgid "No cast list found in the database."
 msgstr ""
 
-#: ../src/plugin.py:382
+#: ../src/plugin.py:397
 msgid "No details found."
 msgstr ""
 
-#: ../src/plugin.py:385 ../src/plugin.py:454
+#: ../src/plugin.py:400 ../src/plugin.py:469
 msgid "OFDb Details parsed"
 msgstr ""
 
-#: ../src/plugin.py:346
+#: ../src/plugin.py:358
 msgid "OFDb Download completed"
 msgstr ""
 
-#: ../src/plugin.py:319
+#: ../src/plugin.py:331
 msgid "OFDb Download failed"
 msgstr ""
 
-#: ../src/plugin.py:483
+#: ../src/plugin.py:498
 msgid "OFDb Plugin"
 msgstr ""
 
-#: ../src/plugin.py:374
+#: ../src/plugin.py:389
 msgid "OFDb Re-Download completed"
 msgstr ""
 
-#: ../src/plugin.py:371
+#: ../src/plugin.py:386
 msgid "OFDb query failed!"
 msgstr ""
 
-#: ../src/plugin.py:219
+#: ../src/plugin.py:240
 msgid "Please select the matching entry"
 msgstr ""
 
-#: ../src/plugin.py:305
+#: ../src/plugin.py:317
 #, python-format
 msgid "Query OFDb: %s..."
 msgstr ""
 
-#: ../src/plugin.py:495 ../src/plugin.py:500 ../src/plugin.py:507
+#: ../src/plugin.py:510 ../src/plugin.py:515 ../src/plugin.py:522
 msgid "Query details from the Online-Filmdatenbank"
 msgstr ""
 
-#: ../src/plugin.py:234
+#: ../src/plugin.py:255
 #, python-format
 msgid "Re-Query OFDb: %s..."
 msgstr ""
@@ -107,10 +107,10 @@ msgstr ""
 msgid "The Online-Filmdatenbank"
 msgstr ""
 
-#: ../src/plugin.py:222
+#: ../src/plugin.py:243
 msgid "Title Menu"
 msgstr ""
 
-#: ../src/plugin.py:415
+#: ../src/plugin.py:430
 msgid "no user rating yet"
 msgstr ""

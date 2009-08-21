@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2 zaphistorybrowser Turkish Locale\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-28 22:41+0200\n"
+"POT-Creation-Date: 2008-11-26 16:52-0000\n"
 "PO-Revision-Date: 2008-11-27 10:39+0200\n"
 "Last-Translator: Zülfikar VEYİSOĞLU <zveyis@gmail.com>\n"
 "Language-Team: www.turkeyforum.com/satforum <zveyis@gmail.com>\n"
@@ -13,35 +13,16 @@ msgstr ""
 "X-Poedit-Country: TURKEY\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-msgid "Clear"
-msgstr "Temizle"
-
-msgid "Config"
-msgstr ""
-
-msgid "Delete"
-msgstr "Sil"
-
-msgid "Enable zap history:"
-msgstr ""
-
-msgid "Maximum zap history entries:"
-msgstr ""
-
-msgid "Zap & Close"
-msgstr ""
-
+#: /home/aliabdul/dream/enigma2-plugins/zaphistorybrowser/src/plugin.py:38
+#: /home/aliabdul/dream/enigma2-plugins/zaphistorybrowser/src/plugin.py:111
 msgid "Zap-History Browser"
 msgstr "Zap Geçmişi Gösterici"
 
-msgid "Zap-History Configurator"
-msgstr ""
+#: /home/aliabdul/dream/enigma2-plugins/zaphistorybrowser/src/plugin.py:59
+msgid "Clear"
+msgstr "Temizle"
 
-msgid "disabled"
-msgstr ""
+#: /home/aliabdul/dream/enigma2-plugins/zaphistorybrowser/src/plugin.py:60
+msgid "Delete"
+msgstr "Sil"
 
-msgid "disabled at parental lock"
-msgstr ""
-
-msgid "enabled"
-msgstr ""

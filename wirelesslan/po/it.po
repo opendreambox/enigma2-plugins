@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2 - wirelesslan\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-28 22:41+0200\n"
+"POT-Creation-Date: 2009-05-31 01:42+0100\n"
 "PO-Revision-Date: 2009-05-31 02:28+0100\n"
 "Last-Translator: Spaeleus <spaeleus@croci.org>\n"
 "Language-Team: WWW.Linsat.net <spaeleus@croci.org>\n"
@@ -18,92 +18,137 @@ msgstr ""
 "X-Poedit-Basepath: /home/dario/Plugins/wirelesslan\n"
 "X-Poedit-SearchPath-0: /home/dario/Plugins/wirelesslan\n"
 
-msgid " Wireless Network(s) found!"
-msgstr "Rete wireless rilevata!"
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:79
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:515
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:538
+msgid "No Connection"
+msgstr "Nessuna connessione!"
 
-msgid "Accesspoint:"
-msgstr "Accesspoint:"
-
-msgid "Bitrate:"
-msgstr "Bitrate:"
-
-msgid "Choose a Wireless Network"
-msgstr "Scegliere una rete wireless"
-
-msgid "Close"
-msgstr "Chiudere"
-
-msgid "Connect"
-msgstr "Connettere"
-
-msgid "Connect to a Wireless Network"
-msgstr "Connesso a rete wireless"
-
-msgid "Disabled"
-msgstr "Disabilitata"
-
-msgid "Enabled"
-msgstr "Abilitata"
-
-#, python-format
-msgid "Encrypted: %s"
-msgstr "Codificata: %s"
-
-msgid "Encryption:"
-msgstr "Codifica:"
-
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:83
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:85
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:519
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:521
 msgid "Hidden networkname"
 msgstr "Nascondere nome rete"
 
-#, python-format
-msgid "Interface: %s"
-msgstr "Interfaccia: %s"
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:108
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:556
+msgid "Disabled"
+msgstr "Disabilitata"
 
-msgid "Link Quality:"
-msgstr "Qualità:"
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:113
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:560
+msgid "Enabled"
+msgstr "Abilitata"
 
-msgid "Link:"
-msgstr "Connesso:"
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:246
+msgid "N/A"
+msgstr "N/A"
 
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:278
+msgid "Yes"
+msgstr "Sì"
+
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:278
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:268
+msgid "No"
+msgstr "No"
+
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:280
+msgid "Signal: "
+msgstr "Segnale: "
+
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:282
 #, python-format
 msgid "Max. Bitrate: %s"
 msgstr "Bitrate max.: %s"
 
-msgid "N/A"
-msgstr "N/A"
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:283
+#, python-format
+msgid "Encrypted: %s"
+msgstr "Codificata: %s"
 
-msgid "Network:"
-msgstr "Rete:"
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:284
+#, python-format
+msgid "Interface: %s"
+msgstr "Interfaccia: %s"
 
-msgid "No"
-msgstr "No"
-
-msgid "No Connection"
-msgstr "Nessuna connessione!"
-
-msgid "Please wait..."
-msgstr "Attendere..."
-
-msgid "Refresh"
-msgstr "Aggiornare"
-
-msgid "SSID:"
-msgstr "SSID:"
-
-msgid "Signal Strength:"
-msgstr "Potenza:"
-
-msgid "Signal: "
-msgstr "Segnale: "
-
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:543
+#: /home/dario/Plugins/wirelesslan/src/Wlan.py:554
 msgid "Unsupported"
 msgstr "Non supportata"
 
-msgid "Wireless LAN"
-msgstr "Rete locale wireless"
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:80
+msgid "Accesspoint:"
+msgstr "Accesspoint:"
 
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:81
+msgid "SSID:"
+msgstr "SSID:"
+
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:82
+msgid "Link Quality:"
+msgstr "Qualità:"
+
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:83
+msgid "Signal Strength:"
+msgstr "Potenza:"
+
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:84
+msgid "Bitrate:"
+msgstr "Bitrate:"
+
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:85
+msgid "Encryption:"
+msgstr "Codifica:"
+
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:103
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:204
+msgid "Close"
+msgstr "Chiudere"
+
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:124
 msgid "Wireless Network State"
 msgstr "Stato rete wireless"
 
-msgid "Yes"
-msgstr "Sì"
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:148
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:149
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:150
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:151
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:152
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:153
+msgid "Please wait..."
+msgstr "Attendere..."
+
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:154
+msgid "Network:"
+msgstr "Rete:"
+
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:156
+msgid "Link:"
+msgstr "Connesso:"
+
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:205
+msgid "Connect"
+msgstr "Connettere"
+
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:206
+msgid "Refresh"
+msgstr "Aggiornare"
+
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:223
+msgid "Choose a Wireless Network"
+msgstr "Scegliere una rete wireless"
+
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:269
+msgid " Wireless Network(s) found!"
+msgstr "Rete wireless rilevata!"
+
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:298
+msgid "Wireless LAN"
+msgstr "Rete locale wireless"
+
+#: /home/dario/Plugins/wirelesslan/src/plugin.py:298
+msgid "Connect to a Wireless Network"
+msgstr "Connesso a rete wireless"
+

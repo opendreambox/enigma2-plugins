@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RS Downloader\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-20 10:33+0200\n"
+"POT-Creation-Date: 2009-02-10 13:04+0100\n"
 "PO-Revision-Date: 2009-02-10 13:56+0100\n"
 "Last-Translator: José Juan Zapater <josej@zapater.fdns.net>\n"
 "Language-Team: none\n"
@@ -14,18 +14,11 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-SearchPath-0: /home/aliabdul/dream/e2-plugins/enigma2-plugins/"
-"rsdownloader/src\n"
+"X-Poedit-SearchPath-0: /home/aliabdul/dream/e2-plugins/enigma2-plugins/rsdownloader/src\n"
 
 #, python-format
 msgid "%s saved."
 msgstr "%s guardado."
-
-msgid "Add"
-msgstr ""
-
-msgid "Add downloads from txt files"
-msgstr ""
 
 #, python-format
 msgid "Added %s to the download-list."
@@ -55,20 +48,8 @@ msgstr "Permitir descargar en miércoles:"
 msgid "Already downloading!"
 msgstr "¡Ya estoy descargando!"
 
-msgid "Checking"
-msgstr ""
-
 msgid "Clear"
 msgstr "Limpiar"
-
-msgid "Clear finished downloads"
-msgstr ""
-
-msgid "Close plugin"
-msgstr ""
-
-msgid "Config"
-msgstr ""
 
 msgid "Could not start downloading!"
 msgstr "¡No puedo comenzar la descarga!"
@@ -80,19 +61,6 @@ msgstr "¡No puedo encontrar el directorio %s!"
 msgid "Delete"
 msgstr "Borrar"
 
-#, python-format
-msgid "Delete %s?"
-msgstr ""
-
-msgid "Delete download"
-msgstr ""
-
-msgid "Delete failed downloads"
-msgstr ""
-
-msgid "Delete log"
-msgstr ""
-
 msgid "Delete log..."
 msgstr "Borrar log..."
 
@@ -102,8 +70,8 @@ msgstr "No descargar después de:"
 msgid "Don't download before:"
 msgstr "No descargar antes de:"
 
-msgid "Download files from rapidshare"
-msgstr ""
+msgid "Download files from rapidshare in the background"
+msgstr "Descarga ficheros de rapidshare en segundo plano"
 
 msgid "Download in the background:"
 msgstr "Descargas en segundo plano:"
@@ -160,9 +128,6 @@ msgstr "Falló"
 msgid "Files"
 msgstr "Ficheros"
 
-msgid "Finished"
-msgstr ""
-
 msgid "Ignore download times:"
 msgstr "Ignorar tiempos de descarga:"
 
@@ -175,9 +140,6 @@ msgstr "Cargando página siguiente... espere!"
 msgid "Loading previous page... please wait!"
 msgstr "Cargando página anterior... espere!"
 
-msgid "Maximal downloads:"
-msgstr ""
-
 msgid "Nothing found, sorry."
 msgstr "No encontré nada, lo siento."
 
@@ -187,9 +149,6 @@ msgstr "Página %d / %d. Pulse < > para cambiar de página..."
 
 msgid "Password:"
 msgstr "Contraseña:"
-
-msgid "Please choose a function..."
-msgstr ""
 
 msgid "RS Downloader"
 msgstr "RS Downloader"
@@ -211,14 +170,8 @@ msgstr "Reconectar fritz.Box antes de descargar:"
 msgid "Reload"
 msgstr "Recargar"
 
-msgid "Restart failed downloads"
-msgstr ""
-
 msgid "Save"
 msgstr "Guardar"
-
-msgid "Search"
-msgstr ""
 
 msgid "Search http://rapidshare-search-engine.com for:"
 msgstr "Buscar http://rapidshare-search-engine.com para:"
@@ -231,9 +184,6 @@ msgstr "Mostrar info..."
 
 msgid "Show lists..."
 msgstr "Mostrar listas..."
-
-msgid "Show log"
-msgstr ""
 
 msgid "Show log..."
 msgstr "Mostrar log..."
@@ -253,20 +203,12 @@ msgstr "Comenzando descarga..."
 msgid "Stopped!"
 msgstr "¡Parado!"
 
-msgid "Use search engine"
-msgstr ""
-
 msgid "Use search-engine..."
 msgstr "Usar búsqueda..."
 
 msgid "Username:"
 msgstr "Nombre de Usuario:"
 
-msgid "Waiting"
-msgstr ""
-
 msgid "Write log:"
 msgstr "Escribir log:"
 
-#~ msgid "Download files from rapidshare in the background"
-#~ msgstr "Descarga ficheros de rapidshare en segundo plano"

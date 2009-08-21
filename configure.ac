@@ -25,7 +25,6 @@ AM_CONDITIONAL(HAVE_E2_INCLUDES, test "$have_e2_includes" = "yes")
 AC_OUTPUT([
 Makefile
 antiscrollbar/Makefile
-antiscrollbar/etc/Makefile
 antiscrollbar/src/Makefile
 
 movietagger/Makefile
@@ -170,6 +169,7 @@ googlemaps/src/Makefile
 rsdownloader/Makefile
 rsdownloader/po/Makefile
 rsdownloader/src/Makefile
+rsdownloader/src/container/Makefile
 
 permanentclock/Makefile
 permanentclock/po/Makefile

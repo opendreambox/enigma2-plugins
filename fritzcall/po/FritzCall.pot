@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-20 10:33+0200\n"
+"POT-Creation-Date: 2009-06-29 15:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,75 +18,58 @@ msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:164 ../src/plugin.py:2371 ../src/plugin.py:2402
 msgid "About FritzCall"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:2017 ../src/plugin.py:2138
 msgid "Add entry to phonebook"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: ../src/plugin.py:1520
 msgid "All"
 msgstr ""
 
-#: ../src/plugin.py:128
 msgid "All calls"
 msgstr ""
 
-#: ../src/plugin.py:2442
 msgid "Append shortcut number"
 msgstr ""
 
-#: ../src/plugin.py:2441
 msgid "Append type of number"
 msgstr ""
 
-#: ../src/plugin.py:2443
 msgid "Append vanity name"
 msgstr ""
 
-#: ../src/plugin.py:2431
 msgid "Areacode to add to Outgoing Calls (if necessary)"
 msgstr ""
 
-#: ../src/plugin.py:120
 msgid "Austria"
 msgstr ""
 
-#: ../src/plugin.py:2449
 msgid "Automatically add new Caller to PhoneBook"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: ../src/plugin.py:1670
 msgid "Call"
 msgstr ""
 
-#: ../src/plugin.py:2418
 msgid "Call monitoring"
 msgstr ""
 
-#: ../src/plugin.py:1262
 msgid "Call redirection"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: ../src/plugin.py:2150 ../src/plugin.py:2363
 msgid "Cancel"
 msgstr ""
 
-#: ../src/plugin.py:1288
 msgid "Connected since"
 msgstr ""
 
-#: ../src/plugin.py:2730
 msgid "Connected to FRITZ!Box!"
 msgstr ""
 
-#: ../src/plugin.py:2743
 #, python-format
 msgid ""
 "Connecting to FRITZ!Box failed\n"
@@ -94,11 +77,9 @@ msgid ""
 "retrying..."
 msgstr ""
 
-#: ../src/plugin.py:2726
 msgid "Connecting to FRITZ!Box..."
 msgstr ""
 
-#: ../src/plugin.py:2739
 #, python-format
 msgid ""
 "Connection to FRITZ!Box! lost\n"
@@ -106,61 +87,48 @@ msgid ""
 "retrying..."
 msgstr ""
 
-#: ../src/plugin.py:473
 msgid "Could not parse FRITZ!Box Phonebook entry"
 msgstr ""
 
-#: ../src/plugin.py:2435
 msgid "Country"
 msgstr ""
 
-#: ../src/plugin.py:1366
 msgid "DECT phones registered"
 msgstr ""
 
-#: ../src/plugin.py:2455
 msgid "Debug"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: ../src/plugin.py:1993
 msgid "Delete"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:2015
 msgid "Delete entry"
 msgstr ""
 
-#: ../src/plugin.py:2799
 msgid "Display FRITZ!box-Fon calls on screen"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:1542
 msgid "Display all calls"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:1546
 msgid "Display incoming calls"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:1544
 msgid "Display missed calls"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:1548
 msgid "Display outgoing calls"
 msgstr ""
 
-#: ../src/plugin.py:1653
 msgid "Do what?"
 msgstr ""
 
-#: ../src/plugin.py:2089
 #, python-format
 msgid ""
 "Do you really want to delete entry for\n"
@@ -171,121 +139,94 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: ../src/plugin.py:1997
 msgid "Edit"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:2019
 msgid "Edit selected entry"
 msgstr ""
 
-#: ../src/plugin.py:2224
 msgid "Enter Search Terms"
 msgstr ""
 
-#: ../src/plugin.py:2176
 msgid "Entry incomplete."
 msgstr ""
 
-#: ../src/plugin.py:2438
 msgid "Extension number to initiate call on"
 msgstr ""
 
-#: ../src/plugin.py:620
 #, python-format
 msgid "FRITZ!Box - Could not load calls: %s"
 msgstr ""
 
-#: ../src/plugin.py:477
 #, python-format
 msgid "FRITZ!Box - Could not load phonebook: %s"
 msgstr ""
 
-#: ../src/plugin.py:658
 #, python-format
 msgid "FRITZ!Box - Dialling failed: %s"
 msgstr ""
 
-#: ../src/plugin.py:962
 #, python-format
 msgid "FRITZ!Box - Error getting status: %s"
 msgstr ""
 
-#: ../src/plugin.py:312 ../src/plugin.py:325 ../src/plugin.py:515
 #, python-format
 msgid "FRITZ!Box - Error logging in: %s"
 msgstr ""
 
-#: ../src/plugin.py:345
 #, python-format
 msgid "FRITZ!Box - Error logging out: %s"
 msgstr ""
 
-#: ../src/plugin.py:1003
 #, python-format
 msgid "FRITZ!Box - Error resetting: %s"
 msgstr ""
 
-#: ../src/plugin.py:758
 #, python-format
 msgid "FRITZ!Box - Failed changing Mailbox: %s"
 msgstr ""
 
-#: ../src/plugin.py:698
 #, python-format
 msgid "FRITZ!Box - Failed changing WLAN: %s"
 msgstr ""
 
-#: ../src/plugin.py:2421
 msgid "FRITZ!Box FON address (Name or IP)"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:1141 ../src/plugin.py:2373 ../src/plugin.py:2400
-#: ../src/plugin.py:2802
 msgid "FRITZ!Box Fon Status"
 msgstr ""
 
-#: ../src/plugin.py:105
 msgid "Flash"
 msgstr ""
 
-#: ../src/plugin.py:117
 msgid "France"
 msgstr ""
 
-#: ../src/plugin.py:2285 ../src/plugin.py:2289 ../src/plugin.py:2329
 msgid "FritzCall Setup"
 msgstr ""
 
-#: ../src/plugin.py:2454
 msgid "Full screen display"
 msgstr ""
 
-#: ../src/plugin.py:115
 msgid "Germany"
 msgstr ""
 
-#: ../src/plugin.py:1550 ../src/plugin.py:1606
 msgid "Getting calls from FRITZ!Box..."
 msgstr ""
 
-#: ../src/plugin.py:1229
 msgid "Getting status from FRITZ!Box Fon..."
 msgstr ""
 
-#: ../src/plugin.py:1288 ../src/plugin.py:1290
 msgid "IP Address:"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: ../src/plugin.py:1524
 msgid "Incoming"
 msgstr ""
 
-#: ../src/plugin.py:2559
 #, python-format
 msgid ""
 "Incoming Call on %(date)s from\n"
@@ -296,108 +237,83 @@ msgid ""
 "to: %(phone)s"
 msgstr ""
 
-#: ../src/plugin.py:129
 msgid "Incoming calls"
 msgstr ""
 
-#: ../src/plugin.py:118
 msgid "Italy"
 msgstr ""
 
-#: ../src/plugin.py:2510
 msgid "Last 10 calls:\n"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: ../src/plugin.py:1668
 msgid "Lookup"
 msgstr ""
 
-#: ../src/plugin.py:2427
 msgid "MSN to show (separated by ,)"
 msgstr ""
 
-#: ../src/plugin.py:1204
 msgid "Mailbox"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: ../src/plugin.py:1522
 msgid "Missed"
 msgstr ""
 
-#: ../src/plugin.py:130
 msgid "Missed calls"
 msgstr ""
 
-#: ../src/plugin.py:2420
 msgid "Mute on call"
 msgstr ""
 
-#: ../src/plugin.py:2165
 msgid "Name"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: ../src/plugin.py:1995
 msgid "New"
 msgstr ""
 
-#: ../src/plugin.py:1361
 msgid "No DECT phone registered"
 msgstr ""
 
-#: ../src/plugin.py:1377
 msgid "No call redirection active"
 msgstr ""
 
-#: ../src/plugin.py:2093 ../src/plugin.py:2110 ../src/plugin.py:2215
 msgid "No entry selected"
 msgstr ""
 
-#: ../src/plugin.py:1342
 msgid "No mailbox active"
 msgstr ""
 
-#: ../src/plugin.py:1720
 msgid "No result from LDIF"
 msgstr ""
 
-#: ../src/plugin.py:1718
 msgid "No result from Outlook export"
 msgstr ""
 
-#: ../src/plugin.py:1716
 msgid "No result from reverse lookup"
 msgstr ""
 
-#: ../src/plugin.py:2166
 msgid "Number"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: ../src/plugin.py:2152 ../src/plugin.py:2365
 msgid "OK"
 msgstr ""
 
-#: ../src/plugin.py:1364
 msgid "One DECT phone registered"
 msgstr ""
 
-#: ../src/plugin.py:1382
 msgid "One call redirection active"
 msgstr ""
 
-#: ../src/plugin.py:1353
 msgid "One mailbox active"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: ../src/plugin.py:1526
 msgid "Outgoing"
 msgstr ""
 
-#: ../src/plugin.py:2561
 #, python-format
 msgid ""
 "Outgoing Call on %(date)s to\n"
@@ -408,190 +324,145 @@ msgid ""
 "from: %(phone)s"
 msgstr ""
 
-#: ../src/plugin.py:131
 msgid "Outgoing calls"
 msgstr ""
 
-#: ../src/plugin.py:2437
 msgid "Password Accessing FRITZ!Box"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: ../src/plugin.py:1456 ../src/plugin.py:1460 ../src/plugin.py:1495
-#: ../src/plugin.py:2367 ../src/plugin.py:2800
 msgid "Phone calls"
 msgstr ""
 
-#: ../src/plugin.py:2447
 msgid "PhoneBook Location"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: ../src/plugin.py:1936 ../src/plugin.py:1940 ../src/plugin.py:1972
-#: ../src/plugin.py:2369 ../src/plugin.py:2801
 msgid "Phonebook"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:1219 ../src/plugin.py:1221 ../src/plugin.py:1540
-#: ../src/plugin.py:2013
 msgid "Quit"
 msgstr ""
 
-#: ../src/plugin.py:2439
 msgid "Read PhoneBook from FRITZ!Box"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:1227
 msgid "Refresh status"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:1171 ../src/plugin.py:1225
 msgid "Reset"
 msgstr ""
 
-#: ../src/plugin.py:2433
 msgid "Reverse Lookup Caller ID (select country below)"
 msgstr ""
 
-#: ../src/plugin.py:1694
 msgid "Reverse searching..."
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: ../src/plugin.py:1672
 msgid "Save"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: ../src/plugin.py:1999
 msgid "Search"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:2021
 msgid "Search (case insensitive)"
 msgstr ""
 
-#: ../src/plugin.py:2224
 msgid "Search phonebook"
 msgstr ""
 
-#: ../src/plugin.py:1705
 msgid "Searching in LDIF..."
 msgstr ""
 
-#: ../src/plugin.py:1698
 msgid "Searching in Outlook export..."
 msgstr ""
 
-#: ../src/plugin.py:437 ../src/plugin.py:458
 msgid "Shortcut"
 msgstr ""
 
-#: ../src/plugin.py:2425
 msgid "Show Calls for specific MSN"
 msgstr ""
 
-#: ../src/plugin.py:2429
 msgid "Show Outgoing Calls"
 msgstr ""
 
-#: ../src/plugin.py:2423
 msgid "Show after Standby"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:1538 ../src/plugin.py:2011
 msgid "Show details of entry"
 msgstr ""
 
-#: ../src/plugin.py:1371
 msgid "Software fax active"
 msgstr ""
 
-#: ../src/plugin.py:1284 ../src/plugin.py:1307 ../src/plugin.py:1333
 msgid "Status not available"
 msgstr ""
 
-#: ../src/plugin.py:2451
 msgid "Strip Leading 0"
 msgstr ""
 
-#: ../src/plugin.py:119
 msgid "Switzerland"
 msgstr ""
 
-#: ../src/plugin.py:116
 msgid "The Netherlands"
 msgstr ""
 
-#: ../src/plugin.py:2432
 msgid "Timeout for Call Notifications (seconds)"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:1195
 msgid "Toggle 1. mailbox"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:1197
 msgid "Toggle 2. mailbox"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:1199
 msgid "Toggle 3. mailbox"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:1201
 msgid "Toggle 4. mailbox"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:1203
 msgid "Toggle 5. mailbox"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: ../src/plugin.py:1177
 msgid "Toggle Mailbox"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:1173 ../src/plugin.py:1223
 msgid "Toggle WLAN"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:1193
 msgid "Toggle all mailboxes"
 msgstr ""
 
-#: ../src/plugin.py:555 ../src/plugin.py:1626 ../src/plugin.py:2529
-#: ../src/plugin.py:2637 ../src/plugin.py:2714
 msgid "UNKNOWN"
 msgstr ""
 
-#: ../src/plugin.py:2445
 msgid "Use internal PhoneBook"
 msgstr ""
 
-#: ../src/plugin.py:439 ../src/plugin.py:460
 msgid "Vanity"
 msgstr ""
 
-#: ../src/plugin.py:2358
 msgid "You need to enable the monitoring on your FRITZ!Box by dialing #96*5*!"
 msgstr ""
 
-#: ../src/plugin.py:566
 msgid ""
 "You need to set the password of the FRITZ!Box\n"
 "in the configuration dialog to display calls\n"
@@ -599,111 +470,78 @@ msgid ""
 "It could be a communication issue, just try again."
 msgstr ""
 
-#: ../src/FritzLDIF.py:70 ../src/FritzLDIF.py:148
-msgid "business"
-msgstr ""
-
-#: ../src/plugin.py:1384
 msgid "call redirections active"
 msgstr ""
 
-#: ../src/plugin.py:1326
 msgid "devices active"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:2392
 msgid "display calls"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:2394
 msgid "display phonebook"
 msgstr ""
 
-#: ../src/plugin.py:562
 msgid "done"
 msgstr ""
 
-#: ../src/plugin.py:577
 msgid "done, using last list"
 msgstr ""
 
-#: ../src/plugin.py:1319
 msgid "encrypted"
 msgstr ""
 
-#: ../src/plugin.py:531
 msgid "finishing"
 msgstr ""
 
-#: ../src/FritzLDIF.py:102 ../src/FritzLDIF.py:175
-#: ../src/FritzOutlookCSV.py:116 ../src/FritzOutlookCSV.py:185
-#: ../src/plugin.py:432
 msgid "home"
 msgstr ""
 
-#: ../src/plugin.py:226
 msgid "login"
 msgstr ""
 
-#: ../src/plugin.py:316
 msgid "login ok"
 msgstr ""
 
-#: ../src/plugin.py:308
 msgid "login verification"
 msgstr ""
 
-#: ../src/plugin.py:1355
 msgid "mailboxes active"
 msgstr ""
 
-#: ../src/FritzLDIF.py:100 ../src/FritzLDIF.py:173
-#: ../src/FritzOutlookCSV.py:114 ../src/FritzOutlookCSV.py:183
-#: ../src/plugin.py:430
 msgid "mobile"
 msgstr ""
 
-#: ../src/plugin.py:1322
 msgid "no device active"
 msgstr ""
 
-#: ../src/plugin.py:1317
 msgid "not encrypted"
 msgstr ""
 
-#: ../src/plugin.py:1324
 msgid "one device active"
 msgstr ""
 
-#: ../src/plugin.py:520
 msgid "preparing"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:2388 ../src/plugin.py:2398
 msgid "quit"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: ../src/plugin.py:2390 ../src/plugin.py:2396
 msgid "save and quit"
 msgstr ""
 
-#: ../src/plugin.py:83
 msgid "show as list"
 msgstr ""
 
-#: ../src/plugin.py:83
 msgid "show each call"
 msgstr ""
 
-#: ../src/plugin.py:83
 msgid "show nothing"
 msgstr ""
 
-#: ../src/FritzOutlookCSV.py:90 ../src/FritzOutlookCSV.py:161
-#: ../src/plugin.py:434
 msgid "work"
 msgstr ""

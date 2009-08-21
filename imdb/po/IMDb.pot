@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-20 10:33+0200\n"
+"POT-Creation-Date: 2009-02-17 18:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,15 +16,15 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/plugin.py:464
+#: ../src/plugin.py:442
 msgid " as "
 msgstr ""
 
-#: ../src/plugin.py:257
+#: ../src/plugin.py:248
 msgid "Ambiguous results"
 msgstr ""
 
-#: ../src/plugin.py:466
+#: ../src/plugin.py:444
 msgid "Cast: "
 msgstr ""
 
@@ -32,48 +32,48 @@ msgstr ""
 msgid "Channel Selection"
 msgstr ""
 
-#: ../src/plugin.py:339
+#: ../src/plugin.py:321
 msgid "Could't get Eventname"
 msgstr ""
 
-#: ../src/plugin.py:262 ../src/plugin.py:419
+#: ../src/plugin.py:253 ../src/plugin.py:399
 msgid "Details"
 msgstr ""
 
-#: ../src/plugin.py:474
+#: ../src/plugin.py:452
 #, python-format
 msgid "Downloading Movie Poster: %s..."
 msgstr ""
 
-#: ../src/plugin.py:148
+#: ../src/plugin.py:145
 msgid "Exit"
 msgstr ""
 
-#: ../src/plugin.py:493
+#: ../src/plugin.py:471
 msgid "Extra Info"
 msgstr ""
 
-#: ../src/plugin.py:420 ../src/plugin.py:499
+#: ../src/plugin.py:400 ../src/plugin.py:476
 msgid "IMDb Details parsed"
 msgstr ""
 
-#: ../src/plugin.py:375
+#: ../src/plugin.py:352
 msgid "IMDb Download completed"
 msgstr ""
 
-#: ../src/plugin.py:343
+#: ../src/plugin.py:325
 msgid "IMDb Download failed"
 msgstr ""
 
-#: ../src/plugin.py:528
+#: ../src/plugin.py:505
 msgid "IMDb Plugin"
 msgstr ""
 
-#: ../src/plugin.py:409
+#: ../src/plugin.py:389
 msgid "IMDb Re-Download completed"
 msgstr ""
 
-#: ../src/plugin.py:406
+#: ../src/plugin.py:386
 msgid "IMDb query failed!"
 msgstr ""
 
@@ -81,44 +81,44 @@ msgstr ""
 msgid "Lookup"
 msgstr ""
 
-#: ../src/plugin.py:393 ../src/plugin.py:394
+#: ../src/plugin.py:373 ../src/plugin.py:374
 msgid "No IMDb match."
 msgstr ""
 
-#: ../src/plugin.py:468
+#: ../src/plugin.py:446
 msgid "No cast list found in the database."
 msgstr ""
 
-#: ../src/plugin.py:417
+#: ../src/plugin.py:397
 msgid "No details found."
 msgstr ""
 
-#: ../src/plugin.py:258
+#: ../src/plugin.py:249
 msgid "Please select the matching entry"
 msgstr ""
 
-#: ../src/plugin.py:332
+#: ../src/plugin.py:314
 #, python-format
 msgid "Query IMDb: %s..."
 msgstr ""
 
-#: ../src/plugin.py:540 ../src/plugin.py:545 ../src/plugin.py:552
+#: ../src/plugin.py:517 ../src/plugin.py:522 ../src/plugin.py:529
 msgid "Query details from the Internet Movie Database"
 msgstr ""
 
-#: ../src/plugin.py:273 ../src/plugin.py:399
+#: ../src/plugin.py:264 ../src/plugin.py:379
 #, python-format
 msgid "Re-Query IMDb: %s..."
 msgstr ""
 
-#: ../src/plugin.py:138
+#: ../src/plugin.py:135
 msgid "The Internet Movie Database"
 msgstr ""
 
-#: ../src/plugin.py:261
+#: ../src/plugin.py:252
 msgid "Title Menu"
 msgstr ""
 
-#: ../src/plugin.py:449
+#: ../src/plugin.py:427
 msgid "no user rating yet"
 msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-20 10:33+0200\n"
+"POT-Creation-Date: 2009-02-17 13:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,7 +92,7 @@ msgstr ""
 msgid "HTTP Port"
 msgstr ""
 
-#: ../src/VlcServerList.py:98
+#: ../src/VlcServerList.py:80
 msgid "List of known VLC-Server Profiles"
 msgstr ""
 
@@ -127,7 +127,7 @@ msgstr ""
 msgid "Playlist"
 msgstr ""
 
-#: ../src/VlcServerList.py:144
+#: ../src/VlcServerList.py:126
 msgid "Really delete this Server?"
 msgstr ""
 
@@ -167,15 +167,15 @@ msgstr ""
 msgid "Video Norm"
 msgstr ""
 
-#: ../src/VlcServerList.py:101
+#: ../src/VlcServerList.py:83
 msgid "add server"
 msgstr ""
 
-#: ../src/VlcServerList.py:100
+#: ../src/VlcServerList.py:82
 msgid "delete server"
 msgstr ""
 
-#: ../src/VlcServerList.py:102
+#: ../src/VlcServerList.py:84
 msgid "edit server"
 msgstr ""
 
@@ -195,6 +195,6 @@ msgstr ""
 msgid "refresh"
 msgstr ""
 
-#: ../src/VlcServerList.py:103
+#: ../src/VlcServerList.py:85
 msgid "set default"
 msgstr ""

@@ -113,7 +113,6 @@ eServiceTS::eServiceTS(const eServiceReference &url): m_pump(eApp, 1)
 	m_filename = url.path.c_str();
 	m_vpid = url.getData(0) == 0 ? 0x44 : url.getData(0);
 	m_apid = url.getData(1) == 0 ? 0x45 : url.getData(1);
-	m_state = stIdle;
 	m_audioInfo = 0;
 	m_destfd = -1;
 }
@@ -275,10 +274,9 @@ RESULT eServiceTS::start()
 	m_decoder->setAudioPID(m_apid, eDVBAudio::aMPEG);
 	m_streamthread = new eStreamThread();
 	CONNECT(m_streamthread->m_event, eServiceTS::recv_event);
-	m_decoder->freeze(0);
-	m_decoder->preroll();
-	if (unpause() != 0) return -1;
-	m_state = stRunning;
+	m_decoder->pause();
+	if (unpause() != 0) 
+		return -1;
 	m_event(this, evStart);
 	return 0;
 }
@@ -290,12 +288,9 @@ RESULT eServiceTS::stop()
 		::close(m_destfd);
 		m_destfd = -1;
 	}
-	if (m_state != stRunning)
-		return -1;
 	printf("TS: %s stop\n", m_filename.c_str());
 	m_streamthread->stop();
 	m_decodedemux->flush();
-	m_state = stStopped;
 	m_audioInfo = 0;
 	return 0;
 }
@@ -306,13 +301,11 @@ void eServiceTS::recv_event(int evt)
 	switch (evt) {
 	case eStreamThread::evtEOS:
 		m_decodedemux->flush();
-		m_state = stStopped;
 		m_event((iPlayableService*)this, evEOF);
 		break;
 	case eStreamThread::evtReadError:
 	case eStreamThread::evtWriteError:
-		m_decoder->freeze(0);
-		m_state = stStopped;
+		m_decoder->pause();
 		m_event((iPlayableService*)this, evEOF);
 		break;
 	case eStreamThread::evtSOS:
@@ -344,26 +337,33 @@ RESULT eServiceTS::pause(ePtr<iPauseableService> &ptr)
 RESULT eServiceTS::pause()
 {
 	m_streamthread->stop();
-	m_decoder->freeze(0);
+	m_decoder->pause();
 	return 0;
 }
 
 RESULT eServiceTS::unpause()
 {
-	int is_streaming = !strncmp(m_filename.c_str(), "http://", 7);
-	int srcfd = -1;
-	if (is_streaming) {
-		srcfd = openHttpConnection(m_filename);
-	} else {
-		srcfd = ::open(m_filename.c_str(), O_RDONLY);
+	if (!m_streamthread->running())
+	{
+		int is_streaming = !strncmp(m_filename.c_str(), "http://", 7);
+		int srcfd = -1;
+
+		if (is_streaming)
+			srcfd = openHttpConnection(m_filename);
+		else
+			srcfd = ::open(m_filename.c_str(), O_RDONLY);
+
+		if (srcfd < 0) {
+			eDebug("Cannot open source stream: %s", m_filename.c_str());
+			return 1;
+		}
+
+		m_decodedemux->flush();
+		m_streamthread->start(srcfd, m_destfd);
+		m_decoder->play();
 	}
-	if (srcfd < 0) {
-		eDebug("Cannot open source stream: %s", m_filename.c_str());
-		return 1;
-	}
-	m_decodedemux->flush();
-	m_streamthread->start(srcfd, m_destfd);
-	m_decoder->unfreeze();
+	else
+		eDebug("unpause but thread already running!");
 	return 0;
 }
 
@@ -441,8 +441,7 @@ RESULT eServiceTS::selectTrack(unsigned int i) {
 		m_apid = m_audioInfo->audioStreams[i].pid;
 		eDebug("[servicets] audio track %d PID 0x%02x type %d\n", i, m_apid, m_audioInfo->audioStreams[i].type);
 		m_decoder->setAudioPID(m_apid, m_audioInfo->audioStreams[i].type);
-		if (m_state == stRunning)
-			m_decoder->preroll();
+		m_decoder->set();
 		return 0;
 	} else {
 		return -1;
@@ -486,7 +485,7 @@ eStreamThread::~eStreamThread() {
 void eStreamThread::start(int srcfd, int destfd) {
 	m_srcfd = srcfd;
 	m_destfd = destfd;
-	m_stop = false;
+	m_stop = m_running = false;
 	m_audioInfo = 0;
 	run(IOPRIO_CLASS_RT);
 }
@@ -631,6 +630,7 @@ void eStreamThread::thread() {
 	int rc,r,w,maxfd;
 	time_t next_scantime = 0;
 	bool sosSend = false;
+	m_running = true;
 
 	r = w = 0;
 	hasStarted();
@@ -696,8 +696,6 @@ void eStreamThread::thread() {
 			}
 		}
 		if (eof && (r==w)) {
-			::close(m_srcfd);
-			m_srcfd = -1;
 			m_messagepump.send(evtEOS);
 			break;
 		}
@@ -706,8 +704,10 @@ void eStreamThread::thread() {
 }
 
 void eStreamThread::thread_finished() {
-	if (m_srcfd >= 0) ::close(m_srcfd);
+	if (m_srcfd >= 0)
+		::close(m_srcfd);
 	eDebug("eStreamThread closed");
+	m_running = false;
 }
 
 eAutoInitPtr<eServiceFactoryTS> init_eServiceFactoryTS(eAutoInitNumbers::service+1, "eServiceFactoryTS");

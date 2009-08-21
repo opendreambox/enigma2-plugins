@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2 passwordchanger plugin Turkish Locale\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-28 22:41+0200\n"
+"POT-Creation-Date: 2008-11-26 16:05-0000\n"
 "PO-Revision-Date: 2008-11-27 10:37+0200\n"
 "Last-Translator: Zülfikar VEYİSOĞLU <zveyis@gmail.com>\n"
 "Language-Team: www.turkeyforum.com/satforum <zveyis@gmail.com>\n"
@@ -13,15 +13,15 @@ msgstr ""
 "X-Poedit-Country: TURKEY\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-msgid "Change your ftp and telnet password"
-msgstr "FTP ve telnet parolanızı değiştirin"
+#: /home/aliabdul/dream/enigma2-plugins/passwordchanger/src/plugin.py:50
+msgid "Old password:"
+msgstr "Eski parola:"
 
-msgid "Could not log in!"
-msgstr "Oturum açılamadı!"
+#: /home/aliabdul/dream/enigma2-plugins/passwordchanger/src/plugin.py:51
+msgid "New password:"
+msgstr "Yeni parola:"
 
-msgid "Error while setting new password!"
-msgstr "Yeni parola atanırken hata oluştu!"
-
+#: /home/aliabdul/dream/enigma2-plugins/passwordchanger/src/plugin.py:62
 msgid ""
 "Incorrect new password!\n"
 "Minimum length: 5\n"
@@ -31,11 +31,19 @@ msgstr ""
 "Karakter sayısı (en az): 5\n"
 "Karakter sayısı (en çok): 8"
 
-msgid "New password:"
-msgstr "Yeni parola:"
+#: /home/aliabdul/dream/enigma2-plugins/passwordchanger/src/plugin.py:137
+msgid "Could not log in!"
+msgstr "Oturum açılamadı!"
 
-msgid "Old password:"
-msgstr "Eski parola:"
+#: /home/aliabdul/dream/enigma2-plugins/passwordchanger/src/plugin.py:150
+msgid "Error while setting new password!"
+msgstr "Yeni parola atanırken hata oluştu!"
 
+#: /home/aliabdul/dream/enigma2-plugins/passwordchanger/src/plugin.py:163
 msgid "Password Changer"
 msgstr "Parola Değiştirici"
+
+#: /home/aliabdul/dream/enigma2-plugins/passwordchanger/src/plugin.py:163
+msgid "Change your ftp and telnet password"
+msgstr "FTP ve telnet parolanızı değiştirin"
+

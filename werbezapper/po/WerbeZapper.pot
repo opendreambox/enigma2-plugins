@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-20 10:33+0200\n"
+"POT-Creation-Date: 2009-02-07 12:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,11 +20,11 @@ msgstr ""
 msgid "Automatically zaps back to current service after given Time"
 msgstr ""
 
-#: ../src/WerbeZapper.py:58
+#: ../src/WerbeZapper.py:55
 msgid "Custom"
 msgstr ""
 
-#: ../src/WerbeZapper.py:84
+#: ../src/WerbeZapper.py:81
 msgid "How many minutes to wait until zapping back?"
 msgstr ""
 
@@ -38,17 +38,11 @@ msgstr ""
 msgid "When to Zap back?"
 msgstr ""
 
-#: ../src/WerbeZapper.py:107
+#: ../src/WerbeZapper.py:104
 #, python-format
 msgid "Zapping back in %d Minutes"
 msgstr ""
 
-#: ../src/WerbeZapper.py:49
-msgid "minute"
-msgstr ""
-
-#: ../src/WerbeZapper.py:50 ../src/WerbeZapper.py:51 ../src/WerbeZapper.py:52
-#: ../src/WerbeZapper.py:53 ../src/WerbeZapper.py:54 ../src/WerbeZapper.py:55
-#: ../src/WerbeZapper.py:56 ../src/WerbeZapper.py:57
+#: ../src/WerbeZapper.py:50
 msgid "minutes"
 msgstr ""

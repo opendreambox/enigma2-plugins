@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: epgrefresh_fy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-28 22:41+0200\n"
+"POT-Creation-Date: 2009-01-09 20:07+0100\n"
 "PO-Revision-Date: 2009-01-09 20:46+0100\n"
 "Last-Translator: gerrit <gerrit@nedlinux.nl>\n"
 "Language-Team: gerrit <fy@li.org>\n"
@@ -15,9 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-
-msgid "Add to EPGRefresh"
-msgstr ""
 
 msgid "Automated EPGRefresher"
 msgstr "Automatyske EPG ferfasker"
@@ -58,9 +55,6 @@ msgstr "Sykje ek at untfanger yn gebrûk is."
 msgid "Inherit Services from AutoTimer if available"
 msgstr "Services fan AutoTimer brûke at dizze beskikber is."
 
-msgid "Make AutoTimer parse EPG if available"
-msgstr ""
-
 msgid "New"
 msgstr "Nij"
 
@@ -94,12 +88,6 @@ msgstr "Kies útstjoering om te ferfaskjen"
 msgid "Shutdown after refresh"
 msgstr "Ofslúte nei it ferfaskjen"
 
-msgid ""
-"This might have been an automated bootup to refresh the EPG. For this to "
-"happen it is recommmended to put the receiver to Standby.\n"
-"Do you want to do this now?"
-msgstr ""
-
 msgid "Time to stay on service (in m)"
 msgstr "Tiid op dizze service bliuwe (ym min)"
 
@@ -108,3 +96,4 @@ msgstr "Ut de djippe sliipstand komme om de EPG te ferfaskjen."
 
 msgid "delete"
 msgstr "Ferwiderje"
+

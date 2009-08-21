@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PermanentClock\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-28 22:41+0200\n"
+"POT-Creation-Date: 2008-11-26 18:22-0000\n"
 "PO-Revision-Date: 2009-01-16 09:20+0100\n"
 "Last-Translator: WeeGull <weegull@hotmail.com>\n"
 "Language-Team: Nabil Hanna <nabil1978@web.de>\n"
@@ -13,20 +13,28 @@ msgstr ""
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-SearchPath-0: /home/aliabdul/dream/enigma2-plugins/permanentclock/"
-"src\n"
+"X-Poedit-SearchPath-0: /home/aliabdul/dream/enigma2-plugins/permanentclock/src\n"
 
-msgid "Activate permanent clock"
-msgstr "Aktivera permanent klocka"
-
-msgid "Change permanent clock position"
-msgstr "Flytta permanent klockas position"
-
-msgid "Deactivate permanent clock"
-msgstr "Avaktivera permanent klocka"
-
+#: /home/aliabdul/dream/enigma2-plugins/permanentclock/src/plugin.py:54
+#: /home/aliabdul/dream/enigma2-plugins/permanentclock/src/plugin.py:210
 msgid "Permanent Clock"
 msgstr "Permanent Klocka"
 
+#: /home/aliabdul/dream/enigma2-plugins/permanentclock/src/plugin.py:178
+#: /home/aliabdul/dream/enigma2-plugins/permanentclock/src/plugin.py:186
+msgid "Deactivate permanent clock"
+msgstr "Avaktivera permanent klocka"
+
+#: /home/aliabdul/dream/enigma2-plugins/permanentclock/src/plugin.py:180
+#: /home/aliabdul/dream/enigma2-plugins/permanentclock/src/plugin.py:186
+msgid "Activate permanent clock"
+msgstr "Aktivera permanent klocka"
+
+#: /home/aliabdul/dream/enigma2-plugins/permanentclock/src/plugin.py:181
+msgid "Change permanent clock position"
+msgstr "Flytta permanent klockas position"
+
+#: /home/aliabdul/dream/enigma2-plugins/permanentclock/src/plugin.py:210
 msgid "Shows the clock permanent on the screen"
 msgstr "Visa klockan permanent på skärmen"
+

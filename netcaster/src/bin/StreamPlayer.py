@@ -17,8 +17,7 @@ class StreamPlayer:
    			currentServiceRef = self.session.nav.getCurrentService()
    			if currentServiceRef is not None:
    				#it seems, that only Title is avaible for now
-   				sTagTitle = "No title information yet"
-   				#currentServiceRef.info().getInfoString(iServiceInformation.sTagTitle)
+   				sTagTitle = currentServiceRef.info().getInfoString(iServiceInformation.sTagTitle)
 				self._onMetadataChanged(sTagTitle)
 
 	def _onMetadataChanged(self,title):
