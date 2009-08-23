@@ -1,6 +1,6 @@
 from enigma import eConsoleAppContainer
 
-from twisted.web import resource, http
+from twisted.web import server, resource, http
 
 class IPKGResource(resource.Resource):
 	IPKG_PATH = "/usr/bin/ipkg"
@@ -8,7 +8,10 @@ class IPKGResource(resource.Resource):
 	SIMPLECMDS = [ "list", "list_installed", "update", "upgrade" ]
 	PACKAGECMDS = [ "info", "status", "install", "remove" ]
 	FILECMDS = [ "search" ]
-
+	
+	def __init__(self):
+		resource.Resource.__init__(self)
+	
 	def render(self, request):
 		self.args = request.args
 		self.command = self.getArg("command")
@@ -23,7 +26,7 @@ class IPKGResource(resource.Resource):
 			else:
 				return self.doErrorPage(request, "Unknown command: ", self.command)
 		else:
-			return self.doIndexPage()
+			return self.doIndexPage(request)
 
 	def buildCmd(self, parms=[]):
 		cmd = [IPKGResource.IPKG_PATH, "ipkg", self.command] + parms
@@ -71,13 +74,18 @@ class IPKGResource(resource.Resource):
 		
 		request.setResponseCode(http.OK)
 		request.write(html)
-		request.finish()				
+		request.finish()
+		
+		return server.NOT_DONE_YET
+						
 
 	def doErrorPage(self, request, errormsg):
 		request.setResponseCode(http.OK)
 		request.write(errormsg)
 		request.finish()		
-
+		
+		return server.NOT_DONE_YET
+		
 	def getArg(self, key):
 		if self.args.has_key(key):
 			return self.args[key][0]
@@ -97,6 +105,8 @@ class IPKGConsoleStream:
 
 	def cmdFinished(self, data):
 		self.request.finish()
+		
+		return server.NOT_DONE_YET
 
 	def dataAvail(self, data):
 		self.request.write(data)

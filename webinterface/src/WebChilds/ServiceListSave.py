@@ -7,6 +7,7 @@ from urllib import unquote as urllib_unquote
 ##########################
 class ServiceList(resource.Resource):
 	def __init__(self, session):
+		
 		self.session = session
 		resource.Resource.__init__(self)
 		self.putChild("reload", ServiceListReload())
@@ -40,7 +41,7 @@ class ServiceListSave(resource.PostableResource):
 
 	def parsePOSTData(self, request):
 		"""
-		overwriten, because we need to set higher values to fileupload.parse_urlencoded
+		overridden, because we need to set higher values to fileupload.parse_urlencoded
 		"""
 		if request.stream.length == 0:
 			return defer.succeed(None)

@@ -1,5 +1,5 @@
 from enigma import eServiceReference
-from twisted.web import resource, http
+from twisted.web import resource, http, server
 from os import path as os_path
 
 class ServiceplayerResource(resource.Resource):
@@ -7,7 +7,7 @@ class ServiceplayerResource(resource.Resource):
 		resource.Resource.__init__(self)
 		self.session = session
 		self.oldservice = None
-
+	
 	def render(self, request):
 		if request.args.has_key("file"):
 			output = self.playFile(request.args['file'][0])
@@ -20,7 +20,9 @@ class ServiceplayerResource(resource.Resource):
 			
 		request.setResponseCode(http.OK)
 		request.write(output[1])
-		request.finish()		
+		request.finish()
+					
+		return server.NOT_DONE_YET
 
 	def playFile(self, path):
 		print "[ServiceplayerResource] playing file", path

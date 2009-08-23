@@ -1,10 +1,13 @@
-from twisted.web import resource, http, http_headers
+from twisted.web import resource, http, http_headers, server
 from urllib import unquote_plus
 from os import path as os_path
 
 class FileStreamer(resource.Resource):
 	addSlash = True
-
+	
+	def __init__(self):
+		resource.Resource.__init__(self)
+	
 	def render(self, request):
 		try:
 			w1 = request.uri.split("?")[1]
@@ -59,7 +62,9 @@ class FileStreamer(resource.Resource):
 		else:
 			request.setResponseCode(http.OK)
 			request.write("no file given with file=???")
-			request.finish()			
+			request.finish()
+			
+		return server.NOT_DONE_YET
 
 
 

@@ -1,4 +1,4 @@
-from twisted.web import resource, http
+from twisted.web import resource, http, server
 
 from Plugins.Extensions.WebInterface import webif
 
@@ -23,12 +23,13 @@ TextHtmlHeaderFiles = ['wapremote.xml', 'stream.xml', ]
 NoExplicitHeaderFiles = ['getpid.xml', 'tvbrowser.xml', ]
 
 class ScreenPage(resource.Resource):
-	def __init__(self, session, path):
+	def __init__(self, session, path):		
 		self.session = session
 		self.path = path
 
-	def render(self, req):
-
+	def render(self, request):
+		print "request: %s, path %s" %(request, self.path)
+		
 		if os.path.isfile(self.path):
 			webif.renderPage(request, self.path, self.session) # login?
 			if self.path.split("/")[-1] in AppTextHeaderFiles:
@@ -52,11 +53,14 @@ class ScreenPage(resource.Resource):
 			request.setResponseCode(http.NOT_FOUND)			
 		
 		request.finish()
+		return server.NOT_DONE_YET
+		
 
-	def locateChild(self, request, segments):
-		path = self.path + '/' + '/'.join(segments)
+	def getChild(self, path, request):
+		path = "%s/%s" %(self.path, path)
+		print "[WebInterface] Screenpage.getChild: path: %s, request: %s" %(path, request)
 		if path[-1:] == "/":
 			path += "index.html"
 		path += ".xml"
-		return ScreenPage(self.session, path), ()
+		return ScreenPage(self.session, path)
 

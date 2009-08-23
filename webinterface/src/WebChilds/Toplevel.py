@@ -10,7 +10,7 @@ from Screengrab import GrabResource
 from IPKG import IPKGResource
 from PlayService import ServiceplayerResource
 from Uploader import UploadResource
-from ServiceListSave import ServiceList
+#from ServiceListSave import ServiceList
 from RedirecToCurrentStream import RedirecToCurrentStreamResource
 
 from External.__init__ import importExternalModules
@@ -20,21 +20,22 @@ def addExternalChild(child):
 	externalChildren.append(child)
 
 class Toplevel(resource.Resource):
-	addSlash = True
+	#addSlash = True
+	
 	def __init__(self, session):
-		self.session = session
-		resource.Resource.__init__(self)
-
-		self.putChild("web", ScreenPage(self.session, util.sibpath(__file__, "web"))) # "/web/*"
+		
+		resource.Resource.__init__(self)		
+		
+		self.putChild("web", ScreenPage(session, util.sibpath(__file__, "web"))) # "/web/*"
 		self.putChild("web-data", static.File(util.sibpath(__file__, "web-data")))
 		self.putChild("file", FileStreamer())
 		self.putChild("grab", GrabResource())
 		self.putChild("ipkg", IPKGResource())
-		self.putChild("play", ServiceplayerResource(self.session))
+		self.putChild("play", ServiceplayerResource(session))
 		self.putChild("wap", RedirectorResource("/mobile/"))
-		self.putChild("mobile", ScreenPage(self.session, util.sibpath(__file__, "mobile")))
+		self.putChild("mobile", ScreenPage(session, util.sibpath(__file__, "mobile")))
 		self.putChild("upload", UploadResource())
-		self.putChild("servicelist", ServiceList(self.session))
+		#self.putChild("servicelist", ServiceList(session))
 		self.putChild("streamcurrent", RedirecToCurrentStreamResource(session))
 			
 		if config.plugins.Webinterface.includemedia.value is True:
@@ -50,7 +51,9 @@ class Toplevel(resource.Resource):
 
 
 	def render(self, request):
-		fp = open(util.sibpath(__file__, "web-data/tpl/default") + "/index.html")
+		print "Request: %s", request
+		
+		fp = open(util.sibpath(__file__, "/web-data/tpl/default") + "/index.html")
 		s = fp.read()
 		fp.close()
 		
@@ -58,6 +61,8 @@ class Toplevel(resource.Resource):
 		request.setHeader('Content-type', 'text/html; charset=UTF-8')
 		request.write(s)
 		request.finish()
+		
+		return server.NOT_DONE_YET		
 		#return http.Response(responsecode.OK, {'Content-type': http_headers.MimeType('text', 'html')},stream=s)
 
 	def locateChild(self, request, segments):		
@@ -73,5 +78,5 @@ class RedirectorResource(resource.Resource):
 	
 	def render(self, request):
 		request.redirect(self.uri)
-		request.finish()		
+		request.NOT_DONE_YET		
 

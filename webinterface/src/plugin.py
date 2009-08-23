@@ -7,7 +7,8 @@ from WebChilds.Toplevel import Toplevel
 from twisted.internet import reactor, defer, ssl
 from twisted.internet.error import CannotListenError
 from twisted.web import server, http
-from twisted.web._auth import digest, basic, wrapper
+from twisted.web._auth import basic, digest
+from twisted.web._auth.wrapper import HTTPAuthSessionWrapper
 from twisted.python.log import startLogging
 from twisted.cred.portal import Portal, IRealm
 from twisted.cred import checkers, credentials, error
@@ -115,29 +116,30 @@ def stopWebserver(session):
 		Closer(session).stop()
 
 def startServerInstance(session, ipaddress, port, useauth=False, usessl=False):
-	try:
+#	try:
 		toplevel = Toplevel(session)
 		if useauth:
-			portal = Portal(HTTPAuthRealm())
-			portal.registerChecker(PasswordDatabase())
-			root = wrapper.HTTPAuthResource(toplevel, (basic.BasicCredentialFactory(socket_gethostname()),), portal, (IHTTPUser,))
+#			portal = Portal(HTTPAuthRealm())
+#			portal.registerChecker(PasswordDatabase())
+#			root = HTTPAuthSessionWrapper(toplevel, (basic.BasicCredentialFactory(socket_gethostname()),), portal, (IHTTPUser,))
+			root = toplevel
 			site = server.Site(root)			
 		else:
 			site = server.Site(toplevel)
-		try:
-			if usessl:
-				ctx = ssl.DefaultOpenSSLContextFactory('/etc/enigma2/server.pem', '/etc/enigma2/cacert.pem', sslmethod=SSL.SSLv23_METHOD)
-				d = reactor.listenSSL(port, channel.HTTPFactory(site), ctx, interface=ipaddress)
-			else:
-				d = reactor.listenTCP(port, channel.HTTPFactory(site), interface=ipaddress)
-			running_defered.append(d)
-			print "[Webinterface] started on %s:%i" % (ipaddress, port), "auth=", useauth, "ssl=", usessl
-		except CannotListenError, e:
-			print "[Webinterface] Could not Listen on %s:%i!" % (ipaddress, port)
-			session.open(MessageBox, 'Could not Listen on %s:%i!\n\n%s' % (ipaddress, port, str(e)), MessageBox.TYPE_ERROR)
-	except Exception, e:
-		print "[Webinterface] starting FAILED on %s:%i!" % (ipaddress, port), e
-		session.open(MessageBox, 'starting FAILED on %s:%i!\n\n%s' % (ipaddress, port, str(e)), MessageBox.TYPE_ERROR)
+#		try:
+		if usessl:
+			ctx = ssl.DefaultOpenSSLContextFactory('/etc/enigma2/server.pem', '/etc/enigma2/cacert.pem', sslmethod=SSL.SSLv23_METHOD)
+			d = reactor.listenSSL(port, site, ctx, interface=ipaddress)
+		else:
+			d = reactor.listenTCP(port, site, interface=ipaddress)
+		running_defered.append(d)
+		print "[Webinterface] started on %s:%i" % (ipaddress, port), "auth=", useauth, "ssl=", usessl
+#		except CannotListenError, e:
+#			print "[Webinterface] Could not Listen on %s:%i!" % (ipaddress, port)
+#			session.open(MessageBox, 'Could not Listen on %s:%i!\n\n%s' % (ipaddress, port, str(e)), MessageBox.TYPE_ERROR)
+#	except Exception, e:
+#		print "[Webinterface] starting FAILED on %s:%i!" % (ipaddress, port), e
+#		session.open(MessageBox, 'starting FAILED on %s:%i!\n\n%s' % (ipaddress, port, str(e)), MessageBox.TYPE_ERROR)
 
 class PasswordDatabase:
 	"""
@@ -373,11 +375,11 @@ def sessionstart(reason, session):
 
 def autostart(reason, **kwargs):
 	if reason is True:
-		try:
-			updateConfig()
-			startWebserver(global_session)
-		except ImportError, e:
-			print "[Webinterface] twisted not available, not starting web services", e
+#		try:
+		updateConfig()
+		startWebserver(global_session)
+#		except ImportError, e:
+#			print "[Webinterface] twisted not available, not starting web services", e
 	elif reason is False:
 		stopWebserver(global_session)
 

@@ -1,6 +1,6 @@
 from enigma import eConsoleAppContainer
 
-from twisted.web import resource, http, http_headers
+from twisted.web import resource, http, http_headers, server
 
 from os import path as os_path, remove as os_remove
 
@@ -10,7 +10,10 @@ class GrabResource(resource.Resource):
 	'''
 	GRAB_BIN = '/usr/bin/grab'
 	SPECIAL_ARGS = ['format', 'filename', 'save']
-
+	
+	def __init__(self):
+		resource.Resource.__init__(self)
+	
 	def render(self, request):
 		self.baseCmd = ['/usr/bin/grab', '/usr/bin/grab']
 		self.args = []
@@ -62,7 +65,7 @@ class GrabResource(resource.Resource):
 		if not os_path.exists(self.GRAB_BIN):
 			request.setResponseCode(http.OK)
 			request.write('Grab is not installed at %s. Please install package aio-grab.' %self.GRAB_BIN)
-			request.finish()
+			request.finish()			
 			
 		else:
 			request.setHeader('Content-Disposition', 'inline; filename=screenshot.%s;' %imageformat)			
@@ -73,8 +76,10 @@ class GrabResource(resource.Resource):
 			cmd = self.baseCmd + self.args
 					
 			GrabStream(request, cmd, filename, save)
-
-class GrabStream(stream.ProducerStream):
+		
+		return server.NOT_DONE_YET
+	
+class GrabStream:
 	'''
 		used to start the grab-bin in the console in the background
 		while this takes some time, the browser must wait until the grabis finished
