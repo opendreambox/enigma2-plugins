@@ -3,7 +3,7 @@ from Plugins.Plugin import PluginDescriptor
 from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigInteger, ConfigYesNo, ConfigText, ConfigSelection, ConfigSubList
 from Screens.MessageBox import MessageBox
 from WebIfConfig import WebIfConfigScreen, initConfig, updateConfig
-from WebChilds.Toplevel import Toplevel
+from WebChilds.Toplevel import getToplevel
 from twisted.internet import reactor, defer, ssl
 from twisted.internet.error import CannotListenError
 from twisted.web import server, http
@@ -116,17 +116,17 @@ def stopWebserver(session):
 		Closer(session).stop()
 
 def startServerInstance(session, ipaddress, port, useauth=False, usessl=False):
-#	try:
-		toplevel = Toplevel(session)
+	try:
+		toplevel = getToplevel(session)
 		if useauth:
-#			portal = Portal(HTTPAuthRealm())
-#			portal.registerChecker(PasswordDatabase())
-#			root = HTTPAuthSessionWrapper(toplevel, (basic.BasicCredentialFactory(socket_gethostname()),), portal, (IHTTPUser,))
+			portal = Portal(HTTPAuthRealm())
+			portal.registerChecker(PasswordDatabase())
+			wrapper = HTTPAuthSessionWrapper(portal, (IHTTPUser,))
 			root = toplevel
 			site = server.Site(root)			
 		else:
 			site = server.Site(toplevel)
-#		try:
+
 		if usessl:
 			ctx = ssl.DefaultOpenSSLContextFactory('/etc/enigma2/server.pem', '/etc/enigma2/cacert.pem', sslmethod=SSL.SSLv23_METHOD)
 			d = reactor.listenSSL(port, site, ctx, interface=ipaddress)
@@ -134,12 +134,10 @@ def startServerInstance(session, ipaddress, port, useauth=False, usessl=False):
 			d = reactor.listenTCP(port, site, interface=ipaddress)
 		running_defered.append(d)
 		print "[Webinterface] started on %s:%i" % (ipaddress, port), "auth=", useauth, "ssl=", usessl
-#		except CannotListenError, e:
-#			print "[Webinterface] Could not Listen on %s:%i!" % (ipaddress, port)
-#			session.open(MessageBox, 'Could not Listen on %s:%i!\n\n%s' % (ipaddress, port, str(e)), MessageBox.TYPE_ERROR)
-#	except Exception, e:
-#		print "[Webinterface] starting FAILED on %s:%i!" % (ipaddress, port), e
-#		session.open(MessageBox, 'starting FAILED on %s:%i!\n\n%s' % (ipaddress, port, str(e)), MessageBox.TYPE_ERROR)
+		
+	except Exception, e:
+		print "[Webinterface] starting FAILED on %s:%i!" % (ipaddress, port), e
+		session.open(MessageBox, 'starting FAILED on %s:%i!\n\n%s' % (ipaddress, port, str(e)), MessageBox.TYPE_ERROR)
 
 class PasswordDatabase:
 	"""

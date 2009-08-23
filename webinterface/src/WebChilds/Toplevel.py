@@ -1,4 +1,4 @@
-from twisted.web import resource, static, http
+from twisted.web import resource, static
 from twisted.python import util
 
 from Components.config import config
@@ -19,55 +19,36 @@ externalChildren = []
 def addExternalChild(child):
 	externalChildren.append(child)
 
-class Toplevel(resource.Resource):
-	#addSlash = True
+def getToplevel(session):
+	print "[Webinterface.Toplevel].__init__ %s" %util.sibpath(__file__, "web-data/tpl/default")		
+		
+	file = static.File(util.sibpath(__file__, "web-data/tpl/default"))
 	
-	def __init__(self, session):
+	file.putChild("web", ScreenPage(session, util.sibpath(__file__, "web"))) # "/web/*"
+	file.putChild("web-data", static.File(util.sibpath(__file__, "web-data")))
+	file.putChild("file", FileStreamer())
+	file.putChild("grab", GrabResource())
+	file.putChild("ipkg", IPKGResource())
+	file.putChild("play", ServiceplayerResource(session))
+	file.putChild("wap", RedirectorResource("/mobile/"))
+	file.putChild("mobile", ScreenPage(session, util.sibpath(__file__, "mobile")))
+	file.putChild("upload", UploadResource())
+	#self.putChild("servicelist", ServiceList(session))
+	file.putChild("streamcurrent", RedirecToCurrentStreamResource(session))
 		
-		resource.Resource.__init__(self)		
+	if config.plugins.Webinterface.includemedia.value is True:
+		file.putChild("media", static.File("/media"))
+		file.putChild("hdd", static.File("/media/hdd"))
 		
-		self.putChild("web", ScreenPage(session, util.sibpath(__file__, "web"))) # "/web/*"
-		self.putChild("web-data", static.File(util.sibpath(__file__, "web-data")))
-		self.putChild("file", FileStreamer())
-		self.putChild("grab", GrabResource())
-		self.putChild("ipkg", IPKGResource())
-		self.putChild("play", ServiceplayerResource(session))
-		self.putChild("wap", RedirectorResource("/mobile/"))
-		self.putChild("mobile", ScreenPage(session, util.sibpath(__file__, "mobile")))
-		self.putChild("upload", UploadResource())
-		#self.putChild("servicelist", ServiceList(session))
-		self.putChild("streamcurrent", RedirecToCurrentStreamResource(session))
-			
-		if config.plugins.Webinterface.includemedia.value is True:
-			self.putChild("media", static.File("/media"))
-			self.putChild("hdd", static.File("/media/hdd"))
-			
-		
-		importExternalModules()
+	
+	importExternalModules()
 
-		for child in externalChildren:
-			if len(child) == 2:
-				self.putChild(child[0], child[1])
-
-
-	def render(self, request):
-		print "Request: %s", request
+	for child in externalChildren:
+		if len(child) == 2:
+			file.putChild(child[0], child[1])
+	
+	return file
 		
-		fp = open(util.sibpath(__file__, "/web-data/tpl/default") + "/index.html")
-		s = fp.read()
-		fp.close()
-		
-		request.setResponseCode(http.OK)
-		request.setHeader('Content-type', 'text/html; charset=UTF-8')
-		request.write(s)
-		request.finish()
-		
-		return server.NOT_DONE_YET		
-		#return http.Response(responsecode.OK, {'Content-type': http_headers.MimeType('text', 'html')},stream=s)
-
-	def locateChild(self, request, segments):		
-		return resource.Resource.locateChild(self, request, segments)
-
 class RedirectorResource(resource.Resource):
 	"""
 		this class can be used to redirect a request to a specified uri

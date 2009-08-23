@@ -5,7 +5,7 @@ class RedirecToCurrentStreamResource(resource.Resource):
 	"""
 		used to redirect the client to the streamproxy with the current service tuned on TV
 	"""
-	def __init__(self,session):
+	def __init__(self, session):
 		resource.Resource.__init__(self)
 		self.session = session
 		resource.Resource.__init__(self)
@@ -17,7 +17,7 @@ class RedirecToCurrentStreamResource(resource.Resource):
 		else:
 			sref = "N/A"
 		
-		request.redirect("http://%s:8001/%s"%(request.host,sref))
+		request.redirect("http://%s:8001/%s" % (request.getHost().host, sref))
 		request.finish()
 		return server.NOT_DONE_YET
 

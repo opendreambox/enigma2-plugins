@@ -18,6 +18,7 @@ from xml.sax import make_parser
 from xml.sax.handler import ContentHandler, feature_namespaces
 from xml.sax.saxutils import escape as escape_xml
 from twisted.python import util
+from twisted.web import server
 from urllib2 import quote
 
 #DO NOT REMOVE THIS IMPORT
@@ -462,7 +463,7 @@ def renderPage(request, path, session):
 	def ping(request):
 		from twisted.internet import reactor
 		request.write("\n");
-		reactor.callLater(3, ping, s)
+		reactor.callLater(3, ping, request)
 
 	# if we met a "StreamingElement", there is at least one
 	# element which wants to output data more than once,
@@ -478,10 +479,17 @@ def renderPage(request, path, session):
 		# i agree that this "ping" sucks terrible, so better be sure to have something
 		# similar. A "CurrentTime" is fine. Or anything that creates *some* output.
 		ping(request)
-		#stream.closed_callback = lambda : requestFinish(handler, request)
+		
+		d = request.notifyFinish()
+		def requestFinishDeferred(nothing, handler, request):
+			requestFinish(handler, request)
+			
+		d.addCallback( requestFinishDeferred, handler, request )
 
 def requestFinish(handler, request):
 	handler.cleanup()
 	request.finish()
+	server.NOT_DONE_YET
+	
 	del handler
 	del request
