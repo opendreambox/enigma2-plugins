@@ -6,12 +6,17 @@ from WebIfConfig import WebIfConfigScreen, initConfig, updateConfig
 from WebChilds.Toplevel import getToplevel
 from twisted.internet import reactor, defer, ssl
 from twisted.internet.error import CannotListenError
-from twisted.web import server, http
+from twisted.web import server, http, util
+
 from twisted.web._auth import basic, digest
-from twisted.web._auth.wrapper import HTTPAuthSessionWrapper
+#from HTTPAuthWrapper import HTTPAuthSessionWrapper
+from twisted.web import resource, server
+
+from twisted.cred.credentials import Anonymous
 from twisted.python.log import startLogging
 from twisted.cred.portal import Portal, IRealm
 from twisted.cred import checkers, credentials, error
+from twisted.plugins.cred_unix import UNIXChecker, UNIXCheckerFactory
 from zope.interface import Interface, implements
 from socket import gethostname as socket_gethostname
 from OpenSSL import SSL
@@ -116,28 +121,70 @@ def stopWebserver(session):
 		Closer(session).stop()
 
 def startServerInstance(session, ipaddress, port, useauth=False, usessl=False):
-	try:
-		toplevel = getToplevel(session)
-		if useauth:
-			portal = Portal(HTTPAuthRealm())
-			portal.registerChecker(PasswordDatabase())
-			wrapper = HTTPAuthSessionWrapper(portal, (IHTTPUser,))
-			root = toplevel
-			site = server.Site(root)			
-		else:
-			site = server.Site(toplevel)
+#	try:
+	toplevel = getToplevel(session)
+	if useauth:
+		#root = HTTPAuthResource(toplevel)
+		root = toplevel
+		site = server.Site(root)			
+	else:
+		site = server.Site(toplevel)
 
-		if usessl:
-			ctx = ssl.DefaultOpenSSLContextFactory('/etc/enigma2/server.pem', '/etc/enigma2/cacert.pem', sslmethod=SSL.SSLv23_METHOD)
-			d = reactor.listenSSL(port, site, ctx, interface=ipaddress)
-		else:
-			d = reactor.listenTCP(port, site, interface=ipaddress)
-		running_defered.append(d)
-		print "[Webinterface] started on %s:%i" % (ipaddress, port), "auth=", useauth, "ssl=", usessl
+	if usessl:
+		ctx = ssl.DefaultOpenSSLContextFactory('/etc/enigma2/server.pem', '/etc/enigma2/cacert.pem', sslmethod=SSL.SSLv23_METHOD)
+		d = reactor.listenSSL(port, site, ctx, interface=ipaddress)
+	else:
+		d = reactor.listenTCP(port, site, interface=ipaddress)
+	running_defered.append(d)
+	print "[Webinterface] started on %s:%i" % (ipaddress, port), "auth=", useauth, "ssl=", usessl
 		
-	except Exception, e:
-		print "[Webinterface] starting FAILED on %s:%i!" % (ipaddress, port), e
-		session.open(MessageBox, 'starting FAILED on %s:%i!\n\n%s' % (ipaddress, port, str(e)), MessageBox.TYPE_ERROR)
+#	except Exception, e:
+#		print "[Webinterface] starting FAILED on %s:%i!" % (ipaddress, port), e
+#		session.open(MessageBox, 'starting FAILED on %s:%i!\n\n%s' % (ipaddress, port, str(e)), MessageBox.TYPE_ERROR)
+
+
+#class HTTPAuthResource(HTTPAuthSessionWrapper):
+#	def __init__(self, resource):
+#		portal = Portal(HTTPAuthRealm())
+#		portal.registerChecker(UNIXChecker())
+#		
+#		HTTPAuthSessionWrapper.__init__(self, portal, (UNIXCheckerFactory(),))				
+#		
+#		self.resource = resource		
+#
+#	def render(self, request):
+#		child = self.getChildForRequest(self.wrapper, request)
+#		self.renderResource(self.resource, child)
+#	
+#	def renderResource(self, resource, request):
+#		resource.render(child)
+#
+#	def getChildWithDefault(self, path, request):
+#		"""
+#		Inspect the Authorization HTTP header, and return a deferred which,
+#		when fired after successful authentication, will return an authorized
+#		C{Avatar}. On authentication failure, an C{UnauthorizedResource} will
+#		be returned, essentially halting further dispatch on the wrapped
+#		resource and all children
+#		"""
+#		authheader = request.getHeader('authorization')
+#		if not authheader:
+#			return util.DeferredResource(self._login(Anonymous()))
+#
+#		factory, respString = self._selectParseHeader(authheader)
+#		if factory is None:
+#			return HTTPUnauthorizedResource(self._credentialFactories)
+#		try:
+#			credentials = factory.decode(respString, request)
+#		except error.LoginFailed:
+#			return HTTPUnauthorizedResource(self._credentialFactories)
+#		except:
+#			log.err(None, "Unexpected failure from credentials factory")
+#			return ErrorPage(500, None, None)
+#		else:
+#			request.postpath.insert(0, request.prepath.pop())
+#			return util.DeferredResource(self._login(credentials))
+
 
 class PasswordDatabase:
 	"""

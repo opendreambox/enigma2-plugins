@@ -462,7 +462,7 @@ def renderPage(request, path, session):
 
 	def ping(request):
 		from twisted.internet import reactor
-		request.write("\n");
+		request.write("");		
 		reactor.callLater(3, ping, request)
 
 	# if we met a "StreamingElement", there is at least one
@@ -478,18 +478,20 @@ def renderPage(request, path, session):
 		# in order to detect disconnected clients.
 		# i agree that this "ping" sucks terrible, so better be sure to have something
 		# similar. A "CurrentTime" is fine. Or anything that creates *some* output.
-		ping(request)
+		
+		# ping(request)
 		
 		d = request.notifyFinish()
 		def requestFinishDeferred(nothing, handler, request):
 			requestFinish(handler, request)
 			
-		d.addCallback( requestFinishDeferred, handler, request )
-
+		d.addCallback( requestFinishDeferred, handler, request )		
+		
 def requestFinish(handler, request):
 	handler.cleanup()
-	request.finish()
-	server.NOT_DONE_YET
+	request.finish()	
 	
 	del handler
 	del request
+	
+	return server.NOT_DONE_YET

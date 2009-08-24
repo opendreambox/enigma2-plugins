@@ -1,4 +1,4 @@
-from twisted.web import resource, http
+from twisted.web import resource, http, server
 
 from Plugins.Extensions.WebInterface import webif
 
@@ -31,7 +31,7 @@ class ScreenPage(resource.Resource):
 
 	def render(self, request):	
 		if os.path.isfile(self.path):	
-
+			print "[Webinterface.Screenpage].render - request: %s" %request
 # Set the Header according to what's requested								
 			if self.path.split("/")[-1] in AppTextHeaderFiles:				
 				request.setResponseCode(http.OK)
@@ -53,8 +53,10 @@ class ScreenPage(resource.Resource):
 								
 		else:
 			request.setResponseCode(http.NOT_FOUND)
+		
+		return server.NOT_DONE_YET
 
-# request.finish() and server.NOT_DONE_YET are called inside webif.py (very bottom)		
+# request.finish() is called inside webif.py (very bottom)		
 
 	def getChild(self, path, request):
 		path = "%s/%s" %(self.path, path)
