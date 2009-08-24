@@ -31,7 +31,6 @@ class ScreenPage(resource.Resource):
 
 	def render(self, request):	
 		if os.path.isfile(self.path):	
-			#print "[Webinterface.Screenpage].render - request: %s" %request
 			
 # Set the Header according to what's requested								
 			if self.path.split("/")[-1] in AppTextHeaderFiles:				
@@ -49,15 +48,16 @@ class ScreenPage(resource.Resource):
 				request.setResponseCode(http.OK)				
 				request.setHeader('Content-Type', 'application/xhtml+xml; charset=UTF-8')	
 
-# now go and write the Output			
+			# now go and write the Output			
 			webif.renderPage(request, self.path, self.session) # login?
 								
 		else:
 			request.setResponseCode(http.NOT_FOUND)
 		
+		# request.finish() is called inside webif.py (requestFinish() which is called via renderPage())
+		
 		return server.NOT_DONE_YET
-
-# request.finish() is called inside webif.py (very bottom)		
+				
 
 	def getChild(self, path, request):
 		path = "%s/%s" %(self.path, path)

@@ -22,32 +22,32 @@ def addExternalChild(child):
 def getToplevel(session):
 	print "[Webinterface.Toplevel].__init__ %s" %util.sibpath(__file__, "web-data/tpl/default")		
 		
-	file = static.File(util.sibpath(__file__, "web-data/tpl/default"))
+	root = static.File(util.sibpath(__file__, "web-data/tpl/default"))
 	
-	file.putChild("web", ScreenPage(session, util.sibpath(__file__, "web"))) # "/web/*"
-	file.putChild("web-data", static.File(util.sibpath(__file__, "web-data")))
-	file.putChild("file", FileStreamer())
-	file.putChild("grab", GrabResource())
-	file.putChild("ipkg", IPKGResource())
-	file.putChild("play", ServiceplayerResource(session))
-	file.putChild("wap", RedirectorResource("/mobile/"))
-	file.putChild("mobile", ScreenPage(session, util.sibpath(__file__, "mobile")))
-	file.putChild("upload", UploadResource())
+	root.putChild("web", ScreenPage(session, util.sibpath(__file__, "web"))) # "/web/*"
+	root.putChild("web-data", static.File(util.sibpath(__file__, "web-data")))
+	root.putChild("file", FileStreamer())
+	root.putChild("grab", GrabResource())
+	root.putChild("ipkg", IPKGResource())
+	root.putChild("play", ServiceplayerResource(session))
+	root.putChild("wap", RedirectorResource("/mobile/"))
+	root.putChild("mobile", ScreenPage(session, util.sibpath(__file__, "mobile")))
+	root.putChild("upload", UploadResource())
 	#self.putChild("servicelist", ServiceList(session))
-	file.putChild("streamcurrent", RedirecToCurrentStreamResource(session))
+	root.putChild("streamcurrent", RedirecToCurrentStreamResource(session))
 		
 	if config.plugins.Webinterface.includemedia.value is True:
-		file.putChild("media", static.File("/media"))
-		file.putChild("hdd", static.File("/media/hdd"))
+		root.putChild("media", static.File("/media"))
+		root.putChild("hdd", static.File("/media/hdd"))
 		
 	
 	importExternalModules()
 
 	for child in externalChildren:
 		if len(child) == 2:
-			file.putChild(child[0], child[1])
+			root.putChild(child[0], child[1])
 	
-	return file
+	return root
 		
 class RedirectorResource(resource.Resource):
 	"""
