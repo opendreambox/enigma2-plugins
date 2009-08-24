@@ -71,7 +71,7 @@ class genuineDreambox(Screen):
         self["actions"] = ActionMap(["SetupActions", "ColorActions"],
         {
             "green": self.restart,
-            "cancel": self.close,
+            "cancel": self.exit,
          }, -1)
         self["kGreen"] = Button(_("Restart"))
         self["kRed"] = Button(_("Cancel"))
@@ -91,6 +91,7 @@ class genuineDreambox(Screen):
             self["resulttext"].setText("Please wait (Step 1)")
             self.uds = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
             self.uds.connect(("/var/run/tpmd_socket"))
+            self.uds.settimeout(5.0)
         except:
             self["resulttext"].setText("Security service not running.")
             udsError = True
@@ -101,27 +102,25 @@ class genuineDreambox(Screen):
                     getPage(url).addCallback(self._gotPageLoadRandom).addErrback(self.errorLoad)
                 except:
                     self["resulttext"].setText("Can't connect to server. Please check your network!")
-        try:
-            self.uds.close()
-        except:
-            pass
 
     def _gotPageLoad(self, data):
         authcode = data.strip().replace('+', '')
         self.finish = "%s-%s-%s" % (authcode[0:4], authcode[4:8], authcode[8:12])
         self["resulttext"].setText(self.finish)
+        self.closeUds()
         self.isStart = False
         
     def _gotPageLoadRandom(self, data):
         self["resulttext"].setText("Please wait (Step 2)")
         self.back = data.strip()
         self.random = (self.formatList(base64.b64decode(self.back)))
-        self.stepSecond(TPMD_CMD_GET_DATA,[TPMD_DT_PROTOCOL_VERSION,TPMD_DT_TPM_VERSION,TPMD_DT_SERIAL,TPMD_DT_LEVEL2_CERT,
-                TPMD_DT_LEVEL3_CERT,TPMD_DT_FAB_CA_CERT,TPMD_DT_DATABLOCK_SIGNED] )
-        url = self.buildUrl()
-        getPage(url).addCallback(self._gotPageLoad).addErrback(self.errorLoad) 
+        if (self.stepSecond(TPMD_CMD_GET_DATA,[TPMD_DT_PROTOCOL_VERSION,TPMD_DT_TPM_VERSION,TPMD_DT_SERIAL,TPMD_DT_LEVEL2_CERT,
+                TPMD_DT_LEVEL3_CERT,TPMD_DT_FAB_CA_CERT,TPMD_DT_DATABLOCK_SIGNED] )):
+            url = self.buildUrl()
+            getPage(url).addCallback(self._gotPageLoad).addErrback(self.errorLoad) 
 
     def errorLoad(self, error):
+        print str(error)
         self["resulttext"].setText("Invalid response from server. Please report: %s" % str(error))
 
     def buildUrl(self):
@@ -153,8 +152,11 @@ class genuineDreambox(Screen):
         return (self.parseResult (self.udsSend(typ,daten,len(daten)), 1))
 
     def stepSecond(self,typ,daten):
-        self.parseResult(self.udsSend(typ,daten,len(daten)),2)
-        self.parseResult(self.udsSend(TPMD_CMD_COMPUTE_SIGNATURE,self.random,8),3)
+        if (self.parseResult(self.udsSend(typ,daten,len(daten)),2) == False):
+            return False
+        if (self.parseResult(self.udsSend(TPMD_CMD_COMPUTE_SIGNATURE,self.random,8),3) == False):
+            return False
+        return True     
 
     def parseResult(self,rbuf,art):
         if (rbuf != -1):
@@ -177,31 +179,54 @@ class genuineDreambox(Screen):
                 self.level2_cert = tpmdata.get(4)
                 self.level3_cert = tpmdata.get(5) # can be None
                 self.fab_ca_cert = tpmdata.get(6)
-                self.datablock_signed = tpmdata.get(7)                
+                self.datablock_signed = tpmdata.get(7)
+                return True            
             elif (art == 3):
                 self.r = self.formatString(buf)
+                return True
         else:
             return False
 
     def udsSend(self, cmdTyp, data, length):
-        self.uds.settimeout(2)
+        udsError = False
         sbuf = [(cmdTyp >> 8) & 0xff,(cmdTyp >> 0) & 0xff,(length >> 8) & 0xff,(length >> 0) & 0xff]
         sbuf.extend(data[:length])
         sbuf = struct.pack(str((length + 4))+"B", *sbuf)
         try:
             self.uds.send(sbuf)
+            udsError = False
         except socket.timeout:
+            udsError = True
             self["resulttext"].setText("Invalid response from Security service pls restart your Dreambox" )
-        rbuf = self.uds.recv(4)
-        leng = [ord(rbuf[2]) << 8 | ord(rbuf[3])]
-        if (leng != 4):
-            try:
-                res = self.uds.recv(leng[0])
-            except socket.timeout:
-                self["resulttext"].setText("Invalid response from Security service pls restart your Dreambox")
+        try:
+            rbuf = self.uds.recv(4)
+            udsError = False
+        except socket.timeout:
+            udsError = True
+            self["resulttext"].setText("Invalid response from Security service pls restart your Dreambox" )
+        
+        if (udsError == False):
+            leng = [ord(rbuf[2]) << 8 | ord(rbuf[3])]
+            if (leng != 4):
+                try:
+                    res = self.uds.recv(leng[0])
+                except socket.timeout:
+                    self["resulttext"].setText("Invalid response from Security service pls restart your Dreambox")
+            else:
+                return -1
         else:
             return -1
         return res
+
+    def closeUds(self):
+       try:
+            self.uds.close()
+       except:
+            pass
+
+    def exit(self):
+        self.closeUds()
+        self.close() 
 
 def main(session, **kwargs):
         session.open(genuineDreambox)
