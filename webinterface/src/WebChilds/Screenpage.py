@@ -31,7 +31,8 @@ class ScreenPage(resource.Resource):
 
 	def render(self, request):	
 		if os.path.isfile(self.path):	
-			print "[Webinterface.Screenpage].render - request: %s" %request
+			#print "[Webinterface.Screenpage].render - request: %s" %request
+			
 # Set the Header according to what's requested								
 			if self.path.split("/")[-1] in AppTextHeaderFiles:				
 				request.setResponseCode(http.OK)

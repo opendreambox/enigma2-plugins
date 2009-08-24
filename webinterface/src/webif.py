@@ -480,18 +480,17 @@ def renderPage(request, path, session):
 		# similar. A "CurrentTime" is fine. Or anything that creates *some* output.
 		
 		# ping(request)
+
+		def requestFinishDeferred(nothing, handler, request):
+			requestFinish(handler, request)				
 		
 		d = request.notifyFinish()
-		def requestFinishDeferred(nothing, handler, request):
-			requestFinish(handler, request)
-			
+
 		d.addCallback( requestFinishDeferred, handler, request )		
+							
 		
 def requestFinish(handler, request):
 	handler.cleanup()
 	request.finish()	
 	
 	del handler
-	del request
-	
-	return server.NOT_DONE_YET
