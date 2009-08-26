@@ -460,11 +460,6 @@ def renderPage(request, path, session):
 		else:
 			request.write(str(x))
 
-	def ping(request):
-		from twisted.internet import reactor
-		request.write("");		
-		reactor.callLater(3, ping, request)
-
 	# if we met a "StreamingElement", there is at least one
 	# element which wants to output data more than once,
 	# i.e. on host-originated changes.
@@ -473,20 +468,15 @@ def renderPage(request, path, session):
 	if finish:
 		requestFinish(handler, request)
 	else:
-		# ok.
-		# you *need* something which constantly sends something in a regular interval,
-		# in order to detect disconnected clients.
-		# i agree that this "ping" sucks terrible, so better be sure to have something
-		# similar. A "CurrentTime" is fine. Or anything that creates *some* output.
-		
-		# ping(request)
-
+	
 		def requestFinishDeferred(nothing, handler, request):
-			requestFinish(handler, request)				
+			from twisted.internet import reactor
+			reactor.callLater(1, requestFinish, handler, request)				
 		
 		d = request.notifyFinish()
 
-		d.addCallback( requestFinishDeferred, handler, request )		
+		d.addErrback( requestFinishDeferred, handler, request )
+		d.addCallback( requestFinishDeferred, handler, request )
 							
 		
 def requestFinish(handler, request):
