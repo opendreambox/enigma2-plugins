@@ -18,7 +18,6 @@ from xml.sax import make_parser
 from xml.sax.handler import ContentHandler, feature_namespaces
 from xml.sax.saxutils import escape as escape_xml
 from twisted.python import util
-from twisted.web import server
 from urllib2 import quote
 
 #DO NOT REMOVE THIS IMPORT
@@ -467,8 +466,8 @@ def renderPage(request, path, session):
 	# but instead do that when the client disconnects.
 	if finish:
 		requestFinish(handler, request)
-	else:
 	
+	else:	
 		def requestFinishDeferred(nothing, handler, request):
 			from twisted.internet import reactor
 			reactor.callLater(1, requestFinish, handler, request)				

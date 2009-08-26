@@ -1,21 +1,14 @@
 Version = '$Header$';
 from Plugins.Plugin import PluginDescriptor
-from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigInteger, ConfigYesNo, ConfigText, ConfigSelection, ConfigSubList
+from Components.config import config, ConfigSubsection, ConfigInteger, ConfigYesNo, ConfigText, ConfigSubList
 from Screens.MessageBox import MessageBox
 from WebIfConfig import WebIfConfigScreen, initConfig, updateConfig
 from WebChilds.Toplevel import getToplevel
-from twisted.internet import reactor, defer, ssl
-from twisted.internet.error import CannotListenError
+
+from twisted.internet import reactor, ssl
 from twisted.web import server, http, util, static, resource
-
-from twisted.web._auth import basic, digest
-#from HTTPAuthWrapper import HTTPAuthSessionWrapper
-
-from twisted.cred.credentials import Anonymous
 from twisted.python.log import startLogging
-from twisted.cred.portal import Portal, IRealm
-from twisted.cred import checkers, credentials, error
-from twisted.plugins.cred_unix import UNIXChecker, UNIXCheckerFactory
+
 from zope.interface import Interface, implements
 from socket import gethostname as socket_gethostname
 from OpenSSL import SSL
@@ -94,10 +87,10 @@ def startWebserver(session):
 	session.messageboxanswer = None
 
 	if config.plugins.Webinterface.enable.value is not True:
-		print "not starting Werbinterface"
+		print "[Webinterface] is disabled!"
 		return False
 	if DEBUG_TO_FILE:
-		print "start twisted logfile, writing to %s" % DEBUGFILE
+		print "[Webinterface] start twisted logfile, writing to %s" % DEBUGFILE
 		startLogging(open(DEBUGFILE, 'w'))
 
 	for c in config.plugins.Webinterface.interfaces:
@@ -124,7 +117,6 @@ def startServerInstance(session, ipaddress, port, useauth=False, usessl=False):
 		toplevel = getToplevel(session)
 		if useauth:
 			root = HTTPAuthResource(toplevel, "Enigma2 WebInterface")
-			#root = toplevel
 			site = server.Site(root)			
 		else:
 			site = server.Site(toplevel)
@@ -151,7 +143,7 @@ class HTTPAuthResource(resource.Resource):
 		self.unauthorizedResource = UnauthorizedResource(self.realm)		
 	
 	def unautorized(self, request):
-		print "[Webinterface.plugin].render Unauthorized!"
+		print "[Webinterface] Unauthorized!"
 		request.setResponseCode(http.UNAUTHORIZED)
 		request.setHeader('WWW-authenticate', 'basic realm="%s"' % self.realm)
 
@@ -195,11 +187,7 @@ class UnauthorizedResource(resource.Resource):
 		self.realm = realm
 		self.errorpage = static.Data('<html><body>Access Denied.</body></html>', 'text/html')
 		
-	def render(self, request):
-		request.setResponseCode(http.UNAUTHORIZED)
-		# FIXME: Does realm need to be quoted?
-		request.setHeader('WWW-authenticate', 'basic realm="%s"' %self.realm)
-		
+	def render(self, request):	
 		return self.errorpage.render(request)
 
 from hashlib import md5 as md5_new
