@@ -10,7 +10,7 @@ from Screengrab import GrabResource
 from IPKG import IPKGResource
 from PlayService import ServiceplayerResource
 from Uploader import UploadResource
-#from ServiceListSave import ServiceList
+from ServiceListSave import ServiceList
 from RedirecToCurrentStream import RedirecToCurrentStreamResource
 
 from External.__init__ import importExternalModules
@@ -32,8 +32,8 @@ def getToplevel(session):
 	root.putChild("play", ServiceplayerResource(session))
 	root.putChild("wap", RedirectorResource("/mobile/"))
 	root.putChild("mobile", ScreenPage(session, util.sibpath(__file__, "mobile")))
-	root.putChild("upload", UploadResource())
-	#self.putChild("servicelist", ServiceList(session))
+	#root.putChild("upload", UploadResource())
+	root.putChild("servicelist", ServiceList(session))
 	root.putChild("streamcurrent", RedirecToCurrentStreamResource(session))
 		
 	if config.plugins.Webinterface.includemedia.value is True:
