@@ -1,4 +1,4 @@
-from twisted.web import resource, http, http_headers, server
+from twisted.web import resource, http, http_headers, server, static
 from urllib import unquote_plus
 from os import path as os_path
 
@@ -38,22 +38,8 @@ class FileStreamer(resource.Resource):
 				path = "/hdd/movie/%s" %filename
 			
 			if os_path.exists(path):
-				s = stream.FileStream(open(path,"r"))
-				type = path.split(".")[-1]
-				header = http_headers.MimeType('video', 'ts')
-				if type == "mp3" or type == "ogg" or type == "wav":
-					header = http_headers.MimeType('audio', 'x-mpeg')
-				elif type == "avi" or type == "mpg":
-					header = http_headers.MimeType('video', 'x-msvideo')
-				elif type == "jpg" or type == "jpeg" or type == "jpe":
-					header = http_headers.MimeType('image', 'jpeg')
-
-				resp = http.Response(responsecode.OK, {'Content-type': header},stream=s)
-				request.setResponseCode(http.OK)
-				request.setHeader('Content-type', header)
-				request.setHeader('Content-Disposition','attachment; filename="%s"'%filename)
-				request.write(s)
-				request.finish()
+				file = static.File(path)
+				return file.render(request)
 				
 			else:
 				request.setResponseCode(http.OK)

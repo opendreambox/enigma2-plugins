@@ -120,23 +120,27 @@ def stopWebserver(session):
 		Closer(session).stop()
 
 def startServerInstance(session, ipaddress, port, useauth=False, usessl=False):
-#	try:
-	toplevel = getToplevel(session)
-	if useauth:
-		root = HTTPAuthResource(toplevel, "Enigma2 WebInterface")
-		#root = toplevel
-		site = server.Site(root)			
-	else:
-		site = server.Site(toplevel)
-
-	if usessl:
-		ctx = ssl.DefaultOpenSSLContextFactory('/etc/enigma2/server.pem', '/etc/enigma2/cacert.pem', sslmethod=SSL.SSLv23_METHOD)
-		d = reactor.listenSSL(port, site, ctx, interface=ipaddress)
-	else:
-		d = reactor.listenTCP(port, site, interface=ipaddress)
-	running_defered.append(d)
-	print "[Webinterface] started on %s:%i" % (ipaddress, port), "auth=", useauth, "ssl=", usessl
-
+	try:
+		toplevel = getToplevel(session)
+		if useauth:
+			root = HTTPAuthResource(toplevel, "Enigma2 WebInterface")
+			#root = toplevel
+			site = server.Site(root)			
+		else:
+			site = server.Site(toplevel)
+	
+		if usessl:
+			ctx = ssl.DefaultOpenSSLContextFactory('/etc/enigma2/server.pem', '/etc/enigma2/cacert.pem', sslmethod=SSL.SSLv23_METHOD)
+			d = reactor.listenSSL(port, site, ctx, interface=ipaddress)
+		else:
+			d = reactor.listenTCP(port, site, interface=ipaddress)
+		running_defered.append(d)
+		print "[Webinterface] started on %s:%i" % (ipaddress, port), "auth=", useauth, "ssl=", usessl
+	
+	except Exception, e:
+		print "[Webinterface] starting FAILED on %s:%i!" % (ipaddress, port), e
+		session.open(MessageBox, 'starting FAILED on %s:%i!\n\n%s' % (ipaddress, port, str(e)), MessageBox.TYPE_ERROR)
+	
 class HTTPAuthResource(resource.Resource):
 	def __init__(self, res, realm):
 		resource.Resource.__init__(self)

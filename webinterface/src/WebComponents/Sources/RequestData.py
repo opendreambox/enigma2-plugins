@@ -25,7 +25,7 @@ class RequestData(Source):
 		if self.what is self.HOST:
 			return self.request.host.host
 		elif self.what is self.PORT:
-			return self.request.host.port
+			return str(self.request.host.port)
 		elif self.what is self.METHOD:
 			return self.request.method
 		elif self.what is self.PATH:
@@ -33,7 +33,7 @@ class RequestData(Source):
 		elif self.what is self.REMOTEADRESS:
 			return self.request.client.ip
 		elif self.what is self.REMOTEPORT:
-			return self.request.client.port
+			return str(self.request.client.port)
 		elif self.what is self.REMOTETYPE:
 			return self.request.client.type
 		elif self.what is self.URI:
