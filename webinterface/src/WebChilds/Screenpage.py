@@ -1,4 +1,4 @@
-from twisted.web import resource, http, server
+from twisted.web import resource, http, server, static
 
 from Plugins.Extensions.WebInterface import webif
 
@@ -28,6 +28,10 @@ class ScreenPage(resource.Resource):
 		
 		self.session = session
 		self.path = path
+		
+		if os.path.isdir(path):
+			self.path = "%s/index.html.xml" %self.path
+			
 
 	def render(self, request):	
 		if os.path.isfile(self.path):	
@@ -48,22 +52,25 @@ class ScreenPage(resource.Resource):
 				request.setResponseCode(http.OK)				
 				request.setHeader('Content-Type', 'application/xhtml+xml; charset=UTF-8')	
 
-			# now go and write the Output			
-			webif.renderPage(request, self.path, self.session) # login?
-								
+			# now go and write the Output
+			# request.finish() is called inside webif.py (requestFinish() which is called via renderPage())			
+			webif.renderPage(request, self.path, self.session) # login?		
+		
 		else:
 			request.setResponseCode(http.NOT_FOUND)
-		
-		# request.finish() is called inside webif.py (requestFinish() which is called via renderPage())
-		
+			request.write('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">\n')
+			request.write("<html><head><title>Enigma2 WebControl</title></head><body><h1>404 - Page not found</h1></body></html>")
+			request.finish()
+				
 		return server.NOT_DONE_YET
 				
 
-	def getChild(self, path, request):
+	def getChild(self, path, request):	
 		path = "%s/%s" %(self.path, path)
-
+		
 		if path[-1:] == "/":
 			path += "index.html"
+			
 		path += ".xml"
 		return ScreenPage(self.session, path)
 

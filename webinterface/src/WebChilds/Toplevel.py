@@ -20,7 +20,7 @@ def addExternalChild(child):
 	externalChildren.append(child)
 
 def getToplevel(session):
-	print "[Webinterface.Toplevel].__init__ %s" %util.sibpath(__file__, "web-data/tpl/default")		
+	print "[Webinterface.Toplevel].__init__ %s" %util.sibpath(__file__, "web-data/tpl/default/")		
 		
 	root = static.File(util.sibpath(__file__, "web-data/tpl/default"))
 	
