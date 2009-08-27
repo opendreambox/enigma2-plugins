@@ -28,10 +28,6 @@ class ScreenPage(resource.Resource):
 		
 		self.session = session
 		self.path = path
-		
-		if os.path.isdir(path):
-			self.path = "%s/index.html.xml" %self.path
-			
 
 	def render(self, request):	
 		if os.path.isfile(self.path):	
@@ -56,6 +52,9 @@ class ScreenPage(resource.Resource):
 			# request.finish() is called inside webif.py (requestFinish() which is called via renderPage())			
 			webif.renderPage(request, self.path, self.session) # login?		
 		
+		elif os.path.isdir(self.path):			
+			return self.getChild("/", request).render(request)
+			
 		else:
 			request.setResponseCode(http.NOT_FOUND)
 			request.write('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">\n')
