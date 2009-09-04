@@ -65,14 +65,12 @@ def EPGSelection__init__(self, session, service, zapFunc=None, eventid=None, bou
 		self["key_blue"].setText(_("EPG Search"))
 
 def bluePressed(self):
-	try:
-		# EPGList could be empty
-		cur = self["list"].getCurrent()
-	except: # XXX: is this an IndexError? always be as specific as possible ;-)
+	cur = self["list"].getCurrent()
+	if cur[0] is None:
 		name = ''
 	else:
 		name = cur[0].getEventName()
-	self.session.open(EPGSearch,name , False)
+	self.session.open(EPGSearch, name, False)
 
 class EPGSearchList(EPGList):
 	def __init__(self, type=EPG_TYPE_SINGLE, selChangedCB=None, timer=None):
