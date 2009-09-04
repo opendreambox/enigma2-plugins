@@ -49,6 +49,7 @@ config.plugins.RSDownloader.download_friday = ConfigYesNo(default=True)
 config.plugins.RSDownloader.download_saturday = ConfigYesNo(default=True)
 config.plugins.RSDownloader.download_sunday = ConfigYesNo(default=True)
 config.plugins.RSDownloader.count_downloads = ConfigInteger(default=3, limits=(1, 6))
+config.plugins.RSDownloader.count_maximal_downloads = ConfigInteger(default=40, limits=(1, 400))
 config.plugins.RSDownloader.write_log = ConfigYesNo(default=True)
 config.plugins.RSDownloader.reconnect_fritz = ConfigYesNo(default=False)
 config.plugins.RSDownloader.autorestart_failed = ConfigYesNo(default=False)
@@ -193,15 +194,6 @@ class RSDownload:
 		self.size = 0
 		self.status = _("Waiting")
 		self.name = self.url.split("/")[-1]
-		
-		self.freeDownloadUrl = ""
-		self.freeDownloadTimer = eTimer()
-		self.freeDownloadTimer.callback.append(self.freeDownloadStart)
-		self.checkTimer = eTimer()
-		self.checkTimer.callback.append(self.doCheckTimer)
-		self.restartFailedTimer = eTimer()
-		self.restartFailedTimer.callback.append(self.restartFailedCheck)
-		
 		self.finishCallbacks = []
 
 	def start(self):
@@ -228,14 +220,38 @@ class RSDownload:
 				if not seconds:
 					self.httpFailed(True, "Failed to get download page url: %s"%self.url)
 				else:
-					writeLog("Free RS-download... must wait %s seconds: %s"%(seconds, self.url))
+					writeLog("Free RS-Download... must wait %s seconds: %s"%(seconds, self.url))
 					self.status = "%s %s"%(_("Waiting"), seconds)
 					url = matchGet('"dlf" action="([^"]+)', data)
 					if not url:
 						self.httpFailed(True, "Failed to get download page url: %s"%self.url)
 					else:
 						self.freeDownloadUrl = url
+						self.freeDownloadTimer = eTimer()
+						self.freeDownloadTimer.callback.append(self.freeDownloadStart)
 						self.freeDownloadTimer.start((int(seconds) + 2) * 1000, 1)
+		elif self.url.__contains__("uploaded.to") or self.url.__contains__("ul.to"):
+			writeLog("Free Uploaded.to-Download: %s"%self.url)
+			self.status = _("Checking")
+			if config.plugins.RSDownloader.reconnect_fritz.value:
+				reconnect()
+				sleep(3)
+			data = get(self.url)
+			tmp = re.search(r"Or wait (\d+) minutes", data)
+			if tmp:
+				minutes = tmp.group(1)
+				writeLog("Free Uploaded.to-Download... must wait %s minutes: %s"%(minutes, self.url))
+				self.status = "%s %s"%(_("Waiting"), minutes)
+				self.freeDownloadTimer = eTimer()
+				self.freeDownloadTimer.callback.append(self.start)
+				self.freeDownloadTimer.start((int(minutes) + 1) * 60000, 1)
+			else:
+				url = re.search(r".*<form name=\"download_form\" method=\"post\" action=\"(.*)\">", data).group(1)
+				self.name = re.search(r"<td><b>\s+(.+)\s", data).group(1) + re.search(r"</td><td>(\..+)</td></tr>", data).group(1)
+				self.status = _("Downloading")
+				self.download = ProgressDownload(url, ("%s/%s"%(config.plugins.RSDownloader.downloads_directory.value, self.name)).replace("//", "/"))
+				self.download.addProgress(self.httpProgress)
+				self.download.start().addCallback(self.httpFinished).addErrback(self.httpFailed)
 		elif self.url.__contains__("youtube.com"):
 			writeLog("Getting youtube video link: %s"%self.url)
 			self.status = _("Checking")
@@ -283,25 +299,26 @@ class RSDownload:
 		if self.size == 0:
 			self.size = int((totalbytes / 1024) / 1024)
 		self.progress = int(100.0 * float(recvbytes) / float(totalbytes))
-		if self.progress == 100:
-			writeLog("Finished: %s"%self.url)
-			self.status = _("Finished")
-			self.execFinishCallbacks()
 
-	def httpFinished(self, string=""):
+	def httpFinished(self, string=None):
 		if string is not None:
 			writeLog("Failed: %s"%self.url)
 			writeLog("Error: %s"%string)
 		self.status = _("Checking")
+		self.checkTimer = eTimer()
+		self.checkTimer.callback.append(self.doCheckTimer)
 		self.checkTimer.start(10000, 1)
 
 	def doCheckTimer(self):
-		if self.size == 0:
+		if (self.size == 0) or (self.progress < 100):
 			self.status = _("Failed")
 			if config.plugins.RSDownloader.autorestart_failed.value:
+				self.restartFailedTimer = eTimer()
+				self.restartFailedTimer.callback.append(self.restartFailedCheck)
 				self.restartFailedTimer.start(10000*60, 1)
 		elif self.progress == 100:
 			self.status = _("Finished")
+			writeLog("Finished: %s"%self.url)
 		self.downloading = False
 		self.execFinishCallbacks()
 
@@ -322,6 +339,8 @@ class RSDownload:
 				writeLog("Failed: %s"%self.url)
 				writeLog("Error: %s"%error)
 				self.status = _("Checking")
+		self.checkTimer = eTimer()
+		self.checkTimer.callback.append(self.doCheckTimer)
 		self.checkTimer.start(10000, 1)
 
 	def getYoutubeDownloadLink(self):
@@ -467,10 +486,12 @@ class RS:
 		writeLog("Directory: " + path)
 		try:
 			file_list = listdir(path)
+			file_list.sort()
 			writeLog("Count of lists: " + str(len(file_list)))
 		except:
 			file_list = []
 			writeLog("Could not find any list!")
+		added_downloads = 0
 		for x in file_list:
 			list = path + x
 			if list.endswith(".txt"):
@@ -480,8 +501,12 @@ class RS:
 					count = 0
 					for l in f:
 						if l.startswith("http://"):
-							if (self.addDownload(l.replace("\n", "").replace("\r", ""))) == True:
-								count += 1
+							if added_downloads < config.plugins.RSDownloader.count_maximal_downloads.value:
+								if (self.addDownload(l.replace("\n", "").replace("\r", ""))) == True:
+									count += 1
+									added_downloads += 1
+							else:
+								break
 					f.close()
 					if count == 0:
 						writeLog("Empty list or downloads already in download list: %s"%list)
@@ -501,21 +526,27 @@ class RS:
 			file_list = listdir(path)
 		except:
 			file_list = []
+		
+		finished_downloads = []
+		for download in self.downloads:
+			if download.status == _("Finished"):
+				finished_downloads.append(download)
 		for x in file_list:
 			list = path + x
-			try:
-				f = open(list, "r")
-				content = f.read()
-				f.close()
-				for download in self.downloads:
-					if download.status == _("Finished") and content.__contains__(download.url):
-						content = content.replace(download.url, "")
-						content = content.replace("\n\n", "\n").replace("\r\r", "\r")
-				f = open(list, "w")
-				f.write(content)
-				f.close()
-			except:
-				writeLog("Error while cleaning list %s!"%list)
+			if list.endswith(".txt"):
+				try:
+					f = open(list, "r")
+					content = f.read()
+					f.close()
+					for finished in finished_downloads:
+						if content.__contains__(finished.url):
+							content = content.replace(finished.url, "")
+							content = content.replace("\n\n", "\n").replace("\r\r", "\r")
+					f = open(list, "w")
+					f.write(content)
+					f.close()
+				except:
+					writeLog("Error while cleaning list %s!"%list)
 		self.startDownloading()
 
 	def removeDownload(self, url):
@@ -640,6 +671,7 @@ class RSConfig(ConfigListScreen, ChangedScreen):
 			getConfigListEntry(_("Don't download before:"), config.plugins.RSDownloader.start_time),
 			getConfigListEntry(_("Don't download after:"), config.plugins.RSDownloader.end_time),
 			getConfigListEntry(_("Maximal downloads:"), config.plugins.RSDownloader.count_downloads),
+			getConfigListEntry(_("Take x downloads to list:"), config.plugins.RSDownloader.count_maximal_downloads),
 			getConfigListEntry(_("Write log:"), config.plugins.RSDownloader.write_log),
 			getConfigListEntry(_("Reconnect fritz.Box before downloading:"), config.plugins.RSDownloader.reconnect_fritz),
 			getConfigListEntry(_("Restart failed after 10 minutes:"), config.plugins.RSDownloader.autorestart_failed)])
@@ -988,6 +1020,7 @@ class RSMain(ChangedScreen):
 						link = link[:-4]
 					f.write("%s\n"%link)
 				f.close()
+				remove(file)
 			except:
 				pass
 			self.refreshTimer.stop()
