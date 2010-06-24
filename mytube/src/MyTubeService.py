@@ -1,5 +1,5 @@
 # -*- coding: iso-8859-1 -*-
-from __init__ import bin2long, long2bin, rsa_pub1024, decrypt_block
+from __init__ import _
 import gdata.youtube
 import gdata.youtube.service
 from gdata.service import BadAuthentication
@@ -13,23 +13,10 @@ from twisted.internet import reactor
 from urllib2 import Request, URLError, HTTPError, urlopen as urlopen2
 from socket import gaierror,error
 import re, os, sys, socket
-from urllib import quote, unquote_plus, unquote
+from urllib import quote, unquote_plus, unquote   #FancyURLopener,
 import cookielib
 from httplib import HTTPConnection,CannotSendRequest,BadStatusLine,HTTPException
 HTTPConnection.debuglevel = 1
-
-def validate_cert(cert, key):
-	buf = decrypt_block(cert[8:], key) 
-	if buf is None:
-		return None
-	return buf[36:107] + cert[139:196]
-
-def get_rnd():
-	try:
-		rnd = os.urandom(8)
-		return rnd
-	except:
-		return None
 
 std_headers = {
 	'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2',
