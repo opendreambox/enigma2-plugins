@@ -1,7 +1,5 @@
 Version = '$Header$';
 
-from __init__ import _
-
 from enigma import eListboxPythonMultiContent, gFont
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
@@ -13,7 +11,7 @@ from Components.MenuList import MenuList
 from Components.MultiContent import MultiContentEntryText
 
 from Components.ActionMap import ActionMap
-			
+
 class WebIfConfigScreen(ConfigListScreen, Screen):
 	skin = """
 		<screen name="WebIfConfigScreen" position="center,center" size="560,400" title="Webinterface: Main Setup">
@@ -26,11 +24,11 @@ class WebIfConfigScreen(ConfigListScreen, Screen):
 
 	def __init__(self, session, args=0):
 		Screen.__init__(self, session)
-		
 
-		ConfigListScreen.__init__(self, [])		
+
+		ConfigListScreen.__init__(self, [])
 		self.createSetup()
-		
+
 		self["key_red"] = StaticText(_("Cancel"))
 		self["key_green"] = StaticText(_("OK"))
 		# SKIN Compat HACK!
@@ -44,9 +42,9 @@ class WebIfConfigScreen(ConfigListScreen, Screen):
 			"cancel": self.cancel,
 			"ok": self.save,
 		}, -2)
-				
+
 		self.onLayoutFinish.append(self.layoutFinished)
-	
+
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
 		self.createSetup()
@@ -54,7 +52,7 @@ class WebIfConfigScreen(ConfigListScreen, Screen):
 	def keyRight(self):
 		ConfigListScreen.keyRight(self)
 		self.createSetup()
-		
+
 	def createSetup(self):
 		list = [
 			getConfigListEntry(_("Start Webinterface"), config.plugins.Webinterface.enabled),
@@ -65,36 +63,36 @@ class WebIfConfigScreen(ConfigListScreen, Screen):
 			getConfigListEntry(_("Load movie-length"), config.plugins.Webinterface.loadmovielength),
 			getConfigListEntry(_("Enable HTTP Access"), config.plugins.Webinterface.http.enabled)
 		]
-		
+
 		if config.plugins.Webinterface.http.enabled.value == True:
 			sublist = [
 				getConfigListEntry(_("HTTP Port"), config.plugins.Webinterface.http.port),
-				getConfigListEntry(_("Enable HTTP Authentication"), config.plugins.Webinterface.http.auth)				
+				getConfigListEntry(_("Enable HTTP Authentication"), config.plugins.Webinterface.http.auth)
 			]
-			
+
 			list.extend(sublist)
-		
+
 		list.append( getConfigListEntry(_("Enable HTTPS Access"), config.plugins.Webinterface.https.enabled) )
-		
+
 		if config.plugins.Webinterface.https.enabled.value == True:
 			sublist = [
 				getConfigListEntry(_("HTTPS Port"), config.plugins.Webinterface.https.port),
-				getConfigListEntry(_("Enable HTTPS Authentication"), config.plugins.Webinterface.https.auth)				
+				getConfigListEntry(_("Enable HTTPS Authentication"), config.plugins.Webinterface.https.auth)
 			]
-			
+
 			list.extend(sublist)
-		
+
 		#Auth for Streaming (127.0.0.1 Listener)
 		list.append(getConfigListEntry(_("Enable Streaming Authentication"), config.plugins.Webinterface.streamauth))
-		
+
 		self["config"].list = list
 		self["config"].l.setList(list)
-		
+
 	def layoutFinished(self):
 		self.setTitle(_("Webinterface: Main Setup"))
 
 	def save(self):
-		print "[Webinterface] Saving Configuration"		
+		print "[Webinterface] Saving Configuration"
 		for x in self["config"].list:
 			x[1].save()
 		self.close(True, self.session)
@@ -104,5 +102,3 @@ class WebIfConfigScreen(ConfigListScreen, Screen):
 		for x in self["config"].list:
 			x[1].cancel()
 		self.close(False, self.session)
-
-
