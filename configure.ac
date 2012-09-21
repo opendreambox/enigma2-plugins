@@ -466,6 +466,8 @@ pluginsort/meta/Makefile
 pluginsort/po/Makefile
 pluginsort/src/Makefile
 
+po/Makefile
+
 podcast/Makefile
 podcast/etc/Makefile
 podcast/meta/Makefile

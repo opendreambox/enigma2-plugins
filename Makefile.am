@@ -81,6 +81,7 @@ SUBDIRS = \
 	pipzap \
 	pluginhider \
 	pluginsort \
+	po \
 	podcast \
 	porncenter \
 	pushservice \
