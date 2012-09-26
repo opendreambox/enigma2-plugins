@@ -43,7 +43,8 @@ if test "$with_po" = "yes"; then
 	AC_PATH_PROG(MSGMERGE, msgmerge)
 	AC_PATH_PROG(MSGUNIQ, msguniq)
 	AC_PATH_PROG(XGETTEXT, xgettext)
-	if test -z "$MSGINIT" -o -z "$MSGMERGE" -o -z "$MSGUNIQ" -o -z "$XGETTEXT"; then
+	AC_PATH_PROG(MSGFMT, msgfmt)
+	if test -z "$MSGINIT" -o -z "$MSGMERGE" -o -z "$MSGUNIQ" -o -z "$XGETTEXT" -o -z "$MSGFMT"; then
 		AC_MSG_ERROR([Could not find required gettext tools])
 	fi
 fi

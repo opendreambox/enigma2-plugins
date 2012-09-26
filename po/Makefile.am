@@ -5,11 +5,6 @@ LANGPO = $(LANGS:=.po)
 EXTRA_DIST = $(LANGPO)
 
 if UPDATE_PO
-XGETTEXT = xgettext
-MSGUNIQ = msguniq
-MSGMERGE = msgmerge
-MSGINIT = msginit
-MSGFMT = msgfmt
 # the TRANSLATORS: allows putting translation comments before the to-be-translated line.
 @PACKAGE_NAME@-py.pot: $(top_srcdir)/webinterface/src/*.py \
 	$(top_srcdir)/webinterface/src/WebComponents/*.py \
@@ -21,6 +16,12 @@ MSGFMT = msgfmt
 	$(PYTHON) $^ > $@
 
 @PACKAGE_NAME@.pot: @PACKAGE_NAME@-py.pot @PACKAGE_NAME@-xml.pot
+	if test -f $(srcdir)/../po/@PACKAGE_NAME@-py.pot; then \
+		sed -e s/charset=CHARSET/charset=UTF-8/ $(srcdir)/../po/@PACKAGE_NAME@-py.pot -i; \
+	fi;
+	if test -f $(srcdir)/../po/@PACKAGE_NAME@-xml.pot; then \
+		sed -e s/charset=CHARSET/charset=UTF-8/ $(srcdir)/../po/@PACKAGE_NAME@-xml.pot -i; \
+	fi;
 	cat $^ | $(MSGUNIQ) -s -n --add-location --to-code=UTF-8 -o $@ -
 
 %.po: @PACKAGE_NAME@.pot
