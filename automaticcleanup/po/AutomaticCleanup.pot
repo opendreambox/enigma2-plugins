@@ -1,0 +1,179 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: AutomaticCleanup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-27 16:00+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/plugin.py:126 ../src/plugin.py:196 ../src/plugin.py:468
+msgid "Automatic System Cleanup Setup"
+msgstr ""
+
+#: ../src/plugin.py:173
+msgid "Cancel"
+msgstr ""
+
+#: ../src/plugin.py:219
+msgid ""
+"Cleanup timerlist, orphaned movie files and stored setting backups "
+"automatically.\n"
+"\n"
+"Modify the settings to match your preferences. More detailed explanations "
+"given with each adjustable option."
+msgstr ""
+
+#: ../src/plugin.py:137
+msgid "Delete crashlogs"
+msgstr ""
+
+#: ../src/plugin.py:135
+msgid "Delete orphaned movie files"
+msgstr ""
+
+#: ../src/plugin.py:131
+msgid "Delete system setting backups"
+msgstr ""
+
+#: ../src/plugin.py:152 ../src/plugin.py:155
+msgid "Delete timerlist entries"
+msgstr ""
+
+#: ../src/plugin.py:175
+msgid "Help"
+msgstr ""
+
+#: ../src/plugin.py:136
+msgid ""
+"If enabled, orphaned movie files will be automatically deleted from movie "
+"directories."
+msgstr ""
+
+#: ../src/plugin.py:139
+msgid "Maximum number of crashlogs"
+msgstr ""
+
+#: ../src/plugin.py:133
+msgid "Maximum number of system setting backups"
+msgstr ""
+
+#: ../src/plugin.py:134
+msgid ""
+"Maximum number of system setting backups to keep, regardless of retention "
+"period."
+msgstr ""
+
+#: ../src/plugin.py:174
+msgid "OK"
+msgstr ""
+
+#: ../src/plugin.py:138 ../src/plugin.py:140
+msgid ""
+"Sorry, this feature is not available due to license reasons. To get the full "
+"version, please search the web for \"dreambox automaticcleanup.\""
+msgstr ""
+
+#: ../src/plugin.py:156
+msgid ""
+"Specify, how long expired timer list entries shall be kept at most. "
+"Deactivated repeat timer entries won't be deleted ever."
+msgstr ""
+
+#: ../src/plugin.py:132
+msgid ""
+"Specify, how long system setting backups shall be kept at most (even if "
+"maximum number is not yet exceeded). Latest backup will be kept anyway!"
+msgstr ""
+
+#: ../src/plugin.py:465
+msgid "System cleanup"
+msgstr ""
+
+#: ../src/plugin.py:153
+msgid ""
+"Timerlist cleanup is enabled in EMC plugin! To avoid crashes, we won't "
+"delete entries whilst this option is enabled in EMC."
+msgstr ""
+
+#: ../src/plugin.py:196
+msgid "Ver."
+msgstr ""
+
+#: ../src/plugin.py:93 ../src/plugin.py:97
+msgid "all"
+msgstr ""
+
+#: ../src/plugin.py:95 ../src/plugin.py:99
+msgid "cleanup disabled"
+msgstr ""
+
+#: ../src/plugin.py:99
+msgid "immediately after recording"
+msgstr ""
+
+#: ../src/plugin.py:97
+msgid "last 10"
+msgstr ""
+
+#: ../src/plugin.py:97
+msgid "last 2"
+msgstr ""
+
+#: ../src/plugin.py:97
+msgid "last 3"
+msgstr ""
+
+#: ../src/plugin.py:97
+msgid "last 5"
+msgstr ""
+
+#: ../src/plugin.py:99
+msgid "older than 1 day"
+msgstr ""
+
+#: ../src/plugin.py:95 ../src/plugin.py:99
+msgid "older than 1 week"
+msgstr ""
+
+#: ../src/plugin.py:95 ../src/plugin.py:99
+msgid "older than 2 weeks"
+msgstr ""
+
+#: ../src/plugin.py:99
+msgid "older than 3 days"
+msgstr ""
+
+#: ../src/plugin.py:95
+msgid "older than 3 months"
+msgstr ""
+
+#: ../src/plugin.py:95 ../src/plugin.py:99
+msgid "older than 4 weeks"
+msgstr ""
+
+#: ../src/plugin.py:95
+msgid "older than 6 months"
+msgstr ""
+
+#: ../src/plugin.py:99
+msgid "older than 6 weeks"
+msgstr ""
+
+#: ../src/plugin.py:97
+msgid "only last one"
+msgstr ""
+
+#: ../src/plugin.py:91
+msgid "void"
+msgstr ""

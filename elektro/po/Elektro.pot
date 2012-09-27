@@ -1,0 +1,309 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Elektro\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-27 23:46+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/plugin.py:475
+msgid "A NAS/Server can be shut down. Is required activated Telnet."
+msgstr ""
+
+#: ../src/plugin.py:456
+msgid "Active Time Profile"
+msgstr ""
+
+#: ../src/plugin.py:111
+msgid "Automatically shut down to deep standby"
+msgstr ""
+
+#: ../src/plugin.py:470
+msgid "Avoid deep standby when HDD is active, e.g. for FTP"
+msgstr ""
+
+#: ../src/plugin.py:461
+msgid ""
+"Both profiles are used alternately. When shutting down the other profile is "
+"enabled. This allows two time cycles per day. Do not overlap the times."
+msgstr ""
+
+#: ../src/plugin.py:274 ../src/plugin.py:320 ../src/plugin.py:399
+#: ../src/plugin.py:502
+msgid "Cancel"
+msgstr ""
+
+#: ../src/plugin.py:472
+msgid "Check IPs (press OK to edit)"
+msgstr ""
+
+#: ../src/plugin.py:393
+msgid "Command [poweroff, shutdown -h,...]"
+msgstr ""
+
+#: ../src/plugin.py:150
+msgid "Connection Error"
+msgstr ""
+
+#: ../src/plugin.py:484
+msgid "Description"
+msgstr ""
+
+#: ../src/plugin.py:477
+msgid "Do not wake up at the end of next deep standby interval."
+msgstr ""
+
+#: ../src/plugin.py:476
+msgid "Don't wake up"
+msgstr ""
+
+#: ../src/plugin.py:110
+msgid "Elektro Power Save"
+msgstr ""
+
+#: ../src/plugin.py:458
+msgid "Enable Elektro Power Save"
+msgstr ""
+
+#: ../src/plugin.py:112
+msgid "Extensions menu"
+msgstr ""
+
+#: ../src/plugin.py:468
+msgid "Force sleep (even when not in standby)"
+msgstr ""
+
+#: ../src/plugin.py:469
+msgid ""
+"Forces deep standby, even when not in standby mode. Scheduled recordings "
+"remain unaffected."
+msgstr ""
+
+#: ../src/plugin.py:137
+msgid "Friday"
+msgstr ""
+
+#: ../src/plugin.py:645
+msgid "Go to Standby now?"
+msgstr ""
+
+#: ../src/plugin.py:824
+msgid "Go to sleep now?"
+msgstr ""
+
+#: ../src/plugin.py:504
+msgid "Help"
+msgstr ""
+
+#: ../src/plugin.py:478
+msgid "Holiday mode (experimental)"
+msgstr ""
+
+#: ../src/plugin.py:316
+msgid "IP Address"
+msgstr ""
+
+#: ../src/plugin.py:265 ../src/plugin.py:270
+msgid ""
+"If the box is supposed to enter deep standby e.g. monday night at 1 AM, it "
+"actually is already tuesday. To enable this anyway, differing next day start "
+"time can be specified here."
+msgstr ""
+
+#: ../src/plugin.py:133
+msgid "Monday"
+msgstr ""
+
+#: ../src/plugin.py:474
+msgid "NAS Poweroff (press OK to edit)"
+msgstr ""
+
+#: ../src/plugin.py:390
+msgid "NAS/Server Name or IP"
+msgstr ""
+
+#: ../src/plugin.py:482
+msgid "Name"
+msgstr ""
+
+#: ../src/plugin.py:264 ../src/plugin.py:269
+msgid "Next day starts at"
+msgstr ""
+
+#: ../src/plugin.py:275 ../src/plugin.py:321 ../src/plugin.py:400
+#: ../src/plugin.py:503
+msgid "Ok"
+msgstr ""
+
+#: ../src/plugin.py:392
+msgid "Password"
+msgstr ""
+
+#: ../src/plugin.py:112
+msgid "Plugin menu"
+msgstr ""
+
+#: ../src/plugin.py:463
+msgid "Puts the box in standby mode after boot."
+msgstr ""
+
+#: ../src/plugin.py:401
+msgid "Run"
+msgstr ""
+
+#: ../src/plugin.py:138
+msgid "Saturday"
+msgstr ""
+
+#: ../src/plugin.py:480
+msgid "Show in"
+msgstr ""
+
+#: ../src/plugin.py:553
+msgid "Showing Elektro readme.txt"
+msgstr ""
+
+#: ../src/plugin.py:263 ../src/plugin.py:268
+msgid "Sleep"
+msgstr ""
+
+#: ../src/plugin.py:467
+msgid ""
+"Specify how long to show the standby query on boot screen. This value can be "
+"set to ensure the box does not shut down to deep standby again too fast when "
+"in standby mode."
+msgstr ""
+
+#: ../src/plugin.py:485
+msgid "Specify plugin description to be used in menu (needs GUI restart)."
+msgstr ""
+
+#: ../src/plugin.py:483
+msgid "Specify plugin name to be used in menu (needs GUI restart)."
+msgstr ""
+
+#: ../src/plugin.py:481
+msgid ""
+"Specify whether plugin shall show up in plugin menu or extensions menu "
+"(needs GUI restart)"
+msgstr ""
+
+#: ../src/plugin.py:462 ../src/plugin.py:619
+msgid "Standby on boot"
+msgstr ""
+
+#: ../src/plugin.py:466
+msgid "Standby on boot screen timeout"
+msgstr ""
+
+#: ../src/plugin.py:464
+msgid "Standby on manual boot"
+msgstr ""
+
+#: ../src/plugin.py:139
+msgid "Sunday"
+msgstr ""
+
+#: ../src/plugin.py:394
+msgid "Telnet Port"
+msgstr ""
+
+#: ../src/plugin.py:457
+msgid "The active Time Profile is (1 or 2)."
+msgstr ""
+
+#: ../src/plugin.py:479
+msgid "The box always enters deep standby mode, except for recording."
+msgstr ""
+
+#: ../src/plugin.py:473
+msgid ""
+"This list of IP addresses is checked. Elektro waits until addresses no "
+"longer responds to ping."
+msgstr ""
+
+#: ../src/plugin.py:136
+msgid "Thursday"
+msgstr ""
+
+#: ../src/plugin.py:505
+msgid "Times"
+msgstr ""
+
+#: ../src/plugin.py:134
+msgid "Tuesday"
+msgstr ""
+
+#: ../src/plugin.py:459
+msgid "Unless this is enabled, this plugin won't run automatically."
+msgstr ""
+
+#: ../src/plugin.py:460
+msgid "Use both profiles alternately"
+msgstr ""
+
+#: ../src/plugin.py:391
+msgid "Username"
+msgstr ""
+
+#: ../src/plugin.py:210 ../src/plugin.py:221 ../src/plugin.py:229
+#: ../src/plugin.py:525
+msgid "Ver."
+msgstr ""
+
+#: ../src/plugin.py:471
+msgid ""
+"Wait for the HDD to enter sleep mode. Depending on the configuration this "
+"can prevent the box entirely from entering deep standby mode."
+msgstr ""
+
+#: ../src/plugin.py:395
+msgid "Waiting until poweroff"
+msgstr ""
+
+#: ../src/plugin.py:262 ../src/plugin.py:267
+msgid "Wakeup"
+msgstr ""
+
+#: ../src/plugin.py:135
+msgid "Wednesday"
+msgstr ""
+
+#: ../src/plugin.py:465
+msgid ""
+"Whether to put the box in standby when booted manually. On manual boot the "
+"box will not go to standby before the next deep standby interval starts, "
+"even if this option is set. This option is only active if 'Standby on boot' "
+"option is set, too."
+msgstr ""
+
+#: ../src/plugin.py:149
+msgid "no Name"
+msgstr ""
+
+#: ../src/plugin.py:353
+msgid "please wait..."
+msgstr ""
+
+#: ../src/plugin.py:553
+msgid "readme.txt"
+msgstr ""
+
+#: ../src/plugin.py:124
+msgid "yes, Profile 1"
+msgstr ""
+
+#: ../src/plugin.py:124
+msgid "yes, Profile 2"
+msgstr ""

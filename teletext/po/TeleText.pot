@@ -1,0 +1,337 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TeleText\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-28 00:00+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/plugin.py:1699 ../src/plugin.py:1708 ../src/plugin.py:1735
+msgid "<empty>"
+msgstr ""
+
+#: ../src/plugin.py:1711
+msgid "Add"
+msgstr ""
+
+#: ../src/plugin.py:68
+msgid "Arabic"
+msgstr ""
+
+#: ../src/plugin.py:1338
+msgid "Background caching"
+msgstr ""
+
+#: ../src/plugin.py:1327
+msgid "Brightness"
+msgstr ""
+
+#: ../src/plugin.py:1127 ../src/plugin.py:1272
+msgid "Cancel"
+msgstr ""
+
+#: ../src/plugin.py:68
+msgid "Central and Southeast Europe"
+msgstr ""
+
+#: ../src/plugin.py:1676
+msgid "Clear all"
+msgstr ""
+
+#: ../src/plugin.py:1328
+msgid "Contrast"
+msgstr ""
+
+#: ../src/plugin.py:68
+msgid "Cyrillic"
+msgstr ""
+
+#: ../src/plugin.py:1339
+msgid "Debug"
+msgstr ""
+
+#: ../src/plugin.py:1273
+msgid "Default"
+msgstr ""
+
+#: ../src/plugin.py:1713
+msgid "Delete"
+msgstr ""
+
+#: ../src/plugin.py:1770
+msgid "Delete all favorites?"
+msgstr ""
+
+#: ../src/plugin.py:1759
+msgid "Delete favorite?"
+msgstr ""
+
+#: ../src/plugin.py:69
+msgid "Disabled"
+msgstr ""
+
+#: ../src/plugin.py:1427
+msgid "Discard changes?"
+msgstr ""
+
+#: ../src/plugin.py:1333
+msgid "Display edges"
+msgstr ""
+
+#: ../src/plugin.py:77
+msgid "Display first and last row."
+msgstr ""
+
+#: ../src/plugin.py:68
+msgid "Eastern Europe"
+msgstr ""
+
+#: ../src/plugin.py:1715
+msgid "Edit"
+msgstr ""
+
+#: ../src/plugin.py:1742
+#, python-format
+msgid "Enter text for page %s"
+msgstr ""
+
+#: ../src/plugin.py:71 ../src/plugin.py:72
+msgid ""
+"Enter values (left, top, right, bottom) or press TEXT to move and resize the "
+"teletext graphically."
+msgstr ""
+
+#: ../src/plugin.py:68
+msgid "Hebrew / Arabic"
+msgstr ""
+
+#: ../src/plugin.py:82
+msgid ""
+"If caching is disabled, each teletext page will searched when you entered "
+"its number."
+msgstr ""
+
+#: ../src/plugin.py:1855
+msgid "No teletext available."
+msgstr ""
+
+#: ../src/plugin.py:1128 ../src/plugin.py:1149 ../src/plugin.py:1274
+msgid "OK"
+msgstr ""
+
+#: ../src/plugin.py:1332 ../src/plugin.py:1337
+msgid "Position and size"
+msgstr ""
+
+#: ../src/plugin.py:78
+msgid "Print debug messages to /tmp/dbttcp.log."
+msgstr ""
+
+#: ../src/plugin.py:1331
+msgid "Region"
+msgstr ""
+
+#: ../src/plugin.py:1325
+msgid "Scale filter"
+msgstr ""
+
+#: ../src/plugin.py:1326
+msgid "Scale filter zoom"
+msgstr ""
+
+#: ../src/plugin.py:1714
+msgid "Select"
+msgstr ""
+
+#: ../src/plugin.py:74
+msgid "Select brightness."
+msgstr ""
+
+#: ../src/plugin.py:75
+msgid "Select contrast."
+msgstr ""
+
+#: ../src/plugin.py:73
+msgid "Select splitting mode."
+msgstr ""
+
+#: ../src/plugin.py:1109
+msgid "Select teletext"
+msgstr ""
+
+#: ../src/plugin.py:79
+msgid "Select teletext version to use."
+msgstr ""
+
+#: ../src/plugin.py:76
+msgid "Select transparency."
+msgstr ""
+
+#: ../src/plugin.py:81
+msgid "Select your favourite scale filter."
+msgstr ""
+
+#: ../src/plugin.py:80
+msgid "Select your region to use the proper font."
+msgstr ""
+
+#: ../src/plugin.py:1334
+msgid "Splitting mode"
+msgstr ""
+
+#: ../src/plugin.py:1642 ../src/plugin.py:1810
+msgid "TeleText favorites"
+msgstr ""
+
+#: ../src/plugin.py:1249 ../src/plugin.py:1470
+msgid "TeleText settings"
+msgstr ""
+
+#: ../src/plugin.py:1330
+msgid "Text level"
+msgstr ""
+
+#: ../src/plugin.py:1329
+msgid "Transparency"
+msgstr ""
+
+#: ../src/plugin.py:68
+msgid "Turkish / Greek"
+msgstr ""
+
+#: ../src/plugin.py:68
+msgid "Western Europe and Turkey"
+msgstr ""
+
+#: ../src/plugin.py:68
+msgid "Western and Central Europe"
+msgstr ""
+
+#: ../src/plugin.py:69
+msgid "anisotropic"
+msgstr ""
+
+#: ../src/plugin.py:69
+msgid "bilinear"
+msgstr ""
+
+#: ../src/plugin.py:231
+msgid "blue teletext link"
+msgstr ""
+
+#: ../src/plugin.py:203 ../src/plugin.py:204 ../src/plugin.py:205
+#: ../src/plugin.py:206 ../src/plugin.py:207 ../src/plugin.py:208
+#: ../src/plugin.py:209 ../src/plugin.py:210
+msgid "enter page number"
+msgstr ""
+
+#: ../src/plugin.py:211
+msgid "enter page number / page 100"
+msgstr ""
+
+#: ../src/plugin.py:213
+msgid "enter page number / rezap"
+msgstr ""
+
+#: ../src/plugin.py:215 ../src/plugin.py:234
+msgid "exit"
+msgstr ""
+
+#: ../src/plugin.py:219
+msgid "favorites / decrease height"
+msgstr ""
+
+#: ../src/plugin.py:229
+msgid "green teletext link"
+msgstr ""
+
+#: ../src/plugin.py:214
+msgid "next channel / channel list"
+msgstr ""
+
+#: ../src/plugin.py:222
+msgid "next page / catch page / move"
+msgstr ""
+
+#: ../src/plugin.py:225
+msgid "next sub page / move"
+msgstr ""
+
+#: ../src/plugin.py:66
+msgid "picture and teletext"
+msgstr ""
+
+#: ../src/plugin.py:212
+msgid "prev channel / channel list"
+msgstr ""
+
+#: ../src/plugin.py:226
+msgid "prev page / catch page / move"
+msgstr ""
+
+#: ../src/plugin.py:223
+msgid "prev sub page / move"
+msgstr ""
+
+#: ../src/plugin.py:228
+msgid "red teletext link"
+msgstr ""
+
+#: ../src/plugin.py:69
+msgid "sharp"
+msgstr ""
+
+#: ../src/plugin.py:69
+msgid "sharper"
+msgstr ""
+
+#: ../src/plugin.py:232
+msgid "split screen"
+msgstr ""
+
+#: ../src/plugin.py:224
+msgid "start page catching / select page"
+msgstr ""
+
+#: ../src/plugin.py:66
+msgid "teletext and picture"
+msgstr ""
+
+#: ../src/plugin.py:66
+msgid "teletext in picture"
+msgstr ""
+
+#: ../src/plugin.py:221
+msgid "teletext settings"
+msgstr ""
+
+#: ../src/plugin.py:227
+msgid "toggle flof/top"
+msgstr ""
+
+#: ../src/plugin.py:220
+msgid "toggle info"
+msgstr ""
+
+#: ../src/plugin.py:233
+msgid "toggle transparency"
+msgstr ""
+
+#: ../src/plugin.py:230
+msgid "yellow teletext link"
+msgstr ""
+
+#: ../src/plugin.py:218
+msgid "zoom / increase height"
+msgstr ""

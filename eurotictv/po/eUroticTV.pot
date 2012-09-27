@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Mosaic\n"
+"Project-Id-Version: eUroticTV\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-09-27 23:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -17,18 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/plugin.py:189 ../src/plugin.py:298
-msgid "Channel: "
-msgstr ""
-
-#: ../src/plugin.py:326
-msgid "Countdown:"
-msgstr ""
-
-#: ../src/plugin.py:313
-msgid "Error while creating screenshot. You need grab version 0.8 or higher!"
-msgstr ""
-
-#: ../src/plugin.py:383
-msgid "Mosaic"
+#: ../src/plugin.py:145
+#, python-format
+msgid "Streaming error: %s"
 msgstr ""

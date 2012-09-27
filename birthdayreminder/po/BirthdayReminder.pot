@@ -1,268 +1,282 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR ORGANIZATION
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-09-14 19:42+CEST\n"
+"Project-Id-Version: BirthdayReminder\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-27 23:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
-"Generated-By: pygettext.py 1.5\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 
+#: ../src/BirthdayTimer.py:57
+#, python-format
+msgid "%s will turn %s in %s!"
+msgstr ""
 
-#: BirthdayReminder.py:73 BirthdayReminder.py:102 BirthdayReminder.py:430
+#: ../src/plugin.py:42
+msgid "1 day"
+msgstr ""
+
+#: ../src/plugin.py:42
+msgid "1 week"
+msgstr ""
+
+#: ../src/plugin.py:42
+msgid "3 days"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:588
+msgid "Accept changes"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:216
+msgid "Add"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:199
+msgid "Add a birthday"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:549
+msgid "Add birthday"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:223 ../src/plugin.py:49
+msgid "Age"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:222
+msgid "Birthday"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:183
+msgid "Birthday Reminder"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:615
+msgid "Birthday Reminder Settings"
+msgstr ""
+
+#: ../src/BirthdayTimer.py:243
+#, python-format
+msgid "Birthday Reminder received %s birthdays from %s."
+msgstr ""
+
+#: ../src/BirthdayReminder.py:632
+msgid "Birthday filename:"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:624
+msgid "Birthdays"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:486
+msgid "CSV import successful!"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:445
+#, python-format
+msgid "Can't find CSV file %s!"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:471
+#, python-format
+msgid "Can't import CSV data from file %s."
+msgstr ""
+
+#: ../src/BirthdayReminder.py:439
+#, python-format
+msgid "Can't write CSV file %s."
+msgstr ""
+
+#: ../src/BirthdayReminder.py:562 ../src/BirthdayReminder.py:582
+#: ../src/BirthdayReminder.py:587 ../src/BirthdayReminder.py:622
+#: ../src/BirthdayReminder.py:645 ../src/BirthdayReminder.py:651
+#: ../src/BirthdayReminder.py:729
+msgid "Cancel"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:646
+msgid "Change path"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:633
+msgid "Date format:"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:571 ../src/BirthdayReminder.py:573
+msgid "Day:"
+msgstr ""
+
+#: ../src/plugin.py:42
+msgid "Disabled"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:272
+msgid "Distribute birthdays to other Dreamboxes"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:257
+#, python-format
+msgid "Do you really want to delete the entry for %s?"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:267
+msgid "Edit"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:555
+msgid "Edit birthday"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:653
+msgid "Edit birthdays"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:206
+msgid "Edit the selected entry"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:73 ../src/BirthdayReminder.py:102
+#: ../src/BirthdayReminder.py:452
+#, python-format
 msgid ""
 "Error reading file %s.\n"
 "\n"
 "Error: %s, %s"
 msgstr ""
 
-#: BirthdayReminder.py:86 BirthdayReminder.py:126
+#: ../src/BirthdayReminder.py:86 ../src/BirthdayReminder.py:126
+#, python-format
 msgid ""
 "Error writing file %s.\n"
 "\n"
 "Error: %s, %s"
 msgstr ""
 
-#: BirthdayReminder.py:183
-msgid "Birthday Reminder"
-msgstr ""
-
-#: BirthdayReminder.py:194
+#: ../src/BirthdayReminder.py:194
 msgid "Exit the plugin"
 msgstr ""
 
-#: BirthdayReminder.py:199
-msgid "Add a birthday"
-msgstr ""
-
-#: BirthdayReminder.py:200
-msgid "Open the extras menu"
-msgstr ""
-
-#: BirthdayReminder.py:206
-msgid "Edit the selected entry"
-msgstr ""
-
-#: BirthdayReminder.py:207
-msgid "Remove the selected entry"
-msgstr ""
-
-#: BirthdayReminder.py:212
-msgid "Sorting next"
-msgstr ""
-
-#: BirthdayReminder.py:213
-msgid "Sorting previous"
-msgstr ""
-
-#: BirthdayReminder.py:216
-msgid "Add"
-msgstr ""
-
-#: BirthdayReminder.py:219
-msgid "Extras"
-msgstr ""
-
-#: BirthdayReminder.py:221 plugin.py:47
-msgid "Name"
-msgstr ""
-
-#: BirthdayReminder.py:222
-msgid "Birthday"
-msgstr ""
-
-#: BirthdayReminder.py:223 plugin.py:49
-msgid "Age"
-msgstr ""
-
-#: BirthdayReminder.py:257
-msgid "Do you really want to delete the entry for %s?"
-msgstr ""
-
-#: BirthdayReminder.py:267
-msgid "Edit"
-msgstr ""
-
-#: BirthdayReminder.py:268
-msgid "Remove"
-msgstr ""
-
-#: BirthdayReminder.py:272
-msgid "Distribute birthdays to other Dreamboxes"
-msgstr ""
-
-#: BirthdayReminder.py:272
+#: ../src/BirthdayReminder.py:272
 msgid "Export CSV file"
 msgstr ""
 
-#: BirthdayReminder.py:272
+#: ../src/BirthdayReminder.py:219
+msgid "Extras"
+msgstr ""
+
+#: ../src/plugin.py:71 ../src/plugin.py:73
+msgid "Helps to remind of birthdays"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:272
 msgid "Import CSV file"
 msgstr ""
 
-#: BirthdayReminder.py:273
-msgid "What do you want to do?"
-msgstr ""
-
-#: BirthdayReminder.py:415
-msgid "Wrote CSV file %s."
-msgstr ""
-
-#: BirthdayReminder.py:417
-msgid "Can't write CSV file %s."
-msgstr ""
-
-#: BirthdayReminder.py:423
-msgid "Can't find CSV file %s!"
-msgstr ""
-
-#: BirthdayReminder.py:449
-msgid "Can't import CSV data from file %s."
-msgstr ""
-
-#: BirthdayReminder.py:464
-msgid "CSV import successful!"
-msgstr ""
-
-#: BirthdayReminder.py:527
-msgid "Add birthday"
-msgstr ""
-
-#: BirthdayReminder.py:533
-msgid "Edit birthday"
-msgstr ""
-
-#: BirthdayReminder.py:540 BirthdayReminder.py:560 BirthdayReminder.py:565
-#: BirthdayReminder.py:600 BirthdayReminder.py:623 BirthdayReminder.py:629
-#: BirthdayReminder.py:707
-msgid "Cancel"
-msgstr ""
-
-#: BirthdayReminder.py:541 BirthdayReminder.py:601 BirthdayReminder.py:630
-msgid "Save"
-msgstr ""
-
-#: BirthdayReminder.py:542
-msgid "Invalid date!"
-msgstr ""
-
-#: BirthdayReminder.py:546
-msgid "Name:"
-msgstr ""
-
-#: BirthdayReminder.py:548 BirthdayReminder.py:552
-msgid "Month:"
-msgstr ""
-
-#: BirthdayReminder.py:549 BirthdayReminder.py:551
-msgid "Day:"
-msgstr ""
-
-#: BirthdayReminder.py:553
-msgid "Year:"
-msgstr ""
-
-#: BirthdayReminder.py:566
-msgid "Accept changes"
-msgstr ""
-
-#: BirthdayReminder.py:593
-msgid "Birthday Reminder Settings"
-msgstr ""
-
-#: BirthdayReminder.py:602
-msgid "Birthdays"
-msgstr ""
-
-#: BirthdayReminder.py:609
-msgid "Path to birthday file:"
-msgstr ""
-
-#: BirthdayReminder.py:610
-msgid "Birthday filename:"
-msgstr ""
-
-#: BirthdayReminder.py:611
-msgid "Date format:"
-msgstr ""
-
-#: BirthdayReminder.py:612
-msgid "Remind before birthday:"
-msgstr ""
-
-#: BirthdayReminder.py:613
-msgid "Notification time:"
-msgstr ""
-
-#: BirthdayReminder.py:614
-msgid "Sort birthdays by:"
-msgstr ""
-
-#: BirthdayReminder.py:615
-msgid "Show plugin in extensions menu:"
-msgstr ""
-
-#: BirthdayReminder.py:616
-msgid "Networking port (default: 7374):"
-msgstr ""
-
-#: BirthdayReminder.py:624
-msgid "Change path"
-msgstr ""
-
-#: BirthdayReminder.py:631
-msgid "Edit birthdays"
-msgstr ""
-
-#: BirthdayReminder.py:708
-msgid "OK"
-msgstr ""
-
-#: BirthdayReminder.py:742
+#: ../src/BirthdayReminder.py:764
 msgid "Invalid Location"
 msgstr ""
 
-#: BirthdayTimer.py:57
-msgid "%s will turn %s in %s!"
+#: ../src/BirthdayReminder.py:564
+msgid "Invalid date!"
 msgstr ""
 
-#: BirthdayTimer.py:67
+#: ../src/BirthdayReminder.py:570 ../src/BirthdayReminder.py:574
+msgid "Month:"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:221 ../src/plugin.py:47
+msgid "Name"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:568
+msgid "Name:"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:638
+msgid "Networking port (default: 7374):"
+msgstr ""
+
+#: ../src/plugin.py:48
+msgid "Next birthday"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:635
+msgid "Notification time:"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:730
+msgid "OK"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:200
+msgid "Open the extras menu"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:631
+msgid "Path to birthday file:"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:634
+msgid "Remind before birthday:"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:268
+msgid "Remove"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:207
+msgid "Remove the selected entry"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:563 ../src/BirthdayReminder.py:623
+#: ../src/BirthdayReminder.py:652
+msgid "Save"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:637
+msgid "Show plugin in extensions menu:"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:636
+msgid "Sort birthdays by:"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:212
+msgid "Sorting next"
+msgstr ""
+
+#: ../src/BirthdayReminder.py:213
+msgid "Sorting previous"
+msgstr ""
+
+#: ../src/BirthdayTimer.py:67
+#, python-format
 msgid ""
 "Today is %s's birthday!\n"
 "\n"
 "She/he was born on %s and is now %s year(s) old."
 msgstr ""
 
-#: BirthdayTimer.py:249
-msgid "Birthday Reminder received %s birthdays from %s."
+#: ../src/BirthdayReminder.py:273
+msgid "What do you want to do?"
 msgstr ""
 
-#: plugin.py:42
-msgid "1 day"
+#: ../src/BirthdayReminder.py:437
+#, python-format
+msgid "Wrote CSV file %s."
 msgstr ""
 
-#: plugin.py:42
-msgid "1 week"
+#: ../src/BirthdayReminder.py:575
+msgid "Year:"
 msgstr ""
-
-#: plugin.py:42
-msgid "3 days"
-msgstr ""
-
-#: plugin.py:42
-msgid "Disabled"
-msgstr ""
-
-#: plugin.py:48
-msgid "Next birthday"
-msgstr ""
-
-#: plugin.py:71 plugin.py:73
-msgid "Helps to remind of birthdays"
-msgstr ""
-

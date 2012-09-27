@@ -1,0 +1,93 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Flashexpander\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-27 23:59+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/flashexpander.py:66
+#, python-format
+msgid "... is used, %dMB free"
+msgstr ""
+
+#: ../src/flashexpander.py:143
+#, python-format
+msgid ""
+"Are you sure want to create FlashExpander on\n"
+"%s\n"
+"Partition %d"
+msgstr ""
+
+#: ../src/flashexpander.py:146
+#, python-format
+msgid ""
+"Are you sure want to create FlashExpander on \n"
+"Server: %s\n"
+"Path: %s"
+msgstr ""
+
+#: ../src/flashexpander.py:278
+msgid "Do you want to reboot your Dreambox?"
+msgstr ""
+
+#: ../src/plugin.py:10
+msgid "FlashExpander"
+msgstr ""
+
+#: ../src/flashexpander.py:69
+msgid "FlashExpander is not installed, create? Press Key OK."
+msgstr ""
+
+#: ../src/flashexpander.py:235
+#, python-format
+msgid "Mount failed (%s)"
+msgstr ""
+
+#: ../src/flashexpander.py:134
+msgid "No HDD-, SSD- or USB-Device found. Please first initialized."
+msgstr ""
+
+#: ../src/flashexpander.py:223
+msgid "Please wait, Flash memory will be copied."
+msgstr ""
+
+#: ../src/flashexpander.py:238
+msgid "Too little free space < 180MB or wrong Filesystem!"
+msgstr ""
+
+#: ../src/flashexpander.py:93
+msgid "choose device to FlashExpander"
+msgstr ""
+
+#: ../src/flashexpander.py:280
+#, python-format
+msgid "error adding fstab entry for: %s"
+msgstr ""
+
+#: ../src/flashexpander.py:283
+msgid "error copy flash memory"
+msgstr ""
+
+#: ../src/plugin.py:10
+msgid "extend your flash memory"
+msgstr ""
+
+#: ../src/flashexpander.py:190
+msgid "read UUID"
+msgstr ""
+
+#: ../src/flashexpander.py:117
+msgid "unknown"
+msgstr ""

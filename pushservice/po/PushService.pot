@@ -1,24 +1,347 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# betonme (Frank Glaser <glaserfrank(at)gmail.com>), 2012
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: enigma2 plugin - PushService\n"
+"Project-Id-Version: PushService\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-22 20:52+0100\n"
-"PO-Revision-Date: 2011-11-22 20:52+0100\n"
-"Last-Translator: Your Name <you@example.com>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2012-09-28 00:00+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
-"X-Poedit-Basepath: .../enigma2-plugins/PushService\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-SearchPath-0: .../enigma2-plugins/PushService\n"
 
+#: ../src/plugin.py:42
+msgid ""
+"  (C) 2012 by betonme @ IHAD \n"
+"\n"
+msgstr ""
 
+#: ../src/plugin.py:43
+msgid "  If You like this plugin and want to support it,\n"
+msgstr ""
+
+#: ../src/plugin.py:47
+msgid "  Support: "
+msgstr ""
+
+#: ../src/plugin.py:46
+msgid ""
+"  Thanks a lot ! \n"
+"  PayPal: "
+msgstr ""
+
+#: ../src/plugin.py:45
+msgid ""
+"  feel free to donate via PayPal. \n"
+"\n"
+msgstr ""
+
+#: ../src/plugin.py:44
+msgid "  or if just want to say ''thanks'',\n"
+msgstr ""
+
+#: ../src/PushServiceBase.py:265
+msgid "%d.%m.%Y %H:%M"
+msgstr ""
+
+#: ../src/ConfigScreen.py:119 ../src/ConfigScreen.py:282
+msgid "Add Controller"
+msgstr ""
+
+#: ../src/ConfigScreen.py:110 ../src/ConfigScreen.py:251
+msgid "Add Service"
+msgstr ""
+
+#: ../src/ConfigScreen.py:210
+msgid "Add controller"
+msgstr ""
+
+#: ../src/ConfigScreen.py:198
+msgid "Add service"
+msgstr ""
+
+#: ../src/ConfigScreen.py:108 ../src/ConfigScreen.py:117
+msgid "Back to main screen"
+msgstr ""
+
+#: ../src/ConfigScreen.py:171
+msgid "Cancel"
+msgstr ""
+
+#: ../src/ConfigScreen.py:189
+msgid "Config file"
+msgstr ""
+
+#: ../src/ConfigScreen.py:67
+msgid "Configuration"
+msgstr ""
+
+#: ../src/ConfigScreen.py:178
+msgid "Controllers"
+msgstr ""
+
+#: ../src/PushServiceBase.py:220
+msgid "Don't edit this manually unless you really know what you are doing"
+msgstr ""
+
+#: ../src/ConfigScreen.py:188
+msgid "Dreambox name"
+msgstr ""
+
+#: ../src/ConfigScreen.py:185
+msgid "Enable PushService"
+msgstr ""
+
+#: ../src/ConfigScreen.py:94
+msgid "Exit without saving"
+msgstr ""
+
+#: ../src/ConfigScreen.py:427
+msgid "If You can see this, Your configuration is correct."
+msgstr ""
+
+#: ../src/ConfigScreen.py:196 ../src/ConfigScreen.py:208
+msgid "Main"
+msgstr ""
+
+#: ../src/ConfigScreen.py:444
+msgid "Nothing to push"
+msgstr ""
+
+#: ../src/ConfigScreen.py:419
+msgid "Nothing to test"
+msgstr ""
+
+#: ../src/ConfigScreen.py:172
+msgid "OK"
+msgstr ""
+
+#: ../src/ConfigScreen.py:89
+msgid "Page down"
+msgstr ""
+
+#: ../src/ConfigScreen.py:88
+msgid "Page up"
+msgstr ""
+
+#: ../src/ConfigScreen.py:192
+msgid "Period in hours (0=disabled)"
+msgstr ""
+
+#: ../src/ConfigScreen.py:427
+msgid "Push test"
+msgstr ""
+
+#: ../src/ConfigScreen.py:427
+msgid "PushService Config"
+msgstr ""
+
+#: ../src/PushServiceBase.py:333
+msgid "PushService Service push() exception"
+msgstr ""
+
+#: ../src/ConfigScreen.py:431
+msgid "PushService Test exception:"
+msgstr ""
+
+#: ../src/plugin.py:94
+msgid "PushService autostart exception "
+msgstr ""
+
+#: ../src/PushServiceBase.py:283
+msgid "PushService controller run() exception"
+msgstr ""
+
+#: ../src/PushServiceBase.py:275
+msgid "PushService running: "
+msgstr ""
+
+#: ../src/plugin.py:79
+msgid "PushService setup exception "
+msgstr ""
+
+#: ../src/PushServiceBase.py:265
+msgid "PushService started: "
+msgstr ""
+
+#: ../src/ConfigScreen.py:337
+msgid "Really close without saving settings?"
+msgstr ""
+
+#: ../src/ConfigScreen.py:120
+msgid "Remove Controller"
+msgstr ""
+
+#: ../src/ConfigScreen.py:111
+msgid "Remove Service"
+msgstr ""
+
+#: ../src/ConfigScreen.py:211 ../src/ConfigScreen.py:267
+#: ../src/ConfigScreen.py:298
+msgid "Remove controller"
+msgstr ""
+
+#: ../src/ConfigScreen.py:199
+msgid "Remove service"
+msgstr ""
+
+#: ../src/ConfigScreen.py:193
+msgid "Run on boot"
+msgstr ""
+
+#: ../src/ConfigScreen.py:95
+msgid "Save and exit"
+msgstr ""
+
+#: ../src/PushServiceBase.py:348
+#, python-format
+msgid "Service %s returned error(s)"
+msgstr ""
+
+#: ../src/ConfigScreen.py:177
+msgid "Services"
+msgstr ""
+
+#: ../src/ConfigScreen.py:102
+msgid "Show Controllers"
+msgstr ""
+
+#: ../src/ConfigScreen.py:101
+msgid "Show Services"
+msgstr ""
+
+#: ../src/ModuleBase.py:94
+msgid "Skipping config option:"
+msgstr ""
+
+#: ../src/ConfigScreen.py:191
+msgid "Start time (HH:MM)"
+msgstr ""
+
+#: ../src/ConfigScreen.py:197 ../src/ConfigScreen.py:209
+msgid "Test"
+msgstr ""
+
+#: ../src/ConfigScreen.py:456
+msgid "Test failed"
+msgstr ""
+
+#: ../src/ConfigScreen.py:454
+#, python-format
+msgid ""
+"Test failed\n"
+"\n"
+"%s"
+msgstr ""
+
+#: ../src/ConfigScreen.py:451
+#, python-format
+msgid ""
+"Test failed:\n"
+"\n"
+"%s"
+msgstr ""
+
+#: ../src/ConfigScreen.py:439
+msgid "Test has been finished successfully"
+msgstr ""
+
+#: ../src/ConfigScreen.py:118
+msgid "Test selected Controller"
+msgstr ""
+
+#: ../src/ConfigScreen.py:109
+msgid "Test selected Service"
+msgstr ""
+
+#: ../src/ConfigScreen.py:418
+msgid "Testing"
+msgstr ""
+
+#: ../src/ConfigScreen.py:415
+msgid "Testing Controller"
+msgstr ""
+
+#: ../src/ConfigScreen.py:412
+msgid "Testing Service"
+msgstr ""
+
+#: ../src/ConfigScreen.py:413 ../src/ConfigScreen.py:416
+msgid ""
+"Testing...\n"
+"\n"
+"Cancel?"
+msgstr ""
+
+#: ../src/Modules.py:107
+msgid "Unexpected error: "
+msgstr ""
+
+#: ../src/ConfigFile.py:71
+msgid "[PushService] Exception in readXML: "
+msgstr ""
+
+#: ../src/ConfigFile.py:92
+msgid "[PushService] Exception in writeXML: "
+msgstr ""
+
+#: ../src/Modules.py:60
+msgid "[PushService] Find module exception: "
+msgstr ""
+
+#: ../src/Modules.py:105
+msgid "[PushService] Instantiate exception: "
+msgstr ""
+
+#: ../src/Modules.py:70
+msgid "[PushService] Load exception: "
+msgstr ""
+
+#: ../src/ModuleBase.py:93
+#, python-format
+msgid "[PushService] Module %s:\n"
+msgstr ""
+
+#: ../src/Modules.py:110
+msgid "[PushService] Module is not callable"
+msgstr ""
+
+#: ../src/ConfigFile.py:58
+msgid "[PushService] No configuration file present"
+msgstr ""
+
+#: ../src/Modules.py:76
+msgid "[PushService] No module available: "
+msgstr ""
+
+#: ../src/Modules.py:64
+msgid "[PushService] No module found: "
+msgstr ""
+
+#: ../src/Modules.py:81
+msgid "[PushService] Warning attribute not available: "
+msgstr ""
+
+#: ../src/Modules.py:87
+msgid "[PushService] Warning no class definition: "
+msgstr ""
+
+#: ../src/Modules.py:92
+msgid "[PushService] Warning no subclass of base: "
+msgstr ""
+
+#: ../src/plugin.py:110
+msgid "configuration"
+msgstr ""
+
+#: ../src/PushServiceBase.py:307
+#, python-format
+msgid "controller %s returned error(s)"
+msgstr ""

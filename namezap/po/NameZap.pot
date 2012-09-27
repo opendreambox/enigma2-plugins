@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PasswordChanger\n"
+"Project-Id-Version: NameZap\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-09-27 23:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -17,34 +17,38 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/plugin.py:173
-msgid "Change your ftp and telnet password"
+#: ../src/NamezapSetup.py:57
+msgid "Cancel"
 msgstr ""
 
-#: ../src/plugin.py:142
-msgid "Could not log in!"
+#: ../src/NamezapSetup.py:39
+msgid "Controls the visual appearance of the number zap dialog."
 msgstr ""
 
-#: ../src/plugin.py:155
-msgid "Error while setting new password!"
+#: ../src/NamezapSetup.py:33 ../src/NamezapSetup.py:74 ../src/plugin.py:107
+msgid "NameZAP Setup"
 msgstr ""
 
-#: ../src/plugin.py:67
-msgid ""
-"Incorrect new password!\n"
-"Minimum length: 5\n"
-"Maximum length: 8"
+#: ../src/plugin.py:19
+msgid "Number and Name"
 msgstr ""
 
-#: ../src/plugin.py:56
-msgid "New password:"
+#: ../src/NamezapSetup.py:56
+msgid "OK"
 msgstr ""
 
-#: ../src/plugin.py:55
-msgid "Old password:"
+#: ../src/plugin.py:17
+msgid "Only Number"
 msgstr ""
 
-#: ../src/plugin.py:48 ../src/plugin.py:81 ../src/plugin.py:168
-#: ../src/plugin.py:173
-msgid "Password Changer"
+#: ../src/plugin.py:18
+msgid "Service Name"
+msgstr ""
+
+#: ../src/plugin.py:91
+msgid "Unknown Service"
+msgstr ""
+
+#: ../src/NamezapSetup.py:39
+msgid "Zapper Style"
 msgstr ""

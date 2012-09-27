@@ -6,93 +6,133 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: EPGSearch\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-24 16:16+0200\n"
+"POT-Creation-Date: 2012-09-27 23:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/EPGSearch.py:150
+#: ../src/EPGSearchSetup.py:40
+msgid "Add \"Search\" Button to EPG"
+msgstr ""
+
+#: ../src/EPGSearch.py:153
 msgid "Add timer"
 msgstr ""
 
-#: ../src/EPGSearch.py:349
+#: ../src/EPGSearch.py:385 ../src/EPGSearchSetup.py:58
 msgid "Cancel"
 msgstr ""
 
-#: ../src/EPGSearch.py:387
+#: ../src/EPGSearch.py:423
 msgid "Channel Selection"
 msgstr ""
 
-#: ../src/EPGSearch.py:257
+#: ../src/EPGSearch.py:279
 #, python-format
 msgid "Could not read AutoTimer timer list: %s"
 msgstr ""
 
-#: ../src/EPGSearch.py:69 ../src/EPGSearch.py:179
+#: ../src/EPGSearch.py:196
 msgid "EPG Search"
 msgstr ""
 
-#: ../src/EPGSearch.py:203
+#: ../src/EPGSearchSetup.py:33 ../src/EPGSearchSetup.py:75
+msgid "EPGSearch Setup"
+msgstr ""
+
+#: ../src/EPGSearch.py:220
 msgid "Enter text to search for"
 msgstr ""
 
-#: ../src/EPGSearch.py:216
+#: ../src/EPGSearch.py:233
 msgid "Export selected as AutoTimer"
 msgstr ""
 
-#: ../src/EPGSearch.py:135
+#: ../src/EPGSearch.py:138
 msgid "History"
 msgstr ""
 
-#: ../src/EPGSearch.py:214
+#: ../src/EPGSearchSetup.py:39
+msgid ""
+"How many entries to keep in the search history at most. 0 disables history "
+"entirely!"
+msgstr ""
+
+#: ../src/EPGSearchSetup.py:40
+msgid ""
+"If this setting is enabled, the plugin adds a \"Search\" Button to the "
+"regular EPG."
+msgstr ""
+
+#: ../src/EPGSearch.py:231
 msgid "Import from AutoTimer"
 msgstr ""
 
-#: ../src/EPGSearch.py:209
+#: ../src/EPGSearch.py:226
 msgid "Import from EPG"
 msgstr ""
 
-#: ../src/EPGSearch.py:208
+#: ../src/EPGSearch.py:225
 msgid "Import from Timer"
 msgstr ""
 
-#: ../src/EPGSearch.py:134
+#: ../src/EPGSearchSetup.py:39
+msgid "Length of History"
+msgstr ""
+
+#: ../src/EPGSearch.py:137
 msgid "New Search"
 msgstr ""
 
-#: ../src/EPGSearch.py:298
+#: ../src/EPGSearch.py:333
 msgid "No history"
 msgstr ""
 
-#: ../src/EPGSearch.py:350
+#: ../src/EPGSearch.py:386 ../src/EPGSearchSetup.py:57
 msgid "OK"
 msgstr ""
 
-#: ../src/EPGSearch.py:215
+#: ../src/EPGSearch.py:236
+msgid "Open selected in IMDb"
+msgstr ""
+
+#: ../src/EPGSearch.py:232
 msgid "Save search as AutoTimer"
 msgstr ""
 
-#: ../src/EPGSearch.py:415
+#: ../src/EPGSearch.py:72 ../src/EPGSearch.py:451
 msgid "Search"
 msgstr ""
 
-#: ../src/plugin.py:58
+#. TRANSLATORS: description of EPGSearch in PluginBrowser
+#: ../src/plugin.py:55
 msgid "Search EPG"
 msgstr ""
 
-#: ../src/EPGSearch.py:364
+#: ../src/EPGSearch.py:400
 msgid "Select a timer to search"
 msgstr ""
 
-#: ../src/EPGSearch.py:268 ../src/EPGSearch.py:292
+#: ../src/EPGSearch.py:290 ../src/EPGSearch.py:327
 msgid "Select text to search for"
 msgstr ""
 
-#: ../src/plugin.py:63 ../src/plugin.py:69
+#: ../src/EPGSearch.py:238
+msgid "Setup"
+msgstr ""
+
+#. TRANSLATORS: EPGSearch title in MovieList (does not require further user interaction)
+#: ../src/plugin.py:69
+msgid "search EPG"
+msgstr ""
+
+#. TRANSLATORS: EPGSearch title in EventInfo dialog (requires the user to select an event to search for)
+#: ../src/plugin.py:62
 msgid "search EPG..."
 msgstr ""
