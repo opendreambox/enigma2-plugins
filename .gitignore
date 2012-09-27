@@ -32,3 +32,5 @@ stamp-h1
 *.mo
 *.o
 *.bak
+*-py.pot
+*-xml.pot
