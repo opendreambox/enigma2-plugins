@@ -32,7 +32,7 @@ endif
 	$(MSGFMT) -o $@ $<
 
 BUILT_SOURCES = $(LANGMO)
-CLEANFILES = $(LANGMO) @PACKAGE_NAME@-py.pot @PACKAGE_NAME@-xml.pot @PACKAGE_NAME@.pot
+CLEANFILES = $(LANGMO) @PACKAGE_NAME@-py.pot @PACKAGE_NAME@-xml.pot
 
 dist-hook: $(LANGPO)
 
