@@ -16,12 +16,8 @@ if UPDATE_PO
 	$(PYTHON) $^ > $@
 
 @PACKAGE_NAME@.pot: @PACKAGE_NAME@-py.pot @PACKAGE_NAME@-xml.pot
-	if test -f $(srcdir)/../po/@PACKAGE_NAME@-py.pot; then \
-		sed -e s/charset=CHARSET/charset=UTF-8/ $(srcdir)/../po/@PACKAGE_NAME@-py.pot -i; \
-	fi;
-	if test -f $(srcdir)/../po/@PACKAGE_NAME@-xml.pot; then \
-		sed -e s/charset=CHARSET/charset=UTF-8/ $(srcdir)/../po/@PACKAGE_NAME@-xml.pot -i; \
-	fi;
+	sed -e s/": PACKAGE VERSION"/": @PACKAGE_NAME@"/ $^ -i
+	sed -e s/charset=CHARSET/charset=UTF-8/ $^ -i
 	cat $^ | $(MSGUNIQ) -s -n --add-location --to-code=UTF-8 -o $@ -
 
 %.po: @PACKAGE_NAME@.pot

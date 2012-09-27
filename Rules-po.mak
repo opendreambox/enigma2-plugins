@@ -27,12 +27,8 @@ $(PLUGIN)-xml.pot:
 	fi;
 
 $(PLUGIN).pot: $(PLUGIN)-py.pot $(PLUGIN)-xml.pot
-	if test -f $(srcdir)/../po/$(PLUGIN)-py.pot; then \
-		sed -e s/charset=CHARSET/charset=UTF-8/ $(srcdir)/../po/$(PLUGIN)-py.pot -i; \
-	fi;
-	if test -f $(srcdir)/../po/$(PLUGIN)-xml.pot; then \
-		sed -e s/charset=CHARSET/charset=UTF-8/ $(srcdir)/../po/$(PLUGIN)-xml.pot -i; \
-	fi;
+	sed -e s/": PACKAGE VERSION"/": $(PLUGIN)"/ $^ -i
+	sed -e s/charset=CHARSET/charset=UTF-8/ $^ -i
 	cat $^ | $(MSGUNIQ) --no-location -o $@ -
 
 %.po: $(PLUGIN).pot
