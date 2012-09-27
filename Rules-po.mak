@@ -29,16 +29,16 @@ $(PLUGIN)-xml.pot:
 $(PLUGIN).pot: $(PLUGIN)-py.pot $(PLUGIN)-xml.pot
 	sed -e s/": PACKAGE VERSION"/": $(PLUGIN)"/ $^ -i
 	sed -e s/charset=CHARSET/charset=UTF-8/ $^ -i
-	cat $^ | $(MSGUNIQ) --no-location -o $@ -
+	cat $^ | $(MSGUNIQ) -s -n --add-location --to-code=UTF-8 -o $@ -
 
 %.po: $(PLUGIN).pot
 	if [ -f $@ ]; then \
-		$(MSGMERGE) --backup=none --no-location -s -N -U $@ $< && touch $@; \
+		$(MSGMERGE) --backup=none --add-location -s -N -U $@ $< && touch $@; \
 	else \
-		$(MSGINIT) -l $@ -o $@ -i $< --no-translator; \
+		$(MSGINIT) --locale=UTF-8 $@ -o $@ -i $< --no-translator; \
 	fi
 
-CLEANFILES += $(PLUGIN)-py.pot $(PLUGIN)-xml.pot $(PLUGIN).pot
+CLEANFILES += $(PLUGIN)-py.pot $(PLUGIN)-xml.pot
 endif
 
 .po.mo:
