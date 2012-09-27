@@ -2,6 +2,9 @@ CATEGORY ?= "Extensions"
 
 plugindir = $(libdir)/enigma2/python/Plugins/$(CATEGORY)/$(PLUGIN)
 
+PYSRC ?= $(srcdir)/../src/*.py
+XMLSRC ?= $(srcdir)/../src/*.xml
+
 LANGMO = $(LANGS:=.mo)
 LANGPO = $(LANGS:=.po)
 
@@ -10,35 +13,25 @@ CLEANFILES = $(LANGMO)
 
 if UPDATE_PO
 # the TRANSLATORS: allows putting translation comments before the to-be-translated line.
-$(PLUGIN)-py.pot:
-	if test -d $(srcdir)/../src; then \
-		$(XGETTEXT) -L python --from-code=UTF-8 --add-comments="TRANSLATORS:" -d $(PLUGIN) -s -o $(PLUGIN)-py.pot $(srcdir)/../src/*.py; \
-	fi;
-	if test -d $(srcdir)/../src_py; then \
-		$(XGETTEXT) -L python --from-code=UTF-8 --add-comments="TRANSLATORS:" -d $(PLUGIN) -s -o $(PLUGIN)-py.pot $(srcdir)/../src_py/*.py; \
-	fi;
+$(PLUGIN)-py.pot: $(PYSRC)
+	$(XGETTEXT) -L python --from-code=UTF-8 --add-comments="TRANSLATORS:" -d $(PLUGIN) -s -o $@ $^
 
-$(PLUGIN)-xml.pot:
-	if test -f $(srcdir)/../src/*.xml; then \
-		$(PYTHON) $(top_srcdir)/xml2po.py $(srcdir)/../src/*.xml; \
-	fi;
-	if test ! -f $(srcdir)/../po/$(PLUGIN)-xml.pot; then \
-		touch $(srcdir)/../po/$(PLUGIN)-xml.pot; \
-	fi;
+$(PLUGIN)-xml.pot: $(top_srcdir)/xml2po.py $(XMLSRC)
+	$(PYTHON) $^ > $@
 
 $(PLUGIN).pot: $(PLUGIN)-py.pot $(PLUGIN)-xml.pot
 	sed -e s/": PACKAGE VERSION"/": $(PLUGIN)"/ $^ -i
 	sed -e s/charset=CHARSET/charset=UTF-8/ $^ -i
-	cat $^ | $(MSGUNIQ) --no-location -o $@ -
+	cat $^ | $(MSGUNIQ) -s -n --add-location --to-code=UTF-8 -o $@ -
 
 %.po: $(PLUGIN).pot
 	if [ -f $@ ]; then \
-		$(MSGMERGE) --backup=none --no-location -s -N -U $@ $< && touch $@; \
+		$(MSGMERGE) --backup=none --add-location -s -N -U $@ $< && touch $@; \
 	else \
-		$(MSGINIT) -l $@ -o $@ -i $< --no-translator; \
+		$(MSGINIT) --locale=UTF-8 $@ -o $@ -i $< --no-translator; \
 	fi
 
-CLEANFILES += $(PLUGIN)-py.pot $(PLUGIN)-xml.pot $(PLUGIN).pot
+CLEANFILES += $(PLUGIN)-py.pot $(PLUGIN)-xml.pot
 endif
 
 .po.mo:
