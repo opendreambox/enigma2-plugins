@@ -7,19 +7,107 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: enigma2-plugins\n"
-"Report-Msgid-Bugs-To: enigma2-translations@lists.elitedvb.net\n"
-"POT-Creation-Date: 2012-09-21 12:36+0200\n"
-"PO-Revision-Date: 2012-09-21 12:36+0200\n"
-"Last-Translator: Mladen Horvat <acid-burn@opendreambox.org>\n"
-"Language-Team: Dream Multimedia\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-28 08:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: ../emission/src/plugin.py:135
+#, python-format
+msgid "%d Torrents(s) were scheduled for download, %d failed."
+msgstr ""
+
 #: ../webinterface/src/WebComponents/Sources/Movie.py:153
 #, python-format
 msgid "%d error while moving Movie '%s' to '%s': %s"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:228
+#, python-format
+msgid ""
+"%d files added to database!\n"
+"Press OK to close."
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:231
+#: ../emission/src/EmissionDetailview.py:232
+#, python-format
+msgid "%d kb/s"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:723
+#, python-format
+msgid "%d min"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:973
+#, python-format
+msgid ""
+"%i file(s) was extracted and I didn't match them automatically this time. \n"
+" Please make local convertion (long TEXT)."
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:209
+#, python-format
+msgid ""
+"%s\n"
+" added to database"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:213
+#: ../merlinmusicplayer/src/plugin.py:217
+#, python-format
+msgid ""
+"%s\n"
+" already exists in database!"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2519
+#: ../merlinmusicplayer/src/plugin.py:3270
+#, python-format
+msgid ""
+"%s\n"
+"appended to songlist"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2529
+#: ../merlinmusicplayer/src/plugin.py:3281
+#, python-format
+msgid ""
+"%s\n"
+"inserted and will be played as next song"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:334
+#, python-format
+msgid ""
+"%s \n"
+"FAILED!"
+msgstr ""
+
+#: ../netcaster/src/bin/plugin.py:198
+#, python-format
+msgid "%s Enigma2 Plugin V%s (Patched)"
+msgstr ""
+
+#: ../emission/src/EmissionBandwidth.py:73
+#, python-format
+msgid "%s bandwidth settings"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:178
+#, python-format
+msgid "%s of %s min"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:694
+#, python-format
+msgid "%s's Gallery"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Movie.py:100
@@ -55,6 +143,62 @@ msgstr ""
 msgid "'%s' removed from playlist"
 msgstr ""
 
+#: ../webcamviewer/src/plugin.py:512
+msgid "*"
+msgstr ""
+
+#: ../webcamviewer/src/plugin.py:42
+msgid "1 Minute"
+msgstr ""
+
+#: ../webcamviewer/src/plugin.py:42
+msgid "10 Seconds"
+msgstr ""
+
+#: ../dyndns/src/plugin.py:17
+msgid "10 min."
+msgstr ""
+
+#: ../dyndns/src/plugin.py:17
+msgid "15 min."
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1125
+msgid "1st subtitle language:"
+msgstr ""
+
+#: ../webcamviewer/src/plugin.py:42
+msgid "20 Seconds"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1126
+msgid "2nd subtitle language:"
+msgstr ""
+
+#: ../dyndns/src/plugin.py:17
+msgid "30 min."
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1127
+msgid "3rd subtitle language:"
+msgstr ""
+
+#: ../webcamviewer/src/plugin.py:42
+msgid "5 Seconds"
+msgstr ""
+
+#: ../dyndns/src/plugin.py:17
+msgid "5 min."
+msgstr ""
+
+#: ../dyndns/src/plugin.py:17
+msgid "60 min."
+msgstr ""
+
+#: ../antiscrollbar/src/plugin.py:116
+msgid ": Main Setup"
+msgstr ""
+
 #: ../webinterface/src/WebComponents/Sources/AudioTracks.py:50
 msgid "AC3 Downmix disabled"
 msgstr ""
@@ -63,16 +207,41 @@ msgstr ""
 msgid "AC3 Downmix enabled"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:92
+#: ../growlee/src/plugin.py:175
+msgid "API Key"
+msgstr ""
+
+#: ../ecasa/src/EcasaSetup.py:40
+msgid ""
+"API Key used to access Flickr. You can request one by logging in to Flickr "
+"from your computer."
+msgstr ""
+
+#: ../babelzapper/src/plugin.py:78
+#: ../webinterface/src/WebComponents/Sources/Strings.py:93
 msgid "About"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:50
+#: ../webinterface/src/WebComponents/Sources/Strings.py:51
 msgid "Action"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:40
+#: ../webinterface/src/WebComponents/Sources/Strings.py:41
 msgid "Activate"
+msgstr ""
+
+#. TRANSLATORS: Do NOT translate this! This is not a string in our plugin but one from e2 core which we try to find, so a custom translation will probably disallow us to do so.
+#: ../pipzap/src/plugin.py:36
+msgid "Activate Picture in Picture"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2908
+msgid "Activate screensaver"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:449
+#, python-format
+msgid "Active Torrents: %d/%d"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/SwitchService.py:68
@@ -80,59 +249,372 @@ msgstr ""
 msgid "Active service is now '%s'"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:106
-msgid "Add Timer"
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:138
+#: ../pipservicerelation/src/plugin.py:87
+msgid "Add"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:166
+#, python-format
+msgid "Add %s to playlist"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1138
+msgid "Add Subs Downloader to BlueButton menu:"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Strings.py:107
+msgid "Add Timer"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:108
 msgid "Add Zap Timer"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:63
+#: ../merlinmusicplayer/src/plugin.py:1819
+#: ../merlinmusicplayer/src/plugin.py:1833
+msgid "Add all songs from selected album to a playlist"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1821
+#: ../merlinmusicplayer/src/plugin.py:1831
+msgid "Add all songs from selected artist to a playlist"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1835
+msgid "Add all songs from selected genre to a playlist"
+msgstr ""
+
+#: ../fstabeditor/src/plugin.py:103
+msgid "Add entry"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:284
+msgid "Add new download"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1817
+msgid "Add selected song to a playlist"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:737
+msgid "Add timer"
+msgstr ""
+
+#: ../growlee/src/plugin.py:179
+msgid "Address"
+msgstr ""
+
+#: ../pipzap/src/PipzapSetup.py:41
+msgid "Adds an entry to the Plugin menu to toggle pipzap"
+msgstr ""
+
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:137
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:263
+msgid "Adjustment value"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:64
 msgid "After event"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:31
+#: ../ecasa/src/EcasaGui.py:476
+msgid "Album"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2324
+#, python-format
+msgid "Album (%s) -> Song List"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:107
+msgid "Albums"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2352
+#, python-format
+msgid "Albums (%d)"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2421
+msgid "Albums List"
+msgstr ""
+
+#: ../ecasa/src/EcasaSetup.py:41
+msgid "Albums of"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:150
+#: ../emission/src/EmissionOverview.py:303
+#: ../emission/src/EmissionOverview.py:310
+#: ../webinterface/src/WebComponents/Sources/Strings.py:32
 msgid "All"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:33
+#: ../ecasa/src/FlickrApi.py:122
+msgid "All Photos"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2236
+msgid "All Songs"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:34
 msgid "All Timers"
 msgstr ""
 
-#: ../webinterface/src/WebIfConfig.py:63
+#: ../emission/src/EmissionBandwidth.py:102
+msgid "Allow PEX"
+msgstr ""
+
+#: ../webinterface/src/WebIfConfig.py:61
 msgid "Allow zapping via Webinterface"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:134
+#: ../reconstructapsc/src_py/plugin.py:126
+#, python-format
+msgid ""
+"Another movie or directory is currently processed.\n"
+"The %s \"%s\" will be processed in the background after it."
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1824
+msgid "Append file to current playing songlist"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:3233
+msgid "Append file to current songlist"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2408
+#, python-format
+msgid "Artist (%s) -> Album List"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2298
+#, python-format
+msgid "Artist (%s) -> Song List"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2348
+#, python-format
+msgid "Artists (%d)"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2372
+msgid "Artists List"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:50
+msgid "Atlantis"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:135
 msgid "Audio PID"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:112
+#: ../webinterface/src/WebComponents/Sources/Strings.py:113
 msgid "Authors"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:68
+#: ../webinterface/src/WebComponents/Sources/Strings.py:69
 msgid "Auto"
 msgstr ""
 
-#: ../webinterface/src/WebIfConfig.py:64
+#: ../merlinepg/src/plugin.py:116
+msgid "Auto-Primetime:"
+msgstr ""
+
+#: ../emission/src/EmissionSetup.py:31
+msgid "Auto-add torrent enclosures from SimpleRSS"
+msgstr ""
+
+#: ../merlinepg/src/plugin.py:571 ../merlinepg/src/plugin.py:891
+msgid "AutoTimer"
+msgstr ""
+
+#: ../automaticvolumeadjustment/src/plugin.py:46
+#: ../automaticvolumeadjustment/src/plugin.py:49
+msgid "Automatic Volume Adjustment"
+msgstr ""
+
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:53
+msgid "Automatic Volume Adjustment - Config"
+msgstr ""
+
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:240
+msgid "Automatic Volume Adjustment - Entry Config"
+msgstr ""
+
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:135
+msgid "Automatic Volume Adjustment - Service Config"
+msgstr ""
+
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentConfig.py:69
+msgid "Automatic volume adjust"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:76
+msgid "Autotimer"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:608
+msgid "Autotimer is not installed!"
+msgstr ""
+
+#: ../webinterface/src/WebIfConfig.py:62
 msgid "Autowrite timer"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:55
+#: ../valixdcontrol/src/plugin.py:51
+msgid "Avalon"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:913
+msgid "BZ2-package:\\n"
+msgstr ""
+
+#: ../babelzapper/src/plugin.py:91
+msgid "Babelzapper Plugin"
+msgstr ""
+
+#: ../babelzapper/src/plugin.py:123
+#, python-format
+msgid ""
+"Babelzapper Version %s\n"
+"by gutemine and garbage"
+msgstr ""
+
+#: ../babelzapper/src/plugin.py:120
+msgid "Babelzapper readme.txt"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:89
+#: ../emission/src/EmissionOverview.py:146
+msgid "Bandwidth"
+msgstr ""
+
+#: ../emission/src/EmissionBandwidth.py:23
+msgid "Bandwidth settings"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:42
+msgid "Base"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:120
+msgid "Base background:"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:56
 msgid "Begins"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:26
+#: ../valixdcontrol/src/plugin.py:43
+msgid "Beyond Dreams"
+msgstr ""
+
+#: ../aihdcontroler/src/plugin.py:43
+msgid "BeyondDreams-HD"
+msgstr ""
+
+#: ../bitrateviewer/src/plugin.py:93
+msgid "BitrateViewer"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:52
+msgid "Blues of dream"
+msgstr ""
+
+#: ../aihdcontroler/src/plugin.py:47
+msgid "BluesOfDream-HD"
+msgstr ""
+
+#: ../bonjour/src/plugin.py:88
+msgid "Bonjour"
+msgstr ""
+
+#: ../bonjour/src/plugin.py:41
+msgid "Bonjour: Overview"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:27
 msgid "Bouquets"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:19
+#: ../webinterface/src/WebComponents/Sources/Strings.py:20
 msgid "BoxControl"
 msgstr ""
 
-#: ../webinterface/src/WebIfConfig.py:34
+#: ../cdinfo/src/plugin.py:73
+msgid "CDInfo"
+msgstr ""
+
+#: ../logomanager/src/plugin.py:13
+msgid "CF Drive"
+msgstr ""
+
+#: ../ecasa/src/EcasaSetup.py:45
+msgid "Cache size"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:764
+#, python-format
+msgid "Camera: %s"
+msgstr ""
+
+#: ../webcamviewer/src/WebcamTravel.py:80
+#: ../webcamviewer/src/WebcamTravel.py:240
+msgid "Cams: "
+msgstr ""
+
+#: ../genuinedreambox/src/plugin.py:108
+msgid "Can't connect to server. Please check your network!"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:566
+msgid ""
+"Can't detect downloaded subtitle code page. Please contact with developer to "
+"correct this in future versions."
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:568
+msgid ""
+"Can't detect downloaded subtitle format. Please contact with developer to "
+"correct this in future versions."
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:563
+msgid ""
+"Can't detect movie FPS. Please install libMediaInfor from ConfigurationMenu."
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:561
+msgid ""
+"Can't find subtitle file on storage device.\n"
+" Check:\n"
+" -network connection,\n"
+" - subtitle server availability,\n"
+" - storage device access."
+msgstr ""
+
+#: ../antiscrollbar/src/plugin.py:125
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:61
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:248
+#: ../babelzapper/src/plugin.py:75 ../cdinfo/src/plugin.py:56
+#: ../dreamirc/src/dreamIRCSetup.py:71 ../ecasa/src/EcasaSetup.py:71
+#: ../emission/src/EmissionBandwidth.py:72 ../emission/src/EmissionSetup.py:39
+#: ../genuinedreambox/src/plugin.py:81 ../growlee/src/plugin.py:99
+#: ../merlinmusicplayer/src/plugin.py:258
+#: ../merlinmusicplayer/src/plugin.py:2772
+#: ../merlinmusicplayer/src/plugin.py:2893 ../movieepg/src/MovieEpgSetup.py:55
+#: ../pipservicerelation/src/plugin.py:188 ../pipzap/src/PipzapSetup.py:60
+#: ../remotetimer/src/plugin.py:105 ../remotetimer/src/plugin.py:230
+#: ../satloader/src/plugin.py:53
+#: ../startuptostandby/src/StartupToStandbyConfiguration.py:27
+#: ../subsdownloader2/src/plugin.py:907 ../subsdownloader2/src/plugin.py:912
+#: ../subsdownloader2/src/plugin.py:920 ../subsdownloader2/src/plugin.py:925
+#: ../tvcharts/src/plugin.py:403 ../webinterface/src/WebIfConfig.py:32
 msgid "Cancel"
 msgstr ""
 
@@ -140,12 +622,29 @@ msgstr ""
 msgid "Cannot zap while device is in Standby"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:124
+#: ../webinterface/src/WebComponents/Sources/Strings.py:125
 msgid "Capacity"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:118
+msgid "Center Mainmenu and Plugins-list:"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/TPMChallenge.py:37
 msgid "Challenge executed, please verify the result!"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:283
+msgid "Change sorting"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:170
+#, python-format
+msgid "Change to %s"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:513 ../ecasa/src/EcasaGui.py:519
+msgid "Change user"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Timer.py:365
@@ -153,28 +652,97 @@ msgstr ""
 msgid "Changing the timer for '%s' failed!"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:58
+#: ../dreamirc/src/dreamIRCSetup.py:67 ../merlinepg/src/plugin.py:751
+#: ../webinterface/src/WebComponents/Sources/Strings.py:59
 msgid "Channel"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:36
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:271
+#: ../pipservicerelation/src/plugin.py:211
+msgid "Channel Selection"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:116
+msgid "Channel and EPG selectors Style:"
+msgstr ""
+
+#: ../aihdcontroler/src/plugin.py:96
+msgid "Channel and EPG selectors style:"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:77
+msgid "Channel info"
+msgstr ""
+
+#: ../dreamirc/src/plugin.py:109
+msgid "ChatBox"
+msgstr ""
+
+#: ../reconstructapsc/src_py/plugin.py:36
+msgid "Check any running reconstruct process"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1131
+msgid "Choose Napisy24 search method:"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1119
+msgid "Choose subtitle server:"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:37
 msgid "Cleans up the list of timers by removing e.g. finished timers"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:35
+#: ../remotetimer/src/plugin.py:103
+#: ../webinterface/src/WebComponents/Sources/Strings.py:36
 msgid "Cleanup"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:25
+#: ../merlinmusicplayer/src/plugin.py:1823
+#: ../merlinmusicplayer/src/plugin.py:3232
+msgid "Clear current songlist and play selected entry"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:26
 msgid "Clear search"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:93
+#: ../webinterface/src/WebComponents/Sources/Strings.py:94
 msgid "Click to show/hide extended description"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:169
+#: ../ecasa/src/EcasaGui.py:106 ../ecasa/src/EcasaGui.py:511
+#: ../ecasa/src/EcasaGui.py:518 ../ecasa/src/EcasaGui.py:630
+#: ../emission/src/EmissionDetailview.py:88
+#: ../emission/src/EmissionOverview.py:145 ../fstabeditor/src/dirSelect.py:44
+#: ../mphelp/src/MPHelp.py:42 ../pipservicerelation/src/plugin.py:86
+msgid "Close"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:176
 msgid "Close MediaPlayer"
+msgstr ""
+
+#: ../fstabeditor/src/plugin.py:110
+msgid "Close plugin"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:275
+msgid ""
+"Color format: TTRRGGBB (hexadecimal)\n"
+"TT=Transparenty RR=Red GG=Green BB=Blue\n"
+"See more colors by www.colorpicker.com\n"
+"\n"
+"Support: www.dreambox-tools.info"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:269
+msgid "Colored icons patch"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:306
+msgid "Colors setup are only for Base-Style possible."
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/MP.py:234
@@ -182,8 +750,49 @@ msgstr ""
 msgid "Command '%s' executed"
 msgstr ""
 
+#: ../aihdcontroler/src/plugin.py:46
+msgid "Concinnity"
+msgstr ""
+
+#: ../webcamviewer/src/plugin.py:80
+#, python-format
+msgid "Config file %s not found."
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1809
+#: ../merlinmusicplayer/src/plugin.py:3228
+msgid "Configuration"
+msgstr ""
+
 #: ../webinterface/src/plugin.py:516 ../webinterface/src/plugin.py:519
 msgid "Configuration for the Webinterface"
+msgstr ""
+
+#: ../aihdcontroler/src/plugin.py:68
+msgid "Configuration tool for All.In HD skins"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:87
+msgid "Configuration tool for Vali-XD skins"
+msgstr ""
+
+#: ../growlee/src/plugin.py:242
+msgid "Configure Growlee"
+msgstr ""
+
+#: ../movieepg/src/plugin.py:132
+msgid "Configure Movie-EPG Plugin"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:282
+msgid "Configure connection"
+msgstr ""
+
+#: ../movieepg/src/MovieEpgSetup.py:36
+msgid ""
+"Configures where to show the \"EPG\"-Entry in the Extensions-List. You can "
+"either show this just in the movie player, the movie player and TV-mode or "
+"never."
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Timer.py:360
@@ -191,6 +800,39 @@ msgstr ""
 #: ../webinterface/src/WebComponents/Sources/Timer.py:433
 #, python-format
 msgid "Conflicting Timer(s) detected! %s"
+msgstr ""
+
+#: ../dreamirc/src/plugin.py:110
+msgid "Connect"
+msgstr ""
+
+#: ../ecasa/src/EcasaSetup.py:50
+msgid "Connect to"
+msgstr ""
+
+#: ../dreamirc/src/e2support.py:112
+msgid "Connected to IRC server"
+msgstr ""
+
+#: ../bonjour/src/plugin.py:88
+msgid "Control Bonjour (avahi-daemon)"
+msgstr ""
+
+#: ../growlee/src/plugin.py:57
+msgid "Converted connection"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:73 ../easyinfo/src/plugin.py:97
+#: ../easyinfo/src/plugin.py:98
+msgid "Cool-TV"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:656
+msgid "CoolTVGuide is not installed!"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1047
+msgid "Copy"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Timer.py:391
@@ -208,35 +850,116 @@ msgstr ""
 msgid "Could not find timer '%s' with given start and end time!"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:34
+#: ../pipzap/src/plugin.py:72
+msgid "Could not open Picture in Picture"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:35
 msgid "Create Timer"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:128
+#: ../merlinmusicplayer/src/plugin.py:1812
+msgid "Create new playlist"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:129
 msgid "DHCP enabled"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:57
+#: ../emission/src/EmissionOverview.py:151
+msgid "DL"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:451
+#, python-format
+msgid "DL: %d kb/s"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:64
+msgid "DM-7025"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:62
+msgid "DM-800 Simple"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:63
+msgid "DM-8000 Full"
+msgstr ""
+
+#: ../multirc/src/plugin.py:16
+msgid "DM8000-RC layer 1"
+msgstr ""
+
+#: ../multirc/src/plugin.py:17
+msgid "DM8000-RC layer 2"
+msgstr ""
+
+#: ../multirc/src/plugin.py:18
+msgid "DM8000-RC layer 3"
+msgstr ""
+
+#: ../multirc/src/plugin.py:19
+msgid "DM8000-RC layer 4"
+msgstr ""
+
+#: ../aihdcontroler/src/plugin.py:41
+msgid "DMM-Board"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:58
 msgid "Days"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:41
+#: ../webinterface/src/WebComponents/Sources/Strings.py:42
 msgid "Deactivate"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:77
+#: ../dreamirc/src/dreamIRCSetup.py:69
+msgid "Debug"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:78
 msgid "Deepstandby"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:43
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:78
+msgid "Default volume adjustment value for AC3/DTS"
+msgstr ""
+
+#: ../cdinfo/src/plugin.py:58
+msgid "Defaults"
+msgstr ""
+
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:141
+#: ../growlee/src/plugin.py:102 ../pipservicerelation/src/plugin.py:85
+#: ../remotetimer/src/plugin.py:104 ../subsdownloader2/src/plugin.py:1046
+#: ../webinterface/src/WebComponents/Sources/Strings.py:44
 msgid "Delete"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:44
+#: ../webinterface/src/WebComponents/Sources/Strings.py:169
+#, python-format
+msgid "Delete %s"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:45
 msgid "Delete Timer"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:60
+#: ../merlinmusicplayer/src/plugin.py:1829
+msgid "Delete selected playlist"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1815
+msgid "Delete song from current playlist"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1822
+msgid "Delete song from database"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:61
 msgid "Description"
 msgstr ""
 
@@ -245,36 +968,208 @@ msgstr ""
 msgid "Destination dir '%s' does not exist."
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:116
-msgid "Device & Versions"
-msgstr ""
-
-#: ../webinterface/src/WebComponents/Sources/Strings.py:89
-msgid "Device Info"
+#: ../subsdownloader2/src/plugin.py:350
+msgid "Device"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Strings.py:117
+msgid "Device & Versions"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:90
+msgid "Device Info"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:118
 msgid "Device Name"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:42
+#: ../logomanager/src/plugin.py:219
+msgid "Directory to scan for Logos"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:43
 msgid "Disable"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:64
+#: ../easyinfo/src/plugin.py:65 ../easyinfo/src/plugin.py:96
+#: ../easyinfo/src/plugin.py:104
+msgid "Disabled"
+msgstr ""
+
+#: ../dreamirc/src/plugin.py:111
+msgid "Disconnect"
+msgstr ""
+
+#: ../letterbox/src/plugin.py:41
+msgid "Display 4:3 content as"
+msgstr ""
+
+#: ../pipzap/src/PipzapSetup.py:42
+msgid "Displays a label in the opposite corner of PiP if pipzap is enabled."
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:65
 msgid "Do Nothing"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:148
+#: ../subsdownloader2/src/plugin.py:1069
+#, python-format
+msgid "Do You realy want to delete: /n %s"
+msgstr ""
+
+#: ../subsdownloader2/src/pluginOnlineContent.py:66
+msgid "Do You want to restart GUI to apply changes?"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1879
+msgid "Do you really want to add all songs from that album to a playlist?"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1869
+msgid "Do you really want to add all songs from that artist to a playlist?"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1859
+msgid "Do you really want to add all songs from that genre to a playlist?"
+msgstr ""
+
+#: ../merlinepg/src/plugin.py:588 ../merlinepg/src/plugin.py:908
+#, python-format
+msgid "Do you really want to delete %s?"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1913
+msgid "Do you really want to delete that song from the database?"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1902
+msgid "Do you really want to delete that song the current playlist?"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1889
+msgid "Do you really want to delete the current playlist?"
+msgstr ""
+
+#: ../remotetimer/src/plugin.py:145
+#, python-format
+msgid ""
+"Do you really want to delete the timer \n"
+"%s ?"
+msgstr ""
+
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:182
+#: ../pipservicerelation/src/plugin.py:123
+msgid "Do you really want to delete this entry?"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:926
+msgid "Do you want to execute?\\n"
+msgstr ""
+
+#: ../satloader/src/plugin.py:96 ../satloader/src/plugin.py:118
+msgid "Do you want to restart the GUI now?"
+msgstr ""
+
+#: ../reconstructapsc/src_py/plugin.py:33
+msgid "Don't reconstruct"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:149
 msgid "Down"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:146
+#: ../webinterface/src/WebComponents/Sources/Strings.py:168
+#, python-format
+msgid "Downlad %s"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:298
+#: ../emission/src/EmissionOverview.py:309
+#: ../webinterface/src/WebComponents/Sources/Strings.py:147
 msgid "Download"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:23
+#: ../ecasa/src/EcasaGui.py:688
+msgid "Download Picture"
+msgstr ""
+
+#: ../emission/src/EmissionBandwidth.py:101
+msgid "Download directory"
+msgstr ""
+
+#: ../emission/src/EmissionBandwidth.py:90
+msgid "Download rate"
+msgstr ""
+
+#: ../emission/src/plugin.py:155
+msgid "Download torrent..."
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:247
+#: ../emission/src/EmissionDetailview.py:250
+#, python-format
+msgid "Downloaded %d and uploaded %d MB"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:244
+#, python-format
+msgid "Downloaded %d of %d MB (%d%%)"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:243
+#, python-format
+msgid "Downloading from %d of %d peers"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1200
+msgid "Dream-Explorer..."
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:3391
+#: ../merlinmusicplayer/src/plugin.py:3394
+msgid "Dreambox Music Database"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:349
+msgid "Dreambox: "
+msgstr ""
+
+#: ../webcamviewer/src/WebcamTravel.py:250
+msgid "Duration: "
+msgstr ""
+
+#: ../dyndns/src/plugin.py:142
+msgid "DynDNS"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:80
+msgid "EPG refresh"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:75
+msgid "EPG search"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:24
 msgid "EPG-Search"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:650
+msgid "EPGRefresh is not installed!"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:619 ../easyinfo/src/plugin.py:991
+#: ../merlinepg/src/plugin.py:673 ../merlinepg/src/plugin.py:682
+#: ../merlinepg/src/plugin.py:972 ../merlinepg/src/plugin.py:981
+msgid "EPGsearch is not installed!"
+msgstr ""
+
+#: ../remotetimer/src/plugin.py:372
+#, python-format
+msgid ""
+"ERROR - Set Timer on Remote DreamBox via WebIf:\n"
+"%s"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/SleepTimer.py:110
@@ -296,56 +1191,200 @@ msgstr ""
 msgid "ERROR: Obligatory parameter 'time' [0-999] is missing"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:38
-#: ../webinterface/src/WebComponents/Sources/Strings.py:108
-msgid "Edit Timer"
+#: ../easyinfo/src/plugin.py:69 ../easyinfo/src/plugin.py:97
+#: ../easyinfo/src/plugin.py:98 ../easyinfo/src/plugin.py:104
+msgid "Easy-PG"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:254
+msgid "Easy-PG Primetime 1:"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:255
+msgid "Easy-PG Primetime 2 (main):"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:256
+msgid "Easy-PG Primetime 3:"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:253
+msgid "Easy-PG picons path:"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:70 ../easyinfo/src/plugin.py:104
+msgid "Easy-Selection"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:244
+msgid "EasyInfo settings..."
+msgstr ""
+
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:140
+#: ../pipservicerelation/src/plugin.py:88
+msgid "Edit"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Strings.py:39
+#: ../webinterface/src/WebComponents/Sources/Strings.py:109
+msgid "Edit Timer"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1219
+msgid "Edit line "
+msgstr ""
+
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:72
+#: ../webinterface/src/WebComponents/Sources/Strings.py:40
 msgid "Enable"
 msgstr ""
 
-#: ../webinterface/src/WebIfConfig.py:62
+#: ../webinterface/src/WebIfConfig.py:60
 msgid "Enable /media"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:158
+#: ../babelzapper/src/plugin.py:69
+msgid "Enable Babelzapper on Mute"
+msgstr ""
+
+#: ../tvcharts/src/plugin.py:417
+msgid "Enable Bouquet-Filter?"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:159
 msgid "Enable Debug"
 msgstr ""
 
-#: ../webinterface/src/WebIfConfig.py:66
+#: ../webinterface/src/WebIfConfig.py:64
 msgid "Enable HTTP Access"
 msgstr ""
 
-#: ../webinterface/src/WebIfConfig.py:72
+#: ../webinterface/src/WebIfConfig.py:70
 msgid "Enable HTTP Authentication"
 msgstr ""
 
-#: ../webinterface/src/WebIfConfig.py:77
+#: ../webinterface/src/WebIfConfig.py:75
 msgid "Enable HTTPS Access"
 msgstr ""
 
-#: ../webinterface/src/WebIfConfig.py:82
+#: ../webinterface/src/WebIfConfig.py:80
 msgid "Enable HTTPS Authentication"
 msgstr ""
 
-#: ../webinterface/src/WebIfConfig.py:88
+#: ../pipzap/src/PipzapSetup.py:40
+msgid "Enable Hotkey"
+msgstr ""
+
+#: ../emission/src/EmissionBandwidth.py:104
+msgid "Enable Port-Forwarding"
+msgstr ""
+
+#: ../webinterface/src/WebIfConfig.py:86
 msgid "Enable Streaming Authentication"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:56
+#: ../easyinfo/src/plugin.py:96
+#: ../startuptostandby/src/StartupToStandbyConfiguration.py:41
+msgid "Enabled"
+msgstr ""
+
+#: ../movieepg/src/MovieEpgSetup.py:37
+msgid ""
+"Enables you to show all plugins in the (regular) movie player, including "
+"ones which may have previously been hidden there like the Graphical Multi-"
+"EPG."
+msgstr ""
+
+#: ../emission/src/EmissionBandwidth.py:100
+msgid "Encryption"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:57
 msgid "Ends"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:118
+#: ../webinterface/src/WebComponents/Sources/Strings.py:119
 msgid "Enigma2 Version"
+msgstr ""
+
+#: ../fstabeditor/src/dirSelect.py:46
+msgid "Enter directory"
+msgstr ""
+
+#: ../webcamviewer/src/plugin.py:306
+msgid "Enter filename to save the List:"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1943
+msgid "Enter name for playlist"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1960
+msgid "Enter search-text"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:334 ../moviesearch/src/plugin.py:85
+msgid "Enter text to search for"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:561
+msgid "Enter username"
+msgstr ""
+
+#: ../dreamirc/src/plugin.py:242
+msgid "Enter your text here:"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/AudioTracks.py:39
 #: ../webinterface/src/WebComponents/Sources/AudioTracks.py:41
-#: ../webinterface/src/WebComponents/Sources/Strings.py:47
-#: ../webinterface/src/WebComponents/Sources/Strings.py:85
+#: ../webinterface/src/WebComponents/Sources/Strings.py:48
+#: ../webinterface/src/WebComponents/Sources/Strings.py:86
 msgid "Error"
+msgstr ""
+
+#: ../aihdcontroler/src/plugin.py:174 ../valixdcontrol/src/plugin.py:249
+msgid "Error by processing the skin file !!!"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:120
+#: ../emission/src/EmissionDetailview.py:136
+#: ../emission/src/EmissionDetailview.py:183
+#: ../emission/src/EmissionDetailview.py:211
+#: ../emission/src/EmissionDetailview.py:312
+#: ../emission/src/EmissionOverview.py:178
+#: ../emission/src/EmissionOverview.py:194
+#: ../emission/src/EmissionOverview.py:250
+#: ../emission/src/EmissionOverview.py:264
+#: ../emission/src/EmissionOverview.py:358
+#: ../emission/src/EmissionOverview.py:385
+#, python-format
+msgid "Error communicating with transmission-daemon: %s."
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:422 ../ecasa/src/EcasaGui.py:541
+#: ../ecasa/src/EcasaGui.py:544 ../ecasa/src/EcasaGui.py:672
+msgid "Error downloading"
+msgstr ""
+
+#: ../multirc/src/plugin.py:72
+#, python-format
+msgid "Error writing to %s!"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:230
+msgid ""
+"Error!\n"
+"Can not open database!\n"
+"Check if save folder is correct and writeable!\n"
+"Press OK to close."
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1222
+msgid "Error..."
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:66 ../easyinfo/src/plugin.py:100
+msgid "Event info"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Timer.py:267
@@ -357,60 +1396,291 @@ msgstr ""
 msgid "EventId not found"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:20
+#: ../easyinfo/src/plugin.py:251
+msgid "EventInfo blue button:"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:250
+msgid "EventInfo yellow button:"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1045
+msgid "Exit"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1134
+msgid "Extended configuratin menu:"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:21
 msgid "Extras"
+msgstr ""
+
+#: ../emission/src/plugin.py:66
+#, python-format
+msgid "Failed to add %d torrents."
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:781
+#, python-format
+msgid ""
+"Failed to download or save file.\n"
+"Possible problems:\n"
+"- Subtitle filname:\n"
+"%s\n"
+"- Subtitle codepage:\n"
+"%s\n"
+"- Subtitle filetype:\n"
+"%s\n"
+"- Movie fsp:\n"
+"%s\n"
+"."
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/AudioTracks.py:11
 msgid "False"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:166
+#: ../ecasa/src/EcasaGui.py:462
+msgid "Featured Photos"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:932
+msgid ""
+"File size is bigger than 61440.\n"
+"\n"
+" Subs Downloader can't manage it with vEditor."
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:17
+#: ../webinterface/src/WebComponents/Sources/Strings.py:173
 msgid "Filebrowser"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:111
+#: ../merlinmusicplayer/src/plugin.py:2911
+msgid "Filebrowser startup path"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:3311
+#, python-format
+msgid "Filelist: %s"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:100
+msgid "Files"
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:45
+msgid "Filesystemposition list left"
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:46
+msgid "Filesystemposition list right"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:112
 msgid "Filter Services"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:49
+#: ../webinterface/src/WebComponents/Sources/Strings.py:50
 msgid "Finished"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:125
+#: ../ecasa/src/EcasaSetup.py:40
+msgid "Flickr API Key"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:126
 msgid "Free Space"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:120
+#: ../webinterface/src/WebComponents/Sources/Strings.py:121
 msgid "Frontprocessor Version"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:131
+#: ../aihdcontroler/src/plugin.py:50 ../aihdcontroler/src/plugin.py:56
+#: ../valixdcontrol/src/plugin.py:56
+msgid "Full"
+msgstr ""
+
+#: ../aihdcontroler/src/plugin.py:51
+msgid "Full vertikal"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:58
+msgid "Full-horizontal"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:57
+msgid "Full-vertical"
+msgstr ""
+
+#: ../aihdcontroler/src/plugin.py:175 ../valixdcontrol/src/plugin.py:250
+msgid ""
+"GUI needs a restart to apply a new skin.\n"
+"Do you want to Restart the GUI now?"
+msgstr ""
+
+#: ../satloader/src/plugin.py:96 ../satloader/src/plugin.py:118
+msgid "GUI needs a restart to apply changes."
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:908
+msgid "GZ-package:\\n"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:132
 msgid "Gateway"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:153
-msgid "Get a Screenshot"
+#: ../merlinmusicplayer/src/plugin.py:2153
+#, python-format
+msgid "Genre (%s) -> Song List"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2119
+msgid "Genre List"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2360
+#, python-format
+msgid "Genres (%d)"
+msgstr ""
+
+#: ../genuinedreambox/src/plugin.py:71
+msgid "Genuine Dreambox"
+msgstr ""
+
+#: ../genuinedreambox/src/plugin.py:326
+msgid "Genuine Dreambox verification"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Strings.py:154
+msgid "Get a Screenshot"
+msgstr ""
+
+#: ../satloader/src/plugin.py:114
+msgid "Getting transponders failed!"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:47
+msgid "Glas"
+msgstr ""
+
+#: ../emission/src/EmissionBandwidth.py:33
+#: ../emission/src/EmissionBandwidth.py:37
+msgid "Global Setting"
+msgstr ""
+
+#: ../googlemaps/src/plugin.py:619
+msgid "Google Maps"
+msgstr ""
+
+#: ../ecasa/src/EcasaSetup.py:39
+msgid "Google Password"
+msgstr ""
+
+#: ../ecasa/src/EcasaSetup.py:38
+msgid "Google Username"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2906
+msgid "Google image path"
+msgstr ""
+
+#: ../googlemaps/src/plugin.py:529
+msgid "GoogleMaps Search"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:155
 msgid "Grab Video & OSD"
 msgstr ""
 
-#: ../webinterface/src/WebIfConfig.py:71
+#: ../easyinfo/src/plugin.py:638
+msgid "GraphMultiEPG is not installed!"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:71 ../easyinfo/src/plugin.py:97
+#: ../easyinfo/src/plugin.py:98
+msgid "Graphik multi-EPG"
+msgstr ""
+
+#: ../webinterface/src/WebIfConfig.py:69
 msgid "HTTP Port"
 msgstr ""
 
-#: ../webinterface/src/WebIfConfig.py:81
+#: ../webinterface/src/WebIfConfig.py:79
 msgid "HTTPS Port"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:123
+#: ../logomanager/src/plugin.py:13
+#: ../webinterface/src/WebComponents/Sources/Strings.py:124
 msgid "Harddisk"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:129
+#: ../googlemaps/src/plugin.py:212 ../pipzap/src/PipzapSetup.py:64
+msgid "Help"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:265
+msgid "Help information"
+msgstr ""
+
+#: ../growlee/src/plugin.py:31 ../growlee/src/plugin.py:52
+msgid "High (Warning)"
+msgstr ""
+
+#: ../growlee/src/plugin.py:31 ../growlee/src/plugin.py:52
+msgid "Highest (Emergency)"
+msgstr ""
+
+#: ../growlee/src/plugin.py:166
+msgid "Host"
+msgstr ""
+
+#: ../dyndns/src/plugin.py:35 ../emission/src/EmissionSetup.py:27
+msgid "Hostname"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:624
+msgid "I can't convert subtitle for this kind of media!!!"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:591
+msgid "I can't detect movie FPS!!!"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:651 ../subsdownloader2/src/plugin.py:726
+msgid "I can't download subtitle for this kind of media!!!"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:98
+msgid "IMDB"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:78 ../easyinfo/src/plugin.py:97
+#: ../easyinfo/src/plugin.py:98
+msgid "IMDB info"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:632
+msgid "IMDB is not installed!"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:98
+msgid "IMDB then movie filname"
+msgstr ""
+
+#: ../merlinepg/src/plugin.py:552
+msgid "IMDb info"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:130
 msgid "IP Address"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:921
+msgid "IPKG-package:\\n"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Movie.py:61
@@ -429,32 +1699,160 @@ msgstr ""
 msgid "Illegal Parameter value for Parameter edit : '%s'"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:119
+#: ../multirc/src/plugin.py:21
+msgid "Illuminated RC layer 1"
+msgstr ""
+
+#: ../multirc/src/plugin.py:22
+msgid "Illuminated RC layer 2"
+msgstr ""
+
+#: ../multirc/src/plugin.py:23
+msgid "Illuminated RC layer 3"
+msgstr ""
+
+#: ../multirc/src/plugin.py:24
+msgid "Illuminated RC layer 4"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:120
 msgid "Image Version"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:83
+#: ../moviesearch/src/plugin.py:90
+msgid ""
+"Improperly launched plugin.\n"
+"Aborting!"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:886
+msgid "Incompatible MerlinMusicPlayer version!"
+msgstr ""
+
+#: ../babelzapper/src/plugin.py:77
+#: ../webinterface/src/WebComponents/Sources/Strings.py:84
 msgid "Info"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:97
+#: ../valixdcontrol/src/plugin.py:115
+msgid "Infobar and Window Style:"
+msgstr ""
+
+#: ../aihdcontroler/src/plugin.py:95
+msgid "Infobar and window style:"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1826
+msgid "Insert file to current playing songlist and play next"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:3235
+msgid "Insert file to current songlist and play next"
+msgstr ""
+
+#: ../satloader/src/plugin.py:106
+msgid "Install"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:267
+msgid "Install magic buttons"
+msgstr ""
+
+#: ../subsdownloader2/src/pluginOnlineContent.py:86
+msgid "Install plugin"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:266
+msgid "Install round buttons"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:907 ../subsdownloader2/src/plugin.py:912
+#: ../subsdownloader2/src/plugin.py:920
+msgid "Install this package"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:98
 msgid "Instant Record"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:114
+#: ../ecasa/src/EcasaSetup.py:43
+msgid "Interval in slideshow before new picture is being shown."
+msgstr ""
+
+#: ../dyndns/src/plugin.py:34
+msgid "Interval to check IP-Adress"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2807
+msgid "Invalid Location"
+msgstr ""
+
+#: ../genuinedreambox/src/plugin.py:304
+msgid "Invalid response from Security service pls restart again"
+msgstr ""
+
+#: ../genuinedreambox/src/plugin.py:132
+msgid "Invalid response from server."
+msgstr ""
+
+#: ../genuinedreambox/src/plugin.py:177
+#, python-format
+msgid "Invalid response from server. Please report: %s"
+msgstr ""
+
+#: ../multirc/src/plugin.py:80
+msgid "Is the RC still working?"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1123
+msgid "Itasa server password:"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1122
+msgid "Itasa server user:"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:115
 msgid "JavaScript Libraries"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:100
+msgid "Just zap"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:778
+#, python-format
+msgid "Keywords: %s"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/TPMChallenge.py:29
 msgid "LEVEL2 and LEVEL3 Certifcates (Base64-encoded)"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:45
+#: ../webcamviewer/src/WebcamTravel.py:247
+#: ../webcamviewer/src/WebcamTravel.py:250
+msgid "Last updated: "
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:46
 msgid "Legend"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:115
+#: ../webinterface/src/WebComponents/Sources/Strings.py:116
 msgid "License"
+msgstr ""
+
+#: ../aihdcontroler/src/plugin.py:45
+msgid "LigaLine"
+msgstr ""
+
+#: ../emission/src/EmissionBandwidth.py:33
+#: ../emission/src/EmissionBandwidth.py:37
+#: ../emission/src/EmissionBandwidth.py:54
+#: ../emission/src/EmissionBandwidth.py:56
+#: ../emission/src/EmissionBandwidth.py:93
+#: ../emission/src/EmissionBandwidth.py:96
+msgid "Limit"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/ReadPluginList.py:14
@@ -465,15 +1863,31 @@ msgstr ""
 msgid "List of Timers has been cleaned"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:103
+#: ../multirc/src/plugin.py:55
+msgid "Listen on Remote Control"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:104
 msgid "Load Bouquet"
 msgstr ""
 
-#: ../webinterface/src/WebIfConfig.py:65
+#: ../webinterface/src/WebIfConfig.py:63
 msgid "Load movie-length"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:61
+#: ../webcamviewer/src/plugin.py:98
+#, python-format
+msgid "Loading config file %s failed: %s"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:608
+#, python-format
+msgid ""
+"Local subtitle convertion for:\n"
+"%s."
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:62
 msgid "Location"
 msgstr ""
 
@@ -497,15 +1911,39 @@ msgstr ""
 msgid "Location '%s' removed successfully"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:105
+#: ../webinterface/src/WebComponents/Sources/Strings.py:106
 msgid "Lookup on IMDb.com"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:127
+#: ../growlee/src/plugin.py:31 ../growlee/src/plugin.py:52
+msgid "Low (Yes/No)"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:128
 msgid "Mac Address"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:88
+#: ../valixdcontrol/src/plugin.py:45
+msgid "Magic Shadow"
+msgstr ""
+
+#: ../tvcharts/src/plugin.py:416
+msgid "Max Timerlist Entries"
+msgstr ""
+
+#: ../tvcharts/src/plugin.py:415
+msgid "Max Toplist Entries"
+msgstr ""
+
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:79
+msgid "Max. volume for mpeg audio"
+msgstr ""
+
+#: ../emission/src/EmissionBandwidth.py:97
+msgid "Maximum Connections"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:89
 msgid "Mediaplayer"
 msgstr ""
 
@@ -522,12 +1960,48 @@ msgstr ""
 msgid "Mediaplayer was not active"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:80
+#: ../googlemaps/src/plugin.py:210 ../netcaster/src/bin/plugin.py:191
+msgid "Menu"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:72 ../easyinfo/src/plugin.py:97
+#: ../easyinfo/src/plugin.py:98
+msgid "Merlin EPG"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:3381
+#: ../merlinmusicplayer/src/plugin.py:3392
+#: ../merlinmusicplayer/src/plugin.py:3396
+#: ../merlinmusicplayer/src/plugin.py:3398
+msgid "Merlin Music Player"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1509
+msgid "Merlin Music Player Lyrics"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1604
+msgid "Merlin Music Player Songlist"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:602
+msgid "MerlinEPG is not installed!"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:81
 msgid "Message"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Message.py:62
 msgid "Message sent successfully!"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:48
+msgid "Metal Pad"
+msgstr ""
+
+#: ../growlee/src/plugin.py:169
+msgid "Minimum Priority"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Timer.py:84
@@ -592,6 +2066,14 @@ msgstr ""
 msgid "Missing value for parameter dirname"
 msgstr ""
 
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:75
+msgid "Modus"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1048
+msgid "Move"
+msgstr ""
+
 #: ../webinterface/src/WebComponents/Sources/Movie.py:59
 #, python-format
 msgid "Movie '%s' deleted"
@@ -607,7 +2089,15 @@ msgstr ""
 msgid "Movie '%s' moved to '%s' without errors."
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:16
+#: ../movieepg/src/plugin.py:17
+msgid "Movie Player"
+msgstr ""
+
+#: ../movieepg/src/MovieEpgSetup.py:30 ../movieepg/src/MovieEpgSetup.py:72
+msgid "Movie-EPG Configuration"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:17
 msgid "Movies"
 msgstr ""
 
@@ -616,8 +2106,21 @@ msgstr ""
 msgid "Moving Movie '%s' to '%s' in background."
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:149
+#: ../multirc/src/plugin.py:142
+msgid "Multi Dreambox RC layer setup"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:68 ../easyinfo/src/plugin.py:97
+#: ../easyinfo/src/plugin.py:98
+msgid "Multi EPG"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:150
 msgid "Mute"
+msgstr ""
+
+#: ../babelzapper/src/plugin.py:54
+msgid "Mute button remote control"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Volume.py:26
@@ -628,23 +2131,77 @@ msgstr ""
 msgid "N/A"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:59
+#: ../subsdownloader2/src/plugin.py:774
+msgid ""
+"NAPISY24 searching method error:\n"
+"\n"
+"Both IMDB and movie name haven't values. \n"
+"Please give at least one correct searching value."
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:772
+msgid ""
+"NAPISY24 searching method error:\n"
+"\n"
+"Can't find IMDB identifier for this movie.\n"
+"Please try another searching method."
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:776
+msgid ""
+"NAPISY24 searching method error:\n"
+"\n"
+"Please enter movie name to search."
+msgstr ""
+
+#: ../growlee/src/plugin.py:167
+#: ../webinterface/src/WebComponents/Sources/Strings.py:60
 msgid "Name"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:130
+#: ../webinterface/src/WebComponents/Sources/Strings.py:131
 msgid "Netmask"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:126
+#: ../webinterface/src/WebComponents/Sources/Strings.py:127
 msgid "Network Interface"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:164
+#: ../growlee/src/GrowleeConnection.py:25
+msgid ""
+"Network error.\n"
+"Disabling Growlee until next restart!"
+msgstr ""
+
+#: ../movieepg/src/plugin.py:16
+msgid "Never"
+msgstr ""
+
+#: ../growlee/src/plugin.py:101
+msgid "New"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:46
+msgid "New Shadow"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:49
+msgid "New Vision"
+msgstr ""
+
+#: ../growlee/src/plugin.py:148
+msgid "New connection"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:171
 msgid "Next"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:27
+#: ../dreamirc/src/dreamIRCSetup.py:57
+msgid "Nickname"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:28
 msgid "No Bouquets to Display"
 msgstr ""
 
@@ -652,44 +2209,105 @@ msgstr ""
 msgid "No Messagetext given"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:109
+#: ../webinterface/src/WebComponents/Sources/Strings.py:110
 msgid "No Service to show"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:37
+#: ../webinterface/src/WebComponents/Sources/Strings.py:38
 msgid "No Timer Available!"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:170
+#: ../ecasa/src/EcasaGui.py:382 ../ecasa/src/EcasaGui.py:590
+msgid "No history"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:177
 msgid "No items to show..."
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:145
+#: ../merlinmusicplayer/src/plugin.py:1559
+msgid "No lyrics found"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1327 ../subsdownloader2/src/plugin.py:1340
+msgid "No more picture-files."
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1506 ../subsdownloader2/src/plugin.py:1516
+msgid "No more playable files."
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:146
 msgid "No movies to show..."
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:54
+#: ../merlinmusicplayer/src/plugin.py:3183
+#: ../merlinmusicplayer/src/plugin.py:3220
+msgid "No music files found!"
+msgstr ""
+
+#: ../growlee/src/plugin.py:31 ../growlee/src/plugin.py:52
+msgid "Normal (Information)"
+msgstr ""
+
+#: ../subsdownloader2/src/pluginOnlineContent.py:87
+msgid "Not now"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:55
 msgid "Note: For one-time events the days don't have to be specified."
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:53
+#: ../webinterface/src/WebComponents/Sources/Strings.py:54
 msgid "Note: For recurring events dates are not mandatory."
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:144
+#: ../webinterface/src/WebComponents/Sources/Strings.py:145
 msgid "Nothing found..."
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:142
+#: ../webinterface/src/WebComponents/Sources/Strings.py:143
 msgid "Nothing running..."
 msgstr ""
 
-#: ../webinterface/src/WebIfConfig.py:35
+#: ../ecasa/src/EcasaSetup.py:42
+msgid "Number of search results to display at most."
+msgstr ""
+
+#: ../antiscrollbar/src/plugin.py:126
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:62
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:139
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:249
+#: ../babelzapper/src/plugin.py:76 ../cdinfo/src/plugin.py:57
+#: ../ecasa/src/EcasaSetup.py:70 ../emission/src/EmissionBandwidth.py:71
+#: ../emission/src/EmissionSetup.py:38 ../growlee/src/plugin.py:100
+#: ../merlinmusicplayer/src/plugin.py:2773
+#: ../merlinmusicplayer/src/plugin.py:2894 ../movieepg/src/MovieEpgSetup.py:54
+#: ../pipservicerelation/src/plugin.py:189 ../pipzap/src/PipzapSetup.py:59
+#: ../remotetimer/src/plugin.py:231
+#: ../startuptostandby/src/StartupToStandbyConfiguration.py:28
+#: ../tvcharts/src/plugin.py:402 ../webinterface/src/WebIfConfig.py:33
 msgid "OK"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:140
+#: ../easyinfo/src/plugin.py:252
+msgid "OK function in Easy-PG:"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:119
+msgid "OLED Layout like:"
+msgstr ""
+
+#: ../aihdcontroler/src/plugin.py:97
+msgid "OLED display style:"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:141
 msgid "ONID"
+msgstr ""
+
+#: ../orfteletext/src/plugin.py:45
+msgid "ORF-Teletext"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/TPMChallenge.py:39
@@ -715,20 +2333,65 @@ msgid ""
 "shutdown], enabled [True,False]"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:102
-msgid "Open Multi-EPG for"
+#: ../webinterface/src/WebComponents/Sources/Strings.py:103
+#, python-format
+msgid "Open Multi-EPG for %s"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:100
+#: ../webinterface/src/WebComponents/Sources/Strings.py:101
 msgid "Open Signal Panel"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:136
-msgid "PCR PID"
+#: ../fstabeditor/src/plugin.py:111
+msgid "Open editor"
+msgstr ""
+
+#: ../fstabeditor/src/plugin.py:210
+msgid "Open selector"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:392
+#, python-format
+msgid "Oryginal dir name: %s"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:394
+#, python-format
+msgid "Oryginal file name: %s"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Strings.py:137
+msgid "PCR PID"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:138
 msgid "PMT PID"
+msgstr ""
+
+#: ../merlinepg/src/plugin.py:118
+msgid "Page-up/down with bouquet+/- :"
+msgstr ""
+
+#: ../webcamviewer/src/WebcamTravel.py:81
+#: ../webcamviewer/src/WebcamTravel.py:241
+msgid "Page: "
+msgstr ""
+
+#: ../letterbox/src/plugin.py:40
+msgid "Pan&Scan"
+msgstr ""
+
+#: ../dreamirc/src/dreamIRCSetup.py:59
+msgid "Passwd"
+msgstr ""
+
+#: ../dyndns/src/plugin.py:37 ../emission/src/EmissionSetup.py:29
+#: ../growlee/src/plugin.py:182
+msgid "Password"
+msgstr ""
+
+#: ../ecasa/src/EcasaSetup.py:39
+msgid "Password to the google account."
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/LocationsAndTags.py:69
@@ -741,8 +2404,38 @@ msgstr ""
 msgid "Path %s does not exist"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:163
+#: ../emission/src/EmissionOverview.py:287
+msgid "Pause all"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:285
+msgid "Pause shown"
+msgstr ""
+
+#: ../letterbox/src/plugin.py:40
+msgid "Pillarbox"
+msgstr ""
+
+#: ../pipservicerelation/src/plugin.py:82
+msgid "PipServiceRelation - Config"
+msgstr ""
+
+#: ../pipservicerelation/src/plugin.py:180
+msgid "PipServiceRelation - Entry Config"
+msgstr ""
+
+#: ../netcaster/src/bin/plugin.py:67
+#: ../webinterface/src/WebComponents/Sources/Strings.py:164
 msgid "Play"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:165
+#, python-format
+msgid "Play %s"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2899
+msgid "Play last used songlist after starting"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/MP.py:149
@@ -750,7 +2443,7 @@ msgstr ""
 msgid "Playback of '%s' started"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:167
+#: ../webinterface/src/WebComponents/Sources/Strings.py:174
 msgid "Playlist"
 msgstr ""
 
@@ -759,8 +2452,14 @@ msgstr ""
 msgid "Playlist '%s' does not exist"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:104
-msgid "Playlist for"
+#: ../merlinmusicplayer/src/plugin.py:2106
+#, python-format
+msgid "Playlist (%s) -> Song List"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:105
+#, python-format
+msgid "Playlist for %s"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/MP.py:205
@@ -768,19 +2467,158 @@ msgstr ""
 msgid "Playlist saved to '%s'"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:28
-msgid "Please select any bouquet"
+#: ../merlinmusicplayer/src/plugin.py:2072
+msgid "Playlists"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:70
-msgid "Power Control"
+#: ../merlinmusicplayer/src/plugin.py:2344
+#, python-format
+msgid "Playlists (%d)"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:162
-msgid "Previous"
+#: ../webcamviewer/src/WebcamTravel.py:131
+msgid "Please enter a searchkey:"
+msgstr ""
+
+#: ../fstabeditor/src/plugin.py:242
+msgid "Please enter a value for every input field"
+msgstr ""
+
+#: ../remotetimer/src/plugin.py:301
+msgid "Please select a subservice to record..."
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Strings.py:29
+msgid "Please select any bouquet"
+msgstr ""
+
+#: ../genuinedreambox/src/plugin.py:137
+msgid "Please wait (Step 2)"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:114
+msgid "Please wait... Loading list..."
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1140
+msgid "Plugin autoupdate:"
+msgstr ""
+
+#: ../fstabeditor/src/plugin.py:288
+msgid "Plugin to edit fstab"
+msgstr ""
+
+#: ../dreamirc/src/dreamIRCSetup.py:66
+#: ../emission/src/EmissionBandwidth.py:103
+#: ../emission/src/EmissionSetup.py:30
+msgid "Port"
+msgstr ""
+
+#: ../googlemaps/src/plugin.py:422 ../googlemaps/src/plugin.py:423
+msgid "Pos."
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:257
+msgid "Position 1 (info button):"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:266
+msgid "Position 10:"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:267
+msgid "Position 11:"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:258
+msgid "Position 2 (red button):"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:259
+msgid "Position 3 (green button):"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:260
+msgid "Position 4 (yellow button):"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:261
+msgid "Position 5 (blue button):"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:262
+msgid "Position 6:"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:263
+msgid "Position 7:"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:264
+msgid "Position 8:"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:265
+msgid "Position 9:"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:71
+msgid "Power Control"
+msgstr ""
+
+#: ../pipservicerelation/src/plugin.py:195
+msgid "Press OK to select a related PiP service"
+msgstr ""
+
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentConfig.py:88
+#: ../pipservicerelation/src/plugin.py:194
+msgid "Press OK to select a service"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:163
+msgid "Previous"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:79
+msgid "Prime Time Manager"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:644
+msgid "Prime Time Manager is not installed!"
+msgstr ""
+
+#: ../merlinepg/src/plugin.py:113
+msgid "Primetime (h):"
+msgstr ""
+
+#: ../merlinepg/src/plugin.py:114
+msgid "Primetime from (m):"
+msgstr ""
+
+#: ../merlinepg/src/plugin.py:115
+msgid "Primetime to (m):"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:260
+#, python-format
+msgid "Private: %s"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:226
+msgid ""
+"Process aborted.\n"
+" 0 files added to database!\n"
+"Press OK to close."
+msgstr ""
+
+#: ../reconstructapsc/src_py/plugin.py:104
+#, python-format
+msgid ""
+"Processing failed for the %s \"%s\":\n"
+"%s"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:30
 msgid "Providers"
 msgstr ""
 
@@ -789,93 +2627,479 @@ msgstr ""
 msgid "RC command '%s' has been issued"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:15
+#: ../webinterface/src/WebComponents/Sources/Strings.py:16
 msgid "Radio"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:78
-msgid "Reboot"
+#: ../webcamviewer/src/WebcamTravel.py:247
+#: ../webcamviewer/src/WebcamTravel.py:250
+msgid "Ratings: "
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:51
-msgid "Record"
+#: ../emission/src/EmissionDetailview.py:253
+#, python-format
+msgid "Ratio: %.2f"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:98
-msgid "Record current event"
+#: ../growlee/src/plugin.py:137
+msgid ""
+"Really delete this entry?\n"
+"It cannot be recovered!"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:156
-msgid "Refresh Screenshot"
+#: ../emission/src/EmissionDetailview.py:192
+msgid "Really delete torrent?"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Strings.py:79
+msgid "Reboot"
+msgstr ""
+
+#: ../growlee/src/plugin.py:178
+msgid "Receive Notifications?"
+msgstr ""
+
+#: ../reconstructapsc/src_py/plugin.py:19
+msgid "Reconstruct AP/SC ..."
+msgstr ""
+
+#: ../reconstructapsc/src_py/plugin.py:35
+msgid "Reconstruct all missing .ap and .sc files in this directory"
+msgstr ""
+
+#: ../reconstructapsc/src_py/plugin.py:34
+msgid "Reconstruct the .ap and .sc files of the selected movie"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:52
+msgid "Record"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:99
+msgid "Record current event"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:157
+msgid "Refresh Screenshot"
+msgstr ""
+
+#: ../pipservicerelation/src/plugin.py:84
+msgid "Related PiP Service"
+msgstr ""
+
+#: ../pipservicerelation/src/plugin.py:218
+#, python-format
+msgid "Related PiP service for %s"
+msgstr ""
+
+#: ../pipservicerelation/src/plugin.py:202
+msgid "Related Pip Service"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:254
+#, python-format
+msgid "Remaining: %s"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2910
+msgid "Remember last path of filebrowser"
+msgstr ""
+
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentConfig.py:69
+msgid "Remember service volume value"
+msgstr ""
+
+#: ../remotetimer/src/plugin.py:264
+msgid "Remote Timer"
+msgstr ""
+
+#: ../remotetimer/src/plugin.py:234
+msgid "Remote Timer - Hostname"
+msgstr ""
+
+#: ../remotetimer/src/plugin.py:235
+msgid "Remote Timer - Network IP"
+msgstr ""
+
+#: ../remotetimer/src/plugin.py:238
+msgid "Remote Timer - Password"
+msgstr ""
+
+#: ../remotetimer/src/plugin.py:237
+msgid "Remote Timer - Username"
+msgstr ""
+
+#: ../remotetimer/src/plugin.py:236
+msgid "Remote Timer - WebIf Port"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:167
+#, python-format
+msgid "Remove %s from playlist"
+msgstr ""
+
+#: ../fstabeditor/src/plugin.py:195 ../fstabeditor/src/plugin.py:204
+msgid "Remove entry"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:734
+msgid "Remove timer"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1049
+msgid "Rename"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1434
+msgid "Repeat is not available yet with cue-files!"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:249
+msgid "Replace TV-button function:"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1556
+#, python-format
+msgid "Response -> lyrics for: %s (%s)"
+msgstr ""
+
+#: ../aihdcontroler/src/plugin.py:176 ../satloader/src/plugin.py:97
+#: ../satloader/src/plugin.py:119 ../valixdcontrol/src/plugin.py:251
+msgid "Restart GUI now?"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:80
 msgid "Restart enigma2"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:48
+#: ../fstabeditor/src/plugin.py:104
+msgid "Restore back up of fstab"
+msgstr ""
+
+#: ../fstabeditor/src/plugin.py:203
+msgid "Return with saving"
+msgstr ""
+
+#: ../fstabeditor/src/plugin.py:209
+msgid "Return without saving"
+msgstr ""
+
+#: ../fstabeditor/src/plugin.py:105
+msgid "Run mount -a"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:49
 msgid "Running"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:141
+#: ../webinterface/src/WebComponents/Sources/Strings.py:142
 msgid "SID"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:30
+#: ../satloader/src/plugin.py:55
+#: ../webinterface/src/WebComponents/Sources/Strings.py:31
 msgid "Satellites"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:69
+#: ../dreamirc/src/dreamIRCSetup.py:72
+#: ../webinterface/src/WebComponents/Sources/Strings.py:70
 msgid "Save"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:168
+#: ../webinterface/src/WebComponents/Sources/Strings.py:175
 msgid "Save Playlist"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:73
-msgid "Screenshot (All)"
+#: ../subsdownloader2/src/plugin.py:1136
+msgid "Save last FileList path:"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:75
-msgid "Screenshot (OSD)"
+#: ../merlinmusicplayer/src/plugin.py:1810
+msgid "Scan path for music files and add them to database"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Strings.py:74
+msgid "Screenshot (All)"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:76
+msgid "Screenshot (OSD)"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:75
 msgid "Screenshot (Video)"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:24
+#: ../babelzapper/src/plugin.py:70
+msgid "Scroll Time [msec]"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:109 ../googlemaps/src/plugin.py:211
+msgid "Search"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:25
 msgid "Search EPG"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:86
+#: ../ecasa/src/EcasaGui.py:354
+msgid "Search History"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:349
+#, python-format
+msgid "Search for %s"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1809
+msgid "Search in iDream database"
+msgstr ""
+
+#: ../ecasa/src/EcasaSetup.py:42
+msgid "Search results"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1973
+#, python-format
+msgid "Search results for \"%s\" in all albums"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1970
+#, python-format
+msgid "Search results for \"%s\" in all artists"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1967
+#, python-format
+msgid "Search results for \"%s\" in all titles"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1976
+#, python-format
+msgid "Search results for \"%s\" in title, artist or album"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:122
+msgid "Second background:"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:123
+msgid "Second foreground:"
+msgstr ""
+
+#: ../genuinedreambox/src/plugin.py:160
+msgid "Security service not running."
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:297
+#: ../emission/src/EmissionOverview.py:304
+msgid "Seeding"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:246
+#, python-format
+msgid "Seeding to %d of %d peers"
+msgstr ""
+
+#: ../netcaster/src/bin/plugin.py:69
+msgid "Select"
+msgstr ""
+
+#: ../merlinepg/src/plugin.py:552
+msgid "Select Info type..."
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:376
+msgid "Select text to search for"
+msgstr ""
+
+#: ../merlinepg/src/plugin.py:571 ../merlinepg/src/plugin.py:891
+msgid "Select timer type..."
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:584
+msgid "Select user"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:124
+msgid "Selected background:"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:125
+msgid "Selected foreground:"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:87
 msgid "Send"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:71
-#: ../webinterface/src/WebComponents/Sources/Strings.py:87
+#: ../babelzapper/src/plugin.py:71
+msgid "Send ESC for EXIT key"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:72
+#: ../webinterface/src/WebComponents/Sources/Strings.py:88
 msgid "Send Message"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:155
+#: ../growlee/src/plugin.py:170
+msgid "Send Notifications?"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:156
 msgid "Send \\\"long\\\" keypress"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:90
+#: ../dreamirc/src/dreamIRCSetup.py:61
+msgid "Server1"
+msgstr ""
+
+#: ../dreamirc/src/dreamIRCSetup.py:63
+msgid "Server2"
+msgstr ""
+
+#: ../dreamirc/src/dreamIRCSetup.py:64
+msgid "Server3"
+msgstr ""
+
+#: ../pipservicerelation/src/plugin.py:83
+#: ../pipservicerelation/src/plugin.py:201
+msgid "Service"
+msgstr ""
+
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:136
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:261
+msgid "Servicename"
+msgstr ""
+
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:80
+msgid "Services"
+msgstr ""
+
+#: ../remotetimer/src/plugin.py:364
+#, python-format
+msgid ""
+"Set Timer on Remote DreamBox via WebIf:\n"
+"%s"
+msgstr ""
+
+#: ../emission/src/EmissionBandwidth.py:128
+msgid ""
+"Setting \"Unlimited\" is not supported via RPC.\n"
+"Either abort or choose another limit to continue."
+msgstr ""
+
+#: ../dreamirc/src/plugin.py:112 ../filebrowser/src/plugin.py:62
+#: ../remotetimer/src/plugin.py:102
+#: ../webinterface/src/WebComponents/Sources/Strings.py:91
 msgid "Settings"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:94
-msgid "Show EPG for"
+#: ../ecasa/src/EcasaGui.py:353
+msgid "Setup"
 msgstr ""
 
-#: ../webinterface/src/WebIfConfig.py:61
+#: ../aihdcontroler/src/plugin.py:42
+msgid "Shadow"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:82
+msgid "Sherlock"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:662
+msgid "Sherlock is not installed!"
+msgstr ""
+
+#: ../movieepg/src/MovieEpgSetup.py:36
+msgid "Show \"EPG\" entry"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:95
+#, python-format
+msgid "Show EPG for %s"
+msgstr ""
+
+#: ../merlinepg/src/plugin.py:111
+msgid "Show EPG in columns:"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2914
+msgid "Show Merlin Music Player in extended-pluginlist"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2916
+msgid "Show Merlin Music Player in mainmenu"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:117
+msgid "Show Picons (Reference):"
+msgstr ""
+
+#: ../webinterface/src/WebIfConfig.py:59
 msgid "Show Setup in Extensions menu"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:67
+#: ../ecasa/src/EcasaSetup.py:41
+msgid ""
+"Show albums for this user by default. Use \"default\" for currently logged "
+"in user."
+msgstr ""
+
+#: ../movieepg/src/MovieEpgSetup.py:37
+msgid "Show all Plugins in MoviePlayer?"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2913
+msgid "Show iDream in extended-pluginlist"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2915
+msgid "Show iDream in mainmenu"
+msgstr ""
+
+#: ../pipzap/src/PipzapSetup.py:41
+msgid "Show in Plugin menu"
+msgstr ""
+
+#: ../pipzap/src/PipzapSetup.py:42
+msgid "Show indicator label if zapping PiP"
+msgstr ""
+
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:83
+msgid "Show volumebar when volume-value was changed"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1422
+msgid "Shuffle is not available yet with cue-files!"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:68
 msgid "Shutdown"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:679 ../easyinfo/src/plugin.py:724
+msgid "Similar"
+msgstr ""
+
+#: ../aihdcontroler/src/plugin.py:53 ../aihdcontroler/src/plugin.py:57
+#: ../valixdcontrol/src/plugin.py:55
+msgid "Simple"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:67 ../easyinfo/src/plugin.py:97
+#: ../easyinfo/src/plugin.py:98
+msgid "Single EPG"
+msgstr ""
+
+#: ../ecasa/src/EcasaSetup.py:45
+msgid ""
+"Size of local picture cache. If the maximum size is reached the cleanup "
+"process will delete the oldest existing pictured after the plugin was closed."
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:81
+msgid "Sleep timer"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/SleepTimer.py:87
@@ -895,68 +3119,171 @@ msgstr ""
 msgid "Sleeptimer set to %s minutes"
 msgstr ""
 
+#: ../webcamviewer/src/WebcamViewConfig.py:18
+msgid "Slideshow Mode"
+msgstr ""
+
+#: ../webcamviewer/src/WebcamViewConfig.py:17
+msgid "Slideshow Time"
+msgstr ""
+
+#: ../ecasa/src/EcasaSetup.py:43
+msgid "Slideshow interval"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2356
+#, python-format
+msgid "Songs (%d)"
+msgstr ""
+
+#: ../menusort/src/plugin.py:328
+msgid "Sort main menu"
+msgstr ""
+
 #: ../webinterface/src/WebComponents/Sources/Movie.py:96
 msgid "Source and destination folders are the same."
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:66
+#: ../merlinepg/src/plugin.py:552
+msgid "Standard EPG info"
+msgstr ""
+
+#: ../merlinepg/src/plugin.py:571 ../merlinepg/src/plugin.py:891
+msgid "Standard timer"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:67
 msgid "Standby"
 msgstr ""
 
-#: ../webinterface/src/WebIfConfig.py:60
+#: ../ecasa/src/EcasaGui.py:698
+msgid "Start Slideshow"
+msgstr ""
+
+#: ../webinterface/src/WebIfConfig.py:58
 msgid "Start Webinterface"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:99
+#: ../merlinepg/src/plugin.py:112
+msgid "Start allways on channel 1:"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:925
+msgid "Start execution"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:248
+msgid "Start first EventInfo:"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:100
 msgid "Start infinite recording"
+msgstr ""
+
+#: ../antiscrollbar/src/plugin.py:121
+msgid "Start on Sessionstart"
+msgstr ""
+
+#: ../startuptostandby/src/StartupToStandbyConfiguration.py:23
+msgid "StartupToStandby Configuration"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Volume.py:17
 msgid "State"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:165
+#: ../netcaster/src/bin/plugin.py:165
+#: ../webinterface/src/WebComponents/Sources/Strings.py:172
 msgid "Stop"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:96
+#: ../ecasa/src/EcasaGui.py:698
+msgid "Stop Slideshow"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:97
 msgid "Stream"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:95
-msgid "Stream Channel"
+#: ../webinterface/src/WebComponents/Sources/Strings.py:96
+#, python-format
+msgid "Stream %s"
+msgstr ""
+
+#: ../tvcharts/src/plugin.py:419
+msgid "Submit Pluginlist?"
+msgstr ""
+
+#: ../tvcharts/src/plugin.py:418
+msgid "Submit Timerlist?"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:914 ../subsdownloader2/src/plugin.py:922
+msgid "SubsDownloader : Install..."
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:909
+msgid "Subtitle Downloader : Install..."
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/AudioTracks.py:37
 msgid "Success"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:139
+#: ../valixdcontrol/src/plugin.py:268
+msgid "Suomipoeka-Movielist patch"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:140
 msgid "TSID"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:14
+#: ../webinterface/src/WebComponents/Sources/Strings.py:15
 msgid "TV"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:32
+#: ../tvcharts/src/plugin.py:412
+msgid "TV Charts Plugin Enable"
+msgstr ""
+
+#: ../tvcharts/src/plugin.py:388
+msgid "TV Charts Settings"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:33
 msgid "Tag Filter"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:62
+#: ../webinterface/src/WebComponents/Sources/Strings.py:63
 msgid "Tags"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:143
+#: ../webinterface/src/WebComponents/Sources/Strings.py:144
 msgid "Technical Information"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:13
+#: ../webinterface/src/WebComponents/Sources/Strings.py:14
 msgid "TeleVision"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:138
+#: ../genuinedreambox/src/plugin.py:80
+msgid "Test again"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:139
 msgid "Text PID"
+msgstr ""
+
+#: ../reconstructapsc/src_py/plugin.py:124
+#, python-format
+msgid "The %s \"%s\" is processed in the background."
+msgstr ""
+
+#: ../reconstructapsc/src_py/plugin.py:103
+#, python-format
+msgid ""
+"The %s \"%s\" is successfully processed:\n"
+"%s"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/SleepTimer.py:90
@@ -977,15 +3304,81 @@ msgstr ""
 msgid "The timer has NOT been deleted"
 msgstr ""
 
+#: ../valixdcontrol/src/plugin.py:303
+msgid ""
+"There are errors in the color-strings!\n"
+"The PlugIn will use default colors."
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1805
+#: ../merlinmusicplayer/src/plugin.py:1929
+msgid ""
+"There are no playlists defined.\n"
+"Do you want to create a new playlist?"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:666 ../subsdownloader2/src/plugin.py:685
+msgid ""
+"There is no subtitle on this server to Your movie. \n"
+"Please try another language or subtitle server.\n"
+"\n"
+"If error still appears please check network connection with server."
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:778
+msgid ""
+"There is no subtitle on this server to Your movie. \n"
+"Please try another search method or subtitle server.\n"
+"\n"
+"If error still appears please check network connection with server."
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:705 ../subsdownloader2/src/plugin.py:975
+msgid ""
+"There is problem with downloading or saveing subtitles on storage device."
+msgstr ""
+
+#: ../subsdownloader2/src/pluginOnlineContent.py:106
+msgid ""
+"There is problem with server connection. \n"
+" Please try again later."
+msgstr ""
+
+#: ../genuinedreambox/src/plugin.py:130
+msgid ""
+"There's a certificate update available for your dreambox. Would you like to "
+"apply this update now?"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1292
+#, python-format
+msgid "This Dreambox can't decode %s streams!"
+msgstr ""
+
 #: ../webinterface/src/WebComponents/Sources/AudioTracks.py:53
 msgid "This device does not support AC3 Downmix"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:81
+#: ../emission/src/plugin.py:92
+msgid ""
+"This feature requires SimpleRSS to be installed.\n"
+"You can do so with the Plugin Installer, see the User Manual for further "
+"explanation."
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:667
+msgid "This function is yet not available!"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1221
+msgid "This line is not editable!"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:82
 msgid "Timeout"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:17
+#: ../webinterface/src/WebComponents/Sources/Strings.py:18
 msgid "Timer"
 msgstr ""
 
@@ -1003,24 +3396,86 @@ msgstr ""
 msgid "TimerList has not been saved"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:18
+#: ../easyinfo/src/plugin.py:74
+msgid "Timerlist"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:19
 msgid "Timers"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:76
+#: ../ecasa/src/EcasaGui.py:768
+#, python-format
+msgid "Title: %s"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:77
 msgid "Toggle Standby"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:91
+#: ../pipzap/src/plugin.py:535
+msgid "Toggle pipzap status"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:92
 msgid "Tools"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:122
+#: ../emission/src/EmissionOverview.py:202
+msgid "Torrent could not be scheduled not download!"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:259
+#, python-format
+msgid "Tracker: %s"
+msgstr ""
+
+#: ../satloader/src/plugin.py:56
+msgid "Transponder"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:123
 msgid "Tuners"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:82
+#: ../growlee/src/plugin.py:168
+#: ../webinterface/src/WebComponents/Sources/Strings.py:83
 msgid "Type"
+msgstr ""
+
+#: ../dreamirc/src/plugin.py:108
+msgid "Type your text here and press OK to send:"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:152
+msgid "UL"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:450
+#, python-format
+msgid "UL: %d kb/s"
+msgstr ""
+
+#: ../movieepg/src/plugin.py:93
+msgid ""
+"Unable to access InfoBar!\n"
+"EPG not available."
+msgstr ""
+
+#: ../pipzap/src/plugin.py:514
+msgid ""
+"Unable to access InfoBar.\n"
+"pipzap not available."
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:98 ../ecasa/src/EcasaGui.py:405
+#, python-format
+msgid "Unable to authenticate with Google: %s."
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:725
+#, python-format
+msgid "Unable to download picture: %s"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Volume.py:41
@@ -1048,8 +3503,27 @@ msgstr ""
 msgid "Unknown parameter %s"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:150
+#: ../emission/src/EmissionBandwidth.py:33
+#: ../emission/src/EmissionBandwidth.py:54
+#: ../emission/src/EmissionBandwidth.py:56
+msgid "Unlimited"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:151
 msgid "Unmute"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:288
+msgid "Unpause all"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:286
+msgid "Unpause shown"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:300
+msgid ""
+"Unselecting the only file scheduled for download is not possible through RPC."
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Message.py:50
@@ -1057,35 +3531,131 @@ msgstr ""
 msgid "Unsupported Messagetype %s"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:152
+#: ../webinterface/src/WebComponents/Sources/Strings.py:153
 msgid "Up"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:159
-msgid "Update interval for current service (min. 10 sec)"
+#: ../genuinedreambox/src/plugin.py:167
+msgid "Update done..."
+msgstr ""
+
+#: ../genuinedreambox/src/plugin.py:170
+msgid ""
+"Update done... The genuine dreambox test will now be rerun and should not "
+"ask you to update again."
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Strings.py:160
+msgid "Update interval for current service (min. 10 sec)"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:161
 msgid "Update-Interval for EPG of the current bouquets (min. 60 sec)"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:135
+#: ../genuinedreambox/src/plugin.py:150
+msgid ""
+"Updating failed. Nothing is broken, just the update couldn't be applied."
+msgstr ""
+
+#: ../genuinedreambox/src/plugin.py:118
+msgid "Updating, please wait..."
+msgstr ""
+
+#: ../emission/src/EmissionBandwidth.py:94
+msgid "Upload rate"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1132
+msgid "Use \"guessFileData\" method for movie filname:"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2905
+msgid "Use google-images for cover art"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2898
+msgid "Use hardware-decoder for MP3"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1137
+msgid "Use media patern filter in FileList:"
+msgstr ""
+
+#: ../pipzap/src/PipzapSetup.py:40
+msgid ""
+"Use the STOP-Key to quickly enable/disable pipzap in TV-Mode? Changing this "
+"setting requires a restart."
+msgstr ""
+
+#: ../dreamirc/src/plugin.py:107
+msgid "User Online"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:514 ../ecasa/src/EcasaGui.py:520
+msgid "User history"
+msgstr ""
+
+#: ../webcamviewer/src/WebcamTravel.py:247
+msgid "User: "
+msgstr ""
+
+#: ../dyndns/src/plugin.py:36 ../emission/src/EmissionSetup.py:28
+msgid "Username"
+msgstr ""
+
+#: ../ecasa/src/EcasaSetup.py:38
+msgid ""
+"Username to use for authentication with google. Leave empty for "
+"unauthenticated use."
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:270
+msgid "Vali-XD Tool Box..."
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:158
+msgid "Vali-XD converters and renderers are not installed!!!"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:44
+msgid "Validator"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:65
+msgid "Very simple"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:136
 msgid "Video PID"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:132
+#: ../webinterface/src/WebComponents/Sources/Strings.py:133
 msgid "Video Size"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:22
+#: ../merlinepg/src/plugin.py:571 ../merlinepg/src/plugin.py:891
+msgid "View AutoTimers"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:925
+msgid "View this shell-script"
+msgstr ""
+
+#: ../webcamviewer/src/WebcamTravel.py:247
+#: ../webcamviewer/src/WebcamTravel.py:250
+msgid "Views: "
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:23
 msgid "Volume"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:147
+#: ../webinterface/src/WebComponents/Sources/Strings.py:148
 msgid "Volume Down"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:151
+#: ../webinterface/src/WebComponents/Sources/Strings.py:152
 msgid "Volume Up"
 msgstr ""
 
@@ -1099,39 +3669,78 @@ msgstr ""
 msgid "Volume set to %i"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:157
+#: ../multirc/src/plugin.py:57
+msgid ""
+"WARNING!\n"
+"After changing this and pressing <Ok>, your Remote Control might stop "
+"working!\n"
+"\n"
+"Information about re-configuring the RC is available at http://www.dream-"
+"multimedia-tv.de/board/thread.php?threadid=5613"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:158
 msgid "WARNING: Cookies are required to store the settings!"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:46
+#: ../merlinmusicplayer/src/plugin.py:2909
+msgid "Wait for screensaver (in min)"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:47
 msgid "Waiting"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:84
+#: ../webinterface/src/WebComponents/Sources/Strings.py:85
 msgid "Warning"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:72
+#: ../webinterface/src/WebComponents/Sources/Strings.py:73
 msgid "WebRemote"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:21
+#: ../webinterface/src/WebComponents/Sources/Strings.py:22
 msgid "WebTV"
+msgstr ""
+
+#: ../webcamviewer/src/plugin.py:143
+msgid "WebcamViewer"
 msgstr ""
 
 #: ../webinterface/src/plugin.py:516
 msgid "Webinterface"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:121
+#: ../webinterface/src/WebComponents/Sources/Strings.py:122
 msgid "Webinterface Version"
 msgstr ""
 
-#: ../webinterface/src/WebIfConfig.py:94
+#: ../webinterface/src/WebIfConfig.py:92
 msgid "Webinterface: Main Setup"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:133
+#: ../emission/src/EmissionOverview.py:281
+msgid "What do you want to do?"
+msgstr ""
+
+#: ../reconstructapsc/src_py/plugin.py:38
+#, python-format
+msgid "What would you like to reconstruct?  (\"%s\")"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:714
+msgid "Where to save?"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:226
+msgid "Which sorting method do you prefer?"
+msgstr ""
+
+#: ../aihdcontroler/src/plugin.py:44
+msgid "WhiteLine"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:134
 msgid "Widescreen"
 msgstr ""
 
@@ -1140,28 +3749,329 @@ msgstr ""
 msgid "Wrong parameter format 'set=%s'. Use set=set15"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:52
+#: ../ecasa/src/EcasaSetup.py:50
+msgid "You can choose between Flickr and Picasa as site to use."
+msgstr ""
+
+#: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:291
+msgid "You must select a valid service!"
+msgstr ""
+
+#: ../easyinfo/src/plugin.py:275
+msgid "You need GUI-restart to load the new settings!"
+msgstr ""
+
+#: ../emission/src/plugin.py:86
+msgid ""
+"Your version if SimpleRSS is too old to support this feature.\n"
+"If possible update your SimpleRSS installation."
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:53
 msgid "Zap"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:101
-msgid "Zap to"
+#: ../easyinfo/src/plugin.py:100
+msgid "Zap and Exit"
+msgstr ""
+
+#: ../pipzap/src/plugin.py:294
+msgid "Zap focus to Picture in Picture"
+msgstr ""
+
+#: ../pipzap/src/plugin.py:293
+msgid "Zap focus to main screen"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:102
+#, python-format
+msgid "Zap to %s"
+msgstr ""
+
+#: ../merlinepg/src/plugin.py:117
+msgid "Zap with OK button (false=EventInfo):"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/SwitchService.py:74
 msgid "Zapping is disabled in WebInterface Configuration"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:113
+#: ../googlemaps/src/plugin.py:424
+msgid "Zoom"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2078
+#: ../merlinmusicplayer/src/plugin.py:2100
+#: ../merlinmusicplayer/src/plugin.py:2125
+#: ../merlinmusicplayer/src/plugin.py:2147
+#: ../merlinmusicplayer/src/plugin.py:2242
+#: ../merlinmusicplayer/src/plugin.py:2268
+#: ../merlinmusicplayer/src/plugin.py:2292
+#: ../merlinmusicplayer/src/plugin.py:2318
+#: ../merlinmusicplayer/src/plugin.py:2378
+#: ../merlinmusicplayer/src/plugin.py:2398
+#: ../merlinmusicplayer/src/plugin.py:2427
+msgid "[back]"
+msgstr ""
+
+#: ../dyndns/src/plugin.py:33
+msgid "activate DynDNS"
+msgstr ""
+
+#: ../googlemaps/src/plugin.py:76
+msgid "add Entry to Main Menu"
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:43
+msgid "add Plugin to Extensionmenu"
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:42
+msgid "add Plugin to Mainmenu"
+msgstr ""
+
+#: ../movieepg/src/plugin.py:18
+msgid "always"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:114
 msgid "and many contributors"
+msgstr ""
+
+#: ../multirc/src/plugin.py:14
+msgid "any RC"
+msgstr ""
+
+#: ../netcaster/src/bin/plugin.py:267
+#, python-format
+msgid ""
+"are you shure to delete the stream?\n"
+"\n"
+"%s"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:229
+msgid "by age"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:227
+msgid "by eta"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:228
+msgid "by progress"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:230
+msgid "by speed"
+msgstr ""
+
+#: ../dyndns/src/plugin.py:39 ../filebrowser/src/plugin.py:49
+#: ../googlemaps/src/plugin.py:85 ../httpproxy/src/plugin.py:50
+#: ../logomanager/src/plugin.py:221 ../webcamviewer/src/WebcamViewConfig.py:22
+msgid "cancel"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:238
+msgid "check pending"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:240
+msgid "checking"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:130
+msgid "close"
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:114
+msgid "copy"
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:176
+msgid "copy file"
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:184
+msgid "copying file ..."
+msgstr ""
+
+#: ../antiscrollbar/src/plugin.py:127
+msgid "current Service"
+msgstr ""
+
+#: ../webcamviewer/src/WebcamTravel.py:82
+#: ../webcamviewer/src/WebcamTravel.py:242
+msgid "current: "
+msgstr ""
+
+#: ../googlemaps/src/plugin.py:82
+msgid "default Zoomlevel for Preview Images"
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:112
+msgid "delete"
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:193
+msgid "delete file"
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:200
+msgid "deleting file ..."
+msgstr ""
+
+#: ../fstabeditor/src/plugin.py:231
+msgid "device name: "
+msgstr ""
+
+#: ../reconstructapsc/src_py/plugin.py:49
+msgid "directory"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/Movie.py:178
 msgid "disabled"
 msgstr ""
 
+#: ../emission/src/EmissionDetailview.py:269
+msgid "downloading"
+msgstr ""
+
+#: ../fstabeditor/src/plugin.py:235
+msgid "dump frequency (in days): "
+msgstr ""
+
+#: ../ecasa/src/EcasaSetup.py:34 ../ecasa/src/EcasaSetup.py:90
+msgid "eCasa Setup"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:462 ../ecasa/src/EcasaGui.py:476
+#: ../ecasa/src/EcasaGui.py:767
+#, python-format
+msgid "eCasa: %s"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:527
+#, python-format
+msgid "eCasa: Albums for user %s"
+msgstr ""
+
+#: ../emission/src/EmissionSetup.py:21
+msgid "eMission settings"
+msgstr ""
+
+#: ../googlemaps/src/plugin.py:80
+msgid "enable caching of Images in /tmp/"
+msgstr ""
+
+#: ../webcamviewer/src/plugin.py:43
+msgid "endless"
+msgstr ""
+
+#: ../emission/src/plugin.py:162
+msgid "enigma2 frontend to transmission-daemon"
+msgstr ""
+
+#: ../ecasa/src/plugin.py:14
+msgid "enigma2 picasa client"
+msgstr ""
+
+#: ../menusort/src/plugin.py:197
+msgid "enter menu"
+msgstr ""
+
+#: ../remotetimer/src/plugin.py:164
+msgid "error parsing incoming data."
+msgstr ""
+
+#: ../remotetimer/src/plugin.py:115
+msgid "fetching remote data..."
+msgstr ""
+
+#: ../fstabeditor/src/plugin.py:233
+msgid "file system type: "
+msgstr ""
+
+#: ../remotetimer/src/plugin.py:125
+msgid "finish fetching remote data..."
+msgstr ""
+
+#: ../webcamviewer/src/WebcamTravel.py:90
+msgid "hdkfjhg"
+msgstr ""
+
+#: ../netcaster/src/bin/plugin.py:190
+msgid "help"
+msgstr ""
+
+#: ../netcaster/src/bin/plugin.py:188
+msgid "hide"
+msgstr ""
+
+#: ../menusort/src/plugin.py:198
+msgid "hide entry"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:3386
+#: ../merlinmusicplayer/src/plugin.py:3400
+msgid "iDream"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1752
+#: ../merlinmusicplayer/src/plugin.py:2335
+msgid "iDream Main Menu"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:2901
+msgid "iDream database path"
+msgstr ""
+
 #: ../webinterface/src/WebComponents/Sources/Movie.py:210
 msgid "illegal call"
+msgstr ""
+
+#: ../netcaster/src/bin/plugin.py:189
+msgid "info"
+msgstr ""
+
+#: ../dreamirc/src/dreamIRCSetup.py:157
+#, python-format
+msgid ""
+"irc server %s not responding!\n"
+"please check your network settings and/or irc servername..."
+msgstr ""
+
+#: ../multirc/src/plugin.py:10
+msgid "layer 1"
+msgstr ""
+
+#: ../multirc/src/plugin.py:11
+msgid "layer 2"
+msgstr ""
+
+#: ../multirc/src/plugin.py:12
+msgid "layer 3"
+msgstr ""
+
+#: ../multirc/src/plugin.py:13
+msgid "layer 4"
+msgstr ""
+
+#: ../googlemaps/src/plugin.py:79
+msgid "load Map Overlay"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1281 ../subsdownloader2/src/plugin.py:1322
+#: ../subsdownloader2/src/plugin.py:1335
+msgid "loading... "
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:18
+msgid "manage local Files"
+msgstr ""
+
+#: ../aihdcontroler/src/plugin.py:52
+msgid "mini TV"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/ServiceListReload.py:44
@@ -1171,16 +4081,152 @@ msgid ""
 "only]"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:65
+#: ../fstabeditor/src/plugin.py:232
+msgid "mount point: "
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:113
+msgid "move"
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:210
+msgid "move file"
+msgstr ""
+
+#: ../reconstructapsc/src_py/plugin.py:45
+msgid "movie"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:98
+msgid "movie filname"
+msgstr ""
+
+#: ../pipzap/src/plugin.py:269 ../pipzap/src/plugin.py:270
+#: ../pipzap/src/plugin.py:271
+msgid "movie list"
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:218
+msgid "moving file ..."
+msgstr ""
+
+#: ../googlemaps/src/plugin.py:256 ../googlemaps/src/plugin.py:257
+#: ../googlemaps/src/plugin.py:258 ../googlemaps/src/plugin.py:259
+msgid "navigate thru Placemarks"
+msgstr ""
+
+#: ../webcamviewer/src/WebcamTravel.py:87
+msgid "next"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:193
+#: ../emission/src/EmissionDetailview.py:260 ../filebrowser/src/plugin.py:176
+#: ../filebrowser/src/plugin.py:193 ../filebrowser/src/plugin.py:210
+msgid "no"
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:265
+msgid "no Viewer installed for this mimetype!"
+msgstr ""
+
+#: ../webcamviewer/src/plugin.py:43
+msgid "normal"
+msgstr ""
+
+#: ../remotetimer/src/plugin.py:119
+msgid "not configured yet. please do so in the settings."
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:66
 msgid "of"
+msgstr ""
+
+#: ../dyndns/src/plugin.py:40 ../filebrowser/src/plugin.py:50
+#: ../googlemaps/src/plugin.py:86 ../httpproxy/src/plugin.py:51
+#: ../logomanager/src/plugin.py:222 ../webcamviewer/src/WebcamViewConfig.py:23
+msgid "ok"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1219
+msgid "old:  "
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/LocationsAndTags.py:17
 msgid "one two three four unknown command"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:110
+#: ../webcamviewer/src/plugin.py:144
+msgid "online webcam.travel"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:84
+#: ../emission/src/EmissionOverview.py:135
+msgid "open bandwidth settings"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:127 ../ecasa/src/EcasaGui.py:631
+#: ../emission/src/EmissionOverview.py:142
+msgid "open context menu"
+msgstr ""
+
+#: ../fstabeditor/src/plugin.py:234
+msgid "options: "
+msgstr ""
+
+#: ../fstabeditor/src/plugin.py:236
+msgid "pass num: "
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:176
+#: ../webcamviewer/src/PictureScreen.py:193
+#: ../webcamviewer/src/PictureScreen.py:219
+msgid "pause"
+msgstr ""
+
+#: ../pipzap/src/plugin.py:526
+msgid "pipzap"
+msgstr ""
+
+#: ../pipzap/src/PipzapSetup.py:34 ../pipzap/src/PipzapSetup.py:84
+msgid "pipzap Setup"
+msgstr ""
+
+#: ../pipzap/src/plugin.py:518
+msgid ""
+"pipzap not properly installed.\n"
+"Please restart Enigma2."
+msgstr ""
+
+#: ../pipzap/src/plugin.py:42
+msgid "play as picture in picture"
+msgstr ""
+
+#: ../pipzap/src/plugin.py:40
+msgid "play in mainwindow"
+msgstr ""
+
+#: ../logomanager/src/plugin.py:144
+msgid "please select a option"
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:111
 msgid "please select a submenu on the left..."
+msgstr ""
+
+#: ../emission/src/EmissionBandwidth.py:59
+msgid "preferred"
+msgstr ""
+
+#: ../webcamviewer/src/WebcamTravel.py:85
+msgid "prev"
+msgstr ""
+
+#: ../googlemaps/src/plugin.py:255
+msgid "quit Google Maps"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1311
+msgid "ready..."
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/ServiceListReload.py:21
@@ -1195,8 +4241,181 @@ msgstr ""
 msgid "reloaded lamedb"
 msgstr ""
 
-#: ../webinterface/src/WebComponents/Sources/Strings.py:161
+#: ../emission/src/EmissionDetailview.py:94
+msgid "remove"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:85
+msgid "remove torrent"
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:115
+msgid "rename"
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:227
+msgid "rename file"
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:233
+msgid "renaming file ..."
+msgstr ""
+
+#: ../emission/src/EmissionBandwidth.py:59
+msgid "required"
+msgstr ""
+
+#: ../satloader/src/plugin.py:96
+msgid "satellites.xml building finished!"
+msgstr ""
+
+#: ../satloader/src/plugin.py:118
+msgid "satellites.xml is up-to-date"
+msgstr ""
+
+#: ../filebrowser/src/plugin.py:44
+msgid "save Filesystemposition on exit"
+msgstr ""
+
+#: ../googlemaps/src/plugin.py:78
+msgid "save last Map Position"
+msgstr ""
+
+#: ../webcamviewer/src/WebcamTravel.py:89
+msgid "search"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1954
+msgid "search for album"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1953
+msgid "search for artist"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1952
+msgid "search for title"
+msgstr ""
+
+#: ../merlinmusicplayer/src/plugin.py:1955
+msgid "search in all of them"
+msgstr ""
+
+#: ../moviesearch/src/plugin.py:96
+msgid "search..."
+msgstr ""
+
+#: ../webinterface/src/WebComponents/Sources/Strings.py:162
 msgid "sec"
+msgstr ""
+
+#: ../webcamviewer/src/plugin.py:282
+msgid "select List to load"
+msgstr ""
+
+#: ../netcaster/src/bin/plugin.py:127
+msgid "select Plugin"
+msgstr ""
+
+#: ../logomanager/src/plugin.py:174
+msgid "select Target for logo"
+msgstr ""
+
+#: ../netcaster/src/bin/plugin.py:262
+msgid "select stream to delete"
+msgstr ""
+
+#: ../fstabeditor/src/dirSelect.py:94
+msgid "select:"
+msgstr ""
+
+#: ../pipservicerelation/src/plugin.py:279
+msgid "setup for PiPServiceRelation"
+msgstr ""
+
+#: ../googlemaps/src/plugin.py:81
+msgid "show Preview Image for Searchresults"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:517
+msgid "show album"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:129
+msgid "show details"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:629
+msgid "show metadata"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:72
+msgid "show next download details"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:137
+msgid "show next list"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:121
+msgid "show next page"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:71
+msgid "show previous download details"
+msgstr ""
+
+#: ../emission/src/EmissionOverview.py:136
+msgid "show previous list"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:122
+msgid "show previous page"
+msgstr ""
+
+#: ../googlemaps/src/plugin.py:260
+msgid "show selected Placemark"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:125
+msgid "show your albums (if logged in)"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:269
+msgid "skipping"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:91
+#: ../emission/src/EmissionDetailview.py:179
+msgid "start"
+msgstr ""
+
+#: ../httpproxy/src/plugin.py:44
+msgid "start HTTP Proxy"
+msgstr ""
+
+#: ../ecasa/src/EcasaGui.py:126
+msgid "start a new search"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:93
+msgid "stop"
+msgstr ""
+
+#: ../webcamviewer/src/WebcamViewConfig.py:19
+msgid "stop Service on Start"
+msgstr ""
+
+#: ../googlemaps/src/plugin.py:77
+msgid "stop TV Service on Start"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:249
+msgid "stopped"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:113
+msgid "t"
 msgstr ""
 
 #: ../webinterface/src/WebComponents/Sources/RemoteControl.py:52
@@ -1208,6 +4427,22 @@ msgstr ""
 msgid "this recording"
 msgstr ""
 
+#: ../emission/src/EmissionDetailview.py:83
+msgid "toggle download status"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:77
+msgid "toggle file status"
+msgstr ""
+
+#: ../menusort/src/plugin.py:196
+msgid "toggle selection"
+msgstr ""
+
+#: ../emission/src/EmissionBandwidth.py:59
+msgid "tolerated"
+msgstr ""
+
 #: ../webinterface/src/WebComponents/Sources/Message.py:38
 #, python-format
 msgid "type %s is not a number"
@@ -1217,7 +4452,62 @@ msgstr ""
 msgid "undefined"
 msgstr ""
 
+#: ../ecasa/src/EcasaGui.py:753
+msgid "unknown"
+msgstr ""
+
 #: ../webinterface/src/WebComponents/Sources/Message.py:17
 #, python-format
 msgid "unknown command (%s)"
+msgstr ""
+
+#: ../httpproxy/src/plugin.py:46
+msgid "use Host Filter"
+msgstr ""
+
+#: ../httpproxy/src/plugin.py:45
+msgid "use Port"
+msgstr ""
+
+#: ../httpproxy/src/plugin.py:47
+msgid "use URI Filter"
+msgstr ""
+
+#: ../dyndns/src/plugin.py:142
+msgid "use www.DynDNS.org on your Box"
+msgstr ""
+
+#: ../dreamirc/src/plugin.py:116
+msgid "virtual Keyb."
+msgstr ""
+
+#: ../dreamirc/src/plugin.py:114
+msgid "virtual Keyboard"
+msgstr ""
+
+#: ../subsdownloader2/src/plugin.py:1325 ../subsdownloader2/src/plugin.py:1338
+#: ../subsdownloader2/src/plugin.py:1344
+msgid "wait..."
+msgstr ""
+
+#: ../webcamviewer/src/plugin.py:506
+msgid "webcam.travel"
+msgstr ""
+
+#: ../valixdcontrol/src/plugin.py:59
+msgid "with PiG"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:194
+#: ../emission/src/EmissionDetailview.py:260 ../filebrowser/src/plugin.py:176
+#: ../filebrowser/src/plugin.py:193 ../filebrowser/src/plugin.py:210
+msgid "yes"
+msgstr ""
+
+#: ../emission/src/EmissionDetailview.py:195
+msgid "yes, including data"
+msgstr ""
+
+#: ../pipzap/src/plugin.py:281
+msgid "zap in pip window..."
 msgstr ""
