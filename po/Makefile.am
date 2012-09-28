@@ -1,40 +1,96 @@
 LANGS = ar ca cs da de el en es et fa fi fr fy he hr hu is it lt lv nl no pl pt ru sv sk sl sr tr uk
-LANGMO = $(LANGS:=.mo)
-LANGPO = $(LANGS:=.po)
-
-EXTRA_DIST = $(LANGPO)
-
-if UPDATE_PO
-# the TRANSLATORS: allows putting translation comments before the to-be-translated line.
-@PACKAGE_NAME@-py.pot: $(top_srcdir)/webinterface/src/*.py \
-	$(top_srcdir)/webinterface/src/WebComponents/*.py \
-	$(top_srcdir)/webinterface/src/WebChilds/*/*.py \
-	$(top_srcdir)/webinterface/src/WebComponents/*/*.py
-	$(XGETTEXT) --language=Python --from-code=UTF-8 --add-comments="TRANSLATORS:" -d @PACKAGE_NAME@ -s -o $@ $^
-
-@PACKAGE_NAME@-xml.pot: $(top_srcdir)/xml2po.py $(top_srcdir)/webinterface/meta/*.xml
-	$(PYTHON) $^ > $@
-
-@PACKAGE_NAME@.pot: @PACKAGE_NAME@-py.pot @PACKAGE_NAME@-xml.pot
-	sed -e s/": PACKAGE VERSION"/": @PACKAGE_NAME@"/ $^ -i
-	sed -e s/charset=CHARSET/charset=UTF-8/ $^ -i
-	cat $^ | $(MSGUNIQ) -s -n --add-location --to-code=UTF-8 -o $@ -
-
-%.po: @PACKAGE_NAME@.pot
-	if [ -f $@ ]; then \
-		$(MSGMERGE) --backup=none --add-location -s -N -U $@ $< && touch $@; \
-	else \
-		$(MSGINIT) --locale=UTF-8 $@ -o $@ -i $< --no-translator; \
-	fi
-endif
-
-.po.mo:
-	$(MSGFMT) -o $@ $<
-
-BUILT_SOURCES = $(LANGMO)
-CLEANFILES = $(LANGMO) @PACKAGE_NAME@-py.pot @PACKAGE_NAME@-xml.pot
-
-dist-hook: $(LANGPO)
+PLUGIN = @PACKAGE_NAME@
+PYSRC = \
+	$(top_srcdir)/aihdcontroler/src/*.py $(top_srcdir)/aihdcontroler/src/comp/*.py \
+	$(top_srcdir)/antiscrollbar/src/*.py \
+	$(top_srcdir)/ardmediathek/src/*.py \
+	$(top_srcdir)/automaticvolumeadjustment/src/*.py \
+	$(top_srcdir)/babelzapper/src/*.py \
+	$(top_srcdir)/bitrateviewer/src/*.py \
+	$(top_srcdir)/bonjour/src/*.py \
+	$(top_srcdir)/cdinfo/src/*.py \
+	$(top_srcdir)/dreamirc/src/*.py \
+	$(top_srcdir)/dyndns/src/*.py \
+	$(top_srcdir)/easyinfo/src/*.py \
+	$(top_srcdir)/ecasa/src/*.py \
+	$(top_srcdir)/emission/src/*.py \
+	$(top_srcdir)/filebrowser/src/*.py \
+	$(top_srcdir)/fstabeditor/src/*.py \
+	$(top_srcdir)/genuinedreambox/src/*.py \
+	$(top_srcdir)/googlemaps/src/*.py \
+	$(top_srcdir)/growlee/src/*.py \
+	$(top_srcdir)/httpproxy/src/*.py \
+	$(top_srcdir)/letterbox/src/*.py \
+	$(top_srcdir)/logomanager/src/*.py \
+	$(top_srcdir)/menusort/src/*.py \
+	$(top_srcdir)/merlinepg/src/*.py \
+	$(top_srcdir)/merlinmusicplayer/src/*.py \
+	$(top_srcdir)/movieepg/src/*.py \
+	$(top_srcdir)/moviesearch/src/*.py \
+	$(top_srcdir)/mphelp/src/*.py \
+	$(top_srcdir)/multirc/src/*.py \
+	$(top_srcdir)/netcaster/src/bin/*.py \
+	$(top_srcdir)/orfat/src/*.py \
+	$(top_srcdir)/orfteletext/src/*.py \
+	$(top_srcdir)/pipservicerelation/src/*.py \
+	$(top_srcdir)/pipzap/src/*.py \
+	$(top_srcdir)/reconstructapsc/src_py/*.py \
+	$(top_srcdir)/remotetimer/src/*.py \
+	$(top_srcdir)/satloader/src/*.py \
+	$(top_srcdir)/startuptostandby/src/*.py \
+	$(top_srcdir)/subsdownloader2/src/*.py \
+	$(top_srcdir)/svdrp/src/*.py \
+	$(top_srcdir)/trafficinfo/src/*.py \
+	$(top_srcdir)/tvcharts/src/*.py \
+	$(top_srcdir)/valixdcontrol/src/*.py \
+	$(top_srcdir)/webcamviewer/src/*.py \
+	$(top_srcdir)/webinterface/src/*.py $(top_srcdir)/webinterface/src/*/*.py $(top_srcdir)/webinterface/src/*/*/*.py
+XMLSRC = \
+	$(top_srcdir)/aihdcontroler/meta/*.xml \
+	$(top_srcdir)/antiscrollbar/meta/*.xml \
+	$(top_srcdir)/ardmediathek/meta/*.xml \
+	$(top_srcdir)/automaticvolumeadjustment/meta/*.xml \
+	$(top_srcdir)/babelzapper/meta/*.xml \
+	$(top_srcdir)/bitrateviewer/meta/*.xml \
+	$(top_srcdir)/bonjour/meta/*.xml \
+	$(top_srcdir)/cdinfo/meta/*.xml \
+	$(top_srcdir)/dreamirc/meta/*.xml \
+	$(top_srcdir)/dyndns/meta/*.xml \
+	$(top_srcdir)/easyinfo/meta/*.xml \
+	$(top_srcdir)/ecasa/meta/*.xml \
+	$(top_srcdir)/emission/meta/*.xml \
+	$(top_srcdir)/filebrowser/meta/*.xml \
+	$(top_srcdir)/fstabeditor/meta/*.xml \
+	$(top_srcdir)/genuinedreambox/meta/*.xml \
+	$(top_srcdir)/googlemaps/meta/*.xml \
+	$(top_srcdir)/growlee/meta/*.xml \
+	$(top_srcdir)/httpproxy/meta/*.xml \
+	$(top_srcdir)/letterbox/meta/*.xml \
+	$(top_srcdir)/logomanager/meta/*.xml \
+	$(top_srcdir)/menusort/meta/*.xml \
+	$(top_srcdir)/merlinepg/meta/*.xml \
+	$(top_srcdir)/merlinmusicplayer/meta/*.xml \
+	$(top_srcdir)/movieepg/meta/*.xml \
+	$(top_srcdir)/moviesearch/meta/*.xml \
+	$(top_srcdir)/mphelp/meta/*.xml \
+	$(top_srcdir)/multirc/meta/*.xml \
+	$(top_srcdir)/netcaster/meta/*.xml \
+	$(top_srcdir)/orfat/meta/*.xml \
+	$(top_srcdir)/orfteletext/meta/*.xml \
+	$(top_srcdir)/pipservicerelation/meta/*.xml \
+	$(top_srcdir)/pipzap/meta/*.xml \
+	$(top_srcdir)/reconstructapsc/meta/*.xml \
+	$(top_srcdir)/remotetimer/meta/*.xml \
+	$(top_srcdir)/satloader/meta/*.xml \
+	$(top_srcdir)/startuptostandby/meta/*.xml \
+	$(top_srcdir)/subsdownloader2/meta/*.xml \
+	$(top_srcdir)/svdrp/meta/*.xml \
+	$(top_srcdir)/trafficinfo/meta/*.xml \
+	$(top_srcdir)/tvcharts/meta/*.xml \
+	$(top_srcdir)/valixdcontrol/meta/*.xml \
+	$(top_srcdir)/webcamviewer/meta/*.xml \
+	$(top_srcdir)/webinterface/meta/*.xml
+include $(top_srcdir)/Rules-po.mak
 
 install-data-local: $(LANGMO)
 	for lang in $(LANGS); do \
