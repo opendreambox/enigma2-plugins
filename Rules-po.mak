@@ -26,9 +26,9 @@ $(PLUGIN).pot: $(PLUGIN)-py.pot $(PLUGIN)-xml.pot
 
 %.po: $(PLUGIN).pot
 	if [ -f $@ ]; then \
-		$(MSGMERGE) --backup=none --add-location -s -N -U $@ $< && touch $@; \
+		$(MSGMERGE) --backup=none --add-location -s -N -U $@ $<; \
 	else \
-		$(MSGINIT) --locale=UTF-8 $@ -o $@ -i $< --no-translator; \
+		$(MSGINIT) --locale=UTF-8 -o $@ -i $< --no-translator; \
 	fi
 
 CLEANFILES += $(PLUGIN)-py.pot $(PLUGIN)-xml.pot
