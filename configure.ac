@@ -382,7 +382,6 @@ multirc/meta/Makefile
 
 mytube/Makefile
 mytube/meta/Makefile
-mytube/po/Makefile
 mytube/src/Makefile
 
 namezap/Makefile
