@@ -517,7 +517,6 @@ seekbar/src/Makefile
 
 serienfilm/Makefile
 serienfilm/meta/Makefile
-serienfilm/po/Makefile
 serienfilm/src/Makefile
 serienfilm/src/icons/Makefile
 
