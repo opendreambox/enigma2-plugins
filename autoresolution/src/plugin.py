@@ -11,8 +11,6 @@ from enigma import iPlayableService, iServiceInformation, eTimer
 from Plugins.Plugin import PluginDescriptor
 from Plugins.SystemPlugins.Videomode.VideoHardware import video_hw # depends on Videomode Plugin
 
-# for localized messages
-from . import _
 
 usable = False
 preferedmodes = None
