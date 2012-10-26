@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-# for localized messages
-#from __init__ import _
 from enigma import eTimer, getDesktop
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
