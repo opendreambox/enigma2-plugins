@@ -30,6 +30,7 @@ stamp-h1
 *.la
 *.lo
 *.mo
+*.po~
 *.o
 *.bak
 *-py.pot
