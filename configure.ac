@@ -82,7 +82,6 @@ audiorestart/src/Makefile
 audiosync/Makefile
 audiosync/img/Makefile
 audiosync/meta/Makefile
-audiosync/po/Makefile
 audiosync/src/Makefile
 
 automaticcleanup/Makefile

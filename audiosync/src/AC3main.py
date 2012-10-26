@@ -11,7 +11,7 @@ from Screens.ChoiceBox import ChoiceBox
 from Screens.HelpMenu import HelpableScreen
 from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
-from __init__ import _
+
 
 class AC3LipSync(Screen, HelpableScreen, MovableScreen):
 

@@ -8,7 +8,6 @@ from Components.config import config, getConfigListEntry
 from Screens.ChoiceBox import ChoiceBox
 from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
-from __init__ import _
 import os
 
 class AC3LipSyncSetup(ConfigListScreen, Screen):
