@@ -1,6 +1,3 @@
-# l10n
-from . import _
-
 # GUI (Screens)
 from Screens.WizardLanguage import WizardLanguage
 from Screens.Rc import Rc

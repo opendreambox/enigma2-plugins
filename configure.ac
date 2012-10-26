@@ -104,7 +104,6 @@ autoresolution/src/Makefile
 
 autotimer/Makefile
 autotimer/meta/Makefile
-autotimer/po/Makefile
 autotimer/src/Makefile
 autotimer/src/WebChilds/Makefile
 autotimer/src/WebComponents/Makefile

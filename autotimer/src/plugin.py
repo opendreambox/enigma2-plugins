@@ -1,6 +1,6 @@
 from __future__ import print_function
 
-from . import _, config
+from . import config
 
 # GUI (Screens)
 from Screens.MessageBox import MessageBox

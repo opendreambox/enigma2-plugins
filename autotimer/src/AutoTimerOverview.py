@@ -1,6 +1,3 @@
-# for localized messages
-from . import _, config
-
 # GUI (Screens)
 from Screens.Screen import Screen
 from Screens.HelpMenu import HelpableScreen
