@@ -1,0 +1,63 @@
+							
+			Enigma2-Plugins translation notes.
+
+
+11/2012 - We now have a global plugin translation functionality,
+	  which makes the old individual (per plugin) translations obsolete.
+	  Once all plugins have been migrated, we are planning to add a translation
+	  webinterface for enigma2-plugins like the one enigma2 has.
+
+
+
+			Guidelines for adding translation support to your plugin:
+
+1. Write all your strings that should be translated in English!
+
+2. Use _() to mark your strings inside python files as translatable for gettext e.g. _("My translatable string")
+   Note: use \" for quotation inside python files.
+
+3. XML Files are also parsed and the tags: "text", "title", "value", "caption"
+   also "shortdescription" and "description" from the plugin meta.xml will be included.
+   Note: use &quot; for quotation inside xml files.
+
+4. Add your new plugin to PYSRC and XMLSRC into po/Makefile.am.
+
+5. Build enigma2-plugins with the --with-po configure option (see below).
+   Your translatable strings should now be included inside the new global translation files.
+
+6. Commit your changes.
+
+
+			Migration Guide:
+
+1. Add your plugin to PYSRC and XMLSRC into po/Makefile.am.
+
+2. Rebuild enigma2-plugins with the --with-po configure option (see below).
+   Your translatable strings should now be included inside the new global translation files.
+	 
+3. Merge your old translations into the new global translation files.
+   Run: make -f doc/TRANSLATIONS.mak migrate PLUGIN=yourpluginfoldername
+
+4. Remove the yourplugin/po/Makefile entry from configure.ac and the po subfolder inside yourplugin/Makefile.am
+
+5. Remove all gettext imports (e.g.: from __init__ import _  or from . import _).
+
+6. Commit your changes.
+
+
+			Build enigma2-plugins with the --with-po configure option.
+
+1. Checkout a local copy of enigma2-plugins.git
+   git clone git://schwerkraft.elitedvb.net/enigma2-plugins/enigma2-plugins.git
+2. cd enigma2-plugins
+3. source /home/path to your opendreambox 2.0/cross-compile.env BOXNAME (e.g. DM8000)
+4. oe_autoreconf
+5. oe_runconf --with-po
+6. oe_runmake
+
+Attention: Building enigma2-plugins with the --with-po configure option currently will also build and update all plugin translations
+that haven't been migrated to the new translation system yet.
+When committing the update, make sure you have only the po folder and your changes added to the commit.
+If you encounter any problems drop us a line on IRC #enigma2 @ freenode or on the enigma2-translations mailinglist
+at https://lists.elitedvb.net/mailman/listinfo/enigma2-translations.
+
