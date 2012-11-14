@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2-plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-12 13:36+0200\n"
+"POT-Creation-Date: 2012-11-08 14:21+0100\n"
 "PO-Revision-Date: 2012-05-12 16:42+0200\n"
 "Last-Translator: Christian <christian.bornmann@multimedia-labs.de>\n"
 "Language-Team: Dream Multimedia\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-15\n"
 "X-Poedit-Country: GERMANY\n"
 
-#: ../audiosync/src/AC3setup.py:65
+#: ../audiosync/src/AC3setup.py:64
 msgid " "
 msgstr " "
 
@@ -70,8 +70,8 @@ msgid "%d min"
 msgstr "%d min"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:239
-#: ../autotimer/src/AutoTimerEditor.py:240
+#: ../autotimer/src/AutoTimerEditor.py:236
+#: ../autotimer/src/AutoTimerEditor.py:237
 msgid "%d.%B %Y"
 msgstr "%d.%B %Y"
 
@@ -158,6 +158,11 @@ msgstr ""
 msgid "60 min."
 msgstr ""
 
+# The default title:episode separator is the same in german
+#: ../src/MovieSelection.py:32 ../src/SerienFilm.py:50
+msgid ": "
+msgstr ": "
+
 #: ../antiscrollbar/src/plugin.py:116
 msgid ": Main Setup"
 msgstr ""
@@ -187,7 +192,7 @@ msgid "A graphical EPG interface."
 msgstr "Zeigt eine grafische EPG Ansicht."
 
 #
-#: ../networkbrowser/src/MountEdit.py:269
+#: ../networkbrowser/src/MountEdit.py:267
 msgid ""
 "A mount entry with this name already exists!\n"
 "Update existing entry and continue?\n"
@@ -243,7 +248,7 @@ msgstr "Zugriff auf die ARD-Mediathek online Video Datenbank."
 msgid "Activate Picture in Picture"
 msgstr "Bild in Bild aktivieren"
 
-#: ../autotimer/src/AutoTimerEditor.py:633
+#: ../autotimer/src/AutoTimerEditor.py:630
 msgid "Activate VPS"
 msgstr "VPS aktivieren"
 
@@ -252,7 +257,7 @@ msgid "Activate screensaver"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountEdit.py:177
+#: ../networkbrowser/src/MountEdit.py:175
 msgid "Active"
 msgstr "Aktiv"
 
@@ -262,7 +267,7 @@ msgid "Active Torrents: %d/%d"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountView.py:61
+#: ../networkbrowser/src/MountView.py:59
 msgid ""
 "Active/\n"
 "Inactive"
@@ -272,13 +277,13 @@ msgstr ""
 
 #
 #: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:138
-#: ../autotimer/src/AutoTimerOverview.py:72
+#: ../autotimer/src/AutoTimerOverview.py:69
 #: ../pipservicerelation/src/plugin.py:87
 msgid "Add"
 msgstr "Hinzufügen"
 
 #
-#: ../networkbrowser/src/MountManager.py:73
+#: ../networkbrowser/src/MountManager.py:71
 msgid "Add a new NFS or CIFS mount point to your Dreambox."
 msgstr "Eine neue CIFS oder NFS Freigabe hinzufügen."
 
@@ -301,7 +306,7 @@ msgid "Add entry"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:100
+#: ../autotimer/src/AutoTimerOverview.py:97
 msgid "Add new AutoTimer"
 msgstr "Neuen AutoTimer hinzufügen"
 
@@ -310,7 +315,7 @@ msgid "Add new download"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountManager.py:73
+#: ../networkbrowser/src/MountManager.py:71
 msgid "Add new network mount point"
 msgstr "Netzwerkfreigabe hinzufügen"
 
@@ -318,7 +323,7 @@ msgstr "Netzwerkfreigabe hinzufügen"
 msgid "Add selected song to a playlist"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerSettings.py:45
+#: ../autotimer/src/AutoTimerSettings.py:42
 msgid "Add similar timer on conflict"
 msgstr "Ähnlichen Timer bei einem Konflikt hinzufügen"
 
@@ -332,12 +337,12 @@ msgid "Add timer"
 msgstr "Timer setzen"
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:46
+#: ../autotimer/src/AutoTimerSettings.py:43
 msgid "Add timer as disabled on conflict"
 msgstr "Timer bei Konflikt als deaktiviert hinzufügen"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:516
+#: ../autotimer/src/AutoTimerEditor.py:513
 msgid "Add zap timer instead of record timer?"
 msgstr "Umschalt-Timer anstelle von Aufnahme-Timern erstellen?"
 
@@ -381,8 +386,8 @@ msgstr ""
 "im Standby-Modus."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:599
-#: ../autotimer/src/AutoTimerImporter.py:182
+#: ../autotimer/src/AutoTimerEditor.py:596
+#: ../autotimer/src/AutoTimerImporter.py:179
 msgid "After event"
 msgstr "Nach dem Event"
 
@@ -421,7 +426,7 @@ msgstr ""
 #: ../emission/src/EmissionOverview.py:150
 #: ../emission/src/EmissionOverview.py:303
 #: ../emission/src/EmissionOverview.py:310 ../mytube/src/plugin.py:64
-#: ../mytube/src/plugin.py:84 ../serienfilm/src/MovieSelection.py:256
+#: ../mytube/src/plugin.py:84 ../serienfilm/src/MovieSelection.py:254
 msgid "All"
 msgstr "Alle"
 
@@ -438,7 +443,7 @@ msgid "All Time"
 msgstr "Alle Zeiten"
 
 #
-#: ../autotimer/src/__init__.py:17
+#: ../autotimer/src/__init__.py:12
 msgid "All non-repeating timers"
 msgstr "Alle sich nicht Wiederholenden"
 
@@ -473,7 +478,7 @@ msgid ""
 "unusable movie player until you uninstall one of the conflicting plugins."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:617
+#: ../autotimer/src/AutoTimerEditor.py:614
 msgid "Amount of recordings left"
 msgstr ""
 
@@ -489,7 +494,7 @@ msgid ""
 "The %s \"%s\" will be processed in the background after it."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:326
+#: ../autotimer/src/AutoTimerEditor.py:323
 msgid "Any service/recording"
 msgstr ""
 
@@ -502,7 +507,7 @@ msgid "Append file to current songlist"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountEdit.py:271
+#: ../networkbrowser/src/MountEdit.py:269
 msgid ""
 "Are you sure you want to save this network mount?\n"
 "\n"
@@ -600,7 +605,7 @@ msgid "AutoTimer"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:421
+#: ../autotimer/src/AutoTimerEditor.py:418
 msgid "AutoTimer Editor"
 msgstr "AutoTimer Editor"
 
@@ -609,7 +614,7 @@ msgid "AutoTimer FAQ"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:887
+#: ../autotimer/src/AutoTimerEditor.py:884
 msgid "AutoTimer Filters"
 msgstr "AutoTimer Filter"
 
@@ -618,17 +623,17 @@ msgid "AutoTimer Help"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:1091
+#: ../autotimer/src/AutoTimerEditor.py:1088
 msgid "AutoTimer Services"
 msgstr "AutoTimer Sender"
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:33
+#: ../autotimer/src/AutoTimerSettings.py:30
 msgid "AutoTimer Settings"
 msgstr "AutoTimer Einstellungen"
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:115
+#: ../autotimer/src/AutoTimerOverview.py:112
 msgid "AutoTimer overview"
 msgstr "AutoTimer Übersicht"
 
@@ -702,30 +707,30 @@ msgstr "Erstellt Timereinträge auf Grund von Stichworten"
 msgid "Automatically refresh EPG"
 msgstr "Aktualisiert automatisch EPG-Informationen"
 
-#: ../autoresolution/src/plugin.py:362
+#: ../autoresolution/src/plugin.py:360
 msgid "Autoresolution"
 msgstr ""
 
-#: ../autoresolution/src/plugin.py:232
+#: ../autoresolution/src/plugin.py:230
 #, python-format
 msgid ""
 "Autoresolution Plugin Testmode:\n"
 "Is %s OK?"
 msgstr ""
 
-#: ../autoresolution/src/plugin.py:370
+#: ../autoresolution/src/plugin.py:368
 msgid "Autoresolution Switch"
 msgstr "Autoresolution Schalter"
 
-#: ../autoresolution/src/plugin.py:318
+#: ../autoresolution/src/plugin.py:316
 msgid "Autoresolution is not working in Scart/DVI-PC Mode"
 msgstr "Autoresolution funktioniert nicht im Scart/DVI-PC Modus"
 
-#: ../autoresolution/src/plugin.py:300
+#: ../autoresolution/src/plugin.py:298
 msgid "Autoresolution settings"
 msgstr "Autoresolution Einstellungen"
 
-#: ../autoresolution/src/plugin.py:281
+#: ../autoresolution/src/plugin.py:279
 msgid "Autoresolution videomode setup"
 msgstr "Autoresolution Videomodus Einstellungen"
 
@@ -772,13 +777,13 @@ msgid "Basic Picasa client."
 msgstr "Einfacher Picasa client."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:608
+#: ../autotimer/src/AutoTimerEditor.py:605
 msgid "Begin of \"after event\" timespan"
 msgstr "Anfang der Zeitspanne"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:571
-#: ../autotimer/src/AutoTimerWizard.py:103
+#: ../autotimer/src/AutoTimerEditor.py:568
+#: ../autotimer/src/AutoTimerWizard.py:100
 msgid "Begin of timespan"
 msgstr "Anfang der Zeitspanne"
 
@@ -811,7 +816,7 @@ msgid "Bonjour: Overview"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:1102
+#: ../autotimer/src/AutoTimerEditor.py:1099
 msgid "Bouquets"
 msgstr "Bouquets"
 
@@ -837,24 +842,24 @@ msgstr ""
 "durchsuchen und zu diesen eine Verbindung herstellen."
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:157
+#: ../networkbrowser/src/NetworkBrowser.py:155
 msgid "Browse network neighbourhood"
 msgstr "Netzwerkumgebung durchsuchen"
 
-#: ../autotimer/src/AutoTimerEditor.py:522
+#: ../autotimer/src/AutoTimerEditor.py:519
 msgid ""
 "By enabling this events will not be matched if they don't occur on certain "
 "dates."
 msgstr "Keine Events finden wenn Sie nicht an bestimmten Tagen auftreten."
 
-#: ../autotimer/src/AutoTimerSettings.py:50
+#: ../autotimer/src/AutoTimerSettings.py:47
 msgid ""
 "By enabling this you will be notified about similar timers added during "
 "automated polling. There is no intelligence involved, so it might bother you "
 "about the same conflict over and over."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerSettings.py:49
+#: ../autotimer/src/AutoTimerSettings.py:46
 msgid ""
 "By enabling this you will be notified about timer conflicts found during "
 "automated polling. There is no intelligence involved, so it might bother you "
@@ -883,7 +888,7 @@ msgid "CF Drive"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountEdit.py:98
+#: ../networkbrowser/src/MountEdit.py:96
 msgid "CIFS share"
 msgstr "CIFS Freigabe"
 
@@ -916,41 +921,45 @@ msgstr "Kanada"
 
 #
 #: ../antiscrollbar/src/plugin.py:125 ../audiosync/src/AC3main.py:66
-#: ../audiosync/src/AC3setup.py:63
+#: ../audiosync/src/AC3setup.py:62
 #: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:61
 #: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:248
-#: ../autoresolution/src/plugin.py:294 ../autotimer/src/AutoTimerEditor.py:445
-#: ../autotimer/src/AutoTimerEditor.py:908
-#: ../autotimer/src/AutoTimerEditor.py:1111
-#: ../autotimer/src/AutoTimerImporter.py:45
-#: ../autotimer/src/AutoTimerImporter.py:119
-#: ../autotimer/src/AutoTimerPreview.py:59
-#: ../autotimer/src/AutoTimerSettings.py:70 ../babelzapper/src/plugin.py:75
+#: ../autoresolution/src/plugin.py:292 ../autotimer/src/AutoTimerEditor.py:442
+#: ../autotimer/src/AutoTimerEditor.py:905
+#: ../autotimer/src/AutoTimerEditor.py:1108
+#: ../autotimer/src/AutoTimerImporter.py:42
+#: ../autotimer/src/AutoTimerImporter.py:116
+#: ../autotimer/src/AutoTimerPreview.py:56
+#: ../autotimer/src/AutoTimerSettings.py:67 ../babelzapper/src/plugin.py:75
 #: ../cdinfo/src/plugin.py:56 ../dreamirc/src/dreamIRCSetup.py:71
 #: ../ecasa/src/EcasaSetup.py:71 ../emission/src/EmissionBandwidth.py:72
 #: ../emission/src/EmissionSetup.py:39 ../genuinedreambox/src/plugin.py:81
 #: ../growlee/src/plugin.py:99 ../merlinmusicplayer/src/plugin.py:258
 #: ../merlinmusicplayer/src/plugin.py:2772
 #: ../merlinmusicplayer/src/plugin.py:2893 ../movieepg/src/MovieEpgSetup.py:55
-#: ../networkbrowser/src/MountEdit.py:65
-#: ../networkbrowser/src/NetworkBrowser.py:498
+#: ../networkbrowser/src/MountEdit.py:63
+#: ../networkbrowser/src/NetworkBrowser.py:496
 #: ../pipservicerelation/src/plugin.py:188 ../pipzap/src/PipzapSetup.py:60
 #: ../remotetimer/src/plugin.py:105 ../remotetimer/src/plugin.py:230
 #: ../satloader/src/plugin.py:53
 #: ../startuptostandby/src/StartupToStandbyConfiguration.py:27
-#: ../serienfilm/src/SerienFilm.py:65
+#: ../serienfilm/src/SerienFilm.py:62
 msgid "Cancel"
 msgstr "Abbrechen"
 
 #
-#: ../audiosync/src/MovableScreen.py:32
+#: ../audiosync/src/MovableScreen.py:31
 msgid "Center screen at the lower border"
 msgstr "Plugin am unteren Rand zentrieren"
 
 #
-#: ../audiosync/src/MovableScreen.py:26
+#: ../audiosync/src/MovableScreen.py:25
 msgid "Center screen at the upper border"
 msgstr "Plugin am oberen Rand zentrieren"
+
+#: ../src/SerienFilm.py:56
+msgid "Change"
+msgstr "Ändern"
 
 #
 #: ../audiosync/src/AC3main.py:76 ../audiosync/src/AC3main.py:77
@@ -958,12 +967,12 @@ msgid "Change active delay"
 msgstr "Aktive Verzögerung ändern"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:525
+#: ../autotimer/src/AutoTimerEditor.py:522
 msgid "Change default recording offset?"
 msgstr "Angepasster Vor-/Nachlauf?"
 
 #
-#: ../networkbrowser/src/MountManager.py:76
+#: ../networkbrowser/src/MountManager.py:74
 msgid "Change hostname"
 msgstr "Netzwerkname ändern"
 
@@ -972,7 +981,7 @@ msgid "Change sorting"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountManager.py:76
+#: ../networkbrowser/src/MountManager.py:74
 msgid "Change the hostname of your Dreambox."
 msgstr "Ändern Sie den Netzwerknamen Ihrer Dreambox."
 
@@ -987,7 +996,7 @@ msgstr "Kanal"
 
 #
 #: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:271
-#: ../autotimer/src/AutoTimerEditor.py:99
+#: ../autotimer/src/AutoTimerEditor.py:96
 #: ../pipservicerelation/src/plugin.py:211
 msgid "Channel Selection"
 msgstr "Kanalliste"
@@ -1006,7 +1015,7 @@ msgid "Channel info"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:1101
+#: ../autotimer/src/AutoTimerEditor.py:1098
 msgid "Channels"
 msgstr "Kanäle"
 
@@ -1018,17 +1027,17 @@ msgstr ""
 msgid "Check any running reconstruct process"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:623
+#: ../autotimer/src/AutoTimerEditor.py:620
 msgid "Check for uniqueness in"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:379 ../mytube/src/MyTubeSearch.py:360
+#: ../autotimer/src/AutoTimerEditor.py:376 ../mytube/src/MyTubeSearch.py:360
 msgid "Choose target folder"
 msgstr "Wähle Zielverzeichnis"
 
 #
-#: ../autotimer/src/__init__.py:22
+#: ../autotimer/src/__init__.py:17
 msgid "Classic"
 msgstr "klassisch"
 
@@ -1074,22 +1083,22 @@ msgstr "Verlauf beim Verlassen löschen:"
 #: ../mphelp/src/MPHelp.py:42 ../mytube/src/MyTubeSearch.py:298
 #: ../mytube/src/MyTubeSearch.py:464 ../mytube/src/plugin.py:279
 #: ../mytube/src/plugin.py:1310 ../mytube/src/plugin.py:1496
-#: ../networkbrowser/src/MountManager.py:54
-#: ../networkbrowser/src/MountView.py:63
-#: ../networkbrowser/src/NetworkBrowser.py:107
-#: ../networkbrowser/src/UserDialog.py:91
-#: ../networkbrowser/src/UserManager.py:50
+#: ../networkbrowser/src/MountManager.py:52
+#: ../networkbrowser/src/MountView.py:61
+#: ../networkbrowser/src/NetworkBrowser.py:105
+#: ../networkbrowser/src/UserDialog.py:89
+#: ../networkbrowser/src/UserManager.py:48
 #: ../pipservicerelation/src/plugin.py:86
 msgid "Close"
 msgstr "Schließen"
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:85
+#: ../autotimer/src/AutoTimerOverview.py:82
 msgid "Close and forget changes"
 msgstr "Schließen ohne Speichern der Änderungen"
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:98
+#: ../autotimer/src/AutoTimerOverview.py:95
 msgid "Close and save changes"
 msgstr "Schließen und Speichern"
 
@@ -1111,12 +1120,16 @@ msgstr ""
 msgid "Configuration"
 msgstr ""
 
+#: ../src/MovieSelection.py:89 ../src/SerienFilm.py:47
+msgid "Configuration of the title:episode separator"
+msgstr "Konfiguration des Titel:Episode Trenners"
+
 #: ../aihdcontroler/src/plugin.py:68
 msgid "Configuration tool for All.In HD skins"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:87
+#: ../autotimer/src/AutoTimerSettings.py:84
 msgid "Configure AutoTimer behavior"
 msgstr "AutoTimer Verhalten"
 
@@ -1160,7 +1173,7 @@ msgstr ""
 msgid "Control Bonjour (avahi-daemon)"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:635
+#: ../autotimer/src/AutoTimerEditor.py:632
 msgid "Control recording completely by service"
 msgstr ""
 
@@ -1224,12 +1237,12 @@ msgid "Create a new AutoTimer."
 msgstr "Einen neuen AutoTimer erstellen."
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:230
+#: ../autotimer/src/AutoTimerOverview.py:227
 msgid "Create a new timer using the classic editor"
 msgstr "Neuen Timer mit dem klassichen Editor erstellen"
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:232
+#: ../autotimer/src/AutoTimerOverview.py:229
 msgid "Create a new timer using the wizard"
 msgstr "Neuen Timer mit dem Wizard erstellen"
 
@@ -1253,18 +1266,18 @@ msgstr ""
 "lassen, Timer hinzufügen oder entfernen sowie die Timerliste organisieren."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:318
+#: ../autotimer/src/AutoTimerEditor.py:315
 #, python-format
 msgid "Custom (%s)"
 msgstr "Speziell (%s)"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:628
+#: ../autotimer/src/AutoTimerEditor.py:625
 msgid "Custom location"
 msgstr "Aufnahmeverzeichnis"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:584
+#: ../autotimer/src/AutoTimerEditor.py:581
 msgid "Custom offset"
 msgstr "Angepasster Vor- und Nachlauf"
 
@@ -1352,39 +1365,39 @@ msgstr "Legt einen Startsender fest"
 msgid "Define a startup service for your Dreambox."
 msgstr "StartUpService legen Sie einen Startsender Ihrer Dreambox fest."
 
-#: ../autotimer/src/AutoTimerEditor.py:538
+#: ../autotimer/src/AutoTimerEditor.py:535
 msgid ""
 "Defines where to search for duplicates (only title, short description or "
 "even extended description)"
 msgstr ""
 
-#: ../autoresolution/src/plugin.py:314
+#: ../autoresolution/src/plugin.py:312
 msgid "Deinterlacer mode for interlaced content"
 msgstr "Deinterlacer Modus für Interlaced Inhalte"
 
-#: ../autoresolution/src/plugin.py:315
+#: ../autoresolution/src/plugin.py:313
 msgid "Deinterlacer mode for progressive content"
 msgstr "Deinterlacer Modus für Progressive Inhalte"
 
-#: ../autoresolution/src/plugin.py:312
+#: ../autoresolution/src/plugin.py:310
 msgid "Delay x seconds after service started"
 msgstr "Warte x Sekunden nach dem Starten eines Services"
 
 #
 #: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:141
-#: ../autotimer/src/AutoTimerOverview.py:71 ../growlee/src/plugin.py:102
-#: ../networkbrowser/src/UserManager.py:52
+#: ../autotimer/src/AutoTimerOverview.py:68 ../growlee/src/plugin.py:102
+#: ../networkbrowser/src/UserManager.py:50
 #: ../pipservicerelation/src/plugin.py:85 ../remotetimer/src/plugin.py:104
 msgid "Delete"
 msgstr "Löschen"
 
 #
-#: ../serienfilm/src/MovieSelection.py:188
+#: ../serienfilm/src/MovieSelection.py:186
 msgid "Delete failed!"
 msgstr "Löschen fehlgeschlagen."
 
 #
-#: ../networkbrowser/src/MountView.py:64
+#: ../networkbrowser/src/MountView.py:62
 msgid "Delete mount"
 msgstr "Freigabe löschen"
 
@@ -1406,13 +1419,13 @@ msgid "Descending"
 msgstr "absteigend"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:551
-#: ../autotimer/src/AutoTimerWizard.py:111
+#: ../autotimer/src/AutoTimerEditor.py:548
+#: ../autotimer/src/AutoTimerWizard.py:108
 msgid "Description"
 msgstr "Beschreibung"
 
 #
-#: ../networkbrowser/src/MountView.py:85
+#: ../networkbrowser/src/MountView.py:83
 msgid "Dir:"
 msgstr "Verzeichnis:"
 
@@ -1421,7 +1434,7 @@ msgid "Direct playback of Youtube videos"
 msgstr "Youtube Filme direkt abspielen"
 
 #
-#: ../serienfilm/src/MovieSelection.py:473
+#: ../serienfilm/src/MovieSelection.py:471
 #, python-format
 msgid "Directory %s nonexistent."
 msgstr "Verzeichnis %s existiert nicht."
@@ -1429,6 +1442,10 @@ msgstr "Verzeichnis %s existiert nicht."
 #: ../logomanager/src/plugin.py:219
 msgid "Directory to scan for Logos"
 msgstr ""
+
+#: ../src/SerienFilm.py:56 ../src/SerienFilm.py:132
+msgid "Disable "
+msgstr "Deaktivieren"
 
 #
 #: ../easyinfo/src/plugin.py:65 ../easyinfo/src/plugin.py:96
@@ -1442,7 +1459,7 @@ msgid "Discard changes and close plugin"
 msgstr "Änderungen verwerfen und Plugin schliessen"
 
 #
-#: ../audiosync/src/MovableScreen.py:18 ../audiosync/src/MovableScreen.py:23
+#: ../audiosync/src/MovableScreen.py:17 ../audiosync/src/MovableScreen.py:22
 msgid "Discard changes and close screen"
 msgstr "Änderungen verwerfen"
 
@@ -1485,7 +1502,7 @@ msgstr ""
 msgid "Do you really want to add all songs from that genre to a playlist?"
 msgstr ""
 
-#: ../serienfilm/src/MovieSelection.py:160
+#: ../serienfilm/src/MovieSelection.py:158
 #, python-format
 msgid ""
 "Do you really want to delete %s\n"
@@ -1495,11 +1512,25 @@ msgstr ""
 "%s?"
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:188 ../merlinepg/src/plugin.py:588
+#: ../autotimer/src/AutoTimerOverview.py:185 ../merlinepg/src/plugin.py:588
 #: ../merlinepg/src/plugin.py:908
 #, python-format
 msgid "Do you really want to delete %s?"
 msgstr "%s wirklich löschen?"
+
+#
+# MovieSelection.py
+#
+#: ../src/MovieSelection.py:147
+#, python-format
+msgid ""
+"Do you really want to delete series\n"
+"  %s\n"
+"with %d movies?"
+msgstr ""
+"Wollen Sie wirklich die komplette Serie\n"
+"  %s\n"
+"mit %d Filmen löschen?"
 
 #: ../merlinmusicplayer/src/plugin.py:1913
 msgid "Do you really want to delete that song from the database?"
@@ -1526,9 +1557,9 @@ msgid "Do you really want to delete this entry?"
 msgstr ""
 
 #
+#: ../networkbrowser/src/NetworkBrowser.py:389
 #: ../networkbrowser/src/NetworkBrowser.py:391
-#: ../networkbrowser/src/NetworkBrowser.py:393
-#: ../networkbrowser/src/NetworkBrowser.py:406
+#: ../networkbrowser/src/NetworkBrowser.py:404
 msgid "Do you want to enter a username and password for this host?\n"
 msgstr ""
 "Wollen Sie einen Benutzernamen und Passwort für diesen Rechner eingeben?\n"
@@ -1622,7 +1653,7 @@ msgid "DynDNS"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:556
+#: ../autotimer/src/AutoTimerEditor.py:553
 msgid "EPG encoding"
 msgstr "Zeichensatz des EPG"
 
@@ -1691,22 +1722,22 @@ msgstr ""
 
 #
 #: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:140
-#: ../pipservicerelation/src/plugin.py:88 ../serienfilm/src/SerienFilm.py:65
+#: ../pipservicerelation/src/plugin.py:88 ../serienfilm/src/SerienFilm.py:62
 msgid "Edit"
 msgstr "Bearbeiten"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:473
+#: ../autotimer/src/AutoTimerEditor.py:470
 msgid "Edit AutoTimer"
 msgstr "AutoTimer bearbeiten"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:929
+#: ../autotimer/src/AutoTimerEditor.py:926
 msgid "Edit AutoTimer filters"
 msgstr "AutoTimer Filter bearbeiten"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:1132
+#: ../autotimer/src/AutoTimerEditor.py:1129
 msgid "Edit AutoTimer services"
 msgstr "AutoTimer Sender bearbeiten"
 
@@ -1717,12 +1748,12 @@ msgid "Edit Timers and scan for new Events"
 msgstr "Automatisch Aufnahmen programmieren"
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:221
+#: ../autotimer/src/AutoTimerOverview.py:218
 msgid "Edit new timer defaults"
 msgstr "Voreinstellungen neuer Timer bearbeiten"
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:84
+#: ../autotimer/src/AutoTimerOverview.py:81
 msgid "Edit selected AutoTimer"
 msgstr "Markierten AutoTimer bearbeiten"
 
@@ -1735,8 +1766,12 @@ msgid "Edit tags of recorded movies."
 msgstr ""
 "Mit TagEditor können Sie die Tags Ihrer aufgenommenen Filme bearbeiten."
 
+#: ../src/SerienFilm.py:112
+msgid "Edit title:episode separator"
+msgstr "Titel:Episode Trenner bearbeiten"
+
 #
-#: ../autotimer/src/AutoTimerEditor.py:1154
+#: ../autotimer/src/AutoTimerEditor.py:1151
 msgid "Editing"
 msgstr "Bearbeiten"
 
@@ -1745,7 +1780,7 @@ msgid "Editor for fstab"
 msgstr "Editor für die Fstab"
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:51
+#: ../autotimer/src/AutoTimerSettings.py:48
 msgid "Editor for new AutoTimers"
 msgstr "Standardeditor für neue AutoTimer"
 
@@ -1765,23 +1800,27 @@ msgstr ""
 msgid "Enable"
 msgstr "Ein"
 
-#: ../autoresolution/src/plugin.py:27
+#: ../src/SerienFilm.py:58 ../src/SerienFilm.py:129
+msgid "Enable "
+msgstr "Aktivieren"
+
+#: ../autoresolution/src/plugin.py:25
 msgid "Enable 1080p24 Mode"
 msgstr "Aktiviere 1080p24 Modus"
 
-#: ../autoresolution/src/plugin.py:28
+#: ../autoresolution/src/plugin.py:26
 msgid "Enable 1080p25 Mode"
 msgstr "Aktiviere 1080p25 Modus"
 
-#: ../autoresolution/src/plugin.py:28
+#: ../autoresolution/src/plugin.py:26
 msgid "Enable 1080p30 Mode"
 msgstr "Aktiviere 1080p30 Modus"
 
-#: ../autoresolution/src/plugin.py:27
+#: ../autoresolution/src/plugin.py:25
 msgid "Enable 720p24 Mode"
 msgstr "Aktiviere 720p24 Modus"
 
-#: ../autoresolution/src/plugin.py:303
+#: ../autoresolution/src/plugin.py:301
 msgid "Enable Autoresolution"
 msgstr "Aktiviere Autoresolution"
 
@@ -1790,7 +1829,7 @@ msgid "Enable Babelzapper on Mute"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:973
+#: ../autotimer/src/AutoTimerEditor.py:970
 msgid "Enable Filtering"
 msgstr "Filter einschalten"
 
@@ -1803,12 +1842,12 @@ msgid "Enable Port-Forwarding"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:1153
+#: ../autotimer/src/AutoTimerEditor.py:1150
 msgid "Enable Service Restriction"
 msgstr "Sender-Beschränkungen"
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:42
+#: ../autotimer/src/AutoTimerSettings.py:39
 msgid ""
 "Enable this to be able to access the AutoTimer Overview from within the "
 "extension menu."
@@ -1817,9 +1856,9 @@ msgstr ""
 "zugänglich zu machen."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:550
-#: ../autotimer/src/AutoTimerImporter.py:130
-#: ../autotimer/src/AutoTimerWizard.py:110 ../easyinfo/src/plugin.py:96
+#: ../autotimer/src/AutoTimerEditor.py:547
+#: ../autotimer/src/AutoTimerImporter.py:127
+#: ../autotimer/src/AutoTimerWizard.py:107 ../easyinfo/src/plugin.py:96
 #: ../startuptostandby/src/StartupToStandbyConfiguration.py:41
 msgid "Enabled"
 msgstr "Eingeschaltet"
@@ -1832,7 +1871,7 @@ msgid ""
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:513
+#: ../autotimer/src/AutoTimerEditor.py:510
 msgid ""
 "Encoding the channel uses for it's EPG data. You only need to change this if "
 "you're searching for special characters like the german umlauts."
@@ -1846,13 +1885,13 @@ msgid "Encryption"
 msgstr "Verschlüsselung"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:609
+#: ../autotimer/src/AutoTimerEditor.py:606
 msgid "End of \"after event\" timespan"
 msgstr "Ende der Zeitspanne"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:572
-#: ../autotimer/src/AutoTimerWizard.py:104
+#: ../autotimer/src/AutoTimerEditor.py:569
+#: ../autotimer/src/AutoTimerWizard.py:101
 msgid "End of timespan"
 msgstr "Ende der Zeitspanne"
 
@@ -1866,7 +1905,7 @@ msgstr ""
 "benötigt."
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:526
+#: ../networkbrowser/src/NetworkBrowser.py:524
 msgid "Enter IP to scan..."
 msgstr "IP zum Scannen eingeben..."
 
@@ -1879,18 +1918,18 @@ msgid "Enter name for playlist"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountManager.py:108
+#: ../networkbrowser/src/MountManager.py:106
 msgid "Enter new hostname for your Dreambox"
 msgstr "Neuen Netzwerknamen für Ihre Dreambox eingeben"
 
 #
-#: ../networkbrowser/src/MountEdit.py:217
+#: ../networkbrowser/src/MountEdit.py:215
 msgid "Enter options:"
 msgstr "Optionen eingeben:"
 
 #
-#: ../networkbrowser/src/MountEdit.py:221
-#: ../networkbrowser/src/UserDialog.py:141
+#: ../networkbrowser/src/MountEdit.py:219
+#: ../networkbrowser/src/UserDialog.py:139
 msgid "Enter password:"
 msgstr "Passwort eingeben:"
 
@@ -1899,12 +1938,12 @@ msgid "Enter search-text"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountEdit.py:215
+#: ../networkbrowser/src/MountEdit.py:213
 msgid "Enter share directory:"
 msgstr "Freigabeverzeichnis eingeben:"
 
 #
-#: ../networkbrowser/src/MountEdit.py:213
+#: ../networkbrowser/src/MountEdit.py:211
 msgid "Enter share name:"
 msgstr "Freigabename eingeben:"
 
@@ -1913,7 +1952,7 @@ msgid "Enter text to search for"
 msgstr ""
 
 #
-#: ../networkbrowser/src/UserDialog.py:94
+#: ../networkbrowser/src/UserDialog.py:92
 msgid "Enter user and password for host: "
 msgstr "Benutzernamen und Passwort eingeben: "
 
@@ -1922,8 +1961,8 @@ msgid "Enter username"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountEdit.py:219
-#: ../networkbrowser/src/UserDialog.py:139
+#: ../networkbrowser/src/MountEdit.py:217
+#: ../networkbrowser/src/UserDialog.py:137
 msgid "Enter username:"
 msgstr "Benutzernamen eingeben:"
 
@@ -1995,19 +2034,19 @@ msgid "EventInfo yellow button:"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerImporter.py:146
+#: ../autotimer/src/AutoTimerImporter.py:143
 msgid "Exact match"
 msgstr "Exakter Treffer"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:982
-#: ../autotimer/src/AutoTimerEditor.py:999
-#: ../autotimer/src/AutoTimerEditor.py:1024
+#: ../autotimer/src/AutoTimerEditor.py:979
+#: ../autotimer/src/AutoTimerEditor.py:996
+#: ../autotimer/src/AutoTimerEditor.py:1021
 msgid "Exclude"
 msgstr "Ausschließen"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:603
+#: ../autotimer/src/AutoTimerEditor.py:600
 msgid "Execute \"after event\" during timespan"
 msgstr "Führe innerhalb der Zeitspanne aus"
 
@@ -2018,7 +2057,7 @@ msgid ""
 msgstr ""
 
 #
-#: ../serienfilm/src/SerienFilm.py:59
+#: ../serienfilm/src/SerienFilm.py:56
 msgid "Exit"
 msgstr "Beenden"
 
@@ -2027,7 +2066,7 @@ msgid "Expand your Flash using an USB stick or an NFS share."
 msgstr ""
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:110
+#: ../networkbrowser/src/NetworkBrowser.py:108
 msgid "Expert"
 msgstr "Experte"
 
@@ -2097,7 +2136,7 @@ msgid "Film & Animation"
 msgstr "Film & Animation"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:974
+#: ../autotimer/src/AutoTimerEditor.py:971
 msgid "Filter"
 msgstr "Filter"
 
@@ -2115,11 +2154,11 @@ msgstr ""
 "neuen Filter hinzuzufügen und GELB um einen zu entfernen"
 
 #
-#: ../networkbrowser/src/MountManager.py:132
+#: ../networkbrowser/src/MountManager.py:130
 msgid "Finished restarting your network"
 msgstr "Netzwerkneustart abgeschlossen"
 
-#: ../autotimer/src/AutoTimerEditor.py:523
+#: ../autotimer/src/AutoTimerEditor.py:520
 msgid ""
 "First day to match events. No event that begins before this date will be "
 "matched."
@@ -2150,7 +2189,7 @@ msgstr ""
 msgid "France"
 msgstr "Frankreich"
 
-#: ../autotimer/src/AutoTimerOverview.py:227
+#: ../autotimer/src/AutoTimerOverview.py:224
 msgid "Frequently asked questions"
 msgstr ""
 
@@ -2159,7 +2198,7 @@ msgid "Frequently asked questions about the AutoTimer"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:48
+#: ../autotimer/src/AutoTimerEditor.py:45
 msgid "Friday"
 msgstr "Freitag"
 
@@ -2323,15 +2362,15 @@ msgstr ""
 "Growl-Client."
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:44
+#: ../autotimer/src/AutoTimerSettings.py:41
 msgid "Guess existing timer based on begin/end"
 msgstr "Bestimme bestehende Timer anhand Anfang-/Endzeit"
 
-#: ../autoresolution/src/plugin.py:26
+#: ../autoresolution/src/plugin.py:24
 msgid "HD Interlace Mode"
 msgstr "HD Interlace Modus"
 
-#: ../autoresolution/src/plugin.py:26
+#: ../autoresolution/src/plugin.py:24
 msgid "HD Progressive Mode"
 msgstr "HD Progressiv Modus"
 
@@ -2346,7 +2385,7 @@ msgid "Harddisk"
 msgstr "Festplatte"
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:226 ../googlemaps/src/plugin.py:212
+#: ../autotimer/src/AutoTimerOverview.py:223 ../googlemaps/src/plugin.py:212
 #: ../mytube/src/plugin.py:1514 ../pipzap/src/PipzapSetup.py:64
 msgid "Help"
 msgstr "Hilfe"
@@ -2409,12 +2448,12 @@ msgid "IMDb info"
 msgstr ""
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:514
+#: ../networkbrowser/src/NetworkBrowser.py:512
 msgid "IP Address"
 msgstr "IP-Adresse"
 
 #
-#: ../networkbrowser/src/MountView.py:84
+#: ../networkbrowser/src/MountView.py:82
 msgid "IP:"
 msgstr "IP:"
 
@@ -2422,7 +2461,7 @@ msgstr "IP:"
 msgid "IRC Client for Enigma2"
 msgstr "IRC Client für Enigma2"
 
-#: ../autotimer/src/AutoTimerSettings.py:45
+#: ../autotimer/src/AutoTimerSettings.py:42
 msgid ""
 "If a timer conflict occurs, AutoTimer will search outside the timespan for a "
 "similar event and add it."
@@ -2435,20 +2474,20 @@ msgid ""
 "launchable from the regular plugin overview."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerSettings.py:44
+#: ../autotimer/src/AutoTimerSettings.py:41
 #, python-format
 msgid ""
 "If this is enabled an existing timer will also be considered recording an "
 "event if it records at least 80%% of the it."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerSettings.py:48
+#: ../autotimer/src/AutoTimerSettings.py:45
 msgid ""
 "If this is selected, the name of the respective AutoTimer will be added as a "
 "tag to timers created by this plugin."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerSettings.py:47
+#: ../autotimer/src/AutoTimerSettings.py:44
 msgid ""
 "If this is selected, the tag \"AutoTimer\" will be given to timers created "
 "by this plugin."
@@ -2471,17 +2510,17 @@ msgid "Illuminated RC layer 4"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerImporter.py:229
+#: ../autotimer/src/AutoTimerImporter.py:226
 msgid "Import AutoTimer"
 msgstr "AutoTimer importieren"
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:218
+#: ../autotimer/src/AutoTimerOverview.py:215
 msgid "Import existing Timer"
 msgstr "Importiere aus Timer"
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:219
+#: ../autotimer/src/AutoTimerOverview.py:216
 msgid "Import from EPG"
 msgstr "Importiere aus EPG"
 
@@ -2492,17 +2531,17 @@ msgid ""
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:987
-#: ../autotimer/src/AutoTimerEditor.py:1004
-#: ../autotimer/src/AutoTimerEditor.py:1025
+#: ../autotimer/src/AutoTimerEditor.py:984
+#: ../autotimer/src/AutoTimerEditor.py:1001
+#: ../autotimer/src/AutoTimerEditor.py:1022
 msgid "Include"
 msgstr "Einschließen"
 
-#: ../autotimer/src/AutoTimerSettings.py:47
+#: ../autotimer/src/AutoTimerSettings.py:44
 msgid "Include \"AutoTimer\" in tags"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerSettings.py:48
+#: ../autotimer/src/AutoTimerSettings.py:45
 msgid "Include AutoTimer name in tags"
 msgstr ""
 
@@ -2636,6 +2675,14 @@ msgstr "Italien"
 msgid "Japan"
 msgstr "Japan"
 
+#: ../src/MovieSelection.py:291
+msgid "Jump to listbegin"
+msgstr "Springe zum Listenanfang"
+
+#: ../src/MovieSelection.py:292
+msgid "Jump to listend"
+msgstr "Springe zum Listenende"
+
 #: ../easyinfo/src/plugin.py:100
 msgid "Just zap"
 msgstr ""
@@ -2652,6 +2699,10 @@ msgstr "Taste %(Key)s erfolgreich auf %(delay)i ms gesetzt"
 msgid "Key %(key)s (current value: %(value)i ms)"
 msgstr "Taste %(key)s (aktueller Wert: %(value)i ms)"
 
+#: ../src/SerienFilm.py:113
+msgid "Key 0 provides special chracters, key 1 blank"
+msgstr "Taste 0 = Sonderzeichen, Taste 1 Leerzeichen"
+
 #: ../ecasa/src/EcasaGui.py:778
 #, python-format
 msgid "Keywords: %s"
@@ -2663,23 +2714,27 @@ msgstr ""
 "KiddyTimer hilft Ihnen dabei, die tägliche TV-Nutzung Ihres Kindes zu "
 "kontrollieren."
 
-#: ../autotimer/src/AutoTimerEditor.py:542
+#: ../autotimer/src/AutoTimerEditor.py:539
 msgid ""
 "Label Timers with season, episode and title, according to the SeriesPlugin "
 "settings."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:638
+#: ../autotimer/src/AutoTimerEditor.py:635
 msgid "Label series"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:524
+#: ../autotimer/src/AutoTimerEditor.py:521
 msgid ""
 "Last day to match events. Events have to begin before this date to be "
 "matched."
 msgstr ""
 "Letzter Tag berücksichtigter Tag. Sendungen müssen vor diesem Datum begonnen "
 "haben."
+
+#: ../src/SerienFilm.py:139
+msgid "Length of the title:episode separator"
+msgstr "Länge des Titel:Episode Trenners"
 
 #: ../aihdcontroler/src/plugin.py:45
 msgid "LigaLine"
@@ -2708,12 +2763,12 @@ msgid "Load feed on startup:"
 msgstr "Feed beim Starten laden:"
 
 #
-#: ../networkbrowser/src/MountEdit.py:179
+#: ../networkbrowser/src/MountEdit.py:177
 msgid "Local share name"
 msgstr "Lokaler Freigabename"
 
 #
-#: ../autotimer/src/AutoTimerImporter.py:200
+#: ../autotimer/src/AutoTimerImporter.py:197
 msgid "Location"
 msgstr "Zielverzeichnis"
 
@@ -2722,12 +2777,12 @@ msgid "Low (Yes/No)"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:532
+#: ../autotimer/src/AutoTimerEditor.py:529
 msgid "Lower bound of timespan."
 msgstr "Untere Grenze der Zeitspanne."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:520
+#: ../autotimer/src/AutoTimerEditor.py:517
 msgid ""
 "Lower bound of timespan. Nothing before this time will be matched. Offsets "
 "are not taken into account!"
@@ -2750,7 +2805,7 @@ msgid "Manage logos to display at boottime"
 msgstr "Bilderverwaltung für Boot  und Radio-Modus"
 
 #
-#: ../networkbrowser/src/plugin.py:33
+#: ../networkbrowser/src/plugin.py:30
 msgid "Manage network shares"
 msgstr "Netzwerkfreigaben verwalten"
 
@@ -2762,24 +2817,24 @@ msgstr ""
 "Musikdateien und dient gleichzeitig zum Abspielen von Musikdateien."
 
 #
-#: ../networkbrowser/src/plugin.py:33
+#: ../networkbrowser/src/plugin.py:30
 msgid "Manage your network shares..."
 msgstr "Verwalten Sie Ihre Netzwerkfreigaben..."
 
 #
-#: ../autotimer/src/AutoTimerImporter.py:157
+#: ../autotimer/src/AutoTimerImporter.py:154
 #, python-format
 msgid "Match Timespan: %02d:%02d - %02d:%02d"
 msgstr "Finde in Zeitspanne: %02d:%02d - %02d:%02d"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:552
-#: ../autotimer/src/AutoTimerWizard.py:112
+#: ../autotimer/src/AutoTimerEditor.py:549
+#: ../autotimer/src/AutoTimerWizard.py:109
 msgid "Match title"
 msgstr "Finde in Titel"
 
 #
-#: ../autotimer/src/AutoTimerImporter.py:139
+#: ../autotimer/src/AutoTimerImporter.py:136
 #, python-format
 msgid "Match title: %s"
 msgstr "Finde Titel: %s"
@@ -2793,11 +2848,11 @@ msgid "Maximum Connections"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:597
+#: ../autotimer/src/AutoTimerEditor.py:594
 msgid "Maximum duration (in m)"
 msgstr "Maximale Länge (in Min.)"
 
-#: ../autotimer/src/AutoTimerEditor.py:529
+#: ../autotimer/src/AutoTimerEditor.py:526
 msgid ""
 "Maximum event duration to match. If an event is longer than this amount of "
 "time (without offset) it won't be matched."
@@ -2847,7 +2902,7 @@ msgid "Minimum Priority"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:43
+#: ../autotimer/src/AutoTimerSettings.py:40
 msgid "Modify existing timers"
 msgstr "Ändere bestehende Timer"
 
@@ -2856,12 +2911,12 @@ msgid "Modus"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:44
+#: ../autotimer/src/AutoTimerEditor.py:41
 msgid "Monday"
 msgstr "Montag"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:316
+#: ../autotimer/src/AutoTimerEditor.py:313
 msgid "Monthly"
 msgstr "Monatlich"
 
@@ -2905,27 +2960,27 @@ msgid "Most viewed"
 msgstr "Meistgesehen"
 
 #
-#: ../networkbrowser/src/MountView.py:60
+#: ../networkbrowser/src/MountView.py:58
 msgid "Mount informations"
 msgstr "Freigabe Informationen"
 
 #
-#: ../networkbrowser/src/MountEdit.py:194
+#: ../networkbrowser/src/MountEdit.py:192
 msgid "Mount options"
 msgstr "Freigabeoptionen"
 
 #
-#: ../networkbrowser/src/MountEdit.py:181
+#: ../networkbrowser/src/MountEdit.py:179
 msgid "Mount type"
 msgstr "Freigabetyp"
 
 #
-#: ../networkbrowser/src/MountManager.py:64 ../networkbrowser/src/plugin.py:33
+#: ../networkbrowser/src/MountManager.py:62 ../networkbrowser/src/plugin.py:30
 msgid "MountManager"
 msgstr "Freigabe Manager"
 
 #
-#: ../networkbrowser/src/MountView.py:59
+#: ../networkbrowser/src/MountView.py:57
 msgid ""
 "Mounted/\n"
 "Unmounted"
@@ -2934,17 +2989,17 @@ msgstr ""
 "nicht Verbunden"
 
 #
-#: ../networkbrowser/src/MountManager.py:74
+#: ../networkbrowser/src/MountManager.py:72
 msgid "Mountpoints management"
 msgstr "Freigaben Verwaltung"
 
 #
-#: ../networkbrowser/src/MountEdit.py:69
+#: ../networkbrowser/src/MountEdit.py:67
 msgid "Mounts editor"
 msgstr "Freigaben Editor"
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:108
+#: ../networkbrowser/src/NetworkBrowser.py:106
 msgid "Mounts management"
 msgstr "Freigaben Verwaltung"
 
@@ -2954,57 +3009,57 @@ msgid "Move plugin screen"
 msgstr "Plugin- Bildschirm verschieben"
 
 #
-#: ../audiosync/src/MovableScreen.py:22
+#: ../audiosync/src/MovableScreen.py:21
 msgid "Move screen down"
 msgstr "Plugin nach unten bewegen"
 
 #
-#: ../audiosync/src/MovableScreen.py:29
+#: ../audiosync/src/MovableScreen.py:28
 msgid "Move screen to the center of your TV"
 msgstr "Plugin auf dem Bildschirm zentrieren"
 
 #
-#: ../audiosync/src/MovableScreen.py:19
+#: ../audiosync/src/MovableScreen.py:18
 msgid "Move screen to the left"
 msgstr "Plugin nach links bewegen"
 
 #
-#: ../audiosync/src/MovableScreen.py:31
+#: ../audiosync/src/MovableScreen.py:30
 msgid "Move screen to the lower left corner"
 msgstr "Plugin in die linke untere Ecke verschieben"
 
 #
-#: ../audiosync/src/MovableScreen.py:33
+#: ../audiosync/src/MovableScreen.py:32
 msgid "Move screen to the lower right corner"
 msgstr "Plugin in die rechte untere Ecke verschieben"
 
 #
-#: ../audiosync/src/MovableScreen.py:28
+#: ../audiosync/src/MovableScreen.py:27
 msgid "Move screen to the middle of the left border"
 msgstr "Plugin in die Mitte des linken Randes bewegen"
 
 #
-#: ../audiosync/src/MovableScreen.py:30
+#: ../audiosync/src/MovableScreen.py:29
 msgid "Move screen to the middle of the right border"
 msgstr "Plugin in die Mitte des rechten Randes bewegen"
 
 #
-#: ../audiosync/src/MovableScreen.py:20
+#: ../audiosync/src/MovableScreen.py:19
 msgid "Move screen to the right"
 msgstr "Plugin nach rechts bewegen"
 
 #
-#: ../audiosync/src/MovableScreen.py:25
+#: ../audiosync/src/MovableScreen.py:24
 msgid "Move screen to the upper left corner"
 msgstr "Plugin in die linke obere Ecke verschieben"
 
 #
-#: ../audiosync/src/MovableScreen.py:27
+#: ../audiosync/src/MovableScreen.py:26
 msgid "Move screen to the upper right corner"
 msgstr "Plugin in die rechte obere Ecke verschieben"
 
 #
-#: ../audiosync/src/MovableScreen.py:21
+#: ../audiosync/src/MovableScreen.py:20
 msgid "Move screen up"
 msgstr "Plugin nach oben bewegen"
 
@@ -3028,6 +3083,13 @@ msgid ""
 msgstr ""
 "Movielist Preview erstellt für aufgenommene Filme Vorschaubilder und zeigt "
 "diese in der Filmliste an."
+
+#
+# MovieInfo.py
+#
+#: ../src/MovieList.py:579
+msgid "Movies"
+msgstr "Filme"
 
 #: ../multirc/src/plugin.py:142
 msgid "Multi Dreambox RC layer setup"
@@ -3098,7 +3160,7 @@ msgstr ""
 "Easybox auf Ihrer Dreambox."
 
 #
-#: ../networkbrowser/src/MountEdit.py:97
+#: ../networkbrowser/src/MountEdit.py:95
 msgid "NFS share"
 msgstr "NFS Freigabe"
 
@@ -3114,12 +3176,12 @@ msgid ""
 msgstr ""
 
 #
-#: ../networkbrowser/src/plugin.py:32
+#: ../networkbrowser/src/plugin.py:29
 msgid "NetworkBrowser"
 msgstr "Netzwerkbrowser"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:316 ../movieepg/src/plugin.py:16
+#: ../autotimer/src/AutoTimerEditor.py:313 ../movieepg/src/plugin.py:16
 msgid "Never"
 msgstr "Niemals"
 
@@ -3128,8 +3190,8 @@ msgid "Never miss any free space warning, update or timer conflict"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:911
-#: ../autotimer/src/AutoTimerEditor.py:1114 ../growlee/src/plugin.py:101
+#: ../autotimer/src/AutoTimerEditor.py:908
+#: ../autotimer/src/AutoTimerEditor.py:1111 ../growlee/src/plugin.py:101
 msgid "New"
 msgstr "Neu"
 
@@ -3152,7 +3214,7 @@ msgid "Nickname"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:323 ../mytube/src/plugin.py:60
+#: ../autotimer/src/AutoTimerEditor.py:320 ../mytube/src/plugin.py:60
 #: ../mytube/src/plugin.py:615 ../mytube/src/plugin.py:621
 #: ../autotimer/src/autotimerwizard.xml
 msgid "No"
@@ -3172,7 +3234,7 @@ msgid "No music files found!"
 msgstr ""
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:193
+#: ../networkbrowser/src/NetworkBrowser.py:191
 msgid "No network devices found!"
 msgstr "Keine Netzwerkgeräte gefunden"
 
@@ -3182,7 +3244,7 @@ msgid "No playable video found! Stop playing this movie?"
 msgstr "Kein abspielbares Video gefunden! Wiedergabe beenden?"
 
 #
-#: ../serienfilm/src/MovieSelection.py:516
+#: ../serienfilm/src/MovieSelection.py:514
 msgid "No tags are set on these movies."
 msgstr "Keine Tags für diese Filme gesetzt."
 
@@ -3212,8 +3274,8 @@ msgid "No, remove them."
 msgstr "Nein, entfernen."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:357
-#: ../autotimer/src/AutoTimerEditor.py:387 ../autotimer/src/__init__.py:15
+#: ../autotimer/src/AutoTimerEditor.py:354
+#: ../autotimer/src/AutoTimerEditor.py:384 ../autotimer/src/__init__.py:10
 msgid "None"
 msgstr "Keine"
 
@@ -3226,11 +3288,11 @@ msgstr "Non-Profit"
 msgid "Normal (Information)"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:581
+#: ../autotimer/src/AutoTimerEditor.py:578
 msgid "Not after"
 msgstr "Nicht nach"
 
-#: ../autotimer/src/AutoTimerEditor.py:580
+#: ../autotimer/src/AutoTimerEditor.py:577
 msgid "Not before"
 msgstr "Nicht vor"
 
@@ -3239,8 +3301,12 @@ msgstr "Nicht vor"
 msgid "Not fetching feed entries"
 msgstr "Lade keine feed Einträge"
 
+#: ../src/SerienFilm.py:138
+msgid "Number of characters"
+msgstr "Zahl der Zeichen"
+
 #
-#: ../autotimer/src/AutoTimerEditor.py:535
+#: ../autotimer/src/AutoTimerEditor.py:532
 msgid "Number of scheduled recordings left."
 msgstr "Anzahl verbleibender Treffer."
 
@@ -3253,11 +3319,11 @@ msgstr ""
 #: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:62
 #: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:139
 #: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:249
-#: ../autoresolution/src/plugin.py:293 ../autotimer/src/AutoTimerEditor.py:446
-#: ../autotimer/src/AutoTimerEditor.py:1112
-#: ../autotimer/src/AutoTimerImporter.py:46
-#: ../autotimer/src/AutoTimerImporter.py:120
-#: ../autotimer/src/AutoTimerSettings.py:69 ../babelzapper/src/plugin.py:76
+#: ../autoresolution/src/plugin.py:291 ../autotimer/src/AutoTimerEditor.py:443
+#: ../autotimer/src/AutoTimerEditor.py:1109
+#: ../autotimer/src/AutoTimerImporter.py:43
+#: ../autotimer/src/AutoTimerImporter.py:117
+#: ../autotimer/src/AutoTimerSettings.py:66 ../babelzapper/src/plugin.py:76
 #: ../cdinfo/src/plugin.py:57 ../ecasa/src/EcasaSetup.py:70
 #: ../emission/src/EmissionBandwidth.py:71 ../emission/src/EmissionSetup.py:38
 #: ../growlee/src/plugin.py:100 ../merlinmusicplayer/src/plugin.py:2773
@@ -3281,53 +3347,53 @@ msgid "ORF-Teletext"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:590
+#: ../autotimer/src/AutoTimerEditor.py:587
 msgid "Offset after recording (in m)"
 msgstr "Nachlauf der Aufnahme (in Min.)"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:589
+#: ../autotimer/src/AutoTimerEditor.py:586
 msgid "Offset before recording (in m)"
 msgstr "Vorlauf der Aufnahme (in Min.)"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:325
+#: ../autotimer/src/AutoTimerEditor.py:322
 msgid "On any service"
 msgstr "Auf jedem Sender"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:324
+#: ../autotimer/src/AutoTimerEditor.py:321
 msgid "On same service"
 msgstr "Auf dem gleichen Sender"
 
 #
-#: ../autotimer/src/__init__.py:16
+#: ../autotimer/src/__init__.py:11
 msgid "Only AutoTimers created during this session"
 msgstr "Nur die dieser Sitzung"
 
-#: ../autotimer/src/AutoTimerSettings.py:41
+#: ../autotimer/src/AutoTimerSettings.py:38
 msgid "Only add timer for next x days"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:565
-#: ../autotimer/src/AutoTimerWizard.py:97
+#: ../autotimer/src/AutoTimerEditor.py:562
+#: ../autotimer/src/AutoTimerWizard.py:94
 msgid "Only match during timespan"
 msgstr "Finde nur innerhalb einer Zeitspanne"
 
 #
-#: ../autotimer/src/AutoTimerImporter.py:173
+#: ../autotimer/src/AutoTimerImporter.py:170
 #, python-format
 msgid "Only on Service: %s"
 msgstr "Nur auf Sender: %s"
 
-#: ../autotimer/src/AutoTimerImporter.py:164
+#: ../autotimer/src/AutoTimerImporter.py:161
 #, python-format
 msgid "Only on Weekday: %s"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:91
+#: ../autotimer/src/AutoTimerOverview.py:88
 msgid "Open Context Menu"
 msgstr "Öffne Kontext-Menü"
 
@@ -3345,7 +3411,7 @@ msgid "Open selector"
 msgstr ""
 
 #
-#: ../audiosync/src/AC3setup.py:42
+#: ../audiosync/src/AC3setup.py:41
 msgid "Outer Bound (+/-)"
 msgstr "Grenzen (+/-)"
 
@@ -3354,7 +3420,7 @@ msgid "Overlay for scrolling bars"
 msgstr "Overlay für Scrollbalken"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:564
+#: ../autotimer/src/AutoTimerEditor.py:561
 msgid "Override found with alternative service"
 msgstr "Service mit alternative ersetzen"
 
@@ -3382,8 +3448,8 @@ msgstr ""
 
 #
 #: ../dyndns/src/plugin.py:37 ../emission/src/EmissionSetup.py:29
-#: ../growlee/src/plugin.py:182 ../networkbrowser/src/MountEdit.py:199
-#: ../networkbrowser/src/UserDialog.py:130
+#: ../growlee/src/plugin.py:182 ../networkbrowser/src/MountEdit.py:197
+#: ../networkbrowser/src/UserDialog.py:128
 msgid "Password"
 msgstr "Passwort"
 
@@ -3492,6 +3558,10 @@ msgstr ""
 msgid "Playlists (%d)"
 msgstr ""
 
+#: ../src/MovieSelection.py:149
+msgid "Please delete the files in this Directory!"
+msgstr "Bitte löschen Sie die Filme in diesem Verzeichnis einzeln"
+
 #: ../fstabeditor/src/plugin.py:242
 msgid "Please enter a value for every input field"
 msgstr ""
@@ -3502,7 +3572,7 @@ msgid "Please enter your search term."
 msgstr "Bitte geben Sie einen Suchbegriff ein."
 
 #
-#: ../autotimer/src/AutoTimerImporter.py:316
+#: ../autotimer/src/AutoTimerImporter.py:313
 msgid "Please provide a Text to match"
 msgstr "Bitte zu findenden Text eingeben"
 
@@ -3517,12 +3587,12 @@ msgid "Please select a subservice to record..."
 msgstr "Bitte einen Unterkanal zur Aufnahme auswählen..."
 
 #
-#: ../serienfilm/src/MovieSelection.py:513
+#: ../serienfilm/src/MovieSelection.py:511
 msgid "Please select tag to filter..."
 msgstr "Bitte einen Tag zum Filtern auswählen..."
 
 #
-#: ../serienfilm/src/MovieSelection.py:457
+#: ../serienfilm/src/MovieSelection.py:455
 msgid "Please select the movie path..."
 msgstr "Bitte den Filmpfad angeben..."
 
@@ -3532,26 +3602,26 @@ msgid "Please wait (Step 2)"
 msgstr "Bitte warten (Schritt 2)"
 
 #
-#: ../networkbrowser/src/MountEdit.py:328
+#: ../networkbrowser/src/MountEdit.py:326
 msgid "Please wait for activation of your network mount..."
 msgstr "Bitte warten während die Netzwerkfreigabe aktiviert wird..."
 
 #
-#: ../networkbrowser/src/MountView.py:113
+#: ../networkbrowser/src/MountView.py:111
 msgid "Please wait while removing your network mount..."
 msgstr "Bitte warten während die Netzwerkfreigabe entfernt wird..."
 
 #
-#: ../networkbrowser/src/MountEdit.py:291
+#: ../networkbrowser/src/MountEdit.py:289
 msgid "Please wait while updating your network mount..."
 msgstr "Bitte warten während die Freigabe aktualisiert wird..."
 
-#: ../networkbrowser/src/MountManager.py:119
+#: ../networkbrowser/src/MountManager.py:117
 msgid "Please wait while your network is restarting..."
 msgstr "Bitte warten Sie, das Netzwerk wird neu gestartet."
 
 #
-#: ../ecasa/src/EcasaGui.py:114 ../serienfilm/src/MovieSelection.py:231
+#: ../ecasa/src/EcasaGui.py:114 ../serienfilm/src/MovieSelection.py:229
 msgid "Please wait... Loading list..."
 msgstr "Bitte warten... Liste wird geladen..."
 
@@ -3560,7 +3630,7 @@ msgid "Plugin to edit fstab"
 msgstr ""
 
 #
-#: ../audiosync/src/AC3setup.py:60
+#: ../audiosync/src/AC3setup.py:59
 #, python-format
 msgid "Plugin: %(plugin)s , Version: %(version)s"
 msgstr "Plugin: %(plugin)s , Version: %(version)s"
@@ -3575,12 +3645,12 @@ msgid "Poland"
 msgstr "Polen"
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:40
+#: ../autotimer/src/AutoTimerSettings.py:37
 msgid "Poll Interval (in h)"
 msgstr "Abfrageintervall (in Stunden)"
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:39
+#: ../autotimer/src/AutoTimerSettings.py:36
 msgid "Poll automatically"
 msgstr "Frage automatisch ab"
 
@@ -3639,7 +3709,7 @@ msgid "Position 9:"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:530
+#: ../autotimer/src/AutoTimerEditor.py:527
 msgid ""
 "Power state to change to after recordings. Select \"standard\" to not change "
 "the default behavior of enigma2 or values changed by yourself."
@@ -3648,42 +3718,42 @@ msgstr ""
 "von enigma2 oder eigens geänderte Werte nicht zu verändern."
 
 #
-#: ../networkbrowser/src/MountEdit.py:64
+#: ../networkbrowser/src/MountEdit.py:62
 msgid "Press OK to activate the settings."
 msgstr "OK drücken zum Aktivieren."
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:364
+#: ../networkbrowser/src/NetworkBrowser.py:362
 msgid "Press OK to collapse this host"
 msgstr "OK drücken zum zuklappen"
 
 #
-#: ../networkbrowser/src/UserManager.py:51
+#: ../networkbrowser/src/UserManager.py:49
 msgid "Press OK to edit selected settings."
 msgstr "OK drücken zum Editieren."
 
 #
-#: ../networkbrowser/src/MountView.py:62
+#: ../networkbrowser/src/MountView.py:60
 msgid "Press OK to edit the settings."
 msgstr "OK drücken zum Editieren."
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:366
+#: ../networkbrowser/src/NetworkBrowser.py:364
 msgid "Press OK to expand this host"
 msgstr "Ok drücken zum erweitern"
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:360
+#: ../networkbrowser/src/NetworkBrowser.py:358
 msgid "Press OK to mount this share!"
 msgstr "Ok drücken um diese Freigabe zu verbinden!"
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:111
+#: ../networkbrowser/src/NetworkBrowser.py:109
 msgid "Press OK to mount!"
 msgstr "OK drücken zum Verbinden."
 
 #
-#: ../networkbrowser/src/UserDialog.py:90
+#: ../networkbrowser/src/UserDialog.py:88
 msgid "Press OK to save settings."
 msgstr "OK drücken zum Speichern."
 
@@ -3697,17 +3767,17 @@ msgid "Press OK to select a service"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountManager.py:55
+#: ../networkbrowser/src/MountManager.py:53
 msgid "Press OK to select."
 msgstr "Ok drücken zum Auswählen."
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:217
+#: ../autotimer/src/AutoTimerOverview.py:214
 msgid "Preview"
 msgstr "Vorschau"
 
 #
-#: ../autotimer/src/AutoTimerPreview.py:76
+#: ../autotimer/src/AutoTimerPreview.py:73
 msgid "Preview AutoTimer"
 msgstr "Vorschau"
 
@@ -3842,12 +3912,12 @@ msgid "Ratio: %.2f"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:709
-#: ../autotimer/src/AutoTimerEditor.py:1054
-#: ../autotimer/src/AutoTimerEditor.py:1225
-#: ../autotimer/src/AutoTimerImporter.py:235
-#: ../autotimer/src/AutoTimerOverview.py:202
-#: ../serienfilm/src/SerienFilm.py:90
+#: ../autotimer/src/AutoTimerEditor.py:706
+#: ../autotimer/src/AutoTimerEditor.py:1051
+#: ../autotimer/src/AutoTimerEditor.py:1222
+#: ../autotimer/src/AutoTimerImporter.py:232
+#: ../autotimer/src/AutoTimerOverview.py:199
+#: ../serienfilm/src/SerienFilm.py:87
 msgid "Really close without saving settings?"
 msgstr "Wirklich ohne Sichern beenden?"
 
@@ -3898,18 +3968,18 @@ msgid "Reconstruct the .ap and .sc files of the selected movie"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:612
+#: ../autotimer/src/AutoTimerEditor.py:609
 msgid "Record a maximum of x times"
 msgstr "Höchstens X-mal aufnehmen"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:1163
-#: ../autotimer/src/AutoTimerEditor.py:1217
+#: ../autotimer/src/AutoTimerEditor.py:1160
+#: ../autotimer/src/AutoTimerEditor.py:1214
 msgid "Record on"
 msgstr "Aufnahme von"
 
 #
-#: ../serienfilm/src/MovieSelection.py:439
+#: ../serienfilm/src/MovieSelection.py:437
 msgid "Recorded files..."
 msgstr "Aufgenommene Dateien..."
 
@@ -3918,7 +3988,7 @@ msgid "Redirect notifications to Growl, Snarl, Prowl or Syslog"
 msgstr "Sendet Benachrichtigungen an Growl, Snarl, Prowl oder Syslog"
 
 #
-#: ../autoresolution/src/plugin.py:309 ../autoresolution/src/plugin.py:310
+#: ../autoresolution/src/plugin.py:307 ../autoresolution/src/plugin.py:308
 msgid "Refresh Rate"
 msgstr "Bildwiederholrate"
 
@@ -4003,7 +4073,7 @@ msgid "Remove entry"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:99
+#: ../autotimer/src/AutoTimerOverview.py:96
 msgid "Remove selected AutoTimer"
 msgstr "Markierten AutoTimer löschen"
 
@@ -4035,22 +4105,22 @@ msgid "Replace the rewind  input with a seekbar"
 msgstr "Ersetzt die Minuteneingabe für die Spulfunktionen"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:620
+#: ../autotimer/src/AutoTimerEditor.py:617
 msgid "Require description to be unique"
 msgstr "Beschreibung muss eindeutig sein"
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:109
+#: ../networkbrowser/src/NetworkBrowser.py:107
 msgid "Rescan"
 msgstr "Erneut suchen"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:618
+#: ../autotimer/src/AutoTimerEditor.py:615
 msgid "Reset count"
 msgstr "Setze Zähler zurück"
 
 #
-#: ../audiosync/src/MovableScreen.py:34
+#: ../audiosync/src/MovableScreen.py:33
 msgid "Reset saved position"
 msgstr "Gespeicherte Position zurücksetzen"
 
@@ -4079,11 +4149,11 @@ msgid "Restore back up of fstab"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:531
+#: ../autotimer/src/AutoTimerEditor.py:528
 msgid "Restrict \"after event\" to a certain timespan?"
 msgstr "\"Nach dem Event\" nur in einem bestimmten Zeitraum setzen?"
 
-#: ../autotimer/src/AutoTimerEditor.py:575
+#: ../autotimer/src/AutoTimerEditor.py:572
 msgid "Restrict to events on certain dates"
 msgstr ""
 
@@ -4108,7 +4178,7 @@ msgstr ""
 msgid "Run mount -a"
 msgstr ""
 
-#: ../autoresolution/src/plugin.py:313
+#: ../autoresolution/src/plugin.py:311
 msgid "Running in testmode"
 msgstr "Testmodus aktiv"
 
@@ -4117,19 +4187,19 @@ msgstr "Testmodus aktiv"
 msgid "Russia"
 msgstr "Russland"
 
-#: ../autoresolution/src/plugin.py:24
+#: ../autoresolution/src/plugin.py:22
 msgid "SD 25/50HZ Interlace Mode"
 msgstr "SD 25/50HZ Interlace Modus"
 
-#: ../autoresolution/src/plugin.py:25
+#: ../autoresolution/src/plugin.py:23
 msgid "SD 25/50HZ Progressive Mode"
 msgstr "SD 25/50HZ Progressiv Modus"
 
-#: ../autoresolution/src/plugin.py:24
+#: ../autoresolution/src/plugin.py:22
 msgid "SD 30/60HZ Interlace Mode"
 msgstr "SD 30/60HZ Interlace Modus"
 
-#: ../autoresolution/src/plugin.py:25
+#: ../autoresolution/src/plugin.py:23
 msgid "SD 30/60HZ Progressive Mode"
 msgstr "SD 30/60HZ Progressiv Modus"
 
@@ -4154,15 +4224,15 @@ msgid "Satellites"
 msgstr "Satelliten"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:49
+#: ../autotimer/src/AutoTimerEditor.py:46
 msgid "Saturday"
 msgstr "Samstag"
 
 #
-#: ../audiosync/src/AC3setup.py:64 ../autotimer/src/AutoTimerEditor.py:909
-#: ../autotimer/src/AutoTimerOverview.py:70
+#: ../audiosync/src/AC3setup.py:63 ../autotimer/src/AutoTimerEditor.py:906
+#: ../autotimer/src/AutoTimerOverview.py:67
 #: ../dreamirc/src/dreamIRCSetup.py:72 ../mytube/src/MyTubeSearch.py:299
-#: ../serienfilm/src/SerienFilm.py:65
+#: ../serienfilm/src/SerienFilm.py:62
 msgid "Save"
 msgstr "Speichern"
 
@@ -4182,12 +4252,12 @@ msgid "Save values and close plugin"
 msgstr "Werte speichern und Plugin schliessen"
 
 #
-#: ../audiosync/src/MovableScreen.py:17 ../audiosync/src/MovableScreen.py:24
+#: ../audiosync/src/MovableScreen.py:16 ../audiosync/src/MovableScreen.py:23
 msgid "Save values and close screen"
 msgstr "Werte speichern und plugin schliessen"
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:499
+#: ../networkbrowser/src/NetworkBrowser.py:497
 msgid "Scan NFS share"
 msgstr "NFS Freigabe suchen"
 
@@ -4196,7 +4266,7 @@ msgid "Scan path for music files and add them to database"
 msgstr ""
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:500
+#: ../networkbrowser/src/NetworkBrowser.py:498
 msgid "Scan range"
 msgstr "Bereich durchsuchen"
 
@@ -4233,12 +4303,12 @@ msgid "Search for %s"
 msgstr ""
 
 #
-#: ../networkbrowser/src/plugin.py:32
+#: ../networkbrowser/src/plugin.py:29
 msgid "Search for network shares"
 msgstr "Suche nach Netzwerkfreigaben"
 
 #
-#: ../networkbrowser/src/plugin.py:32
+#: ../networkbrowser/src/plugin.py:29
 msgid "Search for network shares..."
 msgstr "Suche nach Netzwerkfreigaben..."
 
@@ -4281,7 +4351,7 @@ msgid "Search results for \"%s\" in title, artist or album"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:558
+#: ../autotimer/src/AutoTimerEditor.py:555
 msgid "Search strictness"
 msgstr "Genauigkeit der Suche"
 
@@ -4290,12 +4360,12 @@ msgid "Search through the EPG"
 msgstr "Durchsucht das EPG"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:557
+#: ../autotimer/src/AutoTimerEditor.py:554
 msgid "Search type"
 msgstr "Suchtyp"
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:189
+#: ../networkbrowser/src/NetworkBrowser.py:187
 msgid "Searching your network. Please wait..."
 msgstr "Netzwerk wird durchsucht. Bitte warten..."
 
@@ -4326,7 +4396,7 @@ msgstr ""
 msgid "Select"
 msgstr "Auswählen"
 
-#: ../autotimer/src/AutoTimerEditor.py:514
+#: ../autotimer/src/AutoTimerEditor.py:511
 msgid ""
 "Select \"exact match\" to enforce \"Match title\" to match exactly, "
 "\"partial match\" if you only want to search for a part of the event title "
@@ -4339,17 +4409,17 @@ msgid "Select Info type..."
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerImporter.py:60
+#: ../autotimer/src/AutoTimerImporter.py:57
 msgid "Select a timer to import"
 msgstr "Wähle zu importierende Aufnahme"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:1201
+#: ../autotimer/src/AutoTimerEditor.py:1198
 msgid "Select bouquet to record on"
 msgstr "Wähle Bouquet für Aufnahme"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:1195
+#: ../autotimer/src/AutoTimerEditor.py:1192
 msgid "Select channel to record on"
 msgstr "Wähle Kanal für Aufnahme"
 
@@ -4369,7 +4439,7 @@ msgid "Select the key you want to set to %i ms"
 msgstr "Wählen Sie die Taste, die Sue auf %i ms setzen wollen"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:540
+#: ../autotimer/src/AutoTimerEditor.py:537
 msgid "Select the location to save the recording to."
 msgstr "Wähle das Aufnahmeverzeichnis aus."
 
@@ -4378,7 +4448,7 @@ msgid "Select timer type..."
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:1022
+#: ../autotimer/src/AutoTimerEditor.py:1019
 msgid "Select type of Filter"
 msgstr "Typ des Filters auswählen"
 
@@ -4387,7 +4457,7 @@ msgid "Select user"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:515
+#: ../autotimer/src/AutoTimerEditor.py:512
 msgid "Select whether or not you want to enforce case correctness."
 msgstr ""
 "Wähle aus ob Groß- und Kleinschreibung im Sendungstitel mit \"Finde im Titel"
@@ -4411,12 +4481,19 @@ msgid "Send Notifications?"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountEdit.py:183
+# MovieList.py
+#
+#: ../src/MovieList.py:425
+msgid "Series"
+msgstr "Serie"
+
+#
+#: ../networkbrowser/src/MountEdit.py:181
 msgid "Server IP"
 msgstr "Server IP"
 
 #
-#: ../networkbrowser/src/MountEdit.py:185
+#: ../networkbrowser/src/MountEdit.py:183
 msgid "Server share"
 msgstr "Server Freigabe"
 
@@ -4458,7 +4535,7 @@ msgid "Set Bitstream/PCM audio delays"
 msgstr "Einstellung der Ton- / Bild- Synchronität"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:562
+#: ../autotimer/src/AutoTimerEditor.py:559
 msgid "Set End Time"
 msgstr "End-Zeit eingeben"
 
@@ -4469,11 +4546,15 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:517
+#: ../autotimer/src/AutoTimerEditor.py:514
 msgid ""
 "Set an end time for the timer. If you do, the timespan of the event might be "
 "blocked for recordings."
 msgstr ""
+
+#: ../src/SerienFilm.py:56
+msgid "Set default"
+msgstr "Standardwert"
 
 #
 #: ../audiosync/src/AC3main.py:89 ../audiosync/src/AC3main.py:90
@@ -4483,12 +4564,16 @@ msgid "Set delay to %i ms (can be set)"
 msgstr "Verzögerung auf %i ms setzen"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:593
+#: ../autotimer/src/AutoTimerEditor.py:590
 msgid "Set maximum duration"
 msgstr "Finde maximale Länge"
 
+#: ../src/SerienFilm.py:62
+msgid "Set size"
+msgstr "Länge ändern"
+
 #
-#: ../autotimer/src/AutoTimerEditor.py:510
+#: ../autotimer/src/AutoTimerEditor.py:507
 msgid "Set this NO to disable this AutoTimer."
 msgstr "Setze das auf NEIN um den AutoTimer zu deaktivieren."
 
@@ -4510,7 +4595,7 @@ msgid "Settings"
 msgstr "Einstellungen"
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:220 ../ecasa/src/EcasaGui.py:353
+#: ../autotimer/src/AutoTimerOverview.py:217 ../ecasa/src/EcasaGui.py:353
 msgid "Setup"
 msgstr "Einstellungen"
 
@@ -4549,18 +4634,18 @@ msgid "Short Movies"
 msgstr "Kurzvideos"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:519
+#: ../autotimer/src/AutoTimerEditor.py:516
 msgid "Should this AutoTimer be restricted to a timespan?"
 msgstr "Soll dieser AutoTimer auf einen Zeitraum beschränkt werden?"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:528
+#: ../autotimer/src/AutoTimerEditor.py:525
 msgid "Should this AutoTimer only match up to a certain event duration?"
 msgstr ""
 "Soll dieser AutoTimer nur bis zu einer gewissen Sendungslänge zutreffen?"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:539
+#: ../autotimer/src/AutoTimerEditor.py:536
 msgid ""
 "Should timers created by this AutoTimer be recorded to a custom location?"
 msgstr ""
@@ -4606,7 +4691,7 @@ msgid "Show in Plugin menu"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:42
+#: ../autotimer/src/AutoTimerSettings.py:39
 msgid "Show in extension menu"
 msgstr "In Erweiterungsmenü anzeigen"
 
@@ -4614,15 +4699,15 @@ msgstr "In Erweiterungsmenü anzeigen"
 msgid "Show indicator label if zapping PiP"
 msgstr ""
 
-#: ../autoresolution/src/plugin.py:311
+#: ../autoresolution/src/plugin.py:309
 msgid "Show info screen"
 msgstr "Zeige Informationen"
 
-#: ../autotimer/src/AutoTimerSettings.py:49
+#: ../autotimer/src/AutoTimerSettings.py:46
 msgid "Show notification on conflicts"
 msgstr "Zeige Benachrichtigung bei Konflikten"
 
-#: ../autotimer/src/AutoTimerSettings.py:50
+#: ../autotimer/src/AutoTimerSettings.py:47
 msgid "Show notification on similars"
 msgstr ""
 
@@ -4724,7 +4809,7 @@ msgid "Sorry, video is not available!"
 msgstr "Video nicht verfügbar!"
 
 #
-#: ../autotimer/src/AutoTimerPreview.py:82
+#: ../autotimer/src/AutoTimerPreview.py:79
 msgid "Sort AutoTimer"
 msgstr "Sortiere AutoTimer"
 
@@ -4733,7 +4818,7 @@ msgid "Sort Plugins in the PluginBrowser."
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerPreview.py:80
+#: ../autotimer/src/AutoTimerPreview.py:77
 msgid "Sort Time"
 msgstr "Sortiere nach Zeit"
 
@@ -4799,20 +4884,20 @@ msgid "Std. Feeds"
 msgstr "Std. Feeds"
 
 #
-#: ../audiosync/src/AC3setup.py:43
+#: ../audiosync/src/AC3setup.py:42
 msgid "Step in ms for arrow keys"
 msgstr "Schritte in ms für Pfeiltasten"
 
 #
-#: ../audiosync/src/AC3setup.py:48 ../audiosync/src/AC3setup.py:49
-#: ../audiosync/src/AC3setup.py:50
+#: ../audiosync/src/AC3setup.py:47 ../audiosync/src/AC3setup.py:48
+#: ../audiosync/src/AC3setup.py:49
 #, python-format
 msgid "Step in ms for key %i"
 msgstr "Schritt in ms für Taste %i"
 
 #
-#: ../audiosync/src/AC3setup.py:45 ../audiosync/src/AC3setup.py:46
-#: ../audiosync/src/AC3setup.py:47
+#: ../audiosync/src/AC3setup.py:44 ../audiosync/src/AC3setup.py:45
+#: ../audiosync/src/AC3setup.py:46
 #, python-format
 msgid "Step in ms for keys '%s'"
 msgstr "Schritt in ms für Tasten '%s'"
@@ -4846,11 +4931,11 @@ msgid ""
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:50
+#: ../autotimer/src/AutoTimerEditor.py:47
 msgid "Sunday"
 msgstr "Sonntag"
 
-#: ../autotimer/src/AutoTimerSettings.py:52
+#: ../autotimer/src/AutoTimerSettings.py:49
 msgid "Support \"Fast Scan\"?"
 msgstr "Unterstütze \"Fast Scan\"?"
 
@@ -4868,24 +4953,24 @@ msgid "TV Charts of all users"
 msgstr "TV Charts aller teilnehmenden Nutzer"
 
 #
-#: ../serienfilm/src/MovieSelection.py:400
+#: ../serienfilm/src/MovieSelection.py:398
 msgid "Tag 1"
 msgstr "Tag 1"
 
 #
-#: ../serienfilm/src/MovieSelection.py:405
+#: ../serienfilm/src/MovieSelection.py:403
 msgid "Tag 2"
 msgstr "Tag 2"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:630
-#: ../autotimer/src/AutoTimerImporter.py:209
-#: ../serienfilm/src/MovieSelection.py:412
+#: ../autotimer/src/AutoTimerEditor.py:627
+#: ../autotimer/src/AutoTimerImporter.py:206
+#: ../serienfilm/src/MovieSelection.py:410
 msgid "Tags"
 msgstr "Tags"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:541
+#: ../autotimer/src/AutoTimerEditor.py:538
 msgid "Tags the Timer/Recording will have."
 msgstr "Tags die der Aufnahme zugewiesen werden."
 
@@ -5017,14 +5102,23 @@ msgid ""
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:536
+#: ../autotimer/src/AutoTimerEditor.py:533
 msgid ""
 "The counter can automatically be reset to the limit at certain intervals."
 msgstr ""
 "Der Zähler kann automatisiert zu bestimmten Intervallen zurückegsetzt werden."
 
+#: ../src/SerienFilm.py:60
+#, python-format
+msgid ""
+"The current title:episode separator is \"%s\" (%d characters)\n"
+"To change it: first Set size and then Edit"
+msgstr ""
+"Der derzeitige Titel:Episode Trenner ist \"%s\" (%d Zeichen)\n"
+"Zum Ändern: erst die Länge ändern, dann Bearbeiten"
+
 #
-#: ../autotimer/src/AutoTimerSettings.py:51
+#: ../autotimer/src/AutoTimerSettings.py:48
 msgid ""
 "The editor to be used for new AutoTimers. This can either be the Wizard or "
 "the classic editor."
@@ -5033,7 +5127,7 @@ msgstr ""
 "klassische Editor sein."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:726
+#: ../autotimer/src/AutoTimerEditor.py:723
 msgid "The match attribute is mandatory."
 msgstr "Das Attribut 'Finde in Titel' muss angegeben werden!"
 
@@ -5119,7 +5213,7 @@ msgid ""
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:511
+#: ../autotimer/src/AutoTimerEditor.py:508
 msgid ""
 "This is a name you can give the AutoTimer. It will be shown in the Overview "
 "and the Preview."
@@ -5140,7 +5234,7 @@ msgid ""
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:40
+#: ../autotimer/src/AutoTimerSettings.py:37
 msgid ""
 "This is the delay in hours that the AutoTimer will wait after a search to "
 "search the EPG again."
@@ -5154,7 +5248,7 @@ msgid "This is the help screen. Feed me with something to display."
 msgstr "Dies ist der Hilfe Screen."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:512
+#: ../autotimer/src/AutoTimerEditor.py:509
 msgid ""
 "This is what will be looked for in event titles. Note that looking for e.g. "
 "german umlauts can be tricky as you have to know the encoding the channel "
@@ -5162,6 +5256,19 @@ msgid ""
 msgstr ""
 "Hiernach wird im Sendungstitel gesucht. Die Suche z.B. nach Umlauten ist "
 "etwas komplizierter, da man dazu den Zeichensatz des Sender-EPGs wissen muss."
+
+#
+# SerienFilm.py
+#
+#: ../src/SerienFilm.py:27
+msgid ""
+"This plugin is configured by the MENU key in the movielist\n"
+"\n"
+"Application details provides the HELP key in the movielist"
+msgstr ""
+"Dieses Plugin wird mit der MENÜ Taste in der Filmliste konfiguriert\n"
+"\n"
+"Details zur Anwendung liefert die HELP Taste in der Filmliste"
 
 #: ../autotimer/src/mphelp.xml
 msgid ""
@@ -5175,14 +5282,14 @@ msgid ""
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:43
+#: ../autotimer/src/AutoTimerSettings.py:40
 msgid "This setting controls the behavior when a timer matches a found event."
 msgstr ""
 "Diese Einstellung kontrolliert das Verhalten, wenn ein bestehender Timer mit "
 "einer gefundenen Sendung übereinstimmt."
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:46
+#: ../autotimer/src/AutoTimerSettings.py:43
 msgid ""
 "This toggles the behavior on timer conflicts. If an AutoTimer matches an "
 "event that conflicts with an existing timer it will not ignore this event "
@@ -5193,26 +5300,26 @@ msgstr ""
 "inaktiv hinzugefügt werden."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:47
+#: ../autotimer/src/AutoTimerEditor.py:44
 msgid "Thursday"
 msgstr "Donnerstag"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:527
+#: ../autotimer/src/AutoTimerEditor.py:524
 msgid "Time in minutes to append to recording."
 msgstr ""
 "Zusätzliche zeit in Minuten die nach der Sendung aufgezeichnet werden soll."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:526
+#: ../autotimer/src/AutoTimerEditor.py:523
 msgid "Time in minutes to prepend to recording."
 msgstr ""
 "Zusätzliche zeit in Minuten die vor der Sendung aufgezeichnet werden soll."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:559
-#: ../autotimer/src/AutoTimerImporter.py:191
-#: ../autotimer/src/AutoTimerWizard.py:113
+#: ../autotimer/src/AutoTimerEditor.py:556
+#: ../autotimer/src/AutoTimerImporter.py:188
+#: ../autotimer/src/AutoTimerWizard.py:110
 msgid "Timer type"
 msgstr "Timer-Typ"
 
@@ -5233,15 +5340,15 @@ msgid ""
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:333
+#: ../autotimer/src/AutoTimerEditor.py:330
 msgid "Title"
 msgstr "Titel"
 
-#: ../autotimer/src/AutoTimerEditor.py:334
+#: ../autotimer/src/AutoTimerEditor.py:331
 msgid "Title and Short description"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:335
+#: ../autotimer/src/AutoTimerEditor.py:332
 msgid "Title and all descriptions"
 msgstr ""
 
@@ -5261,9 +5368,21 @@ msgstr ""
 msgid "Today"
 msgstr "Heute"
 
+#: ../src/MovieSelection.py:290
+msgid "Toggle date / alphabetic sort mode"
+msgstr "Datums / Alphabetische Sortierung umschalten"
+
+#: ../src/MovieSelection.py:294
+msgid "Toggle description / tags display"
+msgstr "Anzeig des Senders / der Tags umschalten"
+
 #: ../pipzap/src/plugin.py:535
 msgid "Toggle pipzap status"
 msgstr ""
+
+#: ../src/MovieSelection.py:293
+msgid "Toggle style minimal / compact"
+msgstr "kompakte / einzeilige Listenansicht umschalten"
 
 #
 #: ../mytube/src/plugin.py:126 ../mytube/src/plugin.py:793
@@ -5313,7 +5432,7 @@ msgid "Trying to download the Youtube search results. Please wait..."
 msgstr "YouTube Suchergebnisse werden geladen, bitte warten..."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:45
+#: ../autotimer/src/AutoTimerEditor.py:42
 msgid "Tuesday"
 msgstr "Dienstag"
 
@@ -5362,7 +5481,7 @@ msgstr ""
 msgid "United States"
 msgstr "USA"
 
-#: ../autotimer/src/AutoTimerSettings.py:39
+#: ../autotimer/src/AutoTimerSettings.py:36
 msgid ""
 "Unless this is enabled AutoTimer will NOT automatically look for events "
 "matching your AutoTimers but only when you leave the GUI with the green "
@@ -5429,12 +5548,12 @@ msgid "Upload rate"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:533
+#: ../autotimer/src/AutoTimerEditor.py:530
 msgid "Upper bound of timespan."
 msgstr "Obere Grenze der Zeitspanne."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:521
+#: ../autotimer/src/AutoTimerEditor.py:518
 msgid ""
 "Upper bound of timespan. Nothing after this time will be matched. Offsets "
 "are not taken into account!"
@@ -5443,7 +5562,7 @@ msgstr ""
 "Übereinstimmung gefunden. Nachlauf wird hier nicht eingerechnet!"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:626
+#: ../autotimer/src/AutoTimerEditor.py:623
 msgid "Use a custom location"
 msgstr "Angepasstes Aufnahmeverzeichnis"
 
@@ -5476,7 +5595,7 @@ msgid "User history"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountManager.py:75
+#: ../networkbrowser/src/MountManager.py:73
 msgid "User management"
 msgstr "Benutzerwaltung"
 
@@ -5485,14 +5604,14 @@ msgid "User video entries."
 msgstr ""
 
 #
-#: ../networkbrowser/src/UserManager.py:60
+#: ../networkbrowser/src/UserManager.py:58
 msgid "Usermanager"
 msgstr "Benutzerverwaltung"
 
 #
 #: ../dyndns/src/plugin.py:36 ../emission/src/EmissionSetup.py:28
-#: ../networkbrowser/src/MountEdit.py:197
-#: ../networkbrowser/src/UserDialog.py:128
+#: ../networkbrowser/src/MountEdit.py:195
+#: ../networkbrowser/src/UserDialog.py:126
 msgid "Username"
 msgstr "Benutzername"
 
@@ -5507,6 +5626,25 @@ msgid ""
 "Using eMission you can control downloads and settings of a remote (or local) "
 "instance of Transmission."
 msgstr ""
+
+#: ../src/SerienFilm.py:55
+msgid ""
+"Usually the episode of a series is tansmitted separate of the title in the "
+"description field\n"
+"In a few series however it is appended to the title behind a colon\n"
+"e.g. Tatort: Der Fluch der Mumie\n"
+"\n"
+"A commen part of the title up to this title:episode separator shared by "
+"several movies creates a series"
+msgstr ""
+"Üblicherweise wird der Episodenname einer Serie getrennt vom Serientitel im "
+"Feld \"Beschreibung\" übertragen.\n"
+"Bei einigen wenigen Serien wird er aber mit einem Doppelpunkt an den Titel "
+"angehängt\n"
+"Z.B. Tatort: Der Fluch der Mumie\n"
+"\n"
+"Finden sich mehrere Filme, deren Titel bis zum Doppelpunkt übereinstimmt, "
+"wird dies der Titel einer Serie"
 
 #: ../vps/meta/plugin_vps.xml
 msgid "VPS-Plugin"
@@ -5571,12 +5709,12 @@ msgid "View response videos"
 msgstr "Video Antworten"
 
 #
-#: ../networkbrowser/src/MountManager.py:74
+#: ../networkbrowser/src/MountManager.py:72
 msgid "View, edit or delete mountpoints on your Dreambox."
 msgstr "Verwalten, bearbeiten oder löschen Sie Ihre Netzwerkfreigaben."
 
 #
-#: ../networkbrowser/src/MountManager.py:75
+#: ../networkbrowser/src/MountManager.py:73
 msgid "View, edit or delete usernames and passwords for your network."
 msgstr "Verwalten, bearbeiten oder löschen Sie Benutzernamen und Passwörter"
 
@@ -5612,7 +5750,7 @@ msgid "Wait for screensaver (in min)"
 msgstr ""
 
 #
-#: ../audiosync/src/AC3setup.py:44
+#: ../audiosync/src/AC3setup.py:43
 msgid "Wait time in ms before activation:"
 msgstr "Wartezeit vor Aktivierung in ms"
 
@@ -5650,27 +5788,27 @@ msgid "Web-Ipkg-Admin for PC"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:46
+#: ../autotimer/src/AutoTimerEditor.py:43
 msgid "Wednesday"
 msgstr "Mittwoch"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:52
+#: ../autotimer/src/AutoTimerEditor.py:49
 msgid "Weekday"
 msgstr "Wochentag"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:51
+#: ../autotimer/src/AutoTimerEditor.py:48
 msgid "Weekend"
 msgstr "Wochenende"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:316
+#: ../autotimer/src/AutoTimerEditor.py:313
 msgid "Weekly (Monday)"
 msgstr "Wöchentlich (Montag)"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:316
+#: ../autotimer/src/AutoTimerEditor.py:313
 msgid "Weekly (Sunday)"
 msgstr "Wöchentlich (Sonntag)"
 
@@ -5756,14 +5894,14 @@ msgstr ""
 msgid "What would you like to reconstruct?  (\"%s\")"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerSettings.py:52
+#: ../autotimer/src/AutoTimerSettings.py:49
 msgid ""
 "When supporting \"Fast Scan\" the service type is ignored. You don't need to "
 "enable this unless your Image supports \"Fast Scan\" and you are using it."
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:537
+#: ../autotimer/src/AutoTimerEditor.py:534
 msgid ""
 "When this option is enabled the AutoTimer won't match events where another "
 "timer with the same description already exists in the timer list."
@@ -5849,7 +5987,7 @@ msgstr ""
 "Es wird ein PC benötigt, auf dem das Programm VLC läuft."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:518
+#: ../autotimer/src/AutoTimerEditor.py:515
 msgid ""
 "With this option enabled the channel to record on can be changed to a "
 "alternative service it is restricted to."
@@ -5857,14 +5995,14 @@ msgstr ""
 "Wenn diese Option aktiv ist kann der Sender auf eine \"Alternative\" "
 "geändert werden wenn dieser als Beschränkung hinzugefügt wurde."
 
-#: ../autotimer/src/AutoTimerEditor.py:534
+#: ../autotimer/src/AutoTimerEditor.py:531
 msgid ""
 "With this option you can restrict the AutoTimer to a certain amount of "
 "scheduled recordings. Set this to 0 to disable this functionality."
 msgstr ""
 
 #
-#: ../autotimer/src/__init__.py:23
+#: ../autotimer/src/__init__.py:18
 msgid "Wizard"
 msgstr "Assistent"
 
@@ -5898,7 +6036,7 @@ msgstr "Ja, behalten."
 msgid "You can choose between Flickr and Picasa as site to use."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerSettings.py:41
+#: ../autotimer/src/AutoTimerSettings.py:38
 msgid ""
 "You can control for how many days in the future timers are added. Set this "
 "to 0 to disable this feature."
@@ -5931,7 +6069,7 @@ msgid ""
 msgstr ""
 
 #
-#: ../serienfilm/src/MovieSelection.py:162
+#: ../serienfilm/src/MovieSelection.py:160
 msgid "You cannot delete this!"
 msgstr "Löschen nicht möglich!"
 
@@ -5946,8 +6084,8 @@ msgstr ""
 "notwendiges Attribut ist können Sie nicht fortfahren ohne dies zu tun."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:735
-#: ../autotimer/src/AutoTimerImporter.py:250
+#: ../autotimer/src/AutoTimerEditor.py:732
+#: ../autotimer/src/AutoTimerImporter.py:247
 #, python-format
 msgid ""
 "You entered \"%s\" as Text to match.\n"
@@ -6005,17 +6143,17 @@ msgstr ""
 "%s"
 
 #
-#: ../networkbrowser/src/MountEdit.py:341
+#: ../networkbrowser/src/MountEdit.py:339
 msgid "Your network mount has been activated."
 msgstr "Ihre Netzwerkfreigabe wurde aktiviert."
 
 #
-#: ../networkbrowser/src/MountView.py:128
+#: ../networkbrowser/src/MountView.py:126
 msgid "Your network mount has been removed."
 msgstr "Ihre Netzwerkfreigabe wurde entfernt."
 
 #
-#: ../networkbrowser/src/MountEdit.py:303
+#: ../networkbrowser/src/MountEdit.py:301
 msgid "Your network mount has been updated."
 msgstr "Ihre Netzwerkfreigabe wurde aktualisiert."
 
@@ -6107,14 +6245,18 @@ msgid "add Plugin to Mainmenu"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:479
+#: ../autotimer/src/AutoTimerEditor.py:476
 msgid "add filters"
 msgstr "Neue Filter"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:485
+#: ../autotimer/src/AutoTimerEditor.py:482
 msgid "add services"
 msgstr "Neue Sender"
+
+#: ../src/MovieSelection.py:72
+msgid "alphabetic sort  (quick toggle by key 0)"
+msgstr "Aufnahmen alphabetisch sortieren  (Schnellumschaltung mit Taste 0)"
 
 #: ../movieepg/src/plugin.py:18
 msgid "always"
@@ -6143,9 +6285,9 @@ msgid "assign long key-press on color buttons to plugins or E2 functions"
 msgstr "Plugins auf Farbtasten legen"
 
 #
-#: ../autoresolution/src/plugin.py:35 ../autoresolution/src/plugin.py:37
-#: ../autotimer/src/AutoTimerEditor.py:272
-#: ../autotimer/src/AutoTimerImporter.py:30
+#: ../autoresolution/src/plugin.py:33 ../autoresolution/src/plugin.py:35
+#: ../autotimer/src/AutoTimerEditor.py:269
+#: ../autotimer/src/AutoTimerImporter.py:27
 msgid "auto"
 msgstr "automatisch"
 
@@ -6153,7 +6295,7 @@ msgstr "automatisch"
 msgid "autotimers need a match attribute"
 msgstr "Autotimer brauchen ein Suchkriterium."
 
-#: ../autoresolution/src/plugin.py:35 ../autoresolution/src/plugin.py:37
+#: ../autoresolution/src/plugin.py:33 ../autoresolution/src/plugin.py:35
 msgid "bob"
 msgstr ""
 
@@ -6180,12 +6322,12 @@ msgid "cancel"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:195
+#: ../autotimer/src/AutoTimerEditor.py:192
 msgid "case-insensitive search"
 msgstr "ignoriere Groß- und Kleinschreibung"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:195
+#: ../autotimer/src/AutoTimerEditor.py:192
 msgid "case-sensitive search"
 msgstr "erzwinge Groß- und Kleinschreibung"
 
@@ -6234,7 +6376,7 @@ msgstr "Erzeugt virtuelle Ordner aus aufgenommenen Episoden von Serien"
 msgid "current Service"
 msgstr ""
 
-#: ../autoresolution/src/plugin.py:122
+#: ../autoresolution/src/plugin.py:120
 msgid "default"
 msgstr "Standard"
 
@@ -6243,8 +6385,8 @@ msgid "default Zoomlevel for Preview Images"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:910
-#: ../autotimer/src/AutoTimerEditor.py:1113 ../filebrowser/src/plugin.py:112
+#: ../autotimer/src/AutoTimerEditor.py:907
+#: ../autotimer/src/AutoTimerEditor.py:1110 ../filebrowser/src/plugin.py:112
 msgid "delete"
 msgstr "Löschen"
 
@@ -6254,7 +6396,7 @@ msgid "delete file"
 msgstr "Datei löschen"
 
 #
-#: ../serienfilm/src/MovieSelection.py:68
+#: ../serienfilm/src/MovieSelection.py:66
 msgid "delete..."
 msgstr "löschen..."
 
@@ -6262,7 +6404,7 @@ msgstr "löschen..."
 msgid "deleting file ..."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:194
+#: ../autotimer/src/AutoTimerEditor.py:191
 msgid "description match"
 msgstr ""
 
@@ -6274,13 +6416,13 @@ msgstr ""
 msgid "directory"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerImporter.py:130
+#: ../autotimer/src/AutoTimerImporter.py:127
 msgid "disable"
 msgstr "deaktivieren"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:269
-#: ../autotimer/src/AutoTimerImporter.py:27
+#: ../autotimer/src/AutoTimerEditor.py:266
+#: ../autotimer/src/AutoTimerImporter.py:24
 msgid "do nothing"
 msgstr "nichts"
 
@@ -6291,6 +6433,10 @@ msgstr ""
 #: ../fstabeditor/src/plugin.py:235
 msgid "dump frequency (in days): "
 msgstr ""
+
+#: ../src/MovieList.py:581
+msgid "duplicated"
+msgstr "mehrfach"
 
 #: ../ecasa/src/EcasaSetup.py:34 ../ecasa/src/EcasaSetup.py:90
 msgid "eCasa Setup"
@@ -6316,16 +6462,16 @@ msgid "ecasa is (so far) a basic picasa client."
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:477
+#: ../autotimer/src/AutoTimerEditor.py:474
 msgid "edit filters"
 msgstr "Filter bearbeiten"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:483
+#: ../autotimer/src/AutoTimerEditor.py:480
 msgid "edit services"
 msgstr "Sender bearbeiten"
 
-#: ../autotimer/src/AutoTimerImporter.py:130
+#: ../autotimer/src/AutoTimerImporter.py:127
 msgid "enable"
 msgstr "aktivieren"
 
@@ -6350,12 +6496,12 @@ msgid "error parsing incoming data."
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:194
+#: ../autotimer/src/AutoTimerEditor.py:191
 msgid "exact match"
 msgstr "gesamter Title"
 
 #
-#: ../serienfilm/src/MovieSelection.py:286
+#: ../serienfilm/src/MovieSelection.py:284
 msgid "exit movielist"
 msgstr "Verlasse Filmliste"
 
@@ -6376,16 +6522,23 @@ msgid "get latest satellites.xml"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:271
-#: ../autotimer/src/AutoTimerImporter.py:28
+#: ../autotimer/src/AutoTimerEditor.py:268
+#: ../autotimer/src/AutoTimerImporter.py:25
 msgid "go to deep standby"
 msgstr "in Deep Standby gehen"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:270
-#: ../autotimer/src/AutoTimerImporter.py:29
+#: ../autotimer/src/AutoTimerEditor.py:267
+#: ../autotimer/src/AutoTimerImporter.py:26
 msgid "go to standby"
 msgstr "in Standby gehen"
+
+#
+# plugin.py
+#
+#: ../src/plugin.py:108
+msgid "group movies of a series to virtual directories"
+msgstr "Fasse Filme einer Serie in virtuellen Verzeichnissen zusammen"
 
 #: ../netcaster/src/bin/plugin.py:190
 msgid "help"
@@ -6395,9 +6548,21 @@ msgstr ""
 msgid "hide"
 msgstr ""
 
+#: ../src/MovieSelection.py:86
+msgid "hide duration"
+msgstr "Spieldauer ausblenden"
+
 #: ../menusort/src/plugin.py:198
 msgid "hide entry"
 msgstr ""
+
+#: ../src/MovieSelection.py:82
+msgid "hide recordingtime"
+msgstr "Aufnahmezeitpunkt ausblenden"
+
+#: ../src/MovieSelection.py:91
+msgid "hide the read real directories"
+msgstr "Verberge die roten realen Verzeichnisse"
 
 #: ../merlinmusicplayer/src/plugin.py:3386
 #: ../merlinmusicplayer/src/plugin.py:3400
@@ -6414,17 +6579,17 @@ msgid "iDream database path"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:893
+#: ../autotimer/src/AutoTimerEditor.py:890
 msgid "in Description"
 msgstr "in der Beschreibung"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:892
+#: ../autotimer/src/AutoTimerEditor.py:889
 msgid "in Shortdescription"
 msgstr "in der Kurzbeschreibung"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:891
+#: ../autotimer/src/AutoTimerEditor.py:888
 msgid "in Title"
 msgstr "im Titel"
 
@@ -6455,6 +6620,24 @@ msgstr ""
 msgid "layer 4"
 msgstr ""
 
+#: ../src/MovieSelection.py:76
+msgid "list style compact with service  (quick toggle by key 8)"
+msgstr "kompakte Listenansicht mit Sender  (Schnellumschaltung mit Taste 8)"
+
+#: ../src/MovieSelection.py:77
+msgid "list style compact with tags  (quick toggle by key 8)"
+msgstr "kompakte Listenansicht mit tags  (Schnellumschaltung mit Taste 8)"
+
+#: ../src/MovieSelection.py:75
+msgid "list style elaborately"
+msgstr "ausführliche Listenansicht"
+
+# msgid "list style single line  (key 8 shows tags)"
+# msgstr "einzeilige Listenansicht  (Taste 8 zeigt tags)"
+#: ../src/MovieSelection.py:78
+msgid "list style single line  (key = service, 8 = tags)"
+msgstr "einzeilige Listenansicht  (Taste 5 = Sender, 8 = tags)"
+
 #: ../internetradio/meta/plugin_internetradio.xml
 msgid "listen to internet radio streams"
 msgstr ""
@@ -6468,7 +6651,7 @@ msgid "manage local Files"
 msgstr ""
 
 #
-#: ../serienfilm/src/MovieSelection.py:272
+#: ../serienfilm/src/MovieSelection.py:270
 msgid "menu"
 msgstr "Menü"
 
@@ -6477,7 +6660,7 @@ msgid "mini TV"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerPreview.py:52
+#: ../autotimer/src/AutoTimerPreview.py:49
 msgid "mins"
 msgstr "Minuten"
 
@@ -6536,7 +6719,7 @@ msgid "not configured yet. please do so in the settings."
 msgstr ""
 
 #
-#: ../autoresolution/src/plugin.py:35 ../autoresolution/src/plugin.py:37
+#: ../autoresolution/src/plugin.py:33 ../autoresolution/src/plugin.py:35
 msgid "off"
 msgstr "aus"
 
@@ -6547,12 +6730,12 @@ msgid "ok"
 msgstr ""
 
 #
-#: ../autoresolution/src/plugin.py:35 ../autoresolution/src/plugin.py:37
+#: ../autoresolution/src/plugin.py:33 ../autoresolution/src/plugin.py:35
 msgid "on"
 msgstr "an"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:894
+#: ../autotimer/src/AutoTimerEditor.py:891
 msgid "on Weekday"
 msgstr "an einem Wochentag"
 
@@ -6571,7 +6754,7 @@ msgid "options: "
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:194
+#: ../autotimer/src/AutoTimerEditor.py:191
 msgid "partial match"
 msgstr "Teil des Titels"
 
@@ -6619,8 +6802,8 @@ msgid "quit Google Maps"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:201
-#: ../autotimer/src/AutoTimerImporter.py:191
+#: ../autotimer/src/AutoTimerEditor.py:198
+#: ../autotimer/src/AutoTimerImporter.py:188
 msgid "record"
 msgstr "aufnehmen"
 
@@ -6685,13 +6868,13 @@ msgid "search..."
 msgstr ""
 
 #
-#: ../autoresolution/src/plugin.py:39
+#: ../autoresolution/src/plugin.py:37
 msgid "second"
 msgstr "Sekunde"
 
 #
-#: ../autoresolution/src/plugin.py:39 ../autoresolution/src/plugin.py:40
-#: ../autoresolution/src/plugin.py:41
+#: ../autoresolution/src/plugin.py:37 ../autoresolution/src/plugin.py:38
+#: ../autoresolution/src/plugin.py:39
 msgid "seconds"
 msgstr "Sekunden"
 
@@ -6708,7 +6891,7 @@ msgid "select Target for logo"
 msgstr ""
 
 #
-#: ../serienfilm/src/MovieSelection.py:287
+#: ../serienfilm/src/MovieSelection.py:285
 msgid "select movie"
 msgstr "Wählen Sie einen Film"
 
@@ -6717,7 +6900,7 @@ msgid "select stream to delete"
 msgstr ""
 
 #
-#: ../serienfilm/src/MovieSelection.py:266
+#: ../serienfilm/src/MovieSelection.py:264
 msgid "select the movie path"
 msgstr "Den Filmpfad auswählen"
 
@@ -6747,7 +6930,7 @@ msgid "show album"
 msgstr ""
 
 #
-#: ../serienfilm/src/MovieSelection.py:278
+#: ../serienfilm/src/MovieSelection.py:276
 msgid "show all"
 msgstr "Zeige alle"
 
@@ -6755,13 +6938,17 @@ msgstr "Zeige alle"
 msgid "show details"
 msgstr ""
 
+#: ../src/MovieSelection.py:88
+msgid "show duration"
+msgstr "Spieldauer anzeigen"
+
 #
-#: ../serienfilm/src/MovieSelection.py:273
+#: ../serienfilm/src/MovieSelection.py:271
 msgid "show event details"
 msgstr "Sendungs-Details anzeigen"
 
 #
-#: ../serienfilm/src/MovieSelection.py:279
+#: ../serienfilm/src/MovieSelection.py:277
 msgid "show first selected tag"
 msgstr "Zeige erstgewähltes tag"
 
@@ -6793,8 +6980,16 @@ msgstr ""
 msgid "show previous page"
 msgstr ""
 
+#: ../src/MovieSelection.py:93
+msgid "show real directories in red"
+msgstr "Zeige reale Verzeichnisse in rot an"
+
+#: ../src/MovieSelection.py:84
+msgid "show recordingtime"
+msgstr "Aufnahmezeitpunkt anzeigen"
+
 #
-#: ../serienfilm/src/MovieSelection.py:280
+#: ../serienfilm/src/MovieSelection.py:278
 msgid "show second selected tag"
 msgstr "Zeige zweitgewähltes tag"
 
@@ -6803,7 +6998,7 @@ msgid "show selected Placemark"
 msgstr ""
 
 #
-#: ../serienfilm/src/MovieSelection.py:281
+#: ../serienfilm/src/MovieSelection.py:279
 msgid "show tag menu"
 msgstr "Zeige tag-Menü"
 
@@ -6815,8 +7010,12 @@ msgstr ""
 msgid "skipping"
 msgstr ""
 
+#: ../src/MovieSelection.py:70
+msgid "sort by date  (quick toggle by key 0)"
+msgstr "Aufnahmen nach Datum sortieren  (Schnellumschaltung mit Taste 0)"
+
 #
-#: ../autotimer/src/AutoTimerEditor.py:269
+#: ../autotimer/src/AutoTimerEditor.py:266
 msgid "standard"
 msgstr "Standard"
 
@@ -6846,7 +7045,7 @@ msgid "stopped"
 msgstr ""
 
 #
-#: ../serienfilm/src/MovieSelection.py:144
+#: ../serienfilm/src/MovieSelection.py:142
 msgid "this recording"
 msgstr "Diese Aufnahme"
 
@@ -6893,7 +7092,7 @@ msgid "use URI Filter"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountEdit.py:187
+#: ../networkbrowser/src/MountEdit.py:185
 msgid "use as HDD replacement"
 msgstr "als HDD Ersatz nutzen"
 
@@ -6929,8 +7128,8 @@ msgid "yes, including data"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:201
-#: ../autotimer/src/AutoTimerImporter.py:191
+#: ../autotimer/src/AutoTimerEditor.py:198
+#: ../autotimer/src/AutoTimerImporter.py:188
 msgid "zap"
 msgstr "umschalten"
 

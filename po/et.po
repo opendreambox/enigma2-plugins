@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2-plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-12 13:36+0200\n"
+"POT-Creation-Date: 2012-11-08 14:21+0100\n"
 "PO-Revision-Date: 2011-09-22 10:35+0200\n"
 "Last-Translator: Arvo <arvo@softshark.ee>\n"
 "Language-Team: none\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.0.3\n"
 
-#: ../audiosync/src/AC3setup.py:65
+#: ../audiosync/src/AC3setup.py:64
 msgid " "
 msgstr " "
 
@@ -64,8 +64,8 @@ msgstr ""
 msgid "%d min"
 msgstr "%d min"
 
-#: ../autotimer/src/AutoTimerEditor.py:239
-#: ../autotimer/src/AutoTimerEditor.py:240
+#: ../autotimer/src/AutoTimerEditor.py:236
+#: ../autotimer/src/AutoTimerEditor.py:237
 msgid "%d.%B %Y"
 msgstr "%d.%B %Y"
 
@@ -151,6 +151,10 @@ msgstr ""
 msgid "60 min."
 msgstr ""
 
+#: ../serienfilm/src/MovieSelection.py:32 ../serienfilm/src/SerienFilm.py:50
+msgid ": "
+msgstr ""
+
 #: ../antiscrollbar/src/plugin.py:116
 msgid ": Main Setup"
 msgstr ""
@@ -180,7 +184,7 @@ msgid "A graphical EPG interface."
 msgstr "Graafiline EPG liides."
 
 #
-#: ../networkbrowser/src/MountEdit.py:269
+#: ../networkbrowser/src/MountEdit.py:267
 msgid ""
 "A mount entry with this name already exists!\n"
 "Update existing entry and continue?\n"
@@ -233,7 +237,7 @@ msgstr "Juurdepääs ARD-Mediathek onlain video andmebaasi."
 msgid "Activate Picture in Picture"
 msgstr "Ava pilt-pildis"
 
-#: ../autotimer/src/AutoTimerEditor.py:633
+#: ../autotimer/src/AutoTimerEditor.py:630
 msgid "Activate VPS"
 msgstr "Aktiveeri VPS"
 
@@ -241,7 +245,7 @@ msgstr "Aktiveeri VPS"
 msgid "Activate screensaver"
 msgstr ""
 
-#: ../networkbrowser/src/MountEdit.py:177
+#: ../networkbrowser/src/MountEdit.py:175
 msgid "Active"
 msgstr "Aktiivne"
 
@@ -251,7 +255,7 @@ msgid "Active Torrents: %d/%d"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountView.py:61
+#: ../networkbrowser/src/MountView.py:59
 msgid ""
 "Active/\n"
 "Inactive"
@@ -261,13 +265,13 @@ msgstr ""
 
 #
 #: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:138
-#: ../autotimer/src/AutoTimerOverview.py:72
+#: ../autotimer/src/AutoTimerOverview.py:69
 #: ../pipservicerelation/src/plugin.py:87
 msgid "Add"
 msgstr "Lisa"
 
 #
-#: ../networkbrowser/src/MountManager.py:73
+#: ../networkbrowser/src/MountManager.py:71
 msgid "Add a new NFS or CIFS mount point to your Dreambox."
 msgstr "Lisa uus NFS või CIFS haakepunkt oma tuunerile."
 
@@ -289,7 +293,7 @@ msgstr ""
 msgid "Add entry"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerOverview.py:100
+#: ../autotimer/src/AutoTimerOverview.py:97
 msgid "Add new AutoTimer"
 msgstr "Lisa uus AutoTimer"
 
@@ -298,7 +302,7 @@ msgid "Add new download"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountManager.py:73
+#: ../networkbrowser/src/MountManager.py:71
 msgid "Add new network mount point"
 msgstr "Lisa uus võrgu haakepunkt"
 
@@ -306,7 +310,7 @@ msgstr "Lisa uus võrgu haakepunkt"
 msgid "Add selected song to a playlist"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerSettings.py:45
+#: ../autotimer/src/AutoTimerSettings.py:42
 msgid "Add similar timer on conflict"
 msgstr "Konflikti korral lisa sarnane taimer"
 
@@ -319,11 +323,11 @@ msgstr "Lisa märkeid salvestisele"
 msgid "Add timer"
 msgstr "Lisa taimer"
 
-#: ../autotimer/src/AutoTimerSettings.py:46
+#: ../autotimer/src/AutoTimerSettings.py:43
 msgid "Add timer as disabled on conflict"
 msgstr "Lisa taimer nagu konfliktne"
 
-#: ../autotimer/src/AutoTimerEditor.py:516
+#: ../autotimer/src/AutoTimerEditor.py:513
 msgid "Add zap timer instead of record timer?"
 msgstr "Lisan zap taimer savestustimeri asemel?"
 
@@ -366,8 +370,8 @@ msgstr ""
 "Teie vastuvõtja ooterežiimi."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:599
-#: ../autotimer/src/AutoTimerImporter.py:182
+#: ../autotimer/src/AutoTimerEditor.py:596
+#: ../autotimer/src/AutoTimerImporter.py:179
 msgid "After event"
 msgstr "Peale salvestust"
 
@@ -405,7 +409,7 @@ msgstr ""
 #: ../emission/src/EmissionOverview.py:150
 #: ../emission/src/EmissionOverview.py:303
 #: ../emission/src/EmissionOverview.py:310 ../mytube/src/plugin.py:64
-#: ../mytube/src/plugin.py:84 ../serienfilm/src/MovieSelection.py:256
+#: ../mytube/src/plugin.py:84 ../serienfilm/src/MovieSelection.py:254
 msgid "All"
 msgstr "Kõik kanalid"
 
@@ -421,7 +425,7 @@ msgstr ""
 msgid "All Time"
 msgstr "Kogu aeg"
 
-#: ../autotimer/src/__init__.py:17
+#: ../autotimer/src/__init__.py:12
 msgid "All non-repeating timers"
 msgstr "Kõik mittekorduvad taimerid"
 
@@ -454,7 +458,7 @@ msgid ""
 "unusable movie player until you uninstall one of the conflicting plugins."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:617
+#: ../autotimer/src/AutoTimerEditor.py:614
 msgid "Amount of recordings left"
 msgstr "Salvestiste mahtu järel"
 
@@ -469,7 +473,7 @@ msgid ""
 "The %s \"%s\" will be processed in the background after it."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:326
+#: ../autotimer/src/AutoTimerEditor.py:323
 msgid "Any service/recording"
 msgstr "Iga teenus/salvestis"
 
@@ -482,7 +486,7 @@ msgid "Append file to current songlist"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountEdit.py:271
+#: ../networkbrowser/src/MountEdit.py:269
 msgid ""
 "Are you sure you want to save this network mount?\n"
 "\n"
@@ -573,7 +577,7 @@ msgstr ""
 msgid "AutoTimer"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:421
+#: ../autotimer/src/AutoTimerEditor.py:418
 msgid "AutoTimer Editor"
 msgstr "AutoTaimeri muutja"
 
@@ -581,7 +585,7 @@ msgstr "AutoTaimeri muutja"
 msgid "AutoTimer FAQ"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:887
+#: ../autotimer/src/AutoTimerEditor.py:884
 msgid "AutoTimer Filters"
 msgstr "AutoTaimeri filtrid"
 
@@ -589,15 +593,15 @@ msgstr "AutoTaimeri filtrid"
 msgid "AutoTimer Help"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:1091
+#: ../autotimer/src/AutoTimerEditor.py:1088
 msgid "AutoTimer Services"
 msgstr "AutoTaimeri teenused"
 
-#: ../autotimer/src/AutoTimerSettings.py:33
+#: ../autotimer/src/AutoTimerSettings.py:30
 msgid "AutoTimer Settings"
 msgstr "AutoTaimeri seaded"
 
-#: ../autotimer/src/AutoTimerOverview.py:115
+#: ../autotimer/src/AutoTimerOverview.py:112
 msgid "AutoTimer overview"
 msgstr "AutoTaimeri ülevaade"
 
@@ -669,11 +673,11 @@ msgstr "Tekitab salvestuse ajad võtmesõnadele tuginedes"
 msgid "Automatically refresh EPG"
 msgstr "Värskenda automaatselt EPG-d"
 
-#: ../autoresolution/src/plugin.py:362
+#: ../autoresolution/src/plugin.py:360
 msgid "Autoresolution"
 msgstr "Autoresolutsioon"
 
-#: ../autoresolution/src/plugin.py:232
+#: ../autoresolution/src/plugin.py:230
 #, python-format
 msgid ""
 "Autoresolution Plugin Testmode:\n"
@@ -682,19 +686,19 @@ msgstr ""
 "Autoresolutsiooni lisa Testmood:\n"
 "Kas %s on OK?"
 
-#: ../autoresolution/src/plugin.py:370
+#: ../autoresolution/src/plugin.py:368
 msgid "Autoresolution Switch"
 msgstr "Autoresolutsiooni vahetus"
 
-#: ../autoresolution/src/plugin.py:318
+#: ../autoresolution/src/plugin.py:316
 msgid "Autoresolution is not working in Scart/DVI-PC Mode"
 msgstr "Autoresolutsiooni ei tööta Scart/DVI-PC režiimis"
 
-#: ../autoresolution/src/plugin.py:300
+#: ../autoresolution/src/plugin.py:298
 msgid "Autoresolution settings"
 msgstr "Autoresolutsiooni seaded"
 
-#: ../autoresolution/src/plugin.py:281
+#: ../autoresolution/src/plugin.py:279
 msgid "Autoresolution videomode setup"
 msgstr "Autoresolutsiooni video seaded"
 
@@ -739,13 +743,13 @@ msgstr ""
 msgid "Basic Picasa client."
 msgstr "Tavaline Picasa klient"
 
-#: ../autotimer/src/AutoTimerEditor.py:608
+#: ../autotimer/src/AutoTimerEditor.py:605
 msgid "Begin of \"after event\" timespan"
 msgstr "Alusta salvestust peale \"praegust\" saadet"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:571
-#: ../autotimer/src/AutoTimerWizard.py:103
+#: ../autotimer/src/AutoTimerEditor.py:568
+#: ../autotimer/src/AutoTimerWizard.py:100
 msgid "Begin of timespan"
 msgstr "Alusta kestuseta salvestust"
 
@@ -777,7 +781,7 @@ msgstr "Bonjour/Avahi seadelisandus."
 msgid "Bonjour: Overview"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:1102
+#: ../autotimer/src/AutoTimerEditor.py:1099
 msgid "Bouquets"
 msgstr "Favoriit kaustad"
 
@@ -801,24 +805,24 @@ msgid "Browse for nfs/cifs shares and connect to them."
 msgstr "Otsi NFS/CIFS osalusi ja ühenda nendega."
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:157
+#: ../networkbrowser/src/NetworkBrowser.py:155
 msgid "Browse network neighbourhood"
 msgstr "Otsi võrgunaabreid"
 
-#: ../autotimer/src/AutoTimerEditor.py:522
+#: ../autotimer/src/AutoTimerEditor.py:519
 msgid ""
 "By enabling this events will not be matched if they don't occur on certain "
 "dates."
 msgstr "Seda lubades saated ei ühtu, kui nad ei toimu tetavatel päevadel."
 
-#: ../autotimer/src/AutoTimerSettings.py:50
+#: ../autotimer/src/AutoTimerSettings.py:47
 msgid ""
 "By enabling this you will be notified about similar timers added during "
 "automated polling. There is no intelligence involved, so it might bother you "
 "about the same conflict over and over."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerSettings.py:49
+#: ../autotimer/src/AutoTimerSettings.py:46
 msgid ""
 "By enabling this you will be notified about timer conflicts found during "
 "automated polling. There is no intelligence involved, so it might bother you "
@@ -843,7 +847,7 @@ msgid "CF Drive"
 msgstr "CompactFlash-kaart"
 
 #
-#: ../networkbrowser/src/MountEdit.py:98
+#: ../networkbrowser/src/MountEdit.py:96
 msgid "CIFS share"
 msgstr "CIFS võrgukoht"
 
@@ -875,49 +879,53 @@ msgstr "Kanada"
 
 #
 #: ../antiscrollbar/src/plugin.py:125 ../audiosync/src/AC3main.py:66
-#: ../audiosync/src/AC3setup.py:63
+#: ../audiosync/src/AC3setup.py:62
 #: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:61
 #: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:248
-#: ../autoresolution/src/plugin.py:294 ../autotimer/src/AutoTimerEditor.py:445
-#: ../autotimer/src/AutoTimerEditor.py:908
-#: ../autotimer/src/AutoTimerEditor.py:1111
-#: ../autotimer/src/AutoTimerImporter.py:45
-#: ../autotimer/src/AutoTimerImporter.py:119
-#: ../autotimer/src/AutoTimerPreview.py:59
-#: ../autotimer/src/AutoTimerSettings.py:70 ../babelzapper/src/plugin.py:75
+#: ../autoresolution/src/plugin.py:292 ../autotimer/src/AutoTimerEditor.py:442
+#: ../autotimer/src/AutoTimerEditor.py:905
+#: ../autotimer/src/AutoTimerEditor.py:1108
+#: ../autotimer/src/AutoTimerImporter.py:42
+#: ../autotimer/src/AutoTimerImporter.py:116
+#: ../autotimer/src/AutoTimerPreview.py:56
+#: ../autotimer/src/AutoTimerSettings.py:67 ../babelzapper/src/plugin.py:75
 #: ../cdinfo/src/plugin.py:56 ../dreamirc/src/dreamIRCSetup.py:71
 #: ../ecasa/src/EcasaSetup.py:71 ../emission/src/EmissionBandwidth.py:72
 #: ../emission/src/EmissionSetup.py:39 ../genuinedreambox/src/plugin.py:81
 #: ../growlee/src/plugin.py:99 ../merlinmusicplayer/src/plugin.py:258
 #: ../merlinmusicplayer/src/plugin.py:2772
 #: ../merlinmusicplayer/src/plugin.py:2893 ../movieepg/src/MovieEpgSetup.py:55
-#: ../networkbrowser/src/MountEdit.py:65
-#: ../networkbrowser/src/NetworkBrowser.py:498
+#: ../networkbrowser/src/MountEdit.py:63
+#: ../networkbrowser/src/NetworkBrowser.py:496
 #: ../pipservicerelation/src/plugin.py:188 ../pipzap/src/PipzapSetup.py:60
 #: ../remotetimer/src/plugin.py:105 ../remotetimer/src/plugin.py:230
 #: ../satloader/src/plugin.py:53
 #: ../startuptostandby/src/StartupToStandbyConfiguration.py:27
-#: ../serienfilm/src/SerienFilm.py:65
+#: ../serienfilm/src/SerienFilm.py:62
 msgid "Cancel"
 msgstr "Tühista"
 
-#: ../audiosync/src/MovableScreen.py:32
+#: ../audiosync/src/MovableScreen.py:31
 msgid "Center screen at the lower border"
 msgstr "Tsentreeri alumisel piirjoonel"
 
-#: ../audiosync/src/MovableScreen.py:26
+#: ../audiosync/src/MovableScreen.py:25
 msgid "Center screen at the upper border"
 msgstr "Tsentreeri ülemisel piirjoonel"
+
+#: ../serienfilm/src/SerienFilm.py:56
+msgid "Change"
+msgstr ""
 
 #: ../audiosync/src/AC3main.py:76 ../audiosync/src/AC3main.py:77
 msgid "Change active delay"
 msgstr "Muuda hilistust"
 
-#: ../autotimer/src/AutoTimerEditor.py:525
+#: ../autotimer/src/AutoTimerEditor.py:522
 msgid "Change default recording offset?"
 msgstr "Muuda salvestuse vaikimisi offsetti?"
 
-#: ../networkbrowser/src/MountManager.py:76
+#: ../networkbrowser/src/MountManager.py:74
 msgid "Change hostname"
 msgstr "Muuda nime"
 
@@ -925,7 +933,7 @@ msgstr "Muuda nime"
 msgid "Change sorting"
 msgstr ""
 
-#: ../networkbrowser/src/MountManager.py:76
+#: ../networkbrowser/src/MountManager.py:74
 msgid "Change the hostname of your Dreambox."
 msgstr "Muuda oma tuuneri nime."
 
@@ -940,7 +948,7 @@ msgstr "Kanal"
 
 #
 #: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:271
-#: ../autotimer/src/AutoTimerEditor.py:99
+#: ../autotimer/src/AutoTimerEditor.py:96
 #: ../pipservicerelation/src/plugin.py:211
 msgid "Channel Selection"
 msgstr "Kanalite valik"
@@ -957,7 +965,7 @@ msgstr "Helikanal:"
 msgid "Channel info"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:1101
+#: ../autotimer/src/AutoTimerEditor.py:1098
 msgid "Channels"
 msgstr "Kanalid"
 
@@ -969,15 +977,15 @@ msgstr ""
 msgid "Check any running reconstruct process"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:623
+#: ../autotimer/src/AutoTimerEditor.py:620
 msgid "Check for uniqueness in"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:379 ../mytube/src/MyTubeSearch.py:360
+#: ../autotimer/src/AutoTimerEditor.py:376 ../mytube/src/MyTubeSearch.py:360
 msgid "Choose target folder"
 msgstr "Vali kataloog"
 
-#: ../autotimer/src/__init__.py:22
+#: ../autotimer/src/__init__.py:17
 msgid "Classic"
 msgstr "Classikaline"
 
@@ -1022,20 +1030,20 @@ msgstr "Kustuta väljudes ajalugu:"
 #: ../mphelp/src/MPHelp.py:42 ../mytube/src/MyTubeSearch.py:298
 #: ../mytube/src/MyTubeSearch.py:464 ../mytube/src/plugin.py:279
 #: ../mytube/src/plugin.py:1310 ../mytube/src/plugin.py:1496
-#: ../networkbrowser/src/MountManager.py:54
-#: ../networkbrowser/src/MountView.py:63
-#: ../networkbrowser/src/NetworkBrowser.py:107
-#: ../networkbrowser/src/UserDialog.py:91
-#: ../networkbrowser/src/UserManager.py:50
+#: ../networkbrowser/src/MountManager.py:52
+#: ../networkbrowser/src/MountView.py:61
+#: ../networkbrowser/src/NetworkBrowser.py:105
+#: ../networkbrowser/src/UserDialog.py:89
+#: ../networkbrowser/src/UserManager.py:48
 #: ../pipservicerelation/src/plugin.py:86
 msgid "Close"
 msgstr "Sulge"
 
-#: ../autotimer/src/AutoTimerOverview.py:85
+#: ../autotimer/src/AutoTimerOverview.py:82
 msgid "Close and forget changes"
 msgstr "Sulge ja unusta muudatused"
 
-#: ../autotimer/src/AutoTimerOverview.py:98
+#: ../autotimer/src/AutoTimerOverview.py:95
 msgid "Close and save changes"
 msgstr "Sulge ja salvesta muudatused"
 
@@ -1057,12 +1065,16 @@ msgstr ""
 msgid "Configuration"
 msgstr ""
 
+#: ../serienfilm/src/MovieSelection.py:89 ../serienfilm/src/SerienFilm.py:47
+msgid "Configuration of the title:episode separator"
+msgstr ""
+
 #: ../aihdcontroler/src/plugin.py:68
 msgid "Configuration tool for All.In HD skins"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:87
+#: ../autotimer/src/AutoTimerSettings.py:84
 msgid "Configure AutoTimer behavior"
 msgstr "Seadista autotaimeri käitumist"
 
@@ -1106,7 +1118,7 @@ msgstr ""
 msgid "Control Bonjour (avahi-daemon)"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:635
+#: ../autotimer/src/AutoTimerEditor.py:632
 msgid "Control recording completely by service"
 msgstr ""
 
@@ -1164,11 +1176,11 @@ msgstr "Tee video DVD-st backup"
 msgid "Create a new AutoTimer."
 msgstr "Loo uus AutoTaimer."
 
-#: ../autotimer/src/AutoTimerOverview.py:230
+#: ../autotimer/src/AutoTimerOverview.py:227
 msgid "Create a new timer using the classic editor"
 msgstr "Loo uus taimer tavaeditoriga"
 
-#: ../autotimer/src/AutoTimerOverview.py:232
+#: ../autotimer/src/AutoTimerOverview.py:229
 msgid "Create a new timer using the wizard"
 msgstr "Loo uus taimer abilisega"
 
@@ -1189,18 +1201,18 @@ msgid "Create timers on remote Dreamboxes."
 msgstr "Sea taimerid kaugjuhitavatel tuuneritel."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:318
+#: ../autotimer/src/AutoTimerEditor.py:315
 #, python-format
 msgid "Custom (%s)"
 msgstr "Tava (%s)"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:628
+#: ../autotimer/src/AutoTimerEditor.py:625
 msgid "Custom location"
 msgstr "Tavaasukoht"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:584
+#: ../autotimer/src/AutoTimerEditor.py:581
 msgid "Custom offset"
 msgstr "Sea kõrvalekalle"
 
@@ -1284,39 +1296,39 @@ msgstr "Määra alguskanal"
 msgid "Define a startup service for your Dreambox."
 msgstr "Määra alguskanal oma tuuneri jaoks."
 
-#: ../autotimer/src/AutoTimerEditor.py:538
+#: ../autotimer/src/AutoTimerEditor.py:535
 msgid ""
 "Defines where to search for duplicates (only title, short description or "
 "even extended description)"
 msgstr ""
 
-#: ../autoresolution/src/plugin.py:314
+#: ../autoresolution/src/plugin.py:312
 msgid "Deinterlacer mode for interlaced content"
 msgstr ""
 
-#: ../autoresolution/src/plugin.py:315
+#: ../autoresolution/src/plugin.py:313
 msgid "Deinterlacer mode for progressive content"
 msgstr ""
 
-#: ../autoresolution/src/plugin.py:312
+#: ../autoresolution/src/plugin.py:310
 msgid "Delay x seconds after service started"
 msgstr "Oota x sekundit peale saate algust"
 
 #
 #: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:141
-#: ../autotimer/src/AutoTimerOverview.py:71 ../growlee/src/plugin.py:102
-#: ../networkbrowser/src/UserManager.py:52
+#: ../autotimer/src/AutoTimerOverview.py:68 ../growlee/src/plugin.py:102
+#: ../networkbrowser/src/UserManager.py:50
 #: ../pipservicerelation/src/plugin.py:85 ../remotetimer/src/plugin.py:104
 msgid "Delete"
 msgstr "Kustuta"
 
 #
-#: ../serienfilm/src/MovieSelection.py:188
+#: ../serienfilm/src/MovieSelection.py:186
 msgid "Delete failed!"
 msgstr "Kustutamine nurjus!"
 
 #
-#: ../networkbrowser/src/MountView.py:64
+#: ../networkbrowser/src/MountView.py:62
 msgid "Delete mount"
 msgstr "Kustuta haage"
 
@@ -1337,12 +1349,12 @@ msgid "Descending"
 msgstr "Kahanev"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:551
-#: ../autotimer/src/AutoTimerWizard.py:111
+#: ../autotimer/src/AutoTimerEditor.py:548
+#: ../autotimer/src/AutoTimerWizard.py:108
 msgid "Description"
 msgstr "Kirjeldus"
 
-#: ../networkbrowser/src/MountView.py:85
+#: ../networkbrowser/src/MountView.py:83
 msgid "Dir:"
 msgstr "Kaust:"
 
@@ -1351,13 +1363,17 @@ msgid "Direct playback of Youtube videos"
 msgstr "Youtube videote kohene taasesitus"
 
 #
-#: ../serienfilm/src/MovieSelection.py:473
+#: ../serienfilm/src/MovieSelection.py:471
 #, python-format
 msgid "Directory %s nonexistent."
 msgstr "Kataloogi %s ei eksisteeri."
 
 #: ../logomanager/src/plugin.py:219
 msgid "Directory to scan for Logos"
+msgstr ""
+
+#: ../serienfilm/src/SerienFilm.py:56 ../serienfilm/src/SerienFilm.py:132
+msgid "Disable "
 msgstr ""
 
 #
@@ -1370,7 +1386,7 @@ msgstr "Keelatud"
 msgid "Discard changes and close plugin"
 msgstr "Tühista muudatused ja sulge laiendus"
 
-#: ../audiosync/src/MovableScreen.py:18 ../audiosync/src/MovableScreen.py:23
+#: ../audiosync/src/MovableScreen.py:17 ../audiosync/src/MovableScreen.py:22
 msgid "Discard changes and close screen"
 msgstr "Tühista muudatused ja sulge aken"
 
@@ -1412,7 +1428,7 @@ msgstr ""
 msgid "Do you really want to add all songs from that genre to a playlist?"
 msgstr ""
 
-#: ../serienfilm/src/MovieSelection.py:160
+#: ../serienfilm/src/MovieSelection.py:158
 #, python-format
 msgid ""
 "Do you really want to delete %s\n"
@@ -1422,11 +1438,19 @@ msgstr ""
 "%s?"
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:188 ../merlinepg/src/plugin.py:588
+#: ../autotimer/src/AutoTimerOverview.py:185 ../merlinepg/src/plugin.py:588
 #: ../merlinepg/src/plugin.py:908
 #, python-format
 msgid "Do you really want to delete %s?"
 msgstr "Kas soovid kindlasti kustutada %s?"
+
+#: ../serienfilm/src/MovieSelection.py:147
+#, python-format
+msgid ""
+"Do you really want to delete series\n"
+"  %s\n"
+"with %d movies?"
+msgstr ""
 
 #: ../merlinmusicplayer/src/plugin.py:1913
 msgid "Do you really want to delete that song from the database?"
@@ -1452,9 +1476,9 @@ msgstr ""
 msgid "Do you really want to delete this entry?"
 msgstr ""
 
+#: ../networkbrowser/src/NetworkBrowser.py:389
 #: ../networkbrowser/src/NetworkBrowser.py:391
-#: ../networkbrowser/src/NetworkBrowser.py:393
-#: ../networkbrowser/src/NetworkBrowser.py:406
+#: ../networkbrowser/src/NetworkBrowser.py:404
 msgid "Do you want to enter a username and password for this host?\n"
 msgstr "Kas soovid seada kasutajanime ja parooli sellele seadmele?\n"
 
@@ -1541,7 +1565,7 @@ msgstr "Kestus: "
 msgid "DynDNS"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:556
+#: ../autotimer/src/AutoTimerEditor.py:553
 msgid "EPG encoding"
 msgstr "EPG kodeering"
 
@@ -1610,19 +1634,19 @@ msgstr ""
 
 #
 #: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:140
-#: ../pipservicerelation/src/plugin.py:88 ../serienfilm/src/SerienFilm.py:65
+#: ../pipservicerelation/src/plugin.py:88 ../serienfilm/src/SerienFilm.py:62
 msgid "Edit"
 msgstr "Välju"
 
-#: ../autotimer/src/AutoTimerEditor.py:473
+#: ../autotimer/src/AutoTimerEditor.py:470
 msgid "Edit AutoTimer"
 msgstr "Muuda AutoTaimer"
 
-#: ../autotimer/src/AutoTimerEditor.py:929
+#: ../autotimer/src/AutoTimerEditor.py:926
 msgid "Edit AutoTimer filters"
 msgstr "Muuda AutoTaimeri filtreid"
 
-#: ../autotimer/src/AutoTimerEditor.py:1132
+#: ../autotimer/src/AutoTimerEditor.py:1129
 msgid "Edit AutoTimer services"
 msgstr "Muuda AutoTaimeri teenuseid"
 
@@ -1631,11 +1655,11 @@ msgstr "Muuda AutoTaimeri teenuseid"
 msgid "Edit Timers and scan for new Events"
 msgstr "Muuda taimereid ja otsi uusi saateid"
 
-#: ../autotimer/src/AutoTimerOverview.py:221
+#: ../autotimer/src/AutoTimerOverview.py:218
 msgid "Edit new timer defaults"
 msgstr "Muuda uute taimerite vaikeväärtuseid"
 
-#: ../autotimer/src/AutoTimerOverview.py:84
+#: ../autotimer/src/AutoTimerOverview.py:81
 msgid "Edit selected AutoTimer"
 msgstr "Muuda valitud AutoTaimerit"
 
@@ -1647,7 +1671,11 @@ msgstr "Muuda salvestatud filmide märkeid"
 msgid "Edit tags of recorded movies."
 msgstr "Muuda salvestatud filmide märkeid."
 
-#: ../autotimer/src/AutoTimerEditor.py:1154
+#: ../serienfilm/src/SerienFilm.py:112
+msgid "Edit title:episode separator"
+msgstr ""
+
+#: ../autotimer/src/AutoTimerEditor.py:1151
 msgid "Editing"
 msgstr "Muudan"
 
@@ -1655,7 +1683,7 @@ msgstr "Muudan"
 msgid "Editor for fstab"
 msgstr "Fstab-i redaktor"
 
-#: ../autotimer/src/AutoTimerSettings.py:51
+#: ../autotimer/src/AutoTimerSettings.py:48
 msgid "Editor for new AutoTimers"
 msgstr "Editor uuele AutoTaimerile"
 
@@ -1672,23 +1700,27 @@ msgstr "E-maili klient on IMAP4 näitaja tuuneri jaoks."
 msgid "Enable"
 msgstr "Luba"
 
-#: ../autoresolution/src/plugin.py:27
+#: ../serienfilm/src/SerienFilm.py:58 ../serienfilm/src/SerienFilm.py:129
+msgid "Enable "
+msgstr ""
+
+#: ../autoresolution/src/plugin.py:25
 msgid "Enable 1080p24 Mode"
 msgstr "Luba 1080p24"
 
-#: ../autoresolution/src/plugin.py:28
+#: ../autoresolution/src/plugin.py:26
 msgid "Enable 1080p25 Mode"
 msgstr "Luba 1080p25"
 
-#: ../autoresolution/src/plugin.py:28
+#: ../autoresolution/src/plugin.py:26
 msgid "Enable 1080p30 Mode"
 msgstr "Luba 1080p30"
 
-#: ../autoresolution/src/plugin.py:27
+#: ../autoresolution/src/plugin.py:25
 msgid "Enable 720p24 Mode"
 msgstr "Luba 720p24"
 
-#: ../autoresolution/src/plugin.py:303
+#: ../autoresolution/src/plugin.py:301
 msgid "Enable Autoresolution"
 msgstr "Luba Autoresolutsioon"
 
@@ -1696,7 +1728,7 @@ msgstr "Luba Autoresolutsioon"
 msgid "Enable Babelzapper on Mute"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:973
+#: ../autotimer/src/AutoTimerEditor.py:970
 msgid "Enable Filtering"
 msgstr "Luba filtreerimine"
 
@@ -1708,20 +1740,20 @@ msgstr ""
 msgid "Enable Port-Forwarding"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:1153
+#: ../autotimer/src/AutoTimerEditor.py:1150
 msgid "Enable Service Restriction"
 msgstr "Luba teenuse piirangud"
 
-#: ../autotimer/src/AutoTimerSettings.py:42
+#: ../autotimer/src/AutoTimerSettings.py:39
 msgid ""
 "Enable this to be able to access the AutoTimer Overview from within the "
 "extension menu."
 msgstr "Luba see, et tagada AutoTimeri ülevaade laienduste menüüst."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:550
-#: ../autotimer/src/AutoTimerImporter.py:130
-#: ../autotimer/src/AutoTimerWizard.py:110 ../easyinfo/src/plugin.py:96
+#: ../autotimer/src/AutoTimerEditor.py:547
+#: ../autotimer/src/AutoTimerImporter.py:127
+#: ../autotimer/src/AutoTimerWizard.py:107 ../easyinfo/src/plugin.py:96
 #: ../startuptostandby/src/StartupToStandbyConfiguration.py:41
 msgid "Enabled"
 msgstr "Kasutusel"
@@ -1733,7 +1765,7 @@ msgid ""
 "EPG."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:513
+#: ../autotimer/src/AutoTimerEditor.py:510
 msgid ""
 "Encoding the channel uses for it's EPG data. You only need to change this if "
 "you're searching for special characters like the german umlauts."
@@ -1747,13 +1779,13 @@ msgid "Encryption"
 msgstr "Kodeering"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:609
+#: ../autotimer/src/AutoTimerEditor.py:606
 msgid "End of \"after event\" timespan"
 msgstr "\"pärast sündmust\" ajavahemiku lõpp"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:572
-#: ../autotimer/src/AutoTimerWizard.py:104
+#: ../autotimer/src/AutoTimerEditor.py:569
+#: ../autotimer/src/AutoTimerWizard.py:101
 msgid "End of timespan"
 msgstr "Ajavahemiku lõpp"
 
@@ -1765,7 +1797,7 @@ msgstr ""
 "Enigma2 lisa AVI/DIVX/WMV/jne. PC-st tulevate videote mängimiseks "
 "vastuvõtjas. Vajab arvutis töötavat VLC programmi www.videolan.org -st."
 
-#: ../networkbrowser/src/NetworkBrowser.py:526
+#: ../networkbrowser/src/NetworkBrowser.py:524
 msgid "Enter IP to scan..."
 msgstr "Sisesta IP..."
 
@@ -1777,17 +1809,17 @@ msgstr ""
 msgid "Enter name for playlist"
 msgstr ""
 
-#: ../networkbrowser/src/MountManager.py:108
+#: ../networkbrowser/src/MountManager.py:106
 msgid "Enter new hostname for your Dreambox"
 msgstr "Sisesta uus nimi oma tuunerile"
 
 #
-#: ../networkbrowser/src/MountEdit.py:217
+#: ../networkbrowser/src/MountEdit.py:215
 msgid "Enter options:"
 msgstr "Sisesta valikud:"
 
-#: ../networkbrowser/src/MountEdit.py:221
-#: ../networkbrowser/src/UserDialog.py:141
+#: ../networkbrowser/src/MountEdit.py:219
+#: ../networkbrowser/src/UserDialog.py:139
 msgid "Enter password:"
 msgstr "Sisesta parool:"
 
@@ -1796,12 +1828,12 @@ msgid "Enter search-text"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountEdit.py:215
+#: ../networkbrowser/src/MountEdit.py:213
 msgid "Enter share directory:"
 msgstr "Sisesta võrgukoha kaust:"
 
 #
-#: ../networkbrowser/src/MountEdit.py:213
+#: ../networkbrowser/src/MountEdit.py:211
 msgid "Enter share name:"
 msgstr "Nimeta võrgukoht:"
 
@@ -1809,7 +1841,7 @@ msgstr "Nimeta võrgukoht:"
 msgid "Enter text to search for"
 msgstr ""
 
-#: ../networkbrowser/src/UserDialog.py:94
+#: ../networkbrowser/src/UserDialog.py:92
 msgid "Enter user and password for host: "
 msgstr "Sisesta kasutajanimi ja parool seadmele: "
 
@@ -1817,8 +1849,8 @@ msgstr "Sisesta kasutajanimi ja parool seadmele: "
 msgid "Enter username"
 msgstr ""
 
-#: ../networkbrowser/src/MountEdit.py:219
-#: ../networkbrowser/src/UserDialog.py:139
+#: ../networkbrowser/src/MountEdit.py:217
+#: ../networkbrowser/src/UserDialog.py:137
 msgid "Enter username:"
 msgstr "Sisesta kasutajanimi:"
 
@@ -1888,19 +1920,19 @@ msgstr ""
 msgid "EventInfo yellow button:"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerImporter.py:146
+#: ../autotimer/src/AutoTimerImporter.py:143
 msgid "Exact match"
 msgstr "Täpne vaste"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:982
-#: ../autotimer/src/AutoTimerEditor.py:999
-#: ../autotimer/src/AutoTimerEditor.py:1024
+#: ../autotimer/src/AutoTimerEditor.py:979
+#: ../autotimer/src/AutoTimerEditor.py:996
+#: ../autotimer/src/AutoTimerEditor.py:1021
 msgid "Exclude"
 msgstr "Välista"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:603
+#: ../autotimer/src/AutoTimerEditor.py:600
 msgid "Execute \"after event\" during timespan"
 msgstr "Teosta \"pärast sündmust\" ajavahemiku ajal"
 
@@ -1911,7 +1943,7 @@ msgid ""
 msgstr ""
 
 #
-#: ../serienfilm/src/SerienFilm.py:59
+#: ../serienfilm/src/SerienFilm.py:56
 msgid "Exit"
 msgstr "Välju"
 
@@ -1920,7 +1952,7 @@ msgid "Expand your Flash using an USB stick or an NFS share."
 msgstr ""
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:110
+#: ../networkbrowser/src/NetworkBrowser.py:108
 msgid "Expert"
 msgstr "Ekspert"
 
@@ -1989,7 +2021,7 @@ msgstr ""
 msgid "Film & Animation"
 msgstr "Film & Animatsioon"
 
-#: ../autotimer/src/AutoTimerEditor.py:974
+#: ../autotimer/src/AutoTimerEditor.py:971
 msgid "Filter"
 msgstr "Filter"
 
@@ -2005,11 +2037,11 @@ msgstr ""
 "kus on kirjelduses tekst nt. \n"
 "Vajuta BLUE uue keelu seadmiseks ja YELLOW seatud keelu muutmiseks."
 
-#: ../networkbrowser/src/MountManager.py:132
+#: ../networkbrowser/src/MountManager.py:130
 msgid "Finished restarting your network"
 msgstr "Võrgu restart on tehtud"
 
-#: ../autotimer/src/AutoTimerEditor.py:523
+#: ../autotimer/src/AutoTimerEditor.py:520
 msgid ""
 "First day to match events. No event that begins before this date will be "
 "matched."
@@ -2038,7 +2070,7 @@ msgstr ""
 msgid "France"
 msgstr "Prantsusmaa"
 
-#: ../autotimer/src/AutoTimerOverview.py:227
+#: ../autotimer/src/AutoTimerOverview.py:224
 msgid "Frequently asked questions"
 msgstr "Korduma kippuvad küsimused"
 
@@ -2047,7 +2079,7 @@ msgid "Frequently asked questions about the AutoTimer"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:48
+#: ../autotimer/src/AutoTimerEditor.py:45
 msgid "Friday"
 msgstr "Reede"
 
@@ -2199,15 +2231,15 @@ msgid ""
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:44
+#: ../autotimer/src/AutoTimerSettings.py:41
 msgid "Guess existing timer based on begin/end"
 msgstr "Eelda olemasolev taimer alguse/lõpu aja järgi"
 
-#: ../autoresolution/src/plugin.py:26
+#: ../autoresolution/src/plugin.py:24
 msgid "HD Interlace Mode"
 msgstr ""
 
-#: ../autoresolution/src/plugin.py:26
+#: ../autoresolution/src/plugin.py:24
 msgid "HD Progressive Mode"
 msgstr ""
 
@@ -2220,7 +2252,7 @@ msgstr "HD videod"
 msgid "Harddisk"
 msgstr "Kõvaketas"
 
-#: ../autotimer/src/AutoTimerOverview.py:226 ../googlemaps/src/plugin.py:212
+#: ../autotimer/src/AutoTimerOverview.py:223 ../googlemaps/src/plugin.py:212
 #: ../mytube/src/plugin.py:1514 ../pipzap/src/PipzapSetup.py:64
 msgid "Help"
 msgstr "Abi"
@@ -2278,12 +2310,12 @@ msgstr ""
 msgid "IMDb info"
 msgstr ""
 
-#: ../networkbrowser/src/NetworkBrowser.py:514
+#: ../networkbrowser/src/NetworkBrowser.py:512
 msgid "IP Address"
 msgstr "IP Aadress"
 
 #
-#: ../networkbrowser/src/MountView.py:84
+#: ../networkbrowser/src/MountView.py:82
 msgid "IP:"
 msgstr "IP:"
 
@@ -2291,7 +2323,7 @@ msgstr "IP:"
 msgid "IRC Client for Enigma2"
 msgstr "IRC klient Enigma2-le"
 
-#: ../autotimer/src/AutoTimerSettings.py:45
+#: ../autotimer/src/AutoTimerSettings.py:42
 msgid ""
 "If a timer conflict occurs, AutoTimer will search outside the timespan for a "
 "similar event and add it."
@@ -2304,20 +2336,20 @@ msgid ""
 "launchable from the regular plugin overview."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerSettings.py:44
+#: ../autotimer/src/AutoTimerSettings.py:41
 #, python-format
 msgid ""
 "If this is enabled an existing timer will also be considered recording an "
 "event if it records at least 80%% of the it."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerSettings.py:48
+#: ../autotimer/src/AutoTimerSettings.py:45
 msgid ""
 "If this is selected, the name of the respective AutoTimer will be added as a "
 "tag to timers created by this plugin."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerSettings.py:47
+#: ../autotimer/src/AutoTimerSettings.py:44
 msgid ""
 "If this is selected, the tag \"AutoTimer\" will be given to timers created "
 "by this plugin."
@@ -2340,17 +2372,17 @@ msgid "Illuminated RC layer 4"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerImporter.py:229
+#: ../autotimer/src/AutoTimerImporter.py:226
 msgid "Import AutoTimer"
 msgstr "Impordi autotaimer"
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:218
+#: ../autotimer/src/AutoTimerOverview.py:215
 msgid "Import existing Timer"
 msgstr "Impordi olemasolev taimer"
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:219
+#: ../autotimer/src/AutoTimerOverview.py:216
 msgid "Import from EPG"
 msgstr "Impordi EPG-st"
 
@@ -2361,17 +2393,17 @@ msgid ""
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:987
-#: ../autotimer/src/AutoTimerEditor.py:1004
-#: ../autotimer/src/AutoTimerEditor.py:1025
+#: ../autotimer/src/AutoTimerEditor.py:984
+#: ../autotimer/src/AutoTimerEditor.py:1001
+#: ../autotimer/src/AutoTimerEditor.py:1022
 msgid "Include"
 msgstr "Kaasa arvatud"
 
-#: ../autotimer/src/AutoTimerSettings.py:47
+#: ../autotimer/src/AutoTimerSettings.py:44
 msgid "Include \"AutoTimer\" in tags"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerSettings.py:48
+#: ../autotimer/src/AutoTimerSettings.py:45
 msgid "Include AutoTimer name in tags"
 msgstr ""
 
@@ -2501,6 +2533,14 @@ msgstr "Itaalia"
 msgid "Japan"
 msgstr "Jaapan"
 
+#: ../serienfilm/src/MovieSelection.py:291
+msgid "Jump to listbegin"
+msgstr ""
+
+#: ../serienfilm/src/MovieSelection.py:292
+msgid "Jump to listend"
+msgstr ""
+
 #: ../easyinfo/src/plugin.py:100
 msgid "Just zap"
 msgstr ""
@@ -2515,6 +2555,10 @@ msgstr "Nupp %(Key)s edukalt seatud %(delay)i ms"
 msgid "Key %(key)s (current value: %(value)i ms)"
 msgstr "Nupp %(key)s (hetke väärtus: %(value)i ms)"
 
+#: ../serienfilm/src/SerienFilm.py:113
+msgid "Key 0 provides special chracters, key 1 blank"
+msgstr ""
+
 #: ../ecasa/src/EcasaGui.py:778
 #, python-format
 msgid "Keywords: %s"
@@ -2524,20 +2568,24 @@ msgstr ""
 msgid "KiddyTimer allows to control your kids's daily tv usage."
 msgstr "KiddyTimer võimaldab kontrollida laste igapäevast tv kasutust."
 
-#: ../autotimer/src/AutoTimerEditor.py:542
+#: ../autotimer/src/AutoTimerEditor.py:539
 msgid ""
 "Label Timers with season, episode and title, according to the SeriesPlugin "
 "settings."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:638
+#: ../autotimer/src/AutoTimerEditor.py:635
 msgid "Label series"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:524
+#: ../autotimer/src/AutoTimerEditor.py:521
 msgid ""
 "Last day to match events. Events have to begin before this date to be "
 "matched."
+msgstr ""
+
+#: ../serienfilm/src/SerienFilm.py:139
+msgid "Length of the title:episode separator"
 msgstr ""
 
 #: ../aihdcontroler/src/plugin.py:45
@@ -2566,11 +2614,11 @@ msgid "Load feed on startup:"
 msgstr "Laadi feed alustades:"
 
 #
-#: ../networkbrowser/src/MountEdit.py:179
+#: ../networkbrowser/src/MountEdit.py:177
 msgid "Local share name"
 msgstr "Kohaliku võrgukoha nimi"
 
-#: ../autotimer/src/AutoTimerImporter.py:200
+#: ../autotimer/src/AutoTimerImporter.py:197
 msgid "Location"
 msgstr "Salvestuskoht"
 
@@ -2579,12 +2627,12 @@ msgid "Low (Yes/No)"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:532
+#: ../autotimer/src/AutoTimerEditor.py:529
 msgid "Lower bound of timespan."
 msgstr "Ajavahemiku väikseim piir."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:520
+#: ../autotimer/src/AutoTimerEditor.py:517
 msgid ""
 "Lower bound of timespan. Nothing before this time will be matched. Offsets "
 "are not taken into account!"
@@ -2605,7 +2653,7 @@ msgid "Manage logos to display at boottime"
 msgstr "Sea logod näitamiseks alustamisel"
 
 #
-#: ../networkbrowser/src/plugin.py:33
+#: ../networkbrowser/src/plugin.py:30
 msgid "Manage network shares"
 msgstr "Halda võrgukohti"
 
@@ -2614,23 +2662,23 @@ msgid ""
 "Manage your music files in a database, play it with Merlin Music Player."
 msgstr "Sea oma muusikafailid andmebaasis, mängi neid Merlin Music Player'iga."
 
-#: ../networkbrowser/src/plugin.py:33
+#: ../networkbrowser/src/plugin.py:30
 msgid "Manage your network shares..."
 msgstr "Halda oma võrgukohti..."
 
-#: ../autotimer/src/AutoTimerImporter.py:157
+#: ../autotimer/src/AutoTimerImporter.py:154
 #, python-format
 msgid "Match Timespan: %02d:%02d - %02d:%02d"
 msgstr "Vastab ajavahemikuga: %02d:%02d - %02d:%02d"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:552
-#: ../autotimer/src/AutoTimerWizard.py:112
+#: ../autotimer/src/AutoTimerEditor.py:549
+#: ../autotimer/src/AutoTimerWizard.py:109
 msgid "Match title"
 msgstr "Vastab pealkirjaga"
 
 #
-#: ../autotimer/src/AutoTimerImporter.py:139
+#: ../autotimer/src/AutoTimerImporter.py:136
 #, python-format
 msgid "Match title: %s"
 msgstr "Vastab pealkirjaga: %s"
@@ -2644,11 +2692,11 @@ msgid "Maximum Connections"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:597
+#: ../autotimer/src/AutoTimerEditor.py:594
 msgid "Maximum duration (in m)"
 msgstr "Maksimaalne kestus (min)"
 
-#: ../autotimer/src/AutoTimerEditor.py:529
+#: ../autotimer/src/AutoTimerEditor.py:526
 msgid ""
 "Maximum event duration to match. If an event is longer than this amount of "
 "time (without offset) it won't be matched."
@@ -2698,7 +2746,7 @@ msgid "Minimum Priority"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:43
+#: ../autotimer/src/AutoTimerSettings.py:40
 msgid "Modify existing timers"
 msgstr "Muuda olemasolevaid taimereid"
 
@@ -2707,12 +2755,12 @@ msgid "Modus"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:44
+#: ../autotimer/src/AutoTimerEditor.py:41
 msgid "Monday"
 msgstr "Esmaspäev"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:316
+#: ../autotimer/src/AutoTimerEditor.py:313
 msgid "Monthly"
 msgstr "Igakuine"
 
@@ -2756,27 +2804,27 @@ msgid "Most viewed"
 msgstr "Enim vaadatud"
 
 #
-#: ../networkbrowser/src/MountView.py:60
+#: ../networkbrowser/src/MountView.py:58
 msgid "Mount informations"
 msgstr "Haake informatsioon"
 
 #
-#: ../networkbrowser/src/MountEdit.py:194
+#: ../networkbrowser/src/MountEdit.py:192
 msgid "Mount options"
 msgstr "Haake seaded"
 
 #
-#: ../networkbrowser/src/MountEdit.py:181
+#: ../networkbrowser/src/MountEdit.py:179
 msgid "Mount type"
 msgstr "Haake tüüp"
 
 #
-#: ../networkbrowser/src/MountManager.py:64 ../networkbrowser/src/plugin.py:33
+#: ../networkbrowser/src/MountManager.py:62 ../networkbrowser/src/plugin.py:30
 msgid "MountManager"
 msgstr "Haakehaldur"
 
 #
-#: ../networkbrowser/src/MountView.py:59
+#: ../networkbrowser/src/MountView.py:57
 msgid ""
 "Mounted/\n"
 "Unmounted"
@@ -2785,17 +2833,17 @@ msgstr ""
 "Lahtihaagitud"
 
 #
-#: ../networkbrowser/src/MountManager.py:74
+#: ../networkbrowser/src/MountManager.py:72
 msgid "Mountpoints management"
 msgstr "Haakepunktide haldamine"
 
 #
-#: ../networkbrowser/src/MountEdit.py:69
+#: ../networkbrowser/src/MountEdit.py:67
 msgid "Mounts editor"
 msgstr "Haake muutja"
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:108
+#: ../networkbrowser/src/NetworkBrowser.py:106
 msgid "Mounts management"
 msgstr "Haakepunktide haldamine"
 
@@ -2805,57 +2853,57 @@ msgid "Move plugin screen"
 msgstr "Liiguta lisandite ekraani"
 
 #
-#: ../audiosync/src/MovableScreen.py:22
+#: ../audiosync/src/MovableScreen.py:21
 msgid "Move screen down"
 msgstr "Liiguta ekraani allapoole"
 
 #
-#: ../audiosync/src/MovableScreen.py:29
+#: ../audiosync/src/MovableScreen.py:28
 msgid "Move screen to the center of your TV"
 msgstr "Liiguta ekraan oma TV keskmesse"
 
 #
-#: ../audiosync/src/MovableScreen.py:19
+#: ../audiosync/src/MovableScreen.py:18
 msgid "Move screen to the left"
 msgstr "Liiguta ekraani vasakule"
 
 #
-#: ../audiosync/src/MovableScreen.py:31
+#: ../audiosync/src/MovableScreen.py:30
 msgid "Move screen to the lower left corner"
 msgstr "Liiguta ekraani alumisse vasakusse nurka"
 
 #
-#: ../audiosync/src/MovableScreen.py:33
+#: ../audiosync/src/MovableScreen.py:32
 msgid "Move screen to the lower right corner"
 msgstr "Liiguta ekraani alumisse paremasse nurka"
 
 #
-#: ../audiosync/src/MovableScreen.py:28
+#: ../audiosync/src/MovableScreen.py:27
 msgid "Move screen to the middle of the left border"
 msgstr "Liiguta ekraan vasaku ääre keskele"
 
 #
-#: ../audiosync/src/MovableScreen.py:30
+#: ../audiosync/src/MovableScreen.py:29
 msgid "Move screen to the middle of the right border"
 msgstr "Liiguta ekraan parema ääre keskele"
 
 #
-#: ../audiosync/src/MovableScreen.py:20
+#: ../audiosync/src/MovableScreen.py:19
 msgid "Move screen to the right"
 msgstr "Liiguta ekraan paremale"
 
 #
-#: ../audiosync/src/MovableScreen.py:25
+#: ../audiosync/src/MovableScreen.py:24
 msgid "Move screen to the upper left corner"
 msgstr "Liiguta ekraan ülemisse vasakusse nurka"
 
 #
-#: ../audiosync/src/MovableScreen.py:27
+#: ../audiosync/src/MovableScreen.py:26
 msgid "Move screen to the upper right corner"
 msgstr "Liiguta ekraan ülemisse paremasse nurka"
 
 #
-#: ../audiosync/src/MovableScreen.py:21
+#: ../audiosync/src/MovableScreen.py:20
 msgid "Move screen up"
 msgstr "Liiguta ekraan üles"
 
@@ -2881,6 +2929,10 @@ msgid ""
 msgstr ""
 "Movielist Preview loob salvestiste ekraanitõmmised ja näitab neid filmide "
 "nimekirjas."
+
+#: ../serienfilm/src/MovieList.py:579
+msgid "Movies"
+msgstr ""
 
 #: ../multirc/src/plugin.py:142
 msgid "Multi Dreambox RC layer setup"
@@ -2948,7 +3000,7 @@ msgid ""
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountEdit.py:97
+#: ../networkbrowser/src/MountEdit.py:95
 msgid "NFS share"
 msgstr "NFS võrgukoht"
 
@@ -2963,12 +3015,12 @@ msgid ""
 "Disabling Growlee until next restart!"
 msgstr ""
 
-#: ../networkbrowser/src/plugin.py:32
+#: ../networkbrowser/src/plugin.py:29
 msgid "NetworkBrowser"
 msgstr "Võrgubrauser"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:316 ../movieepg/src/plugin.py:16
+#: ../autotimer/src/AutoTimerEditor.py:313 ../movieepg/src/plugin.py:16
 msgid "Never"
 msgstr "Mitte kunagi"
 
@@ -2977,8 +3029,8 @@ msgid "Never miss any free space warning, update or timer conflict"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:911
-#: ../autotimer/src/AutoTimerEditor.py:1114 ../growlee/src/plugin.py:101
+#: ../autotimer/src/AutoTimerEditor.py:908
+#: ../autotimer/src/AutoTimerEditor.py:1111 ../growlee/src/plugin.py:101
 msgid "New"
 msgstr "Uus"
 
@@ -3001,7 +3053,7 @@ msgid "Nickname"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:323 ../mytube/src/plugin.py:60
+#: ../autotimer/src/AutoTimerEditor.py:320 ../mytube/src/plugin.py:60
 #: ../mytube/src/plugin.py:615 ../mytube/src/plugin.py:621
 #: ../autotimer/src/autotimerwizard.xml
 msgid "No"
@@ -3021,7 +3073,7 @@ msgid "No music files found!"
 msgstr ""
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:193
+#: ../networkbrowser/src/NetworkBrowser.py:191
 msgid "No network devices found!"
 msgstr "Võrguseadmeid ei leitud!"
 
@@ -3030,7 +3082,7 @@ msgstr "Võrguseadmeid ei leitud!"
 msgid "No playable video found! Stop playing this movie?"
 msgstr "Ei leia mängitavat videot! Kas peatada selle filmi näitamine?"
 
-#: ../serienfilm/src/MovieSelection.py:516
+#: ../serienfilm/src/MovieSelection.py:514
 msgid "No tags are set on these movies."
 msgstr "Salvestisele pole märksõnu määratud."
 
@@ -3060,8 +3112,8 @@ msgid "No, remove them."
 msgstr "Ei, eemalda need."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:357
-#: ../autotimer/src/AutoTimerEditor.py:387 ../autotimer/src/__init__.py:15
+#: ../autotimer/src/AutoTimerEditor.py:354
+#: ../autotimer/src/AutoTimerEditor.py:384 ../autotimer/src/__init__.py:10
 msgid "None"
 msgstr "Pole"
 
@@ -3073,11 +3125,11 @@ msgstr "Mittetulundus & Aktivism"
 msgid "Normal (Information)"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:581
+#: ../autotimer/src/AutoTimerEditor.py:578
 msgid "Not after"
 msgstr "Mitte peale"
 
-#: ../autotimer/src/AutoTimerEditor.py:580
+#: ../autotimer/src/AutoTimerEditor.py:577
 msgid "Not before"
 msgstr "Mitte enne"
 
@@ -3086,8 +3138,12 @@ msgstr "Mitte enne"
 msgid "Not fetching feed entries"
 msgstr "Otsingut ei toimu"
 
+#: ../serienfilm/src/SerienFilm.py:138
+msgid "Number of characters"
+msgstr ""
+
 #
-#: ../autotimer/src/AutoTimerEditor.py:535
+#: ../autotimer/src/AutoTimerEditor.py:532
 msgid "Number of scheduled recordings left."
 msgstr "Järgijäänud määratud salvestuste arv."
 
@@ -3100,11 +3156,11 @@ msgstr ""
 #: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:62
 #: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:139
 #: ../automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:249
-#: ../autoresolution/src/plugin.py:293 ../autotimer/src/AutoTimerEditor.py:446
-#: ../autotimer/src/AutoTimerEditor.py:1112
-#: ../autotimer/src/AutoTimerImporter.py:46
-#: ../autotimer/src/AutoTimerImporter.py:120
-#: ../autotimer/src/AutoTimerSettings.py:69 ../babelzapper/src/plugin.py:76
+#: ../autoresolution/src/plugin.py:291 ../autotimer/src/AutoTimerEditor.py:443
+#: ../autotimer/src/AutoTimerEditor.py:1109
+#: ../autotimer/src/AutoTimerImporter.py:43
+#: ../autotimer/src/AutoTimerImporter.py:117
+#: ../autotimer/src/AutoTimerSettings.py:66 ../babelzapper/src/plugin.py:76
 #: ../cdinfo/src/plugin.py:57 ../ecasa/src/EcasaSetup.py:70
 #: ../emission/src/EmissionBandwidth.py:71 ../emission/src/EmissionSetup.py:38
 #: ../growlee/src/plugin.py:100 ../merlinmusicplayer/src/plugin.py:2773
@@ -3128,53 +3184,53 @@ msgid "ORF-Teletext"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:590
+#: ../autotimer/src/AutoTimerEditor.py:587
 msgid "Offset after recording (in m)"
 msgstr "Ajavaru pärast salvestust (min)"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:589
+#: ../autotimer/src/AutoTimerEditor.py:586
 msgid "Offset before recording (in m)"
 msgstr "Ajavaru enne salvestust (min)"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:325
+#: ../autotimer/src/AutoTimerEditor.py:322
 msgid "On any service"
 msgstr "Igal kanalil"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:324
+#: ../autotimer/src/AutoTimerEditor.py:321
 msgid "On same service"
 msgstr "Samal kanalil"
 
 #
-#: ../autotimer/src/__init__.py:16
+#: ../autotimer/src/__init__.py:11
 msgid "Only AutoTimers created during this session"
 msgstr "Ainult sel korral loodud Autotaimerid"
 
-#: ../autotimer/src/AutoTimerSettings.py:41
+#: ../autotimer/src/AutoTimerSettings.py:38
 msgid "Only add timer for next x days"
 msgstr "Ainult lisa taimer järgmiseks x päevaks"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:565
-#: ../autotimer/src/AutoTimerWizard.py:97
+#: ../autotimer/src/AutoTimerEditor.py:562
+#: ../autotimer/src/AutoTimerWizard.py:94
 msgid "Only match during timespan"
 msgstr "Ajavahemikus ainuke kokkulangevus"
 
 #
-#: ../autotimer/src/AutoTimerImporter.py:173
+#: ../autotimer/src/AutoTimerImporter.py:170
 #, python-format
 msgid "Only on Service: %s"
 msgstr "Ainult kanalil: %s"
 
-#: ../autotimer/src/AutoTimerImporter.py:164
+#: ../autotimer/src/AutoTimerImporter.py:161
 #, python-format
 msgid "Only on Weekday: %s"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:91
+#: ../autotimer/src/AutoTimerOverview.py:88
 msgid "Open Context Menu"
 msgstr "Lahtise kontekstiga menüü"
 
@@ -3192,7 +3248,7 @@ msgid "Open selector"
 msgstr ""
 
 #
-#: ../audiosync/src/AC3setup.py:42
+#: ../audiosync/src/AC3setup.py:41
 msgid "Outer Bound (+/-)"
 msgstr "Väline piir (+/-)"
 
@@ -3201,7 +3257,7 @@ msgid "Overlay for scrolling bars"
 msgstr "Liikuvate ribade ülekate"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:564
+#: ../autotimer/src/AutoTimerEditor.py:561
 msgid "Override found with alternative service"
 msgstr "Teise kanaliga on leitud kattuvus"
 
@@ -3227,8 +3283,8 @@ msgstr ""
 
 #
 #: ../dyndns/src/plugin.py:37 ../emission/src/EmissionSetup.py:29
-#: ../growlee/src/plugin.py:182 ../networkbrowser/src/MountEdit.py:199
-#: ../networkbrowser/src/UserDialog.py:130
+#: ../growlee/src/plugin.py:182 ../networkbrowser/src/MountEdit.py:197
+#: ../networkbrowser/src/UserDialog.py:128
 msgid "Password"
 msgstr "Salasõna"
 
@@ -3336,6 +3392,10 @@ msgstr ""
 msgid "Playlists (%d)"
 msgstr ""
 
+#: ../serienfilm/src/MovieSelection.py:149
+msgid "Please delete the files in this Directory!"
+msgstr ""
+
 #: ../fstabeditor/src/plugin.py:242
 msgid "Please enter a value for every input field"
 msgstr ""
@@ -3346,7 +3406,7 @@ msgid "Please enter your search term."
 msgstr "Palun sisesta otsingusõna."
 
 #
-#: ../autotimer/src/AutoTimerImporter.py:316
+#: ../autotimer/src/AutoTimerImporter.py:313
 msgid "Please provide a Text to match"
 msgstr "Palun sisesta otsitav tekst"
 
@@ -3359,11 +3419,11 @@ msgstr "Palun vali standardfeed või proovi videote otsingut."
 msgid "Please select a subservice to record..."
 msgstr "Palun vali alamteenus salvestamiseks..."
 
-#: ../serienfilm/src/MovieSelection.py:513
+#: ../serienfilm/src/MovieSelection.py:511
 msgid "Please select tag to filter..."
 msgstr "Vali otsingusõna..."
 
-#: ../serienfilm/src/MovieSelection.py:457
+#: ../serienfilm/src/MovieSelection.py:455
 msgid "Please select the movie path..."
 msgstr "Vali salvestise kataloog..."
 
@@ -3373,27 +3433,27 @@ msgid "Please wait (Step 2)"
 msgstr "Palun oota (toiming 2)"
 
 #
-#: ../networkbrowser/src/MountEdit.py:328
+#: ../networkbrowser/src/MountEdit.py:326
 msgid "Please wait for activation of your network mount..."
 msgstr "Palun oota oma võrguühenduse aktiveerimist..."
 
 #
-#: ../networkbrowser/src/MountView.py:113
+#: ../networkbrowser/src/MountView.py:111
 msgid "Please wait while removing your network mount..."
 msgstr "Palun oota oma võrguühenduse kõrvaldamist..."
 
 #
-#: ../networkbrowser/src/MountEdit.py:291
+#: ../networkbrowser/src/MountEdit.py:289
 msgid "Please wait while updating your network mount..."
 msgstr "Palun oota oma võrguühenduse uuendamist..."
 
 #
-#: ../networkbrowser/src/MountManager.py:119
+#: ../networkbrowser/src/MountManager.py:117
 msgid "Please wait while your network is restarting..."
 msgstr "Palun oota kuni võrk taaskäivitub..."
 
 #
-#: ../ecasa/src/EcasaGui.py:114 ../serienfilm/src/MovieSelection.py:231
+#: ../ecasa/src/EcasaGui.py:114 ../serienfilm/src/MovieSelection.py:229
 msgid "Please wait... Loading list..."
 msgstr "Oota.Sisu laetakse..."
 
@@ -3401,7 +3461,7 @@ msgstr "Oota.Sisu laetakse..."
 msgid "Plugin to edit fstab"
 msgstr ""
 
-#: ../audiosync/src/AC3setup.py:60
+#: ../audiosync/src/AC3setup.py:59
 #, python-format
 msgid "Plugin: %(plugin)s , Version: %(version)s"
 msgstr "Lisa: %(plugin)s , Versioon: %(version)s"
@@ -3416,12 +3476,12 @@ msgid "Poland"
 msgstr "Poola"
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:40
+#: ../autotimer/src/AutoTimerSettings.py:37
 msgid "Poll Interval (in h)"
 msgstr "Hääletuse intervall ( h)"
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:39
+#: ../autotimer/src/AutoTimerSettings.py:36
 msgid "Poll automatically"
 msgstr "Hääleta automaatselt"
 
@@ -3480,48 +3540,48 @@ msgid "Position 9:"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:530
+#: ../autotimer/src/AutoTimerEditor.py:527
 msgid ""
 "Power state to change to after recordings. Select \"standard\" to not change "
 "the default behavior of enigma2 or values changed by yourself."
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountEdit.py:64
+#: ../networkbrowser/src/MountEdit.py:62
 msgid "Press OK to activate the settings."
 msgstr "Seadete aktiveerimiseks vajuta OK."
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:364
+#: ../networkbrowser/src/NetworkBrowser.py:362
 msgid "Press OK to collapse this host"
 msgstr ""
 
 #
-#: ../networkbrowser/src/UserManager.py:51
+#: ../networkbrowser/src/UserManager.py:49
 msgid "Press OK to edit selected settings."
 msgstr "Vajuta OK valitud seade muutmiseks."
 
-#: ../networkbrowser/src/MountView.py:62
+#: ../networkbrowser/src/MountView.py:60
 msgid "Press OK to edit the settings."
 msgstr "Sätete muutmiseks vajuta OK."
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:366
+#: ../networkbrowser/src/NetworkBrowser.py:364
 msgid "Press OK to expand this host"
 msgstr ""
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:360
+#: ../networkbrowser/src/NetworkBrowser.py:358
 msgid "Press OK to mount this share!"
 msgstr "Vajuta OK võrgukoha haakimiseks!"
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:111
+#: ../networkbrowser/src/NetworkBrowser.py:109
 msgid "Press OK to mount!"
 msgstr "Vajuta OK haakimiseks!"
 
 #
-#: ../networkbrowser/src/UserDialog.py:90
+#: ../networkbrowser/src/UserDialog.py:88
 msgid "Press OK to save settings."
 msgstr "Vajuta OK seadete salvestamiseks."
 
@@ -3535,17 +3595,17 @@ msgid "Press OK to select a service"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountManager.py:55
+#: ../networkbrowser/src/MountManager.py:53
 msgid "Press OK to select."
 msgstr "Vajuta OK valikuks."
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:217
+#: ../autotimer/src/AutoTimerOverview.py:214
 msgid "Preview"
 msgstr "Eelvaade"
 
 #
-#: ../autotimer/src/AutoTimerPreview.py:76
+#: ../autotimer/src/AutoTimerPreview.py:73
 msgid "Preview AutoTimer"
 msgstr "Autotaimeri eelvaade"
 
@@ -3679,12 +3739,12 @@ msgid "Ratio: %.2f"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:709
-#: ../autotimer/src/AutoTimerEditor.py:1054
-#: ../autotimer/src/AutoTimerEditor.py:1225
-#: ../autotimer/src/AutoTimerImporter.py:235
-#: ../autotimer/src/AutoTimerOverview.py:202
-#: ../serienfilm/src/SerienFilm.py:90
+#: ../autotimer/src/AutoTimerEditor.py:706
+#: ../autotimer/src/AutoTimerEditor.py:1051
+#: ../autotimer/src/AutoTimerEditor.py:1222
+#: ../autotimer/src/AutoTimerImporter.py:232
+#: ../autotimer/src/AutoTimerOverview.py:199
+#: ../serienfilm/src/SerienFilm.py:87
 msgid "Really close without saving settings?"
 msgstr "Kas soovid seadeid salvestamata väljuda?"
 
@@ -3733,17 +3793,17 @@ msgid "Reconstruct the .ap and .sc files of the selected movie"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:612
+#: ../autotimer/src/AutoTimerEditor.py:609
 msgid "Record a maximum of x times"
 msgstr "Salvesta maksimaalselt x korda"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:1163
-#: ../autotimer/src/AutoTimerEditor.py:1217
+#: ../autotimer/src/AutoTimerEditor.py:1160
+#: ../autotimer/src/AutoTimerEditor.py:1214
 msgid "Record on"
 msgstr "Salvestus käib"
 
-#: ../serienfilm/src/MovieSelection.py:439
+#: ../serienfilm/src/MovieSelection.py:437
 msgid "Recorded files..."
 msgstr "Salvestised..."
 
@@ -3752,7 +3812,7 @@ msgid "Redirect notifications to Growl, Snarl, Prowl or Syslog"
 msgstr ""
 
 #
-#: ../autoresolution/src/plugin.py:309 ../autoresolution/src/plugin.py:310
+#: ../autoresolution/src/plugin.py:307 ../autoresolution/src/plugin.py:308
 msgid "Refresh Rate"
 msgstr "Värskendussagedus"
 
@@ -3837,7 +3897,7 @@ msgid "Remove entry"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:99
+#: ../autotimer/src/AutoTimerOverview.py:96
 msgid "Remove selected AutoTimer"
 msgstr "Kustuta valitud autotaimer"
 
@@ -3866,22 +3926,22 @@ msgid "Replace the rewind  input with a seekbar"
 msgstr "Asenda tagasikerimine  sisestus otsiribaga"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:620
+#: ../autotimer/src/AutoTimerEditor.py:617
 msgid "Require description to be unique"
 msgstr "Nõua unikaalset kirjeldust"
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:109
+#: ../networkbrowser/src/NetworkBrowser.py:107
 msgid "Rescan"
 msgstr "Otsi uuesti"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:618
+#: ../autotimer/src/AutoTimerEditor.py:615
 msgid "Reset count"
 msgstr "Nulli arvesti"
 
 #
-#: ../audiosync/src/MovableScreen.py:34
+#: ../audiosync/src/MovableScreen.py:33
 msgid "Reset saved position"
 msgstr "Nulli salvestatud positsioon"
 
@@ -3909,11 +3969,11 @@ msgid "Restore back up of fstab"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:531
+#: ../autotimer/src/AutoTimerEditor.py:528
 msgid "Restrict \"after event\" to a certain timespan?"
 msgstr "Kas keelata \"pärast sündmust\" teatud ajavahemikuks?"
 
-#: ../autotimer/src/AutoTimerEditor.py:575
+#: ../autotimer/src/AutoTimerEditor.py:572
 msgid "Restrict to events on certain dates"
 msgstr ""
 
@@ -3938,7 +3998,7 @@ msgstr ""
 msgid "Run mount -a"
 msgstr ""
 
-#: ../autoresolution/src/plugin.py:313
+#: ../autoresolution/src/plugin.py:311
 msgid "Running in testmode"
 msgstr ""
 
@@ -3947,19 +4007,19 @@ msgstr ""
 msgid "Russia"
 msgstr "Venemaa"
 
-#: ../autoresolution/src/plugin.py:24
+#: ../autoresolution/src/plugin.py:22
 msgid "SD 25/50HZ Interlace Mode"
 msgstr ""
 
-#: ../autoresolution/src/plugin.py:25
+#: ../autoresolution/src/plugin.py:23
 msgid "SD 25/50HZ Progressive Mode"
 msgstr ""
 
-#: ../autoresolution/src/plugin.py:24
+#: ../autoresolution/src/plugin.py:22
 msgid "SD 30/60HZ Interlace Mode"
 msgstr ""
 
-#: ../autoresolution/src/plugin.py:25
+#: ../autoresolution/src/plugin.py:23
 msgid "SD 30/60HZ Progressive Mode"
 msgstr ""
 
@@ -3984,15 +4044,15 @@ msgid "Satellites"
 msgstr "Satelliidid"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:49
+#: ../autotimer/src/AutoTimerEditor.py:46
 msgid "Saturday"
 msgstr "Laupäev"
 
 #
-#: ../audiosync/src/AC3setup.py:64 ../autotimer/src/AutoTimerEditor.py:909
-#: ../autotimer/src/AutoTimerOverview.py:70
+#: ../audiosync/src/AC3setup.py:63 ../autotimer/src/AutoTimerEditor.py:906
+#: ../autotimer/src/AutoTimerOverview.py:67
 #: ../dreamirc/src/dreamIRCSetup.py:72 ../mytube/src/MyTubeSearch.py:299
-#: ../serienfilm/src/SerienFilm.py:65
+#: ../serienfilm/src/SerienFilm.py:62
 msgid "Save"
 msgstr "Salvesta"
 
@@ -4012,12 +4072,12 @@ msgid "Save values and close plugin"
 msgstr "Salvesta väärtused ja sulge laiendus"
 
 #
-#: ../audiosync/src/MovableScreen.py:17 ../audiosync/src/MovableScreen.py:24
+#: ../audiosync/src/MovableScreen.py:16 ../audiosync/src/MovableScreen.py:23
 msgid "Save values and close screen"
 msgstr "Salvesta väärtused ja sulge aken"
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:499
+#: ../networkbrowser/src/NetworkBrowser.py:497
 msgid "Scan NFS share"
 msgstr "Otsi NFS võrgukohta"
 
@@ -4026,7 +4086,7 @@ msgid "Scan path for music files and add them to database"
 msgstr ""
 
 #
-#: ../networkbrowser/src/NetworkBrowser.py:500
+#: ../networkbrowser/src/NetworkBrowser.py:498
 msgid "Scan range"
 msgstr "Otsi piirkonda"
 
@@ -4063,12 +4123,12 @@ msgid "Search for %s"
 msgstr ""
 
 #
-#: ../networkbrowser/src/plugin.py:32
+#: ../networkbrowser/src/plugin.py:29
 msgid "Search for network shares"
 msgstr "Otsi võrgukohti"
 
 #
-#: ../networkbrowser/src/plugin.py:32
+#: ../networkbrowser/src/plugin.py:29
 msgid "Search for network shares..."
 msgstr "Otsi võrgukohti..."
 
@@ -4111,7 +4171,7 @@ msgid "Search results for \"%s\" in title, artist or album"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:558
+#: ../autotimer/src/AutoTimerEditor.py:555
 msgid "Search strictness"
 msgstr "Otsingu põhjalikkus"
 
@@ -4120,11 +4180,11 @@ msgid "Search through the EPG"
 msgstr "Otsi EPG kaudu"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:557
+#: ../autotimer/src/AutoTimerEditor.py:554
 msgid "Search type"
 msgstr "Otsingu tüüp"
 
-#: ../networkbrowser/src/NetworkBrowser.py:189
+#: ../networkbrowser/src/NetworkBrowser.py:187
 msgid "Searching your network. Please wait..."
 msgstr "Otsin võrku. Palun oota..."
 
@@ -4152,7 +4212,7 @@ msgstr ""
 msgid "Select"
 msgstr "Vali"
 
-#: ../autotimer/src/AutoTimerEditor.py:514
+#: ../autotimer/src/AutoTimerEditor.py:511
 msgid ""
 "Select \"exact match\" to enforce \"Match title\" to match exactly, "
 "\"partial match\" if you only want to search for a part of the event title "
@@ -4165,17 +4225,17 @@ msgid "Select Info type..."
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerImporter.py:60
+#: ../autotimer/src/AutoTimerImporter.py:57
 msgid "Select a timer to import"
 msgstr "Vali taimer importimiseks"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:1201
+#: ../autotimer/src/AutoTimerEditor.py:1198
 msgid "Select bouquet to record on"
 msgstr "Vali favoriit millelt salvestada"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:1195
+#: ../autotimer/src/AutoTimerEditor.py:1192
 msgid "Select channel to record on"
 msgstr "Vali kanal millelt salvestada"
 
@@ -4195,7 +4255,7 @@ msgid "Select the key you want to set to %i ms"
 msgstr "Vali nupp, mille tahad seada %i ms jaoks"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:540
+#: ../autotimer/src/AutoTimerEditor.py:537
 msgid "Select the location to save the recording to."
 msgstr "Vali salvestise jaoks sobiv asukoht."
 
@@ -4204,7 +4264,7 @@ msgid "Select timer type..."
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:1022
+#: ../autotimer/src/AutoTimerEditor.py:1019
 msgid "Select type of Filter"
 msgstr "Vali filtri tüüp"
 
@@ -4213,7 +4273,7 @@ msgid "Select user"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:515
+#: ../autotimer/src/AutoTimerEditor.py:512
 msgid "Select whether or not you want to enforce case correctness."
 msgstr "Vali, kas soovid kasutada tähesuuruse korrektsuse jälgimist."
 
@@ -4234,13 +4294,17 @@ msgstr ""
 msgid "Send Notifications?"
 msgstr ""
 
+#: ../serienfilm/src/MovieList.py:425
+msgid "Series"
+msgstr ""
+
 #
-#: ../networkbrowser/src/MountEdit.py:183
+#: ../networkbrowser/src/MountEdit.py:181
 msgid "Server IP"
 msgstr "Serveri IP"
 
 #
-#: ../networkbrowser/src/MountEdit.py:185
+#: ../networkbrowser/src/MountEdit.py:183
 msgid "Server share"
 msgstr "Serveri võrgukoht"
 
@@ -4281,7 +4345,7 @@ msgid "Set Bitstream/PCM audio delays"
 msgstr "Määra Bitivoo/PCM audio viide"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:562
+#: ../autotimer/src/AutoTimerEditor.py:559
 msgid "Set End Time"
 msgstr "Määra lõppaeg"
 
@@ -4292,10 +4356,14 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:517
+#: ../autotimer/src/AutoTimerEditor.py:514
 msgid ""
 "Set an end time for the timer. If you do, the timespan of the event might be "
 "blocked for recordings."
+msgstr ""
+
+#: ../serienfilm/src/SerienFilm.py:56
+msgid "Set default"
 msgstr ""
 
 #
@@ -4306,12 +4374,16 @@ msgid "Set delay to %i ms (can be set)"
 msgstr "Määra viide %i ms (saab muuta)"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:593
+#: ../autotimer/src/AutoTimerEditor.py:590
 msgid "Set maximum duration"
 msgstr "Sea maksimaalne kestus"
 
+#: ../serienfilm/src/SerienFilm.py:62
+msgid "Set size"
+msgstr ""
+
 #
-#: ../autotimer/src/AutoTimerEditor.py:510
+#: ../autotimer/src/AutoTimerEditor.py:507
 msgid "Set this NO to disable this AutoTimer."
 msgstr "Autotaimeri keelamiseks vali EI."
 
@@ -4333,7 +4405,7 @@ msgid "Settings"
 msgstr "Seaded"
 
 #
-#: ../autotimer/src/AutoTimerOverview.py:220 ../ecasa/src/EcasaGui.py:353
+#: ../autotimer/src/AutoTimerOverview.py:217 ../ecasa/src/EcasaGui.py:353
 msgid "Setup"
 msgstr "Seadistamine"
 
@@ -4372,17 +4444,17 @@ msgid "Short Movies"
 msgstr "Lühifilmid"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:519
+#: ../autotimer/src/AutoTimerEditor.py:516
 msgid "Should this AutoTimer be restricted to a timespan?"
 msgstr "Kas keelata see AutoTimer antud ajavahemikus?"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:528
+#: ../autotimer/src/AutoTimerEditor.py:525
 msgid "Should this AutoTimer only match up to a certain event duration?"
 msgstr "Kas see AutoTimer peaks vastama ainult teatud kindlale kestusele?"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:539
+#: ../autotimer/src/AutoTimerEditor.py:536
 msgid ""
 "Should timers created by this AutoTimer be recorded to a custom location?"
 msgstr ""
@@ -4428,7 +4500,7 @@ msgid "Show in Plugin menu"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:42
+#: ../autotimer/src/AutoTimerSettings.py:39
 msgid "Show in extension menu"
 msgstr "Näita laienduste menüüs"
 
@@ -4436,15 +4508,15 @@ msgstr "Näita laienduste menüüs"
 msgid "Show indicator label if zapping PiP"
 msgstr ""
 
-#: ../autoresolution/src/plugin.py:311
+#: ../autoresolution/src/plugin.py:309
 msgid "Show info screen"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerSettings.py:49
+#: ../autotimer/src/AutoTimerSettings.py:46
 msgid "Show notification on conflicts"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerSettings.py:50
+#: ../autotimer/src/AutoTimerSettings.py:47
 msgid "Show notification on similars"
 msgstr ""
 
@@ -4543,7 +4615,7 @@ msgid "Sorry, video is not available!"
 msgstr "Kahjuks pole video saadaval!"
 
 #
-#: ../autotimer/src/AutoTimerPreview.py:82
+#: ../autotimer/src/AutoTimerPreview.py:79
 msgid "Sort AutoTimer"
 msgstr "Järjestai autotaimerit"
 
@@ -4552,7 +4624,7 @@ msgid "Sort Plugins in the PluginBrowser."
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerPreview.py:80
+#: ../autotimer/src/AutoTimerPreview.py:77
 msgid "Sort Time"
 msgstr "Ajajärj."
 
@@ -4618,20 +4690,20 @@ msgid "Std. Feeds"
 msgstr "Tava vood"
 
 #
-#: ../audiosync/src/AC3setup.py:43
+#: ../audiosync/src/AC3setup.py:42
 msgid "Step in ms for arrow keys"
 msgstr "Sisestab ms noolenuppude jaoks"
 
 #
-#: ../audiosync/src/AC3setup.py:48 ../audiosync/src/AC3setup.py:49
-#: ../audiosync/src/AC3setup.py:50
+#: ../audiosync/src/AC3setup.py:47 ../audiosync/src/AC3setup.py:48
+#: ../audiosync/src/AC3setup.py:49
 #, python-format
 msgid "Step in ms for key %i"
 msgstr "Sisestab ms nupu %i jaoks"
 
 #
-#: ../audiosync/src/AC3setup.py:45 ../audiosync/src/AC3setup.py:46
-#: ../audiosync/src/AC3setup.py:47
+#: ../audiosync/src/AC3setup.py:44 ../audiosync/src/AC3setup.py:45
+#: ../audiosync/src/AC3setup.py:46
 #, python-format
 msgid "Step in ms for keys '%s'"
 msgstr "Sisestab ms nuppude '%s' jaoks"
@@ -4665,11 +4737,11 @@ msgid ""
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:50
+#: ../autotimer/src/AutoTimerEditor.py:47
 msgid "Sunday"
 msgstr "Pühapäev"
 
-#: ../autotimer/src/AutoTimerSettings.py:52
+#: ../autotimer/src/AutoTimerSettings.py:49
 msgid "Support \"Fast Scan\"?"
 msgstr ""
 
@@ -4687,24 +4759,24 @@ msgid "TV Charts of all users"
 msgstr ""
 
 #
-#: ../serienfilm/src/MovieSelection.py:400
+#: ../serienfilm/src/MovieSelection.py:398
 msgid "Tag 1"
 msgstr "Võtmesõna 1"
 
 #
-#: ../serienfilm/src/MovieSelection.py:405
+#: ../serienfilm/src/MovieSelection.py:403
 msgid "Tag 2"
 msgstr "Võtmesõna 2"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:630
-#: ../autotimer/src/AutoTimerImporter.py:209
-#: ../serienfilm/src/MovieSelection.py:412
+#: ../autotimer/src/AutoTimerEditor.py:627
+#: ../autotimer/src/AutoTimerImporter.py:206
+#: ../serienfilm/src/MovieSelection.py:410
 msgid "Tags"
 msgstr "Võtmesõnad"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:541
+#: ../autotimer/src/AutoTimerEditor.py:538
 msgid "Tags the Timer/Recording will have."
 msgstr "Nimesilt taimerile/salvestusele."
 
@@ -4835,21 +4907,28 @@ msgid ""
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:536
+#: ../autotimer/src/AutoTimerEditor.py:533
 msgid ""
 "The counter can automatically be reset to the limit at certain intervals."
 msgstr ""
 "Loendurit saab automaatselt seada piirangutele teatud ajavahemike järel."
 
+#: ../serienfilm/src/SerienFilm.py:60
+#, python-format
+msgid ""
+"The current title:episode separator is \"%s\" (%d characters)\n"
+"To change it: first Set size and then Edit"
+msgstr ""
+
 #
-#: ../autotimer/src/AutoTimerSettings.py:51
+#: ../autotimer/src/AutoTimerSettings.py:48
 msgid ""
 "The editor to be used for new AutoTimers. This can either be the Wizard or "
 "the classic editor."
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:726
+#: ../autotimer/src/AutoTimerEditor.py:723
 msgid "The match attribute is mandatory."
 msgstr "Vastete omadus on kohustuslik."
 
@@ -4933,7 +5012,7 @@ msgid ""
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:511
+#: ../autotimer/src/AutoTimerEditor.py:508
 msgid ""
 "This is a name you can give the AutoTimer. It will be shown in the Overview "
 "and the Preview."
@@ -4954,7 +5033,7 @@ msgid ""
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:40
+#: ../autotimer/src/AutoTimerSettings.py:37
 msgid ""
 "This is the delay in hours that the AutoTimer will wait after a search to "
 "search the EPG again."
@@ -4968,11 +5047,18 @@ msgid "This is the help screen. Feed me with something to display."
 msgstr "See on abilise aken. Saada mulle midagi kuvamiseks."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:512
+#: ../autotimer/src/AutoTimerEditor.py:509
 msgid ""
 "This is what will be looked for in event titles. Note that looking for e.g. "
 "german umlauts can be tricky as you have to know the encoding the channel "
 "uses."
+msgstr ""
+
+#: ../serienfilm/src/SerienFilm.py:27
+msgid ""
+"This plugin is configured by the MENU key in the movielist\n"
+"\n"
+"Application details provides the HELP key in the movielist"
 msgstr ""
 
 #: ../autotimer/src/mphelp.xml
@@ -4987,14 +5073,14 @@ msgid ""
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:43
+#: ../autotimer/src/AutoTimerSettings.py:40
 msgid "This setting controls the behavior when a timer matches a found event."
 msgstr ""
 "See seadistus kontrollib vastuvõtja käitumist taimeri kattumisel leitud "
 "sündmusega."
 
 #
-#: ../autotimer/src/AutoTimerSettings.py:46
+#: ../autotimer/src/AutoTimerSettings.py:43
 msgid ""
 "This toggles the behavior on timer conflicts. If an AutoTimer matches an "
 "event that conflicts with an existing timer it will not ignore this event "
@@ -5005,24 +5091,24 @@ msgstr ""
 "lubatuna."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:47
+#: ../autotimer/src/AutoTimerEditor.py:44
 msgid "Thursday"
 msgstr "Neljapäev"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:527
+#: ../autotimer/src/AutoTimerEditor.py:524
 msgid "Time in minutes to append to recording."
 msgstr "Salvestuse lõppu lisatav varuaeg minutites."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:526
+#: ../autotimer/src/AutoTimerEditor.py:523
 msgid "Time in minutes to prepend to recording."
 msgstr "Salvestise ette lisatav eelaeg minutites."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:559
-#: ../autotimer/src/AutoTimerImporter.py:191
-#: ../autotimer/src/AutoTimerWizard.py:113
+#: ../autotimer/src/AutoTimerEditor.py:556
+#: ../autotimer/src/AutoTimerImporter.py:188
+#: ../autotimer/src/AutoTimerWizard.py:110
 msgid "Timer type"
 msgstr "Taimeri tüüp"
 
@@ -5043,15 +5129,15 @@ msgid ""
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:333
+#: ../autotimer/src/AutoTimerEditor.py:330
 msgid "Title"
 msgstr "Pealkiri"
 
-#: ../autotimer/src/AutoTimerEditor.py:334
+#: ../autotimer/src/AutoTimerEditor.py:331
 msgid "Title and Short description"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:335
+#: ../autotimer/src/AutoTimerEditor.py:332
 msgid "Title and all descriptions"
 msgstr ""
 
@@ -5069,8 +5155,20 @@ msgstr "Kasutatakse teiste lisade poolt lihtsa allalaadimise võimalusena."
 msgid "Today"
 msgstr "Täna"
 
+#: ../serienfilm/src/MovieSelection.py:290
+msgid "Toggle date / alphabetic sort mode"
+msgstr ""
+
+#: ../serienfilm/src/MovieSelection.py:294
+msgid "Toggle description / tags display"
+msgstr ""
+
 #: ../pipzap/src/plugin.py:535
 msgid "Toggle pipzap status"
+msgstr ""
+
+#: ../serienfilm/src/MovieSelection.py:293
+msgid "Toggle style minimal / compact"
 msgstr ""
 
 #
@@ -5120,7 +5218,7 @@ msgid "Trying to download the Youtube search results. Please wait..."
 msgstr "Üritan alla laadida YouTube otsingu tulemusi. Oota..."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:45
+#: ../autotimer/src/AutoTimerEditor.py:42
 msgid "Tuesday"
 msgstr "Teisipäev"
 
@@ -5168,7 +5266,7 @@ msgstr ""
 msgid "United States"
 msgstr "USA"
 
-#: ../autotimer/src/AutoTimerSettings.py:39
+#: ../autotimer/src/AutoTimerSettings.py:36
 msgid ""
 "Unless this is enabled AutoTimer will NOT automatically look for events "
 "matching your AutoTimers but only when you leave the GUI with the green "
@@ -5232,12 +5330,12 @@ msgid "Upload rate"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:533
+#: ../autotimer/src/AutoTimerEditor.py:530
 msgid "Upper bound of timespan."
 msgstr "Ajavahemiku ülemine piir."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:521
+#: ../autotimer/src/AutoTimerEditor.py:518
 msgid ""
 "Upper bound of timespan. Nothing after this time will be matched. Offsets "
 "are not taken into account!"
@@ -5246,7 +5344,7 @@ msgstr ""
 "püsimuutusi!"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:626
+#: ../autotimer/src/AutoTimerEditor.py:623
 msgid "Use a custom location"
 msgstr "Kasuta määratud asukohta"
 
@@ -5277,7 +5375,7 @@ msgid "User history"
 msgstr ""
 
 #
-#: ../networkbrowser/src/MountManager.py:75
+#: ../networkbrowser/src/MountManager.py:73
 msgid "User management"
 msgstr "Kasutaja haldamine"
 
@@ -5286,14 +5384,14 @@ msgid "User video entries."
 msgstr ""
 
 #
-#: ../networkbrowser/src/UserManager.py:60
+#: ../networkbrowser/src/UserManager.py:58
 msgid "Usermanager"
 msgstr "Kasutajahaldur"
 
 #
 #: ../dyndns/src/plugin.py:36 ../emission/src/EmissionSetup.py:28
-#: ../networkbrowser/src/MountEdit.py:197
-#: ../networkbrowser/src/UserDialog.py:128
+#: ../networkbrowser/src/MountEdit.py:195
+#: ../networkbrowser/src/UserDialog.py:126
 msgid "Username"
 msgstr "Kasutajatunnus"
 
@@ -5307,6 +5405,17 @@ msgstr ""
 msgid ""
 "Using eMission you can control downloads and settings of a remote (or local) "
 "instance of Transmission."
+msgstr ""
+
+#: ../serienfilm/src/SerienFilm.py:55
+msgid ""
+"Usually the episode of a series is tansmitted separate of the title in the "
+"description field\n"
+"In a few series however it is appended to the title behind a colon\n"
+"e.g. Tatort: Der Fluch der Mumie\n"
+"\n"
+"A commen part of the title up to this title:episode separator shared by "
+"several movies creates a series"
 msgstr ""
 
 #: ../vps/meta/plugin_vps.xml
@@ -5370,12 +5479,12 @@ msgid "View response videos"
 msgstr "Vaata vastuse videoid"
 
 #
-#: ../networkbrowser/src/MountManager.py:74
+#: ../networkbrowser/src/MountManager.py:72
 msgid "View, edit or delete mountpoints on your Dreambox."
 msgstr "Vaata, muuda või kustuta vastuvõtja haakepunkte."
 
 #
-#: ../networkbrowser/src/MountManager.py:75
+#: ../networkbrowser/src/MountManager.py:73
 msgid "View, edit or delete usernames and passwords for your network."
 msgstr "Vaata, muuda või kustuta oma võrgu kasutajanimesid ja salasõnu."
 
@@ -5408,7 +5517,7 @@ msgid "Wait for screensaver (in min)"
 msgstr ""
 
 #
-#: ../audiosync/src/AC3setup.py:44
+#: ../audiosync/src/AC3setup.py:43
 msgid "Wait time in ms before activation:"
 msgstr "Ooteaeg ms enne aktiveerimist:"
 
@@ -5446,27 +5555,27 @@ msgid "Web-Ipkg-Admin for PC"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:46
+#: ../autotimer/src/AutoTimerEditor.py:43
 msgid "Wednesday"
 msgstr "Kolmapäev"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:52
+#: ../autotimer/src/AutoTimerEditor.py:49
 msgid "Weekday"
 msgstr "Nädalapäev"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:51
+#: ../autotimer/src/AutoTimerEditor.py:48
 msgid "Weekend"
 msgstr "Nädalavahetus"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:316
+#: ../autotimer/src/AutoTimerEditor.py:313
 msgid "Weekly (Monday)"
 msgstr "Iganädalane (Esmaspäev)"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:316
+#: ../autotimer/src/AutoTimerEditor.py:313
 msgid "Weekly (Sunday)"
 msgstr "Iganädalane (Pühapäev)"
 
@@ -5530,14 +5639,14 @@ msgstr ""
 msgid "What would you like to reconstruct?  (\"%s\")"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerSettings.py:52
+#: ../autotimer/src/AutoTimerSettings.py:49
 msgid ""
 "When supporting \"Fast Scan\" the service type is ignored. You don't need to "
 "enable this unless your Image supports \"Fast Scan\" and you are using it."
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:537
+#: ../autotimer/src/AutoTimerEditor.py:534
 msgid ""
 "When this option is enabled the AutoTimer won't match events where another "
 "timer with the same description already exists in the timer list."
@@ -5618,20 +5727,20 @@ msgstr ""
 "See lisa vajab arvutit töötava VLC programmiga."
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:518
+#: ../autotimer/src/AutoTimerEditor.py:515
 msgid ""
 "With this option enabled the channel to record on can be changed to a "
 "alternative service it is restricted to."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:534
+#: ../autotimer/src/AutoTimerEditor.py:531
 msgid ""
 "With this option you can restrict the AutoTimer to a certain amount of "
 "scheduled recordings. Set this to 0 to disable this functionality."
 msgstr ""
 
 #
-#: ../autotimer/src/__init__.py:23
+#: ../autotimer/src/__init__.py:18
 msgid "Wizard"
 msgstr "Abiline"
 
@@ -5665,7 +5774,7 @@ msgstr "Jah, hoia alles."
 msgid "You can choose between Flickr and Picasa as site to use."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerSettings.py:41
+#: ../autotimer/src/AutoTimerSettings.py:38
 msgid ""
 "You can control for how many days in the future timers are added. Set this "
 "to 0 to disable this feature."
@@ -5695,7 +5804,7 @@ msgid ""
 msgstr ""
 
 #
-#: ../serienfilm/src/MovieSelection.py:162
+#: ../serienfilm/src/MovieSelection.py:160
 msgid "You cannot delete this!"
 msgstr "Seda ei saa kustutada!"
 
@@ -5708,8 +5817,8 @@ msgid ""
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:735
-#: ../autotimer/src/AutoTimerImporter.py:250
+#: ../autotimer/src/AutoTimerEditor.py:732
+#: ../autotimer/src/AutoTimerImporter.py:247
 #, python-format
 msgid ""
 "You entered \"%s\" as Text to match.\n"
@@ -5763,17 +5872,17 @@ msgstr ""
 "%s"
 
 #
-#: ../networkbrowser/src/MountEdit.py:341
+#: ../networkbrowser/src/MountEdit.py:339
 msgid "Your network mount has been activated."
 msgstr "Teie võrgu haage on aktiveeritud."
 
 #
-#: ../networkbrowser/src/MountView.py:128
+#: ../networkbrowser/src/MountView.py:126
 msgid "Your network mount has been removed."
 msgstr "Teie võrgu haage on kustutatud."
 
 #
-#: ../networkbrowser/src/MountEdit.py:303
+#: ../networkbrowser/src/MountEdit.py:301
 msgid "Your network mount has been updated."
 msgstr "Teie võrgu haakepunkt on uuendatud."
 
@@ -5864,14 +5973,18 @@ msgid "add Plugin to Mainmenu"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:479
+#: ../autotimer/src/AutoTimerEditor.py:476
 msgid "add filters"
 msgstr "lisa filtrid"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:485
+#: ../autotimer/src/AutoTimerEditor.py:482
 msgid "add services"
 msgstr "lisa kanal"
+
+#: ../serienfilm/src/MovieSelection.py:72
+msgid "alphabetic sort  (quick toggle by key 0)"
+msgstr ""
 
 #: ../movieepg/src/plugin.py:18
 msgid "always"
@@ -5900,9 +6013,9 @@ msgstr ""
 msgid "assign long key-press on color buttons to plugins or E2 functions"
 msgstr "omista värviliste nuppude pikk vajutus lisadele või E2 toimingutele"
 
-#: ../autoresolution/src/plugin.py:35 ../autoresolution/src/plugin.py:37
-#: ../autotimer/src/AutoTimerEditor.py:272
-#: ../autotimer/src/AutoTimerImporter.py:30
+#: ../autoresolution/src/plugin.py:33 ../autoresolution/src/plugin.py:35
+#: ../autotimer/src/AutoTimerEditor.py:269
+#: ../autotimer/src/AutoTimerImporter.py:27
 msgid "auto"
 msgstr "automaatne"
 
@@ -5910,7 +6023,7 @@ msgstr "automaatne"
 msgid "autotimers need a match attribute"
 msgstr ""
 
-#: ../autoresolution/src/plugin.py:35 ../autoresolution/src/plugin.py:37
+#: ../autoresolution/src/plugin.py:33 ../autoresolution/src/plugin.py:35
 msgid "bob"
 msgstr ""
 
@@ -5937,12 +6050,12 @@ msgid "cancel"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:195
+#: ../autotimer/src/AutoTimerEditor.py:192
 msgid "case-insensitive search"
 msgstr "tõstutundetu otsing"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:195
+#: ../autotimer/src/AutoTimerEditor.py:192
 msgid "case-sensitive search"
 msgstr "tõstutundlik otsing"
 
@@ -5990,7 +6103,7 @@ msgstr ""
 msgid "current Service"
 msgstr ""
 
-#: ../autoresolution/src/plugin.py:122
+#: ../autoresolution/src/plugin.py:120
 msgid "default"
 msgstr ""
 
@@ -5998,8 +6111,8 @@ msgstr ""
 msgid "default Zoomlevel for Preview Images"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:910
-#: ../autotimer/src/AutoTimerEditor.py:1113 ../filebrowser/src/plugin.py:112
+#: ../autotimer/src/AutoTimerEditor.py:907
+#: ../autotimer/src/AutoTimerEditor.py:1110 ../filebrowser/src/plugin.py:112
 msgid "delete"
 msgstr "kustuta"
 
@@ -6007,7 +6120,7 @@ msgstr "kustuta"
 msgid "delete file"
 msgstr "kustuta fail"
 
-#: ../serienfilm/src/MovieSelection.py:68
+#: ../serienfilm/src/MovieSelection.py:66
 msgid "delete..."
 msgstr "kustuta..."
 
@@ -6015,7 +6128,7 @@ msgstr "kustuta..."
 msgid "deleting file ..."
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:194
+#: ../autotimer/src/AutoTimerEditor.py:191
 msgid "description match"
 msgstr ""
 
@@ -6028,12 +6141,12 @@ msgid "directory"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerImporter.py:130
+#: ../autotimer/src/AutoTimerImporter.py:127
 msgid "disable"
 msgstr "keela"
 
-#: ../autotimer/src/AutoTimerEditor.py:269
-#: ../autotimer/src/AutoTimerImporter.py:27
+#: ../autotimer/src/AutoTimerEditor.py:266
+#: ../autotimer/src/AutoTimerImporter.py:24
 msgid "do nothing"
 msgstr "ära tee midagi"
 
@@ -6043,6 +6156,10 @@ msgstr ""
 
 #: ../fstabeditor/src/plugin.py:235
 msgid "dump frequency (in days): "
+msgstr ""
+
+#: ../serienfilm/src/MovieList.py:581
+msgid "duplicated"
 msgstr ""
 
 #: ../ecasa/src/EcasaSetup.py:34 ../ecasa/src/EcasaSetup.py:90
@@ -6069,17 +6186,17 @@ msgid "ecasa is (so far) a basic picasa client."
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:477
+#: ../autotimer/src/AutoTimerEditor.py:474
 msgid "edit filters"
 msgstr "muuda filtreid"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:483
+#: ../autotimer/src/AutoTimerEditor.py:480
 msgid "edit services"
 msgstr "muuda kanalit"
 
 #
-#: ../autotimer/src/AutoTimerImporter.py:130
+#: ../autotimer/src/AutoTimerImporter.py:127
 msgid "enable"
 msgstr "luba"
 
@@ -6104,11 +6221,11 @@ msgid "error parsing incoming data."
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:194
+#: ../autotimer/src/AutoTimerEditor.py:191
 msgid "exact match"
 msgstr "täpne vaste"
 
-#: ../serienfilm/src/MovieSelection.py:286
+#: ../serienfilm/src/MovieSelection.py:284
 msgid "exit movielist"
 msgstr "välju salvestiste loendist"
 
@@ -6129,16 +6246,20 @@ msgid "get latest satellites.xml"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:271
-#: ../autotimer/src/AutoTimerImporter.py:28
+#: ../autotimer/src/AutoTimerEditor.py:268
+#: ../autotimer/src/AutoTimerImporter.py:25
 msgid "go to deep standby"
 msgstr "mine sügavootele"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:270
-#: ../autotimer/src/AutoTimerImporter.py:29
+#: ../autotimer/src/AutoTimerEditor.py:267
+#: ../autotimer/src/AutoTimerImporter.py:26
 msgid "go to standby"
 msgstr "mine ooterežiimi"
+
+#: ../serienfilm/src/plugin.py:108
+msgid "group movies of a series to virtual directories"
+msgstr ""
 
 #: ../netcaster/src/bin/plugin.py:190
 msgid "help"
@@ -6148,8 +6269,20 @@ msgstr ""
 msgid "hide"
 msgstr ""
 
+#: ../serienfilm/src/MovieSelection.py:86
+msgid "hide duration"
+msgstr ""
+
 #: ../menusort/src/plugin.py:198
 msgid "hide entry"
+msgstr ""
+
+#: ../serienfilm/src/MovieSelection.py:82
+msgid "hide recordingtime"
+msgstr ""
+
+#: ../serienfilm/src/MovieSelection.py:91
+msgid "hide the read real directories"
 msgstr ""
 
 #: ../merlinmusicplayer/src/plugin.py:3386
@@ -6167,16 +6300,16 @@ msgid "iDream database path"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:893
+#: ../autotimer/src/AutoTimerEditor.py:890
 msgid "in Description"
 msgstr "kirjelduses"
 
-#: ../autotimer/src/AutoTimerEditor.py:892
+#: ../autotimer/src/AutoTimerEditor.py:889
 msgid "in Shortdescription"
 msgstr "lühikirjelduses"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:891
+#: ../autotimer/src/AutoTimerEditor.py:888
 msgid "in Title"
 msgstr "pealkirjas"
 
@@ -6207,6 +6340,22 @@ msgstr ""
 msgid "layer 4"
 msgstr ""
 
+#: ../serienfilm/src/MovieSelection.py:76
+msgid "list style compact with service  (quick toggle by key 8)"
+msgstr ""
+
+#: ../serienfilm/src/MovieSelection.py:77
+msgid "list style compact with tags  (quick toggle by key 8)"
+msgstr ""
+
+#: ../serienfilm/src/MovieSelection.py:75
+msgid "list style elaborately"
+msgstr ""
+
+#: ../serienfilm/src/MovieSelection.py:78
+msgid "list style single line  (key = service, 8 = tags)"
+msgstr ""
+
 #: ../internetradio/meta/plugin_internetradio.xml
 msgid "listen to internet radio streams"
 msgstr ""
@@ -6219,7 +6368,7 @@ msgstr ""
 msgid "manage local Files"
 msgstr ""
 
-#: ../serienfilm/src/MovieSelection.py:272
+#: ../serienfilm/src/MovieSelection.py:270
 msgid "menu"
 msgstr "menüü"
 
@@ -6228,7 +6377,7 @@ msgid "mini TV"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerPreview.py:52
+#: ../autotimer/src/AutoTimerPreview.py:49
 msgid "mins"
 msgstr "min"
 
@@ -6286,7 +6435,7 @@ msgid "not configured yet. please do so in the settings."
 msgstr ""
 
 #
-#: ../autoresolution/src/plugin.py:35 ../autoresolution/src/plugin.py:37
+#: ../autoresolution/src/plugin.py:33 ../autoresolution/src/plugin.py:35
 msgid "off"
 msgstr "väljas"
 
@@ -6297,12 +6446,12 @@ msgid "ok"
 msgstr ""
 
 #
-#: ../autoresolution/src/plugin.py:35 ../autoresolution/src/plugin.py:37
+#: ../autoresolution/src/plugin.py:33 ../autoresolution/src/plugin.py:35
 msgid "on"
 msgstr "sees"
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:894
+#: ../autotimer/src/AutoTimerEditor.py:891
 msgid "on Weekday"
 msgstr "nädalapäevast"
 
@@ -6321,7 +6470,7 @@ msgid "options: "
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:194
+#: ../autotimer/src/AutoTimerEditor.py:191
 msgid "partial match"
 msgstr "osaline vaste"
 
@@ -6368,8 +6517,8 @@ msgid "quit Google Maps"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:201
-#: ../autotimer/src/AutoTimerImporter.py:191
+#: ../autotimer/src/AutoTimerEditor.py:198
+#: ../autotimer/src/AutoTimerImporter.py:188
 msgid "record"
 msgstr "salvestus"
 
@@ -6433,13 +6582,13 @@ msgstr ""
 msgid "search..."
 msgstr ""
 
-#: ../autoresolution/src/plugin.py:39
+#: ../autoresolution/src/plugin.py:37
 msgid "second"
 msgstr "sekund"
 
 #
-#: ../autoresolution/src/plugin.py:39 ../autoresolution/src/plugin.py:40
-#: ../autoresolution/src/plugin.py:41
+#: ../autoresolution/src/plugin.py:37 ../autoresolution/src/plugin.py:38
+#: ../autoresolution/src/plugin.py:39
 msgid "seconds"
 msgstr "sekundit"
 
@@ -6455,7 +6604,7 @@ msgstr ""
 msgid "select Target for logo"
 msgstr ""
 
-#: ../serienfilm/src/MovieSelection.py:287
+#: ../serienfilm/src/MovieSelection.py:285
 msgid "select movie"
 msgstr "vali salvestis"
 
@@ -6463,7 +6612,7 @@ msgstr "vali salvestis"
 msgid "select stream to delete"
 msgstr ""
 
-#: ../serienfilm/src/MovieSelection.py:266
+#: ../serienfilm/src/MovieSelection.py:264
 msgid "select the movie path"
 msgstr "vali salvestiste kataloog"
 
@@ -6492,7 +6641,7 @@ msgstr ""
 msgid "show album"
 msgstr ""
 
-#: ../serienfilm/src/MovieSelection.py:278
+#: ../serienfilm/src/MovieSelection.py:276
 msgid "show all"
 msgstr "näita kõik"
 
@@ -6500,11 +6649,15 @@ msgstr "näita kõik"
 msgid "show details"
 msgstr ""
 
-#: ../serienfilm/src/MovieSelection.py:273
+#: ../serienfilm/src/MovieSelection.py:88
+msgid "show duration"
+msgstr ""
+
+#: ../serienfilm/src/MovieSelection.py:271
 msgid "show event details"
 msgstr "näita detailsemat infot"
 
-#: ../serienfilm/src/MovieSelection.py:279
+#: ../serienfilm/src/MovieSelection.py:277
 msgid "show first selected tag"
 msgstr "näita esimene valitud märksõna"
 
@@ -6536,7 +6689,15 @@ msgstr ""
 msgid "show previous page"
 msgstr ""
 
-#: ../serienfilm/src/MovieSelection.py:280
+#: ../serienfilm/src/MovieSelection.py:93
+msgid "show real directories in red"
+msgstr ""
+
+#: ../serienfilm/src/MovieSelection.py:84
+msgid "show recordingtime"
+msgstr ""
+
+#: ../serienfilm/src/MovieSelection.py:278
 msgid "show second selected tag"
 msgstr "näita teine valitud märksõna"
 
@@ -6544,7 +6705,7 @@ msgstr "näita teine valitud märksõna"
 msgid "show selected Placemark"
 msgstr ""
 
-#: ../serienfilm/src/MovieSelection.py:281
+#: ../serienfilm/src/MovieSelection.py:279
 msgid "show tag menu"
 msgstr "näita märksõnade loend"
 
@@ -6556,7 +6717,11 @@ msgstr ""
 msgid "skipping"
 msgstr ""
 
-#: ../autotimer/src/AutoTimerEditor.py:269
+#: ../serienfilm/src/MovieSelection.py:70
+msgid "sort by date  (quick toggle by key 0)"
+msgstr ""
+
+#: ../autotimer/src/AutoTimerEditor.py:266
 msgid "standard"
 msgstr "standard"
 
@@ -6586,7 +6751,7 @@ msgid "stopped"
 msgstr ""
 
 #
-#: ../serienfilm/src/MovieSelection.py:144
+#: ../serienfilm/src/MovieSelection.py:142
 msgid "this recording"
 msgstr "see salvestis"
 
@@ -6631,7 +6796,7 @@ msgstr ""
 msgid "use URI Filter"
 msgstr ""
 
-#: ../networkbrowser/src/MountEdit.py:187
+#: ../networkbrowser/src/MountEdit.py:185
 msgid "use as HDD replacement"
 msgstr "kasuta HDD asenduseks"
 
@@ -6667,8 +6832,8 @@ msgid "yes, including data"
 msgstr ""
 
 #
-#: ../autotimer/src/AutoTimerEditor.py:201
-#: ../autotimer/src/AutoTimerImporter.py:191
+#: ../autotimer/src/AutoTimerEditor.py:198
+#: ../autotimer/src/AutoTimerImporter.py:188
 msgid "zap"
 msgstr "kanalivahetus"
 
