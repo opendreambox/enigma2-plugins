@@ -154,6 +154,12 @@ class AutoTimer:
 	def add(self, timer):
 		self.timers.append(timer)
 
+	def addIgnore(self, ignoreentry, writexml=False):
+		ignorekey = ignoreEntry.serviceref + ignoreEntry.eit
+		self.ignoredict[ignorekey] = ignoreEntry
+		if writexml:
+			self.writeXml()
+
 	def getEnabledTimerList(self):
 		return (x for x in self.timers if x.enabled)
 
@@ -181,6 +187,13 @@ class AutoTimer:
 				return
 			idx += 1
 
+	def removeIgnore(self, ignoreentry, writexml=False):
+		ignorekey = ignoreEntry.serviceref + ignoreEntry.eit
+		if ignorekey in self.ignoredict:
+			del self.ignoredict[ignorekey]
+		if writexml:
+			self.writeXml()
+				
 	def set(self, timer):
 		idx = 0
 		for stimer in self.timers:

@@ -715,14 +715,14 @@ class AutoTimerFastscanComponent(AutoTimerComponent):
 		return override_service
 
 class AutoTimerIgnoreEntry():
-	def __init__(self):
-		self.serviceref = ""
-		self.eit = ""
-		self.validuntil = 0
-		self.begin = 0
-		self.end = 0
-		self.name = ""
-		self.description = ""
+	def __init__(self, serviceref="",eit="",validuntil=0,begin=0,end=0,name="",description=""):
+		self.serviceref = serviceref
+		self.eit = eit
+		self.validuntil = validuntil if validuntil > 0 else (time() + (3600 * 28)) #by default an entry is valid 28 days in the future
+		self.begin = begin
+		self.end = end
+		self.name = name
+		self.description = name
 	
 def getDefaultEncoding():
 	if 'de' in language.getLanguage():
