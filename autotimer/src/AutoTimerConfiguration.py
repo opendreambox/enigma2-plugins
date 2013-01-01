@@ -316,7 +316,7 @@ def parseConfigOld(configuration, list, uniqueTimerId = 0):
 			name = getValue(timer.findall("name"), "").encode("UTF-8")
 
 		if not name:
-			('[AutoTimer] Erroneous config is missing attribute "name", skipping entry')
+			print('[AutoTimer] Erroneous config is missing attribute "name", skipping entry')
 			continue
 
 		# Read out match (V3+)
@@ -325,7 +325,7 @@ def parseConfigOld(configuration, list, uniqueTimerId = 0):
 			# Read out match
 			match = match.encode("UTF-8")
 			if not match:
-				('[AutoTimer] Erroneous config contains empty attribute "match", skipping entry')
+				print('[AutoTimer] Erroneous config contains empty attribute "match", skipping entry')
 				continue
 		# V2-
 		else:
@@ -341,7 +341,7 @@ def parseConfigOld(configuration, list, uniqueTimerId = 0):
 			elif enabled == "yes":
 				enabled = True
 			else:
-				('[AutoTimer] Erroneous config contains invalid value for "enabled":', enabled,', skipping entry')
+				print('[AutoTimer] Erroneous config contains invalid value for "enabled":', enabled,', skipping entry')
 				enabled = False
 		# V1
 		else:
@@ -374,7 +374,7 @@ def parseConfigOld(configuration, list, uniqueTimerId = 0):
 					end = [int(x) for x in end.split(':')]
 					timetuple = (start, end)
 				else:
-					('[AutoTimer] Erroneous config contains invalid definition of "timespan", ignoring definition')
+					print('[AutoTimer] Erroneous config contains invalid definition of "timespan", ignoring definition')
 					timetuple = None
 			else:
 				timetuple = None
@@ -463,7 +463,7 @@ def parseConfigOld(configuration, list, uniqueTimerId = 0):
 			if value in idx:
 				value = idx[value]
 			else:
-				('[AutoTimer] Erroneous config contains invalid value for "afterevent":', afterevent,', ignoring definition')
+				print('[AutoTimer] Erroneous config contains invalid value for "afterevent":', afterevent,', ignoring definition')
 				continue
 
 			start = element.get("from")
