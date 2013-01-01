@@ -2,7 +2,7 @@
 from __future__ import print_function
 
 # for localized messages
-from . import _
+from . import _, iteritems
 
 from AutoTimerComponent import preferredAutoTimerComponent, AutoTimerIgnoreEntry, getDefaultEncoding
 from RecordTimer import AFTEREVENT
@@ -284,7 +284,7 @@ def parseEntryIgnore(element, ignoreEntry):
 	if not ignoreEntry.eit:
 			print('[AutoTimer] Erroneous config is missing attribute "eit", skipping ignore entry')
 			return False
-	ignoreEntry.validuntil = element.get("validuntil", "")
+	ignoreEntry.validuntil = int(element.get("validuntil", 0))
 	ignoreEntry.begin = int(element.get("begin", 0))
 	ignoreEntry.end = int(element.get("end", 0))
 	if not ignoreEntry.validuntil:
@@ -299,7 +299,7 @@ def parseEntryIgnore(element, ignoreEntry):
 	return True
 
 def parseConfigOld(configuration, list, uniqueTimerId = 0):
-	("[AutoTimer] Trying to parse old config")
+	print("[AutoTimer] Trying to parse old config")
 
 	# Iterate Timers
 	for timer in configuration.findall("timer"):
@@ -839,7 +839,7 @@ def buildConfig(defaultTimer, timers, ignores, webif = False):
 		append(' </timer>\n\n')
 	
 	# Iterate ignores
-	for ignoreKey,ignoreEntry in ignores.iteritems():
+	for ignoreKey, ignoreEntry in iteitems(ignores):
 		print("[AutoTimer] ignoreEntry:",ignoreEntry)
 		# Main attributes (serviceref, eit)
 		extend((' <ignore serviceref="', stringToXML(ignoreEntry.serviceref), '" eit="', str(ignoreEntry.eit), '" validuntil="', str(ignoreEntry.validuntil), '"'))
@@ -852,8 +852,7 @@ def buildConfig(defaultTimer, timers, ignores, webif = False):
 		if ignoreEntry.description:
 			extend((' description="', stringToXML(ignoreEntry.description), '"'))
 		# Close still opened tag
-		extend('>\n')
-		append(' </ignore>\n\n')
+		extend(' />\n\n')
 	
 	# End of Configuration
 	append('</autotimer>\n')
