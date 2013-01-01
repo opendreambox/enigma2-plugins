@@ -714,6 +714,16 @@ class AutoTimerFastscanComponent(AutoTimerComponent):
 								break
 		return override_service
 
+class AutoTimerIgnoreEntry():
+	def __init__(self):
+		self.serviceref = ""
+		self.eit = ""
+		self.validuntil = 0
+		self.begin = 0
+		self.end = 0
+		self.name = ""
+		self.description = ""
+	
 def getDefaultEncoding():
 	if 'de' in language.getLanguage():
 		return 'ISO8859-15'

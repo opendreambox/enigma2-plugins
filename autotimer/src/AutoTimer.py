@@ -97,6 +97,7 @@ class AutoTimer:
 	def __init__(self):
 		# Initialize
 		self.timers = []
+		self.ignoredict = {}
 		self.configMtime = -1
 		self.uniqueTimerId = 0
 		self.defaultTimer = preferredAutoTimerComponent(
@@ -133,6 +134,7 @@ class AutoTimer:
 		parseConfig(
 			configuration,
 			self.timers,
+			self.ignoredict,
 			configuration.get("version"),
 			0,
 			self.defaultTimer
@@ -140,11 +142,11 @@ class AutoTimer:
 		self.uniqueTimerId = len(self.timers)
 
 	def getXml(self):
-		return buildConfig(self.defaultTimer, self.timers, webif = True)
+		return buildConfig(self.defaultTimer, self.timers, self.ignoredict, webif = True)
 
 	def writeXml(self):
 		file = open(XML_CONFIG, 'w')
-		file.writelines(buildConfig(self.defaultTimer, self.timers))
+		file.writelines(buildConfig(self.defaultTimer, self.timers, self.ignoredict))
 		file.close()
 
 # Manage List
@@ -307,6 +309,12 @@ class AutoTimer:
 			if n > 0:
 				i = evt.getLinkageService(eserviceref, n-1)
 				serviceref = i.toString()
+
+			#Check if the event is on the ignorelist
+			evtKey = serviceref + str(eit)
+			if evtKey in self.ignoredict:
+				print("[AutoTimer] Skipping event %s because it is in the list of ignored events",evtKey)
+				continue
 
 			evtBegin = begin
 			evtEnd = end = begin + duration

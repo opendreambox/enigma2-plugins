@@ -4,9 +4,10 @@ from __future__ import print_function
 # for localized messages
 from . import _
 
-from AutoTimerComponent import preferredAutoTimerComponent, getDefaultEncoding
+from AutoTimerComponent import preferredAutoTimerComponent, AutoTimerIgnoreEntry, getDefaultEncoding
 from RecordTimer import AFTEREVENT
 from Tools.XMLTools import stringToXML
+from time import time
 from ServiceReference import ServiceReference
 
 from enigma import eServiceReference
@@ -41,7 +42,7 @@ def getValue(definitions, default):
 	# Return stripped output or (if empty) default
 	return ret.strip() or default
 
-def parseConfig(configuration, list, version = None, uniqueTimerId = 0, defaultTimer = None):
+def parseConfig(configuration, list, ignoreList, version = None, uniqueTimerId = 0, defaultTimer = None):
 	try:
 		intVersion = int(version)
 	except ValueError:
@@ -69,6 +70,12 @@ def parseConfig(configuration, list, version = None, uniqueTimerId = 0, defaultT
 		if parseEntry(timer, baseTimer):
 			list.append(baseTimer)
 
+	for ignoreXML in configuration.findall("ignore"):
+		ignoreEntry = AutoTimerIgnoreEntry()
+		if parseEntryIgnore(ignoreXML, ignoreEntry):
+			ignorekey = ignoreEntry.serviceref + ignoreEntry.eit
+			ignoreList[ignorekey] = ignoreEntry
+		
 def parseEntry(element, baseTimer, defaults = False):
 	if not defaults:
 		# Read out match
@@ -268,8 +275,31 @@ def parseEntry(element, baseTimer, defaults = False):
 
 	return True
 
+def parseEntryIgnore(element, ignoreEntry):
+	ignoreEntry.serviceref = element.get("serviceref", "").encode("UTF-8")
+	if not ignoreEntry.serviceref:
+			print('[AutoTimer] Erroneous config is missing attribute "serviceref", skipping ignore entry')
+			return False
+	ignoreEntry.eit = element.get("eit", "").encode("UTF-8")
+	if not ignoreEntry.eit:
+			print('[AutoTimer] Erroneous config is missing attribute "eit", skipping ignore entry')
+			return False
+	ignoreEntry.validuntil = element.get("validuntil", "")
+	ignoreEntry.begin = int(element.get("begin", 0))
+	ignoreEntry.end = int(element.get("end", 0))
+	if not ignoreEntry.validuntil:
+		# Check if an end is given -> Fallback to End
+		# else: Events are in the epg for at most 28 Days: After that we can delete it
+		ignoreEntry.validuntil = ignoreEntry.end if ignoreEntry.end else (time() + (3600 * 28)) 
+	if ignoreEntry.validuntil < time():
+		# Event in the past: ignore (and delete on next write)
+		print('[AutoTimer] Ignore entry in the past, skipping ignore entry with eit %s' % ignoreEntry.eit)
+	ignoreEntry.name = element.get("name", "").encode("UTF-8")
+	ignoreEntry.description = element.get("description", "").encode("UTF-8")
+	return True
+
 def parseConfigOld(configuration, list, uniqueTimerId = 0):
-	print("[AutoTimer] Trying to parse old config")
+	("[AutoTimer] Trying to parse old config")
 
 	# Iterate Timers
 	for timer in configuration.findall("timer"):
@@ -286,7 +316,7 @@ def parseConfigOld(configuration, list, uniqueTimerId = 0):
 			name = getValue(timer.findall("name"), "").encode("UTF-8")
 
 		if not name:
-			print('[AutoTimer] Erroneous config is missing attribute "name", skipping entry')
+			('[AutoTimer] Erroneous config is missing attribute "name", skipping entry')
 			continue
 
 		# Read out match (V3+)
@@ -295,7 +325,7 @@ def parseConfigOld(configuration, list, uniqueTimerId = 0):
 			# Read out match
 			match = match.encode("UTF-8")
 			if not match:
-				print('[AutoTimer] Erroneous config contains empty attribute "match", skipping entry')
+				('[AutoTimer] Erroneous config contains empty attribute "match", skipping entry')
 				continue
 		# V2-
 		else:
@@ -311,7 +341,7 @@ def parseConfigOld(configuration, list, uniqueTimerId = 0):
 			elif enabled == "yes":
 				enabled = True
 			else:
-				print('[AutoTimer] Erroneous config contains invalid value for "enabled":', enabled,', skipping entry')
+				('[AutoTimer] Erroneous config contains invalid value for "enabled":', enabled,', skipping entry')
 				enabled = False
 		# V1
 		else:
@@ -344,7 +374,7 @@ def parseConfigOld(configuration, list, uniqueTimerId = 0):
 					end = [int(x) for x in end.split(':')]
 					timetuple = (start, end)
 				else:
-					print('[AutoTimer] Erroneous config contains invalid definition of "timespan", ignoring definition')
+					('[AutoTimer] Erroneous config contains invalid definition of "timespan", ignoring definition')
 					timetuple = None
 			else:
 				timetuple = None
@@ -433,7 +463,7 @@ def parseConfigOld(configuration, list, uniqueTimerId = 0):
 			if value in idx:
 				value = idx[value]
 			else:
-				print('[AutoTimer] Erroneous config contains invalid value for "afterevent":', afterevent,', ignoring definition')
+				('[AutoTimer] Erroneous config contains invalid value for "afterevent":', afterevent,', ignoring definition')
 				continue
 
 			start = element.get("from")
@@ -521,7 +551,7 @@ def parseConfigOld(configuration, list, uniqueTimerId = 0):
 				tags = tags
 		))
 
-def buildConfig(defaultTimer, timers, webif = False):
+def buildConfig(defaultTimer, timers, ignores, webif = False):
 	# Generate List in RAM
 	list = ['<?xml version="1.0" ?>\n<autotimer version="', CURRENT_CONFIG_VERSION, '">\n\n']
 	append = list.append
@@ -807,7 +837,24 @@ def buildConfig(defaultTimer, timers, webif = False):
 
 		# End of Timer
 		append(' </timer>\n\n')
-
+	
+	# Iterate ignores
+	for ignoreKey,ignoreEntry in ignores.iteritems():
+		print("[AutoTimer] ignoreEntry:",ignoreEntry)
+		# Main attributes (serviceref, eit)
+		extend((' <ignore serviceref="', stringToXML(ignoreEntry.serviceref), '" eit="', str(ignoreEntry.eit), '" validuntil="', str(ignoreEntry.validuntil), '"'))
+		if ignoreEntry.begin:
+			extend((' begin="', str(ignoreEntry.begin), '"'))
+		if ignoreEntry.end:
+			extend((' end="', str(ignoreEntry.end), '"'))
+		if ignoreEntry.name:
+			extend((' name="', stringToXML(ignoreEntry.name), '"'))
+		if ignoreEntry.description:
+			extend((' description="', stringToXML(ignoreEntry.description), '"'))
+		# Close still opened tag
+		extend('>\n')
+		append(' </ignore>\n\n')
+	
 	# End of Configuration
 	append('</autotimer>\n')
 
