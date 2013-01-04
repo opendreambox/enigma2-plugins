@@ -839,7 +839,7 @@ def buildConfig(defaultTimer, timers, ignores, webif = False):
 		append(' </timer>\n\n')
 	
 	# Iterate ignores
-	for ignoreKey, ignoreEntry in iteitems(ignores):
+	for ignoreKey, ignoreEntry in iteritems(ignores):
 		print("[AutoTimer] ignoreEntry:",ignoreEntry)
 		# Main attributes (serviceref, eit)
 		extend((' <ignore serviceref="', stringToXML(ignoreEntry.serviceref), '" eit="', str(ignoreEntry.eit), '" validuntil="', str(ignoreEntry.validuntil), '"'))
