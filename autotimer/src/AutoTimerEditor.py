@@ -319,12 +319,15 @@ class AutoTimerEditorBase:
 		self.counterFormatString = NoSave(ConfigSelection(selection, default = default))
 
 		# Avoid Duplicate Description
-		self.avoidDuplicateDescription = NoSave(ConfigSelection([
+		dupChoices = [
 				("0", _("No")),
 				("1", _("On same service")),
 				("2", _("On any service")),
-				("3", _("Any service/recording")),
-			],
+				("3", _("Any service/recording"))
+			]
+		if hasSeriesPlugin:
+			dupChoices.append( ("4", _("Episode (SeriesPlugin)")) )
+		self.avoidDuplicateDescription = NoSave(ConfigSelection(dupChoices,
 			default = str(timer.getAvoidDuplicateDescription())
 		))
 

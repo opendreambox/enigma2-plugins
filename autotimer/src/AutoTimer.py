@@ -154,8 +154,8 @@ class AutoTimer:
 	def add(self, timer):
 		self.timers.append(timer)
 
-	def addIgnore(self, ignoreentry, writexml=False):
-		ignorekey = ignoreEntry.serviceref + ignoreEntry.eit
+	def addIgnore(self, ignoreEntry, writexml=False):
+		ignorekey = str(ignoreEntry.serviceref) + str(ignoreEntry.eit)
 		self.ignoredict[ignorekey] = ignoreEntry
 		if writexml:
 			self.writeXml()
@@ -387,13 +387,15 @@ class AutoTimer:
 			if simulateOnly:
 				continue
 
+			# Create moviedict from existing recordings in directory
+			if timer.avoidDuplicateDescription > 3:
+				if dest and dest not in moviedict:
+					self.addDirectoryToMovieDict(moviedict, dest, serviceHandler)
+
 			# Check for existing recordings in directory
 			if timer.avoidDuplicateDescription == 3:
 				# Reset movie Exists
 				movieExists = False
-
-				if dest and dest not in moviedict:
-					self.addDirectoryToMovieDict(moviedict, dest, serviceHandler)
 				for movieinfo in moviedict.get(dest, ()):
 					if self.checkSimilarity(timer, name, movieinfo.get("name"), shortdesc, movieinfo.get("shortdesc"), extdesc, movieinfo.get("extdesc") ):
 						print("[AutoTimer] We found a matching recorded movie, skipping event:", name)
@@ -433,6 +435,7 @@ class AutoTimer:
 					self.modifyTimer(rtimer, name, shortdesc, begin, end, serviceref)
 					break
 				elif timer.avoidDuplicateDescription >= 1 \
+					and timer.avoidDuplicateDescription < 4 \
 					and not rtimer.disabled:
 						if self.checkSimilarity(timer, name, rtimer.name, shortdesc, rtimer.description, extdesc, rtimer.extdesc ):
 						# if searchForDuplicateDescription > 1 then check short description
@@ -447,7 +450,8 @@ class AutoTimer:
 					continue
 
 				# We want to search for possible doubles
-				if timer.avoidDuplicateDescription >= 2:
+				if timer.avoidDuplicateDescription >= 2 \
+					and timer.avoidDuplicateDescription < 4:
 					for rtimer in chain.from_iterable( itervalues(timerdict) ):
 						if not rtimer.disabled:
 							if self.checkSimilarity(timer, name, rtimer.name, shortdesc, rtimer.description, extdesc, rtimer.extdesc ):
@@ -496,8 +500,7 @@ class AutoTimer:
 				recordHandler.timeChanged(newEntry)
 
 				if renameTimer is not None and timer.series_labeling:
-					renameTimer(newEntry, name, evtBegin, evtEnd)
-
+						renameTimer(newEntry, name, evtBegin, evtEnd, avoidDuplicates=(timer.avoidDuplicateDescription == 4), timers=timerdict, moviedict=moviedict, autotimer=self )
 			else:
 				conflictString = ""
 				if similarTimer:
@@ -544,7 +547,7 @@ class AutoTimer:
 					timerdict[serviceref].append(newEntry)
 
 					if renameTimer is not None and timer.series_labeling:
-						renameTimer(newEntry, name, evtBegin, evtEnd)
+							renameTimer(newEntry, name, evtBegin, evtEnd, avoidDuplicates=(timer.avoidDuplicateDescription == 4), timers=timerdict, moviedict=moviedict, autotimer=self )
 
 					# Similar timers are in new timers list and additionally in similar timers list
 					if similarTimer:

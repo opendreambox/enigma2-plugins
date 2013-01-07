@@ -1,5 +1,5 @@
 # Format counter
-from time import strftime
+from time import strftime, time
 
 # regular expression
 from re import compile as re_compile
@@ -716,13 +716,14 @@ class AutoTimerFastscanComponent(AutoTimerComponent):
 
 class AutoTimerIgnoreEntry():
 	def __init__(self, serviceref="",eit="",validuntil=0,begin=0,end=0,name="",description=""):
-		self.serviceref = serviceref
-		self.eit = eit
-		self.validuntil = validuntil if validuntil > 0 else (time() + (3600 * 28)) #by default an entry is valid 28 days in the future
-		self.begin = begin
+		self.serviceref = str(serviceref)
+		self.eit = str(eit)
 		self.end = end
+		validfallback = self.end if self.end > 0 else (time() + (3600 * 28)) #by default an entry is valid 28 days in the future
+		self.validuntil = validuntil if validuntil > 0 else validfallback
+		self.begin = begin
 		self.name = name
-		self.description = name
+		self.description = description
 	
 def getDefaultEncoding():
 	if 'de' in language.getLanguage():
