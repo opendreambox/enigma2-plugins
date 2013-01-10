@@ -388,7 +388,7 @@ class AutoTimer:
 				continue
 
 			# Create moviedict from existing recordings in directory
-			if timer.avoidDuplicateDescription > 3:
+			if timer.avoidDuplicateDescription > 2:
 				if dest and dest not in moviedict:
 					self.addDirectoryToMovieDict(moviedict, dest, serviceHandler)
 
