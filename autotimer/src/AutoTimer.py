@@ -211,116 +211,14 @@ class AutoTimer:
 	def parseTimer(self, timer, epgcache, serviceHandler, recordHandler, checkEvtLimit, evtLimit, timers, conflicting, similars, timerdict, moviedict, simulateOnly=False):
 		new = 0
 		modified = 0
+		similardict = defaultdict(list)	# Contains the the marked similar eits and the conflicting strings
 
 		# Precompute timer destination dir
 		dest = timer.destination or config.usage.default_path.value
 
-		# Workaround to allow search for umlauts if we know the encoding
-		match = timer.match
-		if timer.encoding != 'UTF-8':
-			try:
-				match = match.decode('UTF-8').encode(timer.encoding)
-			except UnicodeDecodeError:
-				pass
-
-		if timer.searchType == "description":
-			epgmatches = []
-			mask = (eServiceReference.isMarker | eServiceReference.isDirectory)
-
-			casesensitive = timer.searchCase == "sensitive"
-			if not casesensitive:
-				match = match.lower()
-
-			# Service filter defined
-			# Search only using the specified services
-			test = [(service, 0, -1, -1) for service in timer.services]
-
-			for bouquet in timer.bouquets:
-				services = serviceHandler.list(eServiceReference(bouquet))
-				if not services is None:
-					while True:
-						service = services.getNext()
-						if not service.valid(): #check end of list
-							break
-						if not (service.flags & mask):
-							test.append( (service.toString(), 0, -1, -1 ) )
-
-			if not test:
-				# No service filter defined
-				# Search within all services - could be very slow
-
-				# Get all bouquets
-				bouquetlist = []
-				refstr = '1:134:1:0:0:0:0:0:0:0:FROM BOUQUET \"bouquets.tv\" ORDER BY bouquet'
-				bouquetroot = eServiceReference(refstr)
-				mask = eServiceReference.isDirectory
-				if config.usage.multibouquet.value:
-					bouquets = serviceHandler.list(bouquetroot)
-					if bouquets:
-						while True:
-							s = bouquets.getNext()
-							if not s.valid():
-								break
-							if s.flags & mask:
-								info = serviceHandler.info(s)
-								if info:
-									bouquetlist.append((info.getName(s), s))
-				else:
-					info = serviceHandler.info(bouquetroot)
-					if info:
-						bouquetlist.append((info.getName(bouquetroot), bouquetroot))
-
-				# Get all services
-				mask = (eServiceReference.isMarker | eServiceReference.isDirectory)
-				for name, bouquet in bouquetlist:
-					if not bouquet.valid(): #check end of list
-						break
-					if bouquet.flags & eServiceReference.isDirectory:
-						services = serviceHandler.list(bouquet)
-						if not services is None:
-							while True:
-								service = services.getNext()
-								if not service.valid(): #check end of list
-									break
-								if not (service.flags & mask):
-									test.append( (service.toString(), 0, -1, -1 ) )
-
-			if test:
-				# Get all events
-				#  eEPGCache.lookupEvent( [ format of the returned tuples, ( service, 0 = event intersects given start_time, start_time -1 for now_time), ] )
-				test.insert(0, 'RITBDSE')
-				allevents = epgcache.lookupEvent(test) or []
-
-				# Filter events
-				for serviceref, eit, name, begin, duration, shortdesc, extdesc in allevents:
-					if match in (shortdesc if casesensitive else shortdesc.lower()) \
-						or match in (extdesc if casesensitive else extdesc.lower()):
-						epgmatches.append( (serviceref, eit, name, begin, duration, shortdesc, extdesc) )
-
-		else:
-			# Search EPG, default to empty list
-			epgmatches = epgcache.search( ('RITBDSE', 1000, typeMap[timer.searchType], match, caseMap[timer.searchCase]) ) or []
-
-		# Sort list of tuples by begin time 'B'
-		epgmatches.sort(key=itemgetter(3))
-
-		# Contains the the marked similar eits and the conflicting strings
-		similardict = defaultdict(list)		
-
 		# Loop over all EPG matches
+		epgmatches = self.getEpgMatches(timer, epgcache)
 		for idx, ( serviceref, eit, name, begin, duration, shortdesc, extdesc ) in enumerate( epgmatches ):
-
-			eserviceref = eServiceReference(serviceref)
-			evt = epgcache.lookupEventId(eserviceref, eit)
-			if not evt:
-				atLog( ATLOG_INFO, "Could not create Event!" )
-				continue
-			# Try to determine real service (we always choose the last one)
-			n = evt.getNumOfLinkageServices()
-			if n > 0:
-				i = evt.getLinkageService(eserviceref, n-1)
-				serviceref = i.toString()
-
 			#Check if the event is on the ignorelist
 			evtKey = serviceref + str(eit)
 			if evtKey in self.ignoredict:
@@ -496,6 +394,19 @@ class AutoTimer:
 					tags.append(tagname)
 			newEntry.tags = tags
 
+			# TODO: Pass timer blueprint to consumers
+			# NOTE: basic idea is to create a deferred which on success adds our timer
+			#       from the current design we need to pause the thread of this function
+			#       which is NOT yet safe (it's the main thread), so we either
+			#       need to redesign the way this and our parent parsing function
+			#       works or simply but it back into background.
+			# XXX: would it be more logical to run consumers on background or main thread?
+			#      (this function itself might eventually be back on a background thread
+			#      which we can safely pause until we hear back from our consumers)
+			#      this DOES increase the number of context changes again, but far lower
+			#      than it was before so AutoTimer-only operation should still be good to
+			#      use.
+
 			# Are there any extensions to modify our newly crwated timer: Execute them now
 			extensionResult = timer.executeExtension(newEntry, name, shortdesc, extdesc, dayofweek, serviceref, eit, begin, duration)
 			# Should we react on a "false" of executeExtension here???
@@ -615,6 +526,119 @@ class AutoTimer:
 		return (len(timers), new, modified, timers, conflicting, similars)
 
 # Supporting functions
+
+	def getEpgMatches(self, timer, epgcache):
+		# Workaround to allow search for umlauts if we know the encoding
+		match = timer.match
+		if timer.encoding != 'UTF-8':
+			try:
+				match = match.decode('UTF-8').encode(timer.encoding)
+			except UnicodeDecodeError:
+				pass
+
+		if timer.searchType == "description":
+			epgmatches = []
+			mask = (eServiceReference.isMarker | eServiceReference.isDirectory)
+
+			casesensitive = timer.searchCase == "sensitive"
+			if not casesensitive:
+				match = match.lower()
+
+			# Service filter defined
+			# Search only using the specified services
+			test = [(service, 0, -1, -1) for service in timer.services]
+
+			for bouquet in timer.bouquets:
+				services = serviceHandler.list(eServiceReference(bouquet))
+				if not services is None:
+					while True:
+						service = services.getNext()
+						if not service.valid(): #check end of list
+							break
+						if not (service.flags & mask):
+							test.append( (service.toString(), 0, -1, -1 ) )
+
+			if not test:
+				# No service filter defined
+				# Search within all services - could be very slow
+
+				# Get all bouquets
+				bouquetlist = []
+				refstr = '1:134:1:0:0:0:0:0:0:0:FROM BOUQUET \"bouquets.tv\" ORDER BY bouquet'
+				bouquetroot = eServiceReference(refstr)
+				mask = eServiceReference.isDirectory
+				if config.usage.multibouquet.value:
+					bouquets = serviceHandler.list(bouquetroot)
+					if bouquets:
+						while True:
+							s = bouquets.getNext()
+							if not s.valid():
+								break
+							if s.flags & mask:
+								info = serviceHandler.info(s)
+								if info:
+									bouquetlist.append((info.getName(s), s))
+				else:
+					info = serviceHandler.info(bouquetroot)
+					if info:
+						bouquetlist.append((info.getName(bouquetroot), bouquetroot))
+
+				# Get all services
+				mask = (eServiceReference.isMarker | eServiceReference.isDirectory)
+				for name, bouquet in bouquetlist:
+					if not bouquet.valid(): #check end of list
+						break
+					if bouquet.flags & eServiceReference.isDirectory:
+						services = serviceHandler.list(bouquet)
+						if not services is None:
+							while True:
+								service = services.getNext()
+								if not service.valid(): #check end of list
+									break
+								if not (service.flags & mask):
+									test.append( (service.toString(), 0, -1, -1 ) )
+
+			if test:
+				# Get all events
+				#  eEPGCache.lookupEvent( [ format of the returned tuples, ( service, 0 = event intersects given start_time, start_time -1 for now_time), ] )
+				test.insert(0, 'RITBDSE')
+				allevents = epgcache.lookupEvent(test) or []
+
+				# Filter events
+				for serviceref, eit, name, begin, duration, shortdesc, extdesc in allevents:
+					if match in (shortdesc if casesensitive else shortdesc.lower()) \
+						or match in (extdesc if casesensitive else extdesc.lower()):
+						epgmatches.append( (serviceref, eit, name, begin, duration, shortdesc, extdesc) )
+
+		else:
+			# Search EPG, default to empty list
+			epgmatches = epgcache.search( ('RITBDSE', 1000, typeMap[timer.searchType], match, caseMap[timer.searchCase]) ) or []
+
+		# XXX: eww, we need to check for linkage services in the main thread context
+		# which makes this the most obvious place.
+		# this place however is neither very logical nor efficient.
+		# better solutions: allow to get event from eEPGCache.search
+		#                   make eEPGCache.search return correct serviceref in the first place
+		# none of this is possible however, thanks closed-source!
+		newmatches = []
+		append = newmatches.append
+		for serviceref, eit, name, begin, duration, shortdesc, extdesc in epgmatches:
+			eserviceref = eServiceReference(serviceref)
+			evt = epgcache.lookupEventId(eserviceref, eit)
+			if not evt:
+				print("[AutoTimer] Could not create Event!")
+				continue
+			# Try to determine real service (we always choose the last one)
+			n = evt.getNumOfLinkageServices()
+			if n > 0:
+				i = evt.getLinkageService(eserviceref, n-1)
+				serviceref = i.toString()
+			append((serviceref, eit, name, begin, duration, shortdesc, extdesc))
+
+		# Sort list of tuples by begin time 'B'
+		newmatches.sort(key=itemgetter(3))
+
+		return newmatches
 
 	def populateTimerdict(self, epgcache, recordHandler, timerdict):
 		for timer in chain(recordHandler.timer_list, recordHandler.processed_timers):
