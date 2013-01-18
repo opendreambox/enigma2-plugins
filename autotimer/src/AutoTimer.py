@@ -329,7 +329,6 @@ class AutoTimer:
 						atLog( ATLOG_WARN, "Warning, AutoTimer %s messed with timer %s, which might not belong to it." % (timer.name, rtimer.name))
 
 					newEntry = rtimer
-					modified += 1
 
 					self.modifyTimer(rtimer, name, shortdesc, begin, end, serviceref)
 					break
@@ -414,6 +413,7 @@ class AutoTimer:
 			if oldExists:
 				# XXX: this won't perform a sanity check, but do we actually want to do so?
 				recordHandler.timeChanged(newEntry)
+				modified += 1
 
 			else:
 				conflictString = ""
