@@ -2,6 +2,9 @@
 # for localized messages
 from . import _
 
+# Logging
+from AutoTimerLogger import atLog, ATLOG_DEBUG, ATLOG_INFO, ATLOG_WARN, ATLOG_ERROR
+
 # GUI (Screens)
 from Screens.Screen import Screen
 from Components.ConfigList import ConfigListScreen
@@ -40,17 +43,8 @@ from Tools import Directories
 # Tags
 from Screens.MovieSelection import getPreferredTagEditor
 
-weekdays = [
-	("0", _("Monday")),
-	("1", _("Tuesday")),
-	("2", _("Wednesday")),
-	("3", _("Thursday")),
-	("4", _("Friday")),
-	("5", _("Saturday")),
-	("6", _("Sunday")),
-	("weekend", _("Weekend")),
-	("weekday", _("Weekday"))
-]
+# Filters
+from AutoTimerFilter import ExtendedConfigText, AutoTimerFilterList, weekdays
 
 try:
 	from Plugins.SystemPlugins.vps import Vps
@@ -58,27 +52,6 @@ except ImportError as ie:
 	hasVps = False
 else:
 	hasVps = True
-
-try:
-	from Plugins.Extensions.SeriesPlugin.plugin import Plugins
-except ImportError as ie:
-	hasSeriesPlugin = False
-else:
-	hasSeriesPlugin = True
-
-class ExtendedConfigText(ConfigText):
-	def __init__(self, default = "", fixed_size = True, visible_width = False):
-		ConfigText.__init__(self, default = default, fixed_size = fixed_size, visible_width = visible_width)
-
-		# Workaround some characters currently not "typeable" using NumericalTextInput
-		mapping = self.mapping
-		if mapping:
-			if "&" not in mapping[0]:
-				mapping[0] += "&"
-			if ";" not in mapping[0]:
-				mapping[0] += ";"
-			if "%" not in mapping[0]:
-				mapping[0] += "%"
 
 class SimpleBouquetSelection(SimpleChannelSelection):
 	def __init__(self, session, title):
@@ -144,27 +117,23 @@ class AutoTimerEditorBase:
 		self.editingDefaults = editingDefaults
 
 		# See if we are filtering some strings
-		excludes = (
-			timer.getExcludedTitle(),
-			timer.getExcludedShort(),
-			timer.getExcludedDescription(),
-			timer.getExcludedDays()
-		)
-		includes = (
-			timer.getIncludedTitle(),
-			timer.getIncludedShort(),
-			timer.getIncludedDescription(),
-			timer.getIncludedDays()
-		)
-		if excludes[0] or excludes[1] \
-				or excludes[2] or excludes[3] \
-				or includes[0] or includes[1] \
-				or includes[2] or includes[3]:
+		excludes = timer.getExclude()
+
+		includes = timer.getInclude()
+		if excludes or includes:
 			self.filterSet = True
 		else:
 			self.filterSet = False
 		self.excludes = excludes
 		self.includes = includes
+
+		# See, if there are extensions to call
+		extensions = timer.getExtension()
+		if extensions:
+			self.extensionSet = True
+		else:
+			self.extensionSet = False
+		self.extensions = extensions
 
 		# See if services are restricted
 		self.services = timer.services
@@ -325,8 +294,6 @@ class AutoTimerEditorBase:
 				("2", _("On any service")),
 				("3", _("Any service/recording"))
 			]
-		if hasSeriesPlugin:
-			dupChoices.append( ("4", _("Episode (SeriesPlugin)")) )
 		self.avoidDuplicateDescription = NoSave(ConfigSelection(dupChoices,
 			default = str(timer.getAvoidDuplicateDescription())
 		))
@@ -362,9 +329,6 @@ class AutoTimerEditorBase:
 		# Vps
 		self.vps_enabled = NoSave(ConfigYesNo(default = timer.vps_enabled))
 		self.vps_overwrite = NoSave(ConfigYesNo(default = timer.vps_overwrite))
-
-		# SeriesPlugin
-		self.series_labeling = NoSave(ConfigYesNo(default = timer.series_labeling))
 
 	def pathSelected(self, res):
 		if res is not None:
@@ -542,7 +506,6 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 			self.useDestination: _("Should timers created by this AutoTimer be recorded to a custom location?"),
 			self.destination: _("Select the location to save the recording to."),
 			self.tags: _("Tags the Timer/Recording will have."),
-			self.series_labeling: _("Label Timers with season, episode and title, according to the SeriesPlugin settings."),
 		}
 
 	def refresh(self):
@@ -637,9 +600,6 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 			if self.vps_enabled.value:
 				list.append(getConfigListEntry(_("Control recording completely by service"), self.vps_overwrite))
 
-		if hasSeriesPlugin:
-			list.append(getConfigListEntry(_("Label series"), self.series_labeling))
-
 		self.list = list
 
 	def reloadList(self, value):
@@ -649,17 +609,20 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 	def editFilter(self):
 		self.session.openWithCallback(
 			self.editFilterCallback,
-			AutoTimerFilterEditor,
+			AutoTimerFilterList,
 			self.filterSet,
 			self.excludes,
-			self.includes
+			self.includes,
+			self.extensions
 		)
 
 	def editFilterCallback(self, ret):
 		if ret:
+			atLog( ATLOG_DEBUG, "editFilterCallback ret:", ret )
 			self.filterSet = ret[0]
 			self.excludes = ret[1]
 			self.includes = ret[2]
+			self.extensions = ret[3]
 			self.renameFilterButton()
 
 	def editServices(self):
@@ -834,6 +797,10 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 			self.timer.exclude = None
 			self.timer.include = None
 
+		# Extensions
+		if self.extensionSet:
+			self.timer.extension = self.extensions
+
 		# Counter
 		if self.counter.value:
 			self.timer.matchCount = self.counter.value
@@ -863,214 +830,8 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 		self.timer.vps_enabled = self.vps_enabled.value
 		self.timer.vps_overwrite = self.vps_overwrite.value
 
-		self.timer.series_labeling = self.series_labeling.value
-
 		# Close
 		self.close(self.timer)
-
-class AutoTimerFilterEditor(Screen, ConfigListScreen):
-	"""Edit AutoTimer Filter"""
-
-	skin = """<screen name="AutoTimerFilterEditor" title="Edit AutoTimer Filters" position="center,center" size="565,280">
-		<ePixmap position="0,0" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-		<ePixmap position="140,0" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-		<ePixmap position="280,0" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
-		<ePixmap position="420,0" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
-		<widget source="key_red" render="Label" position="0,0" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-		<widget source="key_green" render="Label" position="140,0" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-		<widget source="key_yellow" render="Label" position="280,0" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-		<widget source="key_blue" render="Label" position="420,0" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-		<widget name="config" position="5,45" size="555,225" scrollbarMode="showOnDemand" />
-	</screen>"""
-
-	def __init__(self, session, filterset, excludes, includes):
-		Screen.__init__(self, session)
-
-		# Summary
-		self.setup_title = _("AutoTimer Filters")
-		self.onChangedEntry = []
-
-		self.typeSelection = NoSave(ConfigSelection(choices = [
-			("title", _("in Title")),
-			("short", _("in Shortdescription")),
-			("desc", _("in Description")),
-			("day", _("on Weekday"))]
-		))
-		self.typeSelection.addNotifier(self.refresh, initial_call = False)
-
-		self.enabled = NoSave(ConfigEnableDisable(default = filterset))
-
-		self.excludes = excludes
-		self.includes = includes
-
-		self.reloadList()
-
-		ConfigListScreen.__init__(self, self.list, session = session, on_change = self.changed)
-
-		# Initialize Buttons
-		self["key_red"] = StaticText(_("Cancel"))
-		self["key_green"] = StaticText(_("Save"))
-		self["key_yellow"] = StaticText(_("delete"))
-		self["key_blue"] = StaticText(_("New"))
-
-		# Define Actions
-		self["actions"] = ActionMap(["SetupActions", "ColorActions"],
-			{
-				"cancel": self.cancel,
-				"save": self.save,
-				"yellow": self.remove,
-				"blue": self.new
-			}
-		)
-
-		# Trigger change
-		self.changed()
-
-		self.onLayoutFinish.append(self.setCustomTitle)
-
-	def setCustomTitle(self):
-		self.setTitle(_("Edit AutoTimer filters"))
-
-
-	def changed(self):
-		for x in self.onChangedEntry:
-			try:
-				x()
-			except Exception:
-				pass
-
-	def getCurrentEntry(self):
-		return self["config"].getCurrent()[0]
-
-	def getCurrentValue(self):
-		return str(self["config"].getCurrent()[1].getText())
-
-	def createSummary(self):
-		return SetupSummary
-
-	def saveCurrent(self):
-		del self.excludes[self.idx][:]
-		del self.includes[self.idx][:]
-
-		# Warning, accessing a ConfigListEntry directly might be considered evil!
-
-		idx = -1
-		for item in self["config"].getList()[:]:
-			idx += 1
-			# Skip empty entries (and those which are no filters)
-			if item[1].value == "" or idx < 2:
-				continue
-			elif idx < self.lenExcludes:
-				self.excludes[self.idx].append(item[1].value.encode("UTF-8"))
-			else:
-				self.includes[self.idx].append(item[1].value.encode("UTF-8"))
-
-	def refresh(self, *args, **kwargs):
-		self.saveCurrent()
-
-		self.reloadList()
-		self["config"].setList(self.list)
-
-	def reloadList(self):
-		self.list = [
-			getConfigListEntry(_("Enable Filtering"), self.enabled),
-			getConfigListEntry(_("Filter"), self.typeSelection)
-		]
-
-		if self.typeSelection.value == "day":
-			self.idx = 3
-
-			# Weekdays are presented as ConfigSelection
-			self.list.extend([
-				getConfigListEntry(_("Exclude"), NoSave(ConfigSelection(choices = weekdays, default = x)))
-					for x in self.excludes[3]
-			])
-			self.lenExcludes = len(self.list)
-			self.list.extend([
-				getConfigListEntry(_("Include"), NoSave(ConfigSelection(choices = weekdays, default = x)))
-					for x in self.includes[3]
-			])
-			return
-		elif self.typeSelection.value == "title":
-			self.idx = 0
-		elif self.typeSelection.value == "short":
-			self.idx = 1
-		else: # self.typeSelection.value == "desc":
-			self.idx = 2
-
-		self.list.extend([
-			getConfigListEntry(_("Exclude"), NoSave(ExtendedConfigText(default = x, fixed_size = False)))
-				for x in self.excludes[self.idx]
-		])
-		self.lenExcludes = len(self.list)
-		self.list.extend([
-			getConfigListEntry(_("Include"), NoSave(ExtendedConfigText(default = x, fixed_size = False)))
-				for x in self.includes[self.idx]
-		])
-
-	def remove(self):
-		idx = self["config"].getCurrentIndex()
-		if idx and idx > 1:
-			if idx < self.lenExcludes:
-				self.lenExcludes -= 1
-
-			list = self["config"].getList()
-			list.remove(self["config"].getCurrent())
-			self["config"].setList(list)
-
-	def new(self):
-		self.session.openWithCallback(
-			self.typeSelected,
-			ChoiceBox,
-			_("Select type of Filter"),
-			[
-				(_("Exclude"), 0),
-				(_("Include"), 1),
-			]
-		)
-
-	def typeSelected(self, ret):
-		if ret is not None:
-			list = self["config"].getList()
-
-			if ret[1] == 0:
-				pos = self.lenExcludes
-				self.lenExcludes += 1
-				text = ret[0]
-			else:
-				pos = len(self.list)
-				text = ret[0]
-
-			if self.typeSelection.value == "day":
-				entry = getConfigListEntry(text, NoSave(ConfigSelection(choices = weekdays)))
-			else:
-				entry = getConfigListEntry(text, NoSave(ExtendedConfigText(fixed_size = False)))
-
-			list.insert(pos, entry)
-			self["config"].setList(list)
-
-	def cancel(self):
-		if self["config"].isChanged():
-			self.session.openWithCallback(
-				self.cancelConfirm,
-				MessageBox,
-				_("Really close without saving settings?")
-			)
-		else:
-			self.close(None)
-
-	def cancelConfirm(self, ret):
-		if ret:
-			self.close(None)
-
-	def save(self):
-		self.refresh()
-
-		self.close((
-			self.enabled.value,
-			self.excludes,
-			self.includes
-		))
 
 class AutoTimerServiceEditor(Screen, ConfigListScreen):
 	"""Edit allowed Services of a AutoTimer"""

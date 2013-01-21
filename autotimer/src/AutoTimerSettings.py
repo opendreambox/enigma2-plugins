@@ -50,6 +50,9 @@ class AutoTimerSettings(Screen, ConfigListScreen):
 				getConfigListEntry(_("Show notification on similars"), config.plugins.autotimer.notifsimilar, _("By enabling this you will be notified about similar timers added during automated polling. There is no intelligence involved, so it might bother you about the same conflict over and over.")),
 				getConfigListEntry(_("Editor for new AutoTimers"), config.plugins.autotimer.editor, _("The editor to be used for new AutoTimers. This can either be the Wizard or the classic editor.")),
 				getConfigListEntry(_("Support \"Fast Scan\"?"), config.plugins.autotimer.fastscan, _("When supporting \"Fast Scan\" the service type is ignored. You don't need to enable this unless your Image supports \"Fast Scan\" and you are using it.")),
+				getConfigListEntry(_("Log level"), config.plugins.autotimer.loglevel, _("Select the level of loggin you want to enable")),
+				getConfigListEntry(_("Debug: Write Log"), config.plugins.autotimer.logwrite, _("Select, if the log should be written to a file")),
+				getConfigListEntry(_("Debug: Log file path"), config.plugins.autotimer.logfile, _("Where should the logfile be written to")),
 			],
 			session = session,
 			on_change = self.changed

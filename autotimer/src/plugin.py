@@ -2,6 +2,9 @@ from __future__ import print_function
 
 from . import _, config
 
+# Logging
+from AutoTimerLogger import atLog, ATLOG_DEBUG, ATLOG_INFO, ATLOG_WARN, ATLOG_ERROR
+
 # GUI (Screens)
 from Screens.MessageBox import MessageBox
 from Tools.Notifications import AddPopup
@@ -21,7 +24,7 @@ try:
 	reader = XMLHelpReader(resolveFilename(SCOPE_PLUGINS, "Extensions/AutoTimer/mphelp.xml"))
 	autotimerHelp = registerHelp(*reader)
 except Exception as e:
-	print("[AutoTimer] Unable to initialize MPHelp:", e,"- Help not available!")
+	atLog( ATLOG_ERROR, "Unable to initialize MPHelp:", e,"- Help not available!")
 	autotimerHelp = None
 #pragma mark -
 
@@ -187,7 +190,7 @@ def housekeepingExtensionsmenu(el):
 		try:
 			plugins.removePlugin(extDescriptor)
 		except ValueError as ve:
-			print("[AutoTimer] housekeepingExtensionsmenu got confused, tried to remove non-existant plugin entry... ignoring.")
+			atLog( ATLOG_WARN, "housekeepingExtensionsmenu got confused, tried to remove non-existant plugin entry... ignoring.")
 
 config.plugins.autotimer.show_in_extensionsmenu.addNotifier(housekeepingExtensionsmenu, initial_call = False, immediate_feedback = True)
 extDescriptor = PluginDescriptor(name="AutoTimer", description = _("Edit Timers and scan for new Events"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = extensionsmenu, needsRestart = False)

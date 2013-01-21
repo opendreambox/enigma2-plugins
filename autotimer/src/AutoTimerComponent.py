@@ -13,6 +13,9 @@ from Components.config import config
 # Default encoding
 from Components.Language import language
 
+# Filters
+from AutoTimerFilter import filterDefinitions, AT_EXCLUDE, AT_INCLUDE, AT_EXTENSION
+
 class AutoTimerComponent(object):
 	"""AutoTimer Component which also handles validity checks"""
 
@@ -48,7 +51,7 @@ class AutoTimerComponent(object):
 	"""
 	def setValues(self, name, match, enabled, timespan=None, services=None, \
 			offset=None, afterevent=[], exclude=None, maxduration=None, \
-			destination=None, include=None, matchCount=0, matchLeft=0, \
+			destination=None, include=None, extension=None, matchCount=0, matchLeft=0, \
 			matchLimit='', matchFormatString='', lastBegin=0, justplay=False, \
 			avoidDuplicateDescription=0, searchForDuplicateDescription=2, bouquets=None, \
 			tags=None, encoding=None, searchType="partial", searchCase="insensitive", \
@@ -61,10 +64,11 @@ class AutoTimerComponent(object):
 		self.services = services
 		self.offset = offset
 		self.afterevent = afterevent
-		self.exclude = exclude
+		self.exclude = exclude if exclude else []
 		self.maxduration = maxduration
 		self.destination = destination
-		self.include = include
+		self.include = include if include else []
+		self.extension = extension if extension else []
 		self.matchCount = matchCount
 		self.matchLeft = matchLeft
 		self.matchLimit = matchLimit
@@ -118,32 +122,6 @@ class AutoTimerComponent(object):
 			self._encoding = getDefaultEncoding()
 
 	encoding = property(lambda self: self._encoding, setEncoding)
-
-	def setExclude(self, exclude):
-		if exclude:
-			self._exclude = (
-				[re_compile(x) for x in exclude[0]],
-				[re_compile(x) for x in exclude[1]],
-				[re_compile(x) for x in exclude[2]],
-				exclude[3]
-			)
-		else:
-			self._exclude = ([], [], [], [])
-
-	exclude = property(lambda self: self._exclude, setExclude)
-
-	def setInclude(self, include):
-		if include:
-			self._include = (
-				[re_compile(x) for x in include[0]],
-				[re_compile(x) for x in include[1]],
-				[re_compile(x) for x in include[2]],
-				include[3]
-			)
-		else:
-			self._include = ([], [], [], [])
-
-	include = property(lambda self: self._include, setInclude)
 
 	def setSearchCase(self, case):
 		assert case in ("sensitive", "insensitive"), "search case must be sensitive or insensitive"
@@ -284,20 +262,64 @@ class AutoTimerComponent(object):
 
 	getEnabled = lambda self: self.enabled and "yes" or "no"
 
+	def getFiltersByKey(self, filterList, filterKey='', paramName='searchstring'):
+		res = []
+		for filter in filterList:
+			if filter.filterKey == filterKey:
+				filterVal = filter.paramValues.get(paramName, "")
+				if filterVal:
+					res.append(filterVal)
+		return res
+	
 	getExclude = lambda self: self._exclude
-	getExcludedDays = lambda self: self.exclude[3]
-	getExcludedDescription = lambda self: [x.pattern for x in self.exclude[2]]
-	getExcludedShort = lambda self: [x.pattern for x in self.exclude[1]]
-	getExcludedTitle = lambda self: [x.pattern for x in self.exclude[0]]
+	
+	# Backwards compatibility
+	def getExcludedDays():
+		return self.getFiltersByKey( self.exclude, "AutoTimer.day" )
+	def getExcludedDescription():
+		return self.getFiltersByKey( self.exclude, "AutoTimer.desc" )
+	def getExcludedShort():
+		return self.getFiltersByKey( self.exclude, "AutoTimer.short" )
+	def getExcludedTitle():
+		return self.getFiltersByKey( self.exclude, "AutoTimer.title" )
+	def setExclude(self, exclude):
+		if exclude:
+			self._exclude = exclude
+		else:
+			self._exclude = []
+
+	exclude = property(lambda self: self._exclude, setExclude)
 
 	getId = lambda self: self.id
-
+	
 	getInclude = lambda self: self._include
-	getIncludedTitle = lambda self: [x.pattern for x in self.include[0]]
-	getIncludedShort = lambda self: [x.pattern for x in self.include[1]]
-	getIncludedDescription = lambda self: [x.pattern for x in self.include[2]]
-	getIncludedDays = lambda self: self.include[3]
 
+	# Backwards compatibility
+	def getIncludedDays():
+		return self.getFiltersByKey( self.include, "AutoTimer.day" )
+	def getIncludedDescription():
+		return self.getFiltersByKey( self.include, "AutoTimer.desc" )
+	def getIncludedShort():
+		return self.getFiltersByKey( self.include, "AutoTimer.short" )
+	def getIncludedTitle():
+		return self.getFiltersByKey( self.include, "AutoTimer.title" )
+	def setInclude(self, include):
+		if include:
+			self._include = include
+		else: 
+			self._include = []
+			
+	include = property(lambda self: self._include, setInclude)
+	
+	getExtension = lambda self: self._extension
+	def setExtension(self, extension):
+		if extension:
+			self._extension = extension
+		else:
+			self._extension = []
+	
+	extension = property(lambda self: self._extension, setExtension)
+			
 	getJustplay = lambda self: self.justplay and "1" or "0"
 
 	getLastBegin = lambda self: self.lastBegin
@@ -349,55 +371,16 @@ class AutoTimerComponent(object):
 		if self.maxduration is None:
 			return False
 		return length > self.maxduration
-
-	def checkExcluded(self, title, short, extended, dayofweek):
-		if dayofweek and self.exclude[3]:
-			list = self.exclude[3]
-			if dayofweek in list:
-				return True
-			if "weekend" in list and dayofweek in ("5", "6"):
-				return True
-			if "weekday" in list and dayofweek in ("0", "1", "2", "3", "4"):
-				return True
-
-		for exclude in self.exclude[0]:
-			if exclude.search(title):
-				return True
-		for exclude in self.exclude[1]:
-			if exclude.search(short):
-				return True
-		for exclude in self.exclude[2]:
-			if exclude.search(extended):
-				return True
-		return False
-
-	def checkFilter(self, title, short, extended, dayofweek):
-		if self.checkExcluded(title, short, extended, dayofweek):
+	
+	def checkFilter(self, *args ):
+		if filterDefinitions.checkFilter( AT_EXCLUDE, self, *args ):
 			return True
 
-		return self.checkIncluded(title, short, extended, dayofweek)
+		result = not filterDefinitions.checkFilter( AT_INCLUDE, self, *args )
+		return result
 
-	def checkIncluded(self, title, short, extended, dayofweek):
-		if dayofweek and self.include[3]:
-			list = self.include[3][:]
-			if "weekend" in list:
-				list.extend(("5", "6"))
-			if "weekday" in list:
-				list.extend(("0", "1", "2", "3", "4"))
-			if dayofweek not in list:
-				return True
-
-		for include in self.include[0]:
-			if not include.search(title):
-				return True
-		for include in self.include[1]:
-			if not include.search(short):
-				return True
-		for include in self.include[2]:
-			if not include.search(extended):
-				return True
-
-		return False
+	def executeExtension(self, *args ):
+		return filterDefinitions.checkFilter( AT_EXTENSION, self, *args )
 
 	def checkServices(self, check_service):
 		services = self.services
@@ -508,10 +491,11 @@ class AutoTimerComponent(object):
 			services = self.services,
 			offset = self.offset,
 			afterevent = self.afterevent,
-			exclude = (self.getExcludedTitle(), self.getExcludedShort(), self.getExcludedDescription(), self.getExcludedDays()),
+			exclude = self.getExclude(),
 			maxduration = self.maxduration,
 			destination = self.destination,
-			include = (self.getIncludedTitle(), self.getIncludedShort(), self.getIncludedDescription(), self.getIncludedDays()),
+			include = self.getInclude(),
+			extension = self.getExtension(),
 			matchCount = self.matchCount,
 			matchLeft = self.matchLeft,
 			matchLimit = self.matchLimit,
@@ -542,10 +526,11 @@ class AutoTimerComponent(object):
 			services = self.services[:],
 			offset = self.offset and self.offset[:],
 			afterevent = self.afterevent[:],
-			exclude = (self.getExcludedTitle(), self.getExcludedShort(), self.getExcludedDescription(), self.exclude[3][:]),
+			exclude = self.getExclude(),
 			maxduration = self.maxduration,
 			destination = self.destination,
-			include = (self.getIncludedTitle(), self.getIncludedShort(), self.getIncludedDescription(), self.include[3][:]),
+			include = self.getInclude(),
+			extension = self.getExtension(),
 			matchCount = self.matchCount,
 			matchLeft = self.matchLeft,
 			matchLimit = self.matchLimit,
@@ -593,16 +578,9 @@ class AutoTimerComponent(object):
 					str(self.services),
 					str(self.offset),
 					str(self.afterevent),
-					str(([x.pattern for x in self.exclude[0]],
-						[x.pattern for x in self.exclude[1]],
-						[x.pattern for x in self.exclude[2]],
-						self.exclude[3]
-					)),
-					str(([x.pattern for x in self.include[0]],
-						[x.pattern for x in self.include[1]],
-						[x.pattern for x in self.include[2]],
-						self.include[3]
-					)),
+					str(x.description for x in self.exclude),
+					str(x.description for x in self.include),
+					str(x.description for x in self.extension),
 					str(self.maxduration),
 					str(self.enabled),
 					str(self.destination),

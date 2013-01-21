@@ -1,11 +1,14 @@
 # l10n
 from . import _
 
+# Logging
+from AutoTimerLogger import atLog, ATLOG_DEBUG, ATLOG_INFO, ATLOG_WARN, ATLOG_ERROR
+
 # GUI (Screens)
 from Screens.WizardLanguage import WizardLanguage
 from Screens.Rc import Rc
-from AutoTimerEditor import AutoTimerEditorBase, AutoTimerServiceEditor, \
-		AutoTimerFilterEditor
+from AutoTimerEditor import AutoTimerEditorBase, AutoTimerServiceEditor
+from AutoTimerFilter import AutoTimerFilterList
 
 # GUI (Components)
 from Components.ActionMap import ActionMap
@@ -73,7 +76,7 @@ class AutoTimerWizard(WizardLanguage, AutoTimerEditorBase, Rc):
 		)
 
 		self.filterDlg = self.session.instantiateDialog(
-				AutoTimerFilterEditor,
+				AutoTimerFilterList,
 				self.filterSet, self.excludes, self.includes
 		)
 
@@ -176,7 +179,7 @@ class AutoTimerWizard(WizardLanguage, AutoTimerEditorBase, Rc):
 	def maybeRemoveWhitespaces(self):
 		# XXX: Hack alert
 		if self["list"].current[1] == "removeTrailingWhitespaces":
-			print("Next step would be to remove trailing whitespaces, removing them and redirecting to 'conf2'")
+			atLog( ATLOG_INFO, "Wizard: Next step would be to remove trailing whitespaces, removing them and redirecting to 'conf2'")
 			self.timer.match = self.timer.match.rstrip()
 			self.match.value = self.match.value.rstrip()
 			self.currStep = self.getStepWithID("conf2")

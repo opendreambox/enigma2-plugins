@@ -28,17 +28,15 @@ import Queue
 # AutoTimer Component
 from AutoTimerComponent import preferredAutoTimerComponent
 
+# Logging
+from AutoTimerLogger import atLog, ATLOG_DEBUG, ATLOG_INFO, ATLOG_WARN, ATLOG_ERROR
+
 from itertools import chain
 from collections import defaultdict
 from difflib import SequenceMatcher
 from operator import itemgetter
 
 from Plugins.SystemPlugins.Toolkit.SimpleThread import SimpleThread
-
-try:
-	from Plugins.Extensions.SeriesPlugin.plugin import renameTimer
-except ImportError as ie:
-	renameTimer = None
 
 from . import config, xrange, itervalues
 
@@ -112,13 +110,13 @@ class AutoTimer:
 	def readXml(self):
 		# Abort if no config found
 		if not os_path.exists(XML_CONFIG):
-			print("[AutoTimer] No configuration file present")
+			atLog( ATLOG_ERROR, "No configuration file present")
 			return
 
 		# Parse if mtime differs from whats saved
 		mtime = os_path.getmtime(XML_CONFIG)
 		if mtime == self.configMtime:
-			print("[AutoTimer] No changes in configuration, won't parse")
+			atLog( ATLOG_INFO, "No changes in configuration, won't parse")
 			return
 
 		# Save current mtime
@@ -315,7 +313,7 @@ class AutoTimer:
 			eserviceref = eServiceReference(serviceref)
 			evt = epgcache.lookupEventId(eserviceref, eit)
 			if not evt:
-				print("[AutoTimer] Could not create Event!")
+				atLog( ATLOG_INFO, "Could not create Event!" )
 				continue
 			# Try to determine real service (we always choose the last one)
 			n = evt.getNumOfLinkageServices()
@@ -326,7 +324,7 @@ class AutoTimer:
 			#Check if the event is on the ignorelist
 			evtKey = serviceref + str(eit)
 			if evtKey in self.ignoredict:
-				print("[AutoTimer] Skipping event %s because it is in the list of ignored events",evtKey)
+				atLog( ATLOG_INFO, "Skipping event %s because it is in the list of ignored events" % (evtKey))
 				continue
 
 			evtBegin = begin
@@ -334,7 +332,7 @@ class AutoTimer:
 
 			# If event starts in less than 60 seconds skip it
 			if begin < time() + 60:
-				print("[AutoTimer] Skipping an event because it starts in less than 60 seconds")
+				atLog( ATLOG_INFO, "Skipping an event because it starts in less than 60 seconds")
 				continue
 
 			# Convert begin time
@@ -363,7 +361,7 @@ class AutoTimer:
 				or (not similarTimer and (\
 					timer.checkTimespan(timestamp) \
 					or timer.checkTimeframe(begin) \
-				)) or timer.checkFilter(name, shortdesc, extdesc, dayofweek):
+				)) or timer.checkFilter(name, shortdesc, extdesc, dayofweek, serviceref, eit, begin, duration):
 				continue
 
 			if timer.hasOffset():
@@ -388,7 +386,7 @@ class AutoTimer:
 				continue
 
 			# Create moviedict from existing recordings in directory
-			if timer.avoidDuplicateDescription > 3:
+			if timer.avoidDuplicateDescription >= 3:
 				if dest and dest not in moviedict:
 					self.addDirectoryToMovieDict(moviedict, dest, serviceHandler)
 
@@ -398,7 +396,7 @@ class AutoTimer:
 				movieExists = False
 				for movieinfo in moviedict.get(dest, ()):
 					if self.checkSimilarity(timer, name, movieinfo.get("name"), shortdesc, movieinfo.get("shortdesc"), extdesc, movieinfo.get("extdesc") ):
-						print("[AutoTimer] We found a matching recorded movie, skipping event:", name)
+						atLog( ATLOG_INFO, "We found a matching recorded movie, skipping event: %s" % name)
 						movieExists = True
 						break
 				if movieExists:
@@ -417,17 +415,19 @@ class AutoTimer:
 
 					# Abort if we don't want to modify timers or timer is repeated
 					if config.plugins.autotimer.refresh.value == "none" or rtimer.repeated:
-						print("[AutoTimer] Won't modify existing timer because either no modification allowed or repeated timer")
+						atLog( ATLOG_INFO, "Won't modify existing timer because either no modification allowed or repeated timer")
 						break
 
 					if hasattr(rtimer, "isAutoTimer"):
 						rtimer.log(501, "[AutoTimer] AutoTimer %s modified this automatically generated timer." % (timer.name))
+						atLog( ATLOG_INFO, "%s modified automatically generated timer %s." % (timer.name, rtimer.name))
 					else:
 						if config.plugins.autotimer.refresh.value != "all":
-							print("[AutoTimer] Won't modify existing timer because it's no timer set by us")
+							atLog( ATLOG_INFO, "Won't modify existing timer because it's no timer set by us")
 							break
 
 						rtimer.log(501, "[AutoTimer] Warning, AutoTimer %s messed with a timer which might not belong to it." % (timer.name))
+						atLog( ATLOG_WARN, "Warning, AutoTimer %s messed with timer %s, which might not belong to it." % (timer.name, rtimer.name))
 
 					newEntry = rtimer
 					modified += 1
@@ -440,7 +440,7 @@ class AutoTimer:
 						if self.checkSimilarity(timer, name, rtimer.name, shortdesc, rtimer.description, extdesc, rtimer.extdesc ):
 						# if searchForDuplicateDescription > 1 then check short description
 							oldExists = True
-							print("[AutoTimer] We found a timer (similar service) with same description, skipping event")
+							atLog( ATLOG_INFO, "We found a timer (similar service) with same description, skipping event")
 							break
 
 			# We found no timer we want to edit
@@ -456,18 +456,18 @@ class AutoTimer:
 						if not rtimer.disabled:
 							if self.checkSimilarity(timer, name, rtimer.name, shortdesc, rtimer.description, extdesc, rtimer.extdesc ):
 								oldExists = True
-								print("[AutoTimer] We found a timer (any service) with same description, skipping event")
+								atLog( ATLOG_INFO, "We found a timer (any service) with same description, skipping event")
 								break
 					if oldExists:
 						continue
 
 				if timer.checkCounter(timestamp):
-					print("[AutoTimer] Not adding new timer because counter is depleted.")
+					atLog( ATLOG_INFO, "Not adding new timer because counter is depleted.")
 					continue
 
 				newEntry = RecordTimerEntry(ServiceReference(serviceref), begin, end, name, shortdesc, eit)
 				newEntry.log(500, "[AutoTimer] Try to add new timer based on AutoTimer %s." % (timer.name))
-
+				atLog( ATLOG_INFO, "Try to add new timer based on AutoTimer %s." % (timer.name))
 				# Mark this entry as AutoTimer (only AutoTimers will have this Attribute set)
 				# It is only temporarily, after a restart it will be lost,
 				# because it won't be stored in the timer xml file
@@ -495,25 +495,27 @@ class AutoTimer:
 					tags.append(tagname)
 			newEntry.tags = tags
 
+			# Are there any extensions to modify our newly crwated timer: Execute them now
+			extensionResult = timer.executeExtension(name, shortdesc, extdesc, dayofweek, serviceref, eit, begin, duration)
+			# Should we react on a "false" of executeExtension here???
+
 			if oldExists:
 				# XXX: this won't perform a sanity check, but do we actually want to do so?
 				recordHandler.timeChanged(newEntry)
 
-				if renameTimer is not None and timer.series_labeling:
-						renameTimer(newEntry, name, evtBegin, evtEnd, avoidDuplicates=(timer.avoidDuplicateDescription == 4), timers=timerdict, moviedict=moviedict, autotimer=self )
 			else:
 				conflictString = ""
 				if similarTimer:
 					conflictString = similardict[eit].conflictString
 					newEntry.log(504, "[AutoTimer] Try to add similar Timer because of conflicts with %s." % (conflictString))
-
+					atLog( ATLOG_INFO, "Try to add similar Timer because of conflicts with %s." % (conflictString))
 				# Try to add timer
 				conflicts = recordHandler.record(newEntry)
 
 				if conflicts:
 					# Maybe use newEntry.log
 					conflictString += ' / '.join(["%s (%s)" % (x.name, strftime("%Y%m%d %H%M", localtime(x.begin))) for x in conflicts])
-					print("[AutoTimer] conflict with %s detected" % (conflictString))
+					atLog( ATLOG_INFO, "conflict with %s detected" % (conflictString))
 
 					if config.plugins.autotimer.addsimilar_on_conflict.value:
 						# We start our search right after our actual index
@@ -524,7 +526,7 @@ class AutoTimer:
 							if self.checkSimilarity(timer, name, nameS, shortdesc, shortdescS, extdesc, extdescS, force=True ):
 								# Check if the similar is already known
 								if eitS not in similardict:
-									print("[AutoTimer] Found similar Timer: " + name)
+									atLog( ATLOG_INFO, "Found similar Timer: " + name)
 
 									# Store the actual and similar eit and conflictString, so it can be handled later
 									newEntry.conflictString = conflictString
@@ -546,9 +548,6 @@ class AutoTimer:
 					newEntry.extdesc = extdesc
 					timerdict[serviceref].append(newEntry)
 
-					if renameTimer is not None and timer.series_labeling:
-							renameTimer(newEntry, name, evtBegin, evtEnd, avoidDuplicates=(timer.avoidDuplicateDescription == 4), timers=timerdict, moviedict=moviedict, autotimer=self )
-
 					# Similar timers are in new timers list and additionally in similar timers list
 					if similarTimer:
 						similars.append((name, begin, end, serviceref, timer.name))
@@ -560,6 +559,7 @@ class AutoTimer:
 
 					if config.plugins.autotimer.disabled_on_conflict.value:
 						newEntry.log(503, "[AutoTimer] Timer disabled because of conflicts with %s." % (conflictString))
+						atLog( ATLOG_INFO, "Timer disabled because of conflicts with %s." % (conflictString))
 						newEntry.disabled = True
 						# We might want to do the sanity check locally so we don't run it twice - but I consider this workaround a hack anyway
 						conflicts = recordHandler.record(newEntry)
@@ -567,7 +567,7 @@ class AutoTimer:
 
 	def parseEPG(self, simulateOnly = False):
 		if NavigationInstance.instance is None:
-			print("[AutoTimer] Navigation is not available, can't parse EPG")
+			atLog( ATLOG_ERROR, "Navigation is not available, can't parse EPG")
 			return (0, 0, 0, [], [], [])
 
 		new = 0
@@ -636,7 +636,7 @@ class AutoTimer:
 	def addDirectoryToMovieDict(self, moviedict, dest, serviceHandler):
 		movielist = serviceHandler.list(eServiceReference("2:0:1:0:0:0:0:0:0:0:" + dest))
 		if movielist is None:
-			print("[AutoTimer] listing of movies in " + dest + " failed")
+			atLog( ATLOG_WARN, "listing of movies in " + dest + " failed")
 		else:
 			append = moviedict[dest].append
 			while 1:

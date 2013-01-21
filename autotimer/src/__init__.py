@@ -5,8 +5,15 @@ from os import environ as os_environ
 import gettext
 
 # Config
+
+ATLOG_LIST = [
+              ("1", _("Debug")),
+              ("2", _("Info")),
+              ("3", _("Warning")),
+              ("4", _("Error"))]
+
 from Components.config import config, ConfigSubsection, ConfigEnableDisable, \
-	ConfigNumber, ConfigSelection, ConfigYesNo
+	ConfigNumber, ConfigSelection, ConfigText, ConfigYesNo
 
 config.plugins.autotimer = ConfigSubsection()
 config.plugins.autotimer.autopoll = ConfigEnableDisable(default=False)
@@ -33,6 +40,11 @@ config.plugins.autotimer.notifconflict = ConfigYesNo(default=True)
 config.plugins.autotimer.notifsimilar = ConfigYesNo(default=True)
 config.plugins.autotimer.maxdaysinfuture = ConfigNumber(default=0)
 config.plugins.autotimer.show_help = ConfigYesNo(default=True)
+
+#Logging
+config.plugins.autotimer.loglevel = ConfigSelection(choices=ATLOG_LIST, default="2")
+config.plugins.autotimer.logwrite = ConfigYesNo(default = False)
+config.plugins.autotimer.logfile = ConfigText(default = "/tmp/autotimer.log", fixed_size = False)
 
 def localeInit():
 	lang = language.getLanguage()[:2] # getLanguage returns e.g. "fi_FI" for "language_country"
