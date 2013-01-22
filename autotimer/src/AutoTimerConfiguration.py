@@ -233,23 +233,32 @@ def parseEntry(element, baseTimer, defaults = False):
 
     # Read out exclude
     l = element.findall("exclude")
-    excludes = []
+    idx = {"title": 0, "shortdescription": 1, "description": 2, "dayofweek": 3}
     if l:
+        excludes = ([], [], [], [])
         for exclude in l:
-            curFilter = parseExtensions(exclude, AT_EXCLUDE)
-            if curFilter:
-                excludes.append(curFilter)
-    baseTimer.exclude = excludes
+            where = exclude.get("where")
+            value = exclude.text
+            if not (value and where):
+                continue
 
-    # Read out includes
-    includes = []
+            if where in idx:
+                excludes[idx[where]].append(value.encode("UTF-8"))
+        baseTimer.exclude = excludes
+
+    # Read out includes (use same idx)
     l = element.findall("include")
     if l:
+        includes = ([], [], [], [])
         for include in l:
-            curFilter = parseExtensions(include, AT_INCLUDE)
-            if curFilter:
-                includes.append(curFilter)
-    baseTimer.include = includes
+            where = include.get("where")
+            value = include.text
+            if not (value and where):
+                continue
+
+            if where in idx:
+                includes[idx[where]].append(value.encode("UTF-8"))
+        baseTimer.include = includes
 
     # Read out Extensions
     extensions = []
@@ -691,10 +700,24 @@ def buildConfig(defaultTimer, timers, ignores, webif = False):
             extend(('>', idx[action], '</afterevent>\n'))
 
     # Excludes
-    extend( getExtensionXML("exclude", defaultTimer.exclude))
+    for title in defaultTimer.getExcludedTitle():
+        extend(('  <exclude where="title">', stringToXML(title), '</exclude>\n'))
+    for short in defaultTimer.getExcludedShort():
+        extend(('  <exclude where="shortdescription">', stringToXML(short), '</exclude>\n'))
+    for desc in defaultTimer.getExcludedDescription():
+        extend(('  <exclude where="description">', stringToXML(desc), '</exclude>\n'))
+    for day in defaultTimer.getExcludedDays():
+        extend(('  <exclude where="dayofweek">', stringToXML(day), '</exclude>\n'))
 
     # Includes
-    extend( getExtensionXML("include", defaultTimer.include))
+    for title in defaultTimer.getIncludedTitle():
+        extend(('  <include where="title">', stringToXML(title), '</include>\n'))
+    for short in defaultTimer.getIncludedShort():
+        extend(('  <include where="shortdescription">', stringToXML(short), '</include>\n'))
+    for desc in defaultTimer.getIncludedDescription():
+        extend(('  <include where="description">', stringToXML(desc), '</include>\n'))
+    for day in defaultTimer.getIncludedDays():
+        extend(('  <include where="dayofweek">', stringToXML(day), '</include>\n'))
 
     # Tags
     if webif and defaultTimer.tags:
@@ -825,14 +848,26 @@ def buildConfig(defaultTimer, timers, ignores, webif = False):
                 extend(('>', idx[action], '</afterevent>\n'))
         
         # Excludes
-        if timer.exclude:
-            extend( getExtensionXML("exclude", timer.exclude))
+        for title in timer.getExcludedTitle():
+            extend(('  <exclude where="title">', stringToXML(title), '</exclude>\n'))
+        for short in timer.getExcludedShort():
+            extend(('  <exclude where="shortdescription">', stringToXML(short), '</exclude>\n'))
+        for desc in timer.getExcludedDescription():
+            extend(('  <exclude where="description">', stringToXML(desc), '</exclude>\n'))
+        for day in timer.getExcludedDays():
+            extend(('  <exclude where="dayofweek">', stringToXML(day), '</exclude>\n'))
 
         # Includes
-        if timer.include:
-            extend( getExtensionXML("include", timer.include))
+        for title in timer.getIncludedTitle():
+            extend(('  <include where="title">', stringToXML(title), '</include>\n'))
+        for short in timer.getIncludedShort():
+            extend(('  <include where="shortdescription">', stringToXML(short), '</include>\n'))
+        for desc in timer.getIncludedDescription():
+            extend(('  <include where="description">', stringToXML(desc), '</include>\n'))
+        for day in timer.getIncludedDays():
+            extend(('  <include where="dayofweek">', stringToXML(day), '</include>\n'))
 
-        # Includes
+        # Extensions
         if timer.extension:
             extend( getExtensionXML("extension", timer.extension))
 

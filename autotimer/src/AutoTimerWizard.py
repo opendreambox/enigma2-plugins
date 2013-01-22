@@ -7,8 +7,8 @@ from AutoTimerLogger import atLog, ATLOG_DEBUG, ATLOG_INFO, ATLOG_WARN, ATLOG_ER
 # GUI (Screens)
 from Screens.WizardLanguage import WizardLanguage
 from Screens.Rc import Rc
-from AutoTimerEditor import AutoTimerEditorBase, AutoTimerServiceEditor
-from AutoTimerFilter import AutoTimerFilterList
+from AutoTimerEditor import AutoTimerEditorBase, AutoTimerServiceEditor, \
+		AutoTimerFilterEditor
 
 # GUI (Components)
 from Components.ActionMap import ActionMap
@@ -76,7 +76,7 @@ class AutoTimerWizard(WizardLanguage, AutoTimerEditorBase, Rc):
 		)
 
 		self.filterDlg = self.session.instantiateDialog(
-				AutoTimerFilterList,
+				AutoTimerFilterEditor,
 				self.filterSet, self.excludes, self.includes
 		)
 

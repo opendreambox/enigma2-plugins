@@ -175,7 +175,7 @@ class AutoTimerFilterDefinitions():
         for filterKey, filterParams in iteritems( self.filters ):
             self.filterSelection.append((filterKey, filterParams.description))
     
-    def checkFilter(self, filterType, timer, title, short, extended, dayofweek, serviceref, eit, begin, duration):
+    def checkFilter(self, filterType, autotimer, timer, title, short, extended, dayofweek, serviceref, eit, begin, duration):
         atLog( ATLOG_INFO, "checkFilter: Start checking filters of type %s" % (atextensiontypes[filterType]) )
         if filterType == AT_EXCLUDE:
             filterEntries = timer.exclude 
@@ -199,7 +199,7 @@ class AutoTimerFilterDefinitions():
                 if fnc:
                     try:
                         atLog( ATLOG_DEBUG, "checkFilter: calling filterFnc=", fnc.__name__ )
-                        checkResult = fnc( filterName=filterName, timer=timer, title=title, short=short, extended=extended, \
+                        checkResult = fnc( filterName=filterName, autotimer=autotimer, timer=timer, title=title, short=short, extended=extended, \
                                        dayofweek=dayofweek, eit=eit, begin=begin, duration=duration, **filter.paramValues )
                         if checkResult:
                             atLog( ATLOG_INFO, "checkFilter: Filter %s returned TRUE" % (filterName) )
