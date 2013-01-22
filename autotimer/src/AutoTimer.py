@@ -208,7 +208,7 @@ class AutoTimer:
 
 # Main function
 
-	def parseTimer(self, timer, epgcache, serviceHandler, recordHandler, checkEvtLimit, evtLimit, timers, conflicting, similars, timerdict, moviedict, simulateOnly=False):
+	def parseTimer(self, timer, epgmatches, serviceHandler, recordHandler, checkEvtLimit, evtLimit, timers, conflicting, similars, timerdict, moviedict, simulateOnly=False):
 		new = 0
 		modified = 0
 		similardict = defaultdict(list)	# Contains the the marked similar eits and the conflicting strings
@@ -216,8 +216,6 @@ class AutoTimer:
 		# Precompute timer destination dir
 		dest = timer.destination or config.usage.default_path.value
 
-		# Loop over all EPG matches
-		epgmatches = self.getEpgMatches(timer, epgcache)
 		for idx, ( serviceref, eit, name, begin, duration, shortdesc, extdesc ) in enumerate( epgmatches ):
 			#Check if the event is on the ignorelist
 			evtKey = serviceref + str(eit)
@@ -519,7 +517,8 @@ class AutoTimer:
 
 		# Iterate Timer
 		for timer in self.getEnabledTimerList():
-			tup = doBlockingCallFromMainThread(self.parseTimer, timer, epgcache, serviceHandler, recordHandler, checkEvtLimit, evtLimit, timers, conflicting, similars, timerdict, moviedict, simulateOnly=simulateOnly)
+			epgmatches = doBlockingCallFromMainThread(self.getEpgMatches, timer, epgcache)
+			tup = doBlockingCallFromMainThread(self.parseTimer, timer, epgmatches, serviceHandler, recordHandler, checkEvtLimit, evtLimit, timers, conflicting, similars, timerdict, moviedict, simulateOnly=simulateOnly)
 			new += tup[0]
 			modified += tup[1]
 
