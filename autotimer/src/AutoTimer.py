@@ -258,7 +258,7 @@ class AutoTimer:
 					timer.checkTimespan(timestamp) \
 					or timer.checkTimeframe(begin) \
 				)) or timer.checkFilter(name, shortdesc, extdesc, dayofweek) \
-				or timer.checkExtensionFilters(name, shortdesc, extdesc, dayofweek, serviceref, eit, begin, duration):
+				or timer.checkAddonFilters(name, shortdesc, extdesc, dayofweek, serviceref, eit, begin, duration):
 				continue
 
 			if timer.hasOffset():
@@ -405,7 +405,7 @@ class AutoTimer:
 			#      use.
 
 			# Are there any extensions to modify our newly crwated timer: Execute them now
-			extensionResult = timer.executeExtension(newEntry, name, shortdesc, extdesc, dayofweek, serviceref, eit, begin, duration)
+			extensionResult = timer.executeExtensions(newEntry, name, shortdesc, extdesc, dayofweek, serviceref, eit, begin, duration)
 			# Should we react on a "false" of executeExtension here???
 
 			if oldExists:

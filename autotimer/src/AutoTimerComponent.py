@@ -14,7 +14,7 @@ from Components.config import config
 from Components.Language import language
 
 # Filters
-from AutoTimerFilter import filterDefinitions, AT_EXCLUDE, AT_INCLUDE, AT_EXTENSION
+from AutoTimerAddon import addonDefinitions, AT_EXCLUDE, AT_INCLUDE, AT_EXTENSION
 
 class AutoTimerComponent(object):
 	"""AutoTimer Component which also handles validity checks"""
@@ -51,7 +51,7 @@ class AutoTimerComponent(object):
 	"""
 	def setValues(self, name, match, enabled, timespan=None, services=None, \
 			offset=None, afterevent=[], exclude=None, maxduration=None, \
-			destination=None, include=None, extension=None, matchCount=0, matchLeft=0, \
+			destination=None, include=None, addons=None, matchCount=0, matchLeft=0, \
 			matchLimit='', matchFormatString='', lastBegin=0, justplay=False, \
 			avoidDuplicateDescription=0, searchForDuplicateDescription=2, bouquets=None, \
 			tags=None, encoding=None, searchType="partial", searchCase="insensitive", \
@@ -68,7 +68,7 @@ class AutoTimerComponent(object):
 		self.maxduration = maxduration
 		self.destination = destination
 		self.include = include
-		self.extension = extension if extension else []
+		self.addons = addons if addons else []
 		self.matchCount = matchCount
 		self.matchLeft = matchLeft
 		self.matchLimit = matchLimit
@@ -311,14 +311,14 @@ class AutoTimerComponent(object):
 	getIncludedDescription = lambda self: [x.pattern for x in self.include[2]]
 	getIncludedDays = lambda self: self.include[3]
 			
-	getExtension = lambda self: self._extension
-	def setExtension(self, extension):
-		if extension:
-			self._extension = extension
+	getAddons = lambda self: self._addons
+	def setAddons(self, addon):
+		if addon:
+			self._addons = addon
 		else:
-			self._extension = []
+			self._addons = []
 	
-	extension = property(lambda self: self._extension, setExtension)
+	addons = property(lambda self: self._addons, setAddons)
 			
 	getJustplay = lambda self: self.justplay and "1" or "0"
 
@@ -421,15 +421,15 @@ class AutoTimerComponent(object):
 
 		return False
 	
-	def checkExtensionFilters(self, *args ):
-		if filterDefinitions.checkFilter( AT_EXCLUDE, self, *args ):
+	def checkAddonFilters(self, *args ):
+		if addonDefinitions.executeAddon( AT_EXCLUDE, self, None, *args ):
 			return True
 
-		result = not filterDefinitions.checkFilter( AT_INCLUDE, self, None, *args )
+		result = not addonDefinitions.executeAddon( AT_INCLUDE, self, None, *args )
 		return result
 
-	def executeExtension(self, *args ):
-		return filterDefinitions.checkFilter( AT_EXTENSION, self, *args )
+	def executeExtensions(self, *args ):
+		return addonDefinitions.executeAddon( AT_EXTENSION, self, *args )
 
 	def checkServices(self, check_service):
 		services = self.services
@@ -544,7 +544,7 @@ class AutoTimerComponent(object):
 			maxduration = self.maxduration,
 			destination = self.destination,
 			include = (self.getIncludedTitle(), self.getIncludedShort(), self.getIncludedDescription(), self.getIncludedDays()),
-			extension = self.getExtension(),
+			addons = self.getAddons(),
 			matchCount = self.matchCount,
 			matchLeft = self.matchLeft,
 			matchLimit = self.matchLimit,
@@ -579,7 +579,7 @@ class AutoTimerComponent(object):
 			maxduration = self.maxduration,
 			destination = self.destination,
 			include = (self.getIncludedTitle(), self.getIncludedShort(), self.getIncludedDescription(), self.include[3][:]),
-			extension = self.getExtension(),
+			addons = self.getAddons(),
 			matchCount = self.matchCount,
 			matchLeft = self.matchLeft,
 			matchLimit = self.matchLimit,
@@ -637,7 +637,7 @@ class AutoTimerComponent(object):
 						[x.pattern for x in self.include[2]],
 						self.include[3]
 					)),
-					str(x.description for x in self.extension),
+					str(x.description for x in self.addons),
 					str(self.maxduration),
 					str(self.enabled),
 					str(self.destination),

@@ -44,7 +44,7 @@ from Tools import Directories
 from Screens.MovieSelection import getPreferredTagEditor
 
 # Filters
-from AutoTimerFilter import ExtendedConfigText, AutoTimerFilterList
+from AutoTimerAddon import ExtendedConfigText, AutoTimerAddonList
 
 weekdays = [
 	("0", _("Monday")),
@@ -154,12 +154,12 @@ class AutoTimerEditorBase:
 		self.includes = includes
 
 		# See, if there are extensions to call
-		extensions = timer.getExtension()
-		if extensions:
-			self.extensionSet = True
+		addons = timer.getAddons()
+		if addons:
+			self.addonsSet = True
 		else:
-			self.extensionSet = False
-		self.extensions = extensions
+			self.addonsSet = False
+		self.addons = addons
 
 		# See if services are restricted
 		self.services = timer.services
@@ -635,17 +635,20 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 	def editFilter(self):
 		self.session.openWithCallback(
 			self.editFilterCallback,
-			AutoTimerFilterEditor,
+			AutoTimerAddonList,
 			self.filterSet,
+			self.addons,
 			self.excludes,
 			self.includes
+			
 		)
 
 	def editFilterCallback(self, ret):
 		if ret:
 			self.filterSet = ret[0]
-			self.excludes = ret[1]
-			self.includes = ret[2]
+			self.addons = ret[1]
+			self.excludes = ret[2]
+			self.includes = ret[3]
 			self.renameFilterButton()
 
 	def editServices(self):
@@ -821,7 +824,7 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 			self.timer.include = None
 
 		# Extensions
-		if self.extensionSet:
+		if self.addonsSet:
 			self.timer.extension = self.extensions
 
 		# Counter

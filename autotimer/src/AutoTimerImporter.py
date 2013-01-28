@@ -19,7 +19,7 @@ from RecordTimer import AFTEREVENT
 
 # Needed to convert our timestamp back and forth
 from time import localtime
-from AutoTimerFilter import weekdays
+from AutoTimerAddon import weekdays
 
 from enigma import eServiceReference
 

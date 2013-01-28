@@ -17,12 +17,11 @@ logLevelEl = config.plugins.autotimer.loglevel
 
 def atLog(logLevel, *args):
 	if logLevel >= logLevelEl.value:
-		logLevelText = ATLOG_MESSAGES[logLevel] if logLevel in ATLOG_MESSAGES.keys() else "?????"
-		print("[AutoTimer", logLevelText + "]", *args)
-
-		if config.plugins.autotimer.logwrite.value:
-			try:
+		try:
+			logLevelText = ATLOG_MESSAGES[logLevel] if logLevel in ATLOG_MESSAGES.keys() else "?????"
+			print("[AutoTimer", logLevelText + "]", *args)
+			if config.plugins.autotimer.logwrite.value:
 				with open(config.plugins.autotimer.logfile.value, 'a') as f:
 					print("[" + logLevelText + "]", *args, file=f)
-			except Exception, e:
-				print("[AutoTimer] atLog exception", e)
+		except Exception, e:
+			print("[AutoTimer] atLog exception", e)

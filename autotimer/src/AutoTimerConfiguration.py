@@ -8,7 +8,7 @@ from . import _, iteritems
 from AutoTimerLogger import atLog, ATLOG_DEBUG, ATLOG_INFO, ATLOG_WARN, ATLOG_ERROR
 
 from AutoTimerComponent import preferredAutoTimerComponent, AutoTimerIgnoreEntry, getDefaultEncoding
-from AutoTimerFilter import AutoTimerFilterEntry, filterDefinitions, AT_EXCLUDE, AT_INCLUDE, AT_EXTENSION
+from AutoTimerAddon import AutoTimerAddonEntry, addonDefinitions, AT_EXCLUDE, AT_INCLUDE, AT_EXTENSION, ataddonXMLtypes
 from RecordTimer import AFTEREVENT
 from Tools.XMLTools import stringToXML
 from time import time
@@ -260,16 +260,20 @@ def parseEntry(element, baseTimer, defaults = False):
                 includes[idx[where]].append(value.encode("UTF-8"))
         baseTimer.include = includes
 
-    # Read out Extensions
-    extensions = []
-    l = element.findall("extension")
+    # Read out AddOns
+    l = element.findall("addons")
     if l:
-        for extension in l:
-            curFilter = parseExtensions(extenion, AT_EXTENSION)
-            if curFilter:
-                extensions.append(curFilter)
-    baseTimer.extension = extensions
-
+        atLog( ATLOG_DEBUG, "parseEntry: Found addons" )                        
+        for type,typeName in iteritems(ataddonXMLtypes):
+            addons = []
+            addonList = l.findall(typeName)
+            if addonList:
+                atLog( ATLOG_DEBUG, "parseEntry: adding addons for type %s" %( typeName ) )                        
+                for addon in addonList:
+                    curAddon = parseAddon(addon, type)
+                    if curAddon:
+                        addons.append(curAddon)
+            baseTimer.addons[type] = addons
 
     # Read out recording tags
     l =  element.findall("tag")
@@ -285,11 +289,11 @@ def parseEntry(element, baseTimer, defaults = False):
 
     return True
 
-def parseExtensions(exinelement, type):
-    where = exinelement.get("where")
-    domain = exinelement.get("domain") if exinelement.get("domain") else "AutoTimer" 
-    description = exinelement.get("description", '')
-    l = exinelement.findall("parameter")
+def parseAddon(addonElement, type):
+    where = addonElement.get("where")
+    domain = addonElement.get("domain") if addonElement.get("domain") else "NoDomain" 
+    description = addonElement.get("description", '')
+    l = addonElement.findall("parameter")
     paramValues = {}
     
     valueFound = False
@@ -299,22 +303,16 @@ def parseExtensions(exinelement, type):
             name = param.get("name")
 
             if not (value and name):
-                atLog( ATLOG_DEBUG, "parseExtensions: Ignore Entry as it is missing either a name or a value" )
+                atLog( ATLOG_DEBUG, "parseAddon: Ignore Entry as it is missing either a name or a value" )
                 continue
             valueFound = True
-            atLog( ATLOG_DEBUG, "parseExtensions: Adding Parameter name=%s, value=%s" % (name, value) )
+            atLog( ATLOG_DEBUG, "parseAddon: Adding Parameter name=%s, value=%s" % (name, value) )
             paramValues[name] = value
-    else:
-        value = exinelement.text.encode("UTF-8")
-        name = "searchstring"
-        atLog( ATLOG_DEBUG, "parseExtensions: Adding Parameter (old format in XML) name=%s, value=%s" % (name, value) )
-        paramValues[name] = value
-        valueFound = True if value else False
-    filterKey = domain + "." + where
-    if filterKey in filterDefinitions.filters.keys() and valueFound:
-        atLog( ATLOG_DEBUG, "parseExtensions: Adding AutoTimerFilterEntry for %s, %s, %s" % ( filterKey, type, description) )
-        curFilter = AutoTimerFilterEntry( filterKey = filterKey, filterType = type, description = description, paramValues = paramValues )
-        return curFilter
+    addonKey = domain + "." + where
+    if addonKey in addonDefinitions.addons[type].keys() and valueFound:
+        atLog( ATLOG_DEBUG, "parseAddon: Adding AutoTimerAddonEntry for %s, %s, %s" % ( addonKey, type, description) )
+        curAddon = AutoTimerAddonEntry( addonKey = addonKey, addonType = type, description = description, paramValues = paramValues )
+        return curAddon
     else:
         return None
 
@@ -337,6 +335,7 @@ def parseEntryIgnore(element, ignoreEntry):
     if ignoreEntry.validuntil < time():
         # Event in the past: ignore (and delete on next write)
         atLog( ATLOG_INFO, 'Ignore entry in the past, skipping ignore entry with eit %s' % ignoreEntry.eit)
+        return False
     ignoreEntry.name = element.get("name", "").encode("UTF-8")
     ignoreEntry.description = element.get("description", "").encode("UTF-8")
     return True
@@ -579,6 +578,7 @@ def parseConfigOld(configuration, list, uniqueTimerId = 0):
                 afterevent = afterevent,
                 exclude = excludes,
                 include = includes,
+                addons = addons,
                 maxduration = maxlen,
                 destination = destination,
                 matchCount = counter,
@@ -718,6 +718,10 @@ def buildConfig(defaultTimer, timers, ignores, webif = False):
         extend(('  <include where="description">', stringToXML(desc), '</include>\n'))
     for day in defaultTimer.getIncludedDays():
         extend(('  <include where="dayofweek">', stringToXML(day), '</include>\n'))
+
+    # Addons
+    if defaultTimer.addons:
+        extend( getAddonXML(defaultTimer.addons) )
 
     # Tags
     if webif and defaultTimer.tags:
@@ -867,9 +871,9 @@ def buildConfig(defaultTimer, timers, ignores, webif = False):
         for day in timer.getIncludedDays():
             extend(('  <include where="dayofweek">', stringToXML(day), '</include>\n'))
 
-        # Extensions
-        if timer.extension:
-            extend( getExtensionXML("extension", timer.extension))
+        # Addons
+        if timer.addons:
+            extend( getAddonXML(timer.addons) )
 
         # Tags
         if webif and timer.tags:
@@ -902,19 +906,29 @@ def buildConfig(defaultTimer, timers, ignores, webif = False):
 
     return list
 
-def getExtensionXML( exinString, exinList):
-    returnList = []
-    paramsValid = False
-    for extension in exinList:
-        try:
-            returnList.extend(('  <' + exinString + ' where="', stringToXML(extension.filterName), '" domain="', stringToXML(extension.filterDomain), '" ',
-                    'description="', stringToXML(extension.description), '">\n'))
-            for name,value in iteritems(extension.paramValues):
-                if name and value:
-                    paramsValid = True
-                    returnList.extend(('   <parameter name="', stringToXML(name), '">', stringToXML(value), '</parameter>\n'))
-            returnList.append('  </' + exinString + '>\n')
-        except Exception, e:
-            atLog( ATLOG_ERROR, "getExtensionXML:", e)
-            paramsValid = False
-    return returnList if paramsValid else []
+def getAddonXML( addonList ):
+    returnList = ["  <addons>\n"]
+    addonFound = False
+    for addonTyp,addonEntries in iteritems(addonList):
+        addonString = ataddonXMLtypes[addonTyp]
+        atLog( ATLOG_DEBUG, "getAddonXML: create addons for type %s" %( addonString ) )
+        for addon in addonEntries:
+            try:
+                atLog( ATLOG_DEBUG, "getAddonXML: create addon %s.%s, %s" %( addon.addonName, addon.addonDomain, addon.description ) )
+                returnList.extend(('    <' + addonString + ' where="', stringToXML(addon.addonName), '" domain="', stringToXML(addon.addonDomain), '" ',
+                        'description="', stringToXML(addon.description), '">\n'))
+                for name,value in iteritems(addon.paramValues):
+                    if name and value:
+                        atLog( ATLOG_DEBUG, "   >>>Parameter name=%s, value=%s" %( name, value ) )
+                        returnList.extend(('     <parameter name="', stringToXML(name), '">', stringToXML(value), '</parameter>\n'))
+                returnList.append('    </' + addonString + '>\n')
+                addonFound = True
+            except Exception, e:
+                atLog( ATLOG_ERROR, "getAddonXML:", e)
+    returnList.append('  </addons>\n')
+    if addonFound:
+        atLog( ATLOG_DEBUG, "getAddonXML: addons found: returning XML" )
+        return returnList
+    else:
+        atLog( ATLOG_DEBUG, "getAddonXML: no addons found, returning []" )
+        return []
