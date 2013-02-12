@@ -226,7 +226,16 @@ class AutoTimerAddonDefinitions():
                     atLog( ATLOG_ERROR, "executeAddon: addon error in addon %s: No fnc given" %addonKey )
         atLog( ATLOG_INFO, "executeAddon: No match. returning:", defaultReturn )
         return defaultReturn
-    
+
+    def advertiseAddon(self, addonType):
+        atLog(ATLOG_DEBUG, "advertiseAddon: Advertising Addons of type", ataddontypes[addonType])
+        assert(addonType == AT_EXTENSION, "addonType must be AT_EXTENSION")
+        if addonType not in self.addons:
+            atLog( ATLOG_INFO, "advertiseAddon: Nothing to advertise")
+            return ()
+
+        return [x.name for x in self.addons[addonType]]
+
     def checkDefaultFilter(self, filterName='title', title='', short='', extended='', dayofweek='', searchstring='', **kwargs):
         atLog( ATLOG_DEBUG, "checkDefaultFilter: Checking filterName=%s, title=%s, short=%s, extended=%s, dayofweek=%s, searchstring=%s" \
                %(filterName, title, short, extended, dayofweek, searchstring) )
@@ -700,4 +709,3 @@ def getAutoTimerPluginDescriptor( addonDomain, name, description, where, fnc, fn
         descriptor = None
     return descriptor
 
-       
