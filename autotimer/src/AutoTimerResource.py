@@ -14,8 +14,9 @@ from Tools.XMLTools import stringToXML
 from enigma import eServiceReference
 from . import _, config, iteritems
 from plugin import autotimer
+from AutoTimerAddon import addonDefinitions, AT_EXTENSION
 
-API_VERSION = "1.3"
+API_VERSION = "1.4"
 
 class AutoTimerBaseResource(resource.Resource):
 	def returnResult(self, req, state, statetext):
@@ -396,12 +397,12 @@ class AutoTimerSettingsResource(resource.Resource):
 		else:
 			hasVps = True
 
-		try:
-			from Plugins.Extensions.SeriesPlugin.plugin import Plugins
-		except ImportError as ie:
-			hasSeriesPlugin = False
-		else:
-			hasSeriesPlugin = True
+		# NOTE: the format modified for suffix is hidden after </e2setting> for hasVps
+		suffix = ''.join(("""
+	<e2setting>
+		<e2settingname>%s</e2settingname>
+		<e2settingvalue>True</e2settingvalue>
+	</e2setting>""" % x for x in addonDefinitions.advertiseAddon(AT_EXTENSION)))
 
 		return """<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <e2settings>
@@ -464,11 +465,7 @@ class AutoTimerSettingsResource(resource.Resource):
 	<e2setting>
 		<e2settingname>hasVps</e2settingname>
 		<e2settingvalue>%s</e2settingvalue>
-	</e2setting>
-	<e2setting>
-		<e2settingname>hasSeriesPlugin</e2settingname>
-		<e2settingvalue>%s</e2settingvalue>
-	</e2setting>
+	</e2setting>%s
 	<e2setting>
 		<e2settingname>version</e2settingname>
 		<e2settingvalue>%s</e2settingvalue>
@@ -493,7 +490,7 @@ class AutoTimerSettingsResource(resource.Resource):
 				config.plugins.autotimer.add_autotimer_to_tags.value,
 				config.plugins.autotimer.add_name_to_tags.value,
 				hasVps,
-				hasSeriesPlugin,
+				suffix,
 				CURRENT_CONFIG_VERSION,
 				API_VERSION,
 			)
