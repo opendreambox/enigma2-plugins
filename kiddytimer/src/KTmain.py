@@ -88,11 +88,11 @@ class KiddyTimer():
 
         self.loopTimerStep = 1000
         self.loopTimer = eTimer()
-        self.loopTimer.callback.append(self.calculateTimes)
+        self.loopTimer_conn = self.loopTimer.timeout.connect(self.calculateTimes)
 
         self.observeTimerStep = 60000 # Check every minute, if the time to acitivate the timer has come
         self.observeTimer = eTimer()
-        self.observeTimer.callback.append(self.observeTime)
+        self.observeTimer_conn = self.observeTimer.timeout.connect(self.observeTime)
 
         config.misc.standbyCounter.addNotifier(self.enterStandby, initial_call = False)
 
@@ -112,7 +112,7 @@ class KiddyTimer():
         curStartYear = time.localtime().tm_year 
         if curStartYear < 2011: 
             # Time has not yet been set from transponder, wait until it has been set
-            eDVBLocalTimeHandler.getInstance().m_timeUpdated.get().append(self.gotTime)
+            self.local_time_handler_conn = eDVBLocalTimeHandler.getInstance().m_timeUpdated.connect(self.gotTime)
         else:
             bDoStandardInit = True
             if bForceStart:
@@ -152,7 +152,7 @@ class KiddyTimer():
                     self.startObserve()
 
     def gotTime(self):
-        eDVBLocalTimeHandler.getInstance().m_timeUpdated.get().remove(self.gotTime)
+        self.local_time_handler_conn = None
         self.startTimer()
     
     def stopTimer(self):

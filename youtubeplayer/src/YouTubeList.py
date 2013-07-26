@@ -176,7 +176,7 @@ class PatientMessageBox(MessageBox):
 
 	def processDelayed(self, function):
 		self.delay_timer = eTimer()
-		self.delay_timer.callback.append(self.processDelay)
+		self.delay_timer_conn = self.delay_timer.timeout.connect(self.processDelay)
 		self.delay_timer.start(0, 1)
 		self.function = function
 
@@ -298,7 +298,7 @@ class YouTubeListScreen(Screen, NumericalTextInput):
 				self["list"].setList(self.list)
 			self.feed.loadThumbnails(self.insertEntry)
 		self.delay_timer = eTimer()
-		self.delay_timer.callback.append(self.closePatientDialogDelayed)
+		self.delay_timer_conn = self.delay_timer.timeout.connect(self.closePatientDialogDelayed)
 		self.delay_timer.start(100, 1)
 
 
@@ -419,7 +419,7 @@ class YouTubeListScreen(Screen, NumericalTextInput):
 
 	def processDelayed(self, function):
 		self.delay_timer = eTimer()
-		self.delay_timer.callback.append(self.processDelay)
+		self.delay_timer_conn = self.delay_timer.timeout.connect(self.processDelay)
 		self.delay_timer.start(0, 1)
 		self.function = function
 

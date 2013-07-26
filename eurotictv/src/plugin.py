@@ -65,7 +65,7 @@ class EuroticTVPlayer(Screen, InfoBarBase, InfoBarSeek, HelpableScreen):
 
 		self["poster"] = Pixmap()
 		self.picload = ePicLoad()
-		self.picload.PictureData.get().append(self.paintPosterPixmapCB)
+		self.picload_conn = self.picload.PictureData.connect(self.paintPosterPixmapCB)
 
 		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "InfobarSeekActions", "MediaPlayerActions"],
 		{

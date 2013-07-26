@@ -370,9 +370,9 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		self["historyactions"].setEnabled(False)
 
 		self.timer_startDownload = eTimer()
-		self.timer_startDownload.timeout.callback.append(self.downloadThumbnails)
+		self.timer_startDownload_conn = self.timer_startDownload.timeout.connect(self.downloadThumbnails)
 		self.timer_thumbnails = eTimer()
-		self.timer_thumbnails.timeout.callback.append(self.updateFeedThumbnails)
+		self.timer_thumbnails_conn = self.timer_thumbnails.timeout.connect(self.updateFeedThumbnails)
 
 		self.SearchConfigEntry = None
 		self.searchContextEntries = []
@@ -383,7 +383,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		self.onShown.append(self.setWindowTitle)
 		self.onClose.append(self.__onClose)
 		self.Timer = eTimer()
-		self.Timer.callback.append(self.TimerFire)
+		self.Timer_conn = self.Timer.timeout.connect(self.TimerFire)
 
 	def __onClose(self):
 		myTubeService.resetAuthState()
@@ -1305,7 +1305,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		sc = AVSwitch().getFramebufferScale()
 		if (os_path.exists(thumbnailFile) == True):
 			self.picloads[tubeid] = ePicLoad()
-			self.picloads[tubeid].PictureData.get().append(boundFunction(self.finish_decode, tubeid))
+			self.picloads[tubeid].conn = self.picloads[tubeid].PictureData.connect(boundFunction(self.finish_decode, tubeid))
 			self.picloads[tubeid].setPara((self["thumbnail"].instance.size().width(), self["thumbnail"].instance.size().height(), sc[0], sc[1], False, 1, "#00000000"))
 			self.picloads[tubeid].startDecode(thumbnailFile)
 		else:
@@ -1416,7 +1416,7 @@ class MyTubeVideoInfoScreen(Screen):
 
 		self["infolist"] = List(self.infolist)
 		self.timer = eTimer()
-		self.timer.callback.append(self.picloadTimeout)
+		self.timer_conn = self.timer.timeout.connect(self.picloadTimeout)
 		self.onLayoutFinish.append(self.layoutFinished)
 		self.onShown.append(self.setWindowTitle)
 
@@ -1505,7 +1505,7 @@ class MyTubeVideoInfoScreen(Screen):
 	def decodePic(self, index):
 		sc = AVSwitch().getFramebufferScale()
 		self.picloads[index] = ePicLoad()
-		self.picloads[index].PictureData.get().append(boundFunction(self.finish_decode, index))
+		self.picloads[index].conn = self.picloads[index].PictureData.connect(boundFunction(self.finish_decode, index))
 		for entry in self.thumbnails:
 			if entry[0] == index:
 				self.index = index
@@ -1679,7 +1679,7 @@ class MyTubePlayer(Screen, InfoBarNotifications, InfoBarSeek):
 		self.lastservice = lastservice
 
 		self.hidetimer = eTimer()
-		self.hidetimer.timeout.get().append(self.ok)
+		self.hidetimer_conn = self.hidetimer.timeout.connect(self.ok)
 		self.returning = False
 
 		self.state = self.STATE_PLAYING

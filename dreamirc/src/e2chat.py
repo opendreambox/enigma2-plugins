@@ -93,7 +93,7 @@ class Conversation:
         self.person = person
         self.pipe = MessagePipe()
         self.timer=eTimer()
-        self.timer.timeout.get().append(self.sendOutPipe)
+        self.timer_conn = self.timer.timeout.connect(self.sendOutPipe)
         self.timer.start(100)
 
     def show(self):
@@ -160,7 +160,7 @@ class GroupConversation:
         self.members = []
         self.pipe = MessagePipe()
         self.timer=eTimer()
-        self.timer.timeout.get().append(self.sendOutPipe)
+        self.timer_conn = self.timer.timeout.connect(self.sendOutPipe)
         self.timer.start(100)
         
     def show(self):

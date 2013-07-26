@@ -11,8 +11,9 @@ class myNumericalTextInput:
 
 		if handleTimeout:
 			self.timer = eTimer()
-			self.timer.callback.append(self.timeout)
+			self.timer_conn = self.timer.timeout.connect(self.timeout)
 		else:
+			self.timer_conn = None
 			self.timer = None
 		self.lastKey = -1
 		self.pos = -1

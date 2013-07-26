@@ -89,7 +89,7 @@ class BirthdayTimerEntry(TimerEntry):
 		
 	def timeChanged(self):
 		self.state = self.StatePrepared
-		
+
 class BirthdayTimer(Timer, BirthdayStore):
 	def __init__(self):
 		BirthdayStore.__init__(self)
@@ -101,13 +101,13 @@ class BirthdayTimer(Timer, BirthdayStore):
 		
 		# let's wait for the system time being up to date before starting the timers. needed when the box was powered off
 		if not eDVBLocalTimeHandler.getInstance().ready():
-			eDVBLocalTimeHandler.getInstance().m_timeUpdated.get().append(self.startTimer)
+			self.local_time_handler_conn = eDVBLocalTimeHandler.getInstance().m_timeUpdated.timeout.connect(self.startTimer)
 		else:
 			self.start()
 			self.startNetworking()
-			
+		
 	def startTimer(self):
-		eDVBLocalTimeHandler.getInstance().m_timeUpdated.get().remove(self.startTimer)
+		self.local_time_handler_conn = None
 		self.start()
 		self.startNetworking()
 		
@@ -125,7 +125,7 @@ class BirthdayTimer(Timer, BirthdayStore):
 		
 		self.timer.stop()
 		self.timer_list = []
-		self.timer.callback.remove(self.calcNextActivation)
+		self.timer_conn = None
 		self.timer = None
 		
 		config.plugins.birthdayreminder.preremindChanged.notifiers.remove(self.cbPreremindChanged)

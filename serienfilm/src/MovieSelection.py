@@ -197,7 +197,7 @@ class SelectionEventInfo:
 		self["Service"] = ServiceEvent()
 		self.list.connectSelChanged(self.__selectionChanged)
 		self.timer = eTimer()
-		self.timer.callback.append(self.updateEventInfo)
+		self.timer_conn = self.timer.timeout.connect(self.updateEventInfo)
 		self.onShown.append(self.__selectionChanged)
 
 	def __selectionChanged(self):
@@ -226,7 +226,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo):
 		self.bouquet_mark_edit = False
 
 		self.delayTimer = eTimer()
-		self.delayTimer.callback.append(self.updateHDDData)
+		self.delayTimer_conn = self.delayTimer.timeout.connect(self.updateHDDData)
 
 		self["waitingtext"] = Label(_("Please wait... Loading list..."))
 

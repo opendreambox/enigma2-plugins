@@ -64,7 +64,7 @@ class DynDNSService:
 	lastip = ""
 	def __init__(self):
 		self.timer = eTimer()
-		self.timer.timeout.get().append(self.checkCurrentIP)
+		self.timer_conn = self.timer.timeout.connect(self.checkCurrentIP)
 
 	def enable(self):
 		if config.plugins.DynDNS.enable.value:

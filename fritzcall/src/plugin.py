@@ -734,7 +734,7 @@ class FritzMenu(Screen, HelpableScreen):
 			
 		#=======================================================================
 		# self._timer = eTimer()
-		# self._timer.callback.append(self._getInfo)
+		# self._timer_conn = self._timer.timeout.connect(self._getInfo)
 		# self.onShown.append(lambda: self._timer.start(5000))
 		# self.onHide.append(self._timer.stop)
 		#=======================================================================
@@ -1285,7 +1285,7 @@ class FritzCallPhonebook:
 		self.phonebook = {}
 		if config.plugins.FritzCall.reloadPhonebookTime.value > 0:
 			self.loop = eTimer()
-			self.loop.callback.append(self.startReload)
+			self.loop_conn = self.loop.timeout.connect(self.startReload)
 			self.loop.start(config.plugins.FritzCall.reloadPhonebookTime.value*60*60*1000, 1)
 		self.reload()
 
@@ -2235,7 +2235,7 @@ class MessageBoxPixmap(Screen):
 	def _initTimeout(self):
 		if self._timeout > 0:
 			self._timer = eTimer()
-			self._timer.callback.append(self._timerTick)
+			self._timer_conn = self._timer.timeout.connect(self._timerTick)
 			self.onExecBegin.append(self._startTimer)
 			self._origTitle = None
 			if self.execing:

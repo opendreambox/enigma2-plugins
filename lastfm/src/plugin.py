@@ -214,17 +214,17 @@ class LastFMScreenMain(Screen,HelpableScreen,LastFM):
         self.onLayoutFinish.append(self.setCoverArt)
         
         self.guiupdatetimer = eTimer()
-        self.guiupdatetimer.timeout.get().append(self.guiupdatetimerFired)
+        self.guiupdatetimer_conn = self.guiupdatetimer.timeout.connect(self.guiupdatetimerFired)
         self.guiupdatetimer.start(config.plugins.LastFM.metadatarefreshinterval.value*1000)
         
         self.tabchangetimer = eTimer()
-        self.tabchangetimer.timeout.get().append(self.tabchangedtimerFired)
+        self.tabchangetimer_conn = self.tabchangetimer.timeout.connect(self.tabchangedtimerFired)
         
         self.infolabelcleartimer = eTimer()
-        self.infolabelcleartimer.timeout.get().append(self.clearInfoLabel)
+        self.infolabelcleartimer_conn = self.infolabelcleartimer.timeout.connect(self.clearInfoLabel)
 
         self.screensavertimer = eTimer()
-        self.screensavertimer.timeout.get().append(self.startScreensaver)
+        self.screensavertimer_conn = self.screensavertimer.timeout.connect(self.startScreensaver)
         self.onShown.append(self.startScreensaverTimer)
         
 
@@ -565,12 +565,12 @@ class LastFMSaveScreen(Screen):
         
         self.onLayoutFinish.append(self.update)
         self.updatetimer = eTimer()
-        self.updatetimer.timeout.get().append(self.update)
+        self.updateTimer_conn = self.updatetimer.timeout.connect(self.update)
         self.updatetimer.start(1000)
             
         if config.plugins.LastFM.sreensaver.coverartanimation.value:
             self.startmovingtimer = eTimer()
-            self.startmovingtimer.timeout.get().append(self.movePixmap)
+            self.startmovingtimer_conn = self.startmovingtimer.timeout.connect(self.movePixmap)
             self.startmovingtimer.start(config.plugins.LastFM.sreensaver.coverartinterval.value*1000)
         
     def action_ok(self):

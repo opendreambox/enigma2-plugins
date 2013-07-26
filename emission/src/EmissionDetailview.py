@@ -107,7 +107,7 @@ class EmissionDetailview(Screen, HelpableScreen):
 		self["private"] = StaticText("")
 
 		self.timer = eTimer()
-		self.timer.callback.append(self.updateList)
+		self.timer_conn = self.timer.timeout.connect(self.updateList)
 		self.timer.start(0, 1)
 
 	def bandwidthCallback(self, ret = None):

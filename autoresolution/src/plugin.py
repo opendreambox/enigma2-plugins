@@ -69,7 +69,7 @@ class AutoRes(Screen):
 				iPlayableService.evStart: self.__evStart
 			})
 		self.timer = eTimer()
-		self.timer.callback.append(self.determineContent)
+		self.timer_conn = self.timer.timeout.connect(self.determineContent)
 		if config.av.videoport.value in config.av.videomode:
 			self.lastmode = config.av.videomode[config.av.videoport.value].value
 		config.av.videoport.addNotifier(self.defaultModeChanged)
@@ -267,7 +267,7 @@ class ResolutionLabel(Screen):
 		self["restxt"] = Label()
 
 		self.hideTimer = eTimer()
-		self.hideTimer.callback.append(self.hide)
+		self.hideTimer_conn = self.hideTimer.timeout.connect(self.hide)
 
 		self.onShow.append(self.hide_me)
 

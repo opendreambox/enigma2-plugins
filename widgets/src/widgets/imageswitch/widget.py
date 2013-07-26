@@ -21,7 +21,7 @@ class WebPixmap(Pixmap):
     def __init__(self, default = None):
         Pixmap.__init__(self)
         self.picload = ePicLoad()
-        self.picload.PictureData.get().append(self.setPixmapCB)
+        self.picload_conn = self.picload.PictureData.connect(self.setPixmapCB)
         self.cachedir = "/tmp/"
         self.default = default
 
@@ -72,7 +72,7 @@ class ImageswitchWidget(Widget):
         Widget.__init__(self,session,name="Image Switch Widget",description="Example of a simple Widget images from the web",version="0.1",author="3c5x9",homepage="cvs://schwerkraft")
         self.elements["imageswitch_pixmap"] = WebPixmap()
         self.Timer = eTimer()
-        self.Timer.callback.append(self.TimerFire)
+        self.Timer_conn = self.Timer.timeout.connect(self.TimerFire)
         self.last = False
        
     def onLoadFinished(self,instance):

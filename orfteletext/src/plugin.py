@@ -126,7 +126,7 @@ class ORFteletextScreen(Screen):
 			self.whatPic = "/tmp/bild"
 		else:
 			self.whatPic = eEnv.resolve("${libdir}/enigma2/python/Plugins/Extensions/ORFteletext/nodata.png")
-		self.EXpicload.PictureData.get().append(self.DecodeAction)
+		self.EXpicload_conn = self.EXpicload.PictureData.connect(self.DecodeAction)
 		self.onLayoutFinish.append(self.firstStart)
 
 	def firstStart(self):

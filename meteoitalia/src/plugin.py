@@ -73,7 +73,7 @@ class meteoitMain(Screen):
 		})
 		
 		self.activityTimer = eTimer()
-		self.activityTimer.timeout.get().append(self.startConnection)
+		self.activityTimer_conn = self.activityTimer.timeout.connect(self.startConnection)
 		self.onShow.append(self.startShow)
 		self.onClose.append(self.delTimer)
 
@@ -256,6 +256,7 @@ class meteoitMain(Screen):
 		return url
 		
 	def delTimer(self):
+		del self.activityTimer_conn
 		del self.activityTimer
 
 	def key_green(self):

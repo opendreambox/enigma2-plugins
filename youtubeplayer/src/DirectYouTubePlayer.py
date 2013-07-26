@@ -115,7 +115,7 @@ class DirectYouTubePlayer(Screen, InfoBarNotifications):
 		self.oldNavService = session.nav.getCurrentlyPlayingServiceReference()
 
 		self.hidetimer = eTimer()
-		self.hidetimer.timeout.get().append(self.ok)
+		self.hidetimer_conn = self.hidetimer.timeout.connect(self.ok)
 		self.returning = False
 
 		self.state = self.STATE_PLAYING

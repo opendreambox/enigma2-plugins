@@ -514,7 +514,7 @@ class CheckMail:
 		self._name = acc._name
 		self._account = acc
 		self._timer = eTimer()
-		self._timer.callback.append(self._checkMail)
+		self._timer_conn = self._timer.timeout.connect(self._checkMail)
 		# I guess, users tend to use identical intervals, so make them a bit different :-)
 		# constant stolen from ReconnectingFactory
 		self._interval = int(self._account._interval)*60*1000

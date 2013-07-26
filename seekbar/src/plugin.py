@@ -98,7 +98,7 @@ class Seekbar(ConfigListScreen, Screen):
 		self["actions"] = ActionMap(["WizardActions"], {"back": self.exit}, -1)
 		
 		self.cursorTimer = eTimer()
-		self.cursorTimer.callback.append(self.updateCursor)
+		self.cursorTimer_conn = self.cursorTimer.timeout.connect(self.updateCursor)
 		self.cursorTimer.start(200, False)
 		
 		self.onLayoutFinish.append(self.firstStart)

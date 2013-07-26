@@ -77,7 +77,7 @@ class AutomaticTimerlistCleanUp:
 		self.session = session
 		print "[AutomaticTimerlistCleanUp] Starting AutomaticTimerlistCleanUp..."
 		self.timer = eTimer() # check timer
-		self.timer.callback.append(self.cleanupTimerlist)
+		self.timer_conn = self.timer.timeout.connect(self.cleanupTimerlist)
 		self.cleanupTimerlist() # always check immediately after starting plugin
 		config.plugins.automatictimerlistcleanup.type.addNotifier(self.configChange, initial_call = False)
 		self.session.nav.RecordTimer.on_state_change.append(self.timerentryOnStateChange)

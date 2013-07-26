@@ -93,11 +93,11 @@ class InternetRadioList(GUIComponent, object):
 	
 	def postWidgetCreate(self, instance):
 		instance.setContent(self.l)
-		instance.selectionChanged.get().append(self.selectionChanged)
+		self.selectionChanged_conn = instance.selectionChanged.connect(self.selectionChanged)
 
 	def preWidgetRemove(self, instance):
 		instance.setContent(None)
-		instance.selectionChanged.get().remove(self.selectionChanged)
+		self.selectionChanged_conn = None
 
 	def moveToIndex(self, index):
 		self.instance.moveSelectionTo(index)

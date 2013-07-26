@@ -104,7 +104,7 @@ class MovielistPreview():
 					self.working = True
 					sc = AVSwitch().getFramebufferScale()
 					self.picload = ePicLoad()
-					self.picload.PictureData.get().append(self.showPreviewCallback)
+					self.picload_conn = self.picload.PictureData.connect(self.showPreviewCallback)
 					size = config.plugins.MovielistPreview.size.value.split("x")
 					self.picload.setPara((int(size[0]), int(size[1]), sc[0], sc[1], False, 1, "#00000000"))
 					self.picload.startDecode(png)
@@ -185,7 +185,7 @@ class MovielistPreviewPositioner(Screen):
 		self.desktopHeight = desktop.size().height()
 		
 		self.moveTimer = eTimer()
-		self.moveTimer.callback.append(self.movePosition)
+		self.moveTimer_conn = self.moveTimer.timeout.connect(self.movePosition)
 		self.moveTimer.start(50, 1)
 		
 		self.onShow.append(self.__onShow)
@@ -371,7 +371,7 @@ class MovielistPreviewAutoCreator(Screen):
 		self["label"] = Label()
 		
 		self.timer = eTimer()
-		self.timer.callback.append(self.seekAndCreatePreview)
+		self.timer_conn = self.timer.timeout.connect(self.seekAndCreatePreview)
 		
 		self["actions"] = ActionMap(["OkCancelActions"], {"cancel": self.exit}, -1)
 		

@@ -306,7 +306,7 @@ class FanControl2Test(ConfigListScreen,Screen):
 		Screen.__init__(self, session)
 
 		self.timer = eTimer()
-		self.timer.callback.append(self.DoTest)
+		self.timer_conn = self.timer.timeout.connect(self.DoTest)
 		self.timer.start(1000, True)
 
 		self["TextTest1"] = StaticText()
@@ -451,7 +451,7 @@ class FanControl2Monitor(Screen, ConfigListScreen):
 		Screen.__init__(self, session)
 
 		self.temp_timer = eTimer()
-		self.temp_timer.callback.append(self.updateTemp)
+		self.temp_timer_conn = self.temp_timer.timeout.connect(self.updateTemp)
 
 		for count in range(8):
 			self["ProTemp%d" % count] = Progress()
@@ -649,7 +649,7 @@ class FanControl2Plugin(ConfigListScreen,Screen):
 		Screen.__init__(self, session)
 
 		self.fan_timer = eTimer()
-		self.fan_timer.callback.append(self.updateFanStatus)
+		self.fan_timer_conn = self.fan_timer.timeout.connect(self.updateFanStatus)
 
 		self.list = []
 		self.list.append(getConfigListEntry(_("Fan type"), config.plugins.FanControl.Fan))
@@ -961,7 +961,7 @@ class FanControl2(Screen):
 			thread.start() 
 		self.timer = eTimer()
 		if self.query not in self.timer.callback:
-			self.timer.callback.append(self.query)
+			self.timer_conn = self.timer.timeout.connect(self.query)
 		self.timer.startLongTimer(10)
 		config.misc.standbyCounter.addNotifier(self.standbyQuery, initial_call = False)
 
@@ -977,8 +977,7 @@ class FanControl2(Screen):
 
 	def stop(self):
 		FClog("Stop")
-		if self.query in self.timer.callback:
-			self.timer.callback.remove(self.query)
+		self.timer_conn = None
 		self.timer.stop()
 
 	def CurrTemp(self):

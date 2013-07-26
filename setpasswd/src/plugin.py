@@ -81,8 +81,8 @@ class ChangePasswdScreen(Screen):
 	def SetPasswd(self):
 		print "Changing password for %s to %s" % (self.user,self.password) 
 		self.container = eConsoleAppContainer()
-		self.container.appClosed.append(self.runFinished)
-		self.container.dataAvail.append(self.dataAvail)
+		self.appClosed_conn = self.container.appClosed.connect(self.runFinished)
+		self.dataAvail_conn = self.container.dataAvail.connect(self.dataAvail)
 		retval = self.container.execute("passwd %s" % self.user)
 		if retval==0:
 			message=_("Sucessfully changed password for root user to: ") + self.password

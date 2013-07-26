@@ -140,13 +140,13 @@ class BabelZapperStartup(Screen):
 		global babelon
 		length=len(babelmenu)-1
 		self.nextKeyTimer = eTimer()
-		self.nextKeyTimer.callback.append(self.nextKey)
+		self.nextKeyTimer_conn = self.nextKeyTimer.timeout.connect(self.nextKey)
 		self.nextKeyTimer.stop()
 		self.resetKeyTimer = eTimer()
-		self.resetKeyTimer.callback.append(self.resetKey)
+		self.resetKeyTimer_conn = self.resetKeyTimer.timeout.connect(self.resetKey)
 		self.resetKeyTimer.stop()
 		self.delayedKeyTimer = eTimer()
-		self.delayedKeyTimer.callback.append(self.setKey)
+		self.delayedKeyTimer_conn = self.delayedKeyTimer.timeout.connect(self.setKey)
 		self.delayedKeyTimer.stop()
 		print "[BABELZAPPER] received mute key"
 		if babelkey==-1:

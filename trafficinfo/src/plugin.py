@@ -60,7 +60,7 @@ class TrafficInfoMain(Screen):
              "right":	        self.right,
              }, -1)
         self.statuslabelcleartimer = eTimer()
-        self.statuslabelcleartimer.timeout.get().append(self.clearStatusLabel)
+        self.statuslabelcleartimer_conn = self.statuslabelcleartimer.timeout.connect(self.clearStatusLabel)
         
         self["itemlist"].onSelectionChanged.append(self.onItemSelected)
         self.selectSectionlist()

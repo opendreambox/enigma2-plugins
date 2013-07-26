@@ -252,7 +252,7 @@ class TeleText(Screen):
       pass
     self.socket.bind('/tmp/dbttcp.socket')
     self.listen_sn = eSocketNotifier(self.socket.fileno(), POLLIN)
-    self.listen_sn.callback.append(self.listen_data_avail)
+    self.listen_sn_conn = self.listen_sn.activated.connect(self.listen_data_avail)
     self.socket.listen(1)
 
   def socketSend(self, buf):

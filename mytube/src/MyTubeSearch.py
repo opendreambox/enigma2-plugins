@@ -33,7 +33,7 @@ class SuggestionsQueryThread(Thread):
 		self.callback = callback
 		self.errorback = errorback
 		self.canceled = False
-		self.messagePump.recv_msg.get().append(self.finished)
+		self.messagePump_conn = self.messagePump.recv_msg.connect(self.finished)
 
 	def cancel(self):
 		self.canceled = True
@@ -473,7 +473,7 @@ class MyTubeTasksScreen(Screen):
 		self.onShown.append(self.setWindowTitle)
 		self.onClose.append(self.__onClose)
 		self.Timer = eTimer()
-		self.Timer.callback.append(self.TimerFire)
+		self.Timer_conn = self.Timer.timeout.connect(self.TimerFire)
 
 	def __onClose(self):
 		del self.Timer

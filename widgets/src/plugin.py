@@ -64,7 +64,7 @@ def InfoBarPlugins__init__(self):
 		SIB_StartOnlyOneTime = True
 		self["SIBActions"] = ActionMap(["WidgetStartActions"],{"ok_but": self.switch,"exit_but": self.swOff}, -1)
 		self.SIBtimer = eTimer()
-		self.SIBtimer.callback.append(self.swOff)
+		self.SIBtimer_conn = self.SIBtimer.timeout.connect(self.swOff)
 		self.SIBtimer.start(4000, True)
 	else:
 		InfoBarPlugins.__init__ = InfoBarPlugins.__init__

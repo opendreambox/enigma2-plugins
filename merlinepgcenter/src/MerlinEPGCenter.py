@@ -275,7 +275,7 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 		
 		# get notifications from the global timer every second to refresh lists on time change
 		self.clockTimer = self.global_screen["CurrentTime"].clock_timer
-		self.clockTimer.callback.append(self.checkTimeChange)
+		self.clockTimer_conn = self.clockTimer.timeout.connect(self.checkTimeChange)
 		
 		# Initialise the blink timer if there's already a recording running
 		self.blinkTimer.gotRecordEvent(None, None)
@@ -284,8 +284,8 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 		
 		self.blinkTimer.appendList(self["list"])
 		self.blinkTimer.appendList(self["upcoming"])
-		self.blinkTimer.timer.callback.append(self.setEventPiconBlinkState)
-		self.blinkTimer.timer.callback.append(self.setRecordingBlinkState)
+		self.setEventPiconBlinkState_conn = self.blinkTimer.timer.timeout.connect(self.setEventPiconBlinkState)
+		self.setRecordingBlinkState_conn = self.blinkTimer.timer.timeout.connect(self.setRecordingBlinkState)
 		
 		self["list"].onSelectionChanged.append(self.onListSelectionChanged)
 		self["timerlist"].onSelectionChanged.append(self.onListSelectionChanged)
@@ -298,8 +298,8 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 		
 		# similar events
 		self.similarTimer = eTimer()
-		self.similarTimer.callback.append(self.getSimilarEvents)
-		self.similarTimer.callback.append(self.getUpcomingEvents)
+		self.getSimilarEvents_conn = self.similarTimer.timeout.connect(self.getSimilarEvents)
+		self.getUpcomingEvents_conn = self.similarTimer.timeout.connect(self.getUpcomingEvents)
 		self.similarShown = False
 		
 		searchFieldPos = self["search"].getPosition()
@@ -318,7 +318,7 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 	def suspend(self):
 		self.suspendedInMode = self.infoBarInstance.servicelist.mode
 		self.session.nav.RecordTimer.on_state_change.remove(self.onStateChange)
-		self.clockTimer.callback.remove(self.checkTimeChange)
+		self.clockTimer_conn = None
 		# reset the timer tab to Timer
 		if self.timerListMode == LIST_MODE_AUTOTIMER:
 			self.timerListMode = LIST_MODE_TIMER
@@ -362,7 +362,7 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 				
 		self.getPrimeTime()
 		self.session.nav.RecordTimer.on_state_change.append(self.onStateChange)
-		self.clockTimer.callback.append(self.checkTimeChange)
+		self.clockTimer_conn = self.clockTimer.timeout.connect(self.checkTimeChange)
 		self.checkTimeChange()
 		self.blinkTimer.resume()
 		
@@ -1811,8 +1811,8 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 	# really shutdown everything when enigma2 is shut down
 	def shutdown(self):
 		self.removeNotifier()
-		self.blinkTimer.timer.callback.remove(self.setEventPiconBlinkState)
-		self.blinkTimer.timer.callback.remove(self.setRecordingBlinkState)
+		self.setEventPiconBlinkState_conn = None
+		self.setRecordingBlinkState_conn = None
 		self.releaseEpgBaseTab()
 		self.blinkTimer.suspend()
 		self.close(None)

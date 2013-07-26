@@ -80,7 +80,7 @@ class ORFatCache(Screen):
 		self.Shown = False
 		
 		self.timer = eTimer()
-		self.timer.callback.append(self.showNextSpinner)
+		self.timer_conn = self.timer.timeout.connect(self.showNextSpinner)
 
 	def start(self):
 		self.show()
@@ -122,7 +122,7 @@ class ORFMain(Screen):
 		self.working = False
 		self.cacheDialog = self.session.instantiateDialog(ORFatCache)
 		self.cacheTimer = eTimer()
-		self.cacheTimer.callback.append(self.chechCachedFile)
+		self.cacheTimer_conn = self.cacheTimer.timeout.connect(self.chechCachedFile)
 		self.transcodeServer = None
 		
 		self["pic"] = MovingPixmap()

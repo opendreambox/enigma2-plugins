@@ -218,7 +218,7 @@ class AdvancedCutInput(Screen, ConfigListScreen):
 class MovieCutQueue:
 	def __init__(self):
 		self.container = eConsoleAppContainer()
-		self.container.appClosed.append(self.runDone)
+		self.appClosed_conn = self.container.appClosed.connect(self.runDone)
 		self.queue = []
 		self.running = False
 
@@ -271,7 +271,7 @@ class MovieCutSpawn:
 		self.mess = ""
 		self.dialog = False
 		self.waitTimer = eTimer()
-		self.waitTimer.callback.append(self.doWaitAck)
+		self.waitTimer_conn = self.waitTimer.timeout.connect(self.doWaitAck)
 		if global_mcut_queue.enqueue(self.doAck, self.clist):
 			mess = _("The movie \"%s\" is cut in the background.") % (self.name)
 		else:

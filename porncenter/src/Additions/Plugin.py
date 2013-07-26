@@ -16,7 +16,7 @@ class Cache:
 		self.idx = -1
 		self.finishCallback = None
 		self.finishCallbackTimer = eTimer()
-		self.finishCallbackTimer.callback.append(self.callback)
+		self.finishCallbackTimer_conn = self.finishCallbackTimer.timeout.connect(self.callback)
 		self.oldService = None
 		self.session = None
 
@@ -66,7 +66,7 @@ class Movie:
 
 	def decodeThumbnail(self, str=None):
 		self.picload = ePicLoad()
-		self.picload.PictureData.get().append(self.decodeThumbnailFinished)
+		self.picload_conn = self.picload.PictureData.connect(self.decodeThumbnailFinished)
 		self.picload.setPara((150, 75, cache.sc[0], cache.sc[1], False, 1, "#00000000"))
 		self.picload.startDecode(self.thumbnailFile)
 
@@ -75,6 +75,7 @@ class Movie:
 		if ptr:
 			self.thumb = ptr
 		remove(self.thumbnailFile)
+		del self.picload_conn
 		del self.picload
 		cache.startCallbackTimer()
 

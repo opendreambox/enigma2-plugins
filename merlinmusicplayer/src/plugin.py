@@ -233,6 +233,7 @@ class PathToDatabase(Thread):
 			Thread.__init__(self)
 
 pathToDatabase = PathToDatabase()
+pathToDatabase_mp_conn = None
 
 
 class iDreamAddToDatabase(Screen):
@@ -259,7 +260,7 @@ class iDreamAddToDatabase(Screen):
 		self["key_green"] = StaticText("Close")
 		self["output"] = Label()
 		self.onClose.append(self.__onClose)
-		pathToDatabase.MessagePump.recv_msg.get().append(self.gotThreadMsg)	
+		pathToDatabase_mp_conn = pathToDatabase.MessagePump.recv_msg.connect(self.gotThreadMsg)	
 		if not pathToDatabase.isRunning and initDir:
 			pathToDatabase.Start(initDir)
 
@@ -277,8 +278,7 @@ class iDreamAddToDatabase(Screen):
 			pathToDatabase.Cancel()
 
 	def __onClose(self):
-		pathToDatabase.MessagePump.recv_msg.get().remove(self.gotThreadMsg)	
-		
+		del pathToDatabase_mp_conn
 
 class myHTTPClientFactory(HTTPClientFactory):
 	def __init__(self, url, method='GET', postdata=None, headers=None,
@@ -498,7 +498,7 @@ class MerlinMusicPlayerScreenSaver(Screen):
 		}, -1)
 		self["coverArt"] = MerlinMediaPixmap()
 		self.coverMoveTimer = eTimer()
-	        self.coverMoveTimer.timeout.get().append(self.moveCoverArt)
+	        self.coverMoveTimer_conn = self.coverMoveTimer.timeout.connect(self.moveCoverArt)
 	        self.coverMoveTimer.start(1)
 		self["display"] = Label()
 		self.onClose.append(self.__onClose)
@@ -604,7 +604,7 @@ class MerlinMusicPlayerTV(MerlinMusicPlayerScreenSaver):
 			self.playService(current.ref)
 
 		self.showHideTimer = eTimer()
-	        self.showHideTimer.timeout.get().append(self.showHideTimerTimeout)
+	        self.showHideTimer_conn = self.showHideTimer.timeout.connect(self.showHideTimerTimeout)
 		self.idx = config.usage.infobar_timeout.index
 		if self.idx:
 		        self.showHideTimer.start(self.idx * 1000)
@@ -950,7 +950,7 @@ class MerlinMusicPlayerScreen(Screen, InfoBarBase, InfoBarSeek, InfoBarNotificat
 		self.currentTitle = ""
 		self.nextTitle = ""
 		self.screenSaverTimer = eTimer()
-		self.screenSaverTimer.timeout.get().append(self.screenSaverTimerTimeout)
+		self.screensaverTimer_conn = self.screenSaverTimer.timeout.connect(self.screenSaverTimerTimeout)
 		self.screenSaverScreen = None
 
 		self.iDreamMode = idreammode
@@ -1092,7 +1092,7 @@ class MerlinMusicPlayerScreen(Screen, InfoBarBase, InfoBarSeek, InfoBarNotificat
 					self.seek = service.seek()
 				self.updateMusicInformationCUE()
 				self.ptsTimer = eTimer()
-				self.ptsTimer.callback.append(self.ptsTimerCallback)
+				self.ptsTimer_conn = self.ptsTimer.timeout.connect(self.ptsTimerCallback)
 				self.ptsTimer.start(1000)
 		self["nextTitle"].setText(self.getNextTitle())
 
@@ -1752,7 +1752,7 @@ class iDreamMerlin(Screen):
 		self["headertext"] = Label(_("iDream Main Menu"))
 
 		self.startMerlinPlayerScreenTimer = eTimer()
-		self.startMerlinPlayerScreenTimer.timeout.get().append(self.info_pressed)
+		self.startMerlinPlayerScreenTimer_conn = self.startMerlinPlayerScreenTimer.timeout.connect(self.info_pressed)
 
 		self.session.nav.SleepTimer.on_state_change.append(self.sleepTimerEntryOnStateChange)
 	
@@ -2437,12 +2437,12 @@ class iDreamMerlin(Screen):
 	def startRun(self):
 		if pathToDatabase.isRunning:
 			self.showScanner = eTimer()
-			self.showScanner.callback.append(self.showScannerCallback)
+			self.showScanner_conn = self.showScanner.timeout.connect(self.showScannerCallback)
 			self.showScanner.start(0,1)
 		else:
 			if config.plugins.merlinmusicplayer.startlastsonglist.value:
 				self.startPlayerTimer = eTimer()
-				self.startPlayerTimer.callback.append(self.startPlayerTimerCallback)
+				self.startPlayerTimer_conn = self.startPlayerTimer.timeout.connect(self.startPlayerTimerCallback)
 				self.startPlayerTimer.start(0,1)
 			self.mode = 0
 			self["list"].setMode(self.mode)
@@ -2633,11 +2633,11 @@ class iDreamList(GUIComponent, object):
 	
 	def postWidgetCreate(self, instance):
 		instance.setContent(self.l)
-		instance.selectionChanged.get().append(self.selectionChanged)
+		self.selectionChanged_conn = instance.selectionChanged.connect(self.selectionChanged)
 
 	def preWidgetRemove(self, instance):
 		instance.setContent(None)
-		instance.selectionChanged.get().remove(self.selectionChanged)
+		self.selectionChanged_conn = None
 
 	def moveToIndex(self, index):
 		self.instance.moveSelectionTo(index)
@@ -2681,7 +2681,7 @@ class MerlinMediaPixmap(Pixmap):
 		Pixmap.__init__(self)
 		self.coverArtFileName = ""
 		self.picload = ePicLoad()
-		self.picload.PictureData.get().append(self.paintCoverArtPixmapCB)
+		self.picload_conn = self.picload.PictureData.connect(self.paintCoverArtPixmapCB)
 		self.coverFileNames = ["folder.png", "folder.jpg", "cover.jpg", "cover.png", "coverArt.jpg"]
 
 	def applySkin(self, desktop, screen):
@@ -3022,7 +3022,7 @@ class MerlinMusicPlayerFileList(Screen):
 		self.session.nav.stopService()
 
 		self.startMerlinPlayerScreenTimer = eTimer()
-		self.startMerlinPlayerScreenTimer.timeout.get().append(self.info_pressed)
+		self.startMerlinPlayerScreenTimer_conn = self.startMerlinPlayerScreenTimer.timeout.connect(self.info_pressed)
 
 		self.session.nav.SleepTimer.on_state_change.append(self.sleepTimerEntryOnStateChange)
 	
@@ -3033,7 +3033,7 @@ class MerlinMusicPlayerFileList(Screen):
 	def startRun(self):
 		if config.plugins.merlinmusicplayer.startlastsonglist.value:
 			self.startPlayerTimer = eTimer()
-			self.startPlayerTimer.callback.append(self.startPlayerTimerCallback)
+			self.startPlayerTimer_conn = self.startPlayerTimer.timeout.connect(self.startPlayerTimerCallback)
 			self.startPlayerTimer.start(0,1)
 
 	def startPlayerTimerCallback(self):

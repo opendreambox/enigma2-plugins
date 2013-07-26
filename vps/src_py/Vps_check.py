@@ -122,10 +122,10 @@ class VPS_check(Screen):
 
 		self.service = service
 		self.program = eConsoleAppContainer()
-		self.program.dataAvail.append(self.program_dataAvail)
-		self.program.appClosed.append(self.program_closed)
+		self.dataAvail_conn = self.program.dataAvail.connect(self.program_dataAvail)
+		self.appClosed_conn = self.program.appClosed.connect(self.program_closed)
 		self.check = eTimer()
-		self.check.callback.append(self.doCheck)
+		self.check_conn = self.check.timeout.connect(self.doCheck)
 		self.simulate_recordService = None
 		self.last_serviceref = None
 		self.calledfinished = False

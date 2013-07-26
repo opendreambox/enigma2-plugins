@@ -294,7 +294,7 @@ class WeatherIcon(Pixmap):
 		Pixmap.__init__(self)
 		self.IconFileName = ""
 		self.picload = ePicLoad()
-		self.picload.PictureData.get().append(self.paintIconPixmapCB)
+		self.picload_conn = self.picload.PictureData.connect(self.paintIconPixmapCB)
 
 	def onShow(self):
 		Pixmap.onShow(self)

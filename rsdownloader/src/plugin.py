@@ -300,7 +300,7 @@ class RSDownload:
 					else:
 						self.freeDownloadUrl = url
 						self.freeDownloadTimer = eTimer()
-						self.freeDownloadTimer.callback.append(self.freeDownloadStart)
+						self.freeDownloadStart_conn = self.freeDownloadTimer.timeout.connect(self.freeDownloadStart)
 						self.freeDownloadTimer.start((int(seconds) + 2) * 1000, 1)
 		elif (self.url.__contains__("uploaded.to") or self.url.__contains__("ul.to")) and ul_username == "" and ul_password == "":
 			writeLog("Free Uploaded.to-Download: %s"%self.url)
@@ -319,7 +319,7 @@ class RSDownload:
 				writeLog("Free Uploaded.to-Download... must wait %s minutes: %s"%(minutes, self.url))
 				self.status = "%s %s"%(_("Waiting"), minutes)
 				self.freeDownloadTimer = eTimer()
-				self.freeDownloadTimer.callback.append(self.start)
+				self.freeDownloadTimer_conn = self.freeDownloadTimer.timeout.connect(self.start)
 				self.freeDownloadTimer.start((int(minutes) + 1) * 60000, 1)
 			else:
 				try:
@@ -392,7 +392,7 @@ class RSDownload:
 			writeLog("Error: %s"%string)
 		self.status = _("Checking")
 		self.checkTimer = eTimer()
-		self.checkTimer.callback.append(self.doCheckTimer)
+		self.checkTimer_conn = self.checkTimer.timeout.connect(self.doCheckTimer)
 		self.checkTimer.start(10000, 1)
 
 	def doCheckTimer(self):
@@ -400,7 +400,7 @@ class RSDownload:
 			self.status = _("Failed")
 			if config.plugins.RSDownloader.autorestart_failed.value:
 				self.restartFailedTimer = eTimer()
-				self.restartFailedTimer.callback.append(self.restartFailedCheck)
+				self.restartFailedTimer_conn = self.restartFailedTimer.timeout.connect(self.restartFailedCheck)
 				self.restartFailedTimer.start(10000*60, 1)
 		elif self.progress == 100:
 			self.status = _("Finished")
@@ -426,7 +426,7 @@ class RSDownload:
 				writeLog("Error: %s"%error)
 				self.status = _("Checking")
 		self.checkTimer = eTimer()
-		self.checkTimer.callback.append(self.doCheckTimer)
+		self.checkTimer_conn = self.checkTimer.timeout.connect(self.doCheckTimer)
 		self.checkTimer.start(10000, 1)
 
 	def getTubeId(self):
@@ -486,7 +486,7 @@ class RS:
 	def __init__(self):
 		self.downloads = []
 		self.checkTimer = eTimer()
-		self.checkTimer.callback.append(self.startDownloading)
+		self.checkTimer_conn = self.checkTimer.timeout.connect(self.startDownloading)
 		self.checkTimer.start(5000*60, False)
 
 	def mayDownload(self):
@@ -1100,7 +1100,7 @@ class Unrar:
 	def __init__(self):
 		self.list = []
 		self.timer = eTimer()
-		self.timer.callback.append(self.checkUnrar)
+		self.timer_conn = self.timer.timeout.connect(self.checkUnrar)
 		self.timer.start(30000, 1)
 		self.xmlFile = ("%s/unrar.xml"%config.plugins.RSDownloader.lists_directory.value).replace("//", "/")
 		
@@ -1355,7 +1355,7 @@ class RSMain(ChangedScreen):
 		self["list"] = RSList([])
 		
 		self.refreshTimer = eTimer()
-		self.refreshTimer.callback.append(self.updateList)
+		self.refreshTimer_conn = self.refreshTimer.timeout.connect(self.updateList)
 		
 		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "InfobarMenuActions"],
 			{

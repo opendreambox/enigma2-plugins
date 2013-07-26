@@ -231,7 +231,7 @@ class AutomaticCleanup:
 		if DEBUG: print pluginPrintname, "Starting in debugging mode..."
 		else: print pluginPrintname, "Starting AutomaticCleanup..."
 		self.timer = eTimer() # check timer
-		self.timer.callback.append(self.doCleanup)
+		self.timer_conn = self.timer.timeout.connect(self.doCleanup)
 		self.initialState = True
 		self.doCleanup() # always check immediately after starting plugin
 		self.initialState = False

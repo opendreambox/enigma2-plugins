@@ -101,13 +101,13 @@ class TravelWebcamviewer(Screen):
 			 }, -1)
 		self.finish_loading = True
 		self.timer_default = eTimer()
-		self.timer_default.timeout.callback.append(self.buildCamList)
+		self.timer_default_conn = self.timer_default.timeout.connect(self.buildCamList)
 
 		self.timer_status = eTimer()
-		self.timer_status.timeout.callback.append(self.buildStatusList)
+		self.timer_status_conn = self.timer_status.timeout.connect(self.buildStatusList)
 
 		self.timer_labels = eTimer()
-		self.timer_labels.timeout.callback.append(self.refreshLabels)
+		self.timer_labels_conn = self.timer_labels.timeout.connect(self.refreshLabels)
 
 		self.onLayoutFinish.append(self.loadData)
 
@@ -171,7 +171,7 @@ class TravelWebcamviewer(Screen):
 		sc = AVSwitch().getFramebufferScale()
 		if (os_path_exists("/tmp/"+str(webcamid)+"_thumb.jpg") == True):
 			self.picloads[webcamid] = ePicLoad()
-			self.picloads[webcamid].PictureData.get().append(boundFunction(self.finish_decode, webcamid))
+			self.picloads[webcamid].conn = self.picloads[webcamid].PictureData.connect(boundFunction(self.finish_decode, webcamid))
 			self.picloads[webcamid].setPara((self["thumbnail"].instance.size().width(), self["thumbnail"].instance.size().height(), sc[0], sc[1], False, 1, "#00000000"))
 			self.picloads[webcamid].startDecode("/tmp/"+str(webcamid)+"_thumb.jpg")
 		else:

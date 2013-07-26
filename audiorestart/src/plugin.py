@@ -21,7 +21,7 @@ PLUGIN_VERSION = "0.1"
 class AudioRestart():
     def __init__(self):
         self.activateTimer = eTimer()
-        self.activateTimer.callback.append(self.restartAudio)
+        self.activateTimer_conn = self.activateTimer.timeout.connect(self.restartAudio)
         if config.plugins.AudioRestart.restartSelection.value in ["standby", "both"]:
             config.misc.standbyCounter.addNotifier(self.enterStandby, initial_call = False)
         if config.plugins.AudioRestart.restartSelection.value in ["restart", "both"]:

@@ -932,7 +932,7 @@ class EasyPG(EPGSelection, Screen):
 		self["list"] = EvNewList(type = EPG_TYPE_MULTI, selChangedCB = self.onSelectionChanged, timer = session.nav.RecordTimer)
 		self.skinName = "EasyPG"
 		self.RefrTimer = eTimer()
-		self.RefrTimer.callback.append(self.RefreshEPG)
+		self.RefTimer_conn = self.RefrTimer.timeout.connect(self.RefreshEPG)
 		self["actions"] = ActionMap(["EPGSelectActions", "OkCancelActions", "NumberActions", "InfobarActions"],
 			{
 				"cancel": self.closeScreen,

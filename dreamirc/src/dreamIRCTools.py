@@ -53,7 +53,7 @@ class ChatWindow(ScrollLabel):
 	def __init__(self,session):
 		ScrollLabel.__init__(self,text="")
 		self.timer=eTimer()
-		self.timer.timeout.get().append(self.updateChatWindow)
+		self.timer_conn = self.timer.timeout.connect(self.updateChatWindow)
 		self.timer.start(250)
 		self.pipe=MessagePipe()
 		self.oldText=""
@@ -69,7 +69,7 @@ class BuddyWindow(ScrollLabel):
 	def __init__(self,session):
 		ScrollLabel.__init__(self,text="")
 		self.timer=eTimer()
-		self.timer.timeout.get().append(self.updateBuddyWindow)
+		self.timer_conn = self.timer.timeout.connect(self.updateBuddyWindow)
 		self.timer.start(500)
 		self.oldlist=""
 
@@ -82,7 +82,7 @@ class ChanName(Label):
 	def __init__(self,session):
 		Label.__init__(self,text=Channel)
 		self.timer=eTimer()
-		self.timer.timeout.get().append(self.updateChanName)
+		self.timer_conn = self.timer.timeout.connect(self.updateChanName)
 		self.timer.start(500)
 		self.oldname=self.text
 		self.pipe=MessagePipe()

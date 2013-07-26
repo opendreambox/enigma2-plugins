@@ -550,7 +550,7 @@ class RemoteTimerChannelList(Screen):
 		self.zaptoservicewhenstreaming = partnerboxentry.zaptoservicewhenstreaming.value
 		self.key_green_choice = self.ADD_TIMER
 		self.zapTimer = eTimer()
-		self.zapTimer.timeout.get().append(self.zapTimerTimeout)
+		self.zapTimer_conn = self.zapTimer.timeout.connect(self.zapTimerTimeout)
 		self.onClose.append(self.__onClose)
 		self.ChannelListCurrentIndex = 0
 		self.mode = self.REMOTE_TIMER_MODE
@@ -859,7 +859,7 @@ class RemotePlayer(Screen, InfoBarAudioSelection):
 		self.parent = parent
 		
 		self.Timer = eTimer()
-		self.Timer.timeout.get().append(self.TimerTimeout)
+		self.Timer_conn = self.Timer.timeout.connect(self.TimerTimeout)
 		
 	def nextChannel(self):
 		if self.parent is not None:
@@ -1414,10 +1414,10 @@ class E2ChannelList(MenuList):
 	def postWidgetCreate(self, instance):
 		MenuList.postWidgetCreate(self, instance)
 		instance.setItemHeight(70)
-		instance.selectionChanged.get().append(self.selectionChanged)
+		self.selectionChanged_conn = instance.selectionChanged.connect(self.selectionChanged)
 	
 	def preWidgetRemove(self, instance):
-		instance.selectionChanged.get().remove(self.selectionChanged)
+		self.selectionChanged_conn = None
 		
 	def selectionChanged(self):
 		for x in self.onSelChanged:
@@ -1466,10 +1466,10 @@ class E2EPGList(MenuList):
 	def postWidgetCreate(self, instance):
 		MenuList.postWidgetCreate(self, instance)
 		instance.setItemHeight(30)
-		instance.selectionChanged.get().append(self.selectionChanged)
+		self.selectionChanged_conn = instance.selectionChanged.connect(self.selectionChanged)
 	
 	def preWidgetRemove(self, instance):
-		instance.selectionChanged.get().remove(self.selectionChanged)
+		self.sectionChanged_conn = None
 	
 	def getCurrentIndex(self):
 		return self.instance.getCurrentIndex()

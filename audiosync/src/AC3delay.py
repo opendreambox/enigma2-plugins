@@ -21,7 +21,7 @@ class AC3delay:
         self.getAudioInformation()
 
         self.activateTimer = eTimer()
-        self.activateTimer.callback.append(self.activateDelay)
+        self.activateTimer_conn = self.activateTimer.timeout.connect(self.activateDelay)
         self.activateWait = config.plugins.AC3LipSync.activationDelay.getValue()
         
         # Current value for movie start behaviour
@@ -71,7 +71,7 @@ class AC3delay:
                     if lCurPosition is not None:
                         self.lCurPosition = lCurPosition
                         self.timer = eTimer()
-                        self.timer.callback.append(self.seekAfterWait)
+                        self.timer_conn = self.timer.timeout.connect(self.seekAfterWait)
                         self.timer.start(200, False)
             else:
                 self.deleteAudio()

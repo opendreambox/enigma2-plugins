@@ -45,7 +45,7 @@ class MovableScreen():
         self.setEnableMoveKeymap(True)
 
         self.moveTimer = eTimer()
-        self.moveTimer.callback.append(self.movePositionTimer)
+        self.moveTimer_conn = self.moveTimer.timeout.connect(self.movePositionTimer)
         self.moveTimer.start(50, 1)
 
     def movePositionTimer(self):

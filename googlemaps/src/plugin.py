@@ -541,9 +541,8 @@ class GoogleMapsGeoSearchScreen(InputBox):
         if listitem:
             #print "list changed",listitem
             adress,lon,lat = listitem[1]
-            for i in self.do_preview_timer.timeout.get():
-                self.do_preview_timer.timeout.get().remove(i)
-            self.do_preview_timer.timeout.get().append(lambda : self.loadPreview(lon, lat))
+            self.do_preview_timer_conn = None
+            self.do_preview_timer_conn = self.do_preview_timer.timeout.connect(lambda : self.loadPreview(lon, lat))
             self.do_preview_timer.start(1500)
         else:
             pass #print "nothing selected"
@@ -559,9 +558,8 @@ class GoogleMapsGeoSearchScreen(InputBox):
     def keyNumberGlobal(self, number):
         self["input"].number(number)
         self.do_search_timer.stop()
-        for i in self.do_search_timer.timeout.get():
-            self.do_search_timer.timeout.get().remove(i)
-        self.do_search_timer.timeout.get().append(lambda : self.doSearch(self["input"].getText()))
+        self.do_search_timer_conn = None
+        self.do_search_timer_conn = self.do_search_timer.timeout.connect(lambda : self.doSearch(self["input"].getText()))
         self.do_search_timer.start(1000)
 
         #self.doSearch(self["input"].getText())

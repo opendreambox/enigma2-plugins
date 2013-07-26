@@ -26,7 +26,7 @@ class RSSPoller:
 	def __init__(self, poll = True):
 		# Timer
 		self.poll_timer = eTimer()
-		self.poll_timer.callback.append(self.poll)
+		self.poll_timer_conn = self.poll_timer.timeout.connect(self.poll)
 		self.do_poll = poll
 
 		# this indicates we're reloading the list of feeds
@@ -254,7 +254,7 @@ class RSSPoller:
 		self.poll_timer.start(1000, 1)
 
 	def shutdown(self):
-		self.poll_timer.callback.remove(self.poll)
+		self.poll_timer_conn = None
 		self.poll_timer = None
 		self.do_poll = False
 

@@ -865,7 +865,7 @@ class PictureExplorerII(Screen):
 			"left": self.Pleft,
 			"right": self.Pright
 		}, -1)
-		self.EXpicload.PictureData.get().append(self.DecodeAction)
+		self.EXpicload_conn = self.EXpicload.PictureData.connect(self.DecodeAction)
 		self.onLayoutFinish.append(self.Show_Picture)
 
 	def Show_Picture(self):

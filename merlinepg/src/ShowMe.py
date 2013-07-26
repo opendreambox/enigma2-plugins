@@ -60,7 +60,7 @@ class ShowMe(Screen):
 			"ok": self.close,
 			"back": self.close
 		}, -1)
-		self.EXpicload.PictureData.get().append(self.DecodeAction)
+		self.ExPicload_conn = self.EXpicload.PictureData.connect(self.DecodeAction)
 		self.onLayoutFinish.append(self.Show_Picture)
 
 	def Show_Picture(self):

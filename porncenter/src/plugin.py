@@ -115,7 +115,7 @@ class PornCenterBuffer(Screen):
 		self.file = file
 		
 		self.infoTimer = eTimer()
-		self.infoTimer.timeout.get().append(self.updateInfo)
+		self.infoTimer_conn = self.infoTimer.timeout.connect(self.updateInfo)
 		
 		self["info"] = Label(_("Downloading movie: %s") % self.file)
 		self["progress"] = ProgressBar()
@@ -290,7 +290,7 @@ class PinChecker:
 	def __init__(self):
 		self.pin_entered = False
 		self.timer = eTimer()
-		self.timer.callback.append(self.lock)
+		self.timer_conn = self.timer.timeout.connect(self.lock)
 
 	def pinEntered(self):
 		self.pin_entered = True

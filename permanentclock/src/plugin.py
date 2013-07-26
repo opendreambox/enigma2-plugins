@@ -107,7 +107,7 @@ class PermanentClockPositioner(Screen):
 		self.desktopHeight = desktop.size().height()
 		
 		self.moveTimer = eTimer()
-		self.moveTimer.callback.append(self.movePosition)
+		self.moveTimer_conn = self.moveTimer.timeout.connect(self.movePosition)
 		self.moveTimer.start(50, 1)
 
 	def movePosition(self):

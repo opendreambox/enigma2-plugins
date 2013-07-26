@@ -433,7 +433,7 @@ class PictureViewer(Screen):
 			selectedfile = self["slist"].l.getCurrentSelection()[1]
 		sc=AVSwitch().getFramebufferScale()
 		self.picload = ePicLoad()
-		self.picload.PictureData.get().append(self.updateInfoPanelCB)
+		self.picload_conn = self.picload.PictureData.connect(self.updateInfoPanelCB)
 		self.picload.setPara((self["pixmap"].instance.size().width(), self["pixmap"].instance.size().height(), sc[0], sc[1], False, 1, "#FF000000"))
 		self.picload.startDecode(selectedfile)
 

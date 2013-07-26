@@ -206,8 +206,8 @@ class Query:
 	def cdtext_scan(self):
 		cmd = "cdtextinfo -xalT"
 		print "[cdtext_scan] " + cmd
-		self.cdtext_container.appClosed.append(self.cdtext_finished)
-		self.cdtext_container.dataAvail.append(self.cdtext_avail)
+		self.cdtext_appClosed_conn = self.cdtext_container.appClosed.connect(self.cdtext_finished)
+		self.cdtext_dataAvail_conn = self.cdtext_container.dataAvail.connect(self.cdtext_avail)
 		self.cdtext_container.execute(cmd)
 
 	def cddb_scan(self):
@@ -215,8 +215,8 @@ class Query:
 		if not config.plugins.CDInfo.CDDB_cache.value:
 			cmd += " --no-cddb-cache"
 		print "[cddb_scan] " + cmd
-		self.cddb_container.appClosed.append(self.cddb_finished)
-		self.cddb_container.dataAvail.append(self.cddb_avail)
+		self.cddb_appClosed_conn = self.cddb_container.appClosed.connect(self.cddb_finished)
+		self.cddb_dataAvail_conn = self.cddb_container.dataAvail.connect(self.cddb_avail)
 		self.cddb_container.execute(cmd)
 
 	def cddb_avail(self,string):

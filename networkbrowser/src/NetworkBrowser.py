@@ -130,7 +130,7 @@ class NetworkBrowser(Screen):
 		self.onShown.append(self.setWindowTitle)
 		self.onClose.append(self.cleanup)
 		self.Timer = eTimer()
-		self.Timer.callback.append(self.TimerFire)
+		self.Timer_conn = self.Timer.timeout.connect(self.TimerFire)
 
 	def cleanup(self):
 		del self.Timer

@@ -161,7 +161,7 @@ class DVDBackup:
 				self.files.append(self.genisoimage)
 				cmd = 'genisoimage -dvd-video -udf -o "%s.iso" "%s"'%(path, path)
 				self.console.ePopen(cmd, self.genisoimageCallback)
-				self.console.appContainers[cmd].dataAvail.append(boundFunction(self.genisoimageProgress, cmd))
+				self.console.appContainers[cmd].dataAvail_conn = self.console.appContainers[cmd].dataAvail.connect(boundFunction(self.genisoimageProgress, cmd))
 			else:
 				self.finished()
 
@@ -242,7 +242,7 @@ class DVDBackupProgress(Screen):
 		Screen.__init__(self, session)
 		
 		self.refreshTimer = eTimer()
-		self.refreshTimer.callback.append(self.refreshList)
+		self.refreshTimer_conn = self.refreshTimer.timeout.connect(self.refreshList)
 		
 		self.console = None
 		self.working = False

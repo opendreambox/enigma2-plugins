@@ -147,7 +147,7 @@ class TVChartsMain(Screen):
 		self.eventcache = []
 
 		self.RefreshTimer = eTimer()
-		self.RefreshTimer.callback.append(self.downloadList)
+		self.RefreshTimer_conn = self.RefreshTimer.timeout.connect(self.downloadList)
 
 		self.onLayoutFinish.append(self.firstPluginExec)
 
@@ -462,7 +462,7 @@ class DBUpdateStatus(Screen):
 		Screen.__init__(self, session)
 
 		self.DBStatusTimer = eTimer()
-		self.DBStatusTimer.callback.append(self.updateStatus)
+		self.DBStatusTimer_conn = self.DBStatusTimer.timeout.connect(self.updateStatus)
 
 		self.__event_tracker = ServiceEventTracker(screen = self, eventmap =
 			{

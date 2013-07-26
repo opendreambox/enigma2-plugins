@@ -15,7 +15,7 @@ class MovingLabel(Label):
 		Label.__init__(self, text)
 
 		self.moveTimer = eTimer()
-		self.moveTimer.callback.append(self.doMove)
+		self.moveTimer_conn = self.moveTimer.timeout.connect(self.doMove)
 
 	def applySkin(self, desktop, screen):
 		if self.skinAttributes is not None:

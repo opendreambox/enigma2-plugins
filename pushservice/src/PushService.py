@@ -45,7 +45,7 @@ class PushService(PushServiceBase):
 		self.state = PSBOOT if config.pushservice.runonboot.value else PSFIRST
 		
 		self.timer = eTimer()
-		self.timer.callback.append(self.do)
+		self.timer_conn = self.timer.timeout.connect(self.do)
 		
 		# Read XML file, parse it and instantiate configured plugins
 		self.load()

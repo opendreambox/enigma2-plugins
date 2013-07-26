@@ -93,7 +93,7 @@ class GrabStream:
 		self.request = request
 
 		self.container = eConsoleAppContainer()
-		self.container.appClosed.append(self.cmdFinished)
+		self.appClosed_conn = self.container.appClosed.connect(self.cmdFinished)
 
 		self.stillAlive = True
 		if hasattr(self.request, 'notifyFinish'):

@@ -284,9 +284,9 @@ class Merlin_PGII(Screen):
 		else:
 			self.Fields = 5
 		self.CheckForEPG = eTimer()
-		self.CheckForEPG.callback.append(self.CheckItNow)
+		self.CheckForEPG_conn = self.CheckForEPG.timeout.connect(self.CheckItNow)
 		self.AutoPrime = eTimer()
-		self.AutoPrime.callback.append(self.go2Primetime)
+		self.AutoPrime_conn = self.AutoPrime.timeout.connect(self.go2Primetime)
 		self["prg_list"] = MenuList(self.getChannels())
 		self["fullEventInfo"] = Label(" ")
 		self["currCh1"] = Label(" ")
@@ -747,7 +747,7 @@ class Merlin_PGd(Screen):
 		self.list = []
 		self.srvList = servicelist
 		self.CheckForEPG = eTimer()
-		self.CheckForEPG.callback.append(self.CheckItNow)
+		self.CheckForEPG_conn = self.CheckForEPG.timeout.connect(self.CheckItNow)
 		self["currCh"] = Label(_("Channel"))
 		self["fullEventInfo"] = Label(" ")
 		self["prg_list"] = MenuList(self.getChannels())

@@ -179,13 +179,13 @@ class MovieRetitle(Screen, ConfigListScreen):
 class MovieRetitleBackgroundMover:
 	def __init__(self):
 		self.container = eConsoleAppContainer()
-		self.container.appClosed.append(self.moveNextSuffBG)
+		self.appClosed_conn = self.container.appClosed.connect(self.moveNextSuffBG)
 		self.currid = 0;
 		self.queue = []
 		self.running = False
 		self.messageQueue = []
 		self.messageTimer = eTimer()
-		self.messageTimer.callback.append(self.tryLaunchMessage)
+		self.messageTimer_conn = self.messageTimer.timeout.connect(self.tryLaunchMessage)
 
 	def message(self, session, id, cb, txt):
 		global global_message_block

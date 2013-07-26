@@ -153,7 +153,7 @@ class PodcastBuffer(Screen):
 		self.file = file
 		
 		self.infoTimer = eTimer()
-		self.infoTimer.timeout.get().append(self.updateInfo)
+		self.infoTimer_conn = self.infoTimer.timeout.connect(self.updateInfo)
 		
 		self["info"] = Label(_("Downloading movie: %s") % self.file)
 		self["progress"] = ProgressBar()

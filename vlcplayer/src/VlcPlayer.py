@@ -238,7 +238,7 @@ class VlcPlayer(Screen, InfoBarNotifications, InfoBarAudioSelection):
 		self.vlcservice = VlcService(self)
 		self.session.screen["CurrentService"] = self.vlcservice
 		self.hidetimer = eTimer()
-		self.hidetimer.timeout.get().append(self.ok)
+		self.hideTimer_conn = self.hidetimer.timeout.connect(self.ok)
 		self.onClose.append(self.__onClose)
 
 		class VlcPlayerActionMap(ActionMap):

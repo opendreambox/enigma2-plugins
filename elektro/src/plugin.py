@@ -352,7 +352,7 @@ class ElektroNASrun(ConfigListScreen,Screen):
 		self["TextTest"] = StaticText()
 		self["TextTest"].setText(_("please wait..."))
 		self.timer = eTimer()
-		self.timer.callback.append(self.DoNASrun)
+		self.timer_conn = self.timer.timeout.connect(self.DoNASrun)
 		self.timer.start(1000, True)
 
 		self["actions"] = ActionMap(["OkCancelActions"], 
@@ -607,12 +607,12 @@ class DoElektro(Screen):
 		#if waken up by timer and configured ask whether to go to sleep.
 		if trysleep:
 			self.TimerStandby = eTimer()
-			self.TimerStandby.callback.append(self.CheckStandby)
+			self.TimerStandby_conn = self.TimerStandby.timeout.connect(self.CheckStandby)
 			self.TimerStandby.startLongTimer(elektrosleeptime)
 			print pluginPrintname, "Set up standby timer"
 
 		self.TimerSleep = eTimer()
-		self.TimerSleep.callback.append(self.CheckElektro)
+		self.TimerSleep_conn = self.TimerSleep.timeout.connect(self.CheckElektro)
 		self.TimerSleep.startLongTimer(elektrostarttime)
 		print pluginPrintname, "Set up sleep timer"		
 		if debug:

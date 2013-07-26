@@ -125,7 +125,7 @@ class AddCopyTimeshiftTask(Task):
 		self.destfile = destfile + ".ts"
 
 		self.ProgressTimer = eTimer()
-		self.ProgressTimer.callback.append(self.ProgressUpdate)
+		self.ProgressTimer_conn = self.ProgressTimer.timeout.connect(self.ProgressUpdate)
 
 	def ProgressUpdate(self):
 		if self.srcsize <= 0 or not fileExists(self.destfile, 'r'):
@@ -166,7 +166,7 @@ class AddMergeTimeshiftTask(Task):
 		self.destfile = config.usage.default_path.value + "/" + destfile
 
 		self.ProgressTimer = eTimer()
-		self.ProgressTimer.callback.append(self.ProgressUpdate)
+		self.ProgressTimer_conn = self.ProgressTimer.timeout.connect(self.ProgressUpdate)
 
 	def ProgressUpdate(self):
 		if self.srcsize <= 0 or not fileExists(self.destfile, 'r'):
@@ -260,32 +260,32 @@ class InfoBar(InfoBarOrg):
 
 		# Init PTS Delay-Timer
 		self.pts_delay_timer = eTimer()
-		self.pts_delay_timer.callback.append(self.activatePermanentTimeshift)
+		self.pts_delay_timer_conn = self.pts_delay_timer.timeout.connect(self.activatePermanentTimeshift)
 
 		# Init PTS LengthCheck-Timer
 		self.pts_LengthCheck_timer = eTimer()
-		self.pts_LengthCheck_timer.callback.append(self.ptsLengthCheck)
+		self.pts_LengthCheck_timer_conn = self.pts_LengthCheck_timer.timeout.connect(self.ptsLengthCheck)
 
 		# Init PTS MergeRecords-Timer
 		self.pts_mergeRecords_timer = eTimer()
-		self.pts_mergeRecords_timer.callback.append(self.ptsMergeRecords)
+		self.pts_mergeRecords_timer_conn = self.pts_mergeRecords_timer.timeout.connect(self.ptsMergeRecords)
 
 		# Init PTS Merge Cleanup-Timer
 		self.pts_mergeCleanUp_timer = eTimer()
-		self.pts_mergeCleanUp_timer.callback.append(self.ptsMergePostCleanUp)
+		self.pts_mergeCleanUp_timer_conn = self.pts_mergeCleanUp_timer.timeout.connect(self.ptsMergePostCleanUp)
 
 		# Init PTS QuitMainloop-Timer
 		self.pts_QuitMainloop_timer = eTimer()
-		self.pts_QuitMainloop_timer.callback.append(self.ptsTryQuitMainloop)
+		self.pts_QuitMainloop_timer_conn = self.pts_QuitMainloop_timer.timeout.connect(self.ptsTryQuitMainloop)
 
 		# Init PTS CleanUp-Timer
 		self.pts_cleanUp_timer = eTimer()
-		self.pts_cleanUp_timer.callback.append(self.ptsCleanTimeshiftFolder)
+		self.pts_cleanUp_timer_conn = self.pts_cleanUp_timer.timeout.connect(self.ptsCleanTimeshiftFolder)
 		self.pts_cleanUp_timer.start(30000, True)
 
 		# Init PTS SeekBack-Timer
 		self.pts_SeekBack_timer = eTimer()
-		self.pts_SeekBack_timer.callback.append(self.ptsSeekBackTimer)
+		self.pts_SeekBack_timer_conn = self.pts_SeekBack_timer.timeout.connect(self.ptsSeekBackTimer)
 
 		# Init Block-Zap Timer
 		self.pts_blockZap_timer = eTimer()
@@ -1550,7 +1550,7 @@ def _mayShow(self):
 		self.pvrStateDialog.show()
 
 		self.pvrstate_hide_timer = eTimer()
-		self.pvrstate_hide_timer.callback.append(self.pvrStateDialog.hide)
+		self.pvrstate_hide_timer_conn = self.pvrstate_hide_timer.timeout.connect(self.pvrStateDialog.hide)
 		self.pvrstate_hide_timer.stop()
 		
 		if self.seekstate == self.SEEK_STATE_PLAY:

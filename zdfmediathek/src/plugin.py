@@ -558,7 +558,7 @@ class RightMenuList(List):
 			self.pixmaps_to_load.remove(thumbID)
 			sc = AVSwitch().getFramebufferScale()
 			self.picloads[thumbID] = ePicLoad()
-			self.picloads[thumbID].PictureData.get().append(boundFunction(self.finishedThumbnailDecode, thumbID, thumbFile))
+			self.picloads[thumbID].conn = self.picloads[thumbID].PictureData.connect(boundFunction(self.finishedThumbnailDecode, thumbID, thumbFile))
 			self.picloads[thumbID].setPara((94, 60, sc[0], sc[1], False, 1, "#00000000"))
 			self.picloads[thumbID].startDecode(thumbFile)
 
@@ -629,7 +629,7 @@ class ZDFMediathekCache(Screen):
 		self.curr = 0
 		
 		self.timer = eTimer()
-		self.timer.callback.append(self.showNextSpinner)
+		self.timer_conn = self.timer.timeout.connect(self.showNextSpinner)
 
 	def start(self):
 		self.show()
@@ -746,7 +746,7 @@ class ZDFMediathek(Screen, HelpableScreen):
 		
 		self.transcodeServer = None
 		self.cacheTimer = eTimer()
-		self.cacheTimer.callback.append(self.chechCachedFile)
+		self.cacheTimer_conn = self.cacheTimer.timeout.connect(self.chechCachedFile)
 		
 		self.onLayoutFinish.append(self.getPage)
 		self.onClose.append(self.__onClose)

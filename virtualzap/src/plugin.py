@@ -253,7 +253,7 @@ class VirtualZap(Screen):
 			self.pipAvailable =  (SystemInfo.get("NumVideoDecoders", 1) > 1)  and config.plugins.virtualzap.usepip.value and not config.plugins.virtualzap.showpipininfobar.value
 		self.epgcache = eEPGCache.getInstance()
 		self.CheckForEPG = eTimer()
-		self.CheckForEPG.callback.append(self.CheckItNow)
+		self.CheckForEPG_conn = self.CheckForEPG.timeout.connect(self.CheckItNow)
 		self["NowChannel"] = Label()
 		self["NowEPG"] = Label()
 		self["NextEPG"] = Label()
@@ -328,7 +328,7 @@ class VirtualZap(Screen):
 				self.setServicelistSelection(bouquet, ref)
 		# prepare exitTimer
 		self.exitTimer = eTimer()
-		self.exitTimer.timeout.get().append(self.standardPiP)
+		self.exitTimer_conn = self.exitTimer.timeout.connect(self.standardPiP)
 		# reverse changes of ChannelSelection when closing plugin
 		self.onClose.append(self.__onClose)
 		# if PiPServiceRelation is installed, get relation dict

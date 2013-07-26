@@ -26,7 +26,7 @@ class InternetRadioCover(Pixmap):
 	def __init__(self, callback = None):
 		Pixmap.__init__(self)
 		self.picload = ePicLoad()
-		self.picload.PictureData.get().append(self.paintIconPixmapCB)
+		self.picload_conn = self.picload.PictureData.connect(self.paintIconPixmapCB)
 		self.callback = callback
 		self.picloaded = False
 		self.showPic = False

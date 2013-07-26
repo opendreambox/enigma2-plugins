@@ -63,8 +63,8 @@ class ReconstructApSc(ChoiceBox):
 class ReconstructApScQueue:
 	def __init__(self):
 		self.container = eConsoleAppContainer()
-		self.container.appClosed.append(self.runDone)
-		self.container.dataAvail.append(self.collOutput)
+		self.appClosed_conn = self.container.appClosed.connect(self.runDone)
+		self.dataAvail_conn = self.container.dataAvail.connect(self.collOutput)
 		self.queue = []
 		self.output = ""
 		self.running = False
@@ -119,7 +119,7 @@ class ReconstructApScSpawn:
 		self.mess = ""
 		self.dialog = False
 		self.waitTimer = eTimer()
-		self.waitTimer.callback.append(self.doWaitAck)
+		self.waitTimer_conn = self.waitTimer.timeout.connect(self.doWaitAck)
 		if global_recons_queue.enqueue(self.doAck, self.clist):
 			mess = _("The %s \"%s\" is processed in the background.") % (self.typename, self.name)
 		else:

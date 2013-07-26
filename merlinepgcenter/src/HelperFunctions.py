@@ -52,7 +52,7 @@ class EmbeddedVolumeControl():
 	def __init__(self):
 		self.volctrl = eDVBVolumecontrol.getInstance()
 		self.hideVolTimer = eTimer()
-		self.hideVolTimer.callback.append(self.volHide)
+		self.hideVolTimer_conn = self.hideVolTimer.timeout.connect(self.volHide)
 		
 	def volSave(self):
 		if self.volctrl.isMuted():
@@ -226,8 +226,7 @@ class BlinkTimer():
 	def suspend(self):
 		if self.gotRecordEvent in self.session.nav.record_event:
 			self.session.nav.record_event.remove(self.gotRecordEvent)
-		if self.changeBlinkState in self.timer.callback:
-			self.timer.callback.remove(self.changeBlinkState)
+		self.changeBlinkState_conn = None
 		if self.getIsRunning():
 			self.timer.stop()
 			self.delay = 0

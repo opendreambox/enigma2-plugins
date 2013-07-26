@@ -171,9 +171,9 @@ class Mosaic(Screen):
 			}, prio=-1)
 		
 		self.updateTimer = eTimer()
-		self.updateTimer.callback.append(self.updateCountdown)
+		self.updateTimer_conn = self.updateTimer.timeout.connect(self.updateCountdown)
 		self.checkTimer = eTimer()
-		self.checkTimer.callback.append(self.checkGrab)
+		self.checkTimer_conn = self.checkTimer.timeout.connect(self.checkGrab)
 		self.checkTimer.start(500, 1)
 
 	def checkGrab(self):

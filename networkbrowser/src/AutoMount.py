@@ -24,7 +24,7 @@ class AutoMount():
 		# Initialize Timer
 		self.callback = None
 		self.timer = eTimer()
-		self.timer.callback.append(self.mountTimeout)
+		self.timer_conn = self.timer.timeout.connect(self.mountTimeout)
 
 		self.getAutoMountPoints()
 

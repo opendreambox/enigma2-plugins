@@ -165,7 +165,7 @@ class EmissionOverview(Screen, HelpableScreen):
 		self.showHideSetTextMagic()
 
 		self.timer = eTimer()
-		self.timer.callback.append(self.updateList)
+		self.timer_conn = self.timer.timeout.connect(self.updateList)
 		self.timer.start(0, 1)
 
 	def bandwidthCallback(self, ret = None):

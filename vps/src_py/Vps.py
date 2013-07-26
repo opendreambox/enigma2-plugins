@@ -22,8 +22,8 @@ class vps_timer:
 		self.timer = timer
 		self.session = session
 		self.program = eConsoleAppContainer()
-		self.program.dataAvail.append(self.program_dataAvail)
-		self.program.appClosed.append(self.program_closed)
+		self.dataAvail_conn = self.program.dataAvail.connect(self.program_dataAvail)
+		self.appClosed_conn = self.program.appClosed.connect(self.program_closed)
 		self.program_running = False
 		self.program_try_search_running = False
 		self.activated_auto_increase = False
@@ -536,7 +536,7 @@ class vps_timer:
 class vps:
 	def __init__(self):
 		self.timer = eTimer()
-		self.timer.callback.append(self.checkTimer)
+		self.timer_conn = self.timer.timeout.connect(self.checkTimer)
 
 		self.vpstimers = [ ]
 		self.current_timers_list = [ ]

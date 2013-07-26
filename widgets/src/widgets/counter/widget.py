@@ -7,7 +7,7 @@ class CounterWidget(Widget):
         Widget.__init__(self,session,name="Simple Counter Widget",description="Example of a Widget with dynamicly changing Text",version="0.1",author="3c5x9",homepage="cvs://schwerkraft")
         self.elements["counter_title"] = Label("0")
         self.Timer = eTimer()
-        self.Timer.callback.append(self.TimerFire)
+        self.Timer_conn = self.Timer.timeout.connect(self.TimerFire)
         self.counter = 0
        
     def onLoadFinished(self,instance):

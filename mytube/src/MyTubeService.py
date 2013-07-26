@@ -621,7 +621,7 @@ class YoutubeQueryThread(Thread):
 		self.query = query
 		self.param = param
 		self.canceled = False
-		self.messagePump.recv_msg.get().append(self.finished)
+		self.messagepPump_conn = self.messagePump.recv_msg.connect(self.finished)
 
 	def cancel(self):
 		self.canceled = True

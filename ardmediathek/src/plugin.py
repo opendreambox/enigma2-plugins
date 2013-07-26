@@ -209,7 +209,7 @@ class ARDMediathekCache(Screen):
 		self.__shown = False
 		
 		self.timer = eTimer()
-		self.timer.callback.append(self.showNextSpinner)
+		self.timer_conn = self.timer.timeout.connect(self.showNextSpinner)
 
 	def start(self):
 		self.__shown = True
@@ -303,7 +303,7 @@ class ARDMediathek(Screen):
 		self.listMovies = []
 		
 		self.cacheTimer = eTimer()
-		self.cacheTimer.callback.append(self.chechCachedFile)
+		self.cacheTimer_conn = self.cacheTimer.timeout.connect(self.chechCachedFile)
 		
 		self.onLayoutFinish.append(self.getPage)
 
@@ -391,7 +391,7 @@ class ARDMediathek(Screen):
 	def downloadThumbnailCallback(self, txt=""):
 		sc = AVSwitch().getFramebufferScale()
 		self.picload = ePicLoad()
-		self.picload.PictureData.get().append(self.buildEntry)
+		self.picload_conn = self.picload.PictureData.connect(self.buildEntry)
 		self.picload.setPara((75, 50, sc[0], sc[1], False, 1, "#00000000"))
 		self.picload.startDecode(self.thumb)
 

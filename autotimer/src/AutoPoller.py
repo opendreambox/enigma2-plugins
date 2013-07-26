@@ -26,9 +26,9 @@ class AutoPollerThread(Thread):
 		self.__semaphore = Semaphore(0)
 		self.__queue = deque(maxlen=1)
 		self.__pump = ePythonMessagePump()
-		self.__pump.recv_msg.get().append(self.gotThreadMsg)
+		self.__pump_recv_msg_conn = self.__pump.recv_msg.connect(self.gotThreadMsg)
 		self.__timer = eTimer()
-		self.__timer.callback.append(self.timeout)
+		self.__timer_conn = self.__timer.timeout.connect(self.timeout)
 		self.running = False
 
 	def timeout(self):
@@ -70,8 +70,8 @@ class AutoPollerThread(Thread):
 		self.__timer.stop()
 		self.running = False
 		self.__semaphore.release()
-		self.__pump.recv_msg.get().remove(self.gotThreadMsg)
-		self.__timer.callback.remove(self.timeout)
+		self.__pump_recv_msg_conn = None
+		self.__timer_conn = None
 
 	def run(self):
 		sem = self.__semaphore

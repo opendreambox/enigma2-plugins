@@ -291,7 +291,7 @@ class ShowClockMain():
 
 	def gotSession(self, session):
 		self.timer = eTimer() # check timer
-		self.timer.callback.append(self.ShowHide)
+		self.timer_conn = self.timer.timeout.connect(self.ShowHide)
 		global globalActionMap
 		readKeymap("/usr/lib/enigma2/python/Plugins/Extensions/ShowClock/keymap.xml")
 		self.dialog = session.instantiateDialog(ShowClock)

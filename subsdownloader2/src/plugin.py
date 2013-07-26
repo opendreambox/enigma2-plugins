@@ -238,7 +238,7 @@ class SubsDownloaderApplication(Screen):
 		#1st picture 
 		self.ServerPicture = ePicLoad()
 		self["serverPicture"] = Pixmap()
-		self.ServerPicture.PictureData.get().append(self.DecodeServerPictureAction)
+		self.ServerPicture_conn = self.ServerPicture.PictureData.connect(self.DecodeServerPictureAction)
 		self.serverPicturePath = "/usr/lib/enigma2/python/Plugins/Extensions/SubsDownloader2/pic/none1.jpg"
 		self.onLayoutFinish.append(self.Show_Server_Picture)
 		
@@ -247,7 +247,7 @@ class SubsDownloaderApplication(Screen):
 		#2nd picture
 		self.CommertialPicture = ePicLoad()
 		self["commertialPicture"] = Pixmap()
-		self.CommertialPicture.PictureData.get().append(self.DecodeCommertialPictureAction)
+		self.CommertialPicture_conn = self.CommertialPicture.PictureData.connect(self.DecodeCommertialPictureAction)
 		self.CommertialPicturePath = "/usr/lib/enigma2/python/Plugins/Extensions/SubsDownloader2/pic/none1.jpg"
 		self.onLayoutFinish.append(self.Show_Commertial_Picture)
 		
@@ -256,7 +256,7 @@ class SubsDownloaderApplication(Screen):
 		self.__commertial_pictures_display_counter = 0
 		self.__commertial_pictures = []
 		self.CommertialBannerTimer = eTimer()
-		self.CommertialBannerTimer.callback.append(self.CommertialBannerDisplayTimerAction)
+		self.CommertialBannerTimer_conn = self.CommertialBannerTimer.timeout.connect(self.CommertialBannerDisplayTimerAction)
 		self.CommertialBannerTimer.start(120, False)
 		"""Oczywiscie trzeba stworzyc widget i pokopiowac odpowiednie funkcje inicjalizujace"""
 		#PICTURE INITIALIZATION
@@ -1334,7 +1334,7 @@ class PictureExplorerII(Screen):
 			"left": self.Pleft,
 			"right": self.Pright
 		}, -1)
-		self.EXpicload.PictureData.get().append(self.DecodeAction)
+		self.EXpicload_conn = self.EXpicload.PictureData.connect(self.DecodeAction)
 		self.onLayoutFinish.append(self.Show_Picture)
 
 	def Show_Picture(self):

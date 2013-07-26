@@ -182,16 +182,16 @@ class InfoBarTunerState(object):
 		self.epg = eEPGCache.getInstance()
 		
 		self.showTimer = eTimer()
-		self.showTimer.callback.append(self.tunerShow)
+		self.showTimer_conn = self.showTimer.timeout.connect(self.tunerShow)
 		
 		self.hideTimer = eTimer()
-		self.hideTimer.callback.append(self.tunerHide)
+		self.hideTimer_conn = self.hideTimer.timeout.connect(self.tunerHide)
 		
 		self.updateTimer = eTimer()
-		self.updateTimer.callback.append(self.update)
+		self.updateTimer_conn = self.updateTimer.timeout.connect(self.update)
 		
 		self.forceBindInfoBarTimer = eTimer()
-		self.forceBindInfoBarTimer.callback.append(self.bindInfoBar)
+		self.forceBindInfoBarTimer_conn = self.forceBindInfoBarTimer.timeout.connect(self.bindInfoBar)
 		
 		self.entries = defaultdict(list)
 		
@@ -954,7 +954,7 @@ class TunerState(TunerStateBase):
 		
 		self.toberemoved = False
 		self.removeTimer = eTimer()
-		self.removeTimer.callback.append(self.remove)
+		self.removeTimer_conn = self.removeTimer.timeout.connect(self.remove)
 		
 		self.type = type
 		self.tuner = tuner

@@ -98,8 +98,8 @@ class IPKGConsoleStream:
 		self.lastdata = None
 		self.stillAlive = True
 
-		self.container.dataAvail.append(self.dataAvail)
-		self.container.appClosed.append(self.cmdFinished)
+		self.dataAvail_conn = self.container.dataAvail.connect(self.dataAvail)
+		self.appClosed_conn = self.container.appClosed.connect(self.cmdFinished)
 
 		if hasattr(self.request, 'notifyFinish'):
 			self.request.notifyFinish().addErrback(self.connectionLost)

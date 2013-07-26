@@ -7,7 +7,7 @@ class SimpleThread(threading.Thread):
 		threading.Thread.__init__(self)
 		self.deferred = defer.Deferred()
 		self.__pump = ePythonMessagePump()
-		self.__pump.recv_msg.get().append(self.gotThreadMsg)
+		self.__pump_conn = self.__pump.recv_msg.connect(self.gotThreadMsg)
 		self.__asyncFunc = fnc
 		self.__result = None
 		self.__err = None
@@ -17,7 +17,7 @@ class SimpleThread(threading.Thread):
 			self.deferred.errback(self.__err)
 		else:
 			self.deferred.callback(self.__result)
-		del self.__pump.recv_msg.get()[:]
+		del self.__pump_conn
 
 	def run(self):
 		try:

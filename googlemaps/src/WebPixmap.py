@@ -22,7 +22,7 @@ class WebPixmap(Pixmap):
 	def __init__(self, default = None):
 		Pixmap.__init__(self)
 		self.picload = ePicLoad()
-		self.picload.PictureData.get().append(self.setPixmapCB)
+		self.picload_conn = self.picload.PictureData.connect(self.setPixmapCB)
 		self.cachedir = "/tmp/googlemaps/"
 		self.default = default
 

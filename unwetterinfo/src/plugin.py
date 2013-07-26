@@ -49,7 +49,7 @@ class PictureView(Screen):
 		self.picload = ePicLoad()
 		sc = AVSwitch().getFramebufferScale()
 		self.picload.setPara((550, 550, sc[0], sc[1], 0, 0, '#ff000000'))
-		self.picload.PictureData.get().append(self.gotPic)
+		self.picload_conn = self.picload.PictureData.connect(self.gotPic)
 		self.onLayoutFinish.append(self.getPic)
 
 	def getPic(self):
@@ -101,7 +101,7 @@ class HelpPictureView(Screen):
 		self.picload = ePicLoad()
 		sc = AVSwitch().getFramebufferScale()
 		self.picload.setPara((690, 225, sc[0], sc[1], 0, 0, '#ff000000'))
-		self.picload.PictureData.get().append(self.gotPic)
+		self.picload_conn = self.picload.PictureData.connect(self.gotPic)
 
 		self.onShown.append(self.getPic)
 
@@ -166,7 +166,7 @@ class UnwetterMain(Screen):
 #		self.onLayoutFinish.append(self.go)
 
 		self.ThumbTimer = eTimer()
-		self.ThumbTimer.callback.append(self.showThumb)
+		self.ThumbTimer_conn = self.ThumbTimer.timeout.connect(self.showThumb)
 
 		self.switchDeA(load=True)
 

@@ -302,8 +302,8 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		self.onExecBegin.append(self.onBeginExec)
 
 		self.musicPlayer = eMusicPlayer(self.BANDS)
-		#self.musicPlayer.callback.append(self.musicPlayerCallBack)
-		self.musicPlayer.callback.get().append(self.musicPlayerCallBack)
+		#self.musicPlayer.timeout.connect(self.musicPlayerCallBack)
+		self.musicPlayer_conn = self.musicPlayer.callback.connect(self.musicPlayerCallBack)
 
 		self.try_url = ""
 		self.url_tried = 0
@@ -313,13 +313,13 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 
 
 		self.visuCleanerTimer = eTimer()
-		self.visuCleanerTimer.callback.append(self.visuCleanerTimerCallback)
+		self.visuCleanerTimer_conn = self.visuCleanerTimer.timeout.connect(self.visuCleanerTimerCallback)
 
 		self.clearStatusTextTimer = eTimer()
-		self.clearStatusTextTimer.callback.append(self.clearStatusTextTimerCallback)
+		self.clearStatusTextTimer_conn = self.clearStatusTextTimer.timeout.connect(self.clearStatusTextTimerCallback)
 
 		self.fullScreenAutoActivationTimer = eTimer()
-		self.fullScreenAutoActivationTimer.callback.append(self.fullScreenAutoActivationTimerCallback)
+		self.fullScreenAutoActivationTimer_conn = self.fullScreenAutoActivationTimer.timeout.connect(self.fullScreenAutoActivationTimerCallback)
 		
 		self.visible = True
 		
@@ -327,11 +327,13 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		eActionMap.getInstance().bindAction('', -0x7FFFFFFF, self.autoActivationKeyPressed)
 
 		global containerStreamripper
+		global dataAvail_conn
+		global appClosed_conn
 		if containerStreamripper is None:
 			containerStreamripper = eConsoleAppContainer()
 
-		containerStreamripper.dataAvail.append(self.streamripperDataAvail)
-		containerStreamripper.appClosed.append(self.streamripperClosed)
+		dataAvail_conn = containerStreamripper.dataAvail.connect(self.streamripperDataAvail)
+		appClosed_conn = containerStreamripper.appClosed.connect(self.streamripperClosed)
 
 		if url is not None and radioStation is not None:
 			self.playRadioStation(url, radioStation)
@@ -927,13 +929,15 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			except: pass
 	
 	def __onClose(self):
+		global dataAvail_conn
+		global appClosed_conn
 		self.session.deleteDialog(self.fullScreen)
 		self.fullScreen = None
 		eActionMap.getInstance().unbindAction('', self.autoActivationKeyPressed)
 		self.session.nav.SleepTimer.on_state_change.remove(self.sleepTimerEntryOnStateChange)
 		self.session.nav.playService(self.currentService)
-		containerStreamripper.dataAvail.remove(self.streamripperDataAvail)
-		containerStreamripper.appClosed.remove(self.streamripperClosed)
+		dataAvail_conn = None
+		appClosed_conn = None
 		# fallback to earlier enigma versions FIXME Delete that when commiting
 		try:
 			config.plugins.internetradio.visualization.removeNotifier(self.visualizationConfigOnChange)

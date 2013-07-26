@@ -36,8 +36,8 @@ class PKGConsoleStream(IPKGConsoleStream):
 		self.container = eConsoleAppContainer()
 		self.lastdata = None
 		self.stillAlive = True
-		self.container.dataAvail.append(self.dataAvail)
-		self.container.appClosed.append(self.cmdFinished)
+		self.dataAvail_conn = self.container.dataAvail.connect(self.dataAvail)
+		self.appClosed_conn = self.container.appClosed.connect(self.cmdFinished)
 		self.container.execute(*cmd)
 		
 	def cmdFinished(self, data):

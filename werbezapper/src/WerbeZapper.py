@@ -31,7 +31,7 @@ class WerbeZapperChoiceBox(ChoiceBox):
 		ChoiceBox.__init__(self, session, title, list, keys, selection, skin_name)
 		
 		self.update_timer = eTimer()
-		self.update_timer.callback.append(self.update)
+		self.update_timer_conn = self.update_timer.timeout.connect(self.update)
 		
 		self.zap_time = zap_time
 		self.zap_service = zap_service
@@ -80,15 +80,15 @@ class WerbeZapper(Screen):
 		# Create zap timer
 		self.zap_time = None
 		self.zap_timer = eTimer()
-		self.zap_timer.callback.append(self.zap)
+		self.zap_timer_conn = self.zap_timer.timeout.connect(self.zap)
 
 		# Create event monitoring timer
 		self.monitor_timer = eTimer()
-		self.monitor_timer.callback.append(self.stopMonitoring)
+		self.monitor_timer_conn = self.monitor_timer.timeout.connect(self.stopMonitoring)
 
 		# Create delay timer
 		self.delay_timer = eTimer()
-		self.delay_timer.callback.append(self.zappedAway)
+		self.delay_timer_conn = self.delay_timer.timeout.connect(self.zappedAway)
 
 		# Initialize services
 		self.zap_service = None
@@ -387,7 +387,7 @@ class WerbeZapper(Screen):
 				self.cleanupfnc()
 
 	def shutdown(self):
-		self.zap_timer.callback.remove(self.zap)
+		self.zap_timer_conn = None
 		self.zap_timer = None
-		self.monitor_timer.callback.remove(self.stopMonitoring)
+		self.monitor_timer_conn = None
 		self.monitor_timer = None

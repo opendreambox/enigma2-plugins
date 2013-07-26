@@ -416,7 +416,7 @@ class EIBoxZoneScreen(Screen, ConfigListScreen):
 		self.moveBorder()
 		self.refreshObjects()
 		self.refresh_timer = eTimer()
-		self.refresh_timer.callback.append(self.refreshObjects)
+		self.refresh_timer_conn = self.refresh_timer.timeout.connect(self.refreshObjects)
 		interval = config.eib.refresh.value
 		if interval >= 500:
 			self.refresh_timer.start(interval)
@@ -518,7 +518,7 @@ class EIBoxZoneScreen(Screen, ConfigListScreen):
 		return SetupSummary
 
 	def exit(self, gotoZone=None):
-		self.refresh_timer.callback.remove(self.refreshObjects)
+		self.refresh_timer_conn = None
 		self.close(gotoZone)
 
 class EIBox(Screen, ConfigListScreen):

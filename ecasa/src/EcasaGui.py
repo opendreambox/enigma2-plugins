@@ -133,7 +133,7 @@ class EcasaPictureWall(Screen, HelpableScreen, InfoBarNotifications):
 
 		# thumbnail loader
 		self.picload = ePicLoad()
-		self.picload.PictureData.get().append(self.gotPicture)
+		self.picload_conn = self.picload.PictureData.connect(self.gotPicture)
 		self.currentphoto = None
 		self.queue = deque()
 
@@ -637,9 +637,9 @@ class EcasaPicture(Screen, HelpableScreen, InfoBarNotifications):
 				}, -2)
 
 		self.picload = ePicLoad()
-		self.picload.PictureData.get().append(self.gotPicture)
+		self.picload_conn = self.picload.PictureData.connect(self.gotPicture)
 		self.timer = eTimer()
-		self.timer.callback.append(self.timerFired)
+		self.timer_conn = self.timer.timeout.connect(self.timerFired)
 
 		# populate with data, initiate download
 		self.reloadData(photo)
