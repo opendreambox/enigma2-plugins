@@ -324,7 +324,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		self.visible = True
 		
 		self.fullScreen = session.instantiateDialog(InternetRadioFullScreen)
-		eActionMap.getInstance().bindAction('', -0x7FFFFFFF, self.autoActivationKeyPressed)
+		self.autoActivationKeyPressedActionSlot = eActionMap.getInstance().bindAction('', -0x7FFFFFFF, self.autoActivationKeyPressed)
 
 		global containerStreamripper
 		global dataAvail_conn
@@ -429,13 +429,13 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				self.fullScreen.setStation("")
 				self.fullScreen.setText("")
 				self.fullScreen.setVisibilityCover(False)
-			eActionMap.getInstance().bindAction('', -0x7FFFFFFF, self.fullScreenKeyPressed)
+			self.fullScreenKeyPressedActionSlot = eActionMap.getInstance().bindAction('', -0x7FFFFFFF, self.fullScreenKeyPressed)
 			
 	def fullScreenKeyPressed(self, key = None, flag = None):
 		if self.fullScreen.isVisible():
 			self.visible = True
 			self.fullScreen.setVisibility(False)
-			eActionMap.getInstance().unbindAction('', self.fullScreenKeyPressed)
+			self.fullScreenKeyPressedActionSlot = None
 			self.autoActivationKeyPressed()
 			return 1
 		else:
@@ -933,7 +933,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		global appClosed_conn
 		self.session.deleteDialog(self.fullScreen)
 		self.fullScreen = None
-		eActionMap.getInstance().unbindAction('', self.autoActivationKeyPressed)
+		self.autoActivationKeyPressedActionSlot = None
 		self.session.nav.SleepTimer.on_state_change.remove(self.sleepTimerEntryOnStateChange)
 		self.session.nav.playService(self.currentService)
 		dataAvail_conn = None
