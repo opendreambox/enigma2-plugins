@@ -142,6 +142,9 @@ cdinfo/Makefile
 cdinfo/meta/Makefile
 cdinfo/src/Makefile
 
+channelselectionshorttitle/Makefile
+channelselectionshorttitle/src/Makefile
+
 curlytx/Makefile
 curlytx/meta/Makefile
 curlytx/po/Makefile
@@ -220,6 +223,9 @@ eurotictv/src/Makefile
 
 eventlist/Makefile
 eventlist/src/Makefile
+
+eventposition/Makefile
+eventposition/src/Makefile
 
 fancontrol2/Makefile
 fancontrol2/meta/Makefile
@@ -639,6 +645,13 @@ weatherplugin/Makefile
 weatherplugin/meta/Makefile
 weatherplugin/po/Makefile
 weatherplugin/src/Makefile
+
+weathercomponent/Makefile
+weathercomponent/src/Makefile
+
+weathercomponenthandler/Makefile
+weathercomponenthandler/src/Makefile
+
 
 webadmin/Makefile
 webadmin/meta/Makefile

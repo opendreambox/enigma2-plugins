@@ -69,7 +69,7 @@ def blockingCallFromMainThread(f, *a, **kw):
 	result = None
 	while True:
 		try:
-			result = queue.get(True, 30)
+			result = queue.get(True, config.plugins.autotimer.timeout.value*60)
 		except Queue.Empty as qe:
 			if True: #not reactor.running: # reactor.running is only False AFTER shutdown, we are during.
 				raise ValueError("Reactor no longer active, aborting.")
@@ -403,12 +403,13 @@ class AutoTimer:
 							print("[AutoTimer] Won't modify existing timer because it's no timer set by us")
 							break
 
-						rtimer.log(501, "[AutoTimer] Warning, AutoTimer %s messed with a timer which might not belong to it." % (timer.name))
+						rtimer.log(501, "[AutoTimer] Warning, AutoTimer %s messed with a timer which might not belong to it: %s ." % (timer.name, rtimer.name))
 
 					newEntry = rtimer
 					modified += 1
 
-					self.modifyTimer(rtimer, name, shortdesc, begin, end, serviceref)
+					self.modifyTimer(rtimer, name, shortdesc, begin, end, serviceref, eit)
+					rtimer.log(501, "[AutoTimer] AutoTimer modified timer: %s ." % (rtimer.name))
 					break
 				elif timer.avoidDuplicateDescription >= 1 \
 					and not rtimer.disabled:
@@ -601,12 +602,14 @@ class AutoTimer:
 					timer.extdesc = ''
 				timerdict[str(timer.service_ref)].append(timer)
 
-	def modifyTimer(self, timer, name, shortdesc, begin, end, serviceref):
-		timer.name = name
+	def modifyTimer(self, timer, name, shortdesc, begin, end, serviceref, eit):
+		# Don't update the name, it will overwrite the name of the SeriesPlugin
+		#timer.name = name
 		timer.description = shortdesc
 		timer.begin = int(begin)
 		timer.end = int(end)
 		timer.service_ref = ServiceReference(serviceref)
+		timer.eit = eit
 
 	def addDirectoryToMovieDict(self, moviedict, dest, serviceHandler):
 		movielist = serviceHandler.list(eServiceReference("2:0:1:0:0:0:0:0:0:0:" + dest))
@@ -639,9 +642,8 @@ class AutoTimer:
 		# NOTE: only check extended if short description already is a match because otherwise
 		# it won't evaluate to True anyway
 		if (timer.searchForDuplicateDescription > 0 or force) and foundShort and extdesc1 != extdesc2:
-			if extdesc1 != extdesc2:
-				# Some channels indicate replays in the extended descriptions
-				# If the similarity percent is higher then 0.8 it is a very close match
-				foundExt = ( 0.8 < SequenceMatcher(lambda x: x == " ",extdesc1, extdesc2).ratio() )
+			# Some channels indicate replays in the extended descriptions
+			# If the similarity percent is higher then 0.8 it is a very close match
+			foundExt = ( 0.8 < SequenceMatcher(lambda x: x == " ",extdesc1, extdesc2).ratio() )
 
 		return foundTitle and foundShort and foundExt
