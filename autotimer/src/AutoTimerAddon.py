@@ -45,8 +45,14 @@ AT_INCLUDE = 1
 AT_EXTENSION = 2
 
 ataddontypes = {AT_EXCLUDE: _("Exclude"), AT_INCLUDE: _("Include"), AT_EXTENSION: _("Extension")}
-ataddonXMLtypes = {AT_EXCLUDE: "exclude", AT_INCLUDE: "include", AT_EXTENSION: "extension"}
-atdefaultFilters = {"title": 0, "short": 1, "desc": 2, "day": 3}
+ataddonXMLtypes = {AT_EXCLUDE: "addon_exclude", AT_INCLUDE: "addon_include", AT_EXTENSION: "addon_extension"}
+atdefaultFilters = {"title": 0, "shortdescription": 1, "description": 2, "dayofweek": 3}
+
+#Plugin- keys, that are ignored when writing the XML for the addins, as they are stored differently
+ataddonSeriesDomain = "SeriesPlugin"
+ataddonSeriesRename = "rename"
+ataddonSeriesRenameKey = ataddonSeriesDomain + "." + ataddonSeriesRename
+ataddonXMLignoreKeys = ["AutoTimer.title", "AutoTimer.shortdescription", "AutoTimer.description", "AutoTimer.dayofweek", ataddonSeriesRenameKey]
 
 #New Plugin- Descriptor- value
 WHERE_AUTOTIMERFILTERINCLUDE = 0xA0001
@@ -54,6 +60,11 @@ WHERE_AUTOTIMERFILTEREXCLUDE = 0xA0002
 WHERE_AUTOTIMEREXTENSION = 0xA0003
 
 atdescriptors = {WHERE_AUTOTIMERFILTERINCLUDE: AT_INCLUDE, WHERE_AUTOTIMERFILTEREXCLUDE: AT_EXCLUDE, WHERE_AUTOTIMEREXTENSION: AT_EXTENSION}
+
+try:
+    from Plugins.Extensions.SeriesPlugin.plugin import renameTimer
+except ImportError as ie:
+    renameTimer = None
 
 class ExtendedConfigText(ConfigText):
     def __init__(self, default = "", fixed_size = True, visible_width = False):
@@ -69,7 +80,60 @@ class ExtendedConfigText(ConfigText):
             if "%" not in mapping[0]:
                 mapping[0] += "%"
 
-class AutoTimerAddonParam:
+class AutoTimerAddonEntry:
+    """Specific entry in an autotimer based on an AutoTimerAddonDefinition. User fills values for all parameters and saves it in the AutoTimer.xml"""
+    def __init__( self, addonKey = "AutoTimer.title", addonType=AT_EXCLUDE, description='', paramValues=None  ):
+        self.addonKey = addonKey #Key to find the AddonDefinition in the list of definitions
+        self.addonDefinition = addonDefinitions.addons[addonType][self.addonKey] #AddonDefinition for this Entry
+        self.addonName = self.addonDefinition.name
+        self.addonDomain = self.addonDefinition.domain
+        self.addonDescription = self.addonDefinition.description if self.addonDefinition.description else self.addonName 
+        self.addonType = addonType
+        self.paramValues = paramValues if paramValues else {}
+        atLog( ATLOG_DEBUG, "AddonEntry: paramValues= ", self.paramValues )
+        if description and description != "-":
+            self.description = description
+        else:
+            self.getDescription()
+        atLog( ATLOG_DEBUG, "AddonEntry: description=", self.description )
+        
+    def getDescription(self):
+        atLog( ATLOG_DEBUG, "AddonEntry, getDescription: Description was empty. Try to build it" )
+
+        self.description = ""
+        addonParams = self.addonDefinition.fncParams
+        firstValue = None
+        descriptionCount = 0
+        for name,value in iteritems(self.paramValues):
+            atLog( ATLOG_DEBUG, "AddonEntry, getDescription: Reading parameter name=%s, value=%s" % (name,value) )
+            try:
+                value
+                valueFound=True
+            except NameError:
+                valueFound=False
+            if valueFound:       
+                if name in addonParams.keys():
+                    atLog( ATLOG_DEBUG, "AddonEntry, getDescription: Name is in keys" )
+                    useasaddonlabel = addonParams[name].useasaddonlabel
+                    atLog( ATLOG_DEBUG, "AddonEntry, getDescription: useasaddonlabel=", useasaddonlabel )
+                else:
+                    useasaddonlabel = False
+                if useasaddonlabel:
+                    if descriptionCount == 0:
+                        self.description = value
+                    else:
+                        self.description += " " + value
+                    descriptionCount += 1
+                if not firstValue:
+                    atLog( ATLOG_DEBUG, "AddonEntry, getDescription: first found value= %s" %(value) )
+                    firstValue = value
+
+        if self.description == "":
+            atLog( ATLOG_DEBUG, "AddonEntry, getDescription: No description found, falling back to default entry %s" %(firstValue) )
+            self.description = firstValue if firstValue else "-"
+
+class AutoTimerAddonParamDefinition:
+    """Parameter definitions for each AutoTimer Addon. Used to define the parameters the user can fill out if this filter is used"""
     def __init__( self, name='', description='', configtype='ConfigText', choices=None, default='', useasaddonlabel=False ):
         self.name = name
         self.description = description if description else name
@@ -94,53 +158,8 @@ class AutoTimerAddonParam:
         self.default = default
         self.useasaddonlabel = useasaddonlabel
 
-class AutoTimerAddonEntry:
-    def __init__( self, addonKey = "AutoTimer.title", addonType=AT_EXCLUDE, description='', paramValues=None  ):
-        self.addonKey = addonKey
-        self.addonDefinition = addonDefinitions.addons[addonType][self.addonKey]
-        self.addonName = self.addonDefinition.name
-        self.addonDomain = self.addonDefinition.domain
-        self.addonDescription = self.addonDefinition.description if self.addonDefinition.description else self.addonName 
-        self.addonType = addonType
-        self.paramValues = paramValues if paramValues else {}
-        atLog( ATLOG_DEBUG, "AddonEntry: paramValues= ", self.paramValues )
-        if description and description != "-":
-            self.description = description
-        else:
-            self.getDescription()
-        atLog( ATLOG_DEBUG, "AddonEntry: description=", self.description )
-        
-    def getDescription(self):
-        atLog( ATLOG_DEBUG, "AddonEntry, getDescription: Description was empty. Try to build it" )
-
-        self.description = ""
-        addonParams = self.addonDefinition.fncParams
-        firstValue = None
-        descriptionCount = 0
-        for name,value in iteritems(self.paramValues):
-            atLog( ATLOG_DEBUG, "AddonEntry, getDescription: Reading parameter name=%s, value=%s" % (name,value) )
-            if value:    
-                if name in addonParams.keys():
-                    atLog( ATLOG_DEBUG, "AddonEntry, getDescription: Name is in keys" )
-                    useasaddonlabel = addonParams[name].useasaddonlabel
-                    atLog( ATLOG_DEBUG, "AddonEntry, getDescription: useasaddonlabel=", useasaddonlabel )
-                else:
-                    useasaddonlabel = False
-                if useasaddonlabel:
-                    if descriptionCount == 0:
-                        self.description = value
-                    else:
-                        self.description += " " + value
-                    descriptionCount += 1
-                if not firstValue:
-                    atLog( ATLOG_DEBUG, "AddonEntry, getDescription: first found value= %s" %(value) )
-                    firstValue = value
-
-        if self.description == "":
-            atLog( ATLOG_DEBUG, "AddonEntry, getDescription: No description found, falling back to default entry %s" %(firstValue) )
-            self.description = firstValue if firstValue else "-"
-
 class AutoTimerAddonDefiniton():
+    """Defines an addon with domain, name, called function and parameters The parameters are a list of AutoTimerAddonParamDefinition"""
     def __init__(self, domain, name, description, fnc, fncParams):
         self.domain = domain
         self.name = name
@@ -151,90 +170,136 @@ class AutoTimerAddonDefiniton():
         self.fncParams = fncParams
 
 class AutoTimerAddonDefinitions():
+    """List of all Addon Definitions: The 'default' ones (Title Filter, Short- Description Filter, Description Filter and day Filter, rename_series- Extension, if installed) 
+    and all other plugins that use the AT- Plugin descriptors"""
     def __init__(self):
-        defaultAutoTimerParam = AutoTimerAddonParam(name='searchstring', description=_("Search for"), configtype='ConfigText', useasaddonlabel=True)
+        self.addonDefinitionsRead = False
+    
+    @property
+    def addons(self):        
+        if not self.addonDefinitionsRead:
+            self.readAddonDefinitions()
+        return self._addons
+    
+    @property
+    def addonSelection(self):
+        if not self.addonDefinitionsRead:
+            self.readAddonDefinitions()
+        return self._addonSelection
+        
+    def readAddonDefinitions(self):
+        atLog( ATLOG_INFO, "Reading Addon definitions")
+        self.addonDefinitionsRead = True
+        defaultAutoTimerParam = AutoTimerAddonParamDefinition(name='searchstring', description=_("Search for"), configtype='ConfigText', useasaddonlabel=True)
         defaultParams = (self.checkDefaultFilter, {'searchstring':defaultAutoTimerParam} )
-        dayAutoTimerParam = AutoTimerAddonParam(name='searchstring', description=_("Search for"), configtype='ConfigSelection', choices = weekdays, useasaddonlabel=True)
+        dayAutoTimerParam = AutoTimerAddonParamDefinition(name='searchstring', description=_("Search for"), configtype='ConfigSelection', choices = weekdays, useasaddonlabel=True)
         dayParams = (self.checkDefaultFilter, {'searchstring':dayAutoTimerParam} )
 
         titleAddon = AutoTimerAddonDefiniton( "AutoTimer", "title", _("in Title"), *defaultParams )
-        shortAddon = AutoTimerAddonDefiniton( "AutoTimer", "short", _("in Shortdescription"), *defaultParams )
-        descAddon = AutoTimerAddonDefiniton( "AutoTimer", "desc", _("in Description"), *defaultParams )
-        dayAddon = AutoTimerAddonDefiniton( "AutoTimer", "day", _("on Weekday"), *dayParams )
+        shortAddon = AutoTimerAddonDefiniton( "AutoTimer", "shortdescription", _("in Shortdescription"), *defaultParams )
+        descAddon = AutoTimerAddonDefiniton( "AutoTimer", "description", _("in Description"), *defaultParams )
+        dayAddon = AutoTimerAddonDefiniton( "AutoTimer", "dayofweek", _("on Weekday"), *dayParams )
         
         self.defaultAddons = {    "AutoTimer.title": titleAddon, 
-                            "AutoTimer.short": shortAddon,
-                            "AutoTimer.desc": descAddon,
-                            "AutoTimer.day": dayAddon}
+                            "AutoTimer.shortdescription": shortAddon,
+                            "AutoTimer.description": descAddon,
+                            "AutoTimer.dayofweek": dayAddon}
         
-        self.addons = {}
-        self.addons[AT_INCLUDE] = self.defaultAddons
-        self.addons[AT_EXCLUDE] = self.defaultAddons
+        self._addons = {}
+        self._addons[AT_INCLUDE] = self.defaultAddons
+        self._addons[AT_EXCLUDE] = self.defaultAddons
 
-        self.addonSelection = {}
-        self.addonSelection[AT_INCLUDE] = []
-        self.addonSelection[AT_EXCLUDE] = []
+        # _addonSelection is a dictionary of Addons that can be selected from the Addon- Dialog. The key is the AddonDomain + AddonName, the value is the description
+        self._addonSelection = {}
+        self._addonSelection[AT_INCLUDE] = []
+        self._addonSelection[AT_EXCLUDE] = []
         for defaultKey, defaultDefinition in iteritems(self.defaultAddons):
-            self.addonSelection[AT_INCLUDE].append((defaultKey, defaultDefinition.description))
-            self.addonSelection[AT_EXCLUDE].append((defaultKey, defaultDefinition.description))
+            self._addonSelection[AT_INCLUDE].append((defaultKey, defaultDefinition.description))
+            self._addonSelection[AT_EXCLUDE].append((defaultKey, defaultDefinition.description))
                 
         for pluginDescriptor,addonType in iteritems(atdescriptors):                
-            curAddons = self.addons.get(addonType, {})
-            curAddonSelection = self.addonSelection.get(addonType, [])
+            curAddons = self._addons.get(addonType, {})
+            curAddonSelection = self._addonSelection.get(addonType, [])
+            atLog( ATLOG_DEBUG, "AddonDefinitions: Searching for Plugins for descriptor", pluginDescriptor )
             for p in plugins.getPlugins(pluginDescriptor):
-                domain = p.addondomain + "." if p.addondomain else ""
+                if not hasattr(p, "addonDomain"):
+                    atLog( ATLOG_WARN, "Plugin does not have a domain specified: Not a valid AutoTimer Addon:", p.name)
+                    continue
+                else:
+                    domain = p.addonDomain + "." if p.addonDomain else ""
                 addonKey = domain + p.name
-                pluginAddon =  AutoTimerAddonDefiniton( p.addondomain, p.name, p.description, p, p.fncParams)
+                atLog( ATLOG_DEBUG, "   >>>found Plugin ", addonKey )
+                pluginAddon =  AutoTimerAddonDefiniton( p.addonDomain, p.name, p.description, p, p.fncParams)
                 curAddons[addonKey] = pluginAddon
                 curAddonSelection.append((addonKey, pluginAddon.description))
-            self.addons[addonType] = curAddons
-            self.addonSelection[addonType] = curAddonSelection
-    
-    def executeAddon(self, addonType, autotimer, timer, title, short, extended, dayofweek, serviceref, eit, begin, duration):
-        atLog( ATLOG_INFO, "executeAddon: Start execute Addons of type %s" % (ataddontypes[addonType]) )
-        if not addonType in autotimer.addons:
-            atLog( ATLOG_INFO, "executeAddon: No addons for this type in this autotimer" )
-            return False
-        addonEntries = autotimer.addons[addonType]
+            self._addons[addonType] = curAddons
+            self._addonSelection[addonType] = curAddonSelection
+        
+        # Add old series- plugin to addons, but only if not already done by newer version of series Plugin
+        if renameTimer is not None:            
+            seriesAutoTimerParam = AutoTimerAddonParamDefinition(name='enabled', description=_("Enabled"), configtype='ConfigYesNo', useasaddonlabel=True)
+            seriesParams = (self.renameSeries, {'enabled': seriesAutoTimerParam} )
+            seriesAddon = AutoTimerAddonDefiniton( ataddonSeriesDomain, ataddonSeriesRename, _("Label Series"), *seriesParams )
+            execAddons = self._addons.get(AT_EXTENSION, {})
+            execAddonSelection = self._addonSelection.get(AT_EXTENSION, [])
+            if not ataddonSeriesRenameKey in execAddons:
+                execAddons[ataddonSeriesRenameKey] = seriesAddon
+                execAddonSelection.append((ataddonSeriesRenameKey, seriesAddon.description))
+                self._addons[AT_EXTENSION] = execAddons
+
+    def executeAddons(self, addonType, autotimer, timer, title, short, extended, dayofweek, serviceref, eit, begin, duration):
+        """Called from autotimer on execution of autotimer. Returns if an exclude / include filter matches or TRUE, if just an Extension was run"""
+        if not self.addonDefinitionsRead:
+            self.readAddonDefinitions()
+        atLog( ATLOG_INFO, "executeAddons: Start execute Addons of type %s" % (ataddonXMLtypes[addonType]) )
+        addonTypeEntries = autotimer.addonEntries.get(addonType, {}) 
         if addonType == AT_EXCLUDE:
             defaultReturn = False
         elif addonType == AT_INCLUDE:
-            defaultReturn = len(addonEntries) == 0 # Return a Filter match, if the include filter is empty, else check filters...
+            defaultReturn = len(addonTypeEntries) == 0 # Return a Filter match, if the include filter is empty, else check filters...
         else:
             defaultReturn = True # Extensions return True by default
 
-        for addon in addonEntries:
-            addonKey = addon.addonKey
-            
-            atLog( ATLOG_DEBUG, "executeAddon: addonKey=", addonKey )
-            if addonKey in self.addons[addonType].keys():
-                atLog( ATLOG_DEBUG, "executeAddon: addonDefinition found" )
-                addonDefinition = self.addons[addonType][addonKey]
-                addonName = addonDefinition.name
-                fnc = addonDefinition.fnc
-                if fnc:
-                    try:
-                        atLog( ATLOG_DEBUG, "executeAddon: calling addonFnc=", fnc.__name__ )
-                        checkResult = fnc( addonName=addonName, autotimer=autotimer, timer=timer, title=title, short=short, extended=extended, \
-                                       dayofweek=dayofweek, eit=eit, begin=begin, duration=duration, **addon.paramValues )
-                        if checkResult:
-                            atLog( ATLOG_INFO, "executeAddon: addon %s returned TRUE" % (addonName) )
-                            return True
-                    except Exception, e:
-                        atLog( ATLOG_ERROR, "executeAddon: addon error in addon %s: %s" %(addonKey, e) )           
-                else:
-                    atLog( ATLOG_ERROR, "executeAddon: addon error in addon %s: No fnc given" %addonKey )
-        atLog( ATLOG_INFO, "executeAddon: No match. returning:", defaultReturn )
+        if not addonTypeEntries:
+            atLog( ATLOG_INFO, "executeAddons: No addons for this type in this autotimer" )
+            return defaultReturn
+        else:
+            atLog( ATLOG_INFO, "executeAddons: found addons:", len(addonTypeEntries) )
+
+        for addonKey,addonKeyEntries in iteritems(addonTypeEntries):
+            atLog( ATLOG_DEBUG, "executeAddons: addonKey=", addonKey )
+            for addonEntry in addonKeyEntries:
+                if addonKey in self._addons[addonType].keys():
+                    atLog( ATLOG_DEBUG, "executeAddons: addonDefinition found" )
+                    addonDefinition = self._addons[addonType][addonKey]
+                    addonName = addonDefinition.name
+                    fnc = addonDefinition.fnc
+                    if fnc:
+                        try:
+                            atLog( ATLOG_DEBUG, "executeAddons: calling addonFnc=", fnc.__name__ )
+                            checkResult = fnc( addonName=addonName, autotimer=autotimer, timer=timer, title=title, short=short, extended=extended, \
+                                           dayofweek=dayofweek, eit=eit, begin=begin, duration=duration, **addonEntry.paramValues )
+                            if checkResult:
+                                atLog( ATLOG_INFO, "executeAddons: addon %s returned TRUE" % (addonName) )
+                                return True
+                        except Exception, e:
+                            atLog( ATLOG_ERROR, "executeAddons: addon error in addon %s: %s" %(addonKey, e) )           
+                    else:
+                        atLog( ATLOG_ERROR, "executeAddons: addon error in addon %s: No fnc given" %addonKey )
+        atLog( ATLOG_INFO, "executeAddons: No match. returning:", defaultReturn )
         return defaultReturn
     
-    def checkDefaultFilter(self, filterName='title', title='', short='', extended='', dayofweek='', searchstring='', **kwargs):
-        atLog( ATLOG_DEBUG, "checkDefaultFilter: Checking filterName=%s, title=%s, short=%s, extended=%s, dayofweek=%s, searchstring=%s" \
-               %(filterName, title, short, extended, dayofweek, searchstring) )
+    def checkDefaultFilter(self, addonName='title', title='', short='', extended='', dayofweek='', searchstring='', **kwargs):
+        """replaces the default filter checks for title, short, extended and dayofweek. Used as fnc for default filters"""
+        if not self.addonDefinitionsRead:
+            self.readAddonDefinitions()
+        atLog( ATLOG_DEBUG, "checkDefaultFilter: Checking addonName=%s, title=%s, short=%s, extended=%s, dayofweek=%s, searchstring=%s" \
+               %(addonName, title, short, extended, dayofweek, searchstring) )
 
         if not searchstring:
             atLog( ATLOG_WARN, "checkDefaultFilter: No searchstring given: break" )
             return False
-        if filterName=='day':
+        if addonName=='dayofweek':
             if dayofweek:
                 list = [ searchstring ]
                 if dayofweek in list:
@@ -248,21 +313,29 @@ class AutoTimerAddonDefinitions():
                     return True
         else:            
             searchRegEx = re_compile(searchstring.lower())
-            if filterName == "title":
+            if addonName == "title":
                 searchIn = title
-            elif filterName =="short":
+            elif addonName =="shortdescription":
                 searchIn = short
             else:
                 searchIn = extended
             searchIn = searchIn.lower()
-            atLog( ATLOG_DEBUG, "checkDefaultFilter: Searching for %s in %s" %(searchstring, filterName) )    
+            atLog( ATLOG_DEBUG, "checkDefaultFilter: Searching for %s in %s" %(searchstring, addonName) )    
             if searchRegEx.search(searchIn):
-                atLog( ATLOG_INFO, "checkDefaultFilter: Found %s in %s" %(searchstring, filterName) )
+                atLog( ATLOG_INFO, "checkDefaultFilter: Found %s in %s" %(searchstring, addonName) )
                 return True
         return False
-        
-addonDefinitions = AutoTimerAddonDefinitions()
     
+    def renameSeries(self, addonName='rename', autotimer=None, timer=None, title='', short='', extended='', \
+                        eit=None, begin=0, duration=0, **kwargs):
+        atLog( ATLOG_DEBUG, "renameSeries: Running renameTimer with parameters title=%s, short=%s, extended=%s" %(title, short, extended) )    
+        if renameTimer is not None:
+            renameTimer(timer, title, begin, begin + duration )
+        return True
+
+#Global variable with ALL definitions that are available. Singleton      
+addonDefinitions = AutoTimerAddonDefinitions()
+
 class AutoTimerAddonList(Screen, ConfigListScreen):
     """Edit AutoTimer Addons"""
 
@@ -278,34 +351,38 @@ class AutoTimerAddonList(Screen, ConfigListScreen):
         <widget name="config" position="5,45" size="555,225" scrollbarMode="showOnDemand" />
     </screen>"""
 
-    def __init__(self, session, addonsEnabled, addons, excludes, includes):
+    def __init__(self, session, addonsEnabled, addonEntriesTimer, excludesTimer, includesTimer, seriesLabelingTimer):
         Screen.__init__(self, session)
 
         # Summary
         self.setup_title = _("AutoTimer Addons")
         self.onChangedEntry = []
 
-        self.enabled = NoSave(ConfigEnableDisable(default = addonsEnabled))
+        self.enabled = addonsEnabled
 
         self.editPos = -1
-        self.excludes = excludes
-        self.includes = includes
+        self.excludes = excludesTimer
+        self.includes = includesTimer
+        self.series_labeling = seriesLabelingTimer
         
         # Add the default filters first
-        self.addons = {}
+        self.addonEntriesFlat = {}
         self.getAddonsForFilter(self.excludes, AT_EXCLUDE)
         self.getAddonsForFilter(self.includes, AT_INCLUDE)
         
         # Now add all other addons
-        for addonType,addonList in addons:
-            if addonType in self.addons:
-                self.addons[addonType].extend(addonList)
-            else:
-                self.addons[addonType] = addonList
-                
+        for addonType,addonTypeList in iteritems(addonEntriesTimer):
+            for addonKey,addonKeyList in iteritems(addonTypeList):     
+                atLog( ATLOG_DEBUG, "AddonList: Check addons for addonKey %s" %(addonKey) )                        
+                if not addonKey in ataddonXMLignoreKeys:
+                    atLog( ATLOG_DEBUG, "AddonList: Not a default key -> Add entry" %(addonKey) )
+                    if addonType in self.addonEntriesFlat:
+                        self.addonEntriesFlat[addonType].extend(addonKeyList)
+                    else:
+                        self.addonEntriesFlat[addonType] = addonKeyList
+                    
         self.addonLenList = {}
 
-        self.enabled.addNotifier(self.refresh, initial_call = False)
         self.reloadList()
         
         ConfigListScreen.__init__(self, self.list, session = session, on_change = self.changed)
@@ -330,9 +407,10 @@ class AutoTimerAddonList(Screen, ConfigListScreen):
         self.onLayoutFinish.append(self.setCustomTitle)
 
     def getAddonsForFilter(self, filterList, filterType):
-        atLog( ATLOG_DEBUG, "AddonList, getAddonsForFilter: Create addons for filterType %s" %(filterType) )                        
+        """Get the addons from the 'classic' filters"""
+        atLog( ATLOG_DEBUG, "AddonList, getAddonsForFilter: Create addons for filterType %s" %(ataddonXMLtypes[filterType]) )                        
         defaultType = -1
-        self.addons[filterType] = []
+        self.addonEntriesFlat[filterType] = []
         for filters in filterList:
             defaultType += 1
             if filters:
@@ -344,7 +422,7 @@ class AutoTimerAddonList(Screen, ConfigListScreen):
                     atLog( ATLOG_DEBUG, "   >>> Add Entry for %s" %(filter) )                        
                     curAddon = AutoTimerAddonEntry( addonKey = filterDomain + "." + filterKey, \
                                                     addonType=filterType, description=filter, paramValues={"searchstring": filter} )
-                    self.addons[filterType].append(curAddon)
+                    self.addonEntriesFlat[filterType].append(curAddon)
                     
     def changed(self):
         for changeFnc in self.onChangedEntry:
@@ -366,38 +444,46 @@ class AutoTimerAddonList(Screen, ConfigListScreen):
         return SetupSummary
 
     def saveCurrent(self):
-        self.addons = {}
+        self.addonEntries = {}
         self.excludes = ([], [], [], [])
-        self.excludes = ([], [], [], [])
+        self.includes = ([], [], [], [])
         
         # Warning, accessing a ConfigListEntry directly might be considered evil!
 
-        idx = -1
         for item in self["config"].getList()[:]:
-            idx += 1
-            # Skip empty entries (and those which are no addons)
-            if item[1].value == "" or idx < 1:
+            # Skip empty entries
+            if item[1].value == "":
                 continue
             else:
-                addon = item[2]
-                addonType = addon.addonType
-                addonDomain = addon.addonDomain
-                addonName = addon.addonName
-                if addonDomain <> "AutoTimer":
-                    atLog( ATLOG_DEBUG, "AddonList, saveCurrent: Adding addon of type %s with name %s for domain %s" %( addonType, addonName, addonDomain ) )                        
-                    if addonType in self.addons:
-                        self.addons[addonType].append(item[2])
+                addonEntry = item[2]
+                addonType = addonEntry.addonType
+                addonDomain = addonEntry.addonDomain
+                addonName = addonEntry.addonName
+                addonKey = addonDomain + "." + addonName
+                atLog( ATLOG_DEBUG, "AddonList, saveCurrent: Adding addon of type %s with name %s for domain %s" %( ataddonXMLtypes[addonType], addonName, addonDomain ) )                        
+                if addonType in self.addonEntries:
+                    if addonKey in self.addonEntries[addonType]:
+                        self.addonEntries[addonType][addonKey].append(addonEntry)
                     else:
-                        self.addons[addonType] = [item[2]]
-                else: # Default filters
-                    atLog( ATLOG_DEBUG, "AddonList, saveCurrent: Adding default filter of type %s with name %s" %( addonType, addonName ) )                        
+                        self.addonEntries[addonType][addonKey] = [addonEntry]
+                else:
+                    self.addonEntries[addonType] = {addonKey: [addonEntry]}
+                
+                # Add old legacy entries, as they are, what will be saved in XML
+                # ... for SeriesPlugin
+                if addonKey == ataddonSeriesRenameKey:
+                    self.series_labeling = addonEntry.paramValues["enabled"]
+
+                #... and default filters
+                if addonDomain == "AutoTimer":
+                    atLog( ATLOG_DEBUG, "AddonList, saveCurrent: Adding default filter of type %s with name %s" %( ataddonXMLtypes[addonType], addonName ) )                        
                     addonNr = atdefaultFilters[addonName]
                     if addonType == AT_EXCLUDE:
                         atLog( ATLOG_DEBUG, "   >>>Add Exclude to list %d" %(addonNr) )                        
-                        self.excludes[addonNr].append(addon.paramValues["searchstring"])
+                        self.excludes[addonNr].append(addonEntry.paramValues["searchstring"])
                     elif addonType == AT_INCLUDE:
                         atLog( ATLOG_DEBUG, "   >>>Add Include to list %d" %(addonNr) )                        
-                        self.excludes[addonNr].append(addon.paramValues["searchstring"])
+                        self.includes[addonNr].append(addonEntry.paramValues["searchstring"])
 
     def refresh(self, *args, **kwargs):
         self.saveCurrent()
@@ -406,21 +492,20 @@ class AutoTimerAddonList(Screen, ConfigListScreen):
         self["config"].setList(self.list)
 
     def reloadList(self):
-        self.list = [
-            getConfigListEntry(_("Enable Addons"), self.enabled),
-        ]
-
-        for addonType,addonList in iteritems(self.addons):
+        self.list = []
+        self.enabled = False
+        for addonType,addonList in iteritems(self.addonEntriesFlat):
             if addonList:
+                self.enabled = True
                 self.addonLenList[addonType] = len(addonList)
                 self.list.extend([
-                    self.getConfigForAddonEntry(x)
-                        for x in addonList
+                    self.getConfigForAddonEntry(addonEntry)
+                        for addonEntry in addonList
                 ])
 
     def remove(self):
         idx = self["config"].getCurrentIndex()
-        if idx and idx > 0:
+        if idx and idx >= 0:
             curEntry = self["config"].getCurrent()
             addonType = curEntry[2].addonType
             if addonType in self.addonLenList:
@@ -467,9 +552,9 @@ class AutoTimerAddonList(Screen, ConfigListScreen):
                         pos += lenValue
                 myList.insert(pos, entry)
                 if myAddon.addonType in self.addonLenList:
-                    self.addonLenList[addonType] += 1
+                    self.addonLenList[myAddon.addonType] += 1
                 else:
-                    self.addonLenList[addonType] = 1
+                    self.addonLenList[myAddon.addonType] = 1
             else:
                 pos = self.editPos
                 myList[pos] = entry
@@ -503,10 +588,11 @@ class AutoTimerAddonList(Screen, ConfigListScreen):
         self.saveCurrent()
 
         self.close((
-            self.enabled.value,
-            self.addons,
+            self.enabled,
+            self.addonEntries,
             self.excludes,
-            self.includes
+            self.includes,
+            self.series_labeling
         ))
 class AutoTimerAddonEditorAdvanced(Screen, ConfigListScreen):
     """Edit AutoTimer Addon"""
@@ -626,18 +712,18 @@ class AutoTimerAddonEditorAdvanced(Screen, ConfigListScreen):
         firstValue = ""
         firstParam = ""
         for item in self["config"].getList()[:]:
-            atLog( ATLOG_DEBUG, "AddonEditorAdvanced, ok: item= ", item)
+            atLog( ATLOG_DEBUG, "AddonEditorAdvanced, ok: item=", item)
             idx += 1
             curValue = item[1].value
-            atLog( ATLOG_INFO, "AddonEditorAdvanced, ok: curValue= "+ str(curValue) )
+            atLog( ATLOG_INFO, "AddonEditorAdvanced, ok: curValue="+ str(curValue) )
             curParam = item[2]
-            atLog( ATLOG_INFO, "AddonEditorAdvanced, ok: curParam: ", curParam )
+            atLog( ATLOG_INFO, "AddonEditorAdvanced, ok: curParam=", curParam )
             
             curChoices = {curValue: curValue}
             if hasattr(item[1], "choices"):
                 if item[1].choices:
                     curChoices = item[1].choices 
-            atLog( ATLOG_DEBUG, "AddonEditorAdvanced, ok: curChoices: ", curChoices )
+            atLog( ATLOG_DEBUG, "AddonEditorAdvanced, ok: curChoices=", curChoices )
 
             # Skip empty entries (and those which are no addons)
             if idx == 1:
@@ -660,11 +746,11 @@ class AutoTimerAddonEditorAdvanced(Screen, ConfigListScreen):
 
                     descValues += 1
                     if descValues == 1:
-                        self.curAddon.description = curChoices[curValue]
+                        self.curAddon.description = curValue
                         firstParam = curParam
-                        firstValue = curChoices[curValue]
+                        firstValue = curValue
                     else:
-                        self.curAddon.description += ", " + curParam + ": " + curChoices[curValue]
+                        self.curAddon.description += ", " + curParam + ": " + curValue
                     if descValues == 2: # Only add Parametername, if there is more than one param to return, was omitted in descValues == 1
                         self.curAddon.description = firstParam + ": " + self.curAddon.description  
                 self.curAddon.paramValues[curParam] = curValue
@@ -693,8 +779,9 @@ def getAutoTimerPluginDescriptor( addonDomain, name, description, where, fnc, fn
         descriptor = PluginDescriptor( name=name, description=description, where=where, fnc=fnc )
         descriptor.addonDomain = addonDomain
         descriptor.fncParams = {}
-        for name,param in iteritems( fncParams.iteritems ):
-            descriptor.fncParams[name] = param if isinstance(param, AutoTimerAddonParam) else AutoTimerAddonParam( name=str(param) )
+        if fncParams:
+            for name,param in iteritems( fncParams ):
+                descriptor.fncParams[name] = param if isinstance(param, AutoTimerAddonParamDefinition) else AutoTimerAddonParamDefinition( name=str(param) )
     else:
         atLog( ATLOG_ERROR, "getAutoTimerPluginDescriptor: mandatory Parameters missing, ignoring request")
         descriptor = None

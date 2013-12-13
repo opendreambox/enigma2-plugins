@@ -44,7 +44,7 @@ from Tools import Directories
 from Screens.MovieSelection import getPreferredTagEditor
 
 # Filters
-from AutoTimerAddon import ExtendedConfigText, AutoTimerAddonList
+from AutoTimerAddon import ExtendedConfigText, AutoTimerAddonList, AT_EXCLUDE, AT_INCLUDE, AT_EXTENSION, ataddonSeriesRenameKey
 
 weekdays = [
 	("0", _("Monday")),
@@ -64,6 +64,13 @@ except ImportError as ie:
 	hasVps = False
 else:
 	hasVps = True
+
+try:
+	from Plugins.Extensions.SeriesPlugin.plugin import Plugins
+except ImportError as ie:
+	hasSeriesPlugin = False
+else:
+	hasSeriesPlugin = True
 
 class SimpleBouquetSelection(SimpleChannelSelection):
 	def __init__(self, session, title):
@@ -154,12 +161,12 @@ class AutoTimerEditorBase:
 		self.includes = includes
 
 		# See, if there are extensions to call
-		addons = timer.getAddons()
-		if addons:
+		addonEntries = timer.getAddonEntries()
+		if addonEntries:
 			self.addonsSet = True
 		else:
 			self.addonsSet = False
-		self.addons = addons
+		self.addonEntries = addonEntries
 
 		# See if services are restricted
 		self.services = timer.services
@@ -356,6 +363,9 @@ class AutoTimerEditorBase:
 		self.vps_enabled = NoSave(ConfigYesNo(default = timer.vps_enabled))
 		self.vps_overwrite = NoSave(ConfigYesNo(default = timer.vps_overwrite))
 
+		# SeriesPlugin
+		self.series_labeling = NoSave(ConfigYesNo(default = timer.series_labeling))
+
 	def pathSelected(self, res):
 		if res is not None:
 			# I'm pretty sure this will always fail
@@ -426,7 +436,7 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 		self.avoidDuplicateDescription.addNotifier(self.reloadList, initial_call = False)
 		self.useDestination.addNotifier(self.reloadList, initial_call = False)
 		self.vps_enabled.addNotifier(self.reloadList, initial_call = False)
-
+		self.series_labeling.addNotifier(self.updateSeriesAddon, initial_call = False)
 		self.refresh()
 		self.initHelpTexts()
 
@@ -532,6 +542,7 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 			self.useDestination: _("Should timers created by this AutoTimer be recorded to a custom location?"),
 			self.destination: _("Select the location to save the recording to."),
 			self.tags: _("Tags the Timer/Recording will have."),
+			self.series_labeling: _("Label Timers with season, episode and title, according to the SeriesPlugin settings."),
 		}
 
 	def refresh(self):
@@ -626,30 +637,51 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 			if self.vps_enabled.value:
 				list.append(getConfigListEntry(_("Control recording completely by service"), self.vps_overwrite))
 
+		if hasSeriesPlugin:
+			list.append(getConfigListEntry(_("Label series"), self.series_labeling))
+
 		self.list = list
 
-	def reloadList(self, value):
+	def reloadList(self, *args):
 		self.refresh()
 		self["config"].setList(self.list)
+	
+	def updateSeriesAddon(self, *args):
+		extAddonEntries = self.addonEntries.get(AT_EXTENSION,{})
+		seriesRenameEntries = extAddonEntries.get(ataddonSeriesRenameKey,[])
+		if seriesRenameEntries:
+			seriesRenameEntry = seriesRenameEntries[0]
+			#Set Value
+			seriesRenameEntry.paramValues["enabled"] = self.series_labeling.value
+			#And update description
+			seriesRenameEntry.getDescription()
+			self.addonEntries[AT_EXTENSION][ataddonSeriesRenameKey] = [seriesRenameEntry]
+			
 
 	def editFilter(self):
 		self.session.openWithCallback(
 			self.editFilterCallback,
 			AutoTimerAddonList,
 			self.filterSet,
-			self.addons,
+			self.addonEntries,
 			self.excludes,
-			self.includes
-			
+			self.includes,
+			self.series_labeling.value
 		)
 
 	def editFilterCallback(self, ret):
 		if ret:
 			self.filterSet = ret[0]
-			self.addons = ret[1]
+			self.addonEntries = ret[1]
 			self.excludes = ret[2]
 			self.includes = ret[3]
+			oldLabel = self.series_labeling.value
+			self.series_labeling.value = ret[4]
 			self.renameFilterButton()
+			# If series- labeling has changed: Reload List...
+			if oldLabel <> self.series_labeling.value:
+				self.reloadList()
+			
 
 	def editServices(self):
 		self.session.openWithCallback(
@@ -825,7 +857,7 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 
 		# Extensions
 		if self.addonsSet:
-			self.timer.extension = self.extensions
+			self.timer.addonEntries = self.addonEntries
 
 		# Counter
 		if self.counter.value:
@@ -855,6 +887,8 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 
 		self.timer.vps_enabled = self.vps_enabled.value
 		self.timer.vps_overwrite = self.vps_overwrite.value
+
+		self.timer.series_labeling = self.series_labeling.value
 
 		# Close
 		self.close(self.timer)

@@ -12,7 +12,7 @@ except ImportError as ie:
 from ServiceReference import ServiceReference
 from Tools.XMLTools import stringToXML
 from enigma import eServiceReference
-from . import _, config, iteritems
+from . import _, config, iteritems, plugin
 from plugin import autotimer
 
 API_VERSION = "1.3"
@@ -94,6 +94,11 @@ class AutoTimerSimulateResource(AutoTimerBackgroundingResource):
 
 class AutoTimerListAutoTimerResource(AutoTimerBaseResource):
 	def render(self, req):
+		# We re-read the config so we won't display empty or wrong information
+		try:
+			autotimer.readXml()
+		except Exception:
+			return self.returnResult(req, False, _("Couldn't load config file!"))
 		# show xml
 		req.setResponseCode(http.OK)
 		req.setHeader('Content-type', 'application/xhtml+xml')

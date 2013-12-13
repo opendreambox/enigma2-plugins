@@ -17,7 +17,9 @@ from Components.config import config, ConfigSubsection, ConfigEnableDisable, \
 
 config.plugins.autotimer = ConfigSubsection()
 config.plugins.autotimer.autopoll = ConfigEnableDisable(default=False)
+config.plugins.autotimer.delay = ConfigNumber(default=3)
 config.plugins.autotimer.interval = ConfigNumber(default=3)
+config.plugins.autotimer.timeout = ConfigNumber(default=1)
 config.plugins.autotimer.refresh = ConfigSelection(choices=[
 		("none", _("None")),
 		("auto", _("Only AutoTimers created during this session")),
@@ -40,9 +42,11 @@ config.plugins.autotimer.notifconflict = ConfigYesNo(default=True)
 config.plugins.autotimer.notifsimilar = ConfigYesNo(default=True)
 config.plugins.autotimer.maxdaysinfuture = ConfigNumber(default=0)
 config.plugins.autotimer.show_help = ConfigYesNo(default=True)
+config.plugins.autotimer.skip_during_records = ConfigYesNo(default=False)
 
 #Logging
 config.plugins.autotimer.loglevel = ConfigSelection(choices=ATLOG_LIST, default="2")
+config.plugins.autotimer.logtime = ConfigYesNo(default = False)
 config.plugins.autotimer.logwrite = ConfigYesNo(default = False)
 config.plugins.autotimer.logfile = ConfigText(default = "/tmp/autotimer.log", fixed_size = False)
 
