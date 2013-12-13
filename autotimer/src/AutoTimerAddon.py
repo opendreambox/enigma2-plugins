@@ -288,6 +288,7 @@ class AutoTimerAddonDefinitions():
                         atLog( ATLOG_ERROR, "executeAddons: addon error in addon %s: No fnc given" %addonKey )
         atLog( ATLOG_INFO, "executeAddons: No match. returning:", defaultReturn )
         return defaultReturn
+<<<<<<< HEAD
     
     def checkDefaultFilter(self, addonName='title', title='', short='', extended='', dayofweek='', searchstring='', **kwargs):
         """replaces the default filter checks for title, short, extended and dayofweek. Used as fnc for default filters"""
@@ -295,6 +296,21 @@ class AutoTimerAddonDefinitions():
             self.readAddonDefinitions()
         atLog( ATLOG_DEBUG, "checkDefaultFilter: Checking addonName=%s, title=%s, short=%s, extended=%s, dayofweek=%s, searchstring=%s" \
                %(addonName, title, short, extended, dayofweek, searchstring) )
+=======
+
+    def advertiseAddon(self, addonType):
+        atLog(ATLOG_DEBUG, "advertiseAddon: Advertising Addons of type", ataddontypes[addonType])
+        assert(addonType == AT_EXTENSION, "addonType must be AT_EXTENSION")
+        if addonType not in self.addons:
+            atLog( ATLOG_INFO, "advertiseAddon: Nothing to advertise")
+            return ()
+
+        return [x.name for x in self.addons[addonType]]
+
+    def checkDefaultFilter(self, filterName='title', title='', short='', extended='', dayofweek='', searchstring='', **kwargs):
+        atLog( ATLOG_DEBUG, "checkDefaultFilter: Checking filterName=%s, title=%s, short=%s, extended=%s, dayofweek=%s, searchstring=%s" \
+               %(filterName, title, short, extended, dayofweek, searchstring) )
+>>>>>>> branch 'AutoTimer-IgnoreEvents' of git+ssh://tode@scm.schwerkraft.elitedvb.net/scmrepos/git/enigma2-plugins/enigma2-plugins.git
 
         if not searchstring:
             atLog( ATLOG_WARN, "checkDefaultFilter: No searchstring given: break" )
@@ -787,4 +803,3 @@ def getAutoTimerPluginDescriptor( addonDomain, name, description, where, fnc, fn
         descriptor = None
     return descriptor
 
-       
