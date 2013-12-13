@@ -650,7 +650,8 @@ class AutoTimer:
 				timerdict[str(timer.service_ref)].append(timer)
 
 	def modifyTimer(self, timer, name, shortdesc, begin, end, serviceref, eit):
-		timer.name = name
+        # Don't update the name, it will overwrite the name of the SeriesPlugin
+        #timer.name = name
 		timer.description = shortdesc
 		timer.begin = int(begin)
 		timer.end = int(end)

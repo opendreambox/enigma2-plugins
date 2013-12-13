@@ -656,7 +656,7 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 			#And update description
 			seriesRenameEntry.getDescription()
 			self.addonEntries[AT_EXTENSION][ataddonSeriesRenameKey] = [seriesRenameEntry]
-			
+			self.reloadList(*args)
 
 	def editFilter(self):
 		self.session.openWithCallback(
