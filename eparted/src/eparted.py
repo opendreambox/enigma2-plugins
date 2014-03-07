@@ -529,7 +529,7 @@ class Cpartexe(Screen):
 		self["list"] = List(list)
 		
 		self.__Stimer = eTimer()
-		self.__Stimer.callback.append(self.__exeList)
+		self.__Stimer_conn = self.__Stimer.timeout.connect(self.__exeList)
 		self.__state = -1
 		
 	def __getPartitionUUID(self, device):
@@ -557,6 +557,7 @@ class Cpartexe(Screen):
 
 	def Exit(self):
 		if self.__state < 0:
+			del self.__Stimer_conn
 			del self.__Stimer
 			self.__mountDevice()
 			self.close()
