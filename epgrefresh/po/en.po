@@ -6,14 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2014-04-12 10:30+CEST\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2014-04-12 10:33+0100\n"
+"Last-Translator: Joe128 <johnny.u@gmx.at>\n"
+"Language-Team: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-
+"X-Generator: Poedit 1.5.5\n"
 
 #: EPGBackupSupport.py:52
 msgid "No Backupfiles found"
@@ -37,18 +38,19 @@ msgstr ""
 
 #: EPGBackupSupport.py:81
 msgid "FILELIST_BIGGEST"
-msgstr ""
+msgstr "biggest"
 
 #: EPGBackupSupport.py:82
 msgid "FILELIST_YOUNGEST"
-msgstr ""
+msgstr "youngest"
 
 #: EPGBackupSupport.py:83
 msgid "FILELIST_FORCED"
-msgstr ""
+msgstr "force"
 
 #: EPGRefresh.py:277
-msgid "There is still a refresh running. The Operation isn't allowed at this moment."
+msgid ""
+"There is still a refresh running. The Operation isn't allowed at this moment."
 msgstr ""
 
 #: EPGRefresh.py:367
@@ -195,7 +197,9 @@ msgid "Refresh EPG automatically"
 msgstr ""
 
 #: EPGRefreshConfiguration.py:156
-msgid "Unless this is enabled, EPGRefresh won't automatically run but needs to be explicitly started by the yellow button in this menu."
+msgid ""
+"Unless this is enabled, EPGRefresh won't automatically run but needs to be "
+"explicitly started by the yellow button in this menu."
 msgstr ""
 
 #: EPGRefreshConfiguration.py:158
@@ -203,11 +207,14 @@ msgid "Duration to stay on service (seconds)"
 msgstr ""
 
 #: EPGRefreshConfiguration.py:158
-msgid "This is the duration each service/channel will stay active during a refresh."
+msgid ""
+"This is the duration each service/channel will stay active during a refresh."
 msgstr ""
 
 #: EPGRefreshConfiguration.py:159
-msgid "An automated refresh will start after this time of day, but before the time specified in next setting."
+msgid ""
+"An automated refresh will start after this time of day, but before the time "
+"specified in next setting."
 msgstr ""
 
 #: EPGRefreshConfiguration.py:159
@@ -215,7 +222,9 @@ msgid "EPG refresh auto-start earliest (hh:mm)"
 msgstr ""
 
 #: EPGRefreshConfiguration.py:160
-msgid "An automated refresh will start before this time of day, but after the time specified in previous setting."
+msgid ""
+"An automated refresh will start before this time of day, but after the time "
+"specified in previous setting."
 msgstr ""
 
 #: EPGRefreshConfiguration.py:160
@@ -227,11 +236,16 @@ msgid "Delay if not in standby (minutes)"
 msgstr ""
 
 #: EPGRefreshConfiguration.py:161
-msgid "If the receiver currently isn't in standby, this is the duration which EPGRefresh will wait before retry."
+msgid ""
+"If the receiver currently isn't in standby, this is the duration which "
+"EPGRefresh will wait before retry."
 msgstr ""
 
 #: EPGRefreshConfiguration.py:163
-msgid "If you want to refresh the EPG in background, you can choose the method which best suits your needs here, e.g. hidden, fake reocrding or regular Picture in Picture."
+msgid ""
+"If you want to refresh the EPG in background, you can choose the method "
+"which best suits your needs here, e.g. hidden, fake reocrding or regular "
+"Picture in Picture."
 msgstr ""
 
 #: EPGRefreshConfiguration.py:163
@@ -247,7 +261,9 @@ msgid "Show Advanced Options"
 msgstr ""
 
 #: EPGRefreshConfiguration.py:167
-msgid "Should protected services be skipped if refresh was started in interactive-mode?"
+msgid ""
+"Should protected services be skipped if refresh was started in interactive-"
+"mode?"
 msgstr ""
 
 #: EPGRefreshConfiguration.py:167
@@ -255,7 +271,9 @@ msgid "Skip protected Services"
 msgstr ""
 
 #: EPGRefreshConfiguration.py:168
-msgid "Enable this to be able to access the EPGRefresh configuration from within the extension menu."
+msgid ""
+"Enable this to be able to access the EPGRefresh configuration from within "
+"the extension menu."
 msgstr ""
 
 #: EPGRefreshConfiguration.py:168
@@ -263,7 +281,9 @@ msgid "Show Setup in extension menu"
 msgstr ""
 
 #: EPGRefreshConfiguration.py:169
-msgid "Enable this to be able to start the EPGRefresh from within the extension menu."
+msgid ""
+"Enable this to be able to start the EPGRefresh from within the extension "
+"menu."
 msgstr ""
 
 #: EPGRefreshConfiguration.py:169
@@ -275,11 +295,15 @@ msgid "Show popup when refresh starts and ends"
 msgstr ""
 
 #: EPGRefreshConfiguration.py:170
-msgid "This setting controls whether or not an informational message will be shown at start and completion of refresh."
+msgid ""
+"This setting controls whether or not an informational message will be shown "
+"at start and completion of refresh."
 msgstr ""
 
 #: EPGRefreshConfiguration.py:171
-msgid "If this is enabled, the plugin will wake up the receiver from standby if possible. Otherwise it needs to be switched on already."
+msgid ""
+"If this is enabled, the plugin will wake up the receiver from standby if "
+"possible. Otherwise it needs to be switched on already."
 msgstr ""
 
 #: EPGRefreshConfiguration.py:171
@@ -291,7 +315,9 @@ msgid "Force scan even if receiver is in use"
 msgstr ""
 
 #: EPGRefreshConfiguration.py:172
-msgid "This setting controls whether or not the refresh will be initiated even though the receiver is active (either not in standby or currently recording)."
+msgid ""
+"This setting controls whether or not the refresh will be initiated even "
+"though the receiver is active (either not in standby or currently recording)."
 msgstr ""
 
 #: EPGRefreshConfiguration.py:173
@@ -299,7 +325,9 @@ msgid "Shutdown after EPG refresh"
 msgstr ""
 
 #: EPGRefreshConfiguration.py:173
-msgid "This setting controls whether the receiver should be set to standby after refresh is completed."
+msgid ""
+"This setting controls whether the receiver should be set to standby after "
+"refresh is completed."
 msgstr ""
 
 #: EPGRefreshConfiguration.py:178
@@ -311,7 +339,11 @@ msgid "Inherit Services from AutoTimer"
 msgstr ""
 
 #: EPGRefreshConfiguration.py:180
-msgid "After a successful refresh the AutoTimer will automatically search for new matches if this is enabled. The options 'Ask*' has only affect on a manually refresh. If EPG-Refresh was called in background the default-Answer will be executed!"
+msgid ""
+"After a successful refresh the AutoTimer will automatically search for new "
+"matches if this is enabled. The options 'Ask*' has only affect on a manually "
+"refresh. If EPG-Refresh was called in background the default-Answer will be "
+"executed!"
 msgstr ""
 
 #: EPGRefreshConfiguration.py:180
@@ -392,7 +424,7 @@ msgstr ""
 
 #: plugin.py:102
 msgid "EPGREFRESH_NOTIFICATION_DOMAIN"
-msgstr ""
+msgstr "EPGREFRESH"
 
 #: plugin.py:202
 msgid ""
@@ -402,11 +434,11 @@ msgstr ""
 
 #: plugin.py:236
 msgid "EXTENSIONMENU_PREFIX"
-msgstr ""
+msgstr "EPGRefresh"
 
 #: plugin.py:237
 msgid "EXTENSIONNAME_SETUP"
-msgstr ""
+msgstr "Configuration"
 
 #: plugin.py:237 plugin.py:293
 msgid "Automatically refresh EPG"
@@ -434,5 +466,4 @@ msgstr ""
 
 #: plugin.py:292
 msgid "PLUGINNAME_EPGRefresh"
-msgstr ""
-
+msgstr "EPGRefresh"
