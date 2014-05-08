@@ -553,14 +553,22 @@ class AutoTimer:
 				})
 
 	def checkSimilarity(self, timer, name1, name2, shortdesc1, shortdesc2, extdesc1, extdesc2, force=False):
-		foundTitle = name1 == name2
-		foundShort = shortdesc1 == shortdesc2 if (timer.searchForDuplicateDescription > 0 or force) else True
-		foundExt = True
-		# NOTE: only check extended if short description already is a match because otherwise
-		# it won't evaluate to True anyway
-		if (timer.searchForDuplicateDescription > 0 or force) and foundShort and extdesc1 != extdesc2:
-			# Some channels indicate replays in the extended descriptions
-			# If the similarity percent is higher then 0.8 it is a very close match
-			foundExt = ( 0.8 < SequenceMatcher(lambda x: x == " ",extdesc1, extdesc2).ratio() )
+		# TODO: make this optional?
+		if name1 and name2:
+			sequenceMatcher = SequenceMatcher(" ".__eq__, name1, name2)
+		else:
+			return False
 
-		return foundTitle and foundShort and foundExt
+		if 0.8 < sequenceMatcher.ratio(): # this is probably a match
+			foundShort = True
+			if (force or timer.searchForDuplicateDescription > 0) and shortdesc1 and shortdesc2:
+				sequenceMatcher.set_seqs(shortdesc1, shortdesc2)
+				foundShort = (0.8 < sequenceMatcher.ratio())
+
+			foundExt = True
+			# NOTE: only check extended if short description already is a match because otherwise
+			# it won't evaluate to True anyway
+			if foundShort and (force or timer.searchForDuplicateDescription > 1) and extdesc1 and extdesc2:
+				sequenceMatcher.set_seqs(extdesc1, extdesc2)
+				foundExt = (0.8 < sequenceMatcher.ratio())
+			return foundShort and foundExt
