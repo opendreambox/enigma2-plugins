@@ -21,6 +21,10 @@
 			&lt;e2ip><e2:item name="Ip" filter="xml"/>&lt;/e2ip>
 			&lt;e2gateway><e2:item name="Gateway" filter="xml"/>&lt;/e2gateway>
 			&lt;e2netmask><e2:item name="Netmask" filter="xml"/>&lt;/e2netmask>
+			&lt;e2method6><e2:item name="Method6" filter="xml"/>&lt;/e2method6>
+			&lt;e2ip6><e2:item name="Ip6" filter="xml"/>&lt;/e2ip6>
+			&lt;e2gateway6><e2:item name="Gateway6" filter="xml"/>&lt;/e2gateway6>
+			&lt;e2netmask6><e2:item name="Netmask6" filter="xml"/>&lt;/e2netmask6>
 		&lt;/e2interface></e2:convert><e2:convert type="web:TextToHTML" /></e2:element>
 	</e2network>
 

@@ -4,7 +4,6 @@ from enigma import eConsoleAppContainer, eTPM
 from Plugins.Plugin import PluginDescriptor
 
 from Components.config import config, ConfigBoolean, ConfigSubsection, ConfigInteger, ConfigYesNo, ConfigText, ConfigEnableDisable
-from Components.Network import iNetwork
 from Screens.MessageBox import MessageBox
 from WebIfConfig import WebIfConfigScreen
 from WebChilds.Toplevel import getToplevel
@@ -184,32 +183,40 @@ def startWebserver(session, l2k):
 			installCertificates(session)
 
 		# Listen on all Interfaces
-		ip = "0.0.0.0"
+
 		#HTTP
 		if config.plugins.Webinterface.http.enabled.value is True:
-			ret = startServerInstance(session, ip, config.plugins.Webinterface.http.port.value, config.plugins.Webinterface.http.auth.value, l2k)
-			if ret == False:
-				errors = "%s%s:%i\n" %(errors, ip, config.plugins.Webinterface.http.port.value)
+			ret = startServerInstance(session, config.plugins.Webinterface.http.port.value, useauth=config.plugins.Webinterface.http.auth.value, l2k=l2k)
+			if not ret:
+				errors = "%s port %i\n" %(errors, config.plugins.Webinterface.http.port.value)
 			else:
 				registerBonjourService('http', config.plugins.Webinterface.http.port.value)
 
-		#Streaming requires listening on 127.0.0.1:80 no matter what, ensure it its available
+		#Streaming requires listening on localhost:80 no matter what, ensure it its available
 		if config.plugins.Webinterface.http.port.value != 80 or not config.plugins.Webinterface.http.enabled.value:
 			#LOCAL HTTP Connections (Streamproxy)
-			ret = startServerInstance(session, '127.0.0.1', 80, config.plugins.Webinterface.http.auth.value, l2k)
-			if ret == False:
-				errors = "%s%s:%i\n" %(errors, '127.0.0.1', 80)
+			local4 = "127.0.0.1"
+			local4mapped = "::ffff:127.0.0.1"
+			local6 = "::1"
+			ret = startServerInstance(session, 80, useauth=config.plugins.Webinterface.http.auth.value, l2k=l2k, ipaddress=local4, ip6address=None)
+			if not ret:
+				errors = "%s%s:%i\n" %(errors, local4, 80)
 
-			if errors != "":
-				session.open(MessageBox, "Webinterface - Couldn't listen on:\n %s" % (errors), type=MessageBox.TYPE_ERROR, timeout=30)
+			ret = startServerInstance(session, 80, useauth=config.plugins.Webinterface.http.auth.value, l2k=l2k, ipaddress=local4mapped, ip6address=local6)
+#ip6 is optional
+#			if not ret:
+#				errors = "%s%s/%s:%i\n" %(errors, local4mapped, local6, 80)
 
 		#HTTPS
 		if config.plugins.Webinterface.https.enabled.value is True:
-			ret = startServerInstance(session, ip, config.plugins.Webinterface.https.port.value, config.plugins.Webinterface.https.auth.value, l2k, True)
-			if ret == False:
-				errors = "%s%s:%i\n" %(errors, ip, config.plugins.Webinterface.https.port.value)
+			ret = startServerInstance(session, config.plugins.Webinterface.https.port.value, useauth=config.plugins.Webinterface.https.auth.value, l2k=l2k, usessl=True)
+			if not ret:
+				errors = "%s%s:%i\n" %(errors, config.plugins.Webinterface.https.port.value)
 			else:
 				registerBonjourService('https', config.plugins.Webinterface.https.port.value)
+
+		if errors:
+			session.open(MessageBox, "Webinterface - Couldn't listen on:\n %s" % (errors), type=MessageBox.TYPE_ERROR, timeout=30)
 
 #===============================================================================
 # stop the Webinterface for all configured Interfaces
@@ -232,8 +239,8 @@ def stopWebserver(session):
 # Starts an Instance of the Webinterface
 # on given ipaddress, port, w/o auth, w/o ssl
 #===============================================================================
-def startServerInstance(session, ipaddress, port, useauth=False, l2k=None, usessl=False):
-	if hw.get_device_name().lower() != "dm7025":
+def startServerInstance(session, port, useauth=False, l2k=None, usessl=False, ipaddress="0.0.0.0", ip6address="::"):
+	if hw.get_device_name().lower() == "dm7025":
 		l3k = None
 		l3c = tpm.getData(eTPM.DT_LEVEL3_CERT)
 
@@ -265,23 +272,43 @@ def startServerInstance(session, ipaddress, port, useauth=False, l2k=None, usess
 		root = HTTPRootResource(toplevel)
 		site = server.Site(root)
 
+	result = False
+
+	def logFail(addr):
+		print "[Webinterface] FAILED to listen on %s:%i auth=%s ssl=%s" % (addr, port, useauth, usessl)
+
 	if usessl:
 		ctx = ChainedOpenSSLContextFactory(KEY_FILE, CERT_FILE)
 		try:
 			d = reactor.listenSSL(port, site, ctx, interface=ipaddress)
+			result = True
+			running_defered.append(d)
 		except CannotListenError:
-			print "[Webinterface] FAILED to listen on %s:%i auth=%s ssl=%s" % (ipaddress, port, useauth, usessl)
-			return False
+			logFail(ipaddress)
+		if ip6address:
+			try:
+				d = reactor.listenSSL(port, site, ctx, interface=ip6address)
+				result = True
+				running_defered.append(d)
+			except CannotListenError:
+				logFail(ip6address)
 	else:
 		try:
 			d = reactor.listenTCP(port, site, interface=ipaddress)
+			result = True
+			running_defered.append(d)
 		except CannotListenError:
-			print "[Webinterface] FAILED to listen on %s:%i auth=%s ssl=%s" % (ipaddress, port, useauth, usessl)
-			return False
-
-	running_defered.append(d)
+			logFail(ipaddress)
+		if ip6address:
+			try:
+				d = reactor.listenTCP(port, site, interface=ip6address)
+				result = True
+				running_defered.append(d)
+			except CannotListenError:
+				logFail(ip6address)
+	
 	print "[Webinterface] started on %s:%i auth=%s ssl=%s" % (ipaddress, port, useauth, usessl)
-	return True
+	return result
 
 	#except Exception, e:
 		#print "[Webinterface] starting FAILED on %s:%i!" % (ipaddress, port), e
@@ -530,7 +557,7 @@ def checkBonjour():
 def networkstart(reason, session):
 	l2r = False
 	l2k = None
-	if hw.get_device_name().lower() != "dm7025":
+	if hw.get_device_name().lower() == "dm7025":
 		l2c = tpm.getData(eTPM.DT_LEVEL2_CERT)
 
 		if l2c is None:
@@ -559,7 +586,7 @@ def openconfig(session, **kwargs):
 def configCB(result, session):
 	l2r = False
 	l2k = None
-	if hw.get_device_name().lower() != "dm7025":
+	if hw.get_device_name().lower() == "dm7025":
 		l2c = tpm.getData(eTPM.DT_LEVEL2_CERT)
 
 		if l2c is None:
