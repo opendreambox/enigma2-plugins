@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 # for localized messages
 #from __init__ import _
-from enigma import eTimer, getDesktop
+from enigma import eTimer
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
-from Components.Label import Label
-from Components.ActionMap import ActionMap, NumberActionMap
+from Components.ActionMap import ActionMap
 from Components.Sources.List import List
 from Components.Sources.StaticText import StaticText
-from Components.Network import iNetwork
-from Components.Input import Input
-from Components.config import getConfigListEntry, NoSave, config, ConfigIP
-from Components.ConfigList import ConfigList, ConfigListScreen
-from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN_IMAGE
+from Components.Network import iNetworkInfo
+from Components.config import getConfigListEntry, ConfigIP
+from Components.ConfigList import ConfigListScreen
+from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 from Tools.LoadPixmap import LoadPixmap
 from cPickle import dump, load
 from os import path as os_path, stat, mkdir, remove
@@ -135,8 +133,6 @@ class NetworkBrowser(Screen):
 	def cleanup(self):
 		del self.Timer
 		iAutoMount.stopMountConsole()
-		iNetwork.stopRestartConsole()
-		iNetwork.stopGetInterfacesConsole()
 
 	def startRun(self):
 		self.expanded = []
@@ -214,7 +210,7 @@ class NetworkBrowser(Screen):
 	def getNetworkIPs(self):
 		nwlist = []
 		sharelist = []
-		self.IP = iNetwork.getAdapterAttribute(self.iface, "ip")
+		self.IP = iNetworkInfo.getConfiguredInterfaces()[self.iface].ipv4.address
 		if len(self.IP):
 			strIP = str(self.IP[0]) + "." + str(self.IP[1]) + "." + str(self.IP[2]) + ".0/24"
 			nwlist.append(netscan.netzInfo(strIP))

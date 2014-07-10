@@ -4,7 +4,7 @@
 
 from Plugins.Plugin import PluginDescriptor
 from NetworkBrowser import NetworkBrowser
-from Components.Network import iNetwork
+from Components.Network import iNetworkInfo
 from MountManager import AutoMountManager
 
 plugin_path = ""
@@ -16,7 +16,7 @@ def MountManagerMain(session, iface = None, **kwargs):
 	session.open(AutoMountManager, iface, plugin_path)
 
 def NetworkBrowserCallFunction(iface):
-	interfaceState = iNetwork.getAdapterAttribute(iface, "up")
+	interfaceState = iNetworkInfo.isConnected()
 	if interfaceState is True:
 		return NetworkBrowserMain
 	else:

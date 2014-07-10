@@ -1,21 +1,19 @@
 # -*- coding: utf-8 -*-
 # for localized messages
 #from __init__ import _
+from enigma import eConsoleAppContainer
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Screens.VirtualKeyBoard import VirtualKeyBoard
 from Components.Sources.StaticText import StaticText
-from Components.Pixmap import Pixmap
 from Components.ActionMap import ActionMap
-from Components.Network import iNetwork
 from Components.Sources.List import List
 from Tools.LoadPixmap import LoadPixmap
-from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN_IMAGE
+from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 from os import path as os_path, fsync
 
 from MountView import AutoMountView
 from MountEdit import AutoMountEdit
-from AutoMount import iAutoMount, AutoMount
 from UserManager import UserManager
 
 class AutoMountManager(Screen):
@@ -42,7 +40,7 @@ class AutoMountManager(Screen):
 		self.skin_path = plugin_path
 		self.session = session
 		self.hostname = None
-		self.restartLanRef = None
+		self._applyHostnameMsgBox = None
 		Screen.__init__(self, session)
 		self["shortcuts"] = ActionMap(["ShortcutActions", "WizardActions"],
 		{
@@ -57,15 +55,13 @@ class AutoMountManager(Screen):
 		self.list = []
 		self["config"] = List(self.list)
 		self.updateList()
-		self.onClose.append(self.cleanup)
 		self.onShown.append(self.setWindowTitle)
+		self._appContainer = eConsoleAppContainer()
+		self._appClosed_conn = self.container.appClosed.connect(self._containerCmdFinished)
+
 
 	def setWindowTitle(self):
 		self.setTitle(_("MountManager"))
-
-	def cleanup(self):
-		iNetwork.stopRestartConsole()
-		iNetwork.stopGetInterfacesConsole()
 
 	def updateList(self):
 		self.list = []
@@ -114,22 +110,16 @@ class AutoMountManager(Screen):
 			fp.flush()
 			fsync(fp.fileno())
 			fp.close()
-			self.restartLan()
+			self.applyHostname()
 
-	def restartLan(self):
-		iNetwork.restartNetwork(self.restartLanDataAvail)
-		self.restartLanRef = self.session.openWithCallback(self.restartfinishedCB, MessageBox, _("Please wait while your network is restarting..."), type = MessageBox.TYPE_INFO, enable_input = False)
+	def applyHostname(self):
+		binary = '/bin/hostname'
+		cmd = [binary, binary, '-F', '/etc/hostname']
+		self._appContainer.execute(*cmd)
+		self._applyHostnameMsgBox = self.session.openWithCallback(self._onApplyHostnameFinished, MessageBox, _("Please wait while the new hostname is being applied..."), type = MessageBox.TYPE_INFO, enable_input = False)
 
-	def restartLanDataAvail(self, data):
-		if data is True:
-			iNetwork.getInterfaces(self.getInterfacesDataAvail)
 
-	def getInterfacesDataAvail(self, data):
-		if data is True:
-			if self.restartLanRef.execing:
-				self.restartLanRef.close(True)
-
-	def restartfinishedCB(self,data):
-		if data is True:
-			self.session.open(MessageBox, _("Finished restarting your network"), type = MessageBox.TYPE_INFO, timeout = 10, default = False)
+	def _onApplyHostnameFinished(self,data):
+		if data:
+			self.session.open(MessageBox, _("Hostname has been applied!"), type = MessageBox.TYPE_INFO, timeout = 10, default = False)
 
