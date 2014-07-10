@@ -8,7 +8,6 @@ from Components.ConfigList import ConfigListScreen
 from Components.Label import Label
 from Components.ActionMap import ActionMap
 from Components.config import config, ConfigSubsection, ConfigInteger,ConfigYesNo
-from Components.Network import iNetwork
 from Plugins.Plugin import PluginDescriptor
 
 from twisted.web import proxy, http
@@ -135,12 +134,9 @@ def autostart(reason,**kwargs):
     """ start proxy in background """
     if reason is True and config.plugins.httpproxy.enable.value is True:
         try:
-            for adaptername in iNetwork.ifaces:
-                extip = iNetwork.ifaces[adaptername]['ip']
-                if iNetwork.ifaces[adaptername]['up'] is True:
-                    extip = "%i.%i.%i.%i" % (extip[0], extip[1], extip[2], extip[3])
-                    print "starting proxy on ",extip,":", config.plugins.httpproxy.port.value
-                    reactor.listenTCP(int(config.plugins.httpproxy.port.value), ProxyFactory(),interface=extip)
+            ip = "0.0.0.0"
+            print "starting proxy on ",ip,":", config.plugins.httpproxy.port.value
+            reactor.listenTCP(int(config.plugins.httpproxy.port.value), ProxyFactory(),interface=ip)
         except Exception,e:
             print "starting the http proxy failed!"
             print e
