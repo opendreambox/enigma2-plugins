@@ -1,5 +1,5 @@
 from Components.Sources.Source import Source
-from Plugins.SystemPlugins.NetworkManager.NetworkConfig import getIfaceConfigs
+from Components.Network import iNetworkInfo
 from Tools.Log import Log
 class Interface:
 	def __init__(self, name):
@@ -25,36 +25,36 @@ class Network(Source):
 
 	def __getInterfaceAttribs(self, iface):
 		Log.i(iface)
-		attribs = [iface["Interface"], iface["Address"]]
-		ip4 = iface["IPv4"]
-		ip6 = iface["IPv6"]
+		attribs = [iface.ethernet.interface, iface.ethernet.mac]
+		ip4 = iface.ipv4
+		ip6 = iface.ipv6
 		if ip4:
 			attribs.extend((
-				ip4.get("Method", "N/A"),
-				ip4.get("Address", "N/A"),
-				ip4.get("Netmask", "N/A"),
-				ip4.get("Gateway", "N/A"),)
-			)
+				ip4.method,
+				ip4.address,
+				ip4.netmask,
+				ip4.gateway,
+			))
 		else:
 			attribs.extend(["N/A", "N/A", "N/A", "N/A"])
 
 		if ip6:
 			attribs.extend((
-				ip6.get("Method", "N/A"),
-				ip6.get("Address", "N/A"),
-				ip6.get("Netmask", "N/A"),
-				ip6.get("Gateway", "N/A"),)
-			)
+				ip6.method,
+				ip6.address,
+				ip6.netmask,
+				ip6.gateway,
+			))
 		else:
 			attribs.extend(["N/A", "N/A", "N/A", "N/A"])
 		return attribs
 
 	def getInterface(self):
-		ifaces = getIfaceConfigs()
+		ifaces = iNetworkInfo.getConfiguredInterfaces()
 		Log.i(ifaces)
 		for key in ifaces.iterkeys():
 			iface = ifaces[key]
-			if iface["Interface"] == self.iface:
+			if iface.ethernet.interface == self.iface:
 				return self.__getInterfaceAttribs(iface)
 		return ["N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"]
 
@@ -62,7 +62,7 @@ class Network(Source):
 
 	def getList(self):
 		lst = []
-		ifaces = getIfaceConfigs()
+		ifaces = iNetworkInfo.getConfiguredInterfaces()
 		Log.i(ifaces)
 		for key in ifaces.iterkeys():
 			iface = ifaces[key]

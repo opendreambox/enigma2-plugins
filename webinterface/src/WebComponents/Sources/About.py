@@ -1,6 +1,6 @@
 # Parts of Code and idea by Homey
 from Components.Sources.Source import Source
-from Plugins.SystemPlugins.NetworkManager.NetworkConfig import getIfaceConfigs
+from Components.Network import iNetworkInfo
 
 class About(Source):
 	def __init__(self, session):
@@ -12,17 +12,16 @@ class About(Source):
 
 	def command(self):
 		ConvertIP = lambda l: "%s.%s.%s.%s" % tuple(l) if len(l) == 4 else "0.0.0.0"
-		ifaces = getIfaceConfigs()
+		ifaces = iNetworkInfo.getConfiguredInterfaces()
 		for key in ifaces.iterkeys():
 			iface = ifaces[key]
 			print "[WebComponents.About] iface: %s" % iface
-			ip4 = iface["IPv4"]
 			l = (
-				iface.get("Address", "N/A"),
-				ip4.get("Method", "N/A"),
-				ip4.get("Address", "N/A"),
-				ip4.get("Netmask", "N/A"),
-				ip4.get("Gateway", "N/A"),
+				iface.ethernet.mac,
+				iface.ipv4.method,
+				iface.ipv4.address,
+				iface.ipv4.netmask,
+				iface.ipv4.gateway,
 			)
 			break
 		else:

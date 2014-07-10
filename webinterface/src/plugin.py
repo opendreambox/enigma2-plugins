@@ -274,8 +274,10 @@ def startServerInstance(session, port, useauth=False, l2k=None, usessl=False, ip
 
 	result = False
 
-	def logFail(addr):
+	def logFail(addr, exception=None):
 		print "[Webinterface] FAILED to listen on %s:%i auth=%s ssl=%s" % (addr, port, useauth, usessl)
+		if exception:
+			print exception
 
 	if usessl:
 		ctx = ChainedOpenSSLContextFactory(KEY_FILE, CERT_FILE)
@@ -283,29 +285,29 @@ def startServerInstance(session, port, useauth=False, l2k=None, usessl=False, ip
 			d = reactor.listenSSL(port, site, ctx, interface=ipaddress)
 			result = True
 			running_defered.append(d)
-		except CannotListenError:
-			logFail(ipaddress)
+		except CannotListenError as e:
+			logFail(ipaddress, e)
 		if ip6address:
 			try:
 				d = reactor.listenSSL(port, site, ctx, interface=ip6address)
 				result = True
 				running_defered.append(d)
-			except CannotListenError:
-				logFail(ip6address)
+			except CannotListenError as e:
+				logFail(ip6address, e)
 	else:
 		try:
 			d = reactor.listenTCP(port, site, interface=ipaddress)
 			result = True
 			running_defered.append(d)
-		except CannotListenError:
-			logFail(ipaddress)
+		except CannotListenError as e:
+			logFail(ipaddress, e)
 		if ip6address:
 			try:
 				d = reactor.listenTCP(port, site, interface=ip6address)
 				result = True
 				running_defered.append(d)
-			except CannotListenError:
-				logFail(ip6address)
+			except CannotListenError as e:
+				logFail(ip6address, e)
 	
 	print "[Webinterface] started on %s:%i auth=%s ssl=%s" % (ipaddress, port, useauth, usessl)
 	return result
