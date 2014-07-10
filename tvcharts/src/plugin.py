@@ -13,7 +13,6 @@ from Components.ConfigList import ConfigList, ConfigListScreen
 from Components.Label import Label
 from Components.MenuList import MenuList
 from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixmapAlphaTest
-from Components.Network import iNetwork
 from Components.ServiceEventTracker import ServiceEventTracker
 from Components.Sources.StaticText import StaticText
 from Components.UsageConfig import preferredTimerPath
@@ -29,6 +28,7 @@ from Screens.TimerEdit import TimerSanityConflict
 from Tools.Directories import fileExists
 from Tools.HardwareInfo import HardwareInfo
 from Plugins.Plugin import PluginDescriptor
+from Components.Network import iNetworkInfo
 
 from enigma import eTimer, eEPGCache, loadPNG, eListboxPythonMultiContent, gFont, eServiceReference, eServiceCenter, iPlayableService
 from random import randint
@@ -484,16 +484,15 @@ class DBUpdateStatus(Screen):
 			self.DBStatusTimer.stop()
 			self.DBStatusTimer.start((randint(15,60))*1000, True)
 		else:
-			iNetwork.checkNetworkState(self.checkNetworkCB)
+			self.checkNetwork()
 
-	def checkNetworkCB(self, data):
-		if data is not None:
-			if data <= 2:
-				self.NetworkConnectionAvailable = True
-				self.restartTimer()
-			else:
-				self.NetworkConnectionAvailable = False
-				self.DBStatusTimer.stop()
+	def checkNetwork(self):
+		if iNetworkInfo.isConnected():
+			self.NetworkConnectionAvailable = True
+			self.restartTimer()
+		else:
+			self.NetworkConnectionAvailable = False
+			self.DBStatusTimer.stop()
 
 	def updateStatus(self):
 		print "[TVCharts] Status Update ..."
@@ -529,7 +528,16 @@ class DBUpdateStatus(Screen):
 			event_description = event.getExtendedDescription()
 
 		# Get Box Info
-		self.BoxID = iNetwork.getAdapterAttribute("eth0", "mac")
+		ifaces = iNetworkInfo.getConfiguredInterfaces()
+		iface = None
+		if len(ifaces) > 0:
+			iface = ifaces.get(
+					"eth0",
+					ifaces.get(ifaces.keys()[0])
+				)
+		if not iface:
+			return
+		self.BoxID = iface.ethernet.mac
 		self.DeviceName = HardwareInfo().get_device_name()
 		self.EnigmaVersion = about.getEnigmaVersionString()
 		self.ImageVersion = about.getVersionString()
