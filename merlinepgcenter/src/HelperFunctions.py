@@ -235,7 +235,7 @@ class BlinkTimer():
 			self.timerRunning = False
 			
 	def resume(self):
-		self.timer.callback.insert(0, self.changeBlinkState) # order is important, this callback must be called first!
+		self.changeBlinkState_conn = self.timer.timeout.connect(self.changeBlinkState)
 		self.session.nav.record_event.append(self.gotRecordEvent)
 		if self.session.nav.RecordTimer.isRecording():
 			self.gotRecordEvent(None, None)
