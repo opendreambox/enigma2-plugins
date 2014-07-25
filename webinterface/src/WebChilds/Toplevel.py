@@ -7,6 +7,7 @@ from Plugins.Extensions.WebInterface import __file__
 from Screenpage import ScreenPage
 from FileStreamer import FileStreamer
 from Screengrab import GrabResource
+from Screenshot import ScreenshotResource
 from IPKG import IPKGResource
 from PlayService import ServiceplayerResource
 from Uploader import UploadResource
@@ -53,6 +54,7 @@ def getToplevel(session):
 	root.putChild("upload", UploadResource())
 	root.putChild("servicelist", ServiceList(session))
 	root.putChild("streamcurrent", RedirecToCurrentStreamResource(session))
+	root.putChild("screenshot", ScreenshotResource())
 
 	if config.plugins.Webinterface.includemedia.value is True:
 		root.putChild("media", File(resolveFilename(SCOPE_MEDIA)))
