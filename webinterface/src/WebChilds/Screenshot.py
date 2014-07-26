@@ -44,8 +44,8 @@ class ScreenshotResource(resource.Resource):
 					osd = True
 				if key == "v":
 					video = True
-			if not osd and not video:
-				osd = video = True
+		if not osd and not video:
+			osd = video = True
 		
 		filename = "%s.%s" %(filename, extension)
 		
@@ -60,7 +60,7 @@ class ScreenshotResource(resource.Resource):
 			else:
 				pixmap.setPixmapFromUI(size)
 		elif video:
-			pixmap.setPixmapFromVideo(size)
+			pixmap.setPixmapFromVideo(0, size)
 
 #		if save:
 #			pixmap.save(imageformat, "/tmp/%s" %filename)
