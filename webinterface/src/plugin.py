@@ -211,7 +211,7 @@ def startWebserver(session, l2k):
 		if config.plugins.Webinterface.https.enabled.value is True:
 			ret = startServerInstance(session, config.plugins.Webinterface.https.port.value, useauth=config.plugins.Webinterface.https.auth.value, l2k=l2k, usessl=True)
 			if not ret:
-				errors = "%s%s:%i\n" %(errors, config.plugins.Webinterface.https.port.value)
+				errors = "%s%s:%i\n" %(errors, "0.0.0.0 / ::", config.plugins.Webinterface.https.port.value)
 			else:
 				registerBonjourService('https', config.plugins.Webinterface.https.port.value)
 
