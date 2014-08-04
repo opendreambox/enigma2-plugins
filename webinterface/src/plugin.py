@@ -240,29 +240,28 @@ def stopWebserver(session):
 # on given ipaddress, port, w/o auth, w/o ssl
 #===============================================================================
 def startServerInstance(session, port, useauth=False, l2k=None, usessl=False, ipaddress="0.0.0.0", ip6address="::"):
-	if hw.get_device_name().lower() == "dm7025":
-		l3k = None
-		l3c = tpm.getData(eTPM.DT_LEVEL3_CERT)
+	l3k = None
+	l3c = tpm.getData(eTPM.DT_LEVEL3_CERT)
 
-		if l3c is None:
+	if l3c is None:
+		return False
+
+	l3k = validate_certificate(l3c, l2k)
+	if l3k is None:
+		return False
+
+	random = get_random()
+	if random is None:
+		return False
+
+	value = tpm.computeSignature(random)
+	result = decrypt_block(value, l3k)
+
+	if result is None:
+		return False
+	else:
+		if result [80:88] != random:
 			return False
-
-		l3k = validate_certificate(l3c, l2k)
-		if l3k is None:
-			return False
-
-		random = get_random()
-		if random is None:
-			return False
-
-		value = tpm.computeSignature(random)
-		result = decrypt_block(value, l3k)
-
-		if result is None:
-			return False
-		else:
-			if result [80:88] != random:
-				return False
 
 	if useauth:
 # HTTPAuthResource handles the authentication for every Resource you want it to
@@ -559,28 +558,22 @@ def checkBonjour():
 def networkstart(reason, session):
 	l2r = False
 	l2k = None
-	if hw.get_device_name().lower() == "dm7025":
-		l2c = tpm.getData(eTPM.DT_LEVEL2_CERT)
+	l2c = tpm.getData(eTPM.DT_LEVEL2_CERT)
 
-		if l2c is None:
-			return
+	if l2c is None:
+		return
 
-		l2k = validate_certificate(l2c, rootkey)
-		if l2k is None:
-			return
+	l2k = validate_certificate(l2c, rootkey)
+	if l2k is None:
+		return
 
-		l2r = True
-	else:
-		l2r = True
+	if reason is True:
+		startWebserver(session, l2k)
+		checkBonjour()
 
-	if l2r:
-		if reason is True:
-			startWebserver(session, l2k)
-			checkBonjour()
-
-		elif reason is False:
-			stopWebserver(session)
-			checkBonjour()
+	elif reason is False:
+		stopWebserver(session)
+		checkBonjour()
 
 def openconfig(session, **kwargs):
 	session.openWithCallback(configCB, WebIfConfigScreen)
@@ -588,27 +581,21 @@ def openconfig(session, **kwargs):
 def configCB(result, session):
 	l2r = False
 	l2k = None
-	if hw.get_device_name().lower() == "dm7025":
-		l2c = tpm.getData(eTPM.DT_LEVEL2_CERT)
+	l2c = tpm.getData(eTPM.DT_LEVEL2_CERT)
 
-		if l2c is None:
-			return
+	if l2c is None:
+		return
 
-		l2k = validate_certificate(l2c, rootkey)
-		if l2k is None:
-			return
+	l2k = validate_certificate(l2c, rootkey)
+	if l2k is None:
+		return
 
-		l2r = True
+	if result:
+		print "[WebIf] config changed"
+		restartWebserver(session, l2k)
+		checkBonjour()
 	else:
-		l2r = True
-
-	if l2r:
-		if result:
-			print "[WebIf] config changed"
-			restartWebserver(session, l2k)
-			checkBonjour()
-		else:
-			print "[WebIf] config not changed"
+		print "[WebIf] config not changed"
 
 def Plugins(**kwargs):
 	p = PluginDescriptor(where=[PluginDescriptor.WHERE_SESSIONSTART], fnc=sessionstart)
