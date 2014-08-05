@@ -30,7 +30,7 @@ from . import _
 
 config.plugins.internetradio = ConfigSubsection()
 config.plugins.internetradio.showinextensions = ConfigYesNo(default = True)
-config.plugins.internetradio.dirname = ConfigDirectory(default = "/hdd/streamripper/")
+config.plugins.internetradio.dirname = ConfigDirectory(default = "/media/hdd/streamripper/")
 config.plugins.internetradio.riptosinglefile = ConfigYesNo(default = False)
 config.plugins.internetradio.createdirforeachstream = ConfigYesNo(default = True)
 config.plugins.internetradio.addsequenceoutputfile = ConfigYesNo(default = False)

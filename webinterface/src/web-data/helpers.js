@@ -891,7 +891,7 @@ function Timer(xml, cssclass){
 	this.startprepare = getNodeContent(xml, 'e2startprepare');
 	this.justplay = getNodeContent(xml, 'e2justplay', '');
 	this.afterevent = getNodeContent(xml, 'e2afterevent', '0');
-	this.dirname = getNodeContent(xml, 'e2location', '/hdd/movie/');
+	this.dirname = getNodeContent(xml, 'e2location', '/media/hdd/movie/');
 	this.tags = getNodeContent(xml, 'e2tags', '');
 	this.logentries = getNodeContent(xml, 'e2logentries');
 	this.tfilename = getNodeContent(xml, 'e2filename');

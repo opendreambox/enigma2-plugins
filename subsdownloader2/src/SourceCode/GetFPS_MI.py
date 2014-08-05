@@ -1,7 +1,7 @@
 from Plugins.Extensions.SubsDownloader2.SourceCode.MediaInfoDLL import *
 
 """
-filename = u"/hdd/Net_HDD/Filmy/Water.For.Elephants.720p.BRRip.x264.Feel-Free//Water.For.Elephants.720p.BRRip.x264.Feel-Free.mp4"
+filename = u"/media/hdd/Net_HDD/Filmy/Water.For.Elephants.720p.BRRip.x264.Feel-Free//Water.For.Elephants.720p.BRRip.x264.Feel-Free.mp4"
 from media.MediaInfoDLL import *
 MI = MediaInfo()
 MI.Open(filename)

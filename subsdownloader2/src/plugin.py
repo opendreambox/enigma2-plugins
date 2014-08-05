@@ -414,7 +414,7 @@ class SubsDownloaderApplication(Screen):
 				current_selection = self["fileList"].getSelection()[0]
 			else:
 				current_dir = self["fileList"].getCurrentDirectory()
-				current_selection = self["fileList"].getCurrentDirectory()+self["fileList"].getSelection()[0]# ('/hdd/Net_HDD/Filmy/Seriale/Boardwalk Empire Season 2/', True)
+				current_selection = self["fileList"].getCurrentDirectory()+self["fileList"].getSelection()[0]# ('/media/hdd/Net_HDD/Filmy/Seriale/Boardwalk Empire Season 2/', True)
 
 			if os.path.exists(str(current_selection)) and "/".join(str(current_dir).split("/")[:-2])+"/"!=current_selection and type(current_dir)!= type(None):	
 				self.set_FileManager_enabled()

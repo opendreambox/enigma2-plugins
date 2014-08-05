@@ -197,7 +197,7 @@ class AutoTimerImporter(Screen):
 		if dirname is not None:
 			append(
 				SelectionEntryComponent(
-					': '.join((_("Location"), dirname or "/hdd/movie/")),
+					': '.join((_("Location"), dirname or "/media/hdd/movie/")),
 					dirname,
 					6,
 					True

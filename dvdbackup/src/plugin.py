@@ -46,7 +46,7 @@ language.addCallback(localeInit)
 
 config.plugins.DVDBackup = ConfigSubsection()
 config.plugins.DVDBackup.device = ConfigText(default="/dev/sr0", fixed_size=False)
-config.plugins.DVDBackup.directory = ConfigText(default="/hdd/movie", fixed_size=False)
+config.plugins.DVDBackup.directory = ConfigText(default="/media/hdd/movie", fixed_size=False)
 config.plugins.DVDBackup.name = ConfigText(default=_("Name of DVD"), fixed_size=False)
 config.plugins.DVDBackup.log = ConfigYesNo(default=True)
 config.plugins.DVDBackup.create_iso = ConfigYesNo(default=False)

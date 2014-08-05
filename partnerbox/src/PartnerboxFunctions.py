@@ -116,7 +116,7 @@ class E2Timer:
 			self.name = description
 			if type & PlaylistEntry.isRepeating:
 				self.repeated = 1
-			self.dirname = "/hdd/movie/"
+			self.dirname = "/media/hdd/movie/"
 
 def FillE2TimerList(xmlstring, sreference = None):
 	E2TimerList = []

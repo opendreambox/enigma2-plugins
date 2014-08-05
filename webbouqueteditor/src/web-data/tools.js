@@ -71,7 +71,7 @@ var hideNotifierTimeout = '';
 var isActive = {};
 isActive.getCurrent = false;
 
-var currentLocation = "/hdd/movie";
+var currentLocation = "/media/hdd/movie";
 var locationsList = [];
 var tagsList = [];
 
@@ -927,7 +927,7 @@ function incomingMovieListLocations(request){
 		locationsList = result.getList();
 
 		if (locationsList.length === 0) {
-			locationsList = ["/hdd/movie"];
+			locationsList = ["/media/hdd/movie"];
 		}
 		doRequest(URL.gettags, incomingMovieListTags, false);
 	}

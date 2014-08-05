@@ -1155,7 +1155,7 @@ class RemoteTimerEPGList(Screen):
 		if self.enigma_type == 0:
 			description = cur[0].eventdescription
 			type = 0
-			dirname = "/hdd/movie/"
+			dirname = "/media/hdd/movie/"
 		else:
 			dirname = ""
 			type = PlaylistEntry.RecTimerEntry|PlaylistEntry.recDVR
