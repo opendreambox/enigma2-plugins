@@ -165,7 +165,7 @@ class PiconLoader():
 		self.nameCache.clear()
 		
 def findDefaultPicon(serviceName):
-	searchPaths = (eEnv.resolve('${datadir}/enigma2/%s/'), '/media/cf/%s/', '/media/usb/%s/')
+	searchPaths = (eEnv.resolve('${datadir}/enigma2/%s/'),)
 	
 	pos = serviceName.rfind(':')
 	if pos != -1:

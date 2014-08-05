@@ -86,8 +86,6 @@ config.plugins.merlinEpgCenter.replaceInfobarChannelDown = ConfigSelection(defau
 config.plugins.merlinEpgCenter.replaceShowEventView = ConfigSelection(default = "-1", choices = TAB_CHOICES)
 config.plugins.merlinEpgCenter.epgPaths = ConfigSelection(default = eEnv.resolve('${datadir}/enigma2/picon_50x30/'), choices = [
 				(eEnv.resolve('${datadir}/enigma2/picon_50x30/'), eEnv.resolve('${datadir}/enigma2/picon_50x30')),
-				('/media/cf/picon_50x30/', '/media/cf/picon_50x30'),
-				('/media/usb/picon_50x30/', '/media/usb/picon_50x30'),
 				])
 config.plugins.merlinEpgCenter.showColoredEpgTimes = ConfigYesNo(True)
 config.plugins.merlinEpgCenter.searchString = NoSave(ConfigText(default = ""))

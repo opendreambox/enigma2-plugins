@@ -10,7 +10,7 @@ from Tools.HardwareInfo import HardwareInfo
 from os import path as os_path, listdir as os_listdir, system as os_system, remove as os_remove
 ###############################################################################
 config.plugins.logomanager = ConfigSubsection()
-config.plugins.logomanager.path = ConfigSelection([("/media/cf/bootlogos/",_("CF Drive")),("/media/hdd/bootlogos/",_("Harddisk"))],default="/media/hdd/bootlogos/")
+config.plugins.logomanager.path = ConfigSelection([("/media/hdd/bootlogos/",_("Harddisk"))],default="/media/hdd/bootlogos/")
 
 
 from mimetypes import add_type

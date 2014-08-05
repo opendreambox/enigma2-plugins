@@ -70,7 +70,7 @@ def ChannelListEntryComponent(type, channelname, serviceref, eventid, eventname,
 
 	# PIXMAP / PICON
 	pixmap = "/usr/share/enigma2/skin_default/picon_default.png"
-	searchPaths = ('/usr/share/enigma2/picon/','/media/cf/picon/','/media/usb/picon/')
+	searchPaths = ('/usr/share/enigma2/picon/',)
 
 	srefstring = serviceref
 	pos = srefstring.rfind(':')
