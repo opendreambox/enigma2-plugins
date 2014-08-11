@@ -185,12 +185,14 @@ def startWebserver(session, l2k):
 		# Listen on all Interfaces
 
 		#HTTP
+		port = config.plugins.Webinterface.http.port.value
+		auth = config.plugins.Webinterface.http.auth.value
 		if config.plugins.Webinterface.http.enabled.value is True:
-			ret = startServerInstance(session, config.plugins.Webinterface.http.port.value, useauth=config.plugins.Webinterface.http.auth.value, l2k=l2k)
+			ret = startServerInstance(session, port, useauth=auth, l2k=l2k)
 			if not ret:
-				errors = "%s port %i\n" %(errors, config.plugins.Webinterface.http.port.value)
+				errors = "%s port %i\n" %(errors, port)
 			else:
-				registerBonjourService('http', config.plugins.Webinterface.http.port.value)
+				registerBonjourService('http', port)
 
 		#Streaming requires listening on localhost:80 no matter what, ensure it its available
 		if config.plugins.Webinterface.http.port.value != 80 or not config.plugins.Webinterface.http.enabled.value:
@@ -198,22 +200,25 @@ def startWebserver(session, l2k):
 			local4 = "127.0.0.1"
 			local4mapped = "::ffff:127.0.0.1"
 			local6 = "::1"
-			ret = startServerInstance(session, 80, useauth=config.plugins.Webinterface.http.auth.value, l2k=l2k, ipaddress=local4, ip6address=None)
+
+			ret = startServerInstance(session, 80, useauth=auth, l2k=l2k, ipaddress=local4)
 			if not ret:
 				errors = "%s%s:%i\n" %(errors, local4, 80)
-
-			ret = startServerInstance(session, 80, useauth=config.plugins.Webinterface.http.auth.value, l2k=l2k, ipaddress=local4mapped, ip6address=local6)
-#ip6 is optional
+			ret = startServerInstance(session, 80, useauth=auth, l2k=l2k, ipaddress=local4mapped, ipaddress2=local6)
+			#ip6 is optional
 #			if not ret:
 #				errors = "%s%s/%s:%i\n" %(errors, local4mapped, local6, 80)
 
 		#HTTPS
 		if config.plugins.Webinterface.https.enabled.value is True:
-			ret = startServerInstance(session, config.plugins.Webinterface.https.port.value, useauth=config.plugins.Webinterface.https.auth.value, l2k=l2k, usessl=True)
+			sport = config.plugins.Webinterface.https.port.value
+			sauth = config.plugins.Webinterface.https.auth.value
+
+			ret = startServerInstance(session, sport, useauth=sauth, l2k=l2k, usessl=True)
 			if not ret:
-				errors = "%s%s:%i\n" %(errors, "0.0.0.0 / ::", config.plugins.Webinterface.https.port.value)
+				errors = "%s%s:%i\n" %(errors, "0.0.0.0 / ::", sport)
 			else:
-				registerBonjourService('https', config.plugins.Webinterface.https.port.value)
+				registerBonjourService('https', sport)
 
 		if errors:
 			session.open(MessageBox, "Webinterface - Couldn't listen on:\n %s" % (errors), type=MessageBox.TYPE_ERROR, timeout=30)
@@ -239,7 +244,7 @@ def stopWebserver(session):
 # Starts an Instance of the Webinterface
 # on given ipaddress, port, w/o auth, w/o ssl
 #===============================================================================
-def startServerInstance(session, port, useauth=False, l2k=None, usessl=False, ipaddress="0.0.0.0", ip6address="::"):
+def startServerInstance(session, port, useauth=False, l2k=None, usessl=False, ipaddress="::", ipaddress2=None):
 	l3k = None
 	l3c = tpm.getData(eTPM.DT_LEVEL3_CERT)
 
@@ -286,13 +291,13 @@ def startServerInstance(session, port, useauth=False, l2k=None, usessl=False, ip
 			running_defered.append(d)
 		except CannotListenError as e:
 			logFail(ipaddress, e)
-		if ip6address:
+		if ipaddress2:
 			try:
-				d = reactor.listenSSL(port, site, ctx, interface=ip6address)
+				d = reactor.listenSSL(port, site, ctx, interface=ipaddress2)
 				result = True
 				running_defered.append(d)
 			except CannotListenError as e:
-				logFail(ip6address, e)
+				logFail(ipaddress2, e)
 	else:
 		try:
 			d = reactor.listenTCP(port, site, interface=ipaddress)
@@ -300,13 +305,13 @@ def startServerInstance(session, port, useauth=False, l2k=None, usessl=False, ip
 			running_defered.append(d)
 		except CannotListenError as e:
 			logFail(ipaddress, e)
-		if ip6address:
+		if ipaddress2:
 			try:
-				d = reactor.listenTCP(port, site, interface=ip6address)
+				d = reactor.listenTCP(port, site, interface=ipaddress2)
 				result = True
 				running_defered.append(d)
 			except CannotListenError as e:
-				logFail(ip6address, e)
+				logFail(ipaddress2, e)
 	
 	print "[Webinterface] started on %s:%i auth=%s ssl=%s" % (ipaddress, port, useauth, usessl)
 	return result
