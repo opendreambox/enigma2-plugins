@@ -69,9 +69,9 @@ class InternetRadioList(GUIComponent, object):
 	def setMode(self, mode):
 		self.mode = mode
 		if mode == 0: # GENRELIST
-			self.l.setItemHeight(29)
+			self.l.setItemHeight(30)
 		elif mode == 1 or mode == 2: # STATIONLIST OR FAVORITELIST
-			self.l.setItemHeight(53)
+			self.l.setItemHeight(60)
 
 	def connectSelChanged(self, fnc):
 		if not fnc in self.onSelectionChanged:
