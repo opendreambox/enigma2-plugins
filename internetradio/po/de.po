@@ -204,7 +204,7 @@ msgstr ""
 #: ../src/InternetRadioScreen.py:601
 #, python-format
 msgid "InternetRadio filter list (%s)"
-msgstr "InternetRadio Filter LIste (%s)"
+msgstr "InternetRadio Filter Liste (%s)"
 
 #: ../src/InternetRadioScreen.py:571
 #: ../src/InternetRadioScreen.py:641
