@@ -210,6 +210,12 @@ eparted/meta/Makefile
 eparted/po/Makefile
 eparted/src/Makefile
 
+epgbackup/Makefile
+epgbackup/meta/Makefile
+epgbackup/po/Makefile
+epgbackup/src/Makefile
+epgbackup/src/localehelp/Makefile
+
 epgrefresh/Makefile
 epgrefresh/meta/Makefile
 epgrefresh/po/Makefile
