@@ -44,14 +44,6 @@
 				</table>
 			</div>
 		</div>
-		<!--		<div id="current">-->
-		<!--			<div id="currentContent">-->
-		<!--				<ul id="mainMenu">-->
-		<!--					<li><a href="#" onClick="switchStreamMode('TV')">TeleVision</a></li>-->
-		<!--					<li><a href="#" onClick="switchStreamMode('Radio')">Radio</a></li>-->
-		<!--				</ul>-->
-		<!--			</div>-->
-		<!--		</div>-->
 		<div id="content">
 			<div id="contentMain">
 				<div id="vlcPlayer" class="fullwidth center">
@@ -87,20 +79,25 @@
 						<button class="vlcVolumeUp" title="Volume Up">
 							<img src="/web-data/img/sound_add.png" alt="Vol+" />
 						</button>
-						<input type="checkbox" id="vlcZap"
-							title="Also zap on TV (for Subservices)">Zap</input> &nbsp;
-						Deinterlace <select id="deinterlace">
-							<option value="off">Off</option>
-							<option value="blend">Blend</option>
-							<option value="bob">Bob</option>
-							<option value="discard">Discard</option>
-							<option value="linear">Linear</option>
-							<option value="mean">Mean</option>
-							<option value="x">X</option>
-							<option value="yadif">Yadif</option>
-							<option value="yadif2x">Yadif2x</option>
-						</select> <br>
-						<span id="bouquetList"></span> <span id="serviceList"></span>
+						<div class="inline-block-top">
+							Zap
+							<input type="checkbox" id="vlcZap" title="Also zap on TV (for Subservices)"></input>
+							Deinterlace
+							<select id="deinterlace">
+								<option value="off">Off</option>
+								<option value="blend">Blend</option>
+								<option value="bob">Bob</option>
+								<option value="discard">Discard</option>
+								<option value="linear">Linear</option>
+								<option value="mean">Mean</option>
+								<option value="x">X</option>
+								<option value="yadif">Yadif</option>
+								<option value="yadif2x">Yadif2x</option>
+							</select>
+						</div>
+						<div class="serviceSelection">
+							<span id="bouquetList"></span> <span id="serviceList"></span>
+						</div>
 					</div>
 				</div>
 			</div>

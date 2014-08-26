@@ -127,14 +127,14 @@ a.date-picker-control:focus,div.datePicker table td:focus{-moz-outline:0 none;co
 a.date-picker-control:hover,a.date-picker-control:active,a.date-picker-control:focus,a.dp-button-active:link,a.dp-button-active:visited,a.dp-button-active:hover,a.dp-button-active:active,a.dp-button-active:focus{background:transparent url(/web-data/lib/datepicker/media/cal.gif) no-repeat 50% 50%!important;}
 a.date-picker-control:link,a.date-picker-control:visited{background:transparent url(/web-data/lib/datepicker/media/cal-grey.gif) no-repeat 50% 50%;border:0 none;cursor:pointer;display:0;line-height:1;min-width:16px;position:relative;text-decoration:none;vertical-align:top;visibility:visible;margin:0 0 0 4px;padding:0;}
 a.dp-disabled,.dp-disabled table{filter:alpha(opacity=40);opacity:.3!important;}
-a.selected{background:#D2D2D2;}
+a.selected{background:#ededed;}
 a.tEditTag{border-radius:2px;border:1px solid #ededed;display:inline-block;margin:3px 0;padding:5px;transition:background .15s ease-in-out 0;}
-a.tEditTag:hover{border:1px solid #000}
 a.tListEdit{display:block;margin:0;padding:1px;}
+a.tListEdit:hover,#nav a:hover{background:#ededed;}
 a.underline,.tools a,.tools a:hover,.tools a:visited,#about a,#about a:hover,#about a:visited{text-decoration:underline;}
 body.fd-drag-active{-webkit-user-select:none;}
 button{background:#FFF;border-radius:2px;border:1px solid #DDD;padding:5px;}
-button:hover,#nav a:hover,a.tListEdit:hover{background:#ededed;}
+button:hover,a.tEditTag:hover{border: 1px solid #66AFE9;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);}
 div.datePicker{-khtml-user-select:none;-moz-user-select:none;color:#444;font-size:11px;position:absolute;text-align:center;z-index:9999;background:#FFF;padding:0;}
 div.datePicker table{-moz-box-shadow:0 0 5px #ededed;border-collapse:separate;border-spacing:1px;border:1px solid #ededed;empty-cells:show;height:auto;text-align:center;width:auto;margin:0;padding:0;}
 div.datePicker table tbody td.date-picker-highlight,div.datePicker table thead th.date-picker-highlight{color:#a86666!important;}

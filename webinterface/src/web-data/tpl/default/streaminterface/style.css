@@ -4,16 +4,33 @@ body {
 	font-weight: bold;
 	color: #fff;
 	text-align: center;
-	background-color: #555
+	background-color: #000;
+	margin: 0;
 }
 
-a,a:visited,a:active {
+a, a:visited, a:active {
 	color: #485052;
 	text-decoration: none;
 }
 
 img {
 	border: 0px;
+}
+
+input, select, button {
+	background: #000;
+	border-radius: 2px;
+	border: 1px solid #333;
+	padding: 5px;
+	color: #fff;
+	transition: border-color .15s ease-in-out 0 box-shadow .15s ease-in-out
+		0;
+}
+
+input:hover, select:hover, button:hover {
+	border: 1px solid #66AFE9;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px
+		rgba(102, 175, 233, 0.6);
 }
 
 #notification {
@@ -63,6 +80,7 @@ img {
 	border-bottom: 1px solid #FFF;
 	position: relative;
 	float: left;
+	display: inline-block;
 }
 
 #bannerText {
@@ -79,7 +97,7 @@ img {
 
 #bannerRight {
 	text-align: right;
-	float: right!important;
+	float: right !important;
 	margin: 2px;
 }
 
@@ -97,6 +115,20 @@ img {
 
 #vlcButtons {
 	border-top: 1px solid #FFF;
+	padding: 5px;
+}
+
+.inline-block-top {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.inline-block-top input {
+	vertical-align: middle;
+}
+
+.serviceSelection {
+	padding: 5px;
 }
 
 #volumeTable {
@@ -116,7 +148,8 @@ img {
 	min-height: 568px;
 	margin: 0px;
 	padding: 0px;
-	background: #000
+	background: #000;
+	display: inline-block;
 }
 
 /**************

@@ -799,7 +799,7 @@ a.dp-disabled, .dp-disabled table {
 }
 
 a.selected {
-	background: #D2D2D2;
+	background: #ededed;
 }
 
 a.tEditTag {
@@ -811,14 +811,14 @@ a.tEditTag {
 	transition: background .15s ease-in-out 0;
 }
 
-a.tEditTag:hover {
-	border: 1px solid #000
-}
-
 a.tListEdit {
 	display: block;
 	margin: 0;
 	padding: 1px;
+}
+
+a.tListEdit:hover, #nav a:hover {
+	background: #ededed;
 }
 
 a.underline, .tools a, .tools a:hover, .tools a:visited, #about a,
@@ -837,8 +837,10 @@ button {
 	padding: 5px;
 }
 
-button:hover, #nav a:hover, a.tListEdit:hover {
-	background: #ededed;
+button:hover, a.tEditTag:hover {
+	border: 1px solid #66AFE9;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px
+		rgba(102, 175, 233, 0.6);
 }
 
 div.datePicker {
