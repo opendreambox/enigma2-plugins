@@ -1056,8 +1056,8 @@ var BaseCore = Class.create({
 		this.popUpBlockerHinted = false;
 		this.hideNotifierTimeout = '';
 		this.sessionProvider = new SessionProvider( this.onSessionAvailable.bind(this) );
-		if(userprefs.data.style != "dark" && userprefs.data.style != "light"){
-			userprefs.data.style = "dark";
+		if(userprefs.data.style != "dark" && userprefs.data.style != "light" && userprefs.data.style != "modern"){
+			userprefs.data.style = "modern";
 			userprefs.save();
 		}
 	},
@@ -1154,12 +1154,22 @@ var BaseCore = Class.create({
 	},
 	
 	styleChanged: function(){
-		if(userprefs.data.style == 'light'){
-			$('style_light').disabled = false;
+	switch(userprefs.data.style){
+		case 'light':
 			$('style_dark').disabled = true;
-		} else {
+			$('style_light').disabled = false;
+			$('style_modern').disabled = true;
+			break;
+		case 'dark':
 			$('style_dark').disabled = false;
 			$('style_light').disabled = true;
+			$('style_modern').disabled = true;
+			break;
+		default:
+			$('style_dark').disabled = true;
+			$('style_light').disabled = true;
+			$('style_modern').disabled = false;
+			break;
 		}
 	}
 });

@@ -1,0 +1,1125 @@
+
+
+html,body {
+	background: #e8e8e8;
+	color: #333;
+	font-family: Tahoma,Sans-Serif;
+	font-size: 14px;
+	font-weight: 700;
+	text-align: center;
+ }
+
+button {
+	background: #FFF;
+	border-radius: 2px;
+	border: 1px solid #DDD;
+	padding: 5px;
+ }
+
+	button:hover {background: #ededed;}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	color: inherit;
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+ }
+
+input,select {
+	background-color: #FFF;
+	border-radius: 2px;
+	border: 1px solid #DDD;
+	color: #444;
+	font-family: Tahoma,Sans-Serif;
+	font-size: 14px;
+	font-weight: 700;
+	padding: 5px;
+	transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+ }
+
+input:focus {
+	border-color: #66AFE9;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6);
+	outline: 0px none;
+ }
+
+a,a:visited,a:active {
+	color: #444;
+	text-decoration: none;
+ }
+
+img {border: 0;}
+
+form {margin: 2px;}
+
+#notification {
+	color: #444;
+	height: 32px;
+	left: 25%;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	vertical-align: bottom;
+	width: 50%;
+	z-index: 2;
+ }
+
+.wap a,.wap a:visited,.wap a:active {color: #333;}
+
+.oneliner {
+	height: 16px;
+	margin-top: -8px;
+	position: absolute;
+	top: 50%;
+ }
+
+.small {
+	font-size: 11px;
+	font-weight: 400;
+ }
+
+.leftCol {
+	float: left;
+	width: 50%;
+ }
+
+.rightCol {
+	float: right;
+	width: 50%;
+ }
+
+.liHeader {
+	border-bottom: #444;
+	border-top: #444;
+ }
+
+td.screenShot img {
+	background: #DDD;
+	border: 1px solid #555;
+ }
+
+#banner {
+	background-color: #FFF;
+	border: 1px solid #DDD;
+	display: inline-block;
+	margin-bottom: 8px;
+	position: relative;
+	width: 1000px;
+ }
+
+	#banner a,#banner a:visited,#banner a:active {
+		color: #333;
+		text-decoration: none;
+	 }
+
+#bannerText {padding-left: 2px;}
+
+#bannerLeft {
+	float: left;
+	width: 940px;
+ }
+
+.bannerHeader {
+	background-image: url(/web-data/img/dreamboxweb_modern.png);
+	height: 16px;
+	margin: 7px;
+	padding: 0;
+	width: 780px;
+ }
+
+#ajaxLoad {
+	background-image: url(/web-data/gfx/ajaxload.gif);
+	height: 31px;
+	position: absolute;
+	right: 78px;
+	top: 2px;
+	width: 31px;
+	z-index: 10;
+ }
+
+#powerState {
+	border: 0;
+	margin-left: 93px;
+	text-align: right;
+ }
+
+#bannerRight {
+	float: left;
+	height: 60px;
+	text-align: right;
+	width: 50px;
+ }
+
+	#bannerRight img {padding-top: 5px;}
+
+#current {
+	background-color: #FFF;
+	border: 1px solid #DDD;
+	margin-bottom: 8px;
+	padding-bottom: 1px;
+	padding-left: 3px;
+	padding-right: 3px;
+	position: relative;
+	width: 999px;
+ }
+
+.techInfo {font-size: 10px;}
+
+#mainMenu {
+	background-color: #FFF;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	text-align: center;
+	width: 940px;
+ }
+
+	#mainMenu li {
+		background: #FFF;
+		float: left;
+		list-style: none;
+		margin-bottom: 0;
+		margin-top: 6px;
+		padding: 0;
+		position: relative;
+		z-index: 2;
+	 }
+
+	#mainMenu a {
+		display: block;
+		height: 100%;
+		padding: 10px;
+	 }
+
+	#mainMenu span {
+		display: block;
+		padding-top: 2px;
+	 }
+
+	#mainMenu li.navselected {
+		background: #efefef;
+		position: relative;
+		z-index: 3;
+	 }
+
+		#mainMenu li.navselected a {background #D2D2D2;}
+
+#instantRecordMenu {
+	display: inline-block;
+	background-color: #FFF;
+	border: 1px solid #ededed;
+	color: #444;
+	opacity: .98;
+	position: relative;
+	right: 185px;
+	text-align: left;
+	top: 5px;
+	z-index: 1000;
+	padding: 10px;
+ }
+
+	#instantRecordMenu button {
+		text-align: center;
+		width: 200px;
+	 }
+
+#navContainer {
+	float: left;
+	width: 160px;
+ }
+
+#nav {
+	background-color: #FFF;
+	border: 1px solid #DDD;
+	min-height: 350px;
+	padding-left: 0;
+	padding-right: 0;
+	position: relative;
+	width: 100%;
+ }
+
+	#nav a {display: block;}
+
+		#nav a:hover {background: #ededed;}
+
+	#nav li div {
+		display: table-cell;
+		padding: 10px;
+		vertical-align: middle;
+	 }
+
+#navContent {
+	color: #444;
+	padding: 0;
+ }
+
+#navExternalsContainer {
+	margin: 0;
+	padding: 0;
+ }
+
+#navSearch {
+	background-color: #FFF;
+	border: 1px solid #DDD;
+	margin-top: 8px;
+	position: relative;
+	width: 100%;
+ }
+
+#navVolume {
+	background-color: #FFF;
+	border: 1px solid #DDD;
+	height: 75px;
+	margin-top: 8px;
+	position: relative;
+	width: 100%;
+ }
+
+#main {
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+ }
+
+#content {
+	background-color: #FFF;
+	border: 1px solid #DDD;
+	float: left;
+	margin-left: 8px;
+	min-height: 360px;
+	position: relative;
+	width: 837px;
+ }
+
+#contentHd {
+	padding: 5px;
+	width: 527px;
+ }
+
+table.contentHd {
+	border-bottom: 1px solid #DDD;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+ }
+
+#epgSearch {width: 115px;}
+
+#tags {width: 90%;}
+
+#navMovies li {
+	margin: 5px;
+	text-align: center;
+ }
+
+.boxContent {
+	color: #444;
+	padding: 3px;
+ }
+
+.navTable li {
+	display: block;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	position: relative;
+ }
+
+.navTable a:hover {
+	background-color: #ededed;
+	color: #444;
+	display: block;
+ }
+
+.sListEPGItem {
+	font-size: 13px;
+	margin: 0;
+	padding: 0;
+ }
+
+.sListSProgress {
+	border: 1px solid #DDD;
+	display: inline-block;
+	height: 15px;
+	margin: 4px 1px 1px;
+	padding: 1px;
+	width: 50px;
+ }
+
+.sListSProgressBar {
+	background-color: #66AFE9;
+	height: 100%;
+	margin: 0;
+	width: 0;
+ }
+
+.sListExtEpg {
+	display: block;
+	padding: 1px;
+ }
+
+.header {
+	display: block;
+	height: 22px;
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 2px;
+ }
+
+#container {
+	margin: 0 auto;
+	text-align: left;
+	width: 1007px;
+ }
+
+#contentTable {
+	margin: 0 auto;
+	scrollbar: auto;
+	width: 785px;
+ }
+
+#contentServices {
+	vertical-align: top;
+	width: 575px;
+ }
+
+	#contentServices table {scrollbar: auto;}
+
+#bouquetTable li {
+	border-bottom: 1px solid #EDEDED;
+	clear: both;
+	display: inline-block;
+	list-style: none;
+	margin: 2px;
+	position: relative;
+ }
+
+.bouquetIcons {
+	float: left;
+	padding-top: 10px;
+	width: 40px;
+ }
+
+	.bouquetIcons a {
+		display: inline-block;
+		vertical-align: middle;
+	 }
+
+.bouquetName {
+	float: right;
+	width: 158px;
+ }
+
+#contentBouquets {
+	border-right: 1px solid #DDD;
+	vertical-align: top;
+	width: 220px;
+ }
+
+#contentMain {
+	clear: both;
+	color: #444;
+	margin-bottom: 5px;
+	min-height: 360px;
+	overflow-y: auto;
+	padding: 8px;
+	width: 815px;
+ }
+
+	#contentMain div table {
+		float: left;
+		width: 599px;
+	 }
+
+.sListItem {
+	border-bottom: 1px solid #DDD;
+	color: #444;
+	width: 570px!important;
+ }
+
+.mListItem {
+	border-bottom: 1px solid #DDD;
+	color: #444;
+	width: 780px;
+ }
+
+.epgStart {
+	color: #444;
+	width: 50px;
+ }
+
+.epgTitle {
+	color: #444;
+	padding: 3px;
+	width: 420px;
+ }
+
+.epgLength {
+	color: #444;
+	text-align: right;
+	width: 100px;
+ }
+
+.mListDetail {
+	color: #444;
+	font-size: 12px;
+ }
+
+.mStart {
+	color: #444;
+	width: 160px;
+ }
+
+.mTitle {
+	color: #444;
+	width: 650px;
+ }
+
+.mLength {
+	color: #444;
+	text-align: right;
+	width: 90px;
+ }
+
+.toolsHeader {
+	color: #333;
+	font-weight: 700;
+ }
+
+.tools td {
+	font-size: 12px;
+	padding: 5px;
+	vertical-align: top;
+ }
+
+.toolsElementLeft {
+	font-weight: 700;
+	text-align: left;
+	width: 15%;
+ }
+
+.toolsElementRight {
+	text-align: left;
+	width: 10%;
+ }
+
+.aboutHeader {
+	color: #333;
+	font-weight: 700;
+	width: 100%;
+ }
+
+.about td {
+	font-size: 12px;
+	padding: 5px;
+ }
+
+.aboutElementLeft {
+	font-weight: 700;
+	text-align: left;
+	width: 50%;
+ }
+
+.aboutElementRight {width: 50%;}
+
+.w200h50 {
+	height: 50px;
+	width: 200px;
+ }
+
+.tListItemTable {
+	background: none!important;
+	left: 0;
+	margin-left: 22px;
+	position: relative;
+	top: 0;
+	width: 585px!important;
+ }
+
+.tListItem {
+	font-size: 13px;
+	font-weight: 700;
+ }
+
+.tListDelete {
+	bottom: 2px;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	right: 1px;
+	width: 100px;
+ }
+
+.tListOption {
+	text-align: right;
+	vertical-align: bottom;
+	z-index: 9999;
+ }
+
+.tListToggleDisabled {
+	bottom: 2px;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	right: 105px;
+	width: 100px;
+ }
+
+.tListButton {
+	font-size: 10px;
+	height: 100%;
+	margin: 0;
+	vertical-align: middle;
+	width: 100px;
+ }
+
+div.legendRow {
+	height: auto;
+	overflow: auto;
+ }
+
+div.legendCol {
+	float: left;
+	padding-left: 2px;
+	width: 100px;
+ }
+
+.timerState {
+	display: block;
+	height: 100%;
+	left: 0;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	width: 10px;
+ }
+
+.timerState0 {
+	background: #333;
+	color: #FFF;
+ }
+
+.timerState1 {
+	background: #BD282D;
+	color: #000;
+ }
+
+.timerState2 {
+	background: #2DBD28;
+	color: #000;
+ }
+
+.timerState3 {
+	background: #282DBD;
+	color: #FFF;
+ }
+
+td.timerList {
+	border-bottom: 1px solid #ededed;
+	display: block;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	width: 100%;
+ }
+
+a.tListEdit {
+	display: block;
+	margin: 0;
+	padding: 1px;
+ }
+
+	a.tListEdit:hover {
+		background: #ededed;
+		display: block;
+		margin: 0;
+	 }
+
+#timerEditForm table {cell-spacing: 1px;}
+
+a.tEditTag {
+	border-radius: 2px;
+	border: 1px solid #ededed;
+	display: inline-block;
+	margin: 3px 0;
+	padding: 5px;
+ }
+
+	a.tEditTag:hover {background: #ededed;}
+
+a.selected {background: #D2D2D2;}
+
+.epgListItem {
+	font-weight: normal;
+	padding: 3px;
+ }
+
+.externals {
+	border-bottom: 1px solid #DDD;
+	border-top: 1px solid #DDD;
+ }
+
+* html #banner {
+	height: 78px;
+	width: 1007px;
+ }
+
+* html #bannerRight {
+	height: 60px;
+	width: 120px;
+ }
+
+* html #nav {
+	background-color: #FFF;
+	height: 250px;
+	padding-left: 5px;
+	width: 99%;
+ }
+
+* html .navTable {width: 95%;}
+
+input.fd-hidden-input,select.fd-hidden-input {display: none;}
+
+.fd-screen-reader {
+	-moz-outline: 0 none;
+	height: 1px;
+	left: -999em;
+	outline: 0 none;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	width: 1px;
+ }
+
+a.dp-disabled,.dp-disabled table {
+	filter: alpha(opacity=40);
+	opacity: .3!important;
+ }
+
+.dp-disabled,.dp-disabled td,.dp-disabled th,.dp-disabled th span {cursor: default!important;}
+
+a.date-picker-control:focus,div.datePicker table td:focus {
+	-moz-outline: 0 none;
+	color: #6482aa!important;
+	outline: 0 none;
+	overflow: hidden;
+ }
+
+div.datePicker {
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	background: transparent;
+	color: #444;
+	font-size: 11px;
+	padding: 0;
+	position: absolute;
+	text-align: center;
+	z-index: 9999;
+ }
+
+div.static-datepicker {
+	left: 0;
+	position: relative;
+	top: 5px;
+ }
+
+div.datePicker table {
+	-moz-box-shadow: 0 0 5px #ededed;
+	border-collapse: separate;
+	border-spacing: 1px;
+	border: 1px solid #ededed;
+	empty-cells: show;
+	height: auto;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	width: auto;
+ }
+
+div.datePicker tfoot th.drag-enabled,div.datePicker thead th.drag-enabled,div.datePicker thead th.drag-enabled span {cursor: move;}
+
+iframe.iehack {
+	border: 0;
+	display: none;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	z-index: 9998;
+ }
+
+a.date-picker-control:link,a.date-picker-control:visited {
+	background: transparent url(/web-data/lib/datepicker/media/cal-grey.gif) no-repeat 50% 50%;
+	border: 0 none;
+	cursor: pointer;
+	display: 0;
+	line-height: 1;
+	margin: 0 0 0 4px;
+	min-width: 16px;
+	padding: 0;
+	position: relative;
+	text-decoration: none;
+	vertical-align: top;
+	visibility: visible;
+ }
+
+a.date-picker-control:hover,a.date-picker-control:active,a.date-picker-control:focus,a.dp-button-active:link,a.dp-button-active:visited,a.dp-button-active:hover,a.dp-button-active:active,a.dp-button-active:focus {background: transparent url(/web-data/lib/datepicker/media/cal.gif) no-repeat 50% 50%!important;}
+
+* html a.date-picker-control {width: 16px;}
+
+a.date-picker-control {display: inline-block;}
+
+	a.date-picker-control span {
+		display: block;
+		height: 16px;
+		margin: auto 0;
+		width: 16px;
+	 }
+
+div.datePicker thead th span {
+	background: transparent;
+	border: 0 none;
+	cursor: pointer;
+	display: block;
+	font-weight: 700;
+	line-height: 1em;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+ }
+
+div.datePicker th span.month-display,div.datePicker th span.year-display {
+	cursor: default;
+	display: inline;
+	font-size: 13px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+ }
+
+div.datePicker th span.prev-but,div.datePicker th span.next-but {
+	cursor: pointer!important;
+	font-size: 13px;
+	font-weight: lighter;
+ }
+
+div.datePicker th span.prev-but:hover,div.datePicker th span.next-but:hover,div.datePicker th span.today-but:hover {color: #a84444;}
+
+div.datePicker th span.today-but {
+	cursor: pointer!important;
+	font-size: 13px;
+	margin: 0;
+	padding-top: .3em;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	vertical-align: middle;
+	width: 100%;
+ }
+
+div.dp-disabled th span.prev-but,div.dp-disabled th span.next-but,div.dp-disabled th span.today-but,div.dp-disabled th span.prev-but:hover,div.dp-disabled th span.next-but:hover,div.dp-disabled th span.today-but:hover,div.datePicker th span.prev-but.fd-disabled:hover,div.datePicker th span.next-but.fd-disabled:hover,div.datePicker thead th span.fd-disabled,div.datePicker th span.fd-disabled:hover {
+	color: #ededed;
+	cursor: default!important;
+	opacity: 1;
+ }
+
+div.datePicker th span.fd-day-header {
+	cursor: pointer;
+	font-size: 11px;
+	margin: 0;
+	text-align: center;
+	text-decoration: none;
+	text-transform: lowercase;
+ }
+
+div.datePicker table tbody th,div.datePicker table td {
+	border: 1px solid #DDD;
+	cursor: pointer;
+	height: 2em;
+	outline: transparent none 0;
+	overflow: hidden;
+	padding: 0;
+	text-align: center;
+	text-transform: none;
+	vertical-align: middle;
+	width: 2em;
+ }
+
+div.datePicker table td:focus,div.datePicker table td:active {outline: 0 none red;}
+
+div.datePicker table th {
+	border: 0 none;
+	color: #444;
+	font-weight: 700;
+	padding: 0;
+	text-align: center;
+	text-transform: none;
+	vertical-align: middle;
+ }
+
+div.datePicker table thead th {height: auto!important;}
+
+div.datePicker table tbody th {border: 1px solid #dcdcdc;}
+
+div.datePicker table thead th.date-picker-week-header,div.datePicker table tbody th.date-picker-week-header {
+	background: transparent;
+	color: #DDD;
+	cursor: default;
+	font-style: oblique;
+ }
+
+div.datePicker table thead th.date-picker-week-header {
+	border: 0 none;
+	cursor: help;
+	padding: 0 0 .2em;
+ }
+
+div.datePicker tfoot th {
+	border: 0 none;
+	cursor: default;
+	font-weight: 400;
+	height: 2.8em;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+ }
+
+div.datePicker table tbody td.date-picker-unused {
+	background-color: #FFF url(/web-data/lib/datepicker/media/backstripes.gif);
+	border-color: #dcdcdc;
+	cursor: default!important;
+ }
+
+div.datePicker table thead th.date-picker-title {
+	color: #333;
+	height: auto;
+	padding: .4em 0;
+	width: auto;
+ }
+
+div.datePicker table thead th.date-picker-day-header {
+	cursor: help;
+	height: auto;
+	text-transform: lowercase;
+ }
+
+div.datePicker table tbody td.date-picker-today {
+	background-color: #FFF url(/web-data/lib/datepicker/media/bullet2.gif) no-repeat 0 0;
+	color: #646464!important;
+ }
+
+div.datePicker table tbody td.month-out.date-picker-highlight {color: #a86!important;}
+
+div.datePicker table tbody td.date-picker-highlight,div.datePicker table thead th.date-picker-highlight {color: #a86666!important;}
+
+div.datePicker table tbody td.date-picker-hover {
+	background-color: #FFF url(/web-data/lib/datepicker/media/bg_header.jpg) no-repeat 0 0;
+	border-color: #6482aa!important;
+	color: #6482aa;
+	cursor: pointer;
+	text-shadow: 0 1px 1px #333;
+ }
+
+div.datePicker table tbody td.day-disabled {
+	background-color: #FFF url(/web-data/lib/datepicker/media/backstripes.gif) no-repeat 0 0;
+	color: #ededed!important;
+	cursor: default;
+	text-decoration: line-through;
+ }
+
+div.datePicker table tbody td.month-out {
+	background-color: #FFF url(/web-data/lib/datepicker/media/gradient-e5e5e5-ffffff.gif) repeat-x 0 0;
+	border-color: #ddd;
+	color: #ededed!important;
+ }
+
+div.datePicker table tbody td.date-picker-selected-date {
+	border-color: #333!important;
+	color: #333!important;
+ }
+
+div.datePicker table tbody td.out-of-range,div.datePicker table tbody td.not-selectable {
+	background: #fcfcfc!important;
+	color: #DDD!important;
+	cursor: default!important;
+	font-style: oblique;
+ }
+
+div.datePicker table tbody th.month-out,div.datePicker table tbody th.out-of-range {
+	background: #fcfcfc!important;
+	color: #ededed!important;
+	font-style: oblique;
+ }
+
+div.datePicker table tbody th.out-of-range {
+	filter: alpha(opacity=60);
+	opacity: .6;
+ }
+
+div.datePicker table tbody td.not-selectable {
+	filter: alpha(opacity=80);
+	opacity: .8;
+ }
+
+div.datePicker table tbody tr {display: table-row;}
+
+div.datePicker table tfoot sup {
+	height: 0;
+	letter-spacing: normal;
+	line-height: 1;
+	position: relative;
+	text-transform: none;
+	top: -.2em;
+	vertical-align: baseline!important;
+ }
+
+div.datepicker-focus table.datePickerTable {border-color: #999!important;}
+
+div.datePicker table tbody tr td:focus,div.datePicker table tbody td.date-picker-hover {
+	-moz-outline: 0 none;
+	-o-highlight: 0 none;
+	color: #6482aa!important;
+	outline: 0 solid red;
+	overflow: hidden;
+ }
+
+div.static-datepicker table {-moz-box-shadow: 0 0 0 transparent;}
+
+div.datepicker-focus table {
+	-moz-box-shadow: 0 0 5px #ededed;
+	outline: 0;
+ }
+
+:-o-prefocus {outline: 0;}
+
+* html div.datePicker table td {background-image: none;}
+
+	* html div.datePicker table td.date-picker-unused {background: #FFF;}
+
+body.fd-drag-active {-webkit-user-select: none;}
+
+.rounded {
+	-moz-border-bottom-colors: none;
+	-moz-border-left-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-top-colors: none;
+	background-color: #FFF;
+	border-color: #D8D8D8;
+	border-image: none;
+	border-left: 1px solid #D8D8D8;
+	border-radius: 2px;
+	border-right: 2px solid #D8D8D8;
+	border-style: solid;
+	border-width: 0px 1px 2px;
+	box-sizing: border-box;
+	margin: 2px;
+	vertical-align: top;
+ }
+
+.roundedNav {
+	background-color: transparent;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+	vertical-align: top;
+ }
+
+li.roundedNav {
+	background: none;
+	border: none;
+ }
+
+.black,#current a,.sListMarker {color: #333;}
+
+.fullwidth,#currentTable {width: 100%;}
+
+.center,td.screenShot,.textCenter {text-align: center;}
+
+a.underline,.tools a,.tools a:hover,.tools a:visited,#about a,#about a:hover,#about a:visited {text-decoration: underline;}
+
+.right,#currentDuration,.textRight {text-align: right;}
+
+.bottom,#current img {vertical-align: bottom;}
+
+#mainMenu a:hover,#mainMenu li.hover {
+	background: #ededed;
+	position: relative;
+	z-index: 3;
+ }
+
+#navHd,#searchHd,#volHd {
+	border-bottom: 1px solid #DDD;
+	padding: 5px;
+	text-align: center;
+	width: 150px;
+ }
+
+#contentHdExt input,#contentHdExt li div {
+	color: #444;
+	padding: 5px;
+ }
+
+.navTable,#bouquetTable {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+ }
+
+.sListSName a {
+	color: #444;
+	display: block;
+	font-size: 15px;
+	padding: 5px 3px;
+ }
+
+.bListSLink {padding: 10px 3px;}
+
+	.bListSLink:hover,.sListSName a:hover {
+		background-color: #ededed;
+		display: block;
+	 }
+
+#tools,#about {
+	font-size: 12px;
+	text-align: center;
+ }
+
+#tools h1,#about h1 {font-size: 14px;}
+
+.tools,.about {
+	border-radius: 2px;
+	border: 1px solid #DDD;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+ }
+
+.toolsElementCenter,.textLeft,.tListSName {text-align: left;}
+
+.tListTitle,.tListDescr {
+	text-align: left;
+	width: 150px;
+ }
+
+.tListRepeat,.tListDuration {
+	text-align: left;
+	width: 120px;
+ }
+
+.tListBegin,.tListEnd {
+	text-align: left;
+	width: 170px;
+ }
+
+.tListAfter,.tListType {
+	text-align: left;
+	width: 85px;
+ }
+
+@media screen and -webkit-min-device-pixel-ratio0 {div.static-datepicker table}
+
+div.datePicker table td,div.datePicker table tbody th {padding: .1em;}
+
+div.datePicker table tbody td.date-picker-hover {-webkit-box-shadow: 0 0 1px #6482aa;}
+
+div.datePicker table,div.datepicker-focus table {-webkit-box-shadow: 0 0 5px #ededed;}
+
