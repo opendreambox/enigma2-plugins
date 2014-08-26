@@ -296,6 +296,8 @@ td.screenShot img {
 #contentHd {
 	padding: 5px;
 	width: 527px;
+	display:table-cell;
+	vertical-align:middle;
  }
 
 table.contentHd {
@@ -1051,6 +1053,8 @@ a.underline,.tools a,.tools a:hover,.tools a:visited,#about a,#about a:hover,#ab
 	padding: 5px;
 	text-align: center;
 	width: 150px;
+	display:table-cell;
+	vertical-align:middle;
  }
 
 #contentHdExt input,#contentHdExt li div {

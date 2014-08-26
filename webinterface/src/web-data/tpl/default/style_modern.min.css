@@ -9,7 +9,7 @@
 #container{text-align:left;width:1007px;margin:0 auto;}
 #content{background-color:#FFF;border:1px solid #DDD;float:left;margin-left:8px;min-height:360px;position:relative;width:837px;}
 #contentBouquets{border-right:1px solid #DDD;vertical-align:top;width:220px;}
-#contentHd{width:527px;padding:5px;}
+#contentHd{width:527px;padding:5px;display:table-cell;vertical-align:middle;}
 #contentHdExt input,#contentHdExt li div{color:#444;padding:5px;}
 #contentMain{clear:both;color:#444;margin-bottom:5px;min-height:360px;overflow-y:auto;width:815px;padding:8px;}
 #contentMain div table{float:left;width:599px;}
@@ -33,7 +33,7 @@
 #navContainer{float:left;width:160px;}
 #navContent{color:#444;padding:0;}
 #navExternalsContainer{margin:0;padding:0;}
-#navHd,#searchHd,#volHd{border-bottom:1px solid #DDD;text-align:center;width:150px;padding:5px;}
+#navHd,#searchHd,#volHd{border-bottom:1px solid #DDD;text-align:center;width:150px;padding:5px;display:table-cell;vertical-align:middle;}
 #navMovies li{text-align:center;margin:5px;}
 #navSearch{background-color:#FFF;border:1px solid #DDD;margin-top:8px;position:relative;width:100%;}
 #navVolume{background-color:#FFF;border:1px solid #DDD;height:75px;margin-top:8px;position:relative;width:100%;}
