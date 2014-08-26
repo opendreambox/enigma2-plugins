@@ -1172,7 +1172,7 @@ img {
 	border: 0;
 }
 
-input, select {
+input, select, textarea {
 	background-color: #FFF;
 	border-radius: 2px;
 	border: 1px solid #DDD;
@@ -1189,7 +1189,7 @@ input.fd-hidden-input, select.fd-hidden-input {
 	display: none;
 }
 
-input:focus {
+input:focus, textarea:focus, select:focus {
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px
 		rgba(102, 175, 233, 0.6);
 	outline: 0 none;
