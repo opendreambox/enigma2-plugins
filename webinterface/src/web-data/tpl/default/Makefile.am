@@ -7,5 +7,6 @@ install_DATA = 	default.appcache \
 				multiepg.css \
 				style.min.css \
 				style_light.min.css \
+				style_modern.min.css \
 				style.css \
 				*.htm

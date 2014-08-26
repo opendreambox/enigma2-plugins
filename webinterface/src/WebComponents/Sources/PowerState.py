@@ -22,11 +22,11 @@ class PowerState(Source):
 
 		#-1: get current state
 		# 0: toggle standby
-		# 1: poweroff/deepstandby
+		# 1: poweroff/standby
 		# 2: rebootdreambox
 		# 3: rebootenigma
 		# 4: wakeup (if not already awake)
-		# 5: standby
+		# 5: idle mode
 		# 6: kill enigma2
 		try:
 			from Screens.Standby import inStandby
