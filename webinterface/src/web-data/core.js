@@ -1431,33 +1431,6 @@ var E2WebCore = Class.create(BaseCore, {
 
 	registerEvents: function(){
 		debug("[E2WebCore].registerEvents");
-		//Hash-Reload-Fix
-		//HACK :: THIS IS EVIL VOODOO, DON'T TRY THIS AT HOME!
-		document.on(
-			'click',
-			'a',
-			function(event, element){
-				var parts = element.href.split('#');
-				var curHost = window.location.href.split('#')[0];
-				//Don't do this crazy stuff when the target is another host!
-				if(curHost == parts[0]){
-					if (parts.length > 1){
-						if(parts[1] != ''){
-							if(window.location == element.href){
-								this.onHashChanged(true);
-								return;
-							}else{
-								window.location == element.href;
-								return;
-							}
-						} else {
-							element.href = window.location;
-						}
-						return false;
-					}
-				}
-			}.bind(this)
-		);
 		//Header
 		$('openSignalPanel').on(
 			'click',
@@ -1465,18 +1438,6 @@ var E2WebCore = Class.create(BaseCore, {
 				this.signal.load();
 				event.stop();
 			}.bind(this)
-		);
-		$('instantRecord').on(
-			'click',
-			function(event, element){
-				var menu = $('instantRecordMenu');
-				if(menu.visible()){
-					menu.hide();
-				} else {
-					menu.show();
-				}
-				event.stop();
-			}
 		);
 		document.on(
 			'click',
@@ -1486,6 +1447,9 @@ var E2WebCore = Class.create(BaseCore, {
 				this.timers.recordNow(
 					element.readAttribute('data-type'),
 					function(result){
+						var toggle = menu.up('.group').down('.dropdown-toggle');
+						toggle.removeClassName("active");
+						menu.removeClassName("open");
 						menu.hide();
 					}
 				);
@@ -1641,7 +1605,7 @@ var E2WebCore = Class.create(BaseCore, {
 			}.bind(this)
 		);
 		//Powerstate
-		content.on(
+		document.on(
 			'click',
 			'.powerState',
 			function(event, element){
@@ -1651,11 +1615,11 @@ var E2WebCore = Class.create(BaseCore, {
 					switch(this.power.STATES[newState]){
 					case this.power.STATES.toggle:
 						if(isStandby)
-							text = "Device is now in Soft-Standby";
+							text = "Device is now in idle mode";
 						break;
 					case this.power.STATES.deep:
 						if(isStandby)
-							text = "Device will go into deep standby (if possible, check OSD for messages)";
+							text = "Device will go into standby mode (if possible, check OSD for messages)";
 						else
 							text = "Cannot shutdown!";
 						break;
@@ -1907,6 +1871,35 @@ var E2WebCore = Class.create(BaseCore, {
 				event.stop();
 			}.bind(this)
 		);
+		//Hash-Reload-Fix
+		//HACK :: THIS IS EVIL VOODOO, DON'T TRY THIS AT HOME!
+		document.on(
+			'click',
+			'a',
+			function(event, element){
+				if(event.stopped)
+					return;
+				var parts = element.href.split('#');
+				var curHost = window.location.href.split('#')[0];
+				//Don't do this crazy stuff when the target is another host!
+				if(curHost == parts[0]){
+					if (parts.length > 1){
+						if(parts[1] != ''){
+							if(window.location == element.href){
+								this.onHashChanged(true);
+								return;
+							}else{
+								window.location == element.href;
+								return;
+							}
+						} else {
+							element.href = window.location;
+						}
+						return;
+					}
+				}
+			}.bind(this)
+		);
 	},
 
 	/*
@@ -2046,4 +2039,56 @@ var E2WebCore = Class.create(BaseCore, {
 		}
 	}
 });
+
+DropDownHandler = Class.create({
+	initialize: function(){
+		this.registerEvents();
+	},
+
+	show: function(toggle, menu){
+		toggle.addClassName("active");
+		menu.addClassName("open");
+		menu.show();
+	},
+
+	hide: function(toggle, menu){
+		toggle.removeClassName("active");
+		menu.removeClassName("open");
+		menu.hide();
+	},
+
+	onClick: function(event, toggle){
+		event.stop();
+		var menu = toggle.up('.group').down('.dropdown-menu');
+		if(menu.visible()){
+			this.hide(toggle, menu);
+		} else {
+			this.show(toggle, menu)
+		}
+	},
+
+	registerEvents: function(){
+		document.on(
+			'click',
+			'.dropdown-toggle',
+			this.onClick.bind(this)
+		);
+		document.on(
+			'click',
+			function(event, element){
+				if(event.stopped)
+					return;
+				$$('.open').each(function(menu){
+					if(element != menu && element.up('.open') != menu){
+						var toggle = menu.up('.group').down('.dropdown-toggle');
+						this.hide(toggle, menu);
+					}
+				}.bind(this));
+			}.bind(this)
+		);
+	}
+});
+
+var dropDownHandler = new DropDownHandler();
+
 var core = new E2WebCore();

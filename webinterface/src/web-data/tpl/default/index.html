@@ -107,8 +107,21 @@
 					<li class="roundedNav navmenu" data-mode="radio"><a class="roundedNav" href="#!/radio/bouquets"><span id="mainMenuItemRadio">Radio</span></a></li>
 					<li class="roundedNav navmenu" data-mode="movies"><a class="roundedNav" href="#!/movies/list/filter//"><span id="mainMenuItemMovies">Movies</span></a></li>
 					<li class="roundedNav navmenu" data-mode="timer"><a class="roundedNav" href="#!/timer/list"><span id="mainMenuItemTimer">Timer</span></a></li>
-					<li class="roundedNav navmenu" data-mode="control"><a class="roundedNav" href="#!/control/power"><span id="mainMenuItemBoxControl">BoxControl</span></a></li>
+					<li class="roundedNav navmenu" data-mode="control"><a class="roundedNav" href="#!/control"><span id="mainMenuItemBoxControl">BoxControl</span></a></li>
 					<li class="roundedNav navmenu" data-mode="extras"><a class="roundedNav" href="#!/extras"><span id="mainMenuItemExtras">Extras</span></a></li>
+					<li id="menuPower" class="roundedNav navmenu">
+						<div class="group">
+							<a class="roundedNav dropdown-toggle" href="#">
+								<span>Power</span>
+							</a>
+							<ul class="dropdown-menu" style="display:none;">
+								<li><a href="#" class="powerState" data-state="toggle">Idle</a></li>
+								<li><a href="#" class="powerState" data-state="deep">Shutdown</a></li>
+								<li><a href="#" class="powerState" data-state="reboot">Reboot</a></li>
+								<li><a href="#" class="powerState" data-state="gui">Restart GUI</a></li>
+							</ul>
+						</div>
+					</li>
 					<li class="roundedNav navmenu"><a class="roundedNav" href="#" id="webTv"><span id="mainMenuItemWebTV">WebTV</span></a></li>
 				</ul>
 			</div>
@@ -120,27 +133,18 @@
 						</a></td>
 					</tr>
 					<tr>
-						<td><a id="instantRecord" href="#">
-								<img  id="instantRecordImg" border="0" src="/web-data/img/clock_red.png" alt="R" title="Instant Record">
+						<td class="group">
+							<a id="instantRecord" class="dropdown-toggle" href="#">
+								<img id="instantRecordImg" border="0" src="/web-data/img/clock_red.png" alt="R" title="Instant Record">
 							</a>
+							<ul id="instantRecordMenu" class="dropdown-menu right-aligned" style="display: none;">
+								<li id="instantRecordHd">Instant record</li>
+								<li><button id="instantRecordCurrentEvent" class="doInstantRecord" data-type="current">Record current event</button></li>
+								<li><button id="instantRecordInfinite" class="doInstantRecord" data-type="infinite">Start infinite recording</button></li>
+							</ul>
 						</td>
-
 					</tr>
 				</table>
-				<div id="instantRecordMenu" class="rounded" style="display: none;">
-					<table>
-						<tr>
-							<th id="instantRecordHd">Instant record</th>
-						</tr>
-						<tr>
-							<td colspan="2"><button id="instantRecordCurrentEvent" class="doInstantRecord" data-type="current">Record current event</button></td>
-						</tr>
-						<tr>
-							<td colspan="2"><button id="instantRecordInfinite" class="doInstantRecord" data-type="infinite">Start infinite recording</button></td>
-						</tr>
-					</table>
-
-				</div>
 			</div>
 		</div>
 		<div id="current" class="rounded">
