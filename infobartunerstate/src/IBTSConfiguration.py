@@ -88,7 +88,7 @@ class InfoBarTunerStateConfiguration(Screen, ConfigListScreen):
 			(  _("Show on events")                                    , config.infobartunerstate.show_events ),
 #			(  _("Show on events")                                    , config.infobartunerstate.show_on_events ),
 			(  _("Show streams")                                      , config.infobartunerstate.show_streams ),
-			
+			(  _("Show on key press")                                 , config.infobartunerstate.show_ontoggle ),
 			(  _("MoviePlayer integration")                           , config.infobartunerstate.show_overwrite ),
 			(  _("Time format begin")                                 , config.infobartunerstate.time_format_begin ),
 			(  _("Time format end")                                   , config.infobartunerstate.time_format_end ),
@@ -214,10 +214,10 @@ class InfoBarTunerStateConfiguration(Screen, ConfigListScreen):
 			if plugin.gInfoBarTunerState:
 				
 				# Handle InfoBar overwrite
-				if config.infobartunerstate.show_overwrite.value:
-					overwriteInfoBar()
-				else:
-					recoverInfoBar()
+				#if config.infobartunerstate.show_overwrite.value:
+				overwriteInfoBar()
+				#else:
+				#	recoverInfoBar()
 				
 				# Handle extension menu integration
 				if config.infobartunerstate.extensions_menu_show.value or config.infobartunerstate.extensions_menu_setup.value:
