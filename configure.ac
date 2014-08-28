@@ -697,6 +697,7 @@ webinterface/src/m/Makefile
 webinterface/src/mobile/Makefile
 webinterface/src/web/Makefile
 webinterface/src/web-data/Makefile
+webinterface/src/web-data/fonts/Makefile
 webinterface/src/web-data/gfx/Makefile
 webinterface/src/web-data/img/Makefile
 webinterface/src/web-data/lib/Makefile

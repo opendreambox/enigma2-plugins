@@ -1,3 +1,4 @@
+@import url("/web-data/fonts/fonts.css");
 #ajaxLoad{background-image:url(/web-data/gfx/ajaxload.gif);height:31px;position:absolute;right:78px;top:2px;width:31px;z-index:10;}
 #banner{background-color:#FFF;border:1px solid #DDD;display:inline-block;margin-bottom:8px;position:relative;width:1000px;}
 #banner a,#banner a:visited,#banner a:active{color:#333;text-decoration:none;}
@@ -7,7 +8,7 @@
 #bannerText{padding-left:2px;}
 #bouquetTable li{border-bottom:1px solid #EDEDED;clear:both;display:inline-block;list-style:none;position:relative;margin:2px;}
 #container{text-align:left;width:1007px;margin:0 auto;}
-#content{background-color:#FFF;border:1px solid #DDD;float:left;margin-left:8px;min-height:360px;position:relative;width:837px;}
+#content{background-color:#FFF;border:1px solid #DDD;float:left;margin-left:8px;min-height:360px;position:relative;width:834px;}
 #contentBouquets{border-right:1px solid #DDD;vertical-align:top;width:220px;}
 #contentHd{width:527px;padding:5px;display:table-cell;vertical-align:middle;}
 #contentHdExt input,#contentHdExt li div{color:#444;padding:5px;}
@@ -44,6 +45,7 @@
 #timerEditForm table{cell-spacing:1px;}
 #tools h1,#about h1{font-size:14px;}
 #tools,#about{font-size:12px;text-align:center;}
+#trExtCurrent{font-weight:normal;}
 * html #banner{height:78px;width:1007px;}
 * html #bannerRight{height:60px;width:120px;}
 * html #nav{background-color:#FFF;height:250px;padding-left:5px;width:99%;}
@@ -52,9 +54,9 @@
 * html div.datePicker table td{background-image:none;}
 * html div.datePicker table td.date-picker-unused{background:#FFF;}
 .about td{font-size:12px;padding:5px;}
-.aboutElementLeft{font-weight:700;text-align:left;width:50%;}
+.aboutElementLeft{font-weight:bold;text-align:left;width:50%;}
 .aboutElementRight{width:50%;}
-.aboutHeader{color:#333;font-weight:700;width:100%;}
+.aboutHeader{color:#333;font-weight:bold;width:100%;}
 .bListSLink{padding:10px 3px;}
 .bListSLink:hover,.sListSName a:hover{background-color:#ededed;display:block;}
 .bannerHeader{background-image:url(/web-data/img/dreamboxweb_modern.png);height:16px;width:780px;margin:7px;padding:0;}
@@ -105,7 +107,7 @@
 .tListButton{font-size:10px;height:100%;vertical-align:middle;width:50px;margin:0;}
 .tListButton div{display:none;}
 .tListDelete{bottom:2px;position:absolute;right:1px;margin:0;padding:0;}
-.tListItem{font-size:13px;font-weight:700;}
+.tListItem{font-size:13px;font-weight:bold;}
 .tListItemTable{background:none!important;left:0;margin-left:22px;position:relative;top:0;width:585px!important;}
 .tListOption{text-align:right;vertical-align:bottom;z-index:9999;}
 .tListRepeat,.tListDuration{text-align:left;width:120px;}
@@ -120,9 +122,9 @@
 .tools td{font-size:12px;vertical-align:top;padding:5px;}
 .tools,.about{border-radius:2px;border:1px solid #DDD;width:100%;margin:0;padding:0;}
 .toolsElementCenter,.textLeft,.tListSName{text-align:left;}
-.toolsElementLeft{font-weight:700;text-align:left;width:15%;}
+.toolsElementLeft{font-weight:bold;text-align:left;width:15%;}
 .toolsElementRight{text-align:left;width:10%;}
-.toolsHeader{color:#333;font-weight:700;}
+.toolsHeader{color:#333;font-weight:bold;}
 .w200h50{height:50px;width:200px;}
 .wap a,.wap a:visited,.wap a:active,.black,#current a,.sListMarker{color:#333;}
 :-o-prefocus{outline:0;}
@@ -162,7 +164,7 @@ div.datePicker table tbody tr td:focus,div.datePicker table tbody td.date-picker
 div.datePicker table td,div.datePicker table tbody th{padding:.1em;}
 div.datePicker table td:focus,div.datePicker table td:active{outline:0 none red;}
 div.datePicker table tfoot sup{height:0;letter-spacing:normal;line-height:1;position:relative;text-transform:none;top:-.2em;vertical-align:baseline!important;}
-div.datePicker table th{border:0 none;color:#444;font-weight:700;text-align:center;text-transform:none;vertical-align:middle;padding:0;}
+div.datePicker table th{border:0 none;color:#444;font-weight:bold;text-align:center;text-transform:none;vertical-align:middle;padding:0;}
 div.datePicker table thead th{height:auto!important;}
 div.datePicker table thead th.date-picker-day-header{cursor:help;height:auto;text-transform:lowercase;}
 div.datePicker table thead th.date-picker-title{color:#333;height:auto;width:auto;padding:.4em 0;}
@@ -185,10 +187,10 @@ div.legendRow{height:auto;overflow:auto;}
 div.static-datepicker{left:0;position:relative;top:5px;}
 div.static-datepicker table{-moz-box-shadow:0 0 0 transparent;}
 form{margin:2px;}
-html,body{background:#e8e8e8;color:#333;font-family:Tahoma,Sans-Serif;font-size:14px;font-weight:700;text-align:center;}
+html,body{background:#e8e8e8;color:#333;font-family: 'Roboto', sans-serif;font-weight:bold;font-size:14px;text-align:center;}
 iframe.iehack{border:0;display:none;position:absolute;z-index:9998;margin:0;padding:0;}
 img{border:0;}
-input,select,textarea{background-color:#FFF;border-radius:2px;border:1px solid #DDD;color:#444;font-family:Tahoma,Sans-Serif;font-size:14px;font-weight:700;transition:border-color .15s ease-in-out 0 box-shadow .15s ease-in-out 0;padding:5px;}
+input,select,textarea{background-color:#FFF;border-radius:2px;border:1px solid #DDD;color:#444;font-size:14px;transition:border-color .15s ease-in-out 0 box-shadow .15s ease-in-out 0;padding:5px;}
 input.fd-hidden-input,select.fd-hidden-input{display:none;}
 input:focus,textarea:focus,select:focus{box-shadow:0 1px 1px rgba(0,0,0,0.075) inset, 0 0 8px rgba(102,175,233,0.6);outline:0 none;border-color:#66AFE9;}
 li.roundedNav{background:none;border:none;}
