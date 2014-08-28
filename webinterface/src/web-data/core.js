@@ -697,17 +697,15 @@ var Screenshots = Class.create(Controller, {
 	},
 
 	load: function(type){
-		var filename = '/tmp/' + new Date().getTime();
-		var params = {'format' : 'jpg', 'r': '720', 'filename' : filename};
+		var params = {'format' : 'jpg'};
 
 		switch(type){
 			case this.TYPE_OSD:
-				params['o'] = '';
-				params['n'] = '';
+				params['osd'] = '';
 				params['format'] = 'png';
 				break;
 			case this.TYPE_VIDEO:
-				params['v'] = '';
+				params['video'] = '';
 				break;
 			default:
 				break;
