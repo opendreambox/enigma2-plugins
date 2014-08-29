@@ -61,9 +61,9 @@ function setBouquetName(bouquet){
 
 function setNavBackground(element, selected){
 	if(selected)
-		element.setStyle({background :  "#AAA"});
+		element.addClassName('navselected');
 	else
-		element.setStyle({background :  "#485052"});
+		element.removeClassName('navselected');
 }
 
 function setMode(mode){
