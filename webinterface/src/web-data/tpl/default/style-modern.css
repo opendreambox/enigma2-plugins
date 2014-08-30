@@ -1,3 +1,5 @@
+@import url("/web-data/fonts/fonts.css");
+
 #ajaxLoad {
 	background-image: url(/web-data/gfx/ajaxload.gif);
 	height: 31px;
@@ -64,7 +66,7 @@
 	margin-left: 8px;
 	min-height: 360px;
 	position: relative;
-	width: 837px;
+	width: 834px;
 }
 
 #contentBouquets {
@@ -80,7 +82,11 @@
 	vertical-align: middle;
 }
 
-#contentHdExt input, #contentHdExt li div {
+#contentHdExt {
+	margin-right: 2px;
+}
+
+#contentHdExt input, #contentHdExt li div, #contentHdExt select {
 	color: #444;
 	padding: 5px;
 }
@@ -292,6 +298,10 @@
 	text-align: center;
 }
 
+#trExtCurrent {
+	font-weight: normal;
+}
+
 * html #banner {
 	height: 78px;
 	width: 1007px;
@@ -331,7 +341,7 @@
 }
 
 .aboutElementLeft {
-	font-weight: 700;
+	font-weight: bold;
 	text-align: left;
 	width: 50%;
 }
@@ -342,7 +352,7 @@
 
 .aboutHeader {
 	color: #333;
-	font-weight: 700;
+	font-weight: bold;
 	width: 100%;
 }
 
@@ -361,6 +371,10 @@
 	width: 780px;
 	margin: 7px;
 	padding: 0;
+}
+
+.bold {
+	font-weight: bold;
 }
 
 .bottom, #current img {
@@ -432,6 +446,15 @@
 
 .epgListItem {
 	font-weight: 400;
+	padding: 3px;
+	border: 1px soid #DDD;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	margin-bottom: 10px;
+}
+
+.epgListItem td {
 	padding: 3px;
 }
 
@@ -659,7 +682,7 @@
 
 .tListItem {
 	font-size: 13px;
-	font-weight: 700;
+	font-weight: bold;
 }
 
 .tListItemTable {
@@ -748,7 +771,7 @@
 }
 
 .toolsElementLeft {
-	font-weight: 700;
+	font-weight: bold;
 	text-align: left;
 	width: 15%;
 }
@@ -760,7 +783,7 @@
 
 .toolsHeader {
 	color: #333;
-	font-weight: 700;
+	font-weight: bold;
 }
 
 .w200h50 {
@@ -768,8 +791,7 @@
 	width: 200px;
 }
 
-.wap a, .wap a:visited, .wap a:active, .black, #current a, .sListMarker
-	{
+.wap a, .wap a:visited, .wap a:active, .black, #current a, .sListMarker {
 	color: #333;
 }
 
@@ -800,16 +822,13 @@ a.date-picker-control:focus, div.datePicker table td:focus {
 	overflow: hidden;
 }
 
-a.date-picker-control:hover, a.date-picker-control:active, a.date-picker-control:focus,
-	a.dp-button-active:link, a.dp-button-active:visited, a.dp-button-active:hover,
-	a.dp-button-active:active, a.dp-button-active:focus {
-	background: transparent url(/web-data/lib/datepicker/media/cal.gif)
-		no-repeat 50% 50% !important;
+a.date-picker-control:hover, a.date-picker-control:active, a.date-picker-control:focus, a.dp-button-active:link, a.dp-button-active:visited,
+	a.dp-button-active:hover, a.dp-button-active:active, a.dp-button-active:focus {
+	background: transparent url(/web-data/lib/datepicker/media/cal.gif) no-repeat 50% 50% !important;
 }
 
 a.date-picker-control:link, a.date-picker-control:visited {
-	background: transparent url(/web-data/lib/datepicker/media/cal-grey.gif)
-		no-repeat 50% 50%;
+	background: transparent url(/web-data/lib/datepicker/media/cal-grey.gif) no-repeat 50% 50%;
 	border: 0 none;
 	cursor: pointer;
 	display: 0;
@@ -851,8 +870,7 @@ a.tListEdit:hover, #nav a:hover {
 	background: #ededed;
 }
 
-a.underline, .tools a, .tools a:hover, .tools a:visited, #about a,
-	#about a:hover, #about a:visited {
+a.underline, .tools a, .tools a:hover, .tools a:visited, #about a, #about a:hover, #about a:visited {
 	text-decoration: underline;
 }
 
@@ -869,8 +887,7 @@ button {
 
 button:hover, a.tEditTag:hover {
 	border: 1px solid #66AFE9;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px
-		rgba(102, 175, 233, 0.6);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
 }
 
 div.datePicker {
@@ -898,14 +915,12 @@ div.datePicker table {
 	padding: 0;
 }
 
-div.datePicker table tbody td.date-picker-highlight, div.datePicker table thead th.date-picker-highlight
-	{
+div.datePicker table tbody td.date-picker-highlight, div.datePicker table thead th.date-picker-highlight {
 	color: #a86666 !important;
 }
 
 div.datePicker table tbody td.date-picker-hover {
-	background-color: #FFF url(/web-data/lib/datepicker/media/bg_header.jpg)
-		no-repeat 0 0;
+	background-color: #FFF url(/web-data/lib/datepicker/media/bg_header.jpg) no-repeat 0 0;
 	color: #6482aa;
 	cursor: pointer;
 	text-shadow: 0 1px 1px #333;
@@ -919,30 +934,25 @@ div.datePicker table tbody td.date-picker-selected-date {
 }
 
 div.datePicker table tbody td.date-picker-today {
-	background-color: #FFF url(/web-data/lib/datepicker/media/bullet2.gif)
-		no-repeat 0 0;
+	background-color: #FFF url(/web-data/lib/datepicker/media/bullet2.gif) no-repeat 0 0;
 	color: #646464 !important;
 }
 
 div.datePicker table tbody td.date-picker-unused {
-	background-color: #FFF
-		url(/web-data/lib/datepicker/media/backstripes.gif);
+	background-color: #FFF url(/web-data/lib/datepicker/media/backstripes.gif);
 	cursor: default !important;
 	border-color: #dcdcdc;
 }
 
 div.datePicker table tbody td.day-disabled {
-	background-color: #FFF
-		url(/web-data/lib/datepicker/media/backstripes.gif) no-repeat 0 0;
+	background-color: #FFF url(/web-data/lib/datepicker/media/backstripes.gif) no-repeat 0 0;
 	color: #ededed !important;
 	cursor: default;
 	text-decoration: line-through;
 }
 
 div.datePicker table tbody td.month-out {
-	background-color: #FFF
-		url(/web-data/lib/datepicker/media/gradient-e5e5e5-ffffff.gif)
-		repeat-x 0 0;
+	background-color: #FFF url(/web-data/lib/datepicker/media/gradient-e5e5e5-ffffff.gif) repeat-x 0 0;
 	color: #ededed !important;
 	border-color: #ddd;
 }
@@ -956,8 +966,7 @@ div.datePicker table tbody td.not-selectable {
 	opacity: .8;
 }
 
-div.datePicker table tbody td.out-of-range, div.datePicker table tbody td.not-selectable
-	{
+div.datePicker table tbody td.out-of-range, div.datePicker table tbody td.not-selectable {
 	background: #fcfcfc !important;
 	color: #DDD !important;
 	cursor: default !important;
@@ -981,8 +990,7 @@ div.datePicker table tbody th, div.datePicker table td {
 	padding: 0;
 }
 
-div.datePicker table tbody th.month-out, div.datePicker table tbody th.out-of-range
-	{
+div.datePicker table tbody th.month-out, div.datePicker table tbody th.out-of-range {
 	background: #fcfcfc !important;
 	color: #ededed !important;
 	font-style: oblique;
@@ -997,8 +1005,7 @@ div.datePicker table tbody tr {
 	display: table-row;
 }
 
-div.datePicker table tbody tr td:focus, div.datePicker table tbody td.date-picker-hover
-	{
+div.datePicker table tbody tr td:focus, div.datePicker table tbody td.date-picker-hover {
 	-moz-outline: 0 none;
 	-o-highlight: 0 none;
 	color: #6482aa !important;
@@ -1027,7 +1034,7 @@ div.datePicker table tfoot sup {
 div.datePicker table th {
 	border: 0 none;
 	color: #444;
-	font-weight: 700;
+	font-weight: bold;
 	text-align: center;
 	text-transform: none;
 	vertical-align: middle;
@@ -1057,8 +1064,7 @@ div.datePicker table thead th.date-picker-week-header {
 	padding: 0 0 .2em;
 }
 
-div.datePicker table thead th.date-picker-week-header, div.datePicker table tbody th.date-picker-week-header
-	{
+div.datePicker table thead th.date-picker-week-header, div.datePicker table tbody th.date-picker-week-header {
 	background: transparent;
 	color: #DDD;
 	cursor: default;
@@ -1078,8 +1084,7 @@ div.datePicker tfoot th {
 	text-transform: uppercase;
 }
 
-div.datePicker tfoot th.drag-enabled, div.datePicker thead th.drag-enabled,
-	div.datePicker thead th.drag-enabled span {
+div.datePicker tfoot th.drag-enabled, div.datePicker thead th.drag-enabled, div.datePicker thead th.drag-enabled span {
 	cursor: move;
 }
 
@@ -1092,8 +1097,7 @@ div.datePicker th span.fd-day-header {
 	margin: 0;
 }
 
-div.datePicker th span.month-display, div.datePicker th span.year-display
-	{
+div.datePicker th span.month-display, div.datePicker th span.year-display {
 	cursor: default;
 	display: inline;
 	font-size: 13px;
@@ -1107,8 +1111,7 @@ div.datePicker th span.prev-but, div.datePicker th span.next-but {
 	font-weight: lighter;
 }
 
-div.datePicker th span.prev-but:hover, div.datePicker th span.next-but:hover,
-	div.datePicker th span.today-but:hover {
+div.datePicker th span.prev-but:hover, div.datePicker th span.next-but:hover, div.datePicker th span.today-but:hover {
 	color: #a84444;
 }
 
@@ -1145,11 +1148,10 @@ div.datepicker-focus table.datePickerTable {
 	border-color: #999 !important;
 }
 
-div.dp-disabled th span.prev-but, div.dp-disabled th span.next-but, div.dp-disabled th span.today-but,
-	div.dp-disabled th span.prev-but:hover, div.dp-disabled th span.next-but:hover,
-	div.dp-disabled th span.today-but:hover, div.datePicker th span.prev-but.fd-disabled:hover,
-	div.datePicker th span.next-but.fd-disabled:hover, div.datePicker thead th span.fd-disabled,
-	div.datePicker th span.fd-disabled:hover {
+div.dp-disabled th span.prev-but, div.dp-disabled th span.next-but, div.dp-disabled th span.today-but, div.dp-disabled th span.prev-but:hover,
+	div.dp-disabled th span.next-but:hover, div.dp-disabled th span.today-but:hover, div.datePicker th span.prev-but.fd-disabled:hover,
+	div.datePicker th span.next-but.fd-disabled:hover, div.datePicker thead th span.fd-disabled, div.datePicker th span.fd-disabled:hover
+	{
 	color: #ededed;
 	cursor: default !important;
 	opacity: 1;
@@ -1183,10 +1185,9 @@ form {
 html, body {
 	background: #e8e8e8;
 	color: #333;
-	font-family: Tahoma, Sans-Serif;
+	font-family: 'Roboto', sans-serif;
+	font-weight: bold;
 	font-size: 14px;
-	font-weight: 700;
-	text-align: center;
 }
 
 iframe.iehack {
@@ -1207,11 +1208,8 @@ input, select, textarea {
 	border-radius: 2px;
 	border: 1px solid #DDD;
 	color: #444;
-	font-family: Tahoma, Sans-Serif;
 	font-size: 14px;
-	font-weight: 700;
-	transition: border-color .15s ease-in-out 0 box-shadow .15s ease-in-out
-		0;
+	transition: border-color .15s ease-in-out 0 box-shadow .15s ease-in-out 0;
 	padding: 5px;
 }
 
@@ -1220,8 +1218,7 @@ input.fd-hidden-input, select.fd-hidden-input {
 }
 
 input:focus, textarea:focus, select:focus {
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px
-		rgba(102, 175, 233, 0.6);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
 	outline: 0 none;
 	border-color: #66AFE9;
 }
@@ -1249,7 +1246,8 @@ table.contentHd {
 
 td.screenShot img {
 	background: #DDD;
-	border: 1px solid #555;
+	border: 1px solid #555;;
+	width: 100%;
 }
 
 td.timerList {

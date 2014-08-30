@@ -61,6 +61,7 @@
 .bListSLink{padding:10px 3px;}
 .bListSLink:hover,.sListSName a:hover{background-color:#ededed;display:block;}
 .bannerHeader{background-image:url(/web-data/img/dreamboxweb_modern.png);height:16px;width:780px;margin:7px;padding:0;}
+.bold{font-weight:bold;}
 .bottom,#current img{vertical-align:bottom;}
 .bouquetIcons{float:left;padding-top:10px;width:40px;}
 .bouquetIcons a{display:inline-block;vertical-align:middle;}
@@ -72,7 +73,8 @@
 .dropdown-menu li{float:none !important;}
 .dropdown-toggle.active{background:#ededed;);}
 .epgLength{color:#444;text-align:right;width:100px;}
-.epgListItem{font-weight:400;padding:3px;}
+.epgListItem{font-weight:400;padding:3px;border:1px soid #DDD;border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;margin-bottom:10px;}
+.epgListItem td{padding: 3px;}
 .epgStart{color:#444;width:50px;}
 .epgTitle{color:#444;width:420px;padding:3px;}
 .externals{border-bottom:1px solid #DDD;border-top:1px solid #DDD;}
@@ -188,7 +190,7 @@ div.legendRow{height:auto;overflow:auto;}
 div.static-datepicker{left:0;position:relative;top:5px;}
 div.static-datepicker table{-moz-box-shadow:0 0 0 transparent;}
 form{margin:2px;}
-html,body{background:#e8e8e8;color:#333;font-family: 'Roboto', sans-serif;font-weight:bold;font-size:14px;text-align:center;}
+html,body{background:#e8e8e8;color:#333;font-family: 'Roboto', sans-serif;font-weight:bold;font-size:14px;}
 iframe.iehack{border:0;display:none;position:absolute;z-index:9998;margin:0;padding:0;}
 img{border:0;}
 input,select,textarea{background-color:#FFF;border-radius:2px;border:1px solid #DDD;color:#444;font-size:14px;transition:border-color .15s ease-in-out 0 box-shadow .15s ease-in-out 0;padding:5px;}
