@@ -790,26 +790,12 @@ $Date: 2014-07-28 16:17:43 +0200 (Mon, 28 Jul 2014) $
 		</website>
 		<website name="tel.search.ch" url="http://tel.search.ch/result.html?tel=$NUMBER" prefix="0">
 			<entry>
-				<name>&lt;h[1-9]*&gt;&lt;a\s+href=&quot;[^&quot;]*&quot;\s+class=&quot;fn&quot;&gt;([^&lt;]*)&lt;/a&gt;</name>
-				<street>&lt;div class=&quot;adr&quot;&gt;&lt;span class=&quot;adrgroup street-address&quot;&gt;([^&lt;]*)&lt;/span&gt;</street>
-				<city>&lt;span class=&quot;locality&quot;&gt;([^&lt;]*)&lt;/span&gt;</city>
-				<zipcode>&lt;span class=&quot;adrgroup&quot;&gt;&lt;span class=&quot;postal-code&quot;&gt;([^&lt;]*)&lt;/span&gt;</zipcode>
-			</entry>
-			<entry>
-				<company>&lt;h5&gt;&lt;a href=&quot;[^&quot;]*&quot; class=&quot;fn org&quot;&gt;([^&lt;]*)&lt;/a&gt;&lt;/h5&gt;</company>
+				<name>&lt;h[1-9]*&gt;&lt;a\s+href=&quot;[^&quot;]*&quot;\s+class=&quot;fn(?: org)?&quot;&gt;([^&lt;]*)(?:&lt;span class="sl-nowrap"&gt;[^&lt;]*&lt;/span&gt;)?&lt;/a&gt;</name>
 				<street>&lt;div class=&quot;adr&quot;&gt;&lt;span class=&quot;adrgroup street-address&quot;&gt;([^&lt;]*)&lt;/span&gt;</street>
 				<city>&lt;span class=&quot;locality&quot;&gt;([^&lt;]*)&lt;/span&gt;</city>
 				<zipcode>&lt;span class=&quot;adrgroup&quot;&gt;&lt;span class=&quot;postal-code&quot;&gt;([^&lt;]*)&lt;/span&gt;</zipcode>
 			</entry>
 		</website>
-		<website name ="tel.local.ch" url="http://tel.local.ch/de/q/?ext=1&amp;phone=$NUMBER" prefix="0">
-			<entry>
-				<name>&lt;a class='big info-link button' href='[^']*' title='([^']*)'&gt;Details&lt;/a&gt;</name>
-				<street>&lt;span class='address'&gt;([^,]*), \d+ [^&lt;]*&lt;/span&gt;</street>
-				<city>&lt;span class='address'&gt;[^,]*, \d+ ([^&lt;]*)&lt;/span&gt;</city>
-				<zipcode>&lt;span class='address'&gt;[^,]*, (\d+) [^&lt;]*&lt;/span&gt;</zipcode>
-			</entry>
-		</website>		
 	</country>
 	<country code="+423">
 		<website name="tel.search.ch" url="http://tel.search.ch/result.html?tel=00423$NUMBER" prefix="">
@@ -822,33 +808,35 @@ $Date: 2014-07-28 16:17:43 +0200 (Mon, 28 Jul 2014) $
 		</website>
 	</country>
 	<country code="+43">
-		<website name="herold.at (Privat)" url="http://www.herold.at/servlet/at.herold.sp.servlet.SPWPSearchServlet?searchmask=2&amp;phone=$NUMBER" prefix="0">
+		<website name="herold.at (Privat)" url="http://www.herold.at/telefonbuch/telefon_$NUMBER/" prefix="0">
 			<entry>
-				<name>&lt;h2 class=&quot;fullw&quot;&gt;&lt;a href=&quot;[^&quot;]*&quot;&gt;([^&lt;]*)&lt;/a&gt;&lt;/h2&gt;&lt;div class=&quot;addr fullw&quot;&gt;&lt;p&gt;[\d]+ [^&lt;]*&lt;br /&gt;</name>
-				<street>&lt;h2 class=&quot;fullw&quot;&gt;&lt;a href=&quot;[^&quot;]*&quot;&gt;[^&lt;]*&lt;/a&gt;&lt;/h2&gt;&lt;div class=&quot;addr fullw&quot;&gt;&lt;p&gt;[\d]+ [^,]*, ([^&lt;]*)&lt;br /&gt;</street>
-				<city>&lt;h2 class=&quot;fullw&quot;&gt;&lt;a href=&quot;[^&quot;]*&quot;&gt;[^&lt;]*&lt;/a&gt;&lt;/h2&gt;&lt;div class=&quot;addr fullw&quot;&gt;&lt;p&gt;[\d]+ ([^,]*), [^&lt;]*&lt;br /&gt;</city>
-				<zipcode>&lt;h2 class=&quot;fullw&quot;&gt;&lt;a href=&quot;[^&quot;]*&quot;&gt;[^&lt;]*&lt;/a&gt;&lt;/h2&gt;&lt;div class=&quot;addr fullw&quot;&gt;&lt;p&gt;([\d]+) [^,]*, [^&lt;]*&lt;br /&gt;</zipcode>
+				<name>data-clickpos="name"&gt;([^&lt;]*)&lt;/a&gt;</name>
+				<street>&lt;div class="addr fullw"&gt;&lt;p&gt;[\d]+ [^,]+, ([^&lt;]+)&lt;br /&gt;</street>
+				<city>&lt;div class="addr fullw"&gt;&lt;p&gt;[\d]+ ([^,]+), [^&lt;]+&lt;br /&gt;</city>
+				<zipcode>&lt;div class="addr fullw"&gt;&lt;p&gt;([\d]+) [^,]+, [^&lt;]+&lt;br /&gt;</zipcode>
 			</entry>
 		</website>
-		<website name="herold.at (Firma)" url="http://www.herold.at/servlet/at.herold.sp.servlet.SPYPSearchServlet?searchmask=2&amp;phone=$NUMBER" prefix="0">
+		<website name="herold.at (Firma)" url="http://www.herold.at/gelbe-seiten/telefon_$NUMBER/" prefix="0">
 			<entry>
-				<name>&lt;h2 class="fullw"&gt;&lt;a href="[^"]*"&gt;([^&lt;]*)&lt;/a&gt;&lt;/h2&gt;</name>
-				<street>&lt;p class="allEntries"&gt;&lt;a href="[^"]*" onclick="[^"]*"&gt;[^&lt;]*&lt;/a&gt;&lt;/p&gt;&lt;p&gt;\d+ [^,]*, ([^&lt;]*)&lt;br /&gt;&lt;/p&gt;</street>
-				<city>&lt;p class="allEntries"&gt;&lt;a href="[^"]*" onclick="[^"]*"&gt;[^&lt;]*&lt;/a&gt;&lt;/p&gt;&lt;p&gt;\d+ ([^,]*), [^&lt;]*&lt;br /&gt;&lt;/p&gt;</city>
-				<zipcode>&lt;p class="allEntries"&gt;&lt;a href="[^"]*" onclick="[^"]*"&gt;[^&lt;]*&lt;/a&gt;&lt;/p&gt;&lt;p&gt;(\d+) [^,]*, [^&lt;]*&lt;br /&gt;&lt;/p&gt;</zipcode>
+				<name>data-clickpos="name"(?: class=" ttWrapper")?&gt;([^&lt;]*)&lt;</name>
+				<street>&lt;div class="addr fullw"&gt;&lt;p class="allEntries"&gt;&lt;a href="[^&gt;]+&gt;[^&lt;]+&lt;/a&gt;&lt;/p&gt;&lt;p&gt;[\d]+ [^,]+, ([^&lt;]+)&lt;br /&gt;</street>
+				<city>&lt;div class="addr fullw"&gt;&lt;p class="allEntries"&gt;&lt;a href="[^&gt;]+&gt;[^&lt;]+&lt;/a&gt;&lt;/p&gt;&lt;p&gt;[\d]+ ([^,]+), [^&lt;]+&lt;br /&gt;</city>
+				<zipcode>&lt;div class="addr fullw"&gt;&lt;p class="allEntries"&gt;&lt;a href="[^&gt;]+&gt;[^&lt;]+&lt;/a&gt;&lt;/p&gt;&lt;p&gt;([\d]+) [^,]+, [^&lt;]+&lt;br /&gt;</zipcode>
 			</entry>
 		</website>
-		<website name="tb-online.at" url="http://www.tb-online.at/index.php?pc=in&amp;telnummer=$NUMBER&amp;aktion=suchein" prefix="0">
+<!--
+ 		<website name="dasschnelle.at" url="http://www.dasschnelle.at/result/index/resultsPerPage=20&pageNum=1&what=013323531&where=&rubrik=0&bezirk=0&orderBy=Standard&mapsearch=false&boundsN=0&boundsW=0&boundsS=0&boundsE=0" prefix="0">
 			<entry>
-				<!-- 
+				
 				zipcode hidden as image...
-				-->
+				
 				<name>&lt;p\s*class=&quot;name&quot;&gt;\s*([^&lt;]*)&lt;/p&gt;</name>
 				<street>&lt;p&gt;([^&lt;]*)&lt;/p&gt;\s*&lt;p&gt;&lt;img class=&quot;img&quot; src=&quot;grafikpng.php?[^&gt;]*&gt;&amp;nbsp;[^&lt;]*&lt;/p&gt;</street>
 				<city>&lt;p&gt;[^&lt;]*&lt;/p&gt;\s*&lt;p&gt;&lt;img class=&quot;img&quot; src=&quot;grafikpng.php?[^&gt;]*&gt;&amp;nbsp;([^&lt;]*)&lt;/p&gt;</city>
 				<zipcode>()</zipcode>
 			</entry>
-		</website>				
+		</website>
+-->
 	</country>
 	<country code="+45">
 		<website name="degulesider.dk" url="http://www.degulesider.dk/vbw/super/resultat.do?twoFieldName=$NUMBER&amp;twoFieldAddr=&amp;Image52.x=0&amp;Image52.y=0" prefix="0">
