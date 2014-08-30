@@ -7,7 +7,7 @@ from traceback import format_exc
 # for localized messages
 from . import _
 
-PLUGIN_VERSION = "1.0"
+PLUGIN_VERSION = "1.0.1"
 def debugOut(outtxt, outfile=None, fmode="aw", forced=False, outPrefix="[EPGBackup]"):
 	try: # fails if called too early during Enigma startup
 		if config.plugins.epgbackup.enable_debug.value or forced:
