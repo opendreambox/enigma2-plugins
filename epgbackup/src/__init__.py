@@ -4,8 +4,8 @@ from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LANGUAGE
 from os import environ as os_environ
 import gettext
 
-PluginLanguageDomain = "EPGRefresh"
-PluginLanguagePath = "Extensions/EPGRefresh/locale"
+PluginLanguageDomain = "EPGBackup"
+PluginLanguagePath = "Extensions/EPGBackup/locale"
 # Fallback to EN for Code-Strings
 DefaultPluginLang = "EN"
 
@@ -24,14 +24,10 @@ def _(txt):
 
 def getDefaultTxt(txt):
 	lang = language.getLanguage()[:2]
-	os_environ["LANGUAGE"] = DefaultPluginLang
+	os.environ["LANGUAGE"] = DefaultPluginLang
 	t = gettext.dgettext(PluginLanguageDomain, txt)
-	os_environ["LANGUAGE"] = lang
+	os.environ["LANGUAGE"] = lang
 	return t
 
 localeInit()
 language.addCallback(localeInit)
-
-STARTNOTIFICATIONID = 'EpgRefreshStartNotificationId'
-ENDNOTIFICATIONID = 'EpgRefreshEndNotificationId'
-NOTIFICATIONDOMAIN = "EPGRefresh" 

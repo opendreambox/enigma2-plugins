@@ -1,23 +1,73 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: enigma2 - epgrefresh\n"
+"Project-Id-Version: Enigma2 EPGRefresh Plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-26 14:41+0200\n"
-"PO-Revision-Date: 2011-01-30 12:36+0200\n"
+"POT-Creation-Date: 2014-03-11 07:00+CET\n"
+"PO-Revision-Date: 2014-08-20 10:56+0200\n"
 "Last-Translator: Ni Hao <ni_hao_1@hotmail.com>\n"
-"Language-Team:  <Benny.DeTandt@gmail.com>\n"
+"Language-Team: none\n"
+"Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
-"X-Poedit-Language: Dutch\n"
-"X-Poedit-Country: NETHERLANDS\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Poedit 1.6.7\n"
+"X-Poedit-SearchPath-0: ../src\n"
+
+msgid "%d more services"
+msgstr "%d meer zenders"
+
+msgid ""
+"After a successful refresh the AutoTimer will automatically search for new "
+"matches if this is enabled. The options 'Ask*' has only affect on a manually "
+"refresh. If EPG-Refresh was called in background the default-Answer will be "
+"executed!"
+msgstr ""
+"Na een succesvolle refresh zal, indien deze optie is geactiveerd, de "
+"AutoTimer plugin automatisch naar nieuwe overeenkomsten zoeken. De optie "
+"\"Vragen\" is alleen relevant bij een handmatige refresh. Op de achtergrond "
+"zal het standaard-antwoord worden gebruikt."
+
+msgid ""
+"After that times of unsuccesfully boot enigma2, the EPG-File will be deleted."
+msgstr ""
+"Na dit aantal foutieve Enigam2 starts, zal het EPG-bestand worden verwijderd."
+
+msgid ""
+"An automated refresh will start after this time of day, but before the time "
+"specified in next setting."
+msgstr ""
+"Een automatische refresh zal na dit tijdstip van de dag worden uitgevoerd, "
+"maar voor het tijdstip dat in de volgende regel is opgegeven"
+
+msgid ""
+"An automated refresh will start before this time of day, but after the time "
+"specified in previous setting."
+msgstr ""
+"Een automatische refresh zal na dit tijdstip van de dag worden uitgevoerd, "
+"maar na het tijdstip dat op de vorige regel is opgegeven"
+
+msgid "Ask default No"
+msgstr "Vragen standaard Nee"
+
+msgid "Ask default Yes"
+msgstr "Vragen standaard Ja"
 
 msgid "Automatically refresh EPG"
-msgstr "Automatisch EPG vernieuwen"
+msgstr "Automatische EPG actualisering"
+
+msgid "Background only"
+msgstr "Alleen op de achtergrond"
+
+msgid "Backup-Strategy"
+msgstr "Backup-strategie"
+
+msgid "Biggest before Youngest"
+msgstr "Grootste voor de nieuwste"
 
 msgid "Bouquets"
-msgstr "Boeketten"
+msgstr "Favorieten"
 
 msgid "Cancel"
 msgstr "Annuleren"
@@ -25,85 +75,445 @@ msgstr "Annuleren"
 msgid "Channels"
 msgstr "Zenders"
 
-msgid "Configure EPGRefresh"
-msgstr "EPGRefresh instellen"
+msgid "Close and forget changes"
+msgstr "Afsluiten en wijzigingen negeren"
 
-msgid "Delay when not in Standby (in m)"
-msgstr "Vertraging wanneer niet in Standby (in min)"
+msgid "Close and save changes"
+msgstr "Afsluiten en wijzigingen opslaan"
+
+msgid "Delay if not in standby (minutes)"
+msgstr "Vertraging voor zover niet in standby (minuten)"
+
+msgid "Directory for the Logfiles."
+msgstr "Map voor de logbestanden"
+
+msgid "Display more Options"
+msgstr "Toon meer optie's"
+
+msgid "Duration to stay on service (seconds)"
+msgstr "Tijd (seconden) om op de zender te blijven staan"
+
+msgid "EPG refresh auto-start earliest (hh:mm)"
+msgstr "EPGRefresh auto-start op zijn vroegst om (uu:mm)"
+
+msgid "EPG refresh auto-start latest (hh:mm)"
+msgstr "EPGRefresh auto-start op zijn laatst om (uu:mm)"
+
+msgid "EPG refresh finished."
+msgstr "EPGRefresh beëindigd."
+
+msgid ""
+"EPG refresh finished.\n"
+"Should AutoTimer be search for new matches?"
+msgstr ""
+"EPGRefresh voltooid.\n"
+"Moet Auto Timer plugin naar nieuwe overeenkomsten zoeken?"
+
+msgid "EPG refresh started in background."
+msgstr "EPGRefresh is op de achtergrond gestart"
+
+msgid "EPG refresh starts scanning channels."
+msgstr "EPGRefresh gaat de zenders af."
+
+msgid "EPG-Backup has been installed!:"
+msgstr "EPG-Backup is geïnstalleerd!"
+
+msgid "EPG-Backup has been uninstalled!:"
+msgstr "EPG-Backup is gedeïnstalleerd!"
+
+msgid "EPG-Backup is disabled"
+msgstr "EPG-Backup is uitgeschakeld"
+
+msgid "EPG-File-Write Wait"
+msgstr "Wachten op het schrijven van het EPG-bestand"
+
+msgid "EPG-Files with a less size of this value (KB) won't be backuped."
+msgstr ""
+"EPG-bestanden welke kleiner zijn dan deze waarde (in kb) worden niet "
+"gebackupped."
+
+msgid "EPGREFRESH_NOTIFICATION_DOMAIN"
+msgstr "EPGRefresh"
 
 msgid "EPGRefresh Configuration"
-msgstr "EPGRefresh configuratie"
+msgstr "EPGRefresh Instellingen"
+
+msgid "EPGRefresh Configuration Help"
+msgstr "EPGRefresh Configuratie Help"
+
+msgid "EPGRefresh Functions"
+msgstr "EPGRefresh Funkties"
 
 msgid "EPGRefresh Services"
-msgstr "EPGRefresh Services"
+msgstr "EPGRefresh zenders"
+
+msgid "EXTENSIONMENU_PREFIX"
+msgstr "EPGRefresh"
+
+msgid "EXTENSIONNAME_SETUP"
+msgstr "Instellingen"
 
 msgid "Edit Services"
-msgstr "Zenders bewerken"
+msgstr "Zenders"
 
 msgid "Edit Services to refresh"
-msgstr "Bewerk te verniewen zenders"
+msgstr "Zenders kiezen voor actualisering"
 
 msgid "Editing"
-msgstr "Wat wil je bewerken"
+msgstr "Wijzig"
+
+msgid "Enable Backup"
+msgstr "Backup activeren"
+
+msgid "Enable Debug"
+msgstr "Debug activeren"
+
+msgid ""
+"Enable this to be able to access the EPGRefresh configuration from within "
+"the extension menu."
+msgstr ""
+"Activeer dit om de instellingen van EPGRefresh beschikbaar te maken in het "
+"uitbreidingsmenu. "
+
+msgid ""
+"Enable this to be able to start a restore of a Backup-File from within the "
+"extension menu."
+msgstr ""
+"Activeer dit om een backup terug te zetten vanuit het uitbreidingsmenu."
+
+msgid ""
+"Enable this to be able to start the EPGRefresh from within the extension "
+"menu."
+msgstr ""
+"Activeer dit om EPGRefresh te kunnen starten vanuit het uitbreidingsmenu."
+
+msgid "Extend the list of services to refresh by those your AutoTimers use?"
+msgstr ""
+"Lijst met zenders automatisch uitbreiden met de zenders die de AutoTimer "
+"plugin gebruikt?"
+
+msgid "FILELIST_BIGGEST"
+msgstr "Grootste"
+
+msgid "FILELIST_FORCED"
+msgstr "Geforceerd"
+
+msgid "FILELIST_YOUNGEST"
+msgstr "Nieuwste"
+
+msgid "Fake recording"
+msgstr "Nep opname"
+
+msgid "Following Services have to be scanned:"
+msgstr "Volgende zenders worden afgezocht:"
 
 msgid "Force scan even if receiver is in use"
 msgstr "Zoeken wanneer de ontvanger in gebruik is"
 
-msgid "Inherit Services from AutoTimer if available"
-msgstr "AutoTimer zenders overnemen indien beschikbaar"
+msgid "Foreground also"
+msgstr "ook op de voorgrond"
 
-msgid "Make AutoTimer parse EPG if available"
-msgstr "EPG van AutoTimer doorgeven indien beschikbaar"
+msgid ""
+"Found a total of %d matching Events.\n"
+"%d Timer were added and\n"
+"%d modified,\n"
+"%d conflicts encountered,\n"
+"%d similars added."
+msgstr ""
+"In totaal %d overeenkomsten gevonden.\n"
+"%d Timers toegevoegd en\n"
+"%d aangepast,\n"
+"%d conflicten opgetreden,\n"
+"%d gelijkwaardige toegevoegd."
+
+msgid "Functions"
+msgstr "Funkties"
+
+msgid "General Help"
+msgstr "Algemene Hulp"
+
+msgid ""
+"How many seconds should EPGRefresh be wait to check if the EPG-File-Size "
+"didn't change before it starts the Backup."
+msgstr ""
+"Hoeveel seconden moet EPGRefresh wachten om te controleren of de grootte van "
+"het EPG-bestand niet meer veranderd voordat de Backup wordt gestart."
+
+msgid ""
+"If the receiver currently isn't in standby, this is the duration which "
+"EPGRefresh will wait before retry."
+msgstr ""
+"Indien de ontvanger momenteel niet in standby staat, is dit de tijd dat zal "
+"worden gewacht voordat EPGRefresh het opnieuw probeert."
+
+msgid ""
+"If this is enabled, the plugin will wake up the receiver from standby if "
+"possible. Otherwise it needs to be switched on already."
+msgstr ""
+"Indien deze optie is geactiveerd, zal de plugin, voor zover mogelijk, de "
+"ontvanger uit standby halen. Indien niet mogelijk, dan moet de ontvanger "
+"reeds aan staan."
+
+msgid ""
+"If you want to refresh the EPG in background, you can choose the method "
+"which best suits your needs here, e.g. hidden, fake reocrding or regular "
+"Picture in Picture."
+msgstr ""
+"Indien EPGRefresh op de achtergrond moet worden uitgevoerd, kan hier de "
+"methode worden ingesteld, vb. Hoofdscherm, Beeld in Beeld (verborgen), Beel "
+"in Beeld, nep opname."
+
+msgid "Inherit Services from AutoTimer"
+msgstr "Zenders van AutoTimer plugin overnemen"
+
+msgid "Key Help"
+msgstr "Toetsen hulp"
+
+msgid "Last refresh was %s"
+msgstr "Vorige actuaisering was %s"
+
+msgid "Log-directory"
+msgstr "Naam van de Map met logbestanden"
+
+msgid "Maximum Boot-Count"
+msgstr "Maximaal aantal keren opstarten (boot)"
+
+msgid "Move page down"
+msgstr "Pagina omlaag"
+
+msgid "Move page up"
+msgstr "Pagina omhoog"
 
 msgid "New"
 msgstr "Nieuw"
 
+msgid "No"
+msgstr "Nee"
+
+msgid "No Backupfiles found"
+msgstr "Geen backup bestanden gevonden"
+
 msgid "OK"
-msgstr "Ok"
+msgstr "OK"
+
+msgid "Only keep EPG-Backup-Files younger than this days."
+msgstr ""
+"Bewaar/behoud alleen EPG-backup bestanden welke jonger zijn (in dagen) dan "
+"het aantal hier opgegeven."
+
+msgid "PLUGINNAME_EPGRefresh"
+msgstr "EPGRefresh"
+
+msgid "Pending Services"
+msgstr "Zenders in de wachtrij"
+
+msgid "PiP available now."
+msgstr "Beeld in Beeld (PiP) kan weer worden gebruikt."
+
+msgid "Picture in Picture"
+msgstr "Beeld in Beeld (PiP)"
+
+msgid "Picture in Picture (hidden)"
+msgstr "Beeld in Beeld (verborgen)"
+
+msgid "Please don't use PiP meanwhile!"
+msgstr "Gebruik ondertussen géén PiP!"
 
 msgid "Really close without saving settings?"
-msgstr "Echt sluiten zonder op te slaan?"
+msgstr "Echt afsluiten zonder op te slaan?"
 
-msgid "Refresh EPG after"
-msgstr "EPG vernieuwen na"
+msgid "Refresh EPG automatically"
+msgstr "EPG automatisch actualiseren"
 
-msgid "Refresh EPG before"
-msgstr "EPG vernieuwen voor"
-
-msgid "Refresh automatically"
-msgstr "Automatisch vernieuwen"
+msgid "Refresh EPG using"
+msgstr "Maak voor EPG actualisering gebruik van"
 
 msgid "Refresh now"
-msgstr "Nu vernieuwen"
+msgstr " Nu actualiseren"
 
 msgid "Refreshing"
-msgstr "Wat wil je vernieuwen"
+msgstr "Bezig met actualiseren"
+
+msgid "Restore Backup"
+msgstr "Backup terugzetten"
+
+msgid "Restore EPG-Backups (Date)"
+msgstr "EPG-Backup terugzetten (datum)"
+
+msgid "Restore EPG-Backups (Size)"
+msgstr "EPG-Backup terugzetten (grootte)"
+
+msgid "Run AutoTimer after refresh"
+msgstr "AutoTimer plugin na EPGRefresh starten"
+
+msgid "Select Logfile-Location"
+msgstr "Kies de locatie van het log-bestand"
+
+msgid "Select a file to force a Backup"
+msgstr "Kies een bestand om een backup te starten"
 
 msgid "Select bouquet to refresh"
-msgstr "Kies boeket om te vernieuwen"
+msgstr "Kies favoriet (boeket) om te actualiseren"
 
 msgid "Select channel to refresh"
-msgstr "Kies zender om te vernieuwen"
-
-msgid "Shutdown after refresh"
-msgstr "Afsluiten na het vernieuwen"
+msgstr "Kies zender om te actualiseren"
 
 msgid ""
-"This might have been an automated bootup to refresh the EPG. For this to happen it is recommmended to put the receiver to Standby.\n"
-"Do you want to do this now?"
+"Should debugmessages be printed in a File?\n"
+"The filename will be added with the current date"
 msgstr ""
-"Dit zou een automatische start lkunnen zijn om de EPG te vernieuwen. Om dit te bereiken wordt aanbevolen de ontvanger in standby te plaatsen.\n"
-"Wilt u dit nu doen?"
+"Moet debug informatie in een bestand worden opgeslagen?\n"
+"Standaard wordt dit opgeslagen in de map \"tmp\". Indien Debug is "
+"geactiveert, wordthet bestand voorzien van de actuele datum"
 
-msgid "Time to stay on service (in m)"
-msgstr "Tijd om op de zender te blijven staan (in min)"
+msgid ""
+"Should protected services be skipped if refresh was started in interactive-"
+"mode?"
+msgstr ""
+"Moeten tijdens een handmatige actualisatie de zenders met een kinderslot "
+"worden overgeslagisen?"
 
-msgid "Wakeup from Deep-Standby to refresh EPG"
-msgstr "EPG vernieuwen indien in Deep-Standby"
+msgid ""
+"Should the Backup-Functionality be enabled?\n"
+"For more Information have a look at the Help-Screen."
+msgstr ""
+"Moet de Backup functie worden geactiveerd?\n"
+"Kijk voor meer informatie in het Algemene Hulpscherm."
+
+msgid "Should the Manage-Script be shown in User-Scripts?"
+msgstr "Moet het administratieve script worden getoond in userscripts?"
+
+msgid ""
+"Should the biggest or the youngest File be backuped?\n"
+"If it is smaller than the Real-EPG-File then the other strategy will be the "
+"Fallback-Strategy."
+msgstr ""
+"Moet het grootste of het nieuwste backup-bestand worden gebruikt?\n"
+"Indien het bestand kleiner is dan het echte EPG-bestand, wordt de andere "
+"strategie geprobeerd."
+
+msgid "Show 'EPGRefresh Restore Backup' in extension menu"
+msgstr "\"Backup terugzetten\" in uitbreidingsmenu weergeven"
+
+msgid "Show 'EPGRefresh Start now' in extension menu"
+msgstr "\"EPG actualisering starten\" in uitbreidingsmenu weergeven"
+
+msgid "Show Advanced Options"
+msgstr "Uitgebreide opties weergeven"
+
+msgid "Show Setup in extension menu"
+msgstr "Instellingen in uitbreidingsmenu weergeven"
+
+msgid "Show in User-Scripts"
+msgstr "In userscripts weergeven"
+
+msgid "Show last EPGRefresh - Time"
+msgstr "Tijdstip van laatste EPG-aktualisering weergeven"
+
+msgid "Show more Functions"
+msgstr "Meer functies weergeven"
+
+msgid "Show popup when refresh starts and ends"
+msgstr "Bericht weergeven wanneer actualisering begint/eindigt"
+
+msgid "Show the pending Services for refresh"
+msgstr "Zenders in de wachtrij weergeven"
+
+msgid "Shutdown after EPG refresh"
+msgstr "Na EPGRefresh ontvanger uitschakelen"
+
+msgid "Skip protected Services"
+msgstr "Zenders met kinderslot overslaan"
+
+msgid "Start EPGrefresh immediately"
+msgstr "EPG-actualisering direct starten"
+
+msgid "Start a Restore of a Backup"
+msgstr "Backup maken of terugzetten (daarna is een herstart noodzakeijk)"
+
+msgid "Stop Refresh"
+msgstr "EPG-actualisering stoppen"
+
+msgid "Stop Running EPG-refresh"
+msgstr "Huidige/Lopende EPG-actualisering stoppen"
+
+msgid "Stop running refresh"
+msgstr "Huidige/Lopende EPG-actualisering stoppen"
+
+msgid ""
+"There is still a refresh running. The Operation isn't allowed at this moment."
+msgstr "EPGRefresh is actief. De actie is momenteel niet mogelijk."
+
+msgid ""
+"This is the duration each service/channel will stay active during a refresh."
+msgstr ""
+"Dit is de tijd dat tijdens een EPG-actualisatie op een zender zal worden "
+"blijven gestaan."
+
+msgid ""
+"This setting controls whether or not an informational message will be shown "
+"at start and completion of refresh."
+msgstr "Bij het begin/einde van een actualisatie een bericht weergeven?"
+
+msgid ""
+"This setting controls whether or not the refresh will be initiated even "
+"though the receiver is active (either not in standby or currently recording)."
+msgstr ""
+"Ook een EPG-actuaisatie starten wanneer de ontvanger actief is (dus niet in "
+"standby of aan het opnemen)."
+
+msgid ""
+"This setting controls whether the receiver should be set to standby after "
+"refresh is completed."
+msgstr "Ontvanger na EPG-actualisatie in standby zetten?"
+
+msgid ""
+"To apply your Changes the GUI has to be restarted.\n"
+"Do you want to restart the GUI now?"
+msgstr ""
+"Om de wijzigingen over te nemen moet de GUI (Enigma2) worden herstart.\n"
+"De GUI (Enigma2) nu herstarten?"
+
+msgid ""
+"To load the Backupfile the GUI has to be restarted.\n"
+"Do you want to restart the GUI now?"
+msgstr ""
+"Om het teruggezette bestand te laden moet de GUI (Enigma2) worden herstart.\n"
+"De GUI (Enigma2) nu herstarten?"
+
+msgid "Uninstall EPG-Backup"
+msgstr "EPG-Backup deinstalleren"
+
+msgid ""
+"Unless this is enabled, EPGRefresh won't automatically run but needs to be "
+"explicitly started by the yellow button in this menu."
+msgstr ""
+"Tenzij deze op Ja is gezet, zal EPGRefresh niet automatisch starten maar zal "
+"pas worden geactiveerd indien op de gele knop in dit menu is gedrukt"
+
+msgid "Valid Age"
+msgstr "Geldige datum"
+
+msgid "Valid Filesize"
+msgstr "Geldige bestandsgrootte"
+
+msgid "Version"
+msgstr "Versie"
+
+msgid "Wake up from standby for EPG refresh"
+msgstr "Ontvanger uit standby halen voor EPGRefresh"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "Youngest before Biggest"
+msgstr "Nieuwste voor grootste"
 
 msgid "add to EPGRefresh"
-msgstr "toevoegen aan EPGRefresh"
+msgstr "Toevoegen aan EPGRefresh"
 
 msgid "delete"
 msgstr "Verwijderen"
 
+msgid "never"
+msgstr "Nooit"

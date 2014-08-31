@@ -29,14 +29,14 @@ class InternetRadioList(GUIComponent, object):
 		width = self.l.getItemSize().width()
 		res = [ None ]
 		if self.mode == 0: # GENRELIST
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 3, width, 23, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, item.name))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, 28, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, item.name))
 		elif self.mode == 1: # STATIONLIST
 			if len(item.country) != 0:
 				display = "%s (%s)" % (item.name, item.country)
 			else:
 				display = item.name
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 3, width, 23, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, display))
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 27, width, 23, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, item.genre))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, 26, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, display))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 10, 28, width, 26, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, item.genre))
 		elif self.mode == 2: # FAVORITELIST
 			if len(item.configItem.country.value) != 0:
 				display = "%s (%s)" % (item.configItem.name.value, item.configItem.country.value)
@@ -51,8 +51,8 @@ class InternetRadioList(GUIComponent, object):
 				display2 = "%s %s" % (_("Filter:"),filtername)
 			else:
 				display2 = item.configItem.tags.value
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 3, width, 23, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, display))
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 27, width, 23, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, display2))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, 26, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, display))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 10, 28, width, 26, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, display2))
 		return res
 
 	def __init__(self):
@@ -69,9 +69,9 @@ class InternetRadioList(GUIComponent, object):
 	def setMode(self, mode):
 		self.mode = mode
 		if mode == 0: # GENRELIST
-			self.l.setItemHeight(29)
+			self.l.setItemHeight(30)
 		elif mode == 1 or mode == 2: # STATIONLIST OR FAVORITELIST
-			self.l.setItemHeight(53)
+			self.l.setItemHeight(60)
 
 	def connectSelChanged(self, fnc):
 		if not fnc in self.onSelectionChanged:

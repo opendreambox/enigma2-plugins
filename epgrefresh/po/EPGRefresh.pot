@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-04-12 10:30+CEST\n"
+"POT-Creation-Date: 2014-06-23 11:23+CEST\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,53 +15,21 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: EPGBackupSupport.py:52
-msgid "No Backupfiles found"
-msgstr ""
-
-#: EPGBackupSupport.py:53 EPGRefreshChannelEditor.py:79
-#: EPGRefreshConfiguration.py:44 EPGRefreshConfiguration.py:60
-#: EPGRefreshConfiguration.py:107
-msgid "Cancel"
-msgstr ""
-
-#: EPGBackupSupport.py:55
-msgid "Select a file to force a Backup"
-msgstr ""
-
-#: EPGBackupSupport.py:65
-msgid ""
-"To load the Backupfile the GUI has to be restarted.\n"
-"Do you want to restart the GUI now?"
-msgstr ""
-
-#: EPGBackupSupport.py:81
-msgid "FILELIST_BIGGEST"
-msgstr ""
-
-#: EPGBackupSupport.py:82
-msgid "FILELIST_YOUNGEST"
-msgstr ""
-
-#: EPGBackupSupport.py:83
-msgid "FILELIST_FORCED"
-msgstr ""
-
-#: EPGRefresh.py:277
+#: EPGRefresh.py:282
 msgid "There is still a refresh running. The Operation isn't allowed at this moment."
 msgstr ""
 
-#: EPGRefresh.py:367
+#: EPGRefresh.py:372
 msgid ""
 "EPG refresh finished.\n"
 "Should AutoTimer be search for new matches?"
 msgstr ""
 
-#: EPGRefresh.py:408
+#: EPGRefresh.py:413
 msgid "AutoTimer failed with error %s"
 msgstr ""
 
-#: EPGRefresh.py:417
+#: EPGRefresh.py:422
 msgid ""
 "Found a total of %d matching Events.\n"
 "%d Timer were added and\n"
@@ -70,15 +38,15 @@ msgid ""
 "%d similars added."
 msgstr ""
 
-#: EPGRefresh.py:431 PipAdapter.py:79
+#: EPGRefresh.py:436 PipAdapter.py:79
 msgid "EPG refresh finished."
 msgstr ""
 
-#: EPGRefresh.py:546
+#: EPGRefresh.py:557
 msgid "%d more services"
 msgstr ""
 
-#: EPGRefresh.py:547
+#: EPGRefresh.py:558
 msgid "Following Services have to be scanned:"
 msgstr ""
 
@@ -92,6 +60,11 @@ msgstr ""
 
 #: EPGRefreshChannelEditor.py:70
 msgid "Bouquets"
+msgstr ""
+
+#: EPGRefreshChannelEditor.py:79 EPGRefreshConfiguration.py:44
+#: EPGRefreshConfiguration.py:60 EPGRefreshConfiguration.py:107
+msgid "Cancel"
 msgstr ""
 
 #: EPGRefreshChannelEditor.py:80 EPGRefreshConfiguration.py:108
@@ -142,11 +115,11 @@ msgstr ""
 msgid "Stop running refresh"
 msgstr ""
 
-#: EPGRefreshConfiguration.py:57 plugin.py:240
+#: EPGRefreshConfiguration.py:57 plugin.py:243
 msgid "Pending Services"
 msgstr ""
 
-#: EPGRefreshConfiguration.py:59 plugin.py:238
+#: EPGRefreshConfiguration.py:59 plugin.py:241
 msgid "Refresh now"
 msgstr ""
 
@@ -154,7 +127,7 @@ msgstr ""
 msgid "EPGRefresh Functions"
 msgstr ""
 
-#: EPGRefreshConfiguration.py:90 EPGRefreshConfiguration.py:195
+#: EPGRefreshConfiguration.py:90 EPGRefreshConfiguration.py:194
 msgid "EPGRefresh Configuration"
 msgstr ""
 
@@ -310,27 +283,27 @@ msgstr ""
 msgid "Inherit Services from AutoTimer"
 msgstr ""
 
-#: EPGRefreshConfiguration.py:180
+#: EPGRefreshConfiguration.py:179
 msgid "After a successful refresh the AutoTimer will automatically search for new matches if this is enabled. The options 'Ask*' has only affect on a manually refresh. If EPG-Refresh was called in background the default-Answer will be executed!"
 msgstr ""
 
-#: EPGRefreshConfiguration.py:180
+#: EPGRefreshConfiguration.py:179
 msgid "Run AutoTimer after refresh"
 msgstr ""
 
-#: EPGRefreshConfiguration.py:195
+#: EPGRefreshConfiguration.py:194
 msgid "Version"
 msgstr ""
 
-#: EPGRefreshConfiguration.py:328
+#: EPGRefreshConfiguration.py:327
 msgid "never"
 msgstr ""
 
-#: EPGRefreshConfiguration.py:332
+#: EPGRefreshConfiguration.py:331
 msgid "Last refresh was %s"
 msgstr ""
 
-#: EPGRefreshConfiguration.py:348
+#: EPGRefreshConfiguration.py:347
 msgid "Really close without saving settings?"
 msgstr ""
 
@@ -394,45 +367,45 @@ msgstr ""
 msgid "EPGREFRESH_NOTIFICATION_DOMAIN"
 msgstr ""
 
-#: plugin.py:202
+#: plugin.py:205
 msgid ""
 "To apply your Changes the GUI has to be restarted.\n"
 "Do you want to restart the GUI now?"
 msgstr ""
 
-#: plugin.py:236
+#: plugin.py:239
 msgid "EXTENSIONMENU_PREFIX"
 msgstr ""
 
-#: plugin.py:237
+#: plugin.py:240
 msgid "EXTENSIONNAME_SETUP"
 msgstr ""
 
-#: plugin.py:237 plugin.py:293
+#: plugin.py:240 plugin.py:296
 msgid "Automatically refresh EPG"
 msgstr ""
 
-#: plugin.py:238
+#: plugin.py:241
 msgid "Start EPGrefresh immediately"
 msgstr ""
 
-#: plugin.py:239
+#: plugin.py:242
 msgid "Stop Refresh"
 msgstr ""
 
-#: plugin.py:239
+#: plugin.py:242
 msgid "Stop Running EPG-refresh"
 msgstr ""
 
-#: plugin.py:240
+#: plugin.py:243
 msgid "Show the pending Services for refresh"
 msgstr ""
 
-#: plugin.py:286
+#: plugin.py:289
 msgid "add to EPGRefresh"
 msgstr ""
 
-#: plugin.py:292
+#: plugin.py:295
 msgid "PLUGINNAME_EPGRefresh"
 msgstr ""
 

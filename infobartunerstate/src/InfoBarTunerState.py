@@ -75,6 +75,7 @@ except:
 # Globals
 InfoBarShow = None
 InfoBarHide = None
+InfoBarToggle = None
 
 
 # Type Enum
@@ -88,27 +89,38 @@ INFINITY =  u"\u221E".encode("utf-8")
 #######################################################
 # InfoBarShowHide for MoviePlayer integration
 def overwriteInfoBar():
-	global InfoBarShow, InfoBarHide
-	if InfoBarShow is None:
-		# Backup original function
-		InfoBarShow = InfoBarShowHide._InfoBarShowHide__onShow
-		# Overwrite function
-		InfoBarShowHide._InfoBarShowHide__onShow = InfoBarShowTunerState
+	global InfoBarShow, InfoBarHide, InfoBarToggle
+	if config.infobartunerstate.show_infobar.value:
+		if InfoBarShow is None:
+			# Backup original function
+			InfoBarShow = InfoBarShowHide._InfoBarShowHide__onShow
+			# Overwrite function
+			InfoBarShowHide._InfoBarShowHide__onShow = InfoBarShowTunerState
 	if InfoBarHide is None:
 		# Backup original function
 		InfoBarHide = InfoBarShowHide._InfoBarShowHide__onHide
 		# Overwrite function
 		InfoBarShowHide._InfoBarShowHide__onHide = InfoBarHideTunerState
+	if config.infobartunerstate.show_ontoggle.value:
+		if InfoBarToggle is None:
+			# Backup original function
+			InfoBarToggle = InfoBarShowHide.toggleShow
+			# Overwrite function
+			InfoBarShowHide.toggleShow = InfoBarToggleTunerState
 
 # InfoBar Events
 def recoverInfoBar():
-	global InfoBarShow, InfoBarHide
+	global InfoBarShow, InfoBarHide, InfoBarToggle
 	if InfoBarShow:
 		InfoBarShowHide._InfoBarShowHide__onShow = InfoBarShow
 		InfoBarShow = None
 	if InfoBarHide:
 		InfoBarShowHide._InfoBarShowHide__onHide = InfoBarHide
 		InfoBarHide = None
+	if InfoBarToggle:
+		InfoBarShowHide.toggleShow = InfoBarToggle
+		InfoBarToggle = None
+
 
 def InfoBarShowTunerState(self):
 	from Plugins.Extensions.InfoBarTunerState.plugin import gInfoBarTunerState
@@ -127,6 +139,15 @@ def InfoBarHideTunerState(self):
 		InfoBarHide(self)
 	if gInfoBarTunerState:
 		gInfoBarTunerState.hide()
+
+def InfoBarToggleTunerState(self):
+	from Plugins.Extensions.InfoBarTunerState.plugin import gInfoBarTunerState
+	global gInfoBarTunerState
+	global InfoBarToggle
+	if InfoBarToggle:
+		InfoBarToggle(self)
+	if gInfoBarTunerState:
+		gInfoBarTunerState.toggle()
 
 
 #######################################################
@@ -176,11 +197,16 @@ class InfoBarTunerState(object):
 	def __init__(self, session):
 		self.session = session
 		
+		self._shown = False
+		
 		self.infobar = None
 		self.info = None
 		
 		self.epg = eEPGCache.getInstance()
 		
+		#TODO showTimer is used to avoid several recalls
+		#TODO find another solution, e.g.
+		# if IBTS is already shown, skip
 		self.showTimer = eTimer()
 		self.showTimer_conn = self.showTimer.timeout.connect(self.tunerShow)
 		
@@ -222,8 +248,8 @@ class InfoBarTunerState(object):
 		if config.infobartunerstate.show_infobar.value:
 			self.forceBindInfoBarTimer.start(1000, False)
 		
-		if config.infobartunerstate.show_overwrite.value:
-			overwriteInfoBar()
+		#if config.infobartunerstate.show_overwrite.value:
+		overwriteInfoBar()
 		
 		#TODO PiP
 		#self.session.
@@ -550,8 +576,14 @@ class InfoBarTunerState(object):
 			if self.hideTimer.isActive():
 				self.hideTimer.stop()
 
+	def toggle(self):
+		print "IBTS toggle"
+		if self._shown is False:
+			self.show()
+
 	def tunerShow(self, forceshow=False):
 		print "IBTS tunerShow"
+		self._shown = True
 		
 		self.updateNextTimer()
 		
@@ -755,6 +787,7 @@ class InfoBarTunerState(object):
 			win.hide()
 		if self.info:
 			self.info.hide()
+		self._shown = False
 
 	def close(self):
 		print "IBTS close"

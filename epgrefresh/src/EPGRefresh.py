@@ -396,13 +396,9 @@ class EPGRefresh:
 					autotimer = AutoTimer()
 	
 				# Parse EPG
-				deferred = autotimer.parseEPGAsync(simulateOnly=False)
-				deferred.addCallback(self._nextTodo)
-				deferred.addErrback(self._autotimerErrback)
-			#except Exception as e:
+				autotimer.parseEPGAsync(simulateOnly=False).addCallback(self._nextTodo).addErrback(self._autotimerErrback)
 			except:
 				from traceback import format_exc
-				#print("[EPGRefresh] Could not start AutoTimer:", e)
 				print("[EPGRefresh] Could not start AutoTimer:" + str(format_exc()))
 		else:
 			self._nextTodo()
@@ -441,7 +437,6 @@ class EPGRefresh:
 		if not self.forcedScan and config.plugins.epgrefresh.afterevent.value \
 			and not Screens.Standby.inTryQuitMainloop:
 			self.forcedScan = False
-		
 			if Screens.Standby.inStandby:
 				RecordTimerEntry.TryQuitMainloop()
 			else:
@@ -491,6 +486,11 @@ class EPGRefresh:
 		epgrefreshtimer.add(EPGRefreshTimerEntry(time() + 30, self.prepareRefresh))
 
 	def isServiceProtected(self, service):
+		if not config.ParentalControl.configured.value \
+			or not config.ParentalControl.servicepinactive.value:
+			print("[EPGRefresh] DEBUG: ParentalControl not configured")
+			return False
+		print("[EPGRefresh] DEBUG: ParentalControl ProtectionLevel:" + str(parentalControl.getProtectionLevel(str(service))))
 		return parentalControl.getProtectionLevel(str(service)) != -1
 
 	def nextService(self):
