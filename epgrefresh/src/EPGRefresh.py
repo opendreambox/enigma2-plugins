@@ -120,7 +120,7 @@ class EPGRefresh:
 			if value:
 				# strip all after last : (custom name)
 				pos = value.rfind(':')
-                # don't split alternative service
+				# don't split alternative service
 				if value.find('1:134:1') == -1 and pos != -1:
 					value = value[:pos+1]
 
