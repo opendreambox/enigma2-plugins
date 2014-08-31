@@ -12,21 +12,19 @@ for file in sys.argv[1:]:
 	package.set("details", os.path.basename(file))
 	
 	# we need all prerequisites
-	package.append(p.find("prerequisites"))
+	prerequisites = p.find("prerequisites")
+	if prerequisites is None:
+		continue
+	package.append(prerequisites)
 	
-	info = None
 	# we need some of the info, but not all
-	for i in p.findall("info"):
-		if not info:
-			info = i
-	assert info
+	info = p.find("info")
+	if info is None:
+		continue
 	
-	for i in info[:]:
-		if i.tag not in ["name", "packagename", "packagetype", "shortdescription"]:
-			info.remove(i)
-
-	for i in info[:]:
-		package.set(i.tag, i.text)
+	for i in info:
+		if i.tag in ("name", "packagename", "packagetype", "shortdescription"):
+			package.set(i.tag, i.text)
 
 	root.append(package)
 
