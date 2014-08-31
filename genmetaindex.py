@@ -30,7 +30,7 @@ for file in sys.argv[1:]:
 
 def indent(elem, level=0):
 	i = "\n" + level*"\t"
-	if len(elem):
+	if elem != None and len(elem):
 		if not elem.text or not elem.text.strip():
 			elem.text = i + "\t"
 		if not elem.tail or not elem.tail.strip():
