@@ -175,7 +175,7 @@ class YTTrailer:
 		return feeds
 
 	def setServiceReference(self, entry):
-		url = self.getVideoUrl(entry)
+		url = self.getVideoUrl(str(self.getTubeId(entry)))
 		if url:
 			ref = eServiceReference(4097,0,url)
 			ref.setName(entry.media.title.text)
@@ -195,7 +195,7 @@ class YTTrailer:
 					ret = tmp.pop(0)
 		return ret
 
-	def getVideoUrl(self, entry):
+	def getVideoUrl(self, id):
 		std_headers = {
 			'User-Agent': 'Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6) Gecko/20100627 Firefox/3.6.6',
 			'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
@@ -217,7 +217,7 @@ class YTTrailer:
 				VIDEO_FMT_PRIORITY_MAP["37"] = 2 #MP4 1080p (HD)
 
 		video_url = None
-		video_id = str(self.getTubeId(entry))
+		video_id = id
 
 		# Getting video webpage
 		#URLs for YouTube video pages will change from the format http://www.youtube.com/watch?v=ylLzyHk54Z0 to http://www.youtube.com/watch#!v=ylLzyHk54Z0.
