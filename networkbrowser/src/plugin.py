@@ -25,11 +25,23 @@ def NetworkBrowserCallFunction(iface):
 def MountManagerCallFunction(iface):
 	return MountManagerMain
 
+def menu_browser(menuid, **kwargs):
+	if menuid == "network":
+		return [(_("Network Browser"), NetworkBrowserMain, "nwbrowser", 10)]
+	else:
+		return []
+
+def menu_manager(menuid, **kwargs):
+	if menuid == "network":
+		return [(_("Mount Manager"), MountManagerMain, "nwmntmng", 11)]
+	else:
+		return []
+
 def Plugins(path, **kwargs):
 	global plugin_path
 	plugin_path = path
 	return [
-		PluginDescriptor(name=_("NetworkBrowser"), description=_("Search for network shares"), where = PluginDescriptor.WHERE_NETWORKSETUP, fnc={"ifaceSupported": NetworkBrowserCallFunction, "menuEntryName": lambda x: _("NetworkBrowser"), "menuEntryDescription": lambda x: _("Search for network shares...")}),
-		PluginDescriptor(name=_("MountManager"), description=_("Manage network shares"), where = PluginDescriptor.WHERE_NETWORKSETUP, fnc={"ifaceSupported": MountManagerCallFunction, "menuEntryName": lambda x: _("MountManager"), "menuEntryDescription": lambda x: _("Manage your network shares...")})
+		PluginDescriptor(name=_("NetworkBrowser"), description=_("Browse network shares..."), where=PluginDescriptor.WHERE_MENU, fnc=menu_browser),
+		PluginDescriptor(name=_("Mount Manager"), description=_("Manage network mounts..."), where=PluginDescriptor.WHERE_MENU, fnc=menu_manager),
 	]
 

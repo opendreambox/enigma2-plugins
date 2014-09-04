@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # for localized messages
 #from __init__ import _
+from enigma import eEnv
 from Screens.Screen import Screen
 from Components.Sources.StaticText import StaticText
 from Components.Pixmap import Pixmap
@@ -61,7 +62,7 @@ class UserManager(Screen):
 
 	def updateList(self):
 		self.list = []
-		for file in listdir('/etc/enigma2'):
+		for file in listdir(eEnv.resolve("${sysconfdir}/enigma2")):
 			if file.endswith('.cache'):
 				if file == 'networkbrowser.cache':
 					continue
@@ -85,7 +86,7 @@ class UserManager(Screen):
 		cur = self["config"].getCurrent()
 		if cur:
 			returnValue = cur[2]
-			cachefile = '/etc/enigma2/' + returnValue.strip()
+			cachefile = eEnv.resolve("${sysconfdir}/enigma2/") + returnValue.strip()
 			if os_path.exists(cachefile):
 				unlink(cachefile)
 				self.updateList()

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # for localized messages
 #from __init__ import _
-from enigma import eConsoleAppContainer
+from enigma import eConsoleAppContainer, eEnv
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Screens.VirtualKeyBoard import VirtualKeyBoard
@@ -57,7 +57,7 @@ class AutoMountManager(Screen):
 		self.updateList()
 		self.onShown.append(self.setWindowTitle)
 		self._appContainer = eConsoleAppContainer()
-		self._appClosed_conn = self.container.appClosed.connect(self._containerCmdFinished)
+		self._appClosed_conn = self._appContainer.appClosed.connect(self._onApplyHostnameFinished)
 
 
 	def setWindowTitle(self):
@@ -69,7 +69,8 @@ class AutoMountManager(Screen):
 		self.list.append((_("Add new network mount point"),"add", _("Add a new NFS or CIFS mount point to your Dreambox."), okpng ))
 		self.list.append((_("Mountpoints management"),"view", _("View, edit or delete mountpoints on your Dreambox."), okpng ))
 		self.list.append((_("User management"),"user", _("View, edit or delete usernames and passwords for your network."), okpng))
-		self.list.append((_("Change hostname"),"hostname", _("Change the hostname of your Dreambox."), okpng))
+		if os_path.exists(eEnv.resolve("${sysconfdir}/hostname")):
+			self.list.append((_("Change hostname"),"hostname", _("Change the hostname of your Dreambox."), okpng))
 		self["config"].setList(self.list)
 
 	def exit(self):
@@ -97,15 +98,15 @@ class AutoMountManager(Screen):
 		self.session.open(UserManager, self.skin_path)
 
 	def hostEdit(self):
-		if os_path.exists("/etc/hostname"):
-			fp = open('/etc/hostname', 'r')
+		if os_path.exists(eEnv.resolve("${sysconfdir}/hostname")):
+			fp = open(eEnv.resolve("${sysconfdir}/hostname"), 'r')
 			self.hostname = fp.read()
 			fp.close()
 			self.session.openWithCallback(self.hostnameCallback, VirtualKeyBoard, title = (_("Enter new hostname for your Dreambox")), text = self.hostname)
 
 	def hostnameCallback(self, callback = None):
 		if callback is not None and len(callback):
-			fp = open('/etc/hostname', 'w+')
+			fp = open(eEnv.resolve("${sysconfdir}/hostname"), 'w+')
 			fp.write(callback)
 			fp.flush()
 			fsync(fp.fileno())
@@ -114,7 +115,7 @@ class AutoMountManager(Screen):
 
 	def applyHostname(self):
 		binary = '/bin/hostname'
-		cmd = [binary, binary, '-F', '/etc/hostname']
+		cmd = [binary, binary, '-F', eEnv.resolve("${sysconfdir}/hostname")]
 		self._appContainer.execute(*cmd)
 		self._applyHostnameMsgBox = self.session.openWithCallback(self._onApplyHostnameFinished, MessageBox, _("Please wait while the new hostname is being applied..."), type = MessageBox.TYPE_INFO, enable_input = False)
 

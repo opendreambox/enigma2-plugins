@@ -4,14 +4,14 @@
 from re import compile as re_compile
 from os import path as os_path, symlink, listdir, unlink, readlink, remove
 
-from enigma import eTimer
+from enigma import eTimer, eEnv
 from Components.Console import Console
 from Components.Harddisk import harddiskmanager #global harddiskmanager
 from Tools.Directories import isMount, removeDir, createDir
 
 from xml.etree.cElementTree import parse as cet_parse
 
-XML_FSTAB = "/etc/enigma2/automounts.xml"
+XML_FSTAB = eEnv.resolve("${sysconfdir}/enigma2/automounts.xml")
 
 class AutoMount():
 	"""Manages Mounts declared in a XML-Document."""

@@ -64,7 +64,7 @@ class UserDialog(Screen, ConfigListScreen):
 		Screen.__init__(self, self.session)
 		self.hostinfo = hostinfo
 		self.cache_ttl = 86400 #600 is default, 0 disables, Seconds cache is considered valid
-		self.cache_file = '/etc/enigma2/' + self.hostinfo + '.cache' #Path to cache directory
+		self.cache_file = eEnv.resolve("${sysconfdir}/enigma2/") + self.hostinfo + '.cache' #Path to cache directory
 		self.createConfig()
 
 		self["actions"] = NumberActionMap(["SetupActions"],

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # for localized messages
 #from __init__ import _
-from enigma import eTimer
+from enigma import eTimer, eEnv
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Components.ActionMap import ActionMap
@@ -100,7 +100,7 @@ class NetworkBrowser(Screen):
 		self.mounts = None
 		self.expanded = []
 		self.cache_ttl = 604800 #Seconds cache is considered valid, 7 Days should be ok
-		self.cache_file = '/etc/enigma2/networkbrowser.cache' #Path to cache directory
+		self.cache_file = eEnv.resolve("${sysconfdir}/enigma2/networkbrowser.cache") #Path to cache directory
 
 		self["key_red"] = StaticText(_("Close"))
 		self["key_green"] = StaticText(_("Mounts management"))
@@ -220,7 +220,7 @@ class NetworkBrowser(Screen):
 	def getNetworkShares(self,hostip,hostname,devicetype):
 		sharelist = []
 		self.sharecache_file = None
-		self.sharecache_file = '/etc/enigma2/' + hostname.strip() + '.cache' #Path to cache directory
+		self.sharecache_file = eEnv.resolve("${sysconfdir}/enigma2/") + hostname.strip() + '.cache' #Path to cache directory
 		if os_path.exists(self.sharecache_file):
 			print '[Networkbrowser] Loading userinfo from ',self.sharecache_file
 			try:
@@ -377,7 +377,7 @@ class NetworkBrowser(Screen):
 				self.updateNetworkList()
 			else:
 				self.hostcache_file = None
-				self.hostcache_file = '/etc/enigma2/' + selectedhostname.strip() + '.cache' #Path to cache directory
+				self.hostcache_file = eEnv.resolve("${sysconfdir}/enigma2/") + selectedhostname.strip() + '.cache' #Path to cache directory
 				if os_path.exists(self.hostcache_file):
 					print '[Networkbrowser] Loading userinfo cache from ',self.hostcache_file
 					try:
@@ -394,7 +394,7 @@ class NetworkBrowser(Screen):
 		if sel[0][0] == 'smbShare': # share entry selected
 			print '[Networkbrowser] sel cifsShare'
 			self.hostcache_file = None
-			self.hostcache_file = '/etc/enigma2/' + selectedhostname.strip() + '.cache' #Path to cache directory
+			self.hostcache_file = eEnv.resolve("${sysconfdir}/enigma2/") + selectedhostname.strip() + '.cache' #Path to cache directory
 			if os_path.exists(self.hostcache_file):
 				print '[Networkbrowser] userinfo found from ',self.sharecache_file
 				self.openMountEdit(sel[0])
@@ -452,7 +452,7 @@ class NetworkBrowser(Screen):
 				data['sharedir'] = selection[3]
 				data['options'] = "rw"
 				self.sharecache_file = None
-				self.sharecache_file = '/etc/enigma2/' + selection[1].strip() + '.cache' #Path to cache directory
+				self.sharecache_file = eEnv.resolve("${sysconfdir}/enigma2/") + selection[1].strip() + '.cache' #Path to cache directory
 				if os_path.exists(self.sharecache_file):
 					print '[Networkbrowser] Loading userinfo from ',self.sharecache_file
 					try:
