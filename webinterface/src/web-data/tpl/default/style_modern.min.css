@@ -46,6 +46,8 @@
 #timerEditForm table{cell-spacing:1px;}
 #tools h1,#about h1{font-size:14px;}
 #tools,#about{font-size:12px;text-align:center;}
+.tools a:hover{color:#66AFE9;}
+.tools tr{font-weight:normal;}
 #trExtCurrent{font-weight:normal;}
 * html #banner{height:78px;width:1007px;}
 * html #bannerRight{height:60px;width:120px;}

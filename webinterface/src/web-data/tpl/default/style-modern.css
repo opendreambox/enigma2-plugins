@@ -298,6 +298,14 @@
 	text-align: center;
 }
 
+.tools a:hover {
+	color: #66AFE9;
+}
+
+.tools tr {
+	font-weight: normal;
+}
+
 #trExtCurrent {
 	font-weight: normal;
 }
