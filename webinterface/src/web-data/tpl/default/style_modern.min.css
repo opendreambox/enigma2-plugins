@@ -20,6 +20,7 @@
 #contentTable{scrollbar:auto;width:785px;margin:0 auto;}
 #current{background-color:#FFF;border:1px solid #DDD;margin-bottom:8px;padding-bottom:1px;padding-left:3px;padding-right:3px;position:relative;width:999px;}
 #epgSearch{width:115px;}
+#instantRecordMenu{padding:5px;}
 #instantRecordMenu li{margin:3px;}
 #instantRecordMenu button{text-align:center;width:200px;}
 #main{overflow:hidden;margin:0;padding:0;}
