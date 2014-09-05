@@ -83,7 +83,6 @@ def blockingCallFromMainThread(f, *a, **kw):
 typeMap = {
 	"exact": eEPGCache.EXAKT_TITLE_SEARCH,
 	"partial": eEPGCache.PARTIAL_TITLE_SEARCH,
-	"start": eEPGCache.START_TITLE_SEARCH,
 	"description": -99
 }
 
