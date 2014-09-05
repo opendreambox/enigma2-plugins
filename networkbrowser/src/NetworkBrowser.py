@@ -12,6 +12,7 @@ from Components.config import getConfigListEntry, ConfigIP
 from Components.ConfigList import ConfigListScreen
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 from Tools.LoadPixmap import LoadPixmap
+from Tools.Log import Log
 from cPickle import dump, load
 from os import path as os_path, stat, mkdir, remove
 from time import time
@@ -168,7 +169,7 @@ class NetworkBrowser(Screen):
 			if result[1] == "address":
 				print "[Networkbrowser] got IP:",result[1]
 				nwlist = []
-				nwlist.append(netscan.netzInfo(result[0] + "/24"))
+				nwlist.append(netscan.netInfo(result[0] + "/24"))
 				self.networklist += nwlist[0]
 			elif result[1] == "nfs":
 				self.networklist.append(['host', result[0], result[0] , '00:00:00:00:00:00', result[0], 'Master Browser'])
@@ -210,10 +211,11 @@ class NetworkBrowser(Screen):
 	def getNetworkIPs(self):
 		nwlist = []
 		sharelist = []
-		self.IP = iNetworkInfo.getConfiguredInterfaces()[self.iface].ipv4.address
+		self.IP = iNetworkInfo.getConfiguredInterfaces()[self.iface].ipv4.address.split(".")
 		if len(self.IP):
-			strIP = str(self.IP[0]) + "." + str(self.IP[1]) + "." + str(self.IP[2]) + ".0/24"
-			nwlist.append(netscan.netzInfo(strIP))
+			strIP = "%s.0/24" %( ".".join(self.IP[0:3]) )
+			Log.i(strIP)
+			nwlist.append(netscan.netInfo(strIP))
 		tmplist = nwlist[0]
 		return tmplist
 

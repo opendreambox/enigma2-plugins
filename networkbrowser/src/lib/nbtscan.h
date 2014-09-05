@@ -43,7 +43,7 @@ typedef struct {
 
 int set_range(char* range_str, struct ip_range* range_struct);
 int print_header();
-int netzInfo(char *pythonIp, netinfo *nInfo);
+int netInfo(char *pythonIp, netinfo *nInfo);
 netinfo * newNetInfo();
 void freeNetInfo(netinfo *nInfo);
 int python_hostinfo(struct in_addr addr, const struct nb_host_info* hostinfo, netinfo *nInfo, int pos);

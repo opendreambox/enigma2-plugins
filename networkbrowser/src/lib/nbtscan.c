@@ -95,7 +95,7 @@ void freeNetInfo(netinfo *nInfo)
 #define BUFFSIZE 1024
 #define MAX 255
 
-int netzInfo(char *pythonIp, netinfo *nInfo) {
+int netInfo(char *pythonIp, netinfo *nInfo) {
   int timeout=10000, verbose=0, use137=0, bandwidth=0, send_ok=0, hr=0;
   extern char *optarg;
   extern int optind;

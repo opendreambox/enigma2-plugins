@@ -29,7 +29,7 @@
 
 static PyObject *error;
 
-PyObject *_netzInfo(PyObject *self, PyObject *args)
+PyObject *_netInfo(PyObject *self, PyObject *args)
 {
 	netinfo *nInfo;
 	char *s;
@@ -37,14 +37,14 @@ PyObject *_netzInfo(PyObject *self, PyObject *args)
 	int i;
 
 	if(!PyArg_ParseTuple(args, "s", &s)) {
-		PyErr_SetString(error, "netzInfo(ip/24)");
+		PyErr_SetString(error, "netInfo(ip/24)");
 		return NULL;
 	}
 
 	if(!(plist= PyList_New(0)))  return NULL;
 	if(!(result= PyList_New(0)))  return NULL;
 	nInfo = newNetInfo();
-	netzInfo(s, nInfo);
+	netInfo(s, nInfo);
 	for (i=0; i<256; i++) 
 	{ 
 		if(nInfo[i].ip[0] == '\0') {
@@ -179,7 +179,7 @@ PyObject *_smbShare(PyObject *self, PyObject *args)
 }
 
 static PyMethodDef netscanmethods[] = {
-	{"netzInfo", _netzInfo, METH_VARARGS},
+	{"netInfo", _netInfo, METH_VARARGS},
 	{"smbShare", _smbShare, METH_VARARGS},
 	{"nfsShare", _nfsShare, METH_VARARGS},
 	{NULL, NULL}
