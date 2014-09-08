@@ -45,37 +45,6 @@ def leavePlayerConfirmedMP(self, answer):
 	else:
 		gLeavePlayerConfirmed(self, answer)
 
-
-from skin import readSkin
-
-def doInstantiateDialogSF(self, screen, arguments, kwargs, desktop):
-	# create dialog
-
-	try:
-		dlg = self.create(screen, arguments, **kwargs)
-	except:
-		print 'EXCEPTION IN DIALOG INIT CODE, ABORTING:'
-		print '-'*60
-		print_exc(file=stdout)
-		from enigma import quitMainloop
-		quitMainloop(5)
-		print '-'*60
-
-	if dlg is None:
-		return
-
-	# read skin data
-	readSkin(dlg, None, dlg.skinName, desktop)
-
-	# create GUI view of this dialog
-	assert desktop is not None
-
-	dlg.setDesktop(desktop)
-	dlg.applySkin()
-
-	return dlg
-
-
 RUNPLUGIN = 1
 
 def autostart(reason, **kwargs):
@@ -93,10 +62,6 @@ def autostart(reason, **kwargs):
 					gLeavePlayerConfirmed = MoviePlayer.leavePlayerConfirmed
 				MoviePlayer.leavePlayerConfirmed = leavePlayerConfirmedMP
 
-				Session.doInstantiateDialog.im_class.doInstantiateDialog = doInstantiateDialogSF
-				modname = Session.doInstantiateDialog.__module__
-				print "[SF-Plugin] mytest.Session.doInstantiateDialog modname = %s = %s" % (str(type(modname)), str(modname))
-				
 			except Exception, e:
 				print "[SF-Plugin] autostart MovieList launch override exception:\n" + str(e)
 
