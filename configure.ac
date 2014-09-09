@@ -1,4 +1,4 @@
-AC_INIT([enigma2-plugins],[3.2.0],[enigma2-devel@lists.elitedvb.net])
+AC_INIT([enigma2-plugins],[4.2.0],[enigma2-devel@lists.elitedvb.net])
 AM_INIT_AUTOMAKE([dist-bzip2 foreign no-define tar-pax])
 AC_CONFIG_HEADERS([enigma2-plugins-config.h])
 
