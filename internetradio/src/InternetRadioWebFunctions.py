@@ -22,6 +22,22 @@
 from twisted.internet import reactor
 from twisted.web import client
 from twisted.web.client import HTTPClientFactory
+import urlparse
+
+def url_parse(url, defaultPort=None):
+	parsed = urlparse.urlparse(url)
+	scheme = parsed[0]
+	path = urlparse.urlunparse(('', '') + parsed[2:])
+	if defaultPort is None:
+		if scheme == 'https':
+			defaultPort = 443
+		else:
+			defaultPort = 80
+	host, port = parsed[1], defaultPort
+	if ':' in host:
+		host, port = host.split(':')
+		port = int(port)
+	return scheme, host, port, path
 
 class InternetRadioHTTPClientFactory(HTTPClientFactory):
 	def __init__(self, url, method='GET', postdata=None, headers=None,
@@ -31,7 +47,7 @@ class InternetRadioHTTPClientFactory(HTTPClientFactory):
 		headers=headers, agent=agent, timeout=timeout, cookies=cookies,followRedirect=followRedirect)
 
 def sendUrlCommand(url, contextFactory=None, timeout=10, *args, **kwargs):
-	scheme, host, port, path = client._parse(url)
+	scheme, host, port, path = url_parse(url)
 	factory = InternetRadioHTTPClientFactory(url, *args, **kwargs)
 	reactor.connectTCP(host, port, factory, timeout=timeout)
 	return factory.deferred
