@@ -7,7 +7,6 @@ from os import remove as os_remove, fsync
 
 class Bonjour:
 	AVAHI_SERVICES_DIR = '/etc/avahi/services/'
-	AVAHI_START_SCRIPT = '/etc/init.d/avahi-daemon'
 
 	def __init__(self):
 		self.services = []
