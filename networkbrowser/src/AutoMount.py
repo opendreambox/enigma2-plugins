@@ -17,7 +17,6 @@ class AutoMount():
 	"""Manages Mounts declared in a XML-Document."""
 	def __init__(self):
 		self.automounts = {}
-		self.restartConsole = Console()
 		self.MountConsole = Console()
 		self.removeConsole = Console()
 		self.activeMountsCounter = 0
@@ -318,7 +317,6 @@ class AutoMount():
 class AutoMount_Unused:
 	def __init__(self):
 		self.automounts = {}
-		self.restartConsole = Console()
 		self.MountConsole = Console()
 		self.activeMountsCounter = 0
 		self.getAutoMountPoints()
@@ -547,22 +545,6 @@ class AutoMount_Unused:
 				fp.write( tmpsharedir + "\n")
 		fp.write("\n")
 		fp.close()
-
-	def restartAutoFS(self,callback = None):
-		print "[AutoMount.py] restartAutoFS "
-		self.restartConsole = Console()
-		self.commands = []
-		self.commands.append("/etc/init.d/autofs stop")
-		self.commands.append("killall -9 automount")
-		self.commands.append("rm -rf /var/run/autofs")
-		self.commands.append("/etc/init.d/autofs start")
-		self.restartConsole.eBatch(self.commands, self.restartAutoFSFinished, callback, debug=True)
-
-	def restartAutoFSFinished(self,extra_args):
-		print "[AutoMount.py] restartAutoFSFinished "
-		( callback ) = extra_args
-		if callback is not None:
-			callback(True)
 
 	def stopMountConsole(self):
 		if self.MountConsole is not None:
