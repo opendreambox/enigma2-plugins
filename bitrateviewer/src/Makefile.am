@@ -1,4 +1,4 @@
-#SUBDIRS = bitratecalc
+SUBDIRS = bitratecalc
 
 plugindir = $(libdir)/enigma2/python/Plugins/Extensions/BitrateViewer
 
