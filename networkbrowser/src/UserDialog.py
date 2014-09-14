@@ -10,7 +10,7 @@ from Components.ConfigList import ConfigListScreen
 from Components.Sources.StaticText import StaticText
 from Components.Pixmap import Pixmap
 from Components.ActionMap import ActionMap, NumberActionMap
-from enigma import ePoint
+from enigma import ePoint, eEnv
 from cPickle import dump, load
 from os import path as os_path, unlink, stat, mkdir
 from time import time
