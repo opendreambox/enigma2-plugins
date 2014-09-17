@@ -26,8 +26,10 @@
 #include <openssl/bn.h>
 #include <openssl/sha.h>
 
-eBitrateCalc::eBitrateCalc(const eServiceReference &ref, int pid, int refreshintervall, int buffer_size): m_size(0), m_refresh_intervall(refreshintervall)
+eBitrateCalc::eBitrateCalc(const eServiceReference &ref, int pid, int refreshintervall, int buffer_size)
+	:m_size(0), m_refresh_intervall(refreshintervall), m_callback_func(Py_None)
 {
+	Py_INCREF(m_callback_func);
 	m_send_data_timer = eTimer::create(eApp);
 	CONNECT(m_send_data_timer->timeout, eBitrateCalc::sendDataTimerTimeoutCB);
 	eDVBChannelID chid;
@@ -96,6 +98,17 @@ void eBitrateCalc::sendDataTimerTimeoutCB()
 		sendData(bitrate,1);
 	}		
 	m_send_data_timer->start(m_refresh_intervall, true);
+}
+
+void eBitrateCalc::sendData(int bitrate, int state)
+{
+	if (m_callback_func != Py_None) {
+		ePyObject args = PyTuple_New(2);
+		PyTuple_SET_ITEM(args, 0, PyInt_FromLong(bitrate));
+		PyTuple_SET_ITEM(args, 1, PyInt_FromLong(state));
+		ePython::call(m_callback_func, args);
+		Py_DECREF(args);
+	}
 }
 
 void eBitrateCalc::stateChange(iDVBChannel *ch)
@@ -273,18 +286,17 @@ struct eBitrateCalculatorPy
 static int
 eBitrateCalculatorPy_traverse(eBitrateCalculatorPy *self, visitproc visit, void *arg)
 {
-	PyObject *obj = self->bc->dataSent.getSteal();
-	if (obj)
-		Py_VISIT(obj);
+	if (self->bc->m_callback_func != Py_None)
+		Py_VISIT((PyObject*)self->bc->m_callback_func);
 	return 0;
 }
 
 static int
 eBitrateCalculatorPy_clear(eBitrateCalculatorPy *self)
 {
-	PyObject *obj = self->bc->dataSent.getSteal(true);
-	if (obj)
-		Py_CLEAR(obj);
+	PyObject *obj = (PyObject*)self->bc->m_callback_func;
+	Py_CLEAR(obj);
+	self->bc->m_callback_func = obj;
 	delete self->bc;
 	return 0;
 }
@@ -310,15 +322,29 @@ eBitrateCalculatorPy_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 }
 
 static PyObject *
-eBitrateCalculatorPy_get_cb_list(eBitrateCalculatorPy *self, void *closure)
+eBitrateCalculatorPy_get_callback(eBitrateCalculatorPy *self, void *closure)
 {
-	return self->bc->dataSent.get();
+	Py_INCREF(self->bc->m_callback_func);
+	return self->bc->m_callback_func;
+}
+
+static int
+eBitrateCalculatorPy_set_callback(eBitrateCalculatorPy *self, PyObject *func, void *closure)
+{
+	Py_DECREF(self->bc->m_callback_func);
+	if (!(func == Py_None || PyCallable_Check(func))) {
+		PyErr_SetString(PyExc_StandardError, "you can only assign a callable function/method to callback or None");
+		return -1;
+	}
+	self->bc->m_callback_func = func;
+	Py_INCREF(self->bc->m_callback_func);
+	return 0;
 }
 
 static PyGetSetDef eBitrateCalculatorPy_getseters[] = {
 	{"callback",
-	 (getter)eBitrateCalculatorPy_get_cb_list, (setter)0,
-	 "returns the callback python list",
+	 (getter)eBitrateCalculatorPy_get_callback, (setter)eBitrateCalculatorPy_set_callback,
+	 "gets/sets the python callback function",
 	 NULL},
 	{NULL} /* Sentinel */
 };

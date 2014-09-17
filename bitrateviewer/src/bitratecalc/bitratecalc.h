@@ -36,13 +36,13 @@ private:
 	ePtr<eConnection> m_pes_connection;
 	ePtr<eConnection> m_channel_connection;
 	void dataReady(const __u8*,  int size);
-	void sendData(int bitrate, int status) {dataSent(bitrate, status);}
+	void sendData(int bitrate, int status);
 	void stateChange(iDVBChannel *ch);
 	ePtr<eTimer> m_send_data_timer;
 	void sendDataTimerTimeoutCB();
 public:
+	ePyObject m_callback_func;
 	eBitrateCalc(const eServiceReference &ref, int pid, int refreshintervall, int buffer_size);
-	PSignal2<void, int, int> dataSent;
 };
 
 #endif
