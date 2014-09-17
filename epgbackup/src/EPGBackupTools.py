@@ -7,12 +7,12 @@ from traceback import format_exc
 # for localized messages
 from . import _
 
-PLUGIN_VERSION = "1.0.1"
+PLUGIN_VERSION = "1.1"
 def debugOut(outtxt, outfile=None, fmode="aw", forced=False, outPrefix="[EPGBackup]"):
 	try: # fails if called too early during Enigma startup
 		if config.plugins.epgbackup.enable_debug.value or forced:
 			ltim = localtime()
-			headerstr = "%04d%02d%02d %02d:%02d:%02d " %(ltim[0],ltim[1],ltim[2],ltim[3],ltim[4],ltim[5])
+			headerstr = "[%04d%02d%02d %02d:%02d:%02d V%s] " %(ltim[0],ltim[1],ltim[2],ltim[3],ltim[4],ltim[5], PLUGIN_VERSION)
 			outtxt = headerstr + outtxt
 			outfile = _getLogFilename(outfile)
 			if outfile != None:
@@ -22,7 +22,7 @@ def debugOut(outtxt, outfile=None, fmode="aw", forced=False, outPrefix="[EPGBack
 	except:
 		pass
 
-def _getLogFilename(outfile):
+def _getLogFilename(outfile=None):
 	if outfile == None:
 		if config.plugins.epgbackup.plugin_debug_in_file.value:
 			if config.plugins.epgbackup.enable_debug.value:

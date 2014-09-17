@@ -1,7 +1,7 @@
 #!/bin/sh
 
 LINE="--------------------------------------"
-PLUGINNAME="EPG-Backup"
+PLUGINNAME="EPGBackup"
 PLUGINDIR="/usr/lib/enigma2/python/Plugins/Extensions/EPGBackup"
 PLUGINCONFPREFIX="config.plugins.epgbackup"
 SCRIPTNAME=`basename $0`
@@ -47,13 +47,15 @@ BACKUPFILEPREFIX="epg_"
 BOOTCOUNTERFILE="/tmp/.EPGBackup.boot.counter"
 LASTRESTOREDFILE="/tmp/.EPGBackup.lastfile.restored"
 LASTBACKUPEDFILE="/tmp/.EPGBackup.lastfile.backuped"
+OUTERRORTXTFILE="/tmp/.EPGBackup.outerrortxt"
 
 if [ `echo "$ENABLEDEUG" | tr [:upper:] [:lower:]` == "true" ] ; then
   debug="true"
   logfile=$LOGPATH/EPGBackup.log.`date +%Y%m%d`
 else
-  # always log the current run
+  # always log the current run, but make sure that the file doesn't become to big
   logfile=/tmp/EPGBackup.log
+  echo "" > $logfile
 fi
 
 getVersion () {
@@ -66,7 +68,7 @@ getVersion () {
 }
 
 echologprefix () {
-  echo -n "$LOGPREFIX [`date +%Y%m%d_%H%M%S``getVersion`] "
+  echo -n "$LOGPREFIX [`date +'%Y%m%d %H:%M:%S'``getVersion`] "
 }
 
 housekeeping () {
@@ -96,6 +98,7 @@ housekeeping () {
 }
 
 printVars () {
+  echo "$LINE"
   echo "Variables:"
   echo -e "Backup enabled: $BACKUPENABLED"
   echo -e "Make backup after unsuccessfully restore: $MAKE_BACKUP_AFTER_UNSUCCESS_RESTORE"
@@ -113,9 +116,11 @@ printVars () {
 getLastFileInfo () {
   fileInfo=""
   if [ "$1" == "backup" ]; then
-    fileInfo=`cat $LASTBACKUPEDFILE 2> /dev/null`
+    [ -e $LASTBACKUPEDFILE ] && fileInfo=`cat $LASTBACKUPEDFILE`
+  elif [ "$1" == "error" ]; then
+    [ -e $OUTERRORTXTFILE ] && fileInfo=`cat $OUTERRORTXTFILE`
   else
-    fileInfo=`cat $LASTRESTOREDFILE 2> /dev/null`
+    [ -e $LASTRESTOREDFILE ] && fileInfo=`cat $LASTRESTOREDFILE`
   fi
   
   echo -n "$fileInfo"
@@ -124,7 +129,8 @@ getLastFileInfo () {
 makeBackup () {
   rm -f $LASTBACKUPEDFILE 2> /dev/null
   if [ `echo "$BACKUPENABLED" | tr [:upper:] [:lower:]` != "true" ] ; then
-    echologprefix; echo "Backup/Restore is disabled!"
+    echologprefix; echo "Backup/Restore is disabled2!"
+    OUTERRORTEXT="BACKUP_RESTORE_DISABLED"
     return
   fi
   echologprefix; echo "Backuping ..."
@@ -153,9 +159,11 @@ makeBackup () {
       echo "$EPGPATH/$EPGbackup" > $LASTBACKUPEDFILE 2> /dev/null
     else
       echologprefix; echo "Epg-File too small for Backup ($(($EPGFILESIZE / 1024)) KiB)"
+      OUTERRORTEXT="BACKUP_EPGFILE_TOO_SMALL#$(($EPGFILESIZE / 1024)) KiB#$(($VALIDSIZE / 1024)) KiB"
     fi
   else
     echologprefix; echo "No Epg-File found at $EPGPATH"
+    OUTERRORTEXT="BACKUP_NO_EPGFILE_FOUND#$EPGPATH"
   fi
 }
 
@@ -199,8 +207,9 @@ _restore () {
           cp -f "$EPGbackup" "$EPGFILE"
           success="true"
         else
-          [ -n "$debug" ] && echo "`basename $EPGbackup` smaller or equal: $(($BACKUPSIZE / 1024)) KiB --> no restoring!"
-          [ -n "$debug" ] && echo "Size of existing Epg-File: $(($EPGFILESIZE / 1024)) KiB"
+          echologprefix; echo "`basename $EPGbackup` smaller or equal: $(($BACKUPSIZE / 1024)) KiB --> no restoring!"
+          echologprefix; echo "Size of existing Epg-File: $(($EPGFILESIZE / 1024)) KiB"
+          OUTERRORTEXT="RESTORE_BACKUPFILE_SMALLER#$(($BACKUPSIZE / 1024)) KiB#$(($EPGFILESIZE / 1024)) KiB"
         fi
       else
         # youngest
@@ -210,8 +219,11 @@ _restore () {
           success="true"
         else
           if [ -n "$debug" ]; then
-            echologprefix; echo "`basename $EPGbackup` older or equal: `echo $EPGbackupInfo | cut -d " " -f 7-10` --> no restoring!"
-            echologprefix; echo "Modify-Date of Epg-File: `ls -ler "$EPGFILE" | tr -s " " | cut -d " " -f 7-10 | head -n1`"
+            BACKUPAGE=`echo $EPGbackupInfo | cut -d " " -f 7-10`
+            EPGFILEAGE=`ls -ler "$EPGFILE" | tr -s " " | cut -d " " -f 7-10 | head -n1`
+            echologprefix; echo "`basename $EPGbackup` older or equal: $BACKUPAGE --> no restoring!"
+            echologprefix; echo "Modify-Date of Epg-File: $EPGFILEAGE"
+            OUTERRORTEXT="RESTORE_BACKUPFILE_OLDER#$BACKUPAGE#$EPGFILEAGE"
           fi
         fi
       fi
@@ -251,7 +263,6 @@ _isValidFile () {
         [ -n "$debug" ] && echo "`basename $checkFile` hasn't a valid size: $(($FILESIZE / 1024)) KiB"
       fi
     else
-      echo "not ageOK"
       [ -n "$debug" ] && echo "`basename $checkFile` hasn't a valid age: `echo $FILEINFO | cut -d " " -f 7-10`"
     fi
   fi
@@ -264,6 +275,7 @@ restore () {
   rm -f $LASTRESTOREDFILE 2> /dev/null
   if [ `echo "$BACKUPENABLED" | tr [:upper:] [:lower:]` != "true" ] ; then
     echologprefix; echo "Backup/Restore is disabled!"
+    OUTERRORTEXT="BACKUP_RESTORE_DISABLED"
     return
   fi
   echologprefix; echo "Restoring ..."
@@ -274,6 +286,7 @@ restore () {
   
   if [ "$aktbootcount" -gt "$MAXBOOTCOUNT" ]; then
     echologprefix; echo "Maximum Boot-Count reached: Deleting EPG-File!"
+    OUTERRORTEXT="RESTORE_MAXBOOTCOUNT_REACHED"
     rm -f $EPGFILE 2> /dev/null
     return
   fi
@@ -289,6 +302,7 @@ restore () {
         else
           # keep the state unsuccessfully, maybe make a backup later
           echologprefix; echo "Original epg.dat is valid, fallback - strategy not needed!"
+          OUTERRORTEXT="RESTORE_ORIGINALFILE_VALID"
         fi
       fi
       ;;
@@ -302,12 +316,13 @@ restore () {
         else
           # keep the state unsuccessfully, maybe make a backup later
           echologprefix; echo "Original epg.dat is valid, fallback - strategy not needed!"
+          OUTERRORTEXT="RESTORE_ORIGINALFILE_VALID"
         fi
       fi
   esac 
   
   if [ "$success" == "false" ]; then
-    echologprefix; echo "No valid Backup found!"
+    echologprefix; echo "No valid Backup found for restore, or restore not needed!"
     if [ `echo "$MAKE_BACKUP_AFTER_UNSUCCESS_RESTORE" | tr [:upper:] [:lower:]` == "true" ]; then
       echologprefix; echo "Trying to make a Backup of current epg.dat!"
       makeBackup
@@ -433,22 +448,23 @@ case "$1" in
         getLastFileInfo "$2"
         ;;
      backup|b)
+        errorHandling=TRUE
         echo "Output will be append to $logfile"
         exec >> $logfile 2>&1
         echo $LINE
         housekeeping
         makeBackup
-        exit 0
         ;;
      restore|r)
+        errorHandling=TRUE
         echo "Output will be append to $logfile"
         exec >> $logfile 2>&1
         echo $LINE
         [ -z "$2" ] && housekeeping
         restore $2
-        exit 0
         ;;
      setforcefile)
+        errorHandling=TRUE
         setforcefile "$2"
         ;;
      info)
@@ -470,5 +486,12 @@ case "$1" in
         exit 1
         ;;
 esac
+
+if [ -n "$errorHandling" ] ; then
+  rm -f $OUTERRORTXTFILE 2> /dev/null
+  if [ -n "$OUTERRORTEXT" ] ; then
+    echo "$OUTERRORTEXT" > $OUTERRORTXTFILE
+  fi
+fi
 
 exit 0
