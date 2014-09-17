@@ -7,16 +7,18 @@ from Components.config import config
 from enigma import eEPGCache
 from enigma import eTimer
 from Tools import Notifications
+from Screens.TextBox import TextBox
 
 from . import _
 
 # Error-print
-from EPGBackupTools import debugOut, EPGBACKUP_NOTIFICATIONDOMAIN
+from EPGBackupTools import debugOut, _getLogFilename, EPGBACKUP_NOTIFICATIONDOMAIN
 from traceback import format_exc
 
 # SH-Script
 from Tools.Directories import SCOPE_PLUGINS, resolveFilename
 import os
+import subprocess
 SH_EXEC_FILE = resolveFilename(SCOPE_PLUGINS, "Extensions/EPGBackup/EPGBackup.sh")
 SH_TMP_OUTPUT="/tmp/.EPGBackup.sh.output"
 BOOTCOUNTERFILE="/tmp/.EPGBackup.boot.counter"
@@ -28,6 +30,9 @@ EPGBACKUP_SHELL_CONSTANTS = { 'INSTALL': 'install',
 		'FORCERESTORE': 'restore',
 		'MAKEBACKUP': 'backup',
 		'GETLASTFILE': 'getlastfile',
+		'GETLASTFILE_BACKUP': 'backup',
+		'GETLASTFILE_RESTORE': 'restore',
+		'GETLASTFILE_ERROR': 'error',
 		'SETFORCERESTORE': 'setforcefile',
 		'EPGINFO': 'epginfo',
 		'EPGINFOSORTSIZE': 'bySize',
@@ -46,6 +51,8 @@ class EPGBackupSupport:
 		self.backuptimer = eTimer()
 		self.backuptimer.callback.append(self.makeBackup)
 		
+		# while postinst doesn't work in git-make
+		self.autoinstall(config.plugins.epgbackup.backup_enabled)
 		config.plugins.epgbackup.backup_enabled.addNotifier(self.autoinstall, initial_call = False, immediate_feedback = True)
 
 		config.plugins.epgbackup.backupSaveInterval.addNotifier(self.startStopBackupTimer, initial_call = False, immediate_feedback = True)
@@ -75,7 +82,7 @@ class EPGBackupSupport:
 				
 				bootCount= int(bootCount)
 				if bootCount > int(config.plugins.epgbackup.max_boot_count.value):
-					backupedFile = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], "backup", getoutput = True)
+					backupedFile = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE_BACKUP"], getoutput = True)
 					Notifications.AddNotificationWithCallback(self.askDeleteBadBackupCB, MessageBox, \
 						text = _("The EPG-Backup was not performed, because there were %d unsuccessfully boot-attempts!\nThe last restored backup-file was \"%s\".\nDo you want to delete the file?") \
 						% (bootCount, backupedFile), type = MessageBox.TYPE_YESNO, \
@@ -86,7 +93,7 @@ class EPGBackupSupport:
 	def askDeleteBadBackupCB(self, deleteIt):
 		try:
 			if deleteIt:
-				backupedFile = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], "backup", getoutput = True)
+				backupedFile = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE_BACKUP"], getoutput = True)
 				if backupedFile != "":
 					debugOut("Deleting file \"%s\"..." % (backupedFile))
 					os.system("rm -f %s" % (backupedFile))
@@ -118,6 +125,49 @@ class EPGBackupSupport:
 		except:
 			debugOut("startStopBackupTimer-Error:\n" + str(format_exc()), forced=True)
 
+	def __getErrortext(self):
+		errorTxt = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE_ERROR"], getoutput = True)
+		if not errorTxt or errorTxt == "":
+			errorTxt = _("General Error!")
+			return errorTxt
+		elif errorTxt.count("#") > 0:
+			params = errorTxt.split("#")
+			errorTxt = params[0]
+			param1 = params[1]
+			param2 = params[2]
+		
+		if errorTxt == "BACKUP_RESTORE_DISABLED":
+			errorTxt = _("Backup and Restore are disabled!")
+		elif errorTxt == "BACKUP_EPGFILE_TOO_SMALL":
+			errorTxt = _("EPG-File is too small for Backup: Size: %s; your setting: %s") % (param1, param2)
+		elif errorTxt == "BACKUP_NO_EPGFILE_FOUND":
+			errorTxt = _("No EPG-File found at %s!") % (param1)
+		elif errorTxt == "RESTORE_BACKUPFILE_SMALLER":
+			errorTxt = _("Backup-File to restore is smaller or equal EPG-file: Backup-File: %s; Epg-File: %s") % (param1, param2)
+		elif errorTxt == "RESTORE_BACKUPFILE_OLDER":
+			errorTxt = _("Backup-File to restore is older or equal EPG-file: Backup-File: %s; Epg-File: %s") % (param1, param2)
+		elif errorTxt == "RESTORE_MAXBOOTCOUNT_REACHED":
+			errorTxt = _("Maximum Number of unsuccessfully boots reached!")
+		elif errorTxt == "RESTORE_ORIGINALFILE_VALID":
+			errorTxt = _("The EPG-File is still valid!")
+		
+		return errorTxt
+	
+	def showLogFileCB(self, showIt):
+		try:
+			if showIt:
+				logFile = _getLogFilename()
+				if logFile != "":
+					if os.path.exists(logFile):
+						logTxt = self._executeSh("/bin/cat", logFile, getoutput = True)
+						self.session.open(TextBox, text = _("Logfile %s:\n%s") % (logFile, logTxt))
+					else:
+						self.session.open(MessageBox, \
+							_("There is no logfile named \"%s\"!") % (logFile), \
+							type = MessageBox.TYPE_ERROR)
+		except:
+			debugOut("showLogFileCB-Error:\n" + str(format_exc()), forced=True)
+	
 	def makeBackup(self, interactive = False):
 		try:
 			debugOut("making a backup!")
@@ -127,15 +177,17 @@ class EPGBackupSupport:
 			self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["MAKEBACKUP"])
 			self.startStopBackupTimer()
 			if interactive or config.plugins.epgbackup.show_messages_background.value:
-				backupedFile = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], "backup", getoutput = True)
+				backupedFile = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE_BACKUP"], getoutput = True)
 				if backupedFile != "":
 					Notifications.AddPopup(
 						_("Backup \"%s\" successfully created!") % (backupedFile), \
 						MessageBox.TYPE_INFO, 10, domain = EPGBACKUP_NOTIFICATIONDOMAIN)
 				else:
-					Notifications.AddPopup(
-						_("Couldn't create a backup, see logfile for more details!"), \
-						MessageBox.TYPE_ERROR, 30, domain = EPGBACKUP_NOTIFICATIONDOMAIN)
+					errorTxt = self.__getErrortext()
+					Notifications.AddNotificationWithCallback(self.showLogFileCB, MessageBox, \
+						text = _("Couldn't create a backup.\nReason: %s.\nPress OK to see the logfile!") \
+						% (errorTxt), type = MessageBox.TYPE_ERROR, \
+						timeout = 30, domain = EPGBACKUP_NOTIFICATIONDOMAIN)
 		except:
 			debugOut("makeBackup-Error:\n" + str(format_exc()), forced=True)
 	
@@ -176,7 +228,7 @@ class EPGBackupSupport:
 				backupfile = backupinfo [1].rstrip()
 				if FORCERESTORECANCEL != backupfile and FORCERESTORENOFILES != backupfile:
 					self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["FORCERESTORE"], backupfile)
-					restoredFile = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], "restore", getoutput = True)
+					restoredFile = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE_RESTORE"], getoutput = True)
 					if restoredFile != "":
 						eEPGCache.getInstance().Lock()
 						eEPGCache.getInstance().load()
@@ -185,9 +237,11 @@ class EPGBackupSupport:
 							_("Backup-file \"%s\" successfully loaded!") % (restoredFile), \
 							type = MessageBox.TYPE_INFO)
 					else:
-						self.session.open(MessageBox, \
-							_("Couldn't load backup-file, see logfile for more details!"), \
-							type = MessageBox.TYPE_ERROR)
+						errorTxt = self.__getErrortext()
+						Notifications.AddNotificationWithCallback(self.showLogFileCB, MessageBox, \
+							text = _("Couldn't load backup-file.\nReason: %s.\nPress OK to see the logfile!") \
+							% (errorTxt), type = MessageBox.TYPE_ERROR, \
+							timeout = 30, domain = EPGBACKUP_NOTIFICATIONDOMAIN)
 		except:
 			debugOut("__forceRestoreCB-Error:\n" + str(format_exc()), forced=True)
 
@@ -226,25 +280,26 @@ class EPGBackupSupport:
 			self.uninstall()
 	
 	def install(self):
+		if os.path.exists(SH_EXEC_FILE):
+			self._executeSh("/bin/chmod", "u+x", SH_EXEC_FILE)
 		self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["INSTALL"], \
 			config.plugins.epgbackup.showin_usr_scripts.value)
 	
 	def uninstall(self):
 		self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["UNINSTALL"])
-
+		
 	def executeShScript(self, sh_action, param1 = "", getoutput = False):
+		debugOut("EPGBackup.sh execute with params %s %s" %(sh_action, param1))
+		return self._executeSh(SH_EXEC_FILE, sh_action, param1, getoutput)
+
+	def _executeSh(self, sh_cmd, param1 = "", param2 = "", getoutput = False):
 		outtext = ""
-		if getoutput:
-			os.system(SH_EXEC_FILE + " %s %s > %s" %(sh_action, param1, str(SH_TMP_OUTPUT)))
-			fo=open(str(SH_TMP_OUTPUT))
-			line = fo.readline()
-			while (line):
-				outtext += line
-				line = fo.readline()
-			fo.close
-		else:
-			debugOut("EPGBackup.sh execute wiht params %s %s" %(sh_action, param1))
-			os.system(SH_EXEC_FILE + " %s %s" %(sh_action, param1))
+		try:
+			outtext = subprocess.check_output("%s %s %s" % (sh_cmd, param1, param2),
+				stderr=subprocess.STDOUT, 
+				shell=True)
+		except subprocess.CalledProcessError as cpe:
+			debugOut("sh-Execute-Error:\n%s: %s" %(str(cpe.returncode), cpe.output))
 		return outtext
 
 

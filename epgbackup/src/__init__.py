@@ -24,9 +24,9 @@ def _(txt):
 
 def getDefaultTxt(txt):
 	lang = language.getLanguage()[:2]
-	os.environ["LANGUAGE"] = DefaultPluginLang
+	os_environ["LANGUAGE"] = DefaultPluginLang
 	t = gettext.dgettext(PluginLanguageDomain, txt)
-	os.environ["LANGUAGE"] = lang
+	os_environ["LANGUAGE"] = lang
 	return t
 
 localeInit()
