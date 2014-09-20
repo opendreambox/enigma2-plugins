@@ -101,7 +101,7 @@ class BirthdayTimer(Timer, BirthdayStore):
 		
 		# let's wait for the system time being up to date before starting the timers. needed when the box was powered off
 		if not eDVBLocalTimeHandler.getInstance().ready():
-			self.local_time_handler_conn = eDVBLocalTimeHandler.getInstance().m_timeUpdated.timeout.connect(self.startTimer)
+			self.local_time_handler_conn = eDVBLocalTimeHandler.getInstance().m_timeUpdated.connect(self.startTimer)
 		else:
 			self.start()
 			self.startNetworking()
