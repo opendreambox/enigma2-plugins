@@ -571,7 +571,7 @@ var MovieListProvider = Class.create(AbstractContentProvider, {
 /* this one is a little special! */
 var ScreenshotProvider = Class.create(AbstractContentProvider, {
 	initialize: function($super, showFnc){
-		$super(URL.screenshot, showFnc);
+		$super(URL.grab, showFnc);
 		this.src = "";
 	},
 
