@@ -13,7 +13,5 @@
 
 	  <files type="package"> <!-- without version, without .ipk -->
 		<file type="package" name="enigma2-plugin-extensions-emailclient" />
-		<file type="package" name="python-shell" />
-		<file type="package" name="python-textutils" />
 	  </files>
 </default>

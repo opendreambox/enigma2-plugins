@@ -13,6 +13,5 @@
 
 	  <files type="package"> <!-- without version, without .ipk -->
 		<file type="package" name="enigma2-plugin-extensions-mytube" />
-		<file type="package" name="python-gdata" />
 	  </files>
 </default>
