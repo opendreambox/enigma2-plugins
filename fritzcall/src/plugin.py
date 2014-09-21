@@ -1279,11 +1279,10 @@ class FritzOfferAction(Screen):
 	def _exit(self):
 		self.close()
 
-OneHour = 60*60*1000
-# OneHour = 1000
 class FritzCallPhonebook:
 	def __init__(self):
 		debug("[FritzCallPhonebook] init")
+		oneHour = 60*60*1000
 		# Beware: strings in phonebook.phonebook have to be in utf-8!
 		self.phonebook = {}
 		if config.plugins.FritzCall.reloadPhonebookTime.value > 0:
