@@ -134,7 +134,7 @@
 .w200h50{height:50px;width:200px;}
 .wap a,.wap a:visited,.wap a:active,.black,#current a,.sListMarker{color:#333;}
 :-o-prefocus{outline:0;}
-a,a:visited,a:active{color:#444;text-decoration:none;}
+a,a:visited,a:active{color:#444;text-decoration:none;outline:0;}
 a.date-picker-control{display:inline-block;}
 a.date-picker-control span{display:block;height:16px;width:16px;margin:auto 0;}
 a.date-picker-control:focus,div.datePicker table td:focus{-moz-outline:0 none;color:#6482aa!important;outline:0 none;overflow:hidden;}

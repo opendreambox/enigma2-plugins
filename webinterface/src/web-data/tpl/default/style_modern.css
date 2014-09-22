@@ -136,6 +136,10 @@
 	width: 115px;
 }
 
+#instantRecordMenu {
+	padding: 5px;
+}
+
 #instantRecordMenu li {
 	margin: 3px;
 }
@@ -810,6 +814,7 @@
 a, a:visited, a:active {
 	color: #444;
 	text-decoration: none;
+	outline: 0;
 }
 
 a.date-picker-control {
