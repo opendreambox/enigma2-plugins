@@ -274,7 +274,7 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 		self.delayTick = True
 		
 		# get notifications from the global timer every second to refresh lists on time change
-		self.clockTimer = self.global_screen["CurrentTime"].clock_timer
+		self.clockTimer = self.session.screen["CurrentTimer"].clock_timer
 		self.clockTimer_conn = self.clockTimer.timeout.connect(self.checkTimeChange)
 		
 		# Initialise the blink timer if there's already a recording running
