@@ -323,7 +323,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		
 		self.visible = True
 		
-		self.fullScreen = session.instantiateDialog(InternetRadioFullScreen)
+		self.fullScreen = session.instantiateDialog(InternetRadioFullScreen, zPosition=10000)
 		self.autoActivationKeyPressedActionSlot = eActionMap.getInstance().bindAction('', -0x7FFFFFFF, self.autoActivationKeyPressed)
 
 		global containerStreamripper
