@@ -573,7 +573,7 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 		if sRef == None or begin == None or duration == None:
 			nextEvent = -1
 		else:
-			nextEvent = self.epgcache.startTimeQuery(eServiceReference(sRef), begin + duration)
+			nextEvent = self.epgcache.lookupEventTime(eServiceReference(sRef), begin + duration)
 		
 		if nextEvent == -1:
 			self["upcoming"].setList([])
