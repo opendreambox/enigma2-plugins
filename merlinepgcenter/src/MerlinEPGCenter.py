@@ -580,14 +580,11 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 			return
 			
 		i = 0
-		while i < size:
-			nextEvent = self.epgcache.getNextTimeEntry()
-			if nextEvent <= 0:
-				break
-			else:
-				data = (0, nextEvent.getEventId(), sRef, nextEvent.getBeginTime(), nextEvent.getDuration(), nextEvent.getEventName(), nextEvent.getShortDescription(), nextEvent.getExtendedDescription())
-				upcomingEvents.append(data)
-				i += 1
+		while (i < size) and nextEvent:
+			data = (0, nextEvent.getEventId(), sRef, nextEvent.getBeginTime(), nextEvent.getDuration(), nextEvent.getEventName(), nextEvent.getShortDescription(), nextEvent.getExtendedDescription())
+			upcomingEvents.append(data)
+			nextEvent = self.epgcache.lookupEventTime(eServiceReference(sRef), nextEvent.getBeginTime() + nextEvent.getDuration())
+			i += 1
 				
 		self["upcoming"].currentBouquetIndex = self.currentBouquetIndex
 		self["upcoming"].setList(upcomingEvents)
