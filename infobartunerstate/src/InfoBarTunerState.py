@@ -528,7 +528,7 @@ class InfoBarTunerState(object):
 						# Delete references to avoid blocking tuners
 						del timer
 						
-						if pending_begin and pending_limit < begin:
+						if pending_limit and pending_limit < begin:
 							# Skip timer
 							continue
 						
