@@ -93,6 +93,7 @@ class InfoBarTunerStateConfiguration(Screen, ConfigListScreen):
 			(  _("Time format begin")                                 , config.infobartunerstate.time_format_begin ),
 			(  _("Time format end")                                   , config.infobartunerstate.time_format_end ),
 			(  _("Number of pending records in list")                 , config.infobartunerstate.number_pending_records ),
+			(  _("Show pending records only within x hours")          , config.infobartunerstate.pending_hours ),
 			(  _("Number of finished records in list")                , config.infobartunerstate.number_finished_records ),
 			(  _("Number of seconds for displaying finished records") , config.infobartunerstate.timeout_finished_records ),
 			(  separator                                              , config.infobartunerstate.about ),

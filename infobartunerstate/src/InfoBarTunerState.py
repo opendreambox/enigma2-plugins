@@ -504,6 +504,9 @@ class InfoBarTunerState(object):
 		nextwins = [ id for id in self.entries.keys() if id.startswith('next')]
 		
 		if number_pending_records:
+			pending_seconds = int( config.infobartunerstate.pending_hours.value ) * 3600
+			pending_limit = (time() + pending_seconds) if pending_seconds else 0
+			
 			timer_list = getNextPendingRecordTimers()[:number_pending_records]
 			
 			if timer_list:
@@ -524,6 +527,10 @@ class InfoBarTunerState(object):
 						
 						# Delete references to avoid blocking tuners
 						del timer
+						
+						if pending_begin and pending_limit < begin:
+							# Skip timer
+							continue
 						
 						number = service_ref and getNumber(service_ref.ref)
 						channel = service_ref and service_ref.getServiceName()
