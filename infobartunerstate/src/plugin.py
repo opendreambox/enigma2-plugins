@@ -37,7 +37,7 @@ from InfoBarTunerState import InfoBarTunerState, TunerStateInfo
 NAME = _("InfoBarTunerState")
 IBTSSHOW = _("Show InfoBarTunerState")
 IBTSSETUP = _("InfoBarTunerState Setup")
-VERSION = "1.1.4"
+VERSION = "1.1.5"
 SUPPORT = "http://bit.ly/ibtsihad"
 DONATE = "http://bit.ly/ibtspaypal"
 ABOUT = "\n  " + NAME + " " + VERSION + "\n\n" \
@@ -124,6 +124,7 @@ config.infobartunerstate.show_overwrite            = ConfigYesNo(default = False
 config.infobartunerstate.time_format_begin         = ConfigSelection(default = "%H:%M", choices = date_choices)
 config.infobartunerstate.time_format_end           = ConfigSelection(default = "%H:%M", choices = date_choices)
 config.infobartunerstate.number_pending_records    = ConfigSelectionNumber(0, 10, 1, default = 1)
+config.infobartunerstate.pending_hours             = ConfigSelectionNumber(0, 1000, 1, default = 0)
 config.infobartunerstate.number_finished_records   = ConfigSelectionNumber(0, 10, 1, default = 5)
 config.infobartunerstate.timeout_finished_records  = ConfigSelectionNumber(0, 600, 10, default = 60)
 
