@@ -518,7 +518,9 @@ class InfoBarTunerState(object):
 						# Is this really necessary?
 						try: timer.Filename
 						except: timer.calculateFilename()
-						filename = timer.Filename
+						
+						try: filename = timer.Filename
+						except: filename = timer.name
 						
 						# Delete references to avoid blocking tuners
 						del timer
@@ -565,7 +567,8 @@ class InfoBarTunerState(object):
 			if autohide or self.session.current_dialog is None or not issubclass(self.session.current_dialog.__class__, InfoBarShowHide):
 				# Start timer to avoid permanent displaying
 				# Do not start timer if no timeout is configured
-				timeout = int(config.infobartunerstate.infobar_timeout.value) or int(config.usage.infobar_timeout.index)
+				#timeout = int(config.infobartunerstate.infobar_timeout.value) or int(config.usage.infobar_timeout.index)
+				timeout = int(config.usage.infobar_timeout.index)
 				if timeout > 0:
 					if self.hideTimer.isActive():
 						self.hideTimer.stop()
@@ -580,6 +583,8 @@ class InfoBarTunerState(object):
 		print "IBTS toggle"
 		if self._shown is False:
 			self.show()
+		else:
+			self.hide()
 
 	def tunerShow(self, forceshow=False):
 		print "IBTS tunerShow"
