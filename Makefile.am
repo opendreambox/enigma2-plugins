@@ -40,7 +40,6 @@ SUBDIRS = \
 	eventposition \
 	fancontrol2 \
 	filebrowser \
-	flashexpander \
 	fritzcall \
 	fstabeditor \
 	ftpbrowser \
