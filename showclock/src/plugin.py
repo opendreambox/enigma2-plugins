@@ -233,7 +233,7 @@ class ShowClockPositioner(Screen):
 			"cancel": self.cancel                                                                                  
 		}, -1)
 		
-		self.onShow.append(self.setPosition)
+		self.onExecBegin.append(self.setPosition)
 
 	def setPosition(self):
 		self.pos = (config.plugins.ShowClock.position_x.value, config.plugins.ShowClock.position_y.value)
@@ -273,7 +273,7 @@ class ShowClock(Screen):
 
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		self.skin = clockSkin()					
+		self.skin = clockSkin()
 		self.onShow.append(self.setPosition)
 
 	def setPosition(self):
@@ -294,7 +294,8 @@ class ShowClockMain():
 		self.timer_conn = self.timer.timeout.connect(self.ShowHide)
 		global globalActionMap
 		readKeymap("/usr/lib/enigma2/python/Plugins/Extensions/ShowClock/keymap.xml")
-		self.dialog = session.instantiateDialog(ShowClock)
+		self.dialog = session.instantiateDialog(ShowClock, zPosition=1000)
+		self.dialog.setPosition() # we need coordinates before first shown...
 		globalActionMap.actions['showClock'] = self.ShowHide
 		
 	def ShowHide(self):

@@ -66,7 +66,8 @@ class PermanentClock():
 		self.dialog = None
 
 	def gotSession(self, session):
-		self.dialog = session.instantiateDialog(PermanentClockScreen)
+		self.dialog = session.instantiateDialog(PermanentClockScreen, zPosition=1000)
+		self.dialog.movePosition()
 		self.showHide()
 
 	def changeVisibility(self):
@@ -108,7 +109,7 @@ class PermanentClockPositioner(Screen):
 		
 		self.moveTimer = eTimer()
 		self.moveTimer_conn = self.moveTimer.timeout.connect(self.movePosition)
-		self.moveTimer.start(50, 1)
+		self.onExecBegin.append(self.movePosition)
 
 	def movePosition(self):
 		self.instance.move(ePoint(config.plugins.PermanentClock.position_x.value, config.plugins.PermanentClock.position_y.value))

@@ -966,8 +966,7 @@ class FanControl2(Screen):
 			thread.setDaemon(True) 
 			thread.start() 
 		self.timer = eTimer()
-		if self.query not in self.timer.callback:
-			self.timer_conn = self.timer.timeout.connect(self.query)
+		self.timer_conn = self.timer.timeout.connect(self.query)
 		self.timer.startLongTimer(10)
 		config.misc.standbyCounter.addNotifier(self.standbyQuery, initial_call = False)
 

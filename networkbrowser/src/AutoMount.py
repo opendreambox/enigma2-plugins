@@ -14,6 +14,7 @@ from xml.etree.cElementTree import parse as cet_parse
 XML_FSTAB = eEnv.resolve("${sysconfdir}/enigma2/automounts.xml")
 
 class AutoMount():
+	MOUNT_BASE = '/media/'
 	"""Manages Mounts declared in a XML-Document."""
 	def __init__(self):
 		self.automounts = {}
@@ -119,17 +120,17 @@ class AutoMount():
 		if self.activeMountsCounter == 0:
 			print "self.automounts without active mounts",self.automounts
 			if data['active'] == 'False' or data['active'] is False:
-				path = '/media/net/'+ data['sharename']
+				path = AutoMount.MOUNT_BASE + data['sharename']
 				umountcmd = 'umount -fl '+ path
 				print "[AutoMount.py] UMOUNT-CMD--->",umountcmd
 				self.MountConsole.ePopen(umountcmd, self.CheckMountPointFinished, [data, callback])
 		else:
 			if data['active'] == 'False' or data['active'] is False:
-				path = '/media/net/'+ data['sharename']
+				path = AutoMount.MOUNT_BASE + data['sharename']
 				self.command = 'umount -fl '+ path
 
 			elif data['active'] == 'True' or data['active'] is True:
-				path = '/media/net/'+ data['sharename']
+				path = AutoMount.MOUNT_BASE + data['sharename']
 				if os_path.exists(path) is False:
 					createDir(path)
 				tmpsharedir = data['sharedir'].replace(" ", "\\ ")
@@ -160,7 +161,7 @@ class AutoMount():
 		print "[AutoMount.py] retval",retval
 		(data, callback ) = extra_args
 		print "LEN",len(self.MountConsole.appContainers)
-		path = '/media/net/'+ data['sharename']
+		path = AutoMount.MOUNT_BASE + data['sharename']
 		print "PATH im CheckMountPointFinished",path
 		if os_path.exists(path):
 			if os_path.ismount(path):
@@ -290,7 +291,7 @@ class AutoMount():
 		self.automounts = self.newautomounts
 		if not self.removeConsole:
 			self.removeConsole = Console()
-		path = '/media/net/'+ mountpoint
+		path = AutoMount.MOUNT_BASE + mountpoint
 		umountcmd = 'umount -fl '+ path
 		print "[AutoMount.py] UMOUNT-CMD--->",umountcmd
 		self.removeConsole.ePopen(umountcmd, self.removeMountPointFinished, [path, callback])
