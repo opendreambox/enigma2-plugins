@@ -103,7 +103,8 @@ class IPKGUpdateNotification(ControllerBase):
 				if p == packagename:
 					updversion = v
 					break
-			updates += packagename + " :\t" + instversion + " :\t" + updversion + "\n"
+			if instversion != updversion:
+				updates += packagename + " :\t" + instversion + " :\t" + updversion + "\n"
 		if updates:
 			callback( SUBJECT, BODY % (updates) )
 		else:
