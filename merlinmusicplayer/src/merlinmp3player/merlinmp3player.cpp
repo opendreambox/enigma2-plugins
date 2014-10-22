@@ -29,7 +29,7 @@ eServiceFactoryMerlinMP3Player::eServiceFactoryMerlinMP3Player()
 		extensions.push_back("mp3");
 		sc->addServiceFactory(eServiceFactoryMerlinMP3Player::id, this, extensions);
 	}
-	m_service_info = new eStaticServiceMP3Info();
+	m_service_info = new eStaticServiceMerlinMP3Info();
 
 }
 
@@ -76,14 +76,14 @@ RESULT eServiceFactoryMerlinMP3Player::offlineOperations(const eServiceReference
 	return -1;
 }
 
-DEFINE_REF(eStaticServiceMP3Info)
+DEFINE_REF(eStaticServiceMerlinMP3Info)
 
-eStaticServiceMP3Info::eStaticServiceMP3Info()
+eStaticServiceMerlinMP3Info::eStaticServiceMerlinMP3Info()
 {
 	// nothing to to here...
 }
 
-RESULT eStaticServiceMP3Info::getName(const eServiceReference &ref, std::string &name)
+RESULT eStaticServiceMerlinMP3Info::getName(const eServiceReference &ref, std::string &name)
 {
 	size_t last = ref.path.rfind('/');
 	if (last != std::string::npos)
@@ -93,7 +93,7 @@ RESULT eStaticServiceMP3Info::getName(const eServiceReference &ref, std::string 
 	return 0;
 }
 
-int eStaticServiceMP3Info::getLength(const eServiceReference &ref)
+int eStaticServiceMerlinMP3Info::getLength(const eServiceReference &ref)
 {
 	return -1;
 }
