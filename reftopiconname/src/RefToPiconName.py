@@ -37,6 +37,9 @@ class RefToPiconName(Converter, object):
 				info = eServiceCenter.getInstance().info(ref)
 				if info:
 					return info.getName(ref).replace(" ","_")
+			#alternatives
+			elif ref.flags & (eServiceReference.isGroup):
+				return eServiceCenter.getInstance().list(ref).getContent("S")[0]
 			#channel
 			else:
 				return ref.toString()
