@@ -35,6 +35,7 @@ class PipAdapter:
 			self.wasShown = True
 			self.previousService = self.session.pip.getCurrentService()
 			self.previousPath = self.session.pip.servicePath
+			self.session.deleteDialog(self.session.pip)
 			del self.session.pip
 		else:
 			self.wasShown = False
@@ -62,7 +63,8 @@ class PipAdapter:
 
 	def play(self, service):
 		print("[EPGRefresh.PipAdapter.play]")
-		if not self.pipAvail: return False
+		if not self.pipAvail:
+			return False
 
 		if not self.session.pipshown: # make sure pip still exists
 			self.initPiP()
@@ -73,14 +75,16 @@ class PipAdapter:
 		return False
 
 	def stop(self):
-		if not self.pipAvail: return
+		if not self.pipAvail:
+			return
 
 		if config.plugins.epgrefresh.enablemessage.value:
 			Notifications.AddPopup(_("EPG refresh finished.") + "\n" + _("PiP available now."), MessageBox.TYPE_INFO, 4, ENDNOTIFICATIONID, domain = NOTIFICATIONDOMAIN)
 
-		# remove pip preemptively
-		try: del self.session.pip
-		except Exception: pass
+		if self.session.pipshown:
+			self.session.deleteDialog(self.session.pip)
+			del self.session.pip
+			self.session.pipshown = False
 
 		# reset pip and remove it if unable to play service
 		if self.wasShown:
@@ -91,7 +95,5 @@ class PipAdapter:
 				self.session.pip.servicePath = self.previousPath
 			else:
 				self.session.pipshown = False
+				self.session.deleteDialog(self.session.pip)
 				del self.session.pip
-		else:
-			self.session.pipshown = False
-
