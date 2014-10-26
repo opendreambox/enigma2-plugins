@@ -68,6 +68,7 @@ def ChannelContextMenu_showServiceInPiP(self):
 		self.close(True)
 	else:
 		self.session.pipshown = False
+		self.session.deleteDialog(self.session.pip)
 		del self.session.pip
 		self.session.openWithCallback(self.close, MessageBox, _("Could not open Picture in Picture"), MessageBox.TYPE_ERROR)
 
@@ -98,6 +99,7 @@ def ChannelSelection_togglePipzap(self):
 		# Disable PiP if not playing a service
 		if self.session.pip.pipservice is None:
 			self.session.pipshown = False
+			self.session.deleteDialog(self.session.pip)
 			del self.session.pip
 
 		# Move to playing service
