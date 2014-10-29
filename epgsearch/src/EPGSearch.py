@@ -353,14 +353,6 @@ class EPGSearch(EPGSelection):
 					history.remove(searchString)
 					history.insert(0, searchString)
 
-			# Workaround to allow search for umlauts if we know the encoding (pretty bad, I know...)
-			encoding = config.plugins.epgsearch.encoding.value
-			if encoding != 'UTF-8':
-				try:
-					searchString = searchString.decode('UTF-8', 'replace').encode(encoding, 'replace')
-				except (UnicodeDecodeError, UnicodeEncodeError):
-					pass
-
 			# Search EPG, default to empty list
 			epgcache = eEPGCache.getInstance() # XXX: the EPGList also keeps an instance of the cache but we better make sure that we get what we want :-)
 			ret = epgcache.search(('RIBDT', 1000, eEPGCache.PARTIAL_TITLE_SEARCH, searchString, eEPGCache.NO_CASE_CHECK)) or []
