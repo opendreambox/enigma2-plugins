@@ -10,9 +10,6 @@ from enigma import eServiceReference, eServiceCenter
 # To get preferred component
 from Components.config import config
 
-# Default encoding
-from Components.Language import language
-
 class AutoTimerComponent(object):
 	"""AutoTimer Component which also handles validity checks"""
 
