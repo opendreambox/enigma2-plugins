@@ -1371,10 +1371,14 @@ def getTuner(service):
 	feinfo = service and service.frontendInfo()
 	data = feinfo and feinfo.getAll(False)
 	if data:
+		#number = data.get("slot_number", -1)
 		number = data.get("tuner_number", -1)
 		type = data.get("tuner_type", "")
 		if number is not None and number > -1:
+			#return ( ('A', 'B', 'C', 'D', 'E', 'F')[number], type)
 			return ( chr( int(number) + ord('A') ), type)
+		else:
+			return ( "", type)
 	return "", ""
 
 def readBouquetList(self):
