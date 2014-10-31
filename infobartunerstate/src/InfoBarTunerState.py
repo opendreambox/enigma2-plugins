@@ -555,12 +555,14 @@ class InfoBarTunerState(object):
 						self.entries[id] = win
 					else:
 						if self.entries.has_key(id):
+							self.session.deleteDialog(win)
 							del self.entries[id]
 			
 			# Close all not touched next windows
 			if nextwins:
 				for id in nextwins:
 					if self.entries.has_key(id):
+						self.session.deleteDialog(win)
 						del self.entries[id]
 
 	def show(self, autohide=False, forceshow=False):
@@ -685,7 +687,9 @@ class InfoBarTunerState(object):
 						win.updateTimes( begin, end, endless )
 						win.update()
 						#TEST
+						self.session.deleteDialog(win)
 						del self.entries[id]
+						##
 						self.updateRecordTimer()
 				elif win.type == STREAM:
 					if config.infobartunerstate.show_streams.value:
@@ -721,7 +725,7 @@ class InfoBarTunerState(object):
 							win.updateTimes( begin, end, endless )
 							win.update()
 						else:
-							win.toberemoved = True
+							win.remove()
 					else:
 						# Should never happen delete
 						begin = win.begin
@@ -861,6 +865,8 @@ class TunerStateBase(Screen):
 		self.typewidth = 0
 		self.progresswidth = 0
 		
+		self.toberemoved = False
+		
 		self.onLayoutFinish.append(self.layoutFinished)
 
 	def applySkin(self):
@@ -953,6 +959,9 @@ class TunerStateBase(Screen):
 	def move(self, posx, posy):
 		self.instance.move(ePoint(posx, posy))
 
+	def remove(self):
+		self.toberemoved = True 
+
 
 #######################################################
 # Displaying screen class, show nothing running
@@ -1027,7 +1036,6 @@ class TunerState(TunerStateBase):
 		#TODO use parameter ref instead of number and channel
 		TunerStateBase.__init__(self, session)
 		
-		self.toberemoved = False
 		self.removeTimer = eTimer()
 		self.removeTimer.callback.append(self.remove)
 		
@@ -1323,9 +1331,6 @@ class TunerState(TunerStateBase):
 			widths.append( width )
 		
 		self.widths = widths
-
-	def remove(self):
-		self.toberemoved = True 
 
 
 #######################################################
