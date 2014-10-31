@@ -2,7 +2,7 @@
 #include <lib/service/iservice.h>
 #include <gst/gst.h>
 
-class eStaticServiceMP3Info;
+class eStaticServiceMerlinMP3Info;
 
 class eServiceFactoryMerlinMP3Player: public iServiceHandler
 {
@@ -19,14 +19,14 @@ public:
 	RESULT info(const eServiceReference &, ePtr<iStaticServiceInformation> &ptr);
 	RESULT offlineOperations(const eServiceReference &, ePtr<iServiceOfflineOperations> &ptr);
 private:
-	ePtr<eStaticServiceMP3Info> m_service_info;
+	ePtr<eStaticServiceMerlinMP3Info> m_service_info;
 };
 
-class eStaticServiceMP3Info: public iStaticServiceInformation
+class eStaticServiceMerlinMP3Info: public iStaticServiceInformation
 {
-	DECLARE_REF(eStaticServiceMP3Info);
+	DECLARE_REF(eStaticServiceMerlinMP3Info);
 	friend class eServiceFactoryMerlinMP3Player;
-	eStaticServiceMP3Info();
+	eStaticServiceMerlinMP3Info();
 public:
 	RESULT getName(const eServiceReference &ref, std::string &name);
 	int getLength(const eServiceReference &ref);
