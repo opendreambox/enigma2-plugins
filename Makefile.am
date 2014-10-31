@@ -97,6 +97,7 @@ SUBDIRS = \
 	satloader \
 	seekbar \
 	serienfilm \
+	seriesplugin \
 	setpasswd \
 	showclock \
 	simplerss \

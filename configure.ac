@@ -557,6 +557,15 @@ serienfilm/po/Makefile
 serienfilm/src/Makefile
 serienfilm/src/icons/Makefile
 
+seriesplugin/Makefile
+seriesplugin/meta/Makefile
+seriesplugin/po/Makefile
+seriesplugin/src/Makefile
+seriesplugin/src/identifiers/Makefile
+seriesplugin/src/identifiers/bs4/Makefile
+seriesplugin/src/identifiers/bs4/builder/Makefile
+seriesplugin/src/identifiers/pkg/Makefile
+
 setpasswd/Makefile
 setpasswd/meta/Makefile
 setpasswd/po/Makefile
