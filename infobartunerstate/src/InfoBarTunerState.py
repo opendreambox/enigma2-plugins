@@ -61,6 +61,12 @@ from enigma import eDVBResourceManager, eActionMap, eListboxPythonMultiContent, 
 
 from skin import parseColor, parseFont
 
+try:
+	from Plugins.Extensions.2IB import SecondInfoBar
+	SecondInfobarAvailable = True
+except:
+	SecondInfobarAvailable = False
+
 # Plugin internal
 from netstat import netstat
 
@@ -559,6 +565,16 @@ class InfoBarTunerState(object):
 
 	def show(self, autohide=False, forceshow=False):
 		print "IBTS show"
+		
+		#TEST
+		if SecondInfobarAvailable:
+			try:
+				if self.infobar.SIBdialog.shown:
+					print "IBTS SecondInfobar is shown"
+					return
+			except Exception, e:
+				print "InfoBarTunerState show SIB exception " + str(e)
+		
 		allowclosing = True
 		if self.updateTimer.isActive() and autohide:
 			# Avoid closing if the update timer is active
