@@ -294,6 +294,7 @@ class SeriesPluginRenamer(object):
 		
 		self.failed = []
 		self.returned = 0
+		self.__pump_recv_msg_conn = None
 		
 		session.openWithCallback(
 			self.confirm,
@@ -306,14 +307,14 @@ class SeriesPluginRenamer(object):
 
 	def confirm(self, confirmed):
 		if confirmed and self.services:
-			seriespluginrenameservice.MessagePump.recv_msg.get().append(self.gotThreadMsg_seriespluginrenameservice) # interconnect to thread start
+			self.__pump_recv_msg_conn = seriespluginrenameservice.MessagePump.recv_msg.connect(self.gotThreadMsg_seriespluginrenameservice) # interconnect to thread start
 			seriespluginrenameservice.Start(self.services)
 
 	def gotThreadMsg_seriespluginrenameservice(self, msg):
 		msg = seriespluginrenameservice.Message.pop()
 		print ('gotThreadMsg_seriespluginrenameservice]msg: %s' %str(msg))
 		self.renamerCallback(msg)
-		seriespluginrenameservice.MessagePump.recv_msg.get().remove(self.gotThreadMsg_seriespluginrenameservice) # interconnect to thread stop
+		self.__pump_recv_msg_conn = None
 
 	def renamerCallback(self, result=None):
 		self.returned += 1

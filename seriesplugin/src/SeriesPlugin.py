@@ -264,7 +264,7 @@ class SeriesPlugin(Modules, ChannelsBase):
 		ChannelsBase.__init__(self)
 		
 		self.serviceHandler = eServiceCenter.getInstance()
-		seriespluginworker.MessagePump.recv_msg.get().append(self.gotThreadMsg_seriespluginworker)
+		self.__pump_recv_msg_conn = seriespluginworker.MessagePump.recv_msg.connect(self.gotThreadMsg_seriespluginworker)
 		#http://bugs.python.org/issue7980
 		datetime.strptime('2012-01-01', '%Y-%m-%d')
 			
@@ -411,5 +411,5 @@ class SeriesPlugin(Modules, ChannelsBase):
 			)
 
 	def cancel(self):
-		seriespluginworker.MessagePump.recv_msg.get().remove(self.gotThreadMsg_seriespluginrenameservice) # interconnect to thread stop
+		self.__pump_recv_msg_conn = None
 		self.stop()
