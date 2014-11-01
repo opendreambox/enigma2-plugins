@@ -561,10 +561,10 @@ seriesplugin/Makefile
 seriesplugin/meta/Makefile
 seriesplugin/po/Makefile
 seriesplugin/src/Makefile
-seriesplugin/src/identifiers/Makefile
-seriesplugin/src/identifiers/bs4/Makefile
-seriesplugin/src/identifiers/bs4/builder/Makefile
-seriesplugin/src/identifiers/pkg/Makefile
+seriesplugin/src/Identifiers/Makefile
+seriesplugin/src/Identifiers/bs4/Makefile
+seriesplugin/src/Identifiers/bs4/builder/Makefile
+seriesplugin/src/Identifiers/pkg/Makefile
 
 setpasswd/Makefile
 setpasswd/meta/Makefile
