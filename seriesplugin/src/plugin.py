@@ -28,7 +28,7 @@ from Logger import splog
 #######################################################
 # Constants
 NAME = "SeriesPlugin"
-VERSION = "1.0"
+VERSION = "1.0.1"
 DESCRIPTION = _("SeriesPlugin")
 SHOWINFO = _("Show series info")
 RENAMESERIES = _("Rename serie(s)")
@@ -56,6 +56,9 @@ try:
 except:
 	DEVICE = ''
 
+WHERE_EPGMENU     = 'WHERE_EPGMENU'
+WHERE_CHANNELMENU = 'WHERE_CHANNELMENU'
+
 
 #######################################################
 # Initialize Configuration
@@ -65,6 +68,8 @@ config.plugins.seriesplugin.enabled                   = ConfigEnableDisable(defa
 
 config.plugins.seriesplugin.menu_info                 = ConfigYesNo(default = True)
 config.plugins.seriesplugin.menu_extensions           = ConfigYesNo(default = False)
+config.plugins.seriesplugin.menu_epg                  = ConfigYesNo(default = True)
+config.plugins.seriesplugin.menu_channel              = ConfigYesNo(default = True)
 config.plugins.seriesplugin.menu_movie_info           = ConfigYesNo(default = True)
 config.plugins.seriesplugin.menu_movie_rename         = ConfigYesNo(default = True)
 
@@ -246,95 +251,151 @@ def Plugins(**kwargs):
 	
 	#TODO icon
 	descriptors.append( PluginDescriptor(
-																			name = NAME + " " + _("Setup"),
-																			description = NAME + " " + _("Setup"),
-																			where = PluginDescriptor.WHERE_PLUGINMENU,
-																			fnc = setup,
-																			needsRestart = False) )
+											name = NAME + " " + _("Setup"),
+											description = NAME + " " + _("Setup"),
+											where = PluginDescriptor.WHERE_PLUGINMENU,
+											fnc = setup,
+											needsRestart = False) )
 	
 	if config.plugins.seriesplugin.enabled.value:
 		
 		overwriteAutoTimer()
 		
 		descriptors.append( PluginDescriptor(
-																				#where = PluginDescriptor.WHERE_SESSIONSTART,
-																				where = PluginDescriptor.WHERE_AUTOSTART,
-																				needsRestart = False,
-																				fnc = start) )
+													#where = PluginDescriptor.WHERE_SESSIONSTART,
+													where = PluginDescriptor.WHERE_AUTOSTART,
+													needsRestart = False,
+													fnc = start) )
 
 		if config.plugins.seriesplugin.menu_info.value:
 			descriptors.append( PluginDescriptor(
-																					name = SHOWINFO,
-																					description = SHOWINFO,
-																					where = PluginDescriptor.WHERE_EVENTINFO,
-																					needsRestart = False,
-																					fnc = info) )
+													name = SHOWINFO,
+													description = SHOWINFO,
+													where = PluginDescriptor.WHERE_EVENTINFO,
+													needsRestart = False,
+													fnc = info) )
 
 		if config.plugins.seriesplugin.menu_extensions.value:
 			descriptors.append(PluginDescriptor(
-																				name = SHOWINFO,
-																				description = SHOWINFO,
-																				where = PluginDescriptor.WHERE_EXTENSIONSMENU,
-																				fnc = extension,
-																				needsRestart = False) )
+													name = SHOWINFO,
+													description = SHOWINFO,
+													where = PluginDescriptor.WHERE_EXTENSIONSMENU,
+													fnc = extension,
+													needsRestart = False) )
 		
 		if config.plugins.seriesplugin.check_timer_list.value:
 			descriptors.append(PluginDescriptor(
-																				name = CHECKTIMERS,
-																				description = CHECKTIMERS,
-																				where = PluginDescriptor.WHERE_EXTENSIONSMENU,
-																				fnc = checkTimers,
-																				needsRestart = False) )
+													name = CHECKTIMERS,
+													description = CHECKTIMERS,
+													where = PluginDescriptor.WHERE_EXTENSIONSMENU,
+													fnc = checkTimers,
+													needsRestart = False) )
 		
 		if config.plugins.seriesplugin.menu_movie_info.value:
 			descriptors.append( PluginDescriptor(
-																					name = SHOWINFO,
-																					description = SHOWINFO,
-																					where = PluginDescriptor.WHERE_MOVIELIST,
-																					fnc = movielist_info,
-																					needsRestart = False) )
+													name = SHOWINFO,
+													description = SHOWINFO,
+													where = PluginDescriptor.WHERE_MOVIELIST,
+													fnc = movielist_info,
+													needsRestart = False) )
 		
 		if config.plugins.seriesplugin.menu_movie_rename.value:
 			descriptors.append( PluginDescriptor(
-																					name = RENAMESERIES,
-																					description = RENAMESERIES,
-																					where = PluginDescriptor.WHERE_MOVIELIST,
-																					fnc = movielist_rename,
-																					needsRestart = False) )
+													name = RENAMESERIES,
+													description = RENAMESERIES,
+													where = PluginDescriptor.WHERE_MOVIELIST,
+													fnc = movielist_rename,
+													needsRestart = False) )
+		
+		if config.plugins.seriesplugin.menu_epg.value:
+			addSeriesPlugin(WHERE_EPGMENU, SHOWINFO)
+		
+		if config.plugins.seriesplugin.menu_channel.value:
+			addSeriesPlugin(WHERE_CHANNELMENU, SHOWINFO)
 
 	return descriptors
 
 
 #######################################################
+# Override ChannelContextMenu
+ChannelContextMenu__init__ = None
+from Screens.ChannelSelection import ChannelContextMenu, MODE_TV
+from Components.ChoiceList import ChoiceEntryComponent
+from Tools.BoundFunction import boundFunction
+from enigma import eServiceReference
+def SPChannelContextMenuInit():
+	print "[SeriesPlugin] override ChannelContextMenu.__init__"
+	global ChannelContextMenu__init__
+	if ChannelContextMenu__init__ is None:
+		ChannelContextMenu__init__ = ChannelContextMenu.__init__
+	ChannelContextMenu.__init__ = SPChannelContextMenu__init__
+	ChannelContextMenu.SPchannelShowSeriesInfo = channelShowSeriesInfo
+	ChannelContextMenu.SPcloseafterfinish = closeafterfinish
+
+def SPChannelContextMenu__init__(self, session, csel):
+	ChannelContextMenu__init__(self, session, csel)
+	current = csel.getCurrentSelection()
+	current_sel_path = current.getPath()
+	current_sel_flags = current.flags
+	if csel.mode == MODE_TV and not (current_sel_path or current_sel_flags & (eServiceReference.isDirectory|eServiceReference.isMarker)):
+		self["menu"].list.insert(0, ChoiceEntryComponent(text=(_("Show Series Info (SP)"), boundFunction(self.SPchannelShowSeriesInfo))))
+
+def channelShowSeriesInfo(self):
+	splog( "SeriesPlugin channelShowSeriesInfo ")
+	if config.plugins.seriesplugin.enabled.value:
+		try:
+			from enigma import eServiceCenter
+			service = self.csel.servicelist.getCurrent()
+			info = eServiceCenter.getInstance().info(service)
+			event = info.getEvent(service)
+			self.session.openWithCallback(self.SPcloseafterfinish, SeriesPluginInfoScreen, service, event)
+		except Exception as e:
+			splog(_("SeriesPlugin info exception ") + str(e))
+
+def closeafterfinish(self, retval=None):
+	self.close() 
+
+
+#######################################################
 # Add / Remove menu functions
-def addSeriesPlugin(menu, title, fnc):
-	# Add to extension menu
-	from Components.PluginComponent import plugins
-	if plugins:
-		for p in plugins.getPlugins( where = menu ):
-			if p.name == title:
-				# Plugin is already in menu
-				break
-		else:
-			# Plugin not in menu - add it
-			plugin = PluginDescriptor(
-															name = title,
-															description = title,
-															where = menu,
-															needsRestart = False,
-															fnc = fnc)
-			if menu in plugins.plugins:
-				plugins.plugins[ menu ].append(plugin)
+def addSeriesPlugin(menu, title, fnc=None):
+	# Add to menu
+	if( menu == WHERE_EPGMENU ):
+		pass
+	elif( menu == WHERE_CHANNELMENU ):
+		SPChannelContextMenuInit()
+	else:
+		from Components.PluginComponent import plugins
+		if plugins:
+			for p in plugins.getPlugins( where = menu ):
+				if p.name == title:
+					# Plugin is already in menu
+					break
+			else:
+				# Plugin not in menu - add it
+				plugin = PluginDescriptor(
+																name = title,
+																description = title,
+																where = menu,
+																needsRestart = False,
+																fnc = fnc)
+				if menu in plugins.plugins:
+					plugins.plugins[ menu ].append(plugin)
 
 
 def removeSeriesPlugin(menu, title):
-	# Remove from extension menu
-	from Components.PluginComponent import plugins
-	if plugins:
-		for p in plugins.getPlugins( where = menu ):
-			if p.name == title:
-				plugins.plugins[ menu ].remove(p)
-				break
+	# Remove from menu
+	if( menu == WHERE_EPGMENU ):
+		pass
+	elif( menu == WHERE_CHANNELMENU ):
+		pass
+	else:
+		from Components.PluginComponent import plugins
+		if plugins:
+			for p in plugins.getPlugins( where = menu ):
+				if p.name == title:
+					plugins.plugins[ menu ].remove(p)
+					break
 
 
 #######################################################
