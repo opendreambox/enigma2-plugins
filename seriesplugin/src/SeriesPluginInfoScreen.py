@@ -344,7 +344,7 @@ class SeriesPluginInfoScreen(Screen):
 				self[widget].instance.setPixmap(ptr)
 				self[widget].show()
 			del self.picload
-
+			self.picload_conn = None
 
 	# Overwrite Screen close function
 	def close(self):
