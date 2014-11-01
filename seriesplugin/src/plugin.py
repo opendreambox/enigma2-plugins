@@ -28,7 +28,7 @@ from Logger import splog
 #######################################################
 # Constants
 NAME = "SeriesPlugin"
-VERSION = "1.0"
+VERSION = "1.0.1"
 DESCRIPTION = _("SeriesPlugin")
 SHOWINFO = _("Show series info")
 RENAMESERIES = _("Rename serie(s)")
@@ -306,6 +306,12 @@ def Plugins(**kwargs):
 													where = PluginDescriptor.WHERE_MOVIELIST,
 													fnc = movielist_rename,
 													needsRestart = False) )
+		
+		if config.plugins.seriesplugin.menu_epg.value:
+			addSeriesPlugin(WHERE_EPGMENU, SHOWINFO)
+		
+		if config.plugins.seriesplugin.menu_channel.value:
+			addSeriesPlugin(WHERE_CHANNELMENU, SHOWINFO)
 
 	return descriptors
 
@@ -314,6 +320,9 @@ def Plugins(**kwargs):
 # Override ChannelContextMenu
 ChannelContextMenu__init__ = None
 from Screens.ChannelSelection import ChannelContextMenu, MODE_TV
+from Components.ChoiceList import ChoiceEntryComponent
+from Tools.BoundFunction import boundFunction
+from enigma import eServiceReference
 def SPChannelContextMenuInit():
 	print "[SeriesPlugin] override ChannelContextMenu.__init__"
 	global ChannelContextMenu__init__
@@ -349,7 +358,7 @@ def closeafterfinish(self, retval=None):
 
 #######################################################
 # Add / Remove menu functions
-def addSeriesPlugin(menu, title, fnc):
+def addSeriesPlugin(menu, title, fnc=None):
 	# Add to menu
 	if( menu == WHERE_EPGMENU ):
 		pass

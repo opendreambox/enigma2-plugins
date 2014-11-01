@@ -237,12 +237,12 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 			removeSeriesPlugin(PluginDescriptor.WHERE_EVENTINFO, SHOWINFO)
 		
 		if config.plugins.seriesplugin.menu_extensions.value:
-			addSeriesPlugin(PluginDescriptor.WHERE_EXTENSIONSMENU, SHOWINFO, extension)
+			addSeriesPlugin(PluginDescriptor.WHERE_EXTENSIONSMENU, SHOWINFO)
 		else:
 			removeSeriesPlugin(PluginDescriptor.WHERE_EXTENSIONSMENU, SHOWINFO)
 		
 		if config.plugins.seriesplugin.menu_epg.value:
-			addSeriesPlugin(WHERE_EPGMENU, SHOWINFO, extension)
+			addSeriesPlugin(WHERE_EPGMENU, SHOWINFO)
 		else:
 			removeSeriesPlugin(WHERE_EPGMENU, SHOWINFO)
 		
