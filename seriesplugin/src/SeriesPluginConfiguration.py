@@ -229,7 +229,7 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 			recoverAutoTimer()
 		
 		# Set new configuration
-		from plugin import WHERE_EPGMENU, WHERE_CHANNELMENU, addSeriesPlugin, removeSeriesPlugin, SHOWINFO, RENAMESERIES, CHECKTIMERS, info, extension, movielist_info, movielist_rename, checkTimers
+		from plugin import WHERE_EPGMENU, addSeriesPlugin, removeSeriesPlugin, SHOWINFO, RENAMESERIES, CHECKTIMERS, info, extension, channel, movielist_info, movielist_rename, checkTimers
 		
 		if config.plugins.seriesplugin.menu_info.value:
 			addSeriesPlugin(PluginDescriptor.WHERE_EVENTINFO, SHOWINFO, info)
@@ -247,9 +247,9 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 			removeSeriesPlugin(WHERE_EPGMENU, SHOWINFO)
 		
 		if config.plugins.seriesplugin.menu_channel.value:
-			addSeriesPlugin(WHERE_CHANNELMENU, SHOWINFO, extension)
+			addSeriesPlugin(PluginDescriptor.WHERE_CHANNEL_CONTEXT_MENU, SHOWINFO, channel)
 		else:
-			removeSeriesPlugin(WHERE_CHANNELMENU, SHOWINFO)
+			removeSeriesPlugin(PluginDescriptor.WHERE_CHANNEL_CONTEXT_MENU, SHOWINFO)
 		
 		if config.plugins.seriesplugin.menu_movie_info.value:
 			addSeriesPlugin(PluginDescriptor.WHERE_MOVIELIST, SHOWINFO, movielist_info)

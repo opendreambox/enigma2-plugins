@@ -57,7 +57,6 @@ except:
 	DEVICE = ''
 
 WHERE_EPGMENU     = 'WHERE_EPGMENU'
-WHERE_CHANNELMENU = 'WHERE_CHANNELMENU'
 
 
 #######################################################
@@ -174,6 +173,22 @@ def extension(session, *args, **kwargs):
 			#exc_type, exc_value, exc_traceback = sys.exc_info()
 			#splog( exc_type, exc_value, exc_traceback )
 
+
+#######################################################
+# Channel menu
+def channel(session, service=None, *args, **kwargs):
+	if config.plugins.seriesplugin.enabled.value:
+		try:
+			from enigma import eServiceCenter
+			info = eServiceCenter.getInstance().info(service)
+			event = info.getEvent(service)
+			session.open(SeriesPluginInfoScreen, service, event)
+		except Exception as e:
+			splog(_("SeriesPlugin extension exception ") + str(e))
+
+
+#######################################################
+# Timer
 def checkTimers(session, *args, **kwargs):
 	runIndependent()
 
@@ -282,6 +297,14 @@ def Plugins(**kwargs):
 													where = PluginDescriptor.WHERE_EXTENSIONSMENU,
 													fnc = extension,
 													needsRestart = False) )
+			
+		if config.plugins.seriesplugin.menu_channel.value:
+			descriptors.append( PluginDescriptor(
+													name = SHOWINFO,
+													description = SHOWINFO,
+													where = PluginDescriptor.WHERE_CHANNEL_CONTEXT_MENU,
+													fnc = channel,
+													needsRestart = False) )
 		
 		if config.plugins.seriesplugin.check_timer_list.value:
 			descriptors.append(PluginDescriptor(
@@ -309,127 +332,8 @@ def Plugins(**kwargs):
 		
 		if config.plugins.seriesplugin.menu_epg.value:
 			addSeriesPlugin(WHERE_EPGMENU, SHOWINFO)
-		
-		if config.plugins.seriesplugin.menu_channel.value:
-			#try:
-			#	# not implemented in oe1.6
-			#	descriptors.append(PluginDescriptor(name=SHOWINFO, where=PluginDescriptor.WHERE_CHANNEL_CONTEXT_MENU, description=SHOWINFO, fnc=TEST_LATER))
-			#except:
-			addSeriesPlugin(WHERE_CHANNELMENU, SHOWINFO)
-		
+
 	return descriptors
-
-
-#######################################################
-# Override EPGSelection enterDateTime
-EPGSelection_enterDateTime = None
-def SPEPGSelectionInit():
-	print "SeriesPlugin override EPGSelection.enterDateTime"
-	global EPGSelection_enterDateTime
-	if EPGSelection_enterDateTime is None:
-		from Screens.EpgSelection import EPGSelection
-		EPGSelection_enterDateTime = EPGSelection.enterDateTime
-		EPGSelection.enterDateTime = SPSenterDateTime
-		EPGSelection.openOutdatedEPGSelection = openOutdatedEPGSelection
-	
-def SPSenterDateTime(self):
-	from Screens.EpgSelection import EPG_TYPE_SINGLE,EPG_TYPE_MULTI,EPG_TYPE_SIMILAR
-	event = self["Event"].event
-	if self.type == EPG_TYPE_SINGLE:
-		service = self.currentService
-	elif self.type == EPG_TYPE_MULTI:	
-		service = self.services
-	elif self.type == EPG_TYPE_SIMILAR:
-		service = self.currentService
-	if service and event:
-		self.session.openWithCallback(self.openOutdatedEPGSelection, SPEPGContextMenu, service, event, self)
-		return
-	EPGSelection_enterDateTime(self)
-
-def openOutdatedEPGSelection(self, reason=None):
-	if reason == 1:
-		EPGSelection_enterDateTime(self)
-
-from Screens.Screen import Screen
-class SPEPGContextMenu(Screen):
-	def __init__(self, session, service, event, epg):
-		from Components.ActionMap import ActionMap
-		from Components.ChoiceList import ChoiceList, ChoiceEntryComponent
-		Screen.__init__(self, session)
-		self.skinName = "ChannelContextMenu"
-		self.service = service
-		self.event = event
-		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "NumberActions"],
-			{
-				"ok": self.okbuttonClick,
-				"cancel": self.cancelClick,
-			})
-		menu = [ ]
-
-		menu.append(ChoiceEntryComponent(text = (SHOWINFO, self.openSP)))
-		try:
-			from Screens.EpgSelection import  OutdatedEPGSelection
-			if config.misc.epgcache_outdated_timespan.value and not isinstance(epg, OutdatedEPGSelection):
-				menu.append(ChoiceEntryComponent(text = (_("Outdated EPG"), self.closeOutdated)))
-		except:
-			pass
-		self["menu"] = ChoiceList(menu)
-
-	def okbuttonClick(self):
-		self["menu"].getCurrent()[0][1]()
-
-	def cancelClick(self):
-		self.close(False)
-
-	def openSP(self):
-		self.session.openWithCallback(self.closeafterfinish, SeriesPluginInfoScreen, self.service, self.event) 
-		
-	def closeafterfinish(self, retval=None):
-		self.close()
-	
-	def closeOutdated(self, retval=None):
-		self.close(1)
-
-
-#######################################################
-# Override ChannelContextMenu
-ChannelContextMenu__init__ = None
-def SPChannelContextMenuInit():
-	print "[SeriesPlugin] override ChannelContextMenu.__init__"
-	global ChannelContextMenu__init__
-	if ChannelContextMenu__init__ is None:
-		from Screens.ChannelSelection import ChannelContextMenu
-		ChannelContextMenu__init__ = ChannelContextMenu.__init__
-	ChannelContextMenu.__init__ = SPChannelContextMenu__init__
-	ChannelContextMenu.SPchannelShowSeriesInfo = channelShowSeriesInfo
-	ChannelContextMenu.SPcloseafterfinish = closeafterfinish
-
-def SPChannelContextMenu__init__(self, session, csel):
-	from Components.ChoiceList import ChoiceEntryComponent
-	from Screens.ChannelSelection import MODE_TV
-	from Tools.BoundFunction import boundFunction
-	from enigma import eServiceReference
-	ChannelContextMenu__init__(self, session, csel)
-	current = csel.getCurrentSelection()
-	current_sel_path = current.getPath()
-	current_sel_flags = current.flags
-	if csel.mode == MODE_TV and not (current_sel_path or current_sel_flags & (eServiceReference.isDirectory|eServiceReference.isMarker)):
-		self["menu"].list.insert(0, ChoiceEntryComponent(text=(SHOWINFO, boundFunction(self.SPchannelShowSeriesInfo))))
-
-def channelShowSeriesInfo(self):
-	splog( "[SeriesPlugin] channelShowSeriesInfo ")
-	if config.plugins.seriesplugin.enabled.value:
-		try:
-			from enigma import eServiceCenter
-			service = self.csel.servicelist.getCurrent()
-			info = eServiceCenter.getInstance().info(service)
-			event = info.getEvent(service)
-			self.session.openWithCallback(self.SPcloseafterfinish, SeriesPluginInfoScreen, service, event)
-		except Exception as e:
-			splog(_("SeriesPlugin info exception ") + str(e))
-
-def closeafterfinish(self, retval=None):
-	self.close()
 
 
 #######################################################
@@ -437,9 +341,7 @@ def closeafterfinish(self, retval=None):
 def addSeriesPlugin(menu, title, fnc=None):
 	# Add to menu
 	if( menu == WHERE_EPGMENU ):
-		SPEPGSelectionInit()
-	elif( menu == WHERE_CHANNELMENU ):
-		SPChannelContextMenuInit()
+		pass
 	else:
 		from Components.PluginComponent import plugins
 		if plugins:
@@ -462,8 +364,6 @@ def addSeriesPlugin(menu, title, fnc=None):
 def removeSeriesPlugin(menu, title):
 	# Remove from menu
 	if( menu == WHERE_EPGMENU ):
-		pass
-	elif( menu == WHERE_CHANNELMENU ):
 		pass
 	else:
 		from Components.PluginComponent import plugins
