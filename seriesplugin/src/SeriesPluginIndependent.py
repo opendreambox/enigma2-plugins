@@ -88,7 +88,8 @@ class SeriesPluginIndependent(object):
 	
 	def __init__(self):
 		self.etimer = eTimer()
-		self.etimer.callback.append(self.run)
+		self.etimer_conn = self.etimer.timeout.connect(self.run)
+		
 		cycle = int(config.plugins.seriesplugin.independent_cycle.value)
 		if cycle > 0:
 			self.etimer.start( (cycle * 60 * 1000) )
