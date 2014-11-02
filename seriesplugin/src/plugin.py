@@ -28,7 +28,7 @@ from Logger import splog
 #######################################################
 # Constants
 NAME = "SeriesPlugin"
-VERSION = "1.0.2_oe2.0"
+VERSION = "1.1_oe2.0"
 DESCRIPTION = _("SeriesPlugin")
 SHOWINFO = _("Show series info (SP)")
 RENAMESERIES = _("Rename serie(s) (SP)")
@@ -311,84 +311,9 @@ def Plugins(**kwargs):
 			addSeriesPlugin(WHERE_EPGMENU, SHOWINFO)
 		
 		if config.plugins.seriesplugin.menu_channel.value:
-			#try:
-			#	# not implemented in oe1.6
-			#	descriptors.append(PluginDescriptor(name=SHOWINFO, where=PluginDescriptor.WHERE_CHANNEL_CONTEXT_MENU, description=SHOWINFO, fnc=TEST_LATER))
-			#except:
 			addSeriesPlugin(WHERE_CHANNELMENU, SHOWINFO)
 		
 	return descriptors
-
-
-#######################################################
-# Override EPGSelection enterDateTime
-EPGSelection_enterDateTime = None
-def SPEPGSelectionInit():
-	print "SeriesPlugin override EPGSelection.enterDateTime"
-	global EPGSelection_enterDateTime
-	if EPGSelection_enterDateTime is None:
-		from Screens.EpgSelection import EPGSelection
-		EPGSelection_enterDateTime = EPGSelection.enterDateTime
-		EPGSelection.enterDateTime = SPSenterDateTime
-		EPGSelection.openOutdatedEPGSelection = openOutdatedEPGSelection
-	
-def SPSenterDateTime(self):
-	from Screens.EpgSelection import EPG_TYPE_SINGLE,EPG_TYPE_MULTI,EPG_TYPE_SIMILAR
-	event = self["Event"].event
-	if self.type == EPG_TYPE_SINGLE:
-		service = self.currentService
-	elif self.type == EPG_TYPE_MULTI:	
-		service = self.services
-	elif self.type == EPG_TYPE_SIMILAR:
-		service = self.currentService
-	if service and event:
-		self.session.openWithCallback(self.openOutdatedEPGSelection, SPEPGContextMenu, service, event, self)
-		return
-	EPGSelection_enterDateTime(self)
-
-def openOutdatedEPGSelection(self, reason=None):
-	if reason == 1:
-		EPGSelection_enterDateTime(self)
-
-from Screens.Screen import Screen
-class SPEPGContextMenu(Screen):
-	def __init__(self, session, service, event, epg):
-		from Components.ActionMap import ActionMap
-		from Components.ChoiceList import ChoiceList, ChoiceEntryComponent
-		Screen.__init__(self, session)
-		self.skinName = "ChannelContextMenu"
-		self.service = service
-		self.event = event
-		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "NumberActions"],
-			{
-				"ok": self.okbuttonClick,
-				"cancel": self.cancelClick,
-			})
-		menu = [ ]
-
-		menu.append(ChoiceEntryComponent(text = (SHOWINFO, self.openSP)))
-		try:
-			from Screens.EpgSelection import  OutdatedEPGSelection
-			if config.misc.epgcache_outdated_timespan.value and not isinstance(epg, OutdatedEPGSelection):
-				menu.append(ChoiceEntryComponent(text = (_("Outdated EPG"), self.closeOutdated)))
-		except:
-			pass
-		self["menu"] = ChoiceList(menu)
-
-	def okbuttonClick(self):
-		self["menu"].getCurrent()[0][1]()
-
-	def cancelClick(self):
-		self.close(False)
-
-	def openSP(self):
-		self.session.openWithCallback(self.closeafterfinish, SeriesPluginInfoScreen, self.service, self.event) 
-		
-	def closeafterfinish(self, retval=None):
-		self.close()
-	
-	def closeOutdated(self, retval=None):
-		self.close(1)
 
 
 #######################################################
@@ -437,7 +362,7 @@ def closeafterfinish(self, retval=None):
 def addSeriesPlugin(menu, title, fnc=None):
 	# Add to menu
 	if( menu == WHERE_EPGMENU ):
-		SPEPGSelectionInit()
+		pass
 	elif( menu == WHERE_CHANNELMENU ):
 		SPChannelContextMenuInit()
 	else:
