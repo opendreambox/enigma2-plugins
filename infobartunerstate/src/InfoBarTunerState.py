@@ -61,11 +61,11 @@ from enigma import eDVBResourceManager, eActionMap, eListboxPythonMultiContent, 
 
 from skin import parseColor, parseFont
 
-try:
-	from Plugins.Extensions.2IB import SecondInfoBar
-	SecondInfobarAvailable = True
-except:
-	SecondInfobarAvailable = False
+#try:
+#	from Plugins.Extensions.2IB import SecondInfoBar
+#	SecondInfobarAvailable = True
+#except:
+SecondInfobarAvailable = False
 
 # Plugin internal
 from netstat import netstat
