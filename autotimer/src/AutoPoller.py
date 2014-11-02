@@ -90,6 +90,7 @@ class AutoPollerThread(Thread):
 					import NavigationInstance
 					if NavigationInstance.instance.RecordTimer.isRecording():
 						print("[AutoTimer]: Skip check during running records")
+						reactor.callFromThread(timer.startLongTimer, config.plugins.autotimer.interval.value*3600)
 						continue
 				except:
 					pass
