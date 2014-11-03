@@ -28,7 +28,7 @@ from Logger import splog
 #######################################################
 # Constants
 NAME = "SeriesPlugin"
-VERSION = "1.1_oe2.2"
+VERSION = "1.2_oe2.2"
 DESCRIPTION = _("SeriesPlugin")
 SHOWINFO = _("Show series info (SP)")
 RENAMESERIES = _("Rename serie(s) (SP)")
@@ -67,7 +67,7 @@ config.plugins.seriesplugin.enabled                   = ConfigEnableDisable(defa
 
 config.plugins.seriesplugin.menu_info                 = ConfigYesNo(default = True)
 config.plugins.seriesplugin.menu_extensions           = ConfigYesNo(default = False)
-config.plugins.seriesplugin.menu_epg                  = ConfigYesNo(default = True)
+config.plugins.seriesplugin.menu_epg                  = ConfigYesNo(default = False)
 config.plugins.seriesplugin.menu_channel              = ConfigYesNo(default = True)
 config.plugins.seriesplugin.menu_movie_info           = ConfigYesNo(default = True)
 config.plugins.seriesplugin.menu_movie_rename         = ConfigYesNo(default = True)
@@ -337,11 +337,58 @@ def Plugins(**kwargs):
 
 
 #######################################################
+# Override EPGSelection enterDateTime
+EPGSelection_enterDateTime = None
+#EPGSelection_openOutdatedEPGSelection = None
+def SPEPGSelectionInit():
+	print "SeriesPlugin override EPGSelection"
+	global EPGSelection_enterDateTime, EPGSelection_openOutdatedEPGSelection
+	if EPGSelection_enterDateTime is None: # and EPGSelection_openOutdatedEPGSelection is None:
+		from Screens.EpgSelection import EPGSelection
+		EPGSelection_enterDateTime = EPGSelection.enterDateTime
+		EPGSelection.enterDateTime = enterDateTime
+		#EPGSelection_openOutdatedEPGSelection = EPGSelection.openOutdatedEPGSelection
+		#EPGSelection.openOutdatedEPGSelection = openOutdatedEPGSelection
+		EPGSelection.SPcloseafterfinish = closeafterfinish
+
+def SPEPGSelectionUndo():
+	print "SeriesPlugin undo override EPGSelection"
+	global EPGSelection_enterDateTime, EPGSelection_openOutdatedEPGSelection
+	if EPGSelection_enterDateTime and EPGSelection_openOutdatedEPGSelection:
+		from Screens.EpgSelection import EPGSelection
+		EPGSelection.enterDateTime = EPGSelection_enterDateTime
+		EPGSelection_enterDateTime = None
+		#EPGSelection.openOutdatedEPGSelection = EPGSelection_openOutdatedEPGSelection
+		#EPGSelection_openOutdatedEPGSelection = None
+
+def enterDateTime(self):
+	from Screens.EpgSelection import EPG_TYPE_SINGLE,EPG_TYPE_MULTI,EPG_TYPE_SIMILAR
+	event = self["Event"].event
+	if self.type == EPG_TYPE_SINGLE:
+		service = self.currentService
+	elif self.type == EPG_TYPE_MULTI:	
+		service = self.services
+	elif self.type == EPG_TYPE_SIMILAR:
+		service = self.currentService
+	if service and event:
+		self.session.openWithCallback(self.SPcloseafterfinish, SeriesPluginInfoScreen, service, event) 
+		return
+	EPGSelection_enterDateTime(self)
+
+#def openOutdatedEPGSelection(self, reason=None):
+#	if reason == 1:
+#		EPGSelection_enterDateTime(self)
+
+def closeafterfinish(self, retval=None):
+	self.close()
+
+
+#######################################################
 # Add / Remove menu functions
 def addSeriesPlugin(menu, title, fnc=None):
 	# Add to menu
 	if( menu == WHERE_EPGMENU ):
-		pass
+		SPEPGSelectionInit()
 	else:
 		from Components.PluginComponent import plugins
 		if plugins:
@@ -364,7 +411,7 @@ def addSeriesPlugin(menu, title, fnc=None):
 def removeSeriesPlugin(menu, title):
 	# Remove from menu
 	if( menu == WHERE_EPGMENU ):
-		pass
+		SPEPGSelectionUndo()
 	else:
 		from Components.PluginComponent import plugins
 		if plugins:

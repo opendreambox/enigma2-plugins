@@ -125,8 +125,8 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 		if config.plugins.seriesplugin.enabled.value:
 			self.list.append( getConfigListEntry(  _("Show in info menu")                          , config.plugins.seriesplugin.menu_info ) )
 			self.list.append( getConfigListEntry(  _("Show in extensions menu")                    , config.plugins.seriesplugin.menu_extensions ) )
-			#self.list.append( getConfigListEntry(  _("Show in epg menu")                           , config.plugins.seriesplugin.menu_epg ) )
-			#self.list.append( getConfigListEntry(  _("Show in channel menu")                       , config.plugins.seriesplugin.menu_channel ) )
+			self.list.append( getConfigListEntry(  _("Show in epg menu")                           , config.plugins.seriesplugin.menu_epg ) )
+			self.list.append( getConfigListEntry(  _("Show in channel menu")                       , config.plugins.seriesplugin.menu_channel ) )
 			self.list.append( getConfigListEntry(  _("Show Info in movie list menu")               , config.plugins.seriesplugin.menu_movie_info ) )
 			self.list.append( getConfigListEntry(  _("Show Rename in movie list menu")             , config.plugins.seriesplugin.menu_movie_rename ) )
 			
