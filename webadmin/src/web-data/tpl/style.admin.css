@@ -3,15 +3,11 @@
 	height: 61px;
 	background: #FFF;
 	margin-top: 8px;
-	border: 2px solid #000;
+	border:1px solid #DDD;
 	position: relative;
 }
 
-#memHd {
-	background: #000;
-	text-align: center;
-	width: 153px
-}
+#memHd {border-bottom:1px solid #DDD;text-align:center;width:150px;padding:5px;display:table-cell;vertical-align:middle;}
 
 .sPkgInstallSLink {
 	display: inline-block;

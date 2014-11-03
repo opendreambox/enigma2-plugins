@@ -8,7 +8,8 @@
 	<title>Dreambox WebAdmin</title>
 
 	<!-- <link href="/web-data/tpl/default/style.css" type="text/css" rel="stylesheet"> -->
-	<link href="/web-data/tpl/default/style.min.css" type="text/css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" id="style_modern" title="modern" href="/web-data/tpl/default/style_modern.min.css">
+	<!-- <link href="/web-data/tpl/default/style.min.css" type="text/css" rel="stylesheet" disabled> -->
 	<link href="/webadmin/tpl/style.admin.css" type="text/css" rel="stylesheet">
 	<link rel="shortcut icon" type="image/x-icon" href="/web-data/img/favicon.ico">
 	<!--
@@ -35,6 +36,25 @@
 	}
 	</script>
 	<script language="javascript" type="text/javascript">
+		var appCache = window.applicationCache;
+		if(appCache){
+			window.addEventListener(
+				'load',
+				function(e) {
+					window.applicationCache
+						.addEventListener(
+							'updateready',
+							function(e) {
+								if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+									window.applicationCache.swapCache();
+									if (confirm('A new version of this site is available. Load it?')) {
+										window.location.reload();
+									}
+								}// Manifest didn't change. Nothing to do.
+							}, false);
+				}, false);
+		}
+
 		function setMaxHeight(element){
 			try{
 				var slc = $(element);
@@ -46,21 +66,22 @@
 			}
 		}
 		function setNavHd(content){
-			$('navHd').update('<div style="background-color: #000">'+content+'</div>');
+			$('navHd').update('<div>'+content+'</div>');
 		}
 
-		function setContentHd(content){
+		function setContentHd(content, keepHdExt){
 			var div = new Element('div');
-			div.setStyle({background: 'black'});
 			div.update(content);
 			$('contentHd').update(div);
-			$('contentHdExt').update('');
+			if(!keepHdExt)
+				$('contentHdExt').update('');
 		}
 
 		function getAjaxLoad(){
 			return ('<center><img style="padding-top: 50px;" src="/web-data/gfx/ajaxload.gif" alt="loading..."></center>');
 		}
 	</script>
+
 
 	<!-- Webinterface Stuff -->
 	<script type="text/javascript" src="/web/strings.js"></script>
@@ -84,7 +105,7 @@
 			<span id="notification"><div></div></span>
 			<div id="bannerLeft">
 				<div id="bannerText" style="font-size: 24px;">
-					<img src="/web-data/img/dreamboxweb.png" alt="Dreambox Web">
+					<img src="/web-data/img/dreamboxweb_modern.png" alt="Dreambox Web">
 				</div>
 				<ul id="mainMenu">
 					<li class="roundedNav navmenu" data-mode="tv"><a class="roundedNav" href="../#!/tv"><span id="mainMenuItemTv" >TeleVision</span></a></li>
@@ -167,7 +188,7 @@
 				</div>
 			</div>
 			<div id="content" class="rounded">
-				<table style="margin:0px; padding:0px; background:#000;width:100%" cellpadding="0" cellspacing="0">
+				<table class="contentHd" cellpadding="0" cellspacing="0">
 					<tr>
 						<td><div id="contentHd" class="header"><div>Content</div></div></td>
 						<td style="text-align: right"><div id="contentHdExt"></div></td>
