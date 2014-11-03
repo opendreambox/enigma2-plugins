@@ -446,10 +446,13 @@ class InfoBarTunerState(object):
 				filename = "" #TODO file streaming - read meta eit
 				
 				try:
+					print "IBTS ip"
+					print ip
 					host = ip and socket.gethostbyaddr( ip )
 					client = host and host[0].split('.')[0]
-				except socket.herror, x:
-					pass
+				except:
+					ip = ''
+					client = ''
 				
 				number = service_ref and getNumber(service_ref.ref)
 				channel = service_ref and service_ref.getServiceName()
