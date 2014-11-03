@@ -30,7 +30,7 @@ class UploadPkgResource(resource.Resource):
 		</script>
 	</head>
 	<body onunload="javascript:opener.location.reload()" >
-		<p>Ipk: %s</p>
+		<p>DEB: %s</p>
 		<br>
 		<form>
 			<input type="button" value="%s" onClick="javascript:window.close();">
@@ -45,7 +45,7 @@ class UploadPkgResource(resource.Resource):
 		print "[filename req.args]", req.args['filename'][0]
 		filename = mbasename(req.args['filename'][0])
 		print "[filename]", filename
-		if not filename.endswith(".ipk"):
+		if not filename.endswith(".deb"):
 			return self.res % (_("wrong filetype!") ,_("Close"), _("Add"))
 		
 		if not data:
@@ -106,7 +106,7 @@ class UploadPkgResource(resource.Resource):
 				</head>
 				<body onunload="javascript:opener.location.reload()" onload="window.scrollBy(0,1000000);" >
 				<form name="form_uploadpkg" method="POST" enctype="multipart/form-data">
-				Ipk %s:
+				DEB %s:
 				<input name="file" type="file" size="50" maxlength="100000" accept="text/*" onchange="getPkgFilename();">
 				<br>
 				<input type="hidden" name="filename" value="">

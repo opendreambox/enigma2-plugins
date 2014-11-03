@@ -4,9 +4,10 @@
 							${CSS=""}
 							{for pkg in pkgs}
 							<tr>
-								<td class="{if CSS == '' | CSS == 'even'}${CSS='odd'}{else}${CSS='even'}{/if}" >
+								<td class="{if CSS == '' | CSS == 'even'}${CSS='odd'}{else}${CSS='even'}{/if}" style="border-bottom:1px solid #DDD;padding:5px;display:table-cell;vertical-align:middle;">
 									<table>
 										<tr>
+										
 											<td style="font-size: 12px; width: 400px;">
 												<div>
 													{if pkg.update == "0" && pkg.state == "0"}

@@ -42,19 +42,19 @@ var Pkgs = Class.create(Controller, {
 	},
 
 	loadAll: function(){
-		setContentHd('Packages (ipk) - all');
+		setContentHd('Packages (deb) - all');
 		this.handler.loadAll();
 		this.addFilterInput();
 	},
 
 	loadInstalled: function(){
-		setContentHd('Packages (ipk) - installed');
+		setContentHd('Packages (deb) - installed');
 		this.handler.loadInstalled();
 		this.addFilterInput();
 	},
 
 	loadUpgradable: function(){
-		setContentHd('Packages (ipk) - upgradable');
+		setContentHd('Packages (deb) - upgradable');
 		this.handler.loadUpgradable();
 		this.addFilterInput();
 	},
@@ -71,8 +71,8 @@ var Pkgs = Class.create(Controller, {
 	filter: function (event){
 		var needle = event.element().value;
 		if (event.keyCode == Event.KEY_RETURN) {
-			setContentHd('Packages (ipk) - Filter: \''+ needle +'\'');
-			window.location.href = '/webadmin/#!/ipk/search?filter=' + needle.replace(' ', '%20');
+			setContentHd('Packages (deb) - Filter: \''+ needle +'\'');
+			window.location.href = '/webadmin/#!/deb/search?filter=' + needle.replace(' ', '%20');
 		};
 	},
 
@@ -86,8 +86,8 @@ var Pkgs = Class.create(Controller, {
 	},
 	
 	search: function (needle){
-		setContentHd('Packages (ipk) - Filter: \''+ unescape(needle) +'\'');
-		window.location.href = '/webadmin/#!/ipk/search?filter=' + needle.replace(' ', '%20');
+		setContentHd('Packages (deb) - Filter: \''+ unescape(needle) +'\'');
+		window.location.href = '/webadmin/#!/deb/search?filter=' + needle.replace(' ', '%20');
 		this.handler.loadFilter(needle);
 		this.addFilterInput();
 	},
@@ -142,7 +142,7 @@ var WebAdminCore = Class.create(E2WebCore, {
 
 		//create required Instances
 		this.navlut = {
-			'ipk': {
+			'deb': {
 				'all' : this.pkgs.loadAll.bind(this.pkgs),
 				'installed' : this.pkgs.loadInstalled.bind(this.pkgs),
 				'upgradable' : this.pkgs.loadUpgradable.bind(this.pkgs),
@@ -196,7 +196,7 @@ var WebAdminCore = Class.create(E2WebCore, {
 				}
 				if(len > 3){
 					switch(this.mode){
-					case 'ipk':
+					case 'deb':
 						event.stop();
 						break;
 					default:
@@ -220,7 +220,7 @@ var WebAdminCore = Class.create(E2WebCore, {
 
 	loadDefault: function(){
 		debug("[WebAdminCore].loadDefault");
-		window.location.href='/webadmin/#!/ipk/installed';
+		window.location.href='/webadmin/#!/deb/installed';
 	},
 
 	run: function(){
@@ -451,13 +451,13 @@ var WebAdminCore = Class.create(E2WebCore, {
 		}
 
 		switch(mode){
-		case "ipk":
-			debug('[switchMode] mod=ipk');
+		case "deb":
+			debug('[switchMode] mod=deb');
 			this.pkgs.loadNav();
 			break;
 			
 		case "settings":
-			window.location.href='/webadmin/#!/ipk/settings';
+			window.location.href='/webadmin/#!/deb/settings';
 			break;
 			
 		default:
