@@ -28,11 +28,11 @@ class PkgConfList(Source):
 		if cmd:
 			try:
 				file = cmd["file"]
-				if os_path.exists("/etc/opkg/" + file):
-					sh_move("/etc/opkg/" + file, "/etc/opkg/" + file + ".off")
+				if os_path.exists("/etc/apt/sources.list.d/" + file):
+					sh_move("/etc/apt/sources.list.d/" + file, "/etc/apt/sources.list.d/" + file + ".off")
 					return (True, file + ".off")
 				else:
-					sh_move("/etc/opkg/" + file + ".off", "/etc/opkg/" + file)
+					sh_move("/etc/apt/sources.list.d/" + file + ".off", "/etc/apt/sources.list.d/" + file)
 					return (True, file)
 			except Exception, e:
 				return (False, str(e))
@@ -47,17 +47,22 @@ class PkgConfList(Source):
 			
 	def getList(self):
 		list = []
-		files = os_popen("ls /etc/opkg")
+		files = os_popen("ls /etc/apt/sources.list.d")
 		for n in files:
 			file = n[:-1]
-			if file.endswith(".conf") or file.endswith(".off"):
+			if file.endswith(".list") or file.endswith(".off"):
 				print "[PkgConfList] file ", file
 				text =""
-				with open("/etc/opkg/" + file) as f:
+				with open("/etc/apt/sources.list.d/" + file) as f:
 					text = f.read()
 					print "[PkgConfList] text ",text
 					f.close()
 				list.append((file, text))
+		with open("/etc/apt/apt.conf") as f:
+			text = f.read()
+			print "[PkgConfList] text ",text
+			f.close()
+		list.append(("apt.conf", text))
 		return list
 
 	def getResult(self):

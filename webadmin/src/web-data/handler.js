@@ -104,7 +104,7 @@ var SwitchFeedHandler  = Class.create(AbstractAdminContentHandler, {
 		element = document.getElementById(id.replace('.off','') + "-pic");
 		hiddenInput  = document.getElementById(id.replace('.off','') + "-name");
 		if (result.getState()) {
-			if (id.endsWith('.conf')) {
+			if (id.endsWith('.list')) {
 				element.alt='disable';
 				element.src = '/web-data/img/minus.png';
 				var title = 'enable ' + id;

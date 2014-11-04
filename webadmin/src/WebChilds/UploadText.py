@@ -23,7 +23,7 @@ class UploadTextResource(resource.Resource):
 				req.setHeader('Content-type', 'text/html')
 				return "path '%s' to upload not existing!" % req.args['path'][0]
 			
-			if uploaddir[:10] == "/etc/opkg/" or uploaddir[:12] == "/usr/script/":
+			if uploaddir[:24] == "/etc/apt/sources.list.d/" or uploaddir[:9] == "/etc/apt/" or uploaddir[:12] == "/usr/script/":
 				pass
 			else:
 				req.setResponseCode(http.OK)
@@ -65,7 +65,7 @@ class UploadTextResource(resource.Resource):
 					<head>
 					<meta content="text/html; charset=UTF-8" http-equiv="content-type">
 					
-					<link href="/web-data/tpl/default/style.min.css" type="text/css" rel="stylesheet">
+					<link href="/web-data/tpl/default/modern_style.min.css" type="text/css" rel="stylesheet">
 					<link rel="shortcut icon" type="image/x-icon" href="/web-data/img/favicon.ico">
 					</head>
 					<body onunload="javascript:opener.location.reload()" >

@@ -109,7 +109,7 @@ function Script(xml){
 function PkgConf(xml){
 	this.name = getNodeContent(xml, 'e2name');
 	this.text = getNodeContent(xml, 'e2text');
-	this.state = this.name.endsWith('conf') ? '1' : '0';
+	this.state = this.name.endsWith('.list') ? '1' : '0';
 
 	this.getName = function () { return this.name.replace('.off',''); };
 
