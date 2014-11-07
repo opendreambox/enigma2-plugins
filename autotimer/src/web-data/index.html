@@ -9,7 +9,7 @@
 	
 	<title>Dreambox AutoTimerEditor</title>
 	
-	<link href="/autotimereditor/style.css" type="text/css" rel="stylesheet">
+	<link href="/autotimereditor/style_modern.css" type="text/css" rel="stylesheet">
 	<link rel="shortcut icon" type="/web-data/image/x-icon" href="/web-data/img/favicon.ico">
 	<!--
 	<script type="text/javascript" src="/web-data/lib/prototype.js"></script>
@@ -54,31 +54,32 @@
 	<script type="text/javascript" src="/web-data/core.js" ></script>
 
 	<!-- autotimereditor stuff -->
+	<link type="text/css" rel="stylesheet" href="/autotimereditor/anytimec.css" />
+	<link type="text/css" rel="stylesheet" href="/autotimereditor/autotimereditor_style.css?version=20141106"  >
 	<script type="text/javascript" src="jquery.js"></script>
 	<script type="text/javascript">$.noConflict();</script>
-	<link rel="stylesheet" type="text/css" href="/autotimereditor/anytimec.css" />
 	<script type="text/javascript" src="/autotimereditor/anytimec.js" ></script>
 	<script type="text/javascript" src="/autotimereditor/autotimereditor.js?version=20140108" ></script>
 	
 </head>
 <body onload="document.getElementById('notification').style.display='none'">
 	<div id="container">
-
-		<div id="banner">
-			<span id="notification"><div></div></span>
-			<div id="bannerCenter">
-				<div id="bannerText">
-					<img src="/autotimereditor/dreambox_autotimereditor.png" alt="Dreambox AutoTimerEditor">
+		<div id="banner" class="rounded">
+			<span id="notification" style="display: none;"><div></div></span>
+			<div id="bannerLeft_autotimereditor">
+				<div id="ajaxLoad" style="display:none;"></div>
+				<div id="bannerText" style="font-size: 24px;">
+					<div class="bannerHeader_autotimereditor"></div>
 				</div>
+				<ul id="mainMenu">
+					<div id="contentAutoTimerMenu"></div>
+				</ul>
 			</div>
-		</div>
-
-		<div id="menu">
-			<div id="contentAutoTimerMenu"></div>
+			
 		</div>
 
 		<div id="main">
-			<div id="navContainer">
+			<div id="navContainer" class="container">
 				<div id="nav">
 					<div id="navHd" class="header">
 						<div class="headerindent">AutoTimer List</div>
@@ -86,7 +87,7 @@
 					<div id="contentAutoTimerList"></div>
 				</div>
 			</div>
-			<div id="contentContainer">
+			<div id="contentContainer" class="container">
 				<div id="content">
 					<div id="contentHd" class="header">
 						<div id="headerautotimercontent" class="headerindent">AutoTimer</div>

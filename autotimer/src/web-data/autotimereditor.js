@@ -465,13 +465,13 @@ var AutoTimerMenuController  = Class.create(Controller, {
 			}.bind(this)
 		);
 		$('restore').title = "Restore a previous configuration backup";
-		$('about').on(
+		$('about_autotimereditor').on(
 			'click',
 			function(event, element){
 				this.about();
 			}.bind(this)
 		);
-		$('about').title = "Some information about author, license, support...";
+		$('about_autotimereditor').title = "Some information about author, license, support...";
 	},
 });
 
@@ -1296,24 +1296,6 @@ var TimerController = Class.create({
 	}
 });
 
-var AboutPage = Class.create({
-	initialize: function(target){
-		this.simpleHandler = new SimplePageHandler(target);
-	},
-
-	show: function(tpl, data){
-		if(!data)
-			data = {};
-		this.simpleHandler.show(tpl, data);
-	},
-
-	load: function(){
-		$('list').selectedIndex = -1;
-		$('headerautotimercontent').innerHTML = "AutoTimer WebIf About:";
-		this.show('tplAbout');
-	},
-});
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Handler
@@ -1407,6 +1389,20 @@ var AutoTimerMenuHandler = Class.create(AbstractATContentHandler,{
 			callback();
 		}
 	},
+});
+
+var AboutPage = Class.create(AbstractATContentHandler,{
+	initialize: function($super, target){
+		$super('tplAutoTimerAbout', target);
+		this.provider = new SimpleRequestProvider();
+	},
+	
+	load: function(){
+		$('list').selectedIndex = -1;
+		$('headerautotimercontent').innerHTML = "AutoTimer WebIf About:";
+		//this.show('tplAutoTimerAbout');
+		this.show({});
+	}
 });
 
 var AutoTimerListHandler  = Class.create(AbstractATContentHandler, {
