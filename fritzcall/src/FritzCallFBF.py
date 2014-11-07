@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 859 $
-$Date: 2014-06-03 15:36:33 +0200 (Tue, 03 Jun 2014) $
-$Id: FritzCallFBF.py 859 2014-06-03 13:36:33Z michael $
+$Revision: 1033 $
+$Date: 2014-11-07 14:20:19 +0100 (Fr, 07 Nov 2014) $
+$Id: FritzCallFBF.py 1033 2014-11-07 13:20:19Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -2367,12 +2367,12 @@ class FritzCallFBF_05_50:
 				ipAddress = found.group(1)
 			debug("[FritzCallFBF_05_50] _okGetInfo ipAddress v6: " + ipAddress)
 
-
+		# dslState = [ state, info, unused ]; state == '5' means up, everything else down
 		found = re.match('.*<tr id="uiTrDsl"><td class="(led_gray|led_green|led_red)">', html, re.S)
 		if found:
 			if found.group(1) == "led_green":
 				dslState = ['5', None, None]
-				found = re.match('.*<a href="[^"]*">DSL</a></td><td >bereit, ([^<]*)<img src=\'[^\']*\' height=\'[^\']*\'>&nbsp;([^<]*)<img src=\'[^\']*\' height=\'[^\']*\'></td></tr>', html, re.S)
+				found = re.match('.*<a href="[^"]*">DSL</a></td><td >(?:bereit|verbunden), ([^<]*)<img src=\'[^\']*\' height=\'[^\']*\'>&nbsp;([^<]*)<img src=\'[^\']*\' height=\'[^\']*\'></td></tr>', html, re.S)
 				if found:
 					dslState[1] = found.group(1) + " / " + found.group(2)
 			else:
@@ -2380,16 +2380,15 @@ class FritzCallFBF_05_50:
 		debug("[FritzCallFBF_05_50] _okGetInfo dslState: " + repr(dslState))
 
 		# wlanstate = [ active, encrypted, no of devices ]
-		found = re.match('.*<tr id="uiTrWlan"><td class="(led_gray|led_green|led_red)"></td><td><a href="[^"]*">WLAN</a></td><td>(aus|an)(|, gesichert)</td>', html, re.S)
+		# encrypted == 2 means unknown
+		found = re.match('.*<tr id="uiTrWlan"><td class="(led_gray|led_green|led_red)"></td><td><a href="[^"]*">WLAN</a></td><td[^>]*>(aus|an)', html, re.S)
 		if found:
 			if found.group(1) == "led_green":
-				if found.group(3):
-					wlanState = [ '1', '1', '' ]
-				else:
-					wlanState = [ '1', '0', '' ]
+				wlanState = [ '1', '2', '' ]
 			else:
 				wlanState = [ '0', '0', '0' ]
 			debug("[FritzCallFBF_05_50] _okGetInfo wlanState: " + repr(wlanState))
+			
 
 		#=======================================================================
 		# found = re.match('.*<tr id="trTam" style=""><td><a href="[^"]*">Anrufbeantworter</a></td><td title=\'[^\']*\'>([\d]+) aktiv([^<]*)</td></tr>', html, re.S)
