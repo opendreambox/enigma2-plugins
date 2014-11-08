@@ -204,7 +204,7 @@ class PictureScreen(Screen):
 				self.do()
 		elif self.slideshowcallback is not None:
 				self.closetimer = eTimer()
-				self.closetimer_conn = self.closetimer.connect(self.slideshowcallback)
+				self.closetimer_conn = self.closetimer.timeout.connect(self.slideshowcallback)
 				print "waiting", config.plugins.pictureviewer.slideshowtime.value, "seconds for next picture"
 				if not self.paused:
 					self.closetimer.start(int(config.plugins.pictureviewer.slideshowtime.value))
