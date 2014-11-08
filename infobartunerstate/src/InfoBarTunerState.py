@@ -558,15 +558,19 @@ class InfoBarTunerState(object):
 						self.entries[id] = win
 					else:
 						if self.entries.has_key(id):
-							self.session.deleteDialog(win)
-							del self.entries[id]
+							win = self.entries[id]
+							#self.session.deleteDialog(win)
+							#del self.entries[id]
+							win.remove()
 			
 			# Close all not touched next windows
 			if nextwins:
 				for id in nextwins:
 					if self.entries.has_key(id):
-						self.session.deleteDialog(win)
-						del self.entries[id]
+						win = self.entries[id]
+						#self.session.deleteDialog(win)
+						#del self.entries[id]
+						win.remove()
 
 	def show(self, autohide=False, forceshow=False):
 		print "IBTS show"
@@ -648,6 +652,7 @@ class InfoBarTunerState(object):
 				if win.toberemoved == True \
 					or win.type == FINISHED and numberfinished > int( config.infobartunerstate.number_finished_records.value ):
 					# Delete Stopped Timers
+					win.hide()
 					self.session.deleteDialog(win)
 					del self.entries[id]
 			
@@ -690,8 +695,9 @@ class InfoBarTunerState(object):
 						win.updateTimes( begin, end, endless )
 						win.update()
 						#TEST
-						self.session.deleteDialog(win)
-						del self.entries[id]
+						#self.session.deleteDialog(win)
+						#del self.entries[id]
+						win.remove()
 						##
 						self.updateRecordTimer()
 				elif win.type == STREAM:
@@ -832,6 +838,7 @@ class InfoBarTunerState(object):
 		self.removeEvents()
 		self.hide()
 		for id, win in self.entries.items():
+			win.hide()
 			self.session.deleteDialog(win)
 			del self.entries[id]
 		from Plugins.Extensions.InfoBarTunerState.plugin import gInfoBarTunerState
