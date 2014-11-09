@@ -192,10 +192,12 @@ class Fernsehserien(IdentifierBase):
 		data = self.getPage(url, Headers)
 		
 		if data and isinstance(data, basestring):
+			splog("getNextPage: basestring")
 			data = self.parseNextPage(data)
 			self.doCache(url, data)
 		
 		if data and isinstance(data, list):
+			splog("getNextPage: list")
 			
 			trs = data
 			# trs[x] = [None, u'31.10.2012', u'20:15\u201321:15 Uhr', u'ProSieben', u'8.', u'15', u'Richtungswechsel']
@@ -217,15 +219,16 @@ class Fernsehserien(IdentifierBase):
 			# Sa 30.11.2013 23:35 - 01:30 Uhr ProSieben 46 3. 13 Showdown 3
 			last = datetime.strptime( trs[-1][2][0:5] + trs[-1][1], "%H:%M%d.%m.%Y" )
 			
-			first = first - timedelta(seconds=max_time_drift)
-			last = last + timedelta(seconds=max_time_drift)
+			#first = first - timedelta(seconds=max_time_drift)
+			#last = last + timedelta(seconds=max_time_drift)
 			
+			splog("getNextPage: self.first, first, self.last, last, if: ", self.first, first, self.last, last, (self.first != first and self.last != last))
 			if self.first != first and self.last != last:
 				self.first = first
 				self.last = last
 				
-				splog("first, self.begin, last, if ", first, self.begin, last, ( first <= self.begin and self.begin <= last ))
-				if ( first <= self.begin and self.begin <= last ):
+				splog("first, self.begin, last, if, if:", first, self.begin, last, ( first <= self.begin and self.begin <= last ), ( first >= self.begin and self.begin >= last ) )
+				if ( ( first <= self.begin and self.begin <= last ) or ( first >= self.begin and self.begin >= last ) ):
 					#search in page for matching datetime
 					for tds in trs:
 						if tds and len(tds) >= 6:  #7:
