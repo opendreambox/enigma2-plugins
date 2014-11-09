@@ -76,12 +76,14 @@ def getInstance():
 			splog( "DeviceName " + HardwareInfo().get_device_name().strip() )
 		except:
 			pass
+		
 		try:
 			from Components.About import about
 			splog( "EnigmaVersion " + about.getEnigmaVersionString().strip() )
 			splog( "ImageVersion " + about.getVersionString().strip() )
 		except:
 			pass
+		
 		try:
 			#http://stackoverflow.com/questions/1904394/python-selecting-to-read-the-first-line-only
 			splog( "dreamboxmodel " + open("/proc/stb/info/model").readline().strip() )
@@ -89,25 +91,27 @@ def getInstance():
 			splog( "imageissue " + open("/etc/issue.net").readline().strip() )
 		except:
 			pass
+		
 		try:
 			for key, value in config.plugins.seriesplugin.dict().iteritems():
 				splog( "config.plugins.seriesplugin.%s = %s" % (key, str(value.value)) )
 		except Exception as e:
 			pass
-		try:
-			if os.path.exists(SERIESPLUGIN_PATH):
-				dirList = os.listdir(SERIESPLUGIN_PATH)
-				for fname in dirList:
-					splog( fname, datetime.fromtimestamp( int( os.path.getctime( os.path.join(SERIESPLUGIN_PATH,fname) ) ) ).strftime('%Y-%m-%d %H:%M:%S') )
-		except Exception as e:
-			pass
-		try:
-			if os.path.exists(AUTOTIMER_PATH):
-				dirList = os.listdir(AUTOTIMER_PATH)
-				for fname in dirList:
-					splog( fname, datetime.fromtimestamp( int( os.path.getctime( os.path.join(AUTOTIMER_PATH,fname) ) ) ).strftime('%Y-%m-%d %H:%M:%S') )
-		except Exception as e:
-			pass
+		
+		#try:
+		#	if os.path.exists(SERIESPLUGIN_PATH):
+		#		dirList = os.listdir(SERIESPLUGIN_PATH)
+		#		for fname in dirList:
+		#			splog( fname, datetime.fromtimestamp( int( os.path.getctime( os.path.join(SERIESPLUGIN_PATH,fname) ) ) ).strftime('%Y-%m-%d %H:%M:%S') )
+		#except Exception as e:
+		#	pass
+		#try:
+		#	if os.path.exists(AUTOTIMER_PATH):
+		#		dirList = os.listdir(AUTOTIMER_PATH)
+		#		for fname in dirList:
+		#			splog( fname, datetime.fromtimestamp( int( os.path.getctime( os.path.join(AUTOTIMER_PATH,fname) ) ) ).strftime('%Y-%m-%d %H:%M:%S') )
+		#except Exception as e:
+		#	pass
 		
 		instance = SeriesPlugin()
 		#instance[os.getpid()] = SeriesPlugin()

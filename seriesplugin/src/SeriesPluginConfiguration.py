@@ -38,6 +38,7 @@ from SeriesPlugin import resetInstance, getInstance
 from SeriesPluginIndependent import startIndependent, stopIndependent
 from EpisodePatterns import readPatternFile
 from Logger import splog, Logger
+from ShowLogScreen import ShowLogScreen
 
 
 def checkList(cfg):
@@ -66,8 +67,7 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 		# Buttons
 		self["key_red"] = StaticText(_("Cancel"))
 		self["key_green"] = StaticText(_("OK"))
-		self["key_blue"] = StaticText(_("Send Log"))
-		self["key_blue"] = StaticText("")
+		self["key_blue"] = StaticText(_("Show Log"))
 		
 		# Define Actions
 		self["actions"] = ActionMap(["SetupActions", "ChannelSelectBaseActions", "ColorActions"],
@@ -308,4 +308,6 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 		self["config"].instance.moveSelection(self["config"].instance.pageDown)
 
 	def blue(self):
-		self.sendLog()
+		#self.sendLog()
+		self.session.open(ShowLogScreen, config.plugins.seriesplugin.log_file.value)
+
