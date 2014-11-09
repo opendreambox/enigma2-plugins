@@ -40,6 +40,9 @@ from SeriesPlugin import getInstance, refactorTitle, refactorDescription   #, re
 from Logger import splog
 
 
+CompiledRegexpNonAlphanum = re.compile(r'[^[a-zA-Z0-9_]]+')
+
+
 # By Bin4ry
 def newLegacyEncode(string):
 	string2 = ""
@@ -131,8 +134,13 @@ def renameMeta(service, data):
 
 def renameFile(service, name, data):
 	try:
-		path = os.path.dirname(service.getPath())
-		file_name = os.path.basename(os.path.splitext(service.getPath())[0])
+		servicepath = service.getPath()
+		splog("servicepath", servicepath)
+		servicepath = CompiledRegexpNonAlphanum.sub('', servicepath)
+		splog("servicepathRegexp", servicepath)
+		
+		path = os.path.dirname(servicepath)
+		file_name = os.path.basename(os.path.splitext(servicepath)[0])
 		
 		# Refactor title
 		if config.plugins.seriesplugin.tidy_rename.value:
@@ -144,7 +152,9 @@ def renameFile(service, name, data):
 		name = newLegacyEncode(name)
 		
 		src = os.path.join(path, file_name)
+		splog("servicepathSrc", src)
 		dst = os.path.join(path, name)
+		splog("servicepathDst", dst)
 
 		for f in glob.glob(os.path.join(path, src + "*")):
 			os.rename(f, f.replace(src, dst))
