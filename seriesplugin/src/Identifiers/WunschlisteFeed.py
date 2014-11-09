@@ -142,7 +142,7 @@ class WunschlisteFeed(IdentifierBase):
 			return ( self.returnvalue or _("No matching series found") )
 
 	def getSeries(self, name):
-		url = SERIESLISTURL + urlencode({ 'q' : re.sub("[^a-zA-Z0-9*]", " ", name) })
+		url = SERIESLISTURL + urlencode({ 'q' : re.sub("[^a-zA-Z0-9-*]", " ", name) })
 		data = self.getPage( url )
 		
 		if data and isinstance(data, basestring):
@@ -198,6 +198,9 @@ class WunschlisteFeed(IdentifierBase):
 						#http://code.google.com/p/pyiso8601/
 						xbegin = parse_date(xupdated)
 						xbegin = xbegin.replace(tzinfo=None)
+						
+						#"2014-11-10T20:15:00+01:00"
+						#xbegin =  datetime.strptime(xupdated[0:-6], "%Y-%m-%dT%H:%M:%S");
 						
 						#Py2.6
 						delta = abs(self.begin - xbegin)
