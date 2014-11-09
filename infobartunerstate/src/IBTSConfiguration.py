@@ -249,8 +249,18 @@ class InfoBarTunerStateConfiguration(Screen, ConfigListScreen):
 				if config.infobartunerstate.show_streams.value:
 					plugin.gInfoBarTunerState.updateStreams()
 		else:
+			
 			# Plugin should be disabled
 			if plugin.gInfoBarTunerState:
+				
+				recoverInfoBar()
+				
+				removeExtension()
+				
+				plugin.gInfoBarTunerState.removeEvents()
+				
+				plugin.gInfoBarTunerState.unbindInfoBar()
+				
 				# Plugin is active, disable it
 				plugin.gInfoBarTunerState.close()
 
