@@ -38,6 +38,7 @@ from SeriesPlugin import resetInstance, getInstance
 from SeriesPluginIndependent import startIndependent, stopIndependent
 from EpisodePatterns import readPatternFile
 from Logger import splog, Logger
+from ShowLogScreen import ShowLogScreen
 
 
 def checkList(cfg):
@@ -66,8 +67,7 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 		# Buttons
 		self["key_red"] = StaticText(_("Cancel"))
 		self["key_green"] = StaticText(_("OK"))
-		self["key_blue"] = StaticText(_("Send Log"))
-		self["key_blue"] = StaticText("")
+		self["key_blue"] = StaticText(_("Show Log"))
 		
 		# Define Actions
 		self["actions"] = ActionMap(["SetupActions", "ChannelSelectBaseActions", "ColorActions"],
@@ -229,7 +229,7 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 			recoverAutoTimer()
 		
 		# Set new configuration
-		from plugin import WHERE_EPGMENU, WHERE_CHANNELMENU, addSeriesPlugin, removeSeriesPlugin, SHOWINFO, RENAMESERIES, CHECKTIMERS, info, extension, movielist_info, movielist_rename, checkTimers
+		from plugin import WHERE_EPGMENU, WHERE_CHANNELMENU, addSeriesPlugin, removeSeriesPlugin, SHOWINFO, RENAMESERIES, CHECKTIMERS, info, extension, channel, movielist_info, movielist_rename, checkTimers
 		
 		if config.plugins.seriesplugin.menu_info.value:
 			addSeriesPlugin(PluginDescriptor.WHERE_EVENTINFO, SHOWINFO, info)
@@ -247,7 +247,7 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 			removeSeriesPlugin(WHERE_EPGMENU, SHOWINFO)
 		
 		if config.plugins.seriesplugin.menu_channel.value:
-			addSeriesPlugin(WHERE_CHANNELMENU, SHOWINFO, extension)
+			addSeriesPlugin(WHERE_CHANNELMENU, SHOWINFO, channel)
 		else:
 			removeSeriesPlugin(WHERE_CHANNELMENU, SHOWINFO)
 		
@@ -308,4 +308,6 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 		self["config"].instance.moveSelection(self["config"].instance.pageDown)
 
 	def blue(self):
-		self.sendLog()
+		#self.sendLog()
+		self.session.open(ShowLogScreen, config.plugins.seriesplugin.log_file.value)
+

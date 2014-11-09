@@ -41,13 +41,6 @@ class Analytics(object):
 			else:
 				url = urlparts.path + '?' + parameter
 			
-			#account_id='UA-31168065-1', domain_name = urlparts.netloc)
-			#tracker = Tracker('UA-31168065-1', urlparts.netloc)
-			#visitor = Visitor()
-			#visitor config.plugins.seriesplugin.uid.value
-			#session = Session()
-			#tracker.track_pageview(page, session, visitor)
-			
 			# https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters
 			# v   = version 1
 			# tid = Tracking ID / Web Property ID
@@ -86,10 +79,10 @@ class Analytics(object):
 			
 			try:
 				req = Request( "http://www.google-analytics.com/collect" + '?' + ua_parameter )
-				splog("SP Analytics url: ", req.get_full_url())
+				#splog("SP Analytics url: ", req.get_full_url())
 				
 				response = urlopen(req, timeout=5).read()
-				splog("SP Analytics respond: ", response) 
+				#splog("SP Analytics respond: ", response) 
 			
 			except URLError as e:
 				splog("SP Analytics error code: ", e.code)
