@@ -90,8 +90,6 @@ class WLAtomParser(HTMLParser):
 class WunschlisteFeed(IdentifierBase):
 	def __init__(self):
 		IdentifierBase.__init__(self)
-		
-		self.license = False
 
 	@classmethod
 	def knowsToday(cls):
@@ -157,8 +155,8 @@ class WunschlisteFeed(IdentifierBase):
 		serieslist = []
 		for line in data.splitlines():
 			values = line.split("|")
-			if len(values) == 3:
-				idname, countryyear, id = values
+			if len(values) == 4:
+				idname, countryyear, id, temp = values
 				splog(id, idname)
 				serieslist.append( (id, idname) )
 			else:

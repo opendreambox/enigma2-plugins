@@ -50,8 +50,6 @@ Headers = {
 class Fernsehserien(IdentifierBase):
 	def __init__(self):
 		IdentifierBase.__init__(self)
-		
-		self.license = False
 
 	@classmethod
 	def knowsElapsed(cls):
