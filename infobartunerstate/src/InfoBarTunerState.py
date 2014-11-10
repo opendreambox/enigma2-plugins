@@ -1379,10 +1379,13 @@ def getTuner(service):
 	# service must be an instance of iPlayableService or iRecordableService
 	#TODO detect stream of HDD
 	feinfo = service and service.frontendInfo()
-	data = feinfo and feinfo.getAll(False)
+	#data = feinfo and feinfo.getAll(False)
+	#data = feinfo and feinfo.getAll(True)
+	data = feinfo and feinfo.getFrontendData()
 	if data:
-		#number = data.get("slot_number", -1)
-		number = data.get("tuner_number", -1)
+		number = data.get("slot_number", -1)
+		if number is None or number < 0:
+			number = data.get("tuner_number", -1)
 		type = data.get("tuner_type", "")
 		if number is not None and number > -1:
 			#return ( ('A', 'B', 'C', 'D', 'E', 'F')[number], type)
