@@ -149,7 +149,7 @@ class WunschlisteFeed(IdentifierBase):
 		
 		if data and isinstance(data, list):
 			splog("WunschlisteFeed ids", data)
-			return data
+			return self.filterKnownIds(data)
 
 	def parseSeries(self, data):
 		serieslist = []
