@@ -125,7 +125,7 @@ class Wunschliste(IdentifierBase):
 		
 		if data and isinstance(data, list):
 			splog("WunschlistePrint ids", data)
-			return data
+			return self.filterKnownIds(data)
 
 	def parseSeries(self, data):
 		serieslist = []

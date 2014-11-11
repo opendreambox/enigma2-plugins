@@ -269,6 +269,7 @@ class SeriesPlugin(Modules, ChannelsBase):
 		
 		self.serviceHandler = eServiceCenter.getInstance()
 		seriespluginworker.MessagePump.recv_msg.get().append(self.gotThreadMsg_seriespluginworker)
+		
 		#http://bugs.python.org/issue7980
 		datetime.strptime('2012-01-01', '%Y-%m-%d')
 			
@@ -280,7 +281,6 @@ class SeriesPlugin(Modules, ChannelsBase):
 		
 		self.identifier_future = self.instantiateModuleWithName( config.plugins.seriesplugin.identifier_future.value )
 		splog(self.identifier_future)
-
 
 	def stop(self):
 		splog("SeriesPlugin stop")
@@ -313,7 +313,7 @@ class SeriesPlugin(Modules, ChannelsBase):
 				pass
 		
 		name = removeEpisodeInfo(name)
-		name = removeEpisodeInfo(name)
+		#name = removeEpisodeInfo(name)
 		if name.startswith("The ") or name.startswith("Der ") or name.startswith("Die ")or name.startswith("Das "):
 			name = name[4:]
 		
@@ -329,17 +329,20 @@ class SeriesPlugin(Modules, ChannelsBase):
 		else:
 			identifier = None
 		
-		# Reset title search depth
-		identifier.search_depth = 0;
-		
 		if identifier:
+		
+			# Reset title search depth on every new request
+			identifier.search_depth = 0;
+			
+			# Reset the knownids on every new request
+			identifier.knownids = []
+			
 			channels = lookupServiceAlternatives(service)
 
 			seriespluginworker.Start(ThreadItem(identifier = identifier, callback = callback, name = name, begin = begin, end = end, service = service, channels = channels))
+			
 			'''
 			try:
-				
-				
 				result = identifier.getEpisode(
 								name, begin, end, service, channels
 							)
@@ -365,21 +368,6 @@ class SeriesPlugin(Modules, ChannelsBase):
 				splog("SeriesPlugin Callback Exception:", str(e))
 				callback( str(e) )
 			'''
-			
-#TBD Because of E2 Update 05.2013
-		#from threading import currentThread
-		#if currentThread().getName() == 'MainThread':
-#			if (config.plugins.seriesplugin.lookup_counter.value == 10) \
-#				or (config.plugins.seriesplugin.lookup_counter.value == 100) \
-#				or (config.plugins.seriesplugin.lookup_counter.value % 1000 == 0):
-#				from plugin import ABOUT
-#				about = ABOUT.format( **{'lookups': config.plugins.seriesplugin.lookup_counter.value} )
-#				AddPopup(
-#					about,
-#					MessageBox.TYPE_INFO,
-#					0,
-#					'SP_PopUp_ID_About'
-#				)
 			
 			return identifier.getName()
 			

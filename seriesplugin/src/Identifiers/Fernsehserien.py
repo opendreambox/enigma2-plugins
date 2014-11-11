@@ -134,7 +134,7 @@ class Fernsehserien(IdentifierBase):
 		
 		if data and isinstance(data, list):
 			splog("Fernsehserien ids", data)
-			return data
+			return self.filterKnownIds(data)
 
 	def parseSeries(self, data):
 		serieslist = []

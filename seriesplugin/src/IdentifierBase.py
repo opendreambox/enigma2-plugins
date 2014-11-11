@@ -49,6 +49,8 @@ class IdentifierBase(ModuleBase, Cacher, Analytics):
 		self.channel = ""
 		self.ids = []
 		
+		self.knownids = []
+		
 		self.returnvalue = None
 		
 		self.search_depth = 0;
@@ -62,6 +64,15 @@ class IdentifierBase(ModuleBase, Cacher, Analytics):
 			return " ".join(name.split(" ")[:-1])
 		else:
 			return ""
+
+	def filterKnownIds(self, newids):
+		# Filter already checked series
+		filteredids = [elem for elem in newids if elem not in self.knownids]
+		
+		# Add new ids to knownid list
+		self.knownids.extend(filteredids)
+		
+		return filteredids
 
 
 	################################################
