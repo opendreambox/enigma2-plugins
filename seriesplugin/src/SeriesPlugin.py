@@ -54,6 +54,7 @@ SERIESPLUGIN_PATH  = os.path.join( resolveFilename(SCOPE_PLUGINS), "Extensions/S
 instance = None
 
 CompiledRegexpNonDecimal = re.compile(r'[^\d]+')
+CompiledRegexpNonAlphanum = re.compile(r'[^[a-zA-Z0-9_]]+')
 
 def dump(obj):
 	for attr in dir(obj):
@@ -135,9 +136,16 @@ def refactorTitle(org, data):
 	if data:
 		season, episode, title, series = data
 		if config.plugins.seriesplugin.pattern_title.value and not config.plugins.seriesplugin.pattern_title.value == "Off":
-			#if season == 0 and episode == 0:
-			#	return config.plugins.seriesplugin.pattern_title.value.strip().format( **{'org': org, 'title': title, 'series': series} )
-			#else:
+			splog("SeriesPluginRenamer refactorTitle")
+			splog("SeriesPluginRenamer refactorTitle org", org)
+			org = CompiledRegexpNonAlphanum.sub('', org)
+			splog("SeriesPluginRenamer refactorTitle org", org)
+			splog("SeriesPluginRenamer refactorTitle title", title)
+			title = CompiledRegexpNonAlphanum.sub('', title)
+			splog("SeriesPluginRenamer refactorTitle title", title)
+			splog("SeriesPluginRenamer refactorTitle series", series)
+			series = CompiledRegexpNonAlphanum.sub('', series)
+			splog("SeriesPluginRenamer refactorTitle series", series)
 			return config.plugins.seriesplugin.pattern_title.value.strip().format( **{'org': org, 'season': season, 'episode': episode, 'title': title, 'series': series} )
 		else:
 			return org
