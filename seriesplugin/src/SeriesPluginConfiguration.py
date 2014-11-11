@@ -166,8 +166,8 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 			
 			self.list.append( getConfigListEntry(  _("Check timer list from extension menu")       , config.plugins.seriesplugin.check_timer_list ) )
 
-#NoTimerPopUpPossibleActually
-#			self.list.append( getConfigListEntry(  _("Show Timer error popups")                    , config.plugins.seriesplugin.timer_popups ) )
+			self.list.append( getConfigListEntry(  _("Show warnings after Timer handling")         , config.plugins.seriesplugin.timer_popups ) )
+			self.list.append( getConfigListEntry(  _("Show also success after Timer handling")     , config.plugins.seriesplugin.timer_popups_success ) )
 
 			self.list.append( getConfigListEntry(  _("Use local caching")                          , config.plugins.seriesplugin.caching ) )
 			

@@ -39,6 +39,7 @@ from Logger import splog
 class SeriesPluginTimer(object):
 
 	data = []
+	counter = 0;
 	
 	def __init__(self, timer, name, begin, end):
 		
@@ -135,31 +136,26 @@ class SeriesPluginTimer(object):
 			)
 		
 		else:
-			timer.log(612, "[SeriesPlugin] Failed: %s." % (  str( data ) ))
+			timer.log(612, "[SeriesPlugin] Failed." )
 			SeriesPluginTimer.data.append(
 				str(timer.name) + " " + _("No data available")
 			)
 		
-		# Maybe there is a better way to avoid multiple Popups
-		#print "QUEUE SIZE", self.seriesPlugin.queue.qsize()
-		#if self.seriesPlugin and self.seriesPlugin.queueEmpty() and SeriesPluginTimer.data:
-		if self.seriesPlugin and SeriesPluginTimer.data:
-			splog("SeriesPluginTimer " + " ".join(SeriesPluginTimer.data))
+		if config.plugins.seriesplugin.timer_popups.value and config.plugins.seriesplugin.timer_popups_success.value:
 			
-#TBD Because of E2 Update 05.2013
-		#from threading import currentThread
-		#if currentThread().getName() == 'MainThread':
-#NoTimerPopUpPossibleActually
-#			if config.plugins.seriesplugin.timer_popups.value:
-#				try:
-#					AddPopup(
-#						"SeriesPlugin:\n" + "\n".join(SeriesPluginTimer.data),
-#						MessageBox.TYPE_ERROR,
-#						0,
-#						'SP_PopUp_ID_TimerFinished'
-#					)
-#				except Exception as e:
-#					splog("SeriesPluginTimer AddPopup Exception:", str(e))
+			SeriesPluginTimer.counter = SeriesPluginTimer.counter +1
 			
-			SeriesPluginTimer.data = []
-			
+			if SeriesPluginTimer.data or config.plugins.seriesplugin.timer_popups_success.value:
+				
+				# Maybe there is a better way to avoid multiple Popups
+				from SeriesPlugin import seriespluginworker
+				if not seriespluginworker.__list:
+					#splog("SeriesPluginTimer " + " ".join(SeriesPluginTimer.data))
+					AddPopup(
+						"SeriesPlugin:\n" + SeriesPluginTimer.counter + _(" Timer handeld") + "\n\n".join(SeriesPluginTimer.data),
+						MessageBox.TYPE_ERROR,
+						0,
+						'SP_PopUp_ID_TimerFinished'
+					)
+					SeriesPluginTimer.data = []
+					SeriesPluginTimer.counter = 0

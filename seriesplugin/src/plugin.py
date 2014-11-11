@@ -28,7 +28,7 @@ from Logger import splog
 #######################################################
 # Constants
 NAME = "SeriesPlugin"
-VERSION = "1.2.5_oe2.0"
+VERSION = "1.2.6_oe2.0"
 DESCRIPTION = _("SeriesPlugin")
 SHOWINFO = _("Show series info (SP)")
 RENAMESERIES = _("Rename serie(s) (SP)")
@@ -104,8 +104,8 @@ config.plugins.seriesplugin.independent_retry         = ConfigYesNo(default = Fa
 
 config.plugins.seriesplugin.check_timer_list          = ConfigYesNo(default = False)
 
-#NoTimerPopUpPossibleActually
-#config.plugins.seriesplugin.timer_popups              = ConfigYesNo(default = True)
+config.plugins.seriesplugin.timer_popups              = ConfigYesNo(default = True)
+config.plugins.seriesplugin.timer_popups_success      = ConfigYesNo(default = False)
 
 config.plugins.seriesplugin.caching                   = ConfigYesNo(default = True)
 
@@ -154,7 +154,6 @@ def setup(session, *args, **kwargs):
 def info(session, service=None, event=None, *args, **kwargs):
 	if config.plugins.seriesplugin.enabled.value:
 		try:
-	#TBD Because of E2 Update 05.2013
 			session.open(SeriesPluginInfoScreen, service, event)
 		except Exception as e:
 			splog(_("SeriesPlugin info exception ") + str(e))
@@ -167,12 +166,9 @@ def info(session, service=None, event=None, *args, **kwargs):
 def extension(session, *args, **kwargs):
 	if config.plugins.seriesplugin.enabled.value:
 		try:
-	#TBD Because of E2 Update 05.2013
 			session.open(SeriesPluginInfoScreen)
 		except Exception as e:
 			splog(_("SeriesPlugin extension exception ") + str(e))
-			#exc_type, exc_value, exc_traceback = sys.exc_info()
-			#splog( exc_type, exc_value, exc_traceback )
 
 
 #######################################################
@@ -207,8 +203,6 @@ def movielist_rename(session, service, services=None, *args, **kwargs):
 			SeriesPluginRenamer(session, services)
 		except Exception as e:
 			splog(_("SeriesPlugin renamer exception ") + str(e))
-			#exc_type, exc_value, exc_traceback = sys.exc_info()
-			#splog( exc_type, exc_value, exc_traceback )
 
 
 #######################################################
@@ -216,12 +210,9 @@ def movielist_rename(session, service, services=None, *args, **kwargs):
 def movielist_info(session, service, *args, **kwargs):
 	if config.plugins.seriesplugin.enabled.value:
 		try:
-	#TBD Because of E2 Update 05.2013
 			session.open(SeriesPluginInfoScreen, service)
 		except Exception as e:
 			splog(_("SeriesPlugin extension exception ") + str(e))
-			#exc_type, exc_value, exc_traceback = sys.exc_info()
-			#splog( exc_type, exc_value, exc_traceback )
 
 
 #######################################################
@@ -232,8 +223,6 @@ def renameTimer(timer, name, begin, end, *args, **kwargs):
 			SeriesPluginTimer(timer, name, begin, end)
 		except Exception as e:
 			splog(_("SeriesPlugin label exception ") + str(e))
-			#exc_type, exc_value, exc_traceback = sys.exc_info()
-			#splog( exc_type, exc_value, exc_traceback )
 
 
 # For compatibility reasons
@@ -244,8 +233,6 @@ def modifyTimer(timer, name, *args, **kwargs):
 			SeriesPluginTimer(timer, name or timer.name, timer.begin, timer.end)
 		except Exception as e:
 			splog(_("SeriesPlugin label exception ") + str(e))
-			#exc_type, exc_value, exc_traceback = sys.exc_info()
-			#splog( exc_type, exc_value, exc_traceback )
 
 
 # For compatibility reasons
@@ -256,8 +243,6 @@ def labelTimer(timer, begin=None, end=None, *args, **kwargs):
 			SeriesPluginTimer(timer, timer.name, timer.begin, timer.end)
 		except Exception as e:
 			splog(_("SeriesPlugin label exception ") + str(e))
-			#exc_type, exc_value, exc_traceback = sys.exc_info()
-			#splog( exc_type, exc_value, exc_traceback )
 
 
 #######################################################
