@@ -113,8 +113,8 @@ class SeriesPluginInfoScreen(Screen):
 			#"openSimilarList": self.openSimilarList
 		})
 		
-		splog("SeriesPluginInfo")
-		splog(service, event)
+		splog("SPI: SeriesPluginInfo")
+		#splog(service, event)
 		self.service = service
 		self.event = event
 		
@@ -164,24 +164,24 @@ class SeriesPluginInfoScreen(Screen):
 				self.event = info and info.getEvent(service)
 				today = False
 				elapsed = True
-				splog("SeriesPluginInfoScreen eServiceReference movie", str(ref))
+				splog("SPI: eServiceReference movie", str(ref))
 			else:
 				# Service is channel reference
 				ref = eServiceReference(str(service))
 				channel = ServiceReference(ref).getServiceName() or ""
 				#ref = eServiceReference(service.toString())#
 				# Get information from event
-				splog("SeriesPluginInfoScreen eServiceReference channel", str(ref))
+				splog("SPI: eServiceReference channel", str(ref))
 		
 		elif isinstance(service, ServiceReference):
 			ref = service.ref
 			channel = service.getServiceName()
-			splog("SeriesPluginInfoScreen ServiceReference", str(ref))
+			splog("SPI: ServiceReference", str(ref))
 		
 		elif isinstance(service, ChannelSelectionBase):
 			ref = service.getCurrentSelection()
 			channel = ServiceReference(ref).getServiceName() or ""
-			splog("SeriesPluginInfoScreen ChannelSelectionBase", str(ref))
+			splog("SPI: ChannelSelectionBase", str(ref))
 		
 		# Fallbacks
 		if ref is None:
@@ -192,7 +192,7 @@ class SeriesPluginInfoScreen(Screen):
 			ref = self.session and self.session.nav.getCurrentlyPlayingServiceReference().toString()
 			
 			channel = ServiceReference(ref).getServiceName() or ""
-			splog("SeriesPluginInfoScreen Fallback ref", str(ref))
+			splog("SPI: Fallback ref", str(ref))
 		
 		if not isinstance(self.event, eServiceEvent):
 			try:
@@ -203,7 +203,7 @@ class SeriesPluginInfoScreen(Screen):
 				# Has the movie been renamed earlier?
 				# Refresh / reload the list?
 				self["event_episode"].setText( "No valid selection!" )
-				splog("SeriesPluginInfoScreen No valid selection", str(ref))
+				splog("SPI: No valid selection", str(ref))
 				return
 			#num = event and event.getNumOfLinkageServices() or 0
 			#for cnt in range(num):
@@ -211,7 +211,7 @@ class SeriesPluginInfoScreen(Screen):
 			# Get information from epg
 			today = True
 			elapsed = False
-			splog("SeriesPluginInfoScreen Fallback event")
+			splog("SPI: Fallback event")
 		
 		self.service = ref
 		
@@ -223,29 +223,29 @@ class SeriesPluginInfoScreen(Screen):
 			# We got the exact margins, no need to adapt it
 			self.short = self.event.getShortDescription() or ""
 			ext = self.event.getExtendedDescription() or ""
-			splog("SeriesPluginInfoScreen event")
+			splog("SPI: event")
 		
 		if not begin:
 			info = self.serviceHandler.info(eServiceReference(str(ref)))
-			splog("SeriesPluginInfoScreen info")
+			#splog("SPI: info")
 			if info:
-				splog("SeriesPluginInfoScreen if info")
+				#splog("SPI: if info")
 				begin = info.getInfo(ref, iServiceInformation.sTimeCreate) or 0
 				if begin:
 					duration = info.getLength(ref) or 0
 					end = begin + duration or 0
-					splog("SeriesPluginInfoScreen sTimeCreate")
+					#splog("SPI: sTimeCreate")
 				else:
 					end = os.path.getmtime(ref.getPath()) or 0
 					duration = info.getLength(ref) or 0
 					begin = end - duration or 0
-					splog("SeriesPluginInfoScreen sTimeCreate else")
+					#splog("SPI: sTimeCreate else")
 			elif ref:
 				path = ref.getPath()
-				splog("SeriesPluginInfoScreen getPath")
+				#splog("SPI: getPath")
 				if path and os.path.exists(path):
 					begin = os.path.getmtime(path) or 0
-					splog("SeriesPluginInfoScreen getctime")
+					#splog("SPI: getctime")
 			#else:
 				#MAYBE we could also try to parse the filename
 			# We don't know the exact margins, we will assume the E2 default margins
@@ -271,7 +271,7 @@ class SeriesPluginInfoScreen(Screen):
 		#TODO episode list handling
 		#store the list and just open the first one
 		
-		splog("SeriesPluginInfoScreen episodeCallback")
+		splog("SPI: episodeCallback", data)
 		#splog(data)
 		if data and len(data) == 4:
 			# Episode data available
@@ -294,7 +294,8 @@ class SeriesPluginInfoScreen(Screen):
 				self.setColorButtons()
 			except Exception as e:
 				# Screen already closed
-				splog("SeriesPluginInfoScreen:", str(e))
+				#splog("SPI: exception:", str(e))
+				pass
 		elif data:
 			custom = str( data )
 		else:
@@ -305,7 +306,8 @@ class SeriesPluginInfoScreen(Screen):
 			self["event_episode"].setText( custom )
 		except Exception as e:
 			# Screen already closed
-			splog("SeriesPluginInfoScreen:", str(e))
+			#splog("SPI: exception:", str(e))
+			pass
 
 
 	def updateScreen(self, name, episode, short, ext, begin, duration, channel):
@@ -357,7 +359,7 @@ class SeriesPluginInfoScreen(Screen):
 
 
 	def setColorButtons(self):
-		splog("event eit", self.event and self.event.getEventId())
+		splog("SPI: event eit", self.event and self.event.getEventId())
 		if self.service and self.data:
 			
 			if self.path and os.path.exists(self.path):
@@ -431,13 +433,14 @@ class SeriesPluginInfoScreen(Screen):
 				self.session.openWithCallback(self.finishedAdd, TimerEntry, newEntry)
 
 	def removeTimer(self, timer):
+		splog("SPI: remove Timer")
 		timer.afterEvent = AFTEREVENT.NONE
 		self.session.nav.RecordTimer.removeEntry(timer)
 		#self["key_green"].setText(_("Add timer"))
 		#self.key_green_choice = self.ADD_TIMER
 
 	def finishedAdd(self, answer):
-		splog("finished add")
+		splog("SPI: finished add")
 		if answer[0]:
 			entry = answer[1]
 			simulTimerList = self.session.nav.RecordTimer.record(entry)
@@ -453,7 +456,7 @@ class SeriesPluginInfoScreen(Screen):
 		else:
 			#self["key_green"].setText(_("Add timer"))
 			#self.key_green_choice = self.ADD_TIMER
-			splog("Timeredit aborted")
+			splog("SPI: Timeredit aborted")
 
 	def finishSanityCorrection(self, answer):
 		self.finishedAdd(answer)
