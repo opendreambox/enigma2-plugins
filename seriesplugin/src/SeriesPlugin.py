@@ -54,11 +54,11 @@ SERIESPLUGIN_PATH  = os.path.join( resolveFilename(SCOPE_PLUGINS), "Extensions/S
 instance = None
 
 CompiledRegexpNonDecimal = re.compile(r'[^\d]+')
-CompiledRegexpNonAlphanum = re.compile(r'[^[a-zA-Z0-9_]]+')
+CompiledRegexpNonAlphanum = re.compile(r'[^a-zA-Z0-9_ ]+')
 
 def dump(obj):
 	for attr in dir(obj):
-		splog( "config.plugins.seriesplugin.%s = %s" % (attr, getattr(obj, attr)) )
+		splog( "SP: %s = %s" % (attr, getattr(obj, attr)) )
 
 
 def getInstance():
@@ -68,34 +68,34 @@ def getInstance():
 		
 		from plugin import VERSION
 		
-		splog("SERIESPLUGIN NEW INSTANCE " + VERSION)
+		splog("SP: SERIESPLUGIN NEW INSTANCE " + VERSION)
 		
 		try:
 
 
 			from Tools.HardwareInfo import HardwareInfo
-			splog( "DeviceName " + HardwareInfo().get_device_name().strip() )
+			splog( "SP: DeviceName " + HardwareInfo().get_device_name().strip() )
 		except:
 			pass
 		
 		try:
 			from Components.About import about
-			splog( "EnigmaVersion " + about.getEnigmaVersionString().strip() )
-			splog( "ImageVersion " + about.getVersionString().strip() )
+			splog( "SP: EnigmaVersion " + about.getEnigmaVersionString().strip() )
+			splog( "SP: ImageVersion " + about.getVersionString().strip() )
 		except:
 			pass
 		
 		try:
 			#http://stackoverflow.com/questions/1904394/python-selecting-to-read-the-first-line-only
-			splog( "dreamboxmodel " + open("/proc/stb/info/model").readline().strip() )
-			splog( "imageversion " + open("/etc/image-version").readline().strip() )
-			splog( "imageissue " + open("/etc/issue.net").readline().strip() )
+			splog( "SP: dreamboxmodel " + open("/proc/stb/info/model").readline().strip() )
+			splog( "SP: imageversion " + open("/etc/image-version").readline().strip() )
+			splog( "SP: imageissue " + open("/etc/issue.net").readline().strip() )
 		except:
 			pass
 		
 		try:
 			for key, value in config.plugins.seriesplugin.dict().iteritems():
-				splog( "config.plugins.seriesplugin.%s = %s" % (key, str(value.value)) )
+				splog( "SP: config..%s = %s" % (key, str(value.value)) )
 		except Exception as e:
 			pass
 		
@@ -103,20 +103,20 @@ def getInstance():
 		#	if os.path.exists(SERIESPLUGIN_PATH):
 		#		dirList = os.listdir(SERIESPLUGIN_PATH)
 		#		for fname in dirList:
-		#			splog( fname, datetime.fromtimestamp( int( os.path.getctime( os.path.join(SERIESPLUGIN_PATH,fname) ) ) ).strftime('%Y-%m-%d %H:%M:%S') )
+		#			splog( "SP: ", fname, datetime.fromtimestamp( int( os.path.getctime( os.path.join(SERIESPLUGIN_PATH,fname) ) ) ).strftime('%Y-%m-%d %H:%M:%S') )
 		#except Exception as e:
 		#	pass
 		#try:
 		#	if os.path.exists(AUTOTIMER_PATH):
 		#		dirList = os.listdir(AUTOTIMER_PATH)
 		#		for fname in dirList:
-		#			splog( fname, datetime.fromtimestamp( int( os.path.getctime( os.path.join(AUTOTIMER_PATH,fname) ) ) ).strftime('%Y-%m-%d %H:%M:%S') )
+		#			splog( "SP: ", fname, datetime.fromtimestamp( int( os.path.getctime( os.path.join(AUTOTIMER_PATH,fname) ) ) ).strftime('%Y-%m-%d %H:%M:%S') )
 		#except Exception as e:
 		#	pass
 		
 		instance = SeriesPlugin()
 		#instance[os.getpid()] = SeriesPlugin()
-		splog( strftime("%a, %d %b %Y %H:%M:%S", localtime()) )
+		splog( "SP: ", strftime("%a, %d %b %Y %H:%M:%S", localtime()) )
 	
 	return instance
 
@@ -124,7 +124,7 @@ def resetInstance():
 	#Rename to closeInstance
 	global instance
 	if instance is not None:
-		splog("SERIESPLUGIN INSTANCE STOP")
+		splog("SP: SERIESPLUGIN INSTANCE STOP")
 		instance.stop()
 		instance = None
 	from Cacher import cache
@@ -136,16 +136,15 @@ def refactorTitle(org, data):
 	if data:
 		season, episode, title, series = data
 		if config.plugins.seriesplugin.pattern_title.value and not config.plugins.seriesplugin.pattern_title.value == "Off":
-			splog("SeriesPluginRenamer refactorTitle")
-			splog("SeriesPluginRenamer refactorTitle org", org)
+			splog("SP: refactor org", org)
 			org = CompiledRegexpNonAlphanum.sub('', org)
-			splog("SeriesPluginRenamer refactorTitle org", org)
-			splog("SeriesPluginRenamer refactorTitle title", title)
+			splog("SP: refactor org", org)
+			splog("SP: refactor title", title)
 			title = CompiledRegexpNonAlphanum.sub('', title)
-			splog("SeriesPluginRenamer refactorTitle title", title)
-			splog("SeriesPluginRenamer refactorTitle series", series)
+			splog("SP: refactor title", title)
+			splog("SP: refactor series", series)
 			series = CompiledRegexpNonAlphanum.sub('', series)
-			splog("SeriesPluginRenamer refactorTitle series", series)
+			splog("SP: refactor series", series)
 			return config.plugins.seriesplugin.pattern_title.value.strip().format( **{'org': org, 'season': season, 'episode': episode, 'title': title, 'series': series} )
 		else:
 			return org
@@ -202,7 +201,7 @@ class SeriesPluginWorker(Thread):
 	def Start(self, item):
 		if not self.__running:
 			self.__running = True
-			splog("SeriesPluginRenamer")
+			splog("SP: Worker: Start")
 			#self.__item = item
 			self.__list = [item]
 			self.start() # Start blocking code in Thread
@@ -213,7 +212,7 @@ class SeriesPluginWorker(Thread):
 	
 		while self.__list:
 			item = self.__list.pop(0)
-			splog('SeriesPluginWorker is processing: ', item.identifier)
+			splog('SP: Worker is processing: ', item.identifier)
 			# do processing stuff here
 			result = None
 			
@@ -222,27 +221,27 @@ class SeriesPluginWorker(Thread):
 					item.name, item.begin, item.end, item.service, item.channels
 				)
 			except Exception, e:
-				splog("SeriesPluginWorker Identifier Exception:", str(e))
+				splog("SP: Worker: Exception:", str(e))
 				
 				# Exception finish job with error
 				result = str(e)
 			
 			try:
-				splog("SeriesPluginWorker result")
+				splog("SP: Worker: result")
 				if result and len(result) == 4:
 					season, episode, title, series = result
 					season = int(CompiledRegexpNonDecimal.sub('', season))
 					episode = int(CompiledRegexpNonDecimal.sub('', episode))
 					title = title.strip()
-					splog("SeriesPluginWorker result callback")
+					splog("SP: Worker: result callback")
 					self.__messages.push((2, item.callback, season, episode, title, series,))
 					self.__messagePump.send(0)
 				else:
-					splog("SeriesPluginWorker result failed")
+					splog("SP: Worker: result failed")
 					self.__messages.push((1, item.callback, result))
 					self.__messagePump.send(0)
 			except Exception, e:
-				splog("SeriesPluginWorker Callback Exception:", str(e))
+				splog("SP: Worker: Callback Exception:", str(e))
 			
 			config.plugins.seriesplugin.lookup_counter.value += 1
 			config.plugins.seriesplugin.lookup_counter.save()
@@ -251,27 +250,14 @@ class SeriesPluginWorker(Thread):
 		self.__messagePump.send(0)
 		self.__running = False
 		Thread.__init__(self)
-		splog('SeriesPluginWorker] list is emty, done')
-
-#TBD Because of E2 Update 05.2013
-#			if (config.plugins.seriesplugin.lookup_counter.value == 10) \
-#				or (config.plugins.seriesplugin.lookup_counter.value == 100) \
-#				or (config.plugins.seriesplugin.lookup_counter.value % 1000 == 0):
-#				from plugin import ABOUT
-#				about = ABOUT.format( **{'lookups': config.plugins.seriesplugin.lookup_counter.value} )
-#				AddPopup(
-#					about,
-#					MessageBox.TYPE_INFO,
-#					0,
-#					'SP_PopUp_ID_About'
-#				)
+		splog('SP: Worker: list is emty, done')
 
 seriespluginworker = SeriesPluginWorker()
 
 class SeriesPlugin(Modules, ChannelsBase):
 
 	def __init__(self):
-		splog("SeriesPlugin")
+		splog("SP: Main: Init")
 		Modules.__init__(self)
 		ChannelsBase.__init__(self)
 		
@@ -282,16 +268,16 @@ class SeriesPlugin(Modules, ChannelsBase):
 		datetime.strptime('2012-01-01', '%Y-%m-%d')
 			
 		self.identifier_elapsed = self.instantiateModuleWithName( config.plugins.seriesplugin.identifier_elapsed.value )
-		splog(self.identifier_elapsed)
+		#splog(self.identifier_elapsed)
 		
 		self.identifier_today = self.instantiateModuleWithName( config.plugins.seriesplugin.identifier_today.value )
-		splog(self.identifier_today)
+		#splog(self.identifier_today)
 		
 		self.identifier_future = self.instantiateModuleWithName( config.plugins.seriesplugin.identifier_future.value )
-		splog(self.identifier_future)
+		#splog(self.identifier_future)
 
 	def stop(self):
-		splog("SeriesPlugin stop")
+		splog("SP: Main: stop")
 		if config.plugins.seriesplugin.lookup_counter.isChanged():
 			config.plugins.seriesplugin.lookup_counter.save()
 		self.saveXML()
@@ -315,7 +301,7 @@ class SeriesPlugin(Modules, ChannelsBase):
 			try:
 				import NavigationInstance
 				if NavigationInstance.instance.RecordTimer.isRecording():
-					print("[SeriesPlugin]: Skip check during running records")
+					splog("SP: Main: Skip check during running records")
 					return
 			except:
 				pass
@@ -385,7 +371,7 @@ class SeriesPlugin(Modules, ChannelsBase):
 			
 	def gotThreadMsg_seriespluginworker(self, msg):
 		msg = seriespluginworker.Message.pop()
-		print ('gotThreadMsg_seriespluginrenameservice]msg: %s' %str(msg))
+		splog("SP: Main: gotThreadMsg:", msg)
 		if msg[0] == 2:
 			callback = msg[1]
 			if callable(callback):
@@ -394,10 +380,7 @@ class SeriesPlugin(Modules, ChannelsBase):
 			callback = msg[1]
 			if callable(callback):
 				callback(msg[2])
-		self.renamerCallback()
 
-
-	def renamerCallback(self):
 		if (config.plugins.seriesplugin.lookup_counter.value == 10) \
 			or (config.plugins.seriesplugin.lookup_counter.value == 100) \
 			or (config.plugins.seriesplugin.lookup_counter.value % 1000 == 0):
@@ -411,5 +394,6 @@ class SeriesPlugin(Modules, ChannelsBase):
 			)
 
 	def cancel(self):
+		splog("SP: Main: cancel")
 		seriespluginworker.MessagePump.recv_msg.get().remove(self.gotThreadMsg_seriespluginrenameservice) # interconnect to thread stop
 		self.stop()

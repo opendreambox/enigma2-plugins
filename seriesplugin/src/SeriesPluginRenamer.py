@@ -40,9 +40,6 @@ from SeriesPlugin import getInstance, refactorTitle, refactorDescription   #, re
 from Logger import splog
 
 
-CompiledRegexpNonAlphanum = re.compile(r'[^[a-zA-Z0-9_]]+')
-
-
 # By Bin4ry
 def newLegacyEncode(string):
 	string2 = ""
@@ -66,7 +63,7 @@ def newLegacyEncode(string):
 
 def rename(service, name, short, data):
 	# Episode data available
-	splog(data)
+	splog("SPR: rename:", data)
 	
 	#MAYBE Check if it is already renamed?
 	try:
@@ -119,25 +116,23 @@ def renameMeta(service, data):
 				title = refactorTitle(oldtitle, data)
 			else:
 				title = oldtitle
-			splog(title)
+			splog("SPR: title",title)
 			if config.plugins.seriesplugin.pattern_description.value and not config.plugins.seriesplugin.pattern_description.value == "Off":
 				descr = refactorDescription(olddescr, data)
 			else:
 				descr = olddescr
-			splog(descr)
+			splog("SPR: descr",descr)
 			
 			metafile = open(meta_file, "w")
 			metafile.write("%s%s\n%s\n%s" % (sid, title, descr, rest))
 			metafile.close()
 	except Exception as e:
-		splog(e)
+		splog("SPR: renameMeta:", e)
 
 def renameFile(service, name, data):
 	try:
 		servicepath = service.getPath()
-		splog("servicepath", servicepath)
-		servicepath = CompiledRegexpNonAlphanum.sub('', servicepath)
-		splog("servicepathRegexp", servicepath)
+		splog("SPR: servicepath", servicepath)
 		
 		path = os.path.dirname(servicepath)
 		file_name = os.path.basename(os.path.splitext(servicepath)[0])
@@ -152,14 +147,21 @@ def renameFile(service, name, data):
 		name = newLegacyEncode(name)
 		
 		src = os.path.join(path, file_name)
-		splog("servicepathSrc", src)
+		splog("SPR: servicepathSrc", src)
 		dst = os.path.join(path, name)
-		splog("servicepathDst", dst)
+		splog("SPR: servicepathDst", dst)
 
 		for f in glob.glob(os.path.join(path, src + "*")):
-			os.rename(f, f.replace(src, dst))
+			splog("SPR: servicepathRnm", f)
+			to = f.replace(src, dst)
+			splog("SPR: servicepathTo ", to)
+			if os.path.exists(to):
+				os.rename(f, to)
+			else:
+				splog("SPR: Skip rename: Destination file alreadey exists", to)
 	except Exception as e:
-		splog(e)
+		splog("SPR: renameFile:", e)
+
 
 from ThreadQueue import ThreadQueue
 from threading import Thread
@@ -172,8 +174,6 @@ class SeriesPluginRenameService(Thread):
 		self.__running = False
 		self.__messages = ThreadQueue()
 		self.__messagePump = ePythonMessagePump()
-		self.__beginn = None
-		self.__end = None
 
 	def __getMessagePump(self):
 		return self.__messagePump
@@ -197,16 +197,17 @@ class SeriesPluginRenameService(Thread):
 	def run(self):
 		
 		for service in self.__services:
-			splog("SeriesPluginRenamer")
-			self.seriesPlugin = getInstance()
+			
+			splog("SPR: run")
+			seriesPlugin = getInstance()
 			self.serviceHandler = eServiceCenter.getInstance()
 			
 			if isinstance(service, eServiceReference):
-				self.service = service
+				service = service
 			elif isinstance(service, ServiceReference):
-				self.service = service.ref
+				service = service.ref
 			else:
-				splog(_("SeriesPluginRenamer: Wrong instance"))
+				splog("SPR: Wrong instance")
 				self.__messages.push(service)
 				self.__messagePump.send(0)
 				self.__running = False
@@ -214,7 +215,7 @@ class SeriesPluginRenameService(Thread):
 				return
 			
 			if not os.path.exists( service.getPath() ):
-				splog(_("SeriesPluginRenamer: File not exists: ") + service.getPath())
+				splog("SPR: File not exists: " + service.getPath())
 				self.__messages.push(service)
 				self.__messagePump.send(0)
 				self.__running = False
@@ -223,71 +224,67 @@ class SeriesPluginRenameService(Thread):
 			
 			info = self.serviceHandler.info(service)
 			if not info:
-				splog(_("SeriesPluginRenamer: No info available: ") + service.getPath())
+				splog("SPR: No info available: " + service.getPath())
 				self.__messages.push(service)
 				self.__messagePump.send(0)
 				self.__running = False
 				Thread.__init__(self)
 				return 
 			
-			self.name = service.getName() or info.getName(service) or ""
-			splog("name", self.name)
+			name = service.getName() or info.getName(service) or ""
+			#splog("SPR: name", name)
 			
-			self.short = ""
+			short = ""
 			
 			event = info.getEvent(service)
 			if event:
-				self.short = event.getShortDescription()
-				self.__beginn = event.getBeginTime()
+				short = event.getShortDescription()
+				begin = event.getBeginTime()
 				duration = event.getDuration() or 0
-				self.__end = self.__beginn + duration or 0
+				end = begin + duration or 0
 				# We got the exact start times, no need for margin handling
 			
-			if not self.__beginn:
-				self.__beginn = info.getInfo(service, iServiceInformation.sTimeCreate) or -1
-				if self.__beginn != -1:
-					self.__end = self.__beginn + (info.getLength(service) or 0)
+			if not begin:
+				begin = info.getInfo(service, iServiceInformation.sTimeCreate) or -1
+				if begin != -1:
+					end = begin + (info.getLength(service) or 0)
 				else:
-					self.__end = os.path.getmtime(service.getPath())
-					self.__beginn = self.__end - (info.getLength(service) or 0)
+					end = os.path.getmtime(service.getPath())
+					begin = end - (info.getLength(service) or 0)
 				#MAYBE we could also try to parse the filename
 				# We don't know the exact margins, we will assume the E2 default margins
-				self.__beginn + (int(config.recording.margin_before.value) * 60)
-				self.__end - (int(config.recording.margin_after.value) * 60)
+				begin + (int(config.recording.margin_before.value) * 60)
+				end - (int(config.recording.margin_after.value) * 60)
 			
-			self.__rec_ref_str = info.getInfoString(service, iServiceInformation.sServiceref)
+			rec_ref_str = info.getInfoString(service, iServiceInformation.sServiceref)
 			#channel = ServiceReference(rec_ref_str).getServiceName()
-		
 			
-			
-			self.seriesPlugin.getEpisode(
-					self.serviceCallback, 
-					#self.name, begin, end, channel, elapsed=True
-					#self.name, begin, end, eServiceReference(rec_ref_str), elapsed=True
-					self.name, self.__beginn, self.__end, self.__rec_ref_str, elapsed=True
+			splog("SPR: getEpisode:", name, begin, end)
+			seriesPlugin.getEpisode(
+					boundFunction(self.serviceCallback, service, name, short),
+					name, begin, end, rec_ref_str, elapsed=True
 				)
 
-	def serviceCallback(self, data=None):
-		splog("SeriesPluginRenamer serviceCallback")
-		splog(data)
+	def serviceCallback(self, service, name, short, data=None):
+		splog("SPR: serviceCallback", name, data)
 		
 		result = None
 		
 		if data and len(data) == 4:
-			if rename(self.service, self.name, self.short, data):
+			if rename(service, name, short, data):
 				# Rename was successfully
 				result = None
 		elif data:
-			result = self.service.getPath() + " : " + str( data )
+			result = service.getPath() + " : " + str( data )
 		else:
-			result = self.service.getPath()
+			result = service.getPath()
 		
 		self.__messages.push(result)
 		self.__messagePump.send(0)
 
 		self.__running = False
 		Thread.__init__(self)
-		print ('SeriesPluginRenameService]done')
+		splog("SPR: Service done")
 
 		
 seriespluginrenameservice = SeriesPluginRenameService()
@@ -296,6 +293,8 @@ seriespluginrenameservice = SeriesPluginRenameService()
 # Rename movies
 class SeriesPluginRenamer(object):
 	def __init__(self, session, services, *args, **kwargs):
+		
+		splog("SPR: SeriesPluginRenamer")
 		
 		if services and not isinstance(services, list):
 			services = [services]	
@@ -321,11 +320,12 @@ class SeriesPluginRenamer(object):
 
 	def gotThreadMsg_seriespluginrenameservice(self, msg):
 		msg = seriespluginrenameservice.Message.pop()
-		print ('gotThreadMsg_seriespluginrenameservice]msg: %s' %str(msg))
+		splog("SPR: gotThreadMsg", msg)
 		self.renamerCallback(msg)
 		seriespluginrenameservice.MessagePump.recv_msg.get().remove(self.gotThreadMsg_seriespluginrenameservice) # interconnect to thread stop
 
 	def renamerCallback(self, result=None):
+		splog("SPR: renamerCallback", result)
 		self.returned += 1
 		if result and isinstance(result, basestring):
 			#Maybe later self.failed.append( name + " " + begin.strftime('%y.%m.%d %H-%M') + " " + channel )

@@ -28,6 +28,7 @@ from Components.config import *
 
 from Screens.MessageBox import MessageBox
 from Tools.Notifications import AddPopup
+from Tools.BoundFunction import boundFunction
 
 # Plugin internal
 from SeriesPlugin import getInstance, refactorTitle, refactorDescription
@@ -43,8 +44,7 @@ class SeriesPluginTimer(object):
 	
 	def __init__(self, timer, name, begin, end):
 		
-		splog("SeriesPluginTimer")
-		splog(name, timer.name)
+		splog("SPT: SeriesPluginTimer: name, timername, begin, end:", name, timer.name, begin, end)
 		timer.log(600, "[SeriesPlugin] Try to find infos for %s" % (timer.name) )
 		
 		# We have to compare the length,
@@ -57,13 +57,13 @@ class SeriesPluginTimer(object):
 		event = None
 		
 		if timer.eit:
-			splog("Timer Eit is set", timer.service_ref.ref, timer.eit)
+			#splog("SPT: Timer Eit is set", timer.service_ref.ref, timer.eit)
 			event = epgcache.lookupEventId(timer.service_ref.ref, timer.eit)
-			splog("LookupEventId event", event)
+			splog("SPT: LookupEventId", timer.eit, event)
 		if not(event):
-			splog("Lookup EventTime", timer.service_ref.ref, end, begin)
+			#splog("Lookup EventTime", timer.service_ref.ref, end, begin)
 			event = epgcache.lookupEventTime( timer.service_ref.ref, begin + ((end - begin) /2) );
-			splog("LookupEvent event found", event )
+			splog("SPT: lookupEventTime", event )
 		#if not(event):
 		#	splog("Lookup Event", timer.service_ref.ref, end, begin)
 		#	events = epgcache.lookupEvent( [ "T" , ( timer.service_ref.ref, 0, begin + ((end - begin) /2) ) ] );
@@ -71,53 +71,52 @@ class SeriesPluginTimer(object):
 		#	event = events and events[0]
 		
 		if event:
-			splog("EPG event found")
+			#splog("EPG event found")
 			if not ( len(timer.name) == len(name) == len(event.getEventName()) ):
-				splog("Skip timer because it is already modified", timer.name, name, event and event.getEventName(), len(timer.name), len(name), len(event.getEventName()) )
+				splog("SPT: Skip timer because it is already modified", timer.name, name, event and event.getEventName(), len(timer.name), len(name), len(event.getEventName()) )
 				timer.log(601, "[SeriesPlugin] Skip timer because it is already modified")
 				return
 		else:
 			if ( len(timer.name) == len(name) ):
-				splog("Skip timer because no event was found", timer.name, name, len(timer.name), len(name))
+				splog("SPT: Skip timer because no event was found", timer.name, name, len(timer.name), len(name))
 				timer.log(602, "[SeriesPlugin] Skip timer because no event was found")
 				return
 		
 		if timer.begin < time() + 60:
-			splog("Skipping an event because it starts in less than 60 seconds", timer.name )
+			splog("SPT: Skipping an event because it starts in less than 60 seconds", timer.name )
 			timer.log(603, "[SeriesPlugin] Skip timer because it starts in less than 60 seconds")
 			return
 		
 		if timer.isRunning():
-			splog("Skipping timer because it is already running", timer.name )
+			splog("SPT: Skipping timer because it is already running", timer.name )
 			timer.log(604, "[SeriesPlugin] Skip timer because it is already running")
 			return
 		
 		if timer.justplay:
-			splog("Skipping justplay timer", timer.name )
+			splog("SPT: Skipping justplay timer", timer.name )
 			timer.log(605, "[SeriesPlugin] Skip justplay timer")
 			return
 		
-		self.timer = timer
 		
-		self.seriesPlugin = getInstance()
+		seriesPlugin = getInstance()
 		
 		if timer.service_ref:
 			#channel = timer.service_ref.getServiceName()
 			#splog(channel)
 			
-			self.seriesPlugin.getEpisode(
-					self.timerCallback,
+			splog("SPT: getEpisode:", name, begin, end)
+			seriesPlugin.getEpisode(
+					boundFunction(self.timerCallback, timer),
 					#name, begin, end, channel, future=True
 					name, begin, end, str(timer.service_ref), future=True
 				)
 		else:
-			splog("SeriesPluginTimer: No channel specified")
+			splog("SPT: SeriesPluginTimer: No channel specified")
 			self.timerCallback("No channel specified")
 
-	def timerCallback(self, data=None):
-		splog("SeriesPluginTimer timerCallback")
+	def timerCallback(self, timer, data=None):
+		splog("SPT: timerCallback", data)
 		splog(data)
-		timer = self.timer
 		
 		if data and len(data) == 4 and timer:
 			
@@ -150,7 +149,7 @@ class SeriesPluginTimer(object):
 				# Maybe there is a better way to avoid multiple Popups
 				from SeriesPlugin import seriespluginworker
 				if not seriespluginworker.__list:
-					#splog("SeriesPluginTimer " + " ".join(SeriesPluginTimer.data))
+					#splog("SPT: " + " ".join(SeriesPluginTimer.data))
 					AddPopup(
 						"SeriesPlugin:\n" + SeriesPluginTimer.counter + _(" Timer handeld") + "\n\n".join(SeriesPluginTimer.data),
 						MessageBox.TYPE_ERROR,

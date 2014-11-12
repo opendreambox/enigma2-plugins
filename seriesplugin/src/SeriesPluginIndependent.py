@@ -77,7 +77,7 @@ def runIndependent():
 			timer.serieslookupdone = True
 	
 	except Exception as e:
-		splog(_("SeriesPluginIndependent run exception ") + str(e))
+		splog("SeriesPluginIndependent: run exception " + str(e))
 
 
 #######################################################
@@ -96,7 +96,6 @@ class SeriesPluginIndependent(object):
 		#self.etimer.start( 10, True )
 
 	def run(self):
-		splog("SeriesPluginIndependent run ###########################################")
-		splog( strftime("%a, %d %b %Y %H:%M:%S", localtime()) )
-		
+		splog("SeriesPluginIndependent: run",  strftime("%a, %d %b %Y %H:%M:%S", localtime()) )
+
 		runIndependent()
