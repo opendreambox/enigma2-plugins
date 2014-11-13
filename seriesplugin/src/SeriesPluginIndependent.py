@@ -97,5 +97,5 @@ class SeriesPluginIndependent(object):
 
 	def run(self):
 		splog("SeriesPluginIndependent: run",  strftime("%a, %d %b %Y %H:%M:%S", localtime()) )
-		
+
 		runIndependent()

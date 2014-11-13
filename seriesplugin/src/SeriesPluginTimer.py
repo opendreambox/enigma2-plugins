@@ -148,13 +148,20 @@ class SeriesPluginTimer(object):
 				
 				# Maybe there is a better way to avoid multiple Popups
 				from SeriesPlugin import seriespluginworker
-				if not seriespluginworker.__list:
-					#splog("SPT: " + " ".join(SeriesPluginTimer.data))
-					AddPopup(
-						"SeriesPlugin:\n" + SeriesPluginTimer.counter + _(" Timer handeld") + "\n\n".join(SeriesPluginTimer.data),
-						MessageBox.TYPE_ERROR,
-						0,
-						'SP_PopUp_ID_TimerFinished'
-					)
+				if not seriespluginworker or not seriespluginworker.__list:
+					if SeriesPluginTimer.data:
+						AddPopup(
+							"SeriesPlugin:\n" + _("Timer rename has been finished with %d errors:\n") % (len(SeriesPluginTimer.data)) +"\n" +"\n".join(SeriesPluginTimer.data),
+							MessageBox.TYPE_ERROR,
+							0,
+							'SP_PopUp_ID_TimerFinished'
+						)
+					else:
+						AddPopup(
+							"SeriesPlugin:\n" + _("%d timer renamed successfully") % (SeriesPluginTimer.counter),
+							MessageBox.TYPE_INFO,
+							0,
+							'SP_PopUp_ID_TimerFinished'
+						)
 					SeriesPluginTimer.data = []
 					SeriesPluginTimer.counter = 0
