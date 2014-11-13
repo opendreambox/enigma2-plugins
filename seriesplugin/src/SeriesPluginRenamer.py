@@ -155,7 +155,7 @@ def renameFile(service, name, data):
 			splog("SPR: servicepathRnm", f)
 			to = f.replace(src, dst)
 			splog("SPR: servicepathTo ", to)
-			if os.path.exists(to):
+			if not os.path.exists(to):
 				os.rename(f, to)
 			else:
 				splog("SPR: Skip rename: Destination file alreadey exists", to)
@@ -301,8 +301,8 @@ class SeriesPluginRenamer(object):
 		
 		self.services = services
 		
-		self.failed = []
-		self.returned = 0
+		self.data = []
+		self.counter = 0
 		
 		session.openWithCallback(
 			self.confirm,
@@ -326,21 +326,32 @@ class SeriesPluginRenamer(object):
 
 	def renamerCallback(self, result=None):
 		splog("SPR: renamerCallback", result)
-		self.returned += 1
+		
 		if result and isinstance(result, basestring):
-			#Maybe later self.failed.append( name + " " + begin.strftime('%y.%m.%d %H-%M') + " " + channel )
-			self.failed.append( result )
-		if self.failed:
-			AddPopup(
-				_("Movie rename has been finished with %d errors:\n") % (len(self.failed)) + "\n".join(self.failed),
-				MessageBox.TYPE_ERROR,
-				0,
-				'SP_PopUp_ID_RenameFinished'
-			)
-		else:
-			AddPopup(
-				_("Movie rename has been finished successfully"),
-				MessageBox.TYPE_INFO,
-				0,
-				'SP_PopUp_ID_RenameFinished'
-			)
+			self.data.append( result )
+		
+		if config.plugins.seriesplugin.renamer_popups.value and config.plugins.seriesplugin.renamer_popups_success.value:
+			
+			self.counter = self.counter +1
+			
+			if self.data or config.plugins.seriesplugin.renamer_popups_success.value:
+			
+				# Maybe there is a better way to avoid multiple Popups
+				from SeriesPlugin import seriespluginworker
+				if not seriespluginworker or not seriespluginworker.__list:
+					if self.data:
+						AddPopup(
+							"SeriesPlugin:\n" + _("Record rename has been finished with %d errors:\n") % (len(self.data)) +"\n" +"\n".join(self.data),
+							MessageBox.TYPE_ERROR,
+							0,
+							'SP_PopUp_ID_RenameFinished'
+						)
+					else:
+						AddPopup(
+							"SeriesPlugin:\n" + _("%d records renamed successfully") % (self.counter),
+							MessageBox.TYPE_INFO,
+							0,
+							'SP_PopUp_ID_RenameFinished'
+						)
+					self.data = []
+					self.counter = 0

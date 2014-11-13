@@ -84,6 +84,7 @@ class Wunschliste(IdentifierBase):
 		self.service = service
 		self.channels = channels
 		
+		self.knownids = []
 		self.returnvalue = None
 		
 		# Check preconditions

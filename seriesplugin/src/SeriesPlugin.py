@@ -183,8 +183,7 @@ class SeriesPluginWorker(Thread):
 		self.__running = False
 		self.__messages = ThreadQueue()
 		self.__messagePump = ePythonMessagePump()
-		self.__beginn = None
-		self.__end = None
+		self.__list = []
 
 	def __getMessagePump(self):
 		return self.__messagePump
@@ -312,7 +311,9 @@ class SeriesPlugin(Modules, ChannelsBase):
 			name = name[4:]
 		
 		begin = datetime.fromtimestamp(begin)
+		splog("SP: Main: begin:", begin.strftime('%Y-%m-%d %H:%M:%S'))
 		end = datetime.fromtimestamp(end)
+		splog("SP: Main: end:", end.strftime('%Y-%m-%d %H:%M:%S'))
 		
 		if elapsed:
 			identifier = self.identifier_elapsed

@@ -153,6 +153,8 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 			self.list.append( getConfigListEntry(  _("Rename files")                               , config.plugins.seriesplugin.rename_file ) )
 			if config.plugins.seriesplugin.rename_file.value:
 				self.list.append( getConfigListEntry(  _("Tidy up filename on Rename")             , config.plugins.seriesplugin.tidy_rename ) )
+			self.list.append( getConfigListEntry(  _("Show warnings after Record renaming")        , config.plugins.seriesplugin.timer_popups ) )
+			self.list.append( getConfigListEntry(  _("Show success after Record renaming")         , config.plugins.seriesplugin.timer_popups_success ) )
 			
 			self.list.append( getConfigListEntry(  _("Max time drift to match episode")            , config.plugins.seriesplugin.max_time_drift ) )
 			self.list.append( getConfigListEntry(  _("Title search depths")                        , config.plugins.seriesplugin.search_depths ) )
@@ -167,7 +169,7 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 			self.list.append( getConfigListEntry(  _("Check timer list from extension menu")       , config.plugins.seriesplugin.check_timer_list ) )
 
 			self.list.append( getConfigListEntry(  _("Show warnings after Timer handling")         , config.plugins.seriesplugin.timer_popups ) )
-			self.list.append( getConfigListEntry(  _("Show also success after Timer handling")     , config.plugins.seriesplugin.timer_popups_success ) )
+			self.list.append( getConfigListEntry(  _("Show success after Timer handling")          , config.plugins.seriesplugin.timer_popups_success ) )
 
 			self.list.append( getConfigListEntry(  _("Use local caching")                          , config.plugins.seriesplugin.caching ) )
 			

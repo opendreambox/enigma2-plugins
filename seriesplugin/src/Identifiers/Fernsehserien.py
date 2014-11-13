@@ -78,6 +78,7 @@ class Fernsehserien(IdentifierBase):
 		self.last = None
 		self.page = 0
 		
+		self.knownids = []
 		self.returnvalue = None
 		
 		# Check preconditions
@@ -221,7 +222,7 @@ class Fernsehserien(IdentifierBase):
 			#last = last + timedelta(seconds=max_time_drift)
 			
 			splog("getNextPage: self.first, first, self.last, last, if: ", self.first, first, self.last, last, (self.first != first and self.last != last))
-			if self.first != first and self.last != last:
+			if self.first != first or self.last != last:
 				self.first = first
 				self.last = last
 				
