@@ -28,7 +28,7 @@ from Logger import splog
 #######################################################
 # Constants
 NAME = "SeriesPlugin"
-VERSION = "1.2.9_oe2.0"
+VERSION = "1.3.0"
 DESCRIPTION = _("SeriesPlugin")
 SHOWINFO = _("Show series info (SP)")
 RENAMESERIES = _("Rename serie(s) (SP)")
@@ -165,10 +165,11 @@ def info(session, service=None, event=None, *args, **kwargs):
 
 #######################################################
 # Extensions menu
-def extension(session, *args, **kwargs):
+def sp_extension(session, *args, **kwargs):
 	if config.plugins.seriesplugin.enabled.value:
 		try:
-			session.open(SeriesPluginInfoScreen)
+			if session:
+				session.open(SeriesPluginInfoScreen)
 		except Exception as e:
 			splog(_("SeriesPlugin extension exception ") + str(e))
 
@@ -283,7 +284,7 @@ def Plugins(**kwargs):
 													name = SHOWINFO,
 													description = SHOWINFO,
 													where = PluginDescriptor.WHERE_EXTENSIONSMENU,
-													fnc = extension,
+													fnc = sp_extension,
 													needsRestart = False) )
 		
 		if config.plugins.seriesplugin.check_timer_list.value:
