@@ -228,6 +228,10 @@ class EPGRefreshChangeSettingsResource(resource.Resource):
 			elif key == "parse_autotimer":
 				if value in config.plugins.epgrefresh.parse_autotimer.choices:
 					config.plugins.epgrefresh.parse_autotimer.value = value
+				elif value == "true":
+					config.plugins.epgrefresh.parse_autotimer.value = "always"
+				else:
+					config.plugins.epgrefresh.parse_autotimer.value = "never"
 			elif key == "adapter":
 				if value in config.plugins.epgrefresh.adapter.choices:
 					config.plugins.epgrefresh.adapter.value = value
