@@ -338,7 +338,7 @@ class SeriesPluginRenamer(object):
 			
 				# Maybe there is a better way to avoid multiple Popups
 				from SeriesPlugin import seriespluginworker
-				if not seriespluginworker or not seriespluginworker.__list:
+				if not seriespluginworker or seriespluginworker.isListEmpty():
 					if self.data:
 						AddPopup(
 							"SeriesPlugin:\n" + _("Record rename has been finished with %d errors:\n") % (len(self.data)) +"\n" +"\n".join(self.data),

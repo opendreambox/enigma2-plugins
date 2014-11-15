@@ -197,6 +197,9 @@ class SeriesPluginWorker(Thread):
 		return self.__running
 	isRunning = property(__getRunning)
 
+	def isListEmpty(self):
+		return self.__list and True
+
 	def Start(self, item):
 		if not self.__running:
 			self.__running = True

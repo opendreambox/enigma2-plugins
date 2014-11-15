@@ -148,7 +148,7 @@ class SeriesPluginTimer(object):
 				
 				# Maybe there is a better way to avoid multiple Popups
 				from SeriesPlugin import seriespluginworker
-				if not seriespluginworker or not seriespluginworker.__list:
+				if not seriespluginworker or seriespluginworker.isListEmpty():
 					if SeriesPluginTimer.data:
 						AddPopup(
 							"SeriesPlugin:\n" + _("Timer rename has been finished with %d errors:\n") % (len(SeriesPluginTimer.data)) +"\n" +"\n".join(SeriesPluginTimer.data),
