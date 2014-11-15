@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # by betonme @2012
 
 import re
@@ -54,7 +55,7 @@ SERIESPLUGIN_PATH  = os.path.join( resolveFilename(SCOPE_PLUGINS), "Extensions/S
 instance = None
 
 CompiledRegexpNonDecimal = re.compile(r'[^\d]+')
-CompiledRegexpNonAlphanum = re.compile(r'[^a-zA-Z0-9_ ]+')
+CompiledRegexpNonAlphanum = re.compile(r'[^-_\.()abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789äÄüÜöÖ]+')
 
 def dump(obj):
 	for attr in dir(obj):
