@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 
 _proc_status = '/proc/%d/status' % os.getpid()
