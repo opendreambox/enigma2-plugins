@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # by betonme @2012
 
 from collections import defaultdict

@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 import os, sys, traceback
 
 # Localization
@@ -28,7 +28,7 @@ from Logger import splog
 #######################################################
 # Constants
 NAME = "SeriesPlugin"
-VERSION = "1.3.2"
+VERSION = "1.3.3"
 DESCRIPTION = _("SeriesPlugin")
 SHOWINFO = _("Show series info (SP)")
 RENAMESERIES = _("Rename serie(s) (SP)")

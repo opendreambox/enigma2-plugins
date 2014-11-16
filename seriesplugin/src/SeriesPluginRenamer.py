@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #######################################################################
 #
 #    Series Plugin for Enigma-2
@@ -340,6 +341,9 @@ class SeriesPluginRenamer(object):
 			
 				# Maybe there is a better way to avoid multiple Popups
 				from SeriesPlugin import seriespluginworker
+				
+				splog("SPR: renamerCallback isListEmpty", not seriespluginworker or seriespluginworker.isListEmpty())
+				
 				if not seriespluginworker or seriespluginworker.isListEmpty():
 					if self.data:
 						AddPopup(

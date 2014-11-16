@@ -1,4 +1,4 @@
-﻿# by betonme @2012
+# by betonme @2012
 
 import os, sys
 import math

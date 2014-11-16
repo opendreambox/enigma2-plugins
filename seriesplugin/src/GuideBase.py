@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # by betonme @2012
 
 import os, sys, traceback
