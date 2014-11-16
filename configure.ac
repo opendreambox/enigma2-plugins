@@ -510,7 +510,7 @@ porncenter/src/Makefile
 porncenter/src/Additions/Makefile
 
 pushservice/Makefile
-pushservice/etc//Makefile
+pushservice/etc/Makefile
 pushservice/meta/Makefile
 pushservice/po/Makefile
 pushservice/src/Makefile
