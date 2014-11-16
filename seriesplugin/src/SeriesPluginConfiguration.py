@@ -231,7 +231,7 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 			recoverAutoTimer()
 		
 		# Set new configuration
-		from plugin import WHERE_EPGMENU, WHERE_CHANNELMENU, addSeriesPlugin, removeSeriesPlugin, SHOWINFO, RENAMESERIES, CHECKTIMERS, info, extension, channel, movielist_info, movielist_rename, checkTimers
+		from plugin import WHERE_EPGMENU, WHERE_CHANNELMENU, addSeriesPlugin, removeSeriesPlugin, SHOWINFO, RENAMESERIES, CHECKTIMERS, info, sp_extension, channel, movielist_info, movielist_rename, checkTimers
 		
 		if config.plugins.seriesplugin.menu_info.value:
 			addSeriesPlugin(PluginDescriptor.WHERE_EVENTINFO, SHOWINFO, info)

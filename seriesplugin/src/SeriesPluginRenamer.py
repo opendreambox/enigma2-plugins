@@ -299,6 +299,8 @@ class SeriesPluginRenamer(object):
 		if services and not isinstance(services, list):
 			services = [services]	
 		
+		splog("SPR: len()", len(services))
+		
 		self.services = services
 		
 		self.data = []
@@ -330,7 +332,7 @@ class SeriesPluginRenamer(object):
 		if result and isinstance(result, basestring):
 			self.data.append( result )
 		
-		if config.plugins.seriesplugin.renamer_popups.value and config.plugins.seriesplugin.renamer_popups_success.value:
+		if config.plugins.seriesplugin.rename_popups.value and config.plugins.seriesplugin.rename_popups_success.value:
 			
 			self.counter = self.counter +1
 			
