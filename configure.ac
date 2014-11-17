@@ -559,6 +559,7 @@ serienfilm/src/Makefile
 serienfilm/src/icons/Makefile
 
 seriesplugin/Makefile
+seriesplugin/etc/Makefile
 seriesplugin/meta/Makefile
 seriesplugin/po/Makefile
 seriesplugin/src/Makefile
