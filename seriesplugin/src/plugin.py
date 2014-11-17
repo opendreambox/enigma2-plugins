@@ -28,7 +28,7 @@ from Logger import splog
 #######################################################
 # Constants
 NAME = "SeriesPlugin"
-VERSION = "1.3.3"
+VERSION = "1.3.4"
 DESCRIPTION = _("SeriesPlugin")
 SHOWINFO = _("Show series info (SP)")
 RENAMESERIES = _("Rename serie(s) (SP)")
@@ -87,11 +87,15 @@ config.plugins.seriesplugin.pattern_title             = ConfigText(default = "{o
 config.plugins.seriesplugin.pattern_description       = ConfigText(default = "S{season:02d}E{episode:02d} {title:s} {org:s}", fixed_size = False)
 #config.plugins.seriesplugin.pattern_record            = ConfigText(default = "{org:s} S{season:02d}E{episode:02d} {title:s}", fixed_size = False)
 
+config.plugins.seriesplugin.title_replace_chars       = ConfigYesNo(default = True)
+
 config.plugins.seriesplugin.channel_file              = ConfigText(default = "/etc/enigma2/seriesplugin_channels.xml", fixed_size = False)
 config.plugins.seriesplugin.channel_popups            = ConfigYesNo(default = False)
 
-config.plugins.seriesplugin.tidy_rename               = ConfigYesNo(default = False)
 config.plugins.seriesplugin.rename_file               = ConfigYesNo(default = True)
+config.plugins.seriesplugin.rename_tidy               = ConfigYesNo(default = False)
+config.plugins.seriesplugin.rename_legacy             = ConfigYesNo(default = False)
+config.plugins.seriesplugin.rename_existing_files     = ConfigYesNo(default = False)
 config.plugins.seriesplugin.rename_popups             = ConfigYesNo(default = True)
 config.plugins.seriesplugin.rename_popups_success     = ConfigYesNo(default = False)
 
@@ -331,7 +335,7 @@ EPGSelection_enterDateTime = None
 #EPGSelection_openOutdatedEPGSelection = None
 def SPEPGSelectionInit():
 	print "SeriesPlugin override EPGSelection"
-	global EPGSelection_enterDateTime, EPGSelection_openOutdatedEPGSelection
+	global EPGSelection_enterDateTime #, EPGSelection_openOutdatedEPGSelection
 	if EPGSelection_enterDateTime is None: # and EPGSelection_openOutdatedEPGSelection is None:
 		from Screens.EpgSelection import EPGSelection
 		EPGSelection_enterDateTime = EPGSelection.enterDateTime
@@ -342,8 +346,8 @@ def SPEPGSelectionInit():
 
 def SPEPGSelectionUndo():
 	print "SeriesPlugin undo override EPGSelection"
-	global EPGSelection_enterDateTime, EPGSelection_openOutdatedEPGSelection
-	if EPGSelection_enterDateTime and EPGSelection_openOutdatedEPGSelection:
+	global EPGSelection_enterDateTime #, EPGSelection_openOutdatedEPGSelection
+	if EPGSelection_enterDateTime: # and EPGSelection_openOutdatedEPGSelection:
 		from Screens.EpgSelection import EPGSelection
 		EPGSelection.enterDateTime = EPGSelection_enterDateTime
 		EPGSelection_enterDateTime = None
@@ -368,6 +372,52 @@ def enterDateTime(self):
 #	if reason == 1:
 #		EPGSelection_enterDateTime(self)
 
+
+#######################################################
+# Override ChannelContextMenu
+ChannelContextMenu__init__ = None
+def SPChannelContextMenuInit():
+	print "[SeriesPlugin] override ChannelContextMenu.__init__"
+	global ChannelContextMenu__init__
+	if ChannelContextMenu__init__ is None:
+		from Screens.ChannelSelection import ChannelContextMenu
+		ChannelContextMenu__init__ = ChannelContextMenu.__init__
+		ChannelContextMenu.__init__ = SPChannelContextMenu__init__
+		ChannelContextMenu.SPchannelShowSeriesInfo = channelShowSeriesInfo
+		ChannelContextMenu.SPcloseafterfinish = closeafterfinish
+
+def SPChannelContextMenuUndo():
+	print "[SeriesPlugin] override ChannelContextMenu.__init__"
+	global ChannelContextMenu__init__
+	if ChannelContextMenu__init__:
+		from Screens.ChannelSelection import ChannelContextMenu
+		ChannelContextMenu.__init__ = ChannelContextMenu__init__
+		ChannelContextMenu__init__ = None
+
+def SPChannelContextMenu__init__(self, session, csel):
+	from Components.ChoiceList import ChoiceEntryComponent
+	from Screens.ChannelSelection import MODE_TV
+	from Tools.BoundFunction import boundFunction
+	from enigma import eServiceReference
+	ChannelContextMenu__init__(self, session, csel)
+	current = csel.getCurrentSelection()
+	current_sel_path = current.getPath()
+	current_sel_flags = current.flags
+	if csel.mode == MODE_TV and not (current_sel_path or current_sel_flags & (eServiceReference.isDirectory|eServiceReference.isMarker)):
+		self["menu"].list.insert(0, ChoiceEntryComponent(text=(SHOWINFO, boundFunction(self.SPchannelShowSeriesInfo))))
+
+def channelShowSeriesInfo(self):
+	splog( "[SeriesPlugin] channelShowSeriesInfo ")
+	if config.plugins.seriesplugin.enabled.value:
+		try:
+			from enigma import eServiceCenter
+			service = self.csel.servicelist.getCurrent()
+			info = eServiceCenter.getInstance().info(service)
+			event = info.getEvent(service)
+			self.session.openWithCallback(self.SPcloseafterfinish, SeriesPluginInfoScreen, service, event)
+		except Exception as e:
+			splog(_("SeriesPlugin info exception ") + str(e))
+
 def closeafterfinish(self, retval=None):
 	self.close()
 
@@ -378,6 +428,8 @@ def addSeriesPlugin(menu, title, fnc=None):
 	# Add to menu
 	if( menu == WHERE_EPGMENU ):
 		SPEPGSelectionInit()
+	elif( menu == WHERE_CHANNELMENU ):
+		SPChannelContextMenuInit()
 	else:
 		from Components.PluginComponent import plugins
 		if plugins:
@@ -401,6 +453,8 @@ def removeSeriesPlugin(menu, title):
 	# Remove from menu
 	if( menu == WHERE_EPGMENU ):
 		SPEPGSelectionUndo()
+	elif( menu == WHERE_CHANNELMENU ):
+		SPChannelContextMenuUndo()
 	else:
 		from Components.PluginComponent import plugins
 		if plugins:

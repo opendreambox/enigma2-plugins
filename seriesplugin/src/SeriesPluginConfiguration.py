@@ -146,14 +146,17 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 			self.list.append( getConfigListEntry(  _("Episode pattern file")                       , config.plugins.seriesplugin.pattern_file ) )
 			self.list.append( getConfigListEntry(  _("Record title episode pattern")               , self.cfg_pattern_title ) )
 			self.list.append( getConfigListEntry(  _("Record description episode pattern")         , self.cfg_pattern_description ) )
-			#self.list.append( getConfigListEntry(  _("Record description episode pattern")         , self.cfg_pattern_record ) )
+			
+			self.list.append( getConfigListEntry(  _("Replace special characters from title")      , config.plugins.seriesplugin.title_replace_chars ) )
 			
 			self.list.append( getConfigListEntry(  _("Alternative channel names file")             , config.plugins.seriesplugin.channel_file ) )
 			self.list.append( getConfigListEntry(  _("Ask for channel matching")                   , config.plugins.seriesplugin.channel_popups ) )
 			
 			self.list.append( getConfigListEntry(  _("Rename files")                               , config.plugins.seriesplugin.rename_file ) )
 			if config.plugins.seriesplugin.rename_file.value:
-				self.list.append( getConfigListEntry(  _("Tidy up filename on Rename")             , config.plugins.seriesplugin.tidy_rename ) )
+				self.list.append( getConfigListEntry(  _("Tidy up filename on rename")             , config.plugins.seriesplugin.rename_tidy ) )
+				self.list.append( getConfigListEntry(  _("Use legacy filenames")                   , config.plugins.seriesplugin.rename_legacy ) )
+				self.list.append( getConfigListEntry(  _("Append '_' if file exist)")              , config.plugins.seriesplugin.rename_existing_files ) )
 			self.list.append( getConfigListEntry(  _("Show warnings after Record renaming")        , config.plugins.seriesplugin.timer_popups ) )
 			self.list.append( getConfigListEntry(  _("Show success after Record renaming")         , config.plugins.seriesplugin.timer_popups_success ) )
 			

@@ -149,6 +149,9 @@ class SeriesPluginTimer(object):
 				
 				# Maybe there is a better way to avoid multiple Popups
 				from SeriesPlugin import seriespluginworker
+				
+				splog("SPT: timerCallback getListLength", not seriespluginworker or seriespluginworker.getListLength())
+				
 				if not seriespluginworker or seriespluginworker.isListEmpty():
 					if SeriesPluginTimer.data:
 						AddPopup(
