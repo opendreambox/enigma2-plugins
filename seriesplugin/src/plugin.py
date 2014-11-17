@@ -28,7 +28,7 @@ from Logger import splog
 #######################################################
 # Constants
 NAME = "SeriesPlugin"
-VERSION = "1.3.3"
+VERSION = "1.3.4"
 DESCRIPTION = _("SeriesPlugin")
 SHOWINFO = _("Show series info (SP)")
 RENAMESERIES = _("Rename serie(s) (SP)")
@@ -87,11 +87,15 @@ config.plugins.seriesplugin.pattern_title             = ConfigText(default = "{o
 config.plugins.seriesplugin.pattern_description       = ConfigText(default = "S{season:02d}E{episode:02d} {title:s} {org:s}", fixed_size = False)
 #config.plugins.seriesplugin.pattern_record            = ConfigText(default = "{org:s} S{season:02d}E{episode:02d} {title:s}", fixed_size = False)
 
+config.plugins.seriesplugin.title_replace_chars       = ConfigYesNo(default = True)
+
 config.plugins.seriesplugin.channel_file              = ConfigText(default = "/etc/enigma2/seriesplugin_channels.xml", fixed_size = False)
 config.plugins.seriesplugin.channel_popups            = ConfigYesNo(default = False)
 
-config.plugins.seriesplugin.tidy_rename               = ConfigYesNo(default = False)
 config.plugins.seriesplugin.rename_file               = ConfigYesNo(default = True)
+config.plugins.seriesplugin.rename_tidy               = ConfigYesNo(default = False)
+config.plugins.seriesplugin.rename_legacy             = ConfigYesNo(default = False)
+config.plugins.seriesplugin.rename_existing_files     = ConfigYesNo(default = False)
 config.plugins.seriesplugin.rename_popups             = ConfigYesNo(default = True)
 config.plugins.seriesplugin.rename_popups_success     = ConfigYesNo(default = False)
 
@@ -326,7 +330,7 @@ EPGSelection_enterDateTime = None
 #EPGSelection_openOutdatedEPGSelection = None
 def SPEPGSelectionInit():
 	print "SeriesPlugin override EPGSelection"
-	global EPGSelection_enterDateTime, EPGSelection_openOutdatedEPGSelection
+	global EPGSelection_enterDateTime #, EPGSelection_openOutdatedEPGSelection
 	if EPGSelection_enterDateTime is None: # and EPGSelection_openOutdatedEPGSelection is None:
 		from Screens.EpgSelection import EPGSelection
 		EPGSelection_enterDateTime = EPGSelection.enterDateTime
@@ -337,8 +341,8 @@ def SPEPGSelectionInit():
 
 def SPEPGSelectionUndo():
 	print "SeriesPlugin undo override EPGSelection"
-	global EPGSelection_enterDateTime, EPGSelection_openOutdatedEPGSelection
-	if EPGSelection_enterDateTime and EPGSelection_openOutdatedEPGSelection:
+	global EPGSelection_enterDateTime #, EPGSelection_openOutdatedEPGSelection
+	if EPGSelection_enterDateTime: # and EPGSelection_openOutdatedEPGSelection:
 		from Screens.EpgSelection import EPGSelection
 		EPGSelection.enterDateTime = EPGSelection_enterDateTime
 		EPGSelection_enterDateTime = None

@@ -130,36 +130,43 @@ def renameMeta(service, data):
 	except Exception as e:
 		splog("SPR: renameMeta:", e)
 
-def renameFile(service, name, data):
+def renameFile(service, name, data, tidy=False):
 	try:
 		servicepath = service.getPath()
 		splog("SPR: servicepath", servicepath)
 		
 		path = os.path.dirname(servicepath)
 		file_name = os.path.basename(os.path.splitext(servicepath)[0])
+		splog("SPR: file_name", file_name)
 		
+		splog("SPR: name     ", name)
 		# Refactor title
-		if config.plugins.seriesplugin.tidy_rename.value:
+		if config.plugins.seriesplugin.tidy_rename.value or tidy:
 			name = refactorTitle(name, data)
 		else:
 			name = refactorTitle(file_name, data)
-		# Refactor record file name
-		#name = refactorRecord(file_name, data)
-		name = newLegacyEncode(name)
+		splog("SPR: name     ", name)
+		if config.plugins.seriesplugin.legacy_rename.value:
+			name = newLegacyEncode(name)
+			splog("SPR: name     ", name)
 		
 		src = os.path.join(path, file_name)
 		splog("SPR: servicepathSrc", src)
 		dst = os.path.join(path, name)
 		splog("SPR: servicepathDst", dst)
 
-		for f in glob.glob(os.path.join(path, src + "*")):
+		for f in glob.glob( glob.escape(src) + "*" ):
 			splog("SPR: servicepathRnm", f)
 			to = f.replace(src, dst)
 			splog("SPR: servicepathTo ", to)
 			if not os.path.exists(to):
 				os.rename(f, to)
+			elif config.plugins.seriesplugin.rename_existing_files.value:
+				splog("SPR: Destination file alreadey exists", to, " - Append _")
+				renameFile(service, name + "_", data, True)
+				break
 			else:
-				splog("SPR: Skip rename: Destination file alreadey exists", to)
+				splog("SPR: Destination file alreadey exists", to, " - Skip rename")
 	except Exception as e:
 		splog("SPR: renameFile:", e)
 
@@ -342,7 +349,7 @@ class SeriesPluginRenamer(object):
 				# Maybe there is a better way to avoid multiple Popups
 				from SeriesPlugin import seriespluginworker
 				
-				splog("SPR: renamerCallback isListEmpty", not seriespluginworker or seriespluginworker.isListEmpty())
+				splog("SPR: renamerCallback getListLength", not seriespluginworker or seriespluginworker.getListLength())
 				
 				if not seriespluginworker or seriespluginworker.isListEmpty():
 					if self.data:
