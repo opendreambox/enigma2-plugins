@@ -19,7 +19,7 @@
 
 import os
 import re
-import glob
+from glob import glob #Py3 ,escape
 
 # for localized messages
 from . import _
@@ -155,7 +155,14 @@ def renameFile(service, name, data, tidy=False):
 		dst = os.path.join(path, name)
 		splog("SPR: servicepathDst", dst)
 
-		for f in glob.glob( glob.escape(src) + "*" ):
+		#Py3 for f in glob( escape(src) + "*" ):
+		glob_src = src
+		glob_src.replace("*","\*")
+		glob_src.replace("?","\?")
+		glob_src.replace("[","\[")
+		glob_src.replace("]","\]")
+		splog("SPR: glob_src      ", glob_src)
+		for f in glob( glob_src + "*" ):
 			splog("SPR: servicepathRnm", f)
 			to = f.replace(src, dst)
 			splog("SPR: servicepathTo ", to)
