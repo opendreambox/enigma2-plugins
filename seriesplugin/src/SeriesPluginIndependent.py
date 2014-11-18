@@ -46,8 +46,9 @@ def startIndependent():
 def stopIndependent():
 	#Rename to closeInstance
 	global instance
-	# TEST Does this really stop the process
-	instance = None
+	if instance:
+		instance.stop()
+		instance = None
 
 def runIndependent():
 	try:
@@ -89,7 +90,11 @@ class SeriesPluginIndependent(object):
 	
 	def __init__(self):
 		self.etimer = eTimer()
-		self.etimer.callback.append(self.run)
+		self.etimer_conn = None
+		try:
+			self.etimer_conn = self.etimer.timeout.connect(self.run)
+		except:
+			self.etimer.callback.append(self.run)
 		cycle = int(config.plugins.seriesplugin.independent_cycle.value)
 		if cycle > 0:
 			self.etimer.start( (cycle * 60 * 1000) )
@@ -100,3 +105,10 @@ class SeriesPluginIndependent(object):
 		splog("SeriesPluginIndependent: run",  strftime("%a, %d %b %Y %H:%M:%S", localtime()) )
 
 		runIndependent()
+
+	def stop(self):
+			self.etimer_conn = None
+			try:
+				self.etimer.callback.remove(self.run)
+			except:
+				pass

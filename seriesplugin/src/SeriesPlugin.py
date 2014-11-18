@@ -55,7 +55,7 @@ SERIESPLUGIN_PATH  = os.path.join( resolveFilename(SCOPE_PLUGINS), "Extensions/S
 instance = None
 
 CompiledRegexpNonDecimal = re.compile(r'[^\d]+')
-CompiledRegexpNonAlphanum = re.compile(r'[^-_\.,()abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789äÄüÜöÖ ]+')
+CompiledRegexpNonAlphanum = re.compile(r'[^-_/\.,()abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789äÄüÜöÖ ]+')
 
 def dump(obj):
 	for attr in dir(obj):
@@ -267,7 +267,11 @@ class SeriesPlugin(Modules, ChannelsBase):
 		ChannelsBase.__init__(self)
 		
 		self.serviceHandler = eServiceCenter.getInstance()
-		seriespluginworker.MessagePump.recv_msg.get().append(self.gotThreadMsg_seriespluginworker)
+		self.__pump_recv_msg_conn = None
+		try:
+			self.__pump_recv_msg_conn = seriespluginworker.MessagePump.recv_msg.connect(self.gotThreadMsg_seriespluginworker)
+		except:
+			seriespluginworker.MessagePump.recv_msg.get().append(self.gotThreadMsg_seriespluginworker)
 		
 		#http://bugs.python.org/issue7980
 		datetime.strptime('2012-01-01', '%Y-%m-%d')
@@ -402,5 +406,9 @@ class SeriesPlugin(Modules, ChannelsBase):
 
 	def cancel(self):
 		splog("SP: Main: cancel")
-		seriespluginworker.MessagePump.recv_msg.get().remove(self.gotThreadMsg_seriespluginrenameservice) # interconnect to thread stop
+		self.__pump_recv_msg_conn = None
+		try:
+			seriespluginworker.MessagePump.recv_msg.get().remove(self.gotThreadMsg_seriespluginrenameservice) # interconnect to thread stop
+		except:
+			pass
 		self.stop()

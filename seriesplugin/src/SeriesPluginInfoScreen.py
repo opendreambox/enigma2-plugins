@@ -334,8 +334,13 @@ class SeriesPluginInfoScreen(Screen):
 		sc = AVSwitch().getFramebufferScale()
 		size = self[widget].instance.size()
 		self.picload = ePicLoad()
-		self.picload.PictureData.get().append( boundFunction(self.loadPixmapCallback, widget) )
-		if self.picload:
+		self.picload_conn = None
+		try:
+			self.picload_conn = self.picload.PictureData.connect( boundFunction(self.loadPixmapCallback, widget) )
+		except:
+			self.picload_conn = True
+			self.picload.PictureData.get().append( boundFunction(self.loadPixmapCallback, widget) )
+		if self.picload and self.picload_conn:
 			self.picload.setPara((size.width(), size.height(), sc[0], sc[1], False, 1, "#00000000")) # Background dynamically
 			if self.picload.startDecode(path) != 0:
 				del self.picload
@@ -347,7 +352,7 @@ class SeriesPluginInfoScreen(Screen):
 				self[widget].instance.setPixmap(ptr)
 				self[widget].show()
 			del self.picload
-
+			self.picload_conn = None
 
 	# Overwrite Screen close function
 	def close(self):

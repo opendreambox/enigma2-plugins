@@ -28,7 +28,7 @@ from Logger import splog
 #######################################################
 # Constants
 NAME = "SeriesPlugin"
-VERSION = "1.3.4"
+VERSION = "1.4"
 DESCRIPTION = _("SeriesPlugin")
 SHOWINFO = _("Show series info (SP)")
 RENAMESERIES = _("Rename serie(s) (SP)")
@@ -290,6 +290,7 @@ def Plugins(**kwargs):
 													where = PluginDescriptor.WHERE_EXTENSIONSMENU,
 													fnc = sp_extension,
 													needsRestart = False) )
+			
 		
 		if config.plugins.seriesplugin.check_timer_list.value:
 			descriptors.append(PluginDescriptor(
@@ -315,12 +316,20 @@ def Plugins(**kwargs):
 													fnc = movielist_rename,
 													needsRestart = False) )
 		
-		if config.plugins.seriesplugin.menu_epg.value:
-			addSeriesPlugin(WHERE_EPGMENU, SHOWINFO)
-		
-		if config.plugins.seriesplugin.menu_channel.value:
+		try:
+			if config.plugins.seriesplugin.menu_channel.value:
+				descriptors.append( PluginDescriptor(
+													name = SHOWINFO,
+													description = SHOWINFO,
+													where = PluginDescriptor.WHERE_CHANNEL_CONTEXT_MENU,
+													fnc = channel,
+													needsRestart = False) )
+		except:
 			addSeriesPlugin(WHERE_CHANNELMENU, SHOWINFO)
 		
+		if config.plugins.seriesplugin.menu_epg.value:
+			addSeriesPlugin(WHERE_EPGMENU, SHOWINFO)
+
 	return descriptors
 
 
@@ -424,7 +433,10 @@ def addSeriesPlugin(menu, title, fnc=None):
 	if( menu == WHERE_EPGMENU ):
 		SPEPGSelectionInit()
 	elif( menu == WHERE_CHANNELMENU ):
-		SPChannelContextMenuInit()
+		try:
+			SPChannelContextMenuInit()
+		except:
+			addSeriesPlugin(PluginDescriptor.WHERE_CHANNEL_CONTEXT_MENU, SHOWINFO, channel)
 	else:
 		from Components.PluginComponent import plugins
 		if plugins:
@@ -449,7 +461,10 @@ def removeSeriesPlugin(menu, title):
 	if( menu == WHERE_EPGMENU ):
 		SPEPGSelectionUndo()
 	elif( menu == WHERE_CHANNELMENU ):
-		SPChannelContextMenuUndo()
+		try:
+			SPChannelContextMenuUndo()
+		except:
+			removeSeriesPlugin(PluginDescriptor.WHERE_CHANNEL_CONTEXT_MENU, SHOWINFO)
 	else:
 		from Components.PluginComponent import plugins
 		if plugins:
