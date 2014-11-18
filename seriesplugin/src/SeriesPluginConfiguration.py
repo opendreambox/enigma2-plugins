@@ -253,9 +253,9 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 			removeSeriesPlugin(WHERE_EPGMENU, SHOWINFO)
 		
 		if config.plugins.seriesplugin.menu_channel.value:
-			addSeriesPlugin(PluginDescriptor.WHERE_CHANNEL_CONTEXT_MENU, SHOWINFO, channel)
+			addSeriesPlugin(WHERE_CHANNELMENU, SHOWINFO, channel)
 		else:
-			removeSeriesPlugin(PluginDescriptor.WHERE_CHANNEL_CONTEXT_MENU, SHOWINFO)
+			removeSeriesPlugin(WHERE_CHANNELMENU, SHOWINFO)
 		
 		if config.plugins.seriesplugin.menu_movie_info.value:
 			addSeriesPlugin(PluginDescriptor.WHERE_MOVIELIST, SHOWINFO, movielist_info)

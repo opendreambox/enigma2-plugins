@@ -141,12 +141,12 @@ def renameFile(service, name, data, tidy=False):
 		
 		splog("SPR: name     ", name)
 		# Refactor title
-		if config.plugins.seriesplugin.tidy_rename.value or tidy:
+		if config.plugins.seriesplugin.rename_tidy.value or tidy:
 			name = refactorTitle(name, data)
 		else:
 			name = refactorTitle(file_name, data)
 		splog("SPR: name     ", name)
-		if config.plugins.seriesplugin.legacy_rename.value:
+		if config.plugins.seriesplugin.rename_legacy.value:
 			name = newLegacyEncode(name)
 			splog("SPR: name     ", name)
 		
@@ -326,7 +326,10 @@ class SeriesPluginRenamer(object):
 
 	def confirm(self, confirmed):
 		if confirmed and self.services:
-			self.__pump_recv_msg_conn = seriespluginrenameservice.MessagePump.recv_msg.connect(self.gotThreadMsg_seriespluginrenameservice) # interconnect to thread start
+			try:
+				self.__pump_recv_msg_conn = seriespluginrenameservice.MessagePump.recv_msg.connect(self.gotThreadMsg_seriespluginrenameservice) # interconnect to thread start
+			except:
+				seriespluginrenameservice.MessagePump.recv_msg.get().append(self.gotThreadMsg_seriespluginrenameservice) # interconnect to thread start
 			seriespluginrenameservice.Start(self.services)
 
 	def gotThreadMsg_seriespluginrenameservice(self, msg):
@@ -334,6 +337,10 @@ class SeriesPluginRenamer(object):
 		splog("SPR: gotThreadMsg", msg)
 		self.renamerCallback(msg)
 		self.__pump_recv_msg_conn = None
+		try:
+			seriespluginrenameservice.MessagePump.recv_msg.get().remove(self.gotThreadMsg_seriespluginrenameservice) # interconnect to thread stop
+		except:
+			pass
 
 	def renamerCallback(self, result=None):
 		splog("SPR: renamerCallback", result)
