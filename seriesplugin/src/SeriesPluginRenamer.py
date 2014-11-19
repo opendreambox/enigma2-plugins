@@ -157,10 +157,10 @@ def renameFile(service, name, data, tidy=False):
 
 		#Py3 for f in glob( escape(src) + "*" ):
 		glob_src = src
-		glob_src.replace("*","\*")
-		glob_src.replace("?","\?")
-		glob_src.replace("[","\[")
-		glob_src.replace("]","\]")
+		glob_src = glob_src.replace("*","\*")
+		glob_src = glob_src.replace("?","\?")
+		glob_src = glob_src.replace("[","\[")
+		glob_src = glob_src.replace("]","\]")
 		splog("SPR: glob_src      ", glob_src)
 		for f in glob( glob_src + "*" ):
 			splog("SPR: servicepathRnm", f)
@@ -371,14 +371,14 @@ class SeriesPluginRenamer(object):
 						AddPopup(
 							"SeriesPlugin:\n" + _("Record rename has been finished with %d errors:\n") % (len(self.data)) +"\n" +"\n".join(self.data),
 							MessageBox.TYPE_ERROR,
-							0,
+							-1,
 							'SP_PopUp_ID_RenameFinished'
 						)
 					else:
 						AddPopup(
 							"SeriesPlugin:\n" + _("%d records renamed successfully") % (self.counter),
 							MessageBox.TYPE_INFO,
-							0,
+							-1,
 							'SP_PopUp_ID_RenameFinished'
 						)
 					self.data = []

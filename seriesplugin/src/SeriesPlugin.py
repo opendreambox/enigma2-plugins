@@ -400,7 +400,7 @@ class SeriesPlugin(Modules, ChannelsBase):
 			AddPopup(
 				about,
 				MessageBox.TYPE_INFO,
-				0,
+				-1,
 				'SP_PopUp_ID_About'
 			)
 

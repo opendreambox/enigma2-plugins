@@ -156,7 +156,7 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 			if config.plugins.seriesplugin.rename_file.value:
 				self.list.append( getConfigListEntry(  _("Tidy up filename on rename")             , config.plugins.seriesplugin.rename_tidy ) )
 				self.list.append( getConfigListEntry(  _("Use legacy filenames")                   , config.plugins.seriesplugin.rename_legacy ) )
-				self.list.append( getConfigListEntry(  _("Append '_' if file exist)")              , config.plugins.seriesplugin.rename_existing_files ) )
+				self.list.append( getConfigListEntry(  _("Append '_' if file exist")               , config.plugins.seriesplugin.rename_existing_files ) )
 			self.list.append( getConfigListEntry(  _("Show warnings after Record renaming")        , config.plugins.seriesplugin.timer_popups ) )
 			self.list.append( getConfigListEntry(  _("Show success after Record renaming")         , config.plugins.seriesplugin.timer_popups_success ) )
 			
@@ -243,7 +243,7 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 			removeSeriesPlugin(PluginDescriptor.WHERE_EVENTINFO, SHOWINFO)
 		
 		if config.plugins.seriesplugin.menu_extensions.value:
-			addSeriesPlugin(PluginDescriptor.WHERE_EXTENSIONSMENU, SHOWINFO)
+			addSeriesPlugin(PluginDescriptor.WHERE_EXTENSIONSMENU, SHOWINFO, sp_extension)
 		else:
 			removeSeriesPlugin(PluginDescriptor.WHERE_EXTENSIONSMENU, SHOWINFO)
 		

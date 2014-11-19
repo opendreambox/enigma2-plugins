@@ -157,14 +157,14 @@ class SeriesPluginTimer(object):
 						AddPopup(
 							"SeriesPlugin:\n" + _("Timer rename has been finished with %d errors:\n") % (len(SeriesPluginTimer.data)) +"\n" +"\n".join(SeriesPluginTimer.data),
 							MessageBox.TYPE_ERROR,
-							0,
+							-1,
 							'SP_PopUp_ID_TimerFinished'
 						)
 					else:
 						AddPopup(
 							"SeriesPlugin:\n" + _("%d timer renamed successfully") % (SeriesPluginTimer.counter),
 							MessageBox.TYPE_INFO,
-							0,
+							-1,
 							'SP_PopUp_ID_TimerFinished'
 						)
 					SeriesPluginTimer.data = []
