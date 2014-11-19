@@ -221,13 +221,16 @@ class Fernsehserien(IdentifierBase):
 			#first = first - timedelta(seconds=max_time_drift)
 			#last = last + timedelta(seconds=max_time_drift)
 			
-			splog("getNextPage: self.first, first, self.last, last, if: ", self.first, first, self.last, last, (self.first != first and self.last != last))
-			if self.first != first or self.last != last:
+			new_page = (self.first != first or self.last != last)
+			splog("getNextPage: first_on_prev_page, first, last_on_prev_page, last, if: ", self.first, first, self.last, last, new_page)
+			if new_page:
 				self.first = first
 				self.last = last
 				
-				splog("first, self.begin, last, if, if:", first, self.begin, last, ( first <= self.begin and self.begin <= last ), ( first >= self.begin and self.begin >= last ) )
-				if ( ( first <= self.begin and self.begin <= last ) or ( first >= self.begin and self.begin >= last ) ):
+				test_future_timespan = ( (first-max_time_drift) <= self.begin and self.begin <= (last+max_time_drift) ) 
+				test_past_timespan = ( (first+max_time_drift) >= self.begin and self.begin >= (last+max_time_drift) )
+				splog("first_on_page, self.begin, last_on_page, if, if:", first, self.begin, last, test_future_timespan, test_past_timespan )
+				if ( test_future_timespan or test_past_timespan ):
 					#search in page for matching datetime
 					for tds in trs:
 						if tds and len(tds) >= 6:  #7:
