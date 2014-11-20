@@ -227,8 +227,8 @@ class Fernsehserien(IdentifierBase):
 				self.first = first
 				self.last = last
 				
-				test_future_timespan = ( (first-max_time_drift) <= self.begin and self.begin <= (last+max_time_drift) ) 
-				test_past_timespan = ( (first+max_time_drift) >= self.begin and self.begin >= (last+max_time_drift) )
+				test_future_timespan = ( (first-timedelta(seconds=max_time_drift)) <= self.begin and self.begin <= (last+timedelta(seconds=max_time_drift)) ) 
+				test_past_timespan = ( (first+timedelta(seconds=max_time_drift)) >= self.begin and self.begin >= (last+timedelta(seconds=max_time_drift)) )
 				splog("first_on_page, self.begin, last_on_page, if, if:", first, self.begin, last, test_future_timespan, test_past_timespan )
 				if ( test_future_timespan or test_past_timespan ):
 					#search in page for matching datetime
