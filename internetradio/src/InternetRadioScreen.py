@@ -85,7 +85,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 
 		skin = """
 			<screen name="InternetRadioScreen" position="0,0" size="1280,720" flags="wfNoBorder" backgroundColor="#00000000" title="InternetRadio">
-				<widget transparent="1" name="video" position="0,0" size="1280,720" zPosition="9"/>
+				<widget transparent="1" name="video" position="0,0" size="1280,720" zPosition="1"/>
 				<ePixmap position="50,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
 				<ePixmap position="200,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
 				<ePixmap position="350,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
@@ -140,7 +140,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 	elif sz_w == 1024:
 		skin = """
 			<screen name="InternetRadioScreen" position="0,0" size="1024,576" flags="wfNoBorder" backgroundColor="#00000000" title="InternetRadio">
-				<widget transparent="1" name="video" position="0,0" size="1024,576" zPosition="9"/>
+				<widget transparent="1" name="video" position="0,0" size="1024,576" zPosition="1"/>
 				<ePixmap position="50,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
 				<ePixmap position="200,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
 				<ePixmap position="350,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
@@ -191,7 +191,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 	else:
 		skin = """
 			<screen name="InternetRadioScreen" position="0,0" size="720,576" flags="wfNoBorder" backgroundColor="#00000000" title="InternetRadio">
-				<widget transparent="1" name="video" position="0,0" size="720,576" zPosition="9"/>
+				<widget transparent="1" name="video" position="0,0" size="720,576" zPosition="1"/>
 				<ePixmap position="50,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
 				<ePixmap position="210,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
 				<ePixmap position="370,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />

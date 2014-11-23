@@ -33,7 +33,7 @@ class InternetRadioInformationScreen(Screen):
 		skin = """
 			<screen name="InternetRadioInformationScreen" position="0,0" size="1280,720" flags="wfNoBorder" backgroundColor="#00000000" title="Streaming Information">
 
-				<ePixmap position="50,30" zPosition="1" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
+				<ePixmap position="50,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
 				<ePixmap position="200,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
 				<ePixmap position="350,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
 				<ePixmap position="500,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
@@ -44,7 +44,7 @@ class InternetRadioInformationScreen(Screen):
 	elif sz_w == 1024:
 		skin = """
 			<screen name="InternetRadioInformationScreen" position="0,0" size="1024,576" flags="wfNoBorder" backgroundColor="#00000000" title="Streaming Information">
-				<ePixmap position="50,30" zPosition="1" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
+				<ePixmap position="50,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
 				<ePixmap position="200,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
 				<ePixmap position="350,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
 				<ePixmap position="500,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
@@ -55,7 +55,7 @@ class InternetRadioInformationScreen(Screen):
 	else:
 		skin = """
 			<screen name="InternetRadioInformationScreen" position="0,0" size="720,576" flags="wfNoBorder" backgroundColor="#00000000" title="Streaming Information">
-				<ePixmap position="50,30" zPosition="1" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
+				<ePixmap position="50,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
 				<ePixmap position="210,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
 				<ePixmap position="370,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
 				<ePixmap position="530,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
