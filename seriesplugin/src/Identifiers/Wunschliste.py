@@ -1,3 +1,4 @@
+﻿# -*- coding: utf-8 -*-
 # by betonme @2012
 
 # Imports
@@ -35,6 +36,17 @@ EPISODEIDURLPRINT = "http://www.wunschliste.de/epg_print.pl?"
 #CompiledRegexpPrintTitle = re.compile( '(\(.*\) )?(.+)')
 
 CompiledRegexpEpisode = re.compile( '((\d+)[\.x])?(\d+)')
+
+
+def iso8859_Decode(txt):
+	txt = unicode(txt, 'ISO-8859-1')
+	txt = txt.encode('utf-8')
+	txt = txt.replace('...','').replace('..','').replace(':','')
+
+	# &apos;, &quot;, &amp;, &lt;, and &gt;
+	txt = txt.replace('&amp;','&').replace('&apos;',"'").replace('&gt;','>').replace('&lt;','<').replace('&quot;','"')
+	return txt
+
 
 class WLPrintParser(HTMLParser):
 	def __init__(self):
@@ -104,7 +116,10 @@ class Wunschliste(IdentifierBase):
 				idserie = ids.pop()
 				
 				if idserie and len(idserie) == 2:
-					id, self.series = idserie
+					id, idname = idserie
+					
+					# Handle encodings
+					self.series = iso8859_Decode(idname)
 					
 					result = self.getNextPage( id )
 					if result:
@@ -117,7 +132,8 @@ class Wunschliste(IdentifierBase):
 			return ( self.returnvalue or _("No matching series found") )
 
 	def getSeries(self, name):
-		url = SERIESLISTURL + urlencode({ 'q' : re.sub("[^a-zA-Z0-9-*]", " ", name) })
+		#url = SERIESLISTURL + urlencode({ 'q' : re.sub("[^a-zA-Z0-9-*]", " ", name) })
+		url = SERIESLISTURL + urlencode({ 'q' : name })
 		data = self.getPage( url )
 		
 		if data and isinstance(data, basestring):
@@ -211,7 +227,10 @@ class Wunschliste(IdentifierBase):
 									xseason = "0"
 									xepisode = "0"
 								
-								yepisode = (xseason, xepisode, xtitle.decode('ISO-8859-1').encode('utf8'), self.series.decode('ISO-8859-1').encode('utf8'))
+								# Handle encodings
+								xtitle = iso8859_Decode(xtitle)
+								
+								yepisode = (xseason, xepisode, xtitle, self.series)
 								ydelta = delta
 							
 							else: #if delta >= ydelta:

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 #######################################################################
 #
 #    Series Plugin for Enigma-2
@@ -80,6 +80,7 @@ def runIndependent():
 	
 	except Exception as e:
 		splog("SeriesPluginIndependent: run exception " + str(e))
+
 
 
 #######################################################

@@ -1,7 +1,11 @@
+﻿# -*- coding: utf-8 -*-
 # by betonme @2012
 
 import os, sys
+import json
+import re
 import math
+
 from sys import maxint
 
 from Components.config import config
@@ -15,10 +19,6 @@ from urllib import urlencode
 from time import time
 from datetime import datetime, timedelta
 
-import json
-
-import re
-
 # Internal
 from Plugins.Extensions.SeriesPlugin.IdentifierBase import IdentifierBase
 from Plugins.Extensions.SeriesPlugin.Channels import compareChannels
@@ -27,6 +27,7 @@ from Plugins.Extensions.SeriesPlugin.Logger import splog
 #sys.path.append(os.path.dirname( os.path.realpath( __file__ ) ) + '/bs4')
 #sys.path.append(os.path.dirname( os.path.realpath( __file__ ) ) + '/bs4/builder')
 from bs4 import BeautifulSoup
+
 
 # Constants
 SERIESLISTURL = "http://www.fernsehserien.de/suche?"
@@ -45,6 +46,25 @@ Headers = {
 		'Host':'www.fernsehserien.de',
 		'Pragma':'no-cache'
 	}
+
+def str_to_utf8(s):
+	if '\\u2013' in s:
+		s = s.replace("\\u2013", "-")
+	if '\\u00c4' in s:
+		s = s.replace("\\u00c4", "Ä")
+	if '\\u00e4' in s:
+		s = s.replace("\\u00e4", "ä")
+	if '\\u00d6' in s:
+		s = s.replace("\\u00d6", "Ö")
+	if '\\u00f6' in s:
+		s= s.replace("\\u00f6", "ö")
+	if '\\u00dc' in s:
+		s = s.replace("\\u00dc", "Ü")
+	if '\\u00fc' in s:
+		s = s.replace("\\u00fc", "ü")
+	if '\\u00df' in s:
+		s = s.replace("\\u00df", "ß")
+	return s
 
 
 class Fernsehserien(IdentifierBase):
@@ -102,7 +122,10 @@ class Fernsehserien(IdentifierBase):
 				idserie = ids.pop()
 				
 				if idserie and len(idserie) == 2:
-					id, self.series = idserie
+					id, idname = idserie
+					
+					# Handle encodings
+					self.series = str_to_utf8(idname)
 					
 					self.page = 0
 					#if self.future:
@@ -143,7 +166,7 @@ class Fernsehserien(IdentifierBase):
 			id = line['id']
 			idname = line['value']
 			splog(id, idname)
-			serieslist.append( (id, idname) )
+			serieslist.append( ( id, idname ) )
 		serieslist.reverse()
 		return serieslist
 
@@ -262,7 +285,7 @@ class Fernsehserien(IdentifierBase):
 							delta = abs(self.begin - xbegin)
 							delta = delta.seconds + delta.days * 24 * 3600
 							#Py2.7 delta = abs(self.begin - xbegin).total_seconds()
-							splog(self.begin, xbegin, delta, max_time_drift)
+							#splog(self.begin, xbegin, delta, max_time_drift)
 							
 							if delta <= max_time_drift:
 								
@@ -291,6 +314,10 @@ class Fernsehserien(IdentifierBase):
 											xepisode = "0"
 											xtitle = tds[5]
 										if xseason and xepisode and xtitle and self.series:
+										
+											# Handle encodings
+											xtitle = str_to_utf8(xtitle)
+											
 											yepisode = (xseason, xepisode, xtitle, self.series)
 											ydelta = delta
 									

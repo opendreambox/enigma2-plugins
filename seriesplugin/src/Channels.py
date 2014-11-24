@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 #######################################################################
 #
 #    Series Plugin for Enigma-2
@@ -19,6 +19,7 @@
 
 import os
 import re
+
 
 # Config
 from Components.config import config

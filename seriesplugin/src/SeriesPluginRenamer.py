@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 #######################################################################
 #
 #    Series Plugin for Enigma-2
@@ -40,6 +40,8 @@ from ServiceReference import ServiceReference
 from SeriesPlugin import getInstance, refactorTitle, refactorDescription   #, refactorRecord
 from Logger import splog
 
+CompiledRegexpGlobEscape = re.compile('([\[\]\?*])')  # "[\\1]"
+
 
 # By Bin4ry
 def newLegacyEncode(string):
@@ -61,6 +63,7 @@ def newLegacyEncode(string):
 			except:
 				string2 += " "
 	return string2
+
 
 def rename(service, name, short, data):
 	# Episode data available
@@ -146,6 +149,8 @@ def renameFile(service, name, data, tidy=False):
 		else:
 			name = refactorTitle(file_name, data)
 		splog("SPR: name     ", name)
+		#if config.recording.ascii_filenames.value:
+		#	filename = ASCIItranslit.legacyEncode(filename)
 		if config.plugins.seriesplugin.rename_legacy.value:
 			name = newLegacyEncode(name)
 			splog("SPR: name     ", name)
@@ -156,11 +161,7 @@ def renameFile(service, name, data, tidy=False):
 		splog("SPR: servicepathDst", dst)
 
 		#Py3 for f in glob( escape(src) + "*" ):
-		glob_src = src
-		glob_src = glob_src.replace("*","\*")
-		glob_src = glob_src.replace("?","\?")
-		glob_src = glob_src.replace("[","\[")
-		glob_src = glob_src.replace("]","\]")
+		glob_src = CompiledRegexpGlobEscape.sub("[\\1]", src)
 		splog("SPR: glob_src      ", glob_src)
 		for f in glob( glob_src + "*" ):
 			splog("SPR: servicepathRnm", f)
@@ -250,6 +251,9 @@ class SeriesPluginRenameService(Thread):
 			#splog("SPR: name", name)
 			
 			short = ""
+			begin = None
+			end = None
+			duration = 0
 			
 			event = info.getEvent(service)
 			if event:
