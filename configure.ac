@@ -510,6 +510,7 @@ porncenter/src/Makefile
 porncenter/src/Additions/Makefile
 
 pushservice/Makefile
+pushservice/etc/Makefile
 pushservice/meta/Makefile
 pushservice/po/Makefile
 pushservice/src/Makefile
@@ -558,6 +559,7 @@ serienfilm/src/Makefile
 serienfilm/src/icons/Makefile
 
 seriesplugin/Makefile
+seriesplugin/etc/Makefile
 seriesplugin/meta/Makefile
 seriesplugin/po/Makefile
 seriesplugin/src/Makefile
