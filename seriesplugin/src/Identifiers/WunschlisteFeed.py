@@ -1,3 +1,4 @@
+﻿# -*- coding: utf-8 -*-
 # by betonme @2012
 
 # Imports
@@ -53,6 +54,16 @@ CompiledRegexpAtomTitle = re.compile('.+: (.+)')
 #CompiledRegexpPrintTitle = re.compile( '(\(.*\) )?(.+)')
 
 CompiledRegexpEpisode = re.compile( '((\d+)[\.x])?(\d+)')
+
+
+def iso8859_Decode(txt):
+	txt = unicode(txt, 'ISO-8859-1')
+	txt = txt.encode('utf-8')
+	txt = txt.replace('...','').replace('..','').replace(':','')
+
+	# &apos;, &quot;, &amp;, &lt;, and &gt;
+	txt = txt.replace('&amp;','&').replace('&apos;',"'").replace('&gt;','>').replace('&lt;','<').replace('&quot;','"')
+	return txt
 
 
 class WLAtomParser(HTMLParser):
@@ -128,7 +139,10 @@ class WunschlisteFeed(IdentifierBase):
 				idserie = ids.pop()
 				
 				if idserie and len(idserie) == 2:
-					id, self.series = idserie
+					id, idname = idserie
+					
+					# Handle encodings
+					self.series = iso8859_Decode(idname)
 					
 					result = self.getNextPage( id )
 					if result:
@@ -141,7 +155,8 @@ class WunschlisteFeed(IdentifierBase):
 			return ( self.returnvalue or _("No matching series found") )
 
 	def getSeries(self, name):
-		url = SERIESLISTURL + urlencode({ 'q' : re.sub("[^a-zA-Z0-9-*]", " ", name) })
+		#url = SERIESLISTURL + urlencode({ 'q' : re.sub("[^a-zA-Z0-9-*]", " ", name) })
+		url = SERIESLISTURL + urlencode({ 'q' : name })
 		data = self.getPage( url )
 		
 		if data and isinstance(data, basestring):
@@ -246,7 +261,12 @@ class WunschlisteFeed(IdentifierBase):
 											if result and len(result.groups()) >= 1:
 												# Extract episode title
 												xtitle = result.group(1)
-												yepisode = (xseason, xepisode, xtitle.decode('ISO-8859-1').encode('utf8'), self.series.decode('ISO-8859-1').encode('utf8'))
+												
+												# Handle encodings
+												xtitle = iso8859_Decode(xtitle)
+												
+												yepisode = (xseason, xepisode, xtitle, self.series)
+												
 												ydelta = delta
 									
 									else: #if delta >= ydelta:
