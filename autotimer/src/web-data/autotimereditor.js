@@ -814,7 +814,7 @@ var AutoTimerEditController = Class.create(Controller, {
 		}
 		data['enabled'] = ($('enabled').checked) ? '1' : '0';
 		
-		options = ['match','name','encoding','searchType','searchCase','justplay','avoidDuplicateDescription'];
+		options = ['match','name','searchType','searchCase','justplay','avoidDuplicateDescription'];
 		for (var id = 0; id < options.length; id++) {
 			if ($(options[id]).value == ''){
 				core.notify('Error: ' + options[id] + ' is empty', false);
@@ -1711,12 +1711,6 @@ function AutoTimer(xml, defaults){
 	this.match = xml.getAttribute('match');
 	this.name = (this.name == undefined) ? name : this.match;
 	
-	var encoding = getAttribute(xml, 'encoding', defaults);
-	if (encoding==undefined) encoding = 'ISO8859-15';
-	var options = ['ISO8859-15', 'UTF-8'];
-	this.encoding = toOptionList(options, encoding);
-	this.encoding.shift();
-
 	// Items which only exists if they differ from the default value
 	var searchType = getAttribute(xml, 'searchType', defaults);
 	if (searchType==undefined) searchType = 'partial';
@@ -2040,7 +2034,6 @@ function AutoTimer(xml, defaults){
 			'enabled' :               this.enabled,
 			'name' :                  this.name,
 			'match' :                 this.match,
-			'encoding' :              this.encoding,
 			
 			'searchType' :            this.searchType,
 			'searchCase' :            this.searchCase,
