@@ -48,9 +48,10 @@ from HelperFunctions import getFuzzyDay, LIST_TYPE_EPG, LIST_TYPE_UPCOMING, Time
 from MerlinEPGCenter import STYLE_SINGLE_LINE, STYLE_SHORT_DESCRIPTION
 
 
-MODE_HD = 0
-MODE_XD = 1
-MODE_SD = 2
+MODE_FHD = 0
+MODE_HD = 1
+MODE_XD = 2
+MODE_SD = 3
 
 MULTI_EPG_NOW = 0
 MULTI_EPG_NEXT = 1
@@ -111,6 +112,8 @@ class EpgCenterList(GUIComponent):
 			self.overallFontHeight = 36
 		elif self.videoMode == MODE_HD:
 			self.overallFontHeight = 44
+		elif self.videoMode == MODE_FHD:
+			self.overallFontHeight = 66
 			
 		#initialize
 		self.list = []
@@ -176,6 +179,11 @@ class EpgCenterList(GUIComponent):
 			self.l.setFont(1, gFont("Regular", 20 + diff))
 			self.l.setFont(2, gFont("Regular", 18 + diff))
 			self.l.setFont(3, gFont("Regular", 16 + diff))
+		elif self.videoMode == MODE_FHD:
+			self.l.setFont(0, gFont("Regular", 33 + diff))
+			self.l.setFont(1, gFont("Regular", 30 + diff))
+			self.l.setFont(2, gFont("Regular", 27 + diff))
+			self.l.setFont(3, gFont("Regular", 24 + diff))
 			
 	def setMaxWidth(self, newSize):
 		self.maxWidth = newSize.width()
@@ -193,6 +201,8 @@ class EpgCenterList(GUIComponent):
 			else:
 				self.itemHeight = self.baseHeight + int(config.plugins.merlinEpgCenter.listItemHeight.value)
 		elif self.videoMode == MODE_HD and config.plugins.merlinEpgCenter.listProgressStyle.value == STYLE_PERCENT_TEXT: # HD skin adjustment for text size
+			self.itemHeight = self.baseHeight + int(config.plugins.merlinEpgCenter.listItemHeight.value) + 4
+		elif self.videoMode == MODE_FHD and config.plugins.merlinEpgCenter.listProgressStyle.value == STYLE_PERCENT_TEXT: # FullHD skin adjustment for text size
 			self.itemHeight = self.baseHeight + int(config.plugins.merlinEpgCenter.listItemHeight.value) + 4
 		else:
 			self.itemHeight = self.baseHeight + int(config.plugins.merlinEpgCenter.listItemHeight.value)
@@ -351,6 +361,8 @@ class EpgCenterList(GUIComponent):
 				width = self.maxWidth * (14 + extraWidth) / 100
 			elif self.videoMode == MODE_HD:
 				width = self.maxWidth * (16 + extraWidth) / 100
+			elif self.videoMode == MODE_FHD:
+				width = self.maxWidth * (24 + extraWidth) / 100
 				
 			if not (((self.mode == SINGLE_EPG and not self.similarShown) or self.mode == UPCOMING) and self.instance.getCurrentIndex() != 0):
 				if sRef in EpgCenterList.allServicesNameDict:
@@ -880,6 +892,8 @@ class EpgCenterTimerlist(TimerList):
 			self.overallFontHeight = 36
 		elif self.videoMode == MODE_HD:
 			self.overallFontHeight = 44
+		elif self.videoMode == MODE_FHD:
+			self.overallFontHeight = 66
 			
 		self.l.setList(list)
 		config.plugins.merlinEpgCenter.listItemHeight.addNotifier(self.changeHeight, initial_call = True)
@@ -908,6 +922,11 @@ class EpgCenterTimerlist(TimerList):
 			self.l.setFont(1, gFont("Regular", 20 + diff))
 			self.l.setFont(2, gFont("Regular", 18 + diff))
 			self.l.setFont(3, gFont("Regular", 16 + diff))
+		elif self.videoMode == MODE_FHD:
+			self.l.setFont(0, gFont("Regular", 33 + diff))
+			self.l.setFont(1, gFont("Regular", 30 + diff))
+			self.l.setFont(2, gFont("Regular", 27 + diff))
+			self.l.setFont(3, gFont("Regular", 24 + diff))
 			
 	def setMaxWidth(self, newSize):
 		self.maxWidth = newSize.width()
@@ -1003,6 +1022,8 @@ class EpgCenterTimerlist(TimerList):
 				width = self.maxWidth * (14 + extraWidth) / 100
 			elif self.videoMode == MODE_HD:
 				width = self.maxWidth * (16 + extraWidth) / 100
+			elif self.videoMode == MODE_FHD:
+				width = self.maxWidth * (24 + extraWidth) / 100
 				
 			if isinstance(timer, RecordTimerEntry):
 				res.append((eListboxPythonMultiContent.TYPE_TEXT, offsetLeft, 0, width, self.itemHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.service_ref.getServiceName()))
