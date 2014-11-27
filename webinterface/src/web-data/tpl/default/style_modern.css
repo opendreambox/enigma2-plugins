@@ -169,10 +169,12 @@
 	padding: 10px;
 }
 
-#mainMenu a:hover, #mainMenu li.hover {
+#mainMenu li:hover {
 	background: #ededed;
 	position: relative;
 	z-index: 3;
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
+	transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #mainMenu li {
@@ -375,6 +377,8 @@
 .bListSLink:hover, .sListSName a:hover {
 	background-color: #ededed;
 	display: block;
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
+	transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .bannerHeader {
@@ -554,6 +558,8 @@
 	background-color: #ededed;
 	color: #444;
 	display: block;
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
+	transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navTable li {
@@ -881,6 +887,8 @@ a.tListEdit {
 
 a.tListEdit:hover, #nav a:hover {
 	background: #ededed;
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
+	transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 a.underline, .tools a, .tools a:hover, .tools a:visited, #about a, #about a:hover, #about a:visited {
@@ -900,7 +908,8 @@ button {
 
 button:hover, a.tEditTag:hover {
 	border: 1px solid #66AFE9;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
+	transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 div.datePicker {

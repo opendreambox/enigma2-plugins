@@ -26,7 +26,7 @@
 #main{overflow:hidden;margin:0;padding:0;}
 #mainMenu{background-color:#FFF;text-align:center;width:940px;margin:0;padding:0;}
 #mainMenu a{display:block;height:100%;padding:10px;}
-#mainMenu a:hover,#mainMenu li.hover{background:#ededed;position:relative;z-index:3;}
+#mainMenu li:hover{background:#ededed;position:relative;z-index:3;box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);}
 #mainMenu li{background:#FFF;float:left;list-style:none;margin-bottom:0;margin-top:6px;position:relative;z-index:2;padding:0;}
 #mainMenu li.navselected{background:#efefef;position:relative;z-index:3;}
 #mainMenu span{display:block;padding-top:2px;}
@@ -62,7 +62,7 @@
 .aboutElementRight{width:50%;}
 .aboutHeader{color:#333;font-weight:bold;width:100%;}
 .bListSLink{padding:10px 3px;}
-.bListSLink:hover,.sListSName a:hover{background-color:#ededed;display:block;}
+.bListSLink:hover,.sListSName a:hover{background-color:#ededed;display:block;box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);}
 .bannerHeader{background-image:url(/web-data/img/dreamboxweb_modern.png);height:16px;width:780px;margin:7px;padding:0;}
 .bold{font-weight:bold;}
 .bottom,#current img{vertical-align:bottom;}
@@ -92,7 +92,7 @@
 .mListItem{border-bottom:1px solid #DDD;color:#444;width:780px;}
 .mStart{color:#444;width:160px;}
 .mTitle{color:#444;width:650px;}
-.navTable a:hover{background-color:#ededed;color:#444;display:block;}
+.navTable a:hover{background-color:#ededed;color:#444;display:block;box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);}
 .navTable li{display:block;list-style:none;position:relative;margin:0;padding:0;}
 .navTable,#bouquetTable{width:100%;margin:0;padding:0;}
 .oneliner{height:16px;margin-top:-8px;position:absolute;top:50%;}
@@ -144,11 +144,11 @@ a.dp-disabled,.dp-disabled table{filter:alpha(opacity=40);opacity:.3!important;}
 a.selected{background:#ededed;}
 a.tEditTag{border-radius:2px;border:1px solid #ededed;display:inline-block;margin:3px 0;padding:5px;transition:background .15s ease-in-out 0;}
 a.tListEdit{display:block;margin:0;padding:1px;}
-a.tListEdit:hover,#nav a:hover{background:#ededed;}
+a.tListEdit:hover,#nav a:hover{background:#ededed;box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);}
 a.underline,.tools a,.tools a:hover,.tools a:visited,#about a,#about a:hover,#about a:visited{text-decoration:underline;}
 body.fd-drag-active{-webkit-user-select:none;}
 button{background:#FFF;border-radius:2px;border:1px solid #DDD;padding:5px;}
-button:hover,a.tEditTag:hover{border: 1px solid #66AFE9;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);}
+button:hover,a.tEditTag:hover{border: 1px solid #66AFE9;box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);}
 div.datePicker{-khtml-user-select:none;-moz-user-select:none;color:#444;font-size:11px;position:absolute;text-align:center;z-index:9999;background:#FFF;padding:0;}
 div.datePicker table{-moz-box-shadow:0 0 5px #ededed;border-collapse:separate;border-spacing:1px;border:1px solid #ededed;empty-cells:show;height:auto;text-align:center;width:auto;margin:0;padding:0;}
 div.datePicker table tbody td.date-picker-highlight,div.datePicker table thead th.date-picker-highlight{color:#a86666!important;}
