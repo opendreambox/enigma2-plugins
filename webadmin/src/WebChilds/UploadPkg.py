@@ -72,7 +72,7 @@ class UploadPkgResource(resource.Resource):
 			file = "/tmp/" + filename
 			os_rename(fn,(file))
 			if file is not None:
-				out = os_popen("opkg install %s" %file)
+				out = os_popen("dpkg -i %s" %file)
 				debug = ""
 				for line in out:
 					debug += line
