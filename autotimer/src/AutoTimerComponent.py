@@ -347,13 +347,13 @@ class AutoTimerComponent(object):
 				return True
 
 		for exclude in self.exclude[0]:
-			if exclude.search(title):
+			if exclude.search(title) is not None:
 				return True
 		for exclude in self.exclude[1]:
-			if exclude.search(short):
+			if exclude.search(short) is not None:
 				return True
 		for exclude in self.exclude[2]:
-			if exclude.search(extended):
+			if exclude.search(extended) is not None:
 				return True
 		return False
 
@@ -374,13 +374,13 @@ class AutoTimerComponent(object):
 				return True
 
 		for include in self.include[0]:
-			if not include.search(title):
+			if include.search(title) is None:
 				return True
 		for include in self.include[1]:
-			if not include.search(short):
+			if include.search(short) is None:
 				return True
 		for include in self.include[2]:
-			if not include.search(extended):
+			if include.search(extended) is None:
 				return True
 
 		return False
