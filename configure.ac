@@ -348,6 +348,7 @@ merlinepgcenter/src/Makefile
 merlinepgcenter/po/Makefile
 merlinepgcenter/skins/Makefile
 merlinepgcenter/images/Makefile
+merlinepgcenter/images/FHD/Makefile
 merlinepgcenter/images/HD/Makefile
 merlinepgcenter/images/HD_BORDER/Makefile
 merlinepgcenter/images/SD/Makefile
