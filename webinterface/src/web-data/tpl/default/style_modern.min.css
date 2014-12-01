@@ -6,7 +6,7 @@
 #bannerRight{float:left;height:60px;text-align:right;width:50px;}
 #bannerRight img{padding-top:5px;}
 #bannerText{padding-left:2px;}
-#bouquetTable li{border-bottom:1px solid #EDEDED;clear:both;display:inline-block;list-style:none;position:relative;margin:2px;}
+#bouquetTable li{display:table;list-style:none;position:relative;}
 #container{text-align:left;width:1007px;margin:0 auto;}
 #content{background-color:#FFF;border:1px solid #DDD;float:left;margin-left:8px;min-height:360px;position:relative;width:834px;}
 #contentBouquets{border-right:1px solid #DDD;vertical-align:top;width:220px;}
@@ -62,13 +62,13 @@
 .aboutElementRight{width:50%;}
 .aboutHeader{color:#333;font-weight:bold;width:100%;}
 .bListSLink{padding:10px 3px;}
-.bListSLink:hover,.sListSName a:hover{background-color:#ededed;display:block;box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);}
+.bListSLink:hover, a.sListSLink:hover {background-color:#ededed;display:block;box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);}
 .bannerHeader{background-image:url(/web-data/img/dreamboxweb_modern.png);height:16px;width:780px;margin:7px;padding:0;}
 .bold{font-weight:bold;}
 .bottom,#current img{vertical-align:bottom;}
 .bouquetIcons{float:left;padding-top:10px;width:40px;}
 .bouquetIcons a{display:inline-block;vertical-align:middle;}
-.bouquetName{float:right;width:158px;}
+.bouquetName{float:right;width:215px;}
 .boxContent{color:#444;padding:3px;}
 .center,td.screenShot,.textCenter{text-align:center;}
 .dp-disabled,.dp-disabled td,.dp-disabled th,.dp-disabled th span{cursor:default!important;}
@@ -104,8 +104,12 @@
 .sListEPGItem{font-size:13px;margin:0;padding:0;}
 .sListExtEpg{display:block;padding:1px;}
 .sListItem{border-bottom:1px solid #DDD;color:#444;width:570px!important;}
+.sListItem td{position: relative;}
 .sListSName a{color:#444;display:block;font-size:15px;padding:5px 3px;}
-.sListSProgress{border:1px solid #DDD;display:inline-block;height:15px;width:50px;margin:4px 1px 1px;padding:1px;}
+.sListProgress {width: 60px; float: left }
+a.sListSLink {color:#444;display:block;font-size:15px;padding:5px 3px;display: block;width:100%;}
+.sListSActions{position: absolute; right: 0px; bottom: 5px;}
+.sListSProgress{border:1px solid #DDD;display:inline-block;height:15px;width:50px;padding:1px;}
 .sListSProgressBar{background-color:#66AFE9;height:100%;width:0;margin:0;}
 .small{font-size:11px;font-weight:400;}
 .tListAfter,.tListType{text-align:left;width:85px;}
