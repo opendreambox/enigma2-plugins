@@ -45,12 +45,9 @@
 }
 
 #bouquetTable li {
-	border-bottom: 1px solid #EDEDED;
-	clear: both;
-	display: inline-block;
+	display: table;
 	list-style: none;
 	position: relative;
-	margin: 2px;
 }
 
 #container {
@@ -169,10 +166,12 @@
 	padding: 10px;
 }
 
-#mainMenu a:hover, #mainMenu li.hover {
+#mainMenu li:hover {
 	background: #ededed;
 	position: relative;
 	z-index: 3;
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
+	transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #mainMenu li {
@@ -372,9 +371,11 @@
 	padding: 10px 3px;
 }
 
-.bListSLink:hover, .sListSName a:hover {
+.bListSLink:hover, a.sListSLink:hover {
 	background-color: #ededed;
 	display: block;
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
+	transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .bannerHeader {
@@ -406,7 +407,7 @@
 
 .bouquetName {
 	float: right;
-	width: 158px;
+	width: 215px;
 }
 
 .boxContent {
@@ -554,6 +555,8 @@
 	background-color: #ededed;
 	color: #444;
 	display: block;
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
+	transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navTable li {
@@ -634,6 +637,10 @@
 	width: 570px !important;
 }
 
+.sListItem td {
+	position: relative;
+}
+
 .sListSName a {
 	color: #444;
 	display: block;
@@ -641,12 +648,31 @@
 	padding: 5px 3px;
 }
 
+.sListProgress {
+	width: 60px;
+	float: left
+}
+
+a.sListSLink {
+	color: #444;
+	display: block;
+	font-size: 15px;
+	padding: 5px 3px;
+	display: block;
+	width: 100%;
+}
+
+.sListSActions {
+	position: absolute;
+	right: 0px;
+	bottom: 5px;
+}
+
 .sListSProgress {
 	border: 1px solid #DDD;
 	display: inline-block;
 	height: 15px;
 	width: 50px;
-	margin: 4px 1px 1px;
 	padding: 1px;
 }
 
@@ -881,6 +907,8 @@ a.tListEdit {
 
 a.tListEdit:hover, #nav a:hover {
 	background: #ededed;
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
+	transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 a.underline, .tools a, .tools a:hover, .tools a:visited, #about a, #about a:hover, #about a:visited {
@@ -900,7 +928,8 @@ button {
 
 button:hover, a.tEditTag:hover {
 	border: 1px solid #66AFE9;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
+	transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 div.datePicker {

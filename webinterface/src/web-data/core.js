@@ -699,7 +699,7 @@ var Screenshots = Class.create(Controller, {
 
 	load: function(type){
 		var filename = '/tmp/' + new Date().getTime();
-		var params = {'format' : 'jpg', 'r': '720', 'filename' : filename};
+		var params = {'format' : 'jpg', 'filename' : filename};
 
 		switch(type){
 			case this.TYPE_OSD:
