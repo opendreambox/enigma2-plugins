@@ -121,7 +121,7 @@ class EPGRefresh:
 				# strip all after last : (custom name)
 				pos = value.rfind(':')
 				# don't split alternative service
-				if value.find('1:134:1') == -1 and pos != -1:
+				if pos != -1 and not value.startswith('1:134:'):
 					value = value[:pos+1]
 
 				duration = service.get('duration', None)
