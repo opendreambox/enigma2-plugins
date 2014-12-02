@@ -15,7 +15,7 @@ from enigma import eServiceReference
 from . import _, config, iteritems, plugin
 from plugin import autotimer
 
-API_VERSION = "1.3"
+API_VERSION = "1.4"
 
 class AutoTimerBaseResource(resource.Resource):
 	def returnResult(self, req, state, statetext):
@@ -434,6 +434,14 @@ class AutoTimerChangeSettingsResource(AutoTimerBaseResource):
 				config.plugins.autotimer.add_autotimer_to_tags.value = True if value == "true" else False
 			elif key == "add_name_to_tags":
 				config.plugins.autotimer.add_name_to_tags.value = True if value == "true" else False
+			elif key == "timeout":
+				config.plugins.autotimer.timeout.value = int(value)
+			elif key == "delay":
+				config.plugins.autotimer.delay.value = int(value)
+			elif key == "skip_during_records":
+				config.plugins.autotimer.skip_during_records.value = True if value == "true" else False
+			elif key == "skip_during_epgrefresh":
+				config.plugins.autotimer.skip_during_epgrefresh.value = True if value == "true" else False
 
 		if config.plugins.autotimer.autopoll.value:
 			if plugin.autopoller is None:
@@ -526,6 +534,22 @@ class AutoTimerSettingsResource(resource.Resource):
 		<e2settingvalue>%s</e2settingvalue>
 	</e2setting>
 	<e2setting>
+		<e2settingname>config.plugins.autotimer.timeout</e2settingname>
+		<e2settingvalue>%s</e2settingvalue>
+	</e2setting>
+	<e2setting>
+		<e2settingname>config.plugins.autotimer.delay</e2settingname>
+		<e2settingvalue>%s</e2settingvalue>
+	</e2setting>
+	<e2setting>
+		<e2settingname>config.plugins.autotimer.skip_during_records</e2settingname>
+		<e2settingvalue>%s</e2settingvalue>
+	</e2setting>
+	<e2setting>
+		<e2settingname>config.plugins.autotimer.skip_during_epgrefresh</e2settingname>
+		<e2settingvalue>%s</e2settingvalue>
+	</e2setting>
+	<e2setting>
 		<e2settingname>hasVps</e2settingname>
 		<e2settingvalue>%s</e2settingvalue>
 	</e2setting>
@@ -556,6 +580,10 @@ class AutoTimerSettingsResource(resource.Resource):
 				config.plugins.autotimer.maxdaysinfuture.value,
 				config.plugins.autotimer.add_autotimer_to_tags.value,
 				config.plugins.autotimer.add_name_to_tags.value,
+				config.plugins.autotimer.timeout.value,
+				config.plugins.autotimer.delay.value,
+				config.plugins.autotimer.skip_during_records.value,
+				config.plugins.autotimer.skip_during_epgrefresh.value,
 				hasVps,
 				hasSeriesPlugin,
 				CURRENT_CONFIG_VERSION,
