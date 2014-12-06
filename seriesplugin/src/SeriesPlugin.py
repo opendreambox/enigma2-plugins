@@ -199,7 +199,7 @@ class SeriesPluginWorker(Thread):
 	isRunning = property(__getRunning)
 
 	def isListEmpty(self):
-		return self.__list and True
+		return not self.__list
 
 	def getListLength(self):
 		return len(self.__list)

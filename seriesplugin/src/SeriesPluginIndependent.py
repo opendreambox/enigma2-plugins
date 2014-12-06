@@ -17,6 +17,8 @@
 #
 #######################################################################
 
+#TODO Add optional popup
+
 # for localized messages
 from . import _
 
