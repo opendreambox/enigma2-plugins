@@ -28,7 +28,7 @@ from Logger import splog
 #######################################################
 # Constants
 NAME = "SeriesPlugin"
-VERSION = "1.5.0"
+VERSION = "1.5.8"
 DESCRIPTION = _("SeriesPlugin")
 SHOWINFO = _("Show series info (SP)")
 RENAMESERIES = _("Rename serie(s) (SP)")
@@ -98,6 +98,7 @@ config.plugins.seriesplugin.rename_legacy             = ConfigYesNo(default = Fa
 config.plugins.seriesplugin.rename_existing_files     = ConfigYesNo(default = False)
 config.plugins.seriesplugin.rename_popups             = ConfigYesNo(default = True)
 config.plugins.seriesplugin.rename_popups_success     = ConfigYesNo(default = False)
+config.plugins.seriesplugin.rename_popups_timeout     = ConfigSelectionNumber(-1, 20, 1, default = 3)
 
 config.plugins.seriesplugin.max_time_drift            = ConfigSelectionNumber(0, 600, 1, default = 15)
 config.plugins.seriesplugin.search_depths             = ConfigSelectionNumber(0, 10, 1, default = 0)
@@ -112,6 +113,7 @@ config.plugins.seriesplugin.check_timer_list          = ConfigYesNo(default = Fa
 
 config.plugins.seriesplugin.timer_popups              = ConfigYesNo(default = True)
 config.plugins.seriesplugin.timer_popups_success      = ConfigYesNo(default = False)
+config.plugins.seriesplugin.timer_popups_timeout     = ConfigSelectionNumber(-1, 20, 1, default = 3)
 
 config.plugins.seriesplugin.caching                   = ConfigYesNo(default = True)
 
@@ -315,16 +317,16 @@ def Plugins(**kwargs):
 													fnc = movielist_rename,
 													needsRestart = False) )
 		
-		try:
-			if config.plugins.seriesplugin.menu_channel.value:
+		if config.plugins.seriesplugin.menu_channel.value:
+			try:
 				descriptors.append( PluginDescriptor(
 													name = SHOWINFO,
 													description = SHOWINFO,
 													where = PluginDescriptor.WHERE_CHANNEL_CONTEXT_MENU,
 													fnc = channel,
 													needsRestart = False) )
-		except:
-			addSeriesPlugin(WHERE_CHANNELMENU, SHOWINFO)
+			except:
+				addSeriesPlugin(WHERE_CHANNELMENU, SHOWINFO)
 		
 		if config.plugins.seriesplugin.menu_epg.value:
 			addSeriesPlugin(WHERE_EPGMENU, SHOWINFO)

@@ -141,7 +141,7 @@ class SeriesPluginTimer(object):
 				str(timer.name) + " " + _("No data available")
 			)
 		
-		if config.plugins.seriesplugin.timer_popups.value and config.plugins.seriesplugin.timer_popups_success.value:
+		if config.plugins.seriesplugin.timer_popups.value or config.plugins.seriesplugin.timer_popups_success.value:
 			
 			SeriesPluginTimer.counter = SeriesPluginTimer.counter +1
 			
@@ -150,21 +150,21 @@ class SeriesPluginTimer(object):
 				# Maybe there is a better way to avoid multiple Popups
 				from SeriesPlugin import seriespluginworker
 				
-				splog("SPT: timerCallback getListLength", not seriespluginworker or seriespluginworker.getListLength())
+				splog("SPT: timerCallback getListLength", not seriespluginworker or seriespluginworker.getListLength(), not seriespluginworker or seriespluginworker.isListEmpty() )
 				
 				if not seriespluginworker or seriespluginworker.isListEmpty():
 					if SeriesPluginTimer.data:
 						AddPopup(
 							"SeriesPlugin:\n" + _("Timer rename has been finished with %d errors:\n") % (len(SeriesPluginTimer.data)) +"\n" +"\n".join(SeriesPluginTimer.data),
 							MessageBox.TYPE_ERROR,
-							-1,
+							int(config.plugins.seriesplugin.timer_popups_timeout.value),
 							'SP_PopUp_ID_TimerFinished'
 						)
 					else:
 						AddPopup(
 							"SeriesPlugin:\n" + _("%d timer renamed successfully") % (SeriesPluginTimer.counter),
 							MessageBox.TYPE_INFO,
-							-1,
+							int(config.plugins.seriesplugin.timer_popups_timeout.value),
 							'SP_PopUp_ID_TimerFinished'
 						)
 					SeriesPluginTimer.data = []

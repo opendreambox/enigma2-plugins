@@ -22,10 +22,15 @@ from Plugins.Extensions.SeriesPlugin.Logger import splog
 
 from iso8601 import parse_date
 
+import codecs
+utf8_encoder = codecs.getencoder("utf-8")
+
+
 # Constants
 SERIESLISTURL     = "http://www.wunschliste.de/ajax/search_dropdown.pl?"
 EPISODEIDURLATOM  = "http://www.wunschliste.de/xml/atom.pl?"
 #EPISODEIDURLRSS  = "http://www.wunschliste.de/xml/rss.pl?"
+
 
 # Series: EpisodeTitle (Season.Episode) - Weekday Date, Time / Channel (Country)
 # Two and a Half Men: Der Mittwochs-Mann (1.5) - Mi 02.05., 19.50:00 Uhr / TNT Serie (Pay-TV)
@@ -56,14 +61,15 @@ CompiledRegexpAtomTitle = re.compile('.+: (.+)')
 CompiledRegexpEpisode = re.compile( '((\d+)[\.x])?(\d+)')
 
 
-def iso8859_Decode(txt):
-	txt = unicode(txt, 'ISO-8859-1')
-	txt = txt.encode('utf-8')
-	txt = txt.replace('...','').replace('..','').replace(':','')
-
-	# &apos;, &quot;, &amp;, &lt;, and &gt;
-	txt = txt.replace('&amp;','&').replace('&apos;',"'").replace('&gt;','>').replace('&lt;','<').replace('&quot;','"')
-	return txt
+def str_to_utf8(s):
+	# Convert a byte string with unicode escaped characters
+	splog("WL: str_to_utf8: s: ", repr(s))
+	unicode_str = s.decode('unicode-escape')
+	splog("WL: str_to_utf8: s: ", repr(unicode_str))
+	# Python 2.x can't convert the special chars nativly
+	utf8_str = utf8_encoder(unicode_str)[0]
+	splog("WL: str_to_utf8: s: ", repr(utf8_str))
+	return utf8_str
 
 
 class WLAtomParser(HTMLParser):
@@ -142,7 +148,7 @@ class WunschlisteFeed(IdentifierBase):
 					id, idname = idserie
 					
 					# Handle encodings
-					self.series = iso8859_Decode(idname)
+					self.series = str_to_utf8(idname)
 					
 					result = self.getNextPage( id )
 					if result:
@@ -263,7 +269,7 @@ class WunschlisteFeed(IdentifierBase):
 												xtitle = result.group(1)
 												
 												# Handle encodings
-												xtitle = iso8859_Decode(xtitle)
+												xtitle = str_to_utf8(xtitle)
 												
 												yepisode = (xseason, xepisode, xtitle, self.series)
 												
