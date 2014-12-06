@@ -45,7 +45,7 @@ from Components.Sources.StaticText import StaticText
 from keymapparser import readKeymap, removeKeymap
 
 # Configuration
-from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigSelection, ConfigText, ConfigNumber
+from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigSelection, ConfigText, ConfigNumber, ConfigOnOff
 from Components.Sources.StaticText import StaticText
 
 # Plugin definition
@@ -75,6 +75,7 @@ config.plugins.ShowClock.name = ConfigText(default = _('Show Clock setup'), fixe
 config.plugins.ShowClock.description = ConfigText(default = _('Push "Exit" long to show/hide clock'), fixed_size = False, visible_width = 80)
 config.plugins.ShowClock.menu = ConfigSelection(default = 'plugin', choices = [('plugin', _('Plugin menu')), ('extensions', _('Extensions menu'))])
 config.plugins.ShowClock.showTimeout = ConfigNumber(default = 10)
+config.plugins.ShowClock.showOnBoot = ConfigOnOff(default=False)
 
 width = getDesktop(0).size().width()
 height = getDesktop(0).size().height()
@@ -116,6 +117,8 @@ class ShowClockSetup(Screen, ConfigListScreen): # config
 		self.list = [	
 			getConfigListEntry(_('Clock show timeout'), config.plugins.ShowClock.showTimeout,
 				_('Specify how long (seconds) the clock shall be shown before it disappears. Set to "0" to show clock until hidden manually.')),
+			getConfigListEntry(_('Show clock und system startup?'), config.plugins.ShowClock.showOnBoot,
+				_('Specify wheter the clock shall be shown at system start (will be hidden after the timeout defined above)')),
 			getConfigListEntry(_('Show in'), config.plugins.ShowClock.menu,
 				_('Specify whether plugin shall show up in plugin menu or extensions menu (needs GUI restart)')),
 			getConfigListEntry(_('Name'), config.plugins.ShowClock.name,
@@ -296,6 +299,8 @@ class ShowClockMain():
 		readKeymap("/usr/lib/enigma2/python/Plugins/Extensions/ShowClock/keymap.xml")
 		self.dialog = session.instantiateDialog(ShowClock)
 		globalActionMap.actions['showClock'] = self.ShowHide
+		if config.plugins.ShowClock.showOnBoot.value:
+			self.ShowHide()
 		
 	def ShowHide(self):
 		if self.clockShown:
