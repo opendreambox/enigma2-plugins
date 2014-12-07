@@ -69,6 +69,9 @@ def Partnerbox_EPGSelectionInit():
 	EPGSelection.PartnerboxInit = PartnerboxInit
 
 def Partnerbox_EPGSelection__init__(self, session, service, zapFunc=None, eventid=None, bouquetChangeCB=None, serviceChangeCB=None):
+	#check if alternatives are defined
+	if service.flags & (eServiceReference.isGroup):
+		service = eServiceCenter.getInstance().list(eServiceReference("%s" %(service.toString()))).getContent("S")[0]
 	baseEPGSelection__init__(self, session, service, zapFunc, eventid, bouquetChangeCB, serviceChangeCB)
 	self.PartnerboxInit(True)
 
