@@ -104,7 +104,7 @@ class ConfigTextWithGoogleSuggestions(ConfigText):
 	def onSelect(self, session):
 		ConfigText.onSelect(self, session)
 		if session is not None:
-			self.suggestionsWindow = session.instantiateDialog(MyTubeSuggestionsListScreen, self)
+			self.suggestionsWindow = session.instantiateDialog(MyTubeSuggestionsListScreen, self, zPosition=1000)
 			self.suggestionsWindow.deactivate()
 			self.suggestionsWindow.hide()
 		self.getSuggestions()
