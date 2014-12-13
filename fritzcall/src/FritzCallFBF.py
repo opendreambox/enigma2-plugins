@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1084 $
-$Date: 2014-12-13 15:46:30 +0100 (Sat, 13 Dec 2014) $
-$Id: FritzCallFBF.py 1084 2014-12-13 14:46:30Z michael $
+$Revision: 1085 $
+$Date: 2014-12-13 17:31:10 +0100 (Sat, 13 Dec 2014) $
+$Id: FritzCallFBF.py 1085 2014-12-13 16:31:10Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -2010,7 +2010,7 @@ class FritzCallFBF_05_50:
 				thiscodes = found.group(4).split("<br>")
 				thisvanitys = found.group(5).split("<br>")
 				for i in range(len(thisnumbers)):
-					if (len(thisnumbers) == 0):
+					if (len(thisnumbers[i]) == 0):
 						continue;
 					thisnumber = cleanNumber(thisnumbers[i])
 					if self.phonebook.phonebook.has_key(thisnumber):
