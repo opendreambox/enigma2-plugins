@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1038 $
-$Date: 2014-11-10 19:03:59 +0100 (Mo, 10 Nov 2014) $
-$Id: FritzCallFBF.py 1038 2014-11-10 18:03:59Z michael $
+$Revision: 1084 $
+$Date: 2014-12-13 15:46:30 +0100 (Sat, 13 Dec 2014) $
+$Id: FritzCallFBF.py 1084 2014-12-13 14:46:30Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -2010,6 +2010,8 @@ class FritzCallFBF_05_50:
 				thiscodes = found.group(4).split("<br>")
 				thisvanitys = found.group(5).split("<br>")
 				for i in range(len(thisnumbers)):
+					if (len(thisnumbers) == 0):
+						continue;
 					thisnumber = cleanNumber(thisnumbers[i])
 					if self.phonebook.phonebook.has_key(thisnumber):
 						# debug("[FritzCallFBF_05_50] Ignoring '%s' ('%s') with %s' ( have: '%s')" % (name, thistypes[i], __(thisnumber), self.phonebook.phonebook[thisnumber]))
