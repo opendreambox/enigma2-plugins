@@ -120,9 +120,9 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 
 	def buildConfig(self):
 		#    _config list entry
-		#    _                                                                                   , config element
+		#    _                                                                                     , config element
 		
-		self.list.append( getConfigListEntry(  _("Enable SeriesPlugin")                          , config.plugins.seriesplugin.enabled ) )
+		self.list.append( getConfigListEntry(  _("Enable SeriesPlugin")                            , config.plugins.seriesplugin.enabled ) )
 		
 		if config.plugins.seriesplugin.enabled.value:
 			self.list.append( getConfigListEntry(  _("Show in info menu")                          , config.plugins.seriesplugin.menu_info ) )
@@ -131,6 +131,7 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 			self.list.append( getConfigListEntry(  _("Show in channel menu")                       , config.plugins.seriesplugin.menu_channel ) )
 			self.list.append( getConfigListEntry(  _("Show Info in movie list menu")               , config.plugins.seriesplugin.menu_movie_info ) )
 			self.list.append( getConfigListEntry(  _("Show Rename in movie list menu")             , config.plugins.seriesplugin.menu_movie_rename ) )
+			self.list.append( getConfigListEntry(  _("Check timer list from extension menu")       , config.plugins.seriesplugin.check_timer_list ) )
 			
 			#if len( config.plugins.seriesplugin.identifier_elapsed.choices ) > 1:
 			self.list.append( getConfigListEntry(  _("Select identifier for elapsed events")       , self.cfg_identifier_elapsed ) )
@@ -158,8 +159,10 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 				self.list.append( getConfigListEntry(  _("Tidy up filename on rename")             , config.plugins.seriesplugin.rename_tidy ) )
 				self.list.append( getConfigListEntry(  _("Use legacy filenames")                   , config.plugins.seriesplugin.rename_legacy ) )
 				self.list.append( getConfigListEntry(  _("Append '_' if file exist")               , config.plugins.seriesplugin.rename_existing_files ) )
-			self.list.append( getConfigListEntry(  _("Show warnings after Record renaming")        , config.plugins.seriesplugin.timer_popups ) )
-			self.list.append( getConfigListEntry(  _("Show success after Record renaming")         , config.plugins.seriesplugin.timer_popups_success ) )
+			self.list.append( getConfigListEntry(  _("Show warnings after Record renaming")        , config.plugins.seriesplugin.rename_popups ) )
+			self.list.append( getConfigListEntry(  _("Show success after Record renaming")         , config.plugins.seriesplugin.rename_popups_success ) )
+			if (-1 < config.plugins.seriesplugin.rename_popups.value) or (-1 < config.plugins.seriesplugin.rename_popups_success.value):
+				self.list.append( getConfigListEntry(  _("Timeout for Rename Popup")               , config.plugins.seriesplugin.rename_popups_timeout ) )
 			
 			self.list.append( getConfigListEntry(  _("Max time drift to match episode")            , config.plugins.seriesplugin.max_time_drift ) )
 			self.list.append( getConfigListEntry(  _("Title search depths")                        , config.plugins.seriesplugin.search_depths ) )
@@ -171,11 +174,11 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 				self.list.append( getConfigListEntry(  _("Check timer every x minutes")            , config.plugins.seriesplugin.independent_cycle ) )
 				self.list.append( getConfigListEntry(  _("Always retry to find series info")       , config.plugins.seriesplugin.independent_retry ) )
 			
-			self.list.append( getConfigListEntry(  _("Check timer list from extension menu")       , config.plugins.seriesplugin.check_timer_list ) )
-
 			self.list.append( getConfigListEntry(  _("Show warnings after Timer handling")         , config.plugins.seriesplugin.timer_popups ) )
 			self.list.append( getConfigListEntry(  _("Show success after Timer handling")          , config.plugins.seriesplugin.timer_popups_success ) )
-
+			if (-1 < config.plugins.seriesplugin.timer_popups.value) or (-1 < config.plugins.seriesplugin.timer_popups_success.value):
+				self.list.append( getConfigListEntry(  _("Timeout for Timer Popup")                , config.plugins.seriesplugin.timer_popups_timeout ) )
+			
 			self.list.append( getConfigListEntry(  _("Use local caching")                          , config.plugins.seriesplugin.caching ) )
 			
 			self.list.append( getConfigListEntry(  _("Allow Google Analytics")                     , config.plugins.seriesplugin.ganalytics ) )
@@ -183,10 +186,10 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 			self.list.append( getConfigListEntry(  _("E2: Composition of the recording filenames") , config.recording.filename_composition ) )
 			
 			try:
-				self.list.append( getConfigListEntry(  _("AT: Poll automatically")     , config.plugins.autotimer.autopoll ) )
-				self.list.append( getConfigListEntry(  _("AT: Startup delay (in min)") , config.plugins.autotimer.delay ) )
-				self.list.append( getConfigListEntry(  _("AT: Poll Interval (in h)")   , config.plugins.autotimer.interval ) )
-				self.list.append( getConfigListEntry(  _("AT: Timeout (in min)")       , config.plugins.autotimer.timeout ) )
+				self.list.append( getConfigListEntry(  _("AT: Poll automatically")                 , config.plugins.autotimer.autopoll ) )
+				self.list.append( getConfigListEntry(  _("AT: Startup delay (in min)")             , config.plugins.autotimer.delay ) )
+				self.list.append( getConfigListEntry(  _("AT: Poll Interval (in h)")               , config.plugins.autotimer.interval ) )
+				self.list.append( getConfigListEntry(  _("AT: Timeout (in min)")                   , config.plugins.autotimer.timeout ) )
 			except:
 				pass
 			
@@ -197,7 +200,7 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
 				self.list.append( getConfigListEntry(  _("Debug: User mail address")               , config.plugins.seriesplugin.log_reply_mail ) )
 			
 			try:
-				self.list.append( getConfigListEntry(  _("E2: Enable recording debug (Timer log)")  , config.recording.debug ) )
+				self.list.append( getConfigListEntry(  _("E2: Enable recording debug (Timer log)") , config.recording.debug ) )
 			except:
 				pass
 

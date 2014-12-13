@@ -102,12 +102,12 @@ channels_changed = False
 def lookupServiceAlternatives(service):
 	global channels, channels_changed
 	
-	splog("lookupServiceAlternatives service", service)
+	#splog("lookupServiceAlternatives service", service)
 	ref = str(service)
 	ref = re.sub('::.*', ':', ref)
-	splog("lookupServiceAlternatives ref", ref)
+	#splog("lookupServiceAlternatives ref", ref)
 	#splog("lookupServiceAlternatives channels before", channels)
-	splog("lookupServiceAlternatives ref in channels", ref in channels)
+	#splog("lookupServiceAlternatives ref in channels", ref in channels)
 	if ref in channels:
 		name, alternatives = channels.get(ref)
 	else:
@@ -116,12 +116,12 @@ def lookupServiceAlternatives(service):
 		channels[ref] = ( name, alternatives )
 		channels_changed = True
 	
-	splog("lookupServiceAlternatives channels")
-	for channel in channels:
-		splog(channel)
-	splog("lookupServiceAlternatives alternatives")
-	for alternative in alternatives:
-		splog(alternative)
+	#splog("lookupServiceAlternatives channels")
+	#for channel in channels:
+	#	splog(channel)
+	#splog("lookupServiceAlternatives alternatives")
+	#for alternative in alternatives:
+	#	splog(alternative)
 	
 	return alternatives
 

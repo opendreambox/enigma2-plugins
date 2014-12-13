@@ -591,6 +591,7 @@ var RemoteControl = Class.create({
 			case 'dm800sev2':
 			case 'dm500hdv2':
 			case 'dm7080':
+			case 'dm820':
 				tpl = 'tplWebRemote';
 				break;
 			default:
@@ -699,7 +700,7 @@ var Screenshots = Class.create(Controller, {
 
 	load: function(type){
 		var filename = '/tmp/' + new Date().getTime();
-		var params = {'format' : 'jpg', 'r': '720', 'filename' : filename};
+		var params = {'format' : 'jpg', 'filename' : filename};
 
 		switch(type){
 			case this.TYPE_OSD:

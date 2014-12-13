@@ -1,8 +1,10 @@
 from enigma import ePythonMessagePump
 import threading
 from twisted.internet import defer
-
+ 
 class SimpleThread(threading.Thread):
+	instances = []
+
 	def __init__(self, fnc):
 		threading.Thread.__init__(self)
 		self.deferred = defer.Deferred()
@@ -11,12 +13,14 @@ class SimpleThread(threading.Thread):
 		self.__asyncFunc = fnc
 		self.__result = None
 		self.__err = None
+		SimpleThread.instances.append(self)
 
 	def gotThreadMsg(self, msg):
 		if self.__err:
 			self.deferred.errback(self.__err)
 		else:
 			self.deferred.callback(self.__result)
+		SimpleThread.instances.remove(self)
 		del self.__pump_conn
 
 	def run(self):

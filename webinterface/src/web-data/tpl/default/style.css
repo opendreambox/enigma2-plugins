@@ -174,7 +174,8 @@ td.screenShot {
 
 td.screenShot img {
 	border: 1px solid #555;
-	background: #DDD;
+	background: #DDD;;
+	width: 100%;
 }
 
 #banner {
@@ -509,14 +510,16 @@ table.contentHd {
 	border: 1px solid #AAA
 }
 
-.sListSName a {
-	display: block;
-	margin-right: 5px;
+a.sListSLink {
 	color: #485052;
-	padding: 4px
+	display: block;
+	font-size: 15px;
+	padding: 4px;
+	display: block;
+	width: 99%;
 }
 
-.sListSName a:hover {
+a.sListSLink:hover {
 	display: block;
 	background-color: #DDD;
 	color: #485052;
@@ -535,9 +538,19 @@ table.contentHd {
 	padding: 0
 }
 
+.sListProgress {
+	width: 60px;
+	float: left
+}
+
+.sListSActions {
+	position: absolute;
+	right: 0px;
+	top: 5px;
+}
+
 .sListSProgress {
 	display: inline-block;
-	margin: 4px 1px 1px 1px;
 	border: 1px solid #485052;
 	width: 50px;
 	height: 10px;
@@ -593,11 +606,8 @@ table.contentHd {
 
 #bouquetTable li {
 	list-style: none;
-	margin: 3px;
-	padding: 3px;
 	position: relative;
-	display: block;
-	clear: both
+	display: table
 }
 
 .bouquetIcons {
@@ -608,7 +618,7 @@ table.contentHd {
 
 .bouquetName {
 	float: right;
-	width: 158px
+	width: 215px
 }
 
 #contentBouquets {
@@ -635,6 +645,10 @@ table.contentHd {
 .sListItem {
 	width: 570px !important;
 	color: #485052
+}
+
+.sListItem td {
+	position: relative;
 }
 
 .mListItem {
@@ -1035,8 +1049,7 @@ div.datePicker table {
 	background: #fff
 }
 
-div.datePicker tfoot th.drag-enabled, div.datePicker thead th.drag-enabled,
-	div.datePicker thead th.drag-enabled span {
+div.datePicker tfoot th.drag-enabled, div.datePicker thead th.drag-enabled, div.datePicker thead th.drag-enabled span {
 	cursor: move
 }
 
@@ -1056,8 +1069,7 @@ a.date-picker-control:link, a.date-picker-control:visited {
 	border: 0 none;
 	padding: 0;
 	margin: 0 0 0 4px;
-	background: transparent url(/web-data/lib/datepicker/media/cal-grey.gif)
-		no-repeat 50% 50%;
+	background: transparent url(/web-data/lib/datepicker/media/cal-grey.gif) no-repeat 50% 50%;
 	min-width: 16px;
 	line-height: 1;
 	cursor: pointer;
@@ -1066,11 +1078,9 @@ a.date-picker-control:link, a.date-picker-control:visited {
 	vertical-align: top
 }
 
-a.date-picker-control:hover, a.date-picker-control:active, a.date-picker-control:focus,
-	a.dp-button-active:link, a.dp-button-active:visited, a.dp-button-active:hover,
-	a.dp-button-active:active, a.dp-button-active:focus {
-	background: transparent url(/web-data/lib/datepicker/media/cal.gif)
-		no-repeat 50% 50% !important
+a.date-picker-control:hover, a.date-picker-control:active, a.date-picker-control:focus, a.dp-button-active:link, a.dp-button-active:visited,
+	a.dp-button-active:hover, a.dp-button-active:active, a.dp-button-active:focus {
+	background: transparent url(/web-data/lib/datepicker/media/cal.gif) no-repeat 50% 50% !important
 }
 
 * html a.date-picker-control {
@@ -1100,8 +1110,7 @@ div.datePicker thead th span {
 	cursor: pointer
 }
 
-div.datePicker th span.month-display, div.datePicker th span.year-display
-	{
+div.datePicker th span.month-display, div.datePicker th span.year-display {
 	display: inline;
 	text-transform: uppercase;
 	letter-spacing: 1px;
@@ -1115,8 +1124,7 @@ div.datePicker th span.prev-but, div.datePicker th span.next-but {
 	cursor: pointer !important
 }
 
-div.datePicker th span.prev-but:hover, div.datePicker th span.next-but:hover,
-	div.datePicker th span.today-but:hover {
+div.datePicker th span.prev-but:hover, div.datePicker th span.next-but:hover, div.datePicker th span.today-but:hover {
 	color: #a84444
 }
 
@@ -1132,11 +1140,10 @@ div.datePicker th span.today-but {
 	cursor: pointer !important
 }
 
-div.dp-disabled th span.prev-but, div.dp-disabled th span.next-but, div.dp-disabled th span.today-but,
-	div.dp-disabled th span.prev-but:hover, div.dp-disabled th span.next-but:hover,
-	div.dp-disabled th span.today-but:hover, div.datePicker th span.prev-but.fd-disabled:hover,
-	div.datePicker th span.next-but.fd-disabled:hover, div.datePicker thead th span.fd-disabled,
-	div.datePicker th span.fd-disabled:hover {
+div.dp-disabled th span.prev-but, div.dp-disabled th span.next-but, div.dp-disabled th span.today-but, div.dp-disabled th span.prev-but:hover,
+	div.dp-disabled th span.next-but:hover, div.dp-disabled th span.today-but:hover, div.datePicker th span.prev-but.fd-disabled:hover,
+	div.datePicker th span.next-but.fd-disabled:hover, div.datePicker thead th span.fd-disabled, div.datePicker th span.fd-disabled:hover
+	{
 	color: #aaa;
 	cursor: default !important;
 	opacity: 1
@@ -1203,8 +1210,7 @@ div.datePicker table tbody th {
 	border: 1px solid #dcdcdc
 }
 
-div.datePicker table thead th.date-picker-week-header, div.datePicker table tbody th.date-picker-week-header
-	{
+div.datePicker table thead th.date-picker-week-header, div.datePicker table tbody th.date-picker-week-header {
 	background: url(/web-data/lib/datepicker/media/backstripes.gif);
 	color: #DDD;
 	font-style: oblique;
@@ -1249,8 +1255,7 @@ div.datePicker table thead th.date-picker-day-header {
 }
 
 div.datePicker table tbody td.date-picker-today {
-	background: #fff url(/web-data/lib/datepicker/media/bullet2.gif)
-		no-repeat 0 0;
+	background: #fff url(/web-data/lib/datepicker/media/bullet2.gif) no-repeat 0 0;
 	color: #646464 !important
 }
 
@@ -1258,14 +1263,12 @@ div.datePicker table tbody td.month-out.date-picker-highlight {
 	color: #a86 !important
 }
 
-div.datePicker table tbody td.date-picker-highlight, div.datePicker table thead th.date-picker-highlight
-	{
+div.datePicker table tbody td.date-picker-highlight, div.datePicker table thead th.date-picker-highlight {
 	color: #a86666 !important
 }
 
 div.datePicker table tbody td.date-picker-hover {
-	background: #fff url(/web-data/lib/datepicker/media/bg_header.jpg)
-		no-repeat 0 0;
+	background: #fff url(/web-data/lib/datepicker/media/bg_header.jpg) no-repeat 0 0;
 	cursor: pointer;
 	border-color: #6482aa !important;
 	color: #6482aa;
@@ -1273,8 +1276,7 @@ div.datePicker table tbody td.date-picker-hover {
 }
 
 div.datePicker table tbody td.day-disabled {
-	background: #fff url(/web-data/lib/datepicker/media/backstripes.gif)
-		no-repeat 0 0;
+	background: #fff url(/web-data/lib/datepicker/media/backstripes.gif) no-repeat 0 0;
 	color: #aaa !important;
 	cursor: default;
 	text-decoration: line-through
@@ -1283,9 +1285,7 @@ div.datePicker table tbody td.day-disabled {
 div.datePicker table tbody td.month-out {
 	border-color: #ddd;
 	color: #aaa !important;
-	background: #fff
-		url(/web-data/lib/datepicker/media/gradient-e5e5e5-ffffff.gif)
-		repeat-x 0 -40px
+	background: #fff url(/web-data/lib/datepicker/media/gradient-e5e5e5-ffffff.gif) repeat-x 0 -40px
 }
 
 div.datePicker table tbody td.date-picker-selected-date {
@@ -1293,16 +1293,14 @@ div.datePicker table tbody td.date-picker-selected-date {
 	border-color: #333 !important
 }
 
-div.datePicker table tbody td.out-of-range, div.datePicker table tbody td.not-selectable
-	{
+div.datePicker table tbody td.out-of-range, div.datePicker table tbody td.not-selectable {
 	color: #DDD !important;
 	font-style: oblique;
 	background: #fcfcfc !important;
 	cursor: default !important
 }
 
-div.datePicker table tbody th.month-out, div.datePicker table tbody th.out-of-range
-	{
+div.datePicker table tbody th.month-out, div.datePicker table tbody th.out-of-range {
 	color: #aaa !important;
 	font-style: oblique;
 	background: #fcfcfc !important
@@ -1337,8 +1335,7 @@ div.datepicker-focus table.datePickerTable {
 	border-color: #999 !important
 }
 
-div.datePicker table tbody tr td:focus, div.datePicker table tbody td.date-picker-hover
-	{
+div.datePicker table tbody tr td:focus, div.datePicker table tbody td.date-picker-hover {
 	overflow: hidden;
 	outline: 0 solid #f00;
 	-moz-outline: 0 none;

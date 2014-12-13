@@ -28,6 +28,9 @@ from Plugins.Extensions.SeriesPlugin.Logger import splog
 #sys.path.append(os.path.dirname( os.path.realpath( __file__ ) ) + '/bs4/builder')
 from bs4 import BeautifulSoup
 
+import codecs
+utf8_encoder = codecs.getencoder("utf-8")
+
 
 # Constants
 SERIESLISTURL = "http://www.fernsehserien.de/suche?"
@@ -47,24 +50,14 @@ Headers = {
 		'Pragma':'no-cache'
 	}
 
+
 def str_to_utf8(s):
-	if '\\u2013' in s:
-		s = s.replace("\\u2013", "-")
-	if '\\u00c4' in s:
-		s = s.replace("\\u00c4", "Ä")
-	if '\\u00e4' in s:
-		s = s.replace("\\u00e4", "ä")
-	if '\\u00d6' in s:
-		s = s.replace("\\u00d6", "Ö")
-	if '\\u00f6' in s:
-		s= s.replace("\\u00f6", "ö")
-	if '\\u00dc' in s:
-		s = s.replace("\\u00dc", "Ü")
-	if '\\u00fc' in s:
-		s = s.replace("\\u00fc", "ü")
-	if '\\u00df' in s:
-		s = s.replace("\\u00df", "ß")
-	return s
+	# Convert a byte string with unicode escaped characters
+	splog("FS: str_to_utf8: s: ", repr(s))
+	# Python 2.x can't convert the special chars nativly
+	utf8_str = utf8_encoder(s)[0]
+	splog("FS: str_to_utf8: s: ", repr(utf8_str))
+	return utf8_str
 
 
 class Fernsehserien(IdentifierBase):
