@@ -61,6 +61,12 @@ from enigma import eDVBResourceManager, eActionMap, eListboxPythonMultiContent, 
 
 from skin import parseColor, parseFont
 
+#try:
+#	from Plugins.Extensions.2IB import SecondInfoBar
+#	SecondInfobarAvailable = True
+#except:
+SecondInfobarAvailable = False
+
 # Plugin internal
 from netstat import netstat
 
@@ -440,10 +446,13 @@ class InfoBarTunerState(object):
 				filename = "" #TODO file streaming - read meta eit
 				
 				try:
+					print "IBTS ip"
+					print ip
 					host = ip and socket.gethostbyaddr( ip )
 					client = host and host[0].split('.')[0]
-				except socket.herror, x:
-					pass
+				except:
+					ip = ''
+					client = ''
 				
 				number = service_ref and getNumber(service_ref.ref)
 				channel = service_ref and service_ref.getServiceName()
@@ -504,6 +513,9 @@ class InfoBarTunerState(object):
 		nextwins = [ id for id in self.entries.keys() if id.startswith('next')]
 		
 		if number_pending_records:
+			pending_seconds = int( config.infobartunerstate.pending_hours.value ) * 3600
+			pending_limit = (time() + pending_seconds) if pending_seconds else 0
+			
 			timer_list = getNextPendingRecordTimers()[:number_pending_records]
 			
 			if timer_list:
@@ -518,10 +530,16 @@ class InfoBarTunerState(object):
 						# Is this really necessary?
 						try: timer.Filename
 						except: timer.calculateFilename()
-						filename = timer.Filename
+						
+						try: filename = timer.Filename
+						except: filename = timer.name
 						
 						# Delete references to avoid blocking tuners
 						del timer
+						
+						if pending_limit and pending_limit < begin:
+							# Skip timer
+							continue
 						
 						number = service_ref and getNumber(service_ref.ref)
 						channel = service_ref and service_ref.getServiceName()
@@ -540,16 +558,32 @@ class InfoBarTunerState(object):
 						self.entries[id] = win
 					else:
 						if self.entries.has_key(id):
-							del self.entries[id]
+							win = self.entries[id]
+							#self.session.deleteDialog(win)
+							#del self.entries[id]
+							win.remove()
 			
 			# Close all not touched next windows
 			if nextwins:
 				for id in nextwins:
 					if self.entries.has_key(id):
-						del self.entries[id]
+						win = self.entries[id]
+						#self.session.deleteDialog(win)
+						#del self.entries[id]
+						win.remove()
 
 	def show(self, autohide=False, forceshow=False):
 		print "IBTS show"
+		
+		#TEST
+		if SecondInfobarAvailable:
+			try:
+				if self.infobar.SIBdialog.shown:
+					print "IBTS SecondInfobar is shown"
+					return
+			except Exception, e:
+				print "InfoBarTunerState show SIB exception " + str(e)
+		
 		allowclosing = True
 		if self.updateTimer.isActive() and autohide:
 			# Avoid closing if the update timer is active
@@ -565,7 +599,8 @@ class InfoBarTunerState(object):
 			if autohide or self.session.current_dialog is None or not issubclass(self.session.current_dialog.__class__, InfoBarShowHide):
 				# Start timer to avoid permanent displaying
 				# Do not start timer if no timeout is configured
-				timeout = int(config.infobartunerstate.infobar_timeout.value) or int(config.usage.infobar_timeout.index)
+				#timeout = int(config.infobartunerstate.infobar_timeout.value) or int(config.usage.infobar_timeout.index)
+				timeout = int(config.usage.infobar_timeout.index)
 				if timeout > 0:
 					if self.hideTimer.isActive():
 						self.hideTimer.stop()
@@ -580,6 +615,8 @@ class InfoBarTunerState(object):
 		print "IBTS toggle"
 		if self._shown is False:
 			self.show()
+		else:
+			self.hide()
 
 	def tunerShow(self, forceshow=False):
 		print "IBTS tunerShow"
@@ -615,6 +652,7 @@ class InfoBarTunerState(object):
 				if win.toberemoved == True \
 					or win.type == FINISHED and numberfinished > int( config.infobartunerstate.number_finished_records.value ):
 					# Delete Stopped Timers
+					win.hide()
 					self.session.deleteDialog(win)
 					del self.entries[id]
 			
@@ -657,7 +695,10 @@ class InfoBarTunerState(object):
 						win.updateTimes( begin, end, endless )
 						win.update()
 						#TEST
-						del self.entries[id]
+						#self.session.deleteDialog(win)
+						#del self.entries[id]
+						win.remove()
+						##
 						self.updateRecordTimer()
 				elif win.type == STREAM:
 					if config.infobartunerstate.show_streams.value:
@@ -693,7 +734,7 @@ class InfoBarTunerState(object):
 							win.updateTimes( begin, end, endless )
 							win.update()
 						else:
-							win.toberemoved = True
+							win.remove()
 					else:
 						# Should never happen delete
 						begin = win.begin
@@ -797,6 +838,7 @@ class InfoBarTunerState(object):
 		self.removeEvents()
 		self.hide()
 		for id, win in self.entries.items():
+			win.hide()
 			self.session.deleteDialog(win)
 			del self.entries[id]
 		from Plugins.Extensions.InfoBarTunerState.plugin import gInfoBarTunerState
@@ -832,6 +874,8 @@ class TunerStateBase(Screen):
 		
 		self.typewidth = 0
 		self.progresswidth = 0
+		
+		self.toberemoved = False
 		
 		self.onLayoutFinish.append(self.layoutFinished)
 
@@ -925,6 +969,9 @@ class TunerStateBase(Screen):
 	def move(self, posx, posy):
 		self.instance.move(ePoint(posx, posy))
 
+	def remove(self):
+		self.toberemoved = True 
+
 
 #######################################################
 # Displaying screen class, show nothing running
@@ -999,7 +1046,6 @@ class TunerState(TunerStateBase):
 		#TODO use parameter ref instead of number and channel
 		TunerStateBase.__init__(self, session)
 		
-		self.toberemoved = False
 		self.removeTimer = eTimer()
 		self.removeTimer.callback.append(self.remove)
 		
@@ -1296,9 +1342,6 @@ class TunerState(TunerStateBase):
 		
 		self.widths = widths
 
-	def remove(self):
-		self.toberemoved = True 
-
 
 #######################################################
 # Global helper functions
@@ -1336,12 +1379,19 @@ def getTuner(service):
 	# service must be an instance of iPlayableService or iRecordableService
 	#TODO detect stream of HDD
 	feinfo = service and service.frontendInfo()
-	data = feinfo and feinfo.getAll(False)
+	#data = feinfo and feinfo.getAll(False)
+	#data = feinfo and feinfo.getAll(True)
+	data = feinfo and feinfo.getFrontendData()
 	if data:
-		number = data.get("tuner_number", -1)
+		number = data.get("slot_number", -1)
+		if number is None or number < 0:
+			number = data.get("tuner_number", -1)
 		type = data.get("tuner_type", "")
 		if number is not None and number > -1:
+			#return ( ('A', 'B', 'C', 'D', 'E', 'F')[number], type)
 			return ( chr( int(number) + ord('A') ), type)
+		else:
+			return ( "", type)
 	return "", ""
 
 def readBouquetList(self):
