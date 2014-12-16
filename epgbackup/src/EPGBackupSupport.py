@@ -82,7 +82,7 @@ class EPGBackupSupport:
 				
 				bootCount= int(bootCount)
 				if bootCount > int(config.plugins.epgbackup.max_boot_count.value):
-					backupedFile = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE_BACKUP"], getoutput = True)
+					backupedFile = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE_BACKUP"])
 					Notifications.AddNotificationWithCallback(self.askDeleteBadBackupCB, MessageBox, \
 						text = _("The EPG-Backup was not performed, because there were %d unsuccessfully boot-attempts!\nThe last restored backup-file was \"%s\".\nDo you want to delete the file?") \
 						% (bootCount, backupedFile), type = MessageBox.TYPE_YESNO, \
@@ -93,7 +93,7 @@ class EPGBackupSupport:
 	def askDeleteBadBackupCB(self, deleteIt):
 		try:
 			if deleteIt:
-				backupedFile = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE_BACKUP"], getoutput = True)
+				backupedFile = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE_BACKUP"])
 				if backupedFile != "":
 					debugOut("Deleting file \"%s\"..." % (backupedFile))
 					os.system("rm -f %s" % (backupedFile))
@@ -126,7 +126,7 @@ class EPGBackupSupport:
 			debugOut("startStopBackupTimer-Error:\n" + str(format_exc()), forced=True)
 
 	def __getErrortext(self):
-		errorTxt = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE_ERROR"], getoutput = True)
+		errorTxt = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE_ERROR"])
 		if not errorTxt or errorTxt == "":
 			errorTxt = _("General Error!")
 			return errorTxt
@@ -159,7 +159,7 @@ class EPGBackupSupport:
 				logFile = _getLogFilename()
 				if logFile != "":
 					if os.path.exists(logFile):
-						logTxt = self._executeSh("/bin/cat", logFile, getoutput = True)
+						logTxt = self._executeSh("/bin/cat", logFile)
 						self.session.open(TextBox, text = _("Logfile %s:\n%s") % (logFile, logTxt))
 					else:
 						self.session.open(MessageBox, \
@@ -177,7 +177,7 @@ class EPGBackupSupport:
 			self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["MAKEBACKUP"])
 			self.startStopBackupTimer()
 			if interactive or config.plugins.epgbackup.show_messages_background.value:
-				backupedFile = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE_BACKUP"], getoutput = True)
+				backupedFile = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE_BACKUP"])
 				if backupedFile != "":
 					Notifications.AddPopup(
 						_("Backup \"%s\" successfully created!") % (backupedFile), \
@@ -228,7 +228,7 @@ class EPGBackupSupport:
 				backupfile = backupinfo [1].rstrip()
 				if FORCERESTORECANCEL != backupfile and FORCERESTORENOFILES != backupfile:
 					self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["FORCERESTORE"], backupfile)
-					restoredFile = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE_RESTORE"], getoutput = True)
+					restoredFile = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE"], EPGBACKUP_SHELL_CONSTANTS["GETLASTFILE_RESTORE"])
 					if restoredFile != "":
 						eEPGCache.getInstance().Lock()
 						eEPGCache.getInstance().load()
@@ -259,6 +259,7 @@ class EPGBackupSupport:
 	def _getBackupFiles(self, sortMode):
 		try:
 			backupList = []
+			backupfiles = None
 			backupStrList = self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["EPGINFO"], sortMode, True)
 			if backupStrList:
 				backupfiles = backupStrList.split("\n")
@@ -274,10 +275,13 @@ class EPGBackupSupport:
 		return backupList
 	
 	def autoinstall(self, configentry):
-		if configentry.value:
-			self.install()
-		else:
-			self.uninstall()
+		try:
+			if configentry.value:
+				self.install()
+			else:
+				self.uninstall()
+		except:
+			debugOut("autoinstall-Error:\n" + str(format_exc()), forced=True)
 	
 	def install(self):
 		if os.path.exists(SH_EXEC_FILE):
@@ -288,11 +292,11 @@ class EPGBackupSupport:
 	def uninstall(self):
 		self.executeShScript(EPGBACKUP_SHELL_CONSTANTS["UNINSTALL"])
 		
-	def executeShScript(self, sh_action, param1 = "", getoutput = False):
+	def executeShScript(self, sh_action, param1 = ""):
 		debugOut("EPGBackup.sh execute with params %s %s" %(sh_action, param1))
-		return self._executeSh(SH_EXEC_FILE, sh_action, param1, getoutput)
+		return self._executeSh(SH_EXEC_FILE, sh_action, param1)
 
-	def _executeSh(self, sh_cmd, param1 = "", param2 = "", getoutput = False):
+	def _executeSh(self, sh_cmd, param1 = "", param2 = ""):
 		outtext = ""
 		try:
 			outtext = subprocess.check_output("%s %s %s" % (sh_cmd, param1, param2),
