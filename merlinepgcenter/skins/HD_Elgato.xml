@@ -20,7 +20,7 @@ config.plugins.merlinEpgCenter.showBouquetText.setValue(False)
    <widget name="tab_text_5" position="1080,22" size="134,39" zPosition="3" valign="center" halign="left" font="Regular;20" transparent="1" foregroundColor="#ffffff" />
    <widget name="timerlist" position="40,105" size="820,530" scrollbarMode="showNever" transparent="1"  />
    <widget name="list" enableWrapAround="1" position="40,105" size="820,530" scrollbarMode="showNever" transparent="1" />
-   <widget name="upcoming" position="50,730" size="810,0" scrollbarMode="showNever" zPosition="1" transparent="1"/>
+   <widget name="upcoming" position="50,730" size="810,0" scrollbarMode="showNever" zPosition="2" transparent="1"/>
    <widget name="history" position="40,105" size="820,530" scrollbarMode="showNever" zPosition="1" transparent="1"  />
    <widget name="settings" position="40,105" size="820,530" scrollbarMode="showNever" zPosition="1" transparent="1" />
    <widget name="infoText" position="40,105" size="820,510" font="Regular;20" zPosition="1" transparent="1" />
@@ -40,6 +40,9 @@ config.plugins.merlinEpgCenter.showBouquetText.setValue(False)
    <widget name="remaining" position="1175,202" size="65,20" foregroundColors="#ef7f1a,#e31e24,#74de0a,#ffed00,#ffffff" zPosition="1" font="Regular;20" transparent="1" halign="left" valign="center" />
    <widget name="description" position="880,230" size="360,420" zPosition="1" font="Regular;20" transparent="1" halign="left" valign="top" />
    <widget name="videoPicture" position="880,451" backgroundColor="transparent" size="360,203" zPosition="3" />
+   <widget position="880,451" backgroundColor="transparent" render="MiniTV" size="360,203" source="ServiceEventReference" zPosition="4">
+      <convert type="MiniTVDisplay"/>
+   </widget>
    <eLabel position="40,61" size="1200,44" backgroundColor="white" zPosition="1"/>
    <eLabel position="40,61" size="1200,41" backgroundColor="#546475" zPosition="2"/>
    <widget name="isRecording" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD_Elgato/rec.png" position="990,62" size="38,38" zPosition="3" alphatest="blend" />
@@ -53,13 +56,13 @@ config.plugins.merlinEpgCenter.showBouquetText.setValue(False)
    <widget source="global.CurrentTime" render="Label" position="1030,70" size="130,28" font="Regular;24" zPosition="3" halign="right" transparent="1">
       <convert type="ClockToText">Format: %a %d. %b</convert>
    </widget>
-   <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD_Elgato/red.png" position=" 50,690" size="250,2" alphatest="on"/>
-   <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD_Elgato/green.png" position="300,690" size="250,2" alphatest="on"/>
-   <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD_Elgato/yellow.png" position="550,690" size="250,2" alphatest="on"/>
-   <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD_Elgato/blue.png" position="800,690" size="250,2" alphatest="on"/>
-   <widget name="key_red" position=" 50,660" zPosition="1" size="250,30" font="Regular;24" halign="center" backgroundColor="background" transparent="1" />
-   <widget name="key_green" position="300,660" zPosition="1" size="250,30" font="Regular;24" halign="center" backgroundColor="background" transparent="1" />
-   <widget name="key_yellow" position="550,660" zPosition="1" size="250,30" font="Regular;24" halign="center" backgroundColor="background" transparent="1" />
-   <widget name="key_blue" position="800,660" zPosition="1" size="250,30" font="Regular;24" halign="center" backgroundColor="background" transparent="1" />
+   <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD_Elgato/red.png" position=" 50,690" zPosition="2" size="250,2" alphatest="on"/>
+   <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD_Elgato/green.png" position="300,690" zPosition="2" size="250,2" alphatest="on"/>
+   <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD_Elgato/yellow.png" position="550,690" zPosition="2" size="250,2" alphatest="on"/>
+   <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD_Elgato/blue.png" position="800,690" zPosition="2" size="250,2" alphatest="on"/>
+   <widget name="key_red" position=" 50,660" zPosition="2" size="250,30" font="Regular;24" halign="center" backgroundColor="background" transparent="1" />
+   <widget name="key_green" position="300,660" zPosition="2" size="250,30" font="Regular;24" halign="center" backgroundColor="background" transparent="1" />
+   <widget name="key_yellow" position="550,660" zPosition="2" size="250,30" font="Regular;24" halign="center" backgroundColor="background" transparent="1" />
+   <widget name="key_blue" position="800,660" zPosition="2" size="250,30" font="Regular;24" halign="center" backgroundColor="background" transparent="1" />
 </screen>
 </skin>

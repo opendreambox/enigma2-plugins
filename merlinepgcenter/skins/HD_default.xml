@@ -14,7 +14,7 @@
 		<widget name="timerlist" position="0,44" size="860,630" scrollbarMode="showNever" />
 		<widget name="list" position="0,44" size="860,620" scrollbarMode="showNever" />
 		<widget name="upcomingSeparator" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/separator_h.png" position="0,654" size="860,6" zPosition="1" alphatest="on" />
-		<widget name="upcoming" position="0,614" size="860,0" scrollbarMode="showNever" />
+		<widget name="upcoming" position="0,614" size="860,0" scrollbarMode="showNever" zPosition="2"/>
 		<widget name="history" position="5,44" size="855,630" scrollbarMode="showNever" />
 		<widget name="settings" position="5,44" size="855,630" scrollbarMode="showNever" />
 		<widget name="infoText" position="5,44" size="855,610" font="Regular;20" />
@@ -41,6 +41,9 @@
 		<widget name="isRecording" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD/recording.png" position="867,682" size="413,37" zPosition="2" transparent="1" alphatest="on" />
 		<widget name="description" position="875,210" size="400,466" zPosition="1" font="Regular;20" transparent="1" halign="left" valign="top" />
 		<widget name="videoPicture" position="880,461" size="395,215" zPosition="1" backgroundColor="transparent" />
+		<widget backgroundColor="#ffffffff" position="880,461" render="MiniTV" size="395,215" source="ServiceEventReference" zPosition="1">
+			<convert type="MiniTVDisplay"/>
+		</widget>
 		<widget name="bouquet" position="875,690" size="400,24" zPosition="4" font="Regular;20" transparent="1" halign="center" valign="center" />
 		
 		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD/button_background.png" position="0,681" size="1280,39" transparent="1" alphatest="on" />
@@ -50,9 +53,9 @@
 		<widget font="Regular;18" halign="left" valign="center" name="key_green" position="210,685" size="140,30" transparent="1" zPosition="2"/>
 		<widget font="Regular;18" halign="left" valign="center" name="key_yellow" position="380,685" size="140,30" transparent="1" zPosition="2"/>
 		<widget font="Regular;18" halign="left" valign="center" name="key_blue" position="550,685" size="140,30" transparent="1" zPosition="2"/>
-		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD/red.png" position="5,685" size="30,30" transparent="1" alphatest="on" />
-		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD/green.png" position="175,685" size="30,30" transparent="1" alphatest="on" />
-		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD/yellow.png" position="345,685" size="30,30" transparent="1" alphatest="on" />
-		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD/blue.png" position="515,685" size="30,30" transparent="1" alphatest="on" />
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD/red.png" position="5,685" size="30,30" transparent="1" alphatest="on" zPosition="2" />
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD/green.png" position="175,685" size="30,30" transparent="1" alphatest="on" zPosition="2" />
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD/yellow.png" position="345,685" size="30,30" transparent="1" alphatest="on" zPosition="2" />
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD/blue.png" position="515,685" size="30,30" transparent="1" alphatest="on" zPosition="2" />
 	</screen>
 </skin>
