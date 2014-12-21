@@ -95,6 +95,16 @@ class AutoPollerThread(Thread):
 				except:
 					pass
 
+			if config.plugins.autotimer.skip_during_epgrefresh.value:
+				try:
+					from Plugins.Extensions.EPGRefresh.EPGRefresh import epgrefresh
+					if epgrefresh.isrunning:
+						print("[AutoTimer]: Skip check during EPGRefresh")
+						reactor.callFromThread(timer.startLongTimer, config.plugins.autotimer.interval.value*3600)
+						continue
+				except:
+					pass
+
 			from plugin import autotimer
 			# Ignore any program errors
 			try:
