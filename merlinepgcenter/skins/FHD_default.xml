@@ -41,11 +41,7 @@
 		<widget name="isRecording" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/FHD/recording.png" position="1300,1023" size="620,56" zPosition="2" transparent="1" alphatest="on" />
 		<widget name="description" position="1313,315" size="600,699" zPosition="1" font="Regular;30" transparent="1" halign="left" valign="top" />
 		<widget name="videoPicture" position="1320,692" size="593,323" zPosition="1" backgroundColor="transparent" />
-		<widget backgroundColor="#ffffffff" position="1320,692" render="MiniTV" size="593,323" source="ServiceEventReference" zPosition="1">
-			<convert type="MiniTVDisplay"/>
-		</widget>
 		<widget name="bouquet" position="1313,1035" size="600,36" zPosition="4" font="Regular;30" transparent="1" halign="center" valign="center" />
-		
 		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/FHD/button_background.png" position="0,1022" size="1920,59" transparent="1" alphatest="on" />
 		<widget name="volume" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/FHD/volume.png" position="1301,1023" size="620,56" zPosition="3" transparent="1" />
 		<widget name="mute" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/FHD/mute.png" position="1307,1026" size="48,48" zPosition="3" transparent="1" alphatest="on" />

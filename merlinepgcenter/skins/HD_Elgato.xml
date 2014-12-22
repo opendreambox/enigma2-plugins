@@ -40,9 +40,6 @@ config.plugins.merlinEpgCenter.showBouquetText.setValue(False)
    <widget name="remaining" position="1175,202" size="65,20" foregroundColors="#ef7f1a,#e31e24,#74de0a,#ffed00,#ffffff" zPosition="1" font="Regular;20" transparent="1" halign="left" valign="center" />
    <widget name="description" position="880,230" size="360,420" zPosition="1" font="Regular;20" transparent="1" halign="left" valign="top" />
    <widget name="videoPicture" position="880,451" backgroundColor="transparent" size="360,203" zPosition="3" />
-   <widget position="880,451" backgroundColor="transparent" render="MiniTV" size="360,203" source="ServiceEventReference" zPosition="4">
-      <convert type="MiniTVDisplay"/>
-   </widget>
    <eLabel position="40,61" size="1200,44" backgroundColor="white" zPosition="1"/>
    <eLabel position="40,61" size="1200,41" backgroundColor="#546475" zPosition="2"/>
    <widget name="isRecording" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/HD_Elgato/rec.png" position="990,62" size="38,38" zPosition="3" alphatest="blend" />
