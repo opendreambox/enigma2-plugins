@@ -26,6 +26,7 @@ from Components.EpgList import EPG_TYPE_SINGLE, EPG_TYPE_SIMILAR, EPG_TYPE_MULTI
 from Tools.BoundFunction import boundFunction
 from PartnerboxFunctions import  SetPartnerboxTimerlist, isInTimerList, sendPartnerBoxWebCommand, FillE1TimerList, FillE2TimerList
 import PartnerboxFunctions as partnerboxfunctions
+from enigma import eServiceReference, eServiceCenter
 
 # for localized messages
 from . import _
@@ -70,8 +71,9 @@ def Partnerbox_EPGSelectionInit():
 
 def Partnerbox_EPGSelection__init__(self, session, service, zapFunc=None, eventid=None, bouquetChangeCB=None, serviceChangeCB=None):
 	#check if alternatives are defined
-	if service.flags & (eServiceReference.isGroup):
-		service = eServiceCenter.getInstance().list(eServiceReference("%s" %(service.toString()))).getContent("S")[0]
+	if isinstance(service, eServiceReference):
+		if service.flags & (eServiceReference.isGroup):
+			service = eServiceCenter.getInstance().list(eServiceReference("%s" %(service.toString()))).getContent("S")[0]
 	baseEPGSelection__init__(self, session, service, zapFunc, eventid, bouquetChangeCB, serviceChangeCB)
 	self.PartnerboxInit(True)
 

@@ -971,7 +971,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 
 	def handleHistory(self):
 		if self.HistoryWindow is None:
-			self.HistoryWindow = self.session.instantiateDialog(MyTubeHistoryScreen)
+			self.HistoryWindow = self.session.instantiateDialog(MyTubeHistoryScreen, zPosition=1000)
 		if self.currList in ("configlist","feedlist"):
 			if self.HistoryWindow.status() is False:
 				print "status is FALSE,switchToHistory"
