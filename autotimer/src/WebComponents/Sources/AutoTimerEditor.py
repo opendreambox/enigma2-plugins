@@ -35,6 +35,16 @@ class AutoTimerEditor(Source):
 		backupFilename = path.join(self.BACKUP_PATH, tarFilename)
 		if path.exists(backupFilename):
 			remove(backupFilename)
+		
+		from Plugins.Extensions.AutoTimer.plugin import autotimer
+		if autotimer is not None:
+			try:
+				# Force config write
+				autotimer.writeXml()
+			except Exception:
+				# TODO: proper error handling
+				pass
+		
 		checkfile = path.join(self.BACKUP_PATH,'.autotimeredit')
 		f = open(checkfile, 'w')
 		if f:
