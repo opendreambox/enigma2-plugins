@@ -186,13 +186,17 @@ class Wunschliste(IdentifierBase):
 			
 			yepisode = None
 			ydelta = maxint
-			year = str(datetime.today().year)
+			actual_year = datetime.today().year
 			
 			for tds in trs:
 				if tds and len(tds) >= 5:
 					#print tds
 					xchannel, xday, xdate, xbegin, xend = tds[:5]
 					xtitle = "".join(tds[4:])
+					if xdate.endswith(".01."):
+						year = str(actual_year+1)
+					else:
+						year = str(actual_year)
 					xbegin   = datetime.strptime( xdate+year+xbegin, "%d.%m.%Y%H.%M Uhr" )
 					#xend     = datetime.strptime( xdate+xend, "%d.%m.%Y%H.%M Uhr" )
 					#splog(xchannel, xdate, xbegin, xend, xtitle)

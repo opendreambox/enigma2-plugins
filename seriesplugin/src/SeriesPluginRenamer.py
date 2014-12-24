@@ -248,6 +248,8 @@ class SeriesPluginRenameService(Thread):
 				return 
 			
 			name = service.getName() or info.getName(service) or ""
+			if name[-2:] == 'ts':
+				name = name[:-2]
 			#splog("SPR: name", name)
 			
 			short = ""
@@ -318,7 +320,7 @@ class SeriesPluginRenamer(object):
 		if services and not isinstance(services, list):
 			services = [services]	
 		
-		splog("SPR: len()", len(services))
+		splog("SPR: len(services)", len(services))
 		
 		self.services = services
 		

@@ -160,8 +160,12 @@ class SeriesPluginInfoScreen(Screen):
 				# Service is a movie reference
 				info = self.serviceHandler.info(service)
 				ref = info.getInfoString(service, iServiceInformation.sServiceref)
-				channel = ServiceReference(ref).getServiceName() or ""
-				ref = eServiceReference(str(service))
+				channel = ServiceReference(ref).getServiceName()
+				if not channel:
+					ref = str(ref)
+					ref = re.sub('::.*', ':', ref)
+					channel = ServiceReference(ref).getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
+				#ref = eServiceReference(str(service))
 				# Get information from record meta files
 				self.event = info and info.getEvent(service)
 				today = False

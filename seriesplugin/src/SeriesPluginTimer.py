@@ -48,6 +48,13 @@ class SeriesPluginTimer(object):
 		splog("SPT: SeriesPluginTimer: name, timername, begin, end:", name, timer.name, begin, end)
 		timer.log(600, "[SeriesPlugin] Try to find infos for %s" % (timer.name) )
 		
+		if hasattr(timer, 'sp_in_queue'):
+			if timer.sp_in_queue:
+				splog("SPT: SeriesPluginTimer: Skip timer is already in queue:", timer.name)
+				timer.log(601, "[SeriesPlugin] Skip timer is already in queue %s" % (timer.name) )
+		
+		timer.sp_in_queue = True
+		
 		# We have to compare the length,
 		# because of the E2 special chars handling for creating the filenames
 		#if timer.name == name:
@@ -75,27 +82,27 @@ class SeriesPluginTimer(object):
 			#splog("EPG event found")
 			if not ( len(timer.name) == len(name) == len(event.getEventName()) ):
 				splog("SPT: Skip timer because it is already modified", timer.name, name, event and event.getEventName(), len(timer.name), len(name), len(event.getEventName()) )
-				timer.log(601, "[SeriesPlugin] Skip timer because it is already modified")
+				timer.log(602, "[SeriesPlugin] Skip timer because it is already modified")
 				return
 		else:
 			if ( len(timer.name) == len(name) ):
 				splog("SPT: Skip timer because no event was found", timer.name, name, len(timer.name), len(name))
-				timer.log(602, "[SeriesPlugin] Skip timer because no event was found")
+				timer.log(603, "[SeriesPlugin] Skip timer because no event was found")
 				return
 		
 		if timer.begin < time() + 60:
 			splog("SPT: Skipping an event because it starts in less than 60 seconds", timer.name )
-			timer.log(603, "[SeriesPlugin] Skip timer because it starts in less than 60 seconds")
+			timer.log(604, "[SeriesPlugin] Skip timer because it starts in less than 60 seconds")
 			return
 		
 		if timer.isRunning():
 			splog("SPT: Skipping timer because it is already running", timer.name )
-			timer.log(604, "[SeriesPlugin] Skip timer because it is already running")
+			timer.log(605, "[SeriesPlugin] Skip timer because it is already running")
 			return
 		
 		if timer.justplay:
 			splog("SPT: Skipping justplay timer", timer.name )
-			timer.log(605, "[SeriesPlugin] Skip justplay timer")
+			timer.log(606, "[SeriesPlugin] Skip justplay timer")
 			return
 		
 		
@@ -140,6 +147,8 @@ class SeriesPluginTimer(object):
 			SeriesPluginTimer.data.append(
 				str(timer.name) + " " + _("No data available")
 			)
+		
+		timer.sp_in_queue = False
 		
 		if config.plugins.seriesplugin.timer_popups.value or config.plugins.seriesplugin.timer_popups_success.value:
 			
