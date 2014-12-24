@@ -55,7 +55,7 @@ if [ `echo "$ENABLEDEUG" | tr [:upper:] [:lower:]` == "true" ] ; then
 else
   # always log the current run, but make sure that the file doesn't become to big
   logfile=/tmp/EPGBackup.log
-  echo "" > $logfile
+  echo -n "" > $logfile
 fi
 
 getVersion () {

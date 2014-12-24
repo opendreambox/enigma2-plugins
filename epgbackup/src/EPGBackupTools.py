@@ -7,7 +7,7 @@ from traceback import format_exc
 # for localized messages
 from . import _
 
-PLUGIN_VERSION = "1.1"
+PLUGIN_VERSION = "1.1.1"
 def debugOut(outtxt, outfile=None, fmode="aw", forced=False, outPrefix="[EPGBackup]"):
 	try: # fails if called too early during Enigma startup
 		if config.plugins.epgbackup.enable_debug.value or forced:
@@ -40,6 +40,4 @@ try:
 	Notifications.notificationQueue.registerDomain(EPGBACKUP_NOTIFICATIONDOMAIN, _("EPGBACKUP_NOTIFICATION_DOMAIN"), deferred_callable = True)
 except:
 	debugOut("Register-Notification-Domain-Error:\n" + str(format_exc()), forced=True)
-
-
 	
