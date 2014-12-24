@@ -31,7 +31,7 @@ from Screens.MessageBox import MessageBox
 from IdentifierBase import IdentifierBase
 from ManagerBase import ManagerBase
 from GuideBase import GuideBase
-from Channels import ChannelsBase, removeEpisodeInfo, lookupServiceAlternatives
+from Channels import ChannelsBase, lookupServiceAlternatives
 from Logger import splog
 from CancelableThread import QueueWithTimeOut, CancelableThread, synchronized, myLock
 
@@ -137,15 +137,15 @@ def refactorTitle(org, data):
 		season, episode, title, series = data
 		if config.plugins.seriesplugin.pattern_title.value and not config.plugins.seriesplugin.pattern_title.value == "Off":
 			if config.plugins.seriesplugin.title_replace_chars.value:
-				#splog("SP: refactor org", org)
+				splog("SP: refactor org", org)
 				org = CompiledRegexpReplaceChars.sub('', str(org))
-				#splog("SP: refactor org", org)
-				#splog("SP: refactor title", title)
+				splog("SP: refactor org", org)
+				splog("SP: refactor title", title)
 				title = CompiledRegexpReplaceChars.sub('', str(title))
-				#splog("SP: refactor title", title)
-				#splog("SP: refactor series", series)
+				splog("SP: refactor title", title)
+				splog("SP: refactor series", series)
 				series = CompiledRegexpReplaceChars.sub('', str(series))
-				#splog("SP: refactor series", series)
+				splog("SP: refactor series", series)
 			return config.plugins.seriesplugin.pattern_title.value.strip().format( **{'org': org, 'season': season, 'episode': episode, 'title': title, 'series': series} )
 		else:
 			return org
@@ -276,7 +276,7 @@ class SeriesPlugin(Modules, ChannelsBase):
 		
 		#http://bugs.python.org/issue7980
 		datetime.strptime('2012-01-01', '%Y-%m-%d')
-			
+		
 		self.identifier_elapsed = self.instantiateModuleWithName( config.plugins.seriesplugin.identifier_elapsed.value )
 		#splog(self.identifier_elapsed)
 		
@@ -285,6 +285,13 @@ class SeriesPlugin(Modules, ChannelsBase):
 		
 		self.identifier_future = self.instantiateModuleWithName( config.plugins.seriesplugin.identifier_future.value )
 		#splog(self.identifier_future)
+		
+		pattern = config.plugins.seriesplugin.pattern_title.value
+		pattern = pattern.replace("{org:s}", "(.+)")
+		pattern = re.sub('{season:?\d*d?}', '\d+', pattern)
+		pattern = re.sub('{episode:?\d*d?}', '\d+', pattern)
+		pattern = pattern.replace("{title:s}", ".+")
+		self.compiledRegexpSeries = re.compile(pattern)
 
 	def stop(self):
 		splog("SP: Main: stop")
@@ -316,8 +323,17 @@ class SeriesPlugin(Modules, ChannelsBase):
 			except:
 				pass
 		
-		name = removeEpisodeInfo(name)
-		#name = removeEpisodeInfo(name)
+		# Check for episode information in title
+		match = self.compiledRegexpSeries.match(name)
+		if match:
+			#splog(match.group(0))     # Entire match
+			#splog(match.group(1))     # First parenthesized subgroup
+			if config.plugins.seriesplugin.skip_pattern_match.value:
+				splog("SP: Main: Skip check because of pattern match")
+				return
+			if match.group(1):
+				name = match.group(1)
+		
 		if name.startswith("The ") or name.startswith("Der ") or name.startswith("Die ")or name.startswith("Das "):
 			name = name[4:]
 		

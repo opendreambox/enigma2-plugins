@@ -278,7 +278,7 @@ class Fernsehserien(IdentifierBase):
 							delta = abs(self.begin - xbegin)
 							delta = delta.seconds + delta.days * 24 * 3600
 							#Py2.7 delta = abs(self.begin - xbegin).total_seconds()
-							#splog(self.begin, xbegin, delta, max_time_drift)
+							splog(self.begin, xbegin, delta, max_time_drift)
 							
 							if delta <= max_time_drift:
 								

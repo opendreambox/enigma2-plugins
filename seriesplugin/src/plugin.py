@@ -28,7 +28,7 @@ from Logger import splog
 #######################################################
 # Constants
 NAME = "SeriesPlugin"
-VERSION = "1.5.8"
+VERSION = "1.6.0"
 DESCRIPTION = _("SeriesPlugin")
 SHOWINFO = _("Show series info (SP)")
 RENAMESERIES = _("Rename serie(s) (SP)")
@@ -90,7 +90,6 @@ config.plugins.seriesplugin.pattern_description       = ConfigText(default = "S{
 config.plugins.seriesplugin.title_replace_chars       = ConfigYesNo(default = True)
 
 config.plugins.seriesplugin.channel_file              = ConfigText(default = "/etc/enigma2/seriesplugin_channels.xml", fixed_size = False)
-config.plugins.seriesplugin.channel_popups            = ConfigYesNo(default = False)
 
 config.plugins.seriesplugin.rename_file               = ConfigYesNo(default = True)
 config.plugins.seriesplugin.rename_tidy               = ConfigYesNo(default = False)
@@ -104,6 +103,7 @@ config.plugins.seriesplugin.max_time_drift            = ConfigSelectionNumber(0,
 config.plugins.seriesplugin.search_depths             = ConfigSelectionNumber(0, 10, 1, default = 0)
 
 config.plugins.seriesplugin.skip_during_records       = ConfigYesNo(default=False)
+config.plugins.seriesplugin.skip_pattern_match        = ConfigYesNo(default=True)
 
 config.plugins.seriesplugin.autotimer_independent     = ConfigYesNo(default = False)
 config.plugins.seriesplugin.independent_cycle         = ConfigSelectionNumber(5, 24*60, 5, default = 60)

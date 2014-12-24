@@ -45,17 +45,6 @@ except:
 	from OrderedDict import OrderedDict
 
 
-CompiledRegexpSeries = re.compile('(.*)[ _][Ss]{,1}\d{1,2}[EeXx]\d{1,2}.*')  #Only for S01E01 OR 01x01 + optional title
-def removeEpisodeInfo(text):
-	# Very basic Series Episode remove function
-	m = CompiledRegexpSeries.match(text)
-	if m:
-		#splog(m.group(0))     # Entire match
-		#splog(m.group(1))     # First parenthesized subgroup
-		if m.group(1):
-			text = m.group(1)
-	return text
-
 
 ChannelReplaceDict = OrderedDict([
 	('\(S\)', ''),
@@ -104,17 +93,32 @@ def lookupServiceAlternatives(service):
 	
 	#splog("lookupServiceAlternatives service", service)
 	ref = str(service)
-	ref = re.sub('::.*', ':', ref)
-	#splog("lookupServiceAlternatives ref", ref)
-	#splog("lookupServiceAlternatives channels before", channels)
-	#splog("lookupServiceAlternatives ref in channels", ref in channels)
+	splog("lookupServiceAlternatives str(ref)", ref)
 	if ref in channels:
+		splog("lookupServiceAlternatives if ref in channels")
 		name, alternatives = channels.get(ref)
 	else:
-		name = ServiceReference(ref).getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
-		alternatives = [ ( name, unifyChannel(name) ), ]
-		channels[ref] = ( name, alternatives )
-		channels_changed = True
+		splog("lookupServiceAlternatives else ref in channels")
+		name = ServiceReference(ref).getServiceName()
+		if name:
+			splog("lookupServiceAlternatives if name")
+			alternatives = [ ( name, unifyChannel(name) ), ]
+			channels[ref] = ( name, alternatives )
+			channels_changed = True
+		else:
+			splog("lookupServiceAlternatives else name")
+			ref = re.sub('::.*', ':', ref)
+			splog("lookupServiceAlternatives re.sub  ", ref)
+			#splog("lookupServiceAlternatives channels before", channels)
+			if ref in channels:
+				splog("lookupServiceAlternatives if ref in channels")
+				name, alternatives = channels.get(ref)
+			else:
+				splog("lookupServiceAlternatives else ref in channels")
+				name = ServiceReference(ref).getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
+				alternatives = [ ( name, unifyChannel(name) ), ]
+				channels[ref] = ( name, alternatives )
+				channels_changed = True
 	
 	#splog("lookupServiceAlternatives channels")
 	#for channel in channels:
@@ -145,16 +149,6 @@ def compareChannels(locals, remote, service):
 			# The local channel is unknown
 			return True
 
-		# Ask the user only if we are called from SeriesPluginInfoScreen
-		from SeriesPluginInfoScreen import instance
-		if config.plugins.seriesplugin.channel_popups.value and instance:
-			names = [ name for name, uname in locals ]
-			instance.session.openWithCallback(
-				boundFunction(channelEqual, locals, remote, uremote, service),
-				MessageBox,
-				"SeriesPlugin:\n"+ _("Are these channels equal?")+ "\n"+ str(remote)+ "\n"+str(names),
-				type = MessageBox.TYPE_YESNO
-			)
 	return False
 
 def channelEqual(locals, remote, uremote, service, equal):
