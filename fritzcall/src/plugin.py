@@ -2,9 +2,9 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1039 $
-$Date: 2014-11-15 16:13:49 +0100 (Sat, 15 Nov 2014) $
-$Id: plugin.py 1039 2014-11-15 15:13:49Z michael $
+$Revision: 1120 $
+$Date: 2014-12-26 12:07:53 +0100 (Fr, 26 Dez 2014) $
+$Id: plugin.py 1120 2014-12-26 11:07:53Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -63,6 +63,7 @@ from . import _, __, initDebug, debug #@UnresolvedImport # pylint: disable=W0611
 from enigma import getDesktop
 DESKTOP_WIDTH = getDesktop(0).size().width()
 DESKTOP_HEIGHT = getDesktop(0).size().height()
+
 
 #
 # this is pure magic.
@@ -277,8 +278,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1039 $"[1:-2] + "\n" + 
-							"$Date: 2014-11-15 16:13:49 +0100 (Sat, 15 Nov 2014) $"[1:23] + "\n"
+							"$Revision: 1120 $"[1:-2] + "\n" + 
+							"$Date: 2014-12-26 12:07:53 +0100 (Fr, 26 Dez 2014) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -1906,7 +1907,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1039 $"[1: - 1] + "$Date: 2014-11-15 16:13:49 +0100 (Sat, 15 Nov 2014) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1120 $"[1: - 1] + "$Date: 2014-12-26 12:07:53 +0100 (Fr, 26 Dez 2014) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -2140,6 +2141,7 @@ def findFace(number, name):
 	else:
 		files = os.listdir(facesDir)
 		# debug("[FritzCall] findFace listdir: %s" %repr(files))
+		# TODO macthed das hier auf ????.png1 ?!?!?
 		myFiles = [f for f in files if re.match(re.escape(number) + "\.[png|PNG]", f)]
 		if not myFiles:
 			myFiles = [f for f in files if re.match(re.escape(name) + "\.[png|PNG]", f)]
@@ -2430,7 +2432,7 @@ class FritzReverseLookupAndNotifier:
 
 class FritzProtocol(LineReceiver): # pylint: disable=W0223
 	def __init__(self):
-		debug("[FritzProtocol] " + "$Revision: 1039 $"[1:-1]	+ "$Date: 2014-11-15 16:13:49 +0100 (Sat, 15 Nov 2014) $"[7:23] + " starting")
+		debug("[FritzProtocol] " + "$Revision: 1120 $"[1:-1]	+ "$Date: 2014-12-26 12:07:53 +0100 (Fr, 26 Dez 2014) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
