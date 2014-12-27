@@ -350,7 +350,7 @@ class EpgCenterList(GUIComponent):
 				
 			width = self.piconSize.width()
 			if picon:
-				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetLeft, (self.itemHeight - self.baseHeight) / 2, width, self.itemHeight, picon))
+				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetLeft, (self.itemHeight - self.baseHeight) / 2, width, self.itemHeight, picon))
 			offsetLeft = offsetLeft + width + columnSpace
 			
 		if config.plugins.merlinEpgCenter.showServiceName.value:
@@ -393,7 +393,7 @@ class EpgCenterList(GUIComponent):
 					progressOffset = int((width - self.progressPixmapWidth) / 2)
 				else:
 					progressOffset = 0
-				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetLeft + progressOffset, self.halfItemHeight + (self.halfItemHeight - progressHeight) / 2 + self.singleLineBorder, width, progressHeight, progressPixmap))
+				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetLeft + progressOffset, self.halfItemHeight + (self.halfItemHeight - progressHeight) / 2 + self.singleLineBorder, width, progressHeight, progressPixmap))
 			elif config.plugins.merlinEpgCenter.listProgressStyle.value == STYLE_SIMPLE_BAR:
 				res.append((eListboxPythonMultiContent.TYPE_PROGRESS, offsetLeft, self.halfItemHeight + (self.halfItemHeight - progressHeight) / 2 + self.singleLineBorder, width, progressHeight, percent, 1, secondLineColor))
 			elif config.plugins.merlinEpgCenter.listProgressStyle.value == STYLE_PIXMAP_BAR and progressPixmap is not None:
@@ -441,41 +441,41 @@ class EpgCenterList(GUIComponent):
 				posY = 2
 				height = self.itemHeight - 4
 				if (zapPixmaps & TIMER_TYPE_EID_MATCH):
-					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.zap_event_pixmap))
+					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.zap_event_pixmap))
 				elif (zapPixmaps & TIMER_TYPE_COVERS_FULL):
-					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.zap_pixmap))
+					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.zap_pixmap))
 				elif (zapPixmaps & TIMER_TYPE_EID_REPEATED):
-					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.zap_repeated_pixmap))
+					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.zap_repeated_pixmap))
 				elif (zapPixmaps & TIMER_TYPE_ADD_COVERS_FULL):
-					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.zap_add_pixmap))
+					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.zap_add_pixmap))
 			elif (zapPixmaps & TIMER_TYPE_INSIDE_EVENT) or (zapPixmaps & TIMER_TYPE_ADD_INSIDE_EVENT):
 				posY = self.itemHeight / 2 - 6
 				height = 12
 				if (zapPixmaps & TIMER_TYPE_INSIDE_EVENT):
-					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.zap_pixmap))
+					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.zap_pixmap))
 				elif (zapPixmaps & TIMER_TYPE_ADD_INSIDE_EVENT):
-					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.zap_add_pixmap))
+					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.zap_add_pixmap))
 			else:
 				if zapPixmaps & TIMER_TYPE_COVERS_END:
 					posY = self.itemHeight / 2 + 2
 					height = self.itemHeight - posY - 2
-					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.zap_pre_pixmap))
+					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.zap_pre_pixmap))
 				elif zapPixmaps & TIMER_TYPE_ADD_COVERS_END:
 					posY = self.itemHeight / 2 + 2
 					height = self.itemHeight - posY - 2
-					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.zap_add_pixmap))
+					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.zap_add_pixmap))
 				if zapPixmaps & TIMER_TYPE_COVERS_BEGIN:
 					posY = 2
 					height = self.itemHeight / 2 - 2
-					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.zap_post_pixmap))
+					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.zap_post_pixmap))
 				elif zapPixmaps & TIMER_TYPE_ADD_COVERS_BEGIN:
 					posY = 2
 					height = self.itemHeight / 2 - 2
-					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.zap_add_pixmap))
+					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.zap_add_pixmap))
 				if zapPixmaps & TIMER_TYPE_ADD:
 					posY = 2
 					height = self.itemHeight - 4
-					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.zap_add_pixmap))
+					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.zap_add_pixmap))
 					
 		offsetRight -= 10
 		
@@ -485,58 +485,58 @@ class EpgCenterList(GUIComponent):
 				height = self.itemHeight - 4
 				if (timerPixmaps & TIMER_TYPE_EID_MATCH):
 					if (isRunning & TIMER_TYPE_EID_MATCH) and not self.blinkTimer.getBlinkState():
-						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, None))
+						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, None))
 					else:
-						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.timer_event_pixmap))
+						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.timer_event_pixmap))
 				elif (timerPixmaps & TIMER_TYPE_COVERS_FULL):
 					if (isRunning & TIMER_TYPE_COVERS_FULL) and not self.blinkTimer.getBlinkState():
-						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, None))
+						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, None))
 					else:
-						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.timer_pixmap))
+						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.timer_pixmap))
 				elif (timerPixmaps & TIMER_TYPE_EID_REPEATED):
 					if (isRunning & TIMER_TYPE_EID_REPEATED) and not self.blinkTimer.getBlinkState():
-						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, None))
+						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, None))
 					else:
-						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.timer_repeated_pixmap))
+						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.timer_repeated_pixmap))
 				elif (timerPixmaps & TIMER_TYPE_ADD_COVERS_FULL):
-					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.timer_add_pixmap))
+					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.timer_add_pixmap))
 			elif (timerPixmaps & TIMER_TYPE_INSIDE_EVENT) or (timerPixmaps & TIMER_TYPE_ADD_INSIDE_EVENT):
 				posY = self.itemHeight / 2 - 6
 				height = 12
 				if (timerPixmaps & TIMER_TYPE_INSIDE_EVENT):
 					if (isRunning & TIMER_TYPE_INSIDE_EVENT) and not self.blinkTimer.getBlinkState():
-						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, None))
+						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, None))
 					else:
-						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.timer_pixmap))
+						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.timer_pixmap))
 				elif (timerPixmaps & TIMER_TYPE_ADD_INSIDE_EVENT):
-					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.timer_add_pixmap))
+					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.timer_add_pixmap))
 			else:
 				if timerPixmaps & TIMER_TYPE_COVERS_END:
 					posY = self.itemHeight / 2 + 2
 					height = self.itemHeight - posY - 2
 					if (isRunning & TIMER_TYPE_COVERS_END) and not self.blinkTimer.getBlinkState():
-						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, None))
+						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, None))
 					else:
-						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.timer_pre_pixmap))
+						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.timer_pre_pixmap))
 				elif timerPixmaps & TIMER_TYPE_ADD_COVERS_END:
 					posY = self.itemHeight / 2 + 2
 					height = self.itemHeight - posY - 2
-					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.timer_add_pixmap))
+					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.timer_add_pixmap))
 				if timerPixmaps & TIMER_TYPE_COVERS_BEGIN:
 					posY = 2
 					height = self.itemHeight / 2 - 2
 					if (isRunning & TIMER_TYPE_COVERS_BEGIN) and not self.blinkTimer.getBlinkState():
-						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, None))
+						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, None))
 					else:
-						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.timer_post_pixmap))
+						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.timer_post_pixmap))
 				elif timerPixmaps & TIMER_TYPE_ADD_COVERS_BEGIN:
 					posY = 2
 					height = self.itemHeight / 2 - 2
-					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.timer_add_pixmap))
+					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.timer_add_pixmap))
 				if timerPixmaps & TIMER_TYPE_ADD:
 					posY = 2
 					height = self.itemHeight - 4
-					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetRight, posY, 8, height, self.timer_add_pixmap))
+					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetRight, posY, 8, height, self.timer_add_pixmap))
 					
 		if config.plugins.merlinEpgCenter.showBeginRemainTime.value and config.plugins.merlinEpgCenter.showDuration.value:
 			width = self.maxWidth * 8 / 100
@@ -1011,7 +1011,7 @@ class EpgCenterTimerlist(TimerList):
 			else:
 				picon = self.piconLoader.getPicon(str(timer.service_ref))
 			if picon:
-				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, offsetLeft, (self.itemHeight - self.baseHeight) / 2, width, height, picon))
+				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetLeft, (self.itemHeight - self.baseHeight) / 2, width, height, picon))
 			offsetLeft = offsetLeft + width + columnSpace
 			
 		if config.plugins.merlinEpgCenter.showServiceName.value:

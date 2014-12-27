@@ -142,7 +142,7 @@ def sessionstart(reason, session):
 	MerlinEPGCenterStarter(session)
 	
 # InfoBar is now initialised, our chance to occupy the ChannelSelectActions
-def networkconfigread(reason = None):
+def infobar(reason = None):
 	if not InfoBar.instance:
 		return
 	infoBarFunctionSaver.saveInfoBarChannelFunctions()
@@ -179,7 +179,7 @@ def Plugins(**kwargs):
 	list = [
 		PluginDescriptor(where = [PluginDescriptor.WHERE_AUTOSTART], fnc=autostart, weight=100),
 		PluginDescriptor(where = [PluginDescriptor.WHERE_SESSIONSTART], fnc=sessionstart, weight=100),
-		PluginDescriptor(where = [PluginDescriptor.WHERE_NETWORKCONFIG_READ], fnc=networkconfigread, weight=100),
+		PluginDescriptor(where = [PluginDescriptor.WHERE_INFOBAR], fnc=infobar, weight=100),
 		PluginDescriptor(name = "Merlin EPG Center", description = _("More than just an EPG..."), where = [PluginDescriptor.WHERE_EXTENSIONSMENU,
 		PluginDescriptor.WHERE_PLUGINMENU, PluginDescriptor.WHERE_EVENTINFO], fnc = openMerlinEPGCenter, icon = "plugin.png")
 		]
