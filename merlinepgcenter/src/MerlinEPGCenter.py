@@ -419,13 +419,8 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 			i += 1
 			
 	def setTabText(self, tabList):
-		if self.configTabsShown:
-			numTabs = NUM_CONFIG_TABS
-		else:
-			numTabs = NUM_EPG_TABS
-			
 		i = 0
-		while i <= numTabs:
+		while i <= NUM_EPG_TABS:
 			self["tab_text_%d" % i].setText(tabList[i])
 			i += 1
 			
