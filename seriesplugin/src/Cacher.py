@@ -75,19 +75,19 @@ class Cacher(object):
 			# now, It's useless to check if it's recent enough, it's not there.
 			return None
 
-	def doCacheInternal(self, url, page):
-		#pushCache
+	def doCachePage(self, url, page):
 		global cache
-		
-		#splog("####SPCACHE DO ", url, page)
 		
 		if not config.plugins.seriesplugin.caching.value:
 			return
 		cache[url] = ( time(), page )
-	
-	def doCache(self, url, page):
-		# Temporarily disabled
-		return
+
+	def doCacheList(self, url, list):
+		global cache
+		
+		if not config.plugins.seriesplugin.caching.value:
+			return
+		cache[url] = ( time(), list[:] )
 
 	def isCached(self, url):
 		global cache

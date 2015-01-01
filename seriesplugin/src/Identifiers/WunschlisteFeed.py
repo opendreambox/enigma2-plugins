@@ -116,13 +116,12 @@ class WunschlisteFeed(IdentifierBase):
 	def knowsFuture(cls):
 		return True
 
-	def getEpisode(self, name, begin, end=None, service=None, channels=[]):
+	def getEpisode(self, name, begin, end=None, channels=[]):
 		# On Success: Return a single season, episode, title tuple
 		# On Failure: Return a empty list or String or None
 		
 		self.begin = begin
 		self.end = end
-		self.service = service
 		self.channels = channels
 		
 		self.knownids = []
@@ -167,7 +166,7 @@ class WunschlisteFeed(IdentifierBase):
 		
 		if data and isinstance(data, basestring):
 			data = self.parseSeries(data)
-			self.doCache(url, data)
+			self.doCacheList(url, data)
 		
 		if data and isinstance(data, list):
 			splog("WunschlisteFeed ids", data)
@@ -202,7 +201,7 @@ class WunschlisteFeed(IdentifierBase):
 		
 		if data and isinstance(data, basestring):
 			data = self.parseNextPage(data)
-			self.doCache(url, data)
+			self.doCacheList(url, data)
 		
 		if data and isinstance(data, list):
 			trs = data
@@ -232,7 +231,7 @@ class WunschlisteFeed(IdentifierBase):
 							result = CompiledRegexpAtomChannel.search(xtitle)
 							if result and len(result.groups()) >= 1:
 								
-								if compareChannels(self.channels, result.group(1), self.service):
+								if compareChannels(self.channels, result.group(1)):
 									
 									if delta < ydelta:
 										# Slice string to remove channel

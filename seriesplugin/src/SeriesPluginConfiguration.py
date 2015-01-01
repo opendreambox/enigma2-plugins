@@ -39,7 +39,7 @@ from Plugins.Plugin import PluginDescriptor
 from SeriesPlugin import resetInstance, getInstance
 from SeriesPluginIndependent import startIndependent, stopIndependent
 from EpisodePatterns import readPatternFile
-from Logger import splog, Logger
+from Logger import splog
 from ShowLogScreen import ShowLogScreen
 
 
@@ -56,7 +56,7 @@ def checkList(cfg):
 
 #######################################################
 # Configuration screen
-class SeriesPluginConfiguration(ConfigListScreen, Screen, Logger):
+class SeriesPluginConfiguration(ConfigListScreen, Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.skinName = [ "SeriesServiceConfiguration", "Setup" ]

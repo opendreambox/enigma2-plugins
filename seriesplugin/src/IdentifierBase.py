@@ -30,8 +30,6 @@ from Cacher import Cacher, INTER_QUERY_TIME
 from Logger import splog
 from Analytics import Analytics
 
-import recipeMemUse as MemoryUsage
-
 
 class MyException(Exception):
     pass
@@ -83,16 +81,6 @@ class IdentifierBase(ModuleBase, Cacher, Analytics):
 		
 		splog("SSBase getPage", url)
 		
-		#TEST other solutions
-		#http://de.softuses.com/28672
-		#http://code.google.com/p/psutil/
-		#VmSize = MemoryUsage.memory()
-		#splog("SP VmSize: "+str(VmSize/1024/1024)+" Mb" )
-		#VmRSS  = MemoryUsage.resident()
-		#splog("SP VmRSS:  "+str(VmRSS/1024/1024)+" Mb" )
-		#VmStk  = MemoryUsage.stacksize()
-		#splog("SP VmStk:  "+str(VmStk/1024/1024)+" Mb" )
-		
 		cached = self.getCached(url, expires)
 		
 		self.sendAnalytics(url, True if cached else False)
@@ -110,7 +98,7 @@ class IdentifierBase(ModuleBase, Cacher, Analytics):
 				
 				#splog("SSBase response to cache: ", response) 
 				if response:
-					self.doCacheInternal(url, response)
+					self.doCachePage(url, response)
 			
 			except URLError as e:
 				 # For Python 2.6
@@ -165,7 +153,7 @@ class IdentifierBase(ModuleBase, Cacher, Analytics):
 
 	################################################
 	# To be implemented by subclass
-	def getEpisode(self, name, begin, end, service, channels):
+	def getEpisode(self, name, begin, end, channels):
 		# On Success: Return a single season, episode, title tuple
 		# On Failure: Return a empty list or String or None
 		return None

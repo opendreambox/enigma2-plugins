@@ -100,11 +100,11 @@ def lookupServiceAlternatives(service):
 	else:
 		splog("lookupServiceAlternatives else ref in channels")
 		name = ServiceReference(ref).getServiceName()
+		channels_changed = True
 		if name:
 			splog("lookupServiceAlternatives if name")
 			alternatives = [ ( name, unifyChannel(name) ), ]
 			channels[ref] = ( name, alternatives )
-			channels_changed = True
 		else:
 			splog("lookupServiceAlternatives else name")
 			ref = re.sub('::.*', ':', ref)
@@ -118,7 +118,6 @@ def lookupServiceAlternatives(service):
 				name = ServiceReference(ref).getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
 				alternatives = [ ( name, unifyChannel(name) ), ]
 				channels[ref] = ( name, alternatives )
-				channels_changed = True
 	
 	#splog("lookupServiceAlternatives channels")
 	#for channel in channels:
@@ -129,7 +128,7 @@ def lookupServiceAlternatives(service):
 	
 	return alternatives
 
-def compareChannels(locals, remote, service):
+def compareChannels(locals, remote):
 	#global channels
 	
 	uremote = unifyChannel(remote)		
