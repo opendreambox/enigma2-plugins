@@ -6,6 +6,9 @@ class ThreadQueue:
 		self.__list = [ ]
 		self.__lock = Lock()
 
+	def empty(self):
+		return not self.__list
+
 	def push(self, val):
 		lock = self.__lock
 		lock.acquire()

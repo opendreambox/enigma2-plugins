@@ -265,13 +265,15 @@ class SeriesPluginInfoScreen(Screen):
 			path = os.path.join(PIXMAP_PATH, identifier+".png")
 			if os.path.exists(path):
 				self.loadPixmap("logo", path )
-		
-		identifier = self.seriesPlugin.getEpisode(
-				self.episodeCallback, 
-				#self.name, begin, end, channel, today=today, elapsed=elapsed
-				#self.name, begin, end, self.service, today=today, elapsed=elapsed
-				self.name, begin, end, ref, today=today, elapsed=elapsed
-			)
+		try:
+			identifier = self.seriesPlugin.getEpisode(
+					self.episodeCallback, 
+					#self.name, begin, end, channel, today=today, elapsed=elapsed
+					#self.name, begin, end, self.service, today=today, elapsed=elapsed
+					self.name, begin, end, ref, today=today, elapsed=elapsed
+				)
+		except Exception as e:
+			splog("SPI: exception:", str(e))
 
 	def episodeCallback(self, data=None):
 		#TODO episode list handling
@@ -300,8 +302,7 @@ class SeriesPluginInfoScreen(Screen):
 				self.setColorButtons()
 			except Exception as e:
 				# Screen already closed
-				#splog("SPI: exception:", str(e))
-				pass
+				splog("SPI: exception:", str(e))
 		elif data:
 			custom = str( data )
 		else:

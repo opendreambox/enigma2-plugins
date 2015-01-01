@@ -110,8 +110,8 @@ class SeriesPluginIndependent(object):
 		runIndependent()
 
 	def stop(self):
-			self.etimer_conn = None
-			try:
-				self.etimer.callback.remove(self.run)
-			except:
-				pass
+		self.etimer_conn = None
+		try:
+			self.etimer.callback.remove(self.run)
+		except:
+			pass
