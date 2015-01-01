@@ -425,13 +425,8 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 			i += 1
 			
 	def setTabText(self, tabList):
-		if self.configTabsShown:
-			numTabs = NUM_CONFIG_TABS
-		else:
-			numTabs = NUM_EPG_TABS
-			
 		i = 0
-		while i <= numTabs:
+		while i <= NUM_EPG_TABS:
 			if (not self.configTabsShown) and (i == MULTI_EPG_PRIMETIME) and config.plugins.merlinEpgCenter.showPrimeTimeValue.value:
 				hours = str(config.plugins.merlinEpgCenter.primeTime.value[0])
 				minutes = str(config.plugins.merlinEpgCenter.primeTime.value[1])
