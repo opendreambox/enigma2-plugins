@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1085 $
-$Date: 2014-12-13 17:31:10 +0100 (Sat, 13 Dec 2014) $
-$Id: FritzCallFBF.py 1085 2014-12-13 16:31:10Z michael $
+$Revision: 1119 $
+$Date: 2014-12-26 12:06:04 +0100 (Fr, 26 Dez 2014) $
+$Id: FritzCallFBF.py 1119 2014-12-26 11:06:04Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -70,7 +70,12 @@ def resolveNumber(number, default=None, phonebook=None):
 	return number
 
 def cleanNumber(number):
-	number = (" ".join(re.findall(r"[+0-9*#ABCD]*", number))).replace(" ","")
+	# debug("[FritzCallFBF] cleanNumber: " + number)
+	newNumber = (" ".join(re.findall(r"[+0-9*#ABCD]*", number))).replace(" ","")
+	if len(newNumber) == 0:
+		return number
+	else:
+		number = newNumber
 	if number[0] == '+':
 		number = '00' + number[1:]
 	elif number[0] != '0':
