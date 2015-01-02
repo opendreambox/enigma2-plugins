@@ -34,7 +34,7 @@ from Logger import splog
 
 from ThreadQueue import ThreadQueue
 from threading import Thread, currentThread, _get_ident
-from enigma import ePythonMessagePump
+#from enigma import ePythonMessagePump
 
 
 try:
@@ -187,30 +187,20 @@ class ThreadItem:
 
 class SeriesPluginWorker(Thread):
 	
-	def __init__(self):
+	def __init__(self, callback):
 		Thread.__init__(self)
+		self.callback = callback
 		self.__running = False
-		#self.__messages = ThreadQueue()
-		self.__messagePump = ePythonMessagePump()
-		self.__list = ThreadQueue()
-
-	def __getMessagePump(self):
-		return self.__messagePump
-	MessagePump = property(__getMessagePump)
-
-	#def __getMessageQueue(self):
-	#	return self.__messages
-	#Message = property(__getMessageQueue)
-
-	#def __getRunning(self):
-	#	return self.__running
-	#isRunning = property(__getRunning)
+		self.__messages = ThreadQueue()
+		self.__pump = ePythonMessagePump()
+		try:
+			self.__pump_recv_msg_conn = self.__pump.recv_msg.connect(self.gotThreadMsg)
+		except:
+			self.__pump.recv_msg.get().append(self.gotThreadMsg)
+		self.__queue = ThreadQueue()
 
 	def isListEmpty(self):
-		return self.__list.empty()
-
-	#def getListLength(self):
-	#	return len(self.__list)
+		return self.__queue.empty()
 
 	def add(self, item):
 		
@@ -220,30 +210,48 @@ class SeriesPluginWorker(Thread):
 		tid = libc.syscall(SYS_gettid)
 		splog('SP: Worker add from thread: ', currentThread(), _get_ident(), self.ident, os.getpid(), tid )
 		
+		self.__queue.push(item)
+		
 		if not self.__running:
 			self.__running = True
-		
-		splog("SP: Worker: Add: Start")
-		self.__list.push(item)
+			self.start() # Start blocking code in Thread
 	
+	def gotThreadMsg(self, msg=None):
+		
+		from ctypes import CDLL
+		SYS_gettid = 4222
+		libc = CDLL("libc.so.6")
+		tid = libc.syscall(SYS_gettid)
+		splog('SP: Worker got message: ', currentThread(), _get_ident(), self.ident, os.getpid(), tid )
+		
+		data = self.__messages.pop()
+		if callable(self.callback):
+			self.callback(data)
+
 	def stop(self):
 		self.running = False
-		#self.__pump_recv_msg_conn = None
+		try:
+			self.__pump.recv_msg.get().remove(self.gotThreadMsg)
+		except:
+			pass
+		self.__pump_recv_msg_conn = None
 	
 	def run(self):
 		
-		while not self.__list.empty():
+		from ctypes import CDLL
+		SYS_gettid = 4222
+		libc = CDLL("libc.so.6")
+		tid = libc.syscall(SYS_gettid)
+		splog('SP: Worker got message: ', currentThread(), _get_ident(), self.ident, os.getpid(), tid )
+		
+		while not self.__queue.empty():
 			
 			# NOTE: we have to check this here and not using the while to prevent the parser to be started on shutdown
 			if not self.__running: break
 			
-			item = self.__list.pop(0)
+			item = self.__queue.pop()
 			
-			from ctypes import CDLL
-			SYS_gettid = 4222
-			libc = CDLL("libc.so.6")
-			tid = libc.syscall(SYS_gettid)
-			splog('SP: Worker is processing as thread: ', currentThread(), _get_ident(), self.ident, os.getpid(), tid )
+			splog('SP: Worker is processing')
 			
 			result = None
 			
@@ -266,34 +274,28 @@ class SeriesPluginWorker(Thread):
 				episode = int(CompiledRegexpNonDecimal.sub('', episode))
 				title = title.strip()
 				splog("SP: Worker: result callback")
-				self.__messages.push((2, item.callback, season, episode, title, series,))
-				self.__messagePump.send(0)
+				self.__messages.push( (item.callback, (season, episode, title, series)) )
 			else:
 				splog("SP: Worker: result failed")
-				self.__messages.push((1, item.callback, result))
-				self.__messagePump.send(0)
+				self.__messages.push( (item.callback, result) )
+			self.__pump.send(0)
+			#from twisted.internet import reactor
+			#reactor.callFromThread(self.gotThreadMsg)
 		
-		#self.__messages.push((0, result,))
-		#self.__messagePump.send(0)
-		self.__running = False
-		Thread.__init__(self)
 		splog('SP: Worker: list is emty, done')
+		Thread.__init__(self)
+		self.__running = False
 
 
 class SeriesPlugin(Modules, ChannelsBase):
 
 	def __init__(self):
 		splog("SP: Main: Init")
-		self.thread = SeriesPluginWorker()
+		self.thread = SeriesPluginWorker(self.gotResult)
 		Modules.__init__(self)
 		ChannelsBase.__init__(self)
 		
 		self.serviceHandler = eServiceCenter.getInstance()
-		self.__pump_recv_msg_conn = None
-		try:
-			self.__pump_recv_msg_conn = self.thread.MessagePump.recv_msg.connect(self.gotThreadMsg_seriespluginworker)
-		except:
-			self.thread.MessagePump.recv_msg.get().append(self.gotThreadMsg_seriespluginworker)
 		
 		#http://bugs.python.org/issue7980
 		datetime.strptime('2012-01-01', '%Y-%m-%d')
@@ -462,20 +464,11 @@ class SeriesPlugin(Modules, ChannelsBase):
 		
 		return _("Error: No identifier")
 
-	def gotThreadMsg_seriespluginworker(self, msg):
-		splog("SP: Main: Thread: gotThreadMsg:", msg)
-		msg = self.thread.Message.pop()
-		try:
-			if msg[0] == 2:
-				callback = msg[1]
-				if callable(callback):
-					callback((msg[2],msg[3],msg[4],msg[5]))
-			elif msg[0] == 1:
-				callback = msg[1]
-				if callable(callback):
-					callback(msg[2])
-		except Exception as e:
-			splog("SeriesPlugin gotThreadMsg Exception:", str(e))
+	def gotResult(self, msg):
+		splog("SP: Main: Thread: gotResult:", msg)
+		callback, data = msg
+		if callable(callback):
+			callback(data)
 		
 		if (config.plugins.seriesplugin.lookup_counter.value == 10) \
 			or (config.plugins.seriesplugin.lookup_counter.value == 100) \
@@ -494,9 +487,6 @@ class SeriesPlugin(Modules, ChannelsBase):
 		self.thread.stop()
 		# NOTE: while we don't need to join the thread, we should do so in case it's currently parsing
 		#self.thread.join()
-		try:
-			self.thread.MessagePump.recv_msg.get().remove(self.gotThreadMsg_seriespluginrenameservice) # interconnect to thread stop
-		except:
-			pass
+		
 		self.thread = None
 		self.saveXML()

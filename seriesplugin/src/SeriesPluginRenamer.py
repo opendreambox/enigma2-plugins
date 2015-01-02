@@ -211,7 +211,6 @@ class SeriesPluginRenamer(object):
 			try:
 				for service in self.services:
 				
-					splog("SPR: run")
 					seriesPlugin = getInstance()
 					
 					if isinstance(service, eServiceReference):
