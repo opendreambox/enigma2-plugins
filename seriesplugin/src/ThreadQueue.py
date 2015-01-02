@@ -1,26 +1,27 @@
 # -*- coding: utf-8 -*-
 from threading import Lock
+from collections import deque
 
 class ThreadQueue:
 	def __init__(self):
-		self.__list = [ ]
+		self.__queue = deque()
 		self.__lock = Lock()
 
 	def empty(self):
-		return not self.__list
+		return not self.__queue
 
 	def push(self, val):
 		lock = self.__lock
 		lock.acquire()
-		self.__list.append(val)
+		self.__queue.append(val)
 		lock.release()
 
 	def pop(self):
 		lock = self.__lock
 		lock.acquire()
-		if self.__list:
-			ret = self.__list.pop()
+		if self.__queue:
+			ret = self.__queue.popleft()
 		else:
-			ret = (1, None, None)
+			ret = None
 		lock.release()
 		return ret

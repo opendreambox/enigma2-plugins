@@ -23,7 +23,7 @@ from Plugins.Extensions.SeriesPlugin.Channels import compareChannels
 from Plugins.Extensions.SeriesPlugin.Logger import splog
 
 from bs4 import BeautifulSoup
-#from HTMLParser import HTMLParser
+from HTMLParser import HTMLParser
 
 import codecs
 utf8_encoder = codecs.getencoder("utf-8")
@@ -55,6 +55,66 @@ def str_to_utf8(s):
 	utf8_str = utf8_encoder(s)[0]
 	splog("FS: str_to_utf8: s: ", repr(utf8_str))
 	return utf8_str
+
+
+class FSParser(HTMLParser):
+	def __init__(self):
+		HTMLParser.__init__(self)
+		# Hint: xpath from Firebug without tbody elements
+		xpath = '/html/body/div[2]/div[2]/div/table/tr[3]/td/div/table[2]/tr/td'
+		
+		self.xpath = [ e for e in xpath.split('/') if e ]
+		self.xpath.reverse()
+
+		self.lookfor = self.xpath.pop()
+		self.waitforendtag = 0
+
+		self.start = False
+		self.table = False
+		self.tr= False
+		self.td= False
+		self.data = []
+		self.list = []
+
+	def handle_starttag(self, tag, attributes):
+		if self.waitforendtag == 0:
+			if tag == self.lookfor:
+				if self.xpath:
+					self.lookfor = self.xpath.pop()
+					s = self.lookfor.split('[')
+					if len(s) == 2:
+						self.lookfor = s[0]
+						self.waitforendtag = int( s[1].split(']' )[0]) - 1
+				else:
+					self.start = True
+
+		if self.start and tag == 'table':
+			self.table = True
+
+		if self.table:
+			if tag == 'td':
+				self.td= True
+			elif tag == 'tr':
+				self.tr= True
+
+	def handle_endtag(self, tag):
+		if self.table:
+			if tag == 'td':
+				self.td= False
+			elif tag == 'tr':
+				self.tr= False
+				self.list.append(self.data)
+				self.data= []
+
+		if tag == 'table':
+			self.table = False
+
+		if tag == self.lookfor:
+			if self.waitforendtag > 0: self.waitforendtag -= 1
+
+	def handle_data(self, data):
+		if self.tr and self.td:
+			self.data.append(data)
 
 
 class Fernsehserien(IdentifierBase):
@@ -161,6 +221,10 @@ class Fernsehserien(IdentifierBase):
 
 	def parseNextPage(self, data):
 		trs = []
+		
+		#parser = FSParser()
+		#parser.feed(data)
+		#return parser.list
 		
 		# Handle malformed HTML issues
 		data = data.replace('\\"','"')  # target=\"_blank\"
