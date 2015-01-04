@@ -182,7 +182,7 @@ class EpgCenterList(GUIComponent):
 	def changeHeight(self, configElement = None):
 		self.listStyle = config.plugins.merlinEpgCenter.listStyle.value
 		if self.listStyle == STYLE_SINGLE_LINE:
-			self.singleLineBorder = 2
+			self.singleLineBorder = 4
 		else:
 			self.singleLineBorder = 0
 			
