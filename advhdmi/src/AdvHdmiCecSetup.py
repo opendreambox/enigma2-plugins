@@ -15,11 +15,12 @@ from . import _
 # Plugin
 from Plugins.Plugin import PluginDescriptor
 from Components.config import config, configfile, ConfigSelection, ConfigSubsection, getConfigListEntry, ConfigSubList, \
-	ConfigClock, ConfigInteger, ConfigYesNo 
+	ConfigClock, ConfigInteger, ConfigYesNo, NoSave
 from Components.ConfigList import ConfigListScreen
 from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT, RT_VALIGN_CENTER
 from Components.MenuList import MenuList
 from Tools.BoundFunction import boundFunction
+from plugin import _print, g_AdvHdmi_webif_available, g_AdvHdmi_partnerbox_available
 
 class AdvHdmiCecSetup(Screen, ConfigListScreen):
 	skin = """
@@ -38,6 +39,9 @@ class AdvHdmiCecSetup(Screen, ConfigListScreen):
 
 	def __init__(self, session):
 		Screen.__init__(self, session)
+		
+		# Summary
+		self.setup_title = _("Advanced HDMI-Cec Setup")
 		self.onChangedEntry = []
 		
 		self.list = []
@@ -48,6 +52,10 @@ class AdvHdmiCecSetup(Screen, ConfigListScreen):
 		self["key_yellow"] = StaticText(_("Timespans"))
 		self["key_info"] = StaticText()
 		self["help"] = StaticText()
+		
+		self.partnerboxConfig = NoSave(ConfigSelection(choices=[("NONE", _("no"))], default = "NONE"))
+		self.partnerboxConfig.addNotifier(self.set_disable_partnerbox, initial_call = False, immediate_feedback = True)
+		self.load_partnerbox_entries()
 		
 		self.getConfig()
 		
@@ -85,7 +93,7 @@ class AdvHdmiCecSetup(Screen, ConfigListScreen):
 		self.setTitle(_("Advanced HDMI-Cec Setup"))
 		
 	def getConfig(self):
-		from Plugins.SystemPlugins.AdvHdmi.plugin import g_AdvHdmi_webif_available
+		from Plugins.SystemPlugins.AdvHdmi.plugin import g_AdvHdmi_webif_available, g_AdvHdmi_partnerbox_available
 		
 		self.list = [ getConfigListEntry(_("partially disable HdmiCec"), config.plugins.AdvHdmiCec.enable, _("Partially disable HDMI-Cec?\nIt can be prevented only the signals that are sent from the Dreambox. Signals received by the Dreambox will not be prevented.")) ]
 		if config.plugins.AdvHdmiCec.enable.value:
@@ -95,6 +103,8 @@ class AdvHdmiCecSetup(Screen, ConfigListScreen):
 			self.list.append(getConfigListEntry(_("enable Power On"), config.plugins.AdvHdmiCec.enable_power_on, _("Should HDMI-Cec be send on Power On?")))
 			self.list.append(getConfigListEntry(_("enable Power Off"), config.plugins.AdvHdmiCec.enable_power_off, _("Should HDMI-Cec be send on Power Off?")))
 			self.list.append(getConfigListEntry(_("enable debug"), config.plugins.AdvHdmiCec.debug, _("Schould debugmessages be printed?")))
+			if g_AdvHdmi_partnerbox_available:
+				self.list.append(getConfigListEntry(_("disable if partnerbox running"), self.partnerboxConfig, _("Should HDMI-Cec be disabled if the a partnerbox is still running?")))
 		self.list.append(getConfigListEntry(_("show in"), config.plugins.AdvHdmiCec.show_in, _("Where should this setup be displayed?")))
 
 		self["config"].list = self.list
@@ -124,6 +134,19 @@ class AdvHdmiCecSetup(Screen, ConfigListScreen):
 			x[1].save()
 
 		self.close(self.session)
+	
+	def load_partnerbox_entries(self):
+		if g_AdvHdmi_partnerbox_available:
+			pchoices=[("NONE", _("no"))]
+			for e in config.plugins.Partnerbox.Entries:
+				pchoices.append((e.name.getValue(), e.name.getValue()))
+				_print("DEBUG: pchoice %s" % e.name.getValue())
+			self.partnerboxConfig.setChoices(choices=pchoices, default = "NONE")
+			_print("DEBUG: partnerboxConfig %s" % str(self.partnerboxConfig.getChoices()))
+		
+	def set_disable_partnerbox(self, configelement):
+		_print("DEBUG: set_disable_partnerbox: %s" % str(configelement.getValue()))
+		config.plugins.AdvHdmiCec.disable_partnerbox_entry.setValue(configelement.getValue())
 
 	def EditTimeSpanEntries(self):
 		self.session.open(TimeSpanListScreen)
@@ -141,12 +164,21 @@ class AdvHdmiCecSetup(Screen, ConfigListScreen):
 			infoMsg += _("No HDMI-Cec-Hooks are registered!")
 		self.session.open(MessageBox, infoMsg, MessageBox.TYPE_INFO, title = _("Advanced HDMI-Cec Control"))
 
+	# for Summary
 	def changed(self):
 		for x in self.onChangedEntry:
 			try:
 				x()
 			except Exception:
 				pass
+	def getCurrentEntry(self):
+		if self["config"].getCurrent():
+			return self["config"].getCurrent()[0]
+	def getCurrentValue(self):
+		if self["config"].getCurrent():
+			return str(self["config"].getCurrent()[1].getText())
+	def createSummary(self):
+		return SetupSummary
 
 # Timespans
 class TimeSpanEntryList(MenuList):
