@@ -7,7 +7,7 @@ from . import _
 # Plugin
 from Plugins.Plugin import PluginDescriptor
 from Components.config import config, configfile, ConfigSelection, ConfigSubsection, getConfigListEntry, ConfigSubList, \
-	ConfigClock, ConfigInteger, ConfigYesNo, ConfigText
+	ConfigClock, ConfigInteger, ConfigYesNo 
 from Components.ConfigList import ConfigListScreen
 
 # for function
@@ -20,10 +20,13 @@ def _print(outtxt):
 	outtxt = headerstr + outtxt
 	print outtxt
 
-g_AdvHdmi_sessionstarted = False
-g_AdvHdmi_fromwebif = False
-g_AdvHdmi_initalized = False
-g_AdvHdmi_partnerbox_available = False
+try:
+	from Plugins.SystemPlugins.AdvHdmi.AdvHdmiCecSetup import AdvHdmiCecSetup
+	g_AdvHdmi_setup_available = True
+except ImportError:
+	g_AdvHdmi_setup_available = False
+	_print("error while loading AdvHdmiCecSetup")
+	print_exc(file=stdout) 
 
 # overwrite functions
 from Plugins.SystemPlugins.HdmiCec.plugin import Cec
@@ -89,7 +92,6 @@ config.plugins.AdvHdmiCec.enable_power_on = ConfigYesNo(default = True)
 config.plugins.AdvHdmiCec.enable_power_off = ConfigYesNo(default = True)
 config.plugins.AdvHdmiCec.disable_after_enigmastart = ConfigYesNo(default = False)
 config.plugins.AdvHdmiCec.disable_from_webif = ConfigYesNo(default = False)
-config.plugins.AdvHdmiCec.disable_partnerbox_entry = ConfigText(default = "NONE")
 config.plugins.AdvHdmiCec.entriescount =  ConfigInteger(0)
 config.plugins.AdvHdmiCec.Entries = ConfigSubList()
 config.plugins.AdvHdmiCec.show_in = ConfigSelection(choices=[
@@ -149,26 +151,14 @@ def TimeSpanPresenter(confsection):
 
 # functionality
 def autostart(reason, **kwargs):
-	global g_AdvHdmi_sessionstarted, g_AdvHdmi_partnerbox_available
+	global g_AdvHdmi_sessionstarted
 	if reason == 0:
 		g_AdvHdmi_sessionstarted = True
-		try:
-			from Plugins.Extensions.Partnerbox.PartnerboxFunctions import sendPartnerBoxWebCommand
-			g_AdvHdmi_partnerbox_available = True
-			from AdvHdmiCecPartnerboxSupport import AdvHdmiCecPartnerboxSupport
-			advHdmiCecPartnerboxSupport = AdvHdmiCecPartnerboxSupport()
-		except ImportError:
-			_print("No Partnerbox-Plugin installed")
-			print_exc(file=stdout)
-
 
 def main(session, **kwargs):
-	try:
-		from Plugins.SystemPlugins.AdvHdmi.AdvHdmiCecSetup import AdvHdmiCecSetup
+	global g_AdvHdmi_setup_available
+	if g_AdvHdmi_setup_available:
 		session.open(AdvHdmiCecSetup)
-	except:
-		_print("error while loading AdvHdmiCecSetup")
-		print_exc(file=stdout)
 
 def showinSetup(menuid):
 	if menuid != "system":
@@ -271,7 +261,6 @@ def AdvHdmiCecDOIT():
 # Overwrite CEC-Base
 def Cec__receivedStandby(self):
 	if config.cec.receivepower.value:
-		self._skip_next_poweroff_message = True
 		from Screens.Standby import Standby, inStandby
 		if not inStandby and self.session.current_dialog and self.session.current_dialog.ALLOW_SUSPEND and self.session.in_exec:
 			if callHook(ADVHDMI_BEFORE_RECEIVED_STANDBY):
@@ -280,8 +269,6 @@ def Cec__receivedStandby(self):
 
 def Cec__receivedNowActive(self):
 	if config.cec.receivepower.value:
-		self.powerOn(forceOtp=True)
-		self._skip_next_poweron_message = True
 		from Screens.Standby import inStandby
 		if inStandby != None:
 			if callHook(ADVHDMI_BEFORE_RECEIVED_NOWACTIVE):
@@ -290,36 +277,26 @@ def Cec__receivedNowActive(self):
 
 def Cec_powerOn(self):
 	global g_AdvHdmi_initalized
-	
-	if self._skip_next_poweron_message:
-		self._skip_next_poweron_message = False
-		return
-	if self.session.shutdown:
-		self._idle_to_standby = True
-		return
-	hdmi_cec.setPowerState(hdmi_cec.POWER_STATE_ON)
 	if config.cec.sendpower.value:
-		if config.plugins.AdvHdmiCec.enable_power_on.value and AdvHdmiCecDOIT():
-			g_AdvHdmi_initalized = True
-			if callHook(ADVHDMI_BEFORE_POWERON):
-				_print("power on")
-				hdmi_cec.otpEnable()
-				callHook(ADVHDMI_AFTER_POWERON)
+		if self.session.shutdown:
+			self.idle_to_standby = True
+		else:
+			if config.plugins.AdvHdmiCec.enable_power_on.value and AdvHdmiCecDOIT():
+				g_AdvHdmi_initalized = True
+				if callHook(ADVHDMI_BEFORE_POWERON):
+					_print("power on")
+					hdmi_cec.otp_source_enable()
+					callHook(ADVHDMI_AFTER_POWERON)
 
 def Cec_powerOff(self):
 	global g_AdvHdmi_initalized
-	if self._idle_to_standby:
-		 return
-	hdmi_cec.setPowerState(hdmi_cec.POWER_STATE_STANDBY)
 	if config.cec.sendpower.value and config.plugins.AdvHdmiCec.enable_power_off.value and AdvHdmiCecDOIT():
-		if self._skip_next_poweroff_message:
-			self._skip_next_poweroff_message = False
-		elif callHook(ADVHDMI_BEFORE_POWEROFF):
+		if callHook(ADVHDMI_BEFORE_POWEROFF):
 			_print("power off")
 			if not g_AdvHdmi_initalized:
 				_print("Workaround: enable Hdmi-Cec-Source (^=poweron)")
-				hdmi_cec.otpEnable()
-			hdmi_cec.systemStandby()
+				hdmi_cec.otp_source_enable()
+			hdmi_cec.ss_standby()
 			callHook(ADVHDMI_AFTER_POWEROFF)
 
 # Overwrite WebIf
@@ -333,6 +310,10 @@ def PowerState_handleCommand(self, cmd):
 	global g_AdvHdmi_fromwebif
 	g_AdvHdmi_fromwebif = True
 	self.cmd = cmd
+
+g_AdvHdmi_sessionstarted = False
+g_AdvHdmi_fromwebif = False
+g_AdvHdmi_initalized = False
 
 if config.plugins.AdvHdmiCec.enable.value:
 	_print("enabled")
