@@ -2,9 +2,9 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 858 $
-$Date: 2014-03-06 15:31:01 +0100 (Thu, 06 Mar 2014) $
-$Id: plugin.py 858 2014-03-06 14:31:01Z michael $
+$Revision: 1120 $
+$Date: 2014-12-26 12:07:53 +0100 (Fri, 26 Dec 2014) $
+$Id: plugin.py 1120 2014-12-26 11:07:53Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -63,6 +63,7 @@ from . import _, __, initDebug, debug #@UnresolvedImport # pylint: disable=W0611
 from enigma import getDesktop
 DESKTOP_WIDTH = getDesktop(0).size().width()
 DESKTOP_HEIGHT = getDesktop(0).size().height()
+
 
 #
 # this is pure magic.
@@ -277,8 +278,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 858 $"[1:-2] + "\n" + 
-							"$Date: 2014-03-06 15:31:01 +0100 (Thu, 06 Mar 2014) $"[1:23] + "\n"
+							"$Revision: 1120 $"[1:-2] + "\n" + 
+							"$Date: 2014-12-26 12:07:53 +0100 (Fri, 26 Dec 2014) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -766,8 +767,13 @@ class FritzMenu(Screen, HelpableScreen):
 				if dslState[0] == '5':
 					self["dsl_inactive"].hide()
 					self["dsl_active"].show()
+					if dslState[2]:
+						message = dslState[2]
+					else:
+						message = "DSL"
 					if dslState[1]:
-						self["FBFDsl"].setText('DSL ' + dslState[1])
+						message = message + ' ' + dslState[1]
+					self["FBFDsl"].setText(message)
 				else:
 					self["dsl_active"].hide()
 					self["dsl_inactive"].show()
@@ -783,7 +789,7 @@ class FritzMenu(Screen, HelpableScreen):
 					message = 'WLAN'
 					if wlanState[1] == '0':
 						message += ' ' + _('not encrypted')
-					else:
+					elif wlanState[1] == '1':
 						message += ' ' + _('encrypted')
 					if wlanState[2]:
 						if wlanState[2] == '0':
@@ -1289,7 +1295,13 @@ class FritzCallPhonebook:
 		if config.plugins.FritzCall.reloadPhonebookTime.value > 0:
 			debug("[FritzCallPhonebook] start timer with " + repr(config.plugins.FritzCall.reloadPhonebookTime.value))
 			self.loop = eTimer()
-			self.loop.callback.append(self.reload)
+			
+			# newer OE versions don't have the callback
+			try:
+				self.loop_conn = self.loop.timeout.connect(self.reload)
+			except AttributeError:
+				self.loop.callback.append(self.reload)
+				
 			self.loop.start(config.plugins.FritzCall.reloadPhonebookTime.value*OneHour, False)
 		self.reload()
 
@@ -1895,7 +1907,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 858 $"[1: - 1] + "$Date: 2014-03-06 15:31:01 +0100 (Thu, 06 Mar 2014) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1120 $"[1: - 1] + "$Date: 2014-12-26 12:07:53 +0100 (Fri, 26 Dec 2014) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -2129,6 +2141,7 @@ def findFace(number, name):
 	else:
 		files = os.listdir(facesDir)
 		# debug("[FritzCall] findFace listdir: %s" %repr(files))
+		# TODO macthed das hier auf ????.png1 ?!?!?
 		myFiles = [f for f in files if re.match(re.escape(number) + "\.[png|PNG]", f)]
 		if not myFiles:
 			myFiles = [f for f in files if re.match(re.escape(name) + "\.[png|PNG]", f)]
@@ -2231,7 +2244,13 @@ class MessageBoxPixmap(Screen):
 	def _initTimeout(self):
 		if self._timeout > 0:
 			self._timer = eTimer()
-			self._timer.callback.append(self._timerTick)
+			
+			# newer OE versions don't have the callback
+			try:
+				self._timer_conn = self._timer.timeout.connect(self._timerTick)
+			except AttributeError:
+				self._timer.callback.append(self._timerTick)
+
 			self.onExecBegin.append(self._startTimer)
 			self._origTitle = None
 			if self.execing:
@@ -2413,7 +2432,7 @@ class FritzReverseLookupAndNotifier:
 
 class FritzProtocol(LineReceiver): # pylint: disable=W0223
 	def __init__(self):
-		debug("[FritzProtocol] " + "$Revision: 858 $"[1:-1]	+ "$Date: 2014-03-06 15:31:01 +0100 (Thu, 06 Mar 2014) $"[7:23] + " starting")
+		debug("[FritzProtocol] " + "$Revision: 1120 $"[1:-1]	+ "$Date: 2014-12-26 12:07:53 +0100 (Fri, 26 Dec 2014) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
