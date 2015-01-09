@@ -99,6 +99,7 @@ config.plugins.merlinmusicplayer.merlinmusicplayermainmenu = ConfigYesNo(default
 from enigma import ePythonMessagePump
 from threading import Thread, Lock
 from timer import TimerEntry
+from simplejson import loads as simplejson_loads
 
 class ThreadQueue:
 	def __init__(self):
@@ -1160,10 +1161,12 @@ class MerlinMusicPlayerScreen(Screen, InfoBarBase, InfoBarSeek, InfoBarNotificat
 
 	def updateMusicInformation(self, artist = "", title = "", album = "", genre = "", year = "", track = "", clear = False):
 		if year and album:
-			album = "%s %s" % (album, year)
+			album_year = "%s %s" % (album, year)
+		else:
+			album_year = album
 		self.updateSingleMusicInformation("artist", artist, clear)
 		self.updateSingleMusicInformation("title", title, clear)
-		self.updateSingleMusicInformation("album", album, clear)
+		self.updateSingleMusicInformation("album", album_year, clear)
 		self.updateSingleMusicInformation("genre", genre, clear)
 		self.updateSingleMusicInformation("track", track, clear)
 
@@ -1249,16 +1252,18 @@ class MerlinMusicPlayerScreen(Screen, InfoBarBase, InfoBarSeek, InfoBarNotificat
 
 	def getGoogleCover(self, artist,album):
 		if artist != "" and album != "":
-			url = "http://images.google.de/images?q=%s+%s&btnG=Bilder-Suche" % (quote(album),quote(artist))
+			url = "http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=%s+%s" % (quote(album),quote(artist))
 			sendUrlCommand(url, None,10).addCallback(self.googleImageCallback).addErrback(self.coverDownloadFailed)
 		else:
 			self["coverArt"].showDefaultCover()
 
 	def googleImageCallback(self, result):
-		foundPos = result.find("imgres?imgurl=")
-		foundPos2 = result.find("&amp;imgrefurl=")
-		if foundPos != -1 and foundPos2 != -1:
-			url = result[foundPos+14:foundPos2]
+		results = simplejson_loads(result)
+		try:
+			url = results['responseData']['results'][0]['unescapedUrl']
+		except: # fuck that
+			url = ""
+		if url != "":
 			parts = url.split("/")
 			filename = parts[-1]
 			if filename != self.currentGoogleCoverFile:
