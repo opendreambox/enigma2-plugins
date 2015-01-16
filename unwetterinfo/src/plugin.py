@@ -161,7 +161,14 @@ class UnwetterMain(Screen):
 		self.picweatherfile = pluginpath + "/wetterreport.jpg"
 		self.reportfile = "/tmp/uwz.report"
 
-		self.picload = ePicLoad()
+		sc = AVSwitch().getFramebufferScale()
+		self.picload_thumb_land = ePicLoad()
+		self.picload_thumbs_land_conn = self.picload_thumb_land.PictureData.connect(self.gotThumbLand)
+		self.picload_thumb_land.setPara((90, 40, sc[0], sc[1], 0, 0, '#ff000000'))
+		
+		self.picload_thumb = ePicLoad()
+		self.picload_thumbs_conn = self.picload_thumb.PictureData.connect(self.gotThumb)
+		self.picload_thumb.setPara((90, 40, sc[0], sc[1], 0, 0, '#ff000000'))
 
 #		self.onLayoutFinish.append(self.go)
 
@@ -257,16 +264,10 @@ class UnwetterMain(Screen):
 			picture = pluginpath + "/uwz.png"
 		else:
 			picture = pluginpath + "/uwzat.png"
-		picload = self.picload
-		sc = AVSwitch().getFramebufferScale()
-		picload.setPara((90, 40, sc[0], sc[1], 0, 0, '#ff000000'))
-		l = picload.PictureData.get()
-		del l[:]
-		l.append(self.gotThumbLand)
-		picload.startDecode(picture)
+		self.picload_thumb_land.startDecode(picture)
 
 	def gotThumbLand(self, picInfo = None):
-		ptr = self.picload.getData()
+		ptr = self.picload_thumb_land.getData()
 		if ptr:
 			self["thumbland"].instance.setPixmap(ptr)
 
@@ -286,17 +287,10 @@ class UnwetterMain(Screen):
 			else:
 				picture = self.picweatherfile
 				height = 150
-
-			picload = self.picload
-			sc = AVSwitch().getFramebufferScale()
-			picload.setPara((width, height, sc[0], sc[1], 0, 0, '#ff000000'))
-			l = picload.PictureData.get()
-			del l[:]
-			l.append(self.gotThumb)
-			picload.startDecode(picture)
+			self.picload_thumb.startDecode(picture)
 
 	def gotThumb(self, picInfo = None):
-		ptr = self.picload.getData()
+		ptr = self.picload_thumb.getData()
 		if ptr:
 			self["statuslabel"].setText("")
 			self["thumbnail"].show()
