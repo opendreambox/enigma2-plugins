@@ -16,6 +16,7 @@ config.plugins.vps.allow_seeking_multiple_pdc = ConfigYesNo(default = True)
 config.plugins.vps.vps_default = ConfigSelection(choices = [("no", _("No")), ("yes_safe", _("Yes (safe mode)")), ("yes", _("Yes"))], default = "no") 
 config.plugins.vps.instanttimer = ConfigSelection(choices = [("no", _("No")), ("yes_safe", _("Yes (safe mode)")), ("yes", _("Yes")), ("ask", _("always ask"))], default = "ask")
 config.plugins.vps.infotext = ConfigInteger(default=0)
+config.plugins.vps.margin_after = ConfigInteger(default=10, limits=(0, 600)) # in seconds
 
 
 def autostart(reason, **kwargs):
@@ -23,7 +24,6 @@ def autostart(reason, **kwargs):
 		if kwargs.has_key("session"):
 			session = kwargs["session"]
 			vps_timers.session = session
-			vps_timers.checkNextAfterEventAuto()
 			vps_timers.checkTimer()
 
 			try:
@@ -62,10 +62,6 @@ def startSetup(menuid):
 	if menuid != "system":
 		return []
 	return [(_("VPS Settings"), setup, "vps", 50)]
-
-def getNextWakeup():
-	return vps_timers.NextWakeup()
-	
 	
 
 def Plugins(**kwargs):
@@ -77,7 +73,6 @@ def Plugins(**kwargs):
 				PluginDescriptor.WHERE_SESSIONSTART
 			],
 			fnc = autostart,
-			wakeupfnc = getNextWakeup,
 			needsRestart = True
 		),
 		PluginDescriptor(
