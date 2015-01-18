@@ -190,6 +190,12 @@ msgstr ""
 msgid "VPS-Plugin Information"
 msgstr "VPS-Plugin Information"
 
+msgid "Margin after record (in seconds)"
+msgstr "Nachlauf hinter Aufnahme (in Sekunden)"
+
+msgid "The recording will last n seconds longer after the channel sent the stop signal."
+msgstr "Die Aufnahme dauert noch n Sekunden länger, nachdem der Sender das Ende der Sendung signalisiert hat."
+
 #: ../src_py/Vps_setup.py:129
 msgid ""
 "VPS-Plugin can react on delays arising in the startTime or endTime of a programme. VPS is only supported by certain channels!\n"
