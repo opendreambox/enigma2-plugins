@@ -584,38 +584,18 @@ class vps:
 		for o_timer in self.vpstimers:
 			o_timer.program_abort()
 			o_timer.stop_simulation()
-		
-		# Receiver wann wieder starten?
-		# Um das Verhalten hinter AFTEREVENT.AUTO zu behalten, muss direkt setFPWakeuptime aufgerufen werden. 
-		if config.plugins.vps.enabled.value and config.plugins.vps.allow_wakeup.value:
-			try:
-				for timer in self.session.nav.RecordTimer.timer_list:
-					if timer.vpsplugin_enabled and timer.state == TimerEntry.StateWaiting and not timer.justplay and not timer.repeated and not timer.disabled:
-						from Tools.DreamboxHardware import setFPWakeuptime, getFPWakeuptime
-						wakeupTime = timer.begin - (config.plugins.vps.initial_time.value * 60) - 60
-						curWakeupTime = getFPWakeuptime()
-						curTime = int(time())
-						if (wakeupTime - curTime) < 30:
-							wakeupTime = curTime + 30
-						
-						if curWakeupTime < curTime or curWakeupTime > wakeupTime:
-							print "[VPS-Plugin] set/override wake up time to "+ str(wakeupTime)
-							setFPWakeuptime(wakeupTime)
-							config.misc.isNextRecordTimerAfterEventActionAuto.value = timer.afterEvent == AFTEREVENT.AUTO
-							config.misc.isNextRecordTimerAfterEventActionAuto.save()
-							try:
-								config.misc.prev_wakeup_time_type.value = 0
-								config.misc.prev_wakeup_time_type.save()
-								config.misc.prev_wakeup_time.value = wakeupTime
-								config.misc.prev_wakeup_time.save()
-							except:
-								print "[VPS-Plugin] config.misc.prev_wakeup_time error (old enigma2?)"
-		
-							configfile.save()
-							
-						return
-			except:
-				print "[VPS-Plugin] exception in shutdown handler, setting wake up time" 
 
+	def nextWakeup(self):
+		if not config.plugins.vps.enabled.value or not config.plugins.vps.allow_wakeup.value:
+			return -1, False
+		
+		try:
+			for timer in self.session.nav.RecordTimer.timer_list:
+				if timer.vpsplugin_enabled and timer.state == TimerEntry.StateWaiting and not timer.justplay and not timer.repeated and not timer.disabled:
+					return (timer.begin - (config.plugins.vps.initial_time.value * 60)), timer.afterEvent == AFTEREVENT.AUTO
+		except:
+			pass
+		
+		return -1, False
 
 vps_timers = vps()
