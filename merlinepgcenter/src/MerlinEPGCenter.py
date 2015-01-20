@@ -130,7 +130,7 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 		videoMode = MODE_HD
 	elif desktopSize.width() == 1024:
 		videoMode = MODE_XD
-	elif desktopSize.width() == 720:
+	else: # SD/fallback
 		videoMode = MODE_SD
 		
 	# TimerEditList timer key states
