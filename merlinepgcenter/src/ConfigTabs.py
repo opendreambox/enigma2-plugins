@@ -48,9 +48,9 @@ SKINLIST =	[ # order is important (HD_BORDER, XD_BORDER, SD, HD, XD)!
 		(resolveFilename(SCOPE_CURRENT_PLUGIN, ''.join([SKINDIR, "XD_default.xml"])), "XD_default.xml")
 		]
 		
-# check Merlin2 feature "keep outdated events in epgcache"
+# keep outdated events
 try:
-	KEEP_OUTDATED_TIME = config.merlin2.keep_outdated_epg.value * 60
+	KEEP_OUTDATED_TIME = config.misc.epgcache_outdated_timespan.value * 60
 except KeyError:
 	KEEP_OUTDATED_TIME = 0
 	
