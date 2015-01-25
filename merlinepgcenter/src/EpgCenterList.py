@@ -147,7 +147,6 @@ class EpgCenterList(GUIComponent):
 		
 		# progress pixmaps
 		self.progressPixmap = LoadPixmap(cached=True, path=resolveFilename(SCOPE_CURRENT_PLUGIN, "Extensions/MerlinEPGCenter/images/Progress.png"))
-		self.progressPixmap_0 = LoadPixmap(cached=True, path=resolveFilename(SCOPE_CURRENT_PLUGIN, "Extensions/MerlinEPGCenter/images/Progress_0.png"))
 		self.progressPixmap_1 = LoadPixmap(cached=True, path=resolveFilename(SCOPE_CURRENT_PLUGIN, "Extensions/MerlinEPGCenter/images/Progress_1.png"))
 		self.progressPixmap_2 = LoadPixmap(cached=True, path=resolveFilename(SCOPE_CURRENT_PLUGIN, "Extensions/MerlinEPGCenter/images/Progress_2.png"))
 		self.progressPixmap_3 = LoadPixmap(cached=True, path=resolveFilename(SCOPE_CURRENT_PLUGIN, "Extensions/MerlinEPGCenter/images/Progress_3.png"))
@@ -191,7 +190,7 @@ class EpgCenterList(GUIComponent):
 	def changeHeight(self, configElement = None):
 		self.listStyle = config.plugins.merlinEpgCenter.listStyle.value
 		if self.listStyle == STYLE_SINGLE_LINE:
-			self.singleLineBorder = 2
+			self.singleLineBorder = 4
 		else:
 			self.singleLineBorder = 0
 			

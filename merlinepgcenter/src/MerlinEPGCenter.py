@@ -130,7 +130,7 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 		videoMode = MODE_HD
 	elif desktopSize.width() == 1024:
 		videoMode = MODE_XD
-	elif desktopSize.width() == 720:
+	else: # SD/fallback
 		videoMode = MODE_SD
 		
 	# TimerEditList timer key states
@@ -1302,20 +1302,26 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 			self["key_yellow"].setText(_("New Search"))
 			
 	def setTimerButtonState(self, cur):
-		if self.currentMode == MULTI_EPG_NOW or self.currentMode == MULTI_EPG_NEXT or self.currentMode == SINGLE_EPG or self.currentMode == MULTI_EPG_PRIMETIME or self.currentMode == EPGSEARCH_RESULT or self.currentMode == EPGSEARCH_HISTORY:
-			isRecordEvent = False
-			for timer in self.session.nav.RecordTimer.timer_list:
-				if timer.eit == cur[1] and timer.service_ref.ref.toString() == cur[2]:
-					isRecordEvent = True
-					break
-			if isRecordEvent:
-				self["key_green"].setText(_("Remove timer"))
-				self.key_green_choice = self.REMOVE_TIMER
-			elif not isRecordEvent:
-				self["key_green"].setText(_("Add timer"))
-				self.key_green_choice = self.ADD_TIMER
-		elif self.currentMode == TIMERLIST:
+		if self.configTabsShown:
+			return
+		if cur == None or cur[1] == None or cur[2] == "":
 			self.key_green_choice = self.EMPTY
+			self["key_green"].setText("")
+		else:
+			if self.currentMode == MULTI_EPG_NOW or self.currentMode == MULTI_EPG_NEXT or self.currentMode == SINGLE_EPG or self.currentMode == MULTI_EPG_PRIMETIME or self.currentMode == EPGSEARCH_RESULT or self.currentMode == EPGSEARCH_HISTORY:
+				isRecordEvent = False
+				for timer in self.session.nav.RecordTimer.timer_list:
+					if timer.eit == cur[1] and timer.service_ref.ref.toString() == cur[2]:
+						isRecordEvent = True
+						break
+				if isRecordEvent:
+					self["key_green"].setText(_("Remove timer"))
+					self.key_green_choice = self.REMOVE_TIMER
+				elif not isRecordEvent:
+					self["key_green"].setText(_("Add timer"))
+					self.key_green_choice = self.ADD_TIMER
+			elif self.currentMode == TIMERLIST:
+				self.key_green_choice = self.EMPTY
 			
 	def deleteTimer(self, timer):
 		timer.afterEvent = AFTEREVENT.NONE

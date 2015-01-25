@@ -479,10 +479,9 @@ class webifHandler(ContentHandler):
 			screen.execBegin()
 
 	def cleanup(self):
-		print "screen cleanup!"
 		for screen in self.screens:
 			screen.execEnd()
-			screen.doClose()
+			screen._Screen__doClose()
 		self.screens = [ ]
 
 #===============================================================================

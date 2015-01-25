@@ -8,7 +8,7 @@ from Components.ActionMap import ActionMap
 from Components.Sources.StaticText import StaticText
 from Components.config import config, getConfigListEntry
 
-VERSION = "1.3"
+VERSION = "1.5"
 
 class VPS_Setup(Screen, ConfigListScreen):
 
@@ -33,6 +33,7 @@ class VPS_Setup(Screen, ConfigListScreen):
 
 		self.vps_enabled = getConfigListEntry(_("Enable VPS-Plugin"), config.plugins.vps.enabled)
 		self.vps_initial_time = getConfigListEntry(_("Starting time"), config.plugins.vps.initial_time)
+		self.vps_margin_after = getConfigListEntry(_("Margin after record (in seconds)"), config.plugins.vps.margin_after)
 		self.vps_allow_wakeup = getConfigListEntry(_("Wakeup from Deep-Standby is allowed"), config.plugins.vps.allow_wakeup)
 		self.vps_allow_seeking_multiple_pdc = getConfigListEntry(_("Seeking connected events"), config.plugins.vps.allow_seeking_multiple_pdc)
 		self.vps_default = getConfigListEntry(_("VPS enabled by default"), config.plugins.vps.vps_default)
@@ -41,6 +42,7 @@ class VPS_Setup(Screen, ConfigListScreen):
 		self.list = []
 		self.list.append(self.vps_enabled)
 		self.list.append(self.vps_initial_time)
+		self.list.append(self.vps_margin_after)
 		self.list.append(self.vps_allow_wakeup)
 		self.list.append(self.vps_allow_seeking_multiple_pdc)
 		self.list.append(self.vps_default)
@@ -76,6 +78,8 @@ class VPS_Setup(Screen, ConfigListScreen):
 			self["help"].text = _("This plugin can determine whether a programme begins earlier or lasts longer. The channel has to provide reliable data.")
 		elif cur == self.vps_initial_time:
 			self["help"].text = _("If possible, x minutes before a timer starts VPS-Plugin will control whether the programme begins earlier. (0 disables feature)")
+		elif cur == self.vps_margin_after:
+			self["help"].text = _("The recording will last n seconds longer after the channel sent the stop signal.")
 		elif cur == self.vps_default:
 			self["help"].text = _("Enable VPS by default (new timers)")
 		elif cur == self.vps_allow_wakeup:

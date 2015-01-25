@@ -2,7 +2,7 @@
 
 from enigma import eTimer, eConsoleAppContainer, getBestPlayableServiceReference, eServiceReference, eEPGCache, eEnv
 from time import time, strftime, localtime
-from Components.config import config
+from Components.config import config, configfile
 from timer import TimerEntry
 from Tools import Notifications
 from Screens.MessageBox import MessageBox
@@ -37,6 +37,7 @@ class vps_timer:
 		self.max_extending_timer = 4*3600
 		self.next_events = [ ]
 		self.new_timer_copy = None
+		self.pausing = False
 	
 	
 	def program_closed(self, retval):
@@ -78,19 +79,10 @@ class vps_timer:
 					# dann nicht beenden (Sendung begann noch gar nicht)
 					if data[2] == "FOLLOWING":
 						self.activate_autoincrease()
-					else:
-						if self.timer.state == TimerEntry.StateRunning and not self.set_next_event():
-							self.activated_auto_increase = False
-							self.timer.autoincrease = False
-							
-							if self.timer.vpsplugin_overwrite:
-								# sofortiger Stopp
-								self.timer.abort()
-								self.session.nav.RecordTimer.doActivate(self.timer)
-								self.stop_simulation()
-							
-							self.dont_restart_program = True
-							self.program_abort()
+					elif self.timer.state == TimerEntry.StateRunning and not self.pausing and not self.set_next_event():
+						self.stop_recording()
+						self.dont_restart_program = True
+						self.program_abort()
 				
 				elif data[1] == "2": # starts in a few seconds
 					self.activate_autoincrease()
@@ -98,10 +90,12 @@ class vps_timer:
 						self.session.nav.RecordTimer.doActivate(self.timer)
 				
 				elif data[1] == "3": # pausing
+					self.pausing = True
 					if self.timer.state == TimerEntry.StateRunning:
 						self.activate_autoincrease()
 				
 				elif data[1] == "4": # running
+					self.pausing = False
 					if self.timer.state == TimerEntry.StateRunning:
 						self.activate_autoincrease()
 					elif self.timer.state == TimerEntry.StateWaiting or self.timer.state == TimerEntry.StatePrepared:
@@ -124,16 +118,8 @@ class vps_timer:
 			elif data[0] == "EVENT_ENDED":
 				if not self.set_next_event():
 					if self.timer.state == TimerEntry.StateRunning:
-						self.activated_auto_increase = False
-						self.timer.autoincrease = False
-						
-						if self.timer.vpsplugin_overwrite:
-							# sofortiger Stopp
-							self.timer.abort()
-							self.session.nav.RecordTimer.doActivate(self.timer)
-							self.stop_simulation()
-	
-							
+						self.stop_recording()
+					
 					self.program_abort()
 					self.stop_simulation()
 			
@@ -196,6 +182,24 @@ class vps_timer:
 					self.timer.log(0, "[VPS] can't trust EPG currently, go to safe mode")
 
 
+	def stop_recording(self):
+		self.activated_auto_increase = False
+		self.timer.autoincrease = False
+		
+		if self.timer.vpsplugin_overwrite:
+			# Stopp nach margin_after seconds
+			if config.plugins.vps.margin_after.value == 0:
+				self.timer.abort()
+				self.session.nav.RecordTimer.doActivate(self.timer)
+			else:
+				self.timer.end = int(time()) + config.plugins.vps.margin_after.value
+				self.session.nav.RecordTimer.timeChanged(self.timer)
+			self.stop_simulation()
+		else:
+			new_end_time = int(time()) + config.plugins.vps.margin_after.value
+			if new_end_time > self.timer.end:
+				self.timer.end = new_end_time
+				self.session.nav.RecordTimer.timeChanged(self.timer)
 	
 	def activate_autoincrease(self):
 		if not self.activated_auto_increase:
@@ -522,14 +526,6 @@ class vps_timer:
 				self.program_abort()
 				self.stop_simulation()
 				self.timer.log(0, "[VPS] stop recording, too much autoincrease")
-			
-			try:
-				if self.timer.vpsplugin_wasTimerWakeup:
-					self.timer.vpsplugin_wasTimerWakeup = False
-					if not Screens.Standby.inTryQuitMainloop:
-						RecordTimerEntry.TryQuitMainloop(False)
-			except:
-				pass
 		
 		return self.nextExecution
 
@@ -588,24 +584,18 @@ class vps:
 		for o_timer in self.vpstimers:
 			o_timer.program_abort()
 			o_timer.stop_simulation()
-	
-	def checkNextAfterEventAuto(self):
-		if NavigationInstance.instance.wasTimerWakeup() and config.plugins.vps.allow_wakeup.value and len(self.session.nav.RecordTimer.timer_list) > 0:
-			next_timer = self.session.nav.RecordTimer.timer_list[0]
-			if next_timer.vpsplugin_enabled and next_timer.afterEvent == AFTEREVENT.AUTO and (next_timer.begin - (config.plugins.vps.initial_time.value * 60) - 300) < time():
-				next_timer.vpsplugin_wasTimerWakeup = True
-	
-	def NextWakeup(self):
-		if config.plugins.vps.enabled.value == False or config.plugins.vps.allow_wakeup.value == False:
-			return -1
+
+	def nextWakeup(self):
+		if not config.plugins.vps.enabled.value or not config.plugins.vps.allow_wakeup.value:
+			return -1, False
 		
 		try:
 			for timer in self.session.nav.RecordTimer.timer_list:
 				if timer.vpsplugin_enabled and timer.state == TimerEntry.StateWaiting and not timer.justplay and not timer.repeated and not timer.disabled:
-					return (timer.begin - (config.plugins.vps.initial_time.value * 60))
+					return (timer.begin - (config.plugins.vps.initial_time.value * 60)), timer.afterEvent == AFTEREVENT.AUTO
 		except:
 			pass
 		
-		return -1
+		return -1, False
 
 vps_timers = vps()
