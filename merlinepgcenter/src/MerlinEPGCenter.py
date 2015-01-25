@@ -79,7 +79,7 @@ from Tools.LoadPixmap import LoadPixmap
 from Components.VolumeControl import VolumeControl
 from ConfigTabs import KEEP_OUTDATED_TIME, ConfigBaseTab, ConfigGeneral, ConfigListSettings, ConfigEventInfo, ConfigKeys, SKINDIR, SKINLIST, STYLE_SIMPLE_BAR, STYLE_PIXMAP_BAR, STYLE_MULTI_PIXMAP, STYLE_PERCENT_TEXT, STYLE_SIMPLE_BAR_LIST_OFF, STYLE_PIXMAP_BAR_LIST_OFF, STYLE_MULTI_PIXMAP_LIST_OFF, STYLE_PERCENT_TEXT_LIST_OFF
 from EpgActions import MerlinEPGActions
-from EpgCenterList import EpgCenterList, EpgCenterTimerlist, MODE_HD, MODE_XD, MODE_SD, MULTI_EPG_NOW, MULTI_EPG_NEXT, SINGLE_EPG, MULTI_EPG_PRIMETIME, TIMERLIST, EPGSEARCH_HISTORY, EPGSEARCH_RESULT, EPGSEARCH_MANUAL, UPCOMING
+from EpgCenterList import EpgCenterList, EpgCenterTimerlist, MODE_FHD, MODE_HD, MODE_XD, MODE_SD, MULTI_EPG_NOW, MULTI_EPG_NEXT, SINGLE_EPG, MULTI_EPG_PRIMETIME, TIMERLIST, EPGSEARCH_HISTORY, EPGSEARCH_RESULT, EPGSEARCH_MANUAL, UPCOMING
 from EpgTabs import EpgBaseTab, EpgNowTab, EpgNextTab, EpgSingleTab, EpgPrimeTimeTab, EpgTimerListTab, EpgSearchHistoryTab, EpgSearchManualTab, EpgSearchResultTab
 from HelperFunctions import PiconLoader, findDefaultPicon, ResizeScrollLabel, BlinkTimer, LIST_TYPE_EPG, LIST_TYPE_UPCOMING, TimerListObject, EmbeddedVolumeControl
 from SkinFinder import SkinFinder
@@ -124,11 +124,13 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 		loadSkin(skinFile, "")
 		
 	desktopSize = getDesktop(0).size()
-	if desktopSize.width() == 1280:
+	if desktopSize.width() == 1920:
+		videoMode = MODE_FHD
+	elif desktopSize.width() == 1280:
 		videoMode = MODE_HD
 	elif desktopSize.width() == 1024:
 		videoMode = MODE_XD
-	elif desktopSize.width() == 720:
+	else: # SD/fallback
 		videoMode = MODE_SD
 		
 	# TimerEditList timer key states
@@ -1303,20 +1305,26 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 			self["key_yellow"].setText(_("New Search"))
 			
 	def setTimerButtonState(self, cur):
-		if self.currentMode == MULTI_EPG_NOW or self.currentMode == MULTI_EPG_NEXT or self.currentMode == SINGLE_EPG or self.currentMode == MULTI_EPG_PRIMETIME or self.currentMode == EPGSEARCH_RESULT or self.currentMode == EPGSEARCH_HISTORY:
-			isRecordEvent = False
-			for timer in self.session.nav.RecordTimer.timer_list:
-				if timer.eit == cur[1] and timer.service_ref.ref.toString() == cur[2]:
-					isRecordEvent = True
-					break
-			if isRecordEvent:
-				self["key_green"].setText(_("Remove timer"))
-				self.key_green_choice = self.REMOVE_TIMER
-			elif not isRecordEvent:
-				self["key_green"].setText(_("Add timer"))
-				self.key_green_choice = self.ADD_TIMER
-		elif self.currentMode == TIMERLIST:
+		if self.configTabsShown:
+			return
+		if cur == None or cur[1] == None or cur[2] == "":
 			self.key_green_choice = self.EMPTY
+			self["key_green"].setText("")
+		else:
+			if self.currentMode == MULTI_EPG_NOW or self.currentMode == MULTI_EPG_NEXT or self.currentMode == SINGLE_EPG or self.currentMode == MULTI_EPG_PRIMETIME or self.currentMode == EPGSEARCH_RESULT or self.currentMode == EPGSEARCH_HISTORY:
+				isRecordEvent = False
+				for timer in self.session.nav.RecordTimer.timer_list:
+					if timer.eit == cur[1] and timer.service_ref.ref.toString() == cur[2]:
+						isRecordEvent = True
+						break
+				if isRecordEvent:
+					self["key_green"].setText(_("Remove timer"))
+					self.key_green_choice = self.REMOVE_TIMER
+				elif not isRecordEvent:
+					self["key_green"].setText(_("Add timer"))
+					self.key_green_choice = self.ADD_TIMER
+			elif self.currentMode == TIMERLIST:
+				self.key_green_choice = self.EMPTY
 			
 	def deleteTimer(self, timer):
 		timer.afterEvent = AFTEREVENT.NONE

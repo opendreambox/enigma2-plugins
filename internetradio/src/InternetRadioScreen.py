@@ -40,6 +40,7 @@ import os
 import string
 import xml.etree.cElementTree
 from Tools.BoundFunction import boundFunction
+from simplejson import loads as simplejson_loads
 
 from InternetRadioFavoriteConfig import InternetRadioFavoriteConfig
 from InternetRadioInformationScreen import InternetRadioInformationScreen
@@ -464,7 +465,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				else:
 					sTitle = v[0]
 				if config.plugins.internetradio.googlecover.value:
-					url = "http://images.google.de/images?q=%s&btnG=Bilder-Suche" % quote(sTitle)
+					url = "http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=%s" % quote(sTitle)
 					sendUrlCommand(url, None,10).addCallback(self.GoogleImageCallback).addErrback(self.Error)
 			else:
 				sTitle = "n/a"
@@ -947,11 +948,14 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 
 	def GoogleImageCallback(self, result):
 		self.hideCover()
-		foundPos = result.find("imgres?imgurl=")
-		foundPos2 = result.find("&amp;imgrefurl=")
-		if foundPos != -1 and foundPos2 != -1:
-			print "[InternetRadio] downloading cover from %s " % result[foundPos+14:foundPos2]
-			downloadPage(result[foundPos+14:foundPos2] ,"/tmp/.cover").addCallback(self.coverDownloadFinished).addErrback(self.coverDownloadFailed)
+		results = simplejson_loads(result)
+		try:
+			url = results['responseData']['results'][0]['unescapedUrl']
+		except: # fuck that
+			url = ""
+		if url != "":
+			print "[InternetRadio] downloading cover from %s " % url
+			downloadPage(url,"/tmp/.cover").addCallback(self.coverDownloadFinished).addErrback(self.coverDownloadFailed)
 
 	def coverDownloadFailed(self,result):
 		print "[InternetRadio] cover download failed: %s " % result
