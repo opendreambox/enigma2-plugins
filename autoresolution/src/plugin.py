@@ -84,6 +84,8 @@ class AutoRes(Screen):
 			config.av.videorate["720p"].addNotifier(self.__videorate_720p_changed, initial_call = False, immediate_feedback = False)
 		if "1080i" in config.av.videorate:
 			config.av.videorate["1080i"].addNotifier(self.__videorate_1080i_changed, initial_call = False, immediate_feedback = False)
+		if "1080p" in config.av.videorate:
+			config.av.videorate["1080p"].addNotifier(self.__videorate_1080p_changed, initial_call = False, immediate_feedback = False)
 
 	def __videorate_720p_changed(self, configEntry):
 		if self.lastmode == "720p":
@@ -91,6 +93,10 @@ class AutoRes(Screen):
 
 	def __videorate_1080i_changed(self, configEntry):
 		if self.lastmode == "1080i":
+			self.changeVideomode()
+
+	def __videorate_1080p_changed(self, configEntry):
+		if self.lastmode == "1080p":
 			self.changeVideomode()
 
 	def __evStart(self):
@@ -215,7 +221,7 @@ class AutoRes(Screen):
 	def changeVideomode(self):
 		if usable:
 			mode = self.lastmode
-			if mode.find("1080p") != -1 or mode.find("720p24") != -1:
+			if mode.find("1080p30") != -1 or mode.find("1080p24") != -1 or mode.find("1080p25") != -1 or mode.find("720p24") != -1:
 				print "[AutoRes] switching to", mode
 				v = open('/proc/stb/video/videomode' , "w")
 				v.write("%s\n" % mode)
@@ -309,6 +315,7 @@ class AutoResSetupMenu(Screen, ConfigListScreen):
 				self.list.extend((
 					getConfigListEntry(_("Refresh Rate")+" 720p", config.av.videorate["720p"]),
 					getConfigListEntry(_("Refresh Rate")+" 1080i", config.av.videorate["1080i"]),
+					getConfigListEntry(_("Refresh Rate")+" 1080p", config.av.videorate["1080p"]),
 					getConfigListEntry(_("Show info screen"), config.plugins.autoresolution.showinfo),
 					getConfigListEntry(_("Delay x seconds after service started"), config.plugins.autoresolution.delay_switch_mode),
 					getConfigListEntry(_("Running in testmode"), config.plugins.autoresolution.testmode),
