@@ -387,16 +387,24 @@ class AutoTimerComponent(object):
 			if dayofweek not in list:
 				return True
 
-		for include in self.include[0]:
-			if include.search(title) is None:
+		if self.include[0]:
+			for include in self.include[0]:
+				if include.search(title) is not None:
+					break
+			else:
 				return True
-		for include in self.include[1]:
-			if include.search(short) is None:
+		if self.include[1]:
+			for include in self.include[1]:
+				if include.search(short) is not None:
+					break
+			else:
 				return True
-		for include in self.include[2]:
-			if include.search(extended) is None:
+		if self.include[2]:
+			for include in self.include[2]:
+				if include.search(extended) is not None:
+					break
+			else:
 				return True
-
 		return False
 
 	def checkServices(self, check_service):
