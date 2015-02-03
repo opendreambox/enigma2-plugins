@@ -2,6 +2,7 @@
 # Power Save Plugin by gutemine
 # Rewritten by Morty (morty@gmx.net)
 # Profiles, HDD, IP, NAS Mod by joergm6
+# No deep standby on network activity by betonme
 #
 # Deep standby will be called sleep. Normal standby will be named standby!
 # All calculations are in the local timezone, or in the relative Timezone.
@@ -115,6 +116,7 @@ config.plugins.elektro.force = ConfigYesNo(default = False)
 config.plugins.elektro.dontwakeup = ConfigYesNo(default = False)
 config.plugins.elektro.holiday =  ConfigYesNo(default = False)
 config.plugins.elektro.hddsleep =  ConfigYesNo(default = False)
+config.plugins.elektro.netsleep =  ConfigYesNo(default = False)
 config.plugins.elektro.IPenable =  ConfigYesNo(default = False)
 config.plugins.elektro.deepstandby_wakeup_time = ConfigInteger(default = 0)
 
@@ -463,6 +465,8 @@ class Elektro(ConfigListScreen,Screen):
 				_("Forces deep standby, even when not in standby mode. Scheduled recordings remain unaffected.")),
 			getConfigListEntry(_("Avoid deep standby when HDD is active, e.g. for FTP"), config.plugins.elektro.hddsleep,
 				_("Wait for the HDD to enter sleep mode. Depending on the configuration this can prevent the box entirely from entering deep standby mode.")),
+			getConfigListEntry(_("Avoid deep standby on network activity, e.g. for Streaming"), config.plugins.elektro.netsleep,
+				_("Wait for the network to enter sleep mode.")),
 			getConfigListEntry(_("Check IPs (press OK to edit)"), config.plugins.elektro.IPenable,
 				_("This list of IP addresses is checked. Elektro waits until addresses no longer responds to ping.")),
 			getConfigListEntry(_("NAS Poweroff (press OK to edit)"), config.plugins.elektro.NASenable,
@@ -768,11 +772,32 @@ class DoElektro(Screen):
 						break
 
 		# No Sleep on HDD running - joergm6
-		if (config.plugins.elektro.hddsleep.value == True) and (harddiskmanager.HDDCount() > 0):
+		if trysleep == True and (config.plugins.elektro.hddsleep.value == True) and (harddiskmanager.HDDCount() > 0):
 			hddlist = harddiskmanager.HDDList()
 			if hddlist[0][1].model().startswith("ATA"):
 				if not hddlist[0][1].isSleeping():
 					trysleep = False
+		
+		# No Sleep on network activity - betonme
+		if trysleep == True and (config.plugins.elektro.netsleep.value == True) and (harddiskmanager.HDDCount() > 0):
+			with open("/proc/net/tcp", 'r') as f:
+				lines = f.readlines()
+				lines.pop(0)
+				for line in lines:
+					content = line.split()
+					if content[3] == "01":
+						# Connection established
+						trysleep = False
+						break
+			with open("/proc/net/udp", 'r') as f:
+				lines = f.readlines()
+				lines.pop(0)
+				for line in lines:
+					content = line.split()
+					if content[3] == "01":
+						# Connection established
+						trysleep = False
+						break
 		
 		# Will there be a recording in a short while?
 		nextRecTime = self.session.nav.RecordTimer.getNextRecordingTime()
