@@ -219,6 +219,7 @@ class AutoTimerOverview(Screen, HelpableScreen):
 			(_("Import from EPG"), "import_epg"),
 			(_("Setup"), "setup"),
 			(_("Edit new timer defaults"), "defaults"),
+			(_("Clone selected timer"), "clone")
 		]
 
 		from plugin import autotimerHelp
@@ -298,6 +299,18 @@ class AutoTimerOverview(Screen, HelpableScreen):
 					AutoTimerEditor,
 					newTimer
 				)
+			elif ret == "clone":
+				current = self["entries"].getCurrent()
+				if current is not None:
+					newTimer = current.clone()
+					newTimer.id = self.autotimer.getUniqueId()
+
+					self.session.openWithCallback(
+						self.addCallback,
+						AutoTimerEditor,
+						newTimer
+					)
+				
 
 	def save(self):
 		# Just close here, saving will be done by cb
