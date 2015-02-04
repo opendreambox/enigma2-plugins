@@ -553,22 +553,27 @@ class AutoTimer:
 				})
 
 	def checkSimilarity(self, timer, name1, name2, shortdesc1, shortdesc2, extdesc1, extdesc2, force=False):
-		# TODO: make this optional?
 		if name1 and name2:
 			sequenceMatcher = SequenceMatcher(" ".__eq__, name1, name2)
 		else:
 			return False
 
-		if 0.8 < sequenceMatcher.ratio(): # this is probably a match
+		ratio = sequenceMatcher.ratio()
+		print("[AutoTimer] names ratio %f - %s - %d - %s - %d" % (ratio, name1, len(name1), name2, len(name2)))
+		if name1 in name2 or (0.8 < ratio): # this is probably a match
 			foundShort = True
 			if (force or timer.searchForDuplicateDescription > 0) and shortdesc1 and shortdesc2:
 				sequenceMatcher.set_seqs(shortdesc1, shortdesc2)
-				foundShort = (0.8 < sequenceMatcher.ratio())
+				ratio = sequenceMatcher.ratio()
+				print("[AutoTimer] shortdesc ratio %f - %s - %d - %s - %d" % (ratio, shortdesc1, len(shortdesc1), shortdesc2, len(shortdesc2)))
+				foundShort = shortdesc1 in shortdesc2 or (0.8 < ratio)
 
 			foundExt = True
 			# NOTE: only check extended if short description already is a match because otherwise
 			# it won't evaluate to True anyway
 			if foundShort and (force or timer.searchForDuplicateDescription > 1) and extdesc1 and extdesc2:
 				sequenceMatcher.set_seqs(extdesc1, extdesc2)
-				foundExt = (0.8 < sequenceMatcher.ratio())
+				ratio = sequenceMatcher.ratio()
+				print("[AutoTimer] extdesc ratio %f - %s - %d - %s - %d" % (ratio, extdesc1, len(extdesc1), extdesc2, len(extdesc2)))
+				foundExt = (0.8 < ratio)
 			return foundShort and foundExt
