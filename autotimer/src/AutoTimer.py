@@ -615,14 +615,15 @@ class AutoTimer:
 					timer.extdesc = ''
 				timerdict[str(timer.service_ref)].append(timer)
 
-	def modifyTimer(self, timer, name, shortdesc, begin, end, serviceref, eit):
+	def modifyTimer(self, timer, name, shortdesc, begin, end, serviceref, eit=None):
 		# Don't update the name, it will overwrite the name of the SeriesPlugin
 		#timer.name = name
 		timer.description = shortdesc
 		timer.begin = int(begin)
 		timer.end = int(end)
 		timer.service_ref = ServiceReference(serviceref)
-		timer.eit = eit
+		if eit:
+			timer.eit = eit
 
 	def addDirectoryToMovieDict(self, moviedict, dest, serviceHandler):
 		movielist = serviceHandler.list(eServiceReference("2:0:1:0:0:0:0:0:0:0:" + dest))
