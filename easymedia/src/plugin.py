@@ -114,28 +114,50 @@ def notEasy(session, **kwargs):
 
 
 def MPanelEntryComponent(key, text, cell):
+	sz_w = getDesktop(0).size().width()
+	if sz_w > 1400:
+		ih=90
+		wx=200
+		wy=20
+		psx=135
+		psy=85
+	else:
+		ih=60
+		wx=150
+		wy=17
+		psx=100
+		psy=50
+
 	res = [ text ]
-	res.append((eListboxPythonMultiContent.TYPE_TEXT, 150, 17, 300, 60, 0, RT_HALIGN_LEFT, text[0]))
+	res.append((eListboxPythonMultiContent.TYPE_TEXT, wx, wy, 300, ih, 0, RT_HALIGN_LEFT, text[0]))
 	if cell<5:
 		bpng = LoadPixmap('/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/key-' + str(cell) + ".png")
 		if bpng is not None:
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 0, 5, 5, 50, bpng))
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 0, 5, 5, psy, bpng))
 	png = LoadPixmap(EasyMedia.EMiconspath + key + '.png')
 	if png is not None:
-		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 25, 5, 100, 50, png))
+		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 25, 5, psx, psy, png))
 	else:
 		png = LoadPixmap(EasyMedia.EMiconspath + 'default.png')
 		if png is not None:
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 25, 5, 100, 50, png))
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 25, 5, psx, psy, png))
 	return res
 
 
 
 class MPanelList(MenuList):
 	def __init__(self, list, selection = 0, enableWrapAround=True):
+		sz_w = getDesktop(0).size().width()
+		if sz_w > 1400:
+			fs=30
+			ih=90
+		else:
+			fs=20
+			ih=60 
+
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-		self.l.setFont(0, gFont("Regular", 20))
-		self.l.setItemHeight(60)
+		self.l.setFont(0, gFont("Regular", fs))
+		self.l.setItemHeight(ih)
 		self.selection = selection
 	def postWidgetCreate(self, instance):
 		MenuList.postWidgetCreate(self, instance)
@@ -307,7 +329,14 @@ class EasyMediaSummary(Screen):
 
 class EasyMedia(Screen):
 	sz_w = getDesktop(0).size().width()
-	if sz_w > 1100:
+	if sz_w > 1800:
+		skin = """
+		<screen flags="wfNoBorder" position="0,0" size="550,1080" title="Easy Media">
+			<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/bg2.png" position="0,0" size="750,576"/>
+			<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/bg2.png" position="0,576" size="750,503"/>
+			<widget name="list" position="60,30" size="450,1080" scrollbarMode="showNever" transparent="1" zPosition="2"/>
+		</screen>"""
+	elif sz_w > 1100:
 		skin = """
 		<screen flags="wfNoBorder" position="0,0" size="450,720" title="Easy Media">
 			<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/bg.png" position="0,0" size="450,576"/>
@@ -317,7 +346,7 @@ class EasyMedia(Screen):
 	elif sz_w > 1000:
 		skin = """
 		<screen flags="wfNoBorder" position="-20,0" size="450,576" title="Easy Media">
-			<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/bg.png" position="0,0" size="450,576"/>
+			#<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/bg.png" position="0,0" size="450,576"/>
 			<widget name="list" position="70,48" size="320,480" scrollbarMode="showNever" transparent="1" zPosition="2"/>
 		</screen>"""
 	else:
