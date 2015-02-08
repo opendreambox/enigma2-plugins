@@ -43,7 +43,7 @@ class SeriesPluginTimer(object):
 	data = []
 	counter = 0;
 	
-	def __init__(self, timer, name, begin, end):
+	def __init__(self, timer, name, begin, end, block=False):
 		
 		splog("SPT: SeriesPluginTimer: name, timername, begin, end:", name, timer.name, begin, end)
 		timer.log(600, "[SeriesPlugin] Try to find infos for %s" % (timer.name) )
@@ -112,12 +112,19 @@ class SeriesPluginTimer(object):
 			#channel = timer.service_ref.getServiceName()
 			#splog(channel)
 			
-			splog("SPT: getEpisode:", name, begin, end)
-			seriesPlugin.getEpisode(
+			splog("SPT: getEpisode:", name, begin, end, block)
+			if not block:
+				seriesPlugin.getEpisode(
 					boundFunction(self.timerCallback, timer),
 					#name, begin, end, channel, future=True
-					name, begin, end, str(timer.service_ref), future=True
+					name, begin, end, timer.service_ref, future=True
 				)
+			else:
+				result = seriesPlugin.getEpisodeBlocking(
+					name, begin, end, timer.service_ref, future=True
+				)
+				self.timerCallback(timer, result)
+				return result
 		else:
 			splog("SPT: SeriesPluginTimer: No channel specified")
 			self.timerCallback("No channel specified")
@@ -161,7 +168,7 @@ class SeriesPluginTimer(object):
 				
 				instance = getInstance()
 				
-				if instance.thread.isListEmpty():
+				if instance.thread.empty() and instance.thread.finished():
 				
 					if SeriesPluginTimer.data:
 						AddPopup(

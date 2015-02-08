@@ -29,9 +29,8 @@ from Screens.MessageBox import MessageBox
 
 # Plugin internal
 from IdentifierBase import IdentifierBase
-from Channels import ChannelsBase, lookupServiceAlternatives
 from Logger import splog
-
+from Channels import ChannelsBase
 from ThreadQueue import ThreadQueue
 from threading import Thread, currentThread, _get_ident
 #from enigma import ePythonMessagePump
@@ -54,7 +53,6 @@ SERIESPLUGIN_PATH  = os.path.join( resolveFilename(SCOPE_PLUGINS), "Extensions/S
 instance = None
 
 CompiledRegexpNonDecimal = re.compile(r'[^\d]+')
-CompiledRegexpReplaceChars = re.compile(r'[^-_/\.,()abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789äÄüÜöÖß ]+')
 
 def dump(obj):
 	for attr in dir(obj):
@@ -143,15 +141,18 @@ def refactorTitle(org, data):
 	if data:
 		season, episode, title, series = data
 		if config.plugins.seriesplugin.pattern_title.value and not config.plugins.seriesplugin.pattern_title.value == "Off":
-			if config.plugins.seriesplugin.title_replace_chars.value:
+			if config.plugins.seriesplugin.replace_chars.value:
+				repl = re.compile('['+config.plugins.seriesplugin.replace_chars.value.replace("\\", "\\\\\\\\")+']')
 				splog("SP: refactor org", org)
-				org = CompiledRegexpReplaceChars.sub('', str(org))
+				org = repl.sub('', str(org))
 				splog("SP: refactor org", org)
+				
 				splog("SP: refactor title", title)
-				title = CompiledRegexpReplaceChars.sub('', str(title))
+				title = repl.sub('', str(title))
 				splog("SP: refactor title", title)
+				
 				splog("SP: refactor series", series)
-				series = CompiledRegexpReplaceChars.sub('', str(series))
+				series = repl.sub('', str(series))
 				splog("SP: refactor series", series)
 			return config.plugins.seriesplugin.pattern_title.value.strip().format( **{'org': org, 'season': season, 'episode': episode, 'title': title, 'series': series} )
 		else:
@@ -176,13 +177,13 @@ def refactorDescription(org, data):
 
 
 class ThreadItem:
-	def __init__(self, identifier = None, callback = None, name = None, begin = None, end = None, channels = None):
+	def __init__(self, identifier = None, callback = None, name = None, begin = None, end = None, service = None):
 		self.identifier = identifier
 		self.callback = callback
 		self.name = name
 		self.begin = begin
 		self.end = end
-		self.channels = channels
+		self.service = service
 
 
 class SeriesPluginWorker(Thread):
@@ -199,8 +200,11 @@ class SeriesPluginWorker(Thread):
 			self.__pump.recv_msg.get().append(self.gotThreadMsg)
 		self.__queue = ThreadQueue()
 
-	def isListEmpty(self):
+	def empty(self):
 		return self.__queue.empty()
+	
+	def finished(self):
+		return not self.__running
 
 	def add(self, item):
 		
@@ -257,7 +261,7 @@ class SeriesPluginWorker(Thread):
 			
 			try:
 				result = item.identifier.getEpisode(
-					item.name, item.begin, item.end, item.channels
+					item.name, item.begin, item.end, item.service
 				)
 			except Exception, e:
 				splog("SP: Worker: Exception:", str(e))
@@ -328,7 +332,7 @@ class SeriesPlugin(Modules, ChannelsBase):
 		else:
 			return None
 	
-	def getEpisode(self, callback, name, begin, end=None, service=None, future=False, today=False, elapsed=False):
+	def getEpisode(self, callback, name, begin, end=None, service=None, future=False, today=False, elapsed=False, rename=False):
 		#available = False
 		
 		if config.plugins.seriesplugin.skip_during_records.value:
@@ -345,14 +349,11 @@ class SeriesPlugin(Modules, ChannelsBase):
 		if match:
 			#splog(match.group(0))     # Entire match
 			#splog(match.group(1))     # First parenthesized subgroup
-			if config.plugins.seriesplugin.skip_pattern_match.value:
+			if not rename and config.plugins.seriesplugin.skip_pattern_match.value:
 				splog("SP: Main: Skip check because of pattern match")
 				return
 			if match.group(1):
 				name = match.group(1)
-		
-		if name.startswith("The ") or name.startswith("Der ") or name.startswith("Die ")or name.startswith("Das "):
-			name = name[4:]
 		
 		begin = datetime.fromtimestamp(begin)
 		splog("SP: Main: begin:", begin.strftime('%Y-%m-%d %H:%M:%S'))
@@ -368,25 +369,32 @@ class SeriesPlugin(Modules, ChannelsBase):
 		else:
 			identifier = None
 		
-		if identifier:
+		if not identifier:
+			callback( "Error: No identifier available" )
 		
+		elif identifier.channelsEmpty():
+			callback( "Error: Open setup and channel editor" )
+		
+		else:
 			# Reset title search depth on every new request
 			identifier.search_depth = 0;
 			
 			# Reset the knownids on every new request
 			identifier.knownids = []
 			
-			channels = lookupServiceAlternatives(service)
+			#if isinstance(service, eServiceReference):
+			try:
+				serviceref = service.toString()
+			#else:
+			except:
+				serviceref = str(service)
+			serviceref = re.sub('::.*', ':', serviceref)
 
-			self.thread.add(ThreadItem(identifier = identifier, callback = callback, name = name, begin = begin, end = end, channels = channels))
+			self.thread.add( ThreadItem(identifier, callback, name, begin, end, serviceref) )
 			
 			return identifier.getName()
-			
-		#if not available:
-		else:
-			callback( "No identifier available" )
 
-	def getEpisodeBlocking(self, name, begin, end=None, service=None, future=False, today=False, elapsed=False):
+	def getEpisodeBlocking(self, name, begin, end=None, service=None, future=False, today=False, elapsed=False, rename=False):
 		#available = False
 		
 		if config.plugins.seriesplugin.skip_during_records.value:
@@ -403,14 +411,11 @@ class SeriesPlugin(Modules, ChannelsBase):
 		if match:
 			#splog(match.group(0))     # Entire match
 			#splog(match.group(1))     # First parenthesized subgroup
-			if config.plugins.seriesplugin.skip_pattern_match.value:
+			if not rename and config.plugins.seriesplugin.skip_pattern_match.value:
 				splog("SP: Main: Skip check because of pattern match")
 				return
 			if match.group(1):
 				name = match.group(1)
-		
-		if name.startswith("The ") or name.startswith("Der ") or name.startswith("Die ")or name.startswith("Das "):
-			name = name[4:]
 		
 		begin = datetime.fromtimestamp(begin)
 		splog("SP: Main: begin:", begin.strftime('%Y-%m-%d %H:%M:%S'))
@@ -426,22 +431,29 @@ class SeriesPlugin(Modules, ChannelsBase):
 		else:
 			identifier = None
 		
-		if identifier:
+		if not identifier:
+			callback( "Error: No identifier available" )
 		
+		elif identifier.channelsEmpty():
+			callback( "Error: Open setup and channel editor" )
+		
+		else:
 			# Reset title search depth on every new request
 			identifier.search_depth = 0;
 			
 			# Reset the knownids on every new request
 			identifier.knownids = []
 			
-			channels = lookupServiceAlternatives(service)
+			if isinstance(service, eServiceReference):
+				serviceref = service.toString()
+			else:
+				serviceref = str(service)
+			serviceref = re.sub('::.*', ':', serviceref)
 			
 			result = None
 			
 			try:
-				result = identifier.getEpisode(
-					name, begin, end, channels
-				)
+				result = identifier.getEpisode( name, begin, end, serviceref )
 			except Exception, e:
 				splog("SP: Worker: Exception:", str(e))
 				
@@ -461,8 +473,6 @@ class SeriesPlugin(Modules, ChannelsBase):
 			else:
 				splog("SP: Worker: result failed")
 				return result
-		
-		return _("Error: No identifier")
 
 	def gotResult(self, msg):
 		splog("SP: Main: Thread: gotResult:", msg)

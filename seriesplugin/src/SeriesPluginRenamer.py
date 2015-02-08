@@ -68,7 +68,7 @@ def newLegacyEncode(string):
 def rename(servicepath, name, short, data):
 	# Episode data available
 	splog("SPR: rename:", data)
-	result = None
+	result = True
 	
 	#MAYBE Check if it is already renamed?
 	try:
@@ -135,6 +135,7 @@ def renameMeta(servicepath, name, data):
 		metafile = open(meta_file, "w")
 		metafile.write("%s%s\n%s\n%s" % (sid, title, descr, rest))
 		metafile.close()
+	return True
 
 def renameFile(servicepath, name, data, tidy=False):
 	splog("SPR: servicepath", servicepath)
@@ -176,6 +177,7 @@ def renameFile(servicepath, name, data, tidy=False):
 			break
 		else:
 			splog("SPR: Destination file alreadey exists", to, " - Skip rename")
+	return True
 
 
 #######################################################
@@ -268,7 +270,7 @@ class SeriesPluginRenamer(object):
 					splog("SPR: getEpisode:", name, begin, end)
 					seriesPlugin.getEpisode(
 							boundFunction(self.renamerCallback, servicepath, name, short),
-							name, begin, end, rec_ref_str, elapsed=True
+							name, begin, end, rec_ref_str, elapsed=True, rename=True
 						)
 					
 					#result = seriesPlugin.getEpisodeBlocking( name, begin, end, rec_ref_str, elapsed=True )
@@ -300,7 +302,7 @@ class SeriesPluginRenamer(object):
 				
 				instance = getInstance()
 				
-				if instance.thread.isListEmpty():
+				if instance.thread.empty() and instance.thread.finished():
 					if self.data:
 						AddPopup(
 							"SeriesPlugin:\n" + _("Record rename has been finished with %d errors:\n") % (len(self.data)) +"\n" +"\n".join(self.data),

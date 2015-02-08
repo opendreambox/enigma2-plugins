@@ -115,8 +115,7 @@ class SeriesPluginInfoScreen(Screen):
 			#"openSimilarList": self.openSimilarList
 		})
 		
-		splog("SPI: SeriesPluginInfo")
-		#splog(service, event)
+		splog("SPI: SeriesPluginInfo", service, event)
 		self.service = service
 		self.event = event
 		
@@ -160,12 +159,17 @@ class SeriesPluginInfoScreen(Screen):
 				# Service is a movie reference
 				info = self.serviceHandler.info(service)
 				ref = info.getInfoString(service, iServiceInformation.sServiceref)
-				channel = ServiceReference(ref).getServiceName()
+				sref = ServiceReference(ref)
+				ref = sref.ref
+				channel = sref.getServiceName()
 				if not channel:
 					ref = str(ref)
 					ref = re.sub('::.*', ':', ref)
-					channel = ServiceReference(ref).getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
+					sref = ServiceReference(ref)
+					ref = sref.ref
+					channel = sref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
 				#ref = eServiceReference(str(service))
+				#ref = service
 				# Get information from record meta files
 				self.event = info and info.getEvent(service)
 				today = False
@@ -173,8 +177,10 @@ class SeriesPluginInfoScreen(Screen):
 				splog("SPI: eServiceReference movie", str(ref))
 			else:
 				# Service is channel reference
-				ref = eServiceReference(str(service))
-				channel = ServiceReference(ref).getServiceName() or ""
+				#ref = eServiceReference(str(service))
+				ref = service
+				#channel = ServiceReference(ref).getServiceName() or ""
+				channel = ServiceReference(str(service)).getServiceName() or ""
 				#ref = eServiceReference(service.toString())#
 				# Get information from event
 				splog("SPI: eServiceReference channel", str(ref))
@@ -194,15 +200,19 @@ class SeriesPluginInfoScreen(Screen):
 			#ref = self.session and self.session.nav.getCurrentService()
 			#ref = eServiceReference(ref.info().getInfoString(iServiceInformation.sServiceref))
 			#ref = eServiceReference(str(ref))
+
+			#service = self.session.nav.getCurrentService()
+			#info = service and service.info()
+			#event = info and info.getEvent(0)
 			
-			ref = self.session and self.session.nav.getCurrentlyPlayingServiceReference().toString()
+			sref = self.session and self.session.nav.getCurrentlyPlayingServiceReference().toString()
+			ref = eServiceReference(sref)
+			channel = ServiceReference(str(ref)).getServiceName() or ""
 			
-			channel = ServiceReference(ref).getServiceName() or ""
-			splog("SPI: Fallback ref", str(ref))
+			splog("SPI: Fallback ref", ref, str(ref), channel)
 		
 		if not isinstance(self.event, eServiceEvent):
 			try:
-				ref = eServiceReference(ref)
 				self.event = ref.valid() and self.epg.lookupEventTime(ref, -1)
 			except:
 				# Maybe it is an old reference
@@ -217,7 +227,7 @@ class SeriesPluginInfoScreen(Screen):
 			# Get information from epg
 			today = True
 			elapsed = False
-			splog("SPI: Fallback event")
+			splog("SPI: Fallback event", self.event)
 		
 		self.service = ref
 		
@@ -411,7 +421,7 @@ class SeriesPluginInfoScreen(Screen):
 			path = ref.getPath()
 			if path and os.path.exists(path):
 				from SeriesPluginRenamer import rename
-				if rename(ref, self.name, self.short, self.data):
+				if rename(path, self.name, self.short, self.data) is True:
 					self["key_red"].setText("")
 					self.redButtonFunction = None
 					self.session.open( MessageBox, _("Successfully renamed"), MessageBox.TYPE_INFO )

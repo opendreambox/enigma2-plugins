@@ -603,7 +603,7 @@ def buildConfig(defaultTimer, timers, webif = False):
 			ref = ServiceReference(str(serviceref))
 			extend((
 				'  <e2service>\n',
-				'   <e2servicereference>', str(serviceref), '</e2servicereference>\n',
+				'   <e2servicereference>', stringToXML(str(serviceref)), '</e2servicereference>\n',
 				'   <e2servicename>', stringToXML(ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')), '</e2servicename>\n',
 				'  </e2service>\n',
 			))
@@ -618,7 +618,7 @@ def buildConfig(defaultTimer, timers, webif = False):
 		# Bouquets
 		for bouquet in defaultTimer.bouquets:
 			ref = ServiceReference(str(bouquet))
-			extend(('  <bouquet>', str(bouquet), '</bouquet>',
+			extend(('  <bouquet>', stringToXML(str(bouquet)), '</bouquet>',
 						' <!-- ', stringToXML(ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')), ' -->\n',
 			))
 
@@ -755,7 +755,7 @@ def buildConfig(defaultTimer, timers, webif = False):
 				ref = ServiceReference(str(serviceref))
 				extend((
 					'  <e2service>\n',
-					'   <e2servicereference>', str(serviceref), '</e2servicereference>\n',
+					'   <e2servicereference>', stringToXML(str(serviceref)), '</e2servicereference>\n',
 					'   <e2servicename>', stringToXML(ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')), '</e2servicename>\n',
 					'  </e2service>\n',
 				))
@@ -770,7 +770,7 @@ def buildConfig(defaultTimer, timers, webif = False):
 			# Bouquets
 			for bouquet in timer.bouquets:
 				ref = ServiceReference(str(bouquet))
-				extend(('  <bouquet>', str(bouquet), '</bouquet>',
+				extend(('  <bouquet>', stringToXML(str(bouquet)), '</bouquet>',
 							' <!-- ', stringToXML(ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')), ' -->\n',
 				))
 
