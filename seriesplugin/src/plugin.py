@@ -28,7 +28,7 @@ from Logger import splog
 #######################################################
 # Constants
 NAME = "SeriesPlugin"
-VERSION = "1.7.3"
+VERSION = "2.2.2"
 DESCRIPTION = _("SeriesPlugin")
 SHOWINFO = _("Show series info (SP)")
 RENAMESERIES = _("Rename serie(s) (SP)")
@@ -87,9 +87,11 @@ config.plugins.seriesplugin.pattern_title             = ConfigText(default = "{o
 config.plugins.seriesplugin.pattern_description       = ConfigText(default = "S{season:02d}E{episode:02d} {title:s} {org:s}", fixed_size = False)
 #config.plugins.seriesplugin.pattern_record            = ConfigText(default = "{org:s} S{season:02d}E{episode:02d} {title:s}", fixed_size = False)
 
-config.plugins.seriesplugin.title_replace_chars       = ConfigYesNo(default = True)
+config.plugins.seriesplugin.replace_chars             = ConfigText(default = ":/\\,()", fixed_size = False)
 
 config.plugins.seriesplugin.channel_file              = ConfigText(default = "/etc/enigma2/seriesplugin_channels.xml", fixed_size = False)
+
+config.plugins.seriesplugin.bouquet_main              = ConfigText(default = "", fixed_size = False)
 
 config.plugins.seriesplugin.rename_file               = ConfigYesNo(default = True)
 config.plugins.seriesplugin.rename_tidy               = ConfigYesNo(default = False)
@@ -226,6 +228,18 @@ def movielist_info(session, service, *args, **kwargs):
 
 #######################################################
 # Timer renaming
+
+# Synchronous call, blocks until we have the information
+def getSeasonAndEpisode(timer, name, begin, end, *args, **kwargs):
+	result = None
+	if config.plugins.seriesplugin.enabled.value:
+		try:
+			result = SeriesPluginTimer(timer, name, begin, end, True)
+		except Exception as e:
+			splog(_("SeriesPlugin label exception ") + str(e))
+	return result
+
+# Call asynchronous
 def renameTimer(timer, name, begin, end, *args, **kwargs):
 	if config.plugins.seriesplugin.enabled.value:
 		try:
@@ -435,9 +449,9 @@ def addSeriesPlugin(menu, title, fnc=None):
 		SPEPGSelectionInit()
 	elif( menu == WHERE_CHANNELMENU ):
 		try:
-			SPChannelContextMenuInit()
-		except:
 			addSeriesPlugin(PluginDescriptor.WHERE_CHANNEL_CONTEXT_MENU, SHOWINFO, fnc)
+		except:
+			SPChannelContextMenuInit()
 	else:
 		from Components.PluginComponent import plugins
 		if plugins:
@@ -463,9 +477,9 @@ def removeSeriesPlugin(menu, title):
 		SPEPGSelectionUndo()
 	elif( menu == WHERE_CHANNELMENU ):
 		try:
-			SPChannelContextMenuUndo()
-		except:
 			removeSeriesPlugin(PluginDescriptor.WHERE_CHANNEL_CONTEXT_MENU, SHOWINFO)
+		except:
+			SPChannelContextMenuUndo()
 	else:
 		from Components.PluginComponent import plugins
 		if plugins:
@@ -485,37 +499,28 @@ except:
 	AutoTimer = None
 
 ATmodifyTimer = None
-ATcheckSimilarity = None
 
 
 def overwriteAutoTimer():
 	try:
-		global ATmodifyTimer, ATcheckSimilarity
+		global ATmodifyTimer
 		if AutoTimer:
 			if ATmodifyTimer is None:
 				# Backup original function
 				ATmodifyTimer = AutoTimer.modifyTimer
 				# Overwrite function
 				AutoTimer.modifyTimer = SPmodifyTimer
-			if ATcheckSimilarity is None:
-				# Backup original function
-				ATcheckSimilarity = AutoTimer.checkSimilarity
-				# Overwrite function
-				AutoTimer.checkSimilarity = SPcheckSimilarity
 	except:
 		splog("SeriesPlugin found old AutoTimer")
 
 
 def recoverAutoTimer():
 	try:
-		global ATmodifyTimer, ATcheckSimilarity
+		global ATmodifyTimer
 		if AutoTimer:
 			if ATmodifyTimer:
 				AutoTimer.modifyTimer = ATmodifyTimer
 				ATmodifyTimer = None
-			if ATcheckSimilarity:
-				AutoTimer.checkSimilarity = ATcheckSimilarity
-				ATcheckSimilarity = None
 	except:
 		splog("SeriesPlugin found old AutoTimer")
 
@@ -536,27 +541,3 @@ def SPmodifyTimer(self, timer, name, shortdesc, begin, end, serviceref, eit=None
 	timer.service_ref = ServiceReference(serviceref)
 	if eit:
 		timer.eit = eit
-
-def SPcheckSimilarity(self, timer, name1, name2, shortdesc1, shortdesc2, extdesc1, extdesc2, force=False):
-	# Check if the new title is part of the existing one
-	foundTitle = name1 in name2 or name2 in name1
-	
-	if timer.searchForDuplicateDescription > 0 or force:
-		foundShort = (shortdesc1 in shortdesc2 or shortdesc2 in shortdesc1) if (timer.searchForDuplicateDescription > 0 or force) else True
-		
-		# NOTE: only check extended if short description already is a match because otherwise
-		# it won't evaluate to True anyway
-		if (timer.searchForDuplicateDescription > 0 or force) and foundShort and extdesc1 != extdesc2:
-			# Some channels indicate replays in the extended descriptions
-			# If the similarity percent is higher then 0.8 it is a very close match
-			#if timer.series_labeling and (extdesc1 == "" or extdesc2 == ""):
-			#	foundExt = True
-			#else:
-			foundExt = ( 0.8 < SequenceMatcher(lambda x: x == " ",extdesc1, extdesc2).ratio() )
-		else:
-			foundExt = True
-	else:
-		foundShort = True
-		foundExt = True
-	
-	return foundTitle and foundShort and foundExt

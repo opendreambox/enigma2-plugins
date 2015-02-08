@@ -26,12 +26,15 @@ from . import _
 # Config
 from Components.config import *
 from Components.ConfigList import ConfigListScreen
+from Components.Button import Button
 from Components.Sources.StaticText import StaticText
 
 from Components.ActionMap import ActionMap
 from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
 from Screens.Setup import SetupSummary
+
+from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 
 from Plugins.Plugin import PluginDescriptor
 
@@ -41,6 +44,8 @@ from SeriesPluginIndependent import startIndependent, stopIndependent
 from EpisodePatterns import readPatternFile
 from Logger import splog
 from ShowLogScreen import ShowLogScreen
+from Channels import getTVBouquets
+from ChannelEditor import ChannelEditor
 
 
 def checkList(cfg):
@@ -57,9 +62,13 @@ def checkList(cfg):
 #######################################################
 # Configuration screen
 class SeriesPluginConfiguration(ConfigListScreen, Screen):
+	
+	skinfile = os.path.join( resolveFilename(SCOPE_PLUGINS), "Extensions/SeriesPlugin/skinSetup.xml" )
+	skin = open(skinfile).read()
+	
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		self.skinName = [ "SeriesServiceConfiguration", "Setup" ]
+		self.skinName = [ "SeriesPluginConfiguration" ]
 		
 		from plugin import NAME, VERSION
 		self.setup_title = NAME + " " + _("Configuration") + " " + VERSION
@@ -67,9 +76,10 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 		self.onChangedEntry = [ ]
 		
 		# Buttons
-		self["key_red"] = StaticText(_("Cancel"))
-		self["key_green"] = StaticText(_("OK"))
-		self["key_blue"] = StaticText(_("Show Log"))
+		self["key_red"] = Button(_("Cancel"))
+		self["key_green"] = Button(_("OK"))
+		self["key_blue"] = Button(_("Show Log"))
+		self["key_yellow"] = Button(_("Channel Edit"))
 		
 		# Define Actions
 		self["actions"] = ActionMap(["SetupActions", "ChannelSelectBaseActions", "ColorActions"],
@@ -78,14 +88,15 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 			"save":			self.keySave,
 			"nextBouquet":	self.pageUp,
 			"prevBouquet":	self.pageDown,
-			"blue":			self.blue,
+			"blue":			self.showLog,
+			"yellow":		self.openChannelEditor,
 			"ok": 			self.keyOK,
 			"left": 		self.keyLeft,
 			"right": 		self.keyRight,
 		}, -2) # higher priority
 		
 		stopIndependent()
-		resetInstance()
+		#resetInstance()
 		self.seriesPlugin = getInstance()
 		
 		# Create temporary identifier config elements
@@ -103,9 +114,17 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 		self.cfg_pattern_description = NoSave( ConfigSelection(choices = patterns, default = config.plugins.seriesplugin.pattern_description.value ) )
 		#self.cfg_pattern_record      = NoSave( ConfigSelection(choices = patterns, default = config.plugins.seriesplugin.pattern_record.value ) )
 		
+		bouquetList = [("", "")]
+		tvbouquets = getTVBouquets()
+		for bouquet in tvbouquets:
+			bouquetList.append((bouquet[1], bouquet[1]))
+		self.cfg_bouquet_main = NoSave( ConfigSelection(choices = bouquetList,  default = config.plugins.seriesplugin.bouquet_main.value or str(list(zip(*bouquetList)[1]))   )  )
+		
 		checkList( self.cfg_pattern_title )
-		checkList( self.cfg_pattern_description )		
-		#checkList( self.cfg_pattern_record )
+		checkList( self.cfg_pattern_description )
+		checkList( self.cfg_bouquet_main )
+		
+		self.changesMade = False
 		
 		# Initialize Configuration
 		self.list = []
@@ -139,21 +158,18 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 			self.list.append( getConfigListEntry(  _("Select identifier for today events")         , self.cfg_identifier_today ) )
 			#if len( config.plugins.seriesplugin.identifier_future.choices ) > 1:
 			self.list.append( getConfigListEntry(  _("Select identifier for future events")        , self.cfg_identifier_future ) )
-			
-			#if len( config.plugins.seriesplugin.manager.choices ) > 1:
-#			self.list.append( getConfigListEntry(  _("Select manager service")                     , config.plugins.seriesplugin.manager ) )
-			#if len( config.plugins.seriesplugin.guide.choices ) > 1:
-#			self.list.append( getConfigListEntry(  _("Select guide service")                       , config.plugins.seriesplugin.guide ) )
-			
+				
 			self.list.append( getConfigListEntry(  _("Episode pattern file")                       , config.plugins.seriesplugin.pattern_file ) )
 			self.list.append( getConfigListEntry(  _("Record title episode pattern")               , self.cfg_pattern_title ) )
 			self.list.append( getConfigListEntry(  _("Record description episode pattern")         , self.cfg_pattern_description ) )
 			self.list.append( getConfigListEntry(  _("Skip search if pattern matches")             , config.plugins.seriesplugin.skip_pattern_match ) )
 			
-			self.list.append( getConfigListEntry(  _("Replace special characters from title")      , config.plugins.seriesplugin.title_replace_chars ) )
+			self.list.append( getConfigListEntry(  _("Replace special characters in title")        , config.plugins.seriesplugin.replace_chars ) )
 			
 			self.list.append( getConfigListEntry(  _("Alternative channel names file")             , config.plugins.seriesplugin.channel_file ) )
-
+			
+			self.list.append( getConfigListEntry(  _("Main bouquet for channel editor")            , self.cfg_bouquet_main ) )
+			
 			self.list.append( getConfigListEntry(  _("Rename files")                               , config.plugins.seriesplugin.rename_file ) )
 			if config.plugins.seriesplugin.rename_file.value:
 				self.list.append( getConfigListEntry(  _("Tidy up filename on rename")             , config.plugins.seriesplugin.rename_tidy ) )
@@ -230,7 +246,10 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 		config.plugins.seriesplugin.pattern_title.value       = self.cfg_pattern_title.value
 		config.plugins.seriesplugin.pattern_description.value = self.cfg_pattern_description.value
 		#config.plugins.seriesplugin.pattern_record.value      = self.cfg_pattern_record.value
+		config.plugins.seriesplugin.bouquet_main.value = self.cfg_bouquet_main.value
 		config.plugins.seriesplugin.save()
+		
+		self.seriesPlugin.saveXML()
 		
 		from plugin import overwriteAutoTimer, recoverAutoTimer
 		
@@ -288,7 +307,10 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 
 	# Overwrite ConfigListScreen keyCancel function
 	def keyCancel(self):
-		if self["config"].isChanged():
+		splog("SPC keyCancel")
+		#self.seriesPlugin.resetChannels()
+		resetInstance()
+		if self["config"].isChanged() or self.changesMade:
 			self.session.openWithCallback(self.cancelConfirm, MessageBox, _("Really close without saving settings?"))
 		else:
 			self.close()
@@ -318,7 +340,16 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 	def pageDown(self):
 		self["config"].instance.moveSelection(self["config"].instance.pageDown)
 
-	def blue(self):
+	def showLog(self):
 		#self.sendLog()
 		self.session.open(ShowLogScreen, config.plugins.seriesplugin.log_file.value)
 
+	def openChannelEditor(self):
+		self.session.openWithCallback(self.channelEditorClosed, ChannelEditor, )
+
+	def channelEditorClosed(self, result=None):
+		splog("SPC channelEditorClosed", result)
+		if result:
+			self.changesMade = True
+		else:
+			self.seriesPlugin.resetChannels()
