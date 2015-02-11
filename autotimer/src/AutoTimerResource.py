@@ -32,20 +32,20 @@ class AutoTimerBaseResource(resource.Resource):
 class AutoTimerBackgroundThread(threading.Thread):
 	def __init__(self, req, fnc):
 		threading.Thread.__init__(self)
-		self.__req = req
+		self._req = req
 		if hasattr(req, 'notifyFinish'):
 			req.notifyFinish().addErrback(self.connectionLost)
-		self.__stillAlive = True
-		self.__fnc = fnc
+		self._stillAlive = True
+		self._fnc = fnc
 		self.start()
 
 	def connectionLost(self, err):
-		self.__stillAlive = False
+		self._stillAlive = False
 
 	def run(self):
-		req = self.__req
-		ret = self.__fnc(req)
-		if self.__stillAlive and ret != server.NOT_DONE_YET:
+		req = self._req
+		ret = self._fnc(req)
+		if self._stillAlive and ret != server.NOT_DONE_YET:
 			def finishRequest():
 				req.write(ret)
 				req.finish()
@@ -59,21 +59,67 @@ class AutoTimerBackgroundingResource(AutoTimerBaseResource, threading.Thread):
 	def renderBackground(self, req):
 		pass
 
-class AutoTimerDoParseResource(AutoTimerBackgroundingResource):
-	def renderBackground(self, req):
-		ret = autotimer.parseEPG()
-		output = _("Found a total of %d matching Events.\n%d Timer were added and\n%d modified,\n%d conflicts encountered,\n%d similars added.") % (ret[0], ret[1], ret[2], len(ret[4]), len(ret[5]))
+class AutoTimerDoParseBackgroundThread(AutoTimerBackgroundThread):
+	def run(self):
+		req = self._req
+		if self._stillAlive:
+			req.setResponseCode(http.OK)
+			req.setHeader('Content-type', 'application/xhtml+xml')
+			req.setHeader('charset', 'UTF-8')
+			reactor.callFromThread(lambda: req.write("""<?xml version=\"1.0\" encoding=\"UTF-8\" ?><e2simplexmlresult>"""))
 
-		return self.returnResult(req, True, output)
+		d = autotimer.parseEPGAsync().addCallback(self.epgCallback).addErrback(self.epgErrback)
+		def timeout():
+			if not d.called and self._stillAlive:
+				reactor.callFromThread(lambda: req.write("<ignore />"))
+				reactor.callLater(50, timeout)
+		reactor.callLater(50, timeout)
 
-class AutoTimerSimulateResource(AutoTimerBackgroundingResource):
-	def renderBackground(self, req):
-		ret = autotimer.parseEPG(simulateOnly=True)
+	def epgCallback(self, ret):
+		if self._stillAlive:
+			ret = """<e2state>True</e2state>
+	<e2statetext>"""+ _("Found a total of %d matching Events.\n%d Timer were added and\n%d modified,\n%d conflicts encountered,\n%d similars added.") % (ret[0], ret[1], ret[2], len(ret[4]), len(ret[5])) + "</e2statetext></e2simplexmlresult>"
+			def finishRequest():
+				self._req.write(ret)
+				self._req.finish()
+			reactor.callFromThread(finishRequest)
 
-		returnlist = ["<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<e2autotimersimulate api_version=\"", str(API_VERSION), "\">\n"]
+	def epgErrback(self, failure):
+		if self._stillAlive:
+			ret = """<e2state>False</e2state>
+	<e2statetext>"""+ _("AutoTimer failed with error %s") % (str(failure),) + "</e2statetext></e2simplexmlresult>"
+			def finishRequest():
+				self._req.write(ret)
+				self._req.finish()
+			reactor.callFromThread(finishRequest)
+
+class AutoTimerDoParseResource(AutoTimerBaseResource):
+	def render(self, req):
+		AutoTimerDoParseBackgroundThread(req, None)
+		return server.NOT_DONE_YET
+
+class AutoTimerSimulateBackgroundThread(AutoTimerBackgroundThread):
+	def run(self):
+		req = self._req
+		if self._stillAlive:
+			req.setResponseCode(http.OK)
+			req.setHeader('Content-type', 'application/xhtml+xml')
+			req.setHeader('charset', 'UTF-8')
+			reactor.callFromThread(lambda: req.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<e2autotimersimulate api_version=\"" + str(API_VERSION) + "\">\n"))
+
+		autotimer.parseEPG(simulateOnly=True, callback=self.intermediateWrite)
+
+		if self._stillAlive:
+			def finishRequest():
+				req.write('</e2autotimersimulate>')
+				req.finish()
+			reactor.callFromThread(finishRequest)
+
+	def intermediateWrite(self, new, conflicting, similar):
+		returnlist = []
 		extend = returnlist.extend
 
-		for (name, begin, end, serviceref, autotimername) in ret[3]:
+		for (name, begin, end, serviceref, autotimername) in new:
 			ref = ServiceReference(str(serviceref))
 			extend((
 				'<e2simulatedtimer>\n'
@@ -85,12 +131,14 @@ class AutoTimerSimulateResource(AutoTimerBackgroundingResource):
 				'   <e2autotimername>', stringToXML(autotimername), '</e2autotimername>\n'
 				'</e2simulatedtimer>\n'
 			))
-		returnlist.append('</e2autotimersimulate>')
 
-		req.setResponseCode(http.OK)
-		req.setHeader('Content-type', 'application/xhtml+xml')
-		req.setHeader('charset', 'UTF-8')
-		return ''.join(returnlist)
+		if self._stillAlive:
+			reactor.callFromThread(lambda: self._req.write(''.join(returnlist)))
+
+class AutoTimerSimulateResource(AutoTimerBaseResource):
+	def render(self, req):
+		AutoTimerSimulateBackgroundThread(req, None)
+		return server.NOT_DONE_YET
 
 class AutoTimerListAutoTimerResource(AutoTimerBaseResource):
 	def render(self, req):
