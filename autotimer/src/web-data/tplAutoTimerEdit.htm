@@ -250,11 +250,31 @@
 									<tr>
 										<td class="optionTitle">Avoid duplicate description:</td>
 										<td class="optionContent">
-											<select id="avoidDuplicateDescription" size="1" class="select">
-												{for e in avoidDuplicateDescription}
-													<option value="${e.value}" ${e.selected}>${e.txt}</option>
-												{/for}	
-											</select>
+											<table> 
+												<tr>
+													<td class="optionMain">
+														<select id="avoidDuplicateDescription" size="1" class="select">
+															{for e in avoidDuplicateDescription}
+																<option value="${e.value}" ${e.selected}>${e.txt}</option>
+															{/for}	
+														</select>
+													</td>
+													<td>
+														<table id="avoidDuplicateDescriptioncontent" class="optionSub">
+															<tr>
+																<td>
+																	In:
+																	<select id="searchForDuplicateDescription" size="1" class="select">
+																		{for e in searchForDuplicateDescription}
+																			<option value="${e.value}" ${e.selected}>${e.txt}</option>
+																		{/for}	
+																	</select>
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
 										</td>
 									</tr>
 									<tr>

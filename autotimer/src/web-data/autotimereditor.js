@@ -637,6 +637,7 @@ var AutoTimerEditController = Class.create(Controller, {
 		this.onchangeCheckbox( $('locationavailable') );
 		this.onchangeSelectAfterEvent( $('afterevent') );
 		this.onchangeSelect( $('counter') );
+		this.onchangeSelect( $('avoidDuplicateDescription') );
 		this.onchangeCheckbox( $('usefilters') );
 		var filterwheres = $$('.filterwhere');
 		for (var i = 0; i < filterwheres.size(); i++) {
@@ -814,7 +815,7 @@ var AutoTimerEditController = Class.create(Controller, {
 		}
 		data['enabled'] = ($('enabled').checked) ? '1' : '0';
 		
-		options = ['match','name','encoding','searchType','searchCase','justplay','avoidDuplicateDescription'];
+		options = ['match','name','encoding','searchType','searchCase','justplay'];
 		for (var id = 0; id < options.length; id++) {
 			if ($(options[id]).value == ''){
 				core.notify('Error: ' + options[id] + ' is empty', false);
@@ -895,6 +896,11 @@ var AutoTimerEditController = Class.create(Controller, {
 			if (lastActivation) data['lastActivation'] = lastActivation;
 			var lastBegin = $('lastBegin').value;
 			if (lastBegin) data['lastBegin'] = lastBegin;
+		}
+		
+		data['avoidDuplicateDescription'] = $('avoidDuplicateDescription').value;		
+		if ($('avoidDuplicateDescription').value > 0){
+			data['searchForDuplicateDescription'] = $('searchForDuplicateDescription').value;
 		}
 		
 		if ($('locationavailable').checked){
@@ -1104,6 +1110,12 @@ var AutoTimerEditController = Class.create(Controller, {
 			}.bind(this)
 		);
 		$('counter').on(
+			'change',
+			function(event, element){
+				this.onchangeSelect(element);
+			}.bind(this)
+		);
+		$('avoidDuplicateDescription').on(
 			'change',
 			function(event, element){
 				this.onchangeSelect(element);
@@ -1897,6 +1909,14 @@ function AutoTimer(xml, defaults){
 	options['3'] = 'Any service/recording';
 	this.avoidDuplicateDescription = createOptionList(options, avoidDuplicateDescription);
 
+	searchForDuplicateDescription = getAttribute(xml, 'searchForDuplicateDescription', defaults);
+	if (searchForDuplicateDescription==undefined) searchForDuplicateDescription = '0';
+	var options = {};
+	options['0'] = 'Title';
+	options['1'] = 'Title and Short description';
+	options['2'] = 'Title and all descriptions';
+	this.searchForDuplicateDescription = createOptionList(options, searchForDuplicateDescription);
+	
 	var location = getAttribute(xml, 'location', defaults);
 	var uselocation = (location) ? 'checked' : '';
 	if (location == undefined) {
@@ -2064,6 +2084,8 @@ function AutoTimer(xml, defaults){
 			'counter' :               this.counter,
 			
 			'avoidDuplicateDescription' :  this.avoidDuplicateDescription,
+			'searchForDuplicateDescription' :  this.searchForDuplicateDescription,
+			
 			'location' :                   this.location,
 			'tags' :                       this.tags,
 			'filters' :                    this.filters,
