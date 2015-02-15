@@ -44,11 +44,19 @@ class AutoTimerBackgroundThread(threading.Thread):
 
 	def run(self):
 		req = self._req
-		ret = self._fnc(req)
-		if self._stillAlive and ret != server.NOT_DONE_YET:
-			def finishRequest():
-				req.write(ret)
-				req.finish()
+		code = http.OK
+		try: ret = self._fnc(req)
+		except Exception as e:
+			ret = str(e)
+			code = http.INTERNAL_SERVER_ERROR
+		def finishRequest():
+			req.setResponseCode(code)
+			if code == http.OK:
+				req.setHeader('Content-type', 'application/xhtml+xml')
+			req.setHeader('charset', 'UTF-8')
+			req.write(ret)
+			req.finish()
+		if self._stillAlive:
 			reactor.callFromThread(finishRequest)
 
 class AutoTimerBackgroundingResource(AutoTimerBaseResource, threading.Thread):
@@ -107,12 +115,17 @@ class AutoTimerSimulateBackgroundThread(AutoTimerBackgroundThread):
 			req.setHeader('charset', 'UTF-8')
 			reactor.callFromThread(lambda: req.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<e2autotimersimulate api_version=\"" + str(API_VERSION) + "\">\n"))
 
-		autotimer.parseEPG(simulateOnly=True, callback=self.intermediateWrite)
+		def finishRequest():
+			req.write('</e2autotimersimulate>')
+			req.finish()
+
+		try: autotimer.parseEPG(simulateOnly=True, callback=self.intermediateWrite)
+		except Exception as e:
+			def finishRequest():
+				req.write('<exception>'+str(e)+'</exception><|PURPOSEFULLYBROKENXML<')
+				req.finish()
 
 		if self._stillAlive:
-			def finishRequest():
-				req.write('</e2autotimersimulate>')
-				req.finish()
 			reactor.callFromThread(finishRequest)
 
 	def intermediateWrite(self, new, conflicting, similar):
