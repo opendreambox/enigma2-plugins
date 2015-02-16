@@ -4,6 +4,7 @@ from __future__ import print_function
 from xml.etree.cElementTree import parse as cet_parse
 from os import path as os_path
 from AutoTimerConfiguration import parseConfig, buildConfig
+from Tools.IO import saveFile
 
 # Navigation (RecordTimer)
 import NavigationInstance
@@ -143,8 +144,8 @@ class AutoTimer:
 		return buildConfig(self.defaultTimer, self.timers, webif = True)
 
 	def writeXml(self):
-		with open(XML_CONFIG, 'w') as config:
-			config.writelines(buildConfig(self.defaultTimer, self.timers))
+		# XXX: we probably want to indicate failures in some way :)
+		saveFile(XML_CONFIG, buildConfig(self.defaultTimer, self.timers))
 
 # Manage List
 
