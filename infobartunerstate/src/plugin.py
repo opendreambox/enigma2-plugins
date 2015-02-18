@@ -37,7 +37,7 @@ from InfoBarTunerState import InfoBarTunerState, TunerStateInfo
 NAME = _("InfoBarTunerState")
 IBTSSHOW = _("Show InfoBarTunerState")
 IBTSSETUP = _("InfoBarTunerState Setup")
-VERSION = "1.2.2"
+VERSION = "1.2.4"
 SUPPORT = "http://bit.ly/ibtsihad"
 DONATE = "http://bit.ly/ibtspaypal"
 ABOUT = "\n  " + NAME + " " + VERSION + "\n\n" \
@@ -66,6 +66,7 @@ field_choices = [
 									("TimeElapsed",							_("Time Elapsed")),
 									("Begin",										_("Begin")),
 									("End",											_("End")),
+									("BeginEnd",									_("Begin / End")),
 									("Duration",								_("Duration")),
 									("TimerProgressGraphical",	_("Timer Progress (Graphical)")),  #TODO howto do for file streams
 									("TimerProgressText",				_("Timer Progress (Text)")),  #TODO howto do for file streams
