@@ -67,14 +67,12 @@ class AutoTimerBackgroundingResource(AutoTimerBaseResource, threading.Thread):
 	def renderBackground(self, req):
 		pass
 
-class AutoTimerDoParseBackgroundThread(AutoTimerBackgroundThread):
-	def run(self):
-		req = self._req
-		if self._stillAlive:
-			req.setResponseCode(http.OK)
-			req.setHeader('Content-type', 'application/xhtml+xml')
-			req.setHeader('charset', 'UTF-8')
-			reactor.callFromThread(lambda: req.write("""<?xml version=\"1.0\" encoding=\"UTF-8\" ?><e2simplexmlresult>"""))
+class AutoTimerDoParseResource(AutoTimerBaseResource):
+	def render(self, req):
+		self._req = req
+		self._stillAlive = True
+		if hasattr(req, 'notifyFinish'):
+			req.notifyFinish().addErrback(self.connectionLost)
 
 		d = autotimer.parseEPGAsync().addCallback(self.epgCallback).addErrback(self.epgErrback)
 		def timeout():
@@ -82,6 +80,15 @@ class AutoTimerDoParseBackgroundThread(AutoTimerBackgroundThread):
 				reactor.callFromThread(lambda: req.write("<ignore />"))
 				reactor.callLater(50, timeout)
 		reactor.callLater(50, timeout)
+
+		req.setResponseCode(http.OK)
+		req.setHeader('Content-type', 'application/xhtml+xml')
+		req.setHeader('charset', 'UTF-8')
+		req.write("""<?xml version=\"1.0\" encoding=\"UTF-8\" ?><e2simplexmlresult>""")
+		return server.NOT_DONE_YET
+
+	def connectionLost(self, err):
+		self._stillAlive = False
 
 	def epgCallback(self, ret):
 		if self._stillAlive:
@@ -100,11 +107,6 @@ class AutoTimerDoParseBackgroundThread(AutoTimerBackgroundThread):
 				self._req.write(ret)
 				self._req.finish()
 			reactor.callFromThread(finishRequest)
-
-class AutoTimerDoParseResource(AutoTimerBaseResource):
-	def render(self, req):
-		AutoTimerDoParseBackgroundThread(req, None)
-		return server.NOT_DONE_YET
 
 class AutoTimerSimulateBackgroundThread(AutoTimerBackgroundThread):
 	def run(self):
