@@ -103,6 +103,7 @@ class IPKGUpdateNotification(ControllerBase):
 				if p == packagename:
 					updversion = v
 					break
+			print "PushService: " + packagename + " :\t" + instversion + " :\t" + updversion
 			if instversion != updversion:
 				updates += packagename + " :\t" + instversion + " :\t" + updversion + "\n"
 		if updates:

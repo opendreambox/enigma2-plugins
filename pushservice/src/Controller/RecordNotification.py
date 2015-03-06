@@ -107,7 +107,7 @@ class RecordNotification(ControllerBase):
 				del timer
 		
 		if text:
-			#TODO Problem test tun won't get the message
+			#TODO Problem test run won't get the message
 			# Push mail
 			from Plugins.Extensions.PushService.plugin import gPushService
 			if gPushService:
