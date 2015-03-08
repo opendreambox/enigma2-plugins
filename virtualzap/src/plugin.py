@@ -124,6 +124,7 @@ def VirtualZapCallback(self, service = None, servicePath = None):
 				self.session.pip.servicePath = servicePath
 			else:
 				self.session.pipshown = False
+				self.session.deleteDialog(self.session.pip)
 				del self.session.pip
 				self.session.openWithCallback(self.close, MessageBox, _("Could not open Picture in Picture"), MessageBox.TYPE_ERROR)
 

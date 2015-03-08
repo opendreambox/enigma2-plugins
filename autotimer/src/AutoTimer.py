@@ -4,6 +4,7 @@ from __future__ import print_function
 from xml.etree.cElementTree import parse as cet_parse
 from os import path as os_path
 from AutoTimerConfiguration import parseConfig, buildConfig
+from Tools.IO import saveFile
 
 # Navigation (RecordTimer)
 import NavigationInstance
@@ -143,8 +144,8 @@ class AutoTimer:
 		return buildConfig(self.defaultTimer, self.timers, webif = True)
 
 	def writeXml(self):
-		with open(XML_CONFIG, 'w') as config:
-			config.writelines(buildConfig(self.defaultTimer, self.timers))
+		# XXX: we probably want to indicate failures in some way :)
+		saveFile(XML_CONFIG, buildConfig(self.defaultTimer, self.timers))
 
 # Manage List
 
@@ -554,7 +555,7 @@ class AutoTimer:
 						conflicts = recordHandler.record(newEntry)
 		return (new, modified)
 
-	def parseEPG(self, simulateOnly = False):
+	def parseEPG(self, simulateOnly=False, callback=None):
 		if NavigationInstance.instance is None:
 			print("[AutoTimer] Navigation is not available, can't parse EPG")
 			return (0, 0, 0, [], [], [])
@@ -597,8 +598,14 @@ class AutoTimer:
 		# Iterate Timer
 		for timer in self.getEnabledTimerList():
 			tup = doBlockingCallFromMainThread(self.parseTimer, timer, epgcache, serviceHandler, recordHandler, checkEvtLimit, evtLimit, timers, conflicting, similars, timerdict, moviedict, simulateOnly=simulateOnly)
-			new += tup[0]
-			modified += tup[1]
+			if callback:
+				callback(timers, conflicting, similars)
+				del timers[:]
+				del conflicting[:]
+				del similars[:]
+			else:
+				new += tup[0]
+				modified += tup[1]
 
 		return (len(timers), new, modified, timers, conflicting, similars)
 

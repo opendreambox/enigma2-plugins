@@ -1012,7 +1012,7 @@ msgstr "Calcolare i timer esistenti basati su inizio/fine"
 #, python-format
 msgid ""
 "If this is enabled an existing timer will also be considered recording an "
-"event if it records at least 80% of the it."
+"event if it records at least 80%% of it."
 msgstr ""
 "Abilitando l'opzione, un timer esistente verrà considerato in registrazione "
 "se la percentuale registrata sarà almeno l'80% del totale previsto."
