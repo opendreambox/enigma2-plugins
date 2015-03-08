@@ -564,6 +564,7 @@ seriesplugin/etc/Makefile
 seriesplugin/meta/Makefile
 seriesplugin/po/Makefile
 seriesplugin/src/Makefile
+seriesplugin/src/Images/Makefile
 seriesplugin/src/Logos/Makefile
 seriesplugin/src/Identifiers/Makefile
 seriesplugin/src/Identifiers/bs4/Makefile

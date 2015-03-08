@@ -15,7 +15,7 @@ from enigma import eServiceReference
 from . import _, config, iteritems, plugin
 from plugin import autotimer
 
-API_VERSION = "1.3"
+API_VERSION = "1.4"
 
 class AutoTimerBaseResource(resource.Resource):
 	def returnResult(self, req, state, statetext):
@@ -32,23 +32,31 @@ class AutoTimerBaseResource(resource.Resource):
 class AutoTimerBackgroundThread(threading.Thread):
 	def __init__(self, req, fnc):
 		threading.Thread.__init__(self)
-		self.__req = req
+		self._req = req
 		if hasattr(req, 'notifyFinish'):
 			req.notifyFinish().addErrback(self.connectionLost)
-		self.__stillAlive = True
-		self.__fnc = fnc
+		self._stillAlive = True
+		self._fnc = fnc
 		self.start()
 
 	def connectionLost(self, err):
-		self.__stillAlive = False
+		self._stillAlive = False
 
 	def run(self):
-		req = self.__req
-		ret = self.__fnc(req)
-		if self.__stillAlive and ret != server.NOT_DONE_YET:
-			def finishRequest():
-				req.write(ret)
-				req.finish()
+		req = self._req
+		code = http.OK
+		try: ret = self._fnc(req)
+		except Exception as e:
+			ret = str(e)
+			code = http.INTERNAL_SERVER_ERROR
+		def finishRequest():
+			req.setResponseCode(code)
+			if code == http.OK:
+				req.setHeader('Content-type', 'application/xhtml+xml')
+			req.setHeader('charset', 'UTF-8')
+			req.write(ret)
+			req.finish()
+		if self._stillAlive:
 			reactor.callFromThread(finishRequest)
 
 class AutoTimerBackgroundingResource(AutoTimerBaseResource, threading.Thread):
@@ -59,21 +67,74 @@ class AutoTimerBackgroundingResource(AutoTimerBaseResource, threading.Thread):
 	def renderBackground(self, req):
 		pass
 
-class AutoTimerDoParseResource(AutoTimerBackgroundingResource):
-	def renderBackground(self, req):
-		ret = autotimer.parseEPG()
-		output = _("Found a total of %d matching Events.\n%d Timer were added and\n%d modified,\n%d conflicts encountered,\n%d similars added.") % (ret[0], ret[1], ret[2], len(ret[4]), len(ret[5]))
+class AutoTimerDoParseResource(AutoTimerBaseResource):
+	def render(self, req):
+		self._req = req
+		self._stillAlive = True
+		if hasattr(req, 'notifyFinish'):
+			req.notifyFinish().addErrback(self.connectionLost)
 
-		return self.returnResult(req, True, output)
+		d = autotimer.parseEPGAsync().addCallback(self.epgCallback).addErrback(self.epgErrback)
+		def timeout():
+			if not d.called and self._stillAlive:
+				reactor.callFromThread(lambda: req.write("<ignore />"))
+				reactor.callLater(50, timeout)
+		reactor.callLater(50, timeout)
 
-class AutoTimerSimulateResource(AutoTimerBackgroundingResource):
-	def renderBackground(self, req):
-		ret = autotimer.parseEPG(simulateOnly=True)
+		req.setResponseCode(http.OK)
+		req.setHeader('Content-type', 'application/xhtml+xml')
+		req.setHeader('charset', 'UTF-8')
+		req.write("""<?xml version=\"1.0\" encoding=\"UTF-8\" ?><e2simplexmlresult>""")
+		return server.NOT_DONE_YET
 
-		returnlist = ["<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<e2autotimersimulate api_version=\"", str(API_VERSION), "\">\n"]
+	def connectionLost(self, err):
+		self._stillAlive = False
+
+	def epgCallback(self, ret):
+		if self._stillAlive:
+			ret = """<e2state>True</e2state>
+	<e2statetext>"""+ _("Found a total of %d matching Events.\n%d Timer were added and\n%d modified,\n%d conflicts encountered,\n%d similars added.") % (ret[0], ret[1], ret[2], len(ret[4]), len(ret[5])) + "</e2statetext></e2simplexmlresult>"
+			def finishRequest():
+				self._req.write(ret)
+				self._req.finish()
+			reactor.callFromThread(finishRequest)
+
+	def epgErrback(self, failure):
+		if self._stillAlive:
+			ret = """<e2state>False</e2state>
+	<e2statetext>"""+ _("AutoTimer failed with error %s") % (str(failure),) + "</e2statetext></e2simplexmlresult>"
+			def finishRequest():
+				self._req.write(ret)
+				self._req.finish()
+			reactor.callFromThread(finishRequest)
+
+class AutoTimerSimulateBackgroundThread(AutoTimerBackgroundThread):
+	def run(self):
+		req = self._req
+		if self._stillAlive:
+			req.setResponseCode(http.OK)
+			req.setHeader('Content-type', 'application/xhtml+xml')
+			req.setHeader('charset', 'UTF-8')
+			reactor.callFromThread(lambda: req.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<e2autotimersimulate api_version=\"" + str(API_VERSION) + "\">\n"))
+
+		def finishRequest():
+			req.write('</e2autotimersimulate>')
+			req.finish()
+
+		try: autotimer.parseEPG(simulateOnly=True, callback=self.intermediateWrite)
+		except Exception as e:
+			def finishRequest():
+				req.write('<exception>'+str(e)+'</exception><|PURPOSEFULLYBROKENXML<')
+				req.finish()
+
+		if self._stillAlive:
+			reactor.callFromThread(finishRequest)
+
+	def intermediateWrite(self, new, conflicting, similar):
+		returnlist = []
 		extend = returnlist.extend
 
-		for (name, begin, end, serviceref, autotimername) in ret[3]:
+		for (name, begin, end, serviceref, autotimername) in new:
 			ref = ServiceReference(str(serviceref))
 			extend((
 				'<e2simulatedtimer>\n'
@@ -85,12 +146,14 @@ class AutoTimerSimulateResource(AutoTimerBackgroundingResource):
 				'   <e2autotimername>', stringToXML(autotimername), '</e2autotimername>\n'
 				'</e2simulatedtimer>\n'
 			))
-		returnlist.append('</e2autotimersimulate>')
 
-		req.setResponseCode(http.OK)
-		req.setHeader('Content-type', 'application/xhtml+xml')
-		req.setHeader('charset', 'UTF-8')
-		return ''.join(returnlist)
+		if self._stillAlive:
+			reactor.callFromThread(lambda: self._req.write(''.join(returnlist)))
+
+class AutoTimerSimulateResource(AutoTimerBaseResource):
+	def render(self, req):
+		AutoTimerSimulateBackgroundThread(req, None)
+		return server.NOT_DONE_YET
 
 class AutoTimerListAutoTimerResource(AutoTimerBaseResource):
 	def render(self, req):
@@ -373,6 +436,14 @@ class AutoTimerChangeSettingsResource(AutoTimerBaseResource):
 				config.plugins.autotimer.add_autotimer_to_tags.value = True if value == "true" else False
 			elif key == "add_name_to_tags":
 				config.plugins.autotimer.add_name_to_tags.value = True if value == "true" else False
+			elif key == "timeout":
+				config.plugins.autotimer.timeout.value = int(value)
+			elif key == "delay":
+				config.plugins.autotimer.delay.value = int(value)
+			elif key == "skip_during_records":
+				config.plugins.autotimer.skip_during_records.value = True if value == "true" else False
+			elif key == "skip_during_epgrefresh":
+				config.plugins.autotimer.skip_during_epgrefresh.value = True if value == "true" else False
 
 		if config.plugins.autotimer.autopoll.value:
 			if plugin.autopoller is None:
@@ -465,6 +536,22 @@ class AutoTimerSettingsResource(resource.Resource):
 		<e2settingvalue>%s</e2settingvalue>
 	</e2setting>
 	<e2setting>
+		<e2settingname>config.plugins.autotimer.timeout</e2settingname>
+		<e2settingvalue>%s</e2settingvalue>
+	</e2setting>
+	<e2setting>
+		<e2settingname>config.plugins.autotimer.delay</e2settingname>
+		<e2settingvalue>%s</e2settingvalue>
+	</e2setting>
+	<e2setting>
+		<e2settingname>config.plugins.autotimer.skip_during_records</e2settingname>
+		<e2settingvalue>%s</e2settingvalue>
+	</e2setting>
+	<e2setting>
+		<e2settingname>config.plugins.autotimer.skip_during_epgrefresh</e2settingname>
+		<e2settingvalue>%s</e2settingvalue>
+	</e2setting>
+	<e2setting>
 		<e2settingname>hasVps</e2settingname>
 		<e2settingvalue>%s</e2settingvalue>
 	</e2setting>
@@ -495,6 +582,10 @@ class AutoTimerSettingsResource(resource.Resource):
 				config.plugins.autotimer.maxdaysinfuture.value,
 				config.plugins.autotimer.add_autotimer_to_tags.value,
 				config.plugins.autotimer.add_name_to_tags.value,
+				config.plugins.autotimer.timeout.value,
+				config.plugins.autotimer.delay.value,
+				config.plugins.autotimer.skip_during_records.value,
+				config.plugins.autotimer.skip_during_epgrefresh.value,
 				hasVps,
 				hasSeriesPlugin,
 				CURRENT_CONFIG_VERSION,

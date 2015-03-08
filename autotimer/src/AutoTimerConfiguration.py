@@ -31,10 +31,7 @@ def getValue(definitions, default):
 	# How many definitions are present
 	if isinstance(definitions, list):
 		Len = len(definitions)
-		if Len > 0:
-			childNodes = definitions[Len-1].text
-		else:
-			childNodes = ""
+		ret = definitions[Len-1].text if Len else ""
 	else:
 		ret = definitions.text
 

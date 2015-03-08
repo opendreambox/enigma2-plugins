@@ -247,7 +247,7 @@ class AutoTimerOverview(Screen, HelpableScreen):
 			elif ret == "faq":
 				from Plugins.SystemPlugins.MPHelp import PluginHelp, XMLHelpReader
 				from Tools.Directories import resolveFilename, SCOPE_PLUGINS
-				reader = XMLHelpReader(resolveFilename(SCOPE_PLUGINS, "Extensions/AutoTimer/faq.xml"))
+				reader = XMLHelpReader(resolveFilename(SCOPE_PLUGINS, "Extensions/AutoTimer/faq.xml"), translate=_)
 				autotimerFaq = PluginHelp(*reader)
 				autotimerFaq.open(self.session)
 			elif ret == "preview":
