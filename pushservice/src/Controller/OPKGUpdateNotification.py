@@ -101,7 +101,7 @@ class OPKGUpdateNotification(ControllerBase):
 						continue
 					if line.startswith("Updated"):
 						continue
-					if line.startswith("Downlading"):
+					if line.startswith("Downloading"):
 						continue
 					if line == '':
 						continue
