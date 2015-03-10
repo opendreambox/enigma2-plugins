@@ -11,6 +11,7 @@ from Components.config import config, ConfigSubsection, ConfigEnableDisable, \
 config.plugins.autotimer = ConfigSubsection()
 config.plugins.autotimer.autopoll = ConfigEnableDisable(default=False)
 config.plugins.autotimer.delay = ConfigNumber(default=3)
+config.plugins.autotimer.editdelay = ConfigNumber(default=3)
 config.plugins.autotimer.interval = ConfigNumber(default=3)
 config.plugins.autotimer.timeout = ConfigNumber(default=1)
 config.plugins.autotimer.refresh = ConfigSelection(choices=[

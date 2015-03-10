@@ -136,10 +136,22 @@ def handleAutoPoller():
 	else:
 		autopoller = None
 
+cbtimer = None
+def cbtimerLaunch():
+	global cbtimer
+	cbtimer.stop()
+	autotimer.parseEPGAsync().addCallback(parseEPGCallback)#.addErrback(parseEPGErrback)
+	cbtimer.timeout.get().remove(cbtimerLaunch)
+	cbtimer = None
+
 def editCallback(session):
 	# Don't parse EPG if editing was canceled
 	if session is not None:
-		autotimer.parseEPGAsync().addCallback(parseEPGCallback)#.addErrback(parseEPGErrback)
+		global cbtimer
+		cbtimer = eTimer()
+		cbtimer.timeout.get().append(cbtimerLaunch)
+		delay = config.plugins.autotimer.editdelay.value
+		cbtimer.startLongTimer(delay)
 	else:
 		handleAutoPoller()
 
