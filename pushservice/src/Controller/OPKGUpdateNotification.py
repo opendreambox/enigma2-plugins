@@ -65,7 +65,6 @@ class OPKGUpdateNotification(ControllerBase):
 		callback()
 
 	def dataAvail(self, string):
-		#self.data += "\n" + string.replace("\n","")
 		self.data += string
 
 	def opkgupgradable(self):
@@ -85,18 +84,12 @@ class OPKGUpdateNotification(ControllerBase):
 		except:
 			pass
 		
-		PKG_NAME=0
-		PKG_REL =1
-		PKG_INFO=2
 		updates = ""
 		
 		if self.data:
 			try:
 				for line in self.data.split("\n"):
 					print "PushService opkg upgradable data: ",line
-					#package = line.split(' - ')
-					#print "PushService: " + package[PKG_REL].replace("experimental-", "exp. ") + " -> " + package[PKG_INFO][:-1].replace("experimental-", "exp. ")
-					#updates += package[PKG_REL].replace("experimental-", "exp. ") + " -> " + package[PKG_INFO][:-1].replace("experimental-", "exp. ") + "\n"
 					if line.startswith("Inflating"):
 						continue
 					if line.startswith("Updated"):
@@ -105,9 +98,9 @@ class OPKGUpdateNotification(ControllerBase):
 						continue
 					if line == '':
 						continue
-					updates += line + "\n"
+					updates += line + "\r\n"
 			except Exception, e:
-				updates += "\n\n" + str(e)
+				updates += "\r\n\r\nException:\r\n" + str(e)
 				print "PushService except: ",str(e)
 
 		if updates:
