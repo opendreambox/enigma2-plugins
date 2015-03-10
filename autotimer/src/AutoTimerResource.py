@@ -443,6 +443,8 @@ class AutoTimerChangeSettingsResource(AutoTimerBaseResource):
 				config.plugins.autotimer.timeout.value = int(value)
 			elif key == "delay":
 				config.plugins.autotimer.delay.value = int(value)
+			elif key == "editdelay":
+				config.plugins.autotimer.editdelay.value = int(value)
 			elif key == "skip_during_records":
 				config.plugins.autotimer.skip_during_records.value = True if value == "true" else False
 			elif key == "skip_during_epgrefresh":
@@ -547,6 +549,10 @@ class AutoTimerSettingsResource(resource.Resource):
 		<e2settingvalue>%s</e2settingvalue>
 	</e2setting>
 	<e2setting>
+		<e2settingname>config.plugins.autotimer.editdelay</e2settingname>
+		<e2settingvalue>%s</e2settingvalue>
+	</e2setting>
+	<e2setting>
 		<e2settingname>config.plugins.autotimer.skip_during_records</e2settingname>
 		<e2settingvalue>%s</e2settingvalue>
 	</e2setting>
@@ -587,6 +593,7 @@ class AutoTimerSettingsResource(resource.Resource):
 				config.plugins.autotimer.add_name_to_tags.value,
 				config.plugins.autotimer.timeout.value,
 				config.plugins.autotimer.delay.value,
+				config.plugins.autotimer.editdelay.value,
 				config.plugins.autotimer.skip_during_records.value,
 				config.plugins.autotimer.skip_during_epgrefresh.value,
 				hasVps,

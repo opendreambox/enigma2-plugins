@@ -151,7 +151,7 @@ def editCallback(session):
 		global cbtimer
 		cbtimer = eTimer()
 		cbtimer.timeout.get().append(cbtimerLaunch)
-		delay = config.plugins.autotimer.delay.value*60
+		delay = config.plugins.autotimer.editdelay.value
 		cbtimer.startLongTimer(delay)
 	else:
 		handleAutoPoller()

@@ -38,6 +38,7 @@ class AutoTimerSettings(Screen, ConfigListScreen):
 			[
 				getConfigListEntry(_("Poll automatically"), config.plugins.autotimer.autopoll, _("Unless this is enabled AutoTimer will NOT automatically look for events matching your AutoTimers but only when you leave the GUI with the green button.")),
 				getConfigListEntry(_("Startup delay (in min)"), config.plugins.autotimer.delay, _("This is the delay in minutes that the AutoTimer will wait on initial launch to not delay enigma2 startup time.")),
+				getConfigListEntry(_("Delay after editing (in sec)"), config.plugins.autotimer.editdelay, _("This is the delay in seconds that the AutoTimer will wait after editing the AutoTimers.")),
 				getConfigListEntry(_("Poll Interval (in h)"), config.plugins.autotimer.interval, _("This is the delay in hours that the AutoTimer will wait after a search to search the EPG again.")),
 				getConfigListEntry(_("Timeout (in min)"), config.plugins.autotimer.timeout, _("This is the duration in minutes that the AutoTimer is allowed to run.")),
 				getConfigListEntry(_("Only add timer for next x days"), config.plugins.autotimer.maxdaysinfuture, _("You can control for how many days in the future timers are added. Set this to 0 to disable this feature.")),
