@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 # for localized messages
 #from __init__ import _
-from enigma import eTimer, eEnv
+from enigma import eTimer, eEnv, eNetworkManager
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Components.ActionMap import ActionMap
 from Components.Sources.List import List
 from Components.Sources.StaticText import StaticText
-from Components.Network import iNetworkInfo
+from Components.Network import iNetworkInfo, NetworkInterface
 from Components.config import getConfigListEntry, ConfigIP
 from Components.ConfigList import ConfigListScreen
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS
@@ -94,6 +94,12 @@ class NetworkBrowser(Screen):
 		self.skin_path = plugin_path
 		self.session = session
 		self.iface = iface
+		services = eNetworkManager.getInstance().getServices()
+		for service in services:
+			key = self.getServiceIF(service)
+			if key != None:
+				self.iface = key
+				break
 		if self.iface is None:
 			self.iface = 'eth0'
 		self.networklist = None
@@ -130,6 +136,13 @@ class NetworkBrowser(Screen):
 		self.onClose.append(self.cleanup)
 		self.Timer = eTimer()
 		self.Timer_conn = self.Timer.timeout.connect(self.TimerFire)
+
+	def getServiceIF(self, service):
+		key = None
+		if service.state() == eNetworkManager.STATE_ONLINE:
+			iface = NetworkInterface(service)
+			key = iface.ethernet.interface
+		return key
 
 	def cleanup(self):
 		del self.Timer
