@@ -28,7 +28,7 @@ from Logger import splog
 #######################################################
 # Constants
 NAME = "SeriesPlugin"
-VERSION = "2.4"
+VERSION = "2.4.3"
 DESCRIPTION = _("SeriesPlugin")
 SHOWINFO = _("Show series info (SP)")
 RENAMESERIES = _("Rename serie(s) (SP)")
@@ -87,7 +87,7 @@ config.plugins.seriesplugin.pattern_title             = ConfigText(default = "{o
 config.plugins.seriesplugin.pattern_description       = ConfigText(default = "S{season:02d}E{episode:02d} {title:s} {org:s}", fixed_size = False)
 #config.plugins.seriesplugin.pattern_record            = ConfigText(default = "{org:s} S{season:02d}E{episode:02d} {title:s}", fixed_size = False)
 
-config.plugins.seriesplugin.replace_chars             = ConfigText(default = ":!/\\,\(\)", fixed_size = False)
+config.plugins.seriesplugin.replace_chars             = ConfigText(default = ":\!/\\,\(\)'\?", fixed_size = False)
 
 config.plugins.seriesplugin.channel_file              = ConfigText(default = "/etc/enigma2/seriesplugin_channels.xml", fixed_size = False)
 
