@@ -58,6 +58,7 @@ class DeactivatedTimers(ControllerBase):
 							+ strftime(_("%Y.%m.%d %H:%M"), localtime(timer.begin)) + " - " \
 							+ strftime(_("%H:%M"), localtime(timer.end)) + "    " \
 							+ str(timer.service_ref and timer.service_ref.getServiceName() or "") \
+							+ " " + str(timer.tags) \
 							+ "\n"
 				self.timers.append( timer )
 		if self.timers and text:
@@ -78,10 +79,11 @@ class DeactivatedTimers(ControllerBase):
 				self.timers.remove(timer)
 		else:
 			# Set tag to avoid resending it
-			for timer in self.timers[:]:
-				timer.tags.append(TAG)
-				NavigationInstance.instance.RecordTimer.saveTimer()
-				self.timers.remove(timer)
+			for timer in self.timers[]:
+				if TAG not in timer.tags:
+					timer.tags.append(TAG)
+			NavigationInstance.instance.RecordTimer.saveTimer()
+			self.timers = []
 
 	def errback(self):
 		# Called after all services has returned, but at least one has failed

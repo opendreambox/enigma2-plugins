@@ -96,6 +96,16 @@ class OPKGUpdateNotification(ControllerBase):
 						continue
 					if line.startswith("Downloading"):
 						continue
+					if line.startswith("Ign "):
+						continue
+					if line.startswith("Get:"):
+						continue
+					if line.startswith("Hit "):
+						continue
+					if line.startswith("Fetched "):
+						continue
+					if line.startswith("Reading "):
+						continue
 					if line == '':
 						continue
 					updates += line + "\r\n"
