@@ -106,6 +106,14 @@ class OPKGUpdateNotification(ControllerBase):
 						continue
 					if line.startswith("Reading "):
 						continue
+					if line.startswith("Err "):
+						continue
+					if line.find('404 ') != -1:
+						continue
+					if line.find('Failed ') != -1:
+						continue
+					if line.find('failed ') != -1:
+						continue
 					if line == '':
 						continue
 					updates += line + "\r\n"
