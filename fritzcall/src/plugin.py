@@ -2,9 +2,9 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1120 $
-$Date: 2014-12-26 12:07:53 +0100 (Fri, 26 Dec 2014) $
-$Id: plugin.py 1120 2014-12-26 11:07:53Z michael $
+$Revision: 1148 $
+$Date: 2015-04-14 21:14:18 +0200 (Tue, 14 Apr 2015) $
+$Id: plugin.py 1148 2015-04-14 19:14:18Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -101,6 +101,7 @@ config.plugins.FritzCall.filter = ConfigEnableDisable(default=False)
 config.plugins.FritzCall.filtermsn = ConfigText(default="", fixed_size=False)
 config.plugins.FritzCall.filtermsn.setUseableChars('0123456789,')
 config.plugins.FritzCall.filterCallList = ConfigEnableDisable(default=True)
+config.plugins.FritzCall.showBlacklist = ConfigEnableDisable(default=False)
 config.plugins.FritzCall.showOutgoing = ConfigEnableDisable(default=False)
 config.plugins.FritzCall.timeout = ConfigInteger(default=15, limits=(0, 60))
 config.plugins.FritzCall.lookup = ConfigEnableDisable(default=False)
@@ -278,8 +279,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1120 $"[1:-2] + "\n" + 
-							"$Date: 2014-12-26 12:07:53 +0100 (Fri, 26 Dec 2014) $"[1:23] + "\n"
+							"$Revision: 1148 $"[1:-2] + "\n" + 
+							"$Date: 2015-04-14 21:14:18 +0200 (Tue, 14 Apr 2015) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -1907,7 +1908,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1120 $"[1: - 1] + "$Date: 2014-12-26 12:07:53 +0100 (Fri, 26 Dec 2014) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1148 $"[1: - 1] + "$Date: 2015-04-14 21:14:18 +0200 (Tue, 14 Apr 2015) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -1932,6 +1933,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 				self.list.append(getConfigListEntry(_("Filter also list of calls"), config.plugins.FritzCall.filterCallList))
 			self.list.append(getConfigListEntry(_("Mute on call"), config.plugins.FritzCall.muteOnCall))
 
+			self.list.append(getConfigListEntry(_("Show Blocked Calls"), config.plugins.FritzCall.showBlacklist))
 			self.list.append(getConfigListEntry(_("Show Outgoing Calls"), config.plugins.FritzCall.showOutgoing))
 			# not only for outgoing: config.plugins.FritzCall.showOutgoing.value:
 			self.list.append(getConfigListEntry(_("Areacode to add to calls without one (if necessary)"), config.plugins.FritzCall.prefix))
@@ -2432,7 +2434,7 @@ class FritzReverseLookupAndNotifier:
 
 class FritzProtocol(LineReceiver): # pylint: disable=W0223
 	def __init__(self):
-		debug("[FritzProtocol] " + "$Revision: 1120 $"[1:-1]	+ "$Date: 2014-12-26 12:07:53 +0100 (Fri, 26 Dec 2014) $"[7:23] + " starting")
+		debug("[FritzProtocol] " + "$Revision: 1148 $"[1:-1]	+ "$Date: 2015-04-14 21:14:18 +0200 (Tue, 14 Apr 2015) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
@@ -2503,7 +2505,7 @@ class FritzProtocol(LineReceiver): # pylint: disable=W0223
 			else:
 				number = anEvent[5]
 
-			if fritzbox and fritzbox.blacklist:
+			if fritzbox and fritzbox.blacklist and not config.plugins.FritzCall.showBlacklist:
 				if self.event == "RING":
 					if number in fritzbox.blacklist[0]:
 						debug("[FritzProtocol] lineReceived phone: '''%s''' blacklisted number: '''%s'''" % (phone, number))
