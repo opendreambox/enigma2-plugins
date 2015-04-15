@@ -1,5 +1,4 @@
-SUBDIRS = createapscfiles
-# FIXMEEEEE eitsave
+SUBDIRS = createapscfiles eitsave
 
 plugindir = $(libdir)/enigma2/python/Plugins/Extensions/PermanentTimeshift
 

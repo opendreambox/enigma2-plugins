@@ -42,6 +42,8 @@ import gettext
 import Screens.InfoBar
 import Screens.Standby
 
+from Tools.Log import Log
+
 ##############################
 ###   Multilanguage Init   ###
 ##############################
@@ -504,7 +506,7 @@ class InfoBar(InfoBarOrg):
 
 	def restartTimeshift(self):
 		self.activatePermanentTimeshift()
-		Notifications.AddNotification(MessageBox, _("PTS-Plugin: Restarting Timeshift!"), MessageBox.TYPE_INFO, timeout=5)
+		Notifications.AddNotification(MessageBox, _("[PTS-Plugin] Restarting Timeshift!"), MessageBox.TYPE_INFO, timeout=5)
 
 	def saveTimeshiftPopup(self):
 		self.session.openWithCallback(self.saveTimeshiftPopupCallback, ChoiceBox, \
@@ -652,7 +654,7 @@ class InfoBar(InfoBarOrg):
 							elif config.recording.filename_composition.value == "short":
 								ptsfilename = "%s - %s" % (strftime("%Y%m%d",localtime(self.pts_starttime)),self.pts_curevent_name)
 					except Exception, errormsg:
-						print "PTS-Plugin: Using default filename"
+						Log.i("[PTS-Plugin] Using default filename")
 
 					if config.recording.ascii_filenames.value:
 						ptsfilename = ASCIItranslit.legacyEncode(ptsfilename)
@@ -680,7 +682,7 @@ class InfoBar(InfoBarOrg):
 							elif config.recording.filename_composition.value == "short":
 								ptsfilename = "%s - %s" % (strftime("%Y%m%d",localtime(int(begintime))),eventname)
 					except Exception, errormsg:
-						print "PTS-Plugin: Using default filename"
+						Log.i("[PTS-Plugin] Using default filename")
 
 					if config.recording.ascii_filenames.value:
 						ptsfilename = ASCIItranslit.legacyEncode(ptsfilename)
@@ -785,7 +787,7 @@ class InfoBar(InfoBarOrg):
 					statinfo = os_stat("%s/%s" % (config.usage.timeshift_path.value,filename))
 					# if no write for 5 sec = stranded timeshift
 					if statinfo.st_mtime < (time()-5.0):
-						print "PTS-Plugin: Erasing stranded timeshift %s" % filename
+						Log.i("[PTS-Plugin] Erasing stranded timeshift %s" % filename)
 						self.BgFileEraser.erase("%s/%s" % (config.usage.timeshift_path.value,filename))
 
 						# Delete Meta and EIT File too
@@ -793,7 +795,7 @@ class InfoBar(InfoBarOrg):
 							self.BgFileEraser.erase("%s/%s.meta" % (config.usage.timeshift_path.value,filename))
 							self.BgFileEraser.erase("%s/%s.eit" % (config.usage.timeshift_path.value,filename))
 		except:
-			print "PTS: IO-Error while cleaning Timeshift Folder ..."
+			Log.i("[PTS-Plugin] IO-Error while cleaning Timeshift Folder ...")
 
 	def ptsGetEventInfo(self):
 		event = None
@@ -839,7 +841,7 @@ class InfoBar(InfoBarOrg):
 				elif fileExists("/proc/stb/fp/led0_pattern"):
 					open("/proc/stb/fp/led0_pattern", "w").write("0")
 		except Exception, errormsg:
-			print "PTS Plugin: %s" % (errormsg)
+			Log.i("[PTS-Plugin] %s" % (errormsg))
 
 	def ptsCreateHardlink(self):
 		for filename in os_listdir(config.usage.timeshift_path.value):
@@ -851,7 +853,7 @@ class InfoBar(InfoBarOrg):
 							self.BgFileEraser.erase("%s/pts_livebuffer.%s" % (config.usage.timeshift_path.value,self.pts_eventcount))
 							self.BgFileEraser.erase("%s/pts_livebuffer.%s.meta" % (config.usage.timeshift_path.value,self.pts_eventcount))
 						except Exception, errormsg:
-							print "PTS Plugin: %s" % (errormsg)
+							Log.i("[PTS-Plugin] %s" % (errormsg))
 
 						try:
 							# Create link to pts_livebuffer file
@@ -877,7 +879,7 @@ class InfoBar(InfoBarOrg):
 								metafile.write("%s\n%s\n%s\n%i\nautosaved\n" % (self.pts_curevent_servicerefname,self.pts_curevent_name.replace("\n", ""),self.pts_curevent_description.replace("\n", ""),int(self.pts_starttime)))
 								metafile.close()
 							except Exception, errormsg:
-								print "PTS Plugin: %s" % (errormsg)
+								Log.i("[PTS-Plugin] %s" % (errormsg))
 				except Exception, errormsg:
 					errormsg = str(errormsg)
 					if errormsg.find('Input/output error') != -1:
@@ -957,7 +959,7 @@ class InfoBar(InfoBarOrg):
 
 		# Merging failed :(
 		if not ptsfilemerged and ptsgetnextfile:
-			Notifications.AddNotification(MessageBox,_("PTS-Plugin: Merging records failed!"), MessageBox.TYPE_ERROR)
+			Notifications.AddNotification(MessageBox,_("[PTS-Plugin] Merging records failed!"), MessageBox.TYPE_ERROR)
 
 	def ptsCreateAPSCFiles(self, filename):
 		if fileExists(filename, 'r'):
@@ -979,7 +981,7 @@ class InfoBar(InfoBarOrg):
 				serviceref = ServiceReference(self.session.nav.getCurrentlyPlayingServiceReference()).ref.toString()
 				eitsave.SaveEIT(serviceref, filename+".eit", self.pts_curevent_eventid, -1, -1)
 			except Exception, errormsg:
-				print "PTS Plugin: %s" % (errormsg)
+				Log.i("[PTS-Plugin] %s" % (errormsg))
 
 	def ptsCopyFilefinished(self, srcfile, destfile):
 		# Erase Source File
@@ -1226,8 +1228,9 @@ class InfoBar(InfoBarOrg):
 
 		try:
 			ts.setNextPlaybackFile("%s/%s" % (config.usage.timeshift_path.value,nexttsfile))
+			Log.i(nexttsfile)
 		except:
-			print "PTS-Plugin: setNextPlaybackFile() not supported by OE. Enigma2 too old !?"
+			Log.i("[PTS-Plugin] setNextPlaybackFile() not supported by OE. Enigma2 too old !?")
 
 	def ptsSeekBackHack(self):
 		if not config.plugins.pts.enabled.value or not self.timeshift_enabled:

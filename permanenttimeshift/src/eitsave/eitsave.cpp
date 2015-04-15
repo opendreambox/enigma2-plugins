@@ -6,12 +6,13 @@
 using namespace std;
 #include <lib/dvb/dvb.h>
 #include <lib/dvb/epgcache.h>
+#include <lib/service/event.h>
 #include <fcntl.h>
 
 static void SaveEIT(const char *ref, const char *filename, int  eit_event_id, time_t begTime, time_t endTime)
 {
 	eEPGCache::getInstance()->Lock();
-	const eit_event_struct *event = 0;
+	ePtr<eServiceEvent> event = 0;
 	eServiceReference mref = eServiceReference(ref);
 	std::string sref = ref;
 	if ( eit_event_id != -1 )
@@ -36,13 +37,14 @@ static void SaveEIT(const char *ref, const char *filename, int  eit_event_id, ti
 	if ( event )
 	{
 		eDebug("[EITSave] found event.. store to disc");
-		std::string fname = filename;
-		int fd = open(fname.c_str(), O_CREAT|O_WRONLY, 0777);
-		if (fd>-1)
-		{
-			int evLen=HILO(event->descriptors_loop_length)+12/*EIT_LOOP_SIZE*/;
-			int wr = ::write( fd, (unsigned char*)event, evLen );
-			if ( wr != evLen )
+		uint8_t eit_raw[4096];
+		size_t eit_len = event->writeToEITBuffer(eit_raw);
+		eDebug("found event.. store to disc");
+		int fd = open(filename, O_CREAT | O_WRONLY | O_CLOEXEC, 0777);
+		if(fd > -1)
+			{
+			ssize_t wr = ::write(fd, (unsigned char*)eit_raw, eit_len);
+			if(wr != (ssize_t)eit_len)
 				eDebug("eit write error (%m)");
 			::close(fd);
 		}
