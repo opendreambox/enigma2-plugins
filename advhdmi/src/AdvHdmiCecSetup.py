@@ -363,7 +363,7 @@ def main(session, **kwargs):
 	session.open(AdvHdmiCecSetup)
 
 def showinSetup(menuid):
-	if menuid != "system":
+	if menuid != "devices":
 		return []
 	return [(_("Advanced HDMI-Cec Setup"), main, "", 46)]
 

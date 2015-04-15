@@ -247,7 +247,7 @@ def opensettings(session, **kwargs):
 	session.open(ThreeDSettings)
 
 def settings(menuid, **kwargs):
-	if menuid != "system":
+	if menuid != "osd_video_audio":
 		return []
 	return [(_("3D settings"), opensettings, "3d_settings", 10)]
 
