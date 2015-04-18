@@ -105,7 +105,7 @@ def openconfig(session, **kwargs):
 		debugOut("Config-Import-Error:\n" + str(format_exc()), forced=True)
 
 def showinSetup(menuid):
-	if menuid == "system":
+	if menuid == "services_recordings":
 		return [(extPrefix + " " + _("EXTENSIONNAME_SETUP"), openconfig, "EPGBackupConfig", None)]
 	return []
 

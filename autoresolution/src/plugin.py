@@ -365,7 +365,7 @@ def autostart(reason, **kwargs):
 		AutoRes(session)
 
 def startSetup(menuid):
-	if menuid != "system":
+	if menuid != "osd_video_audio":
 		return [ ]
 	return [(_("Autoresolution"), autoresSetup, "autores_setup", 45)]
 

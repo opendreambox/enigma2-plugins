@@ -1,5 +1,7 @@
 from __future__ import print_function
 
+from enigma import eTimer
+
 from . import _, config
 
 # GUI (Screens)
@@ -137,19 +139,23 @@ def handleAutoPoller():
 		autopoller = None
 
 cbtimer = None
+cbtimer_conn = None
+
 def cbtimerLaunch():
 	global cbtimer
+	global cbtimer_conn
 	cbtimer.stop()
 	autotimer.parseEPGAsync().addCallback(parseEPGCallback)#.addErrback(parseEPGErrback)
-	cbtimer.timeout.get().remove(cbtimerLaunch)
+	cbtimer_conn = None
 	cbtimer = None
 
 def editCallback(session):
 	# Don't parse EPG if editing was canceled
 	if session is not None:
 		global cbtimer
+		global cbtimer_conn
 		cbtimer = eTimer()
-		cbtimer.timeout.get().append(cbtimerLaunch)
+		cbtimer_conn = cbtimer.timeout.connect(cbtimerLaunch)
 		delay = config.plugins.autotimer.editdelay.value
 		cbtimer.startLongTimer(delay)
 	else:
