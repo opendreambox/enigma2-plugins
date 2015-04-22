@@ -67,11 +67,11 @@ def Partnerbox_SingleEntry(self, service, eventId, beginTime, duration, EventNam
 	t = localtime(beginTime)
 	res = [
 		None, # no private data needed
-		(eListboxPythonMultiContent.TYPE_TEXT, r1.left(), r1.top(), r1.width(), r1.height(), 0, RT_HALIGN_RIGHT, self.days[t[6]]),
-		(eListboxPythonMultiContent.TYPE_TEXT, r2.left(), r2.top(), r2.width(), r1.height(), 0, RT_HALIGN_RIGHT, "%02d.%02d, %02d:%02d"%(t[2],t[1],t[3],t[4]))
+		(eListboxPythonMultiContent.TYPE_TEXT, r1.left(), r1.top(), r1.width(), r1.height(), 0, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, self.days[t[6]]),
+		(eListboxPythonMultiContent.TYPE_TEXT, r2.left(), r2.top(), r2.width(), r1.height(), 0, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, "%02d.%02d, %02d:%02d"%(t[2],t[1],t[3],t[4]))
 	]
 	if rec1 or rec2:
-		if rec1:			
+		if rec1:
 			clock_pic = self.getClockPixmap(service, beginTime, duration, eventId)
 			#eventuell auch in der Partnerbox
 			if rec2:
@@ -81,15 +81,15 @@ def Partnerbox_SingleEntry(self, service, eventId, beginTime, duration, EventNam
 		if rec1 and rec2:
 			# wenn sowohl lokal als auch auf Partnerbox
 			res.extend((
-				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r3.left(), r3.top(), 21, 21, clock_pic),
-				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r3.left() + 25, r3.top(), 21, 21, clock_pic_partnerbox),
-				(eListboxPythonMultiContent.TYPE_TEXT, r3.left() + 50, r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT, EventName)))
+				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r3.left(), 4, 21, 21, clock_pic),
+				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r3.left() + 30, 4, 21, 21, clock_pic_partnerbox),
+				(eListboxPythonMultiContent.TYPE_TEXT, r3.left() + 60, r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, EventName)))
 		else:
 			res.extend((
-				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r3.left(), r3.top(), 21, 21, clock_pic),
-				(eListboxPythonMultiContent.TYPE_TEXT, r3.left() + 25, r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT, EventName)))
+				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r3.left(), 4, 21, 21, clock_pic),
+				(eListboxPythonMultiContent.TYPE_TEXT, r3.left() + 30, r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, EventName)))
 	else:
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, r3.left(), r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT, EventName))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, r3.left(), r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, EventName))
 	return res
 
 
@@ -102,8 +102,8 @@ def Partnerbox_SimilarEntry(self, service, eventId, beginTime, service_name, dur
 	t = localtime(beginTime)
 	res = [
 		None,  # no private data needed
-		(eListboxPythonMultiContent.TYPE_TEXT, r1.left(), r1.top(), r1.width(), r1.height(), 0, RT_HALIGN_RIGHT, self.days[t[6]]),
-		(eListboxPythonMultiContent.TYPE_TEXT, r2.left(), r2.top(), r2.width(), r1.height(), 0, RT_HALIGN_RIGHT, "%02d.%02d, %02d:%02d"%(t[2],t[1],t[3],t[4]))
+		(eListboxPythonMultiContent.TYPE_TEXT, r1.left(), r1.top(), r1.width(), r1.height(), 0, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, self.days[t[6]]),
+		(eListboxPythonMultiContent.TYPE_TEXT, r2.left(), r2.top(), r2.width(), r1.height(), 0, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, "%02d.%02d, %02d:%02d"%(t[2],t[1],t[3],t[4]))
 	]
 	if rec1 or rec2:
 		if rec1:			
@@ -116,17 +116,17 @@ def Partnerbox_SimilarEntry(self, service, eventId, beginTime, service_name, dur
 		if rec1 and rec2:
 			# wenn sowohl lokal als auch auf Partnerbox
 			res.extend((
-				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r3.left(), r3.top(), 21, 21, clock_pic),
-				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r3.left() + 25, r3.top(), 21, 21, clock_pic_partnerbox),
-				(eListboxPythonMultiContent.TYPE_TEXT, r3.left() + 50, r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT, service_name)
+				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r3.left(), 4, 21, 21, clock_pic),
+				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r3.left() + 30, 4, 21, 21, clock_pic_partnerbox),
+				(eListboxPythonMultiContent.TYPE_TEXT, r3.left() + 60, r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, service_name)
 			))
 		else:
 			res.extend((
-				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r3.left(), r3.top(), 21, 21, clock_pic),
-				(eListboxPythonMultiContent.TYPE_TEXT, r3.left() + 25, r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT, service_name)
+				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r3.left(), 4, 21, 21, clock_pic),
+				(eListboxPythonMultiContent.TYPE_TEXT, r3.left() + 30, r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, service_name)
 			))
 	else:
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, r3.left(), r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT, service_name))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, r3.left(), r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, service_name))
 	return res
 
 def Partnerbox_MultiEntry(self, changecount, service, eventId, begTime, duration, EventName, nowTime, service_name):
@@ -149,30 +149,30 @@ def Partnerbox_MultiEntry(self, changecount, service, eventId, begTime, duration
 		if rec1 and rec2:
 			# wenn sowohl lokal als auch auf Partnerbox
 			res.extend((
-				(eListboxPythonMultiContent.TYPE_TEXT, r1.left(), r1.top(), r1.width()-41, r1.height(), 0, RT_HALIGN_LEFT, service_name),
-				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r1.left()+r1.width()-32, r1.top(), 21, 21, clock_pic),
-				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r1.left()+r1.width()-16, r1.top(), 21, 21, clock_pic_partnerbox)
+				(eListboxPythonMultiContent.TYPE_TEXT, r1.left(), r1.top(), r1.width()-41, r1.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, service_name),
+				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r1.left()+r1.width()-32, 4, 21, 21, clock_pic),
+				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r1.left()+r1.width()-16, 4, 21, 21, clock_pic_partnerbox)
 			))
 		else:
 			res.extend((
-				(eListboxPythonMultiContent.TYPE_TEXT, r1.left(), r1.top(), r1.width()-21, r1.height(), 0, RT_HALIGN_LEFT, service_name),
-				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r1.left()+r1.width()-16, r1.top(), 21, 21, clock_pic)
+				(eListboxPythonMultiContent.TYPE_TEXT, r1.left(), r1.top(), r1.width()-26, r1.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, service_name),
+				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r1.left()+r1.width()-16, 4, 21, 21, clock_pic)
 			))
 	else:
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, r1.left(), r1.top(), r1.width(), r1.height(), 0, RT_HALIGN_LEFT, service_name))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, r1.left(), r1.top(), r1.width(), r1.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, service_name))
 	if begTime is not None:
 		if nowTime < begTime:
 			begin = localtime(begTime)
 			end = localtime(begTime+duration)
 			res.extend((
 				(eListboxPythonMultiContent.TYPE_TEXT, r4.left(), r4.top(), r4.width(), r4.height(), 1, RT_HALIGN_CENTER|RT_VALIGN_CENTER, "%02d.%02d - %02d.%02d"%(begin[3],begin[4],end[3],end[4])),
-				(eListboxPythonMultiContent.TYPE_TEXT, r3.left(), r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT, EventName)
+				(eListboxPythonMultiContent.TYPE_TEXT, r3.left(), r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, EventName)
 			))
 		else:
 			percent = (nowTime - begTime) * 100 / duration
 			res.extend((
 				(eListboxPythonMultiContent.TYPE_PROGRESS, r2.left(), r2.top(), r2.width(), r2.height(), percent),
-				(eListboxPythonMultiContent.TYPE_TEXT, r3.left(), r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT, EventName)
+				(eListboxPythonMultiContent.TYPE_TEXT, r3.left(), r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, EventName)
 			))
 	return res
 
