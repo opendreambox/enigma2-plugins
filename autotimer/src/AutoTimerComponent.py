@@ -483,7 +483,7 @@ class AutoTimerComponent(object):
 		return None
 
 	def checkTimeframe(self, begin):
-		timerframe = self.timeframe
+		timeframe = self.timeframe
 		if timeframe is not None:
 			start, end = timeframe
 			if start == end: # NOTE: by convention start == end indicates open ended from begin
