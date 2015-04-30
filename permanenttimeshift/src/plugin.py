@@ -1755,7 +1755,7 @@ class PermanentTimeShiftSetup(Screen, ConfigListScreen):
 #################################################
 
 def startSetup(menuid):
-	if menuid != "system":
+	if menuid != "services_recordings":
 		return [ ]
 	return [(_("Timeshift Settings"), PTSSetupMenu, "pts_setup", 50)]
 

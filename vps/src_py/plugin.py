@@ -79,7 +79,7 @@ def doneConfig(session, **kwargs):
 	vps_timers.checkTimer()
 
 def startSetup(menuid):
-	if menuid != "system":
+	if menuid != "services_recordings":
 		return []
 	return [(_("VPS Settings"), setup, "vps", 50)]
 	

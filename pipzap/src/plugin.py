@@ -533,7 +533,7 @@ def main(session, *args, **kwargs):
 	session.open(PipzapSetup)
 
 def menu(menuid):
-	if menuid != "system":
+	if menuid != "services_recordings":
 		return []
 	return [(_("pipzap"), main, "pipzap_setup", None)]
 

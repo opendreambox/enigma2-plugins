@@ -117,7 +117,7 @@ def setup(session, **kwargs):
 	session.open(AutomaticTimerlistCleanUpSetup) # start setup
 
 def startSetup(menuid):
-	if menuid != "system": # show setup only in system level menu
+	if menuid != "services_recordings": # show setup only in system level menu
 		return []
 	return [(_("Automatic Timerlist Cleanup Setup"), setup, "automatictimerlistcleanup", 46)]
 	

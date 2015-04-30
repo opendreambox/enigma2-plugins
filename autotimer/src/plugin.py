@@ -1,8 +1,8 @@
 from __future__ import print_function
 
-from enigma import eTimer
-
 from . import _, config
+
+from twisted.internet import reactor
 
 # GUI (Screens)
 from Screens.MessageBox import MessageBox
@@ -138,26 +138,12 @@ def handleAutoPoller():
 	else:
 		autopoller = None
 
-cbtimer = None
-cbtimer_conn = None
-
-def cbtimerLaunch():
-	global cbtimer
-	global cbtimer_conn
-	cbtimer.stop()
-	autotimer.parseEPGAsync().addCallback(parseEPGCallback)#.addErrback(parseEPGErrback)
-	cbtimer_conn = None
-	cbtimer = None
-
 def editCallback(session):
 	# Don't parse EPG if editing was canceled
 	if session is not None:
-		global cbtimer
-		global cbtimer_conn
-		cbtimer = eTimer()
-		cbtimer_conn = cbtimer.timeout.connect(cbtimerLaunch)
 		delay = config.plugins.autotimer.editdelay.value
-		cbtimer.startLongTimer(delay)
+		parseFunc = lambda: autotimer.parseEPGAsync().addCallback(parseEPGCallback)#.addErrback(parseEPGErrback)
+		reactor.callLater(delay, parseFunc)
 	else:
 		handleAutoPoller()
 
