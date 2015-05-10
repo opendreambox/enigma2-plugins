@@ -2,9 +2,9 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1148 $
-$Date: 2015-04-14 21:14:18 +0200 (Tue, 14 Apr 2015) $
-$Id: plugin.py 1148 2015-04-14 19:14:18Z michael $
+$Revision: 1158 $
+$Date: 2015-05-10 11:46:26 +0200 (Sun, 10 May 2015) $
+$Id: plugin.py 1158 2015-05-10 09:46:26Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -101,8 +101,8 @@ config.plugins.FritzCall.filter = ConfigEnableDisable(default=False)
 config.plugins.FritzCall.filtermsn = ConfigText(default="", fixed_size=False)
 config.plugins.FritzCall.filtermsn.setUseableChars('0123456789,')
 config.plugins.FritzCall.filterCallList = ConfigEnableDisable(default=True)
-config.plugins.FritzCall.showBlacklist = ConfigEnableDisable(default=False)
-config.plugins.FritzCall.showOutgoing = ConfigEnableDisable(default=False)
+config.plugins.FritzCall.showBlacklistedCalls = ConfigEnableDisable(default=False)
+config.plugins.FritzCall.showOutgoingCalls = ConfigEnableDisable(default=False)
 config.plugins.FritzCall.timeout = ConfigInteger(default=15, limits=(0, 60))
 config.plugins.FritzCall.lookup = ConfigEnableDisable(default=False)
 config.plugins.FritzCall.internal = ConfigEnableDisable(default=False)
@@ -279,8 +279,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1148 $"[1:-2] + "\n" + 
-							"$Date: 2015-04-14 21:14:18 +0200 (Tue, 14 Apr 2015) $"[1:23] + "\n"
+							"$Revision: 1158 $"[1:-2] + "\n" + 
+							"$Date: 2015-05-10 11:46:26 +0200 (Sun, 10 May 2015) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -1128,7 +1128,7 @@ class FritzOfferAction(Screen):
 				<widget name="key_yellow" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 			</screen>""" % (
 							DESKTOP_WIDTH, DESKTOP_HEIGHT, # set maximum size
-							scaleH(22,21), # text
+							scaleV(25,22), # text
 							DESKTOP_WIDTH, DESKTOP_HEIGHT, # set maximum size
 							"skin_default/buttons/red.png",
 							"skin_default/buttons/green.png",
@@ -1183,7 +1183,6 @@ class FritzOfferAction(Screen):
 			Notifications.AddNotification(MessageBox, _("Found picture\n\n%s\n\nBut did not load. Probably not PNG, 8-bit") %faceFile, type = MessageBox.TYPE_ERROR)
 			picPixmap = LoadPixmap(resolveFilename(SCOPE_SKIN_IMAGE, "skin_default/icons/input_error.png"))
 		picSize = picPixmap.size()
-		self["FacePixmap"].instance.setPixmap(picPixmap)
 
 		noButtons = 3
 		# recalculate window size
@@ -1209,6 +1208,7 @@ class FritzOfferAction(Screen):
 		self["text"].instance.resize(textSize)
 		# resize pixmap
 		self["FacePixmap"].instance.resize(picSize)
+		self["FacePixmap"].instance.setPixmap(picPixmap)
 		# move buttons
 		buttonPos = (buttonsGap, buttonsVPos)
 		self["key_red_p"].instance.move(ePoint(*buttonPos))
@@ -1908,7 +1908,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1148 $"[1: - 1] + "$Date: 2015-04-14 21:14:18 +0200 (Tue, 14 Apr 2015) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1158 $"[1: - 1] + "$Date: 2015-05-10 11:46:26 +0200 (Sun, 10 May 2015) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -1933,9 +1933,9 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 				self.list.append(getConfigListEntry(_("Filter also list of calls"), config.plugins.FritzCall.filterCallList))
 			self.list.append(getConfigListEntry(_("Mute on call"), config.plugins.FritzCall.muteOnCall))
 
-			self.list.append(getConfigListEntry(_("Show Blocked Calls"), config.plugins.FritzCall.showBlacklist))
-			self.list.append(getConfigListEntry(_("Show Outgoing Calls"), config.plugins.FritzCall.showOutgoing))
-			# not only for outgoing: config.plugins.FritzCall.showOutgoing.value:
+			self.list.append(getConfigListEntry(_("Show Blocked Calls"), config.plugins.FritzCall.showBlacklistedCalls))
+			self.list.append(getConfigListEntry(_("Show Outgoing Calls"), config.plugins.FritzCall.showOutgoingCalls))
+			# not only for outgoing: config.plugins.FritzCall.showOutgoingCalls.value:
 			self.list.append(getConfigListEntry(_("Areacode to add to calls without one (if necessary)"), config.plugins.FritzCall.prefix))
 			self.list.append(getConfigListEntry(_("Timeout for Call Notifications (seconds)"), config.plugins.FritzCall.timeout))
 			self.list.append(getConfigListEntry(_("Reverse Lookup Caller ID (select country below)"), config.plugins.FritzCall.lookup))
@@ -2181,7 +2181,7 @@ class MessageBoxPixmap(Screen):
 	</screen>
 		""" % (
 			# scaleH(350, 60), scaleV(175, 245),
-			scaleV(24, 22), resolveFilename(SCOPE_SKIN_IMAGE, "skin_default/icons/input_info.png")
+			scaleV(25, 22), resolveFilename(SCOPE_SKIN_IMAGE, "skin_default/icons/input_info.png")
 			)
 		debug("[FritzCall] MessageBoxPixmap number: %s" % number)
 		Screen.__init__(self, session)
@@ -2214,7 +2214,6 @@ class MessageBoxPixmap(Screen):
 			Notifications.AddNotification(MessageBox, _("Found picture\n\n%s\n\nBut did not load. Probably not PNG, 8-bit") %faceFile, type = MessageBox.TYPE_ERROR)
 			picPixmap = LoadPixmap(resolveFilename(SCOPE_SKIN_IMAGE, "skin_default/icons/input_error.png"))
 		picSize = picPixmap.size()
-		self["InfoPixmap"].instance.setPixmap(picPixmap)
 
 		# recalculate window size
 		textSize = self["text"].getSize()
@@ -2236,6 +2235,7 @@ class MessageBoxPixmap(Screen):
 		self["text"].instance.resize(textSize)
 		# resize pixmap
 		self["InfoPixmap"].instance.resize(picSize)
+		self["InfoPixmap"].instance.setPixmap(picPixmap)
 		# move text
 		self["text"].instance.move(ePoint(*textPos))
 		# move pixmap
@@ -2434,7 +2434,7 @@ class FritzReverseLookupAndNotifier:
 
 class FritzProtocol(LineReceiver): # pylint: disable=W0223
 	def __init__(self):
-		debug("[FritzProtocol] " + "$Revision: 1148 $"[1:-1]	+ "$Date: 2015-04-14 21:14:18 +0200 (Tue, 14 Apr 2015) $"[7:23] + " starting")
+		debug("[FritzProtocol] " + "$Revision: 1158 $"[1:-1]	+ "$Date: 2015-05-10 11:46:26 +0200 (Sun, 10 May 2015) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
@@ -2498,14 +2498,14 @@ class FritzProtocol(LineReceiver): # pylint: disable=W0223
 		#	if not eDVBVolumecontrol.getInstance().isMuted():
 		#		globalActionMap.actions["volumeMute"]()
 		#=======================================================================
-		elif self.event == "RING" or (self.event == "CALL" and config.plugins.FritzCall.showOutgoing.value):
+		elif self.event == "RING" or (self.event == "CALL" and config.plugins.FritzCall.showOutgoingCalls.value):
 			phone = anEvent[4]
 			if self.event == "RING":
 				number = anEvent[3] 
 			else:
 				number = anEvent[5]
 
-			if fritzbox and fritzbox.blacklist and not config.plugins.FritzCall.showBlacklist:
+			if fritzbox and fritzbox.blacklist and not config.plugins.FritzCall.showBlacklistedCalls.value:
 				if self.event == "RING":
 					if number in fritzbox.blacklist[0]:
 						debug("[FritzProtocol] lineReceived phone: '''%s''' blacklisted number: '''%s'''" % (phone, number))
