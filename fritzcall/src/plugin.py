@@ -7,6 +7,7 @@ $Date: 2015-05-10 11:46:26 +0200 (Sun, 10 May 2015) $
 $Id: plugin.py 1158 2015-05-10 09:46:26Z michael $
 '''
 
+
 # C0111 (Missing docstring)
 # C0103 (Invalid name)
 # C0301 (line too long)
