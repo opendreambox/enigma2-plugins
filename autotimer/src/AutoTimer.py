@@ -41,6 +41,11 @@ try:
 except ImportError as ie:
 	renameTimer = None
 
+try:
+	from Plugins.Extensions.SeriesPlugin.plugin import getSeasonAndEpisode
+except ImportError as ie:
+	getSeasonAndEpisode = None
+
 from . import config, xrange, itervalues
 
 XML_CONFIG = "/etc/enigma2/autotimer.xml"
@@ -343,7 +348,7 @@ class AutoTimer:
 				or (not similarTimer and (\
 					timer.checkTimespan(timestamp) \
 					or timer.checkTimeframe(begin) \
-				)) or timer.checkFilter(name, shortdesc, extdesc, dayofweek):
+				)): 	# or timer.checkFilter(name, shortdesc, extdesc, dayofweek):
 				continue
 
 			if timer.hasOffset():
@@ -462,6 +467,19 @@ class AutoTimer:
 				newEntry.isAutoTimer = True
 
 
+			if getSeasonAndEpisode is not None and timer.series_labeling:
+				sp_timer = getSeasonAndEpisode(newEntry, name, evtBegin, evtEnd)
+				if sp_timer:
+					newEntry = sp_timer
+				name = newEntry.name
+				print("[AutoTimer SeriesPlugin] Returned name %s" % (name))
+				shortdesc = newEntry.description
+				print("[AutoTimer SeriesPlugin] Returned description %s" % (shortdesc))
+			
+			if timer.checkFilter(name, shortdesc, extdesc, dayofweek):
+				continue
+
+
 			# Apply afterEvent
 			if timer.hasAfterEvent():
 				afterEvent = timer.getAfterEventTimespan(localtime(end))
@@ -488,8 +506,8 @@ class AutoTimer:
 				# XXX: this won't perform a sanity check, but do we actually want to do so?
 				recordHandler.timeChanged(newEntry)
 
-				if renameTimer is not None and timer.series_labeling:
-					renameTimer(newEntry, name, evtBegin, evtEnd)
+				#if renameTimer is not None and timer.series_labeling:
+				#	renameTimer(newEntry, name, evtBegin, evtEnd)
 
 			else:
 				conflictString = ""
@@ -536,8 +554,8 @@ class AutoTimer:
 					newEntry.extdesc = extdesc
 					timerdict[serviceref].append(newEntry)
 
-					if renameTimer is not None and timer.series_labeling:
-						renameTimer(newEntry, name, evtBegin, evtEnd)
+					#if renameTimer is not None and timer.series_labeling:
+					#	renameTimer(newEntry, name, evtBegin, evtEnd)
 
 					# Similar timers are in new timers list and additionally in similar timers list
 					if similarTimer:
