@@ -38,6 +38,7 @@ config.plugins.autotimer.maxdaysinfuture = ConfigNumber(default=0)
 config.plugins.autotimer.show_help = ConfigYesNo(default=True)
 config.plugins.autotimer.skip_during_records = ConfigYesNo(default=False)
 config.plugins.autotimer.skip_during_epgrefresh = ConfigYesNo(default=False)
+config.plugins.autotimer.popup_timeout = ConfigNumber(default=5)
 
 def localeInit():
 	lang = language.getLanguage()[:2] # getLanguage returns e.g. "fi_FI" for "language_country"
