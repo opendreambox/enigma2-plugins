@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-01 12:42+0100\n"
+"POT-Creation-Date: 2015-04-14 21:15+0200\n"
 "PO-Revision-Date: 2009-06-04 20:19+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
@@ -531,6 +531,9 @@ msgstr ""
 
 msgid "Shortcut"
 msgstr "Snelkoppeling"
+
+msgid "Show Blocked Calls"
+msgstr ""
 
 msgid "Show Outgoing Calls"
 msgstr "Laat uitgaande gesprekken zien"
