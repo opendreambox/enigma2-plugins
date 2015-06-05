@@ -900,6 +900,9 @@ class EpgCenterTimerlist(TimerList):
 		
 		self.autoTimerPixmap = LoadPixmap(cached=False, path=resolveFilename(SCOPE_CURRENT_PLUGIN, "Extensions/MerlinEPGCenter/images/AutoTimerSmall.png"))
 		
+	def applySkin(self, desktop, parent):
+		GUIComponent.applySkin(self, desktop, parent)
+
 	def onShow(self):
 		self.maxWidth = self.l.getItemSize().width()
 		

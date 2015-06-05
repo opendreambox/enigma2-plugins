@@ -102,7 +102,7 @@ def main(session, *args, **kwargs):
 	session.open(NamezapSetup)
 
 def menu(menuid):
-	if menuid != "system":
+	if menuid != "services_recordings":
 		return []
 	return [(_("NameZAP Setup"), main, "namezap_setup", None)]
 

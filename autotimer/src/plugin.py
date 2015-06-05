@@ -2,6 +2,8 @@ from __future__ import print_function
 
 from . import _, config
 
+from twisted.internet import reactor
+
 # GUI (Screens)
 from Screens.MessageBox import MessageBox
 from Tools.Notifications import AddPopup
@@ -136,22 +138,12 @@ def handleAutoPoller():
 	else:
 		autopoller = None
 
-cbtimer = None
-def cbtimerLaunch():
-	global cbtimer
-	cbtimer.stop()
-	autotimer.parseEPGAsync().addCallback(parseEPGCallback)#.addErrback(parseEPGErrback)
-	cbtimer.timeout.get().remove(cbtimerLaunch)
-	cbtimer = None
-
 def editCallback(session):
 	# Don't parse EPG if editing was canceled
 	if session is not None:
-		global cbtimer
-		cbtimer = eTimer()
-		cbtimer.timeout.get().append(cbtimerLaunch)
 		delay = config.plugins.autotimer.editdelay.value
-		cbtimer.startLongTimer(delay)
+		parseFunc = lambda: autotimer.parseEPGAsync().addCallback(parseEPGCallback)#.addErrback(parseEPGErrback)
+		reactor.callLater(delay, parseFunc)
 	else:
 		handleAutoPoller()
 

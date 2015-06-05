@@ -41,7 +41,7 @@ def setup(session, **kwargs):
 	session.open(AutomaticVolumeAdjustmentConfigScreen) # start setup
 
 def startSetup(menuid):
-	if menuid != "system": # show setup only in system level menu
+	if menuid != "osd_video_audio": # show setup only in system level menu
 		return []
 	return [(_("Automatic Volume Adjustment"), setup, "AutomaticVolumeAdjustment", 46)]
 	

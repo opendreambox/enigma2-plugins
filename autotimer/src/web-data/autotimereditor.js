@@ -1898,7 +1898,7 @@ function AutoTimer(xml, defaults){
 	this.avoidDuplicateDescription = createOptionList(options, avoidDuplicateDescription);
 
 	searchForDuplicateDescription = getAttribute(xml, 'searchForDuplicateDescription', defaults);
-	if (searchForDuplicateDescription==undefined) searchForDuplicateDescription = '0';
+	if (searchForDuplicateDescription==undefined) searchForDuplicateDescription = '2';
 	var options = {};
 	options['0'] = 'Title';
 	options['1'] = 'Title and Short description';
