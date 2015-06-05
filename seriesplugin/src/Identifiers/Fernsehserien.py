@@ -220,15 +220,24 @@ class Fernsehserien(IdentifierBase):
 						else:
 							self.page = 0
 							
-							year_url = EPISODEIDURL % (id, '')
+							year_base_url = EPISODEIDURL % (id, '')
+							splog("year_base_url: ", year_base_url)
+							
+							year_url = year_base_url+"jahr-"+str(self.year+1)
+							splog("year_url: ", year_url)
+							
 							#/sendetermine/jahr-2014
-							response = urlopen( year_url+"jahr-"+str(self.year) )
+							# Increment year by one, because we want to start at the end of the year
+							response = urlopen( year_url )
 							
 							#redirecturl = http://www.fernsehserien.de/criminal-intent-verbrechen-im-visier/sendetermine/-14
 							redirect_url = response.geturl()
+							splog("redirect_url: ", redirect_url)
 							
-							page = int( redirect_url.replace(year_url,'') )
-							
+							try:
+								self.page = int( redirect_url.replace(year_base_url,'') )
+							except:
+								self.page = 0
 					
 					self.first = None
 					self.last = None
