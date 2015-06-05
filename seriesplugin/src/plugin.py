@@ -28,7 +28,7 @@ from Logger import splog
 #######################################################
 # Constants
 NAME = "SeriesPlugin"
-VERSION = "2.4.3"
+VERSION = "2.5"
 DESCRIPTION = _("SeriesPlugin")
 SHOWINFO = _("Show series info (SP)")
 RENAMESERIES = _("Rename serie(s) (SP)")
@@ -234,7 +234,8 @@ def getSeasonAndEpisode(timer, name, begin, end, *args, **kwargs):
 	result = None
 	if config.plugins.seriesplugin.enabled.value:
 		try:
-			result = SeriesPluginTimer(timer, name, begin, end, True)
+			spt = SeriesPluginTimer(timer, name, begin, end, True)
+			result = spt.getSeasonAndEpisode(timer, name, begin, end)
 		except Exception as e:
 			splog(_("SeriesPlugin label exception ") + str(e))
 	return result
