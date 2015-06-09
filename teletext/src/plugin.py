@@ -20,6 +20,8 @@ from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 
 import array
 import socket
+from struct import pack
+from twisted.python.sendmsg import SCM_RIGHTS, send1msg
 
 import NavigationInstance
 
@@ -254,7 +256,7 @@ class TeleText(Screen):
     self.listen_sn_conn = self.listen_sn.activated.connect(self.listen_data_avail)
     self.socket.listen(1)
 
-  def socketSend(self, buf):
+  def socketSend(self, buf, fd = None):
     log("send %s" % (buf))
     try:
       s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
@@ -274,7 +276,10 @@ class TeleText(Screen):
       while totalsent < msg_len:
         if config.plugins.TeleText.debug.value:
           log("... sending")
-        sent = s.send(buf[totalsent:])
+        if fd is not None and totalsent == 0:
+          sent = send1msg(s.fileno(), buf.tostring(), 0, [(socket.SOL_SOCKET, SCM_RIGHTS, pack("i", fd))])
+        else:
+          sent = s.send(buf[totalsent:])
         if sent == 0:
           raise RuntimeError("socket connection broken")
         elif config.plugins.TeleText.debug.value:
@@ -324,10 +329,11 @@ class TeleText(Screen):
 
     renderOffset = self.ttx.getRenderBufferOffset()
     stride = self.ttx.getRenderBufferStride()
+    fd = self.ttx.getRenderBufferFD()
 
     log("framebuffer offset is %08x stride is %08x" % (renderOffset, stride))
     x = array.array('B', (CMD_RQ_UPDATE, 1, (renderOffset&0xFF000000)>>24, (renderOffset&0xFF0000)>>16, (renderOffset&0xFF00)>>8, renderOffset&0xFF, (stride&0xFF00) >> 8, stride&0xFF))
-    self.socketSend(x)
+    self.socketSend(x, fd)
 
     # get daemon version
     self.getDaemonVersion()
