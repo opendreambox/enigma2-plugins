@@ -20,17 +20,16 @@ from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 
 import array
 import socket
-import struct
 
 import NavigationInstance
 
 from os import unlink
-from select import POLLIN, POLLPRI, POLLHUP, POLLERR
+from select import POLLIN
 
 from enigma import Teletext as TeletextInterface
-from enigma import DISABLED, BILINEAR, ANISOTROPIC, SHARP, SHARPER, BLURRY, ANTI_FLUTTER, ANTI_FLUTTER_BLURRY, ANTI_FLUTTER_SHARP
+from enigma import DISABLED, BILINEAR, ANISOTROPIC, SHARP, SHARPER
 
-from ConfigParser import ConfigParser, DuplicateSectionError 
+from ConfigParser import ConfigParser
 
 PLUGIN_VERSION="20120807"
 
@@ -1865,7 +1864,6 @@ def selectText(result):
     my_session.execDialog(ttx_screen)
 
 def mainMenu(session, **kwargs):
-  global ttx_screen
   log("mainMenu")
   session.open(TeleTextMenu)
 
