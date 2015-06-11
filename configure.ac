@@ -426,6 +426,7 @@ mytube/Makefile
 mytube/meta/Makefile
 mytube/po/Makefile
 mytube/src/Makefile
+mytube/src/youtube/Makefile
 
 namezap/Makefile
 namezap/meta/Makefile
