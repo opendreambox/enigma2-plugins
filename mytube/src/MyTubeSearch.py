@@ -335,8 +335,8 @@ class MyTubeSettingsScreen(Screen, ConfigListScreen):
 	def createSetup(self):
 		self.searchContextEntries = []
 		self.searchContextEntries.append(getConfigListEntry(_("Display search results by:"), config.plugins.mytube.search.orderBy))
-		self.searchContextEntries.append(getConfigListEntry(_("Search restricted content:"), config.plugins.mytube.search.racy))
-		self.searchContextEntries.append(getConfigListEntry(_("Search category:"), config.plugins.mytube.search.categories))
+		self.searchContextEntries.append(getConfigListEntry(_("Filter restricted content:"), config.plugins.mytube.search.safeSearch))
+#		self.searchContextEntries.append(getConfigListEntry(_("Search category:"), config.plugins.mytube.search.categories))
 		self.searchContextEntries.append(getConfigListEntry(_("Search region:"), config.plugins.mytube.search.lr))
 		self.loadFeedEntry = getConfigListEntry(_("Load feed on startup:"), config.plugins.mytube.general.loadFeedOnOpen)
 		self.searchContextEntries.append(self.loadFeedEntry)
@@ -356,8 +356,8 @@ class MyTubeSettingsScreen(Screen, ConfigListScreen):
 		self.searchContextEntries.append(getConfigListEntry(_("Clear history on Exit:"), config.plugins.mytube.general.clearHistoryOnClose))
 		self.searchContextEntries.append(getConfigListEntry(_("Auto paginate on last entry:"), config.plugins.mytube.general.AutoLoadFeeds))
 		self.searchContextEntries.append(getConfigListEntry(_("Reset tv-screen after playback:"), config.plugins.mytube.general.resetPlayService))
-		self.searchContextEntries.append(getConfigListEntry(_("Youtube Username (reopen plugin on change):"), config.plugins.mytube.general.username))
-		self.searchContextEntries.append(getConfigListEntry(_("Youtube Password (reopen plugin on change):"), config.plugins.mytube.general.password))
+#		self.searchContextEntries.append(getConfigListEntry(_("Youtube Username (reopen plugin on change):"), config.plugins.mytube.general.username))
+#		self.searchContextEntries.append(getConfigListEntry(_("Youtube Password (reopen plugin on change):"), config.plugins.mytube.general.password))
 
 		self["config"].list = self.searchContextEntries
 		self["config"].l.setList(self.searchContextEntries)
@@ -413,29 +413,8 @@ class MyTubeSettingsScreen(Screen, ConfigListScreen):
 
 	def keySave(self):
 		print "saving"
-		config.plugins.mytube.search.orderBy.save()
-		config.plugins.mytube.search.racy.save()
-		config.plugins.mytube.search.categories.save()
-		config.plugins.mytube.search.lr.save()
-		config.plugins.mytube.general.loadFeedOnOpen.save()
-		config.plugins.mytube.general.startFeed.save()
-		config.plugins.mytube.general.on_movie_stop.save()
-		config.plugins.mytube.general.on_exit.save()
-		config.plugins.mytube.general.videodir.save()
-		config.plugins.mytube.general.clearHistoryOnClose.save()
-		config.plugins.mytube.general.AutoLoadFeeds.save()
-		config.plugins.mytube.general.username.save()
-		config.plugins.mytube.general.password.save()
-		if config.plugins.mytube.general.clearHistoryOnClose.value:
-			config.plugins.mytube.general.history.value = ""
-			config.plugins.mytube.general.history.save()
-		#config.plugins.mytube.general.useHTTPProxy.save()
-		#config.plugins.mytube.general.ProxyIP.save()
-		#config.plugins.mytube.general.ProxyPort.save()
 		for x in self["config"].list:
 			x[1].save()
-		config.plugins.mytube.general.save()
-		config.plugins.mytube.search.save()
 		config.plugins.mytube.save()
 		"""if config.plugins.mytube.general.useHTTPProxy.value is True:
 			proxy = {'http': 'http://'+str(config.plugins.mytube.general.ProxyIP.getText())+':'+str(config.plugins.mytube.general.ProxyPort.value)}
@@ -490,18 +469,18 @@ class MyTubeTasksScreen(Screen):
 		self.onLayoutFinish.append(self.layoutFinished)
 		self.onShown.append(self.setWindowTitle)
 		self.onClose.append(self.__onClose)
-		self.Timer = eTimer()
-		self.Timer.callback.append(self.TimerFire)
+		self._searchTimer = eTimer()
+		self._searchTimer_conn = self.Timer.timeout.connect(self.TimerFire)
 
 	def __onClose(self):
-		del self.Timer
+		del self._searchTimer
 
 	def layoutFinished(self):
 		self["title"].setText(_("MyTubePlayer active video downloads"))
-		self.Timer.startLongTimer(2)
+		self._searchTimer.startLongTimer(2)
 
 	def TimerFire(self):
-		self.Timer.stop()
+		self._searchTimer.stop()
 		self.rebuildTaskList()
 
 	def rebuildTaskList(self):
@@ -510,7 +489,7 @@ class MyTubeTasksScreen(Screen):
 			self.tasklist.append((job,job.name,job.getStatustext(),int(100*job.progress/float(job.end)) ,str(100*job.progress/float(job.end)) + "%" ))
 		self['tasklist'].setList(self.tasklist)
 		self['tasklist'].updateList(self.tasklist)
-		self.Timer.startLongTimer(2)
+		self._searchTimer.startLongTimer(2)
 
 	def setWindowTitle(self):
 		self.setTitle(_("MyTubePlayer active video downloads"))
