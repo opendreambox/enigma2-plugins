@@ -228,7 +228,6 @@ class InfoBar(InfoBarOrg):
 			{
 				iPlayableService.evStart: self.__evStart,
 				iPlayableService.evEnd: self.__evEnd,
-				iPlayableService.evSOF: self.__evSOF,
 				iPlayableService.evUpdatedInfo: self.__evInfoChanged,
 				iPlayableService.evUpdatedEventInfo: self.__evEventInfoChanged,
 				iPlayableService.evSeekableStatusChanged: self.__seekableStatusChanged,
@@ -316,21 +315,6 @@ class InfoBar(InfoBarOrg):
 
 	def __evEnd(self):
 		self.service_changed = 0
-
-	def __evSOF(self):
-		if not config.plugins.pts.enabled.value or not self.timeshift_enabled:
-			return
-
-		if self.pts_currplaying == 1:
-			preptsfile = config.plugins.pts.maxevents.value
-		else:
-			preptsfile = self.pts_currplaying-1
-
-		# Switch to previous TS file by jumping to next one
-		if fileExists("%s/pts_livebuffer.%s" % (config.usage.timeshift_path.value, preptsfile), 'r') and preptsfile != self.pts_eventcount:
-			self.pts_seektoprevfile = True
-			self.ptsSetNextPlaybackFile("pts_livebuffer.%s" % (preptsfile))
-			self.doSeek(3600 * 24 * 90000)
 
 	def __evInfoChanged(self):
 		if self.service_changed:
@@ -474,7 +458,7 @@ class InfoBar(InfoBarOrg):
 		if config.plugins.pts.enabled.value and self.timeshift_enabled:
 			if self.isSeekable():
 				self.pts_switchtolive = True
-				self.ptsSetNextPlaybackFile("")
+				self.ptsSetNextPlaybackFile(None)
 				if self.seekstate != self.SEEK_STATE_PLAY:
 					self.setSeekState(self.SEEK_STATE_PLAY)
 				self.doSeek(3600 * 24 * 90000)
@@ -1206,20 +1190,28 @@ class InfoBar(InfoBarOrg):
 		else:
 			nextptsfile = self.pts_currplaying+1
 
-		# Seek to previous file
+		if self.pts_currplaying != self.pts_eventcount and fileExists("%s/pts_livebuffer.%s" % (config.usage.timeshift_path.value,nextptsfile), 'r'):
+			self.ptsSetNextPlaybackFile("pts_livebuffer.%s" % (nextptsfile))
+		else:
+			self.pts_switchtolive = True
+			self.ptsSetNextPlaybackFile(None)
+
+		self.handleSeekBackward()
+
+	def handleSeekBackward(self):
+		if self.seekstate[1] < 0:
+			if self.pts_currplaying == 1:
+				preptsfile = config.plugins.pts.maxevents.value
+			else:
+				preptsfile = self.pts_currplaying-1
+			if preptsfile != self.pts_eventcount and fileExists("%s/pts_livebuffer.%s" % (config.usage.timeshift_path.value, preptsfile), 'r'):
+				self.pts_switchtolive = False
+				self.pts_seektoprevfile = True
+				self.ptsSetPrevPlaybackFile("pts_livebuffer.%s" %preptsfile)
+				return
 		if self.pts_seektoprevfile:
 			self.pts_seektoprevfile = False
-
-			if fileExists("%s/pts_livebuffer.%s" % (config.usage.timeshift_path.value,nextptsfile), 'r'):
-				self.ptsSetNextPlaybackFile("pts_livebuffer.%s" % (nextptsfile))
-
-			self.ptsSeekBackHack()
-		else:
-			if fileExists("%s/pts_livebuffer.%s" % (config.usage.timeshift_path.value,nextptsfile), 'r') and nextptsfile <= self.pts_eventcount:
-				self.ptsSetNextPlaybackFile("pts_livebuffer.%s" % (nextptsfile))
-			if nextptsfile == self.pts_currplaying:
-				self.pts_switchtolive = True
-				self.ptsSetNextPlaybackFile("")
+			self.ptsSetPrevPlaybackFile(None)
 
 	def ptsSetNextPlaybackFile(self, nexttsfile):
 		ts = self.getTimeshift()
@@ -1227,18 +1219,23 @@ class InfoBar(InfoBarOrg):
 			return
 
 		try:
-			ts.setNextPlaybackFile("%s/%s" % (config.usage.timeshift_path.value,nexttsfile))
-			Log.i(nexttsfile)
+			next_file = "%s/%s" % (config.usage.timeshift_path.value, nexttsfile) if nexttsfile else ""
+			Log.i("[PTS-Plugin] setNextPlaybackFile(%s)" % next_file)
+			ts.setNextPlaybackFile(next_file)
 		except:
 			Log.i("[PTS-Plugin] setNextPlaybackFile() not supported by OE. Enigma2 too old !?")
 
-	def ptsSeekBackHack(self):
-		if not config.plugins.pts.enabled.value or not self.timeshift_enabled:
+	def ptsSetPrevPlaybackFile(self, prevtsfile):
+		ts = self.getTimeshift()
+		if ts is None:
 			return
 
-		self.setSeekState(self.SEEK_STATE_PAUSE)
-		self.doSeek(-90000*4) # seek ~4s before end
-		self.pts_SeekBack_timer.start(1000, True)
+		try:
+			prev_file = "%s/%s" % (config.usage.timeshift_path.value, prevtsfile) if prevtsfile else ""
+			Log.i("[PTS-Plugin] setPrevPlaybackFile(%s)" % prev_file)
+			ts.setPrevPlaybackFile(prev_file)
+		except:
+			Log.i("[PTS-Plugin] setPrevPlaybackFile() not supported by OE. Enigma2 too old !?")
 
 	def ptsSeekBackTimer(self):
 		if self.pts_lastseekspeed == 0:
@@ -1578,6 +1575,20 @@ def seekBack(self):
 	self.pts_lastseekspeed = self.seekstate[1]
 
 InfoBarSeek.seekBack = seekBack
+
+######################
+# setSeekState Hack  #
+######################
+InfoBarSeek_setSeekState = InfoBarSeek.setSeekState
+
+def setSeekState(self, state, onlyGUI = False):
+	InfoBarSeek_setSeekState(self, state, onlyGUI)
+	if not config.plugins.pts.enabled.value or not self.timeshift_enabled:
+		return
+	self.handleSeekBackward()
+
+InfoBarSeek.setSeekState = setSeekState
+
 
 ########################
 # doSeekRelative Hack  #
