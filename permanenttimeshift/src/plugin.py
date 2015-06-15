@@ -20,7 +20,7 @@ from Components.UsageConfig import preferredInstantRecordPath, defaultMoviePath,
 from Screens.ChoiceBox import ChoiceBox
 from Screens.ChannelSelection import ChannelSelection
 from Screens.InfoBar import InfoBar as InfoBarOrg
-from Screens.InfoBarGenerics import NumberZap, InfoBarSeek, InfoBarNumberZap, InfoBarTimeshiftState, InfoBarInstantRecord, InfoBarChannelSelection
+from Screens.InfoBarGenerics import NumberZap
 from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
 from Screens.Setup import SetupSummary
@@ -575,21 +575,21 @@ class InfoBar(InfoBarOrg):
 			
 		# Post PTS Actions like ZAP or whatever the user requested
 		if self.save_timeshift_postaction == "zapUp":
-			InfoBarChannelSelection.zapUp(self)
+			InfoBarOrg.zapUp(self)
 		elif self.save_timeshift_postaction == "zapDown":
-			InfoBarChannelSelection.zapDown(self)
+			InfoBarOrg.zapDown(self)
 		elif self.save_timeshift_postaction == "historyBack":
-			InfoBarChannelSelection.historyBack(self)
+			InfoBarOrg.historyBack(self)
 		elif self.save_timeshift_postaction == "historyNext":
-			InfoBarChannelSelection.historyNext(self)
+			InfoBarOrg.historyNext(self)
 		elif self.save_timeshift_postaction == "switchChannelUp":
-			InfoBarChannelSelection.switchChannelUp(self)
+			InfoBarOrg.switchChannelUp(self)
 		elif self.save_timeshift_postaction == "switchChannelDown":
-			InfoBarChannelSelection.switchChannelDown(self)
+			InfoBarOrg.switchChannelDown(self)
 		elif self.save_timeshift_postaction == "openServiceList":
-			InfoBarChannelSelection.openServiceList(self)
+			InfoBarOrg.openServiceList(self)
 		elif self.save_timeshift_postaction == "showRadioChannelList":
-			InfoBarChannelSelection.showRadioChannelList(self, zap=True)
+			InfoBarOrg.showRadioChannelList(self, zap=True)
 		elif self.save_timeshift_postaction == "standby":
 			Notifications.AddNotification(Screens_Standby_Standby)
 
@@ -759,6 +759,198 @@ class InfoBar(InfoBarOrg):
 				self.save_timeshift_postaction = None
 				errormessage = str(timeshift_saveerror1) + "\n" + str(timeshift_saveerror2)
 				Notifications.AddNotification(MessageBox, _("Timeshift save failed!")+"\n\n%s" % errormessage, MessageBox.TYPE_ERROR)
+
+	def zapUp(self):
+		if self.pts_blockZap_timer.isActive():
+			return
+
+		if self.save_current_timeshift and self.timeshift_enabled:
+			self.saveTimeshiftActions(postaction="zapUp")
+		else:
+			InfoBarOrg.zapUp(self)
+
+	def zapDown(self):
+		if self.pts_blockZap_timer.isActive():
+			return
+
+		if self.save_current_timeshift and self.timeshift_enabled:
+			self.saveTimeshiftActions(postaction="zapDown")
+		else:
+			InfoBarOrg.zapDown(self)
+
+	def historyBack(self):
+		if self.pts_pvrStateDialog == "PTSTimeshiftState" and self.timeshift_enabled and self.isSeekable():
+			InfoBarOrg._mayShow(self)
+			self.pvrStateDialog["PTSSeekPointer"].setPosition(self.pts_seekpointer_MinX, self.pvrStateDialog["PTSSeekPointer"].position[1])
+			if self.seekstate != self.SEEK_STATE_PLAY:
+				self.setSeekState(self.SEEK_STATE_PLAY)
+			self.ptsSeekPointerOK()
+		elif self.save_current_timeshift and self.timeshift_enabled:
+			self.saveTimeshiftActions(postaction="historyBack")
+		else:
+			InfoBarOrg.historyBack(self)
+
+	def historyNext(self):
+		if self.pts_pvrStateDialog == "PTSTimeshiftState" and self.timeshift_enabled and self.isSeekable():
+			InfoBarOrg._mayShow(self)
+			self.pvrStateDialog["PTSSeekPointer"].setPosition(self.pts_seekpointer_MaxX, self.pvrStateDialog["PTSSeekPointer"].position[1])
+			if self.seekstate != self.SEEK_STATE_PLAY:
+				self.setSeekState(self.SEEK_STATE_PLAY)
+			self.ptsSeekPointerOK()
+		elif self.save_current_timeshift and self.timeshift_enabled:
+			self.saveTimeshiftActions(postaction="historyNext")
+		else:
+			InfoBarOrg.historyNext(self)
+
+	def switchChannelUp(self):
+		if self.save_current_timeshift and self.timeshift_enabled:
+			self.saveTimeshiftActions(postaction="switchChannelUp")
+		else:
+			InfoBarOrg.switchChannelUp(self)
+
+	def switchChannelDown(self):
+		if self.save_current_timeshift and self.timeshift_enabled:
+			self.saveTimeshiftActions(postaction="switchChannelDown")
+		else:
+			InfoBarOrg.switchChannelDown(self)
+
+	def openServiceList(self):
+		if self.save_current_timeshift and self.timeshift_enabled:
+			self.saveTimeshiftActions(postaction="openServiceList")
+		else:
+			InfoBarOrg.openServiceList(self)
+
+	def showRadioChannelList(self, zap=False):
+		if self.save_current_timeshift and self.timeshift_enabled:
+			self.saveTimeshiftActions(postaction="showRadioChannelList")
+		else:
+			InfoBarOrg.showRadioChannelList(self, zap)
+
+	def keyNumberGlobal(self, number):
+		if self.pts_pvrStateDialog == "PTSTimeshiftState" and self.timeshift_enabled and self.isSeekable() and number == 0:
+			InfoBarOrg._mayShow(self)
+			self.pvrStateDialog["PTSSeekPointer"].setPosition(self.pts_seekpointer_MaxX/2, self.pvrStateDialog["PTSSeekPointer"].position[1])
+			if self.seekstate != self.SEEK_STATE_PLAY:
+				self.setSeekState(self.SEEK_STATE_PLAY)
+			self.ptsSeekPointerOK()
+			return
+
+		if self.pts_blockZap_timer.isActive():
+			return
+
+		if self.save_current_timeshift and self.timeshift_enabled:
+			self.saveTimeshiftActions()
+			return
+
+		InfoBarOrg.keyNumberGlobal(self, number)
+		if number and config.plugins.pts.enabled.value and self.timeshift_enabled and not self.isSeekable():
+			self.session.openWithCallback(self.numberEntered, NumberZap, number)
+
+	def _mayShow(self):
+		if InfoBar and InfoBar.instance and self.execing and self.timeshift_enabled and self.isSeekable():
+			self.ptsSeekPointerSetCurrentPos()
+			self.pvrStateDialog.show()
+
+			self.pvrstate_hide_timer = eTimer()
+			self.pvrstate_hide_timer_conn = self.pvrstate_hide_timer.timeout.connect(self.pvrStateDialog.hide)
+			self.pvrstate_hide_timer.stop()
+
+			if self.seekstate == self.SEEK_STATE_PLAY:
+				idx = config.usage.infobar_timeout.index
+				if not idx:
+					idx = 5
+				self.pvrstate_hide_timer.start(idx*1000, True)
+			else:
+				self.pvrstate_hide_timer.stop()
+		elif self.execing and self.timeshift_enabled and not self.isSeekable():
+			self.pvrStateDialog.hide()
+		else:
+			InfoBarOrg._mayShow(self)
+
+	def seekBack(self):
+		InfoBarOrg.seekBack(self)
+		self.pts_lastseekspeed = self.seekstate[1]
+
+	def setSeekState(self, state, onlyGUI = False):
+		InfoBarOrg.setSeekState(self, state, onlyGUI)
+		if not config.plugins.pts.enabled.value or not self.timeshift_enabled:
+			return
+		self.ptsHandleSeekBackward()
+
+	def doSeekRelative(self, pts):
+		InfoBarOrg.doSeekRelative(self, pts)
+		if config.plugins.pts.enabled.value and config.usage.show_infobar_on_skip.value:
+			self.showAfterSeek()
+
+	def instantRecord(self):
+		if not config.plugins.pts.enabled.value or not self.timeshift_enabled:
+			InfoBarOrg.instantRecord(self)
+			return
+
+		dir = preferredInstantRecordPath()
+		if not dir or not fileExists(dir, 'w'):
+			dir = defaultMoviePath()
+
+		if not harddiskmanager.inside_mountpoint(dir):
+			if harddiskmanager.HDDCount() and not harddiskmanager.HDDEnabledCount():
+				self.session.open(MessageBox, _("Unconfigured storage devices found!") + "\n" \
+					+ _("Please make sure to set up your storage devices with the storage management in menu -> setup -> system -> storage devices."), MessageBox.TYPE_ERROR)
+				return
+			elif harddiskmanager.HDDEnabledCount() and defaultStorageDevice() == "<undefined>":
+				self.session.open(MessageBox, _("No default storage device found!") + "\n" \
+					+ _("Please make sure to set up your default storage device in menu -> setup -> system -> recording paths."), MessageBox.TYPE_ERROR)
+				return
+			elif harddiskmanager.HDDEnabledCount() and defaultStorageDevice() != "<undefined>":
+				part = harddiskmanager.getDefaultStorageDevicebyUUID(defaultStorageDevice())
+				if part is None:
+					self.session.open(MessageBox, _("Default storage device is not available!") + "\n" \
+						+ _("Please verify if your default storage device is attached or set up your default storage device in menu -> setup -> system -> recording paths."), MessageBox.TYPE_ERROR)
+					return
+			else:
+				# XXX: this message is a little odd as we might be recording to a remote device
+				self.session.open(MessageBox, _("No HDD found or HDD not initialized!"), MessageBox.TYPE_ERROR)
+				return
+
+		if self.isInstantRecordRunning():
+			self.session.openWithCallback(self.recordQuestionCallback, ChoiceBox, \
+				title=_("A recording is currently running.\nWhat do you want to do?"), \
+				list=((_("stop recording"), "stop"), \
+				(_("add recording (stop after current event)"), "event"), \
+				(_("add recording (indefinitely)"), "indefinitely"), \
+				(_("add recording (enter recording duration)"), "manualduration"), \
+				(_("add recording (enter recording endtime)"), "manualendtime"), \
+				(_("change recording (duration)"), "changeduration"), \
+				(_("change recording (endtime)"), "changeendtime"), \
+				(_("Timeshift")+" "+_("save recording (stop after current event)"), "savetimeshift"), \
+				(_("Timeshift")+" "+_("save recording (Select event)"), "savetimeshiftEvent"), \
+				(_("do nothing"), "no")))
+		else:
+			self.session.openWithCallback(self.recordQuestionCallback, ChoiceBox, \
+				title=_("Start recording?"), \
+				list=((_("add recording (stop after current event)"), "event"), \
+				(_("add recording (indefinitely)"), "indefinitely"), \
+				(_("add recording (enter recording duration)"), "manualduration"), \
+				(_("add recording (enter recording endtime)"), "manualendtime"), \
+				(_("Timeshift")+" "+_("save recording (stop after current event)"), "savetimeshift"), \
+				(_("Timeshift")+" "+_("save recording (Select event)"), "savetimeshiftEvent"), \
+				(_("don't record"), "no")))
+
+	def recordQuestionCallback(self, answer):
+		InfoBarOrg.recordQuestionCallback(self, answer)
+
+		if config.plugins.pts.enabled.value:
+			if answer is not None and answer[1] == "savetimeshift":
+				if self.isSeekable() and self.pts_eventcount != self.pts_currplaying:
+					self.SaveTimeshift(timeshiftfile="pts_livebuffer.%s" % self.pts_currplaying)
+				else:
+					Notifications.AddNotification(MessageBox,_("Timeshift will get saved at end of event!"), MessageBox.TYPE_INFO, timeout=5)
+					self.save_current_timeshift = True
+					config.plugins.pts.isRecording.value = True
+			if answer is not None and answer[1] == "savetimeshiftEvent":
+				self.saveTimeshiftEventPopup()
+
+			if answer is not None and answer[1].startswith("pts_livebuffer") is True:
+				self.SaveTimeshift(timeshiftfile=answer[1])
 
 	def ptsCleanTimeshiftFolder(self):
 		if not config.plugins.pts.enabled.value or self.ptsCheckTimeshiftPath() is False or self.session.screen["Standby"].boolean is True:
@@ -1127,7 +1319,7 @@ class InfoBar(InfoBarOrg):
 
 		isvalidjump = False
 		cur_pos = self.pvrStateDialog["PTSSeekPointer"].position
-		InfoBarTimeshiftState._mayShow(self)
+		InfoBarOrg._mayShow(self)
 
 		if direction == "left":
 			minmaxval = self.pts_seekpointer_MinX
@@ -1196,9 +1388,9 @@ class InfoBar(InfoBarOrg):
 			self.pts_switchtolive = True
 			self.ptsSetNextPlaybackFile(None)
 
-		self.handleSeekBackward()
+		self.ptsHandleSeekBackward()
 
-	def handleSeekBackward(self):
+	def ptsHandleSeekBackward(self):
 		if self.seekstate[1] < 0:
 			if self.pts_currplaying == 1:
 				preptsfile = config.plugins.pts.maxevents.value
@@ -1373,155 +1565,6 @@ class StandbyPTS(Standby):
 
 Screens.Standby.Standby = StandbyPTS
 
-############
-#zapUp Hack#
-############
-InfoBarChannelSelection_zapUp = InfoBarChannelSelection.zapUp
-
-def zapUp(self):
-	if self.pts_blockZap_timer.isActive():
-		return
-
-	if self.save_current_timeshift and self.timeshift_enabled:
-		InfoBar.saveTimeshiftActions(self, postaction="zapUp")
-	else:
-		InfoBarChannelSelection_zapUp(self)
-
-InfoBarChannelSelection.zapUp = zapUp
-
-##############
-#zapDown Hack#
-##############
-InfoBarChannelSelection_zapDown = InfoBarChannelSelection.zapDown
-
-def zapDown(self):
-	if self.pts_blockZap_timer.isActive():
-		return
-
-	if self.save_current_timeshift and self.timeshift_enabled:
-		InfoBar.saveTimeshiftActions(self, postaction="zapDown")
-	else:
-		InfoBarChannelSelection_zapDown(self)
-
-InfoBarChannelSelection.zapDown = zapDown
-
-##################
-#historyBack Hack#
-##################
-InfoBarChannelSelection_historyBack = InfoBarChannelSelection.historyBack
-
-def historyBack(self):
-	if self.pts_pvrStateDialog == "PTSTimeshiftState" and self.timeshift_enabled and self.isSeekable():
-		InfoBarTimeshiftState._mayShow(self)
-		self.pvrStateDialog["PTSSeekPointer"].setPosition(self.pts_seekpointer_MinX, self.pvrStateDialog["PTSSeekPointer"].position[1])
-		if self.seekstate != self.SEEK_STATE_PLAY:
-			self.setSeekState(self.SEEK_STATE_PLAY)
-		self.ptsSeekPointerOK()
-	elif self.save_current_timeshift and self.timeshift_enabled:
-		InfoBar.saveTimeshiftActions(self, postaction="historyBack")
-	else:
-		InfoBarChannelSelection_historyBack(self)
-
-InfoBarChannelSelection.historyBack = historyBack
-
-##################
-#historyNext Hack#
-##################
-InfoBarChannelSelection_historyNext = InfoBarChannelSelection.historyNext
-
-def historyNext(self):
-	if self.pts_pvrStateDialog == "PTSTimeshiftState" and self.timeshift_enabled and self.isSeekable():
-		InfoBarTimeshiftState._mayShow(self)
-		self.pvrStateDialog["PTSSeekPointer"].setPosition(self.pts_seekpointer_MaxX, self.pvrStateDialog["PTSSeekPointer"].position[1])
-		if self.seekstate != self.SEEK_STATE_PLAY:
-			self.setSeekState(self.SEEK_STATE_PLAY)
-		self.ptsSeekPointerOK()
-	elif self.save_current_timeshift and self.timeshift_enabled:
-		InfoBar.saveTimeshiftActions(self, postaction="historyNext")
-	else:
-		InfoBarChannelSelection_historyNext(self)
-
-InfoBarChannelSelection.historyNext = historyNext
-
-######################
-#switchChannelUp Hack#
-######################
-InfoBarChannelSelection_switchChannelUp = InfoBarChannelSelection.switchChannelUp
-
-def switchChannelUp(self):
-	if self.save_current_timeshift and self.timeshift_enabled:
-		InfoBar.saveTimeshiftActions(self, postaction="switchChannelUp")
-	else:
-		InfoBarChannelSelection_switchChannelUp(self)
-
-InfoBarChannelSelection.switchChannelUp = switchChannelUp
-
-########################
-#switchChannelDown Hack#
-########################
-InfoBarChannelSelection_switchChannelDown = InfoBarChannelSelection.switchChannelDown
-
-def switchChannelDown(self):
-	if self.save_current_timeshift and self.timeshift_enabled:
-		InfoBar.saveTimeshiftActions(self, postaction="switchChannelDown")
-	else:
-		InfoBarChannelSelection_switchChannelDown(self)
-
-InfoBarChannelSelection.switchChannelDown = switchChannelDown
-
-######################
-#openServiceList Hack#
-######################
-InfoBarChannelSelection_openServiceList = InfoBarChannelSelection.openServiceList
-
-def openServiceList(self):
-	if self.save_current_timeshift and self.timeshift_enabled:
-		InfoBar.saveTimeshiftActions(self, postaction="openServiceList")
-	else:
-		InfoBarChannelSelection_openServiceList(self)
-
-InfoBarChannelSelection.openServiceList = openServiceList
-
-###########################
-#showRadioChannelList Hack#
-###########################
-InfoBarChannelSelection_showRadioChannelList = InfoBarChannelSelection.showRadioChannelList
-
-def showRadioChannelList(self, zap=False):
-	if self.save_current_timeshift and self.timeshift_enabled:
-		InfoBar.saveTimeshiftActions(self, postaction="showRadioChannelList")
-	else:
-		InfoBarChannelSelection_showRadioChannelList(self, zap)
-
-InfoBarChannelSelection.showRadioChannelList = showRadioChannelList
-
-#######################
-#InfoBarNumberZap Hack#
-#######################
-InfoBarNumberZap_keyNumberGlobal = InfoBarNumberZap.keyNumberGlobal
-
-def keyNumberGlobal(self, number):
-	if self.pts_pvrStateDialog == "PTSTimeshiftState" and self.timeshift_enabled and self.isSeekable() and number == 0:
-		InfoBarTimeshiftState._mayShow(self)
-		self.pvrStateDialog["PTSSeekPointer"].setPosition(self.pts_seekpointer_MaxX/2, self.pvrStateDialog["PTSSeekPointer"].position[1])
-		if self.seekstate != self.SEEK_STATE_PLAY:
-			self.setSeekState(self.SEEK_STATE_PLAY)
-		self.ptsSeekPointerOK()
-		return
-
-	if self.pts_blockZap_timer.isActive():
-		return
-
-	if self.save_current_timeshift and self.timeshift_enabled:
-		InfoBar.saveTimeshiftActions(self)
-		return
-
-	InfoBarNumberZap_keyNumberGlobal(self, number)
-	if number and config.plugins.pts.enabled.value and self.timeshift_enabled and not self.isSeekable():
-		self.session.openWithCallback(self.numberEntered, NumberZap, number)
-
-InfoBarNumberZap.keyNumberGlobal = keyNumberGlobal
-
 #############################
 # getNextRecordingTime Hack #
 #############################
@@ -1540,151 +1583,6 @@ def getNextRecordingTime(self):
 		return nextrectime
 
 RecordTimer.getNextRecordingTime = getNextRecordingTime
-
-############################
-#InfoBarTimeshiftState Hack#
-############################
-def _mayShow(self):
-	if InfoBar and InfoBar.instance and self.execing and self.timeshift_enabled and self.isSeekable():
-		InfoBar.ptsSeekPointerSetCurrentPos(self)
-		self.pvrStateDialog.show()
-
-		self.pvrstate_hide_timer = eTimer()
-		self.pvrstate_hide_timer_conn = self.pvrstate_hide_timer.timeout.connect(self.pvrStateDialog.hide)
-		self.pvrstate_hide_timer.stop()
-		
-		if self.seekstate == self.SEEK_STATE_PLAY:
-			idx = config.usage.infobar_timeout.index
-			if not idx:
-				idx = 5
-			self.pvrstate_hide_timer.start(idx*1000, True)
-		else:
-			self.pvrstate_hide_timer.stop()
-	elif self.execing and self.timeshift_enabled and not self.isSeekable():
-		self.pvrStateDialog.hide()
-
-InfoBarTimeshiftState._mayShow = _mayShow
-
-##################
-# seekBack Hack  #
-##################
-InfoBarSeek_seekBack = InfoBarSeek.seekBack
-
-def seekBack(self):
-	InfoBarSeek_seekBack(self)
-	self.pts_lastseekspeed = self.seekstate[1]
-
-InfoBarSeek.seekBack = seekBack
-
-######################
-# setSeekState Hack  #
-######################
-InfoBarSeek_setSeekState = InfoBarSeek.setSeekState
-
-def setSeekState(self, state, onlyGUI = False):
-	InfoBarSeek_setSeekState(self, state, onlyGUI)
-	if not config.plugins.pts.enabled.value or not self.timeshift_enabled:
-		return
-	self.handleSeekBackward()
-
-InfoBarSeek.setSeekState = setSeekState
-
-
-########################
-# doSeekRelative Hack  #
-########################
-InfoBarSeek_doSeekRelative = InfoBarSeek.doSeekRelative
-
-def doSeekRelative(self, pts):
-	InfoBarSeek_doSeekRelative(self, pts)
-	if config.plugins.pts.enabled.value and config.usage.show_infobar_on_skip.value:
-		self.showAfterSeek()
-
-InfoBarSeek.doSeekRelative = doSeekRelative
-
-####################
-#instantRecord Hack#
-####################
-InfoBarInstantRecord_instantRecord = InfoBarInstantRecord.instantRecord
-
-def instantRecord(self):
-	if not config.plugins.pts.enabled.value or not self.timeshift_enabled:
-		InfoBarInstantRecord_instantRecord(self)
-		return
-
-	dir = preferredInstantRecordPath()
-	if not dir or not fileExists(dir, 'w'):
-		dir = defaultMoviePath()
-		
-	if not harddiskmanager.inside_mountpoint(dir):
-		if harddiskmanager.HDDCount() and not harddiskmanager.HDDEnabledCount():
-			self.session.open(MessageBox, _("Unconfigured storage devices found!") + "\n" \
-				+ _("Please make sure to set up your storage devices with the storage management in menu -> setup -> system -> storage devices."), MessageBox.TYPE_ERROR)
-			return
-		elif harddiskmanager.HDDEnabledCount() and defaultStorageDevice() == "<undefined>":
-			self.session.open(MessageBox, _("No default storage device found!") + "\n" \
-				+ _("Please make sure to set up your default storage device in menu -> setup -> system -> recording paths."), MessageBox.TYPE_ERROR)
-			return
-		elif harddiskmanager.HDDEnabledCount() and defaultStorageDevice() != "<undefined>":
-			part = harddiskmanager.getDefaultStorageDevicebyUUID(defaultStorageDevice())
-			if part is None:
-				self.session.open(MessageBox, _("Default storage device is not available!") + "\n" \
-					+ _("Please verify if your default storage device is attached or set up your default storage device in menu -> setup -> system -> recording paths."), MessageBox.TYPE_ERROR)
-				return
-		else:
-			# XXX: this message is a little odd as we might be recording to a remote device
-			self.session.open(MessageBox, _("No HDD found or HDD not initialized!"), MessageBox.TYPE_ERROR)
-			return
-
-	if self.isInstantRecordRunning():
-		self.session.openWithCallback(self.recordQuestionCallback, ChoiceBox, \
-			title=_("A recording is currently running.\nWhat do you want to do?"), \
-			list=((_("stop recording"), "stop"), \
-			(_("add recording (stop after current event)"), "event"), \
-			(_("add recording (indefinitely)"), "indefinitely"), \
-			(_("add recording (enter recording duration)"), "manualduration"), \
-			(_("add recording (enter recording endtime)"), "manualendtime"), \
-			(_("change recording (duration)"), "changeduration"), \
-			(_("change recording (endtime)"), "changeendtime"), \
-			(_("Timeshift")+" "+_("save recording (stop after current event)"), "savetimeshift"), \
-			(_("Timeshift")+" "+_("save recording (Select event)"), "savetimeshiftEvent"), \
-			(_("do nothing"), "no")))
-	else:
-		self.session.openWithCallback(self.recordQuestionCallback, ChoiceBox, \
-			title=_("Start recording?"), \
-			list=((_("add recording (stop after current event)"), "event"), \
-			(_("add recording (indefinitely)"), "indefinitely"), \
-			(_("add recording (enter recording duration)"), "manualduration"), \
-			(_("add recording (enter recording endtime)"), "manualendtime"), \
-			(_("Timeshift")+" "+_("save recording (stop after current event)"), "savetimeshift"), \
-			(_("Timeshift")+" "+_("save recording (Select event)"), "savetimeshiftEvent"), \
-			(_("don't record"), "no")))
-
-InfoBarInstantRecord.instantRecord = instantRecord
-
-#############################
-#recordQuestionCallback Hack#
-#############################
-InfoBarInstantRecord_recordQuestionCallback = InfoBarInstantRecord.recordQuestionCallback
-
-def recordQuestionCallback(self, answer):
-	InfoBarInstantRecord_recordQuestionCallback(self, answer)
-
-	if config.plugins.pts.enabled.value:
-		if answer is not None and answer[1] == "savetimeshift":
-			if InfoBarSeek.isSeekable(self) and self.pts_eventcount != self.pts_currplaying:
-				InfoBar.SaveTimeshift(self, timeshiftfile="pts_livebuffer.%s" % self.pts_currplaying)
-			else:
-				Notifications.AddNotification(MessageBox,_("Timeshift will get saved at end of event!"), MessageBox.TYPE_INFO, timeout=5)
-				self.save_current_timeshift = True
-				config.plugins.pts.isRecording.value = True
-		if answer is not None and answer[1] == "savetimeshiftEvent":
-			InfoBar.saveTimeshiftEventPopup(self)
-
-		if answer is not None and answer[1].startswith("pts_livebuffer") is True:
-			InfoBar.SaveTimeshift(self, timeshiftfile=answer[1])
-
-InfoBarInstantRecord.recordQuestionCallback = recordQuestionCallback
 
 ############################
 #####  SETTINGS SCREEN #####
