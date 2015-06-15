@@ -433,6 +433,12 @@ class EPGRefresh:
 			Notifications.AddPopup(_("EPG refresh finished."), MessageBox.TYPE_INFO, 4, ENDNOTIFICATIONID, domain = NOTIFICATIONDOMAIN)
 		epgrefreshtimer.cleanup()
 		self.maybeStopAdapter()
+                if config.plugins.epgrefresh.epgsave.value:
+                        Notifications.AddPopup(_("EPG refresh save."), MessageBox.TYPE_INFO, 4, ENDNOTIFICATIONID, domain = NOTIFICATIONDOMAIN)
+                        from enigma import eEPGCache
+                        myEpg = None
+                        myEpg = eEPGCache.getInstance()
+                        myEpg.save()
 		
 		# shutdown if we're supposed to go to deepstandby and not recording
 		if not self.forcedScan and config.plugins.epgrefresh.afterevent.value \

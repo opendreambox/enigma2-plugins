@@ -35,6 +35,7 @@ config.plugins.epgrefresh.interval_seconds = ConfigNumber(default = 120)
 config.plugins.epgrefresh.delay_standby = ConfigNumber(default = 10)
 config.plugins.epgrefresh.inherit_autotimer = ConfigYesNo(default = False)
 config.plugins.epgrefresh.afterevent = ConfigYesNo(default = False)
+config.plugins.epgrefresh.epgsave = ConfigYesNo(default = False)
 config.plugins.epgrefresh.force = ConfigYesNo(default = False)
 config.plugins.epgrefresh.skipProtectedServices = ConfigSelection(choices = [
 		("bg_only", _("Background only")),
