@@ -224,6 +224,10 @@ epgbackup/po/Makefile
 epgbackup/src/Makefile
 epgbackup/src/localehelp/Makefile
 
+epgcopy/Makefile
+epgcopy/meta/Makefile
+epgcopy/src/Makefile
+
 epgrefresh/Makefile
 epgrefresh/meta/Makefile
 epgrefresh/po/Makefile

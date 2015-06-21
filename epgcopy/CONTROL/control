@@ -1,0 +1,2 @@
+Description: Plugin to Copy EPG Data via FTP and Load
+Depends: enigma2

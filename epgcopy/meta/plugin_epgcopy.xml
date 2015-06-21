@@ -1,0 +1,15 @@
+<default>
+	<prerequisites>
+		<tag type="EPG" />
+	</prerequisites>
+	<info>
+		<author>nixkoenner</author>
+		<name>EPGCopy</name>
+		<packagename>enigma2-plugin-extensions-epgcopy</packagename>
+		<shortdescription>Copy epg.db EPG-Data</shortdescription>
+		<description>EPG-Copy epg.db via FTP</description>
+	</info>
+	<files type="package"> <!-- without version, without .ipk -->
+		<file type="package" name="enigma2-plugin-extensions-epgcopy" />
+	</files>
+</default>

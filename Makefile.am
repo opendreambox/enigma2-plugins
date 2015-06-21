@@ -33,6 +33,7 @@ SUBDIRS = \
 	emailclient \
 	emission \
 	eparted \
+	epgcopy \
 	epgrefresh \
 	epgsearch \
 	eurotictv \
