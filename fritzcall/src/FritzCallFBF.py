@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1148 $
-$Date: 2015-04-14 21:14:18 +0200 (Tue, 14 Apr 2015) $
-$Id: FritzCallFBF.py 1148 2015-04-14 19:14:18Z michael $
+$Revision: 1170 $
+$Date: 2015-06-20 16:35:35 +0200 (Sat, 20 Jun 2015) $
+$Id: FritzCallFBF.py 1170 2015-06-20 14:35:35Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -2522,7 +2522,13 @@ class FritzCallFBF_05_50:
 				self.blacklist[0].append(entry.group(2))
 			else:
 				self.blacklist[1].append(entry.group(2))
-		entries = re.compile('<tr><td>(?:Ankommende|Ausgehende) Rufe</td><td>([\d]+)</td>', re.S).finditer(html)
+		entries = re.compile('<tr><td>(Ankommende|Ausgehende) Rufe</td><td>([\d]+)</td>', re.S).finditer(html)
+		for entry in entries:
+			if entry.group(1) == "Ankommende":
+				self.blacklist[0].append(entry.group(2))
+			else:
+				self.blacklist[1].append(entry.group(2))
+		entries = re.compile('<TD>(Ankommende|Ausgehende) Rufe</TD>\s+<TD>([\d]+)</TD>', re.S).finditer(html)
 		for entry in entries:
 			if entry.group(1) == "Ankommende":
 				self.blacklist[0].append(entry.group(2))
