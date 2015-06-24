@@ -1,4 +1,4 @@
-installdir = $(libdir)/enigma2/python/Plugins/Extensions/MyTube/youtube
+installdir = $(libdir)/enigma2/python/Plugins/SystemPlugins/TubeLib/youtube
 
 install_PYTHON = \
 	__init__.py \

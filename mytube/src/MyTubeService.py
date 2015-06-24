@@ -7,8 +7,6 @@ from Tools.Log import Log
 from __init__ import decrypt_block
 from ThreadQueue import ThreadQueue
 
-from youtube_dl import YoutubeDL
-
 from twisted.web import client
 from twisted.internet import reactor
 from urllib2 import Request, URLError, urlopen as urlopen2
@@ -22,10 +20,10 @@ from threading import Thread
 
 HTTPConnection.debuglevel = 1
 
-from youtube.Base import buildYoutube
-from youtube.Search import Search
-from youtube.Videos import Videos
-from youtube.VideoCategories import VideoCategories
+from Plugins.SystemPlugins.TubeLib.youtube.Base import buildYoutube
+from Plugins.SystemPlugins.TubeLib.youtube.Search import Search
+from Plugins.SystemPlugins.TubeLib.youtube.Videos import Videos
+from Plugins.SystemPlugins.TubeLib.youtube.VideoCategories import VideoCategories
 
 def validate_cert(cert, key):
 	buf = decrypt_block(cert[8:], key)
