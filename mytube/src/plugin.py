@@ -22,9 +22,6 @@ from Tools.Directories import resolveFilename, SCOPE_HDD, SCOPE_CURRENT_PLUGIN
 from Tools.Downloader import downloadWithProgress
 from Tools.Log import Log
 
-import sys
-sys.argv = ["enigma2"] #HACKFIX FOR argparse reading sys.argv[0] wihtout checking sys.argc
-
 from Plugins.Plugin import PluginDescriptor
 
 from MyTubeSearch import ConfigTextWithGoogleSuggestions, MyTubeSettingsScreen, MyTubeTasksScreen, MyTubeHistoryScreen
