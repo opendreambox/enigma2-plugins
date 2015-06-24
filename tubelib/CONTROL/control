@@ -1,0 +1,2 @@
+Description: Helper libs for *tube video browsing and playback
+Depends: enigma2, python-twisted-web, python-google-api-client, python-youtube-dl

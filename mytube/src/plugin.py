@@ -29,7 +29,7 @@ from Plugins.Plugin import PluginDescriptor
 
 from MyTubeSearch import ConfigTextWithGoogleSuggestions, MyTubeSettingsScreen, MyTubeTasksScreen, MyTubeHistoryScreen
 from MyTubeService import validate_cert, get_rnd, myTubeService
-from youtube.Search import Search
+from Plugins.SystemPlugins.TubeLib.youtube.Search import Search
 
 from __init__ import decrypt_block
 
