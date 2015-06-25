@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1170 $
-$Date: 2015-06-20 16:35:35 +0200 (Sat, 20 Jun 2015) $
-$Id: FritzCallFBF.py 1170 2015-06-20 14:35:35Z michael $
+$Revision: 1171 $
+$Date: 2015-06-24 19:57:31 +0200 (Wed, 24 Jun 2015) $
+$Id: FritzCallFBF.py 1171 2015-06-24 17:57:31Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -867,7 +867,7 @@ class FritzCallFBF:
 				found = re.match('.*function DslStateDisplay \(state\){\s*var state = "(\d+)";', html, re.S)
 				if found:
 					# debug("[FritzCallFBF] _okGetInfo DslState: " + found.group(1))
-					dslState = [ found.group(1), None ] # state, speed
+					dslState = [ found.group(1), None, None ] # state, speed
 					found = re.match('.*function DslStateDisplay \(state\){\s*var state = "\d+";.*?if \("3130" != "0"\) str = "([^"]*)";', html, re.S)
 					if found:
 						# debug("[FritzCallFBF] _okGetInfo DslSpeed: " + found.group(1).strip())
@@ -972,7 +972,7 @@ class FritzCallFBF:
 		found = re.match('.*"dsl_carrier_state": "(\d+)"', html, re.S)
 		if found:
 			# debug("[FritzCallFBF] _okSetDslState: dsl_carrier_state: " + found.group(1))
-			dslState = [ found.group(1), "" ]
+			dslState = [ found.group(1), "", None ]
 			found = re.match('.*"dsl_ds_nrate": "(\d+)"', html, re.S)
 			if found:
 				# debug("[FritzCallFBF] _okSetDslState: dsl_ds_nrate: " + found.group(1))
