@@ -12,6 +12,9 @@ from urllib2 import urlopen, Request, URLError
 
 from Components.config import config
 
+import HTMLParser
+#html_parser = HTMLParser.HTMLParser()
+
 
 #from SerienRecorder import getUserAgent
 import datetime, random
@@ -38,6 +41,7 @@ def iso8859_Decode(txt):
 
 	# &apos;, &quot;, &amp;, &lt;, and &gt;
 	txt = txt.replace('&amp;','&').replace('&apos;',"'").replace('&gt;','>').replace('&lt;','<').replace('&quot;','"')
+	#txt = html_parser.unescape(txt)
 	return txt
 
 
@@ -77,7 +81,7 @@ class WebChannels(object):
 			for station in stations:
 				if station != 'alle':
 					station = iso8859_Decode(station)
-					station = station.replace(' (Pay-TV)','').replace(' (Schweiz)','').replace(' (GB)','').replace(' (Österreich)','').replace(' (USA)','').replace(' (RP)','').replace(' (F)','').replace('&#x1f512;','')
+					station = station.replace(' (Pay-TV)','').replace(' (Schweiz)','').replace(' (GB)','').replace(' (Österreich)','').replace(' (&Ouml;sterreich)','').replace(' (USA)','').replace(' (RP)','').replace(' (F)','').replace('&#x1f512;','')
 					#station = station.strip()
 					
 					web_chlist.append(station)
