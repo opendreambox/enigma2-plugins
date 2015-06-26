@@ -179,7 +179,6 @@ class downloadTask(Task):
 
 
 class MyTubePlayerMainScreen(Screen, ConfigListScreen):
-	BASE_STD_FEEDURL = "http://gdata.youtube.com/feeds/api/standardfeeds/"
 	Details = {}
 	#(entry, Title, Description, TubeID, thumbnail, PublishedDate,Views,duration,ratings )
 	skin = """
