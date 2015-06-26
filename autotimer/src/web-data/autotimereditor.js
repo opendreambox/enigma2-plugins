@@ -1997,7 +1997,7 @@ function AutoTimer(xml, defaults){
 				// Service reference flags == isDirectory | mustDescent | canDescent (== 7)
 				if (unescape(reference).slice(2,3) == "7"){
 					bouquets.push({
-						'bouquet' : createOptionList(autotimereditorcore.bouquets, reference),
+						'bouquet' : createOptionList(autotimereditorcore.bouquets, unescape(reference)),
 						'class' : 'remove',
 					});
 				}else{
