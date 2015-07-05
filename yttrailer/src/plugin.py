@@ -29,14 +29,6 @@ from Components.Sources.StaticText import StaticText
 from Components.GUIComponent import GUIComponent
 from enigma import eServiceReference,  RT_WRAP, RT_VALIGN_CENTER, RT_HALIGN_LEFT, gFont, eListbox, eListboxPythonMultiContent, eTPM
 
-import gdata.youtube
-import gdata.youtube.service
-from socket import gaierror, error as sorcket_error
-from urllib2 import Request, URLError, urlopen as urlopen2
-from urllib import unquote_plus
-from httplib import HTTPException
-from urlparse import parse_qs
-
 from Components.config import config, ConfigSubsection, ConfigSelection, getConfigListEntry, configfile, ConfigText, ConfigInteger, ConfigYesNo
 from Components.ConfigList import ConfigListScreen
 
@@ -60,6 +52,9 @@ from Screens.EpgSelection import EPGSelection
 baseEPGSelection__init__ = None
 etpm = eTPM()
 
+from Plugins.SystemPlugins.TubeLib.youtube.Base import buildYoutube
+from Plugins.SystemPlugins.TubeLib.youtube.Search import Search
+from Plugins.SystemPlugins.TubeLib.youtube.Videos import Videos
 
 def autostart(reason, **kwargs):
 	global l2key
@@ -146,162 +141,40 @@ def showTrailerList(self):
 class YTTrailer:
 	def __init__(self, session):
 		self.session = session
+		self._youtube = None
+		self._query = None
 		self.l3cert = etpm.getData(eTPM.DT_LEVEL3_CERT)
 
 	def showTrailer(self, eventname):
 		if eventname:
-			feeds = self.getYTFeeds(eventname, 1)
-			if feeds and len(feeds.entry) >= 1:
-				ref = self.setServiceReference(feeds.entry[0])
-				if ref:
-					self.session.open(TrailerPlayer, ref)
+			self.getYTFeeds(eventname, 1)
+
+	def _gotYTFeeds(self, success, videos, data):
+		if videos:
+			ref = self.setServiceReference(videos[0])
+			if ref:
+				from twisted.internet import reactor
+				reactor.callLater(0, self.session.open, TrailerPlayer, ref)
 
 	def getYTFeeds(self, eventname, max_results):
-		yt_service = gdata.youtube.service.YouTubeService()
-		# developer key and client id taken from mytube-plugin with permission from acid_burn.
-		yt_service.developer_key = 'AI39si4AjyvU8GoJGncYzmqMCwelUnqjEMWTFCcUtK-VUzvWygvwPO-sadNwW5tNj9DDCHju3nnJEPvFy4WZZ6hzFYCx8rJ6Mw'
-		yt_service.client_id = 'ytapi-dream-MyTubePlayer-i0kqrebg-0'
-		query = gdata.youtube.service.YouTubeVideoQuery()
+		if not self._youtube:
+			self._youtube = buildYoutube()
 		if int(config.plugins.yttrailer.best_resolution.value) <= 1:
 			shd = "HD"
 		else:
 			shd = ""
-		query.vq = "%s %s Trailer %s" % (eventname, shd, config.plugins.yttrailer.ext_descr.value)
-		query.max_results = max_results
-		try:
-			feeds = yt_service.YouTubeQuery(query)
-		except gaierror:
-			feeds = None
-		return feeds
+		q = "%s %s Trailer %s" % (eventname, shd, config.plugins.yttrailer.ext_descr.value)
+		search = Search(self._youtube)
+		self._query = search.list(self._gotYTFeeds, searchTerm=q, maxResults=max_results)
 
 	def setServiceReference(self, entry):
-		url = self.getVideoUrl(str(self.getTubeId(entry)))
+		url = entry.url
 		if url:
 			ref = eServiceReference(4097,0,url)
-			ref.setName(entry.media.title.text)
+			ref.setName(entry.title)
 		else:
 			ref = None
 		return ref
-
-	def getTubeId(self, entry):
-		ret = None
-		if entry.media.player:
-			split = entry.media.player.url.split("=")
-			ret = split.pop()
-			if ret.startswith('youtube_gdata'):
-				tmpval=split.pop()
-				if tmpval.endswith("&feature"):
-					tmp = tmpval.split("&")
-					ret = tmp.pop(0)
-		return ret
-
-	def getVideoUrl(self, id):
-		std_headers = {
-			'User-Agent': 'Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6) Gecko/20100627 Firefox/3.6.6',
-			'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
-			'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-			'Accept-Language': 'en-us,en;q=0.5',
-		}
-
-		VIDEO_FMT_PRIORITY_MAP = {
-			'18' : 4, #MP4 360p
-			'35' : 5, #FLV 480p
-			'34' : 6, #FLV 360p
-		}
-
-		if int(config.plugins.yttrailer.best_resolution.value) <= 1:
-			VIDEO_FMT_PRIORITY_MAP["38"] = 1 #MP4 Original (HD)
-			VIDEO_FMT_PRIORITY_MAP["22"] = 3 #MP4 720p (HD)
-
-			if int(config.plugins.yttrailer.best_resolution.value) == 0:
-				VIDEO_FMT_PRIORITY_MAP["37"] = 2 #MP4 1080p (HD)
-
-		video_url = None
-		video_id = id
-
-		# Getting video webpage
-		#URLs for YouTube video pages will change from the format http://www.youtube.com/watch?v=ylLzyHk54Z0 to http://www.youtube.com/watch#!v=ylLzyHk54Z0.
-		watch_url = 'http://www.youtube.com/watch?v=%s&gl=US&hl=en' % video_id
-		watchrequest = Request(watch_url, None, std_headers)
-		try:
-			print "[YTTrailer] trying to find out if a HD Stream is available",watch_url
-			watchvideopage = urlopen2(watchrequest).read()
-		except (URLError, HTTPException, socket_error), err:
-			print "[YTTrailer] Error: Unable to retrieve watchpage - Error code: ", str(err)
-			return video_url
-
-		# Get video info
-		for el in ['&el=embedded', '&el=detailpage', '&el=vevo', '']:
-			info_url = ('http://www.youtube.com/get_video_info?&video_id=%s%s&ps=default&eurl=&gl=US&hl=en' % (video_id, el))
-			request = Request(info_url, None, std_headers)
-			try:
-				infopage = urlopen2(request).read()
-				videoinfo = parse_qs(infopage)
-				if ('url_encoded_fmt_stream_map' or 'fmt_url_map') in videoinfo:
-					break
-			except (URLError, HTTPException, socket_error), err:
-				print "[YTTrailer] Error: unable to download video infopage",str(err)
-				return video_url
-
-		if ('url_encoded_fmt_stream_map' or 'fmt_url_map') not in videoinfo:
-			# Attempt to see if YouTube has issued an error message
-			if 'reason' not in videoinfo:
-				print '[YTTrailer] Error: unable to extract "url_encoded_fmt_stream_map" or "fmt_url_map" parameter for unknown reason'
-			else:
-				reason = unquote_plus(videoinfo['reason'][0])
-				print '[YTTrailer] Error: YouTube said: %s' % reason.decode('utf-8')
-			return video_url
-
-		video_fmt_map = {}
-		fmt_infomap = {}
-
-		if videoinfo.has_key('url_encoded_fmt_stream_map'):
-			tmp_fmtUrlDATA = videoinfo['url_encoded_fmt_stream_map'][0].split(',')
-		else:
-			tmp_fmtUrlDATA = videoinfo['fmt_url_map'][0].split(',')
-		for fmtstring in tmp_fmtUrlDATA:
-			fmturl = fmtid = ""
-			if videoinfo.has_key('url_encoded_fmt_stream_map'):
-				try:
-					for arg in fmtstring.split('&'):
-						if arg.find('=') >= 0:
-							print arg.split('=')
-							key, value = arg.split('=')
-							if key == 'itag':
-								if len(value) > 3:
-									value = value[:2]
-								fmtid = value
-							elif key == 'url':
-								fmturl = value
-
-					if fmtid != "" and fmturl != "" and VIDEO_FMT_PRIORITY_MAP.has_key(fmtid):
-						video_fmt_map[VIDEO_FMT_PRIORITY_MAP[fmtid]] = { 'fmtid': fmtid, 'fmturl': unquote_plus(fmturl)}
-						fmt_infomap[int(fmtid)] = "%s" %(unquote_plus(fmturl))
-					fmturl = fmtid = ""
-
-				except:
-					print "error parsing fmtstring:",fmtstring
-
-			else:
-				(fmtid,fmturl) = fmtstring.split('|')
-			if VIDEO_FMT_PRIORITY_MAP.has_key(fmtid) and fmtid != "":
-				video_fmt_map[VIDEO_FMT_PRIORITY_MAP[fmtid]] = { 'fmtid': fmtid, 'fmturl': unquote_plus(fmturl) }
-				fmt_infomap[int(fmtid)] = unquote_plus(fmturl)
-		print "[YTTrailer] got",sorted(fmt_infomap.iterkeys())
-		if video_fmt_map and len(video_fmt_map):
-			if self.l3cert:
-				l3key = validate_cert(self.l3cert, l2key)
-				if l3key:
-					rnd = read_random()
-					val = etpm.computeSignature(rnd)
-					result = decrypt_block(val, l3key)
-					if result[80:88] == rnd:
-						print "[YTTrailer] found best available video format:",video_fmt_map[sorted(video_fmt_map.iterkeys())[0]]['fmtid']
-						best_video = video_fmt_map[sorted(video_fmt_map.iterkeys())[0]]
-						video_url = "%s" %(best_video['fmturl'].split(';')[0])
-						print "[YTTrailer] found best available video url:",video_url
-
-		return video_url
 
 class YTTrailerList(Screen, YTTrailer):
 
@@ -322,16 +195,17 @@ class YTTrailerList(Screen, YTTrailer):
 
 		self.eventName = eventname
 		self["list"] = TrailerList()
-		self.onLayoutFinish.append(self.startRun)
+		self.onFirstExecBegin.append(self.startRun)
 
-
-	def startRun(self):
-		feeds = self.getYTFeeds(self.eventName, config.plugins.yttrailer.max_results.value)
-		if feeds is not None:
+	def _gotYTFeeds(self, success, videos, data):
+		if videos:
 			entryList = []
-			for entry in feeds.entry:
+			for entry in videos:
 				entryList.append(((entry),))
 			self["list"].setList(entryList)
+
+	def startRun(self):
+		self.getYTFeeds(self.eventName, config.plugins.yttrailer.max_results.value)
 
 	def okPressed(self):
 		entry = self["list"].getCurrent()
@@ -354,9 +228,9 @@ class TrailerList(GUIComponent, object):
 
 	def buildList(self, entry):
 		width = self.l.getItemSize().width()
-		res = [ None ]
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width , 24, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, entry.media.title.text))
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 28, width , 40, 1, RT_WRAP, entry.media.description.text))
+		res = [ entry ]
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width , 24, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, entry.title))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 28, width , 40, 1, RT_WRAP, entry.description))
 		return res
 
 	def getCurrent(self):

@@ -33,6 +33,7 @@ SUBDIRS = \
 	emailclient \
 	emission \
 	eparted \
+	epgcopy \
 	epgrefresh \
 	epgsearch \
 	eurotictv \
@@ -106,6 +107,7 @@ SUBDIRS = \
 	tageditor \
 	teletext \
 	toolkit \
+	tubelib \
 	tvcharts \
 	unwetterinfo \
 	valixdcontrol \

@@ -224,6 +224,10 @@ epgbackup/po/Makefile
 epgbackup/src/Makefile
 epgbackup/src/localehelp/Makefile
 
+epgcopy/Makefile
+epgcopy/meta/Makefile
+epgcopy/src/Makefile
+
 epgrefresh/Makefile
 epgrefresh/meta/Makefile
 epgrefresh/po/Makefile
@@ -426,7 +430,6 @@ mytube/Makefile
 mytube/meta/Makefile
 mytube/po/Makefile
 mytube/src/Makefile
-mytube/src/youtube/Makefile
 
 namezap/Makefile
 namezap/meta/Makefile
@@ -638,6 +641,11 @@ teletext/src/Makefile
 
 toolkit/Makefile
 toolkit/src/Makefile
+
+tubelib/Makefile
+tubelib/meta/Makefile
+tubelib/src/Makefile
+tubelib/src/youtube/Makefile
 
 tvcharts/Makefile
 tvcharts/meta/Makefile

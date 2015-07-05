@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1148 $
-$Date: 2015-04-14 21:14:18 +0200 (Tue, 14 Apr 2015) $
-$Id: FritzCallFBF.py 1148 2015-04-14 19:14:18Z michael $
+$Revision: 1171 $
+$Date: 2015-06-24 19:57:31 +0200 (Wed, 24 Jun 2015) $
+$Id: FritzCallFBF.py 1171 2015-06-24 17:57:31Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -867,7 +867,7 @@ class FritzCallFBF:
 				found = re.match('.*function DslStateDisplay \(state\){\s*var state = "(\d+)";', html, re.S)
 				if found:
 					# debug("[FritzCallFBF] _okGetInfo DslState: " + found.group(1))
-					dslState = [ found.group(1), None ] # state, speed
+					dslState = [ found.group(1), None, None ] # state, speed
 					found = re.match('.*function DslStateDisplay \(state\){\s*var state = "\d+";.*?if \("3130" != "0"\) str = "([^"]*)";', html, re.S)
 					if found:
 						# debug("[FritzCallFBF] _okGetInfo DslSpeed: " + found.group(1).strip())
@@ -972,7 +972,7 @@ class FritzCallFBF:
 		found = re.match('.*"dsl_carrier_state": "(\d+)"', html, re.S)
 		if found:
 			# debug("[FritzCallFBF] _okSetDslState: dsl_carrier_state: " + found.group(1))
-			dslState = [ found.group(1), "" ]
+			dslState = [ found.group(1), "", None ]
 			found = re.match('.*"dsl_ds_nrate": "(\d+)"', html, re.S)
 			if found:
 				# debug("[FritzCallFBF] _okSetDslState: dsl_ds_nrate: " + found.group(1))
@@ -2522,7 +2522,13 @@ class FritzCallFBF_05_50:
 				self.blacklist[0].append(entry.group(2))
 			else:
 				self.blacklist[1].append(entry.group(2))
-		entries = re.compile('<tr><td>(?:Ankommende|Ausgehende) Rufe</td><td>([\d]+)</td>', re.S).finditer(html)
+		entries = re.compile('<tr><td>(Ankommende|Ausgehende) Rufe</td><td>([\d]+)</td>', re.S).finditer(html)
+		for entry in entries:
+			if entry.group(1) == "Ankommende":
+				self.blacklist[0].append(entry.group(2))
+			else:
+				self.blacklist[1].append(entry.group(2))
+		entries = re.compile('<TD>(Ankommende|Ausgehende) Rufe</TD>\s+<TD>([\d]+)</TD>', re.S).finditer(html)
 		for entry in entries:
 			if entry.group(1) == "Ankommende":
 				self.blacklist[0].append(entry.group(2))
