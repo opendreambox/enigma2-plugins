@@ -6,7 +6,7 @@ from . import _
 from Components.MenuList import MenuList
 from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT
 
-from skin import parseColor, parseFont
+from skin import parseColor, parseFont, TemplatedListFonts
 
 class AutoTimerList(MenuList):
 	"""Defines a simple Component to show Timer name"""
@@ -18,6 +18,8 @@ class AutoTimerList(MenuList):
 		self.l.setBuildFunc(self.buildListboxEntry)
 		self.l.setItemHeight(25)
 		self.colorDisabled = 12368828
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
 
 	def applySkin(self, desktop, parent):
 		attribs = [ ] 
