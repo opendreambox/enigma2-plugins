@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1187 $
-$Date: 2015-07-12 14:26:55 +0200 (Sun, 12 Jul 2015) $
-$Id: FritzCallFBF.py 1187 2015-07-12 12:26:55Z michael $
+$Revision: 1194 $
+$Date: 2015-07-17 17:42:55 +0200 (Fri, 17 Jul 2015) $
+$Id: FritzCallFBF.py 1194 2015-07-17 15:42:55Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -2248,8 +2248,8 @@ class FritzCallFBF_05_50:
 
 	def changeGuestAccess(self, statusGuestAccess, callback):
 		debug("[FritzCallFBF_05_50] changeGuestAccess start")
-		if not statusGuestAccess:
-			return
+# 		if not statusGuestAccess:
+# 			return
 		self._login(lambda md5Sid: self._changeGuestAccessWLAN(statusGuestAccess, callback, md5Sid))
 		
 	def _changeGuestAccessWLAN(self, statusGuestAccess, callback, md5Sid):
@@ -2393,13 +2393,32 @@ class FritzCallFBF_05_50:
 
 		# wlanstate = [ active, encrypted, no of devices ]
 		# encrypted == 2 means unknown
-		found = re.match('.*<tr id="uiTrWlan"><td class="(led_gray|led_green|led_red)"></td><td><a href="[^"]*">WLAN</a></td><td[^>]*>(?:aus|an)([^<]*)', html, re.S)
+		#                                      <tr id="uiTrWlan"><td class="led_green"></td><td><a href="/wlan/wlan_settings.lua?sid=9c824da3ecfc7168">WLAN</a></td><td title="an
+		found = re.match('.*<tr id="uiTrWlan"><td class="(led_gray|led_green|led_red)"></td><td><a href="[^"]*">WLAN</a></td><td([^>]*)>(?:aus|an)([^<]*)', html, re.S)
 		if found:
 			if found.group(1) == "led_green":
-				if found.group(2) and found.group(2).find(", gesichert") != -1:
-					wlanState = [ '1', '1', '' ]
+				if found.group(2):
+					wlans = found.group(2)
+					found = re.match('.*"an, ([^"]+)"', wlans, re.S)
+					if found:
+						wlanState = [ '1', '2', '', '' ]
+						wlans = found.group(1)
+					else:
+						wlanState = [ '0', '0', '', '' ]
+					found = re.match('.*Funknetz \(2,4 GHz\): ([^,"]*)', wlans, re.S)
+					if found:
+						wlanState[3] = "2,4Ghz: " + found.group(1)
+					found = re.match('.*Funknetz \(5 GHz\): ([^,"]*)', wlans, re.S)
+					if found:
+						if wlanState[3]:
+							wlanState[3] = wlanState[3] + " 5Ghz: " + found.group(1)
+						else:
+							wlanState[3] = "5Ghz: " + found.group(1)
 				else:
-					wlanState = [ '1', '0', '' ]
+					if found.group(3) and found.group(3).find(", gesichert") != -1:
+						wlanState = [ '1', '1', '' ]
+					else:
+						wlanState = [ '1', '0', '' ]
 			else:
 				wlanState = [ '0', '0', '0' ]
 			debug("[FritzCallFBF_05_50] _okGetInfo wlanState: " + repr(wlanState))
@@ -2699,9 +2718,10 @@ class FritzCallFBF_06_35:
 
 		parms = urlencode({
 						'sid':md5Sid,
+						'page':'bookLi'
 						})
-		# TODO /?fonbook_select
-		url = "http://%s/fon_num/fonbook_list.lua" % (config.plugins.FritzCall.hostname.value)
+		# TODO /?fonbook_select /data.lua?xhr=1&sid=1c08ccd3e37327c7&lang=de&no_sidrenew=&page=bookLi
+		url = "http://%s/data.lua" % (config.plugins.FritzCall.hostname.value)
 		debug("[FritzCallFBF_06_35] _loadFritzBoxPhonebookNew: " + url + "?" + parms)
 		getPage(url,
 			method="POST",
@@ -2887,7 +2907,58 @@ class FritzCallFBF_06_35:
 		@type state: string
 		'''
 		debug("[FritzCallFBF_06_35] changeWLAN start")
-		Notifications.AddNotification(MessageBox, _("not available with this firmware version"), type=MessageBox.TYPE_ERROR, timeout=config.plugins.FritzCall.timeout.value)
+		#=======================================================================
+		# Notifications.AddNotification(MessageBox, _("not available with this firmware version"), type=MessageBox.TYPE_ERROR, timeout=config.plugins.FritzCall.timeout.value)
+		# return
+		#=======================================================================
+
+		if not statusWLAN or (statusWLAN != '1' and statusWLAN != '0'):
+			return
+		self._login(lambda md5Sid: self._changeWLAN(statusWLAN, callback, md5Sid))
+		
+	def _changeWLAN(self, statusWLAN, callback, md5Sid):
+		if statusWLAN == '0':
+			parms = urlencode({
+				'sid':md5Sid,
+				'apply':'',
+				'cancel':'',
+				'btn_refresh':''
+				})
+		else:
+			parms = urlencode({
+				'sid':md5Sid,
+				'active':'on',
+				'active_24':'on',
+				'active_5':'on',
+				'hidden_ssid':'on',
+				'apply':'',
+				'cancel':'',
+				'btn_refresh':''
+				})
+
+		url = "http://%s//wlan/wlan_settings.lua" % config.plugins.FritzCall.hostname.value
+		debug("[FritzCallFBF_05_50] changeWLAN url: " + url + "?" + parms)
+		getPage(url,
+			method="POST",
+			agent=USERAGENT,
+			headers={
+					'Content-Type': "application/x-www-form-urlencoded"},
+			postdata=parms).addCallback(self._okChangeWLAN, callback, md5Sid).addErrback(self._errorChangeWLAN, md5Sid)
+
+	def _okChangeWLAN(self, html, callback, md5Sid): #@UnusedVariable # pylint: disable=W0613
+		debug("[FritzCallFBF_05_50] _okChangeWLAN")
+		if html:
+			found = re.match('.*<p class="ErrorMsg">([^<]*)</p>', html, re.S)
+			if found:
+				self._notify(found.group(1))
+		callback()
+		self._logout(md5Sid, "_okChangeWLAN")
+
+	def _errorChangeWLAN(self, error, md5Sid):
+		debug("[FritzCallFBF_05_50] _errorChangeWLAN: $s" % error)
+		text = _("FRITZ!Box - Failed changing WLAN: %s") % error.getErrorMessage()
+		self._notify(text)
+		self._logout(md5Sid, "_errorChangeWLAN")
 
 	def changeGuestAccess(self, statusGuestAccess, callback):
 		'''
@@ -2914,18 +2985,19 @@ class FritzCallFBF_06_35:
 		Retrieve info from box and fill in self.info and self.blacklist
 		'''
 		debug("[FritzCallFBF_06_35] getInfo start")
-		return
-		# self._login(lambda md5Sid: self._getInfo(callback, md5Sid))
+		self._login(lambda md5Sid: self._getInfo(callback, md5Sid))
 		
 	def _getInfo(self, callback, md5Sid):
 		debug("[FritzCallFBF_06_35] _getInfo: verify login")
 
 		self._login(self._readBlacklist)
 
-		# TODO wizOv ?!?!
-		url = "http://%s/?Ip=overview" % config.plugins.FritzCall.hostname.value
+		# TODO wizOv ?!?! https://%s/data.lua?xhr=1&lang=de&page=overview&type=all&no_sidrenew=
+		url = "http://%s/data.lua" % config.plugins.FritzCall.hostname.value
 		parms = urlencode({
-			'sid':md5Sid
+			'sid':md5Sid,
+			'page':'overview',
+			'type':'all'
 			})
 		debug("[FritzCallFBF_06_35] _getInfo url: " + url + "?" + parms)
 		getPage(url,
@@ -2940,48 +3012,88 @@ class FritzCallFBF_06_35:
 
 		debug("[FritzCallFBF_06_35] _okGetInfo")
 
-# 		linkP = open("/tmp/FritzCallInfo.htm", "w")
-# 		linkP.write(html)
-# 		linkP.close()
+		linkP = open("/tmp/FritzCallData.lua", "w")
+		linkP.write(html)
+		linkP.close()
 
 		(boxInfo, upTime, ipAddress, wlanState, dslState, tamActive, dectActive, faxActive, rufumlActive, guestAccess) = (None, None, None, None, None, None, None, None, None, None)
 
-		found = re.match('.*<div class="label">FRITZ!Box-Modell:</div><span class="">([^<]+)</span>', html, re.S)
+		found = re.match('.*"Productname": "([^"]+)",', html, re.S)
 		if found:
 			boxInfo = found.group(1)
-		found = re.match('.*<div class="label">Version:</div><span class="">([^<]+)</span>', html, re.S)
-		if found:
-			boxInfo = boxInfo + ", " + found.group(1)
-# 		if boxInfo:
-# 			boxInfo = boxInfo.replace('&nbsp;',' ')
-		debug("[FritzCallFBF_06_35] _okGetInfo Boxinfo: " + boxInfo)
+			found = re.match('.*"nspver": "([^"]+)"', html, re.S)
+			if found:
+				boxInfo = boxInfo + ", " + found.group(1)
+			found = re.match('.*"fb_name": "([^"]+)"', html, re.S)
+			if found:
+				boxInfo = boxInfo + ", " + found.group(1)
+			debug("[FritzCallFBF_06_35] _okGetInfo Boxinfo: " + boxInfo)
 
-# 		found = re.match('.*<div id=\'ipv._info\'><span class="[^"]*">verbunden seit ([^<]*)</span>', html, re.S)
-# 		if found:
-# 			upTime = found.group(1)
-# 			debug("[FritzCallFBF_06_35] _okGetInfo upTime: " + upTime)
-# 
-# 		ipAddress = ""
-# 		found = re.match('.*IP-Adresse: ([^<]*)</span>', html, re.S)
-# 		if found:
-# 			ipAddress = found.group(1)
-# 			debug("[FritzCallFBF_06_35] _okGetInfo ipAddress v4: " + ipAddress)
-# 		found = re.match('.*IPv6-Präfix: ([^<]*)</span>', html, re.S)
-# 		if found:
-# 			if ipAddress:
-# 				ipAddress = ipAddress + ' / ' + found.group(1)
-# 			else:
-# 				ipAddress = found.group(1)
-# 			debug("[FritzCallFBF_06_35] _okGetInfo ipAddress v6: " + ipAddress)
+		# found = re.match('.*"ipv4": {\s*"txt": \["IPv4, verbunden seit ([^"]+) Uhr",( "Anbieter: ([^"]*)",)? "IP-Adresse: ([^"]+)"\],', html, re.S)
+		found = re.match('.*"ipv4": {\s*"txt": \["(?:IPv4, )?verbunden seit ([^"]+) Uhr",', html, re.S)
+		if found:
+			upTime = found.group(1)
+			debug("[FritzCallFBF_06_35] _okGetInfo upTime: " + upTime)
+
+		#found = re.match('.*"ipv4": {\s*"txt": \["IPv4, verbunden seit ([^"]+) Uhr",( "Anbieter: ([^"]*)",)? "IP-Adresse: ([^"]+)"\],', html, re.S)
+		found = re.match('.*"ipv4": {\s*"txt": \["IPv4, [^"]+", "Anbieter: ([^"]*)",', html, re.S)
+		if found:
+			provider = found.group(1)
+			debug("[FritzCallFBF_06_35] _okGetInfo provider: " + provider)
+		else:
+			found = re.match('.*"ipv4": {\s*"txt": \["[^"]+", "Anbieter: ([^"]*)",', html, re.S)
+			if found:
+				provider = found.group(1)
+				debug("[FritzCallFBF_06_35] _okGetInfo provider2: " + provider)
+
+		found = re.match('.*"ipv4": {\s*"txt": \["IPv4, [^"]+",(?: "Anbieter: [^"]*",)? "IP-Adresse: ([^"]+)"\],', html, re.S)
+		if found:
+			ipAddress = found.group(1)
+			debug("[FritzCallFBF_06_35] _okGetInfo ipAddress: " + ipAddress)
+		else:
+			found = re.match('.*"ipv4": {\s*"txt": \["[^"]+",(?: "Anbieter: [^"]*",)? "IP-Adresse: ([^"]+)"\],', html, re.S)
+			if found:
+				ipAddress = found.group(1)
+				debug("[FritzCallFBF_06_35] _okGetInfo ipAddress: " + ipAddress)
+
+		# found = re.match('.*"ipv4": {\s*"txt": \["IPv4, verbunden seit ([^"]+) Uhr",( "Anbieter: ([^"]*)",)? "IP-Adresse: ([^"]+)"\],', html, re.S)
+		found = re.match('.*"ipv6": {\s*"txt": \["IPv6, verbunden seit ([^"]+) Uhr",', html, re.S)
+		if found:
+			upTime6 = found.group(1)
+			if upTime and upTime.find(upTime6) == -1:
+				upTime = upTime +'/' + upTime6
+			debug("[FritzCallFBF_06_35] _okGetInfo upTime6: " + upTime)
+
+		#found = re.match('.*"ipv4": {\s*"txt": \["IPv4, verbunden seit ([^"]+) Uhr",( "Anbieter: ([^"]*)",)? "IP-Adresse: ([^"]+)"\],', html, re.S)
+		found = re.match('.*"ipv6": {\s*"txt": \["IPv6, [^"]+", "Anbieter: ([^"]*)",', html, re.S)
+		if found:
+			provider6 = found.group(1)
+			if provider and provider.find(provider6) == -1:
+				provider = provider +'/' + provider6
+			debug("[FritzCallFBF_06_35] _okGetInfo provider6: " + provider)
+		
+		if provider:
+			if upTime:
+				upTime = upTime + ' mit ' + provider
+		
+		found = re.match('.*"ipv6": {\s*"txt": \["IPv6, [^"]+",(?: "Anbieter: [^"]*",)? "IPv6-Präfix: ([^"]+)"\],', html, re.S)
+		if found:
+			if ipAddress:
+				ipAddress = ipAddress + ' / ' + found.group(1).replace('\\', '')
+			else:
+				ipAddress = found.group(1)
+			debug("[FritzCallFBF_06_35] _okGetInfo ipAddress6: " + ipAddress)
 
 		# dslState = [ state, info, unused ]; state == '5' means up, everything else down
 		#found = re.match('.*<tr id="uiTrDsl"><td class="(led_gray|led_green|led_red)">', html, re.S)
-		found = re.match('.*<div class="desc (led_gray|led_green|led_red)"><div class="desc title"><a href="">(DSL|Kabel)</a></div><div class="details info">[^<]*<div class="speed"><span class="downstream">([^<]*)</span><span class="upstream">([^<]*)</span></div></div></div>', html, re.S)
+		# found = re.match('.*<div class="desc (led_gray|led_green|led_red)"><div class="desc title"><a href="">(DSL|Kabel)</a></div><div class="details info">[^<]*<div class="speed"><span class="downstream">([^<]*)</span><span class="upstream">([^<]*)</span></div></div></div>', html, re.S)
+		found = re.match('.*"(?:dsl|cable)": {\s*"txt": "(?:verbunden|aktiviert|deaktiviert)",\s*"led": "(led_gray|led_green|led_red)",\s*"title": "(DSL|Kabel)",\s*"up": "([^"]*)",\s*"down": "([^"]*)",', html, re.S)
 		if found:
 			if found.group(1) == "led_green":
 				dslState = ['5', None, None]
-				dslState[1] = found.group(2) + " / " + found.group(3)
-				dslState[2] = found.group(1)
+				dslState[1] = found.group(3) + " / " + found.group(4)
+				dslState[1] = dslState[1].replace('\\', '')
+				dslState[2] = found.group(2)
 			else:
 				dslState = ['0', None, None]
 		debug("[FritzCallFBF_06_35] _okGetInfo dslState: " + repr(dslState))
@@ -2989,15 +3101,25 @@ class FritzCallFBF_06_35:
 		# wlanstate = [ active, encrypted, no of devices, info ]
 		# encrypted == 2 means unknown
 		#found = re.match('.*<tr id="uiTrWlan"><td class="(led_gray|led_green|led_red)"></td><td><a href="[^"]*">WLAN</a></td><td[^>]*>(aus|an)', html, re.S)
-		found = re.match('.*<div class="desc led_green)"><div class="desc title"><a href="">WLAN</a></div><div class="details info">an, Funknetz 2,4 GHz: ([^<]*)</div></div>', html, re.S)
+		#found = re.match('.*<div class="desc led_green)"><div class="desc title"><a href="">WLAN</a></div><div class="details info">an, Funknetz 2,4 GHz: ([^<]*)</div></div>', html, re.S)
+		found = re.match('.*"wlan24": {\s*"txt": "(an|aus), Funknetz 2,4 GHz: ([^"]+)",\s*"led": "(led_gray|led_green)",', html, re.S)
 		if found:
-			wlanState = [ '1', '', '',  "2,4GHz: " + found.group(1)]
-		found = re.match('.*<div class="desc led_green"><div class="desc title"><a href="">WLAN</a></div><div class="details info">an, Funknetz 5 GHz: ([^<]*)</div></div>', html, re.S)
+			if found.group(1) == 'an':
+				wlanState = [ '1', '', '',  "2,4GHz an: " + found.group(2)]
+			else:
+				wlanState = [ '0', '', '',  "2,4GHz aus: " + found.group(2)]
+		#found = re.match('.*<div class="desc led_green"><div class="desc title"><a href="">WLAN</a></div><div class="details info">an, Funknetz 5 GHz: ([^<]*)</div></div>', html, re.S)
+		found = re.match('.*"wlan5": {\s*"txt": "(an|aus), Funknetz 5 GHz: ([^"]+)",\s*"led": "(led_gray|led_green)",', html, re.S)
 		if found:
 			if not wlanState:
-				wlanState = [ '1', '', '',  "5GHz: " + found.group(1)]
+				if found.group(1) == 'an':
+					wlanState = [ '1', '', '',  "5GHz an: " + found.group(2)]
+				else:
+					wlanState = [ '0', '', '',  "5GHz aus: " + found.group(2)]
 			else:
-				wlanState[3] = wlanState[3] + ", 5GHz: " + found.group(1)
+				if found.group(1) == 'an':
+					wlanState[0] = '1'
+					wlanState[3] = wlanState[3] + ", 5GHz an: " + found.group(2)
 		debug("[FritzCallFBF_06_35] _okGetInfo wlanState: " + repr(wlanState))
 			
 
@@ -3010,31 +3132,39 @@ class FritzCallFBF_06_35:
 		#=======================================================================
 
 		# found = re.match('.*<tr id="uiTrDect"><td class="(led_gray|led_green|led_red)"></td><td><a href="[^"]*">DECT</a></td><td>(?:aus|an, (ein|\d*) Schnurlostelefon)', html, re.S)
-		found = re.match('.*<div class="desc led_green"><div class="desc title"><a href="">DECT</a></div><div class="details info">an, ([\d+]+) Schnurlostelefone angemeldet</div></div>', html, re.S)
+		#found = re.match('.*<div class="desc led_green"><div class="desc title"><a href="">DECT</a></div><div class="details info">an, ([\d+]+) Schnurlostelefone angemeldet</div></div>', html, re.S)
+		found = re.match('.*"dect": {\s*"txt": "an, ([\d+]+) Schnurlostelefone angemeldet",\s*"led": "led_green"', html, re.S)
 		if found:
 			dectActive = found.group(1)
 		debug("[FritzCallFBF_06_35] _okGetInfo dectActive: " + repr(dectActive))
 
-# 		found = re.match('.*<tr (?:style="")?><td><a href="[^"]*">Faxfunktion</a></td><td>Integriertes Fax aktiv</td>', html, re.S)
-# 		if found:
-# 			faxActive = True
-# 			debug("[FritzCallFBF_06_35] _okGetInfo faxActive: " + repr(faxActive))
-# 
-# 		found = re.match('.*Rufumleitung</a></td><td>aktiv</td>', html, re.S)
-# 		if found:
-# 			rufumlActive = -1 # means no number available
-# 			debug("[FritzCallFBF_06_35] _okGetInfo rufumlActive: " + repr(rufumlActive))
-# 
-# 		guestAccess = ""
-# 		found = re.match('.*WLAN-Gastzugang</a></td><td title="[^"]*">aktiv ([^<]*)</td>', html, re.S)
-# 		if found:
-# 			# guestAccess =  "WLAN " + found.group(1)
-# 			if found.group(1).find(", gesichert"):
-# 				guestAccess =  "WLAN (gesichert)"
-# 			else:
-# 				guestAccess =  "WLAN (ungesichert)"
-# 			debug("[FritzCallFBF_06_35] _okGetInfo guestAccess WLAN: " + repr(guestAccess))
-# 		found = re.match('.*LAN-Gastzugang</a></td><td title="aktiv">aktiv</td>', html, re.S)
+		found = re.match('.*"details": "Integriertes Fax aktiv"', html, re.S)
+		if found:
+			faxActive = True
+			debug("[FritzCallFBF_06_35] _okGetInfo faxActive: " + repr(faxActive))
+ 
+		found = re.match('.*"linktxt": "Rufumleitung",\s*"details": "aktiv",', html, re.S)
+		if found:
+			rufumlActive = -1 # means no number available
+			debug("[FritzCallFBF_06_35] _okGetInfo rufumlActive: " + repr(rufumlActive))
+ 
+		guestAccess = ""
+		# found = re.match('.*WLAN-Gastzugang</a></td><td title="[^"]*">aktiv ([^<]*)</td>', html, re.S)
+		found = re.match('.*linktxt": "WLAN-Gastzugang",\s*"details": "aktiv \(([^\)]+)\)(, gesichert)?,(?: \d+ Minuten verbleiben,)? (\d+ Geräte), ([^"]+)",\s*"link": "wGuest"', html, re.S)
+		if found:
+			# guestAccess =  "WLAN " + found.group(1)
+			if found.group(2):
+				guestAccess =  "WLAN (gesichert)"
+			else:
+				guestAccess =  "WLAN (ungesichert)"
+			if found.group(1):
+				guestAccess = guestAccess + ', ' + found.group(1).replace('\\', '')
+			if found.group(3):
+				guestAccess = guestAccess + ', ' + found.group(3)
+			if found.group(4):
+				guestAccess = guestAccess + ', ' + found.group(4)
+			debug("[FritzCallFBF_06_35] _okGetInfo guestAccess WLAN: " + repr(guestAccess))
+#		found = re.match('.*LAN-Gastzugang</a></td><td title="aktiv">aktiv</td>', html, re.S)
 # 		if found:
 # 			if guestAccess:
 # 				guestAccess =  guestAccess + ", LAN"
@@ -3097,10 +3227,11 @@ class FritzCallFBF_06_35:
 
 	def _readBlacklist(self, md5Sid):
 		# http://fritz.box/cgi-bin/webcm?getpage=../html/de/menus/menu2.html&var:lang=de&var:menu=fon&var:pagename=sperre
-		# TODO callLock
-		url = "http://%s/fon_num/sperre.lua" % config.plugins.FritzCall.hostname.value
+		# https://217.245.196.140:699/data.lua?xhr=1&sid=e8fcf4f9a9186070&lang=de&no_sidrenew=&page=callLock
+		url = "http://%s/data.lua" % config.plugins.FritzCall.hostname.value
 		parms = urlencode({
-			'sid':md5Sid
+			'sid':md5Sid,
+			'page':'callLock'
 			})
 		debug("[FritzCallFBF_06_35] _readBlacklist url: " + url + "?" + parms)
 		getPage(url,
@@ -3118,7 +3249,8 @@ class FritzCallFBF_06_35:
 		# linkP.write(html)
 		# linkP.close()
 		#=======================================================================
-		entries = re.compile('<span title="(?:Ankommende|Ausgehende) Rufe">(Ankommende|Ausgehende) Rufe</span></nobr></td><td><nobr><span title="[\d]+">([\d]+)</span>', re.S).finditer(html)
+		# entries = re.compile('<span title="(?:Ankommende|Ausgehende) Rufe">(Ankommende|Ausgehende) Rufe</span></nobr></td><td><nobr><span title="[\d]+">([\d]+)</span>', re.S).finditer(html)
+		entries = re.compile('<tr><td>(Ankommende|Ausgehende) Rufe</td><td>([\d]+)</td><td>weg</td>', re.S).finditer(html)
 		self.blacklist = ([], [])
 		for entry in entries:
 			if entry.group(1) == "Ankommende":
