@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1195 $
-$Date: 2015-07-19 17:28:25 +0200 (Sun, 19 Jul 2015) $
-$Id: FritzCallFBF.py 1195 2015-07-19 15:28:25Z michael $
+$Revision: 1196 $
+$Date: 2015-07-19 19:28:02 +0200 (Sun, 19 Jul 2015) $
+$Id: FritzCallFBF.py 1196 2015-07-19 17:28:02Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -3166,7 +3166,7 @@ class FritzCallFBF_06_35:
 		if found:
 			if found.group(1) == "led_green":
 				dslState = ['5', None, None]
-				dslState[1] = found.group(3) + " / " + found.group(4)
+				dslState[1] = found.group(4) + " / " + found.group(3)
 				dslState[1] = dslState[1].replace('\\', '')
 				dslState[2] = found.group(2)
 			else:
@@ -3245,12 +3245,13 @@ class FritzCallFBF_06_35:
 				guestAccess = guestAccess + ', ' + found.group(7) # WLAN Name
 			debug("[FritzCallFBF_06_35] _okGetInfo guestAccess WLAN: " + repr(guestAccess))
 #		found = re.match('.*LAN-Gastzugang</a></td><td title="aktiv">aktiv</td>', html, re.S)
-# 		if found:
-# 			if guestAccess:
-# 				guestAccess =  guestAccess + ", LAN"
-# 			else:
-# 				guestAccess = "LAN"
-# 			debug("[FritzCallFBF_06_35] _okGetInfo guestAccess LAN: " + repr(guestAccess))
+		found = re.match('.*linktxt": "LAN-Gastzugang",\s*"details": "aktiv"', html, re.S)
+		if found:
+			if guestAccess:
+				guestAccess =  'LAN, ' + guestAccess
+			else:
+				guestAccess = "LAN"
+			debug("[FritzCallFBF_06_35] _okGetInfo guestAccess LAN: " + repr(guestAccess))
 
 		info = (boxInfo, upTime, ipAddress, wlanState, dslState, tamActive, dectActive, faxActive, rufumlActive, guestAccess)
 		debug("[FritzCallFBF_06_35] _okGetInfo info: " + str(info))
