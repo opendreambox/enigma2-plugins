@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1194 $
-$Date: 2015-07-17 17:42:55 +0200 (Fri, 17 Jul 2015) $
-$Id: FritzCallFBF.py 1194 2015-07-17 15:42:55Z michael $
+$Revision: 1195 $
+$Date: 2015-07-19 17:28:25 +0200 (Sun, 19 Jul 2015) $
+$Id: FritzCallFBF.py 1195 2015-07-19 15:28:25Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -2968,7 +2968,82 @@ class FritzCallFBF_06_35:
 		@type statusGuestAccess: string
 		'''
 		debug("[FritzCallFBF_06_35] changeWLAN start")
-		Notifications.AddNotification(MessageBox, _("not available with this firmware version"), type=MessageBox.TYPE_ERROR, timeout=config.plugins.FritzCall.timeout.value)
+# 		if not statusGuestAccess:
+# 			return
+		self._login(lambda md5Sid: self._changeGuestAccessWLAN(statusGuestAccess, callback, md5Sid))
+		
+	def _changeGuestAccessWLAN(self, statusGuestAccess, callback, md5Sid):
+		if statusGuestAccess.find('WLAN') != -1:
+			parms = urlencode({
+				'sid':md5Sid,
+				'autoupdate':'on',
+				'print':'',
+				'apply':'',
+				'oldpage':'/wlan/guest_access.lua',
+#				'btn_cancel':''
+				})
+		else:
+			if config.plugins.FritzCall.guestSecure.value:
+				parms = urlencode({
+					'sid':md5Sid,
+					'autoupdate':'on',
+					'activate_guest_access':'on',
+					'guest_ssid':config.plugins.FritzCall.guestSSID.value,
+					'sec_mode':'3',
+					'wpa_key': config.plugins.FritzCall.guestPassword.value,
+ 					'down_time_activ':'on',
+ 					'down_time_value':'30',
+ 					'disconnect_guest_access':'on',
+#					'group_access':'on',
+					'apply':'',
+					'oldpage':'/wlan/guest_access.lua',
+#					'btn_cancel':'',
+#					'xhr':'1',
+#					'lang':'de',
+#					'no_sidrenew':''
+					})
+			else:
+				parms = urlencode({
+					'sid':md5Sid,
+					'autoupdate':'on',
+					'activate_guest_access':'on',
+					'guest_ssid':config.plugins.FritzCall.guestSSID.value,
+					'sec_mode':'5',
+					'down_time_activ':'on',
+					'down_time_value':'30',
+					'disconnect_guest_access':'on',
+#					'group_access':'on',
+					'apply':'',
+					'oldpage':'/wlan/guest_access.lua',
+# 					'btn_cancel':'',
+# 					'xhr':'1',
+# 					'lang':'de',
+# 					'no_sidrenew':''
+					})
+
+		url = "http://%s/data.lua" % config.plugins.FritzCall.hostname.value
+		debug("[FritzCallFBF_06_35] _changeGuestAccessWLAN url: " + url + "?" + parms)
+		getPage(url,
+			method="POST",
+			agent=USERAGENT,
+			headers={
+					'Content-Type': "application/x-www-form-urlencoded"},
+			postdata=parms).addCallback(self._okChangeGuestAccess, callback, md5Sid).addErrback(self._errorChangeGuestAccess, md5Sid)
+
+	def _okChangeGuestAccess(self, html, callback, md5Sid): #@UnusedVariable # pylint: disable=W0613
+		debug("[FritzCallFBF_06_35] _okChangeGuestAccess")
+		if html:
+			found = re.match('.*<p class="ErrorMsg">([^<]*)</p>', html, re.S)
+			if found:
+				self._notify(found.group(1))
+		callback()
+		self._logout(md5Sid, "_okChangeGuestAccess")
+
+	def _errorChangeGuestAccess(self, error, md5Sid):
+		debug("[FritzCallFBF_06_35] _errorChangeGuestAccess: $s" % error)
+		text = _("FRITZ!Box - Failed changing GuestAccess: %s") % error.getErrorMessage()
+		self._notify(text)
+		self._logout(md5Sid, "_errorChangeGuestAccess")
 
 	def changeMailbox(self, whichMailbox, callback):
 		'''
@@ -3012,9 +3087,9 @@ class FritzCallFBF_06_35:
 
 		debug("[FritzCallFBF_06_35] _okGetInfo")
 
-		linkP = open("/tmp/FritzCallData.lua", "w")
-		linkP.write(html)
-		linkP.close()
+# 		linkP = open("/tmp/FritzCallDataOverview.lua", "w")
+# 		linkP.write(html)
+# 		linkP.close()
 
 		(boxInfo, upTime, ipAddress, wlanState, dslState, tamActive, dectActive, faxActive, rufumlActive, guestAccess) = (None, None, None, None, None, None, None, None, None, None)
 
@@ -3150,19 +3225,24 @@ class FritzCallFBF_06_35:
  
 		guestAccess = ""
 		# found = re.match('.*WLAN-Gastzugang</a></td><td title="[^"]*">aktiv ([^<]*)</td>', html, re.S)
-		found = re.match('.*linktxt": "WLAN-Gastzugang",\s*"details": "aktiv \(([^\)]+)\)(, gesichert)?,(?: \d+ Minuten verbleiben,)? (\d+ Geräte), ([^"]+)",\s*"link": "wGuest"', html, re.S)
+		found = re.match('.*linktxt": "WLAN-Gastzugang",\s*"details": "aktiv \(([^\)]+)\)(, (ungesichert|gesichert))?,( (\d+) Minuten verbleiben,)? (\d+ Geräte), ([^"]+)",\s*"link": "wGuest"', html, re.S)
 		if found:
 			# guestAccess =  "WLAN " + found.group(1)
 			if found.group(2):
-				guestAccess =  "WLAN (gesichert)"
+				if found.group(3).find('ungesichert') != -1:
+					guestAccess =  "WLAN (unges)"
+				else:
+					guestAccess =  "WLAN (ges)"
 			else:
-				guestAccess =  "WLAN (ungesichert)"
-			if found.group(1):
-				guestAccess = guestAccess + ', ' + found.group(1).replace('\\', '')
-			if found.group(3):
-				guestAccess = guestAccess + ', ' + found.group(3)
+				guestAccess =  "WLAN"
+# 			if found.group(1):
+# 				guestAccess = guestAccess + ', ' + found.group(1).replace('\\', '')
 			if found.group(4):
-				guestAccess = guestAccess + ', ' + found.group(4)
+				guestAccess = guestAccess + ', ' + found.group(5) + ' Min.' # n Minuten verbleiben
+			if found.group(5):
+				guestAccess = guestAccess + ', ' + found.group(6) # Geräte
+			if found.group(6):
+				guestAccess = guestAccess + ', ' + found.group(7) # WLAN Name
 			debug("[FritzCallFBF_06_35] _okGetInfo guestAccess WLAN: " + repr(guestAccess))
 #		found = re.match('.*LAN-Gastzugang</a></td><td title="aktiv">aktiv</td>', html, re.S)
 # 		if found:
