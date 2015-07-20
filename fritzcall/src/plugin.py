@@ -2,9 +2,9 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1196 $
-$Date: 2015-07-19 19:28:02 +0200 (Sun, 19 Jul 2015) $
-$Id: plugin.py 1196 2015-07-19 17:28:02Z michael $
+$Revision: 1197 $
+$Date: 2015-07-20 19:17:14 +0200 (Mon, 20 Jul 2015) $
+$Id: plugin.py 1197 2015-07-20 17:17:14Z michael $
 '''
 
 
@@ -130,6 +130,7 @@ config.plugins.FritzCall.phonebookLocation = ConfigDirectory(default = resolveFi
 config.plugins.FritzCall.guestSSID = ConfigText(default="FRITZ!Box Gastzugang", fixed_size=False)
 config.plugins.FritzCall.guestSecure = ConfigEnableDisable(default=True)
 config.plugins.FritzCall.guestPassword = ConfigText(default="guestguest!!!", fixed_size=False)
+config.plugins.FritzCall.guestUptime = ConfigInteger(default=30, limits=(0, 99))
 
 countryCodes = [
 	("0049", _("Germany")),
@@ -280,8 +281,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1196 $"[1:-2] + "\n" + 
-							"$Date: 2015-07-19 19:28:02 +0200 (Sun, 19 Jul 2015) $"[1:23] + "\n"
+							"$Revision: 1197 $"[1:-2] + "\n" + 
+							"$Date: 2015-07-20 19:17:14 +0200 (Mon, 20 Jul 2015) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -1914,7 +1915,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1196 $"[1: - 1] + "$Date: 2015-07-19 19:28:02 +0200 (Sun, 19 Jul 2015) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1197 $"[1: - 1] + "$Date: 2015-07-20 19:17:14 +0200 (Mon, 20 Jul 2015) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -1953,11 +1954,12 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 					self.list.append(getConfigListEntry(_("User name Accessing FRITZ!Box"), config.plugins.FritzCall.username))
 				self.list.append(getConfigListEntry(_("Password Accessing FRITZ!Box"), config.plugins.FritzCall.password))
 				self.list.append(getConfigListEntry(_("Extension number to initiate call on"), config.plugins.FritzCall.extension))
-				if config.plugins.FritzCall.fwVersion.value == "05.50"  or config.plugins.FritzCall.fwVersion.value == "06.35":
+				if config.plugins.FritzCall.fwVersion.value == "05.50" or config.plugins.FritzCall.fwVersion.value == "06.35":
 					self.list.append(getConfigListEntry(_("Name of WLAN guest network"), config.plugins.FritzCall.guestSSID))
 					self.list.append(getConfigListEntry(_("Secure WLAN guest network"), config.plugins.FritzCall.guestSecure))
+					# TODO: make password unreadable?
 					self.list.append(getConfigListEntry(_("Password of WLAN guest network"), config.plugins.FritzCall.guestPassword))
-				# TODO: make password unreadable?
+					self.list.append(getConfigListEntry(_("Minutes of uptime of WLAN guest network"), config.plugins.FritzCall.guestUptime))
 				self.list.append(getConfigListEntry(_("Read PhoneBook from FRITZ!Box"), config.plugins.FritzCall.fritzphonebook))
 				if config.plugins.FritzCall.fritzphonebook.value:
 					if config.plugins.FritzCall.fwVersion.value != "06.35":
@@ -2442,7 +2444,7 @@ class FritzReverseLookupAndNotifier:
 
 class FritzProtocol(LineReceiver): # pylint: disable=W0223
 	def __init__(self):
-		debug("[FritzProtocol] " + "$Revision: 1196 $"[1:-1]	+ "$Date: 2015-07-19 19:28:02 +0200 (Sun, 19 Jul 2015) $"[7:23] + " starting")
+		debug("[FritzProtocol] " + "$Revision: 1197 $"[1:-1]	+ "$Date: 2015-07-20 19:17:14 +0200 (Mon, 20 Jul 2015) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
