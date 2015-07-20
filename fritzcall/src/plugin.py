@@ -2,11 +2,10 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1170 $
-$Date: 2015-06-20 16:35:35 +0200 (Sat, 20 Jun 2015) $
-$Id: plugin.py 1170 2015-06-20 14:35:35Z michael $
+$Revision: 1195 $
+$Date: 2015-07-19 17:28:25 +0200 (Sun, 19 Jul 2015) $
+$Id: plugin.py 1195 2015-07-19 15:28:25Z michael $
 '''
-
 
 # C0111 (Missing docstring)
 # C0103 (Invalid name)
@@ -65,7 +64,6 @@ from enigma import getDesktop
 DESKTOP_WIDTH = getDesktop(0).size().width()
 DESKTOP_HEIGHT = getDesktop(0).size().height()
 
-
 #
 # this is pure magic.
 # It returns the first value, if HD (1280x720),
@@ -91,7 +89,8 @@ def scale(y2, y1, x2, x1, x):
 my_global_session = None
 
 config.plugins.FritzCall = ConfigSubsection()
-config.plugins.FritzCall.fwVersion = ConfigSelection(choices=[(None, _("not configured")), ("old", _("before 05.27")), ("05.27", "05.27, 05.28"), ("05.50", "05.29 and newer")], default=None)
+config.plugins.FritzCall.fwVersion = ConfigSelection(choices=[(None, _("not configured")), ("old", _("before 05.27")), ("05.27", "05.27, 05.28"), ("05.50", _("05.29 until below 6.35")), ("06.35", _("06.35 and newer"))], default=None)
+#config.plugins.FritzCall.fwVersion = ConfigSelection(choices=[(None, _("not configured")), ("old", _("before 05.27")), ("05.27", "05.27, 05.28"), ("05.50", _("05.29 and newer"))], default=None)
 config.plugins.FritzCall.debug = ConfigEnableDisable(default=False)
 #config.plugins.FritzCall.muteOnCall = ConfigSelection(choices=[(None, _("no")), ("ring", _("on ring")), ("connect", _("on connect"))])
 #config.plugins.FritzCall.muteOnCall = ConfigSelection(choices=[(None, _("no")), ("ring", _("on ring"))])
@@ -280,8 +279,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1170 $"[1:-2] + "\n" + 
-							"$Date: 2015-06-20 16:35:35 +0200 (Sat, 20 Jun 2015) $"[1:23] + "\n"
+							"$Revision: 1195 $"[1:-2] + "\n" + 
+							"$Date: 2015-07-19 17:28:25 +0200 (Sun, 19 Jul 2015) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -293,8 +292,7 @@ class FritzAbout(Screen):
 	def exit(self):
 		self.close()
 
-from FritzCallFBF import FBF_dectActive, FBF_faxActive, FBF_rufumlActive, FBF_tamActive
-
+from FritzCallFBF import FBF_dectActive, FBF_faxActive, FBF_rufumlActive, FBF_tamActive, FBF_wlanState
 class FritzMenu(Screen, HelpableScreen):
 	def __init__(self, session):
 		if not fritzbox or not fritzbox.info:
@@ -654,7 +652,7 @@ class FritzMenu(Screen, HelpableScreen):
 											"ok": self._exit,
 											"green": self._toggleWlan,
 											"yellow": self._toggleGast,
-											"red": self._reset,
+											"red": self._reset, # no button, does not work
 											"info": self._getInfo,
 											}, -2)
 	
@@ -800,6 +798,8 @@ class FritzMenu(Screen, HelpableScreen):
 							message = message + ', ' + _('one device active')
 						else:
 							message = message + ', ' + wlanState[2] + ' ' + _('devices active')
+					if len(wlanState) == 4:
+						message = message + ", " + wlanState[3]
 					self["FBFWlan"].setText(message)
 				else:
 					self["wlan_active"].hide()
@@ -890,7 +890,7 @@ class FritzMenu(Screen, HelpableScreen):
 			debug("[FritzCallFBF] _fillMenu: " + traceback.format_exc())
 
 	def _toggleWlan(self):
-		self["FBFInfo"].setText(_("Setting..."))
+		self["FBFInfo"].setText(_("Setting...") + " WLAN")
 		if self._wlanActive:
 			debug("[FritzMenu] toggleWlan off")
 			fritzbox.changeWLAN('0', self._getInfo)
@@ -905,7 +905,11 @@ class FritzMenu(Screen, HelpableScreen):
 			fritzbox.changeMailbox(which, self._getInfo)
 
 	def _toggleGast(self):
-		self["FBFInfo"].setText(_("Setting..."))
+		self["FBFInfo"].setText(_("Setting...") + ' ' + _("Guest access"))
+		if fritzbox.info[FBF_wlanState][0] != '1':
+			# self["FBFInfo"].setText(_("WLAN not active"))
+			self._toggleWlan()
+			return
 		fritzbox.changeGuestAccess(self._guestActive, self._getInfo)
 
 	def _reset(self):
@@ -1909,7 +1913,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1170 $"[1: - 1] + "$Date: 2015-06-20 16:35:35 +0200 (Sat, 20 Jun 2015) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1195 $"[1: - 1] + "$Date: 2015-07-19 17:28:25 +0200 (Sun, 19 Jul 2015) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -1944,17 +1948,19 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 				self.list.append(getConfigListEntry(_("Country"), config.plugins.FritzCall.country))
 
 			if config.plugins.FritzCall.fwVersion.value != None:
-				if config.plugins.FritzCall.fwVersion.value == "05.50":
+				if config.plugins.FritzCall.fwVersion.value == "05.50" or config.plugins.FritzCall.fwVersion.value == "06.35":
+					self.list.append(getConfigListEntry(_("User name Accessing FRITZ!Box"), config.plugins.FritzCall.username))
+				self.list.append(getConfigListEntry(_("Password Accessing FRITZ!Box"), config.plugins.FritzCall.password))
+				self.list.append(getConfigListEntry(_("Extension number to initiate call on"), config.plugins.FritzCall.extension))
+				if config.plugins.FritzCall.fwVersion.value == "05.50"  or config.plugins.FritzCall.fwVersion.value == "06.35":
 					self.list.append(getConfigListEntry(_("Name of WLAN guest network"), config.plugins.FritzCall.guestSSID))
 					self.list.append(getConfigListEntry(_("Secure WLAN guest network"), config.plugins.FritzCall.guestSecure))
 					self.list.append(getConfigListEntry(_("Password of WLAN guest network"), config.plugins.FritzCall.guestPassword))
-					self.list.append(getConfigListEntry(_("User name Accessing FRITZ!Box"), config.plugins.FritzCall.username))
 				# TODO: make password unreadable?
-				self.list.append(getConfigListEntry(_("Password Accessing FRITZ!Box"), config.plugins.FritzCall.password))
-				self.list.append(getConfigListEntry(_("Extension number to initiate call on"), config.plugins.FritzCall.extension))
 				self.list.append(getConfigListEntry(_("Read PhoneBook from FRITZ!Box"), config.plugins.FritzCall.fritzphonebook))
 				if config.plugins.FritzCall.fritzphonebook.value:
-					self.list.append(getConfigListEntry(_("FRITZ!Box PhoneBook to read"), config.plugins.FritzCall.fritzphonebookName))
+					if config.plugins.FritzCall.fwVersion.value != "06.35":
+						self.list.append(getConfigListEntry(_("FRITZ!Box PhoneBook to read"), config.plugins.FritzCall.fritzphonebookName))
 					self.list.append(getConfigListEntry(_("Append type of number"), config.plugins.FritzCall.showType))
 					self.list.append(getConfigListEntry(_("Append shortcut number"), config.plugins.FritzCall.showShortcut))
 					self.list.append(getConfigListEntry(_("Append vanity name"), config.plugins.FritzCall.showVanity))
@@ -2435,7 +2441,7 @@ class FritzReverseLookupAndNotifier:
 
 class FritzProtocol(LineReceiver): # pylint: disable=W0223
 	def __init__(self):
-		debug("[FritzProtocol] " + "$Revision: 1170 $"[1:-1]	+ "$Date: 2015-06-20 16:35:35 +0200 (Sat, 20 Jun 2015) $"[7:23] + " starting")
+		debug("[FritzProtocol] " + "$Revision: 1195 $"[1:-1]	+ "$Date: 2015-07-19 17:28:25 +0200 (Sun, 19 Jul 2015) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
@@ -2596,6 +2602,8 @@ class FritzClientFactory(ReconnectingClientFactory):
 			fritzbox = FritzCallFBF.FritzCallFBF_05_27()
 		elif config.plugins.FritzCall.fwVersion.value == "05.50":
 			fritzbox = FritzCallFBF.FritzCallFBF_05_50()
+		elif config.plugins.FritzCall.fwVersion.value == "06.35":
+			fritzbox = FritzCallFBF.FritzCallFBF_06_35()
 		else:
 			Notifications.AddNotification(MessageBox, _("FRITZ!Box firmware version not configured! Please set it in the configuration."), type=MessageBox.TYPE_INFO, timeout=0)
 		phonebook.reload()

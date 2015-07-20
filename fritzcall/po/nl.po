@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-14 21:15+0200\n"
+"POT-Creation-Date: 2015-07-11 16:29+0200\n"
 "PO-Revision-Date: 2009-06-04 20:19+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
@@ -17,6 +17,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "05.29 and newer"
+msgstr ""
 
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
@@ -695,6 +698,9 @@ msgstr ""
 #, fuzzy
 msgid "no device active"
 msgstr "Eén mailbox actief"
+
+msgid "not available with this firmware version"
+msgstr ""
 
 msgid "not configured"
 msgstr ""
