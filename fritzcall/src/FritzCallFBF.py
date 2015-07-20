@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1196 $
-$Date: 2015-07-19 19:28:02 +0200 (Sun, 19 Jul 2015) $
-$Id: FritzCallFBF.py 1196 2015-07-19 17:28:02Z michael $
+$Revision: 1197 $
+$Date: 2015-07-20 19:17:14 +0200 (Mon, 20 Jul 2015) $
+$Id: FritzCallFBF.py 1197 2015-07-20 17:17:14Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -2271,7 +2271,7 @@ class FritzCallFBF_05_50:
 					'sec_mode':'4',
 					'wpa_key': config.plugins.FritzCall.guestPassword.value,
 					'down_time_activ':'on',
-					'down_time_value':'30',
+					'down_time_value':config.plugins.FritzCall.guestUptime.value,
 					'disconnect_guest_access':'on',
 					'btnSave':'',
 					'btnChancel':'',
@@ -2777,7 +2777,7 @@ class FritzCallFBF_06_35:
 						thisname = thisname + ", " + _("Vanity") + ": " + thisvanitys[i]
 
 					# debug("[FritzCallFBF_06_35] _parseFritzBoxPhonebook: Adding '''%s''' with '''%s'''" % (__(thisname.strip()), __(thisnumber, False)))
-					debug("[FritzCallFBF_06_35] _parseFritzBoxPhonebook: Adding '''%s''' with '''%s'''" % (thisname.strip(), thisnumber))
+					# debug("[FritzCallFBF_06_35] _parseFritzBoxPhonebook: Adding '''%s''' with '''%s'''" % (thisname.strip(), thisnumber))
 					# Beware: strings in phonebook.phonebook have to be in utf-8!
 					self.phonebook.phonebook[thisnumber] = thisname.encode('utf-8')
 
@@ -2992,7 +2992,7 @@ class FritzCallFBF_06_35:
 					'sec_mode':'3',
 					'wpa_key': config.plugins.FritzCall.guestPassword.value,
  					'down_time_activ':'on',
- 					'down_time_value':'30',
+ 					'down_time_value':config.plugins.FritzCall.guestUptime.value,
  					'disconnect_guest_access':'on',
 #					'group_access':'on',
 					'apply':'',
@@ -3112,6 +3112,7 @@ class FritzCallFBF_06_35:
 
 		#found = re.match('.*"ipv4": {\s*"txt": \["IPv4, verbunden seit ([^"]+) Uhr",( "Anbieter: ([^"]*)",)? "IP-Adresse: ([^"]+)"\],', html, re.S)
 		found = re.match('.*"ipv4": {\s*"txt": \["IPv4, [^"]+", "Anbieter: ([^"]*)",', html, re.S)
+		provider = None
 		if found:
 			provider = found.group(1)
 			debug("[FritzCallFBF_06_35] _okGetInfo provider: " + provider)
@@ -3145,6 +3146,8 @@ class FritzCallFBF_06_35:
 			provider6 = found.group(1)
 			if provider and provider.find(provider6) == -1:
 				provider = provider +'/' + provider6
+			else:
+				provider = provider6
 			debug("[FritzCallFBF_06_35] _okGetInfo provider6: " + provider)
 		
 		if provider:
@@ -3156,7 +3159,7 @@ class FritzCallFBF_06_35:
 			if ipAddress:
 				ipAddress = ipAddress + ' / ' + found.group(1).replace('\\', '')
 			else:
-				ipAddress = found.group(1)
+				ipAddress = found.group(1).replace('\\', '')
 			debug("[FritzCallFBF_06_35] _okGetInfo ipAddress6: " + ipAddress)
 
 		# dslState = [ state, info, unused ]; state == '5' means up, everything else down
