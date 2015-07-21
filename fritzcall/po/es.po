@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma 2-plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-11 16:29+0200\n"
+"POT-Creation-Date: 2015-07-20 10:07+0200\n"
 "PO-Revision-Date: 2009-06-04 20:22+0200\n"
 "Last-Translator: José Juan Zapater <josej@zapater.fdns.net>\n"
 "Language-Team: none\n"
@@ -17,7 +17,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "05.29 and newer"
+msgid "05.29 until below 6.35"
+msgstr ""
+
+msgid "06.35 and newer"
 msgstr ""
 
 #. TRANSLATORS: this is a window title.
@@ -367,6 +370,9 @@ msgstr "MSN a mostrar (separado por ,)"
 
 msgid "Mailbox"
 msgstr "Carpeta de correo"
+
+msgid "Minutes of uptime of WLAN guest network"
+msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
 msgid "Missed"

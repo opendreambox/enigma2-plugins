@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1197 $
-$Date: 2015-07-20 19:17:14 +0200 (Mon, 20 Jul 2015) $
-$Id: FritzCallFBF.py 1197 2015-07-20 17:17:14Z michael $
+$Revision: 1198 $
+$Date: 2015-07-21 20:19:38 +0200 (Tue, 21 Jul 2015) $
+$Id: FritzCallFBF.py 1198 2015-07-21 18:19:38Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -3228,7 +3228,7 @@ class FritzCallFBF_06_35:
  
 		guestAccess = ""
 		# found = re.match('.*WLAN-Gastzugang</a></td><td title="[^"]*">aktiv ([^<]*)</td>', html, re.S)
-		found = re.match('.*linktxt": "WLAN-Gastzugang",\s*"details": "aktiv \(([^\)]+)\)(, (ungesichert|gesichert))?,( (\d+) Minuten verbleiben,)? (\d+ Geräte), ([^"]+)",\s*"link": "wGuest"', html, re.S)
+		found = re.match('.*linktxt": "WLAN-Gastzugang",\s*"details": "aktiv \(([^\)]+)\)(, (ungesichert|gesichert))?,( (\d+) (Minuten|Stunden) verbleiben,)? (\d+ Geräte), ([^"]+)",\s*"link": "wGuest"', html, re.S)
 		if found:
 			# guestAccess =  "WLAN " + found.group(1)
 			if found.group(2):
@@ -3241,10 +3241,13 @@ class FritzCallFBF_06_35:
 # 			if found.group(1):
 # 				guestAccess = guestAccess + ', ' + found.group(1).replace('\\', '')
 			if found.group(4):
-				guestAccess = guestAccess + ', ' + found.group(5) + ' Min.' # n Minuten verbleiben
-			if found.group(5):
-				guestAccess = guestAccess + ', ' + found.group(6) # Geräte
+				if found.group(5) == 'Minuten':
+					guestAccess = guestAccess + ', ' + found.group(5) + ' Min.' # n Minuten verbleiben
+				else:
+					guestAccess = guestAccess + ', ' + found.group(5) + ' Std.' # n Stunden verbleiben
 			if found.group(6):
+				guestAccess = guestAccess + ', ' + found.group(6) # Geräte
+			if found.group(7):
 				guestAccess = guestAccess + ', ' + found.group(7) # WLAN Name
 			debug("[FritzCallFBF_06_35] _okGetInfo guestAccess WLAN: " + repr(guestAccess))
 #		found = re.match('.*LAN-Gastzugang</a></td><td title="aktiv">aktiv</td>', html, re.S)
