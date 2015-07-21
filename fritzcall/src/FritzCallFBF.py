@@ -7,6 +7,7 @@ $Date: 2015-07-21 20:19:38 +0200 (Tue, 21 Jul 2015) $
 $Id: FritzCallFBF.py 1198 2015-07-21 18:19:38Z michael $
 '''
 
+
 # C0111 (Missing docstring)
 # C0103 (Invalid name)
 # C0301 (line too long)
