@@ -79,7 +79,7 @@ class DeactivatedTimers(ControllerBase):
 				self.timers.remove(timer)
 		else:
 			# Set tag to avoid resending it
-			for timer in self.timers[]:
+			for timer in self.timers:
 				if TAG not in timer.tags:
 					timer.tags.append(TAG)
 			NavigationInstance.instance.RecordTimer.saveTimer()
