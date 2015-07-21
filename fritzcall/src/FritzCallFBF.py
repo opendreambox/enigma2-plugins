@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1198 $
-$Date: 2015-07-21 20:19:38 +0200 (Tue, 21 Jul 2015) $
-$Id: FritzCallFBF.py 1198 2015-07-21 18:19:38Z michael $
+$Revision: 1199 $
+$Date: 2015-07-21 20:37:51 +0200 (Tue, 21 Jul 2015) $
+$Id: FritzCallFBF.py 1199 2015-07-21 18:37:51Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -3233,9 +3233,9 @@ class FritzCallFBF_06_35:
 			# guestAccess =  "WLAN " + found.group(1)
 			if found.group(2):
 				if found.group(3).find('ungesichert') != -1:
-					guestAccess =  "WLAN (unges)"
+					guestAccess =  "WLAN (unges.)"
 				else:
-					guestAccess =  "WLAN (ges)"
+					guestAccess =  "WLAN (ges.)"
 			else:
 				guestAccess =  "WLAN"
 # 			if found.group(1):
