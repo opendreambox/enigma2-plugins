@@ -3241,14 +3241,14 @@ class FritzCallFBF_06_35:
 # 			if found.group(1):
 # 				guestAccess = guestAccess + ', ' + found.group(1).replace('\\', '')
 			if found.group(4):
-				if found.group(5) == 'Minuten':
+				if found.group(6) == 'Minuten':
 					guestAccess = guestAccess + ', ' + found.group(5) + ' Min.' # n Minuten verbleiben
 				else:
 					guestAccess = guestAccess + ', ' + found.group(5) + ' Std.' # n Stunden verbleiben
-			if found.group(6):
-				guestAccess = guestAccess + ', ' + found.group(6) # Geräte
 			if found.group(7):
-				guestAccess = guestAccess + ', ' + found.group(7) # WLAN Name
+				guestAccess = guestAccess + ', ' + found.group(7) # Geräte
+			if found.group(8):
+				guestAccess = guestAccess + ', ' + found.group(8) # WLAN Name
 			debug("[FritzCallFBF_06_35] _okGetInfo guestAccess WLAN: " + repr(guestAccess))
 #		found = re.match('.*LAN-Gastzugang</a></td><td title="aktiv">aktiv</td>', html, re.S)
 		found = re.match('.*linktxt": "LAN-Gastzugang",\s*"details": "aktiv"', html, re.S)
