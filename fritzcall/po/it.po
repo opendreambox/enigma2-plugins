@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2  - FRITZ!Box\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-20 10:07+0200\n"
+"POT-Creation-Date: 2015-07-22 17:57+0200\n"
 "PO-Revision-Date: 2015-04-14 23:22+0200\n"
 "Last-Translator: Spaeleus <spaeleus@croci.org>\n"
 "Language-Team: www.linsat.net <spaeleus@croci.org>\n"
@@ -439,6 +439,9 @@ msgstr "Ricerca in Outlook  export: nessun risultato!"
 
 msgid "No result from reverse lookup"
 msgstr "Ricerca identificativo chiamante: nessun risultato!"
+
+msgid "Not deactivating after time"
+msgstr ""
 
 msgid "Number"
 msgstr "Numero"

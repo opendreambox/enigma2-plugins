@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma 2-plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-20 10:07+0200\n"
+"POT-Creation-Date: 2015-07-22 17:57+0200\n"
 "PO-Revision-Date: 2009-06-04 20:22+0200\n"
 "Last-Translator: José Juan Zapater <josej@zapater.fdns.net>\n"
 "Language-Team: none\n"
@@ -421,6 +421,9 @@ msgstr "No hay resultado desde la exportación de Outlook"
 
 msgid "No result from reverse lookup"
 msgstr "No hay resultado de resolución inversa"
+
+msgid "Not deactivating after time"
+msgstr ""
 
 msgid "Number"
 msgstr "Número"
