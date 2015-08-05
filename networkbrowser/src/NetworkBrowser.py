@@ -24,6 +24,8 @@ from AutoMount import iAutoMount
 from MountEdit import AutoMountEdit
 from UserDialog import UserDialog
 
+from twisted.internet import reactor, threads
+
 def write_cache(cache_file, cache_data):
 	#Does a cPickle dump
 	if not os_path.isdir( os_path.dirname(cache_file) ):
@@ -110,7 +112,7 @@ class NetworkBrowser(Screen):
 		self.cache_file = eEnv.resolve("${sysconfdir}/enigma2/networkbrowser.cache") #Path to cache directory
 
 		self["key_red"] = StaticText(_("Close"))
-		self["key_green"] = StaticText(_("Mounts management"))
+		self["key_green"] = StaticText(_("Mounts"))
 		self["key_yellow"] = StaticText(_("Rescan"))
 		self["key_blue"] = StaticText(_("Expert"))
 		self["infotext"] = StaticText(_("Press OK to mount!"))
@@ -146,12 +148,11 @@ class NetworkBrowser(Screen):
 
 	def cleanup(self):
 		del self.Timer
-		iAutoMount.stopMountConsole()
 
 	def startRun(self):
 		self.expanded = []
 		self.setStatus('update')
-		self.mounts = iAutoMount.getMountsList()
+		self.mounts = iAutoMount.getMounts()
 		self["infotext"].setText("")
 		self.vc = valid_cache(self.cache_file, self.cache_ttl)
 		if self.cache_ttl > 0 and self.vc != 0:
@@ -207,35 +208,50 @@ class NetworkBrowser(Screen):
 		self.inv_cache = 0
 		self.vc = valid_cache(self.cache_file, self.cache_ttl)
 		if self.cache_ttl > 0 and self.vc != 0:
-			print '[Networkbrowser] Loading network cache from ',self.cache_file
+			Log.i('Loading network cache from %s' %(self.cache_file))
 			try:
 				self.networklist = load_cache(self.cache_file)
+				if len(self.networklist) > 0:
+					self.updateHostsList()
+				else:
+					self.setStatus('error')
 			except:
 				self.inv_cache = 1
 		if self.cache_ttl == 0 or self.inv_cache == 1 or self.vc == 0:
-			print '[Networkbrowser] Getting fresh network list'
-			self.networklist = self.getNetworkIPs()
-			write_cache(self.cache_file, self.networklist)
+			Log.i('Getting fresh network list')
+			self._ip = iNetworkInfo.getConfiguredInterfaces()[self.iface].ipv4.address.split(".")
+			reactor.callInThread(self.getNetworkIPs)
+
+	def getNetworkIPs(self):
+		Log.w()
+		info = None
+		sharelist = []
+		if len(self._ip):
+			strIP = "%s.0/24" %( ".".join(self._ip[0:3]) )
+			info = netscan.netInfo(strIP)
+			Log.i(info)
+		else:
+			Log.w("IP FAULTY! %s" %self._ip)
+		reactor.callFromThread(self._onNetworkIPsReady, info)
+
+	def _onNetworkIPsReady(self, info):
+		self.networklist = info
+		write_cache(self.cache_file, self.networklist)
 		if len(self.networklist) > 0:
 			self.updateHostsList()
 		else:
 			self.setStatus('error')
 
-	def getNetworkIPs(self):
-		nwlist = []
-		sharelist = []
-		self.IP = iNetworkInfo.getConfiguredInterfaces()[self.iface].ipv4.address.split(".")
-		if len(self.IP):
-			strIP = "%s.0/24" %( ".".join(self.IP[0:3]) )
-			Log.i(strIP)
-			nwlist.append(netscan.netInfo(strIP))
-		tmplist = nwlist[0]
-		return tmplist
+	def _onError(self, *args, **kwargs):
+		Log.w()
 
 	def getNetworkShares(self,hostip,hostname,devicetype):
 		sharelist = []
 		self.sharecache_file = None
 		self.sharecache_file = eEnv.resolve("${sysconfdir}/enigma2/") + hostname.strip() + '.cache' #Path to cache directory
+
+		username = "guest"
+		password = ""
 		if os_path.exists(self.sharecache_file):
 			print '[Networkbrowser] Loading userinfo from ',self.sharecache_file
 			try:
@@ -243,28 +259,19 @@ class NetworkBrowser(Screen):
 				username = self.hostdata['username']
 				password = self.hostdata['password']
 			except:
-				username = "username"
-				password = "password"
-		else:
-			username = "username"
-			password = "password"
+				pass
 
+		smblist = netscan.smbShare(hostip, hostname, username, password)
+		for x in smblist:
+			if len(x) == 6:
+				if x[4] == "Disk" and not x[3].endswith('$'):
+					sharelist.append(x)
 		if devicetype == 'unix':
-			smblist=netscan.smbShare(hostip,hostname,username,password)
-			for x in smblist:
-				if len(x) == 6:
-					if x[3] != 'IPC$':
-						sharelist.append(x)
-			nfslist=netscan.nfsShare(hostip,hostname)
+			nfslist = netscan.nfsShare(hostip, hostname)
 			for x in nfslist:
 				if len(x) == 6:
 					sharelist.append(x)
-		else:
-			smblist=netscan.smbShare(hostip,hostname,username,password)
-			for x in smblist:
-				if len(x) == 6:
-					if x[3] != 'IPC$':
-						sharelist.append(x)
+
 		return sharelist
 
 	def updateHostsList(self):
@@ -293,7 +300,7 @@ class NetworkBrowser(Screen):
 	def updateNetworkList(self):
 		self.list = []
 		self.network = {}
-		self.mounts = iAutoMount.getMountsList() # reloading mount list
+		self.mounts = iAutoMount.getMounts() # reloading mount list
 		for x in self.networklist:
 			if not self.network.has_key(x[2]):
 				self.network[x[2]] = []
@@ -390,6 +397,7 @@ class NetworkBrowser(Screen):
 			if selectedhost in self.expanded:
 				self.expanded.remove(selectedhost)
 				self.updateNetworkList()
+				return
 			else:
 				self.hostcache_file = None
 				self.hostcache_file = eEnv.resolve("${sysconfdir}/enigma2/") + selectedhostname.strip() + '.cache' #Path to cache directory
@@ -398,14 +406,15 @@ class NetworkBrowser(Screen):
 					try:
 						self.hostdata = load_cache(self.hostcache_file)
 						self.passwordQuestion(False)
+						return
 					except:
-						self.session.openWithCallback(self.passwordQuestion, MessageBox, (_("Do you want to enter a username and password for this host?\n") ) )
-				else:
-					self.session.openWithCallback(self.passwordQuestion, MessageBox, (_("Do you want to enter a username and password for this host?\n") ) )
+						pass
 
 		if sel[0][0] == 'nfsShare': # share entry selected
 			print '[Networkbrowser] sel nfsShare'
 			self.openMountEdit(sel[0])
+			return
+
 		if sel[0][0] == 'smbShare': # share entry selected
 			print '[Networkbrowser] sel cifsShare'
 			self.hostcache_file = None
@@ -413,8 +422,9 @@ class NetworkBrowser(Screen):
 			if os_path.exists(self.hostcache_file):
 				print '[Networkbrowser] userinfo found from ',self.sharecache_file
 				self.openMountEdit(sel[0])
-			else:
-				self.session.openWithCallback(self.passwordQuestion, MessageBox, (_("Do you want to enter a username and password for this host?\n") ) )
+				return
+
+		self.session.openWithCallback(self.passwordQuestion, MessageBox, text=_("Do you want to enter a username and password for this host?\n"), default=False )
 
 	def passwordQuestion(self, ret = False):
 		sel = self["list"].getCurrent()
@@ -439,18 +449,16 @@ class NetworkBrowser(Screen):
 			self.go()
 
 	def openMountEdit(self, selection):
-		if selection is not None and len(selection):
-			mounts = iAutoMount.getMountsList()
+		if selection:
+			mounts = iAutoMount.getMounts()
 			if selection[0] == 'nfsShare': # share entry selected
 				#Initialize blank mount enty
-				data = { 'isMounted': False, 'active': False, 'ip': False, 'sharename': False, 'sharedir': False, 'username': False, 'password': False, 'mounttype' : False, 'options' : False }
+				data = iAutoMount.DEFAULT_OPTIONS_NFS
 				# add data
-				data['mounttype'] = 'nfs'
 				data['active'] = True
 				data['ip'] = selection[2]
 				data['sharename'] = selection[1]
 				data['sharedir'] = selection[4]
-				data['options'] = "rw,nolock,tcp"
 
 				for sharename, sharedata in mounts.items():
 					if sharedata['ip'] == selection[2] and sharedata['sharedir'] == selection[4]:
@@ -458,14 +466,12 @@ class NetworkBrowser(Screen):
 				self.session.openWithCallback(self.MountEditClosed,AutoMountEdit, self.skin_path, data)
 			if selection[0] == 'smbShare': # share entry selected
 				#Initialize blank mount enty
-				data = { 'isMounted': False, 'active': False, 'ip': False, 'sharename': False, 'sharedir': False, 'username': False, 'password': False, 'mounttype' : False, 'options' : False }
+				data = iAutoMount.DEFAULT_OPTIONS_CIFS
 				# add data
-				data['mounttype'] = 'cifs'
 				data['active'] = True
 				data['ip'] = selection[2]
 				data['sharename'] = selection[1]
 				data['sharedir'] = selection[3]
-				data['options'] = "rw"
 				self.sharecache_file = None
 				self.sharecache_file = eEnv.resolve("${sysconfdir}/enigma2/") + selection[1].strip() + '.cache' #Path to cache directory
 				if os_path.exists(self.sharecache_file):
@@ -475,11 +481,7 @@ class NetworkBrowser(Screen):
 						data['username'] = self.hostdata['username']
 						data['password'] = self.hostdata['password']
 					except:
-						data['username'] = "username"
-						data['password'] = "password"
-				else:
-					data['username'] = "username"
-					data['password'] = "password"
+						pass
 
 				for sharename, sharedata in mounts.items():
 					if sharedata['ip'] == selection[2].strip() and sharedata['sharedir'] == selection[3].strip():

@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-# for localized messages
-#from __init__ import _
 from re import compile as re_compile
 from os import path as os_path, symlink, listdir, unlink, readlink, remove
+from copy import deepcopy
 
 from enigma import eTimer, eEnv
 from Components.Console import Console
-from Components.Harddisk import harddiskmanager #global harddiskmanager
+from Components.Harddisk import harddiskmanager, Util
 from Tools.Directories import isMount, removeDir, createDir
+from Tools.Log import Log
 
 from xml.etree.cElementTree import parse as cet_parse
 
@@ -15,228 +15,184 @@ XML_FSTAB = eEnv.resolve("${sysconfdir}/enigma2/automounts.xml")
 
 class AutoMount():
 	MOUNT_BASE = '/media/'
+	DEFAULT_OPTIONS_NFS = { 'isMounted': False, 'active': False, 'ip': '192.168.0.1', 'sharename': 'Sharename', 'sharedir': "/export/hdd", 'username': "", \
+							'password': "", 'mounttype' : 'nfs', 'options' : "rw,nolock,udp", 'hdd_replacement' : False }
+	DEFAULT_OPTIONS_CIFS = { 'isMounted': False, 'active': False, 'ip': '192.168.0.1', 'sharename': 'Sharename', 'sharedir': "/export/hdd", 'username': "", \
+							'password': "", 'mounttype' : 'cifs', 'options' : "rw", 'hdd_replacement' : False }
+
 	"""Manages Mounts declared in a XML-Document."""
 	def __init__(self):
-		self.automounts = {}
-		self.MountConsole = Console()
-		self.removeConsole = Console()
-		self.activeMountsCounter = 0
-		# Initialize Timer
-		self.callback = None
-		self.timer = eTimer()
-		self.timer_conn = self.timer.timeout.connect(self.mountTimeout)
+		self._mounts = {}
+		self._console = Console()
+		self._numActive = 0
+		self.reload()
 
-		self.getAutoMountPoints()
+	def _getAutoMounts(self):
+		return self._mounts
 
-	def getAutoMountPoints(self, callback = None):
+	def _setAutoMounts(self, automounts):
+		self._mounts = automounts
+
+	mounts = property(_getAutoMounts)#, _setAutoMounts)
+
+	def _parse(self, tree, types, defaults):
+		def setFromTag(parent, key, data, bool=False):
+			elements = parent.findall(key)
+			if len(elements):
+					val = elements[0].text
+					if bool:
+						val = val == "True"
+					if val != None:
+						data[key] = val
+
+		keys = ['active', 'hdd_replacement', 'ip', 'sharedir', 'sharename', 'options', 'username', 'password']
+		bool_keys = ['active', 'hdd_replacement']
+		for i in range(0, len(types)):
+			mounttype = types[i]
+			for parent in tree.findall(mounttype):
+				for mount in parent.findall("mount"):
+					data = deepcopy(defaults[i])
+					try:
+						for key in keys:
+							setFromTag(mount, key, data, key in bool_keys)
+						Log.d("%s share %s" %(mounttype.upper(), data,))
+						if data["active"]:
+							self._numActive += 1
+						self._mounts[data['sharename']] = data
+					except Exception, e:
+						Log.w("Error reading %s share: %s" %(mounttype.upper(), e))
+
+	def reload(self, callback=None):
+		Log.i()
 		# Initialize mounts to empty list
 		automounts = []
-		self.automounts = {}
-		self.activeMountsCounter = 0
+		self._mounts = {}
+		self._numActive = 0
 
 		if not os_path.exists(XML_FSTAB):
 			return
 		tree = cet_parse(XML_FSTAB).getroot()
+		self._parse(tree, ['nfs', 'cifs'], [AutoMount.DEFAULT_OPTIONS_NFS, AutoMount.DEFAULT_OPTIONS_CIFS])
 
-		def getValue(definitions, default):
-			# Initialize Output
-			ret = ""
-			# How many definitions are present
-			Len = len(definitions)
-			return Len > 0 and definitions[Len-1].text or default
-		# Config is stored in "mountmanager" element
-		# Read out NFS Mounts
-		for nfs in tree.findall("nfs"):
-			for mount in nfs.findall("mount"):
-				data = { 'isMounted': False, 'active': False, 'ip': False, 'sharename': False, 'sharedir': False, 'username': False, \
-							'password': False, 'mounttype' : False, 'options' : False, 'hdd_replacement' : False }
-				try:
-					data['mounttype'] = 'nfs'.encode("UTF-8")
-					data['active'] = getValue(mount.findall("active"), False).encode("UTF-8")
-					if data["active"] == 'True' or data["active"] == True:
-						self.activeMountsCounter +=1
-					data['hdd_replacement'] = getValue(mount.findall("hdd_replacement"), "False").encode("UTF-8")
-					data['ip'] = getValue(mount.findall("ip"), "192.168.0.0").encode("UTF-8")
-					data['sharedir'] = getValue(mount.findall("sharedir"), "/exports/").encode("UTF-8")
-					data['sharename'] = getValue(mount.findall("sharename"), "MEDIA").encode("UTF-8")
-					data['options'] = getValue(mount.findall("options"), "rw,nolock,tcp").encode("UTF-8")
-					print "NFSMOUNT",data
-					self.automounts[data['sharename']] = data
-				except Exception, e:
-					print "[MountManager] Error reading Mounts:", e
-			# Read out CIFS Mounts
-		for nfs in tree.findall("cifs"):
-			for mount in nfs.findall("mount"):
-				data = { 'isMounted': False, 'active': False, 'ip': False, 'sharename': False, 'sharedir': False, 'username': False, \
-							'password': False, 'mounttype' : False, 'options' : False, 'hdd_replacement' : False }
-				try:
-					data['mounttype'] = 'cifs'.encode("UTF-8")
-					data['active'] = getValue(mount.findall("active"), False).encode("UTF-8")
-					if data["active"] == 'True' or data["active"] == True:
-						self.activeMountsCounter +=1
-					data['hdd_replacement'] = getValue(mount.findall("hdd_replacement"), "False").encode("UTF-8")
-					data['ip'] = getValue(mount.findall("ip"), "192.168.0.0").encode("UTF-8")
-					data['sharedir'] = getValue(mount.findall("sharedir"), "/exports/").encode("UTF-8")
-					data['sharename'] = getValue(mount.findall("sharename"), "MEDIA").encode("UTF-8")
-					data['options'] = getValue(mount.findall("options"), "rw,nolock").encode("UTF-8")
-					data['username'] = getValue(mount.findall("username"), "guest").encode("UTF-8")
-					data['password'] = getValue(mount.findall("password"), "").encode("UTF-8")
-					print "CIFSMOUNT",data
-					self.automounts[data['sharename']] = data
-				except Exception, e:
-					print "[MountManager] Error reading Mounts:", e
-
-		print "[AutoMount.py] -getAutoMountPoints:self.automounts -->",self.automounts
-		if len(self.automounts) == 0:
-			print "[AutoMount.py] self.automounts without mounts",self.automounts
+		if len(self._mounts):
+			for sharename, sharedata in self._mounts.items():
+				self._applyShare(sharedata, callback)
+			self._reloadSystemd(callback=self._onSharesApplied)
+		else:
+			Log.i("self._mounts without mounts %s" %(self._mounts,))
 			if callback is not None:
 				callback(True)
-		else:
-			for sharename, sharedata in self.automounts.items():
-				self.CheckMountPoint(sharedata, callback)
 
-	def sanitizeOptions(self, origOptions, cifs=False):
-		options = origOptions.strip()
-		if not options:
-			options = 'rsize=8192,wsize=8192'
-			if not cifs:
-				options += ',tcp'
-		else:
-			if 'rsize' not in options:
-				options += ',rsize=8192'
-			if 'wsize' not in options:
-				options += ',wsize=8192'
-			if not cifs and 'tcp' not in options and 'udp' not in options:
-				options += ',tcp'
+	def sanitizeOptions(self, options, cifs=False):
+		self._ensureOption(options, 'x-systemd.automount')
+		self._ensureOption(options, 'rsize', 'rsize=8192')
+		self._ensureOption(options, 'wsize', 'wsize=8192')
+		if not cifs and 'tcp' not in options and 'udp' not in options:
+			options.append('udp')
 		return options
 
-	def CheckMountPoint(self, data, callback):
-		print "[AutoMount.py] CheckMountPoint"
-		print "[AutoMount.py] activeMounts:--->",self.activeMountsCounter
-		if not self.MountConsole:
-			self.MountConsole = Console()
+	def _ensureOption(self, options, key, default=None):
+		if default is None:
+			default = key
+		for option in options:
+			if option.startswith(key):
+				return
+		options.append(default)
 
-		self.command = None
-		if self.activeMountsCounter == 0:
-			print "self.automounts without active mounts",self.automounts
-			if data['active'] == 'False' or data['active'] is False:
-				path = AutoMount.MOUNT_BASE + data['sharename']
-				umountcmd = 'umount -fl '+ path
-				print "[AutoMount.py] UMOUNT-CMD--->",umountcmd
-				self.MountConsole.ePopen(umountcmd, self.CheckMountPointFinished, [data, callback])
+	def _applyShare(self, data, callback):
+		Log.i("activeMounts: %s" %(self._numActive,))
+		if data['active']:
+			mountpoint = AutoMount.MOUNT_BASE + data['sharename']
+			if os_path.exists(mountpoint) is False:
+				createDir(mountpoint)
+			tmpsharedir = data['sharedir'].replace(" ", "\\ ").replace("$", "\\$")
+
+			if data['mounttype'] == 'nfs':
+				opts = self.sanitizeOptions(data['options'].split(','))
+				remote = '%s:/%s' % (data['ip'], tmpsharedir)
+				harddiskmanager.modifyFstabEntry(remote, mountpoint, mode="add_deactivated", extopts=opts, fstype="nfs")
+
+			elif data['mounttype'] == 'cifs':
+				opts = self.sanitizeOptions(data['options'].split(','), cifs=True)
+				password = data['password']
+				username = data['username'].replace(" ", "\\ ")
+				if password:
+					username = data['username'].replace(" ", "\\ ")
+					opts.extend([
+						'username=%s' % (data['username']),
+						'password=%s' % (data['password']),
+						])
+				else:
+					opts.extend(['guest'])
+				remote = "//%s/%s" % (data['ip'], tmpsharedir)
+				harddiskmanager.modifyFstabEntry(remote, mountpoint, mode="add_deactivated", extopts=opts, fstype="cifs")
 		else:
-			if data['active'] == 'False' or data['active'] is False:
-				path = AutoMount.MOUNT_BASE + data['sharename']
-				self.command = 'umount -fl '+ path
+			mountpoint = AutoMount.MOUNT_BASE + data['sharename']
+			self.removeMount(mountpoint)
+		if callback:
+			callback(True)
 
-			elif data['active'] == 'True' or data['active'] is True:
-				path = AutoMount.MOUNT_BASE + data['sharename']
-				if os_path.exists(path) is False:
-					createDir(path)
-				tmpsharedir = data['sharedir'].replace(" ", "\\ ")
-				if tmpsharedir[-1:] == "$":
-					tmpdir = tmpsharedir.replace("$", "\\$")
-					tmpsharedir = tmpdir
-
-				if data['mounttype'] == 'nfs':
-					if not os_path.ismount(path):
-						tmpcmd = 'mount -t nfs -o '+ self.sanitizeOptions(data['options']) + ' ' + data['ip'] + ':/' + tmpsharedir + ' ' + path
-						self.command = tmpcmd.encode("UTF-8")
-
-				elif data['mounttype'] == 'cifs':
-					if not os_path.ismount(path):
-						tmpusername = data['username'].replace(" ", "\\ ")
-						tmpcmd = 'mount -t cifs -o '+ self.sanitizeOptions(data['options'], cifs=True) +',iocharset=utf8,username='+ tmpusername + ',password='+ data['password'] + ' //' + data['ip'] + '/' + tmpsharedir + ' ' + path
-						self.command = tmpcmd.encode("UTF-8")
-
-			if self.command is not None:
-				print "[AutoMount.py] U/MOUNTCMD--->",self.command
-				self.MountConsole.ePopen(self.command, self.CheckMountPointFinished, [data, callback])
-			else:
-				self.CheckMountPointFinished(None,None, [data, callback])
-
-	def CheckMountPointFinished(self, result, retval, extra_args):
-		print "[AutoMount.py] CheckMountPointFinished"
-		print "[AutoMount.py] result",result
-		print "[AutoMount.py] retval",retval
-		(data, callback ) = extra_args
-		print "LEN",len(self.MountConsole.appContainers)
-		path = AutoMount.MOUNT_BASE + data['sharename']
-		print "PATH im CheckMountPointFinished",path
-		if os_path.exists(path):
-			if os_path.ismount(path):
-				if self.automounts.has_key(data['sharename']):
-					self.automounts[data['sharename']]['isMounted'] = True
+	def _onSharesApplied(self):
+		Log.d()
+		for sharename, data in self._mounts.items():
+			mountpoint = AutoMount.MOUNT_BASE + sharename
+			Log.d("mountpoint: %s" %(mountpoint,))
+			if os_path.exists(mountpoint):
+				if os_path.ismount(mountpoint):
+					Log.d("'%s' is mounted" %(mountpoint,))
+					data['isMounted'] = True
 					desc = data['sharename']
-					if self.automounts[data['sharename']]['hdd_replacement'] == 'True': #hdd replacement hack
-						self.makeHDDlink(path)
-					harddiskmanager.addMountedPartition(path, desc)
-			else:
-				if self.automounts.has_key(data['sharename']):
-					self.automounts[data['sharename']]['isMounted'] = False
-				if os_path.exists(path):
-					if not os_path.ismount(path):
-						removeDir(path)
-						harddiskmanager.removeMountedPartition(path)
+					if data['hdd_replacement']: #hdd replacement hack
+						self._linkAsHdd(mountpoint)
+					harddiskmanager.addMountedPartition(mountpoint, desc)
+				else:
+					Log.d("'%s' is NOT mounted" %(mountpoint,))
+					sharename = self._mounts.get(data['sharename'], None)
+					if sharename:
+						data['isMounted'] = False
+					if os_path.exists(mountpoint):
+						if not os_path.ismount(mountpoint):
+							removeDir(mountpoint)
+							harddiskmanager.removeMountedPartition(mountpoint)
 
-		if self.MountConsole:
-			if len(self.MountConsole.appContainers) == 0:
-				if callback is not None:
-					self.callback = callback
-					self.timer.startLongTimer(10)
-
-	def makeHDDlink(self, path):
+	def _linkAsHdd(self, path):
 		hdd_dir = '/media/hdd'
-		print "[AutoMount.py] symlink %s %s" % (path, hdd_dir)
+		Log.i("symlink %s %s" % (path, hdd_dir))
 		if os_path.islink(hdd_dir):
 			if readlink(hdd_dir) != path:
 				remove(hdd_dir)
 				symlink(path, hdd_dir)
-		elif isMount(hdd_dir) is False:
+		elif not isMount(hdd_dir):
 			if os_path.isdir(hdd_dir):
-				self.rm_rf(hdd_dir)
+				removeDir(hdd_dir)
 		try:
 			symlink(path, hdd_dir)
 		except OSError:
-			print "[AutoMount.py] add symlink fails!"
+			Log.i("adding symlink failed!")
 		if os_path.exists(hdd_dir + '/movie') is False:
 			createDir(hdd_dir + '/movie')
 
-	def rm_rf(self, d): # only for removing the ipkg stuff from /media/hdd subdirs
-		for path in (os_path.join(d,f) for f in listdir(d)):
-			if os_path.isdir(path):
-				self.rm_rf(path)
-			else:
-				unlink(path)
-		removeDir(d)
-
-	def mountTimeout(self):
-		self.timer.stop()
-		if self.MountConsole:
-			if len(self.MountConsole.appContainers) == 0:
-				print "self.automounts after mounting",self.automounts
-				if self.callback is not None:
-					self.callback(True)
-
-	def getMountsList(self):
-		return self.automounts
+	def getMounts(self):
+		return self._mounts
 
 	def getMountsAttribute(self, mountpoint, attribute):
-		if self.automounts.has_key(mountpoint):
-			if self.automounts[mountpoint].has_key(attribute):
-				return self.automounts[mountpoint][attribute]
+		if self._mounts.has_key(mountpoint):
+			if self._mounts[mountpoint].has_key(attribute):
+				return self._mounts[mountpoint][attribute]
 		return None
 
-	def setMountsAttribute(self, mountpoint, attribute, value):
-		print "setting for mountpoint", mountpoint, "attribute", attribute, " to value", value
-		if self.automounts.has_key(mountpoint):
-			self.automounts[mountpoint][attribute] = value
+	def setMountAttributes(self, mountpoint, attributes):
+		mount = self._mounts.get(mountpoint, None)
+		Log.w("before: %s" %(mount,))
+		if mount:
+			mount.update(attributes)
+		Log.w("after: %s" %(mount,))
 
-	def writeMountsConfig(self):
+	def save(self):
 		# Generate List in RAM
-		list = ['<?xml version="1.0" ?>\n<mountmanager>\n']
+		list = ['<?xml version="1.0" encoding="UTF-8"?>\n<mountmanager>\n']
 
-		for sharename, sharedata in self.automounts.items():
+		for sharename, sharedata in self._mounts.items():
 			if sharedata['mounttype'] == 'nfs':
 				list.append('<nfs>\n')
 				list.append(' <mount>\n')
@@ -272,44 +228,39 @@ class AutoMount():
 			file = open(XML_FSTAB, "w")
 			file.writelines(list)
 		except Exception, e:
-			print "[AutoMount.py] Error Saving Mounts List:", e
+			Log.w("Error Saving Mounts List: %s" %e)
 		finally:
 			if file is not None:
 				file.close()
 
-	def stopMountConsole(self):
-		if self.MountConsole is not None:
-			self.MountConsole = None
+	def removeMount(self, mountpoint, callback=None):
+		res = False
+		entry = Util.findInFstab(src=None, dst=mountpoint)
+		if entry:
+			self._unmount(mountpoint)
+			harddiskmanager.modifyFstabEntry(entry['src'], entry['dst'], mode="remove")
+			harddiskmanager.removeMountedPartition(mountpoint)
+			res = True
+		if callback is not None:
+			callback(res)
 
-	def removeMount(self, mountpoint, callback = None):
-		print "[AutoMount.py] removing mount: ",mountpoint
-		self.newautomounts = {}
-		for sharename, sharedata in self.automounts.items():
-			if sharename is not mountpoint.strip():
-				self.newautomounts[sharename] = sharedata
-		self.automounts.clear()
-		self.automounts = self.newautomounts
-		if not self.removeConsole:
-			self.removeConsole = Console()
-		path = AutoMount.MOUNT_BASE + mountpoint
-		umountcmd = 'umount -fl '+ path
-		print "[AutoMount.py] UMOUNT-CMD--->",umountcmd
-		self.removeConsole.ePopen(umountcmd, self.removeMountPointFinished, [path, callback])
+	def _unmount(self, mountpoint):
+		if os_path.ismount(mountpoint):
+			self._console.ePopen('umount -fl %s' %mountpoint, self._onConsoleFinished)
 
-	def removeMountPointFinished(self, result, retval, extra_args):
-		print "[AutoMount.py] removeMountPointFinished"
-		print "[AutoMount.py] result",result
-		print "[AutoMount.py] retval",retval
-		(path, callback ) = extra_args
-		if os_path.exists(path):
-			if not os_path.ismount(path):
-				removeDir(path)
-				harddiskmanager.removeMountedPartition(path)
+	def _reloadSystemd(self, **kwargs):
+		self._console.ePopen('systemctl daemon-reload && systemctl restart remote-fs.target', self._onConsoleFinished, kwargs)
 
-		if self.removeConsole:
-			if len(self.removeConsole.appContainers) == 0:
-				if callback is not None:
-					self.callback = callback
-					self.timer.startLongTimer(10)
+	def _onConsoleFinished(self, *args):
+		kwargs = {}
+		if len(args) > 2:
+			kw = args[2]
+			if isinstance(kw, dict):
+				kwargs = kw
+		Log.d("args=%s\nkwargs=%s" %(args, kwargs))
+		callback = kwargs.get('callback', None)
+		if callback:
+			args = kwargs.get('args', [])
+			callback(*args)
 
 iAutoMount = AutoMount()
