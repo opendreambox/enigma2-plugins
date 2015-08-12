@@ -583,6 +583,12 @@ def networkstart(reason, session):
 def openconfig(session, **kwargs):
 	session.openWithCallback(configCB, WebIfConfigScreen)
 
+def menu_config(menuid, **kwargs):
+	if menuid == "network":
+		return [(_("Webinterface"), openconfig, "webif", 60)]
+	else:
+		return []
+
 def configCB(result, session):
 	l2r = False
 	l2k = None
@@ -608,8 +614,8 @@ def Plugins(**kwargs):
 	list = [p,
 #			PluginDescriptor(where=[PluginDescriptor.WHERE_NETWORKCONFIG_READ], fnc=networkstart),
 			PluginDescriptor(name=_("Webinterface"), description=_("Configuration for the Webinterface"),
-							where=[PluginDescriptor.WHERE_PLUGINMENU], icon="plugin.png", fnc=openconfig)]
+							where=PluginDescriptor.WHERE_MENU, icon="plugin.png", fnc=menu_config)]
 	if config.plugins.Webinterface.show_in_extensionsmenu.value:
 		list.append(PluginDescriptor(name="Webinterface", description=_("Configuration for the Webinterface"),
-			where = PluginDescriptor.WHERE_EXTENSIONSMENU, icon="plugin.png", fnc=openconfig))
+			where=PluginDescriptor.WHERE_EXTENSIONSMENU, icon="plugin.png", fnc=openconfig))
 	return list
