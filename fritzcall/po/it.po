@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2  - FRITZ!Box\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-11 16:29+0200\n"
+"POT-Creation-Date: 2015-07-22 17:57+0200\n"
 "PO-Revision-Date: 2015-04-14 23:22+0200\n"
 "Last-Translator: Spaeleus <spaeleus@croci.org>\n"
 "Language-Team: www.linsat.net <spaeleus@croci.org>\n"
@@ -18,7 +18,10 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: ../enigma2-plugins/fritzcall\n"
 
-msgid "05.29 and newer"
+msgid "05.29 until below 6.35"
+msgstr ""
+
+msgid "06.35 and newer"
 msgstr ""
 
 #. TRANSLATORS: this is a window title.
@@ -387,6 +390,9 @@ msgstr "MSN da mostrare (separare con ,)"
 msgid "Mailbox"
 msgstr "Casella di posta"
 
+msgid "Minutes of uptime of WLAN guest network"
+msgstr ""
+
 #. TRANSLATORS: keep it short, this is a button
 msgid "Missed"
 msgstr "Ch. perse"
@@ -433,6 +439,9 @@ msgstr "Ricerca in Outlook  export: nessun risultato!"
 
 msgid "No result from reverse lookup"
 msgstr "Ricerca identificativo chiamante: nessun risultato!"
+
+msgid "Not deactivating after time"
+msgstr ""
 
 msgid "Number"
 msgstr "Numero"

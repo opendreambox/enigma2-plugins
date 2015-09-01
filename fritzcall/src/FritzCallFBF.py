@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1197 $
-$Date: 2015-07-20 19:17:14 +0200 (Mon, 20 Jul 2015) $
-$Id: FritzCallFBF.py 1197 2015-07-20 17:17:14Z michael $
+$Revision: 1202 $
+$Date: 2015-07-23 19:54:35 +0200 (Thu, 23 Jul 2015) $
+$Id: FritzCallFBF.py 1202 2015-07-23 17:54:35Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -2253,42 +2253,38 @@ class FritzCallFBF_05_50:
 		self._login(lambda md5Sid: self._changeGuestAccessWLAN(statusGuestAccess, callback, md5Sid))
 		
 	def _changeGuestAccessWLAN(self, statusGuestAccess, callback, md5Sid):
-		if statusGuestAccess.find('WLAN') != -1:
-			parms = urlencode({
+		parms = {
 				'sid':md5Sid,
 				'autoupdate':'on',
-				'print':'',
 				'btnSave':'',
 				'btnChancel':''
-				})
+		}
+		if statusGuestAccess.find('WLAN') != -1:
+			parms.update({
+					'print':'',
+			})
 		else:
+			parms.update({
+					'activate_guest_access':'on',
+					'guest_ssid':config.plugins.FritzCall.guestSSID.value,
+					'disconnect_guest_access':'on',
+					})
+			if config.plugins.FritzCall.guestUptime.value:
+				parms.update({
+							'down_time_activ':'on',
+							'down_time_value':config.plugins.FritzCall.guestUptime.value,
+							'disconnect_guest_access':'on',
+					})
 			if config.plugins.FritzCall.guestSecure.value:
-				parms = urlencode({
-					'sid':md5Sid,
-					'activate_guest_access':'on',
-					'autoupdate':'on',
-					'guest_ssid':config.plugins.FritzCall.guestSSID.value,
-					'sec_mode':'4',
-					'wpa_key': config.plugins.FritzCall.guestPassword.value,
-					'down_time_activ':'on',
-					'down_time_value':config.plugins.FritzCall.guestUptime.value,
-					'disconnect_guest_access':'on',
-					'btnSave':'',
-					'btnChancel':'',
-					})
+				parms.update({
+							'sec_mode':'4',
+							'wpa_key': config.plugins.FritzCall.guestPassword.value,
+							})
 			else:
-				parms = urlencode({
-					'sid':md5Sid,
-					'activate_guest_access':'on',
-					'autoupdate':'on',
-					'guest_ssid':config.plugins.FritzCall.guestSSID.value,
-					'sec_mode':'5',
-					'down_time_activ':'on',
-					'down_time_value':'30',
-					'disconnect_guest_access':'on',
-					'btnSave':'',
-					'btnChancel':'',
-					})
+				parms.update({
+							'sec_mode':'5',
+							})
+		parms = urlencode(parms)
 
 		url = "http://%s/wlan/guest_access.lua" % config.plugins.FritzCall.hostname.value
 		debug("[FritzCallFBF_05_50] _changeGuestAccessWLAN url: " + url + "?" + parms)
@@ -2450,21 +2446,43 @@ class FritzCallFBF_05_50:
 			debug("[FritzCallFBF_05_50] _okGetInfo rufumlActive: " + repr(rufumlActive))
 
 		guestAccess = ""
-		found = re.match('.*WLAN-Gastzugang</a></td><td title="[^"]*">aktiv ([^<]*)</td>', html, re.S)
+# 		found = re.match('.*WLAN-Gastzugang</a></td><td title="[^"]*">aktiv ([^<]*)</td>', html, re.S)
+# 		if found:
+# 			# guestAccess =  "WLAN " + found.group(1)
+# 			if found.group(1).find(", gesichert"):
+# 				guestAccess =  "WLAN (gesichert)"
+# 			else:
+# 				guestAccess =  "WLAN (ungesichert)"
+# 			debug("[FritzCallFBF_05_50] _okGetInfo guestAccess WLAN: " + repr(guestAccess))
+# 		found = re.match('.*LAN-Gastzugang</a></td><td title="aktiv">aktiv</td>', html, re.S)
+# 		if found:
+# 			if guestAccess:
+# 				guestAccess =  guestAccess + ", LAN"
+# 			else:
+# 				guestAccess = "LAN"
+# 			debug("[FritzCallFBF_05_50] _okGetInfo guestAccess LAN: " + repr(guestAccess))
+		# WLAN-Gastzugang</a></td><td title="aktiv (2,4 GHz), gesichert, 29 Minuten verbleiben, 0 Geräte">aktiv (2,4 GHz), gesichert, 29 Minuten verbleiben, 0 Geräte</td>
+		# found = re.match('.*linktxt": "WLAN-Gastzugang",\s*"details": "aktiv \(([^\)]+)\)(, (ungesichert|gesichert))?,( (\d+) (Minuten|Stunden) verbleiben,)? (\d+ Geräte), ([^"]+)",\s*"link": "wGuest"', html, re.S)
+		found = re.match('.*WLAN-Gastzugang</a></td><td title="[^"]*">aktiv \(([^\)]+)\)(, (ungesichert|gesichert))?,( (\d+) (Minuten|Stunden) verbleiben,)? (\d+ Geräte)</td>', html, re.S)
 		if found:
 			# guestAccess =  "WLAN " + found.group(1)
-			if found.group(1).find(", gesichert"):
-				guestAccess =  "WLAN (gesichert)"
+			if found.group(2):
+				if found.group(3).find('ungesichert') != -1:
+					guestAccess =  "WLAN (unges.)"
+				else:
+					guestAccess =  "WLAN (ges.)"
 			else:
-				guestAccess =  "WLAN (ungesichert)"
-			debug("[FritzCallFBF_05_50] _okGetInfo guestAccess WLAN: " + repr(guestAccess))
-		found = re.match('.*LAN-Gastzugang</a></td><td title="aktiv">aktiv</td>', html, re.S)
-		if found:
-			if guestAccess:
-				guestAccess =  guestAccess + ", LAN"
-			else:
-				guestAccess = "LAN"
-			debug("[FritzCallFBF_05_50] _okGetInfo guestAccess LAN: " + repr(guestAccess))
+				guestAccess =  "WLAN"
+# 			if found.group(1):
+# 				guestAccess = guestAccess + ', ' + found.group(1).replace('\\', '')
+			if found.group(4):
+				if found.group(6) == 'Minuten':
+					guestAccess = guestAccess + ', ' + found.group(5) + ' Min.' # n Minuten verbleiben
+				else:
+					guestAccess = guestAccess + ', ' + found.group(5) + ' Std.' # n Stunden verbleiben
+			if found.group(7):
+				guestAccess = guestAccess + ', ' + found.group(7) # Geräte
+			debug("[FritzCallFBF_06_35] _okGetInfo guestAccess WLAN: " + repr(guestAccess))
 
 		info = (boxInfo, upTime, ipAddress, wlanState, dslState, tamActive, dectActive, faxActive, rufumlActive, guestAccess)
 		debug("[FritzCallFBF_05_50] _okGetInfo info: " + str(info))
@@ -2973,53 +2991,38 @@ class FritzCallFBF_06_35:
 		self._login(lambda md5Sid: self._changeGuestAccessWLAN(statusGuestAccess, callback, md5Sid))
 		
 	def _changeGuestAccessWLAN(self, statusGuestAccess, callback, md5Sid):
+		parms = {
+			'sid':md5Sid,
+			'autoupdate':'on',
+			'apply':'',
+			'oldpage':'/wlan/guest_access.lua',
+			}
+
 		if statusGuestAccess.find('WLAN') != -1:
-			parms = urlencode({
-				'sid':md5Sid,
-				'autoupdate':'on',
+			parms.update({
 				'print':'',
-				'apply':'',
-				'oldpage':'/wlan/guest_access.lua',
-#				'btn_cancel':''
 				})
 		else:
-			if config.plugins.FritzCall.guestSecure.value:
-				parms = urlencode({
-					'sid':md5Sid,
-					'autoupdate':'on',
-					'activate_guest_access':'on',
-					'guest_ssid':config.plugins.FritzCall.guestSSID.value,
-					'sec_mode':'3',
-					'wpa_key': config.plugins.FritzCall.guestPassword.value,
+			parms.update({
+				'activate_guest_access':'on',
+				'guest_ssid':config.plugins.FritzCall.guestSSID.value,
+				})
+			if config.plugins.FritzCall.guestUptime.value:
+				parms.update({
  					'down_time_activ':'on',
  					'down_time_value':config.plugins.FritzCall.guestUptime.value,
  					'disconnect_guest_access':'on',
-#					'group_access':'on',
-					'apply':'',
-					'oldpage':'/wlan/guest_access.lua',
-#					'btn_cancel':'',
-#					'xhr':'1',
-#					'lang':'de',
-#					'no_sidrenew':''
+					})
+			if config.plugins.FritzCall.guestSecure.value:
+				parms.update({
+					'sec_mode':'3',
+					'wpa_key': config.plugins.FritzCall.guestPassword.value,
 					})
 			else:
-				parms = urlencode({
-					'sid':md5Sid,
-					'autoupdate':'on',
-					'activate_guest_access':'on',
-					'guest_ssid':config.plugins.FritzCall.guestSSID.value,
+				parms.update({
 					'sec_mode':'5',
-					'down_time_activ':'on',
-					'down_time_value':'30',
-					'disconnect_guest_access':'on',
-#					'group_access':'on',
-					'apply':'',
-					'oldpage':'/wlan/guest_access.lua',
-# 					'btn_cancel':'',
-# 					'xhr':'1',
-# 					'lang':'de',
-# 					'no_sidrenew':''
 					})
+		parms = urlencode(parms)
 
 		url = "http://%s/data.lua" % config.plugins.FritzCall.hostname.value
 		debug("[FritzCallFBF_06_35] _changeGuestAccessWLAN url: " + url + "?" + parms)
@@ -3228,24 +3231,27 @@ class FritzCallFBF_06_35:
  
 		guestAccess = ""
 		# found = re.match('.*WLAN-Gastzugang</a></td><td title="[^"]*">aktiv ([^<]*)</td>', html, re.S)
-		found = re.match('.*linktxt": "WLAN-Gastzugang",\s*"details": "aktiv \(([^\)]+)\)(, (ungesichert|gesichert))?,( (\d+) Minuten verbleiben,)? (\d+ Geräte), ([^"]+)",\s*"link": "wGuest"', html, re.S)
+		found = re.match('.*linktxt": "WLAN-Gastzugang",\s*"details": "aktiv \(([^\)]+)\)(, (ungesichert|gesichert))?,( (\d+) (Minuten|Stunden) verbleiben,)? (\d+ Geräte), ([^"]+)",\s*"link": "wGuest"', html, re.S)
 		if found:
 			# guestAccess =  "WLAN " + found.group(1)
 			if found.group(2):
 				if found.group(3).find('ungesichert') != -1:
-					guestAccess =  "WLAN (unges)"
+					guestAccess =  "WLAN (unges.)"
 				else:
-					guestAccess =  "WLAN (ges)"
+					guestAccess =  "WLAN (ges.)"
 			else:
 				guestAccess =  "WLAN"
 # 			if found.group(1):
 # 				guestAccess = guestAccess + ', ' + found.group(1).replace('\\', '')
 			if found.group(4):
-				guestAccess = guestAccess + ', ' + found.group(5) + ' Min.' # n Minuten verbleiben
-			if found.group(5):
-				guestAccess = guestAccess + ', ' + found.group(6) # Geräte
-			if found.group(6):
-				guestAccess = guestAccess + ', ' + found.group(7) # WLAN Name
+				if found.group(6) == 'Minuten':
+					guestAccess = guestAccess + ', ' + found.group(5) + ' Min.' # n Minuten verbleiben
+				else:
+					guestAccess = guestAccess + ', ' + found.group(5) + ' Std.' # n Stunden verbleiben
+			if found.group(7):
+				guestAccess = guestAccess + ', ' + found.group(7) # Geräte
+			if found.group(8):
+				guestAccess = guestAccess + ', ' + found.group(8) # WLAN Name
 			debug("[FritzCallFBF_06_35] _okGetInfo guestAccess WLAN: " + repr(guestAccess))
 #		found = re.match('.*LAN-Gastzugang</a></td><td title="aktiv">aktiv</td>', html, re.S)
 		found = re.match('.*linktxt": "LAN-Gastzugang",\s*"details": "aktiv"', html, re.S)
