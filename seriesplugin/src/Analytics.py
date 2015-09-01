@@ -86,8 +86,8 @@ class Analytics(object):
 				#splog("SP Analytics respond: ", response) 
 			
 			except URLError as e:
-				splog("SP Analytics error code: ", e.code)
-				splog("SP Analytics error msg: ", e.msg)
+				splog("SP Analytics error code: ", e.getcode())
+				splog("SP Analytics error info: ", e.info())
 			
 			except socket.timeout as e:
 				splog("SP Analytics socket timeout")

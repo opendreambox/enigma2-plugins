@@ -447,10 +447,10 @@ class SeriesPlugin(Modules, ChannelsBase):
 			identifier = None
 		
 		if not identifier:
-			callback( "Error: No identifier available" )
+			return "Error: No identifier available"
 		
 		elif identifier.channelsEmpty():
-			callback( "Error: Open setup and channel editor" )
+			return "Error: Open setup and channel editor"
 		
 		else:
 			# Reset title search depth on every new request
