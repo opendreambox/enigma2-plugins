@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enigma2 FritzCall Plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-11 16:29+0200\n"
-"PO-Revision-Date: 2015-07-11 16:29+0200\n"
+"POT-Creation-Date: 2015-07-20 10:07+0200\n"
+"PO-Revision-Date: 2015-07-20 19:18+0200\n"
 "Last-Translator: Michael Schmidt <michael@schmidt-schmitten.com>\n"
 "Language-Team: german <de@li.org>\n"
 "Language: de\n"
@@ -16,8 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "05.29 and newer"
-msgstr "05.29 und neuer"
+msgid "05.29 until below 6.35"
+msgstr "05.29 bis vor 6.35"
+
+msgid "06.35 and newer"
+msgstr "06.35 und neuer"
 
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
@@ -387,6 +390,9 @@ msgstr "anzuzeigende MSNs (getrennt durch ,)"
 
 msgid "Mailbox"
 msgstr "Anrufbeantworter"
+
+msgid "Minutes of uptime of WLAN guest network"
+msgstr "Dauer für den WLAN-Gastzugang in Minuten"
 
 #. TRANSLATORS: keep it short, this is a button
 msgid "Missed"
@@ -766,8 +772,5 @@ msgstr "Büro"
 msgid "wrong user or password?"
 msgstr "falscher Benutzer oder falsches Passwort?"
 
-#~ msgid "05.29 until below 6.35"
-#~ msgstr "05.29 bis vor 6.35"
-
-#~ msgid "06.35 and newer"
-#~ msgstr "06.35 und neuer"
+#~ msgid "05.29 and newer"
+#~ msgstr "05.29 und neuer"

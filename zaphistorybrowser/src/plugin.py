@@ -9,7 +9,7 @@ from Components.Language import language
 from Components.MenuList import MenuList
 from Components.MultiContent import MultiContentEntryText
 from enigma import eListboxPythonMultiContent, eServiceCenter, \
-		eServiceReference, gFont
+		eServiceReference, RT_VALIGN_CENTER, gFont
 from os import environ
 from Plugins.Plugin import PluginDescriptor
 from Screens.ChannelSelection import ChannelSelection
@@ -17,6 +17,7 @@ from Screens.ParentalControlSetup import ProtectedScreen
 from Screens.Screen import Screen
 from Tools.Directories import resolveFilename, SCOPE_LANGUAGE, SCOPE_PLUGINS
 from enigma import eServiceReference
+from skin import TemplatedListFonts, componentSizes
 import gettext
 
 ################################################
@@ -141,16 +142,27 @@ class ZapHistoryConfigurator(ConfigListScreen, Screen):
 ################################################
 
 class ZapHistoryBrowserList(MenuList):
+	SKIN_COMPONENT_KEY = "ZapHistoryBrowserList"
+	SKIN_COMPONENT_SERVICE_NAME_HEIGHT = "serviceNameHeight"
+	SKIN_COMPONENT_EVENT_NAME_HEIGHT = "eventNameHeight"
+	SKIN_COMPONENT_LINE_SPACING = "lineSpacing"
+
 	def __init__(self, list, enableWrapAround=False):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-		self.l.setItemHeight(40)
-		self.l.setFont(0, gFont("Regular", 20))
-		self.l.setFont(1, gFont("Regular", 18))
+		self.l.setItemHeight(componentSizes.itemHeight(self.SKIN_COMPONENT_KEY, 50))
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
+		self.l.setFont(1, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
 
 def ZapHistoryBrowserListEntry(serviceName, eventName):
+	sizes = componentSizes[ZapHistoryBrowserList.SKIN_COMPONENT_KEY]
+	textWidth = sizes.get(componentSizes.ITEM_WIDTH, 560)
+	serviceNameHeight = sizes.get(ZapHistoryBrowserList.SKIN_COMPONENT_SERVICE_NAME_HEIGHT, 22)
+	eventNameHeight = sizes.get(ZapHistoryBrowserList.SKIN_COMPONENT_EVENT_NAME_HEIGHT, 20)
+	lineSpacing = sizes.get(ZapHistoryBrowserList.SKIN_COMPONENT_LINE_SPACING, 5)
 	res = [serviceName]
-	res.append(MultiContentEntryText(pos=(0, 0), size=(560, 22), font=0, text=serviceName))
-	res.append(MultiContentEntryText(pos=(0, 22), size=(560, 18), font=1, text=eventName))
+	res.append(MultiContentEntryText(pos=(0, 0), size=(textWidth, serviceNameHeight), font=0, flags = RT_VALIGN_CENTER, text=serviceName))
+	res.append(MultiContentEntryText(pos=(0, serviceNameHeight+lineSpacing), size=(textWidth, eventNameHeight), font=1, flags = RT_VALIGN_CENTER, text=eventName))
 	return res
 
 ################################################
