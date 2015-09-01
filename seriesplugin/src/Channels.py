@@ -230,10 +230,11 @@ class ChannelsBase(ChannelsFile):
 	#
 	def compareChannels(self, ref, remote):
 		splog("SP compareChannels", ref, remote)
+		remote = remote.lower()
 		if ref in ChannelsBase.channels:
 			( name, alternatives ) = ChannelsBase.channels[ref]
 			for altname in alternatives:
-				if altname in remote or remote in altname:
+				if altname.lower() in remote or remote in altname.lower():
 					return True
 			
 		return False
