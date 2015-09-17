@@ -43,8 +43,11 @@ PyObject *_netInfo(PyObject *self, PyObject *args)
 
 	if(!(plist= PyList_New(0)))  return NULL;
 	if(!(result= PyList_New(0)))  return NULL;
+	Py_BEGIN_ALLOW_THREADS
 	nInfo = newNetInfo();
 	netInfo(s, nInfo);
+	Py_END_ALLOW_THREADS
+
 	for (i=0; i<256; i++) 
 	{ 
 		if(nInfo[i].ip[0] == '\0') {
@@ -92,7 +95,9 @@ PyObject *_nfsShare(PyObject *self, PyObject *args)
 	if(!(result= PyList_New(0)))  return NULL;
 
 	nfsInfo = newNfsInfo();
+	Py_BEGIN_ALLOW_THREADS
 	err = showNfsShare(s, nfsInfo);
+	Py_END_ALLOW_THREADS
 	if (err == 0)
 	{
 		for (i=0; i<256; i++) 
@@ -148,8 +153,11 @@ PyObject *_smbShare(PyObject *self, PyObject *args)
 	if(!(plist= PyList_New(0)))  return NULL;
 	if(!(result= PyList_New(0)))  return NULL;
 
+	Py_BEGIN_ALLOW_THREADS
 	sInfo = newShareInfo();
 	smbInfo(s,r,u,p,sInfo);
+	Py_END_ALLOW_THREADS
+
 	for (i=0; i<128; i++) 
 	{ 
 		if(sInfo[i].sharename[0] == '\0') {
