@@ -9,7 +9,7 @@ from Screens.HelpMenu import HelpableScreen
 from Tools.BoundFunction import boundFunction
 from Tools.Directories import fileExists
 
-from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT, \
+from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT, RT_VALIGN_CENTER, \
 		RT_WRAP
 from Components.MenuList import MenuList
 from skin import parseColor, parseFont
@@ -143,9 +143,9 @@ class SortableMenuList(MenuList):
 				elif attrib == "itemHeight":
 					self.l.setItemHeight(int(value))
 				elif attrib == "selectedColor":
-					self.selectedColor = int(parseColor(value))
+					self.selectedColor = parseColor(value).argb()
 				elif attrib == "hiddenColor":
-					self.hiddenColor = int(parseColor(value))
+					self.hiddenColor = parseColor(value).argb()
 				else:
 					attribs.append((attrib, value))
 		self.skinAttributes = attribs
@@ -159,16 +159,18 @@ class SortableMenuList(MenuList):
 
 		l = [
 			None,
-			(eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, height, 0, RT_HALIGN_LEFT|RT_WRAP, menu[0], color, color),
+			(eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, height, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER|RT_WRAP, menu[0], color, color),
 		]
 		if menu[0] == self.selected:
-			l.insert(1, (eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, height, 0, RT_HALIGN_LEFT|RT_WRAP, '',  None, None, None, self.selectedColor, None, None))
+			l.insert(1, (eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, height, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER|RT_WRAP, '',  None, None, None, self.selectedColor, None, None))
 		return l
 
 class SortableMenu(Menu, HelpableScreen):
-	skin = """<screen name="SortableMenu" position="center,center" size="210,285">
-		<widget source="title" render="Label" position="5,10" size="200,35" font="Regular;23" />
-		<widget name="menu" position="5,55" size="200,225" scrollbarMode="showOnDemand" font="Regular;23" />
+	skin = """<screen name="SortableMenu" position="center,center" title="Men&#252; Sort" size="400,430">
+		<widget source="title" render="Label" position="5,10" size="390,35" font="Regular;26" />
+		<widget name="menu" position="5,55" itemHeight="30" size="390,330" scrollbarMode="showOnDemand" font="Regular;22" />
+		<ePixmap position="5,400" size="35,25" pixmap="skin_default/buttons/key_blue.png" alphatest="on" />
+		<eLabel font="Regular;21" position="45,400" size="350,30" text="hide/visible entry"/>
 		</screen>"""
 	def __init__(self, *args, **kwargs):
 		baseMethods.Menu__init__(self, *args, **kwargs) # using the base initializer saves us a few cycles
