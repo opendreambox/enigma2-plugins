@@ -52,6 +52,7 @@ Headers = {
 		'Cache-Control':'no-cache',
 		'Connection':'keep-alive',
 		'Host':'www.fernsehserien.de',
+		'Referer':'http://www.fernsehserien.de/',
 		'Pragma':'no-cache'
 	}
 
