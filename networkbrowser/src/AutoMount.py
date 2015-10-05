@@ -87,6 +87,7 @@ class AutoMount():
 		self._ensureOption(options, 'x-systemd.automount')
 		self._ensureOption(options, 'rsize', 'rsize=8192')
 		self._ensureOption(options, 'wsize', 'wsize=8192')
+		self._ensureOption(options, 'soft')
 		if not cifs and 'tcp' not in options and 'udp' not in options:
 			options.append('udp')
 		return options
