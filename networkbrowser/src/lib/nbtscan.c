@@ -57,7 +57,6 @@ static int python_hostinfo(struct in_addr addr, const struct nb_host_info *hosti
 	int unique;
 	uint8_t service;
 
-	sleep(1);
 	service = hostinfo->names[0].ascii_name[15];
 	unique = !(hostinfo->names[0].rr_flags & 0x0080);
 	strncpy(nInfo->name, hostinfo->names[0].ascii_name, 15);
