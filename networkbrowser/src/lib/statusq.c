@@ -44,9 +44,6 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <ctype.h>
-#include "errors.h"
-
-extern int quiet;
 
 #define MIN(a,b)	((a) < (b) ? (a) : (b))
 
@@ -134,7 +131,8 @@ int send_query(int sock, struct in_addr dest_addr, uint32_t rtt_base) {
                 (struct sockaddr *)&dest_sockaddr, sizeof(dest_sockaddr));
 	if(status==-1) {
 	        snprintf(errmsg, 80, "%s\tSendto failed", inet_ntoa(dest_addr));
-	        err_print(errmsg, quiet); return(-1);
+		perror(errmsg);
+		return -1;
         };
 	return 0;
 };
