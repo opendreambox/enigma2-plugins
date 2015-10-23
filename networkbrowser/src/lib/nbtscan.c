@@ -105,10 +105,8 @@ int netInfo(char *pythonIp, netinfo * nInfo)
 		return 0;
 	}
 	/* Finished with options */
-  /*************************/
 
 	/* Prepare socket and address structures */
-  /*****************************************/
 	sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 	if (sock < 0)
 		err_die("Failed to create socket", quiet);
@@ -140,7 +138,6 @@ int netInfo(char *pythonIp, netinfo * nInfo)
 	rtt_base = last_send_time.tv_sec;
 
 	/* Send queries, receive answers and print results */
-  /***************************************************/
 
 	scanned = new_list();
 
