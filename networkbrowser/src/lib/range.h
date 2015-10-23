@@ -62,6 +62,4 @@ int next_address(const struct ip_range* range, const struct in_addr* prev_addr,
    Returns 1 on success, 0 on failure */
 int is_range2(const char *string, struct ip_range *range);
 
-int print_range(const struct ip_range* range); 
-
 #endif /* RANGE_H */

@@ -149,19 +149,3 @@ int is_range2(const char *string, struct ip_range *range) {
 	free(ip);
 	return 0;
 };
-
-int print_range(const struct ip_range* range) {
-	struct in_addr *addr;
-	
-	if((addr = (struct in_addr*)malloc(sizeof(struct in_addr)))==NULL) 
-		err_die("Malloc failed", quiet);
-	
-	next_address(range, 0, addr);
-	printf("%s\n",inet_ntoa(*addr));
-	
-	while(next_address(range, addr, addr)) {
-	        printf("%s\n",inet_ntoa(*addr));
-	};
-	free(addr);
-	return 0;
-};
