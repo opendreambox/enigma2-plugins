@@ -44,7 +44,7 @@ extern int quiet;
 /* is_ip checks if supplied string is an ip address in dotted-decimal
    notation, and fills both members of range structure with its numerical value
    (host byte order)/ Returns 1 on success, 0 on failure */
-int is_ip(char* string, struct ip_range* range) {
+int is_ip(const char *string, struct ip_range *range) {
 	unsigned long addr;
 
 	addr = inet_addr(string);
@@ -59,7 +59,7 @@ int is_ip(char* string, struct ip_range* range) {
    form xxx.xxx.xxx.xxx/xx (as in 192.168.1.2/24) and fills
    range structure with start and end ip addresses of the interval.
    Returns 1 on success, 0 on failure */
-int is_range1(char* string, struct ip_range* range) {
+int is_range1(const char *string, struct ip_range *range) {
 	char* separator;
 	unsigned int mask;
 	char* ip;
@@ -114,7 +114,7 @@ int next_address(const struct ip_range* range, const struct in_addr* prev_addr,
    form xxx.xxx.xxx.xxx-xxx (as in 192.168.1.2-15) and fills
    range structure with start and end ip addresses of the interval.
    Returns 1 on success, 0 on failure */
-int is_range2(char* string, struct ip_range* range) {
+int is_range2(const char *string, struct ip_range *range) {
 	unsigned long last_octet; /*last octet of last ip in range*/
 	char* separator;
 	unsigned long addr;
