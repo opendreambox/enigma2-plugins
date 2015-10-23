@@ -330,7 +330,7 @@ broken_packet:
 	return;
 };
 
-nb_service_t services[] = {
+static const nb_service_t services[] = {
 {"__MSBROWSE__", 0x01, 0, "Master Browser"},
 {"INet~Services", 0x1C, 0, "IIS"},
 {"IS~", 0x00, 1, "IIS"},
@@ -368,14 +368,10 @@ nb_service_t services[] = {
 {"Forte_$ND800ZA", 0x20, 1, "DCA IrmaLan Gateway Server Service"}
 };
 
-char* getnbservicename(uint8_t service, int unique, char* name) {
+const char *getnbservicename(uint8_t service, int unique, const char *name) {
 	int i;
-	char *unknown;
+	static char unknown[100];
 
-	unknown = (char*)malloc(100);
-
-	if(!unknown) err_die("Malloc failed.\n", 0);
-	
 	for(i=0; i < 35; i++) {
 		if(strstr(name, services[i].nb_name) && 
 			service == services[i].service_number &&

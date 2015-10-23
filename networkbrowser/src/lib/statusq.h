@@ -56,7 +56,7 @@ uint32_t get32(const void *data);
 uint16_t get16(const void *data);
 int send_query(int sock, struct in_addr dest_addr, uint32_t rtt_base);
 void parse_response(const char *buff, int buffsize, struct nb_host_info *);
-char* getnbservicename(uint8_t service, int unique, char* name);
+const char *getnbservicename(uint8_t service, int unique, const char *name);
 
 struct nbname {
 	char ascii_name [16] ;

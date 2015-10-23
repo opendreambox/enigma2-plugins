@@ -65,7 +65,7 @@ static bool python_hostinfo(struct in_addr addr, const struct nb_host_info *host
 	unique = !(hostinfo->names[0].rr_flags & 0x0080);
 	strncpy(nInfo->name, hostinfo->names[0].ascii_name, 15);
 	strncpy(nInfo->domain, hostinfo->names[1].ascii_name, 15);
-	sprintf(nInfo->service, "%s", (char *)getnbservicename(service, unique, hostinfo->names[0].ascii_name));
+	sprintf(nInfo->service, "%s", getnbservicename(service, unique, hostinfo->names[0].ascii_name));
 	sprintf(nInfo->mac, "%02x:%02x:%02x:%02x:%02x:%02x",
 		hostinfo->footer.adapter_address[0], hostinfo->footer.adapter_address[1],
 		hostinfo->footer.adapter_address[2], hostinfo->footer.adapter_address[3],
