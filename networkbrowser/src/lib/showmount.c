@@ -188,7 +188,8 @@ int showNfsShare(char *pythonIp, nfsinfo *nfsInfo)
 	}
 	else {
 		if ((hp = gethostbyname(hostname)) == NULL) {
-			exit(1);
+			strcpy(nfsInfo[0].share, "ERROR: failed to resolve hostname");
+			return 1;
 		}
 		server_addr.sin_family = AF_INET;
 		memcpy(&server_addr.sin_addr, hp->h_addr, hp->h_length);
