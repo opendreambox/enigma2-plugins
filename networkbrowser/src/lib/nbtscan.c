@@ -52,7 +52,7 @@ static int set_range(const char *range_str, struct ip_range *range_struct)
 	return 0;
 };
 
-static int python_hostinfo(struct in_addr addr, const struct nb_host_info *hostinfo, netinfo *nInfo, int pos)
+static int python_hostinfo(struct in_addr addr, const struct nb_host_info *hostinfo, netinfo *nInfo)
 {
 	int unique;
 	my_uint8_t service;
@@ -60,16 +60,16 @@ static int python_hostinfo(struct in_addr addr, const struct nb_host_info *hosti
 	sleep(1);
 	service = hostinfo->names[0].ascii_name[15];
 	unique = !(hostinfo->names[0].rr_flags & 0x0080);
-	strncpy(nInfo[pos].name, hostinfo->names[0].ascii_name, 15);
-	strncpy(nInfo[pos].domain, hostinfo->names[1].ascii_name, 15);
-	sprintf(nInfo[pos].service, "%s", (char *)getnbservicename(service, unique, hostinfo->names[0].ascii_name));
+	strncpy(nInfo->name, hostinfo->names[0].ascii_name, 15);
+	strncpy(nInfo->domain, hostinfo->names[1].ascii_name, 15);
+	sprintf(nInfo->service, "%s", (char *)getnbservicename(service, unique, hostinfo->names[0].ascii_name));
 	if (hostinfo->footer) {
-		sprintf(nInfo[pos].mac, "%02x:%02x:%02x:%02x:%02x:%02x",
+		sprintf(nInfo->mac, "%02x:%02x:%02x:%02x:%02x:%02x",
 			hostinfo->footer->adapter_address[0], hostinfo->footer->adapter_address[1],
 			hostinfo->footer->adapter_address[2], hostinfo->footer->adapter_address[3],
 			hostinfo->footer->adapter_address[4], hostinfo->footer->adapter_address[5]);
 	}
-	strcpy(nInfo[pos].ip, inet_ntoa(addr));
+	strcpy(nInfo->ip, inet_ntoa(addr));
 	return 0;
 }
 
@@ -202,8 +202,7 @@ int netInfo(char *pythonIp, netinfo * nInfo)
 					if (hostinfo->names == 0x0) {
 						printf("hostinfo->names == NULL\n");
 					} else {
-						python_hostinfo(dest_sockaddr.sin_addr, hostinfo, nInfo, pos);
-						pos++;
+						python_hostinfo(dest_sockaddr.sin_addr, hostinfo, &nInfo[pos++]);
 					}
 				};
 				free(hostinfo);
