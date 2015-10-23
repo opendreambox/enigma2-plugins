@@ -50,10 +50,12 @@
 
 #define NB_DGRAM		137
 
+struct nb_host_info;
+
 uint32_t get32(const void *data);
 uint16_t get16(const void *data);
 int send_query(int sock, struct in_addr dest_addr, uint32_t rtt_base);
-struct nb_host_info* parse_response(const char *buff, int buffsize);
+void parse_response(const char *buff, int buffsize, struct nb_host_info *);
 char* getnbservicename(uint8_t service, int unique, char* name);
 
 struct nbname {
@@ -124,10 +126,9 @@ typedef struct nbname_response_footer {
 #define NBNAME_RESPONSE_FOOTER_SIZE 50
 
 struct nb_host_info {
-	struct nbname_response_header* header;
-	struct nbname* names;
-	struct nbname_response_footer* footer;
-	int is_broken;
+	struct nbname_response_header header;
+	struct nbname names[2];
+	struct nbname_response_footer footer;
 };
 
 typedef struct nb_service {

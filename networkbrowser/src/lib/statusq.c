@@ -46,6 +46,8 @@
 
 extern int quiet;
 
+#define MIN(a,b)	((a) < (b) ? (a) : (b))
+
 /* Start of code from Samba */
 static int name_mangle(const char *In, char *Out, char name_type) {
 	int   i;
@@ -155,22 +157,17 @@ uint16_t get16(const void *data) {
 	return(ntohs(x.all));
 };
 
-struct nb_host_info* parse_response(const char *buff, int buffsize) {
-	struct nb_host_info* hostinfo = NULL;
+void parse_response(const char *buff, int buffsize, struct nb_host_info *hostinfo)
+{
 	nbname_response_footer_t* response_footer;
 	nbname_response_header_t* response_header;
 	int name_table_size;
 	int offset = 0;
 
-	if((response_header = malloc(sizeof(nbname_response_header_t)))==NULL) return NULL;
-	if((response_footer = malloc(sizeof(nbname_response_footer_t)))==NULL) return NULL;
-	bzero(response_header, sizeof(nbname_response_header_t));
-	bzero(response_footer, sizeof(nbname_response_footer_t));
-	
-	if((hostinfo = malloc(sizeof(struct nb_host_info)))==NULL) return NULL;
-	hostinfo->header = NULL;
-        hostinfo->names = NULL;
-	hostinfo->footer = NULL;
+	memset(hostinfo, 0, sizeof(struct nb_host_info));
+
+	response_header = &hostinfo->header;
+	response_footer = &hostinfo->footer;
 
 	/* Parsing received packet */
 	/* Start with header */
@@ -178,7 +175,6 @@ struct nb_host_info* parse_response(const char *buff, int buffsize) {
 	response_header->transaction_id = get16(buff+offset); 
 	//Move pointer to the next structure field
 	offset+=sizeof(response_header->transaction_id);
-        hostinfo->header = response_header;
 
 	// Check if there is room for next field in buffer
 	if( offset+sizeof(response_header->flags) >= buffsize) goto broken_packet; 
@@ -230,8 +226,7 @@ struct nb_host_info* parse_response(const char *buff, int buffsize) {
 	name_table_size = (response_header->number_of_names) * (sizeof(struct nbname));
 	if( offset+name_table_size >= buffsize) goto broken_packet;
 	
-	if((hostinfo->names = malloc(name_table_size))== NULL) return NULL;
-	memcpy(hostinfo->names, buff + offset, name_table_size);
+	memcpy(hostinfo->names, buff + offset, MIN(name_table_size, sizeof(hostinfo->names)));
 	//printf("DEBUG: %s , %d\n", hostinfo->names, name_table_size);
 	
 	offset+=name_table_size;
@@ -245,8 +240,6 @@ struct nb_host_info* parse_response(const char *buff, int buffsize) {
 	       (buff+offset), 
 	       sizeof(response_footer->adapter_address));
 	offset+=sizeof(response_footer->adapter_address);
-
-	hostinfo->footer=response_footer;	
 
 	if( offset+sizeof(response_footer->version_major) >= buffsize) goto broken_packet;
 	response_footer->version_major = *(typeof(response_footer->version_major)*)(buff+offset);
@@ -333,12 +326,8 @@ struct nb_host_info* parse_response(const char *buff, int buffsize) {
 	offset+=sizeof(response_footer->packet_sessions);
 	
 	/* Done with packet footer and the whole packet */
-
-	return hostinfo;
-	
-	broken_packet: 
-		hostinfo->is_broken = offset;
-		return hostinfo;	
+broken_packet:
+	return;
 };
 
 nb_service_t services[] = {

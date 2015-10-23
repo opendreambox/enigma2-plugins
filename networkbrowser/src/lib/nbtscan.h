@@ -35,7 +35,7 @@
 
 typedef struct {
 	char name[16];
-	char domain[80];
+	char domain[16];
 	char ip[20];
 	char mac[20];
 	char service[80];

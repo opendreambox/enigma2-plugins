@@ -24,6 +24,7 @@
 #
 ###########################################################################*/
 
+#include <stdbool.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -50,24 +51,27 @@ static int set_range(const char *range_str, struct ip_range *range_struct)
 	return 0;
 };
 
-static int python_hostinfo(struct in_addr addr, const struct nb_host_info *hostinfo, netinfo *nInfo)
+static bool python_hostinfo(struct in_addr addr, const struct nb_host_info *hostinfo, netinfo *nInfo)
 {
 	int unique;
 	uint8_t service;
+
+	if (hostinfo->names[0].ascii_name[0] == '\0')
+		return false;
+
+	memset(nInfo, 0, sizeof(netinfo));
 
 	service = hostinfo->names[0].ascii_name[15];
 	unique = !(hostinfo->names[0].rr_flags & 0x0080);
 	strncpy(nInfo->name, hostinfo->names[0].ascii_name, 15);
 	strncpy(nInfo->domain, hostinfo->names[1].ascii_name, 15);
 	sprintf(nInfo->service, "%s", (char *)getnbservicename(service, unique, hostinfo->names[0].ascii_name));
-	if (hostinfo->footer) {
-		sprintf(nInfo->mac, "%02x:%02x:%02x:%02x:%02x:%02x",
-			hostinfo->footer->adapter_address[0], hostinfo->footer->adapter_address[1],
-			hostinfo->footer->adapter_address[2], hostinfo->footer->adapter_address[3],
-			hostinfo->footer->adapter_address[4], hostinfo->footer->adapter_address[5]);
-	}
+	sprintf(nInfo->mac, "%02x:%02x:%02x:%02x:%02x:%02x",
+		hostinfo->footer.adapter_address[0], hostinfo->footer.adapter_address[1],
+		hostinfo->footer.adapter_address[2], hostinfo->footer.adapter_address[3],
+		hostinfo->footer.adapter_address[4], hostinfo->footer.adapter_address[5]);
 	strcpy(nInfo->ip, inet_ntoa(addr));
-	return 0;
+	return true;
 }
 
 #define BUFFSIZE 1024
@@ -84,7 +88,7 @@ unsigned int netInfo(const char *pythonIp, netinfo *nInfo, unsigned int n)
 	struct in_addr next_in_addr;
 	struct timeval select_timeout, last_send_time, current_time, diff_time, send_interval;
 	struct timeval transmit_started, now, recv_time;
-	struct nb_host_info *hostinfo;
+	struct nb_host_info hostinfo;
 	fd_set fdsr;
 	fd_set fdsw;
 	int size;
@@ -145,16 +149,10 @@ unsigned int netInfo(const char *pythonIp, netinfo *nInfo, unsigned int n)
 					perror(errmsg);
 					continue;
 				};
-				gettimeofday(&recv_time, NULL);
-				memset(&hostinfo, 0, sizeof(hostinfo));
-				hostinfo = (struct nb_host_info *)parse_response(buff, size);
-				if (!hostinfo) {
-					perror("parse_response returned NULL");
-					continue;
-				};
 				/* If this packet isn't a duplicate */
 				if (insert(scanned, ntohl(dest_sockaddr.sin_addr.s_addr))) {
-					rtt = recv_time.tv_sec + recv_time.tv_usec / 1000000 - rtt_base - hostinfo->header->transaction_id / 1000;
+					gettimeofday(&recv_time, NULL);
+					rtt = recv_time.tv_sec + recv_time.tv_usec / 1000000 - rtt_base - hostinfo.header.transaction_id / 1000;
 					/* Using algorithm described in Stevens' 
 					   Unix Network Programming */
 					delta = rtt - srtt;
@@ -162,13 +160,10 @@ unsigned int netInfo(const char *pythonIp, netinfo *nInfo, unsigned int n)
 					if (delta < 0.0)
 						delta = -delta;
 					rttvar += (delta - rttvar) / 4;
-					if (hostinfo->names == 0x0) {
-						printf("hostinfo->names == NULL\n");
-					} else {
-						python_hostinfo(dest_sockaddr.sin_addr, hostinfo, &nInfo[pos++]);
-					}
+					parse_response(buff, size, &hostinfo);
+					if (python_hostinfo(dest_sockaddr.sin_addr, &hostinfo, &nInfo[pos]))
+						pos++;
 				};
-				free(hostinfo);
 			};
 
 			if (pos == n)
