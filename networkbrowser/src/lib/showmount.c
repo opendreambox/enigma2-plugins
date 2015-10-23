@@ -159,20 +159,6 @@ bool_t xdr_groupnode (XDR *xdrs, groupnode *objp)
 	return TRUE;
 }
 
-nfsinfo * newNfsInfo()
-{
-	nfsinfo *nfsInfo = malloc(sizeof(nfsinfo)*255);
-	if(!nfsInfo)
-		exit(0); // TODO: besser machen
-		memset(nfsInfo,0,sizeof(nfsinfo)*255);
-	return nfsInfo;
-}
-
-void freeNfsInfo(nfsinfo *nfsInfo)
-{
-	free(nfsInfo);
-}
-
 int showNfsShare(char *pythonIp, nfsinfo *nfsInfo) 
 {
 	char *hostname;

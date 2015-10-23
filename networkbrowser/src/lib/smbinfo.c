@@ -111,27 +111,6 @@ BOOL passive = False;
 BOOL have_ip = False;
 
 /****************************************************************************
-speicher allocieren  
-****************************************************************************/
-shareinfo * newShareInfo()
-{
-	shareinfo *sInfo = malloc(sizeof(shareinfo)*128);
-	if(!sInfo)
-	{
-		printf("ERROR MALLOC !!!!!!!\n");
-		exit(0); // TODO: besser machen
-	} 
-	memset(sInfo,0,sizeof(shareinfo)*128);
-	return sInfo;
-}
-/****************************************************************************
-speicher freigeben
-****************************************************************************/
-void freeShareInfo(shareinfo *sInfo)
-{
-	free(sInfo); 
-}
-/****************************************************************************
 hier gehts los 
 ****************************************************************************/
 int smbInfo(char *pythonIp , char *pythonrName, char *pythonUser, char *pythonPass, shareinfo *sInfo) 
