@@ -47,7 +47,7 @@
 extern int quiet;
 
 /* Start of code from Samba */
-int name_mangle( char *In, char *Out, char name_type ) {
+static int name_mangle( char *In, char *Out, char name_type ) {
 	int   i;
 	int   c;
 	int   len;

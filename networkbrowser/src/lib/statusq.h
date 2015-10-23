@@ -52,7 +52,6 @@
 
 uint32_t get32(void* data);
 uint16_t get16(void* data);
-int name_mangle( char *In, char *Out, char name_type );
 int send_query(int sock, struct in_addr dest_addr, uint32_t rtt_base);
 struct nb_host_info* parse_response(char* buff, int buffsize);
 char* getnbservicename(uint8_t service, int unique, char* name);
