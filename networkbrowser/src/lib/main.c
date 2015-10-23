@@ -27,8 +27,6 @@
 #include "smbinfo.h"
 #include "showmount.h"
 
-static PyObject *error;
-
 PyObject *_netInfo(PyObject *self, PyObject *args)
 {
 	const unsigned int max_hosts = 256;
@@ -38,7 +36,7 @@ PyObject *_netInfo(PyObject *self, PyObject *args)
 	int i;
 
 	if(!PyArg_ParseTuple(args, "s", &s)) {
-		PyErr_SetString(error, "netInfo(ip/24)");
+		PyErr_SetString(PyExc_TypeError, "netInfo(ip/24)");
 		return NULL;
 	}
 
@@ -89,7 +87,7 @@ PyObject *_nfsShare(PyObject *self, PyObject *args)
 	int err = 0;
 
 	if(!PyArg_ParseTuple(args, "ss", &s, &r)) {
-		PyErr_SetString(error, "nfsShare(ip,rechnername)");
+		PyErr_SetString(PyExc_TypeError, "nfsShare(ip,rechnername)");
 		return NULL;
 	}
 
@@ -149,7 +147,7 @@ PyObject *_smbShare(PyObject *self, PyObject *args)
 
 	
 	if(!PyArg_ParseTuple(args, "ssss", &s,&r,&u,&p)) {
-		PyErr_SetString(error, "getInfo(ip, rechnername, username, passwort)");
+		PyErr_SetString(PyExc_TypeError, "getInfo(ip, rechnername, username, passwort)");
 		return NULL;
 	}
 	if(!(plist= PyList_New(0)))  return NULL;
