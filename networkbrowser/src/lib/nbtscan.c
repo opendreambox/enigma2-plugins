@@ -139,6 +139,10 @@ unsigned int netInfo(const char *pythonIp, netinfo *nInfo, unsigned int n)
 	/* Send queries, receive answers and print results */
 
 	scanned = new_list();
+	if (scanned == NULL) {
+		close(sock);
+		return 0;
+	}
 
 	for (i = 0; i <= retransmits; i++) {
 		gettimeofday(&transmit_started, NULL);
@@ -150,7 +154,7 @@ unsigned int netInfo(const char *pythonIp, netinfo *nInfo, unsigned int n)
 					continue;
 				};
 				/* If this packet isn't a duplicate */
-				if (insert(scanned, ntohl(dest_sockaddr.sin_addr.s_addr))) {
+				if (insert(scanned, ntohl(dest_sockaddr.sin_addr.s_addr)) == 1) {
 					gettimeofday(&recv_time, NULL);
 					rtt = recv_time.tv_sec + recv_time.tv_usec / 1000000 - rtt_base - hostinfo.header.transaction_id / 1000;
 					/* Using algorithm described in Stevens' 
