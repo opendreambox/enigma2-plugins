@@ -78,17 +78,17 @@ int netInfo(char *pythonIp, netinfo * nInfo)
 {
 	int timeout = 10000, send_ok;
 	struct ip_range range;
-	void *buff;
+	char buff[BUFFSIZE];
 	int sock;
 	unsigned int addr_size;
 	struct sockaddr_in src_sockaddr, dest_sockaddr;
 	struct in_addr *prev_in_addr = NULL;
-	struct in_addr *next_in_addr;
+	struct in_addr next_in_addr;
 	struct timeval select_timeout, last_send_time, current_time, diff_time, send_interval;
 	struct timeval transmit_started, now, recv_time;
 	struct nb_host_info *hostinfo;
-	fd_set *fdsr;
-	fd_set *fdsw;
+	fd_set fdsr;
+	fd_set fdsw;
 	int size;
 	int pos = 0;
 	struct list *scanned;
@@ -118,31 +118,17 @@ int netInfo(char *pythonIp, netinfo * nInfo)
 	if (bind(sock, (struct sockaddr *)&src_sockaddr, sizeof(src_sockaddr)) == -1)
 		err_die("Failed to bind", quiet);
 
-	fdsr = malloc(sizeof(fd_set));
-	if (!fdsr)
-		err_die("Malloc failed", quiet);
-	FD_ZERO(fdsr);
-	FD_SET(sock, fdsr);
+	FD_ZERO(&fdsr);
+	FD_SET(sock, &fdsr);
 
-	fdsw = malloc(sizeof(fd_set));
-	if (!fdsw)
-		err_die("Malloc failed", quiet);
-	FD_ZERO(fdsw);
-	FD_SET(sock, fdsw);
+	FD_ZERO(&fdsw);
+	FD_SET(sock, &fdsw);
 
 	/* timeout is in milliseconds */
 	select_timeout.tv_sec = 60;	/* Default 1 min to survive ARP timeouts */
 	select_timeout.tv_usec = 0;
 
 	addr_size = sizeof(struct sockaddr_in);
-
-	next_in_addr = malloc(sizeof(struct in_addr));
-	if (!next_in_addr)
-		err_die("Malloc failed", quiet);
-
-	buff = malloc(BUFFSIZE);
-	if (!buff)
-		err_die("Malloc failed", quiet);
 
 	/* Calculate interval between subsequent sends */
 
@@ -160,8 +146,8 @@ int netInfo(char *pythonIp, netinfo * nInfo)
 
 	for (i = 0; i <= retransmits; i++) {
 		gettimeofday(&transmit_started, NULL);
-		while ((select(sock + 1, fdsr, fdsw, NULL, &select_timeout)) > 0) {
-			if (FD_ISSET(sock, fdsr)) {
+		while ((select(sock + 1, &fdsr, &fdsw, NULL, &select_timeout)) > 0) {
+			if (FD_ISSET(sock, &fdsr)) {
 				if ((size = recvfrom(sock, buff, BUFFSIZE, 0, (struct sockaddr *)&dest_sockaddr, &addr_size)) <= 0) {
 					snprintf(errmsg, 80, "%s\tRecvfrom failed", inet_ntoa(dest_sockaddr.sin_addr));
 					err_print(errmsg, quiet);
@@ -193,24 +179,24 @@ int netInfo(char *pythonIp, netinfo * nInfo)
 				free(hostinfo);
 			};
 
-			FD_ZERO(fdsr);
-			FD_SET(sock, fdsr);
+			FD_ZERO(&fdsr);
+			FD_SET(sock, &fdsr);
 
 			/* check if send_interval time passed since last send */
 			gettimeofday(&current_time, NULL);
 			timersub(&current_time, &last_send_time, &diff_time);
 			send_ok = timercmp(&diff_time, &send_interval, >=);
 
-			if (more_to_send && FD_ISSET(sock, fdsw) && send_ok) {
-				if (next_address(&range, prev_in_addr, next_in_addr)) {
-					if (!in_list(scanned, ntohl(next_in_addr->s_addr)))
-						send_query(sock, *next_in_addr, rtt_base);
-					prev_in_addr = next_in_addr;
+			if (more_to_send && FD_ISSET(sock, &fdsw) && send_ok) {
+				if (next_address(&range, prev_in_addr, &next_in_addr)) {
+					if (!in_list(scanned, ntohl(next_in_addr.s_addr)))
+						send_query(sock, next_in_addr, rtt_base);
+					prev_in_addr = &next_in_addr;
 					/* Update last send time */
 					gettimeofday(&last_send_time, NULL);
 				} else {	/* No more queries to send */
 					more_to_send = 0;
-					FD_ZERO(fdsw);
+					FD_ZERO(&fdsw);
 					/* timeout is in milliseconds */
 					select_timeout.tv_sec = timeout / 1000;
 					select_timeout.tv_usec = (timeout % 1000) * 1000;	/* Microseconds */
@@ -218,8 +204,8 @@ int netInfo(char *pythonIp, netinfo * nInfo)
 				};
 			};
 			if (more_to_send) {
-				FD_ZERO(fdsw);
-				FD_SET(sock, fdsw);
+				FD_ZERO(&fdsw);
+				FD_SET(sock, &fdsw);
 			};
 		};
 
@@ -239,15 +225,12 @@ int netInfo(char *pythonIp, netinfo * nInfo)
 			sleep((transmit_started.tv_sec + rto) - now.tv_sec);
 		prev_in_addr = NULL;
 		more_to_send = 1;
-		FD_ZERO(fdsw);
-		FD_SET(sock, fdsw);
-		FD_ZERO(fdsr);
-		FD_SET(sock, fdsr);
+		FD_ZERO(&fdsw);
+		FD_SET(sock, &fdsw);
+		FD_ZERO(&fdsr);
+		FD_SET(sock, &fdsr);
 	};
 
 	delete_list(scanned);
-	if (buff) {
-		free(buff);
-	}
 	return 0;
 };
