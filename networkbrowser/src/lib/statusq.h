@@ -50,32 +50,28 @@
 
 #define NB_DGRAM		137
 
-#define my_uint32_t uint32_t
-#define my_uint16_t uint16_t
-#define my_uint8_t uint8_t
-
-my_uint32_t get32(void* data);
-my_uint16_t get16(void* data);
+uint32_t get32(void* data);
+uint16_t get16(void* data);
 int name_mangle( char *In, char *Out, char name_type );
-int send_query(int sock, struct in_addr dest_addr, my_uint32_t rtt_base);
+int send_query(int sock, struct in_addr dest_addr, uint32_t rtt_base);
 struct nb_host_info* parse_response(char* buff, int buffsize);
-char* getnbservicename(my_uint8_t service, int unique, char* name);
+char* getnbservicename(uint8_t service, int unique, char* name);
 
 struct nbname {
 	char ascii_name [16] ;
-	my_uint16_t rr_flags;
+	uint16_t rr_flags;
 };
 
 struct nbname_request {
-        my_uint16_t transaction_id;
-        my_uint16_t flags;
-        my_uint16_t question_count;
-        my_uint16_t answer_count;
-        my_uint16_t name_service_count;
-        my_uint16_t additional_record_count;
+        uint16_t transaction_id;
+        uint16_t flags;
+        uint16_t question_count;
+        uint16_t answer_count;
+        uint16_t name_service_count;
+        uint16_t additional_record_count;
         char question_name[34]; 
-        my_uint16_t question_type;
-        my_uint16_t question_class;
+        uint16_t question_type;
+        uint16_t question_class;
 };
 
 #define NBNAME_REQUEST_SIZE 50
@@ -83,18 +79,18 @@ struct nbname_request {
 #define IP_HEADER_SIZE 20
 
 typedef struct nbname_response_header {
-	my_uint16_t transaction_id;
-	my_uint16_t flags;
-	my_uint16_t question_count;
-	my_uint16_t answer_count;
-	my_uint16_t name_service_count;
-	my_uint16_t additional_record_count;
+	uint16_t transaction_id;
+	uint16_t flags;
+	uint16_t question_count;
+	uint16_t answer_count;
+	uint16_t name_service_count;
+	uint16_t additional_record_count;
 	char question_name[34];
-	my_uint16_t question_type;
-	my_uint16_t question_class;
-	my_uint32_t ttl;
-	my_uint16_t rdata_length;
-	my_uint8_t number_of_names;
+	uint16_t question_type;
+	uint16_t question_class;
+	uint32_t ttl;
+	uint16_t rdata_length;
+	uint8_t number_of_names;
 } nbname_response_header_t;
 
 /* #define NBNAME_RESPONSE_NUMBER_OF_NAMES_OFFSET 56 */
@@ -102,28 +98,28 @@ typedef struct nbname_response_header {
 #define NBNAME_RESPONSE_HEADER_SIZE 57
 
 typedef struct nbname_response_footer {
-	my_uint8_t adapter_address [6];
-	my_uint8_t version_major;
-	my_uint8_t version_minor;
-	my_uint16_t duration;
-	my_uint16_t frmps_received;
-	my_uint16_t frmps_transmitted;
-	my_uint16_t iframe_receive_errors;
-	my_uint16_t transmit_aborts;
-	my_uint32_t transmitted;
-	my_uint32_t received;
-	my_uint16_t iframe_transmit_errors;
-	my_uint16_t no_receive_buffer;
-	my_uint16_t tl_timeouts;
-	my_uint16_t ti_timeouts;
-	my_uint16_t free_ncbs;
-	my_uint16_t ncbs;
-	my_uint16_t max_ncbs;
-	my_uint16_t no_transmit_buffers;
-	my_uint16_t max_datagram;
-	my_uint16_t pending_sessions;
-	my_uint16_t max_sessions;
-	my_uint16_t packet_sessions;
+	uint8_t adapter_address [6];
+	uint8_t version_major;
+	uint8_t version_minor;
+	uint16_t duration;
+	uint16_t frmps_received;
+	uint16_t frmps_transmitted;
+	uint16_t iframe_receive_errors;
+	uint16_t transmit_aborts;
+	uint32_t transmitted;
+	uint32_t received;
+	uint16_t iframe_transmit_errors;
+	uint16_t no_receive_buffer;
+	uint16_t tl_timeouts;
+	uint16_t ti_timeouts;
+	uint16_t free_ncbs;
+	uint16_t ncbs;
+	uint16_t max_ncbs;
+	uint16_t no_transmit_buffers;
+	uint16_t max_datagram;
+	uint16_t pending_sessions;
+	uint16_t max_sessions;
+	uint16_t packet_sessions;
 } nbname_response_footer_t ;
 
 #define NBNAME_RESPONSE_FOOTER_SIZE 50
@@ -137,7 +133,7 @@ struct nb_host_info {
 
 typedef struct nb_service {
 	char nb_name[16];
-	my_uint8_t service_number;
+	uint8_t service_number;
 	int unique;
 	char* service_name;
 } nb_service_t ;

@@ -55,7 +55,7 @@ static int set_range(const char *range_str, struct ip_range *range_struct)
 static int python_hostinfo(struct in_addr addr, const struct nb_host_info *hostinfo, netinfo *nInfo)
 {
 	int unique;
-	my_uint8_t service;
+	uint8_t service;
 
 	sleep(1);
 	service = hostinfo->names[0].ascii_name[15];
@@ -93,7 +93,7 @@ int netInfo(char *pythonIp, netinfo * nInfo)
 	int size;
 	int pos = 0;
 	struct list *scanned;
-	my_uint32_t rtt_base;	/* Base time (seconds) for round trip time calculations */
+	uint32_t rtt_base;	/* Base time (seconds) for round trip time calculations */
 	float rtt;		/* most recent measured RTT, seconds */
 	float srtt = 0;		/* smoothed rtt estimator, seconds */
 	float rttvar = 0.75;	/* smoothed mean deviation, seconds */

@@ -100,7 +100,7 @@ int name_mangle( char *In, char *Out, char name_type ) {
 /* end of code from Samba */
 
 
-int send_query(int sock, struct in_addr dest_addr, my_uint32_t rtt_base) {
+int send_query(int sock, struct in_addr dest_addr, uint32_t rtt_base) {
         struct nbname_request request;
 	struct sockaddr_in dest_sockaddr;
 	int status;
@@ -135,20 +135,20 @@ int send_query(int sock, struct in_addr dest_addr, my_uint32_t rtt_base) {
 	return 0;
 };
 
-my_uint32_t get32(void* data) {
+uint32_t get32(void* data) {
 	union {
 		char bytes[4];
-		my_uint32_t all;
+		uint32_t all;
 	} x;
 
 	memcpy(x.bytes, data, 4);
 	return(ntohl(x.all));
 };
 
-my_uint16_t get16(void* data) {
+uint16_t get16(void* data) {
 	union {
 		char bytes[2];
-		my_uint16_t all;
+		uint16_t all;
 	} x;
 
 	memcpy(x.bytes, data, 2);
@@ -379,7 +379,7 @@ nb_service_t services[] = {
 {"Forte_$ND800ZA", 0x20, 1, "DCA IrmaLan Gateway Server Service"}
 };
 
-char* getnbservicename(my_uint8_t service, int unique, char* name) {
+char* getnbservicename(uint8_t service, int unique, char* name) {
 	int i;
 	char *unknown;
 
