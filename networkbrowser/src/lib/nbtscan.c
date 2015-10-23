@@ -81,7 +81,7 @@ unsigned int netInfo(const char *pythonIp, netinfo *nInfo, unsigned int n)
 	char buff[BUFFSIZE];
 	int sock;
 	unsigned int addr_size;
-	struct sockaddr_in src_sockaddr, dest_sockaddr;
+	struct sockaddr_in dest_sockaddr;
 	struct in_addr *prev_in_addr = NULL;
 	struct in_addr next_in_addr;
 	struct timeval select_timeout, last_send_time, current_time, diff_time, send_interval;
@@ -111,10 +111,6 @@ unsigned int netInfo(const char *pythonIp, netinfo *nInfo, unsigned int n)
 	if (sock < 0)
 		err_die("Failed to create socket", quiet);
 
-	bzero((void *)&src_sockaddr, sizeof(src_sockaddr));
-	src_sockaddr.sin_family = AF_INET;
-	if (bind(sock, (struct sockaddr *)&src_sockaddr, sizeof(src_sockaddr)) == -1)
-		err_die("Failed to bind", quiet);
 
 	FD_ZERO(&fdsr);
 	FD_SET(sock, &fdsr);
