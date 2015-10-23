@@ -31,6 +31,8 @@
 #
 ###########################################################################*/
 
+#define BSD_SOURCE
+#include <endian.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -137,25 +139,15 @@ int send_query(int sock, struct in_addr dest_addr, uint32_t rtt_base) {
 	return 0;
 };
 
-uint32_t get32(const void *data) {
-	union {
-		char bytes[4];
-		uint32_t all;
-	} x;
+static inline uint32_t get32(const void *data)
+{
+	return be32toh(*(const uint32_t *)data);
+}
 
-	memcpy(x.bytes, data, 4);
-	return(ntohl(x.all));
-};
-
-uint16_t get16(const void *data) {
-	union {
-		char bytes[2];
-		uint16_t all;
-	} x;
-
-	memcpy(x.bytes, data, 2);
-	return(ntohs(x.all));
-};
+static inline uint16_t get16(const void *data)
+{
+	return be16toh(*(const uint16_t *)data);
+}
 
 void parse_response(const char *buff, int buffsize, struct nb_host_info *hostinfo)
 {
