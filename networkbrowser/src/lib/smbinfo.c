@@ -263,13 +263,19 @@ int browse_host(shareinfo *sInfo, unsigned int size)
   char *inbuf = (char *)malloc(BUFFER_SIZE + SAFETY_MARGIN);
   char *outbuf = (char *)malloc(BUFFER_SIZE + SAFETY_MARGIN);
   int rv = 0;
-  if ((inbuf == NULL) || (outbuf == NULL)) 
+  if ((inbuf == NULL) || (outbuf == NULL)) {
+    free(inbuf);
+    free(outbuf);
     return -1;
+  }
   
   memset(outbuf,0,smb_size);
 
-  if (!send_login(inbuf,outbuf,True))
+  if (!send_login(inbuf,outbuf,True)) {
+    free(inbuf);
+    free(outbuf);
     return -1;
+  }
 
   /* now send a SMBtrans command with api RNetShareEnum */
   memset(outbuf,0,smb_size);
@@ -370,6 +376,8 @@ int browse_host(shareinfo *sInfo, unsigned int size)
 	rv = count;
     }
   send_logout(inbuf,outbuf);
+  free(inbuf);
+  free(outbuf);
   return rv;
 }
 /****************************************************************************
