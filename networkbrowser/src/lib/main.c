@@ -48,6 +48,8 @@ PyObject *_netInfo(PyObject *self, PyObject *args)
 	if (nInfo == NULL)
 		return result;
 
+	memset(nInfo, 0, sizeof(netinfo) * max_hosts);
+
 	Py_BEGIN_ALLOW_THREADS
 	n = netInfo(s, nInfo, max_hosts);
 	Py_END_ALLOW_THREADS
