@@ -41,7 +41,7 @@
 
 int quiet = 0;
 
-int set_range(char *range_str, struct ip_range *range_struct)
+static int set_range(const char *range_str, struct ip_range *range_struct)
 {
 	if (is_ip(range_str, range_struct))
 		return 1;
@@ -52,7 +52,7 @@ int set_range(char *range_str, struct ip_range *range_struct)
 	return 0;
 };
 
-int python_hostinfo(struct in_addr addr, const struct nb_host_info *hostinfo, netinfo * nInfo, int pos)
+static int python_hostinfo(struct in_addr addr, const struct nb_host_info *hostinfo, netinfo *nInfo, int pos)
 {
 	int unique;
 	my_uint8_t service;
