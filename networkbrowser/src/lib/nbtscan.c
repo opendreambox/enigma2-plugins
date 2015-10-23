@@ -225,5 +225,6 @@ unsigned int netInfo(const char *pythonIp, netinfo *nInfo, unsigned int n)
 	};
 
 	delete_list(scanned);
+	close(sock);
 	return pos;
 };
