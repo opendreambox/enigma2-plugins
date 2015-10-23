@@ -32,7 +32,7 @@ PyObject *_netInfo(PyObject *self, PyObject *args)
 	const unsigned int max_hosts = 256;
 	netinfo *nInfo;
 	char *s;
-	PyObject *plist, *name, *ip, *service, *mac, *result, *domain, *host;
+	PyObject *result;
 	unsigned int i, n;
 
 	if(!PyArg_ParseTuple(args, "s", &s)) {
@@ -40,36 +40,33 @@ PyObject *_netInfo(PyObject *self, PyObject *args)
 		return NULL;
 	}
 
-	if(!(plist= PyList_New(0)))  return NULL;
-	if(!(result= PyList_New(0)))  return NULL;
+	result = PyList_New(0);
+	if (result == NULL)
+		return NULL;
 
 	nInfo = PyMem_New(netinfo, max_hosts);
+	if (nInfo == NULL)
+		return result;
+
 	Py_BEGIN_ALLOW_THREADS
 	n = netInfo(s, nInfo, max_hosts);
 	Py_END_ALLOW_THREADS
 
 	for (i = 0; i < n; i++) {
-		{
-			host = Py_BuildValue("s", "host");
-			service = Py_BuildValue("s", nInfo[i].service);
-			domain = Py_BuildValue("s", nInfo[i].domain);
-			ip = Py_BuildValue("s", nInfo[i].ip);
-			name = Py_BuildValue("s", nInfo[i].name); 
-			mac = Py_BuildValue("s", nInfo[i].mac);
-			PyList_Append(plist, host);
-			PyList_Append(plist, name);
-			PyList_Append(plist, ip);
-			PyList_Append(plist, mac);
-			PyList_Append(plist, domain);
-			PyList_Append(plist, service);
-			PyList_Append(result, plist);
-			if(!(plist= PyList_New(0)))  return NULL;
-			
-		}
-	} 
+		PyObject *plist = PyList_New(0);
+		if (plist == NULL)
+			break;
+		PyList_Append(plist, PyString_FromString("host"));
+		PyList_Append(plist, PyString_FromString(nInfo[i].name));
+		PyList_Append(plist, PyString_FromString(nInfo[i].ip));
+		PyList_Append(plist, PyString_FromString(nInfo[i].mac));
+		PyList_Append(plist, PyString_FromString(nInfo[i].domain));
+		PyList_Append(plist, PyString_FromString(nInfo[i].service));
+		PyList_Append(result, plist);
+	}
+
 	PyMem_Free(nInfo);
 	return result;
-	//return Py_BuildValue("s", nInfo[0].name);
 }
 
 PyObject *_nfsShare(PyObject *self, PyObject *args)
