@@ -39,8 +39,6 @@
 
 #include "nbtscan.h"
 
-int quiet = 0;
-
 static int set_range(const char *range_str, struct ip_range *range_struct)
 {
 	if (is_ip(range_str, range_struct))
@@ -108,9 +106,10 @@ unsigned int netInfo(const char *pythonIp, netinfo *nInfo, unsigned int n)
 
 	/* Prepare socket and address structures */
 	sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	if (sock < 0)
-		err_die("Failed to create socket", quiet);
-
+	if (sock < 0) {
+		perror("Failed to create socket");
+		return 0;
+	}
 
 	FD_ZERO(&fdsr);
 	FD_SET(sock, &fdsr);
@@ -143,14 +142,14 @@ unsigned int netInfo(const char *pythonIp, netinfo *nInfo, unsigned int n)
 			if (FD_ISSET(sock, &fdsr)) {
 				if ((size = recvfrom(sock, buff, BUFFSIZE, 0, (struct sockaddr *)&dest_sockaddr, &addr_size)) <= 0) {
 					snprintf(errmsg, 80, "%s\tRecvfrom failed", inet_ntoa(dest_sockaddr.sin_addr));
-					err_print(errmsg, quiet);
+					perror(errmsg);
 					continue;
 				};
 				gettimeofday(&recv_time, NULL);
 				memset(&hostinfo, 0, sizeof(hostinfo));
 				hostinfo = (struct nb_host_info *)parse_response(buff, size);
 				if (!hostinfo) {
-					err_print("parse_response returned NULL", quiet);
+					perror("parse_response returned NULL");
 					continue;
 				};
 				/* If this packet isn't a duplicate */
