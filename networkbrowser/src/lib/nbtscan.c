@@ -92,7 +92,6 @@ void freeNetInfo(netinfo * nInfo)
 int netInfo(char *pythonIp, netinfo * nInfo)
 {
 	int timeout = 10000, send_ok;
-	char *target_string;
 	struct ip_range range;
 	void *buff;
 	int sock;
@@ -116,13 +115,10 @@ int netInfo(char *pythonIp, netinfo * nInfo)
 	int rto, retransmits = 0, more_to_send = 1, i;
 	char errmsg[80];
 
-	if ((target_string = strdup(pythonIp)) == NULL) {
-		err_die("Malloc failed.\n", quiet);
+	if (!set_range(pythonIp, &range)) {
+		printf("Error: %s is not an IP address or address range.\n", pythonIp);
+		return 0;
 	}
-	if (!set_range(target_string, &range)) {
-		printf("Error: %s is not an IP address or address range.\n", target_string);
-		free(target_string);
-	};
 	/* Finished with options */
   /*************************/
 
