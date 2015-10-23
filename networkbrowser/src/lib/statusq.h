@@ -50,10 +50,10 @@
 
 #define NB_DGRAM		137
 
-uint32_t get32(void* data);
-uint16_t get16(void* data);
+uint32_t get32(const void *data);
+uint16_t get16(const void *data);
 int send_query(int sock, struct in_addr dest_addr, uint32_t rtt_base);
-struct nb_host_info* parse_response(char* buff, int buffsize);
+struct nb_host_info* parse_response(const char *buff, int buffsize);
 char* getnbservicename(uint8_t service, int unique, char* name);
 
 struct nbname {

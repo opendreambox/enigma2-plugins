@@ -47,7 +47,7 @@
 extern int quiet;
 
 /* Start of code from Samba */
-static int name_mangle( char *In, char *Out, char name_type ) {
+static int name_mangle(const char *In, char *Out, char name_type) {
 	int   i;
 	int   c;
 	int   len;
@@ -135,7 +135,7 @@ int send_query(int sock, struct in_addr dest_addr, uint32_t rtt_base) {
 	return 0;
 };
 
-uint32_t get32(void* data) {
+uint32_t get32(const void *data) {
 	union {
 		char bytes[4];
 		uint32_t all;
@@ -145,7 +145,7 @@ uint32_t get32(void* data) {
 	return(ntohl(x.all));
 };
 
-uint16_t get16(void* data) {
+uint16_t get16(const void *data) {
 	union {
 		char bytes[2];
 		uint16_t all;
@@ -155,7 +155,7 @@ uint16_t get16(void* data) {
 	return(ntohs(x.all));
 };
 
-struct nb_host_info* parse_response(char* buff, int buffsize) {
+struct nb_host_info* parse_response(const char *buff, int buffsize) {
 	struct nb_host_info* hostinfo = NULL;
 	nbname_response_footer_t* response_footer;
 	nbname_response_header_t* response_header;
