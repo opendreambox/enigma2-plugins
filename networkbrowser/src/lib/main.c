@@ -33,7 +33,7 @@ PyObject *_netInfo(PyObject *self, PyObject *args)
 	netinfo *nInfo;
 	char *s;
 	PyObject *plist, *name, *ip, *service, *mac, *result, *domain, *host;
-	int i;
+	unsigned int i, n;
 
 	if(!PyArg_ParseTuple(args, "s", &s)) {
 		PyErr_SetString(PyExc_TypeError, "netInfo(ip/24)");
@@ -45,15 +45,10 @@ PyObject *_netInfo(PyObject *self, PyObject *args)
 
 	nInfo = PyMem_New(netinfo, max_hosts);
 	Py_BEGIN_ALLOW_THREADS
-	netInfo(s, nInfo);
+	n = netInfo(s, nInfo, max_hosts);
 	Py_END_ALLOW_THREADS
 
-	for (i=0; i<256; i++) 
-	{ 
-		if(nInfo[i].ip[0] == '\0') {
-			break;
-		}
-		else
+	for (i = 0; i < n; i++) {
 		{
 			host = Py_BuildValue("s", "host");
 			service = Py_BuildValue("s", nInfo[i].service);

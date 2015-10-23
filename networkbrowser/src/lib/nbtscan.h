@@ -41,7 +41,7 @@ typedef struct {
 	char service[80];
 } netinfo;
 
-int netInfo(char *pythonIp, netinfo *nInfo);
+unsigned int netInfo(const char *pythonIp, netinfo *nInfo, unsigned int size);
 
 #endif
 

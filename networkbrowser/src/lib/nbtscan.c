@@ -74,7 +74,7 @@ static int python_hostinfo(struct in_addr addr, const struct nb_host_info *hosti
 
 #define BUFFSIZE 1024
 
-int netInfo(char *pythonIp, netinfo * nInfo)
+unsigned int netInfo(const char *pythonIp, netinfo *nInfo, unsigned int n)
 {
 	int timeout = 10000, send_ok;
 	struct ip_range range;
@@ -90,7 +90,7 @@ int netInfo(char *pythonIp, netinfo * nInfo)
 	fd_set fdsr;
 	fd_set fdsw;
 	int size;
-	int pos = 0;
+	unsigned int pos = 0;
 	struct list *scanned;
 	uint32_t rtt_base;	/* Base time (seconds) for round trip time calculations */
 	float rtt;		/* most recent measured RTT, seconds */
@@ -176,6 +176,9 @@ int netInfo(char *pythonIp, netinfo * nInfo)
 				free(hostinfo);
 			};
 
+			if (pos == n)
+				break;
+
 			FD_ZERO(&fdsr);
 			FD_SET(sock, &fdsr);
 
@@ -206,6 +209,9 @@ int netInfo(char *pythonIp, netinfo * nInfo)
 			};
 		};
 
+		if (pos == n)
+			break;
+
 		if (i >= retransmits)
 			break;	/* If we are not going to retransmit
 				   we can finish right now without waiting */
@@ -229,5 +235,5 @@ int netInfo(char *pythonIp, netinfo * nInfo)
 	};
 
 	delete_list(scanned);
-	return 0;
+	return pos;
 };
