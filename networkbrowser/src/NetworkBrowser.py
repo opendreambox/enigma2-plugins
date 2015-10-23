@@ -228,7 +228,7 @@ class NetworkBrowser(Screen):
 		sharelist = []
 		if len(self._ip):
 			strIP = "%s.0/24" %( ".".join(self._ip[0:3]) )
-			info = netscan.netInfo(strIP)
+			info = [x for x in netscan.netInfo(strIP) if x[2] != '.'.join(self._ip)]
 			Log.i(info)
 		else:
 			Log.w("IP FAULTY! %s" %self._ip)
