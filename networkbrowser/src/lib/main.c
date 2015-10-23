@@ -31,6 +31,7 @@ static PyObject *error;
 
 PyObject *_netInfo(PyObject *self, PyObject *args)
 {
+	const unsigned int max_hosts = 256;
 	netinfo *nInfo;
 	char *s;
 	PyObject *plist, *name, *ip, *service, *mac, *result, *domain, *host;
@@ -43,8 +44,9 @@ PyObject *_netInfo(PyObject *self, PyObject *args)
 
 	if(!(plist= PyList_New(0)))  return NULL;
 	if(!(result= PyList_New(0)))  return NULL;
+
+	nInfo = PyMem_New(netinfo, max_hosts);
 	Py_BEGIN_ALLOW_THREADS
-	nInfo = newNetInfo();
 	netInfo(s, nInfo);
 	Py_END_ALLOW_THREADS
 
@@ -72,7 +74,7 @@ PyObject *_netInfo(PyObject *self, PyObject *args)
 			
 		}
 	} 
-	freeNetInfo(nInfo);
+	PyMem_Free(nInfo);
 	return result;
 	//return Py_BuildValue("s", nInfo[0].name);
 }

@@ -73,20 +73,6 @@ static int python_hostinfo(struct in_addr addr, const struct nb_host_info *hosti
 	return 0;
 }
 
-netinfo *newNetInfo()
-{
-	netinfo *nInfo = malloc(sizeof(netinfo) * 255);
-	if (!nInfo)
-		exit(0);	// TODO: besser machen 
-	memset(nInfo, 0, sizeof(netinfo) * 255);
-	return nInfo;
-}
-
-void freeNetInfo(netinfo * nInfo)
-{
-	free(nInfo);
-}
-
 #define BUFFSIZE 1024
 
 int netInfo(char *pythonIp, netinfo * nInfo)

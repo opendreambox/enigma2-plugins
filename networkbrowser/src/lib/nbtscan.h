@@ -42,8 +42,6 @@ typedef struct {
 } netinfo;
 
 int netInfo(char *pythonIp, netinfo *nInfo);
-netinfo * newNetInfo();
-void freeNetInfo(netinfo *nInfo);
 
 #endif
 
