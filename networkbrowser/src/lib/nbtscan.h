@@ -42,7 +42,6 @@ typedef struct {
 } netinfo;
 
 int set_range(char* range_str, struct ip_range* range_struct);
-int print_header();
 int netInfo(char *pythonIp, netinfo *nInfo);
 netinfo * newNetInfo();
 void freeNetInfo(netinfo *nInfo);
