@@ -79,7 +79,7 @@ PyObject *_nfsShare(PyObject *self, PyObject *args)
 	char *r;
 	PyObject *plist, *result;
 	unsigned int i;
-	int err;
+	int n;
 
 	if(!PyArg_ParseTuple(args, "ss", &s, &r)) {
 		PyErr_SetString(PyExc_TypeError, "nfsShare(ip,rechnername)");
@@ -97,14 +97,11 @@ PyObject *_nfsShare(PyObject *self, PyObject *args)
 	memset(nfsInfo, 0, sizeof(nfsinfo) * max_shares);
 
 	Py_BEGIN_ALLOW_THREADS
-	err = showNfsShare(s, nfsInfo);
+	n = showNfsShare(s, nfsInfo, max_shares);
 	Py_END_ALLOW_THREADS
-	if (err == 0)
+	if (n >= 0)
 	{
-		for (i = 0; i < max_shares; i++) {
-			if (nfsInfo[i].ip[0] == '\0')
-				break;
-
+		for (i = 0; i < n; i++) {
 			plist = PyList_New(0);
 			if (plist == NULL)
 				break;
