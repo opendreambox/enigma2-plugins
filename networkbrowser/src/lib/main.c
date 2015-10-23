@@ -130,7 +130,7 @@ PyObject *_nfsShare(PyObject *self, PyObject *args)
 PyObject *_smbShare(PyObject *self, PyObject *args)
 {
 	const unsigned int max_shares = 128;
-	unsigned int i;
+	int i, n;
 	char *s;
 	char *r;
 	char *u;
@@ -154,13 +154,10 @@ PyObject *_smbShare(PyObject *self, PyObject *args)
 	memset(sInfo, 0, sizeof(shareinfo) * max_shares);
 
 	Py_BEGIN_ALLOW_THREADS
-	smbInfo(s,r,u,p,sInfo);
+	n = smbInfo(s, r, u, p, sInfo, max_shares);
 	Py_END_ALLOW_THREADS
 
-	for (i = 0; i < max_shares; i++) {
-		if(sInfo[i].sharename[0] == '\0')
-			break;
-
+	for (i = 0; i < n; i++) {
 		plist = PyList_New(0);
 		if (plist == NULL)
 			break;

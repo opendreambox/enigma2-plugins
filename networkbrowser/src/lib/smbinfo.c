@@ -46,7 +46,7 @@ BOOL get_myname(char *myname,struct in_addr *ip);
 struct hostent *Get_Hostbyname(char *name);
 void strlower(char *s);
 void strupper(char *s);
-void browse_host(shareinfo *sInfo);
+int browse_host(shareinfo *sInfo, unsigned int size);
 void ssval(char *buf,int pos,uint16 val);
 uint32 ival(char *buf,int pos);
 void *object_byte_swap(void *obj,int size);
@@ -113,7 +113,7 @@ BOOL have_ip = False;
 /****************************************************************************
 hier gehts los 
 ****************************************************************************/
-int smbInfo(char *pythonIp , char *pythonrName, char *pythonUser, char *pythonPass, shareinfo *sInfo) 
+int smbInfo(char *pythonIp , char *pythonrName, char *pythonUser, char *pythonPass, shareinfo *sInfo, unsigned int size)
 {
 	int port = 139;
 	have_ip = True;
@@ -132,11 +132,11 @@ int smbInfo(char *pythonIp , char *pythonrName, char *pythonUser, char *pythonPa
 #endif
 	if (open_sockets(port))
 	{
-		browse_host(sInfo);
+		int ret = browse_host(sInfo, size);
 		close_sockets();
-		return(0);
+		return ret;
 	}
-	return 0;
+	return -1;
 }
 
 /****************************************************************************
@@ -256,19 +256,20 @@ void strupper(char *s)
 /****************************************************************************
 try and browse available connections on a host
 ****************************************************************************/
-void browse_host(shareinfo *sInfo)
+int browse_host(shareinfo *sInfo, unsigned int size)
 {
   char *p;
   char *params;
   char *inbuf = (char *)malloc(BUFFER_SIZE + SAFETY_MARGIN);
   char *outbuf = (char *)malloc(BUFFER_SIZE + SAFETY_MARGIN);
+  int rv = 0;
   if ((inbuf == NULL) || (outbuf == NULL)) 
-    return;
+    return -1;
   
   memset(outbuf,0,smb_size);
 
   if (!send_login(inbuf,outbuf,True))
-    return;
+    return -1;
 
   /* now send a SMBtrans command with api RNetShareEnum */
   memset(outbuf,0,smb_size);
@@ -334,6 +335,9 @@ void browse_host(shareinfo *sInfo)
 	}
 #endif
 
+	if (count > size)
+		count = size;
+
       for (i=0;i<count;i++)
 	{
 	  char *sname = p;
@@ -363,8 +367,10 @@ void browse_host(shareinfo *sInfo)
 #endif
 	  p += 20;
 	}
+	rv = count;
     }
   send_logout(inbuf,outbuf);
+  return rv;
 }
 /****************************************************************************
   set a value at buf[pos] to int16 val
