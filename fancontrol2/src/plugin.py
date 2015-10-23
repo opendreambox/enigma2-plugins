@@ -115,7 +115,7 @@ def Free(dir):
 
 def getVoltage(fanid):
 	f = open("/proc/stb/fp/fan_vlt", "r")
-	value = int(f.readline().strip(), 16)
+	value = int(f.readline().strip() or "0", 16)
 	f.close()
 	return value
 
@@ -128,7 +128,7 @@ def setVoltage(fanid, value):
 
 def getPWM(fanid):
 	f = open("/proc/stb/fp/fan_pwm", "r")
-	value = int(f.readline().strip(), 16)
+	value = int(f.readline().strip() or "0", 16)
 	f.close()
 	return value
 
@@ -168,7 +168,7 @@ config.plugins.FanControl.EnableThread = ConfigYesNo(default = True)
 def GetFanRPM():
 	global RPMread
 	f = open("/proc/stb/fp/fan_speed", "r")
-	value = int(f.readline().strip()[:-4])
+	value = int(f.readline().strip()[:-4] or "0")
 	f.close()
 	value = int(value / int(config.plugins.FanControl.Multi.value))
 	if value > 0 and value < 6000:
@@ -340,7 +340,7 @@ class FanControl2Test(ConfigListScreen,Screen):
 
 	def DoTest(self):
 		self.id = 0
-		self.i = 0
+		self.i = 1
 		self.last = 0
 		self.rpm = 0
 		SaveAktVLT = AktVLT
@@ -348,7 +348,7 @@ class FanControl2Test(ConfigListScreen,Screen):
 		SaveFan = config.plugins.FanControl.Fan.value
 		config.plugins.FanControl.Fan.value = "aus"
 		if SaveFan in ["4pin","4pinREG"]:
-			setPWM(self.id,0)
+			setPWM(self.id,self.i)
 			time.sleep(10)
 			while GetFanRPM() < 100 and self.i < 255:
 				setPWM(self.id,self.i)
