@@ -27,7 +27,7 @@
 #include "smbinfo.h"
 #include "showmount.h"
 
-PyObject *_netInfo(PyObject *self, PyObject *args)
+static PyObject *_netInfo(PyObject *self, PyObject *args)
 {
 	const unsigned int max_hosts = 256;
 	netinfo *nInfo;
@@ -71,7 +71,7 @@ PyObject *_netInfo(PyObject *self, PyObject *args)
 	return result;
 }
 
-PyObject *_nfsShare(PyObject *self, PyObject *args)
+static PyObject *_nfsShare(PyObject *self, PyObject *args)
 {
 	const unsigned int max_shares = 256;
 	nfsinfo *nfsInfo;
@@ -127,7 +127,7 @@ PyObject *_nfsShare(PyObject *self, PyObject *args)
 	return result;
 }
 
-PyObject *_smbShare(PyObject *self, PyObject *args)
+static PyObject *_smbShare(PyObject *self, PyObject *args)
 {
 	const unsigned int max_shares = 128;
 	int i, n;
