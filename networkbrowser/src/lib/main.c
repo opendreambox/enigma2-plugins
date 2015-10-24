@@ -55,16 +55,17 @@ static PyObject *_netInfo(PyObject *self, PyObject *args)
 	Py_END_ALLOW_THREADS
 
 	for (i = 0; i < n; i++) {
-		PyObject *plist = PyList_New(0);
+		PyObject *plist = PyList_New(6);
 		if (plist == NULL)
 			break;
-		PyList_Append(plist, PyString_FromString("host"));
-		PyList_Append(plist, PyString_FromString(nInfo[i].name));
-		PyList_Append(plist, PyString_FromString(nInfo[i].ip));
-		PyList_Append(plist, PyString_FromString(nInfo[i].mac));
-		PyList_Append(plist, PyString_FromString(nInfo[i].domain));
-		PyList_Append(plist, PyString_FromString(nInfo[i].service));
+		PyList_SET_ITEM(plist, 0, PyString_FromString("host"));
+		PyList_SET_ITEM(plist, 1, PyString_FromString(nInfo[i].name));
+		PyList_SET_ITEM(plist, 2, PyString_FromString(nInfo[i].ip));
+		PyList_SET_ITEM(plist, 3, PyString_FromString(nInfo[i].mac));
+		PyList_SET_ITEM(plist, 4, PyString_FromString(nInfo[i].domain));
+		PyList_SET_ITEM(plist, 5, PyString_FromString(nInfo[i].service));
 		PyList_Append(result, plist);
+		Py_DECREF(plist);
 	}
 
 	PyMem_Free(nInfo);
@@ -102,24 +103,26 @@ static PyObject *_nfsShare(PyObject *self, PyObject *args)
 	if (n >= 0)
 	{
 		for (i = 0; i < n; i++) {
-			plist = PyList_New(0);
+			plist = PyList_New(6);
 			if (plist == NULL)
 				break;
-			PyList_Append(plist, PyString_FromString("nfsShare"));
-			PyList_Append(plist, PyString_FromString(r));
-			PyList_Append(plist, PyString_FromString(s));
-			PyList_Append(plist, PyString_FromString(nfsInfo[i].ip));
-			PyList_Append(plist, PyString_FromString(nfsInfo[i].share));
-			PyList_Append(plist, PyString_FromString(""));
+			PyList_SET_ITEM(plist, 0, PyString_FromString("nfsShare"));
+			PyList_SET_ITEM(plist, 1, PyString_FromString(r));
+			PyList_SET_ITEM(plist, 2, PyString_FromString(s));
+			PyList_SET_ITEM(plist, 3, PyString_FromString(nfsInfo[i].ip));
+			PyList_SET_ITEM(plist, 4, PyString_FromString(nfsInfo[i].share));
+			PyList_SET_ITEM(plist, 5, PyString_FromString(""));
 			PyList_Append(result, plist);
+			Py_DECREF(plist);
 		}
 	}
 	else
 	{
-		plist = PyList_New(0);
+		plist = PyList_New(1);
 		if (plist != NULL) {
-			PyList_Append(plist, PyString_FromString(nfsInfo[0].share));
+			PyList_SET_ITEM(plist, 0, PyString_FromString(nfsInfo[0].share));
 			PyList_Append(result, plist);
+			Py_DECREF(plist);
 		}
 	}
 
@@ -158,16 +161,17 @@ static PyObject *_smbShare(PyObject *self, PyObject *args)
 	Py_END_ALLOW_THREADS
 
 	for (i = 0; i < n; i++) {
-		plist = PyList_New(0);
+		plist = PyList_New(6);
 		if (plist == NULL)
 			break;
-		PyList_Append(plist, PyString_FromString("smbShare"));
-		PyList_Append(plist, PyString_FromString(r));
-		PyList_Append(plist, PyString_FromString(s));
-		PyList_Append(plist, PyString_FromString(sInfo[i].sharename));
-		PyList_Append(plist, PyString_FromString(sInfo[i].typ));
-		PyList_Append(plist, PyString_FromString(sInfo[i].comment));
+		PyList_SET_ITEM(plist, 0, PyString_FromString("smbShare"));
+		PyList_SET_ITEM(plist, 1, PyString_FromString(r));
+		PyList_SET_ITEM(plist, 2, PyString_FromString(s));
+		PyList_SET_ITEM(plist, 3, PyString_FromString(sInfo[i].sharename));
+		PyList_SET_ITEM(plist, 4, PyString_FromString(sInfo[i].typ));
+		PyList_SET_ITEM(plist, 5, PyString_FromString(sInfo[i].comment));
 		PyList_Append(result, plist);
+		Py_DECREF(plist);
 	}
 
 	PyMem_Free(sInfo);
