@@ -238,6 +238,9 @@ class AutoMount():
 		res = False
 		entry = Util.findInFstab(src=None, dst=mountpoint)
 		if entry:
+			sharename=os_path.basename(mountpoint)
+			if sharename in self._mounts:
+				del self._mounts[sharename]
 			self._unmount(mountpoint)
 			harddiskmanager.modifyFstabEntry(entry['src'], entry['dst'], mode="remove")
 			harddiskmanager.removeMountedPartition(mountpoint)
