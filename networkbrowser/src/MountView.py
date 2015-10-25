@@ -110,7 +110,7 @@ class AutoMountView(Screen):
                 if cur:
                         returnValue = cur[1]
                         self.applyConfigRef = self.session.openWithCallback(self.applyConfigfinishedCB, MessageBox, _("Please wait while removing your network mount..."), type = MessageBox.TYPE_INFO, enable_input = False)
-                        iAutoMount.removeMount(returnValue,self.removeDataAvail)
+                        iAutoMount.removeMount(iAutoMount.MOUNT_BASE + returnValue, self.removeDataAvail)
 
         def removeDataAvail(self, data):
                 if data is True:
