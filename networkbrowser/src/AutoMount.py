@@ -125,6 +125,7 @@ class AutoMount():
 						])
 				else:
 					opts.extend(['guest'])
+				opts.extend(['sec=ntlmv2'])
 				remote = "//%s/%s" % (data['ip'], tmpsharedir)
 				harddiskmanager.modifyFstabEntry(remote, mountpoint, mode="add_deactivated", extopts=opts, fstype="cifs")
 		else:
