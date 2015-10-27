@@ -27,6 +27,7 @@ class Search(Videos):
 			'part' : 'id',
 			'type' : 'video',
 			'maxResults' : maxResults,
+			'order' : order,
 			'safeSearch' : safeSearch
 		}
 		if searchTerm:
