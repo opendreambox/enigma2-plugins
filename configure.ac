@@ -784,5 +784,6 @@ zdfmediathek/Makefile
 zdfmediathek/meta/Makefile
 zdfmediathek/src/Makefile
 
+po/Makefile
 ])
 AC_OUTPUT

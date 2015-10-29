@@ -127,7 +127,8 @@ SUBDIRS = \
 	yttrailer \
 	zaphistorybrowser \
 	zapstatistic \
-	zdfmediathek
+	zdfmediathek \
+	po
 
 metadir = $(datadir)/meta
 meta_DATA = index-enigma2-plugins.xml
