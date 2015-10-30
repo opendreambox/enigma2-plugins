@@ -86,7 +86,7 @@ class ConfigScreen(Screen, ConfigListScreen, HelpableScreen, PushServiceBase):
 		self["custom_actions"] = HelpableActionMap(self, "PushServiceConfigActions",
 		{
 			"pageUp":				(self.pageUp,       _("Page up")),
-			"pageDown":			(self.pageDown,     _("Page down")),
+			"pageDown":				(self.pageDown,     _("Page down")),
 		}, -2) # higher priority
 		
 		self["main_actions"] = HelpableActionMap(self, "PushServiceConfigActions",
@@ -193,6 +193,8 @@ class ConfigScreen(Screen, ConfigListScreen, HelpableScreen, PushServiceBase):
 				self.list.append( getConfigListEntry( _("Run on boot"), config.pushservice.runonboot, 0 ) )
 				if config.pushservice.runonboot.value:
 					self.list.append( getConfigListEntry( _("Boot delay"), config.pushservice.bootdelay, 0 ) )
+				
+				self.list.append( getConfigListEntry( _("Push errors"), config.pushservice.push_errors, 0 ) )
 			
 		elif self.state == SERVICES:
 			self["key_red"].setText(_("Main"))

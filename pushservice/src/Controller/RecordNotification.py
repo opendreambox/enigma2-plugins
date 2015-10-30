@@ -42,8 +42,11 @@ class RecordNotification(ControllerBase):
 		ControllerBase.__init__(self)
 		
 		self.forceBindRecordTimer = eTimer()
-		self.forceBindRecordTimer.callback.append(self.begin)
- 
+		try:
+			self.forceBindRecordTimer_conn = self.forceBindRecordTimer.timeout.connect(self.begin)
+ 		except:
+			self.forceBindRecordTimer.callback.append(self.begin)
+		
 		# Default configuration
 		self.setOption( 'send_on_start',       NoSave(ConfigYesNo( default = False )),  _("Send notification on record start") )
 		self.setOption( 'send_on_end',	       NoSave(ConfigYesNo( default = True )),   _("Send notification on record end") )
