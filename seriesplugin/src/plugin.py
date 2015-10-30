@@ -28,20 +28,26 @@ from Logger import splog
 #######################################################
 # Constants
 NAME = "SeriesPlugin"
-VERSION = "2.6.2"
+VERSION = "3.0.5"
 DESCRIPTION = _("SeriesPlugin")
 SHOWINFO = _("Show series info (SP)")
 RENAMESERIES = _("Rename serie(s) (SP)")
 CHECKTIMERS = _("Check timer list for series (SP)")
 SUPPORT = "http://bit.ly/seriespluginihad"
 DONATE = "http://bit.ly/seriespluginpaypal"
+TERMS = "TBD"
 ABOUT = "\n  " + NAME + " " + VERSION + "\n\n" \
 				+ _("  (C) 2012 by betonme @ IHAD \n\n") \
+				+ _("  Terms: ") + TERMS + "\n\n" \
 				+ _("  {lookups:d} successful lookups.\n") \
 				+ _("  How much time have You saved?\n\n") \
 				+ _("  Support: ") + SUPPORT + "\n" \
 				+ _("  Feel free to donate. \n") \
 				+ _("  PayPal: ") + DONATE
+
+PROXY = "http://serienrecorder.lima-city.de/proxy.php?url="
+USER_AGENT = "Enigma2-"+NAME
+
 try:
 	from Tools.HardwareInfo import HardwareInfo
 	DEVICE = HardwareInfo().get_device_name().strip()
@@ -115,17 +121,18 @@ config.plugins.seriesplugin.check_timer_list          = ConfigYesNo(default = Fa
 
 config.plugins.seriesplugin.timer_popups              = ConfigYesNo(default = True)
 config.plugins.seriesplugin.timer_popups_success      = ConfigYesNo(default = False)
-config.plugins.seriesplugin.timer_popups_timeout     = ConfigSelectionNumber(-1, 20, 1, default = 3)
+config.plugins.seriesplugin.timer_popups_timeout      = ConfigSelectionNumber(-1, 20, 1, default = 3)
+
+config.plugins.seriesplugin.socket_timeout            = ConfigSelectionNumber(0, 600, 1, default = 30)
 
 config.plugins.seriesplugin.caching                   = ConfigYesNo(default = True)
+config.plugins.seriesplugin.caching_expiration        = ConfigSelectionNumber(0, 48, 1, default = 6)
 
 config.plugins.seriesplugin.debug_prints              = ConfigYesNo(default = False)
 config.plugins.seriesplugin.write_log                 = ConfigYesNo(default = False)
 config.plugins.seriesplugin.log_file                  = ConfigText(default = "/tmp/seriesplugin.log", fixed_size = False)
 config.plugins.seriesplugin.log_reply_user            = ConfigText(default = "Dreambox User", fixed_size = False)
 config.plugins.seriesplugin.log_reply_mail            = ConfigText(default = "myemail@home.com", fixed_size = False)
-
-config.plugins.seriesplugin.ganalytics                = ConfigYesNo(default = True)
 
 # Internal
 config.plugins.seriesplugin.lookup_counter            = ConfigNumber(default = 0)
@@ -536,7 +543,7 @@ def SPmodifyTimer(self, timer, name, shortdesc, begin, end, serviceref, eit=None
 	# Never overwrite existing names, You will lose Your series informations
 	#timer.name = name
 	# Only overwrite non existing descriptions
-	timer.description = timer.description or shortdesc
+	#timer.description = timer.description or shortdesc
 	timer.begin = int(begin)
 	timer.end = int(end)
 	timer.service_ref = ServiceReference(serviceref)

@@ -40,18 +40,6 @@ EPISODEIDURLPRINT = "http://www.wunschliste.de/epg_print.pl?"
 
 CompiledRegexpEpisode = re.compile( '((\d+)[\.x])?(\d+)')
 
-Headers = {
-		'User-Agent' : 'Mozilla/5.0',
-		'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-		'Accept-Charset':'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
-		'Accept-Encoding':'',
-		'Accept-Language':'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4',
-		'Cache-Control':'no-cache',
-		'Connection':'keep-alive',
-		'Host':'www.wunschliste.de',
-		'Referer':'http://www.wunschliste.de/main',
-		'Pragma':'no-cache'
-	}
 
 def str_to_utf8(s):
 	# Convert a byte string with unicode escaped characters
@@ -176,7 +164,7 @@ class Wunschliste(IdentifierBase):
 	def getSeries(self, name):
 		#url = SERIESLISTURL + urlencode({ 'q' : re.sub("[^a-zA-Z0-9-*]", " ", name) })
 		url = SERIESLISTURL + urlencode({ 'q' : name })
-		data = self.getPage( url, Headers )
+		data = self.getPage( url )
 		
 		if data and isinstance(data, basestring):
 			data = self.parseSeries(data)
@@ -212,7 +200,7 @@ class Wunschliste(IdentifierBase):
 		splog("WunschlistePrint getNextPage")
 		
 		url = EPISODEIDURLPRINT + urlencode({ 's' : id })
-		data = self.getPage( url, Headers )
+		data = self.getPage( url )
 		
 		if data and isinstance(data, basestring):
 			data = self.parseNextPage(data)
