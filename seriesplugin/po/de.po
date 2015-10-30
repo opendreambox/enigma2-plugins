@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SeriesPlugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-08 15:16+0100\n"
-"PO-Revision-Date: 2015-02-08 15:18+0100\n"
+"POT-Creation-Date: 2015-10-18 01:52+0100\n"
+"PO-Revision-Date: 2015-10-18 18:22+0100\n"
 "Last-Translator: James Blond <alattka@freenet.de>\n"
 "Language-Team: \n"
 "Language: German\n"
@@ -67,28 +67,24 @@ msgstr "Fehler überprüfe Protokoll Datei"
 msgid "Channel matching..."
 msgstr "Kanalübereinstimmung..."
 
-msgid "Web-Channel / STB-Channels."
-msgstr "Web-Kanal / STB-Kanäle."
+msgid "STB-Channels / Web-Channel"
+msgstr "STB-Kanäle / Web-Kanal"
 
 msgid "Add Web Channel"
 msgstr "Web Kanal zufügen"
 
-#, python-format
 msgid "Channel '- %(servicename)s - %(remote)s -' added."
 msgstr "Kanal '- %(servicename)s - %(remote)s -' hinzugefügt."
 
 msgid "Add channel (Yes) or replace it (No)"
 msgstr "Kanal anfügen (Ja) oder entfernen (Nein)"
 
-#, python-format
 msgid "Channel '- %(servicename)s - %(remote)s -' replaced."
 msgstr "Kanal '- %(servicename)s - %(remote)s -' entfernt."
 
-#, python-format
 msgid "Remove '%s'?"
 msgstr "Entfernen '%s'?"
 
-#, python-format
 msgid "Channel '- %s -' removed."
 msgstr "Kanal '- %s -' entfernt."
 
@@ -116,6 +112,9 @@ msgid ""
 msgstr ""
 "  (C) 2012 von betonme @ IHAD \n"
 "\n"
+
+msgid "  Terms: "
+msgstr "  Bedingungen: "
 
 msgid "  {lookups:d} successful lookups.\n"
 msgstr "  {lookups:d} Erfolgreiche Treffer.\n"
@@ -146,7 +145,7 @@ msgid "SeriesPlugin extension exception "
 msgstr "SeriesPlugin Ausnahme Erweiterung"
 
 msgid "SeriesPlugin renamer exception "
-msgstr "SeriesPlugin Ausnahme umbenennen"
+msgstr "SeriesPlugin Ausnahme Umbenennen"
 
 msgid "SeriesPlugin label exception "
 msgstr "SeriesPlugin Ausnahme Beschriftung"
@@ -188,22 +187,22 @@ msgid "Check timer list from extension menu"
 msgstr "Timerliste aus  dem erweiterten Menü überprüfen"
 
 msgid "Select identifier for elapsed events"
-msgstr "Kennung für abgelaufende Sendung(en) auswählen"
+msgstr "Quelle für abgelaufende Sendung(en) auswählen"
 
 msgid "Select identifier for today events"
-msgstr "Kennung für heutige Sendung(en) auswählen"
+msgstr "Quelle für heutige Sendung(en) auswählen"
 
 msgid "Select identifier for future events"
-msgstr "Kennung für zukünftige Sendung(en) auswählen"
+msgstr "Quelle für zukünftige Sendung(en) auswählen"
 
 msgid "Episode pattern file"
-msgstr "Eigene Episoden Erweiterung"
+msgstr "Eigene Episoden Vorlage"
 
 msgid "Record title episode pattern"
-msgstr "Episoden Erweiterung für den Aufnahmetitel"
+msgstr "Episoden Vorlage für den Aufnahmetitel"
 
 msgid "Record description episode pattern"
-msgstr "Aufnahmebeschreibung Episoden Erweiterung"
+msgstr "Aufnahmebeschreibung Episoden Vorlage"
 
 msgid "Skip search if pattern matches"
 msgstr "Suche überspringen wenn Vorlage übereinstimmt"
@@ -236,7 +235,7 @@ msgid "Show success after Record renaming"
 msgstr "Erfolgreiches umbenennen von Aufnahme(n) anzeigen (Popup)"
 
 msgid "Timeout for Rename Popup"
-msgstr "Anzeigedauer Popup Umbenennen"
+msgstr "Anzeigedauer Umbenennen Popup"
 
 msgid "Max time drift to match episode"
 msgstr "Maximale Zeitabweichung um Folge(n) zu erkennen"
@@ -263,13 +262,16 @@ msgid "Show success after Timer handling"
 msgstr "Fehlerfreie Timerverarbeitung anzeigen (Popup)"
 
 msgid "Timeout for Timer Popup"
-msgstr "Anzeigedauer Popup Timer"
+msgstr "Anzeigedauer Timer Popup"
 
 msgid "Use local caching"
 msgstr "Lokales Zwischenspeichern verwenden"
 
-msgid "Allow Google Analytics"
-msgstr "Google Analytics erlauben"
+msgid "Cache expires after x hours"
+msgstr "Cache  wird ungültig nach x Stunden"
+
+msgid "Socket timeout"
+msgstr "Zeitlimt für Anfragen zum Proxy (Sekunden)"
 
 msgid "E2: Composition of the recording filenames"
 msgstr "E2: Dateinamen-Zusammensetzung der Aufnahmen"
@@ -284,7 +286,10 @@ msgid "AT: Poll Interval (in h)"
 msgstr "AutoTimer: Poll Abfrage (in Stunden)"
 
 msgid "AT: Timeout (in min)"
-msgstr "Autotimer: Timeout (in Minuten)"
+msgstr "Autotimer: Zeitlimit (in Minuten)"
+
+msgid "Debug: Print debug messages (Shell)"
+msgstr "Debug: drucke Debug Nachrichten (Shell)"
 
 msgid "Debug: Write Log"
 msgstr "Debug: Protokolldatei erstellen"
@@ -293,7 +298,7 @@ msgid "Debug: Log file path"
 msgstr "Debug: Protokolldatei Pfad"
 
 msgid "Debug: Forum user name"
-msgstr "Debug: Benutzername Forum"
+msgstr "Debug: Forum Benutzername"
 
 msgid "Debug: User mail address"
 msgstr "Debug: Benutzer Mail Adresse"
@@ -337,7 +342,6 @@ msgstr ""
 msgid "No matching episode found"
 msgstr "Kein Treffer für Folge gefunden"
 
-#, python-format
 msgid "%d min"
 msgstr "%d Min."
 
@@ -353,29 +357,24 @@ msgstr "Erfolgreich umbenannt"
 msgid "Renaming failed"
 msgstr "Umbenennen gescheitert"
 
-#, python-format
 msgid "Do you really want to delete %s?"
 msgstr "Möchtest Du wirklich %s löschen?"
 
 msgid "Do You want to start renaming?"
 msgstr "Möchtest Du das Umbenennen beginnen?"
 
-#, python-format
 msgid "Record rename has been finished with %d errors:\n"
 msgstr "Aufnahme umbenennen wurde beendet mit %d Fehler:\n"
 
-#, python-format
 msgid "%d records renamed successfully"
 msgstr "%d Aufnahmen erfolgreich umbenannt"
 
 msgid "No data available"
 msgstr "Keine Daten vorhanden"
 
-#, python-format
 msgid "Timer rename has been finished with %d errors:\n"
 msgstr "Timer umbenennen wurde beendet mit %d Fehler:\n"
 
-#, python-format
 msgid "%d timer renamed successfully"
 msgstr "%d Timer erfolgreich umbenannt"
 
@@ -393,40 +392,5 @@ msgstr ""
 "Beenden?"
 
 msgid "No log file found"
-msgstr "Protokolldatei nicht gefunden"
+msgstr "Keine Protokolldatei gefunden"
 
-#~ msgid "Error: No identifier"
-#~ msgstr "Fehler: keine Kennzeichnung"
-
-#~ msgid "Reset"
-#~ msgstr "Zurücksetzen"
-
-#~ msgid "SeriesPlugin getPage exception "
-#~ msgstr "SeriesPlugin Seiternaufruf Ausnahmefehler"
-
-#~ msgid "SeriesPlugin base_callback exception "
-#~ msgstr "SeriesPlugin base_callback Ausnahme"
-
-#~ msgid "Enable Logging"
-#~ msgstr "Protokollieren aktivieren"
-
-#~ msgid "Enter user name or user mail"
-#~ msgstr "Benutzernamen oder E-Mail eingeben"
-
-#~ msgid ""
-#~ "I've to spend my free time for this support!\n"
-#~ "\n"
-#~ msgstr ""
-#~ "In diesem Projekt steckt viel Freizeit! \n"
-#~ "\n"
-
-#~ msgid "Have You already checked the problem list:\n"
-#~ msgstr "Hast du die Problemliste überprüft: \n"
-
-#~ msgid ""
-#~ "Is the information available at Wunschliste.de / Fernsehserien.de? \n"
-#~ msgstr ""
-#~ "Ist die Information auf Wunschliste.de / Fernsehserien.de verfügbar? \n"
-
-#~ msgid "Does the start time match? \n"
-#~ msgstr "Stimmt die Startzeit überein? \n"

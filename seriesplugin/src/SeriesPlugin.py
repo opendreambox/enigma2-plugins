@@ -354,6 +354,7 @@ class SeriesPlugin(Modules, ChannelsBase):
 				import NavigationInstance
 				if NavigationInstance.instance.RecordTimer.isRecording():
 					splog("SP: Main: Skip check during running records")
+					callback( "Skip check during running records (Can be disabled)" )
 					return
 			except:
 				pass

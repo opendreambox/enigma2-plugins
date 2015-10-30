@@ -43,19 +43,6 @@ COL_SEASON = 8
 COL_EPISODE = 9
 COL_TITLE = 11
 
-Headers = {
-		'User-Agent' : 'Mozilla/5.0',
-		'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-		'Accept-Charset':'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
-		'Accept-Encoding':'',
-		'Accept-Language':'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4',
-		'Cache-Control':'no-cache',
-		'Connection':'keep-alive',
-		'Host':'www.fernsehserien.de',
-		'Referer':'http://www.fernsehserien.de/',
-		'Pragma':'no-cache'
-	}
-
 CompiledRegexpNonASCII = re.compile('\xe2\x80.')
 
 
@@ -96,70 +83,6 @@ def str_to_utf8(s):
 					splog("WL: str_to_utf8 decode ISO-8859-1 ignore: s: ", repr(s))
 	s = s.replace('\xe2\x80\x93','-').replace('\xe2\x80\x99',"'").replace('\xc3\x9f','ß')
 	return CompiledRegexpNonASCII.sub('', s)
-
-
-class FSParser(HTMLParser):
-	def __init__(self):
-		HTMLParser.__init__(self)
-		# Hint: xpath from Firebug without tbody elements
-		#xpath = '/html/body/div[2]/div[2]/div/table/tr[3]/td/div/table[2]/tr/td'
-		#xpath = '/html/body/div/div[3]/main/div[3]/article/table/tr/td'
-		xpath = '/html/body/div/div[3]/main/div[3]/article/table'
-		
-		self.xpath = [ e for e in xpath.split('/') if e ]
-		self.xpath.reverse()
-
-		self.lookfor = self.xpath.pop()
-		self.waitforendtag = 0
-
-		self.start = False
-		self.table = False
-		self.tr= False
-		self.td= False
-		self.data = []
-		self.list = []
-
-	def handle_starttag(self, tag, attributes):
-		if self.waitforendtag == 0:
-			if tag == self.lookfor:
-				if self.xpath:
-					self.lookfor = self.xpath.pop()
-					s = self.lookfor.split('[')
-					if len(s) == 2:
-						self.lookfor = s[0]
-						self.waitforendtag = int( s[1].split(']' )[0]) - 1
-				else:
-					self.start = True
-					#splog("FSParser: START")
-
-		if self.start and tag == 'table':
-			self.table = True
-			#splog("FSParser: TABLE")
-
-		if self.table:
-			if tag == 'td':
-				self.td= True
-			elif tag == 'tr':
-				self.tr= True
-
-	def handle_endtag(self, tag):
-		if self.table:
-			if tag == 'td':
-				self.td= False
-			elif tag == 'tr':
-				self.tr= False
-				self.list.append(self.data)
-				self.data= []
-
-		if tag == 'table':
-			self.table = False
-
-		if tag == self.lookfor:
-			if self.waitforendtag > 0: self.waitforendtag -= 1
-
-	def handle_data(self, data):
-		if self.tr and self.td:
-			self.data.append(data)
 
 
 class Fernsehserien(IdentifierBase):
@@ -243,7 +166,8 @@ class Fernsehserien(IdentifierBase):
 							
 							#/sendetermine/jahr-2014
 							# Increment year by one, because we want to start at the end of the year
-							response = urlopen( year_url )
+							from plugin import PROXY
+							response = urlopen( PROXY + year_url )
 							
 							#redirecturl = http://www.fernsehserien.de/criminal-intent-verbrechen-im-visier/sendetermine/-14
 							redirect_url = response.geturl()
@@ -271,7 +195,7 @@ class Fernsehserien(IdentifierBase):
 	def getSeries(self, name):
 		parameter =  urlencode({ 'term' : re.sub("[^a-zA-Z0-9*]", " ", name) })
 		url = SERIESLISTURL + parameter
-		data = self.getPage(url, Headers)
+		data = self.getPage(url)
 		
 		if data and isinstance(data, basestring):
 			data = self.parseSeries(data)
@@ -283,6 +207,7 @@ class Fernsehserien(IdentifierBase):
 
 	def parseSeries(self, data):
 		serieslist = []
+		#splog( "parseSeries", data)
 		for line in json.loads(data):
 			id = line['id']
 			idname = line['value']
@@ -294,10 +219,6 @@ class Fernsehserien(IdentifierBase):
 
 	def parseNextPage(self, data):
 		trs = []
-		
-		#parser = FSParser()
-		#parser.feed(data)
-		#return parser.list
 		
 		# Handle malformed HTML issues
 		data = data.replace('\\"','"')  # target=\"_blank\"
@@ -316,14 +237,18 @@ class Fernsehserien(IdentifierBase):
 		table = soup.find('table', 'sendetermine')
 		if table:
 			for trnode in table.find_all('tr'):
-				# TODO skip first header row
-				tdnodes = trnode and trnode.find_all('td')
 				
+				tdnodes = trnode and trnode.find_all('td')
 				if tdnodes:
 					# Filter for known rows
-					if len(tdnodes) >= 11:		# >= 6 and tdnodes[COL_DATE].string and len(tdnodes[COL_DATE].string) >= 10:
+					if len(tdnodes) == 12:
 						tds = []
+						
 						for idx, tdnode in enumerate(tdnodes):
+							if tdnode is None:
+								splog( "Error: tdnode is none" )
+								return []
+							
 							if idx == COL_TIME:
 								tds.append( tdnode.string[0:5] )
 							elif idx == COL_DATE:
@@ -332,7 +257,7 @@ class Fernsehserien(IdentifierBase):
 								#tds[COL_CHANNEL] = tdnode[COL_CHANNEL]['title']
 								spans = tdnode.find('span')
 								if spans:
-									splog( "spans", len(spans), spans)
+									#splog( "spans", len(spans), spans)
 									tds.append( spans.get('title', '') )
 								else:
 									tds.append(tdnode.string or "")
@@ -345,9 +270,11 @@ class Fernsehserien(IdentifierBase):
 						if tds[COL_DATE].find('\xc2\xa0') != -1:
 							splog( "tdnodes xc2xa0", len(tdnodes), tdnodes)
 							continue
+						
 						tds.append( year )
 						splog( "FS table tds", tds)
 						trs.append( tds )
+					
 					# This row belongs to the previous
 					#TODO
 					#elif trs and len(tdnodes) == 5:
@@ -375,7 +302,7 @@ class Fernsehserien(IdentifierBase):
 
 	def getNextPage(self, id):
 		url = EPISODEIDURL % (id, self.page)
-		data = self.getPage(url, Headers)
+		data = self.getPage(url)
 		
 		if data and isinstance(data, basestring):
 			splog("getNextPage: basestring")
@@ -399,7 +326,7 @@ class Fernsehserien(IdentifierBase):
 			cust_date = trs[0][COL_TIME] + trs[0][COL_DATE]
 			if len(cust_date) == 11:
 				cust_date += trs[0][-1]
-			splog(cust_date)
+			#splog(cust_date)
 			if len(cust_date) != 15:
 				return
 			first = datetime.strptime( cust_date, "%H:%M%d.%m.%Y" )
@@ -408,7 +335,7 @@ class Fernsehserien(IdentifierBase):
 			cust_date = trs[-1][COL_TIME] + trs[-1][COL_DATE]
 			if len(cust_date) == 11:
 				cust_date += trs[-1][-1]
-			splog(cust_date)
+			#splog(cust_date)
 			if len(cust_date) != 15:
 				return
 			last = datetime.strptime( cust_date, "%H:%M%d.%m.%Y" )
@@ -454,7 +381,7 @@ class Fernsehserien(IdentifierBase):
 							cust_date = xbegin+xdate
 							if len(cust_date) == 11:
 								cust_date += tds[-1]
-							splog(cust_date)
+							#splog(cust_date)
 							if len(cust_date) != 15:
 								continue
 							xbegin = datetime.strptime( cust_date, "%H:%M%d.%m.%Y" )

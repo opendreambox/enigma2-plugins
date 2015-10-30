@@ -16,17 +16,6 @@ import HTMLParser
 #html_parser = HTMLParser.HTMLParser()
 
 
-#from SerienRecorder import getUserAgent
-import datetime, random
-def getUserAgent():
-	userAgents = [
-	    "Mozilla/5.0"
-	]
-	today = datetime.date.today()
-	random.seed(today.toordinal())
-	#return userAgents[random.randint(0, 8)]
-	return userAgents[0]
-
 def iso8859_Decode(txt):
 	txt = unicode(txt, 'ISO-8859-1')
 	txt = txt.encode('utf-8')
@@ -42,17 +31,20 @@ class WebChannels(object):
 	def __init__(self, user_callback=None, user_errback=None):
 		self.user_callback = user_callback
 		self.user_errback  = user_errback
+		
+		socket.setdefaulttimeout( float(config.plugins.seriesplugin.socket_timeout.value) )
 
 	def	request(self):
 		print "[SP] request webpage.."
 		url = "http://www.wunschliste.de/updates/stationen"
-		#getPage(url, agent="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0", headers={'Content-Type':'application/x-www-form-urlencoded'}).addCallback(self.__callback).addErrback(self.__errback)
-		getPage(url, agent=getUserAgent(), headers={'Content-Type':'application/x-www-form-urlencoded'}).addCallback(self.__callback).addErrback(self.__errback)
+		from plugin import PROXY, USER_AGENT
+		getPage(PROXY+url, headers={'User-Agent':USER_AGENT}).addCallback(self.__callback).addErrback(self.__errback)
 
 	def request_and_return(self):
 		print "[SP] request_and_return webpage.."
 		url = "http://www.wunschliste.de/updates/stationen"
-		req = Request(url, headers={'Content-Type':'application/x-www-form-urlencoded'})
+		from plugin import PROXY, USER_AGENT
+		req = Request(PROXY+url, headers={'User-Agent':USER_AGENT})
 		try:
 			data = urlopen(req).read()
 		except URLError as e:
