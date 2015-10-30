@@ -37,11 +37,6 @@ from operator import itemgetter
 from Plugins.SystemPlugins.Toolkit.SimpleThread import SimpleThread
 
 try:
-	from Plugins.Extensions.SeriesPlugin.plugin import renameTimer
-except ImportError as ie:
-	renameTimer = None
-
-try:
 	from Plugins.Extensions.SeriesPlugin.plugin import getSeasonAndEpisode
 except ImportError as ie:
 	getSeasonAndEpisode = None
@@ -388,10 +383,10 @@ class AutoTimer:
 				sp_timer = getSeasonAndEpisode(newEntry, name, evtBegin, evtEnd)
 				if sp_timer:
 					newEntry = sp_timer
-				name = newEntry.name
-				print("[AutoTimer SeriesPlugin] Returned name %s" % (name))
-				shortdesc = newEntry.description
-				print("[AutoTimer SeriesPlugin] Returned description %s" % (shortdesc))
+					name = newEntry.name
+					print("[AutoTimer SeriesPlugin] Returned name %s" % (name))
+					shortdesc = newEntry.description
+					print("[AutoTimer SeriesPlugin] Returned description %s" % (shortdesc))
 			
 			if timer.checkFilter(name, shortdesc, extdesc, dayofweek):
 				continue
@@ -560,7 +555,7 @@ class AutoTimer:
 	def modifyTimer(self, timer, name, shortdesc, begin, end, serviceref, eit=None):
 		# Don't update the name, it will overwrite the name of the SeriesPlugin
 		#timer.name = name
-		timer.description = shortdesc
+		#timer.description = shortdesc
 		timer.begin = int(begin)
 		timer.end = int(end)
 		timer.service_ref = ServiceReference(serviceref)
