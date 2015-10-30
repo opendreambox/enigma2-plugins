@@ -31,6 +31,8 @@
 #
 ###########################################################################*/
 
+#define BSD_SOURCE
+#include <endian.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -42,12 +44,11 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <ctype.h>
-#include "errors.h"
 
-extern int quiet;
+#define MIN(a,b)	((a) < (b) ? (a) : (b))
 
 /* Start of code from Samba */
-int name_mangle( char *In, char *Out, char name_type ) {
+static int name_mangle(const char *In, char *Out, char name_type) {
 	int   i;
 	int   c;
 	int   len;
@@ -100,7 +101,7 @@ int name_mangle( char *In, char *Out, char name_type ) {
 /* end of code from Samba */
 
 
-int send_query(int sock, struct in_addr dest_addr, my_uint32_t rtt_base) {
+int send_query(int sock, struct in_addr dest_addr, uint32_t rtt_base) {
         struct nbname_request request;
 	struct sockaddr_in dest_sockaddr;
 	int status;
@@ -130,47 +131,33 @@ int send_query(int sock, struct in_addr dest_addr, my_uint32_t rtt_base) {
                 (struct sockaddr *)&dest_sockaddr, sizeof(dest_sockaddr));
 	if(status==-1) {
 	        snprintf(errmsg, 80, "%s\tSendto failed", inet_ntoa(dest_addr));
-	        err_print(errmsg, quiet); return(-1);
+		perror(errmsg);
+		return -1;
         };
 	return 0;
 };
 
-my_uint32_t get32(void* data) {
-	union {
-		char bytes[4];
-		my_uint32_t all;
-	} x;
+static inline uint32_t get32(const void *data)
+{
+	return be32toh(*(const uint32_t *)data);
+}
 
-	memcpy(x.bytes, data, 4);
-	return(ntohl(x.all));
-};
+static inline uint16_t get16(const void *data)
+{
+	return be16toh(*(const uint16_t *)data);
+}
 
-my_uint16_t get16(void* data) {
-	union {
-		char bytes[2];
-		my_uint16_t all;
-	} x;
-
-	memcpy(x.bytes, data, 2);
-	return(ntohs(x.all));
-};
-
-struct nb_host_info* parse_response(char* buff, int buffsize) {
-	struct nb_host_info* hostinfo = NULL;
+void parse_response(const char *buff, int buffsize, struct nb_host_info *hostinfo)
+{
 	nbname_response_footer_t* response_footer;
 	nbname_response_header_t* response_header;
 	int name_table_size;
 	int offset = 0;
 
-	if((response_header = malloc(sizeof(nbname_response_header_t)))==NULL) return NULL;
-	if((response_footer = malloc(sizeof(nbname_response_footer_t)))==NULL) return NULL;
-	bzero(response_header, sizeof(nbname_response_header_t));
-	bzero(response_footer, sizeof(nbname_response_footer_t));
-	
-	if((hostinfo = malloc(sizeof(struct nb_host_info)))==NULL) return NULL;
-	hostinfo->header = NULL;
-        hostinfo->names = NULL;
-	hostinfo->footer = NULL;
+	memset(hostinfo, 0, sizeof(struct nb_host_info));
+
+	response_header = &hostinfo->header;
+	response_footer = &hostinfo->footer;
 
 	/* Parsing received packet */
 	/* Start with header */
@@ -178,7 +165,6 @@ struct nb_host_info* parse_response(char* buff, int buffsize) {
 	response_header->transaction_id = get16(buff+offset); 
 	//Move pointer to the next structure field
 	offset+=sizeof(response_header->transaction_id);
-        hostinfo->header = response_header;
 
 	// Check if there is room for next field in buffer
 	if( offset+sizeof(response_header->flags) >= buffsize) goto broken_packet; 
@@ -230,8 +216,7 @@ struct nb_host_info* parse_response(char* buff, int buffsize) {
 	name_table_size = (response_header->number_of_names) * (sizeof(struct nbname));
 	if( offset+name_table_size >= buffsize) goto broken_packet;
 	
-	if((hostinfo->names = malloc(name_table_size))== NULL) return NULL;
-	memcpy(hostinfo->names, buff + offset, name_table_size);
+	memcpy(hostinfo->names, buff + offset, MIN(name_table_size, sizeof(hostinfo->names)));
 	//printf("DEBUG: %s , %d\n", hostinfo->names, name_table_size);
 	
 	offset+=name_table_size;
@@ -245,8 +230,6 @@ struct nb_host_info* parse_response(char* buff, int buffsize) {
 	       (buff+offset), 
 	       sizeof(response_footer->adapter_address));
 	offset+=sizeof(response_footer->adapter_address);
-
-	hostinfo->footer=response_footer;	
 
 	if( offset+sizeof(response_footer->version_major) >= buffsize) goto broken_packet;
 	response_footer->version_major = *(typeof(response_footer->version_major)*)(buff+offset);
@@ -333,15 +316,11 @@ struct nb_host_info* parse_response(char* buff, int buffsize) {
 	offset+=sizeof(response_footer->packet_sessions);
 	
 	/* Done with packet footer and the whole packet */
-
-	return hostinfo;
-	
-	broken_packet: 
-		hostinfo->is_broken = offset;
-		return hostinfo;	
+broken_packet:
+	return;
 };
 
-nb_service_t services[] = {
+static const nb_service_t services[] = {
 {"__MSBROWSE__", 0x01, 0, "Master Browser"},
 {"INet~Services", 0x1C, 0, "IIS"},
 {"IS~", 0x00, 1, "IIS"},
@@ -379,14 +358,10 @@ nb_service_t services[] = {
 {"Forte_$ND800ZA", 0x20, 1, "DCA IrmaLan Gateway Server Service"}
 };
 
-char* getnbservicename(my_uint8_t service, int unique, char* name) {
+const char *getnbservicename(uint8_t service, int unique, const char *name) {
 	int i;
-	char *unknown;
+	static char unknown[100];
 
-	unknown = (char*)malloc(100);
-
-	if(!unknown) err_die("Malloc failed.\n", 0);
-	
 	for(i=0; i < 35; i++) {
 		if(strstr(name, services[i].nb_name) && 
 			service == services[i].service_number &&

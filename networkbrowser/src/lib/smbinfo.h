@@ -33,9 +33,7 @@ typedef struct {
 	char comment[128];
 } shareinfo;
 
-int smbInfo(char *pythonIp , char *pythonrName, char *pythonUser, char *pythonPass, shareinfo *sInfo);
-shareinfo * newShareInfo();
-void freeShareInfo(shareinfo *sInfo);
+int smbInfo(char *pythonIp , char *pythonrName, char *pythonUser, char *pythonPass, shareinfo *sInfo, unsigned int size);
 
 #endif
 

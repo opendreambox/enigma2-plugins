@@ -33,18 +33,15 @@
 #include "range.h"
 #include <string.h>
 #include <stdlib.h>
-#include "errors.h"
 
 #ifndef INADDR_NONE
 # define INADDR_NONE (in_addr_t)-1
 #endif
 
-extern int quiet;
-
 /* is_ip checks if supplied string is an ip address in dotted-decimal
    notation, and fills both members of range structure with its numerical value
    (host byte order)/ Returns 1 on success, 0 on failure */
-int is_ip(char* string, struct ip_range* range) {
+int is_ip(const char *string, struct ip_range *range) {
 	unsigned long addr;
 
 	addr = inet_addr(string);
@@ -59,19 +56,20 @@ int is_ip(char* string, struct ip_range* range) {
    form xxx.xxx.xxx.xxx/xx (as in 192.168.1.2/24) and fills
    range structure with start and end ip addresses of the interval.
    Returns 1 on success, 0 on failure */
-int is_range1(char* string, struct ip_range* range) {
+int is_range1(const char *string, struct ip_range *range) {
 	char* separator;
-	unsigned int mask;
-	char* ip;
+	int mask;
+	char ip[19];
 
-	if((ip = (char *)malloc(strlen(string)+1))==NULL) 
-		err_die("Malloc failed", quiet);
+	if (strlen(string) > 18)
+		return 0;
 
-	if (strlen(string)>19) return 0;
-	if((separator=(char*)strchr(string,'/'))) {
+	separator = strchr(string, '/');
+	if (separator) {
 		separator++;
 		mask=atoi(separator);
-		if(mask<=0 || mask>32) return 0;
+		if (mask < 0 || mask > 32)
+			return 0;
 		strcpy(ip, string);
 		ip[abs(string-separator)-1]=0;
 		if((range->start_ip=inet_addr(ip)) == INADDR_NONE) return 0;
@@ -84,10 +82,8 @@ int is_range1(char* string, struct ip_range* range) {
 		range->start_ip=ntohl(range->start_ip); // We store ips in host byte order
 		range->start_ip &= mask;
 		range->end_ip = range->start_ip | ( ~ mask);
-		free(ip);
 		return 1;
 	}
-	free(ip);
 	return 0;
 };
 
@@ -114,54 +110,35 @@ int next_address(const struct ip_range* range, const struct in_addr* prev_addr,
    form xxx.xxx.xxx.xxx-xxx (as in 192.168.1.2-15) and fills
    range structure with start and end ip addresses of the interval.
    Returns 1 on success, 0 on failure */
-int is_range2(char* string, struct ip_range* range) {
+int is_range2(const char *string, struct ip_range *range) {
 	unsigned long last_octet; /*last octet of last ip in range*/
 	char* separator;
 	unsigned long addr;
-	char* ip;
+	char ip[20];
 
-	if((ip = (char *)malloc(strlen(string)+1))==NULL) 
-		err_die("Malloc failed", quiet);
+	if (strlen(string) > 19)
+		return 0;
+
 	strcpy(ip,string);
 
-	if((separator = (char*)strchr(ip,'-'))) {
+	separator = strchr(ip, '-');
+	if (separator) {
 		*separator=0;
 		separator++;
 		last_octet = atoi(separator);
 		if(last_octet<0 || last_octet > 255) {
-			free(ip);
 			return 0;
 		};
 		addr = inet_addr(ip);
 		if(addr == INADDR_NONE) {
-			free(ip);
 			return 0;
 		};
 		range->start_ip = ntohl(addr);
 		range->end_ip = (range->start_ip & 0xffffff00) | last_octet;
 		if (range->end_ip < range->start_ip) { 
-			free(ip);
 			return 0;
 		};
-		free(ip);
 		return 1;
 	}
-	free(ip);
-	return 0;
-};
-
-int print_range(const struct ip_range* range) {
-	struct in_addr *addr;
-	
-	if((addr = (struct in_addr*)malloc(sizeof(struct in_addr)))==NULL) 
-		err_die("Malloc failed", quiet);
-	
-	next_address(range, 0, addr);
-	printf("%s\n",inet_ntoa(*addr));
-	
-	while(next_address(range, addr, addr)) {
-	        printf("%s\n",inet_ntoa(*addr));
-	};
-	free(addr);
 	return 0;
 };

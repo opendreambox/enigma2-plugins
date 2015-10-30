@@ -27,34 +27,38 @@
 #include <stdio.h>
 #include "list.h"
 #include <stdlib.h>
-#include "errors.h"
 
-extern int quiet;
+struct list *new_list(void)
+{
+	struct list *lst;
 
-struct list* new_list() {
-	struct list* lst;
+	lst = calloc(1, sizeof(struct list));
+	if (lst == NULL)
+		perror("calloc");
 
-	if( ( lst = (struct list*) malloc(sizeof(struct list)) )==NULL ) 
-		err_die("Malloc failed", quiet);
-	lst->head = NULL;
 	return lst;
-};
+}
 
-struct list_item* new_list_item(unsigned long content) {
-	struct list_item* lst_item;
+struct list_item *new_list_item(unsigned long content)
+{
+	struct list_item *lst_item;
 
-	if( (lst_item = (struct list_item*) malloc(sizeof(struct list_item)) )==NULL  )
-		err_die("Malloc failed", quiet);
+	lst_item = calloc(1, sizeof(struct list_item));
+	if (lst_item == NULL)
+		perror("calloc");
+	else
+		lst_item->content = content;
 
-	lst_item->next = NULL;
-	lst_item->prev = NULL;
-	lst_item->content = content;
 	return lst_item;
-};
+}
 
-void delete_list(struct list* list) {
-	struct list_item* pointer;
-	
+void delete_list(struct list *list)
+{
+	struct list_item *pointer;
+
+	if (list == NULL)
+		return;
+
 	pointer = list->head;
 
         if (pointer) {
@@ -84,6 +88,8 @@ int insert(struct list* lst, unsigned long content) {
 	int cmp;
 
 	item = new_list_item(content);
+	if (item == NULL)
+		return ERROR;
 	
 	cmp = compare(lst->head, item);
 	if(lst->head==NULL) {
@@ -128,6 +134,8 @@ int in_list(struct list* lst, unsigned long content) {
 	struct list_item *temp_item, *item;
 
 	item = new_list_item(content);
+	if (item == NULL)
+		return ERROR;
 	if(lst->head==NULL) return 0;
 	temp_item=lst->head;
 	

@@ -87,6 +87,7 @@ class AutoMount():
 		self._ensureOption(options, 'x-systemd.automount')
 		self._ensureOption(options, 'rsize', 'rsize=8192')
 		self._ensureOption(options, 'wsize', 'wsize=8192')
+		self._ensureOption(options, 'soft')
 		if not cifs and 'tcp' not in options and 'udp' not in options:
 			options.append('udp')
 		return options
@@ -124,6 +125,7 @@ class AutoMount():
 						])
 				else:
 					opts.extend(['guest'])
+				opts.extend(['sec=ntlmv2'])
 				remote = "//%s/%s" % (data['ip'], tmpsharedir)
 				harddiskmanager.modifyFstabEntry(remote, mountpoint, mode="add_deactivated", extopts=opts, fstype="cifs")
 		else:
@@ -237,6 +239,9 @@ class AutoMount():
 		res = False
 		entry = Util.findInFstab(src=None, dst=mountpoint)
 		if entry:
+			sharename=os_path.basename(mountpoint)
+			if sharename in self._mounts:
+				del self._mounts[sharename]
 			self._unmount(mountpoint)
 			harddiskmanager.modifyFstabEntry(entry['src'], entry['dst'], mode="remove")
 			harddiskmanager.removeMountedPartition(mountpoint)
