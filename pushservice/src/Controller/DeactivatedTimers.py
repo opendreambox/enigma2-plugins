@@ -45,22 +45,43 @@ class DeactivatedTimers(ControllerBase):
 		
 		# Default configuration
 		self.setOption( 'remove_timer', NoSave(ConfigYesNo( default = False )), _("Remove deactivated timer(s)") )
+		self.setOption( 'list_similar', NoSave(ConfigYesNo( default = False )), _("List similar timer(s)") )
 
 	def run(self, callback, errback):
 		# At the end a plugin has to call one of the functions: callback or errback
 		# Callback should return with at least one of the parameter: Header, Body, Attachment
 		# If empty or none is returned, nothing will be sent
+		
 		self.timers = []
 		text = ""
+		list_similar = self.getValue('list_similar')
+		
+		def timerToString(timer):
+			return str(timer.name) + "\t" \
+					+ strftime(_("%Y.%m.%d %H:%M"), localtime(timer.begin)) + " - " \
+					+ strftime(_("%H:%M"), localtime(timer.end)) + "\t" \
+					+ str(timer.service_ref and timer.service_ref.getServiceName() or "") \
+					+ "\t" + str(timer.tags)
+		
 		for timer in NavigationInstance.instance.RecordTimer.timer_list + NavigationInstance.instance.RecordTimer.processed_timers:
 			if timer.disabled and TAG not in timer.tags:
-				text += str(timer.name) + "    " \
-							+ strftime(_("%Y.%m.%d %H:%M"), localtime(timer.begin)) + " - " \
-							+ strftime(_("%H:%M"), localtime(timer.end)) + "    " \
-							+ str(timer.service_ref and timer.service_ref.getServiceName() or "") \
-							+ " " + str(timer.tags) \
-							+ "\n"
+				text += timerToString(timer) + "\r\n"
+				
+				if list_similar:
+					if not timer.eit:
+						text += "\t" + _("Timer has no EIT") + "\r\n\r\n"
+						continue
+					
+					text += "\t" + _("Similar:") + "\r\n"
+					
+					for t in NavigationInstance.instance.RecordTimer.timer_list + NavigationInstance.instance.RecordTimer.processed_timers:
+						if not t.disabled and t.name == timer.name and t.eit != timer.eit:
+							text += "\t" + timerToString(t)  + "\r\n"
+					
+					text += "\r\n"
+				
 				self.timers.append( timer )
+			
 		if self.timers and text:
 			callback( SUBJECT, BODY % text )
 		else:
@@ -68,8 +89,10 @@ class DeactivatedTimers(ControllerBase):
 
 	# Callback functions
 	def callback(self):
+		
 		# Called after all services succeded
 		if self.getValue('remove_timer'):
+			
 			# Remove deactivated timers
 			for timer in self.timers[:]:
 				if timer in NavigationInstance.instance.RecordTimer.processed_timers:
@@ -78,6 +101,7 @@ class DeactivatedTimers(ControllerBase):
 					NavigationInstance.instance.RecordTimer.timer_list.remove(timer)
 				self.timers.remove(timer)
 		else:
+			
 			# Set tag to avoid resending it
 			for timer in self.timers:
 				if TAG not in timer.tags:
