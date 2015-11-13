@@ -32,7 +32,7 @@ from Tools.Notifications import AddPopup
 from Tools.BoundFunction import boundFunction
 
 # Plugin internal
-from SeriesPlugin import getInstance, refactorTitle, refactorDescription
+from SeriesPlugin import getInstance, refactorTitle, refactorDescription, refactorDirectory
 from Logger import splog
 
 
@@ -56,8 +56,6 @@ class SeriesPluginTimer(object):
 				splog("SPT: SeriesPluginTimer: Skip timer is already in queue:", timer.name)
 				timer.log(601, "[SeriesPlugin] Skip timer is already in queue %s" % (timer.name) )
 				return
-		
-		timer.sp_in_queue = True
 		
 		# We have to compare the length,
 		# because of the E2 special chars handling for creating the filenames
@@ -119,6 +117,8 @@ class SeriesPluginTimer(object):
 			
 			splog("SPT: getEpisode:", name, begin, end, block)
 			
+			timer.sp_in_queue = True
+			
 			seriesPlugin.getEpisode(
 				boundFunction(self.timerCallback, timer),
 				#name, begin, end, channel, future=True
@@ -138,8 +138,6 @@ class SeriesPluginTimer(object):
 				splog("SPT: SeriesPluginTimer: Skip timer is already in queue:", timer.name)
 				timer.log(601, "[SeriesPlugin] Skip timer is already in queue %s" % (timer.name) )
 				return
-		
-		timer.sp_in_queue = True
 		
 		# We have to compare the length,
 		# because of the E2 special chars handling for creating the filenames
@@ -201,6 +199,8 @@ class SeriesPluginTimer(object):
 			
 			splog("SPT: getEpisode:", name, begin, end)
 			
+			timer.sp_in_queue = True
+			
 			result = seriesPlugin.getEpisodeBlocking(
 				name, begin, end, timer.service_ref, future=True
 			)
@@ -221,6 +221,17 @@ class SeriesPluginTimer(object):
 			timer.name = str(refactorTitle(timer.name, data))
 			#timer.name = newLegacyEncode(refactorTitle(timer.name, data))
 			timer.description = str(refactorDescription(timer.description, data))
+			
+			#try: timer.Filename
+			#except: timer.calculateFilename()
+			if not hasattr(timer, 'Filename'):
+				timer.calculateFilename()
+			
+			if not timer.dirname:
+				splog("SPT: SeriesPluginTimer: No dirname")
+				timer.dirname  = str(refactorDirectory(config.usage.default_path.value, data))
+			else:
+				timer.dirname  = str(refactorDirectory(timer.dirname, data))
 			
 			timer.log(610, "[SeriesPlugin] Success: Changed name: %s." % (timer.name))
 		
