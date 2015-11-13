@@ -1,0 +1,41 @@
+DOMAIN:=enigma2-plugins
+LANGS:=ar ca cs ckb da de el en es et fi fa fr fy he hr hu is it lt lv nl no pl pt pt_BR ru sv sk sl sr tr uk
+
+GETTEXT=xgettext
+PODIR:=po
+POTFILE:=$(PODIR)/$(DOMAIN).pot
+
+.PHONY: default catalog template msgmerge merge
+
+default: catalog
+
+catalog : merge template msgmerge
+
+XMLPODIRS := autotimer/src epgbackup/src epgrefresh/src pipzap/src pluginsort/src
+
+template:
+	mkdir -p $(PODIR)
+	find ./ -iname "*.py" | xargs $(GETTEXT) -L Python --from-code=UTF-8 --add-comments="TRANSLATORS:" -d $(DOMAIN) -s -o $(POTFILE)
+	find ./ -iname "plugin_*.xml" | xargs ./scripts/meta2po.py >> $(POTFILE)
+	./scripts/xml2po.py $(XMLPODIRS) >> $(POTFILE)
+	msguniq -n --add-location -o $(POTFILE) $(POTFILE)
+
+msgmerge:
+	mkdir -p $(PODIR)
+	for lang in $(LANGS); do \
+		echo "merging catalog for $${lang}"; \
+		if [ -e ${PODIR}/$$lang.po ]; then \
+			msgmerge --add-location --force-po -s -N -U "$(PODIR)/$$lang.po" "$(POTFILE)"; \
+			msgattrib --output-file=$(PODIR)/$$lang.po --no-obsolete $(PODIR)/$$lang.po; \
+		fi; \
+	done
+	rm -f ${PODIR}/*.po~
+	rm -f ${PODIR}/*.pending
+
+merge :
+	mkdir -p $(PODIR)
+	for pofile in ./*/po/*.po; do \
+		echo "merging $${pofile} into ${PODIR}/$${pofile##*/}"; \
+		touch $(PODIR)/$${pofile##*/}; \
+		msgcat --add-location --force-po --use-first -s $(PODIR)/$${pofile##*/} $${pofile} -o $(PODIR)/$${pofile##*/}; \
+	done
