@@ -101,10 +101,10 @@ class IdentifierBase(ModuleBase, Cacher, ChannelsBase):
 			splog("SSBase not cached")
 			
 			try:
-				from plugin import PROXY, USER_AGENT
+				from plugin import buildURL, USER_AGENT
 				
 				if use_proxy:
-					temp_url = PROXY+url
+					temp_url = buildURL(url)
 				else:
 					temp_url = url
 				
