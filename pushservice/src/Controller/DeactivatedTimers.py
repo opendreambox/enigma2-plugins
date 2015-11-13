@@ -100,14 +100,13 @@ class DeactivatedTimers(ControllerBase):
 				elif timer in NavigationInstance.instance.RecordTimer.timer_list:
 					NavigationInstance.instance.RecordTimer.timer_list.remove(timer)
 				self.timers.remove(timer)
-		else:
 			
-			# Set tag to avoid resending it
-			for timer in self.timers:
-				if TAG not in timer.tags:
-					timer.tags.append(TAG)
-			NavigationInstance.instance.RecordTimer.saveTimer()
-			self.timers = []
+		# Set tag to avoid resending it
+		for timer in self.timers:
+			if TAG not in timer.tags:
+				timer.tags.append(TAG)
+		NavigationInstance.instance.RecordTimer.saveTimer()
+		self.timers = []
 
 	def errback(self):
 		# Called after all services has returned, but at least one has failed
