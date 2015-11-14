@@ -32,7 +32,7 @@ from Tools.Notifications import AddPopup
 from Tools.BoundFunction import boundFunction
 
 # Plugin internal
-from SeriesPlugin import getInstance, refactorTitle, refactorDescription
+from SeriesPlugin import getInstance, refactorTitle, refactorDescription, refactorDirectory
 from Logger import splog
 
 
@@ -55,8 +55,7 @@ class SeriesPluginTimer(object):
 			if timer.sp_in_queue:
 				splog("SPT: SeriesPluginTimer: Skip timer is already in queue:", timer.name)
 				timer.log(601, "[SeriesPlugin] Skip timer is already in queue %s" % (timer.name) )
-		
-		timer.sp_in_queue = True
+				return
 		
 		# We have to compare the length,
 		# because of the E2 special chars handling for creating the filenames
@@ -118,6 +117,8 @@ class SeriesPluginTimer(object):
 			
 			splog("SPT: getEpisode:", name, begin, end, block)
 			
+			timer.sp_in_queue = True
+			
 			seriesPlugin.getEpisode(
 				boundFunction(self.timerCallback, timer),
 				#name, begin, end, channel, future=True
@@ -125,7 +126,7 @@ class SeriesPluginTimer(object):
 			)
 		else:
 			splog("SPT: SeriesPluginTimer: No channel specified")
-			self.timerCallback("No channel specified")
+			self.timerCallback(timer, "No channel specified")
 
 	def getSeasonAndEpisode(self, timer, name, begin, end):
 		
@@ -136,8 +137,7 @@ class SeriesPluginTimer(object):
 			if timer.sp_in_queue:
 				splog("SPT: SeriesPluginTimer: Skip timer is already in queue:", timer.name)
 				timer.log(601, "[SeriesPlugin] Skip timer is already in queue %s" % (timer.name) )
-		
-		timer.sp_in_queue = True
+				return
 		
 		# We have to compare the length,
 		# because of the E2 special chars handling for creating the filenames
@@ -199,13 +199,15 @@ class SeriesPluginTimer(object):
 			
 			splog("SPT: getEpisode:", name, begin, end)
 			
+			timer.sp_in_queue = True
+			
 			result = seriesPlugin.getEpisodeBlocking(
 				name, begin, end, timer.service_ref, future=True
 			)
 			return self.timerCallback(timer, result)
 		else:
 			splog("SPT: SeriesPluginTimer: No channel specified")
-			self.timerCallback("No channel specified")
+			self.timerCallback(timer, "No channel specified")
 			return None
 
 	def timerCallback(self, timer, data=None):
@@ -219,6 +221,17 @@ class SeriesPluginTimer(object):
 			timer.name = str(refactorTitle(timer.name, data))
 			#timer.name = newLegacyEncode(refactorTitle(timer.name, data))
 			timer.description = str(refactorDescription(timer.description, data))
+			
+			#try: timer.Filename
+			#except: timer.calculateFilename()
+			if not hasattr(timer, 'Filename'):
+				timer.calculateFilename()
+			
+			if not timer.dirname:
+				splog("SPT: SeriesPluginTimer: No dirname")
+				timer.dirname  = str(refactorDirectory(config.usage.default_path.value, data))
+			else:
+				timer.dirname  = str(refactorDirectory(timer.dirname, data))
 			
 			timer.log(610, "[SeriesPlugin] Success: Changed name: %s." % (timer.name))
 		

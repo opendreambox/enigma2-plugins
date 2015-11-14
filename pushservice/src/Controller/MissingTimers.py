@@ -25,65 +25,46 @@ from Plugins.Extensions.PushService.ControllerBase import ControllerBase
 
 # Plugin specific
 import NavigationInstance
-from time import localtime, strftime
-
+from time import localtime, strftime, mktime
+from datetime import date, timedelta
 
 # Constants
-SUBJECT = _("Record Summary")
-BODY    = _("Finished record list:\n%s")
-TAG     = _("FinishedTimerPushed")
+SUBJECT = _("Missing timer")
+BODY    = _("There are no timer for tomorrow - %s")
 
 
-class RecordSummary(ControllerBase):
+class MissingTimers(ControllerBase):
 	
 	ForceSingleInstance = True
 	
 	def __init__(self):
 		# Is called on instance creation
 		ControllerBase.__init__(self)
-		self.timers = []
-		
-		# Default configuration
-		self.setOption( 'remove_timer',        NoSave(ConfigYesNo( default = False )), _("Remove finished timer(s)") )
-		self.setOption( 'include_description', NoSave(ConfigYesNo( default = False )), _("Include timer description") )
 
 	def run(self, callback, errback):
 		# At the end a plugin has to call one of the functions: callback or errback
 		# Callback should return with at least one of the parameter: Header, Body, Attachment
 		# If empty or none is returned, nothing will be sent
-		self.timers = []
-		text = ""
-		for timer in NavigationInstance.instance.RecordTimer.processed_timers:
-			if not timer.disabled and not timer.justplay and TAG not in timer.tags:
-				text += str(timer.name) + "\t" \
-							+ strftime(_("%Y.%m.%d %H:%M"), localtime(timer.begin)) + " - " \
-							+ strftime(_("%H:%M"), localtime(timer.end)) + "\t" \
-							+ str(timer.service_ref and timer.service_ref.getServiceName() or "") \
-							+ "\n"
-                                if self.getValue('include_description'):
-					text += str(timer.description) + "\n\n"
-				self.timers.append( timer )
-		if self.timers and text:
-			callback( SUBJECT, BODY % text )
+		timers = 0
+		tomorrow_begin = mktime( ( date.today() + timedelta(days=1) ).timetuple() )
+		tomorrow_end   = tomorrow_begin + 24*60*60
+		
+		for timer in NavigationInstance.instance.RecordTimer.timer_list:
+			if not timer.disabled:
+				timer_begin = timer.begin
+				if tomorrow_begin <= timer_begin <= tomorrow_end:
+					timers += 1
+				
+		if timers == 0:
+			callback( SUBJECT, BODY % strftime(_("%Y.%m.%d"), localtime(tomorrow_begin)))
 		else:
 			callback()
 
 	# Callback functions
 	def callback(self):
 		# Called after all services succeded
-		if self.getValue('remove_timer'):
-			# Remove finished timers
-			for timer in self.timers[:]:
-				if timer in NavigationInstance.instance.RecordTimer.processed_timers:
-					NavigationInstance.instance.RecordTimer.processed_timers.remove(timer)
-				self.timers.remove(timer)
-		else:
-			# Set tag to avoid resending it
-			for timer in self.timers[:]:
-				timer.tags.append(TAG)
-				NavigationInstance.instance.RecordTimer.saveTimer()
-				self.timers.remove(timer)
+		return
 
 	def errback(self):
 		# Called after all services has returned, but at least one has failed
-		self.timers = []
+		return

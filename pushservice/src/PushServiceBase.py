@@ -278,11 +278,12 @@ class PushServiceBase(Modules, ConfigFile):
 						# Run controller
 						ret = controller.run(
 								boundFunction(self.runcallback, controller),
-								boundFunction(self.runcallback, controller) )
+								boundFunction(self.runerrback, controller) )
 					except Exception, e:
 						print _("PushService controller run() exception")
 						exc_type, exc_value, exc_traceback = sys.exc_info()
 						traceback.print_exception(exc_type, exc_value, exc_traceback, file=sys.stdout)
+						self.runerrback(controller, exc_type, exc_value, exc_traceback)
 
 	def runcallback(self, controller, *args):
 		services = self.services
@@ -305,11 +306,18 @@ class PushServiceBase(Modules, ConfigFile):
 
 	def runerrback(self, controller, *args):
 		print _("controller %s returned error(s)") % controller.getName()
+		text = ""
 		for arg in args:
 			if isinstance(arg, Exception):
-				print str(arg.type), str(arg.value)
+				try:
+					text += str(arg.type) + str(arg.value) + "\n"
+				except:
+					text += str(arg) + "\n"
 			elif arg:
-				print str(arg)
+				text += str(arg) + "\n"
+		print text
+		if config.pushservice.push_errors.value:
+			self.push(controller, _("PushService controller run() exception"), text, [])
 
 	def push(self, controller, subject, text="", attachments=[]):
 		print "push"

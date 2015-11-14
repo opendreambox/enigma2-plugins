@@ -284,6 +284,7 @@ class SeriesPluginInfoScreen(Screen):
 				)
 		except Exception as e:
 			splog("SPI: exception:", str(e))
+			self.episodeCallback(str(e))
 
 	def episodeCallback(self, data=None):
 		#TODO episode list handling
@@ -372,6 +373,7 @@ class SeriesPluginInfoScreen(Screen):
 
 	# Overwrite Screen close function
 	def close(self):
+		splog("SPI: user close")
 		
 		global instance
 		instance = None
@@ -416,6 +418,7 @@ class SeriesPluginInfoScreen(Screen):
 			pass
 
 	def rename(self):
+		splog("SPI: rename")
 		ref = self.eservice
 		if ref and self.data:
 			path = ref.getPath()
@@ -430,13 +433,15 @@ class SeriesPluginInfoScreen(Screen):
 
 	# Adapted from EventView
 	def record(self):
+		splog("SPI: record")
 		if self.event and self.service:
 			event = self.event
 			ref = self.service
 			if event is None:
 				return
 			eventid = event.getEventId()
-			refstr = eServiceReference(str(self.service)).toString()
+			eref = eServiceReference(str(ref))
+			refstr = eref.toString()
 			for timer in self.session.nav.RecordTimer.timer_list:
 				if timer.eit == eventid and timer.service_ref.ref.toString() == refstr:
 					cb_func = lambda ret : not ret or self.removeTimer(timer)
@@ -451,7 +456,9 @@ class SeriesPluginInfoScreen(Screen):
 					name = refactorTitle(name, self.data)
 					description = refactorDescription(description, self.data)
 				
-				newEntry = RecordTimerEntry(ServiceReference(ref), begin, end, name, description, eit, dirname = preferredTimerPath())
+				#newEntry = RecordTimerEntry(ServiceReference(refstr), begin, end, name, description, eit, dirname = preferredTimerPath())
+				newEntry = RecordTimerEntry(ServiceReference(str(ref)), begin, end, name, description, eit, dirname = preferredTimerPath())
+				#newEntry = RecordTimerEntry(refstr, begin, end, name, description, eit, dirname = preferredTimerPath())
 				self.session.openWithCallback(self.finishedAdd, TimerEntry, newEntry)
 
 	def removeTimer(self, timer):

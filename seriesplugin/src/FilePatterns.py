@@ -46,7 +46,7 @@ scheme_fallback = [
 		("{title:s} S{season:02d}E{episode:02d} {series:s}"  , "Title S01E01 Series"),
 	]
 
-def readPatternFile():
+def readFilePatterns():
 	path = config.plugins.seriesplugin.pattern_file.value
 	obj = None
 	patterns = None
@@ -59,7 +59,7 @@ def readPatternFile():
 			header, patterns = json.load(f)
 			patterns = [tuple(p) for p in patterns]
 		except Exception as e:
-			splog("[SeriesPlugin] Exception in readEpisodePatternsFile: " + str(e))
+			splog("[SeriesPlugin] Exception in readFilePatterns: " + str(e))
 		finally:
 			if f is not None:
 				f.close()
