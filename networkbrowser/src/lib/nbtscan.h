@@ -30,23 +30,16 @@
 #include "statusq.h"
 #include "range.h"
 #include "list.h"
-#include "errors.h"
-#include "time_compat.h"
 
 typedef struct {
 	char name[16];
-	char domain[80];
+	char domain[16];
 	char ip[20];
 	char mac[20];
 	char service[80];
 } netinfo;
 
-int set_range(char* range_str, struct ip_range* range_struct);
-int print_header();
-int netInfo(char *pythonIp, netinfo *nInfo);
-netinfo * newNetInfo();
-void freeNetInfo(netinfo *nInfo);
-int python_hostinfo(struct in_addr addr, const struct nb_host_info* hostinfo, netinfo *nInfo, int pos);
+unsigned int netInfo(const char *pythonIp, netinfo *nInfo, unsigned int size);
 
 #endif
 

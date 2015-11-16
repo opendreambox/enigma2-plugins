@@ -27,155 +27,155 @@
 #include "smbinfo.h"
 #include "showmount.h"
 
-static PyObject *error;
-
-PyObject *_netInfo(PyObject *self, PyObject *args)
+static PyObject *_netInfo(PyObject *self, PyObject *args)
 {
+	const unsigned int max_hosts = 256;
 	netinfo *nInfo;
 	char *s;
-	PyObject *plist, *name, *ip, *service, *mac, *result, *domain, *host;
-	int i;
+	PyObject *result;
+	unsigned int i, n;
 
 	if(!PyArg_ParseTuple(args, "s", &s)) {
-		PyErr_SetString(error, "netInfo(ip/24)");
+		PyErr_SetString(PyExc_TypeError, "netInfo(ip/24)");
 		return NULL;
 	}
 
-	if(!(plist= PyList_New(0)))  return NULL;
-	if(!(result= PyList_New(0)))  return NULL;
-	nInfo = newNetInfo();
-	netInfo(s, nInfo);
-	for (i=0; i<256; i++) 
-	{ 
-		if(nInfo[i].ip[0] == '\0') {
+	result = PyList_New(0);
+	if (result == NULL)
+		return NULL;
+
+	nInfo = PyMem_New(netinfo, max_hosts);
+	if (nInfo == NULL)
+		return result;
+
+	memset(nInfo, 0, sizeof(netinfo) * max_hosts);
+
+	Py_BEGIN_ALLOW_THREADS
+	n = netInfo(s, nInfo, max_hosts);
+	Py_END_ALLOW_THREADS
+
+	for (i = 0; i < n; i++) {
+		PyObject *plist = PyList_New(6);
+		if (plist == NULL)
 			break;
-		}
-		else
-		{
-			host = Py_BuildValue("s", "host");
-			service = Py_BuildValue("s", nInfo[i].service);
-			domain = Py_BuildValue("s", nInfo[i].domain);
-			ip = Py_BuildValue("s", nInfo[i].ip);
-			name = Py_BuildValue("s", nInfo[i].name); 
-			mac = Py_BuildValue("s", nInfo[i].mac);
-			PyList_Append(plist, host);
-			PyList_Append(plist, name);
-			PyList_Append(plist, ip);
-			PyList_Append(plist, mac);
-			PyList_Append(plist, domain);
-			PyList_Append(plist, service);
-			PyList_Append(result, plist);
-			if(!(plist= PyList_New(0)))  return NULL;
-			
-		}
-	} 
-	freeNetInfo(nInfo);
+		PyList_SET_ITEM(plist, 0, PyString_FromString("host"));
+		PyList_SET_ITEM(plist, 1, PyString_FromString(nInfo[i].name));
+		PyList_SET_ITEM(plist, 2, PyString_FromString(nInfo[i].ip));
+		PyList_SET_ITEM(plist, 3, PyString_FromString(nInfo[i].mac));
+		PyList_SET_ITEM(plist, 4, PyString_FromString(nInfo[i].domain));
+		PyList_SET_ITEM(plist, 5, PyString_FromString(nInfo[i].service));
+		PyList_Append(result, plist);
+		Py_DECREF(plist);
+	}
+
+	PyMem_Free(nInfo);
 	return result;
-	//return Py_BuildValue("s", nInfo[0].name);
 }
 
-PyObject *_nfsShare(PyObject *self, PyObject *args)
+static PyObject *_nfsShare(PyObject *self, PyObject *args)
 {
+	const unsigned int max_shares = 256;
 	nfsinfo *nfsInfo;
 	char *s;
 	char *r;
-	PyObject *plist, *result, *share, *ip, *nfsShare, *rech, *rechip, *leer;
-	int i = 0;
-	int err = 0;
+	PyObject *plist, *result;
+	unsigned int i;
+	int n;
 
 	if(!PyArg_ParseTuple(args, "ss", &s, &r)) {
-		PyErr_SetString(error, "nfsShare(ip,rechnername)");
+		PyErr_SetString(PyExc_TypeError, "nfsShare(ip,rechnername)");
 		return NULL;
 	}
 
-	if(!(plist= PyList_New(0)))  return NULL;
-	if(!(result= PyList_New(0)))  return NULL;
+	result = PyList_New(0);
+	if (result == NULL)
+		return NULL;
 
-	nfsInfo = newNfsInfo();
-	err = showNfsShare(s, nfsInfo);
-	if (err == 0)
+	nfsInfo = PyMem_New(nfsinfo, max_shares);
+	if (nfsInfo == NULL)
+		return result;
+
+	memset(nfsInfo, 0, sizeof(nfsinfo) * max_shares);
+
+	Py_BEGIN_ALLOW_THREADS
+	n = showNfsShare(s, nfsInfo, max_shares);
+	Py_END_ALLOW_THREADS
+	if (n >= 0)
 	{
-		for (i=0; i<256; i++) 
-		{ 
-			if(nfsInfo[i].ip[0] == '\0') {
+		for (i = 0; i < n; i++) {
+			plist = PyList_New(6);
+			if (plist == NULL)
 				break;
-			}
-			else
-			{
-				ip = Py_BuildValue("s", nfsInfo[i].ip);
-				share = Py_BuildValue("s", nfsInfo[i].share);
-				nfsShare = Py_BuildValue("s", "nfsShare");
-				rech = Py_BuildValue("s",r);
-				rechip = Py_BuildValue("s",s);
-				leer = Py_BuildValue("s","");
-				PyList_Append(plist, nfsShare);
-				PyList_Append(plist, rech);
-				PyList_Append(plist, rechip);
-				PyList_Append(plist, ip);
-				PyList_Append(plist, share);
-				PyList_Append(plist, leer);
-				PyList_Append(result, plist);
-				if(!(plist= PyList_New(0)))  return NULL;		
-			}
+			PyList_SET_ITEM(plist, 0, PyString_FromString("nfsShare"));
+			PyList_SET_ITEM(plist, 1, PyString_FromString(r));
+			PyList_SET_ITEM(plist, 2, PyString_FromString(s));
+			PyList_SET_ITEM(plist, 3, PyString_FromString(nfsInfo[i].ip));
+			PyList_SET_ITEM(plist, 4, PyString_FromString(nfsInfo[i].share));
+			PyList_SET_ITEM(plist, 5, PyString_FromString(""));
+			PyList_Append(result, plist);
+			Py_DECREF(plist);
 		}
 	}
 	else
 	{
-		share = Py_BuildValue("s", nfsInfo[0].share);
-		PyList_Append(plist, share);
-		PyList_Append(result, plist);
-		if(!(plist= PyList_New(0)))  return NULL;
+		plist = PyList_New(1);
+		if (plist != NULL) {
+			PyList_SET_ITEM(plist, 0, PyString_FromString(nfsInfo[0].share));
+			PyList_Append(result, plist);
+			Py_DECREF(plist);
+		}
 	}
-	freeNfsInfo(nfsInfo);	
+
+	PyMem_Free(nfsInfo);
 	return result;
 }
 
-PyObject *_smbShare(PyObject *self, PyObject *args)
+static PyObject *_smbShare(PyObject *self, PyObject *args)
 {
-	int i = 0;
+	const unsigned int max_shares = 128;
+	int i, n;
 	char *s;
 	char *r;
 	char *u;
 	char *p;
 	shareinfo *sInfo;
-	PyObject *plist, *name, *typ, *comment, *result, *smbShare, *rech, *rechip;
+	PyObject *plist, *result;
 
-	
 	if(!PyArg_ParseTuple(args, "ssss", &s,&r,&u,&p)) {
-		PyErr_SetString(error, "getInfo(ip, rechnername, username, passwort)");
+		PyErr_SetString(PyExc_TypeError, "getInfo(ip, rechnername, username, passwort)");
 		return NULL;
 	}
-	if(!(plist= PyList_New(0)))  return NULL;
-	if(!(result= PyList_New(0)))  return NULL;
 
-	sInfo = newShareInfo();
-	smbInfo(s,r,u,p,sInfo);
-	for (i=0; i<128; i++) 
-	{ 
-		if(sInfo[i].sharename[0] == '\0') {
+	result = PyList_New(0);
+	if (result == NULL)
+		return NULL;
+
+	sInfo = PyMem_New(shareinfo, max_shares);
+	if (sInfo == NULL)
+		return result;
+
+	memset(sInfo, 0, sizeof(shareinfo) * max_shares);
+
+	Py_BEGIN_ALLOW_THREADS
+	n = smbInfo(s, r, u, p, sInfo, max_shares);
+	Py_END_ALLOW_THREADS
+
+	for (i = 0; i < n; i++) {
+		plist = PyList_New(6);
+		if (plist == NULL)
 			break;
-		}
-		else
-		{
-			name = Py_BuildValue("s", sInfo[i].sharename);
-			typ = Py_BuildValue("s", sInfo[i].typ);
-			comment = Py_BuildValue("s", sInfo[i].comment);
-			smbShare = Py_BuildValue("s", "smbShare");
-			rech = Py_BuildValue("s",r);
-			rechip = Py_BuildValue("s",s);
-			PyList_Append(plist, smbShare);
-			PyList_Append(plist, rech);
-			PyList_Append(plist, rechip);
-			PyList_Append(plist, name);
-			PyList_Append(plist, typ);
-			PyList_Append(plist, comment);
-			PyList_Append(result, plist);
-			if(!(plist= PyList_New(0)))  return NULL;
-		}
+		PyList_SET_ITEM(plist, 0, PyString_FromString("smbShare"));
+		PyList_SET_ITEM(plist, 1, PyString_FromString(r));
+		PyList_SET_ITEM(plist, 2, PyString_FromString(s));
+		PyList_SET_ITEM(plist, 3, PyString_FromString(sInfo[i].sharename));
+		PyList_SET_ITEM(plist, 4, PyString_FromString(sInfo[i].typ));
+		PyList_SET_ITEM(plist, 5, PyString_FromString(sInfo[i].comment));
+		PyList_Append(result, plist);
+		Py_DECREF(plist);
 	}
-	freeShareInfo(sInfo);
+
+	PyMem_Free(sInfo);
 	return result;
-	//return Py_BuildValue("s",s);
 }
 
 static PyMethodDef netscanmethods[] = {

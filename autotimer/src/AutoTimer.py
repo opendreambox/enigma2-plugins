@@ -37,14 +37,14 @@ from operator import itemgetter
 from Plugins.SystemPlugins.Toolkit.SimpleThread import SimpleThread
 
 try:
-	from Plugins.Extensions.SeriesPlugin.plugin import renameTimer
+	from Plugins.Extensions.SeriesPlugin.plugin import getSeasonEpisode as sp_getSeasonEpisode
 except ImportError as ie:
-	renameTimer = None
+	sp_getSeasonEpisode = None
 
 try:
-	from Plugins.Extensions.SeriesPlugin.plugin import getSeasonAndEpisode
+	from Plugins.Extensions.SeriesPlugin.plugin import showResult as sp_showResult
 except ImportError as ie:
-	getSeasonAndEpisode = None
+	sp_showResult = None
 
 from . import config, xrange, itervalues
 
@@ -265,9 +265,32 @@ class AutoTimer:
 				or (not similarTimer and (\
 					timer.checkTimespan(timestamp) \
 					or timer.checkTimeframe(begin) \
-				)): 	# or timer.checkFilter(name, shortdesc, extdesc, dayofweek):
+				)):
 				continue
 
+			# Initialize
+			newEntry = None
+			oldExists = False
+			dirname = None
+			
+			# Eventually change service to alternative
+			if timer.overrideAlternatives:
+				serviceref = timer.getAlternative(serviceref)
+
+			if timer.series_labeling and sp_getSeasonEpisode is not None:
+				print("[AutoTimer SeriesPlugin] Request name, desc, path %s %s %s" % (name,shortdesc,dest))
+				sp = sp_getSeasonEpisode(serviceref, name, evtBegin, evtEnd, shortdesc, dest)
+				if sp and len(sp) == 3:
+					name = sp[0]
+					shortdesc = sp[1]
+					dirname = sp[2]
+					print("[AutoTimer SeriesPlugin] Returned name, desc, path %s %s %s" % (name,shortdesc,dirname))
+				else:
+					print("[AutoTimer SeriesPlugin] Returned %s" % (str(sp)))
+			
+			if timer.checkFilter(name, shortdesc, extdesc, dayofweek):
+				continue
+			
 			if timer.hasOffset():
 				# Apply custom Offset
 				begin, end = timer.applyOffset(begin, end)
@@ -279,11 +302,6 @@ class AutoTimer:
 			# Overwrite endtime if requested
 			if timer.justplay and not timer.setEndtime:
 				end = begin
-
-			# Eventually change service to alternative
-			if timer.overrideAlternatives:
-				serviceref = timer.getAlternative(serviceref)
-
 
 			# Check for existing recordings in directory
 			if timer.avoidDuplicateDescription == 3:
@@ -299,10 +317,6 @@ class AutoTimer:
 						break
 				if movieExists:
 					continue
-
-			# Initialize
-			newEntry = None
-			oldExists = False
 
 			# Check for double Timers
 			# We first check eit and if user wants us to guess event based on time
@@ -347,12 +361,10 @@ class AutoTimer:
 					print("[AutoTimer] Not adding new timer because counter is depleted.")
 					continue
 
-
 			# Append to timerlist and abort if simulating
 			timers.append((name, begin, end, serviceref, timer.name))
 			if simulateOnly:
 				continue
-
 
 			if newEntry is not None:
 				# Abort if we don't want to modify timers or timer is repeated
@@ -384,19 +396,6 @@ class AutoTimer:
 				newEntry.isAutoTimer = True
 
 
-			if getSeasonAndEpisode is not None and timer.series_labeling:
-				sp_timer = getSeasonAndEpisode(newEntry, name, evtBegin, evtEnd)
-				if sp_timer:
-					newEntry = sp_timer
-				name = newEntry.name
-				print("[AutoTimer SeriesPlugin] Returned name %s" % (name))
-				shortdesc = newEntry.description
-				print("[AutoTimer SeriesPlugin] Returned description %s" % (shortdesc))
-			
-			if timer.checkFilter(name, shortdesc, extdesc, dayofweek):
-				continue
-
-
 			# Apply afterEvent
 			if timer.hasAfterEvent():
 				afterEvent = timer.getAfterEventTimespan(localtime(end))
@@ -405,7 +404,7 @@ class AutoTimer:
 				if afterEvent is not None:
 					newEntry.afterEvent = afterEvent
 
-			newEntry.dirname = timer.destination
+			newEntry.dirname = dirname or timer.destination
 			newEntry.justplay = timer.justplay
 			newEntry.vpsplugin_enabled = timer.vps_enabled
 			newEntry.vpsplugin_overwrite = timer.vps_overwrite
@@ -488,6 +487,10 @@ class AutoTimer:
 						newEntry.disabled = True
 						# We might want to do the sanity check locally so we don't run it twice - but I consider this workaround a hack anyway
 						conflicts = recordHandler.record(newEntry)
+		
+		if sp_showResult is not None:
+			sp_showResult()
+		
 		return (new, modified)
 
 	def parseEPG(self, simulateOnly=False, callback=None):
@@ -547,20 +550,39 @@ class AutoTimer:
 # Supporting functions
 
 	def populateTimerdict(self, epgcache, recordHandler, timerdict):
+		remove = []
 		for timer in chain(recordHandler.timer_list, recordHandler.processed_timers):
 			if timer and timer.service_ref:
 				if timer.eit is not None:
 					event = epgcache.lookupEventId(timer.service_ref.ref, timer.eit)
-					extdesc = event and event.getExtendedDescription() or ''
-					timer.extdesc = extdesc
-				elif not hasattr(timer, 'extdesc'):
+					if event:
+						timer.extdesc = event.getExtendedDescription()
+					else:
+						if config.plugins.autotimer.check_eit_and_remove.value:
+							remove.append(timer)
+				else:
+					if config.plugins.autotimer.check_eit_and_remove.value:
+						remove.append(timer)
+						continue
+
+				if not hasattr(timer, 'extdesc'):
 					timer.extdesc = ''
+
 				timerdict[str(timer.service_ref)].append(timer)
+
+		for timer in remove:
+			try:
+				# Because of the duplicate check, we only want to remove future timer
+				if timer in recordHandler.timer_list:
+					if not timer.isRunning():
+						recordHandler.timer_list.remove(timer)
+			except:
+				pass
 
 	def modifyTimer(self, timer, name, shortdesc, begin, end, serviceref, eit=None):
 		# Don't update the name, it will overwrite the name of the SeriesPlugin
 		#timer.name = name
-		timer.description = shortdesc
+		#timer.description = shortdesc
 		timer.begin = int(begin)
 		timer.end = int(end)
 		timer.service_ref = ServiceReference(serviceref)

@@ -107,6 +107,8 @@ class UserDialog(Screen, ConfigListScreen):
 		self.username = None
 		self.password = None
 
+		username = "guest"
+		password = ""
 		if os_path.exists(self.cache_file):
 			print 'Loading user cache from ',self.cache_file
 			try:
@@ -114,11 +116,7 @@ class UserDialog(Screen, ConfigListScreen):
 				username = self.hostdata['username']
 				password = self.hostdata['password']
 			except:
-				username = "username"
-				password = "password"
-		else:
-			username = "username"
-			password = "password"
+				pass
 
 		self.username = NoSave(ConfigText(default = username, visible_width = 50, fixed_size = False))
 		self.password = NoSave(ConfigPassword(default = password, visible_width = 50, fixed_size = False))

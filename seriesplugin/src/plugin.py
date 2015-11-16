@@ -8,6 +8,7 @@ from time import time
 
 # GUI (Screens)
 from Screens.MessageBox import MessageBox
+from Tools.Notifications import AddPopup
 
 # Config
 from Components.config import config, ConfigSubsection, ConfigEnableDisable, ConfigNumber, ConfigSelection, ConfigYesNo, ConfigText, ConfigSelectionNumber
@@ -28,20 +29,26 @@ from Logger import splog
 #######################################################
 # Constants
 NAME = "SeriesPlugin"
-VERSION = "2.5.1"
+VERSION = "3.3.1"
 DESCRIPTION = _("SeriesPlugin")
 SHOWINFO = _("Show series info (SP)")
 RENAMESERIES = _("Rename serie(s) (SP)")
 CHECKTIMERS = _("Check timer list for series (SP)")
 SUPPORT = "http://bit.ly/seriespluginihad"
 DONATE = "http://bit.ly/seriespluginpaypal"
+TERMS = "TBD"
 ABOUT = "\n  " + NAME + " " + VERSION + "\n\n" \
 				+ _("  (C) 2012 by betonme @ IHAD \n\n") \
+				+ _("  Terms: ") + TERMS + "\n\n" \
 				+ _("  {lookups:d} successful lookups.\n") \
 				+ _("  How much time have You saved?\n\n") \
 				+ _("  Support: ") + SUPPORT + "\n" \
 				+ _("  Feel free to donate. \n") \
 				+ _("  PayPal: ") + DONATE
+
+PROXY = "http://serienrecorder.lima-city.de/proxy.php"
+USER_AGENT = "Enigma2-"+NAME
+
 try:
 	from Tools.HardwareInfo import HardwareInfo
 	DEVICE = HardwareInfo().get_device_name().strip()
@@ -58,6 +65,10 @@ except:
 
 WHERE_EPGMENU     = 'WHERE_EPGMENU'
 WHERE_CHANNELMENU = 'WHERE_CHANNELMENU'
+
+
+def buildURL(url):
+	return PROXY + "?device=" + DEVICE + "&version=" + VERSION + "&url=" + url
 
 
 #######################################################
@@ -86,6 +97,11 @@ config.plugins.seriesplugin.pattern_file              = ConfigText(default = "/e
 config.plugins.seriesplugin.pattern_title             = ConfigText(default = "{org:s} S{season:02d}E{episode:02d} {title:s}", fixed_size = False)
 config.plugins.seriesplugin.pattern_description       = ConfigText(default = "S{season:02d}E{episode:02d} {title:s} {org:s}", fixed_size = False)
 #config.plugins.seriesplugin.pattern_record            = ConfigText(default = "{org:s} S{season:02d}E{episode:02d} {title:s}", fixed_size = False)
+config.plugins.seriesplugin.pattern_file_directories  = ConfigText(default = "/etc/enigma2/seriesplugin_patterns_directories.json", fixed_size = False)
+config.plugins.seriesplugin.pattern_directory         = ConfigText(default = "Disabled", fixed_size = False)
+
+config.plugins.seriesplugin.default_season            = ConfigSelectionNumber(0, 1, 1, default = 1)
+config.plugins.seriesplugin.default_episode           = ConfigSelectionNumber(0, 1, 1, default = 1)
 
 config.plugins.seriesplugin.replace_chars             = ConfigText(default = ":\!/\\,\(\)'\?", fixed_size = False)
 
@@ -115,17 +131,18 @@ config.plugins.seriesplugin.check_timer_list          = ConfigYesNo(default = Fa
 
 config.plugins.seriesplugin.timer_popups              = ConfigYesNo(default = True)
 config.plugins.seriesplugin.timer_popups_success      = ConfigYesNo(default = False)
-config.plugins.seriesplugin.timer_popups_timeout     = ConfigSelectionNumber(-1, 20, 1, default = 3)
+config.plugins.seriesplugin.timer_popups_timeout      = ConfigSelectionNumber(-1, 20, 1, default = 3)
+
+config.plugins.seriesplugin.socket_timeout            = ConfigSelectionNumber(0, 600, 1, default = 30)
 
 config.plugins.seriesplugin.caching                   = ConfigYesNo(default = True)
+config.plugins.seriesplugin.caching_expiration        = ConfigSelectionNumber(0, 48, 1, default = 6)
 
 config.plugins.seriesplugin.debug_prints              = ConfigYesNo(default = False)
 config.plugins.seriesplugin.write_log                 = ConfigYesNo(default = False)
 config.plugins.seriesplugin.log_file                  = ConfigText(default = "/tmp/seriesplugin.log", fixed_size = False)
 config.plugins.seriesplugin.log_reply_user            = ConfigText(default = "Dreambox User", fixed_size = False)
 config.plugins.seriesplugin.log_reply_mail            = ConfigText(default = "myemail@home.com", fixed_size = False)
-
-config.plugins.seriesplugin.ganalytics                = ConfigYesNo(default = True)
 
 # Internal
 config.plugins.seriesplugin.lookup_counter            = ConfigNumber(default = 0)
@@ -239,6 +256,52 @@ def getSeasonAndEpisode(timer, name, begin, end, *args, **kwargs):
 		except Exception as e:
 			splog(_("SeriesPlugin label exception ") + str(e))
 	return result
+
+# Synchronous call, blocks until we have the information
+loop_data = []
+loop_counter = 0
+def getSeasonEpisode(service_ref, name, begin, end, description, path, *args, **kwargs):
+	result = None
+	if config.plugins.seriesplugin.enabled.value:
+		try:
+			from SeriesPlugin import getInstance, refactorTitle, refactorDescription, refactorDirectory
+			seriesPlugin = getInstance()
+			data = seriesPlugin.getEpisodeBlocking(
+				name, begin, end, service_ref, future=True
+			)
+			global loop_counter
+			loop_counter += 1
+			if data and len(data) == 4:
+				name = str(refactorTitle(name, data))
+				description = str(refactorDescription(description, data))
+				path = refactorDirectory(path, data)
+				return (name, description, path)
+			elif data:
+				global loop_data
+				loop_data.append( str(data) )
+			return str(data)
+		except Exception as e:
+			splog(_("SeriesPlugin label exception ") + str(e))
+	return result
+
+def showResult(*args, **kwargs):
+	global loop_data, loop_counter
+	if not loop_data and config.plugins.seriesplugin.timer_popups_success.value:
+		AddPopup(
+			"SeriesPlugin:\n" + _("%d timer renamed successfully") % (loop_counter),
+			MessageBox.TYPE_ERROR,
+			int(config.plugins.seriesplugin.timer_popups_timeout.value),
+			'SP_PopUp_ID_Finished'
+		)
+	elif loop_data and config.plugins.seriesplugin.timer_popups.value:
+		AddPopup(
+			"SeriesPlugin:\n" + _("SP has been finished with errors:\n") +"\n" +"\n".join(loop_data),
+			MessageBox.TYPE_ERROR,
+			int(config.plugins.seriesplugin.timer_popups_timeout.value),
+			'SP_PopUp_ID_Finished'
+		)
+	loop_data = []
+	loop_counter = 0
 
 # Call asynchronous
 def renameTimer(timer, name, begin, end, *args, **kwargs):
@@ -536,7 +599,7 @@ def SPmodifyTimer(self, timer, name, shortdesc, begin, end, serviceref, eit=None
 	# Never overwrite existing names, You will lose Your series informations
 	#timer.name = name
 	# Only overwrite non existing descriptions
-	timer.description = timer.description or shortdesc
+	#timer.description = timer.description or shortdesc
 	timer.begin = int(begin)
 	timer.end = int(end)
 	timer.service_ref = ServiceReference(serviceref)

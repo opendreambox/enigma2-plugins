@@ -32,9 +32,7 @@ typedef struct {
 	char ip[41];
 } nfsinfo;
 
-nfsinfo * newNfsInfo();
-void freeNfsInfo(nfsinfo *nfsInfo);
-
+int showNfsShare(const char *hostname, nfsinfo *nfsInfo, unsigned int size);
 
 #endif
 

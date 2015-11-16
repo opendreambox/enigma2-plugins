@@ -13,8 +13,6 @@ from Components.MenuList import MenuList
 from Components.Button import Button
 from Screens.Screen import Screen
 #from Plugins.Plugin import PluginDescriptor
-#from twisted.web.client import getPage
-#from twisted.web.client import downloadPage
 
 #from Components.ServicePosition import ServicePositionGauge
 #from Tools.NumericalTextInput import NumericalTextInput
@@ -33,13 +31,25 @@ from Screens.MessageBox import MessageBox
 #from Screens.Standby import TryQuitMainloop
 #from Screens.VirtualKeyBoard import VirtualKeyBoard
 
-from enigma import eListboxPythonMultiContent, eListbox, gFont, RT_HALIGN_LEFT, RT_HALIGN_RIGHT, RT_HALIGN_CENTER, loadPNG, RT_WRAP, RT_VALIGN_CENTER, RT_VALIGN_TOP, RT_VALIGN_BOTTOM
+from enigma import eListboxPythonMultiContent, eListbox, gFont, getDesktop, RT_HALIGN_LEFT, RT_HALIGN_RIGHT, RT_HALIGN_CENTER, loadPNG, RT_WRAP, RT_VALIGN_CENTER, RT_VALIGN_TOP, RT_VALIGN_BOTTOM
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 import sys, os, base64, re, time, shutil, datetime, codecs, urllib2
 from twisted.web import client, error as weberror
 from twisted.internet import reactor, defer
 from urllib import urlencode
 from skin import parseColor
+
+# Check if is UHD
+DESKTOP_WIDTH = getDesktop(0).size().width()
+if DESKTOP_WIDTH > 1920:
+	skinFactor = 2.0
+else:
+	skinFactor = 1
+
+try:
+	from skin import TemplatedListFonts
+except:
+	TemplatedListFonts = None
 
 from difflib import SequenceMatcher
 
@@ -107,8 +117,14 @@ class ChannelEditor(Screen, HelpableScreen, ChannelsBase):
 		}, 0)
 
 		self.chooseMenuList = MenuList([], enableWrapAround=True, content=eListboxPythonMultiContent)
-		self.chooseMenuList.l.setFont(0, gFont('Regular', 20 ))
-		self.chooseMenuList.l.setItemHeight(25)
+		global TemplatedListFonts
+		if TemplatedListFonts is not None:
+			tlf = TemplatedListFonts()
+			self.chooseMenuList.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
+			self.chooseMenuList.l.setItemHeight(int(30*skinFactor))
+		else:
+			self.chooseMenuList.l.setFont(0, gFont('Regular', 20 ))
+			self.chooseMenuList.l.setItemHeight(25)
 		self['list'] = self.chooseMenuList
 		self['list'].show()
 
@@ -145,7 +161,7 @@ class ChannelEditor(Screen, HelpableScreen, ChannelsBase):
 				
 				webSender = self.lookupChannelByReference(serviceref)
 				if webSender is not False:
-					self.stbToWebChlist.append((servicename, webSender, serviceref, "1"))
+					self.stbToWebChlist.append((servicename, ' / '.join(webSender), serviceref, "1"))
 					
 				else:
 					self.stbToWebChlist.append((servicename, "", serviceref, "0"))
@@ -167,7 +183,7 @@ class ChannelEditor(Screen, HelpableScreen, ChannelsBase):
 				
 				webSender = self.lookupChannelByReference(serviceref)
 				if webSender is not False:
-					self.stbToWebChlist.append((servicename, webSender, serviceref, "1"))
+					self.stbToWebChlist.append((servicename, ' / '.join(webSender), serviceref, "1"))
 					
 				else:
 					if len(self.webChlist) != 0:
@@ -209,13 +225,23 @@ class ChannelEditor(Screen, HelpableScreen, ChannelsBase):
 			imageStatus = path = os.path.join(PIXMAP_PATH, "minus.png")
 		else:
 			imageStatus = path = os.path.join(PIXMAP_PATH, "plus.png")
-			
-		return [entry,
-			(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 10, 8, 16, 16, loadPNG(imageStatus)),
-			(eListboxPythonMultiContent.TYPE_TEXT, 35, 3, 300, 26, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, stbSender),
-			(eListboxPythonMultiContent.TYPE_TEXT, 350, 3, 250, 26, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, webSender),
-			(eListboxPythonMultiContent.TYPE_TEXT, 600, 3, 250, 26, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, "", colorYellow)
-			]
+		
+		global TemplatedListFonts
+		if TemplatedListFonts is not None:
+			l = [entry,
+				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 10, 8, 16 * skinFactor, 16 * skinFactor, loadPNG(imageStatus)),
+				(eListboxPythonMultiContent.TYPE_TEXT, 35 * skinFactor, 0, 400 * skinFactor, 30 * skinFactor, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, stbSender),
+				(eListboxPythonMultiContent.TYPE_TEXT, 450 * skinFactor, 0, 450 * skinFactor, 30 * skinFactor, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, webSender),
+				(eListboxPythonMultiContent.TYPE_TEXT, 900 * skinFactor, 0, 300 * skinFactor, 30 * skinFactor, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, "", colorYellow)
+				]
+		else:
+			l = [entry,
+				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 10, 8, 16, 16, loadPNG(imageStatus)),
+				(eListboxPythonMultiContent.TYPE_TEXT, 35, 3, 300, 26, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, stbSender),
+				(eListboxPythonMultiContent.TYPE_TEXT, 350, 3, 250, 26, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, webSender),
+				(eListboxPythonMultiContent.TYPE_TEXT, 600, 3, 250, 26, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, "", colorYellow)
+				]
+		return l
 
 	def getIndexOfWebSender(self, webSender):
 		for pos,webCh in enumerate(self.webChlist):

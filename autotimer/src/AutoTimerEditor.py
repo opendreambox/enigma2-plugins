@@ -81,6 +81,8 @@ class ExtendedConfigText(ConfigText):
 				mapping[0] += "%"
 			if "|" not in mapping[0]:
 				mapping[0] += "|"
+			if "\\" not in mapping[0]:
+				mapping[0] += "\\"
 
 class SimpleBouquetSelection(SimpleChannelSelection):
 	def __init__(self, session, title):

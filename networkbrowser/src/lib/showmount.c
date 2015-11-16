@@ -47,8 +47,6 @@
 #define MNTPATHLEN 1024
 #define MNTNAMLEN 255
 
-static int	headers = 1;
-
 typedef char *dirpath;
 typedef char *name;
 
@@ -161,23 +159,8 @@ bool_t xdr_groupnode (XDR *xdrs, groupnode *objp)
 	return TRUE;
 }
 
-nfsinfo * newNfsInfo()
+int showNfsShare(const char *hostname, nfsinfo *nfsInfo, unsigned int size)
 {
-	nfsinfo *nfsInfo = malloc(sizeof(nfsinfo)*255);
-	if(!nfsInfo)
-		exit(0); // TODO: besser machen
-		memset(nfsInfo,0,sizeof(nfsinfo)*255);
-	return nfsInfo;
-}
-
-void freeNfsInfo(nfsinfo *nfsInfo)
-{
-	free(nfsInfo);
-}
-
-int showNfsShare(char *pythonIp, nfsinfo *nfsInfo) 
-{
-	char *hostname;
 	enum clnt_stat clnt_stat;
 	struct hostent *hp;
 	struct sockaddr_in server_addr;
@@ -186,26 +169,17 @@ int showNfsShare(char *pythonIp, nfsinfo *nfsInfo)
 	struct timeval pertry_timeout;
 	CLIENT *mclient;
 	groups grouplist;
-	exports exportlist, exl;
-	int n;
-	int pos = 0;
+	exports exportlist;
+	int pos;
 
-	if (pythonIp != NULL)
-	{
-		hostname = pythonIp;
-	}
-	else
-	{
-		printf ("falscher aufruf showm ip, ergebnis ist showm 127.0.0.1\n");
-		hostname = "127.0.0.1";
-	}
 	if (hostname[0] >= '0' && hostname[0] <= '9') {
 		server_addr.sin_family = AF_INET;
 		server_addr.sin_addr.s_addr = inet_addr(hostname);
 	}
 	else {
 		if ((hp = gethostbyname(hostname)) == NULL) {
-			exit(1);
+			strcpy(nfsInfo[0].share, "ERROR: failed to resolve hostname");
+			return 1;
 		}
 		server_addr.sin_family = AF_INET;
 		memcpy(&server_addr.sin_addr, hp->h_addr, hp->h_length);
@@ -238,12 +212,10 @@ int showNfsShare(char *pythonIp, nfsinfo *nfsInfo)
 			(xdrproc_t) xdr_exports, (caddr_t) &exportlist,
 			total_timeout);
 		if (clnt_stat != RPC_SUCCESS) {
-			//clnt_perror(mclient, "rpc mount export");
 			strcpy(nfsInfo[0].share, "ERROR: mount clntudp_create");
-			return(1);
+			return -1;
 		}
-		pos = 0;
-		while (exportlist) {
+		for (pos = 0; pos < size && exportlist != NULL; pos++) {
 			strcpy(nfsInfo[pos].share, exportlist->ex_dir);
 			grouplist = exportlist->ex_groups;
 			//printf ("blubb ex %s, group %s\n", exportlist->ex_dir,grouplist->gr_name);
@@ -251,9 +223,8 @@ int showNfsShare(char *pythonIp, nfsinfo *nfsInfo)
 				strcpy(nfsInfo[pos].ip, grouplist->gr_name);
 			else
 				strcpy(nfsInfo[pos].ip, "world");
-			pos ++;
 			exportlist = exportlist->ex_next;
 		}
-	return 0;
 
+	return pos;
 }

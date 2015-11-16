@@ -68,29 +68,29 @@ class AutoMountView(Screen):
 
         def showMountsList(self):
                 self.list = []
-                self.mounts = iAutoMount.getMountsList()
+                self.mounts = iAutoMount.getMounts()
                 for sharename in self.mounts.keys():
-                        mountentry = iAutoMount.automounts[sharename]
+                        mountentry = iAutoMount.mounts[sharename]
                         self.list.append(self.buildMountViewItem(mountentry))
                 self["config"].setList(self.list)
 
         def buildMountViewItem(self, entry):
-                if entry["isMounted"] is True:
-                        isMountedpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/ok.png"))
-                if entry["isMounted"] is False:
-                        isMountedpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/cancel.png"))
                 sharename = entry["sharename"]
-                IPdescription = _("IP:") + " " + str(entry["ip"])
-                DIRdescription = _("Dir:") + " " + str(entry["sharedir"])
-                if entry["active"] == 'True' or entry["active"] == True:
+                ip = _("IP:") + " " + str(entry["ip"])
+                mountpoint = _("Dir:") + " " + str(entry["sharedir"])
+                if entry["isMounted"]:
+                        isMountedpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/ok.png"))
+                else:
+                        isMountedpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/cancel.png"))
+                if entry["active"]:
                         activepng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_SKIN_IMAGE, "skin_default/icons/lock_on.png"))
-                if entry["active"] == 'False' or entry["active"] == False:
+                else:
                         activepng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_SKIN_IMAGE, "skin_default/icons/lock_error.png"))
                 if entry["mounttype"] == 'nfs':
                         mounttypepng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/i-nfs.png"))
                 if entry["mounttype"] == 'cifs':
                         mounttypepng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/i-smb.png"))
-                return((isMountedpng, sharename, IPdescription, DIRdescription, activepng, mounttypepng))
+                return((isMountedpng, sharename, ip, mountpoint, activepng, mounttypepng))
 
         def exit(self):
                 self.close()
@@ -99,7 +99,7 @@ class AutoMountView(Screen):
                 cur = self["config"].getCurrent()
                 if cur:
                         returnValue = cur[1]
-                        self.session.openWithCallback(self.MountEditClosed, AutoMountEdit, self.skin_path, iAutoMount.automounts[returnValue])
+                        self.session.openWithCallback(self.MountEditClosed, AutoMountEdit, self.skin_path, iAutoMount.mounts[returnValue])
 
         def MountEditClosed(self, returnValue = None):
                 if returnValue == None:
@@ -110,12 +110,12 @@ class AutoMountView(Screen):
                 if cur:
                         returnValue = cur[1]
                         self.applyConfigRef = self.session.openWithCallback(self.applyConfigfinishedCB, MessageBox, _("Please wait while removing your network mount..."), type = MessageBox.TYPE_INFO, enable_input = False)
-                        iAutoMount.removeMount(returnValue,self.removeDataAvail)
+                        iAutoMount.removeMount(iAutoMount.MOUNT_BASE + returnValue, self.removeDataAvail)
 
         def removeDataAvail(self, data):
                 if data is True:
-                        iAutoMount.writeMountsConfig()
-                        iAutoMount.getAutoMountPoints(self.deleteDataAvail)
+                        iAutoMount.save()
+                        iAutoMount.reload(self.deleteDataAvail)
 
         def deleteDataAvail(self, data):
                 if data is True:
@@ -130,4 +130,3 @@ class AutoMountView(Screen):
                 if data is not None:
                         if data is True:
                                 self.showMountsList()
-

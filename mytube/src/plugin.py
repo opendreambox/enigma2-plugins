@@ -46,7 +46,7 @@ config.plugins.mytube.search.orderBy = ConfigSelection(
 				[
 				 ("relevance", _("Relevance")),
 				 ("viewCount", _("View Count")),
-				 ("published", _("Published")),
+				 ("date", _("Published")),
 				 ("rating", _("Rating"))
 				], "relevance")
 config.plugins.mytube.search.time = ConfigSelection(
