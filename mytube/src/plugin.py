@@ -3,17 +3,14 @@ from Components.ActionMap import ActionMap
 from Components.Button import Button
 from Components.ConfigList import ConfigListScreen
 from Components.Label import Label
-from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixmapAlphaTest
 from Components.Pixmap import Pixmap
 from Components.ProgressBar import ProgressBar
 from Components.ScrollLabel import ScrollLabel
-from Components.ServiceEventTracker import ServiceEventTracker
 from Components.Sources.List import List
 from Components.Task import Task, Job, job_manager
-from Components.config import config, ConfigSelection, ConfigSubsection, ConfigText, ConfigYesNo, getConfigListEntry, ConfigPassword
+from Components.config import config, ConfigSelection, ConfigSubsection, ConfigText, ConfigYesNo, getConfigListEntry
 #, ConfigIP, ConfigNumber, ConfigLocations
 from Screens.ChoiceBox import ChoiceBox
-from Screens.InfoBarGenerics import InfoBarNotifications, InfoBarSeek
 from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
 from Screens.VirtualKeyBoard import VirtualKeyBoard
@@ -24,13 +21,16 @@ from Tools.Log import Log
 
 from Plugins.Plugin import PluginDescriptor
 
-from MyTubeSearch import ConfigTextWithGoogleSuggestions, MyTubeSettingsScreen, MyTubeTasksScreen, MyTubeHistoryScreen
+from MyTubePlayer import MyTubePlayer
+from MyTubeSearch import ConfigTextWithGoogleSuggestions, MyTubeTasksScreen, MyTubeHistoryScreen
 from MyTubeService import validate_cert, get_rnd, myTubeService
+from MyTubeSettings import MyTubeSettingsScreen
+
 from Plugins.SystemPlugins.TubeLib.youtube.Search import Search
 
 from __init__ import decrypt_block
 
-from enigma import eTPM, eTimer, ePoint, RT_HALIGN_LEFT, RT_VALIGN_CENTER, gFont, ePicLoad, eServiceReference, iPlayableService
+from enigma import eTPM, eTimer, ePoint, ePicLoad, eServiceReference
 from os import path as os_path, remove as os_remove
 from twisted.web import client
 
@@ -132,12 +132,7 @@ config.plugins.mytube.general.history = ConfigText(default="")
 config.plugins.mytube.general.clearHistoryOnClose = ConfigYesNo(default = False)
 config.plugins.mytube.general.AutoLoadFeeds = ConfigYesNo(default = True)
 config.plugins.mytube.general.resetPlayService = ConfigYesNo(default = False)
-config.plugins.mytube.general.username = ConfigText(default="", fixed_size = False)
-config.plugins.mytube.general.password = ConfigPassword(default="")
-#config.plugins.mytube.general.useHTTPProxy = ConfigYesNo(default = False)
-#config.plugins.mytube.general.ProxyIP = ConfigIP(default=[0,0,0,0])
-#config.plugins.mytube.general.ProxyPort = ConfigNumber(default=8080)
-
+config.plugins.mytube.general.authenticate = ConfigYesNo(default=False)
 
 class downloadJob(Job):
 	def __init__(self, url, file, title):
@@ -226,6 +221,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 	def __init__(self, session, l2key=None):
 		Screen.__init__(self, session)
 		self.session = session
+		self._userCodeMbx = None
 		self.l2key = l2key
 		self.l3key = None
 		self.skin_path = plugin_path
@@ -361,12 +357,8 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		self.onLayoutFinish.append(self.layoutFinished)
 		self.onShown.append(self.setWindowTitle)
 		self.onClose.append(self.__onClose)
-		self._initTimer = eTimer()
-		self._initTimer.callback.append(self.TimerFire)
 
 	def __onClose(self):
-		myTubeService.resetAuthState()
-		del self._initTimer
 		del self.timer_startDownload
 		del self.timer_thumbnails
 		self.Details = {}
@@ -417,14 +409,24 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		self.statuslist.append(( _("Fetching feed entries"), _("Trying to download the Youtube feed entries. Please wait..." ) ))
 		self["feedlist"].style = "state"
 		self['feedlist'].setList(self.statuslist)
-		self._initTimer.start(500)
-
-	def _initTimerFire(self):
-		self._initTimer.stop()
-		if config.plugins.mytube.general.loadFeedOnOpen.value:
-			self.setState('getFeed')
+		myTubeService.addReadyCallback(self._onServiceReady)
+		if config.plugins.mytube.general.authenticate.value:
+			myTubeService.startAuthenticatedService(self._onUserCodeReady)
 		else:
-			self.setState('byPass')
+			myTubeService.startService()
+
+	def _onServiceReady(self, ready):
+		Log.w("%s" %(ready,))
+		if self._userCodeMbx:
+			self._userCodeMbx.close()
+			self._userCodeMbx = None
+
+		if ready:
+			if config.plugins.mytube.general.loadFeedOnOpen.value:
+				self.getFeed()
+				self.setState('getFeed')
+			else:
+				self.setState('byPass')
 
 	def setWindowTitle(self):
 		self.setTitle(_("MyTubePlayer"))
@@ -435,18 +437,6 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		self.searchContextEntries.append(self.SearchConfigEntry)
 		self["config"].list = self.searchContextEntries
 		self["config"].l.setList(self.searchContextEntries)
-
-
-	def tryUserLogin(self):
-		if config.plugins.mytube.general.username.value is "" or config.plugins.mytube.general.password.value is "":
-			return
-
-		try:
-			myTubeService.auth_user(config.plugins.mytube.general.username.value, config.plugins.mytube.general.password.value)
-			self.statuslist.append(( _("Login OK"), _('Hello') + ' ' + str(config.plugins.mytube.general.username.value)))
-		except Exception as e:
-			print 'Login-Error: ' + str(e)
-			self.statuslist.append(( _("Login failed"), str(e)))
 
 	def setState(self,status = None):
 		if status:
@@ -475,9 +465,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 				return
 
 			print "Genuine Dreambox validation passed"
-			if self.FirstRun == True:
-				self.appendEntries = False
-				myTubeService.startService()
+
 			if self.HistoryWindow is not None:
 				self.HistoryWindow.deactivate()
 				self.HistoryWindow.instance.hide()
@@ -497,9 +485,11 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 				self.switchToConfigList()
 			self["feedlist"].style = "state"
 			self['feedlist'].setList(self.statuslist)
-			if self.FirstRun == True:
-				if config.plugins.mytube.general.loadFeedOnOpen.value:
-					self.getFeed()
+
+
+	def _onUserCodeReady(self, userCode):
+		self._userCodeMbx = self.session.open(MessageBox, str(_("Please visit: %s\nAnd enter: %s") % (userCode.verification_url, userCode.user_code)), type=MessageBox.TYPE_INFO, title=_("Authentication awaiting"))
+		Log.w(userCode)
 
 	def handleHelpWindow(self):
 		print "[handleHelpWindow]"
@@ -694,6 +684,8 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 				self.switchToFeedList()
 
 	def doQuit(self):
+		myTubeService.onReady.remove(self._onServiceReady)
+
 		if self["config"].getCurrent()[1].suggestionsWindow is not None:
 			self.session.deleteDialog(self["config"].getCurrent()[1].suggestionsWindow)
 		if self.HistoryWindow is not None:
@@ -1542,283 +1534,6 @@ class MyTubeVideoHelpScreen(Screen):
 		self["detailtext"].pageDown()
 
 
-class MyTubePlayer(Screen, InfoBarNotifications, InfoBarSeek):
-	STATE_IDLE = 0
-	STATE_PLAYING = 1
-	STATE_PAUSED = 2
-	ENABLE_RESUME_SUPPORT = True
-	ALLOW_SUSPEND = True
-
-	skin = """<screen name="MyTubePlayer" flags="wfNoBorder" position="0,380" size="720,160" title="InfoBar" backgroundColor="transparent">
-		<ePixmap position="0,0" pixmap="skin_default/info-bg_mp.png" zPosition="-1" size="720,160" />
-		<ePixmap position="29,40" pixmap="skin_default/screws_mp.png" size="665,104" alphatest="on" />
-		<ePixmap position="48,70" pixmap="skin_default/icons/mp_buttons.png" size="108,13" alphatest="on" />
-		<ePixmap pixmap="skin_default/icons/icon_event.png" position="207,78" size="15,10" alphatest="on" />
-		<widget source="session.CurrentService" render="Label" position="230,73" size="360,40" font="Regular;20" backgroundColor="#263c59" shadowColor="#1d354c" shadowOffset="-1,-1" transparent="1">
-			<convert type="ServiceName">Name</convert>
-		</widget>
-		<widget source="session.CurrentService" render="Label" position="580,73" size="90,24" font="Regular;20" halign="right" backgroundColor="#4e5a74" transparent="1">
-			<convert type="ServicePosition">Length</convert>
-		</widget>
-		<widget source="session.CurrentService" render="Label" position="205,129" size="100,20" font="Regular;18" halign="center" valign="center" backgroundColor="#06224f" shadowColor="#1d354c" shadowOffset="-1,-1" transparent="1">
-			<convert type="ServicePosition">Position</convert>
-		</widget>
-		<widget source="session.CurrentService" render="PositionGauge" position="300,133" size="270,10" zPosition="2" pointer="skin_default/position_pointer.png:540,0" transparent="1" foregroundColor="#20224f">
-			<convert type="ServicePosition">Gauge</convert>
-		</widget>
-		<widget source="session.CurrentService" render="Label" position="576,129" size="100,20" font="Regular;18" halign="center" valign="center" backgroundColor="#06224f" shadowColor="#1d354c" shadowOffset="-1,-1" transparent="1">
-			<convert type="ServicePosition">Remaining</convert>
-		</widget>
-		</screen>"""
-
-	def __init__(self, session, service, lastservice, infoCallback = None, nextCallback = None, prevCallback = None):
-		Screen.__init__(self, session)
-		InfoBarNotifications.__init__(self)
-		InfoBarSeek.__init__(self)
-		self.session = session
-		self.service = service
-		self.infoCallback = infoCallback
-		self.nextCallback = nextCallback
-		self.prevCallback = prevCallback
-		self.screen_timeout = 5000
-		self.nextservice = None
-
-		print "evEOF=%d" % iPlayableService.evEOF
-		self.__event_tracker = ServiceEventTracker(screen = self, eventmap =
-			{
-				iPlayableService.evSeekableStatusChanged: self.__seekableStatusChanged,
-				iPlayableService.evStart: self.__serviceStarted,
-				iPlayableService.evEOF: self.__evEOF,
-			})
-
-		self["actions"] = ActionMap(["OkCancelActions", "InfobarSeekActions", "MediaPlayerActions", "MovieSelectionActions"],
-		{
-				"ok": self.ok,
-				"cancel": self.leavePlayer,
-				"stop": self.leavePlayer,
-				"playpauseService": self.playpauseService,
-				"seekFwd": self.playNextFile,
-				"seekBack": self.playPrevFile,
-				"showEventInfo": self.showVideoInfo,
-			}, -2)
-
-
-		self.lastservice = lastservice
-
-		self.hidetimer = eTimer()
-		self.hidetimer.timeout.get().append(self.ok)
-		self.returning = False
-
-		self.state = self.STATE_PLAYING
-		self.lastseekstate = self.STATE_PLAYING
-
-		self.onPlayStateChanged = [ ]
-		self.__seekableStatusChanged()
-
-		self.play()
-		self.onClose.append(self.__onClose)
-
-	def __onClose(self):
-		self.session.nav.stopService()
-
-	def __evEOF(self):
-		print "evEOF=%d" % iPlayableService.evEOF
-		print "Event EOF"
-		self.handleLeave(config.plugins.mytube.general.on_movie_stop.value)
-
-	def __setHideTimer(self):
-		self.hidetimer.start(self.screen_timeout)
-
-	def showInfobar(self):
-		self.show()
-		if self.state == self.STATE_PLAYING:
-			self.__setHideTimer()
-		else:
-			pass
-
-	def hideInfobar(self):
-		self.hide()
-		self.hidetimer.stop()
-
-	def ok(self):
-		if self.shown:
-			self.hideInfobar()
-		else:
-			self.showInfobar()
-
-	def showVideoInfo(self):
-		if self.shown:
-			self.hideInfobar()
-		if self.infoCallback is not None:
-			self.infoCallback()
-
-	def playNextFile(self):
-		print "playNextFile"
-		nextservice,error = self.nextCallback()
-		print "nextservice--->",nextservice
-		if nextservice is None:
-			self.handleLeave(config.plugins.mytube.general.on_movie_stop.value, error)
-		else:
-			self.playService(nextservice)
-			self.showInfobar()
-
-	def playPrevFile(self):
-		print "playPrevFile"
-		prevservice,error = self.prevCallback()
-		if prevservice is None:
-			self.handleLeave(config.plugins.mytube.general.on_movie_stop.value, error)
-		else:
-			self.playService(prevservice)
-			self.showInfobar()
-
-	def playagain(self):
-		print "playagain"
-		if self.state != self.STATE_IDLE:
-			self.stopCurrent()
-		self.play()
-
-	def playService(self, newservice):
-		if self.state != self.STATE_IDLE:
-			self.stopCurrent()
-		self.service = newservice
-		self.play()
-
-	def play(self):
-		if self.state == self.STATE_PAUSED:
-			if self.shown:
-				self.__setHideTimer()
-		self.state = self.STATE_PLAYING
-		self.session.nav.playService(self.service)
-		if self.shown:
-			self.__setHideTimer()
-
-	def stopCurrent(self):
-		print "stopCurrent"
-		self.session.nav.stopService()
-		self.state = self.STATE_IDLE
-
-	def playpauseService(self):
-		print "playpauseService"
-		if self.state == self.STATE_PLAYING:
-			self.pauseService()
-		elif self.state == self.STATE_PAUSED:
-			self.unPauseService()
-
-	def pauseService(self):
-		print "pauseService"
-		if self.state == self.STATE_PLAYING:
-			self.setSeekState(self.STATE_PAUSED)
-
-	def unPauseService(self):
-		print "unPauseService"
-		if self.state == self.STATE_PAUSED:
-			self.setSeekState(self.STATE_PLAYING)
-
-
-	def getSeek(self):
-		service = self.session.nav.getCurrentService()
-		if service is None:
-			return None
-
-		seek = service.seek()
-
-		if seek is None or not seek.isCurrentlySeekable():
-			return None
-
-		return seek
-
-	def isSeekable(self):
-		if self.getSeek() is None:
-			return False
-		return True
-
-	def __seekableStatusChanged(self):
-		print "seekable status changed!"
-		if not self.isSeekable():
-			self["SeekActions"].setEnabled(False)
-			self.setSeekState(self.STATE_PLAYING)
-		else:
-			self["SeekActions"].setEnabled(True)
-			print "seekable"
-
-	def __serviceStarted(self):
-		self.state = self.STATE_PLAYING
-		self.__seekableStatusChanged()
-
-	def setSeekState(self, wantstate, onlyGUI = False):
-		print "setSeekState"
-		if wantstate == self.STATE_PAUSED:
-			print "trying to switch to Pause- state:",self.STATE_PAUSED
-		elif wantstate == self.STATE_PLAYING:
-			print "trying to switch to playing- state:",self.STATE_PLAYING
-		service = self.session.nav.getCurrentService()
-		if service is None:
-			print "No Service found"
-			return False
-		pauseable = service.pause()
-		if pauseable is None:
-			print "not pauseable."
-			self.state = self.STATE_PLAYING
-
-		if pauseable is not None:
-			print "service is pausable"
-			if wantstate == self.STATE_PAUSED:
-				print "WANT TO PAUSE"
-				pauseable.pause()
-				self.state = self.STATE_PAUSED
-				if not self.shown:
-					self.hidetimer.stop()
-					self.show()
-			elif wantstate == self.STATE_PLAYING:
-				print "WANT TO PLAY"
-				pauseable.unpause()
-				self.state = self.STATE_PLAYING
-				if self.shown:
-					self.__setHideTimer()
-
-		for c in self.onPlayStateChanged:
-			c(self.state)
-
-		return True
-
-	def handleLeave(self, how, error = False):
-		self.is_closing = True
-		if how == "ask":
-			list = (
-				(_("Yes"), "quit"),
-				(_("No, but play video again"), "playagain"),
-				(_("Yes, but play next video"), "playnext"),
-				(_("Yes, but play previous video"), "playprev"),
-			)
-			if error is False:
-				self.session.openWithCallback(self.leavePlayerConfirmed, ChoiceBox, title=_("Stop playing this movie?"), list = list)
-			else:
-				self.session.openWithCallback(self.leavePlayerConfirmed, ChoiceBox, title=_("No playable video found! Stop playing this movie?"), list = list)
-		else:
-			self.leavePlayerConfirmed([True, how])
-
-	def leavePlayer(self):
-		self.handleLeave(config.plugins.mytube.general.on_movie_stop.value)
-
-	def leavePlayerConfirmed(self, answer):
-		answer = answer and answer[1]
-		if answer == "quit":
-			print 'quited'
-			self.close()
-		elif answer == "playnext":
-			self.playNextFile()
-		elif answer == "playprev":
-			self.playPrevFile()
-		elif answer == "playagain":
-			self.playagain()
-
-	def doEofInternal(self, playing):
-		if not self.execing:
-			return
-		if not playing :
-			return
-		self.handleLeave(config.usage.on_movie_eof.value)
-
 def MyTubeMain(session, **kwargs):
 	l2 = False
 	l2cert = etpm.getData(eTPM.DT_LEVEL2_CERT)
@@ -1833,7 +1548,6 @@ def MyTubeMain(session, **kwargs):
 	l2 = True
 	if l2:
 		session.open(MyTubePlayerMainScreen, l2key)
-
 
 def Plugins(path, **kwargs):
 	global plugin_path
