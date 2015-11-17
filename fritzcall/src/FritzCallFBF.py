@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1247 $
-$Date: 2015-11-16 18:16:56 +0100 (Mon, 16 Nov 2015) $
-$Id: FritzCallFBF.py 1247 2015-11-16 17:16:56Z michael $
+$Revision: 1248 $
+$Date: 2015-11-17 09:44:08 +0100 (Tue, 17 Nov 2015) $
+$Id: FritzCallFBF.py 1248 2015-11-17 08:44:08Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -3244,9 +3244,12 @@ class FritzCallFBF_06_35:
 			faxActive = True
 			self.info("faxActive: " + repr(faxActive))
  
-		found = re.match('.*"linktxt": "Rufumleitung",\s*"details": "aktiv",', html, re.S)
+		found = re.match('.*"linktxt": "Rufumleitung",\s*"details": "(?:(\d+) )?aktiv",', html, re.S)
 		if found:
-			rufumlActive = -1 # means no number available
+			if found.group(1):
+				rufumlActive = int(found.group(1))
+			else:
+				rufumlActive = -1 # means no number available
 			self.info("rufumlActive: " + repr(rufumlActive))
  
 		guestAccess = ""
