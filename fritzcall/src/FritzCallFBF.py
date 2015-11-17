@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1248 $
-$Date: 2015-11-17 09:44:08 +0100 (Tue, 17 Nov 2015) $
-$Id: FritzCallFBF.py 1248 2015-11-17 08:44:08Z michael $
+$Revision: 1249 $
+$Date: 2015-11-17 19:36:24 +0100 (Tue, 17 Nov 2015) $
+$Id: FritzCallFBF.py 1249 2015-11-17 18:36:24Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -3110,9 +3110,11 @@ class FritzCallFBF_06_35:
 
 		self.debug("")
 
-		linkP = open("/tmp/FritzCallDataOverview.lua", "w")
-		linkP.write(html)
-		linkP.close()
+		#=======================================================================
+		# linkP = open("/tmp/FritzCallGetInfo.lua", "w")
+		# linkP.write(html)
+		# linkP.close()
+		#=======================================================================
 
 		(boxInfo, upTime, ipAddress, wlanState, dslState, tamActive, dectActive, faxActive, rufumlActive, guestAccess) = (None, None, None, None, None, None, None, None, None, None)
 
