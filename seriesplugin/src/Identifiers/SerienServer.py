@@ -62,8 +62,8 @@ class SerienServer(IdentifierBase):
 		
 		# Check dependencies
 		if xmlrpclib is None:
-			splog(_("Error install python_xmlrpclib"))
-			return _("Error install python_xmlrpclib")
+			splog(_("Error install")  + " python-xmlrpclib")
+			return _("Error install") + " python-xmlrpclib"
 		
 		
 		# Check preconditions
@@ -81,8 +81,9 @@ class SerienServer(IdentifierBase):
 		# Prepare parameters
 		name = re.sub("[^a-zA-Z0-9-*]", " ", name.lower())
 		webChannels = self.lookupChannelByReference(service)
-		unixtime = str(mktime(begin.timetuple()))
+		unixtime = str(int(mktime(begin.timetuple())))
 		
+		results = ""
 		
 		# Lookup
 		while name:	
@@ -105,6 +106,8 @@ class SerienServer(IdentifierBase):
 					yepisode = ( result['season'], result['episode'], result['title'], result['series'] )
 					if yepisode:
 						return ( yepisode )
+				else:
+					results += str(result) + "\n"
 
 			else:
 				name = self.getAlternativeSeries(name)
@@ -113,7 +116,7 @@ class SerienServer(IdentifierBase):
 			if unixtime < time():
 				return ( _("Please try Fernsehserien.de") )
 			else:
-				return ( _("No matching series found") )
+				return results or ( _("No matching series found") )
 
 #	def getSeries(self, name):
 #		#url = SERIESLISTURL + urlencode({ 'q' : re.sub("[^a-zA-Z0-9-*]", " ", name.lower()) })
