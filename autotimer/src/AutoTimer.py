@@ -50,6 +50,8 @@ from . import config, xrange, itervalues
 
 XML_CONFIG = "/etc/enigma2/autotimer.xml"
 
+TAG = "AutoTimer"
+
 def getTimeDiff(timer, begin, end):
 	if begin <= timer.begin <= end:
 		return end - timer.begin
@@ -466,7 +468,7 @@ class AutoTimer:
 					print("[AutoTimer] Won't modify existing timer because either no modification allowed or repeated timer")
 					continue
 
-				if hasattr(newEntry, "isAutoTimer"):
+				if hasattr(newEntry, "isAutoTimer") or TAG in newEntry.tags:
 					newEntry.log(501, "[AutoTimer] AutoTimer %s modified this automatically generated timer." % (timer.name))
 				else:
 					if config.plugins.autotimer.refresh.value != "all":
@@ -488,6 +490,7 @@ class AutoTimer:
 				# It is only temporarily, after a restart it will be lost,
 				# because it won't be stored in the timer xml file
 				newEntry.isAutoTimer = True
+				newEntry.tags.append(TAG)
 
 
 			# Apply afterEvent
@@ -655,9 +658,10 @@ class AutoTimer:
 						if config.plugins.autotimer.check_eit_and_remove.value:
 							remove.append(timer)
 				else:
-					if config.plugins.autotimer.check_eit_and_remove.value:
-						remove.append(timer)
-						continue
+					if hasattr(timer, "isAutoTimer") or TAG in timer.tags:
+						if config.plugins.autotimer.check_eit_and_remove.value:
+							remove.append(timer)
+							continue
 
 				if not hasattr(timer, 'extdesc'):
 					timer.extdesc = ''
