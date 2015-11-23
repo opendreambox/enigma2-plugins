@@ -337,19 +337,26 @@ class AutoTimer:
 				# If maximum days in future is set then check time
 				if checkEvtLimit:
 					if begin > evtLimit:
+						print("[AutoTimer] Skipping an event because of maximum days in future is reached")
 						continue
 
 				dayofweek = str(timestamp.tm_wday)
 
 			# Check timer conditions
 			# NOTE: similar matches do not care about the day/time they are on, so ignore them
-			if timer.checkServices(serviceref) \
-				or timer.checkDuration(duration) \
-				or (not similarTimer and (\
-					timer.checkTimespan(timestamp) \
-					or timer.checkTimeframe(begin) \
-				)):
+			if timer.checkServices(serviceref):
+				print("[AutoTimer] Skipping an event because of check services")
 				continue
+			if timer.checkDuration(duration):
+				print("[AutoTimer] Skipping an event because of duration check")
+				continue
+			if not similarTimer:
+				if timer.checkTimespan(timestamp):
+					print("[AutoTimer] Skipping an event because of timestamp check")
+					continue
+				if timer.checkTimeframe(begin):
+					print("[AutoTimer] Skipping an event because of timeframe check")
+					continue
 
 			# Initialize
 			newEntry = None
@@ -372,6 +379,7 @@ class AutoTimer:
 					print("[AutoTimer SeriesPlugin] Returned %s" % (str(sp)))
 			
 			if timer.checkFilter(name, shortdesc, extdesc, dayofweek):
+				print("[AutoTimer] Skipping an event because of filter check")
 				continue
 			
 			if timer.hasOffset():
@@ -399,6 +407,7 @@ class AutoTimer:
 						movieExists = True
 						break
 				if movieExists:
+					print("[AutoTimer] Skipping an event because movie already exists")
 					continue
 
 			# Check for double Timers
@@ -427,6 +436,7 @@ class AutoTimer:
 			if newEntry is None:
 				# But there is a match
 				if oldExists:
+					print("[AutoTimer] Skipping an event because a timer on same service exists")
 					continue
 
 				# We want to search for possible doubles
@@ -438,6 +448,7 @@ class AutoTimer:
 								print("[AutoTimer] We found a timer (any service) with same description, skipping event")
 								break
 					if oldExists:
+						print("[AutoTimer] Skipping an event because a timer on any service exists")
 						continue
 
 				if timer.checkCounter(timestamp):
