@@ -2,7 +2,7 @@
 from . import _
 
 from Components.config import config, ConfigSubsection, ConfigSubList, \
-	ConfigEnableDisable, ConfigNumber, ConfigText, ConfigSelection, \
+	ConfigOnOff, ConfigNumber, ConfigText, ConfigSelection, \
 	ConfigYesNo, ConfigPassword
 
 from Components.PluginComponent import plugins
@@ -21,14 +21,14 @@ simpleRSS.update_notification = ConfigSelection(
 )
 simpleRSS.interval = ConfigNumber(default=15)
 simpleRSS.feedcount = ConfigNumber(default=0)
-simpleRSS.autostart = ConfigEnableDisable(default=False)
-simpleRSS.keep_running = ConfigEnableDisable(default=True)
+simpleRSS.autostart = ConfigOnOff(default=False)
+simpleRSS.keep_running = ConfigOnOff(default=True)
 simpleRSS.feed = ConfigSubList()
 i = 0
 while i < simpleRSS.feedcount.value:
 	s = ConfigSubsection()
 	s.uri = ConfigText(default="http://", fixed_size=False)
-	s.autoupdate = ConfigEnableDisable(default=True)
+	s.autoupdate = ConfigOnOff(default=True)
 	simpleRSS.feed.append(s)
 	i += 1
 	del s

@@ -1,12 +1,12 @@
 # -*- coding: iso-8859-1 -*-
 from Plugins.Plugin import PluginDescriptor
-from Components.config import config, ConfigSubsection, ConfigEnableDisable
+from Components.config import config, ConfigSubsection, ConfigOnOff
 from Screens.Standby import Standby, inStandby
 from StartupToStandbyConfiguration import StartupToStandbyConfiguration
 from Tools import Notifications
 
 config.plugins.startuptostandby = ConfigSubsection()
-config.plugins.startuptostandby.enabled = ConfigEnableDisable(default = False)
+config.plugins.startuptostandby.enabled = ConfigOnOff(default = False)
 
 def main(session, **kwargs):
 	print "[StartupToStandby] Open Config Screen"

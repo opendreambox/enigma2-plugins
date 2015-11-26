@@ -5,7 +5,7 @@ from Plugins.Plugin import PluginDescriptor
 
 from Components.ActionMap import HelpableActionMap
 from Components.ChoiceList import ChoiceEntryComponent
-from Components.config import config, ConfigSubsection, ConfigEnableDisable
+from Components.config import config, ConfigSubsection, ConfigOnOff
 from Components.SystemInfo import SystemInfo
 from Components.ParentalControl import parentalControl
 from enigma import ePoint, eServiceReference, getDesktop
@@ -511,10 +511,10 @@ def overwriteFunctions():
 	PictureInPicture.move = PictureInPicture_move
 
 config.plugins.pipzap = ConfigSubsection()
-config.plugins.pipzap.enable_hotkey = ConfigEnableDisable(default = True)
-config.plugins.pipzap.show_in_plugins = ConfigEnableDisable(default = False)
-config.plugins.pipzap.show_label = ConfigEnableDisable(default = True)
-config.plugins.pipzap.show_help = ConfigEnableDisable(default = True)
+config.plugins.pipzap.enable_hotkey = ConfigOnOff(default = True)
+config.plugins.pipzap.show_in_plugins = ConfigOnOff(default = False)
+config.plugins.pipzap.show_label = ConfigOnOff(default = True)
+config.plugins.pipzap.show_help = ConfigOnOff(default = True)
 
 def autostart(reason, **kwargs):
 	if reason == 0:

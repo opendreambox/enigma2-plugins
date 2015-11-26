@@ -3,7 +3,7 @@ Configuration screens for EmailClient
 '''
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
-from Components.config import config, getConfigListEntry, ConfigText, ConfigPassword, ConfigSelection, ConfigEnableDisable
+from Components.config import config, getConfigListEntry, ConfigText, ConfigPassword, ConfigSelection, ConfigOnOff
 from Components.ConfigList import ConfigListScreen
 from Components.Label import Label
 from Components.ActionMap import ActionMap
@@ -123,7 +123,7 @@ class EmailConfigAccount(ConfigListScreen, Screen):
 		self._cInterval.setUseableChars('0123456789,')
 		self._cMaxmail = ConfigText(self._maxmail, fixed_size=False)
 		self._cMaxmail.setUseableChars('0123456789,')
-		self._cListall = ConfigEnableDisable(self._listall)
+		self._cListall = ConfigOnOff(self._listall)
 		
 		self.list = [
 					getConfigListEntry(_("account name"), self._cName),

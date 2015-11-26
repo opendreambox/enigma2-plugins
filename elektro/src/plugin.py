@@ -42,7 +42,7 @@ from Components.Harddisk import harddiskmanager
 from Components.Sources.StaticText import StaticText
 
 # Configuration
-from Components.config import configfile, getConfigListEntry, ConfigEnableDisable, \
+from Components.config import configfile, getConfigListEntry, ConfigOnOff, \
 	ConfigYesNo, ConfigText, ConfigClock, ConfigNumber, ConfigSelection, \
 	config, ConfigSubsection, ConfigSubList, ConfigSubDict, ConfigIP, ConfigInteger
 

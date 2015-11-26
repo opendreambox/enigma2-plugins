@@ -11,7 +11,7 @@ from Screens.MessageBox import MessageBox
 from Tools.Notifications import AddPopup
 
 # Config
-from Components.config import config, ConfigSubsection, ConfigEnableDisable, ConfigNumber, ConfigSelection, ConfigYesNo, ConfigText, ConfigSelectionNumber
+from Components.config import config, ConfigSubsection, ConfigOnOff, ConfigNumber, ConfigSelection, ConfigYesNo, ConfigText, ConfigSelectionNumber
 
 # Plugin
 from Components.PluginComponent import plugins
@@ -75,7 +75,7 @@ def buildURL(url):
 # Initialize Configuration
 config.plugins.seriesplugin = ConfigSubsection()
 
-config.plugins.seriesplugin.enabled                   = ConfigEnableDisable(default = False)
+config.plugins.seriesplugin.enabled                   = ConfigOnOff(default = False)
 
 config.plugins.seriesplugin.menu_info                 = ConfigYesNo(default = True)
 config.plugins.seriesplugin.menu_extensions           = ConfigYesNo(default = False)

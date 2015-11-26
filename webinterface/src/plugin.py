@@ -3,7 +3,7 @@ Version = '$Header$';
 from enigma import eConsoleAppContainer, eTPM
 from Plugins.Plugin import PluginDescriptor
 
-from Components.config import config, ConfigBoolean, ConfigSubsection, ConfigInteger, ConfigYesNo, ConfigText, ConfigEnableDisable
+from Components.config import config, ConfigBoolean, ConfigSubsection, ConfigInteger, ConfigYesNo, ConfigText, ConfigOnOff
 from Screens.MessageBox import MessageBox
 from WebIfConfig import WebIfConfigScreen
 from WebChilds.Toplevel import getToplevel
@@ -54,8 +54,8 @@ config.plugins.Webinterface.https.auth = ConfigYesNo(default=True)
 
 config.plugins.Webinterface.streamauth = ConfigYesNo(default=False)
 
-config.plugins.Webinterface.anti_hijack = ConfigEnableDisable(default=False)
-config.plugins.Webinterface.extended_security = ConfigEnableDisable(default=False)
+config.plugins.Webinterface.anti_hijack = ConfigOnOff(default=False)
+config.plugins.Webinterface.extended_security = ConfigOnOff(default=False)
 
 global running_defered, waiting_shutdown, toplevel
 
