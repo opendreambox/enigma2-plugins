@@ -81,7 +81,7 @@ def blockingCallFromMainThread(f, *a, **kw):
 			result = queue.get(True, config.plugins.autotimer.timeout.value*60)
 		except Queue.Empty as qe:
 			if True: #not reactor.running: # reactor.running is only False AFTER shutdown, we are during.
-				raise ValueError("Reactor no longer active, aborting.")
+				doLog("Reactor no longer active, aborting.")
 		else:
 			break
 
@@ -402,22 +402,22 @@ class AutoTimer:
 					continue
 
 				if hasattr(newEntry, "isAutoTimer") or TAG in newEntry.tags:
-					newEntry.log(501, "AutoTimer %s modified this automatically generated timer." % (timer.name))
+					newEntry.log(501, "[AutoTimer] AutoTimer %s modified this automatically generated timer." % (timer.name))
 				else:
 					if config.plugins.autotimer.refresh.value != "all":
 						doLog("Won't modify existing timer because it's no timer set by us")
 						continue
 
-					newEntry.log(501, "Warning, AutoTimer %s messed with a timer which might not belong to it: %s ." % (timer.name, newEntry.name))
+					newEntry.log(501, "[AutoTimer] Warning, AutoTimer %s messed with a timer which might not belong to it: %s ." % (timer.name, newEntry.name))
 
 				modified += 1
 
 				self.modifyTimer(newEntry, name, shortdesc, begin, end, serviceref, eit)
-				newEntry.log(501, "AutoTimer modified timer: %s ." % (newEntry.name))
+				newEntry.log(501, "[AutoTimer] AutoTimer modified timer: %s ." % (newEntry.name))
 				
 			else:
 				newEntry = RecordTimerEntry(ServiceReference(serviceref), begin, end, name, shortdesc, eit)
-				newEntry.log(500, "Try to add new timer based on AutoTimer %s." % (timer.name))
+				newEntry.log(500, "[AutoTimer] Try to add new timer based on AutoTimer %s." % (timer.name))
 
 				# Mark this entry as AutoTimer (only AutoTimers will have this Attribute set)
 				# It is only temporarily, after a restart it will be lost,
@@ -459,7 +459,7 @@ class AutoTimer:
 				conflictString = ""
 				if similarTimer:
 					conflictString = similardict[eit].conflictString
-					newEntry.log(504, "Try to add similar Timer because of conflicts with %s." % (conflictString))
+					newEntry.log(504, "[AutoTimer] Try to add similar Timer because of conflicts with %s." % (conflictString))
 
 				# Try to add timer
 				conflicts = recordHandler.record(newEntry)
@@ -513,7 +513,7 @@ class AutoTimer:
 					conflicting.append((name, begin, end, serviceref, timer.name))
 
 					if config.plugins.autotimer.disabled_on_conflict.value:
-						newEntry.log(503, "Timer disabled because of conflicts with %s." % (conflictString))
+						newEntry.log(503, "[AutoTimer] Timer disabled because of conflicts with %s." % (conflictString))
 						newEntry.disabled = True
 						# We might want to do the sanity check locally so we don't run it twice - but I consider this workaround a hack anyway
 						conflicts = recordHandler.record(newEntry)
