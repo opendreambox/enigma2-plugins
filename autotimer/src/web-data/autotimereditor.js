@@ -35,6 +35,7 @@ function url() {
 	this.remove            = '/autotimer/remove';
 	this.parse             = '/autotimer/parse';
 	this.preview           = '/autotimer/simulate';
+	this.test              = '/autotimer/test';
 	this.timerlist         = '/web/timerlist';
 	this.timerchange       = "/web/timerchange";
 	this.timerdelete       = "/web/timerdelete";
@@ -223,6 +224,7 @@ var AutoTimerEditorCore = Class.create({
 		this.list = new AutoTimerListController('contentAutoTimerList');
 		this.edit = new AutoTimerEditController('contentAutoTimerContent');
 		this.preview = new AutoTimerPreviewController('contentAutoTimerContent');
+		this.test = new AutoTimerTestController('contentAutoTimerContent');
 		this.parse = new AutoTimerParseController('contentAutoTimerContent');
 		this.timers = new TimerController('contentAutoTimerContent');
 		this.about = new AboutPage('contentAutoTimerContent');
@@ -493,12 +495,13 @@ var AutoTimerListController = Class.create(Controller, {
 	},
 
 	onFinished: function(){
-		this.onChange();
+		this.click();
 	},
 	
-	onChange: function(){
+	click: function(){
 		var selectList = $('list');
 		var selectOptions = selectList.getElementsByTagName('option');
+		var idx = selectList.selectedIndex;
 		
 		// Set new row size of list
 		selectList.size = selectOptions.length + 2;
@@ -520,7 +523,6 @@ var AutoTimerListController = Class.create(Controller, {
 					this.idx = null;
 				}
 			}else{
-				var idx = selectList.selectedIndex;
 				if (idx < 0){
 					// Select at least the first element
 					idx = 0;
@@ -529,7 +531,6 @@ var AutoTimerListController = Class.create(Controller, {
 			}
 			
 			// Update editor
-			idx = selectList.selectedIndex;
 			if (idx >= 0){
 				// Load autotimer
 				var id = unescape(selectList.options[idx].value); 
@@ -592,9 +593,9 @@ var AutoTimerListController = Class.create(Controller, {
 	
 	registerEvents: function(){
 		$('list').on(
-			'change',
+			'click',
 			function(event, element){
-				this.onChange();
+				this.click();
 			}.bind(this)
 		);
 		$('add').on(
@@ -660,7 +661,7 @@ var AutoTimerEditController = Class.create(Controller, {
 		AnyTime.noPicker( 'after' );
 		AnyTime.picker( 'after', { format: "%Y-%m-%d", firstDOW: 1 } );
 		AnyTime.noPicker( 'before' );
-	  AnyTime.picker( 'before', { format: "%Y-%m-%d", firstDOW: 1 } );
+		AnyTime.picker( 'before', { format: "%Y-%m-%d", firstDOW: 1 } );
 		AnyTime.noPicker( 'aftereventFrom' );
 		AnyTime.picker( 'aftereventFrom', { format: "%H:%i" } );
 		AnyTime.noPicker( 'aftereventTo' );
@@ -1066,6 +1067,10 @@ var AutoTimerEditController = Class.create(Controller, {
 		this.reload();
 	},
 	
+	test: function() {
+		autotimereditorcore.test.load( this.id );
+	},
+	
 	registerEvents: function(){
 		$('justplay').on(
 			'change',
@@ -1227,6 +1232,12 @@ var AutoTimerEditController = Class.create(Controller, {
 				this.cancel();
 			}.bind(this)
 		);
+		$('test').on(
+			'click',
+			function(event, element){
+				this.test();
+			}.bind(this)
+		);
 	}
 });
 
@@ -1239,6 +1250,21 @@ var AutoTimerPreviewController = Class.create(Controller, {
 		$('list').selectedIndex = -1;
 		$('headerautotimercontent').innerHTML = "AutoTimer Preview:";
 		this.handler.load({});
+	},
+	
+	onFinished: function(){},
+	
+	registerEvents: function(){}
+});
+
+var AutoTimerTestController = Class.create(Controller, {
+	initialize: function($super, target){
+		$super(new AutoTimerTestHandler(target));
+	},
+	
+	load: function(id){
+		$('headerautotimercontent').innerHTML = "AutoTimer Test:";
+		this.handler.load( { 'id' : id } );
 	},
 	
 	onFinished: function(){},
@@ -1483,6 +1509,14 @@ var AutoTimerPreviewHandler = Class.create(AbstractATContentHandler, {
 	},
 });
 
+var AutoTimerTestHandler = Class.create(AbstractATContentHandler, {
+	initialize: function($super, target){
+		$super('tplAutoTimerTest', target);
+		this.provider = new AutoTimerTestProvider(this.show.bind(this));
+		this.ajaxload = true;
+	},
+});
+
 var AutoTimerParseHandler = Class.create(AbstractATContentHandler, {
 	initialize: function($super, target){
 		$super(null, target);
@@ -1594,6 +1628,21 @@ var AutoTimerPreviewProvider = Class.create(AbstractContentProvider, {
 	},
 });
 
+var AutoTimerTestProvider = Class.create(AbstractContentProvider, {
+	initialize: function($super, showFnc){
+		$super(URL.test, showFnc);
+	},
+	
+	callback: function(transport){
+		var data = this.renderXML(this.getXML(transport));
+		this.show(data);
+	},
+	
+	renderXML: function(xml){
+		this.list = new AutoTimerTest(xml).getList();
+		return {list : this.list};
+	},
+});
 
 ///////////////////////////////////////////////////////////////////////////////
 // Objects
@@ -1630,6 +1679,36 @@ function AutoTimerPreview(xml){
 					'end' :            toReadableTime( end ),
 					'servicename' :    getNodeContent(xmlitem, 'e2servicename'),
 					'autotimer' :      getNodeContent(xmlitem, 'e2autotimername'),
+				};
+				this.list.push(timer);
+			}
+			this.list.sort(sortAutoTimerByStart);
+	}
+	this.getList = function(){
+			return this.list;
+	};
+}
+
+function AutoTimerTest(xml){
+	this.xmlitems = getNamedChildren(xml, "e2autotimersimulate", "e2simulatedtimer");
+	this.list = [];
+		if(this.list.length === 0){
+			var len = this.xmlitems.length;
+			for (var i=0; i<len; i++){
+				var xmlitem = this.xmlitems[i];
+				var begin = new Date( getNodeContent(xmlitem, 'e2timebegin') * 1000 );
+				var end = new Date( getNodeContent(xmlitem, 'e2timeend') * 1000 );
+				var timer = {
+					'name' :           getNodeContent(xmlitem, 'e2name'),
+					'start' :          begin,
+					'begindate' :      toReadableDate( begin ),
+					'begin' :          toReadableTime( begin ),
+					'enddate' :        toReadableDate( end ),
+					'end' :            toReadableTime( end ),
+					'servicename' :    getNodeContent(xmlitem, 'e2servicename'),
+					'autotimer' :      getNodeContent(xmlitem, 'e2autotimername'),
+					'state' :          getNodeContent(xmlitem, 'e2state'),
+					'message' :        getNodeContent(xmlitem, 'e2message'),
 				};
 				this.list.push(timer);
 			}
