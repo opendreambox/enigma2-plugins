@@ -18,7 +18,7 @@ from Components.ActionMap import ActionMap
 from Components.Sources.StaticText import StaticText
 
 # Configuration
-from Components.config import getConfigListEntry, ConfigEnableDisable, \
+from Components.config import getConfigListEntry, ConfigOnOff, \
 	ConfigYesNo, ConfigText, ConfigClock, ConfigNumber, ConfigSelection, \
 	ConfigDateTime, config, NoSave
 
@@ -223,7 +223,7 @@ class AutoTimerEditorBase:
 			now[3] = 23
 			now[4] = 15
 			end = mktime(now)
-		self.timespan = NoSave(ConfigEnableDisable(default = default))
+		self.timespan = NoSave(ConfigOnOff(default = default))
 		self.timespanbegin = NoSave(ConfigClock(default = begin))
 		self.timespanend = NoSave(ConfigClock(default = end))
 
@@ -239,7 +239,7 @@ class AutoTimerEditorBase:
 			now[4] = 0
 			begin = mktime(now)
 			end = begin + 604800 # today + 7d
-		self.timeframe = NoSave(ConfigEnableDisable(default = default))
+		self.timeframe = NoSave(ConfigOnOff(default = default))
 		self.timeframebegin = NoSave(ConfigDateTime(begin, _("%d.%B %Y"), increment = 86400))
 		self.timeframeend = NoSave(ConfigDateTime(end, _("%d.%B %Y"), increment = 86400))
 
@@ -254,7 +254,7 @@ class AutoTimerEditorBase:
 			default = False
 			begin = 5
 			end = 5
-		self.offset = NoSave(ConfigEnableDisable(default = default))
+		self.offset = NoSave(ConfigOnOff(default = default))
 		self.offsetbegin = NoSave(ConfigNumber(default = begin))
 		self.offsetend = NoSave(ConfigNumber(default = end))
 
@@ -292,7 +292,7 @@ class AutoTimerEditorBase:
 			now[3] = 7
 			now[4] = 0
 			end = mktime(now)
-		self.afterevent_timespan = NoSave(ConfigEnableDisable(default = default))
+		self.afterevent_timespan = NoSave(ConfigOnOff(default = default))
 		self.afterevent_timespanbegin = NoSave(ConfigClock(default = begin))
 		self.afterevent_timespanend = NoSave(ConfigClock(default = end))
 
@@ -306,7 +306,7 @@ class AutoTimerEditorBase:
 		else:
 			default = False
 			duration =70
-		self.duration = NoSave(ConfigEnableDisable(default = default))
+		self.duration = NoSave(ConfigOnOff(default = default))
 		self.durationlength = NoSave(ConfigNumber(default = duration))
 
 		# Counter
@@ -900,7 +900,7 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 		))
 		self.typeSelection.addNotifier(self.refresh, initial_call = False)
 
-		self.enabled = NoSave(ConfigEnableDisable(default = filterset))
+		self.enabled = NoSave(ConfigOnOff(default = filterset))
 
 		self.excludes = excludes
 		self.includes = includes
@@ -1101,7 +1101,7 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 			bouquetlist[:]
 		)
 
-		self.enabled = NoSave(ConfigEnableDisable(default = servicerestriction))
+		self.enabled = NoSave(ConfigOnOff(default = servicerestriction))
 		self.typeSelection = NoSave(ConfigSelection(choices = [
 			("channels", _("Channels")),
 			("bouquets", _("Bouquets"))]
