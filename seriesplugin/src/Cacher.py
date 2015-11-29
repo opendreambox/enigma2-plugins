@@ -29,6 +29,10 @@ from Logger import splog
 # Do we have to cleanup it
 cache = {}
 
+def clearCache():
+	global cache
+	cache = {}
+
 
 class Cacher(object):
 	def __init__(self):
@@ -77,13 +81,21 @@ class Cacher(object):
 	def doCachePage(self, url, page):
 		global cache
 		
+		if not page:
+			return
+			
 		if not config.plugins.seriesplugin.caching.value:
 			return
+		
 		cache[url] = ( time(), page )
 
 	def doCacheList(self, url, list):
 		global cache
 		
+		if not list:
+			return
+		
 		if not config.plugins.seriesplugin.caching.value:
 			return
+		
 		cache[url] = ( time(), list )
