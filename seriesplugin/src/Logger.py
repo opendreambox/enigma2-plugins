@@ -71,13 +71,23 @@ def getLog():
 	localLog = False
 	return log
 
-def splog(*args):
+def logInfo(*args):
 	strargs = " ".join( [ str(arg) for arg in args ] )
 	
 	global log, localLog
 	if localLog:
 		log += "&#13;&#10;" + strargs
 	
+	global logger
+	if logger:
+		logger.info(strargs)
+	
+	elif config.plugins.seriesplugin.debug_prints.value:
+		print strargs
+
+def logDebug(*args):
+	strargs = " ".join( [ str(arg) for arg in args ] )
+
 	global logger
 	if logger:
 		logger.debug(strargs)

@@ -43,7 +43,7 @@ from SeriesPlugin import resetInstance, getInstance
 from SeriesPluginIndependent import startIndependent, stopIndependent
 from FilePatterns import readFilePatterns
 from DirectoryPatterns import readDirectoryPatterns
-from Logger import splog
+from Logger import logDebug
 from ShowLogScreen import ShowLogScreen
 from Channels import getTVBouquets
 from ChannelEditor import ChannelEditor
@@ -322,7 +322,7 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 
 	# Overwrite ConfigListScreen keyCancel function
 	def keyCancel(self):
-		splog("SPC keyCancel")
+		logDebug("SPC keyCancel")
 		#self.seriesPlugin.resetChannels()
 		resetInstance()
 		if self["config"].isChanged() or self.changesMade:
@@ -363,7 +363,7 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 		self.session.openWithCallback(self.channelEditorClosed, ChannelEditor, )
 
 	def channelEditorClosed(self, result=None):
-		splog("SPC channelEditorClosed", result)
+		logDebug("SPC channelEditorClosed", result)
 		if result:
 			self.changesMade = True
 		else:

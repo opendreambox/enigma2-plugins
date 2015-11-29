@@ -33,7 +33,7 @@ from Tools.BoundFunction import boundFunction
 
 # Plugin internal
 from SeriesPlugin import getInstance, refactorTitle, refactorDescription, refactorDirectory
-from Logger import splog
+from Logger import logDebug, logInfo
 
 TAG = "SeriesPlugin"
 
@@ -46,7 +46,7 @@ class SeriesPluginTimer(object):
 	
 	def __init__(self, timer, name, begin, end, block=False):
 		
-		splog("SPT: SeriesPluginTimer: name, timername, begin, end:", name, timer.name, begin, end)
+		logDebug("SPT: SeriesPluginTimer: name, timername, begin, end:", name, timer.name, begin, end)
 		
 		if block:
 			# We do not want to execute the blocking code here
@@ -56,11 +56,11 @@ class SeriesPluginTimer(object):
 
 	def getSeasonAndEpisode(self, timer, name, begin, end, block=True):
 		
-		splog("SPT: SeriesPluginTimer: name, timername, begin, end:", name, timer.name, begin, end)
+		logInfo("SeriesPluginTimer: timername, service, name, begin, end:", timer.name, str(timer.service_ref.ref), name, begin, end)
 		
 		if hasattr(timer, 'sp_in_queue'):
 			if timer.sp_in_queue:
-				splog("SPT: SeriesPluginTimer: Skip timer is already in queue:", timer.name)
+				logDebug("SPT: SeriesPluginTimer: Skip timer is already in queue:", timer.name)
 				timer.log(601, "[SeriesPlugin] Skip timer is already in queue %s" % (timer.name) )
 				return
 		
@@ -70,7 +70,7 @@ class SeriesPluginTimer(object):
 		# Mad Men != Mad_Men
 		
 		if TAG in timer.tags:
-			splog("SPT: SeriesPluginTimer: Skip timer is already handled %s", timer.name)
+			logDebug("SPT: SeriesPluginTimer: Skip timer is already handled %s", timer.name)
 			timer.log(607, "[SeriesPlugin] Skip timer is already handled %s" % (timer.name) )
 			return
 		
@@ -80,43 +80,43 @@ class SeriesPluginTimer(object):
 			epgcache = eEPGCache.getInstance()
 			
 			if timer.eit:
-				#splog("SPT: Timer Eit is set", timer.service_ref.ref, timer.eit)
+				#logDebug("SPT: Timer Eit is set", timer.service_ref.ref, timer.eit)
 				event = epgcache.lookupEventId(timer.service_ref.ref, timer.eit)
-				splog("SPT: LookupEventId", timer.eit, event)
+				logDebug("SPT: LookupEventId", timer.eit, event)
 			if not(event):
-				#splog("Lookup EventTime", timer.service_ref.ref, end, begin)
+				#logDebug("Lookup EventTime", timer.service_ref.ref, end, begin)
 				event = epgcache.lookupEventTime( timer.service_ref.ref, begin + ((end - begin) /2) );
-				splog("SPT: lookupEventTime", event )
+				logDebug("SPT: lookupEventTime", event )
 			#if not(event):
-			#	splog("Lookup Event", timer.service_ref.ref, end, begin)
+			#	logDebug("Lookup Event", timer.service_ref.ref, end, begin)
 			#	events = epgcache.lookupEvent( [ "T" , ( timer.service_ref.ref, 0, begin + ((end - begin) /2) ) ] );
-			#	splog("LookupEvent event(s) found", len(events), events )
+			#	logDebug("LookupEvent event(s) found", len(events), events )
 			#	event = events and events[0]
 			
 			if event:
-				#splog("EPG event found")
+				#logDebug("EPG event found")
 				if not ( len(timer.name) == len(name) == len(event.getEventName()) ):
-					splog("SPT: Skip timer because it is already modified", timer.name, name, event and event.getEventName(), len(timer.name), len(name), len(event.getEventName()) )
+					logDebug("SPT: Skip timer because it is already modified", timer.name, name, event and event.getEventName(), len(timer.name), len(name), len(event.getEventName()) )
 					timer.log(602, "[SeriesPlugin] Skip timer because it is already modified")
 					return
 			else:
 				if ( len(timer.name) == len(name) ):
-					splog("SPT: Skip timer because no event was found", timer.name, name, len(timer.name), len(name))
+					logDebug("SPT: Skip timer because no event was found", timer.name, name, len(timer.name), len(name))
 					timer.log(603, "[SeriesPlugin] Skip timer because no event was found")
 					return
 		
 		if timer.begin < time() + 60:
-			splog("SPT: Skipping timer because it starts in less than 60 seconds", timer.name )
+			logDebug("SPT: Skipping timer because it starts in less than 60 seconds", timer.name )
 			timer.log(604, "[SeriesPlugin] Skip timer because it starts in less than 60 seconds")
 			return
 		
 		if timer.isRunning():
-			splog("SPT: Skipping timer because it is already running", timer.name )
+			logDebug("SPT: Skipping timer because it is already running", timer.name )
 			timer.log(605, "[SeriesPlugin] Skip timer because it is already running")
 			return
 		
 		if timer.justplay:
-			splog("SPT: Skipping justplay timer", timer.name )
+			logDebug("SPT: Skipping justplay timer", timer.name )
 			timer.log(606, "[SeriesPlugin] Skip justplay timer")
 			return
 		
@@ -126,9 +126,9 @@ class SeriesPluginTimer(object):
 		
 		if timer.service_ref:
 			#channel = timer.service_ref.getServiceName()
-			#splog(channel)
+			#logDebug(channel)
 			
-			splog("SPT: getEpisode:", name, begin, end, block)
+			logDebug("SPT: getEpisode:", name, begin, end, block)
 			
 			timer.sp_in_queue = True
 			
@@ -145,13 +145,13 @@ class SeriesPluginTimer(object):
 				)
 				return None
 		else:
-			splog("SPT: SeriesPluginTimer: No channel specified")
+			logDebug("SPT: SeriesPluginTimer: No channel specified")
 			self.timerCallback(timer, "No channel specified")
 			return None
 
 	def timerCallback(self, timer, data=None):
-		splog("SPT: timerCallback", data)
-		splog(data)
+		logDebug("SPT: timerCallback", data)
+		logDebug(data)
 		
 		if data and len(data) == 4 and timer:
 			
@@ -167,7 +167,7 @@ class SeriesPluginTimer(object):
 				timer.calculateFilename()
 			
 			if not timer.dirname:
-				splog("SPT: SeriesPluginTimer: No dirname")
+				logDebug("SPT: SeriesPluginTimer: No dirname")
 				timer.dirname  = str(refactorDirectory(config.usage.default_path.value, data))
 			else:
 				timer.dirname  = str(refactorDirectory(timer.dirname, data))
