@@ -417,7 +417,6 @@ class AutoTimerComponent(object):
 
 			for service in services:
 				if service == check_service:
-					doLog("checkServices1", service, check_service)
 					return False
 
 				myref = eServiceReference(str(service))
@@ -443,13 +442,14 @@ class AutoTimerComponent(object):
 								value = value[:pos+1]
 
 							if value == check_service:
-								doLog("checkServices2", value, check_service)
+								return False
+							
+							value = s.toCompareString()
+							if value == check_service:
 								return False
 						else:
 							break
-			doLog("checkServices3 No service match", check_service)
 			return True
-		doLog("checkServices4 No services, no bouquets", check_service)
 		return False
 
 	"""

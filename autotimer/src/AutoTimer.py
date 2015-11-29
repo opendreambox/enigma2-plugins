@@ -323,7 +323,7 @@ class AutoTimer:
 			if n > 0:
 				i = evt.getLinkageService(eserviceref, n-1)
 				serviceref = i.toString()
-				doLog("Serviceref %s" % (str(serviceref)))
+				doLog("Serviceref2 %s" % (str(serviceref)))
 
 			# If event starts in less than 60 seconds skip it
 			if begin < time() + 60:
