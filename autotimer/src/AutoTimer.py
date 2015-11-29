@@ -591,27 +591,27 @@ class AutoTimer:
 					if event:
 						timer.extdesc = event.getExtendedDescription()
 					else:
-						if config.plugins.autotimer.check_eit_and_remove.value:
-							remove.append(timer)
+						remove.append(timer)
 				else:
-					if hasattr(timer, "isAutoTimer") or TAG in timer.tags:
-						if config.plugins.autotimer.check_eit_and_remove.value:
-							remove.append(timer)
-							continue
+					remove.append(timer)
+					continue
 
 				if not hasattr(timer, 'extdesc'):
 					timer.extdesc = ''
 
 				timerdict[str(timer.service_ref)].append(timer)
 
-		for timer in remove:
-			try:
-				# Because of the duplicate check, we only want to remove future timer
-				if timer in recordHandler.timer_list:
-					if not timer.isRunning():
-						recordHandler.timer_list.remove(timer)
-			except:
-				pass
+		if config.plugins.autotimer.check_eit_and_remove.value:
+			for timer in remove:
+				if hasattr(timer, "isAutoTimer") or TAG in timer.tags:
+					try:
+						# Because of the duplicate check, we only want to remove future timer
+						if timer in recordHandler.timer_list:
+							if not timer.isRunning():
+								recordHandler.timer_list.remove(timer)
+					except:
+						pass
+		del remove
 
 	def modifyTimer(self, timer, name, shortdesc, begin, end, serviceref, eit=None):
 		# Don't update the name, it will overwrite the name of the SeriesPlugin
