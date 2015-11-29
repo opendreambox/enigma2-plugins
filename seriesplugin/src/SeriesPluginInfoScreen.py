@@ -72,10 +72,11 @@ class SeriesPluginInfoScreen(Screen):
 	skin = open(skinfile).read()
 	
 	def __init__(self, session, service=None, event=None):
-		Screen.__init__(self, session)
-		
-		global instance
-		instance = self
+		if session:
+			Screen.__init__(self, session)
+			
+			global instance
+			instance = self
 		
 		self.session = session
 		self.skinName = [ "SeriesPluginInfoScreen" ]
@@ -130,7 +131,10 @@ class SeriesPluginInfoScreen(Screen):
 		self.serviceHandler = eServiceCenter.getInstance()
 		self.seriesPlugin = getInstance()
 		
-		self.onLayoutFinish.append( self.layoutFinished )
+		if session:
+			self.onLayoutFinish.append( self.layoutFinished )
+		else:
+			self.getEpisode()
 
 	def layoutFinished(self):
 		self.setTitle( _("SeriesPlugin Info") )
@@ -221,9 +225,6 @@ class SeriesPluginInfoScreen(Screen):
 				self["event_episode"].setText( "No valid selection!" )
 				splog("SPI: No valid selection", str(ref))
 				return
-			#num = event and event.getNumOfLinkageServices() or 0
-			#for cnt in range(num):
-			#	subservice = event.getLinkageService(sref, cnt)
 			# Get information from epg
 			today = True
 			elapsed = False
@@ -262,24 +263,23 @@ class SeriesPluginInfoScreen(Screen):
 				if path and os.path.exists(path):
 					begin = os.path.getmtime(path) or 0
 					#splog("SPI: getctime")
-			#else:
-				#MAYBE we could also try to parse the filename
+
 			# We don't know the exact margins, we will assume the E2 default margins
 			begin = begin + (config.recording.margin_before.value * 60)
 			end = end - (config.recording.margin_after.value * 60)
 		
-		self.updateScreen(self.name, _("Retrieving Season, Episode and Title..."), self.short, ext, begin, duration, channel)
+		if self.session:
+			self.updateScreen(self.name, _("Retrieving Season, Episode and Title..."), self.short, ext, begin, duration, channel)
 		
 		identifier = self.seriesPlugin.getIdentifier(False, today, elapsed)
 		if identifier:
 			path = os.path.join(PIXMAP_PATH, identifier+".png")
-			if os.path.exists(path):
+			
+			if self.session and os.path.exists(path):
 				self.loadPixmap("logo", path )
 		try:
 			identifier = self.seriesPlugin.getEpisode(
 					self.episodeCallback, 
-					#self.name, begin, end, channel, today=today, elapsed=elapsed
-					#self.name, begin, end, self.service, today=today, elapsed=elapsed
 					self.name, begin, end, ref, today=today, elapsed=elapsed
 				)
 		except Exception as e:
