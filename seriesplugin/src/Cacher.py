@@ -22,7 +22,7 @@ from time import time
 
 from Components.config import *
 
-from Logger import splog
+from Logger import logDebug
 
 
 # Global cache
@@ -64,7 +64,7 @@ class Cacher(object):
 			# Woooohooo it is, elapsed_time is less than INTER_QUERY_TIME so I
 			# can get the page from the memory, recent enough
 			if elapsed_time < self.expiration:
-				#splog("####SPCACHE GET ", already_got)
+				#logDebug("####SPCACHE GET ", already_got)
 				return already_got[1]
 			
 			else:	

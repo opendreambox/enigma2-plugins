@@ -8,23 +8,25 @@ from Tools.Notifications import AddPopup
 
 # Plugin internal
 from SeriesPluginTimer import SeriesPluginTimer
-from Logger import splog, getLog, startLog
+from Logger import logDebug, logInfo, getLog, startLog
 
 
 loop_data = []
 loop_counter = 0
 
 
-def bareGetSeasonEpisode(service_ref, name, begin, end, description, path):
+def bareGetSeasonEpisode(service_ref, name, begin, end, description, path, future=True, today=False, elapsed=False):
 	result = None
 	if config.plugins.seriesplugin.enabled.value:
 		
 		startLog()
 		
+		logInfo("Bare:", service_ref, name, begin, end, description, path, future, today, elapsed)
+		
 		from SeriesPlugin import getInstance, refactorTitle, refactorDescription, refactorDirectory
 		seriesPlugin = getInstance()
 		data = seriesPlugin.getEpisodeBlocking(
-			name, begin, end, service_ref, future=True
+			name, begin, end, service_ref, future, today, elapsed
 		)
 		
 		global loop_counter

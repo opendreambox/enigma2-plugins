@@ -29,7 +29,7 @@ from Screens.MessageBox import MessageBox
 
 # Plugin internal
 from IdentifierBase import IdentifierBase
-from Logger import splog, initLog
+from Logger import logDebug, initLog
 from Channels import ChannelsBase
 from ThreadQueue import ThreadQueue
 from threading import Thread, currentThread, _get_ident
@@ -55,7 +55,7 @@ CompiledRegexpNonDecimal = re.compile(r'[^\d]+')
 
 def dump(obj):
 	for attr in dir(obj):
-		splog( "SP: %s = %s" % (attr, getattr(obj, attr)) )
+		logDebug( "SP: %s = %s" % (attr, getattr(obj, attr)) )
 
 
 def getInstance():
@@ -67,38 +67,38 @@ def getInstance():
 		
 		from plugin import VERSION
 		
-		splog("SP: SERIESPLUGIN NEW INSTANCE " + VERSION)
+		logDebug("SP: SERIESPLUGIN NEW INSTANCE " + VERSION)
 		
 		try:
 			from Tools.HardwareInfo import HardwareInfo
-			splog( "SP: DeviceName " + HardwareInfo().get_device_name().strip() )
+			logDebug( "SP: DeviceName " + HardwareInfo().get_device_name().strip() )
 		except:
 			sys.exc_clear()
 		
 		try:
 			from Components.About import about
-			splog( "SP: EnigmaVersion " + about.getEnigmaVersionString().strip() )
-			splog( "SP: ImageVersion " + about.getVersionString().strip() )
+			logDebug( "SP: EnigmaVersion " + about.getEnigmaVersionString().strip() )
+			logDebug( "SP: ImageVersion " + about.getVersionString().strip() )
 		except:
 			sys.exc_clear()
 		
 		try:
 			#http://stackoverflow.com/questions/1904394/python-selecting-to-read-the-first-line-only
-			splog( "SP: dreamboxmodel " + open("/proc/stb/info/model").readline().strip() )
-			splog( "SP: imageversion " + open("/etc/image-version").readline().strip() )
-			splog( "SP: imageissue " + open("/etc/issue.net").readline().strip() )
+			logDebug( "SP: dreamboxmodel " + open("/proc/stb/info/model").readline().strip() )
+			logDebug( "SP: imageversion " + open("/etc/image-version").readline().strip() )
+			logDebug( "SP: imageissue " + open("/etc/issue.net").readline().strip() )
 		except:
 			sys.exc_clear()
 		
 		try:
 			for key, value in config.plugins.seriesplugin.dict().iteritems():
-				splog( "SP: config..%s = %s" % (key, str(value.value)) )
+				logDebug( "SP: config..%s = %s" % (key, str(value.value)) )
 		except Exception as e:
 			sys.exc_clear()
 		
 		instance = SeriesPlugin()
 		
-		splog( "SP: ", strftime("%a, %d %b %Y %H:%M:%S", localtime()) )
+		logDebug( "SP: ", strftime("%a, %d %b %Y %H:%M:%S", localtime()) )
 	
 	return instance
 
@@ -108,7 +108,7 @@ def resetInstance():
 	
 	global instance
 	if instance is not None:
-		splog("SP: SERIESPLUGIN INSTANCE STOP")
+		logDebug("SP: SERIESPLUGIN INSTANCE STOP")
 		instance.stop()
 		instance = None
 	
@@ -122,12 +122,12 @@ def refactorTitle(org, data):
 		if config.plugins.seriesplugin.pattern_title.value and not config.plugins.seriesplugin.pattern_title.value == "Off" and not config.plugins.seriesplugin.pattern_title.value == "Disabled":
 			if config.plugins.seriesplugin.replace_chars.value:
 				repl = re.compile('['+config.plugins.seriesplugin.replace_chars.value.replace("\\", "\\\\\\\\")+']')
-				splog("SP: refactor org1", org)
+				logDebug("SP: refactor org1", org)
 				org = repl.sub('', org)
-				splog("SP: refactor org2", org)
+				logDebug("SP: refactor org2", org)
 			cust_title = config.plugins.seriesplugin.pattern_title.value.strip().format( **{'org': org, 'season': season, 'episode': episode, 'title': title, 'series': series} )
 			cust_title.replace('&amp;','&').replace('&apos;',"'").replace('&gt;','>').replace('&lt;','<').replace('&quot;','"').replace('/',' ').replace('  ',' ')
-			splog("SP: refactor org3", cust_title)
+			logDebug("SP: refactor org3", cust_title)
 			return cust_title
 		else:
 			return org
@@ -140,12 +140,12 @@ def refactorDescription(org, data):
 		if config.plugins.seriesplugin.pattern_description.value and not config.plugins.seriesplugin.pattern_description.value == "Off" and not config.plugins.seriesplugin.pattern_description.value == "Disabled":
 			if config.plugins.seriesplugin.replace_chars.value:
 				repl = re.compile('['+config.plugins.seriesplugin.replace_chars.value.replace("\\", "\\\\\\\\")+']')
-				splog("SP: refactor des1", org)
+				logDebug("SP: refactor des1", org)
 				org = repl.sub('', org)
-				splog("SP: refactor des2", org)
+				logDebug("SP: refactor des2", org)
 			cust_plot = config.plugins.seriesplugin.pattern_description.value.strip().format( **{'org': org, 'season': season, 'episode': episode, 'title': title, 'series': series} )
 			cust_plot = cust_plot.replace("\n", " ").replace('&amp;','&').replace('&apos;',"'").replace('&gt;','>').replace('&lt;','<').replace('&quot;','"').replace('/',' ').replace('  ',' ')
-			splog("SP: refactor des3", cust_plot)
+			logDebug("SP: refactor des3", cust_plot)
 			return cust_plot
 		else:
 			return org
@@ -158,9 +158,9 @@ def refactorDirectory(org, data):
 		if config.plugins.seriesplugin.pattern_directory.value and not config.plugins.seriesplugin.pattern_directory.value == "Off" and not config.plugins.seriesplugin.pattern_directory.value == "Disabled":
 			cust_dir = config.plugins.seriesplugin.pattern_directory.value.strip().format( **{'org': org, 'season': season, 'episode': episode, 'title': title, 'series': series} )
 			cust_dir = cust_dir.replace("\n", " ").replace('&amp;','&').replace('&apos;',"'").replace('&gt;','>').replace('&lt;','<').replace('&quot;','"').replace('/',' ').replace('  ',' ')
-			splog("SP: refactor des1", cust_dir)
+			logDebug("SP: refactor des1", cust_dir)
 			cust_dir = re.sub('[^/\w\-_\. ]', '_', cust_dir)
-			splog("SP: refactor des2", cust_dir)
+			logDebug("SP: refactor des2", cust_dir)
 			return cust_dir
 		else:
 			return org
@@ -169,7 +169,7 @@ def refactorDirectory(org, data):
 
 def normalizeResult(result):
 	if result and len(result) == 4:
-		splog("SP: Worker: result callback")
+		logDebug("SP: Worker: result callback")
 		season, episode, title, series = result
 		season = int(CompiledRegexpNonDecimal.sub('', season))
 		episode = int(CompiledRegexpNonDecimal.sub('', episode))
@@ -177,16 +177,16 @@ def normalizeResult(result):
 		if config.plugins.seriesplugin.replace_chars.value:
 			repl = re.compile('['+config.plugins.seriesplugin.replace_chars.value.replace("\\", "\\\\\\\\")+']')
 			
-			splog("SP: refactor title", title)
+			logDebug("SP: refactor title", title)
 			title = repl.sub('', title)
-			splog("SP: refactor title", title)
+			logDebug("SP: refactor title", title)
 			
-			splog("SP: refactor series", series)
+			logDebug("SP: refactor series", series)
 			series = repl.sub('', series)
-			splog("SP: refactor series", series)
+			logDebug("SP: refactor series", series)
 		return (season, episode, title, series)
 	else:
-		splog("SP: Worker: result failed", str(result))
+		logDebug("SP: Worker: result failed", str(result))
 		return result
 
 
@@ -249,7 +249,7 @@ class SeriesPluginWorker(Thread):
 			# NOTE: we have to check this here and not using the while to prevent the parser to be started on shutdown
 			if not self.__running: break
 			
-			splog('SP: Worker is processing')
+			logDebug('SP: Worker is processing')
 			
 			item = self.__queue.pop()
 			
@@ -260,7 +260,7 @@ class SeriesPluginWorker(Thread):
 					item.name, item.begin, item.end, item.service
 				)
 			except Exception, e:
-				splog("SP: Worker: Exception:", str(e))
+				logDebug("SP: Worker: Exception:", str(e))
 				
 				# Exception finish job with error
 				result = str(e)
@@ -271,7 +271,7 @@ class SeriesPluginWorker(Thread):
 			
 			self.__pump.send(0)
 		
-		splog('SP: Worker: list is emty, done')
+		logDebug('SP: Worker: list is emty, done')
 		Thread.__init__(self)
 		self.__running = False
 
@@ -279,7 +279,7 @@ class SeriesPluginWorker(Thread):
 class SeriesPlugin(Modules, ChannelsBase):
 
 	def __init__(self):
-		splog("SP: Main: Init")
+		logDebug("SP: Main: Init")
 		self.thread = SeriesPluginWorker(self.gotResult)
 		Modules.__init__(self)
 		ChannelsBase.__init__(self)
@@ -290,13 +290,13 @@ class SeriesPlugin(Modules, ChannelsBase):
 		datetime.strptime('2012-01-01', '%Y-%m-%d')
 		
 		self.identifier_elapsed = self.instantiateModuleWithName( config.plugins.seriesplugin.identifier_elapsed.value )
-		#splog(self.identifier_elapsed)
+		#logDebug(self.identifier_elapsed)
 		
 		self.identifier_today = self.instantiateModuleWithName( config.plugins.seriesplugin.identifier_today.value )
-		#splog(self.identifier_today)
+		#logDebug(self.identifier_today)
 		
 		self.identifier_future = self.instantiateModuleWithName( config.plugins.seriesplugin.identifier_future.value )
-		#splog(self.identifier_future)
+		#logDebug(self.identifier_future)
 		
 		pattern = config.plugins.seriesplugin.pattern_title.value
 		pattern = pattern.replace("{org:s}", "(.+)")
@@ -327,7 +327,7 @@ class SeriesPlugin(Modules, ChannelsBase):
 			try:
 				import NavigationInstance
 				if NavigationInstance.instance.RecordTimer.isRecording():
-					splog("SP: Main: Skip check during running records")
+					logDebug("SP: Main: Skip check during running records")
 					callback( "Skip check during running records (Can be disabled)" )
 					return
 			except:
@@ -336,19 +336,19 @@ class SeriesPlugin(Modules, ChannelsBase):
 		# Check for episode information in title
 		match = self.compiledRegexpSeries.match(name)
 		if match:
-			#splog(match.group(0))     # Entire match
-			#splog(match.group(1))     # First parenthesized subgroup
+			#logDebug(match.group(0))     # Entire match
+			#logDebug(match.group(1))     # First parenthesized subgroup
 			if not rename and config.plugins.seriesplugin.skip_pattern_match.value:
-				splog("SP: Main: Skip check because of pattern match")
+				logDebug("SP: Main: Skip check because of pattern match")
 				return
 			if match.group(1):
 				name = match.group(1)
 		
 		begin = datetime.fromtimestamp(begin)
-		splog("SP: Main: begin:", begin.strftime('%Y-%m-%d %H:%M:%S'))
+		logDebug("SP: Main: begin:", begin.strftime('%Y-%m-%d %H:%M:%S'))
 		
 		end = datetime.fromtimestamp(end)
-		splog("SP: Main: end:", end.strftime('%Y-%m-%d %H:%M:%S'))
+		logDebug("SP: Main: end:", end.strftime('%Y-%m-%d %H:%M:%S'))
 		
 		if elapsed:
 			identifier = self.identifier_elapsed
@@ -392,7 +392,7 @@ class SeriesPlugin(Modules, ChannelsBase):
 				try:
 					result = identifier.getEpisode( name, begin, end, serviceref )
 				except Exception, e:
-					splog("SP: Worker: Exception:", str(e))
+					logDebug("SP: Worker: Exception:", str(e))
 					
 					# Exception finish job with error
 					result = str(e)
@@ -402,7 +402,7 @@ class SeriesPlugin(Modules, ChannelsBase):
 				return normalizeResult(result)
 
 	def gotResult(self, msg):
-		splog("SP: Main: Thread: gotResult:", msg)
+		logDebug("SP: Main: Thread: gotResult:", msg)
 		callback, data = msg
 		if callable(callback):
 			callback(data)
@@ -420,7 +420,7 @@ class SeriesPlugin(Modules, ChannelsBase):
 			)
 
 	def stop(self):
-		splog("SP: Main: stop")
+		logDebug("SP: Main: stop")
 		self.thread.stop()
 		# NOTE: while we don't need to join the thread, we should do so in case it's currently parsing
 		#self.thread.join()
