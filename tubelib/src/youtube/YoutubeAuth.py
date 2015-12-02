@@ -1,3 +1,5 @@
+from enigma import HBBTV_USER_AGENT
+
 from oauth2client.client import OAuth2Credentials
 from time import time
 from twisted.internet import reactor
@@ -67,7 +69,7 @@ class YoutubeAuth(object):
 	ERROR_CREDENTIALS_REQUEST_EXPIRED = 4
 	ERROR_CREDENTIALS_UNKOWN = 5
 
-	USER_AGENT = "Mozilla/5.0 (Linux mips; U;HbbTV/1.1.1 (+RTSP;Dream Property GmbH;Dreambox;0.1a;1.0;) CE-HTML/1.0; en) AppleWebKit/535.19 no/Volksbox QtWebkit/2.2"
+	USER_AGENT = HBBTV_USER_AGENT
 
 	def __init__(self, scope=AUTH_SCOPE_YT_RO):
 		self._auth_scope = scope
