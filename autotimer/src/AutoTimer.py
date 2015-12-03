@@ -693,7 +693,8 @@ class AutoTimer:
 						# Because of the duplicate check, we only want to remove future timer
 						if timer in recordHandler.timer_list:
 							if not timer.isRunning():
-								recordHandler.timer_list.remove(timer)
+								global NavigationInstance
+								NavigationInstance.instance.RecordTimer.removeEntry(timer)
 					except:
 						pass
 		del remove
