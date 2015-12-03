@@ -136,11 +136,15 @@ class Video(object):
 	duration = property(getDuration)
 
 	def getLikes(self):
-		return str(self._entry["statistics"]["likeCount"])
+		if "likeCount" in self._entry["statistics"]:
+			return str(self._entry["statistics"]["likeCount"])
+		return "-"
 	likes = property(getLikes)
 
 	def getDislikes(self):
-		return str(self._entry["statistics"]["dislikeCount"])
+		if "dislikeCount" in self._entry["statistics"]:
+			return str(self._entry["statistics"]["dislikeCount"])
+		return "-"
 	dislikes = property(getDislikes)
 
 	def getChannelTitle(self):
