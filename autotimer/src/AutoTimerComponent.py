@@ -13,6 +13,8 @@ from Components.config import config
 # Default encoding
 from Components.Language import language
 
+from Logger import doLog
+
 class AutoTimerComponent(object):
 	"""AutoTimer Component which also handles validity checks"""
 
@@ -439,6 +441,10 @@ class AutoTimerComponent(object):
 									pos -= 1
 								value = value[:pos+1]
 
+							if value == check_service:
+								return False
+							
+							value = s.toCompareString()
 							if value == check_service:
 								return False
 						else:

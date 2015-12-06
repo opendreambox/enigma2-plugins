@@ -1,7 +1,6 @@
 from __future__ import print_function
 
 from . import _, config
-from enigma import eTimer
 
 from twisted.internet import reactor
 
@@ -12,6 +11,8 @@ from Tools.Notifications import AddPopup
 # Plugin
 from Components.PluginComponent import plugins
 from Plugins.Plugin import PluginDescriptor
+
+from Logger import doLog
 
 from AutoTimer import AutoTimer
 autotimer = AutoTimer()
@@ -24,7 +25,7 @@ try:
 	reader = XMLHelpReader(resolveFilename(SCOPE_PLUGINS, "Extensions/AutoTimer/mphelp.xml"), translate=_)
 	autotimerHelp = registerHelp(*reader)
 except Exception as e:
-	print("[AutoTimer] Unable to initialize MPHelp:", e,"- Help not available!")
+	doLog("[AutoTimer] Unable to initialize MPHelp:", e,"- Help not available!")
 	autotimerHelp = None
 #pragma mark -
 
@@ -71,7 +72,7 @@ def sessionstart(reason, **kwargs):
 			from AutoTimerResource import AutoTimerDoParseResource, \
 				AutoTimerListAutoTimerResource, AutoTimerAddOrEditAutoTimerResource, \
 				AutoTimerRemoveAutoTimerResource, AutoTimerChangeSettingsResource, \
-				AutoTimerSettingsResource, AutoTimerSimulateResource, API_VERSION
+				AutoTimerSettingsResource, AutoTimerSimulateResource, AutoTimerTestResource, API_VERSION
 		except ImportError as ie:
 			pass
 		else:
@@ -90,6 +91,7 @@ def sessionstart(reason, **kwargs):
 			root.putChild('get', AutoTimerSettingsResource())
 			root.putChild('set', AutoTimerChangeSettingsResource())
 			root.putChild('simulate', AutoTimerSimulateResource())
+			root.putChild('test', AutoTimerTestResource())
 			addExternalChild( ("autotimer", root , "AutoTimer-Plugin", API_VERSION, False) )
 
 			# webgui
@@ -192,7 +194,7 @@ def housekeepingExtensionsmenu(el):
 		try:
 			plugins.removePlugin(extDescriptor)
 		except ValueError as ve:
-			print("[AutoTimer] housekeepingExtensionsmenu got confused, tried to remove non-existant plugin entry... ignoring.")
+			doLog("[AutoTimer] housekeepingExtensionsmenu got confused, tried to remove non-existant plugin entry... ignoring.")
 
 config.plugins.autotimer.show_in_extensionsmenu.addNotifier(housekeepingExtensionsmenu, initial_call = False, immediate_feedback = True)
 extDescriptor = PluginDescriptor(name="AutoTimer", description = _("Edit Timers and scan for new Events"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = extensionsmenu, needsRestart = False)

@@ -320,7 +320,7 @@ class PushServiceBase(Modules, ConfigFile):
 			self.push(controller, _("PushService controller run() exception"), text, [])
 
 	def push(self, controller, subject, text="", attachments=[]):
-		print "push"
+		print "[PS] push"
 		services = self.services
 		if not services:
 			# Fallback to PopUp
@@ -341,9 +341,10 @@ class PushServiceBase(Modules, ConfigFile):
 						print _("PushService Service push() exception")
 						exc_type, exc_value, exc_traceback = sys.exc_info()
 						traceback.print_exception(exc_type, exc_value, exc_traceback, file=sys.stdout)
+						self.pusherrback(service, controller, exc_type, exc_value, exc_traceback)
 
 	def pushcallback(self, service, controller, *args):
-		print "pushcallback"
+		print "[PS] pushcallback"
 		key = (service, controller)
 		if key not in self.pushcallbacks:
 			self.pushcallbacks[key] = list(args)
@@ -352,7 +353,7 @@ class PushServiceBase(Modules, ConfigFile):
 		self.pushcheckbacks(key)
 
 	def pusherrback(self, service, controller, *args):
-		print "pusherrback"
+		print "[PS] pusherrback"
 		print _("Service %s returned error(s)") % service.getName()
 		for arg in args:
 			if isinstance(arg, Exception):
@@ -367,7 +368,7 @@ class PushServiceBase(Modules, ConfigFile):
 		self.pushcheckbacks(key)
 
 	def pushcheckbacks(self, key):
-		print "pushcheckbacks"
+		print "[PS] pushcheckbacks"
 		callparam = self.pushcallbacks.get(key, [])
 		cntcall = len(callparam)
 		errparam = self.pusherrbacks.get(key, [])
@@ -380,8 +381,8 @@ class PushServiceBase(Modules, ConfigFile):
 			if controller:
 				# Check if no error is logged
 				if ( cnterr == 0 ):
-					print "controller.callback()"
+					print "[PS] controller.callback()"
 					controller.callback()
 				else:
 					controller.errback()
-					print "controller.errback()"
+					print "[PS] controller.errback()"
