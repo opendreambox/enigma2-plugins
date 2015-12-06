@@ -306,7 +306,21 @@ class AutoTimer:
 					doLog(str(sp[3]))
 					#doLog("Returned name, desc, path %s %s %s" % (name,shortdesc,dirname))
 				else:
+					# Nothing found
 					doLog(str(sp))
+					
+					# If AutoTimer name not equal match, do a second lookup with the name
+					if timer.name.lower() != timer.match.lower():
+						sp = sp_getSeasonEpisode(serviceref, timer.name, evtBegin, evtEnd, shortdesc, dest)
+						if sp and len(sp) == 4:
+							name = sp[0]
+							shortdesc = sp[1]
+							dirname = sp[2]
+							doLog(str(sp[3]))
+							#doLog("Returned name, desc, path %s %s %s" % (name,shortdesc,dirname))
+						else:
+							doLog(str(sp))
+					
 
 			if timer.checkFilter(name, shortdesc, extdesc, dayofweek):
 				doLog("Skipping an event because of filter check")
