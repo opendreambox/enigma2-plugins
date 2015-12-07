@@ -495,10 +495,10 @@ var AutoTimerListController = Class.create(Controller, {
 	},
 
 	onFinished: function(){
-		this.click();
+		this.onChange();
 	},
 	
-	click: function(){
+	onChange: function(){
 		var selectList = $('list');
 		var selectOptions = selectList.getElementsByTagName('option');
 		var idx = selectList.selectedIndex;
@@ -593,9 +593,15 @@ var AutoTimerListController = Class.create(Controller, {
 	
 	registerEvents: function(){
 		$('list').on(
+			'change',
+			function(event, element){
+				this.onChange();
+			}.bind(this)
+		);
+		$('list').on(
 			'click',
 			function(event, element){
-				this.click();
+				this.onChange();
 			}.bind(this)
 		);
 		$('add').on(
