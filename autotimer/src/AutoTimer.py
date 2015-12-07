@@ -38,7 +38,10 @@ from collections import defaultdict
 from difflib import SequenceMatcher
 from operator import itemgetter
 
-from Plugins.SystemPlugins.Toolkit.SimpleThread import SimpleThread
+try:
+	from Plugins.SystemPlugins.Toolkit.SimpleThread import SimpleThread
+except ImportError as ie:
+	from SimpleThread import SimpleThread
 
 try:
 	from Plugins.Extensions.SeriesPlugin.plugin import getSeasonEpisode4 as sp_getSeasonEpisode
