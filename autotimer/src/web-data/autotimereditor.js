@@ -495,10 +495,10 @@ var AutoTimerListController = Class.create(Controller, {
 	},
 
 	onFinished: function(){
-		this.click();
+		this.onChange();
 	},
 	
-	click: function(){
+	onChange: function(){
 		var selectList = $('list');
 		var selectOptions = selectList.getElementsByTagName('option');
 		var idx = selectList.selectedIndex;
@@ -593,9 +593,15 @@ var AutoTimerListController = Class.create(Controller, {
 	
 	registerEvents: function(){
 		$('list').on(
+			'change',
+			function(event, element){
+				this.onChange();
+			}.bind(this)
+		);
+		$('list').on(
 			'click',
 			function(event, element){
-				this.click();
+				this.onChange();
 			}.bind(this)
 		);
 		$('add').on(
@@ -816,7 +822,7 @@ var AutoTimerEditController = Class.create(Controller, {
 		}
 		data['enabled'] = ($('enabled').checked) ? '1' : '0';
 		
-		options = ['match','name','searchType','searchCase','justplay'];
+		options = ['match','name','encoding','searchType','searchCase','justplay','avoidDuplicateDescription'];
 		for (var id = 0; id < options.length; id++) {
 			if ($(options[id]).value == ''){
 				core.notify('Error: ' + options[id] + ' is empty', false);
@@ -1802,6 +1808,12 @@ function AutoTimer(xml, defaults){
 	this.match = xml.getAttribute('match');
 	this.name = (this.name == undefined) ? name : this.match;
 	
+	var encoding = getAttribute(xml, 'encoding', defaults);
+	if (encoding==undefined) encoding = 'ISO8859-15';
+	var options = ['ISO8859-15', 'UTF-8'];
+	this.encoding = toOptionList(options, encoding);
+	this.encoding.shift();
+
 	// Items which only exists if they differ from the default value
 	var searchType = getAttribute(xml, 'searchType', defaults);
 	if (searchType==undefined) searchType = 'partial';
@@ -2133,6 +2145,7 @@ function AutoTimer(xml, defaults){
 			'enabled' :               this.enabled,
 			'name' :                  this.name,
 			'match' :                 this.match,
+			'encoding' :              this.encoding,
 			
 			'searchType' :            this.searchType,
 			'searchCase' :            this.searchCase,
