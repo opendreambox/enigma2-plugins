@@ -532,7 +532,8 @@ class AutoTimer:
 				# It is only temporarily, after a restart it will be lost,
 				# because it won't be stored in the timer xml file
 				newEntry.isAutoTimer = True
-				newEntry.tags.append(TAG)
+				if TAG not in newEntry.tags:
+					newEntry.tags.append(TAG)
 
 
 			# Apply afterEvent
