@@ -97,15 +97,12 @@ var Current = Class.create(Controller, {
 		var ext = $('trExtCurrent');
 		if(ext){
 			var bullet = element.down('.currentBulletToggle');
-			if(ext.visible()){
-				bullet.src = '/web-data/img/toggle_expand.png';
-				bullet.alt = "+";
+			var visible = ext.visible();
+			core.toggleBullet(bullet, !visible);
+			if(visible)
 				ext.hide();
-			}else{
-				bullet.src = '/web-data/img/toggle_collapse.png';
-				bullet.alt = "-";
+			else
 				ext.show();
-			}
 			this.display = ext.style.display;
 			setMaxHeight('contentMain');
 		}
@@ -117,13 +114,7 @@ var Current = Class.create(Controller, {
 		if(ext){
 			ext.style.display = this.display;
 			var bullet = $('currentName').down('.currentBulletToggle');
-			if(ext.visible()){
-				bullet.src = '/web-data/img/toggle_collapse.png';
-				bullet.alt = "-";
-			}else{
-				bullet.src = '/web-data/img/toggle_expand.png';
-				bullet.alt = "+";
-			}
+			core.toggleBullet(bullet, ext.visible());
 		}
 		core.currentData = this.handler.data;
 	}
@@ -1156,23 +1147,24 @@ var BaseCore = Class.create({
 	},
 	
 	styleChanged: function(){
-	switch(userprefs.data.style){
-		case 'light':
-			$('style_dark').disabled = true;
-			$('style_light').disabled = false;
-			$('style_modern').disabled = true;
-			break;
-		case 'dark':
-			$('style_dark').disabled = false;
-			$('style_light').disabled = true;
-			$('style_modern').disabled = true;
-			break;
-		default:
-			$('style_dark').disabled = true;
-			$('style_light').disabled = true;
-			$('style_modern').disabled = false;
-			break;
-		}
+		$('style_modern').disabled = false;
+//	switch(userprefs.data.style){
+//		case 'light':
+//			$('style_dark').disabled = true;
+//			$('style_light').disabled = false;
+//			$('style_modern').disabled = true;
+//			break;
+//		case 'dark':
+//			$('style_dark').disabled = false;
+//			$('style_light').disabled = true;
+//			$('style_modern').disabled = true;
+//			break;
+//		default:
+//			$('style_dark').disabled = true;
+//			$('style_light').disabled = true;
+//			$('style_modern').disabled = false;
+//			break;
+//		}
 	}
 });
 
@@ -1267,10 +1259,13 @@ var E2WebCore = Class.create(BaseCore, {
 	},
 
 	onPowerStateAvailable: function(isStandby){
+		var signal = $('openSignalPanelImg');
 		if(isStandby){
-			$('openSignalPanelImg').src="/web-data/img/transmit_grey.png";
+			if(signal.hasClassName("item_enabled"))
+				signal.removeClassName("item_enabled")
 		} else {
-			$('openSignalPanelImg').src="/web-data/img/transmit_blue.png";
+			if(!signal.hasClassName("item_enabled"))
+				signal.addClassName("item_enabled")
 		}
 	},
 
@@ -1429,6 +1424,24 @@ var E2WebCore = Class.create(BaseCore, {
 		}
 		this.updateItems();
 		this.startUpdateCurrentPoller();
+	},
+
+	toggleBullet: function(bullet, isOpen) {
+		var open_class = getBulletToggleClass(true);
+		var closed_class = getBulletToggleClass(false);
+		if(isOpen) {
+			if(bullet.hasClassName(closed_class))
+				bullet.removeClassName(closed_class);
+			if(!bullet.hasClassName(open_class))
+				bullet.addClassName(open_class);
+			bullet.alt = "-";
+		} else {
+			if(bullet.hasClassName(open_class))
+				bullet.removeClassName(open_class);
+			if(!bullet.hasClassName(closed_class))
+				bullet.addClassName(closed_class);
+			bullet.alt = "+";
+		}
 	},
 
 	registerEvents: function(){
@@ -1694,18 +1707,14 @@ var E2WebCore = Class.create(BaseCore, {
 			'a.sListExtEpg',
 			function(event, element){
 				var target = element.up('.sListEPGItem').down('.sListExtEpgLong');
-
 				if(target){
 					var bullet = element.down('.sListBulletToggle');
-					if(target.visible()){
+					var visible = target.visible();
+					this.toggleBullet(bullet, !visible);
+					if(visible)
 						target.hide();
-						bullet.src = "/web-data/img/toggle_expand_small.png";
-						bullet.alt = "+";
-					} else {
+					else
 						target.show();
-						bullet.src = "/web-data/img/toggle_collapse_small.png";
-						bullet.alt = "-";
-					}
 				}
 				event.stop();
 			}.bind(this)
@@ -1994,6 +2003,7 @@ var E2WebCore = Class.create(BaseCore, {
 		userprefs.load();
 		var changed = false;
 
+		/*
 		var l = $('interfaceStyle');
 		var style = l.options[l.selectedIndex].value;
 		if(style != userprefs.data.style){
@@ -2001,7 +2011,8 @@ var E2WebCore = Class.create(BaseCore, {
 			changed = true;
 			this.styleChanged();
 		}
-		
+		*/
+
 		var debug = $('enableDebug').checked;
 		if(debug != undefined){
 			if( userprefs.data.debug != debug ){

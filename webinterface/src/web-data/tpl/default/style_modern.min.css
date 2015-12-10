@@ -1,5 +1,5 @@
 @import url("/web-data/fonts/fonts.css");
-#ajaxLoad{background-image:url(/web-data/gfx/ajaxload.gif);height:31px;position:absolute;right:78px;top:2px;width:31px;z-index:10;}
+#ajaxLoad{position:absolute;right:78px;top:2px;z-index:10;}
 #banner{background-color:#FFF;border:1px solid #DDD;display:inline-block;margin-bottom:8px;position:relative;width:1000px;}
 #banner a,#banner a:visited,#banner a:active{color:#333;text-decoration:none;}
 #bannerLeft{float:left;width:940px;}
@@ -40,7 +40,7 @@
 #navMovies li{text-align:center;margin:5px;}
 #navPower{display:none;}
 #navSearch{background-color:#FFF;border:1px solid #DDD;margin-top:8px;position:relative;width:100%;}
-#navVolume{background-color:#FFF;border:1px solid #DDD;height:75px;margin-top:8px;position:relative;width:100%;}
+#navVolume{background-color:#FFF;border:1px solid #DDD;margin-top:8px;position:relative;width:100%;}
 #notification{color:#444;height:32px;left:25%;position:absolute;text-align:center;top:0;vertical-align:bottom;width:50%;z-index:2;}
 #powerState{border:0;margin-left:93px;text-align:right;}
 #tags{width:90%;}
@@ -66,7 +66,7 @@
 .bannerHeader{background-image:url(/web-data/img/dreamboxweb_modern.png);height:16px;width:780px;margin:7px;padding:0;}
 .bold{font-weight:bold;}
 .bottom,#current img{vertical-align:bottom;}
-.bouquetIcons{float:left;padding-top:10px;width:40px;}
+.bouquetIcons{float:left;padding-top:5px;margin:2px;}
 .bouquetIcons a{display:inline-block;vertical-align:middle;}
 .bouquetName{float:right;width:215px;}
 .boxContent{color:#444;padding:3px;}
@@ -85,6 +85,7 @@
 .fullwidth,#currentTable{width:100%;}
 .group{position:relative !important;}
 .header{display:block;height:22px;padding-left:4px;padding-right:4px;padding-top:2px;}
+.item_enabled{color:#66AFE9 !important;}
 .leftCol{float:left;width:50%;}
 .liHeader{border-bottom:#444;border-top:#444;}
 .mLength{color:#444;text-align:right;width:90px;}
@@ -136,9 +137,13 @@ a.sListSLink {color:#444;display:block;font-size:15px;padding:5px 3px;display: b
 .toolsElementRight{text-align:left;width:10%;}
 .toolsHeader{color:#333;font-weight:bold;}
 .w200h50{height:50px;width:200px;}
+.volume .fa{padding: 0;}
 .wap a,.wap a:visited,.wap a:active,.black,#current a,.sListMarker{color:#333;}
 :-o-prefocus{outline:0;}
 a,a:visited,a:active{color:#444;text-decoration:none;outline:0;}
+.fa{ color: #666;padding:1px;vertical-align:middle;text-align:center;margin:0px;}
+.fa-border:hover{border: 0.08em solid #66AFE9;box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1) 0s;}
+.fa-border{border: 0.08em solid #CECECE;}
 a.date-picker-control{display:inline-block;}
 a.date-picker-control span{display:block;height:16px;width:16px;margin:auto 0;}
 a.date-picker-control:focus,div.datePicker table td:focus{-moz-outline:0 none;color:#6482aa!important;outline:0 none;overflow:hidden;}
