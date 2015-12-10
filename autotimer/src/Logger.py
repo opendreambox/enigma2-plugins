@@ -31,30 +31,30 @@ logger = None
 
 def initLog():
 	global logger
-	logger = logger or logging.getLogger("SeriesPlugin")
+	logger = logger or logging.getLogger("AutoTimer")
 	logger.setLevel(logging.WARNING)
 	
 	logger.handlers = [] 
 	
-	if config.plugins.seriesplugin.debug_prints.value:
+	if config.plugins.autotimer.log_shell.value:
 		shandler = logging.StreamHandler(sys.stdout)
-		shandler.setLevel(logging.DEBUG)
+		shandler.setLevel(logging.INFO)
 
 		sformatter = logging.Formatter('[%(name)s] %(levelname)s - %(message)s')
 		shandler.setFormatter(sformatter)
 
 		logger.addHandler(shandler)
-		logger.setLevel(logging.DEBUG)
+		logger.setLevel(logging.INFO)
 		
-	if config.plugins.seriesplugin.write_log.value:
-		fhandler = logging.FileHandler(config.plugins.seriesplugin.log_file.value)
-		fhandler.setLevel(logging.DEBUG)
+	if config.plugins.autotimer.log_write.value:
+		fhandler = logging.FileHandler(config.plugins.autotimer.log_file.value)
+		fhandler.setLevel(logging.INFO)
 
 		fformatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 		fhandler.setFormatter(fformatter)
 
 		logger.addHandler(fhandler)
-		logger.setLevel(logging.DEBUG)
+		logger.setLevel(logging.INFO)
 
 def shutdownLog():
 	global logger
@@ -71,7 +71,17 @@ def getLog():
 	localLog = False
 	return log
 
-def logInfo(*args):
+def doDebug(*args):
+	strargs = " ".join( [ str(arg) for arg in args ] )
+	
+	global logger
+	if logger:
+		logger.debug(strargs)
+	
+	elif config.plugins.autotimer.log_shell.value:
+		print strargs
+
+def doLog(*args):
 	strargs = " ".join( [ str(arg) for arg in args ] )
 	
 	global log, localLog
@@ -82,17 +92,7 @@ def logInfo(*args):
 	if logger:
 		logger.info(strargs)
 	
-	elif config.plugins.seriesplugin.debug_prints.value:
-		print strargs
-
-def logDebug(*args):
-	strargs = " ".join( [ str(arg) for arg in args ] )
-
-	global logger
-	if logger:
-		logger.debug(strargs)
-	
-	elif config.plugins.seriesplugin.debug_prints.value:
+	elif config.plugins.autotimer.log_shell.value:
 		print strargs
 
 initLog()

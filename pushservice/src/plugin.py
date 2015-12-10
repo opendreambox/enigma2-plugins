@@ -22,7 +22,7 @@ import os, sys, traceback
 from Plugins.Plugin import PluginDescriptor
 
 # Config
-from Components.config import config, ConfigSubsection, ConfigNothing, ConfigEnableDisable, ConfigText, ConfigClock, ConfigSelectionNumber
+from Components.config import config, ConfigSubsection, ConfigNothing, ConfigOnOff, ConfigText, ConfigClock, ConfigSelectionNumber
 
 # Default encoding
 #from Components.Language import language
@@ -56,17 +56,17 @@ config.pushservice                           = ConfigSubsection()
 
 config.pushservice.about                     = ConfigNothing()
 
-config.pushservice.enable                    = ConfigEnableDisable(default = True)
+config.pushservice.enable                    = ConfigOnOff(default = True)
 
 config.pushservice.boxname                   = ConfigText(default = "Enigma2", fixed_size = False)
 config.pushservice.xmlpath                   = ConfigText(default = "/etc/enigma2/pushservice.xml", fixed_size = False)
 
 config.pushservice.time                      = ConfigClock(default = 0)
 config.pushservice.period                    = ConfigSelectionNumber(0, 1000, 1, default = 24)
-config.pushservice.runonboot                 = ConfigEnableDisable(default = True)
+config.pushservice.runonboot                 = ConfigOnOff(default = True)
 config.pushservice.bootdelay                 = ConfigSelectionNumber(5, 1000, 5, default = 10)
 
-config.pushservice.push_errors               = ConfigEnableDisable(default = False)
+config.pushservice.push_errors               = ConfigOnOff(default = False)
 
 
 #######################################################

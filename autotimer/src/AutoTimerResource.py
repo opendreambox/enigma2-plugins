@@ -15,7 +15,7 @@ from enigma import eServiceReference
 from . import _, config, iteritems, plugin
 from plugin import autotimer
 
-API_VERSION = "1.4"
+API_VERSION = "1.5"
 
 class AutoTimerBaseResource(resource.Resource):
 	def returnResult(self, req, state, statetext):
@@ -130,11 +130,11 @@ class AutoTimerSimulateBackgroundThread(AutoTimerBackgroundThread):
 		if self._stillAlive:
 			reactor.callFromThread(finishRequest)
 
-	def intermediateWrite(self, new, conflicting, similar):
+	def intermediateWrite(self, timers, conflicting, similar, skipped):
 		returnlist = []
 		extend = returnlist.extend
 
-		for (name, begin, end, serviceref, autotimername) in new:
+		for (name, begin, end, serviceref, autotimername, message) in timers:
 			ref = ServiceReference(str(serviceref))
 			extend((
 				'<e2simulatedtimer>\n'
@@ -150,9 +150,80 @@ class AutoTimerSimulateBackgroundThread(AutoTimerBackgroundThread):
 		if self._stillAlive:
 			reactor.callFromThread(lambda: self._req.write(''.join(returnlist)))
 
+class AutoTimerTestBackgroundThread(AutoTimerBackgroundThread):
+	def run(self):
+		req = self._req
+		if self._stillAlive:
+			req.setResponseCode(http.OK)
+			req.setHeader('Content-type', 'application/xhtml+xml')
+			req.setHeader('charset', 'UTF-8')
+			reactor.callFromThread(lambda: req.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<e2autotimersimulate api_version=\"" + str(API_VERSION) + "\">\n"))
+
+		def finishRequest():
+			req.write('</e2autotimersimulate>')
+			req.finish()
+
+		id = req.args.get("id")
+		if id:
+			self.id = int(id[0])
+		else:
+			self.id = None
+		
+		try: autotimer.parseEPG(simulateOnly=True, uniqueId=self.id, callback=self.intermediateWrite)
+		except Exception as e:
+			def finishRequest():
+				req.write('<exception>'+str(e)+'</exception><|PURPOSEFULLYBROKENXML<')
+				req.finish()
+
+		if self._stillAlive:
+			reactor.callFromThread(finishRequest)
+
+	def intermediateWrite(self, timers, conflicting, similar, skipped):
+		returnlist = []
+		extend = returnlist.extend
+
+		for (name, begin, end, serviceref, autotimername, message) in timers:
+			ref = ServiceReference(str(serviceref))
+			extend((
+				'<e2simulatedtimer>\n'
+				'   <e2servicereference>', stringToXML(serviceref), '</e2servicereference>\n',
+				'   <e2servicename>', stringToXML(ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')), '</e2servicename>\n',
+				'   <e2name>', stringToXML(name), '</e2name>\n',
+				'   <e2timebegin>', str(begin), '</e2timebegin>\n',
+				'   <e2timeend>', str(end), '</e2timeend>\n',
+				'   <e2autotimername>', stringToXML(autotimername), '</e2autotimername>\n',
+				'   <e2state>OK</e2state>\n'
+				'   <e2message>', stringToXML(message), '</e2message>\n'
+				'</e2simulatedtimer>\n'
+			))
+
+		if self.id:
+			for (name, begin, end, serviceref, autotimername, message) in skipped:
+				ref = ServiceReference(str(serviceref))
+				extend((
+					'<e2simulatedtimer>\n'
+					'   <e2servicereference>', stringToXML(serviceref), '</e2servicereference>\n',
+					'   <e2servicename>', stringToXML(ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')), '</e2servicename>\n',
+					'   <e2name>', stringToXML(name), '</e2name>\n',
+					'   <e2timebegin>', str(begin), '</e2timebegin>\n',
+					'   <e2timeend>', str(end), '</e2timeend>\n',
+					'   <e2autotimername>', stringToXML(autotimername), '</e2autotimername>\n',
+					'   <e2state>Skip</e2state>\n'
+					'   <e2message>', stringToXML(message), '</e2message>\n'
+					'</e2simulatedtimer>\n'
+				))
+		
+		if self._stillAlive:
+			reactor.callFromThread(lambda: self._req.write(''.join(returnlist)))
+
 class AutoTimerSimulateResource(AutoTimerBaseResource):
 	def render(self, req):
 		AutoTimerSimulateBackgroundThread(req, None)
+		return server.NOT_DONE_YET
+
+class AutoTimerTestResource(AutoTimerBaseResource):
+	def render(self, req):
+		AutoTimerTestBackgroundThread(req, None)
 		return server.NOT_DONE_YET
 
 class AutoTimerListAutoTimerResource(AutoTimerBaseResource):

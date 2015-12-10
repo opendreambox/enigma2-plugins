@@ -12,7 +12,7 @@ from Components.Label import Label
 from Components.MenuList import MenuList 
 from Components.Pixmap import Pixmap
 from Components.ServiceEventTracker import ServiceEventTracker
-from Components.config import config, configfile, getConfigListEntry, ConfigSubsection, ConfigEnableDisable, ConfigSlider, ConfigSelection, ConfigSequence
+from Components.config import config, configfile, getConfigListEntry, ConfigSubsection, ConfigOnOff, ConfigSlider, ConfigSelection, ConfigSequence
 from GlobalActions import globalActionMap
 from Plugins.Plugin import PluginDescriptor
 from Plugins.SystemPlugins.Toolkit.NTIVirtualKeyBoard import NTIVirtualKeyBoard 
@@ -106,17 +106,17 @@ config.plugins.TeleText.scale_filter_zoom = ConfigSelection(filterList, default=
 config.plugins.TeleText.brightness   = ConfigSlider(default=8,  increment=1, limits=(0,15))
 config.plugins.TeleText.contrast     = ConfigSlider(default=12, increment=1, limits=(0,15))
 config.plugins.TeleText.transparency = ConfigSlider(default=8,  increment=1, limits=(0,15))
-config.plugins.TeleText.edge_cut = ConfigEnableDisable(default=False)
+config.plugins.TeleText.edge_cut = ConfigOnOff(default=False)
 config.plugins.TeleText.splitting_mode = ConfigSelection(splittingModeList, default=SPLIT_MODE_PAT)
 config.plugins.TeleText.textlevel      = ConfigSelection(textlevelModeList, default="2")
 config.plugins.TeleText.region   = ConfigSelection(regionList, default="16")
-config.plugins.TeleText.debug    = ConfigEnableDisable(default=False)
+config.plugins.TeleText.debug    = ConfigOnOff(default=False)
 config.plugins.TeleText.pos      = ConfigSequence(default=[DEF_LEFT, DEF_TOP, DEF_RIGHT, DEF_BOTTOM], seperator = ",", limits = [(0,dsk_width>>3),(0,dsk_height>>3),(dsk_width-(dsk_width>>3),dsk_width),(dsk_height-(dsk_height>>3),dsk_height)])
 config.plugins.TeleText.tip_pos  = ConfigSequence(default=[(dsk_width>>1)+(dsk_width>>2), (dsk_height>>1)+(dsk_height>>2), dsk_width, dsk_height], seperator = ",", limits = [(0,dsk_width-MIN_W),(0,dsk_height-MIN_H),(MIN_W,dsk_width),(MIN_H,dsk_height)])
 # state
-config.plugins.TeleText.textOnly = ConfigEnableDisable(default=True)
-config.plugins.TeleText.opaque   = ConfigEnableDisable(default=False)
-config.plugins.TeleText.background_caching = ConfigEnableDisable(default=True)
+config.plugins.TeleText.textOnly = ConfigOnOff(default=True)
+config.plugins.TeleText.opaque   = ConfigOnOff(default=False)
+config.plugins.TeleText.background_caching = ConfigOnOff(default=True)
 
 # global functions
 

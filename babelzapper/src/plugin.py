@@ -14,7 +14,7 @@ from Screens.Screen import Screen
 from Screens.Setup import SetupSummary
 from Screens.Console import Console
 from Screens.MessageBox import MessageBox
-from Components.config import config, ConfigSubsection, ConfigEnableDisable, ConfigInteger, getConfigListEntry
+from Components.config import config, ConfigSubsection, ConfigOnOff, ConfigInteger, getConfigListEntry
 from Components.ConfigList import ConfigListScreen
 from Components.ActionMap import ActionMap
 from Components.Label import Label, MultiColorLabel
@@ -35,9 +35,9 @@ babeldone=0
 babelon=0
 
 config.plugins.babelzapper = ConfigSubsection()
-config.plugins.babelzapper.enabled = ConfigEnableDisable(default = False)
+config.plugins.babelzapper.enabled = ConfigOnOff(default = False)
 config.plugins.babelzapper.changetime = ConfigInteger(default = 1000, limits = (200, 10000))
-config.plugins.babelzapper.exit2escape = ConfigEnableDisable(default = False)
+config.plugins.babelzapper.exit2escape = ConfigOnOff(default = False)
 
 def main(session,**kwargs):
 	session.open(BabelzapperConfiguration)

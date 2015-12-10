@@ -4,25 +4,28 @@
 							<td>
 								<table id="previewlist">
 									<tr class="optionTitle">
-										<td class="nopadding">
+										<th class="nopadding">
 											<div class="headerindent">Name</div>
-										</td>
-										<td>Date</td>
-										<td>Begin</td>
-										<td>End</td>
-										<td>Channel</td>
-										<td>AutoTimer</td>
+										</th>
+										<th>Date</th>
+										<th>Begin</th>
+										<th>End</th>
+										<th>Channel</th>
+										<th>AutoTimer</th>
 									</tr>
 									{for timer in list}
 										<tr class="optionContent">
-											<td class="nopadding">
+											<td class="nopadding" colspan="6">
 												<div class="headerindent">${timer.name}</div>
 											</td>
+										</tr>
+										<tr class="optionContent">
+											<td class="nopadding"></td>
 											<td class="nobreak">${timer.date}</td>
 											<td class="nobreak">${timer.begin}</td>
 											<td class="nobreak">${timer.end}</td>
 											<td class="nobreak">${timer.servicename}</td>
-											<td>${timer.autotimer}</td>
+											<td class="nobreak">${timer.autotimer}</td>
 										</tr>
 									{/for}
 								</table>

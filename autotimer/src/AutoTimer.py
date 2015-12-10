@@ -28,6 +28,7 @@ import Queue
 
 # AutoTimer Component
 from AutoTimerComponent import preferredAutoTimerComponent
+from Logger import doLog, startLog, getLog, doDebug
 
 from itertools import chain
 from collections import defaultdict
@@ -37,7 +38,7 @@ from operator import itemgetter
 from Plugins.SystemPlugins.Toolkit.SimpleThread import SimpleThread
 
 try:
-	from Plugins.Extensions.SeriesPlugin.plugin import getSeasonEpisode as sp_getSeasonEpisode
+	from Plugins.Extensions.SeriesPlugin.plugin import getSeasonEpisode4 as sp_getSeasonEpisode
 except ImportError as ie:
 	sp_getSeasonEpisode = None
 
@@ -49,6 +50,8 @@ except ImportError as ie:
 from . import config, xrange, itervalues
 
 XML_CONFIG = "/etc/enigma2/autotimer.xml"
+
+TAG = "AutoTimer"
 
 def getTimeDiff(timer, begin, end):
 	if begin <= timer.begin <= end:
@@ -78,7 +81,7 @@ def blockingCallFromMainThread(f, *a, **kw):
 			result = queue.get(True, config.plugins.autotimer.timeout.value*60)
 		except Queue.Empty as qe:
 			if True: #not reactor.running: # reactor.running is only False AFTER shutdown, we are during.
-				raise ValueError("Reactor no longer active, aborting.")
+				doLog("Reactor no longer active, aborting.")
 		else:
 			break
 
@@ -117,13 +120,13 @@ class AutoTimer:
 	def readXml(self):
 		# Abort if no config found
 		if not os_path.exists(XML_CONFIG):
-			print("[AutoTimer] No configuration file present")
+			doLog("No configuration file present")
 			return
 
 		# Parse if mtime differs from whats saved
 		mtime = os_path.getmtime(XML_CONFIG)
 		if mtime == self.configMtime:
-			print("[AutoTimer] No changes in configuration, won't parse")
+			doLog("No changes in configuration, won't parse")
 			return
 
 		# Save current mtime
@@ -200,7 +203,7 @@ class AutoTimer:
 
 # Main function
 
-	def parseTimer(self, timer, epgcache, serviceHandler, recordHandler, checkEvtLimit, evtLimit, timers, conflicting, similars, timerdict, moviedict, simulateOnly=False):
+	def parseTimer(self, timer, epgcache, serviceHandler, recordHandler, checkEvtLimit, evtLimit, timers, conflicting, similars, skipped, timerdict, moviedict, simulateOnly=False):
 		new = 0
 		modified = 0
 
@@ -218,12 +221,18 @@ class AutoTimer:
 
 		# Loop over all EPG matches
 		for idx, ( serviceref, eit, name, begin, duration, shortdesc, extdesc ) in enumerate( epgmatches ):
+			
+			startLog()
+			
+			evtBegin = begin
+			evtEnd = end = begin + duration
 
-			print("[AutoTimer] possible epgmatch %s" % (name))
+			doLog("possible epgmatch %s" % (name))
 			eserviceref = eServiceReference(serviceref)
 			evt = epgcache.lookupEventId(eserviceref, eit)
 			if not evt:
-				print("[AutoTimer] Could not create Event!")
+				doLog("Could not create Event!")
+				skipped.append((name, begin, end, str(serviceref), timer.name, getLog()))
 				continue
 			# Try to determine real service (we always choose the last one)
 			n = evt.getNumOfLinkageServices()
@@ -231,12 +240,10 @@ class AutoTimer:
 				i = evt.getLinkageService(eserviceref, n-1)
 				serviceref = i.toString()
 
-			evtBegin = begin
-			evtEnd = end = begin + duration
-
 			# If event starts in less than 60 seconds skip it
 			if begin < time() + 60:
-				print("[AutoTimer] Skipping an event because it starts in less than 60 seconds")
+				doLog("Skipping an event because it starts in less than 60 seconds")
+				skipped.append((name, begin, end, serviceref, timer.name, getLog()))
 				continue
 
 			# Convert begin time
@@ -254,19 +261,31 @@ class AutoTimer:
 				# If maximum days in future is set then check time
 				if checkEvtLimit:
 					if begin > evtLimit:
+						doLog("Skipping an event because of maximum days in future is reached")
+						skipped.append((name, begin, end, serviceref, timer.name, getLog()))
 						continue
 
 				dayofweek = str(timestamp.tm_wday)
 
 			# Check timer conditions
 			# NOTE: similar matches do not care about the day/time they are on, so ignore them
-			if timer.checkServices(serviceref) \
-				or timer.checkDuration(duration) \
-				or (not similarTimer and (\
-					timer.checkTimespan(timestamp) \
-					or timer.checkTimeframe(begin) \
-				)):
+			if timer.checkServices(serviceref):
+				doLog("Skipping an event because of check services")
+				skipped.append((name, begin, end, serviceref, timer.name, getLog()))
 				continue
+			if timer.checkDuration(duration):
+				doLog("Skipping an event because of duration check")
+				skipped.append((name, begin, end, serviceref, timer.name, getLog()))
+				continue
+			if not similarTimer:
+				if timer.checkTimespan(timestamp):
+					doLog("Skipping an event because of timestamp check")
+					skipped.append((name, begin, end, serviceref, timer.name, getLog()))
+					continue
+				if timer.checkTimeframe(begin):
+					doLog("Skipping an event because of timeframe check")
+					skipped.append((name, begin, end, serviceref, timer.name, getLog()))
+					continue
 
 			# Initialize
 			newEntry = None
@@ -278,17 +297,34 @@ class AutoTimer:
 				serviceref = timer.getAlternative(serviceref)
 
 			if timer.series_labeling and sp_getSeasonEpisode is not None:
-				print("[AutoTimer SeriesPlugin] Request name, desc, path %s %s %s" % (name,shortdesc,dest))
+				#doLog("Request name, desc, path %s %s %s" % (name,shortdesc,dest))
 				sp = sp_getSeasonEpisode(serviceref, name, evtBegin, evtEnd, shortdesc, dest)
-				if sp and len(sp) == 3:
+				if sp and len(sp) == 4:
 					name = sp[0]
 					shortdesc = sp[1]
 					dirname = sp[2]
-					print("[AutoTimer SeriesPlugin] Returned name, desc, path %s %s %s" % (name,shortdesc,dirname))
+					doLog(str(sp[3]))
+					#doLog("Returned name, desc, path %s %s %s" % (name,shortdesc,dirname))
 				else:
-					print("[AutoTimer SeriesPlugin] Returned %s" % (str(sp)))
-			
+					# Nothing found
+					doLog(str(sp))
+					
+					# If AutoTimer name not equal match, do a second lookup with the name
+					if timer.name.lower() != timer.match.lower():
+						sp = sp_getSeasonEpisode(serviceref, timer.name, evtBegin, evtEnd, shortdesc, dest)
+						if sp and len(sp) == 4:
+							name = sp[0]
+							shortdesc = sp[1]
+							dirname = sp[2]
+							doLog(str(sp[3]))
+							#doLog("Returned name, desc, path %s %s %s" % (name,shortdesc,dirname))
+						else:
+							doLog(str(sp))
+					
+
 			if timer.checkFilter(name, shortdesc, extdesc, dayofweek):
+				doLog("Skipping an event because of filter check")
+				skipped.append((name, begin, end, serviceref, timer.name, getLog()))
 				continue
 			
 			if timer.hasOffset():
@@ -312,10 +348,12 @@ class AutoTimer:
 					self.addDirectoryToMovieDict(moviedict, dest, serviceHandler)
 				for movieinfo in moviedict.get(dest, ()):
 					if self.checkDuplicates(timer, name, movieinfo.get("name"), shortdesc, movieinfo.get("shortdesc"), extdesc, movieinfo.get("extdesc") ):
-						print("[AutoTimer] We found a matching recorded movie, skipping event:", name)
+						doLog("We found a matching recorded movie, skipping event:", name)
 						movieExists = True
 						break
 				if movieExists:
+					doLog("Skipping an event because movie already exists")
+					skipped.append((name, begin, end, serviceref, timer.name, getLog()))
 					continue
 
 			# Check for double Timers
@@ -324,12 +362,12 @@ class AutoTimer:
 			for rtimer in timerdict.get(serviceref, ()):
 				if rtimer.eit == eit:
 					oldExists = True
-					print("[AutoTimer] We found a timer based on eit")
+					doLog("We found a timer based on eit")
 					newEntry = rtimer
 					break
 				elif config.plugins.autotimer.try_guessing.value and getTimeDiff(rtimer, evtBegin, evtEnd) > ((duration/10)*8):
 					oldExists = True
-					print("[AutoTimer] We found a timer based on time guessing")
+					doLog("We found a timer based on time guessing")
 					newEntry = rtimer
 					break
 				elif timer.avoidDuplicateDescription >= 1 \
@@ -337,13 +375,15 @@ class AutoTimer:
 						if self.checkDuplicates(timer, name, rtimer.name, shortdesc, rtimer.description, extdesc, rtimer.extdesc ):
 						# if searchForDuplicateDescription > 1 then check short description
 							oldExists = True
-							print("[AutoTimer] We found a timer (similar service) with same description, skipping event")
+							doLog("We found a timer (similar service) with same description, skipping event")
 							break
 
 			# We found no timer we want to edit
 			if newEntry is None:
 				# But there is a match
 				if oldExists:
+					doLog("Skipping an event because a timer on same service exists")
+					skipped.append((name, begin, end, serviceref, timer.name, getLog()))
 					continue
 
 				# We want to search for possible doubles
@@ -352,31 +392,34 @@ class AutoTimer:
 						if not rtimer.disabled:
 							if self.checkDuplicates(timer, name, rtimer.name, shortdesc, rtimer.description, extdesc, rtimer.extdesc ):
 								oldExists = True
-								print("[AutoTimer] We found a timer (any service) with same description, skipping event")
+								doLog("We found a timer (any service) with same description, skipping event")
 								break
 					if oldExists:
+						doLog("Skipping an event because a timer on any service exists")
+						skipped.append((name, begin, end, serviceref, timer.name, getLog()))
 						continue
 
 				if timer.checkCounter(timestamp):
-					print("[AutoTimer] Not adding new timer because counter is depleted.")
+					doLog("Not adding new timer because counter is depleted.")
+					skipped.append((name, begin, end, serviceref, timer.name, getLog()))
 					continue
 
 			# Append to timerlist and abort if simulating
-			timers.append((name, begin, end, serviceref, timer.name))
+			timers.append((name, begin, end, serviceref, timer.name, getLog()))
 			if simulateOnly:
 				continue
 
 			if newEntry is not None:
 				# Abort if we don't want to modify timers or timer is repeated
 				if config.plugins.autotimer.refresh.value == "none" or newEntry.repeated:
-					print("[AutoTimer] Won't modify existing timer because either no modification allowed or repeated timer")
+					doLog("Won't modify existing timer because either no modification allowed or repeated timer")
 					continue
 
-				if hasattr(newEntry, "isAutoTimer"):
+				if hasattr(newEntry, "isAutoTimer") or TAG in newEntry.tags:
 					newEntry.log(501, "[AutoTimer] AutoTimer %s modified this automatically generated timer." % (timer.name))
 				else:
 					if config.plugins.autotimer.refresh.value != "all":
-						print("[AutoTimer] Won't modify existing timer because it's no timer set by us")
+						doLog("Won't modify existing timer because it's no timer set by us")
 						continue
 
 					newEntry.log(501, "[AutoTimer] Warning, AutoTimer %s messed with a timer which might not belong to it: %s ." % (timer.name, newEntry.name))
@@ -394,6 +437,8 @@ class AutoTimer:
 				# It is only temporarily, after a restart it will be lost,
 				# because it won't be stored in the timer xml file
 				newEntry.isAutoTimer = True
+				if TAG not in newEntry.tags:
+					newEntry.tags.append(TAG)
 
 
 			# Apply afterEvent
@@ -437,7 +482,7 @@ class AutoTimer:
 				if conflicts:
 					# Maybe use newEntry.log
 					conflictString += ' / '.join(["%s (%s)" % (x.name, strftime("%Y%m%d %H%M", localtime(x.begin))) for x in conflicts])
-					print("[AutoTimer] conflict with %s detected" % (conflictString))
+					doLog("conflict with %s detected" % (conflictString))
 
 					if config.plugins.autotimer.addsimilar_on_conflict.value:
 						# We start our search right after our actual index
@@ -448,7 +493,7 @@ class AutoTimer:
 							if self.checkDuplicates(timer, name, nameS, shortdesc, shortdescS, extdesc, extdescS, force=True ):
 								# Check if the similar is already known
 								if eitS not in similardict:
-									print("[AutoTimer] Found similar Timer: " + name)
+									doLog("Found similar Timer: " + name)
 
 									# Store the actual and similar eit and conflictString, so it can be handled later
 									newEntry.conflictString = conflictString
@@ -493,9 +538,9 @@ class AutoTimer:
 		
 		return (new, modified)
 
-	def parseEPG(self, simulateOnly=False, callback=None):
+	def parseEPG(self, simulateOnly=False, uniqueId=None, callback=None):
 		if NavigationInstance.instance is None:
-			print("[AutoTimer] Navigation is not available, can't parse EPG")
+			doLog("Navigation is not available, can't parse EPG")
 			return (0, 0, 0, [], [], [])
 
 		new = 0
@@ -503,6 +548,7 @@ class AutoTimer:
 		timers = []
 		conflicting = []
 		similars = []
+		skipped = []
 
 		if currentThread().getName() == 'MainThread':
 			doBlockingCallFromMainThread = lambda f, *a, **kw: f(*a, **kw)
@@ -535,15 +581,17 @@ class AutoTimer:
 
 		# Iterate Timer
 		for timer in self.getEnabledTimerList():
-			tup = doBlockingCallFromMainThread(self.parseTimer, timer, epgcache, serviceHandler, recordHandler, checkEvtLimit, evtLimit, timers, conflicting, similars, timerdict, moviedict, simulateOnly=simulateOnly)
-			if callback:
-				callback(timers, conflicting, similars)
-				del timers[:]
-				del conflicting[:]
-				del similars[:]
-			else:
-				new += tup[0]
-				modified += tup[1]
+			if uniqueId == None or timer.id == uniqueId:
+				tup = doBlockingCallFromMainThread(self.parseTimer, timer, epgcache, serviceHandler, recordHandler, checkEvtLimit, evtLimit, timers, conflicting, similars, skipped, timerdict, moviedict, simulateOnly=simulateOnly)
+				if callback:
+					callback(timers, conflicting, similars, skipped)
+					del timers[:]
+					del conflicting[:]
+					del similars[:]
+					del skipped[:]
+				else:
+					new += tup[0]
+					modified += tup[1]
 
 		return (len(timers), new, modified, timers, conflicting, similars)
 
@@ -558,26 +606,28 @@ class AutoTimer:
 					if event:
 						timer.extdesc = event.getExtendedDescription()
 					else:
-						if config.plugins.autotimer.check_eit_and_remove.value:
-							remove.append(timer)
-				else:
-					if config.plugins.autotimer.check_eit_and_remove.value:
 						remove.append(timer)
-						continue
+				else:
+					remove.append(timer)
+					continue
 
 				if not hasattr(timer, 'extdesc'):
 					timer.extdesc = ''
 
 				timerdict[str(timer.service_ref)].append(timer)
 
-		for timer in remove:
-			try:
-				# Because of the duplicate check, we only want to remove future timer
-				if timer in recordHandler.timer_list:
-					if not timer.isRunning():
-						recordHandler.timer_list.remove(timer)
-			except:
-				pass
+		if config.plugins.autotimer.check_eit_and_remove.value:
+			for timer in remove:
+				if hasattr(timer, "isAutoTimer") or TAG in timer.tags:
+					try:
+						# Because of the duplicate check, we only want to remove future timer
+						if timer in recordHandler.timer_list:
+							if not timer.isRunning():
+								global NavigationInstance
+								NavigationInstance.instance.RecordTimer.removeEntry(timer)
+					except:
+						pass
+		del remove
 
 	def modifyTimer(self, timer, name, shortdesc, begin, end, serviceref, eit=None):
 		# Don't update the name, it will overwrite the name of the SeriesPlugin
@@ -592,7 +642,7 @@ class AutoTimer:
 	def addDirectoryToMovieDict(self, moviedict, dest, serviceHandler):
 		movielist = serviceHandler.list(eServiceReference("2:0:1:0:0:0:0:0:0:0:" + dest))
 		if movielist is None:
-			print("[AutoTimer] listing of movies in " + dest + " failed")
+			doLog("listing of movies in " + dest + " failed")
 		else:
 			append = moviedict[dest].append
 			while 1:
@@ -620,14 +670,16 @@ class AutoTimer:
 			return False
 
 		ratio = sequenceMatcher.ratio()
-		print("[AutoTimer] names ratio %f - %s - %d - %s - %d" % (ratio, name1, len(name1), name2, len(name2)))
+		doDebug("names ratio %f - %s - %d - %s - %d" % (ratio, name1, len(name1), name2, len(name2)))
 		if name1 in name2 or (0.8 < ratio): # this is probably a match
 			foundShort = True
 			if (force or timer.searchForDuplicateDescription > 0) and shortdesc1 and shortdesc2:
 				sequenceMatcher.set_seqs(shortdesc1, shortdesc2)
 				ratio = sequenceMatcher.ratio()
-				print("[AutoTimer] shortdesc ratio %f - %s - %d - %s - %d" % (ratio, shortdesc1, len(shortdesc1), shortdesc2, len(shortdesc2)))
+				doDebug("shortdesc ratio %f - %s - %d - %s - %d" % (ratio, shortdesc1, len(shortdesc1), shortdesc2, len(shortdesc2)))
 				foundShort = shortdesc1 in shortdesc2 or (0.8 < ratio)
+				if foundShort:
+					doLog("shortdesc ratio %f - %s - %d - %s - %d" % (ratio, shortdesc1, len(shortdesc1), shortdesc2, len(shortdesc2)))
 
 			foundExt = True
 			# NOTE: only check extended if short description already is a match because otherwise
@@ -635,6 +687,8 @@ class AutoTimer:
 			if foundShort and (force or timer.searchForDuplicateDescription > 1) and extdesc1 and extdesc2:
 				sequenceMatcher.set_seqs(extdesc1, extdesc2)
 				ratio = sequenceMatcher.ratio()
-				print("[AutoTimer] extdesc ratio %f - %s - %d - %s - %d" % (ratio, extdesc1, len(extdesc1), extdesc2, len(extdesc2)))
+				doDebug("extdesc ratio %f - %s - %d - %s - %d" % (ratio, extdesc1, len(extdesc1), extdesc2, len(extdesc2)))
 				foundExt = (0.8 < ratio)
+				if foundExt:
+					doLog("extdesc ratio %f - %s - %d - %s - %d" % (ratio, extdesc1, len(extdesc1), extdesc2, len(extdesc2)))
 			return foundShort and foundExt

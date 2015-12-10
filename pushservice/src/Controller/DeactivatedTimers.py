@@ -24,7 +24,6 @@ from Plugins.Extensions.PushService.__init__ import _
 from Plugins.Extensions.PushService.ControllerBase import ControllerBase
 
 # Plugin specific
-import NavigationInstance
 from time import localtime, strftime
 
 
@@ -63,6 +62,7 @@ class DeactivatedTimers(ControllerBase):
 					+ str(timer.service_ref and timer.service_ref.getServiceName() or "") \
 					+ "\t" + str(timer.tags)
 		
+		import NavigationInstance
 		for timer in NavigationInstance.instance.RecordTimer.timer_list + NavigationInstance.instance.RecordTimer.processed_timers:
 			if timer.disabled and TAG not in timer.tags:
 				text += timerToString(timer) + "\r\n"
@@ -89,7 +89,7 @@ class DeactivatedTimers(ControllerBase):
 
 	# Callback functions
 	def callback(self):
-		
+		import NavigationInstance
 		# Called after all services succeded
 		if self.getValue('remove_timer'):
 			
@@ -104,6 +104,7 @@ class DeactivatedTimers(ControllerBase):
 		# Set tag to avoid resending it
 		for timer in self.timers:
 			if TAG not in timer.tags:
+				print "[PS] timer append tag"
 				timer.tags.append(TAG)
 		NavigationInstance.instance.RecordTimer.saveTimer()
 		self.timers = []

@@ -11,7 +11,7 @@ from Screens.InputBox import InputBox
 from Screens import Standby
 from Screens.HelpMenu import HelpableScreen
 
-from Components.config import config, ConfigSubsection, ConfigSelection, ConfigEnableDisable, getConfigListEntry, ConfigText, ConfigInteger
+from Components.config import config, ConfigSubsection, ConfigSelection, ConfigOnOff, getConfigListEntry, ConfigText, ConfigInteger
 from Components.ActionMap import ActionMap
 from Components.Label import Label
 from Components.Button import Button
@@ -102,24 +102,24 @@ def getMountedDevices():
 	return mountedDevs
 
 config.plugins.NcidClient = ConfigSubsection()
-config.plugins.NcidClient.debug = ConfigEnableDisable(default=False)
-config.plugins.NcidClient.muteOnCall = ConfigEnableDisable(default=False)
+config.plugins.NcidClient.debug = ConfigOnOff(default=False)
+config.plugins.NcidClient.muteOnCall = ConfigOnOff(default=False)
 config.plugins.NcidClient.hostname = ConfigText(default="easy.box", fixed_size=False)
 config.plugins.NcidClient.port = ConfigInteger(limits=[1, 65535], default=3333)
 config.plugins.NcidClient.afterStandby = ConfigSelection(choices=[("none", _("show nothing")), ("inList", _("show as list")), ("each", _("show each call"))])
 config.plugins.NcidClient.timeout = ConfigInteger(default=15, limits=(0, 60))
-config.plugins.NcidClient.lookup = ConfigEnableDisable(default=False)
-config.plugins.NcidClient.internal = ConfigEnableDisable(default=False)
+config.plugins.NcidClient.lookup = ConfigOnOff(default=False)
+config.plugins.NcidClient.internal = ConfigOnOff(default=False)
 
-config.plugins.NcidClient.addcallers = ConfigEnableDisable(default=False)
-config.plugins.NcidClient.enable = ConfigEnableDisable(default=True)
+config.plugins.NcidClient.addcallers = ConfigOnOff(default=False)
+config.plugins.NcidClient.enable = ConfigOnOff(default=True)
 config.plugins.NcidClient.extension = ConfigText(default='1', fixed_size=False)
 config.plugins.NcidClient.extension.setUseableChars('0123456789')
-config.plugins.NcidClient.showType = ConfigEnableDisable(default=True)
+config.plugins.NcidClient.showType = ConfigOnOff(default=True)
 config.plugins.NcidClient.prefix = ConfigText(default="", fixed_size=False)
 config.plugins.NcidClient.prefix.setUseableChars('0123456789')
-config.plugins.NcidClient.connectionVerbose = ConfigEnableDisable(default=True)
-config.plugins.NcidClient.phonebook = ConfigEnableDisable(default=False)
+config.plugins.NcidClient.connectionVerbose = ConfigOnOff(default=True)
+config.plugins.NcidClient.phonebook = ConfigOnOff(default=False)
 config.plugins.NcidClient.phonebookLocation = ConfigSelection(choices=getMountedDevices())
 config.plugins.NcidClient.country = ConfigSelection(choices=COUNTRY_CODES)
 config.plugins.NcidClient.name = ConfigText(default="", fixed_size=False)

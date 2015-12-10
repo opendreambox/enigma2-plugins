@@ -12,7 +12,7 @@ from Components.MenuList import MenuList
 from Components.MultiContent import MultiContentEntryText
 from Components.ScrollLabel import ScrollLabel
 from Components.Button import Button
-from Components.config import config, ConfigSubsection, ConfigInteger, ConfigEnableDisable
+from Components.config import config, ConfigSubsection, ConfigInteger, ConfigOnOff
 from Plugins.Plugin import PluginDescriptor
 from Screens.ChoiceBox import ChoiceBox
 from Screens.Screen import Screen
@@ -31,10 +31,10 @@ mailAccounts = [] # contains all EmailAccount objects
 from EmailConfig import EmailConfigOptions, EmailConfigAccount
 
 config.plugins.emailimap = ConfigSubsection()
-config.plugins.emailimap.showDeleted = ConfigEnableDisable(default=False)
+config.plugins.emailimap.showDeleted = ConfigOnOff(default=False)
 config.plugins.emailimap.timeout = ConfigInteger(default=0, limits=(0, 90)) # in seconds
-config.plugins.emailimap.verbose = ConfigEnableDisable(default=True)
-config.plugins.emailimap.debug = ConfigEnableDisable(default=False)
+config.plugins.emailimap.verbose = ConfigOnOff(default=True)
+config.plugins.emailimap.debug = ConfigOnOff(default=False)
 
 def decodeHeader(text, default=''):
 	if text is None:

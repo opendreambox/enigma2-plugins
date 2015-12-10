@@ -68,21 +68,13 @@ def standbyCounterChanged(configElement):
 def main(session, **kwargs):
 	# copy startupservice data to config.tv or config.radio if available
 	if config.startupservice.lastservice.value != "" and config.startupservice.lastroot.value != "":
-		config.servicelist = ConfigSubsection()
-		config.servicelist.lastmode = ConfigText(default = "tv")
 		config.servicelist.lastmode.value = config.startupservice.lastmode.value
 		config.servicelist.lastmode.save()
 		if config.startupservice.lastmode.value == "tv":
-			config.tv = ConfigSubsection()
-			config.tv.lastservice = ConfigText()
-			config.tv.lastroot = ConfigText()
 			config.tv.lastservice.value = config.startupservice.lastservice.value
 			config.tv.lastroot.value = config.startupservice.lastroot.value
 			config.tv.save()
 		else:
-			config.radio = ConfigSubsection()
-			config.radio.lastservice = ConfigText()
-			config.radio.lastroot = ConfigText()
 			config.radio.lastservice.value = config.startupservice.lastservice.value
 			config.radio.lastroot.value = config.startupservice.lastroot.value
 			config.radio.save()

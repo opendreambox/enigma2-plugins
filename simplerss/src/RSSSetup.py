@@ -2,7 +2,7 @@
 from . import _
 
 from Screens.Screen import Screen
-from Components.config import config, ConfigSubsection, ConfigEnableDisable, \
+from Components.config import config, ConfigSubsection, ConfigOnOff, \
 	ConfigText, getConfigListEntry
 from Components.ConfigList import ConfigListScreen
 from Components.Sources.StaticText import StaticText
@@ -167,7 +167,7 @@ class RSSSetup(ConfigListScreen, Screen):
 		l = config.plugins.simpleRSS.feed
 		s = ConfigSubsection()
 		s.uri = ConfigText(default="http://", fixed_size = False)
-		s.autoupdate = ConfigEnableDisable(default=True)
+		s.autoupdate = ConfigOnOff(default=True)
 		id = len(l)
 		l.append(s)
 
@@ -211,7 +211,7 @@ def addFeed(address, auto = False):
 	# Create new Item
 	s = ConfigSubsection()
 	s.uri = ConfigText(default="http://", fixed_size = False)
-	s.autoupdate = ConfigEnableDisable(default=True)
+	s.autoupdate = ConfigOnOff(default=True)
 
 	# Set values
 	s.uri.value = address

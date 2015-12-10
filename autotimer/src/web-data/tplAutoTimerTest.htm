@@ -1,0 +1,46 @@
+<!-- tplAutoTimerTest -->
+					<table id="testlist">
+						{for t in list}
+						<tr>
+							<td class="timerList">
+								<table class="tListItemTable" border="0" cellpadding="0" cellspacing="0">
+									<tr class="tListHead">
+										<td colspan="4" rowspan="1" class="tListSName tListItem">
+											<div class="headerindent">
+												${t.name}
+											</div>
+										</td>
+									</tr>
+									<tr class="">
+										<td class="tListColumn">${t.state}</td>
+										<td class="tListColumn">${t.begindate} ${t.begin}</td>
+										<td class="tListColumn">${t.servicename}</td>
+										<td class="tListColumn">${t.autotimer}</td>
+									</tr>
+									<tr class="">
+										<td class="tListColumn"></td>
+										<td class="tListColumn">${t.enddate} ${t.end}</td>
+									</tr>
+									<tr class="">
+										<td colspan="4" rowspan="1">
+											<div class="messageindent">
+												<pre>${t.message}</pre>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						{forelse}
+						<tr style="width:100%;">
+							<td>No Timers Available!</td>
+						</tr>
+						{/for}
+					</table>
+					<div class="center remark">
+						Results represents an EPG keyword search and aren't filtered!
+						<br />
+						If You like the AutoTimer WebInterface feel free to buy me a 
+						<a href="http://bit.ly/autotimerwebifpaypal" target="_blank" class="underline">beer</a>
+					</div>
+<!-- /tplAutoTimerEditor -->

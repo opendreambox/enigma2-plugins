@@ -6,7 +6,7 @@ from Screens.MessageBox import MessageBox
 from Screens.VirtualKeyBoard import VirtualKeyBoard
 from Components.ActionMap import ActionMap
 from Components.Sources.StaticText import StaticText
-from Components.config import config, ConfigIP, NoSave, ConfigText, ConfigEnableDisable, ConfigPassword, ConfigSelection, getConfigListEntry, ConfigYesNo
+from Components.config import config, ConfigIP, NoSave, ConfigText, ConfigOnOff, ConfigPassword, ConfigSelection, getConfigListEntry, ConfigYesNo
 from Components.ConfigList import ConfigListScreen
 from Components.Pixmap import Pixmap
 from Components.ActionMap import ActionMap, NumberActionMap
@@ -100,7 +100,7 @@ class AutoMountEdit(Screen, ConfigListScreen):
                 else:
                         defaultOptions = iAutoMount.DEFAULT_OPTIONS_CIFS['options']
 
-                self._cfgActive = NoSave(ConfigEnableDisable(default = active))
+                self._cfgActive = NoSave(ConfigOnOff(default = active))
                 self._cfgIp = NoSave(ConfigIP(default = ip))
                 self._cfgSharename = NoSave(ConfigText(default = sharename, visible_width = 50, fixed_size = False))
                 self._cfgSharedir = NoSave(ConfigText(default = sharedir, visible_width = 50, fixed_size = False))
