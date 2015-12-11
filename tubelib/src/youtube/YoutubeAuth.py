@@ -1,4 +1,5 @@
 from enigma import HBBTV_USER_AGENT
+from Tools.Log import Log
 
 from oauth2client.client import OAuth2Credentials
 from time import time
@@ -80,6 +81,7 @@ class YoutubeAuth(object):
 		self._user_code = None
 		self._requestDeferred = None
 		self._responseDeferred = None
+		self._canceled = False
 
 	def cleanup(self):
 		if self._requestDeferred:
@@ -88,6 +90,7 @@ class YoutubeAuth(object):
 			self._responseDeferred.cancel()
 
 	def startAuthFlow(self):
+		self._canceled = False
 		d = self._agent.request(
 			'POST',
 			self.AUTH_REQUEST_URI,
@@ -101,6 +104,9 @@ class YoutubeAuth(object):
 		self._requestDeferred = d
 		return d;
 
+	def cancelAuthFlow(self):
+		self._canceled = True
+
 	def _onError(self, type, errorText=""):
 		print "ERROR! %s, %s" % (type, errorText)
 		self._requestDeferred = None
@@ -109,17 +115,28 @@ class YoutubeAuth(object):
 
 	def _onRequestResponse(self, response):
 		self._requestDeferred = None
+		if self._canceled:
+			Log.d("Auth Request canceled")
+			return
 		readBody(response).addCallback(self._onRequestBodyReady).addErrback(self._onRequestBodyError)
 
 	def _onRequestError(self, error):
 		self._requestDeferred = None
+		if self._canceled:
+			Log.d("Auth Request canceled")
 		self._onError(self.ERROR_AUTH_REQUEST, str(error))
 
 	def _onRequestBodyReady(self, body):
+		if self._canceled:
+			Log.d("Auth Request canceled")
+			return
 		self._parseAuthRequestResponse(body)
 		self._pollForResult()
 
 	def _onRequestBodyError(self, failure):
+		if self._canceled:
+			Log.d("Auth Request canceled")
+			return
 		if isinstance(failure.value, PartialDownloadError):
 			self._onRequestBodyReady(failure.value.response)
 		else:
@@ -132,6 +149,9 @@ class YoutubeAuth(object):
 			fnc(self._user_code)
 
 	def _pollForResult(self):
+		if self._canceled:
+			Log.d("Auth Request canceled")
+			return
 		if self._user_code.expired():
 			self._onError(self.ERROR_CREDENTIALS_REQUEST_EXPIRED)
 			return
@@ -150,14 +170,22 @@ class YoutubeAuth(object):
 
 	def _onCredentialsPollResponse(self, response):
 		self._responseDeferred = None
+		if self._canceled:
+			Log.d("Auth Request canceled")
+			return
 		readBody(response).addCallback(self._onCredentialsPollBodyReady).addErrback(self._onCredentialsPollBodyError)
 
 	def _onCredentialsPollError(self, error):
 		self._responseDeferred = None
+		if self._canceled:
+			Log.d("Auth Request canceled")
+			return
 		self._onError(self.ERROR_CREDENTIALS_REQUEST, str(error))
 
 	def _onCredentialsPollBodyReady(self, body):
-		print body
+		if self._canceled:
+			Log.d("Auth Request canceled")
+			return
 		result = json.loads(body)
 		error = result.get("error", None)
 		if error:
@@ -183,6 +211,9 @@ class YoutubeAuth(object):
 			self._onError(self.ERROR_CREDENTIALS_REQUEST_PARSE, error)
 
 	def _onCredentialsPollBodyError(self, failure):
+		if self._canceled:
+			Log.d("Auth Request canceled")
+			return
 		if isinstance(failure.value, PartialDownloadError):
 			self._onCredentialsPollBodyReady(failure.value.response)
 		else:

@@ -363,6 +363,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		del self.timer_thumbnails
 		self.Details = {}
 		self.session.nav.playService(self.lastservice)
+		myTubeService.cancelAuthFlow()
 
 	def layoutFinished(self):
 		self.currList = "status"
