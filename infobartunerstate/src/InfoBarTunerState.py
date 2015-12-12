@@ -41,6 +41,7 @@ from Components.config import *
 # Screen
 from Components.Label import Label
 from Components.Language import *
+from Components.NimManager import nimmanager
 from Components.Pixmap import Pixmap, MultiPixmap
 from Components.ProgressBar import ProgressBar
 from Components.ServiceEventTracker import ServiceEventTracker
@@ -352,7 +353,7 @@ class InfoBarTunerState(object):
 				if id not in self.entries:
 					#channel = timer.service_ref.getServiceName()
 					tuner, tunertype = getTuner(timer.record_service)
-						
+					
 					#TEST Bug Repeating timer blocking tuner and are not marked as finished
 					#timer.timeChanged = self.__OnTimeChanged
 					
@@ -674,7 +675,7 @@ class InfoBarTunerState(object):
 						service_ref = None
 						if not win.channel or not win.number:
 							service_ref = timer.service_ref
-							
+						
 						del timer
 						
 						if service_ref:
@@ -1387,21 +1388,23 @@ def getTuner(service):
 	# service must be an instance of iPlayableService or iRecordableService
 	#TODO detect stream of HDD
 	feinfo = service and service.frontendInfo()
-	#data = feinfo and feinfo.getAll(False)
-	#data = feinfo and feinfo.getAll(True)
 	data = feinfo and feinfo.getFrontendData()
 	if data:
+		type = str(data.get("tuner_type", ""))
 		number = data.get("slot_number", -1)
 		if number is None or number < 0:
 			number = data.get("tuner_number", -1)
-		type = data.get("tuner_type", "")
-		type = str(type)
 		if number is not None and number > -1:
-			#return ( ('A', 'B', 'C', 'D', 'E', 'F')[number], type)
-			return ( chr( int(number) + ord('A') ), type)
+			try:
+				name = nimmanager.getNimSlotInputName(number)
+			except:
+				pass
+			if not name:
+				name = chr( int(number) + ord('A') )
+			return ( name, type )
 		else:
-			return ( "", type)
-	return "", ""
+			return ( "", type )
+	return ( "", "" )
 
 def readBouquetList(self):
 	serviceHandler = eServiceCenter.getInstance()
