@@ -1342,8 +1342,13 @@ class TunerState(TunerStateBase):
 			width = max(self[fieldid].instance.calculateSize().width(), 0)
 			#print width
 			
-			#Workaround#2
+			#Workaround#2: Width calculation seems to be not enough
 			width = int( width * 1.10 )
+			
+			#Workaround#3: Calculation of left aligned fields seems to be broken
+			if 0 < width and width < 30:
+				width = 30
+			#print "IBTS Update", field, width, self[fieldid].instance.calculateSize().width()
 			
 			#self[fieldid].instance.resize( eSize(width, height) )
 			
@@ -1396,11 +1401,11 @@ def getTuner(service):
 			number = data.get("tuner_number", -1)
 		if number is not None and number > -1:
 			try:
-				name = nimmanager.getNimSlotInputName(number)
+				name = str(nimmanager.getNimSlotInputName(number))
 			except:
 				pass
 			if not name:
-				name = chr( int(number) + ord('A') )
+				name = str(chr( int(number) + ord('A') ))
 			return ( name, type )
 		else:
 			return ( "", type )
