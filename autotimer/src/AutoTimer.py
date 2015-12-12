@@ -510,7 +510,9 @@ class AutoTimer:
 					doLog("Won't modify existing timer because either no modification allowed or repeated timer")
 					continue
 
-				if hasattr(newEntry, "isAutoTimer") or TAG in newEntry.tags:
+				if hasattr(newEntry, "isAutoTimer"):
+					newEntry.log(501, "[AutoTimer] AutoTimer %s modified this automatically generated timer." % (timer.name))
+				elif config.plugins.autotimer.add_autotimer_to_tags.value and TAG in newEntry.tags:
 					newEntry.log(501, "[AutoTimer] AutoTimer %s modified this automatically generated timer." % (timer.name))
 				else:
 					if config.plugins.autotimer.refresh.value != "all":
@@ -532,9 +534,6 @@ class AutoTimer:
 				# It is only temporarily, after a restart it will be lost,
 				# because it won't be stored in the timer xml file
 				newEntry.isAutoTimer = True
-				if TAG not in newEntry.tags:
-					newEntry.tags.append(TAG)
-
 
 			# Apply afterEvent
 			if timer.hasAfterEvent():
@@ -550,12 +549,14 @@ class AutoTimer:
 			newEntry.vpsplugin_overwrite = timer.vps_overwrite
 			tags = timer.tags[:]
 			if config.plugins.autotimer.add_autotimer_to_tags.value:
-				tags.append('AutoTimer')
+				if TAG not in tags:
+					tags.append(TAG)
 			if config.plugins.autotimer.add_name_to_tags.value:
 				tagname = timer.name.strip()
 				if tagname:
 					tagname = tagname[0].upper() + tagname[1:].replace(" ", "_")
-					tags.append(tagname)
+					if tagname not in tags:
+						tags.append(tagname)
 			newEntry.tags = tags
 
 			if oldExists:
@@ -713,7 +714,7 @@ class AutoTimer:
 
 		if config.plugins.autotimer.check_eit_and_remove.value:
 			for timer in remove:
-				if hasattr(timer, "isAutoTimer") or TAG in timer.tags:
+				if hasattr(timer, "isAutoTimer") or (config.plugins.autotimer.add_autotimer_to_tags.value and TAG in timer.tags):
 					try:
 						# Because of the duplicate check, we only want to remove future timer
 						if timer in recordHandler.timer_list:
