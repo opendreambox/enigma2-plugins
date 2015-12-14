@@ -9,4 +9,10 @@ install_DATA = \
 	roboto-regular-webfont.eot \
 	roboto-regular-webfont.svg \
 	roboto-regular-webfont.ttf \
-	roboto-regular-webfont.woff
+	roboto-regular-webfont.woff \
+	FontAwesome.otf \
+	fontawesome-webfont.eot \
+	fontawesome-webfont.svg \
+	fontawesome-webfont.ttf \
+	fontawesome-webfont.woff \
+	fontawesome-webfont.woff2
