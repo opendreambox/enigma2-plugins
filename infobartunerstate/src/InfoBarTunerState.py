@@ -794,7 +794,10 @@ class InfoBarTunerState(object):
 			for win in wins:
 				win.move( posx, posy )
 				win.reorder( widths, overwidth )
-				posy += height
+				if config.infobartunerstate.list_goesup.value == False:
+					posy += height
+				else:
+					posy -= height
 				# Show windows
 				win.show()
 			
@@ -1403,7 +1406,7 @@ def getTuner(service):
 			try:
 				name = str(nimmanager.getNimSlotInputName(number))
 			except:
-				pass
+				name = None
 			if not name:
 				name = str(chr( int(number) + ord('A') ))
 			return ( name, type )
