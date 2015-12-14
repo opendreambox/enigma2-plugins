@@ -109,8 +109,8 @@
 .sListSName a{color:#444;display:block;font-size:15px;padding:5px 3px;}
 .sListProgress {width: 60px; float: left }
 a.sListSLink {color:#444;display:block;font-size:15px;padding:5px 3px;display: block;width:100%;}
-.sListSActions{position: absolute; right: 0px; bottom: 5px;}
-.sListSProgress{border:1px solid #DDD;display:inline-block;height:15px;width:50px;padding:1px;}
+.sListSActions{position: absolute; right: 0px; top: 5px;}
+.sListSProgress{border:1px solid #DDD;height:15px;width:50px;padding:1px;}
 .sListSProgressBar{background-color:#66AFE9;height:100%;width:0;margin:0;}
 .small{font-size:11px;font-weight:400;}
 .tListAfter,.tListType{text-align:left;width:85px;}

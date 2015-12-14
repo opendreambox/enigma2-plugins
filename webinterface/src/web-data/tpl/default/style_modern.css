@@ -665,12 +665,11 @@ a.sListSLink {
 .sListSActions {
 	position: absolute;
 	right: 0px;
-	bottom: 5px;
+	top: 5px;
 }
 
 .sListSProgress {
 	border: 1px solid #DDD;
-	display: inline-block;
 	height: 15px;
 	width: 50px;
 	padding: 1px;
