@@ -910,13 +910,22 @@ var SimplePages = Class.create({
 			debugChecked = 'checked';
 		}
 
+		var encoder = {
+			'enabled' : userprefs.data.encoder_enabled,
+			'rtsp_port' : parseNr(userprefs.data.encoder_rtsp_port),
+			'rtsp_path' : userprefs.data.encoder_rtsp_path,
+			'video_bitrate' : parseNr(userprefs.data.encoder_video_bitrate),
+			'audio_bitrate' : parseNr(userprefs.data.encoder_audio_bitrate)
+		};
+
 		var updateCurrentInterval = userprefs.data.updateCurrentInterval / 1000;
 		var updateBouquetInterval = userprefs.data.updateBouquetInterval / 1000;
 		var style = userprefs.data.style;
 		data = {'debug' : debugChecked,
 				'updateCurrentInterval' : updateCurrentInterval,
 				'updateBouquetInterval' : updateBouquetInterval,
-				'style' : style
+				'style' : style,
+				'encoder' : encoder
 			};
 		this.show(this.PAGE_SETTINGS, data);
 	},
@@ -1396,13 +1405,29 @@ var E2WebCore = Class.create(BaseCore, {
 		
 		if( parseNr(userprefs.data.updateCurrentInterval) < 10000){
 			userprefs.data.updateCurrentInterval = 120000;
-			userprefs.save();
+
 		}
 
 		if( parseNr(userprefs.data.updateBouquetInterval) < 60000 ){
 			userprefs.data.updateBouquetInterval = 300000;
 			userprefs.save();
 		}
+		//Encoder settings
+		if(userprefs.data.encoder_enabled == undefined)
+			userprefs.data.encoder_enabled = false;
+		var rtsp_port = parseNr(userprefs.data.encoder_rtsp_port);
+		if( rtsp_port <= 0 || rtsp_port >= 65535)
+			userprefs.data.encoder_rtsp_port = 554;
+		if( userprefs.data.encoder_rtsp_path == undefined)
+			userprefs.data.encoder_rtsp_path = "/stream";
+		var video_bitrate = parseNr(userprefs.data.encoder_video_bitrate);
+		if( video_bitrate <= 0 || video_bitrate > 10000)
+			userprefs.data.encoder_video_bitrate = 1000;
+		var audio_bitrate = parseNr(userprefs.data.encoder_audio_bitrate);
+		if( audio_bitrate <= 0 || audio_bitrate > 320)
+			userprefs.data.encoder_audio_bitrate = 92;
+
+		userprefs.save();
 
 		if (typeof document.body.style.maxHeight == undefined) {
 			alert("Due to the tremendous amount of work needed to get everthing to " +
@@ -2039,9 +2064,34 @@ var E2WebCore = Class.create(BaseCore, {
 
 		if( userprefs.data.updateBouquetInterval != updateBouquetInterval){
 			userprefs.data.updateBouquetInterval = updateBouquetInterval;
-
 			changed = true;
 			this.startUpdateBouquetItemsPoller();
+		}
+
+		var encoder_enabled = $('encoderEnabled').checked;
+		var rtsp_port = parseNr($F('rtspPort'));
+		var rtsp_path = $F('rtspPath');
+		var video_bitrate = parseNr($F('videoBitrate'));
+		var audio_bitrate = parseNr($F('audioBitrate'));
+		var encoder = {
+				'enabled' : userprefs.data.encoder_enabled,
+				'rtsp_port' : parseNr(userprefs.data.encoder_rtsp_port),
+				'rtsp_path' : userprefs.data.encoder_rtsp_path,
+				'video_bitrate' : parseNr(userprefs.data.encoder_video_bitrate),
+				'audio_bitrate' : parseNr(userprefs.data.encoder_audio_bitrate)
+			};
+
+		if(encoder_enabled != encoder.enabled
+		|| rtsp_port != encoder.rtsp_port
+		|| rtsp_path != encoder.rtsp_path
+		|| video_bitrate != encoder.video_bitrate
+		|| audio_bitrate != encoder.audio_bitrate){
+			changed = true;
+			userprefs.data.encoder_enabled = encoder_enabled;
+			userprefs.data.encoder_rtsp_port = rtsp_port;
+			userprefs.data.encoder_rtsp_path = rtsp_path;
+			userprefs.data.encoder_video_bitrate = video_bitrate;
+			userprefs.data.encoder_audio_bitrate = audio_bitrate;
 		}
 
 		if(changed){

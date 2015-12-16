@@ -213,3 +213,4 @@ table{border-collapse:collapse;border-spacing:0;color:inherit;font-family:inheri
 table.contentHd{border-bottom:1px solid #DDD;width:100%;margin:0;padding:0;}
 td.screenShot img{background:#DDD;border:1px solid #555;;width:100%;}
 td.timerList{border-bottom:1px solid #ededed;display:block;position:relative;width:100%;margin:0;padding:0;}
+small{font-weight:normal;}

@@ -1321,3 +1321,7 @@ td.timerList {
 	margin: 0;
 	padding: 0;
 }
+
+small {
+	font-weight: normal;
+}
