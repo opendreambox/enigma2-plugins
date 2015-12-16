@@ -90,7 +90,7 @@ class MovieContextMenu(Screen):
 			menu.append((_x("show duration"), boundFunction(self.showTimes, MovieList.SHOW_DURATION)))
 		menu.append((_x("Configuration of the title:episode separator"), boundFunction(self.sfconfigure, None)))
 		if config.movielist.sftimes.value & MovieList.SHOW_DIRECTORIES:
-			menu.append((_x("hide the read real directories"), boundFunction(self.showTimes, MovieList.SHOW_DIRECTORIES)))
+			menu.append((_x("hide the red real directories"), boundFunction(self.showTimes, MovieList.SHOW_DIRECTORIES)))
 		else:
 			menu.append((_x("show real directories in red"), boundFunction(self.showTimes, MovieList.SHOW_DIRECTORIES)))
 
