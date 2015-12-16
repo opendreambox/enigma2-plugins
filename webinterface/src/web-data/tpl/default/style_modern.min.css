@@ -202,7 +202,7 @@ div.legendRow{height:auto;overflow:auto;}
 div.static-datepicker{left:0;position:relative;top:5px;}
 div.static-datepicker table{-moz-box-shadow:0 0 0 transparent;}
 form{margin:2px;}
-html,body{background:#e8e8e8;color:#333;font-family: 'Roboto', sans-serif;font-weight:bold;font-size:14px;}
+html,body{background:#e8e8e8;color:#333;font-family:'Roboto',sans-serif;font-weight:normal;font-size:14px;}
 iframe.iehack{border:0;display:none;position:absolute;z-index:9998;margin:0;padding:0;}
 img{border:0;}
 input,select,textarea{background-color:#FFF;border-radius:2px;border:1px solid #DDD;color:#444;font-size:14px;transition:border-color .15s ease-in-out 0 box-shadow .15s ease-in-out 0;padding:5px;}
