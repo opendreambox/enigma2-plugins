@@ -445,6 +445,13 @@ var AutoTimerMenuController  = Class.create(Controller, {
 				autotimereditorcore.parse.load();
 			}.bind(this)
 		);
+		$('testall').title = "Show events matching your AutoTimers with additional comments";
+		$('testall').on(
+			'click',
+			function(event, element){
+				autotimereditorcore.test.loadAll();
+			}.bind(this)
+		);
 		$('parse').title = "Run AutoTimer and add timers";
 		$('timer').on(
 			'click',
@@ -1266,6 +1273,11 @@ var AutoTimerPreviewController = Class.create(Controller, {
 var AutoTimerTestController = Class.create(Controller, {
 	initialize: function($super, target){
 		$super(new AutoTimerTestHandler(target));
+	},
+	
+	loadAll: function(){
+		$('headerautotimercontent').innerHTML = "AutoTimer Test:";
+		this.handler.load( { } );
 	},
 	
 	load: function(id){
