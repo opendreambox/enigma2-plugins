@@ -28,6 +28,7 @@ from Screens.HelpMenu import HelpableScreen
 #from Screens.InputBox import InputBox
 from Screens.ChoiceBox import ChoiceBox
 from Screens.MessageBox import MessageBox
+from Tools.Notifications import AddPopup
 #from Screens.Standby import TryQuitMainloop
 #from Screens.VirtualKeyBoard import VirtualKeyBoard
 
@@ -55,7 +56,7 @@ from difflib import SequenceMatcher
 
 #Internal
 from Channels import ChannelsBase, buildSTBchannellist, unifyChannel
-from Logger import logDebug
+from Logger import logDebug, logInfo
 
 
 # Constants
@@ -133,6 +134,12 @@ class ChannelEditor(Screen, HelpableScreen, ChannelsBase):
 		self.stbToWebChlist = []
 		
 		self.onLayoutFinish.append(self.readChannels)
+		self.onShown.append(self.showMessage)
+
+	def showMessage(self):
+		if self.showMessage in self.onShown:
+			self.onShown.remove(self.showMessage)
+			self.session.open( MessageBox, _("You have to match SD and HD channels separately!"), MessageBox.TYPE_INFO )
 
 	def readChannels(self):
 		self.setTitle(_("Load Web-Channels..."))

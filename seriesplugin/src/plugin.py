@@ -8,7 +8,6 @@ from time import time
 
 # GUI (Screens)
 from Screens.MessageBox import MessageBox
-from Tools.Notifications import AddPopup
 
 from Components.config import config
 
@@ -22,20 +21,23 @@ from SeriesPluginInfoScreen import SeriesPluginInfoScreen
 from SeriesPluginRenamer import SeriesPluginRenamer
 from SeriesPluginIndependent import startIndependent, runIndependent
 from SeriesPluginConfiguration import SeriesPluginConfiguration
-from Logger import logDebug
+from Logger import logDebug, logInfo
+
+from spEPGSelection import SPEPGSelectionInit, SPEPGSelectionUndo
+from spChannelContextMenu import SPChannelContextMenuInit, SPChannelContextMenuUndo
 
 
 #######################################################
 # Constants
 NAME = "SeriesPlugin"
-VERSION = "4.0.1"
+VERSION = "4.4"
 DESCRIPTION = _("SeriesPlugin")
 SHOWINFO = _("Show series info (SP)")
 RENAMESERIES = _("Rename serie(s) (SP)")
 CHECKTIMERS = _("Check timer list for series (SP)")
 SUPPORT = "http://bit.ly/seriespluginihad"
 DONATE = "http://bit.ly/seriespluginpaypal"
-TERMS = "TBD"
+TERMS = "http://www.serienserver.de"
 ABOUT = "\n  " + NAME + " " + VERSION + "\n\n" \
 				+ _("  (C) 2012 by betonme @ IHAD \n\n") \
 				+ _("  Terms: ") + TERMS + "\n\n" \
@@ -45,7 +47,6 @@ ABOUT = "\n  " + NAME + " " + VERSION + "\n\n" \
 				+ _("  Feel free to donate. \n") \
 				+ _("  PayPal: ") + DONATE
 
-PROXY = "http://serienrecorder.lima-city.de/proxy.php"
 USER_AGENT = "Enigma2-"+NAME
 
 try:
@@ -54,14 +55,47 @@ try:
 except:
 	DEVICE = ''
 
+REQUEST_PARAMETER = "?device=" + DEVICE + "&version=SP" + VERSION
+
 WHERE_EPGMENU     = 'WHERE_EPGMENU'
 WHERE_CHANNELMENU = 'WHERE_CHANNELMENU'
 
 
 def buildURL(url):
-	return PROXY + "?device=" + DEVICE + "&version=" + VERSION + "&url=" + url
+	if config.plugins.seriesplugin.proxy_url.value:
+		return config.plugins.seriesplugin.proxy_url.value + REQUEST_PARAMETER + "&url=" + url
+	else:
+		return url
 
 
+#######################################################
+# Test
+def test(**kwargs):
+	# http://dm7080/autotimer
+	# http://www.unixtime.de/
+	try:
+		#from SeriesPluginBare import bareGetSeasonEpisode 	#future=True, today=False, elapsed=False
+		#bareGetSeasonEpisode("1:0:19:7C:6:85:FFFF0000:0:0:0:", "The Walking Dead", 1448740500, 1448745600, "Description", "/media/hdd/movie", True, False, False)
+		#bareGetSeasonEpisode("1:0:1:2F50:F1:270F:FFFF0000:0:0:0:", "Are You the One?", 1448923500, 1448926500, "Description", "/media/hdd/movie", False, False, True)
+		
+		#TEST INFOSCREEN MOVIE
+		#if kwargs.has_key("session"):
+		#	from enigma import eServiceReference
+		#	session = kwargs["session"]
+			#service = eServiceReference(eServiceReference.idDVB, 0, "/media/hdd/movie/20151120 0139 - Pro7 HD - The 100.ts")
+			#service = eServiceReference(eServiceReference.idDVB, 0, "/media/hdd/movie/20151205 1625 - TNT Serie HD (S) - The Last Ship - Staffel 1.ts")
+			#service = eServiceReference(eServiceReference.idDVB, 0, "/media/hdd/movie/20151204 1825 - VIVA_COMEDY CENTRAL HD - Rules of Engagement.ts")
+		#	movielist_info(session, service)
+		
+		#TEST AUTOTIMER
+		#from SeriesPluginBare import bareGetSeasonEpisode
+		#bareGetSeasonEpisode("1:0:1:2F50:F1:270F:FFFF0000:0:0:0:", "Are You the One", 1448751000, 1448754000, "Description", "/media/hdd/movie", False, False, True)
+		#bareGetSeasonEpisode("1:0:19:8150:14B:270F:FFFF0000:0:0:0:", "Dragons Auf zu neuen Ufern TEST_TO_BE_REMOVED", 1449390300, 1449393300, "Description", "/media/hdd/movie", False, False, True)
+		pass
+		
+	except Exception as e:
+		logDebug(_("SeriesPlugin test exception ") + str(e))
+	
 #######################################################
 # Start
 def start(reason, **kwargs):
@@ -70,22 +104,9 @@ def start(reason, **kwargs):
 		if reason == 0:
 			
 			#TEST AUTOTIMER
-			#from SeriesPluginBare import bareGetSeasonEpisode
-			#bareGetSeasonEpisode("1:0:19:7C:6:85:FFFF0000:0:0:0:", "The Walking Dead", 1448740500, 1448745600, "Description", "/media/hdd/movie", True, False, False)
-			
-			#TEST INFOSCREEN MOVIE
-			#if kwargs.has_key("session"):
-			#	from enigma import eServiceReference
-			#	session = kwargs["session"]
-			#	service = eServiceReference(eServiceReference.idDVB, 0, "/media/hdd/movie/20151120 0139 - Pro7 HD - The 100.ts")
-			#	movielist_info(session, service)
-			
-			#TEST AUTOTIMER
-			#from SeriesPluginBare import bareGetSeasonEpisode
-			#bareGetSeasonEpisode("1:0:1:2F50:F1:270F:FFFF0000:0:0:0:", "Are You the One", 1448751000, 1448754000, "Description", "/media/hdd/movie", False, False, True)
-			
+			#test(kwargs)
 			#TESTEND
-
+			
 			# Start on demand if it is requested
 			if config.plugins.seriesplugin.autotimer_independent.value:
 				startIndependent()
@@ -234,7 +255,7 @@ def getSeasonEpisode(service_ref, name, begin, end, description, path, *args, **
 		from SeriesPluginBare import bareGetSeasonEpisode
 		try:
 			result = bareGetSeasonEpisode(service_ref, name, begin, end, description, path)
-			if result and len(result) == 3:
+			if result and len(result) == 4:
 				return (result[0],result[1],result[2])
 			else:
 				return str(result)
@@ -256,8 +277,6 @@ def Plugins(**kwargs):
 											needsRestart = False) )
 	
 	if config.plugins.seriesplugin.enabled.value:
-		
-		overwriteAutoTimer()
 		
 		descriptors.append( PluginDescriptor(
 													where = PluginDescriptor.WHERE_SESSIONSTART,
@@ -320,100 +339,6 @@ def Plugins(**kwargs):
 
 	return descriptors
 
-
-#######################################################
-# Override EPGSelection enterDateTime
-EPGSelection_enterDateTime = None
-#EPGSelection_openOutdatedEPGSelection = None
-def SPEPGSelectionInit():
-	print "[SeriesPlugin] override EPGSelection"
-	global EPGSelection_enterDateTime #, EPGSelection_openOutdatedEPGSelection
-	if EPGSelection_enterDateTime is None: # and EPGSelection_openOutdatedEPGSelection is None:
-		from Screens.EpgSelection import EPGSelection
-		EPGSelection_enterDateTime = EPGSelection.enterDateTime
-		EPGSelection.enterDateTime = enterDateTime
-		#EPGSelection_openOutdatedEPGSelection = EPGSelection.openOutdatedEPGSelection
-		#EPGSelection.openOutdatedEPGSelection = openOutdatedEPGSelection
-		EPGSelection.SPcloseafterfinish = closeafterfinish
-
-def SPEPGSelectionUndo():
-	print "[SeriesPlugin] undo override EPGSelection"
-	global EPGSelection_enterDateTime #, EPGSelection_openOutdatedEPGSelection
-	if EPGSelection_enterDateTime: # and EPGSelection_openOutdatedEPGSelection:
-		from Screens.EpgSelection import EPGSelection
-		EPGSelection.enterDateTime = EPGSelection_enterDateTime
-		EPGSelection_enterDateTime = None
-		#EPGSelection.openOutdatedEPGSelection = EPGSelection_openOutdatedEPGSelection
-		#EPGSelection_openOutdatedEPGSelection = None
-
-def enterDateTime(self):
-	from Screens.EpgSelection import EPG_TYPE_SINGLE,EPG_TYPE_MULTI,EPG_TYPE_SIMILAR
-	event = self["Event"].event
-	if self.type == EPG_TYPE_SINGLE:
-		service = self.currentService
-	elif self.type == EPG_TYPE_MULTI:	
-		service = self.services
-	elif self.type == EPG_TYPE_SIMILAR:
-		service = self.currentService
-	if service and event:
-		self.session.openWithCallback(self.SPcloseafterfinish, SeriesPluginInfoScreen, service, event) 
-		return
-	EPGSelection_enterDateTime(self)
-
-#def openOutdatedEPGSelection(self, reason=None):
-#	if reason == 1:
-#		EPGSelection_enterDateTime(self)
-
-
-#######################################################
-# Override ChannelContextMenu
-ChannelContextMenu__init__ = None
-def SPChannelContextMenuInit():
-	print "[SeriesPlugin] override ChannelContextMenu.__init__"
-	global ChannelContextMenu__init__
-	if ChannelContextMenu__init__ is None:
-		from Screens.ChannelSelection import ChannelContextMenu
-		ChannelContextMenu__init__ = ChannelContextMenu.__init__
-		ChannelContextMenu.__init__ = SPChannelContextMenu__init__
-		ChannelContextMenu.SPchannelShowSeriesInfo = channelShowSeriesInfo
-		ChannelContextMenu.SPcloseafterfinish = closeafterfinish
-
-def SPChannelContextMenuUndo():
-	print "[SeriesPlugin] override ChannelContextMenu.__init__"
-	global ChannelContextMenu__init__
-	if ChannelContextMenu__init__:
-		from Screens.ChannelSelection import ChannelContextMenu
-		ChannelContextMenu.__init__ = ChannelContextMenu__init__
-		ChannelContextMenu__init__ = None
-
-def SPChannelContextMenu__init__(self, session, csel):
-	from Components.ChoiceList import ChoiceEntryComponent
-	from Screens.ChannelSelection import MODE_TV
-	from Tools.BoundFunction import boundFunction
-	from enigma import eServiceReference
-	ChannelContextMenu__init__(self, session, csel)
-	current = csel.getCurrentSelection()
-	current_sel_path = current.getPath()
-	current_sel_flags = current.flags
-	if csel.mode == MODE_TV and not (current_sel_path or current_sel_flags & (eServiceReference.isDirectory|eServiceReference.isMarker)):
-		self["menu"].list.insert(0, ChoiceEntryComponent(text=(SHOWINFO, boundFunction(self.SPchannelShowSeriesInfo))))
-
-def channelShowSeriesInfo(self):
-	logDebug( "[SeriesPlugin] channelShowSeriesInfo ")
-	if config.plugins.seriesplugin.enabled.value:
-		try:
-			from enigma import eServiceCenter
-			service = self.csel.servicelist.getCurrent()
-			info = eServiceCenter.getInstance().info(service)
-			event = info.getEvent(service)
-			self.session.openWithCallback(self.SPcloseafterfinish, SeriesPluginInfoScreen, service, event)
-		except Exception as e:
-			logDebug(_("SeriesPlugin info exception ") + str(e))
-
-def closeafterfinish(self, retval=None):
-	self.close()
-
-
 #######################################################
 # Add / Remove menu functions
 def addSeriesPlugin(menu, title, fnc=None):
@@ -461,56 +386,3 @@ def removeSeriesPlugin(menu, title):
 					plugins.plugins[ menu ].remove(p)
 					break
 
-
-#######################################################
-# Overwrite AutoTimer support functions
-
-try:
-	from Plugins.Extensions.AutoTimer.AutoTimer import AutoTimer
-	#from Plugins.Extensions.AutoTimer.plugin import autotimer as AutoTimer
-except:
-	AutoTimer = None
-
-ATmodifyTimer = None
-
-
-def overwriteAutoTimer():
-	try:
-		global ATmodifyTimer
-		if AutoTimer:
-			if ATmodifyTimer is None:
-				# Backup original function
-				ATmodifyTimer = AutoTimer.modifyTimer
-				# Overwrite function
-				AutoTimer.modifyTimer = SPmodifyTimer
-	except:
-		logDebug("SeriesPlugin found old AutoTimer")
-
-
-def recoverAutoTimer():
-	try:
-		global ATmodifyTimer
-		if AutoTimer:
-			if ATmodifyTimer:
-				AutoTimer.modifyTimer = ATmodifyTimer
-				ATmodifyTimer = None
-	except:
-		logDebug("SeriesPlugin found old AutoTimer")
-
-
-#######################################################
-# Customized support functions
-
-from difflib import SequenceMatcher
-from ServiceReference import ServiceReference
-
-def SPmodifyTimer(self, timer, name, shortdesc, begin, end, serviceref, eit=None):
-	# Never overwrite existing names, You will lose Your series informations
-	#timer.name = name
-	# Only overwrite non existing descriptions
-	#timer.description = timer.description or shortdesc
-	timer.begin = int(begin)
-	timer.end = int(end)
-	timer.service_ref = ServiceReference(serviceref)
-	if eit:
-		timer.eit = eit

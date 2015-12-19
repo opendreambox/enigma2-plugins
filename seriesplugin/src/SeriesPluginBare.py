@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 # by betonme @2012
 
+# for localized messages
+from . import _
+
 from Components.config import *
 
 from Screens.MessageBox import MessageBox
@@ -36,10 +39,13 @@ def bareGetSeasonEpisode(service_ref, name, begin, end, description, path, futur
 			name = str(refactorTitle(name, data))
 			description = str(refactorDescription(description, data))
 			path = refactorDirectory(path, data)
+			logInfo("Bare: Success", name, description, path)
 			return (name, description, path, getLog())
 		elif data:
 			global loop_data
 			loop_data.append( str(data) )
+		
+		logInfo("Bare: Failed", str(data))
 		return str(data)
 	
 	return result
