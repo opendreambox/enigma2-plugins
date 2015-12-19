@@ -176,6 +176,12 @@ class Strings(Source):
 			["close_mediaplayer", _("Close MediaPlayer")],
 			["no_items", _("No items to show...")],
 			["remaining_minutes", _("%s of %s min")],
+			["enable_encoder", _("Enable encoder")],
+			["rtsp_port", _("RTSP Port")],
+			["rtsp_path", _("RTSP Path")],
+			["video_bitrate", _("Video Bitrate")],
+			["audio_bitrate", _("Audio Bitrate")],
+			["encoder_settings_hint", _("You have to set your encoder into TV-Services Mode for things to work as expected!")],
 		]
 
 	list = property(getList)

@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1249 $
-$Date: 2015-11-17 19:36:24 +0100 (Tue, 17 Nov 2015) $
-$Id: FritzCallFBF.py 1249 2015-11-17 18:36:24Z michael $
+$Revision: 1252 $
+$Date: 2015-12-10 11:11:04 +0100 (Thu, 10 Dec 2015) $
+$Id: FritzCallFBF.py 1252 2015-12-10 10:11:04Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -77,6 +77,7 @@ def resolveNumber(number, default=None, phonebook=None):
 
 def cleanNumber(number):
 	# self.debug("[FritzCallFBF] " + number)
+	number = re.sub("<.*?>", "", number)
 	newNumber = (" ".join(re.findall(r"[+0-9*#ABCD]*", number))).replace(" ","")
 	if len(newNumber) == 0:
 		return number
@@ -2785,7 +2786,8 @@ class FritzCallFBF_06_35:
 # 		linkP.write(html)
 # 		linkP.close()
 
-		entrymask = re.compile('<td class="tname" title="([^"]*)">[^<]*</td><td class="tnum"(?: datalabel="[^"]*")?>([^<]+(?:<br>[^<]+)*)</td><td class="ttype">([^<]+(?:<br>[^<]+)*)</td><td class="tcode"(?: datalabel="[^"]*")?>([^<]*(?:<br>[^<]*)*)</td><td class="tvanity"(?: datalabel="[^"]*")?>([^<]*(?:<br>[^<]*)*)</td>', re.S)
+		entrymask = re.compile('<td class="tname" title="([^"]*)">[^<]*</td><td class="tnum"(?: datalabel="[^"]*")?>((?:<a class="print"[^>]+>)?[^<]+(?:<br>(?:<a class="print"[^>]+>)?[^<]+)*)</td><td class="ttype">([^<]+(?:<br>[^<]+)*)</td><td class="tcode"(?: datalabel="[^"]*")?>([^<]*(?:<br>[^<]*)*)</td><td class="tvanity"(?: datalabel="[^"]*")?>([^<]*(?:<br>[^<]*)*)</td>', re.S)
+		# entrymask = re.compile('<td class="tname" title="([^"]*)">[^<]*</td><td class="tnum"(?: datalabel="[^"]*")?>(?:&lt;a class="print"[^&gt;]+&gt;)?([^<]+(?:<br>[^<]+)*)</td><td class="ttype">([^<]+(?:<br>[^<]+)*)</td><td class="tcode"(?: datalabel="[^"]*")?>([^<]*(?:<br>[^<]*)*)</td><td class="tvanity"(?: datalabel="[^"]*")?>([^<]*(?:<br>[^<]*)*)</td>', re.S)
 		entries = entrymask.finditer(html)
 		for found in entries:
 			# self.debug("processing entry for '''%s'''" % repr(found.groups()))

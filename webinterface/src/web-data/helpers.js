@@ -481,6 +481,19 @@ function EPGEvent(xml, number){
 	this.isMarker = function(){
 		return this.serviceRef.startsWith("1:64:");
 	};
+	this.getStreamUrl = function() {
+		var encoder = {
+				'enabled' : userprefs.data.encoder_enabled,
+				'rtsp_port' : parseNr(userprefs.data.encoder_rtsp_port),
+				'rtsp_path' : userprefs.data.encoder_rtsp_path,
+				'video_bitrate' : parseNr(userprefs.data.encoder_video_bitrate),
+				'audio_bitrate' : parseNr(userprefs.data.encoder_audio_bitrate)
+			};
+		if(encoder.enabled)
+			return "rtsp://" + window.location.hostname + ":" + encoder.rtsp_port + encoder.rtsp_path + "?ref=" + this.getServiceReference() + "&video_bitrate=" + encoder.video_bitrate + "&audio_bitrate=" +encoder.audio_bitrate;
+		else
+			return "/web/stream.m3u?ref=" + this.getServiceReference();
+	}
 
 	this.json = {
 		'date': this.getTimeDay(),
@@ -500,7 +513,8 @@ function EPGEvent(xml, number){
 		'extdescription': quotes2html(this.getDescriptionExtended()),
 		'number': String(this.number),
 		'start': this.getTimeBegin(),
-		'end': this.getTimeEnd()
+		'end': this.getTimeEnd(),
+		'streamurl' : this.getStreamUrl()
 	};
 
 	this.toJSON = function() {
@@ -830,6 +844,20 @@ function Movie(xml, cssclass){
 		cssclass = 'odd';
 	}
 
+	this.getStreamUrl = function() {
+		var encoder = {
+				'enabled' : userprefs.data.encoder_enabled,
+				'rtsp_port' : parseNr(userprefs.data.encoder_rtsp_port),
+				'rtsp_path' : userprefs.data.encoder_rtsp_path,
+				'video_bitrate' : parseNr(userprefs.data.encoder_video_bitrate),
+				'audio_bitrate' : parseNr(userprefs.data.encoder_audio_bitrate)
+			};
+		if(encoder.enabled)
+			return "rtsp://" + window.location.hostname + ":" + encoder.rtsp_port + encoder.rtsp_path + "?ref=" + this.getServiceReference() + "&video_bitrate=" + encoder.video_bitrate + "&audio_bitrate=" +encoder.audio_bitrate;
+		else
+			return "/web/ts.m3u?file=" + this.getFilename();
+	}
+
 	this.json = {
 			'servicereference': this.getServiceReference(),
 			'servicename': this.getServiceName(),
@@ -842,6 +870,7 @@ function Movie(xml, cssclass){
 			'tags': this.getTags().join(', ') ,
 			'length': this.getLength() ,
 			'time': this.getTimeDay()+"&nbsp;"+ this.getTimeStartString(),
+			'streamurl' : this.getStreamUrl(),
 			'cssclass' : cssclass
 	};
 

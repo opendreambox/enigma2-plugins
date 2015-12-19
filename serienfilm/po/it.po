@@ -72,7 +72,7 @@ msgid "Configuration of the title:episode separator"
 msgstr "Configurazione titoli: separatore episodi"
 
 #: ...//serienfilm/src/MovieSelection.py:93
-msgid "hide the read real directories"
+msgid "hide the red real directories"
 msgstr "Nasconedere la directory reale"
 
 #: ...//serienfilm/src/MovieSelection.py:95

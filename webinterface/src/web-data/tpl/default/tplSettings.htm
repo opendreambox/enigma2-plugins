@@ -8,6 +8,7 @@
 											<td colspan="2">${strings.settings_cookies_required}</td>
 										</tr>
 										<tr><td colspan=2">&nbsp;</td></tr>
+										<!-- 
 										<tr>
 											<td>Style</td>
 											<td>
@@ -20,11 +21,44 @@
 												</form>
 											</td>
 										</tr>
+										 -->
 										<tr>
-											<td>${strings.enable_debug}</td>
+											<td>${strings.enable_encoder}</td>
 											<td>
-												<form><input type="checkbox" id="enableDebug" ${debug}/></form>
+												<form><input type="checkbox" id="encoderEnabled" 
+													{if encoder.enabled == true}checked{/if}
+												/></form>
 											</td>
+										</tr>
+										<tr>
+											<td><small>${strings.encoder_settings_hint}</small></td>
+										</tr>
+										<tr>
+											<td>${strings.rtsp_port}</td>
+											<td>
+												<form><input type="text" id="rtspPort" value="${encoder.rtsp_port}"/></form>
+											</td>
+										</tr>
+										<tr>
+											<td>${strings.rtsp_path}</td>
+											<td>
+												<form><input type="text" id="rtspPath" value="${encoder.rtsp_path}"/></form>
+											</td>
+										</tr>
+										<tr>
+											<td>${strings.video_bitrate}</td>
+											<td>
+												<form><input type="text" id="videoBitrate" value="${encoder.video_bitrate}"/></form>
+											</td>
+										</tr>
+										<tr>
+											<td>${strings.audio_bitrate}</td>
+											<td>
+												<form><input type="text" id="audioBitrate" value="${encoder.audio_bitrate}"/></form>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">&nbsp;</td>
 										</tr>
 										<tr>
 											<td>${strings.update_interval_current_service}</td>
@@ -38,7 +72,19 @@
 												<form><input type="text" id="updateBouquetInterval" value="${updateBouquetInterval}" />${strings.seconds_short}</form>
 											</td>
 										</tr>
-										<tr><td colspan="2"><button class="saveSettings">${strings.save}</button></td></tr>										
+										<tr>
+											<td colspan="2">&nbsp;</td>
+										</tr>
+										<tr>
+											<td>${strings.enable_debug}</td>
+											<td>
+												<form><input type="checkbox" id="enableDebug" ${debug}/></form>
+											</td>
+										<tr>
+											<td colspan="2">&nbsp;</td>
+										</tr>
+										</tr>
+										<tr><td colspan="2"><button class="saveSettings">${strings.save}</button></td></tr>
 									</table>
 								</td>
 							</tr>

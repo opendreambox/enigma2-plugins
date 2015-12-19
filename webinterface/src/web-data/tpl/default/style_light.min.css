@@ -3,6 +3,8 @@ table{font-family:inherit;font-size:inherit;font-weight:inherit;color:inherit;bo
 input[type="text"],input[type="password"],select{font-family:Tahoma,Sans-Serif;font-size:14px;font-weight:bold;border:1px solid #DDD;background-color:#FFF;color:#444;border: 1px solid #DDD;}
 a,a:visited,a:active{color:#444;text-decoration:none}
 img{border:0}
+a.fa,a.fa:visited,a.fa:active{color:#ddd;}
+.fa a,.fa A:visited,.fa a:active{color:#ddd;}
 form{margin:2px}
 #notification{color:#444;width:50%;height:32px;position:absolute;top:0;left:25%;text-align:center;vertical-align:bottom;z-index:2}
 .wap a,.wap a:visited,.wap a:active{color:#333}

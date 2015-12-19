@@ -119,7 +119,7 @@ msgstr ""
 msgid "Configuration of the title:episode separator"
 msgstr "Konfiguration des Titel:Episode Trenners"
 
-msgid "hide the read real directories"
+msgid "hide the red real directories"
 msgstr "Verberge die roten realen Verzeichnisse"
 
 msgid "show real directories in red"

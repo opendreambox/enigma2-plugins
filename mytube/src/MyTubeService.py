@@ -141,6 +141,10 @@ class MyTubePlayerService():
 		self._ytauth.onCredentialsReady.append(self._onCredentialsReady)
 		self._ytauth.startAuthFlow()
 
+	def cancelAuthFlow(self):
+		if self._ytauth:
+			self._ytauth.cancelAuthFlow()
+
 	def _onCredentialsReady(self, credentials):
 		saveCredentials(self.YT_CREDENTIALS_FILE, credentials)
 		self._ytauth = None
@@ -151,6 +155,7 @@ class MyTubePlayerService():
 
 	def stopService(self):
 		self.onReady = []
+		self.cancelAuthFlow()
 		print "[MyTube] MyTubePlayerService - stopService"
 
 	def supportsSSL(self):

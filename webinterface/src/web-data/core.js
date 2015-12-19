@@ -97,15 +97,12 @@ var Current = Class.create(Controller, {
 		var ext = $('trExtCurrent');
 		if(ext){
 			var bullet = element.down('.currentBulletToggle');
-			if(ext.visible()){
-				bullet.src = '/web-data/img/toggle_expand.png';
-				bullet.alt = "+";
+			var visible = ext.visible();
+			core.toggleBullet(bullet, !visible);
+			if(visible)
 				ext.hide();
-			}else{
-				bullet.src = '/web-data/img/toggle_collapse.png';
-				bullet.alt = "-";
+			else
 				ext.show();
-			}
 			this.display = ext.style.display;
 			setMaxHeight('contentMain');
 		}
@@ -117,13 +114,7 @@ var Current = Class.create(Controller, {
 		if(ext){
 			ext.style.display = this.display;
 			var bullet = $('currentName').down('.currentBulletToggle');
-			if(ext.visible()){
-				bullet.src = '/web-data/img/toggle_collapse.png';
-				bullet.alt = "-";
-			}else{
-				bullet.src = '/web-data/img/toggle_expand.png';
-				bullet.alt = "+";
-			}
+			core.toggleBullet(bullet, ext.visible());
 		}
 		core.currentData = this.handler.data;
 	}
@@ -919,13 +910,22 @@ var SimplePages = Class.create({
 			debugChecked = 'checked';
 		}
 
+		var encoder = {
+			'enabled' : userprefs.data.encoder_enabled,
+			'rtsp_port' : parseNr(userprefs.data.encoder_rtsp_port),
+			'rtsp_path' : userprefs.data.encoder_rtsp_path,
+			'video_bitrate' : parseNr(userprefs.data.encoder_video_bitrate),
+			'audio_bitrate' : parseNr(userprefs.data.encoder_audio_bitrate)
+		};
+
 		var updateCurrentInterval = userprefs.data.updateCurrentInterval / 1000;
 		var updateBouquetInterval = userprefs.data.updateBouquetInterval / 1000;
 		var style = userprefs.data.style;
 		data = {'debug' : debugChecked,
 				'updateCurrentInterval' : updateCurrentInterval,
 				'updateBouquetInterval' : updateBouquetInterval,
-				'style' : style
+				'style' : style,
+				'encoder' : encoder
 			};
 		this.show(this.PAGE_SETTINGS, data);
 	},
@@ -1156,23 +1156,24 @@ var BaseCore = Class.create({
 	},
 	
 	styleChanged: function(){
-	switch(userprefs.data.style){
-		case 'light':
-			$('style_dark').disabled = true;
-			$('style_light').disabled = false;
-			$('style_modern').disabled = true;
-			break;
-		case 'dark':
-			$('style_dark').disabled = false;
-			$('style_light').disabled = true;
-			$('style_modern').disabled = true;
-			break;
-		default:
-			$('style_dark').disabled = true;
-			$('style_light').disabled = true;
-			$('style_modern').disabled = false;
-			break;
-		}
+		$('style_modern').disabled = false;
+//	switch(userprefs.data.style){
+//		case 'light':
+//			$('style_dark').disabled = true;
+//			$('style_light').disabled = false;
+//			$('style_modern').disabled = true;
+//			break;
+//		case 'dark':
+//			$('style_dark').disabled = false;
+//			$('style_light').disabled = true;
+//			$('style_modern').disabled = true;
+//			break;
+//		default:
+//			$('style_dark').disabled = true;
+//			$('style_light').disabled = true;
+//			$('style_modern').disabled = false;
+//			break;
+//		}
 	}
 });
 
@@ -1267,10 +1268,13 @@ var E2WebCore = Class.create(BaseCore, {
 	},
 
 	onPowerStateAvailable: function(isStandby){
+		var signal = $('openSignalPanelImg');
 		if(isStandby){
-			$('openSignalPanelImg').src="/web-data/img/transmit_grey.png";
+			if(signal.hasClassName("item_enabled"))
+				signal.removeClassName("item_enabled")
 		} else {
-			$('openSignalPanelImg').src="/web-data/img/transmit_blue.png";
+			if(!signal.hasClassName("item_enabled"))
+				signal.addClassName("item_enabled")
 		}
 	},
 
@@ -1401,13 +1405,29 @@ var E2WebCore = Class.create(BaseCore, {
 		
 		if( parseNr(userprefs.data.updateCurrentInterval) < 10000){
 			userprefs.data.updateCurrentInterval = 120000;
-			userprefs.save();
+
 		}
 
 		if( parseNr(userprefs.data.updateBouquetInterval) < 60000 ){
 			userprefs.data.updateBouquetInterval = 300000;
 			userprefs.save();
 		}
+		//Encoder settings
+		if(userprefs.data.encoder_enabled == undefined)
+			userprefs.data.encoder_enabled = false;
+		var rtsp_port = parseNr(userprefs.data.encoder_rtsp_port);
+		if( rtsp_port <= 0 || rtsp_port >= 65535)
+			userprefs.data.encoder_rtsp_port = 554;
+		if( userprefs.data.encoder_rtsp_path == undefined)
+			userprefs.data.encoder_rtsp_path = "/stream";
+		var video_bitrate = parseNr(userprefs.data.encoder_video_bitrate);
+		if( video_bitrate <= 0 || video_bitrate > 10000)
+			userprefs.data.encoder_video_bitrate = 1000;
+		var audio_bitrate = parseNr(userprefs.data.encoder_audio_bitrate);
+		if( audio_bitrate <= 0 || audio_bitrate > 320)
+			userprefs.data.encoder_audio_bitrate = 92;
+
+		userprefs.save();
 
 		if (typeof document.body.style.maxHeight == undefined) {
 			alert("Due to the tremendous amount of work needed to get everthing to " +
@@ -1429,6 +1449,24 @@ var E2WebCore = Class.create(BaseCore, {
 		}
 		this.updateItems();
 		this.startUpdateCurrentPoller();
+	},
+
+	toggleBullet: function(bullet, isOpen) {
+		var open_class = getBulletToggleClass(true);
+		var closed_class = getBulletToggleClass(false);
+		if(isOpen) {
+			if(bullet.hasClassName(closed_class))
+				bullet.removeClassName(closed_class);
+			if(!bullet.hasClassName(open_class))
+				bullet.addClassName(open_class);
+			bullet.alt = "-";
+		} else {
+			if(bullet.hasClassName(open_class))
+				bullet.removeClassName(open_class);
+			if(!bullet.hasClassName(closed_class))
+				bullet.addClassName(closed_class);
+			bullet.alt = "+";
+		}
 	},
 
 	registerEvents: function(){
@@ -1694,18 +1732,14 @@ var E2WebCore = Class.create(BaseCore, {
 			'a.sListExtEpg',
 			function(event, element){
 				var target = element.up('.sListEPGItem').down('.sListExtEpgLong');
-
 				if(target){
 					var bullet = element.down('.sListBulletToggle');
-					if(target.visible()){
+					var visible = target.visible();
+					this.toggleBullet(bullet, !visible);
+					if(visible)
 						target.hide();
-						bullet.src = "/web-data/img/toggle_expand_small.png";
-						bullet.alt = "+";
-					} else {
+					else
 						target.show();
-						bullet.src = "/web-data/img/toggle_collapse_small.png";
-						bullet.alt = "-";
-					}
 				}
 				event.stop();
 			}.bind(this)
@@ -1994,6 +2028,7 @@ var E2WebCore = Class.create(BaseCore, {
 		userprefs.load();
 		var changed = false;
 
+		/*
 		var l = $('interfaceStyle');
 		var style = l.options[l.selectedIndex].value;
 		if(style != userprefs.data.style){
@@ -2001,7 +2036,8 @@ var E2WebCore = Class.create(BaseCore, {
 			changed = true;
 			this.styleChanged();
 		}
-		
+		*/
+
 		var debug = $('enableDebug').checked;
 		if(debug != undefined){
 			if( userprefs.data.debug != debug ){
@@ -2028,9 +2064,34 @@ var E2WebCore = Class.create(BaseCore, {
 
 		if( userprefs.data.updateBouquetInterval != updateBouquetInterval){
 			userprefs.data.updateBouquetInterval = updateBouquetInterval;
-
 			changed = true;
 			this.startUpdateBouquetItemsPoller();
+		}
+
+		var encoder_enabled = $('encoderEnabled').checked;
+		var rtsp_port = parseNr($F('rtspPort'));
+		var rtsp_path = $F('rtspPath');
+		var video_bitrate = parseNr($F('videoBitrate'));
+		var audio_bitrate = parseNr($F('audioBitrate'));
+		var encoder = {
+				'enabled' : userprefs.data.encoder_enabled,
+				'rtsp_port' : parseNr(userprefs.data.encoder_rtsp_port),
+				'rtsp_path' : userprefs.data.encoder_rtsp_path,
+				'video_bitrate' : parseNr(userprefs.data.encoder_video_bitrate),
+				'audio_bitrate' : parseNr(userprefs.data.encoder_audio_bitrate)
+			};
+
+		if(encoder_enabled != encoder.enabled
+		|| rtsp_port != encoder.rtsp_port
+		|| rtsp_path != encoder.rtsp_path
+		|| video_bitrate != encoder.video_bitrate
+		|| audio_bitrate != encoder.audio_bitrate){
+			changed = true;
+			userprefs.data.encoder_enabled = encoder_enabled;
+			userprefs.data.encoder_rtsp_port = rtsp_port;
+			userprefs.data.encoder_rtsp_path = rtsp_path;
+			userprefs.data.encoder_video_bitrate = video_bitrate;
+			userprefs.data.encoder_audio_bitrate = audio_bitrate;
 		}
 
 		if(changed){

@@ -1,12 +1,9 @@
 @import url("/web-data/fonts/fonts.css");
 
 #ajaxLoad {
-	background-image: url(/web-data/gfx/ajaxload.gif);
-	height: 31px;
 	position: absolute;
 	right: 78px;
 	top: 2px;
-	width: 31px;
 	z-index: 10;
 }
 
@@ -260,7 +257,6 @@
 #navVolume {
 	background-color: #FFF;
 	border: 1px solid #DDD;
-	height: 75px;
 	margin-top: 8px;
 	position: relative;
 	width: 100%;
@@ -396,8 +392,8 @@
 
 .bouquetIcons {
 	float: left;
-	padding-top: 10px;
-	width: 40px;
+	padding-top: 5px;
+	margin: 2px;
 }
 
 .bouquetIcons a {
@@ -512,6 +508,10 @@
 	padding-left: 4px;
 	padding-right: 4px;
 	padding-top: 2px;
+}
+
+.item_enabled {
+	color: #66AFE9 !important;
 }
 
 .leftCol {
@@ -665,12 +665,11 @@ a.sListSLink {
 .sListSActions {
 	position: absolute;
 	right: 0px;
-	bottom: 5px;
+	top: 5px;
 }
 
 .sListSProgress {
 	border: 1px solid #DDD;
-	display: inline-block;
 	height: 15px;
 	width: 50px;
 	padding: 1px;
@@ -829,6 +828,10 @@ a.sListSLink {
 	width: 200px;
 }
 
+.volume .fa {
+	padding: 0;
+}
+
 .wap a, .wap a:visited, .wap a:active, .black, #current a, .sListMarker {
 	color: #333;
 }
@@ -841,6 +844,24 @@ a, a:visited, a:active {
 	color: #444;
 	text-decoration: none;
 	outline: 0;
+}
+
+.fa {
+	color: #666;
+	padding: 1px;
+	vertical-align: middle;
+	text-align: center;
+	margin: 0px;
+}
+
+.fa-border:hover {
+	border: 0.08em solid #66AFE9;
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
+	transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+}
+
+.fa-border {
+	border: 0.08em solid #CECECE;
 }
 
 a.date-picker-control {
@@ -1228,7 +1249,7 @@ html, body {
 	background: #e8e8e8;
 	color: #333;
 	font-family: 'Roboto', sans-serif;
-	font-weight: bold;
+	font-weight: normal;
 	font-size: 14px;
 }
 
@@ -1299,4 +1320,8 @@ td.timerList {
 	width: 100%;
 	margin: 0;
 	padding: 0;
+}
+
+small {
+	font-weight: normal;
 }

@@ -36,6 +36,10 @@ class Message(Source):
 			typeint = int(self.cmd['type'])
 		except (ValueError, TypeError), e:
 			return ( False, _("type %s is not a number") % self.cmd['type'] )
+			
+		sel = True
+		if self.cmd['default'] is not None and self.cmd['default'] == "no":
+				sel = False			
 
 		if typeint == MessageBox.TYPE_YESNO:
 			#dont know how to give the result to the webif back
@@ -55,7 +59,7 @@ class Message(Source):
 			mtimeout = -1
 
 		if typeint == MessageBox.TYPE_YESNO:
-			self.session.openWithCallback(self.yesNoAnswer, MessageBox, mtext, type=mtype, timeout=mtimeout)
+			self.session.openWithCallback(self.yesNoAnswer, MessageBox, mtext, type=mtype, timeout=mtimeout, default=sel)
 		else:
 			self.session.open(MessageBox, mtext, type=mtype , timeout=mtimeout)
 

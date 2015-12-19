@@ -4,11 +4,13 @@
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type">
 
 	<title>Dreambox WebControl</title>
-
+	<link rel="stylesheet" type="text/css" href="/web-data/css/font-awesome.min.css">
 	<!-- <link href="/web-data/tpl/default/style.css" type="text/css" rel="stylesheet"> -->
 	<link rel="stylesheet" type="text/css" id="style_modern" title="modern" href="/web-data/tpl/default/style_modern.min.css">
+<!--
 	<link rel="alternate stylesheet" type="text/css" id="style_dark" title="dark" href="/web-data/tpl/default/style.min.css" disabled>
 	<link rel="alternate stylesheet" type="text/css" id="style_light" title="light" href="/web-data/tpl/default/style_light.min.css" disabled>
+ -->
 
 	<link rel="shortcut icon" type="image/x-icon" href="/web-data/img/favicon.ico">
 	<!--
@@ -77,7 +79,21 @@
 		}
 
 		function getAjaxLoad(){
-			return ('<center><img style="padding-top: 50px;" src="/web-data/gfx/ajaxload.gif" alt="loading..."></center>');
+			return ('<center><div style="padding-top: 50px"><i class="fa fa-circle-o-notch fa-spin fa-3x" alt="loading..."></i></div></center>');
+		}
+
+		function getBulletToggleClass(isOpen){
+			if(isOpen)
+				return "fa-minus-square-o";
+			else
+				return "fa-plus-square-o";
+		}
+
+		function getEnabledDisabledClass(isEnabled){
+			if(isEnabled)
+				return "fa-check-circle";
+			else
+				return "fa-minus-circle";
 		}
 	</script>
 
@@ -98,7 +114,7 @@
 		<div id="banner" class="rounded">
 			<span id="notification"><div></div></span>
 			<div id="bannerLeft">
-				<div id="ajaxLoad" style="display:none;"></div>
+				<div id="ajaxLoad" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-2x" alt="loading..."></i></div>
 				<div id="bannerText" style="font-size: 24px;">
 					<div class="bannerHeader"></div>
 				</div>
@@ -129,13 +145,13 @@
 				<table style="width: 100%">
 					<tr>
 						<td><a id="openSignalPanel" href="#" >
-							<img id="openSignalPanelImg" border="0" src="/web-data/img/transmit_blue.png" alt="Signal" title="Show Signal Panel">
+							<i id="openSignalPanelImg" class="fa fa-border fa-fw fa-signal" alt="Signal" title="Show Signal Panel"></i>
 						</a></td>
 					</tr>
 					<tr>
 						<td class="group">
 							<a id="instantRecord" class="dropdown-toggle" href="#">
-								<img id="instantRecordImg" border="0" src="/web-data/img/clock_red.png" alt="R" title="Instant Record">
+								<i id="instantRecordImg" class="fa fa-border fa-fw fa-clock-o" alt="R" title="Instant Record"></i>
 							</a>
 							<ul id="instantRecordMenu" class="dropdown-menu right-aligned" style="display: none;">
 								<li id="instantRecordHd">Instant record</li>
@@ -171,7 +187,7 @@
 					<div class="boxContent">
 						<form id="epgSearchForm" action="">
 							<input type="text" id="epgSearch" />
-							<img id="epgSearchClear" style="vertical-align:middle" src="/web-data/img/cross.png" alt="clear..." title="Clear Search"/>
+							<i id="epgSearchClear" class="fa fa-lg fa-times" alt="clear..." title="Clear Search"></i>
 						</form>
 					</div>
 				</div>

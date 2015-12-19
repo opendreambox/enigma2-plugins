@@ -2,10 +2,11 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1249 $
-$Date: 2015-11-17 19:36:24 +0100 (Tue, 17 Nov 2015) $
-$Id: plugin.py 1249 2015-11-17 18:36:24Z michael $
+$Revision: 1252 $
+$Date: 2015-12-10 11:11:04 +0100 (Thu, 10 Dec 2015) $
+$Id: plugin.py 1252 2015-12-10 10:11:04Z michael $
 '''
+
 
 # C0111 (Missing docstring)
 # C0103 (Invalid name)
@@ -36,7 +37,7 @@ from Components.Label import Label
 from Components.Button import Button
 from Components.Pixmap import Pixmap
 from Components.Sources.List import List
-from Components.config import config, ConfigSubsection, ConfigSelection, ConfigDirectory, ConfigOnOff, getConfigListEntry, ConfigText, ConfigInteger
+from Components.config import config, ConfigSubsection, ConfigSelection, ConfigDirectory, ConfigEnableDisable, getConfigListEntry, ConfigText, ConfigInteger
 from Components.ConfigList import ConfigListScreen
 try:
 	from Components.config import ConfigPassword
@@ -101,43 +102,43 @@ initDebug()
 config.plugins.FritzCall = ConfigSubsection()
 config.plugins.FritzCall.fwVersion = ConfigSelection(choices=[(None, _("not configured")), ("old", _("before 05.27")), ("05.27", "05.27, 05.28"), ("05.50", _("05.29 until below 6.35")), ("06.35", _("06.35 and newer"))], default=None)
 #config.plugins.FritzCall.fwVersion = ConfigSelection(choices=[(None, _("not configured")), ("old", _("before 05.27")), ("05.27", "05.27, 05.28"), ("05.50", _("05.29 and newer"))], default=None)
-config.plugins.FritzCall.debug = ConfigOnOff(default=False)
+config.plugins.FritzCall.debug = ConfigEnableDisable(default=False)
 #config.plugins.FritzCall.muteOnCall = ConfigSelection(choices=[(None, _("no")), ("ring", _("on ring")), ("connect", _("on connect"))])
 #config.plugins.FritzCall.muteOnCall = ConfigSelection(choices=[(None, _("no")), ("ring", _("on ring"))])
-config.plugins.FritzCall.muteOnCall = ConfigOnOff(default=False)
+config.plugins.FritzCall.muteOnCall = ConfigEnableDisable(default=False)
 config.plugins.FritzCall.hostname = ConfigText(default="fritz.box", fixed_size=False)
 config.plugins.FritzCall.afterStandby = ConfigSelection(choices=[("none", _("show nothing")), ("inList", _("show as list")), ("each", _("show each call"))])
-config.plugins.FritzCall.filter = ConfigOnOff(default=False)
+config.plugins.FritzCall.filter = ConfigEnableDisable(default=False)
 config.plugins.FritzCall.filtermsn = ConfigText(default="", fixed_size=False)
 config.plugins.FritzCall.filtermsn.setUseableChars('0123456789,')
-config.plugins.FritzCall.filterCallList = ConfigOnOff(default=True)
-config.plugins.FritzCall.showBlacklistedCalls = ConfigOnOff(default=False)
-config.plugins.FritzCall.showOutgoingCalls = ConfigOnOff(default=False)
+config.plugins.FritzCall.filterCallList = ConfigEnableDisable(default=True)
+config.plugins.FritzCall.showBlacklistedCalls = ConfigEnableDisable(default=False)
+config.plugins.FritzCall.showOutgoingCalls = ConfigEnableDisable(default=False)
 config.plugins.FritzCall.timeout = ConfigInteger(default=15, limits=(0, 60))
-config.plugins.FritzCall.lookup = ConfigOnOff(default=False)
-config.plugins.FritzCall.internal = ConfigOnOff(default=False)
-config.plugins.FritzCall.fritzphonebook = ConfigOnOff(default=False)
+config.plugins.FritzCall.lookup = ConfigEnableDisable(default=False)
+config.plugins.FritzCall.internal = ConfigEnableDisable(default=False)
+config.plugins.FritzCall.fritzphonebook = ConfigEnableDisable(default=False)
 config.plugins.FritzCall.fritzphonebookName = ConfigText(default='Dreambox', fixed_size=False)
-config.plugins.FritzCall.phonebook = ConfigOnOff(default=False)
-config.plugins.FritzCall.addcallers = ConfigOnOff(default=False)
-config.plugins.FritzCall.enable = ConfigOnOff(default=False)
+config.plugins.FritzCall.phonebook = ConfigEnableDisable(default=False)
+config.plugins.FritzCall.addcallers = ConfigEnableDisable(default=False)
+config.plugins.FritzCall.enable = ConfigEnableDisable(default=False)
 config.plugins.FritzCall.username = ConfigText(default='BoxAdmin', fixed_size=False)
 config.plugins.FritzCall.password = ConfigPassword(default="", fixed_size=False)
 config.plugins.FritzCall.extension = ConfigText(default='1', fixed_size=False)
 config.plugins.FritzCall.extension.setUseableChars('0123456789')
-config.plugins.FritzCall.showType = ConfigOnOff(default=True)
-config.plugins.FritzCall.showShortcut = ConfigOnOff(default=False)
-config.plugins.FritzCall.showVanity = ConfigOnOff(default=False)
+config.plugins.FritzCall.showType = ConfigEnableDisable(default=True)
+config.plugins.FritzCall.showShortcut = ConfigEnableDisable(default=False)
+config.plugins.FritzCall.showVanity = ConfigEnableDisable(default=False)
 config.plugins.FritzCall.prefix = ConfigText(default="", fixed_size=False)
 config.plugins.FritzCall.prefix.setUseableChars('0123456789')
-config.plugins.FritzCall.connectionVerbose = ConfigOnOff(default=True)
-config.plugins.FritzCall.ignoreUnknown = ConfigOnOff(default=False)
+config.plugins.FritzCall.connectionVerbose = ConfigEnableDisable(default=True)
+config.plugins.FritzCall.ignoreUnknown = ConfigEnableDisable(default=False)
 config.plugins.FritzCall.reloadPhonebookTime = ConfigInteger(default=8, limits=(0, 99))
-config.plugins.FritzCall.FritzExtendedSearchFaces = ConfigOnOff(default=False)
-config.plugins.FritzCall.FritzExtendedSearchNames = ConfigOnOff(default=False)
+config.plugins.FritzCall.FritzExtendedSearchFaces = ConfigEnableDisable(default=False)
+config.plugins.FritzCall.FritzExtendedSearchNames = ConfigEnableDisable(default=False)
 config.plugins.FritzCall.phonebookLocation = ConfigDirectory(default = resolveFilename(SCOPE_CONFIG))
 config.plugins.FritzCall.guestSSID = ConfigText(default="FRITZ!Box Gastzugang", fixed_size=False)
-config.plugins.FritzCall.guestSecure = ConfigOnOff(default=True)
+config.plugins.FritzCall.guestSecure = ConfigEnableDisable(default=True)
 config.plugins.FritzCall.guestPassword = ConfigText(default="guestguest!!!", fixed_size=False)
 
 guestWLANUptime = [(None, _('Not deactivating after time')), "15", "30", "45", "60", "90", "120", "180", "240", "300", "360", "480", "600", "720", "900", "1080", "1260"]
@@ -292,8 +293,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1249 $"[1:-2] + "\n" + 
-							"$Date: 2015-11-17 19:36:24 +0100 (Tue, 17 Nov 2015) $"[1:23] + "\n"
+							"$Revision: 1252 $"[1:-2] + "\n" + 
+							"$Date: 2015-12-10 11:11:04 +0100 (Thu, 10 Dec 2015) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -1926,7 +1927,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1249 $"[1: - 1] + "$Date: 2015-11-17 19:36:24 +0100 (Tue, 17 Nov 2015) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1252 $"[1: - 1] + "$Date: 2015-12-10 11:11:04 +0100 (Thu, 10 Dec 2015) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -2455,7 +2456,7 @@ class FritzReverseLookupAndNotifier:
 
 class FritzProtocol(LineReceiver): # pylint: disable=W0223
 	def __init__(self):
-		info("[FritzProtocol] " + "$Revision: 1249 $"[1:-1]	+ "$Date: 2015-11-17 19:36:24 +0100 (Tue, 17 Nov 2015) $"[7:23] + " starting")
+		info("[FritzProtocol] " + "$Revision: 1252 $"[1:-1]	+ "$Date: 2015-12-10 11:11:04 +0100 (Thu, 10 Dec 2015) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
