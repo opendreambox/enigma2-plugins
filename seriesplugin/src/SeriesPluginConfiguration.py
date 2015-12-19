@@ -43,7 +43,7 @@ from SeriesPlugin import resetInstance, getInstance
 from SeriesPluginIndependent import startIndependent, stopIndependent
 from FilePatterns import readFilePatterns
 from DirectoryPatterns import readDirectoryPatterns
-from Logger import logDebug
+from Logger import logDebug, logInfo
 from ShowLogScreen import ShowLogScreen
 from Channels import getTVBouquets
 from ChannelEditor import ChannelEditor
@@ -266,13 +266,6 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 		
 		self.seriesPlugin.saveXML()
 		
-		from plugin import overwriteAutoTimer, recoverAutoTimer
-		
-		if config.plugins.seriesplugin.enabled.value:
-			overwriteAutoTimer()
-		else:
-			recoverAutoTimer()
-		
 		# Set new configuration
 		from plugin import WHERE_EPGMENU, WHERE_CHANNELMENU, addSeriesPlugin, removeSeriesPlugin, SHOWINFO, RENAMESERIES, CHECKTIMERS, info, sp_extension, channel, movielist_info, movielist_rename, checkTimers
 		
@@ -360,7 +353,7 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 		self.session.open(ShowLogScreen, config.plugins.seriesplugin.log_file.value)
 
 	def openChannelEditor(self):
-		self.session.openWithCallback(self.channelEditorClosed, ChannelEditor, )
+		self.session.openWithCallback(self.channelEditorClosed, ChannelEditor)
 
 	def channelEditorClosed(self, result=None):
 		logDebug("SPC channelEditorClosed", result)
