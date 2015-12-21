@@ -112,7 +112,8 @@ class AutoTimerOverview(Screen, HelpableScreen):
 			autotimerHelp.open(self.session)
 
 	def setCustomTitle(self):
-		self.setTitle(_("AutoTimer overview"))
+		from plugin import AUTOTIMER_VERSION
+		self.setTitle(_("AutoTimer overview") + " - Version: " + AUTOTIMER_VERSION)
 
 	def createSummary(self):
 		return AutoTimerOverviewSummary

@@ -135,13 +135,13 @@ function toReadableTime(date){
 }
 
 function toTimestamp(date){
-		date = date.split('-');
-		var sDate = new Date();
-		sDate.setFullYear(date[0], date[1] - 1, date[2]);
-		sDate.setHours( 0 );
-		sDate.setMinutes( 0 );
-		sDate.setSeconds( 0 );
-		return Math.floor(sDate.getTime() / 1000);
+	date = date.split('-');
+	var sDate = new Date();
+	sDate.setFullYear(date[0], date[1] - 1, date[2]);
+	sDate.setHours( 0 );
+	sDate.setMinutes( 0 );
+	sDate.setSeconds( 0 );
+	return Math.floor(sDate.getTime() / 1000);
 }
 
 function createOptionList(object, selected) {
@@ -261,6 +261,8 @@ var AutoTimerEditorCore = Class.create({
 	loadSettingsCallback: function(settings){
 		this.hasVps = settings['hasVps'];
 		this.hasSeriesPlugin = settings['hasSeriesPlugin'];
+		this.autotimer_version = settings['autotimer_version'];
+		$('autotimer_version').innerHTML = this.autotimer_version;
 		this.loadFinal();
 	},
 	
@@ -1412,7 +1414,7 @@ var AutoTimerMenuHandler = Class.create(AbstractATContentHandler,{
 	},
 	
 	load: function(){
-		this.show({});
+		this.show({ 'autotimer_version' : this.autotimer_version });
 	},
 	
 	backup: function(parms, callback){

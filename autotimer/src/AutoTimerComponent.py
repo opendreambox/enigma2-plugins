@@ -13,7 +13,6 @@ from Components.config import config
 # Default encoding
 from Components.Language import language
 
-from Logger import doLog
 
 class AutoTimerComponent(object):
 	"""AutoTimer Component which also handles validity checks"""
