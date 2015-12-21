@@ -139,7 +139,7 @@ class ChannelEditor(Screen, HelpableScreen, ChannelsBase):
 			self.bouquet = bouquet
 			self.stbChlist = []
 		
-		self.setTitle(_("Load channels for bouquet") + " " + bouquet)
+		self.setTitle(_("Load channels for bouquet") + " " + self.bouquet)
 		
 		if not self.stbChlist:
 			self.stbChlist = buildSTBchannellist(self.bouquet)
@@ -220,7 +220,7 @@ class ChannelEditor(Screen, HelpableScreen, ChannelsBase):
 			self.setTitle(_("Error check log file"))
 		
 	def buildList(self, entry):
-		self.setTitle(_("STB- / Web-Channel / Bouquet:") + " " + self.bouquet )
+		self.setTitle(_("STB- / Web-Channel for bouquet:") + " " + self.bouquet )
 		
 		(stbSender, webSender, serviceref, status) = entry
 		if int(status) == 0:		
@@ -358,24 +358,21 @@ class ChannelEditor(Screen, HelpableScreen, ChannelsBase):
 		self['list'].up()
 	
 	def nextBouquet(self):
-		next = False
 		tvbouquets = getTVBouquets()
-		bouquet = tvbouquets[0][1]
-		for tvbouquet in tvbouquets:
-			if next = True:
-				bouquet = tvbouquet[1]
-				break
+		next = tvbouquets[0][1]
+		for tvbouquet in reversed(tvbouquets):
 			if tvbouquet[1] == self.bouquet:
-				next = True
-		self.readChannels(bouquet)
+				break
+			next = tvbouquet[1]
+		self.readChannels(next)
 	
 	def prevBouquet(self):
-		prev = False
 		tvbouquets = getTVBouquets()
+		prev = tvbouquets[-1][1]
 		for tvbouquet in tvbouquets:
-			prev = tvbouquet[1]
 			if tvbouquet[1] == self.bouquet:
 				break
+			prev = tvbouquet[1]
 		self.readChannels(prev)
 	
 	def keySave(self):
