@@ -261,6 +261,8 @@ var AutoTimerEditorCore = Class.create({
 	loadSettingsCallback: function(settings){
 		this.hasVps = settings['hasVps'];
 		this.hasSeriesPlugin = settings['hasSeriesPlugin'];
+		this.autotimer_version = settings['autotimer_version'];
+		$('autotimer_version').innerHTML = this.autotimer_version;
 		this.loadFinal();
 	},
 	
@@ -1412,7 +1414,7 @@ var AutoTimerMenuHandler = Class.create(AbstractATContentHandler,{
 	},
 	
 	load: function(){
-		this.show({});
+		this.show({ 'autotimer_version' : this.autotimer_version });
 	},
 	
 	backup: function(parms, callback){
