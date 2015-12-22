@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SeriesPlugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-07 21:15+0100\n"
-"PO-Revision-Date: 2015-12-07 21:45+0100\n"
+"POT-Creation-Date: 2015-12-21 19:29+0100\n"
+"PO-Revision-Date: 2015-12-21 19:39+0100\n"
 "Last-Translator: James Blond <jb@unknown.com>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -51,14 +51,23 @@ msgstr "Eine Zeile nach oben"
 msgid "One row down"
 msgstr "Eine Zeile nach unten"
 
+msgid "Next bouquet"
+msgstr "Nächstes Bouquet"
+
+msgid "Previous bouquet"
+msgstr "Vorheriges Bouquet"
+
 msgid "Save and close"
 msgstr "Speichern und schließen"
 
 msgid "Remove channel"
 msgstr "Kanal entfernen"
 
-msgid "Load Web-Channels..."
-msgstr "Lade Web-Kanäle..."
+msgid "You have to match SD and HD channels separately!"
+msgstr "Bitte SD und HD Kanäle separat zuweisen!"
+
+msgid "Load channels for bouquet"
+msgstr "Lade Kanäle für Bouquet"
 
 msgid "Error check log file"
 msgstr "Fehler überprüfe Protokoll Datei"
@@ -66,8 +75,8 @@ msgstr "Fehler überprüfe Protokoll Datei"
 msgid "Channel matching..."
 msgstr "Kanalübereinstimmung..."
 
-msgid "STB-Channels / Web-Channel"
-msgstr "STB-Kanäle / Web-Kanal"
+msgid "STB- / Web-Channel for bouquet:"
+msgstr "STB- / Web-Kanal für Bouquet:"
 
 msgid "Add Web Channel"
 msgstr "Web Kanal zufügen"
@@ -118,7 +127,7 @@ msgid "%d timer renamed successfully"
 msgstr "%d Timer erfolgreich umbenannt"
 
 msgid "SP has been finished with errors:\n"
-msgstr "SP beendet mit Fehlern:\n"
+msgstr "SP mit Fehlern beendet:\n"
 
 msgid "Configuration"
 msgstr "Konfiguration"
@@ -223,7 +232,7 @@ msgid "Skip search if pattern matches"
 msgstr "Überspringe Suche wenn Vorlage übereinstimmt"
 
 msgid "Skip search during records"
-msgstr "Keine Suche während einer Aufnahme"
+msgstr "Suchen während einer Aufnahme deaktivieren"
 
 msgid "AutoTimer independent mode"
 msgstr "Serien Infos suchen ohne AutoTimer"
