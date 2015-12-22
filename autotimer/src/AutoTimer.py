@@ -301,7 +301,7 @@ class AutoTimer:
 			if timer.series_labeling and sp_getSeasonEpisode is not None:
 				#doLog("Request name, desc, path %s %s %s" % (name,shortdesc,dest))
 				sp = sp_getSeasonEpisode(serviceref, name, evtBegin, evtEnd, shortdesc, dest)
-				if sp and isinstance(sp, list) and len(sp) == 4:
+				if sp and type(sp) in (tuple, list) and len(sp) == 4:
 					name = sp[0]
 					shortdesc = sp[1]
 					dirname = sp[2]
@@ -314,7 +314,7 @@ class AutoTimer:
 					# If AutoTimer name not equal match, do a second lookup with the name
 					if timer.name.lower() != timer.match.lower():
 						sp = sp_getSeasonEpisode(serviceref, timer.name, evtBegin, evtEnd, shortdesc, dest)
-						if sp and isinstance(sp, list) and len(sp) == 4:
+						if sp and type(sp) in (tuple, list) and len(sp) == 4:
 							name = sp[0]
 							shortdesc = sp[1]
 							dirname = sp[2]
