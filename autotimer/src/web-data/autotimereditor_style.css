@@ -1,15 +1,23 @@
 /**************
  AutoTimer Editor
  **************/
-	.bannerHeader_autotimereditor {
+	#bannerHeader_autotimereditor {
 		background-image: url(/autotimereditor/dreambox_autotimereditor.png);
 		background-repeat: no-repeat;
 		#background-position: center;
 		height: 16px;
-		#width: 780px;
+		width: 80%;
 		margin: 7px;
 		padding: 0;
 		font-weight: bold;
+		display: inline-block;
+	}
+	#autotimer_version {
+		float: right;
+		height: 16px;
+		font-weight: bold;
+		margin: 7px;
+		padding: 0;
 	}
 	
 	#contentContainer{

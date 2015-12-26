@@ -261,6 +261,8 @@ var AutoTimerEditorCore = Class.create({
 	loadSettingsCallback: function(settings){
 		this.hasVps = settings['hasVps'];
 		this.hasSeriesPlugin = settings['hasSeriesPlugin'];
+		this.autotimer_version = settings['autotimer_version'];
+		$('autotimer_version').innerHTML = this.autotimer_version;
 		this.loadFinal();
 	},
 	
@@ -443,6 +445,13 @@ var AutoTimerMenuController  = Class.create(Controller, {
 			'click',
 			function(event, element){
 				autotimereditorcore.parse.load();
+			}.bind(this)
+		);
+		$('testall').title = "Show events matching your AutoTimers with additional comments";
+		$('testall').on(
+			'click',
+			function(event, element){
+				autotimereditorcore.test.loadAll();
 			}.bind(this)
 		);
 		$('parse').title = "Run AutoTimer and add timers";
@@ -1268,6 +1277,11 @@ var AutoTimerTestController = Class.create(Controller, {
 		$super(new AutoTimerTestHandler(target));
 	},
 	
+	loadAll: function(){
+		$('headerautotimercontent').innerHTML = "AutoTimer Test:";
+		this.handler.load( { } );
+	},
+	
 	load: function(id){
 		$('headerautotimercontent').innerHTML = "AutoTimer Test:";
 		this.handler.load( { 'id' : id } );
@@ -1400,7 +1414,7 @@ var AutoTimerMenuHandler = Class.create(AbstractATContentHandler,{
 	},
 	
 	load: function(){
-		this.show({});
+		this.show({ 'autotimer_version' : this.autotimer_version });
 	},
 	
 	backup: function(parms, callback){

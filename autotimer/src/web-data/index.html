@@ -55,11 +55,11 @@
 
 	<!-- autotimereditor stuff -->
 	<link type="text/css" rel="stylesheet" href="/autotimereditor/anytimec.css" />
-	<link type="text/css" rel="stylesheet" href="/autotimereditor/autotimereditor_style.css?version=20141106"  >
+	<link type="text/css" rel="stylesheet" href="/autotimereditor/autotimereditor_style.css?version=20151221">
 	<script type="text/javascript" src="jquery.js"></script>
 	<script type="text/javascript">$.noConflict();</script>
 	<script type="text/javascript" src="/autotimereditor/anytimec.js" ></script>
-	<script type="text/javascript" src="/autotimereditor/autotimereditor.js?version=20151206" ></script>
+	<script type="text/javascript" src="/autotimereditor/autotimereditor.js?version=20151221" ></script>
 	
 </head>
 <body onload="document.getElementById('notification').style.display='none'">
@@ -68,8 +68,9 @@
 			<span id="notification" style="display: none;"><div></div></span>
 			<div id="bannerLeft_autotimereditor">
 				<div id="ajaxLoad" style="display:none;"></div>
-				<div id="bannerText" style="font-size: 24px;">
-					<div class="bannerHeader_autotimereditor"></div>
+				<div id="bannerText">
+					<div id="bannerHeader_autotimereditor"></div>
+					<span id="autotimer_version"></span>
 				</div>
 				<ul id="mainMenu">
 					<div id="contentAutoTimerMenu"></div>

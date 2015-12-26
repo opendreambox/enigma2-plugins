@@ -110,7 +110,7 @@ def installCertificates(session):
 		print "[Webinterface].installCertificates :: Generating SSL key pair and CACert"
 		# create a key pair
 		k = crypto.PKey()
-		k.generate_key(crypto.TYPE_RSA, 1024)
+		k.generate_key(crypto.TYPE_RSA, 2048)
 
 		# create a self-signed cert
 		cert = crypto.X509()
@@ -126,7 +126,7 @@ def installCertificates(session):
 		cert.set_issuer(cert.get_subject())
 		cert.set_pubkey(k)
 		print "[Webinterface].installCertificates :: Signing SSL key pair with new CACert"
-		cert.sign(k, 'sha1')
+		cert.sign(k, 'sha256')
 
 		try:
 			print "[Webinterface].installCertificates ::  Installing newly generated certificate and key pair"
@@ -329,6 +329,7 @@ class ChainedOpenSSLContextFactory(ssl.DefaultOpenSSLContextFactory):
 
 	def cacheContext(self):
 		ctx = SSL.Context(self.sslmethod)
+		ctx.set_options(SSL.OP_NO_SSLv3|SSL.OP_NO_SSLv2)
 		ctx.use_certificate_chain_file(self.certificateChainFileName)
 		ctx.use_privatekey_file(self.privateKeyFileName)
 		self._context = ctx

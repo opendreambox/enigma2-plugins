@@ -13,7 +13,7 @@ from ServiceReference import ServiceReference
 from Tools.XMLTools import stringToXML
 from enigma import eServiceReference
 from . import _, config, iteritems, plugin
-from plugin import autotimer
+from plugin import autotimer, AUTOTIMER_VERSION
 
 API_VERSION = "1.5"
 
@@ -644,6 +644,10 @@ class AutoTimerSettingsResource(resource.Resource):
 		<e2settingname>api_version</e2settingname>
 		<e2settingvalue>%s</e2settingvalue>
 	</e2setting>
+	<e2setting>
+		<e2settingname>autotimer_version</e2settingname>
+		<e2settingvalue>%s</e2settingvalue>
+	</e2setting>
 </e2settings>""" % (
 				config.plugins.autotimer.autopoll.value,
 				config.plugins.autotimer.interval.value,
@@ -668,4 +672,5 @@ class AutoTimerSettingsResource(resource.Resource):
 				hasSeriesPlugin,
 				CURRENT_CONFIG_VERSION,
 				API_VERSION,
+				AUTOTIMER_VERSION
 			)
