@@ -418,25 +418,35 @@ class AutoTimer:
 					continue
 
 				if hasattr(newEntry, "isAutoTimer"):
-					newEntry.log(501, "[AutoTimer] AutoTimer %s modified this automatically generated timer." % (timer.name))
+					msg = "[AutoTimer] AutoTimer %s modified this automatically generated timer." % (timer.name)
+					doLog(msg)
+					newEntry.log(501, msg)
 				elif config.plugins.autotimer.add_autotimer_to_tags.value and TAG in newEntry.tags:
-					newEntry.log(501, "[AutoTimer] AutoTimer %s modified this automatically generated timer." % (timer.name))
+					msg = "[AutoTimer] AutoTimer %s modified this automatically generated timer." % (timer.name)
+					doLog(msg)
+					newEntry.log(501, msg)
 				else:
 					if config.plugins.autotimer.refresh.value != "all":
 						doLog("Won't modify existing timer because it's no timer set by us")
 						continue
 
-					newEntry.log(501, "[AutoTimer] Warning, AutoTimer %s messed with a timer which might not belong to it: %s ." % (timer.name, newEntry.name))
+					msg = "[AutoTimer] Warning, AutoTimer %s messed with a timer which might not belong to it: %s ." % (timer.name, newEntry.name)
+					doLog(msg)
+					newEntry.log(501, msg)
 
 				modified += 1
 
 				self.modifyTimer(newEntry, name, shortdesc, begin, end, serviceref, eit)
-				newEntry.log(501, "[AutoTimer] AutoTimer modified timer: %s ." % (newEntry.name))
+				msg = "[AutoTimer] AutoTimer modified timer: %s ." % (newEntry.name)
+				doLog(msg)
+				newEntry.log(501, msg)
 				
 			else:
 				newEntry = RecordTimerEntry(ServiceReference(serviceref), begin, end, name, shortdesc, eit)
-				newEntry.log(500, "[AutoTimer] Try to add new timer based on AutoTimer %s." % (timer.name))
-
+				msg = "[AutoTimer] Try to add new timer based on AutoTimer %s." % (timer.name)
+				doLog(msg)
+				newEntry.log(500, msg)
+				
 				# Mark this entry as AutoTimer (only AutoTimers will have this Attribute set)
 				# It is only temporarily, after a restart it will be lost,
 				# because it won't be stored in the timer xml file
@@ -470,14 +480,13 @@ class AutoTimer:
 				# XXX: this won't perform a sanity check, but do we actually want to do so?
 				recordHandler.timeChanged(newEntry)
 
-				#if renameTimer is not None and timer.series_labeling:
-				#	renameTimer(newEntry, name, evtBegin, evtEnd)
-
 			else:
 				conflictString = ""
 				if similarTimer:
 					conflictString = similardict[eit].conflictString
-					newEntry.log(504, "[AutoTimer] Try to add similar Timer because of conflicts with %s." % (conflictString))
+					msg = "[AutoTimer] Try to add similar Timer because of conflicts with %s." % (conflictString)
+					doLog(msg)
+					newEntry.log(504, msg)
 
 				# Try to add timer
 				conflicts = recordHandler.record(newEntry)
@@ -518,9 +527,6 @@ class AutoTimer:
 					newEntry.extdesc = extdesc
 					timerdict[serviceref].append(newEntry)
 
-					#if renameTimer is not None and timer.series_labeling:
-					#	renameTimer(newEntry, name, evtBegin, evtEnd)
-
 					# Similar timers are in new timers list and additionally in similar timers list
 					if similarTimer:
 						similars.append((name, begin, end, serviceref, timer.name))
@@ -531,7 +537,9 @@ class AutoTimer:
 					conflicting.append((name, begin, end, serviceref, timer.name))
 
 					if config.plugins.autotimer.disabled_on_conflict.value:
-						newEntry.log(503, "[AutoTimer] Timer disabled because of conflicts with %s." % (conflictString))
+						msg = "[AutoTimer] Timer disabled because of conflicts with %s." % (conflictString)
+						doLog(msg)
+						newEntry.log(503, msg)
 						newEntry.disabled = True
 						# We might want to do the sanity check locally so we don't run it twice - but I consider this workaround a hack anyway
 						conflicts = recordHandler.record(newEntry)
@@ -627,6 +635,7 @@ class AutoTimer:
 						if timer in recordHandler.timer_list:
 							if not timer.isRunning():
 								global NavigationInstance
+								doLog("Remove timer because of eit check " + timer.name)
 								NavigationInstance.instance.RecordTimer.removeEntry(timer)
 					except:
 						pass
