@@ -367,7 +367,7 @@ class AutoTimer:
 					doLog("We found a timer based on eit")
 					newEntry = rtimer
 					break
-				elif config.plugins.autotimer.try_guessing.value and getTimeDiff(rtimer, evtBegin, evtEnd) > ((duration/10)*8):
+				elif config.plugins.autotimer.try_guessing.value and getTimeDiff(rtimer, begin, end) > ((duration/10)*8):
 					oldExists = True
 					doLog("We found a timer based on time guessing")
 					newEntry = rtimer
