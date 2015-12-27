@@ -197,7 +197,7 @@ class AutoTimerTestBackgroundThread(AutoTimerBackgroundThread):
 				'</e2simulatedtimer>\n'
 			))
 
-		if self.id:
+		if skipped:
 			for (name, begin, end, serviceref, autotimername, message) in skipped:
 				ref = ServiceReference(str(serviceref))
 				extend((
