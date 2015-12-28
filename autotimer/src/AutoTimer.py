@@ -567,7 +567,9 @@ class AutoTimer:
 				if afterEvent is not None:
 					newEntry.afterEvent = afterEvent
 
-			newEntry.dirname = dirname or timer.destination
+			newEntry.dirname = dirname or timer.destination or config.usage.default_path.value
+			newEntry.calculateFilename()
+
 			newEntry.justplay = timer.justplay
 			newEntry.vpsplugin_enabled = timer.vps_enabled
 			newEntry.vpsplugin_overwrite = timer.vps_overwrite
@@ -750,7 +752,7 @@ class AutoTimer:
 
 	def modifyTimer(self, timer, name, shortdesc, begin, end, serviceref, eit=None):
 		# Don't update the name, it will overwrite the name of the SeriesPlugin
-		#timer.name = name
+		timer.name = name
 		if timer.description == "":
 			# Only update the description if it is empty, it will overwrite the description of the SeriesPlugin
 			timer.description = shortdesc
