@@ -53,11 +53,11 @@ XML_CONFIG = "/etc/enigma2/autotimer.xml"
 
 TAG = "AutoTimer"
 
-def getTimeDiff(timer, begin, end):
-	if begin <= timer.begin <= end:
-		return end - timer.begin
-	elif timer.begin <= begin <= timer.end:
-		return timer.end - begin
+def getTimeDiff(timerbegin, timerend, begin, end):
+	if begin <= timerbegin <= end:
+		return end - timerbegin
+	elif timerbegin <= begin <= timerend:
+		return timerend - begin
 	return 0
 
 def blockingCallFromMainThread(f, *a, **kw):
@@ -367,12 +367,26 @@ class AutoTimer:
 					doLog("We found a timer based on eit")
 					newEntry = rtimer
 					break
-				elif config.plugins.autotimer.try_guessing.value and getTimeDiff(rtimer, begin, end) > ((duration/10)*8):
-					oldExists = True
-					doLog("We found a timer based on time guessing")
-					newEntry = rtimer
-					break
-				elif timer.avoidDuplicateDescription >= 1 \
+				elif config.plugins.autotimer.try_guessing.value:
+					if timer.hasOffset():
+						# Remove custom Offset
+						rbegin = rtimer.begin + self.offset[0] 
+						rend = rtimer.end - self.offset[1]
+					else:
+						# Remove E2 Offset
+						rbegin = rtimer.begin + config.recording.margin_before.value * 60
+						rend = rtimer.end - config.recording.margin_after.value * 60
+					# As alternative we could also do a epg lookup
+					#revent = epgcache.lookupEventId(rtimer.service_ref.ref, rtimer.eit)
+					#rbegin = revent.getBeginTime() or 0
+					#rduration = revent.getDuration() or 0
+					#rend = rbegin + rduration or 0
+					if getTimeDiff(rbegin, rend, evtBegin, evtEnd) > ((duration/10)*8):
+						oldExists = True
+						doLog("We found a timer based on time guessing")
+						newEntry = rtimer
+						break
+				if timer.avoidDuplicateDescription >= 1 \
 					and not rtimer.disabled:
 						if self.checkDuplicates(timer, name, rtimer.name, shortdesc, rtimer.description, extdesc, rtimer.extdesc ):
 						# if searchForDuplicateDescription > 1 then check short description
