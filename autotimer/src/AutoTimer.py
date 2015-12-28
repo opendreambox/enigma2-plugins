@@ -474,7 +474,9 @@ class AutoTimer:
 				if afterEvent is not None:
 					newEntry.afterEvent = afterEvent
 
-			newEntry.dirname = dirname or timer.destination
+			newEntry.dirname = dirname or timer.destination or config.usage.default_path.value
+			newEntry.calculateFilename()
+
 			newEntry.justplay = timer.justplay
 			newEntry.vpsplugin_enabled = timer.vps_enabled
 			newEntry.vpsplugin_overwrite = timer.vps_overwrite
