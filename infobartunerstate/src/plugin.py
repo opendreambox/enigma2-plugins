@@ -37,7 +37,7 @@ from InfoBarTunerState import InfoBarTunerState, TunerStateInfo
 NAME = _("InfoBarTunerState")
 IBTSSHOW = _("Show InfoBarTunerState")
 IBTSSETUP = _("InfoBarTunerState Setup")
-VERSION = "1.2.7"
+VERSION = "3.0.0"
 SUPPORT = "http://bit.ly/ibtsihad"
 DONATE = "http://bit.ly/ibtspaypal"
 ABOUT = "\n  " + NAME + " " + VERSION + "\n\n" \
@@ -111,23 +111,21 @@ event_choices = [
 config.infobartunerstate                           = ConfigSubsection()
 
 config.infobartunerstate.about                     = ConfigNothing()
-config.infobartunerstate.enabled                   = ConfigOnOff(default = True)
+config.infobartunerstate.enabled                   = ConfigEnableDisable(default = True)
 config.infobartunerstate.extensions_menu_show      = ConfigYesNo(default = True)
 config.infobartunerstate.extensions_menu_setup     = ConfigYesNo(default = False)
 #config.infobartunerstate.popup_time               = ConfigSelectionNumber(0, 10, 1, default = 5)
 
 config.infobartunerstate.show_infobar              = ConfigYesNo(default = True)
 config.infobartunerstate.show_events               = ConfigYesNo(default = True)		#TODO Show on start, end, start/end
-config.infobartunerstate.show_streams              = ConfigYesNo(default = True)
 config.infobartunerstate.show_ontoggle             = ConfigYesNo(default = False)
 config.infobartunerstate.show_overwrite            = ConfigYesNo(default = False)		# Show with MoviePlayer only is actually not possible
 
 config.infobartunerstate.time_format_begin         = ConfigSelection(default = "%H:%M", choices = date_choices)
 config.infobartunerstate.time_format_end           = ConfigSelection(default = "%H:%M", choices = date_choices)
-config.infobartunerstate.number_pending_records    = ConfigSelectionNumber(0, 10, 1, default = 1)
-config.infobartunerstate.pending_hours             = ConfigSelectionNumber(0, 1000, 1, default = 0)
-config.infobartunerstate.number_finished_records   = ConfigSelectionNumber(0, 10, 1, default = 5)
-config.infobartunerstate.timeout_finished_records  = ConfigSelectionNumber(0, 600, 10, default = 60)
+
+config.infobartunerstate.number_finished_entries   = ConfigSelectionNumber(0, 10, 1, default = 5)
+config.infobartunerstate.timeout_finished_entries  = ConfigSelectionNumber(0, 600, 10, default = 60)
 
 config.infobartunerstate.fields                    = ConfigSubsection()
 config.infobartunerstate.fields.a                  = ConfigSelection(default = "TypeIcon", choices = field_choices)
@@ -167,6 +165,10 @@ config.infobartunerstate.infobar_timeout           = ConfigSelectionNumber(0, 10
 config.infobartunerstate.background_transparency   = ConfigYesNo(default = False)
 
 
+# Temporary if we do not import the modules the config will not be loaded
+from Plugins.Extensions.InfoBarTunerState.Handler import *
+
+
 #######################################################
 # Plugin main function
 def Plugins(**kwargs):
@@ -204,6 +206,10 @@ def setup(session, **kwargs):
 		session.open(InfoBarTunerStateConfiguration)
 	except Exception, e:
 		print "InfoBarTunerStateMenu exception " + str(e)
+		import os, sys, traceback
+		print str(sys.exc_info()[0])
+		print str(traceback.format_exc())
+		sys.exc_clear()
 
 
 #######################################################
@@ -217,6 +223,7 @@ def start(reason, **kwargs):
 				session = kwargs["session"]
 				try:
 					gInfoBarTunerState = InfoBarTunerState(session)
+					gInfoBarTunerState.onInit()
 				except Exception, e:
 					print "InfoBarTunerState start exception " + str(e)
 	# Do not cleanup on session shutdown, it will break the movie player integration
