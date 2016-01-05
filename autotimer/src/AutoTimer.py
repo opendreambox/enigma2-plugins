@@ -463,8 +463,8 @@ class AutoTimer:
 				elif config.plugins.autotimer.try_guessing.value:
 					if timer.hasOffset():
 						# Remove custom Offset
-						rbegin = rtimer.begin + self.offset[0] 
-						rend = rtimer.end - self.offset[1]
+						rbegin = rtimer.begin + timer.offset[0] 
+						rend = rtimer.end - timer.offset[1]
 					else:
 						# Remove E2 Offset
 						rbegin = rtimer.begin + config.recording.margin_before.value * 60
@@ -752,7 +752,7 @@ class AutoTimer:
 
 	def modifyTimer(self, timer, name, shortdesc, begin, end, serviceref, eit=None):
 		# Don't update the name, it will overwrite the name of the SeriesPlugin
-		timer.name = name
+		#timer.name = name
 		if timer.description == "":
 			# Only update the description if it is empty, it will overwrite the description of the SeriesPlugin
 			timer.description = shortdesc
