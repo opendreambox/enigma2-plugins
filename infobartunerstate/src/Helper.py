@@ -27,28 +27,32 @@ from Components.config import *
 # Screen
 from Components.NimManager import nimmanager
 from enigma import eServiceCenter, eServiceReference, eEPGCache
-from enigma import iServiceInformation, iPlayableService, iRecordableService, iPlayableServicePtr
+from enigma import iServiceInformation, iPlayableService, iRecordableService, iPlayableServicePtr, iRecordableServicePtr
 from ServiceReference import ServiceReference
 
 
 #######################################################
 # Global helper functions
-def getTunerName(tunernumber):
+def getTunerName(slot_number):
+	name = ""
 	try:
-		return str(nimmanager.getNimSlotInputName( int(tunernumber) ))
+		name = str(nimmanager.getNimSlotInputName( int(slot_number) ))
 	except:
-		return str(chr( int(tunernumber) + ord('A') ))
+		pass
+	if name == "":
+		name = str(chr( int(slot_number) + ord('A') ))
+	return name
 
 def normTuner(data):
 	if isinstance(data, dict ):
-		type = str(data.get("tuner_type", ""))
-		number = data.get("slot_number", -1)
-		if number is None or number < 0:
-			number = data.get("tuner_number", -1)
-		if number is not None and number > -1:
-			return ( getTunerName(number), type, number )
+		tuner_type = str(data.get("tuner_type", ""))
+		slot_number = data.get("slot_number", -1)
+		if slot_number is None or slot_number < 0:
+			slot_number = data.get("tuner_number", -1)
+		if slot_number is not None and slot_number > -1:
+			return ( getTunerName(slot_number), tuner_type, slot_number )
 		else:
-			return ( "", type, number )
+			return ( "", tuner_type, slot_number )
 	return ( "", "", None )
 
 def getTunerByServiceReferenceOLD(eservicereference):
@@ -67,14 +71,13 @@ def getTunerByServiceReference(servicereference):
 	return ( "", "", None )
 
 def getTunerByPlayableService(iservice):
-	if isinstance(iservice, ( iPlayableService, iRecordableService ) ):
+	if isinstance(iservice, ( iPlayableService, iRecordableService, iPlayableServicePtr, iRecordableServicePtr ) ):
 		feinfo = iservice and iservice.frontendInfo()
 		data = feinfo and feinfo.getFrontendData()
 		return normTuner(data)
 	return ( "", "", None )
 
 def getNumber(eservicereference):
-	print "IBTS getNumber type ###############################", type(eservicereference), str(eservicereference)
 	if isinstance(eservicereference, eServiceReference):
 		
 		from Screens.InfoBar import InfoBar
@@ -116,7 +119,6 @@ def getNumber(eservicereference):
 	return None
 
 def getChannel(eservicereference):
-	print "IBTS getChannel type ###############################", type(eservicereference), str(eservicereference)
 	if isinstance(eservicereference, eServiceReference):
 		servicereference = ServiceReference(eservicereference)
 		if servicereference:
@@ -124,8 +126,7 @@ def getChannel(eservicereference):
 	return ""
 
 def getEventData(iservice):
-	print "IBTS getEventData type ###############################", type(iservice), str(iservice)
-	if isinstance(iservice, ( iPlayableService, iRecordableService, iPlayableServicePtr ) ):
+	if isinstance(iservice, ( iPlayableService, iRecordableService, iPlayableServicePtr, iRecordableServicePtr ) ):
 		info = iservice and iservice.info()
 		event = info and info.getEvent(0)
 		if event:
