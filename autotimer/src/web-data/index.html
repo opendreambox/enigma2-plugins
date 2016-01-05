@@ -9,7 +9,9 @@
 	
 	<title>Dreambox AutoTimerEditor</title>
 	
-	<link href="/autotimereditor/style_modern.css" type="text/css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" id="style_modern" title="modern" href="/web-data/tpl/default/style_modern.min.css">
+	<link rel="stylesheet" type="text/css" href="/web-data/css/font-awesome.min.css">
+	
 	<link rel="shortcut icon" type="/web-data/image/x-icon" href="/web-data/img/favicon.ico">
 	<!--
 	<script type="text/javascript" src="/web-data/lib/prototype.js"></script>
@@ -41,7 +43,7 @@
 		}
 		
 		function getAjaxLoad(){
-			return ('<center><img style="padding-top: 50px;" src="/web-data/gfx/ajaxload.gif" alt="loading..."></center>');
+			return ('<center><div style="padding-top: 50px"><i class="fa fa-circle-o-notch fa-spin fa-3x" alt="loading..."></i></div></center>');
 		}
 	</script>
 	<!-- Webinterface Stuff -->
