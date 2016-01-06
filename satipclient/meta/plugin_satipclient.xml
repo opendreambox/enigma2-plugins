@@ -1,0 +1,16 @@
+<default>
+	<prerequisites>
+		<tag type="Network" />
+	</prerequisites>
+	<info>
+		<author>Reichi</author>
+		<name>Sat>IP Client Setup</name>
+		<packagename>enigma2-plugin-systemplugins-satipclient</packagename>
+		<shortdescription>Sat>IP Client Setup</shortdescription>
+		<description>Allows setting up Sat>IP Based virtual Tuners</description>
+	</info>
+
+	<files type="package"> <!-- without version, without .ipk -->
+		<file type="package" name="enigma2-plugin-systemplugins-satipclient" />
+	</files>
+</default>

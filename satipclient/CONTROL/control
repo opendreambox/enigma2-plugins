@@ -1,0 +1,2 @@
+Description: Sat>IP Client Setup
+Depends: enigma2, satip-client, enigma2-plugin-systemplugins-upnp

@@ -93,6 +93,7 @@ SUBDIRS = \
 	reftopiconname \
 	remotetimer \
 	rsdownloader \
+	satipclient \
 	satloader \
 	seekbar \
 	serienfilm \

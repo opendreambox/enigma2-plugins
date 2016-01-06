@@ -556,6 +556,10 @@ rsdownloader/po/Makefile
 rsdownloader/src/Makefile
 rsdownloader/src/container/Makefile
 
+satipclient/Makefile
+satipclient/meta/Makefile
+satipclient/src/Makefile
+
 satloader/Makefile
 satloader/meta/Makefile
 satloader/src/Makefile
