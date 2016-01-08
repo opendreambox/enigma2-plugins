@@ -111,7 +111,7 @@ event_choices = [
 config.infobartunerstate                           = ConfigSubsection()
 
 config.infobartunerstate.about                     = ConfigNothing()
-config.infobartunerstate.enabled                   = ConfigEnableDisable(default = True)
+config.infobartunerstate.enabled                   = ConfigYesNo(default = True)
 config.infobartunerstate.extensions_menu_show      = ConfigYesNo(default = True)
 config.infobartunerstate.extensions_menu_setup     = ConfigYesNo(default = False)
 #config.infobartunerstate.popup_time               = ConfigSelectionNumber(0, 10, 1, default = 5)
