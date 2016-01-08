@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional"
+       "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- tplWebRemoteid2 -->
+	<head>
+		<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+		<title>Enigma2 Webremote</title>
+
+		<script type="text/javascript" src="/web-data/lib/prototype.js"></script>
+	</head>
+	<body>
+		<center>
+			${strings.get_screenshot}&nbsp;<input type="checkbox" id="screenshot" name="screenshot" checked><br>
+			${strings.grab_video_and_osd}&nbsp;<input type="checkbox" id="video" name="video"><br>
+			${strings.send_long_keypress}&nbsp;<input type="checkbox" id="long" name="long"><br>
+		</center>
+		<br>
+		<!-- RC10 Remote -->
+		<map name="rc10">
+			<area class="remoteKey" shape="circle" coords="121,22,10" nohref data-keyid="116" alt="Power">
+			<area class="remoteKey" shape="circle" coords="37,67,10" nohref data-keyid="2" alt="1">
+			<area class="remoteKey" shape="circle" coords="79,67,10" nohref data-keyid="3" alt="2">
+			<area class="remoteKey" shape="circle" coords="121,67,10" nohref data-keyid="4" alt="3">
+			<area class="remoteKey" shape="circle" coords="37,90,10" nohref data-keyid="5" alt="4">
+			<area class="remoteKey" shape="circle" coords="79,90,10" nohref data-keyid="6" alt="5">
+			<area class="remoteKey" shape="circle" coords="121,90,10" nohref data-keyid="7" alt="6">
+			<area class="remoteKey" shape="circle" coords="37,112,10" nohref data-keyid="8" alt="7">
+			<area class="remoteKey" shape="circle" coords="79,112,10" nohref data-keyid="9" alt="8">
+			<area class="remoteKey" shape="circle" coords="121,112,10" nohref data-keyid="10" alt="9">
+			<area class="remoteKey" shape="circle" coords="37,134,10" nohref data-keyid="412" alt="previous">
+			<area class="remoteKey" shape="circle" coords="79,134,10" nohref data-keyid="11" alt="0">
+			<area class="remoteKey" shape="circle" coords="121,134,10" nohref data-keyid="407" alt="next">
+			<area class="remoteKey" shape="circle" coords="44,285,12" nohref data-keyid="115" alt="volume up">
+			<area class="remoteKey" shape="circle" coords="79,320,10" nohref data-keyid="113" alt="mute">
+			<area class="remoteKey" shape="circle" coords="115,285,12" nohref data-keyid="402" alt="bouquet up">
+			<area class="remoteKey" shape="circle" coords="52,315,12" nohref data-keyid="114" alt="volume down">
+			<area class="remoteKey" shape="circle" coords="79,284,10" nohref data-keyid="174" alt="lame">
+			<area class="remoteKey" shape="circle" coords="106,315,12" nohref data-keyid="403" alt="bouquet down">
+			<area class="remoteKey" shape="circle" coords="34,192,10" nohref data-keyid="358" alt="info">
+			<area class="remoteKey" shape="circle" coords="79,192,12" nohref data-keyid="103" alt="up">
+			<area class="remoteKey" shape="circle" coords="125,192,10" nohref data-keyid="139" alt="menu">
+			<area class="remoteKey" shape="circle" coords="46,222,12" nohref data-keyid="105" alt="left">
+			<area class="remoteKey" shape="circle" coords="79,222,12" nohref data-keyid="352" alt="OK">
+			<area class="remoteKey" shape="circle" coords="112,222,12" nohref data-keyid="106" alt="right">
+			<area class="remoteKey" shape="circle" coords="79,45,10" nohref data-keyid="138" alt="help">
+			<area class="remoteKey" shape="circle" coords="79,255,12" nohref data-keyid="108" alt="down">
+			<area class="remoteKey" shape="circle" coords="125,251,10" nohref data-keyid="393" alt="video">
+			<area class="remoteKey" shape="circle" coords="35,166,10" nohref data-keyid="398" alt="red">
+			<area class="remoteKey" shape="circle" coords="65,166,10" nohref data-keyid="399" alt="green">
+			<area class="remoteKey" shape="circle" coords="95,166,10" nohref data-keyid="400" alt="yellow">
+			<area class="remoteKey" shape="circle" coords="125,166,10" nohref data-keyid="401" alt="blue">
+			<area class="remoteKey" shape="circle" coords="42,360,10" nohref data-keyid="168" alt="rewind">
+			<area class="remoteKey" shape="circle" coords="67,360,10" nohref data-keyid="207" alt="play">
+			<area class="remoteKey" shape="circle" coords="92,360,10" nohref data-keyid="128" alt="stop">
+			<area class="remoteKey" shape="circle" coords="117,360,10" nohref data-keyid="159" alt="forward">
+			<area class="remoteKey" shape="circle" coords="42,389,10" nohref data-keyid="377" alt="tv">
+			<area class="remoteKey" shape="circle" coords="67,389,10" nohref data-keyid="385" alt="radio">
+			<area class="remoteKey" shape="circle" coords="92,389,10" nohref data-keyid="388" alt="text">
+			<area class="remoteKey" shape="circle" coords="117,389,10" nohref data-keyid="167" alt="record">
+		</map>
+
+		<center>
+			<img src="/web-data/img/rc10.png" height="500" width="160" border="0" alt="Remote Control" usemap="#rc10"><br>
+			<input type="button" class="screenshot" value="${strings.refresh_screenshot}"><br>
+		</center>
+
+	</body>
+<!-- /tplWebRemote -->
+</html>
