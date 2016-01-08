@@ -589,7 +589,7 @@ var RemoteControl = Class.create({
 				break;
 			default:
 				tpl = 'tplWebRemoteOld';
-
+			}
 			templateEngine.process(tpl, null, function(html){
 				this.eventsregistered = false;
 				this.window = core.popup('WebRemote', html, 250, 650);
