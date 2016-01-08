@@ -307,6 +307,7 @@ infobartunerstate/Makefile
 infobartunerstate/meta/Makefile
 infobartunerstate/po/Makefile
 infobartunerstate/src/Makefile
+infobartunerstate/src/Handler/Makefile
 
 internetradio/Makefile
 internetradio/meta/Makefile
