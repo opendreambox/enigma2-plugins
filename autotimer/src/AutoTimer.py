@@ -207,9 +207,6 @@ class AutoTimer:
 		new = 0
 		modified = 0
 
-		# Precompute timer destination dir
-		dest = timer.destination or config.usage.default_path.value
-
 		# Search EPG, default to empty list
 		epgmatches = epgcache.search( ('RITBDSE', 1000, typeMap[timer.searchType], timer.match, caseMap[timer.searchCase]) ) or []
 
@@ -223,6 +220,9 @@ class AutoTimer:
 		for idx, ( serviceref, eit, name, begin, duration, shortdesc, extdesc ) in enumerate( epgmatches ):
 			
 			startLog()
+			
+			# timer destination dir
+			dest = timer.destination or config.usage.default_path.value
 			
 			evtBegin = begin
 			evtEnd = end = begin + duration
@@ -292,7 +292,6 @@ class AutoTimer:
 			# Initialize
 			newEntry = None
 			oldExists = False
-			dirname = None
 			
 			# Eventually change service to alternative
 			if timer.overrideAlternatives:
@@ -302,27 +301,27 @@ class AutoTimer:
 				#doLog("Request name, desc, path %s %s %s" % (name,shortdesc,dest))
 				sp = sp_getSeasonEpisode(serviceref, name, evtBegin, evtEnd, shortdesc, dest)
 				if sp and type(sp) in (tuple, list) and len(sp) == 4:
-					name = sp[0]
-					shortdesc = sp[1]
-					dirname = sp[2]
+					name = sp[0] or name
+					shortdesc = sp[1] or shortdesc
+					dest = sp[2] or dest
 					doLog(str(sp[3]))
-					#doLog("Returned name, desc, path %s %s %s" % (name,shortdesc,dirname))
+					#doLog("Returned name, desc, path %s %s %s" % (name,shortdesc,dest))
 				else:
 					# Nothing found
 					doLog(str(sp))
 					
 					# If AutoTimer name not equal match, do a second lookup with the name
 					if timer.name.lower() != timer.match.lower():
+						#doLog("Request name, desc, path %s %s %s" % (timer.name,shortdesc,dest))
 						sp = sp_getSeasonEpisode(serviceref, timer.name, evtBegin, evtEnd, shortdesc, dest)
 						if sp and type(sp) in (tuple, list) and len(sp) == 4:
-							name = sp[0]
-							shortdesc = sp[1]
-							dirname = sp[2]
+							name = sp[0] or name
+							shortdesc = sp[1] or shortdesc
+							dest = sp[2] or dest
 							doLog(str(sp[3]))
-							#doLog("Returned name, desc, path %s %s %s" % (name,shortdesc,dirname))
+							#doLog("Returned name, desc, path %s %s %s" % (name,shortdesc,dest))
 						else:
 							doLog(str(sp))
-					
 
 			if timer.checkFilter(name, shortdesc, extdesc, dayofweek):
 				doLog("Skipping an event because of filter check")
@@ -474,7 +473,7 @@ class AutoTimer:
 				if afterEvent is not None:
 					newEntry.afterEvent = afterEvent
 
-			newEntry.dirname = dirname or timer.destination or config.usage.default_path.value
+			newEntry.dirname = dest
 			newEntry.calculateFilename()
 
 			newEntry.justplay = timer.justplay
