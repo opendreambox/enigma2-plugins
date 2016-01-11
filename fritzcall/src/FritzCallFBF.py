@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1252 $
-$Date: 2015-12-10 11:11:04 +0100 (Thu, 10 Dec 2015) $
-$Id: FritzCallFBF.py 1252 2015-12-10 10:11:04Z michael $
+$Revision: 1254 $
+$Date: 2016-01-10 16:06:12 +0100 (Sun, 10 Jan 2016) $
+$Id: FritzCallFBF.py 1254 2016-01-10 15:06:12Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -2478,7 +2478,7 @@ class FritzCallFBF_05_50:
 # 			self.debug("guestAccess LAN: " + repr(guestAccess))
 		# WLAN-Gastzugang</a></td><td title="aktiv (2,4 GHz), gesichert, 29 Minuten verbleiben, 0 Geräte">aktiv (2,4 GHz), gesichert, 29 Minuten verbleiben, 0 Geräte</td>
 		# found = re.match('.*linktxt": "WLAN-Gastzugang",\s*"details": "aktiv \(([^\)]+)\)(, (ungesichert|gesichert))?,( (\d+) (Minuten|Stunden) verbleiben,)? (\d+ Geräte), ([^"]+)",\s*"link": "wGuest"', html, re.S)
-		found = re.match('.*WLAN-Gastzugang</a></td><td title="[^"]*">aktiv \(([^\)]+)\)(, (ungesichert|gesichert))?,( (\d+) (Minuten|Stunden) verbleiben,)? (\d+ Geräte)</td>', html, re.S)
+		found = re.match('.*WLAN-Gastzugang</a></td><td title="[^"]*">aktiv \(([^\)]+)\)(, (ungesichert|gesichert))?,( (\d+) (Minuten|Stunden) verbleiben,)? (\d+ Geräte)(, Funknetz: ([^<]+))?</td>', html, re.S)
 		if found:
 			# guestAccess =  "WLAN " + found.group(1)
 			if found.group(2):
@@ -2497,6 +2497,8 @@ class FritzCallFBF_05_50:
 					guestAccess = guestAccess + ', ' + found.group(5) + ' Std.' # n Stunden verbleiben
 			if found.group(7):
 				guestAccess = guestAccess + ', ' + found.group(7) # Geräte
+			if found.group(8):
+				guestAccess = guestAccess + ', ' + found.group(9) # WLAN Name
 			self.info("guestAccess WLAN: " + repr(guestAccess))
 
 		info = (boxInfo, upTime, ipAddress, wlanState, dslState, tamActive, dectActive, faxActive, rufumlActive, guestAccess)
