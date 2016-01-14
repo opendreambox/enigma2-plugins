@@ -4179,7 +4179,7 @@ msgstr ""
 
 #: subsdownloader2/src/plugin.py:1100
 #, python-format
-msgid "Do You realy want to delete: /n %s"
+msgid "Do You really want to delete: /n %s"
 msgstr ""
 
 #: subsdownloader2/src/pluginOnlineContent.py:68
@@ -4284,7 +4284,7 @@ msgid "Do you really want to stop the recording?"
 msgstr ""
 
 #: dreamexplorer/src/plugin.py:528 dreamexplorer/src/plugin.py:532
-msgid "Do you realy want to DELETE:\n"
+msgid "Do you really want to DELETE:\n"
 msgstr ""
 
 #: networkbrowser/src/NetworkBrowser.py:427

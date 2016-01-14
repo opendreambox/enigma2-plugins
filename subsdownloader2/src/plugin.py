@@ -1097,7 +1097,7 @@ class FileManagerCommands(Screen):
 		if returnValue == "exit":
 			self.ExitWithoutDoingNothing()
 		elif returnValue == "delete":
-			self.session.openWithCallback(delete_command_notification, MessageBox,_("Do You realy want to delete: /n %s" % self.file_to_manage), MessageBox.TYPE_YESNO, default = False)
+			self.session.openWithCallback(delete_command_notification, MessageBox,_("Do You really want to delete: /n %s" % self.file_to_manage), MessageBox.TYPE_YESNO, default = False)
 		elif returnValue == "copy":
 			self.close (("copy", self.file_to_manage))
 		elif returnValue == "move":
