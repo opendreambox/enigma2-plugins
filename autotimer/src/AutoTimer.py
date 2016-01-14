@@ -658,6 +658,10 @@ class AutoTimer:
 		return (new, modified)
 
 	def parseEPG(self, simulateOnly=False, uniqueId=None, callback=None):
+
+		from plugin import AUTOTIMER_VERSION
+		doLog("AutoTimer Version: " + AUTOTIMER_VERSION)
+
 		if NavigationInstance.instance is None:
 			doLog("Navigation is not available, can't parse EPG")
 			return (0, 0, 0, [], [], [])
@@ -750,10 +754,10 @@ class AutoTimer:
 		del remove
 
 	def modifyTimer(self, timer, name, shortdesc, begin, end, serviceref, eit=None):
-		# Don't update the name, it will overwrite the name of the SeriesPlugin
-		#timer.name = name
-		if timer.description == "":
-			# Only update the description if it is empty, it will overwrite the description of the SeriesPlugin
+		# Only update the name and description if we got a "new" one
+		if len(timer.name) < len(name):
+			timer.name = name
+		if len(timer.description) < len(shortdesc):
 			timer.description = shortdesc
 		timer.begin = int(begin)
 		timer.end = int(end)
