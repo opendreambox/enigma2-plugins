@@ -601,10 +601,10 @@ def EINcallbackFunc(answer):
 		else:
 			EINsession.open(MessageBox, text = _('MerlinEPG is not installed!'), type = MessageBox.TYPE_INFO)
 	elif answer == "autotimer":
-		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/AutoTimer/AutoTimerEditor.pyo"):
+		try:
 			from Plugins.Extensions.AutoTimer.plugin import main as AutoTimerView
 			AutoTimerView(EINsession)
-		else:
+		except ImportError as ie:
 			EINsession.open(MessageBox, text = _('Autotimer is not installed!'), type = MessageBox.TYPE_INFO)
 	elif answer == "epgsearch":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/EPGSearch/plugin.pyo"):
