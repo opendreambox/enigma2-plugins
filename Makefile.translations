@@ -9,7 +9,7 @@ POTFILE:=$(PODIR)/$(DOMAIN).pot
 
 default: catalog
 
-catalog : merge template msgmerge
+catalog : template merge msgmerge
 
 XMLPODIRS := autotimer/src epgbackup/src epgrefresh/src pipzap/src pluginsort/src
 
