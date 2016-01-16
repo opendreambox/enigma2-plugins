@@ -1,18 +1,21 @@
+#: autotimer/src/AutoTimerSettings.py:61 autotimer/src/AutoTimerSettings.py:62
+#: autotimer/src/AutoTimerSettings.py:63
 msgid ""
 msgstr ""
 "Project-Id-Version: enigma2 AC3 Lip Sync Turkish Locale\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-04 09:01+0100\n"
-"PO-Revision-Date: 2009-09-22 13:11+0200\n"
-"Last-Translator: Zülfikar VEYİSOĞLU <z.veyisoglu@hobiagaci.com>\n"
+"POT-Creation-Date: 2016-01-19 13:04+0100\n"
+"PO-Revision-Date: 2016-01-16 08:54+0000\n"
+"Last-Translator: Anonymous Pootle User\n"
 "Language-Team: http://www.hobiagaci.com <z.veyisoglu@hobiagaci.com>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Turkish\n"
-"X-Poedit-Country: TURKEY\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 2.7\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-POOTLE-MTIME: 1452934478.000000\n"
 
 #: permanenttimeshift/src/plugin.py:1062
 msgid ""
@@ -31,18 +34,18 @@ msgstr ""
 msgid " "
 msgstr " "
 
-#: seriesplugin/src/plugin.py:40 infobartunerstate/src/plugin.py:44
+#: seriesplugin/src/plugin.py:42 infobartunerstate/src/plugin.py:44
 #: pushservice/src/plugin.py:42
 msgid ""
 "  (C) 2012 by betonme @ IHAD \n"
 "\n"
 msgstr ""
 
-#: seriesplugin/src/plugin.py:45
+#: seriesplugin/src/plugin.py:47
 msgid "  Feel free to donate. \n"
 msgstr ""
 
-#: seriesplugin/src/plugin.py:43
+#: seriesplugin/src/plugin.py:45
 msgid ""
 "  How much time have You saved?\n"
 "\n"
@@ -52,7 +55,7 @@ msgstr ""
 msgid "  If You like this plugin and want to support it,\n"
 msgstr ""
 
-#: seriesplugin/src/plugin.py:46
+#: seriesplugin/src/plugin.py:48
 msgid "  PayPal: "
 msgstr ""
 
@@ -60,11 +63,11 @@ msgstr ""
 msgid "  SUPPORT: "
 msgstr ""
 
-#: seriesplugin/src/plugin.py:44 pushservice/src/plugin.py:47
+#: seriesplugin/src/plugin.py:46 pushservice/src/plugin.py:47
 msgid "  Support: "
 msgstr ""
 
-#: seriesplugin/src/plugin.py:41
+#: seriesplugin/src/plugin.py:43
 msgid "  Terms: "
 msgstr ""
 
@@ -84,7 +87,7 @@ msgstr ""
 msgid "  or if just want to say ''thanks'',\n"
 msgstr ""
 
-#: seriesplugin/src/plugin.py:42
+#: seriesplugin/src/plugin.py:44
 #, python-brace-format
 msgid "  {lookups:d} successful lookups.\n"
 msgstr ""
@@ -101,7 +104,7 @@ msgstr ""
 msgid " Media-filter"
 msgstr ""
 
-#: mytube/src/MyTubeSearch.py:232
+#: mytube/src/MyTubeSearch.py:227
 msgid " Results"
 msgstr " Sonuçlar"
 
@@ -126,7 +129,7 @@ msgstr "%(name)s (%(user)s@%(server)s)"
 #: pushservice/src/Controller/RecordSummary.py:60
 #: pushservice/src/Controller/RecordNotification.py:100
 #: pushservice/src/Controller/RecordNotification.py:112
-#: pushservice/src/Controller/DeactivatedTimers.py:59
+#: pushservice/src/Controller/DeactivatedTimers.py:61
 #: pushservice/src/Controller/ActiveTimers.py:56
 msgid "%H:%M"
 msgstr "%H:%M"
@@ -138,17 +141,17 @@ msgstr ""
 #: pushservice/src/Controller/RecordSummary.py:59
 #: pushservice/src/Controller/RecordNotification.py:99
 #: pushservice/src/Controller/RecordNotification.py:111
-#: pushservice/src/Controller/DeactivatedTimers.py:58
+#: pushservice/src/Controller/DeactivatedTimers.py:60
 #: pushservice/src/Controller/ActiveTimers.py:55
 msgid "%Y.%m.%d %H:%M"
 msgstr ""
 
-#: infobartunerstate/src/InfoBarTunerState.py:1232
+#: infobartunerstate/src/InfoBarTunerState.py:817
 #, python-format
 msgid "%d"
 msgstr ""
 
-#: infobartunerstate/src/InfoBarTunerState.py:1290
+#: infobartunerstate/src/InfoBarTunerState.py:874
 #, python-format
 msgid "%d %%"
 msgstr ""
@@ -158,21 +161,21 @@ msgstr ""
 msgid "%d Feed(s) were added to configuration."
 msgstr "%d besleme(leri) eklendi."
 
-#: infobartunerstate/src/InfoBarTunerState.py:1325
+#: infobartunerstate/src/InfoBarTunerState.py:909
 #, python-format
 msgid "%d GB"
 msgstr ""
 
-#: infobartunerstate/src/InfoBarTunerState.py:1321
+#: infobartunerstate/src/InfoBarTunerState.py:905
 #, python-format
 msgid "%d MB"
 msgstr ""
 
-#: infobartunerstate/src/InfoBarTunerState.py:1245
-#: infobartunerstate/src/InfoBarTunerState.py:1252
-#: infobartunerstate/src/InfoBarTunerState.py:1260
-#: infobartunerstate/src/InfoBarTunerState.py:1263
-#: infobartunerstate/src/InfoBarTunerState.py:1286
+#: infobartunerstate/src/InfoBarTunerState.py:833
+#: infobartunerstate/src/InfoBarTunerState.py:837
+#: infobartunerstate/src/InfoBarTunerState.py:846
+#: infobartunerstate/src/InfoBarTunerState.py:849
+#: infobartunerstate/src/InfoBarTunerState.py:870
 #, python-format
 msgid "%d Min"
 msgstr ""
@@ -182,7 +185,7 @@ msgstr ""
 msgid "%d Torrents(s) were scheduled for download, %d failed."
 msgstr ""
 
-#: autotimer/src/AutoPoller.py:43
+#: autotimer/src/AutoPoller.py:45
 #, python-format
 msgid ""
 "%d conflict(s) encountered when trying to add new timers:\n"
@@ -191,7 +194,7 @@ msgstr ""
 "Yeni zamanlayıcı eklenirken %d çakışma oluştu:\n"
 "%s"
 
-#: autotimer/src/AutoPoller.py:51
+#: autotimer/src/AutoPoller.py:53
 #, python-format
 msgid ""
 "%d conflict(s) solved with similar timer(s):\n"
@@ -218,7 +221,7 @@ msgid "%d kb/s"
 msgstr "%d kb/s"
 
 #
-#: seriesplugin/src/SeriesPluginInfoScreen.py:346 easyinfo/src/plugin.py:723
+#: seriesplugin/src/SeriesPluginInfoScreen.py:347 easyinfo/src/plugin.py:723
 #, python-format
 msgid "%d min"
 msgstr "%d dk"
@@ -228,12 +231,13 @@ msgstr "%d dk"
 msgid "%d more services"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginRenamer.py:315
+#: seriesplugin/src/SeriesPluginRenamer.py:323
 #, python-format
 msgid "%d records renamed successfully"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginTimer.py:263
+#: seriesplugin/src/SeriesPluginBare.py:58
+#: seriesplugin/src/SeriesPluginTimer.py:215
 #, python-format
 msgid "%d timer renamed successfully"
 msgstr ""
@@ -359,7 +363,7 @@ msgstr ""
 msgid "%s..."
 msgstr ""
 
-#: autotimer/src/AutoPoller.py:43 autotimer/src/AutoPoller.py:51
+#: autotimer/src/AutoPoller.py:45 autotimer/src/AutoPoller.py:53
 #, python-format
 msgid "%s: %s at %s"
 msgstr "%s: %s / %s"
@@ -423,8 +427,8 @@ msgstr ""
 msgid "*"
 msgstr ""
 
-#: infobartunerstate/src/InfoBarTunerState.py:1094
-#: infobartunerstate/src/InfoBarTunerState.py:1095
+#: infobartunerstate/src/InfoBarTunerState.py:674
+#: infobartunerstate/src/InfoBarTunerState.py:675
 msgid "-"
 msgstr ""
 
@@ -447,11 +451,11 @@ msgstr ""
 msgid "01:00"
 msgstr "01:00"
 
-#: fritzcall/src/plugin.py:93
+#: fritzcall/src/plugin.py:107
 msgid "05.29 until below 6.35"
 msgstr ""
 
-#: fritzcall/src/plugin.py:93
+#: fritzcall/src/plugin.py:107
 msgid "06.35 and newer"
 msgstr ""
 
@@ -763,19 +767,19 @@ msgid ""
 "from your computer."
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:210
+#: seriesplugin/src/SeriesPluginConfiguration.py:221
 msgid "AT: Poll Interval (in h)"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:208
+#: seriesplugin/src/SeriesPluginConfiguration.py:219
 msgid "AT: Poll automatically"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:209
+#: seriesplugin/src/SeriesPluginConfiguration.py:220
 msgid "AT: Startup delay (in min)"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:211
+#: seriesplugin/src/SeriesPluginConfiguration.py:222
 msgid "AT: Timeout (in min)"
 msgstr ""
 
@@ -810,8 +814,8 @@ msgstr "Hakkında"
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:294 fritzcall/src/plugin.py:1879
-#: fritzcall/src/plugin.py:1910
+#: fritzcall/src/plugin.py:308 fritzcall/src/plugin.py:1893
+#: fritzcall/src/plugin.py:1924
 msgid "About FritzCall"
 msgstr "FritzCall hakkında"
 
@@ -854,7 +858,7 @@ msgid "Activate VPS"
 msgstr "VPS'i etkinleştir"
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:681 fritzcall/src/plugin.py:890
+#: fritzcall/src/plugin.py:695 fritzcall/src/plugin.py:904
 msgid "Activate WLAN guest access"
 msgstr ""
 
@@ -915,6 +919,7 @@ msgstr ""
 #: partnerbox/src/PartnerboxSetup.py:129 pipservicerelation/src/plugin.py:87
 #: teletext/src/plugin.py:1716 merlinepgcenter/src/MerlinEPGCenter.py:1298
 #: ftpbrowser/src/FTPServerManager.py:259
+#: satipclient/src/SatIPTunerSetup.py:39
 #: birthdayreminder/src/BirthdayReminder.py:216
 #: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:138
 msgid "Add"
@@ -957,7 +962,7 @@ msgstr ""
 msgid "Add Timer"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:264
+#: seriesplugin/src/ChannelEditor.py:266
 msgid "Add Web Channel"
 msgstr ""
 
@@ -989,7 +994,7 @@ msgstr ""
 msgid "Add birthday"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:288
+#: seriesplugin/src/ChannelEditor.py:290
 msgid "Add channel (Yes) or replace it (No)"
 msgstr ""
 
@@ -1020,8 +1025,8 @@ msgstr ""
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a help text
 #. TRANSLATORS: this is a window title.
-#: ncidclient/src/plugin.py:601 fritzcall/src/plugin.py:1593
-#: fritzcall/src/plugin.py:1742
+#: ncidclient/src/plugin.py:601 fritzcall/src/plugin.py:1607
+#: fritzcall/src/plugin.py:1756
 msgid "Add entry to phonebook"
 msgstr "Rehbere yeni kayit ekle"
 
@@ -1092,7 +1097,7 @@ msgstr "Zamanlayıcı eke"
 msgid "Add timer as disabled on conflict"
 msgstr "Çakışmalarda, zamanlayıcıyı 'devre dışı' ekle"
 
-#: mytube/src/plugin.py:544 youtubeplayer/src/YouTubeList.py:632
+#: mytube/src/plugin.py:535 youtubeplayer/src/YouTubeList.py:632
 #: youtubeplayer/src/YouTubeList.py:657 youtubeplayer/src/YouTubeList.py:697
 msgid "Add to favorites"
 msgstr ""
@@ -1119,7 +1124,7 @@ msgstr ""
 msgid "Added %s to the download-list."
 msgstr "%s indirme listedine eklendi."
 
-#: mytube/src/plugin.py:1156 mytube/src/plugin.py:1387
+#: mytube/src/plugin.py:1149 mytube/src/plugin.py:1380
 msgid "Added: "
 msgstr "Eklenme tarihi: "
 
@@ -1263,7 +1268,7 @@ msgstr ""
 #: webinterface/src/WebComponents/Sources/Strings.py:32
 #: serienfilm/src/MovieSelection.py:256 emission/src/EmissionOverview.py:150
 #: emission/src/EmissionOverview.py:303 emission/src/EmissionOverview.py:310
-#: fritzcall/src/plugin.py:1007 mytube/src/plugin.py:67
+#: fritzcall/src/plugin.py:1021 mytube/src/plugin.py:67
 #: youtubeplayer/src/YouTubeSearchDialog.py:59
 #: youtubeplayer/src/YouTubeSearchDialog.py:91
 msgid "All"
@@ -1297,7 +1302,7 @@ msgstr "Tüm zamanlar"
 msgid "All Timers"
 msgstr ""
 
-#: fritzcall/src/plugin.py:152
+#: fritzcall/src/plugin.py:166
 msgid "All calls"
 msgstr "Tüm aramalar"
 
@@ -1349,6 +1354,10 @@ msgstr ""
 msgid "Allow zapping via Webinterface"
 msgstr "Web arayüzünden kanal değişimine izin ver"
 
+#: satipclient/meta/plugin_satipclient.xml./satipclient/meta/plugin_satipclient.xml
+msgid "Allows setting up Sat>IP Based virtual Tuners"
+msgstr ""
+
 #: menusort/meta/plugin_menusort.xml./menusort/meta/plugin_menusort.xml
 msgid "Allows to change the order of entries in the main menu manually."
 msgstr "Ana menü sıralamasını isteğinize göre değiştirebilirsiniz."
@@ -1374,11 +1383,11 @@ msgid ""
 "unusable movie player until you uninstall one of the conflicting plugins."
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:169
+#: seriesplugin/src/SeriesPluginConfiguration.py:178
 msgid "Alternative channel names file"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:192
+#: seriesplugin/src/SeriesPluginConfiguration.py:202
 msgid "Always retry to find series info"
 msgstr ""
 
@@ -1410,7 +1419,7 @@ msgid ""
 "specified in previous setting."
 msgstr ""
 
-#: mytube/src/plugin.py:489
+#: mytube/src/plugin.py:478
 msgid "An error occured."
 msgstr "Bir hata oluştu."
 
@@ -1432,7 +1441,7 @@ msgstr ""
 msgid "Any service/recording"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:177
+#: seriesplugin/src/SeriesPluginConfiguration.py:186
 msgid "Append '_' if file exist"
 msgstr ""
 
@@ -1444,15 +1453,15 @@ msgstr ""
 msgid "Append file to current songlist"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1970
+#: fritzcall/src/plugin.py:1984
 msgid "Append shortcut number"
 msgstr "Çağrıda kısayol kodunu göster"
 
-#: fritzcall/src/plugin.py:1969
+#: fritzcall/src/plugin.py:1983
 msgid "Append type of number"
 msgstr "Çağrıda numara tipini göster"
 
-#: fritzcall/src/plugin.py:1971
+#: fritzcall/src/plugin.py:1985
 msgid "Append vanity name"
 msgstr "Çağrıda vanity kodunu göster"
 
@@ -1494,7 +1503,7 @@ msgstr ""
 "Bu ağ bağlantı noktasını kaydetmek istiyor musunuz?\n"
 "\n"
 
-#: ncidclient/src/plugin.py:739 fritzcall/src/plugin.py:1948
+#: ncidclient/src/plugin.py:739 fritzcall/src/plugin.py:1962
 msgid "Areacode to add to calls without one (if necessary)"
 msgstr ""
 
@@ -1622,6 +1631,7 @@ msgstr ""
 msgid "Attachments"
 msgstr "Ekler"
 
+#: webinterface/src/WebComponents/Sources/Strings.py:183
 #: vlcplayer/src/VlcServerConfig.py:321
 msgid "Audio Bitrate"
 msgstr "Ses bit oranı"
@@ -1671,9 +1681,17 @@ msgstr ""
 msgid "Australia"
 msgstr "Avustralya"
 
-#: ncidclient/src/plugin.py:49 fritzcall/src/plugin.py:143
+#: ncidclient/src/plugin.py:49 fritzcall/src/plugin.py:157
 msgid "Austria"
 msgstr "Avusturya"
+
+#: mytube/src/MyTubeSettings.py:85
+msgid "Authenticate with Youtube"
+msgstr ""
+
+#: mytube/src/plugin.py:492
+msgid "Authentication awaiting"
+msgstr ""
 
 #: youtubeplayer/src/YouTubeList.py:105
 msgid "Author:"
@@ -1688,11 +1706,11 @@ msgstr "Yazarlar"
 msgid "Auto"
 msgstr "Otomatik"
 
-#: seriesplugin/src/ChannelEditor.py:92 seriesplugin/src/ChannelEditor.py:110
+#: seriesplugin/src/ChannelEditor.py:75 seriesplugin/src/ChannelEditor.py:97
 msgid "Auto match"
 msgstr ""
 
-#: mytube/src/MyTubeSearch.py:357
+#: mytube/src/MyTubeSettings.py:83
 msgid "Auto paginate on last entry:"
 msgstr ""
 
@@ -1746,11 +1764,11 @@ msgstr "Otomatik zamanlayıcı ayarları"
 msgid "AutoTimer failed with error %s"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:189
+#: seriesplugin/src/SeriesPluginConfiguration.py:199
 msgid "AutoTimer independent mode"
 msgstr ""
 
-#: autotimer/src/AutoTimerOverview.py:115
+#: autotimer/src/AutoTimerOverview.py:116
 msgid "AutoTimer overview"
 msgstr "Otomatik zamanlayıcı incele"
 
@@ -1766,15 +1784,15 @@ msgstr ""
 msgid "AutoTimer timer"
 msgstr ""
 
-#: autotimer/src/AutoTimerResource.py:401
+#: autotimer/src/AutoTimerResource.py:472
 msgid "AutoTimer was added successfully"
 msgstr "Otomatik zamanlayici başarılıyla eklendi"
 
-#: autotimer/src/AutoTimerResource.py:403
+#: autotimer/src/AutoTimerResource.py:474
 msgid "AutoTimer was changed successfully"
 msgstr "Otomatik zamanlayıcı başarıyla güncellendi"
 
-#: autotimer/src/AutoTimerResource.py:177
+#: autotimer/src/AutoTimerResource.py:248
 msgid "AutoTimer was removed"
 msgstr "Otomatik zamanlayıcı silindi"
 
@@ -1826,7 +1844,7 @@ msgstr "Otomatik ses şiddeti düzenleyici"
 msgid "Automatic volume adjustment for ac3/dts services."
 msgstr "ac3/dts ses izleri için otomatik ses şiddeti düzenleyici."
 
-#: ncidclient/src/plugin.py:763 fritzcall/src/plugin.py:1981
+#: ncidclient/src/plugin.py:763 fritzcall/src/plugin.py:1995
 msgid "Automatically add new Caller to PhoneBook"
 msgstr "Kayıtsız arayan kişisini, rehbere otomatik olarak ekle"
 
@@ -1975,7 +1993,7 @@ msgstr ""
 msgid "Background only"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:121
+#: infobartunerstate/src/IBTSConfiguration.py:130
 msgid "Background transparency"
 msgstr ""
 
@@ -2094,7 +2112,7 @@ msgstr ""
 msgid "Begin of \"after event\" timespan"
 msgstr "Zaman aralığı başlangıcı"
 
-#: autotimer/src/AutoTimerEditor.py:567 autotimer/src/AutoTimerWizard.py:103
+#: autotimer/src/AutoTimerEditor.py:567 autotimer/src/AutoTimerWizard.py:105
 msgid "Begin of timespan"
 msgstr "Zaman aralığı başlangıcı"
 
@@ -2360,7 +2378,7 @@ msgstr ""
 msgid "Cable"
 msgstr "Kablo"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:201
+#: seriesplugin/src/SeriesPluginConfiguration.py:212
 msgid "Cache expires after x hours"
 msgstr ""
 
@@ -2369,23 +2387,23 @@ msgid "Cache size"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1152
+#: fritzcall/src/plugin.py:1166
 msgid "Call"
 msgstr "Ara"
 
-#: ncidclient/src/plugin.py:731 fritzcall/src/plugin.py:1932
+#: ncidclient/src/plugin.py:731 fritzcall/src/plugin.py:1946
 msgid "Call monitoring"
 msgstr "Çağrı görüntüleme"
 
-#: fritzcall/src/plugin.py:550 fritzcall/src/plugin.py:716
+#: fritzcall/src/plugin.py:564 fritzcall/src/plugin.py:730
 msgid "Call redirection"
 msgstr "Çağrı yönlendirme"
 
-#: fritzcall/src/plugin.py:866
+#: fritzcall/src/plugin.py:880
 msgid "Call redirection active"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1284
+#: fritzcall/src/plugin.py:1298
 #, python-format
 msgid "Calling %s"
 msgstr ""
@@ -2475,7 +2493,7 @@ msgstr "Kanada"
 #: autotimer/src/AutoTimerEditor.py:901 autotimer/src/AutoTimerEditor.py:1104
 #: autotimer/src/AutoTimerImporter.py:45
 #: autotimer/src/AutoTimerImporter.py:119
-#: autotimer/src/AutoTimerSettings.py:78 webinterface/src/WebIfConfig.py:32
+#: autotimer/src/AutoTimerSettings.py:81 webinterface/src/WebIfConfig.py:32
 #: partnerbox/src/PartnerboxSetup.py:69 partnerbox/src/PartnerboxSetup.py:236
 #: partnerbox/src/RemoteTimerEntry.py:73 audiorestart/src/plugin.py:107
 #: namezap/src/NamezapSetup.py:57 epgsearch/src/EPGSearch.py:377
@@ -2488,8 +2506,8 @@ msgstr "Kanada"
 #: satloader/src/plugin.py:165 satloader/src/plugin.py:285
 #: satloader/src/plugin.py:409 growlee/src/plugin.py:99
 #: movieepg/src/MovieEpgSetup.py:55 vlcplayer/src/VlcServerConfig.py:296
-#: seriesplugin/src/SeriesPluginConfiguration.py:79
-#: seriesplugin/src/ChannelEditor.py:89 aspectratioswitch/src/plugin.py:120
+#: seriesplugin/src/SeriesPluginConfiguration.py:80
+#: seriesplugin/src/ChannelEditor.py:72 aspectratioswitch/src/plugin.py:120
 #: infobartunerstate/src/IBTSConfiguration.py:49 setpasswd/src/plugin.py:51
 #: merlinmusicplayer/src/plugin.py:277 merlinmusicplayer/src/plugin.py:2794
 #: merlinmusicplayer/src/plugin.py:2915 yttrailer/src/plugin.py:306
@@ -2514,8 +2532,8 @@ msgstr "Kanada"
 #: elektro/src/plugin.py:272 elektro/src/plugin.py:318
 #: elektro/src/plugin.py:397 elektro/src/plugin.py:500
 #: emission/src/EmissionBandwidth.py:72 emission/src/EmissionSetup.py:39
-#: babelzapper/src/plugin.py:75 fritzcall/src/plugin.py:1717
-#: fritzcall/src/plugin.py:1871 simplerss/src/RSSSetup.py:26
+#: babelzapper/src/plugin.py:75 fritzcall/src/plugin.py:1731
+#: fritzcall/src/plugin.py:1885 simplerss/src/RSSSetup.py:26
 #: simplerss/src/RSSSetup.py:73 ftpbrowser/src/FTPBrowser.py:750
 #: epgbackup/src/EPGBackupSupport.py:219 epgbackup/src/EPGBackupConfig.py:55
 #: virtualzap/src/plugin.py:728 ecasa/src/EcasaSetup.py:71
@@ -2539,15 +2557,15 @@ msgstr "Kanada"
 msgid "Cancel"
 msgstr "Vazgeç"
 
-#: seriesplugin/src/ChannelEditor.py:97 seriesplugin/src/ChannelEditor.py:107
+#: seriesplugin/src/ChannelEditor.py:80 seriesplugin/src/ChannelEditor.py:94
 msgid "Cancel and close"
 msgstr ""
 
-#: fritzcall/src/plugin.py:2029 fritzcall/src/plugin.py:2662
+#: fritzcall/src/plugin.py:2043 fritzcall/src/plugin.py:2676
 msgid "Cannot get calls from FRITZ!Box"
 msgstr ""
 
-#: fritzcall/src/plugin.py:2050 fritzcall/src/plugin.py:2680
+#: fritzcall/src/plugin.py:2064 fritzcall/src/plugin.py:2694
 msgid ""
 "Cannot get infos from FRITZ!Box yet\n"
 "Still initialising or wrong firmware version"
@@ -2675,26 +2693,26 @@ msgstr ""
 msgid "Channel"
 msgstr "Kanal"
 
-#: seriesplugin/src/ChannelEditor.py:282 seriesplugin/src/ChannelEditor.py:298
+#: seriesplugin/src/ChannelEditor.py:284 seriesplugin/src/ChannelEditor.py:300
 #, python-format
 msgid "Channel '- %(servicename)s - %(remote)s -' added."
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:304
+#: seriesplugin/src/ChannelEditor.py:306
 #, python-format
 msgid "Channel '- %(servicename)s - %(remote)s -' replaced."
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:329
+#: seriesplugin/src/ChannelEditor.py:331
 #, python-format
 msgid "Channel '- %s -' removed."
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:82
+#: seriesplugin/src/SeriesPluginConfiguration.py:83
 msgid "Channel Edit"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:86
+#: seriesplugin/src/ChannelEditor.py:69
 msgid "Channel Editor"
 msgstr ""
 
@@ -2729,15 +2747,15 @@ msgstr "Ses izi:"
 msgid "Channel info"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:176
+#: seriesplugin/src/ChannelEditor.py:178
 msgid "Channel matching..."
 msgstr ""
 
-#: mytube/src/plugin.py:538
+#: mytube/src/plugin.py:529
 msgid "Channel videos"
 msgstr ""
 
-#: mosaic/src/plugin.py:189 mosaic/src/plugin.py:298 mytube/src/plugin.py:1384
+#: mosaic/src/plugin.py:189 mosaic/src/plugin.py:298 mytube/src/plugin.py:1377
 msgid "Channel: "
 msgstr "Kanal:"
 
@@ -2766,6 +2784,10 @@ msgstr "Kontrol et"
 msgid "Check IPs (press OK to edit)"
 msgstr ""
 
+#: seriesplugin/src/SeriesPluginConfiguration.py:204
+msgid "Check Timer for corresponding EPG events"
+msgstr ""
+
 #: reconstructapsc/src_py/plugin.py:36
 msgid "Check any running reconstruct process"
 msgstr ""
@@ -2774,26 +2796,28 @@ msgstr ""
 msgid "Check for uniqueness in"
 msgstr "Tekilliği seçilen kriterde ara"
 
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:307
-#: seriesplugin/src/Identifiers/Fernsehserien.py:436
-#: seriesplugin/src/Identifiers/Wunschliste.py:274
+#: seriesplugin/src/Identifiers/WunschlisteFeed.py:337
+#: seriesplugin/src/Identifiers/Fernsehserien.py:535
+#: seriesplugin/src/Identifiers/Wunschliste.py:305
 msgid "Check the channel name"
 msgstr ""
 
 #: autotimer/src/AutoTimerSettings.py:60
 msgid ""
-"Check the event id (eit) and remove the timer if event not exists in EPG."
+"Check the event id (eit) and remove the timer if there is no corresponding "
+"EPG event. Due to compatible issues with SerienRecorder and IPRec, only "
+"timer created by AutoTimer are affected."
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:191
+#: seriesplugin/src/SeriesPluginConfiguration.py:201
 msgid "Check timer every x minutes"
 msgstr ""
 
-#: seriesplugin/src/plugin.py:35
+#: seriesplugin/src/plugin.py:37
 msgid "Check timer list for series (SP)"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:153
+#: seriesplugin/src/SeriesPluginConfiguration.py:157
 msgid "Check timer list from extension menu"
 msgstr ""
 
@@ -2823,7 +2847,7 @@ msgstr ""
 msgid "Choose subtitle server:"
 msgstr ""
 
-#: autotimer/src/AutoTimerEditor.py:376 mytube/src/MyTubeSearch.py:381
+#: autotimer/src/AutoTimerEditor.py:376 mytube/src/MyTubeSettings.py:100
 #: movieretitle/src/plugin.py:89 moviecut/src_py/plugin.py:179
 msgid "Choose target folder"
 msgstr "Hedef klasör seç"
@@ -2914,7 +2938,7 @@ msgstr ""
 msgid "Clear finished downloads"
 msgstr "Tamamlanan indirmeleri temizle"
 
-#: mytube/src/MyTubeSearch.py:356
+#: mytube/src/MyTubeSettings.py:82
 msgid "Clear history on Exit:"
 msgstr "Çıkışta geçmişi temizle:"
 
@@ -2934,7 +2958,7 @@ msgstr "Saat"
 msgid "Clock show timeout"
 msgstr ""
 
-#: autotimer/src/AutoTimerOverview.py:222
+#: autotimer/src/AutoTimerOverview.py:223
 msgid "Clone selected timer"
 msgstr ""
 
@@ -2952,9 +2976,9 @@ msgstr ""
 #: simplerss/src/RSSScreens.py:465 mphelp/src/MPHelp.py:42
 #: ecasa/src/EcasaGui.py:106 ecasa/src/EcasaGui.py:511
 #: ecasa/src/EcasaGui.py:518 ecasa/src/EcasaGui.py:630
-#: mytube/src/MyTubeSearch.py:316 mytube/src/MyTubeSearch.py:466
-#: mytube/src/plugin.py:268 mytube/src/plugin.py:1332
-#: mytube/src/plugin.py:1509 networkbrowser/src/UserManager.py:51
+#: mytube/src/MyTubeSearch.py:316 mytube/src/plugin.py:264
+#: mytube/src/plugin.py:1325 mytube/src/plugin.py:1502
+#: mytube/src/MyTubeSettings.py:41 networkbrowser/src/UserManager.py:51
 #: networkbrowser/src/UserDialog.py:91
 #: networkbrowser/src/NetworkBrowser.py:114
 #: networkbrowser/src/MountManager.py:52 networkbrowser/src/MountView.py:62
@@ -3048,14 +3072,14 @@ msgstr ""
 msgid "Config file %s not found."
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:74
+#: seriesplugin/src/SeriesPluginConfiguration.py:75
 #: infobartunerstate/src/IBTSConfiguration.py:45
 #: merlinmusicplayer/src/plugin.py:1831 merlinmusicplayer/src/plugin.py:3250
 #: pushservice/src/ConfigScreen.py:67
 msgid "Configuration"
 msgstr ""
 
-#: webinterface/src/plugin.py:616 webinterface/src/plugin.py:619
+#: webinterface/src/plugin.py:617 webinterface/src/plugin.py:620
 msgid "Configuration for the Webinterface"
 msgstr "Web arayüzünü yapılandırın"
 
@@ -3071,7 +3095,7 @@ msgstr ""
 msgid "Configuration tool for Vali-XD skins"
 msgstr ""
 
-#: autotimer/src/AutoTimerSettings.py:95
+#: autotimer/src/AutoTimerSettings.py:99
 msgid "Configure AutoTimer behavior"
 msgstr "Otomatik zamanlayıcı davranışını düzenle"
 
@@ -3123,11 +3147,11 @@ msgstr ""
 msgid "Connect to FTP..."
 msgstr "FTP sunucuya bağlanılıyor..."
 
-#: fritzcall/src/plugin.py:761
+#: fritzcall/src/plugin.py:775
 msgid "Connected since"
 msgstr "Bağlantı süresi : "
 
-#: fritzcall/src/plugin.py:2594
+#: fritzcall/src/plugin.py:2608
 msgid "Connected to FRITZ!Box!"
 msgstr "FRITZ!Box'a bağlanıldı!"
 
@@ -3139,7 +3163,7 @@ msgstr ""
 msgid "Connected to NCID Server"
 msgstr ""
 
-#: fritzcall/src/plugin.py:2629
+#: fritzcall/src/plugin.py:2643
 #, python-format
 msgid ""
 "Connecting to FRITZ!Box failed\n"
@@ -3150,7 +3174,7 @@ msgstr ""
 " (%s)\n"
 "yeniden deneniyor..."
 
-#: fritzcall/src/plugin.py:2588
+#: fritzcall/src/plugin.py:2602
 msgid "Connecting to FRITZ!Box..."
 msgstr "FRITZ!Box'a bağlanılıyor..."
 
@@ -3170,7 +3194,7 @@ msgstr ""
 msgid "Connection Error"
 msgstr "Bağlantı hatası"
 
-#: fritzcall/src/plugin.py:2621
+#: fritzcall/src/plugin.py:2635
 #, python-format
 msgid ""
 "Connection to FRITZ!Box! lost\n"
@@ -3309,7 +3333,7 @@ msgstr ""
 msgid "Could not find timer '%s' with given start and end time!"
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:502
+#: fritzcall/src/FritzCallFBF.py:509
 msgid "Could not get call list; wrong version?"
 msgstr ""
 
@@ -3326,7 +3350,7 @@ msgstr "Dosya listesi alınamıyor."
 msgid "Could not open Picture in Picture"
 msgstr "Resim içinde resim açılamıyor"
 
-#: fritzcall/src/FritzCallFBF.py:1374 fritzcall/src/FritzCallFBF.py:2044
+#: fritzcall/src/FritzCallFBF.py:1383 fritzcall/src/FritzCallFBF.py:2059
 msgid "Could not parse FRITZ!Box Phonebook entry"
 msgstr "FRITZ!Box rehber kaydı ayrıştırılamıyor"
 
@@ -3335,7 +3359,7 @@ msgstr "FRITZ!Box rehber kaydı ayrıştırılamıyor"
 msgid "Could not read AutoTimer timer list: %s"
 msgstr "AutoTimer zamanlayıcı listesi okunamıyor : %s"
 
-#: fritzcall/src/FritzCallFBF.py:403
+#: fritzcall/src/FritzCallFBF.py:410
 msgid "Could not read FRITZ!Box phonebook; wrong version?"
 msgstr ""
 
@@ -3379,7 +3403,7 @@ msgid ""
 "Press OK to see the logfile!"
 msgstr ""
 
-#: autotimer/src/AutoTimerResource.py:164
+#: autotimer/src/AutoTimerResource.py:235
 msgid "Couldn't load config file!"
 msgstr ""
 
@@ -3407,6 +3431,10 @@ msgstr ""
 msgid "Couldn't open output .ts file"
 msgstr ""
 
+#: satipclient/src/SatIPTunerSetup.py:76
+msgid "Count - Type (host)"
+msgstr ""
+
 #: mosaic/src/plugin.py:326
 msgid "Countdown:"
 msgstr "Sayaç:"
@@ -3421,7 +3449,7 @@ msgstr "Sayaç:"
 msgid "Countries"
 msgstr ""
 
-#: ncidclient/src/plugin.py:743 fritzcall/src/plugin.py:1952
+#: ncidclient/src/plugin.py:743 fritzcall/src/plugin.py:1966
 msgid "Country"
 msgstr "Ülke"
 
@@ -3449,11 +3477,11 @@ msgstr ""
 msgid "Create a new AutoTimer."
 msgstr "Yeni otomatik zamanlayıcı oluştur."
 
-#: autotimer/src/AutoTimerOverview.py:231
+#: autotimer/src/AutoTimerOverview.py:232
 msgid "Create a new timer using the classic editor"
 msgstr "Klasik editörü kullanarak zamanlayıcı oluştur"
 
-#: autotimer/src/AutoTimerOverview.py:233
+#: autotimer/src/AutoTimerOverview.py:234
 msgid "Create a new timer using the wizard"
 msgstr "Sihirbazı kullanarak zamanlayıcı oluştur"
 
@@ -3612,11 +3640,11 @@ msgstr ""
 msgid "DD.MM.YYYY HH:MM"
 msgstr ""
 
-#: fritzcall/src/plugin.py:851
+#: fritzcall/src/plugin.py:865
 msgid "DECT inactive"
 msgstr ""
 
-#: fritzcall/src/plugin.py:847
+#: fritzcall/src/plugin.py:861
 msgid "DECT phones registered"
 msgstr "DECT telefon tanıtılmış"
 
@@ -3723,7 +3751,7 @@ msgid "Deactivate Movielist Preview"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:887
+#: fritzcall/src/plugin.py:901
 msgid "Deactivate WLAN guest access"
 msgstr ""
 
@@ -3731,39 +3759,39 @@ msgstr ""
 msgid "Deactivate permanent clock"
 msgstr "Kalıcı saati kapat"
 
-#: pushservice/src/Controller/DeactivatedTimers.py:33
+#: pushservice/src/Controller/DeactivatedTimers.py:32
 #, python-format
 msgid ""
 "Deactivated timer list:\n"
 "%s"
 msgstr ""
 
-#: pushservice/src/Controller/DeactivatedTimers.py:34
+#: pushservice/src/Controller/DeactivatedTimers.py:33
 msgid "DeactivatedTimerPushed"
 msgstr ""
 
-#: teletext/src/plugin.py:1344 fritzcall/src/plugin.py:1992
+#: teletext/src/plugin.py:1344 fritzcall/src/plugin.py:2006
 #: dreamirc/src/dreamIRCSetup.py:69
 msgid "Debug"
 msgstr "Hata ayıklama"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:219
+#: seriesplugin/src/SeriesPluginConfiguration.py:230
 msgid "Debug: Forum user name"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:218
+#: seriesplugin/src/SeriesPluginConfiguration.py:229
 msgid "Debug: Log file path"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:215
+#: seriesplugin/src/SeriesPluginConfiguration.py:226
 msgid "Debug: Print debug messages (Shell)"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:220
+#: seriesplugin/src/SeriesPluginConfiguration.py:231
 msgid "Debug: User mail address"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:216
+#: seriesplugin/src/SeriesPluginConfiguration.py:227
 msgid "Debug: Write Log"
 msgstr ""
 
@@ -3786,8 +3814,16 @@ msgstr ""
 msgid "Default"
 msgstr "Varsayılan"
 
+#: seriesplugin/src/SeriesPluginConfiguration.py:174
+msgid "Default episode"
+msgstr ""
+
 #: curlytx/src/CurlyTxSettings.py:68
 msgid "Default page"
+msgstr ""
+
+#: seriesplugin/src/SeriesPluginConfiguration.py:173
+msgid "Default season"
 msgstr ""
 
 #: permanenttimeshift/src/plugin.py:906
@@ -3861,7 +3897,7 @@ msgstr ""
 #: remotetimer/src/plugin.py:104 zapstatistic/src/plugin.py:431
 #: growlee/src/plugin.py:102 teletext/src/plugin.py:1718
 #: curlytx/src/CurlyTxSettings.py:52 subsdownloader2/src/plugin.py:1076
-#: fritzcall/src/plugin.py:1569 simplerss/src/RSSSetup.py:76
+#: fritzcall/src/plugin.py:1583 simplerss/src/RSSSetup.py:76
 #: ftpbrowser/src/FTPBrowser.py:188 ftpbrowser/src/FTPServerManager.py:258
 #: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:141
 #: fancontrol2/src/FC2webSite.py:177 fancontrol2/src/FC2webSite.py:213
@@ -3913,7 +3949,7 @@ msgid "Delete download"
 msgstr "İndirmeyi sil"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: zapstatistic/src/plugin.py:562 fritzcall/src/plugin.py:1591
+#: zapstatistic/src/plugin.py:562 fritzcall/src/plugin.py:1605
 msgid "Delete entry"
 msgstr "Kayıt sil"
 
@@ -3990,7 +4026,7 @@ msgstr "Kullanılmayan etiketleri sil"
 msgid "Descending"
 msgstr "Azalan"
 
-#: autotimer/src/AutoTimerEditor.py:548 autotimer/src/AutoTimerWizard.py:111
+#: autotimer/src/AutoTimerEditor.py:548 autotimer/src/AutoTimerWizard.py:113
 #: webinterface/src/WebComponents/Sources/Strings.py:61
 #: partnerbox/src/RemoteTimerEntry.py:159
 #: partnerbox/src/RemoteTimerEntry.py:471 lastfm/src/LastFMConfig.py:36
@@ -4063,6 +4099,10 @@ msgstr ""
 msgid "Directory name error !"
 msgstr ""
 
+#: seriesplugin/src/SeriesPluginConfiguration.py:170
+msgid "Directory pattern file"
+msgstr ""
+
 #: logomanager/src/plugin.py:219
 msgid "Directory to scan for Logos"
 msgstr ""
@@ -4133,7 +4173,7 @@ msgstr ""
 msgid "Display 4:3 content as"
 msgstr "4:3 içeriği şu şekilde göster"
 
-#: fritzcall/src/plugin.py:2706
+#: fritzcall/src/plugin.py:2720
 msgid "Display FRITZ!box-Fon calls on screen"
 msgstr "FRITZ!Box aramalarını ekranda göster"
 
@@ -4142,11 +4182,11 @@ msgid "Display Fon calls on screen"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1029
+#: fritzcall/src/plugin.py:1043
 msgid "Display all calls"
 msgstr "Tüm aramaları göster"
 
-#: fritzcall/src/plugin.py:1990
+#: fritzcall/src/plugin.py:2004
 msgid "Display connection infos"
 msgstr ""
 
@@ -4159,12 +4199,12 @@ msgid "Display first and last row."
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1033
+#: fritzcall/src/plugin.py:1047
 msgid "Display incoming calls"
 msgstr "Gelen aramaları göster"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1031
+#: fritzcall/src/plugin.py:1045
 msgid "Display missed calls"
 msgstr "Cevapsız aramaları göster"
 
@@ -4174,11 +4214,11 @@ msgid "Display more Options"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1035
+#: fritzcall/src/plugin.py:1049
 msgid "Display outgoing calls"
 msgstr "Giden aramaları göster"
 
-#: mytube/src/MyTubeSearch.py:337
+#: mytube/src/MyTubeSettings.py:65
 msgid "Display search results by:"
 msgstr "Sonuçları sıralama türü:"
 
@@ -4211,7 +4251,7 @@ msgstr ""
 msgid "Do You want to restart GUI to apply changes?"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginRenamer.py:203
+#: seriesplugin/src/SeriesPluginRenamer.py:211
 msgid "Do You want to start renaming?"
 msgstr ""
 
@@ -4220,9 +4260,13 @@ msgid "Do not wake up at the end of next deep standby interval."
 msgstr ""
 
 #. TRANSLATORS: this is a window title.
-#: fritzcall/src/plugin.py:1183
+#: fritzcall/src/plugin.py:1197
 msgid "Do what?"
 msgstr "Ne yapmak istiyorsunuz?"
+
+#: dreamexplorer/src/plugin.py:528 dreamexplorer/src/plugin.py:532
+msgid "Do you really want to DELETE:\n"
+msgstr ""
 
 #: merlinmusicplayer/src/plugin.py:1901
 msgid "Do you really want to add all songs from that album to a playlist?"
@@ -4243,8 +4287,8 @@ msgid ""
 "%s?"
 msgstr ""
 
-#: autotimer/src/AutoTimerOverview.py:188 merlinepg/src/plugin.py:588
-#: merlinepg/src/plugin.py:908 seriesplugin/src/SeriesPluginInfoScreen.py:448
+#: autotimer/src/AutoTimerOverview.py:189 merlinepg/src/plugin.py:588
+#: merlinepg/src/plugin.py:908 seriesplugin/src/SeriesPluginInfoScreen.py:449
 #, python-format
 msgid "Do you really want to delete %s?"
 msgstr "%s 'i silmek istediğinizden emin misiniz?"
@@ -4257,7 +4301,7 @@ msgstr ""
 "Bütün etiketleri silmek istediğinizden emin misiniz?\n"
 "(Onaylarsanız, bir sonraki ekrandaki 'Vazgeç' seçimiyle iptal edemezsiniz!)"
 
-#: ncidclient/src/plugin.py:521 fritzcall/src/plugin.py:1662
+#: ncidclient/src/plugin.py:521 fritzcall/src/plugin.py:1676
 #, python-format
 msgid ""
 "Do you really want to delete entry for\n"
@@ -4315,10 +4359,6 @@ msgstr ""
 msgid "Do you really want to stop the recording?"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:528 dreamexplorer/src/plugin.py:532
-msgid "Do you really want to DELETE:\n"
-msgstr ""
-
 #: networkbrowser/src/NetworkBrowser.py:427
 msgid "Do you want to enter a username and password for this host?\n"
 msgstr "Bu konak için kullanıcı adı ve parola tanımlamak istiyor musunuz?\n"
@@ -4337,7 +4377,7 @@ msgstr "Dreambox'ı yeniden başlatmak istiyor musunuz?"
 msgid "Do you want to restart the GUI now?"
 msgstr "Şimdi GUI yeniden başlatmak istiyor musunuz?"
 
-#: mytube/src/plugin.py:788
+#: mytube/src/plugin.py:781
 msgid "Do you want to see more entries?"
 msgstr "Daha fazla başlık görmek istiyor musunuz?"
 
@@ -4365,7 +4405,7 @@ msgstr "Sonra indirme yapma:"
 msgid "Don't download before:"
 msgstr "Önce indirme yapma:"
 
-#: seriesplugin/src/Channels.py:335 pushservice/src/PushServiceBase.py:220
+#: seriesplugin/src/Channels.py:336 pushservice/src/PushServiceBase.py:220
 msgid "Don't edit this manually unless you really know what you are doing"
 msgstr ""
 
@@ -4430,7 +4470,7 @@ msgstr "İndir"
 msgid "Download Picture"
 msgstr ""
 
-#: mytube/src/plugin.py:549
+#: mytube/src/plugin.py:540
 msgid "Download Video"
 msgstr "Video'yu indir"
 
@@ -4454,7 +4494,7 @@ msgstr "İndirme tamamlandı."
 msgid "Download in the background:"
 msgstr "Dosya indirmelerini arkaplanda yap"
 
-#: mytube/src/MyTubeSearch.py:353
+#: mytube/src/MyTubeSettings.py:62
 msgid "Download location"
 msgstr "İndirme konumu"
 
@@ -4519,7 +4559,7 @@ msgstr "%s filmi indiriliyor!"
 msgid "Downloading satellites failed!"
 msgstr "uydular indirilmesi başarısız!"
 
-#: mytube/src/plugin.py:1362
+#: mytube/src/plugin.py:1355
 msgid "Downloading screenshots. Please wait..."
 msgstr "Ekran görüntüsü indiriliyor. Lütfen bekleyin..."
 
@@ -4614,8 +4654,8 @@ msgstr ""
 msgid "Duration:"
 msgstr ""
 
-#: webcamviewer/src/WebcamTravel.py:250 mytube/src/plugin.py:1156
-#: mytube/src/plugin.py:1381
+#: webcamviewer/src/WebcamTravel.py:250 mytube/src/plugin.py:1149
+#: mytube/src/plugin.py:1374
 msgid "Duration: "
 msgstr "Süre: "
 
@@ -4641,11 +4681,11 @@ msgstr "D"
 msgid "E-Mail Address"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:205
+#: seriesplugin/src/SeriesPluginConfiguration.py:216
 msgid "E2: Composition of the recording filenames"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:223
+#: seriesplugin/src/SeriesPluginConfiguration.py:234
 msgid "E2: Enable recording debug (Timer log)"
 msgstr ""
 
@@ -4896,7 +4936,7 @@ msgstr ""
 #: ncidclient/src/plugin.py:445 weatherplugin/src/setup.py:79
 #: advhdmi/src/AdvHdmiCecSetup.py:214 partnerbox/src/PartnerboxSetup.py:130
 #: pipservicerelation/src/plugin.py:88 teletext/src/plugin.py:1720
-#: serienfilm/src/SerienFilm.py:65 fritzcall/src/plugin.py:1573
+#: serienfilm/src/SerienFilm.py:65 fritzcall/src/plugin.py:1587
 #: ftpbrowser/src/FTPServerManager.py:260
 #: birthdayreminder/src/BirthdayReminder.py:267
 #: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:140
@@ -4947,7 +4987,7 @@ msgid "Edit Timer"
 msgstr ""
 
 #. TRANSLATORS: description of AutoTimer in PluginBrowser
-#: autotimer/src/plugin.py:197 autotimer/src/plugin.py:204
+#: autotimer/src/plugin.py:202 autotimer/src/plugin.py:209
 msgid "Edit Timers and scan for new Events"
 msgstr "Zamanlayıcı düzenle ve yeni eylemlerde ara"
 
@@ -4963,7 +5003,7 @@ msgstr ""
 msgid "Edit line "
 msgstr ""
 
-#: autotimer/src/AutoTimerOverview.py:221
+#: autotimer/src/AutoTimerOverview.py:222
 msgid "Edit new timer defaults"
 msgstr "Varsayılan zamanlayıcı taslağını düzenleyin"
 
@@ -4972,7 +5012,7 @@ msgid "Edit selected AutoTimer"
 msgstr "Seçilen otomatik zamanlayıcıyı düzenle"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1595
+#: fritzcall/src/plugin.py:1609
 msgid "Edit selected entry"
 msgstr "Seçili kaydı düzelt"
 
@@ -5166,7 +5206,7 @@ msgstr ""
 msgid "Enable PushService"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:144
+#: seriesplugin/src/SeriesPluginConfiguration.py:148
 msgid "Enable SeriesPlugin"
 msgstr ""
 
@@ -5196,6 +5236,10 @@ msgstr ""
 
 #: vps/src_py/Vps_setup.py:34
 msgid "Enable VPS-Plugin"
+msgstr ""
+
+#: webinterface/src/WebComponents/Sources/Strings.py:179
+msgid "Enable encoder"
 msgstr ""
 
 #: partnerbox/src/PartnerboxSetup.py:80
@@ -5237,7 +5281,7 @@ msgstr "Zap geçmişi:"
 
 #: startuptostandby/src/StartupToStandbyConfiguration.py:41
 #: autotimer/src/AutoTimerEditor.py:547 autotimer/src/AutoTimerImporter.py:130
-#: autotimer/src/AutoTimerWizard.py:110 easyinfo/src/plugin.py:96
+#: autotimer/src/AutoTimerWizard.py:112 easyinfo/src/plugin.py:96
 #: kiddytimer/src/KTsetup.py:52 easymedia/src/plugin.py:57
 #: easymedia/src/plugin.py:58 easymedia/src/plugin.py:59
 #: easymedia/src/plugin.py:60 easymedia/src/plugin.py:61
@@ -5278,7 +5322,7 @@ msgstr ""
 msgid "End of \"after event\" timespan"
 msgstr "Zaman aralığı sonu"
 
-#: autotimer/src/AutoTimerEditor.py:568 autotimer/src/AutoTimerWizard.py:104
+#: autotimer/src/AutoTimerEditor.py:568 autotimer/src/AutoTimerWizard.py:106
 msgid "End of timespan"
 msgstr "Zaman aralığı sonu"
 
@@ -5352,7 +5396,7 @@ msgstr ""
 msgid "Enter IP to scan..."
 msgstr "Aramak istediğiniz IP adresi:"
 
-#: ncidclient/src/plugin.py:643 fritzcall/src/plugin.py:1798
+#: ncidclient/src/plugin.py:643 fritzcall/src/plugin.py:1812
 msgid "Enter Search Terms"
 msgstr "Arama terimlerini düzelt"
 
@@ -5474,7 +5518,7 @@ msgstr ""
 msgid "Enter your password here:"
 msgstr "Parolanızı buraya girin:"
 
-#: mytube/src/plugin.py:599
+#: mytube/src/plugin.py:590
 msgid "Enter your search term(s)"
 msgstr "Arama terim(ler)ini girin"
 
@@ -5496,15 +5540,15 @@ msgstr "Bildirim"
 msgid "Entry %s/%s"
 msgstr "Bildiri %s/%s"
 
-#: ncidclient/src/plugin.py:609 fritzcall/src/plugin.py:1750
+#: ncidclient/src/plugin.py:609 fritzcall/src/plugin.py:1764
 msgid "Entry incomplete."
 msgstr "Giriş tamamlanmamış."
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:162
+#: seriesplugin/src/SeriesPluginConfiguration.py:166
 msgid "Episode pattern file"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:303
+#: seriesplugin/src/SeriesPluginInfoScreen.py:304
 #, python-brace-format
 msgid ""
 "Episode: {episode:d}\n"
@@ -5545,7 +5589,7 @@ msgstr ""
 msgid "Error by writing bookmarks !!!"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:173 seriesplugin/src/ChannelEditor.py:218
+#: seriesplugin/src/ChannelEditor.py:175 seriesplugin/src/ChannelEditor.py:220
 msgid "Error check log file"
 msgstr ""
 
@@ -5589,6 +5633,16 @@ msgstr ""
 #: podcast/src/plugin.py:296
 msgid "Error getting movies"
 msgstr "Filmler getirilirken hata oluştu"
+
+#: seriesplugin/src/Identifiers/WunschlisteFeed.py:159
+#: seriesplugin/src/Identifiers/WunschlisteFeed.py:163
+#: seriesplugin/src/Identifiers/SerienServer.py:63
+#: seriesplugin/src/Identifiers/Fernsehserien.py:126
+#: seriesplugin/src/Identifiers/Fernsehserien.py:130
+#: seriesplugin/src/Identifiers/Wunschliste.py:133
+#: seriesplugin/src/Identifiers/Wunschliste.py:137
+msgid "Error install"
+msgstr ""
 
 #: vlcplayer/src/VlcMediaList.py:186
 #, python-format
@@ -5931,11 +5985,11 @@ msgstr ""
 msgid "Extended Control Range"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1986
+#: fritzcall/src/plugin.py:2000
 msgid "Extended Search for faces"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1985
+#: fritzcall/src/plugin.py:1999
 msgid "Extended Search for names"
 msgstr ""
 
@@ -5947,7 +6001,7 @@ msgstr ""
 msgid "Extended search filter"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1958
+#: fritzcall/src/plugin.py:1972
 msgid "Extension number to initiate call on"
 msgstr "Dış hatta ulaşmak için çevrilen numara"
 
@@ -5986,111 +6040,111 @@ msgstr ""
 msgid "FILELIST_YOUNGEST"
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:551 fritzcall/src/FritzCallFBF.py:1469
-#: fritzcall/src/FritzCallFBF.py:2151 fritzcall/src/FritzCallFBF.py:2888
+#: fritzcall/src/FritzCallFBF.py:558 fritzcall/src/FritzCallFBF.py:1478
+#: fritzcall/src/FritzCallFBF.py:2166 fritzcall/src/FritzCallFBF.py:2929
 #, python-format
 msgid "FRITZ!Box - Could not load calls: %s"
 msgstr "FRITZ!Box - Aramalar yüklenemedi: %s"
 
-#: fritzcall/src/FritzCallFBF.py:407 fritzcall/src/FritzCallFBF.py:1378
-#: fritzcall/src/FritzCallFBF.py:2049 fritzcall/src/FritzCallFBF.py:2788
+#: fritzcall/src/FritzCallFBF.py:414 fritzcall/src/FritzCallFBF.py:1387
+#: fritzcall/src/FritzCallFBF.py:2064 fritzcall/src/FritzCallFBF.py:2829
 #, python-format
 msgid "FRITZ!Box - Could not load phonebook: %s"
 msgstr "Rehber, FRITZ!Box'dan yüklenemiyor: %s"
 
-#: fritzcall/src/FritzCallFBF.py:595 fritzcall/src/FritzCallFBF.py:1513
-#: fritzcall/src/FritzCallFBF.py:2189
+#: fritzcall/src/FritzCallFBF.py:602 fritzcall/src/FritzCallFBF.py:1522
+#: fritzcall/src/FritzCallFBF.py:2204
 #, python-format
 msgid "FRITZ!Box - Dialling failed: %s"
 msgstr "FRITZ!Box araması başarısız: %s"
 
-#: fritzcall/src/FritzCallFBF.py:1092 fritzcall/src/FritzCallFBF.py:1789
-#: fritzcall/src/FritzCallFBF.py:2568 fritzcall/src/FritzCallFBF.py:3364
+#: fritzcall/src/FritzCallFBF.py:1099 fritzcall/src/FritzCallFBF.py:1798
+#: fritzcall/src/FritzCallFBF.py:2603 fritzcall/src/FritzCallFBF.py:3395
 #, python-format
 msgid "FRITZ!Box - Error getting blacklist: %s"
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:994 fritzcall/src/FritzCallFBF.py:1707
-#: fritzcall/src/FritzCallFBF.py:2478 fritzcall/src/FritzCallFBF.py:3271
+#: fritzcall/src/FritzCallFBF.py:1001 fritzcall/src/FritzCallFBF.py:1716
+#: fritzcall/src/FritzCallFBF.py:2513 fritzcall/src/FritzCallFBF.py:3302
 #, python-format
 msgid "FRITZ!Box - Error getting status: %s"
 msgstr "FRITZ!Box durum bilgisi alınamadı: %s"
 
-#: fritzcall/src/FritzCallFBF.py:205 fritzcall/src/FritzCallFBF.py:1211
-#: fritzcall/src/FritzCallFBF.py:1897 fritzcall/src/FritzCallFBF.py:2674
+#: fritzcall/src/FritzCallFBF.py:212 fritzcall/src/FritzCallFBF.py:1220
+#: fritzcall/src/FritzCallFBF.py:1913 fritzcall/src/FritzCallFBF.py:2715
 msgid ""
 "FRITZ!Box - Error logging in\n"
 "\n"
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:460
+#: fritzcall/src/FritzCallFBF.py:467
 #, python-format
 msgid "FRITZ!Box - Error logging in: %s"
 msgstr "FRITZ!Box oturumu başlatılamadı: %s"
 
-#: fritzcall/src/FritzCallFBF.py:219 fritzcall/src/FritzCallFBF.py:1232
-#: fritzcall/src/FritzCallFBF.py:1912 fritzcall/src/FritzCallFBF.py:2689
+#: fritzcall/src/FritzCallFBF.py:226 fritzcall/src/FritzCallFBF.py:1241
+#: fritzcall/src/FritzCallFBF.py:1928 fritzcall/src/FritzCallFBF.py:2730
 #, python-format
 msgid ""
 "FRITZ!Box - Error logging in: %s\n"
 "Disabling plugin."
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:241 fritzcall/src/FritzCallFBF.py:1254
-#: fritzcall/src/FritzCallFBF.py:1933 fritzcall/src/FritzCallFBF.py:2710
+#: fritzcall/src/FritzCallFBF.py:248 fritzcall/src/FritzCallFBF.py:1263
+#: fritzcall/src/FritzCallFBF.py:1949 fritzcall/src/FritzCallFBF.py:2750
 #, python-format
 msgid "FRITZ!Box - Error logging out: %s"
 msgstr "FRITZ!Box oturumu kapatılamadı: %s"
 
-#: fritzcall/src/FritzCallFBF.py:1042 fritzcall/src/FritzCallFBF.py:1753
-#: fritzcall/src/FritzCallFBF.py:2518 fritzcall/src/FritzCallFBF.py:3311
+#: fritzcall/src/FritzCallFBF.py:1049 fritzcall/src/FritzCallFBF.py:1762
+#: fritzcall/src/FritzCallFBF.py:2553 fritzcall/src/FritzCallFBF.py:3342
 #, python-format
 msgid "FRITZ!Box - Error resetting: %s"
 msgstr "FRITZ!Box - yeniden başlatılamadı: %s"
 
-#: fritzcall/src/FritzCallFBF.py:2313 fritzcall/src/FritzCallFBF.py:3044
+#: fritzcall/src/FritzCallFBF.py:2324 fritzcall/src/FritzCallFBF.py:3070
 #, python-format
 msgid "FRITZ!Box - Failed changing GuestAccess: %s"
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:710 fritzcall/src/FritzCallFBF.py:1578
+#: fritzcall/src/FritzCallFBF.py:717 fritzcall/src/FritzCallFBF.py:1587
 #, python-format
 msgid "FRITZ!Box - Failed changing Mailbox: %s"
 msgstr "FRITZ!Box - posta kutusu durumu değiştirilemedi: %s"
 
-#: fritzcall/src/FritzCallFBF.py:642 fritzcall/src/FritzCallFBF.py:1561
-#: fritzcall/src/FritzCallFBF.py:2245 fritzcall/src/FritzCallFBF.py:2959
+#: fritzcall/src/FritzCallFBF.py:649 fritzcall/src/FritzCallFBF.py:1570
+#: fritzcall/src/FritzCallFBF.py:2260 fritzcall/src/FritzCallFBF.py:3000
 #, python-format
 msgid "FRITZ!Box - Failed changing WLAN: %s"
 msgstr "FRITZ!Box WLAN durumu değiştirilemedi: %s"
 
-#: fritzcall/src/plugin.py:1934
+#: fritzcall/src/plugin.py:1948
 msgid "FRITZ!Box FON address (Name or IP)"
 msgstr "FRITZ!Box adresi (isim yada IP)"
 
-#: fritzcall/src/plugin.py:1935
+#: fritzcall/src/plugin.py:1949
 msgid "FRITZ!Box FON firmware version"
 msgstr ""
 
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:734 fritzcall/src/plugin.py:1881
-#: fritzcall/src/plugin.py:1908 fritzcall/src/plugin.py:2709
+#: fritzcall/src/plugin.py:748 fritzcall/src/plugin.py:1895
+#: fritzcall/src/plugin.py:1922 fritzcall/src/plugin.py:2723
 msgid "FRITZ!Box Fon Status"
 msgstr "FRITZ!Box durumu"
 
-#: fritzcall/src/plugin.py:1968
+#: fritzcall/src/plugin.py:1982
 msgid "FRITZ!Box PhoneBook to read"
 msgstr ""
 
-#: fritzcall/src/plugin.py:2613
+#: fritzcall/src/plugin.py:2627
 msgid ""
 "FRITZ!Box firmware version not configured! Please set it in the "
 "configuration."
 msgstr ""
 
-#: fritzcall/src/plugin.py:1288
+#: fritzcall/src/plugin.py:1302
 msgid "FRITZ!Box not available for calling"
 msgstr ""
 
@@ -6234,20 +6288,20 @@ msgstr ""
 msgid "Fetch feeds from Google Reader?"
 msgstr "Google Reader beslemeleri alınsın mı?"
 
-#: mytube/src/plugin.py:417 mytube/src/plugin.py:485
+#: mytube/src/plugin.py:410 mytube/src/plugin.py:474
 msgid "Fetching feed entries"
 msgstr "Bilgiler, youtube'dan alınıyor"
 
-#: mytube/src/plugin.py:487
+#: mytube/src/plugin.py:476
 msgid "Fetching search entries"
 msgstr "Arama sonuçları getiriliyor"
 
-#: infobartunerstate/src/IBTSConfiguration.py:104
+#: infobartunerstate/src/IBTSConfiguration.py:113
 #, python-format
 msgid "Field %d content"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:108
+#: infobartunerstate/src/IBTSConfiguration.py:117
 #, python-format
 msgid "Field %d width"
 msgstr ""
@@ -6336,11 +6390,11 @@ msgstr "Filtre"
 msgid "Filter Services"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1942
+#: fritzcall/src/plugin.py:1956
 msgid "Filter also list of calls"
 msgstr ""
 
-#: mytube/src/MyTubeSearch.py:338
+#: mytube/src/MyTubeSettings.py:66
 msgid "Filter restricted content:"
 msgstr ""
 
@@ -6365,7 +6419,6 @@ msgstr ""
 #: rsdownloader/src/plugin.py:653 rsdownloader/src/plugin.py:720
 #: rsdownloader/src/plugin.py:1433
 #: webinterface/src/WebComponents/Sources/Strings.py:50
-#: infobartunerstate/src/InfoBarTunerState.py:1220
 msgid "Finished"
 msgstr "Tamamlandı"
 
@@ -6456,7 +6509,7 @@ msgstr ""
 msgid "Found Log(s)"
 msgstr ""
 
-#: autotimer/src/plugin.py:161 autotimer/src/AutoTimerResource.py:96
+#: autotimer/src/plugin.py:166 autotimer/src/AutoTimerResource.py:96
 #: epgrefresh/src/EPGRefresh.py:419
 #, python-format
 msgid ""
@@ -6476,7 +6529,7 @@ msgstr ""
 msgid "Found active timer(s)"
 msgstr ""
 
-#: pushservice/src/Controller/DeactivatedTimers.py:32
+#: pushservice/src/Controller/DeactivatedTimers.py:31
 msgid "Found deactivated timer(s)"
 msgstr ""
 
@@ -6484,7 +6537,7 @@ msgstr ""
 msgid "Found no Enclosure we can display."
 msgstr "Gösterilmek üzere ilişkili bildiri bulunamadı."
 
-#: fritzcall/src/plugin.py:1192 fritzcall/src/plugin.py:2226
+#: fritzcall/src/plugin.py:1206 fritzcall/src/plugin.py:2240
 #, python-format
 msgid ""
 "Found picture\n"
@@ -6494,7 +6547,7 @@ msgid ""
 "But did not load. Probably not PNG, 8-bit"
 msgstr ""
 
-#: ncidclient/src/plugin.py:46 fritzcall/src/plugin.py:140
+#: ncidclient/src/plugin.py:46 fritzcall/src/plugin.py:154
 #: mytube/src/plugin.py:91
 msgid "France"
 msgstr "Fransa"
@@ -6525,7 +6578,7 @@ msgstr "Fransızca"
 msgid "Frequency:"
 msgstr "Frekans:"
 
-#: autotimer/src/AutoTimerOverview.py:228
+#: autotimer/src/AutoTimerOverview.py:229
 msgid "Frequently asked questions"
 msgstr "Sıkça sorulan sorular"
 
@@ -6560,7 +6613,7 @@ msgid "Frisian"
 msgstr "Frizyece"
 
 #. TRANSLATORS: this is a window title.
-#: fritzcall/src/plugin.py:1920
+#: fritzcall/src/plugin.py:1934
 msgid "FritzCall Setup"
 msgstr "FritzCall Kurulumu"
 
@@ -6725,7 +6778,7 @@ msgstr ""
 msgid "Genuine Dreambox"
 msgstr "Dreambox'ınız orijinal mi?"
 
-#: mytube/src/plugin.py:390 mytube/src/plugin.py:409 mytube/src/plugin.py:472
+#: mytube/src/plugin.py:383 mytube/src/plugin.py:402 mytube/src/plugin.py:463
 msgid "Genuine Dreambox validation failed!"
 msgstr "Dreambox orijinallik kontrolü başarısız!"
 
@@ -6751,7 +6804,7 @@ msgstr "Almanya hava durumu bilgisi"
 msgid "German traffic information"
 msgstr "Almanya trafik durumu bilgisi"
 
-#: ncidclient/src/plugin.py:44 fritzcall/src/plugin.py:138
+#: ncidclient/src/plugin.py:44 fritzcall/src/plugin.py:152
 #: mytube/src/plugin.py:92
 msgid "Germany"
 msgstr "Almanya"
@@ -6804,11 +6857,11 @@ msgstr ""
 msgid "Getting Partnerbox Information..."
 msgstr ""
 
-#: fritzcall/src/plugin.py:1037 fritzcall/src/plugin.py:1092
+#: fritzcall/src/plugin.py:1051 fritzcall/src/plugin.py:1106
 msgid "Getting calls from FRITZ!Box..."
 msgstr "Aramalar FRITZ!Box'tan alınıyor..."
 
-#: fritzcall/src/plugin.py:517 fritzcall/src/plugin.py:683
+#: fritzcall/src/plugin.py:531 fritzcall/src/plugin.py:697
 msgid "Getting status from FRITZ!Box Fon..."
 msgstr "Durum bilgisi FRITZ!Box'tan alınıyor..."
 
@@ -6935,15 +6988,15 @@ msgstr ""
 msgid "Guess existing timer based on begin/end"
 msgstr "Başlama/Bitiş bilgisini mevcutlardan al"
 
-#: fritzcall/src/plugin.py:722 fritzcall/src/plugin.py:912
+#: fritzcall/src/plugin.py:736 fritzcall/src/plugin.py:926
 msgid "Guest access"
 msgstr ""
 
-#: fritzcall/src/plugin.py:883
+#: fritzcall/src/plugin.py:897
 msgid "Guest access not active"
 msgstr ""
 
-#: fritzcall/src/plugin.py:879
+#: fritzcall/src/plugin.py:893
 msgid "Guest access on "
 msgstr ""
 
@@ -7021,13 +7074,9 @@ msgstr "İbranice"
 msgid "Hebrew / Arabic"
 msgstr ""
 
-#: mytube/src/plugin.py:446
-msgid "Hello"
-msgstr ""
-
-#: autotimer/src/AutoTimerOverview.py:227 pluginsort/src/plugin.py:403
+#: autotimer/src/AutoTimerOverview.py:228 pluginsort/src/plugin.py:403
 #: googlemaps/src/plugin.py:212 elektro/src/plugin.py:502
-#: showclock/src/plugin.py:147 mytube/src/plugin.py:1527
+#: showclock/src/plugin.py:147 mytube/src/plugin.py:1520
 #: automaticcleanup/src/plugin.py:175 podcast/src/plugin.py:619
 #: pipzap/src/PipzapSetup.py:64 fancontrol2/src/plugin.py:674
 msgid "Help"
@@ -7069,7 +7118,7 @@ msgstr ""
 msgid "Hindi"
 msgstr ""
 
-#: epgsearch/src/EPGSearch.py:138 mytube/src/plugin.py:270
+#: epgsearch/src/EPGSearch.py:138 mytube/src/plugin.py:266
 msgid "History"
 msgstr "Geçmiş"
 
@@ -7097,11 +7146,11 @@ msgstr "Hong Kong"
 msgid "Hook"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:113
+#: infobartunerstate/src/IBTSConfiguration.py:122
 msgid "Horizontal offset left in pixel"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:114
+#: infobartunerstate/src/IBTSConfiguration.py:123
 msgid "Horizontal offset right in pixel"
 msgstr ""
 
@@ -7234,7 +7283,7 @@ msgstr ""
 msgid "IP Address"
 msgstr "IP adresi"
 
-#: fritzcall/src/plugin.py:761 fritzcall/src/plugin.py:763
+#: fritzcall/src/plugin.py:775 fritzcall/src/plugin.py:777
 msgid "IP Address:"
 msgstr "IP Adresi:"
 
@@ -7392,7 +7441,7 @@ msgid ""
 "regular EPG."
 msgstr ""
 
-#: startupservice/src/plugin.py:153
+#: startupservice/src/plugin.py:145
 msgid ""
 "If you see this message, please switch to the service you want to mark as "
 "startservice and try again."
@@ -7405,7 +7454,7 @@ msgid ""
 "Picture in Picture."
 msgstr ""
 
-#: fritzcall/src/plugin.py:1991
+#: fritzcall/src/plugin.py:2005
 msgid "Ignore callers with no phone number"
 msgstr ""
 
@@ -7457,7 +7506,7 @@ msgstr "Otomatik zamanlayıcıyı içeri al"
 msgid "Import CSV file"
 msgstr ""
 
-#: autotimer/src/AutoTimerOverview.py:218
+#: autotimer/src/AutoTimerOverview.py:219
 msgid "Import existing Timer"
 msgstr "Mevcut zamanlayıcıyı içeri al"
 
@@ -7465,7 +7514,7 @@ msgstr "Mevcut zamanlayıcıyı içeri al"
 msgid "Import from AutoTimer"
 msgstr "Otomatik zamanlayıcıdan içeri al"
 
-#: autotimer/src/AutoTimerOverview.py:219 epgsearch/src/EPGSearch.py:226
+#: autotimer/src/AutoTimerOverview.py:220 epgsearch/src/EPGSearch.py:226
 msgid "Import from EPG"
 msgstr "EPG'den içeri al"
 
@@ -7530,11 +7579,11 @@ msgid "Included days:"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1011
+#: fritzcall/src/plugin.py:1025
 msgid "Incoming"
 msgstr "Gelen"
 
-#: fritzcall/src/plugin.py:2351
+#: fritzcall/src/plugin.py:2365
 #, python-format
 msgid ""
 "Incoming Call on %(date)s at %(time)s from\n"
@@ -7555,7 +7604,7 @@ msgid ""
 "---------------------------------------------"
 msgstr ""
 
-#: fritzcall/src/plugin.py:153
+#: fritzcall/src/plugin.py:167
 msgid "Incoming calls"
 msgstr "Gelen aramalar"
 
@@ -7619,7 +7668,7 @@ msgstr ""
 msgid "InfoBarTunerState Setup"
 msgstr ""
 
-#: infobartunerstate/src/plugin.py:237
+#: infobartunerstate/src/plugin.py:244
 msgid "InfoBarTunerState is disabled"
 msgstr ""
 
@@ -7638,7 +7687,7 @@ msgid "Infobar and window style:"
 msgstr ""
 
 #
-#: infobartunerstate/src/IBTSConfiguration.py:127
+#: infobartunerstate/src/IBTSConfiguration.py:136
 msgid "Infobar timeout"
 msgstr "Bilgi çubuğu zaman aşımı süresi"
 
@@ -7854,7 +7903,7 @@ msgstr "İtalya hava durumu bilgisi"
 msgid "Italian Weather forecast on Dreambox from www.google.it."
 msgstr "www.google.it kaynaklı İtalya hava durumu bilgisi."
 
-#: ncidclient/src/plugin.py:47 fritzcall/src/plugin.py:141
+#: ncidclient/src/plugin.py:47 fritzcall/src/plugin.py:155
 #: mytube/src/plugin.py:100
 msgid "Italy"
 msgstr "İtalya"
@@ -7998,7 +8047,7 @@ msgstr ""
 msgid "Laothian"
 msgstr ""
 
-#: ncidclient/src/plugin.py:828 fritzcall/src/plugin.py:2081
+#: ncidclient/src/plugin.py:828 fritzcall/src/plugin.py:2095
 msgid "Last 10 calls:\n"
 msgstr "Son 10 arama:\n"
 
@@ -8070,7 +8119,7 @@ msgstr "Lisans"
 msgid "LigaLine"
 msgstr ""
 
-#: mytube/src/plugin.py:1156
+#: mytube/src/plugin.py:1149
 msgid "Likes: "
 msgstr ""
 
@@ -8093,7 +8142,7 @@ msgstr ""
 msgid "Lingala"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:120
+#: infobartunerstate/src/IBTSConfiguration.py:129
 msgid "List goes up"
 msgstr ""
 
@@ -8118,6 +8167,10 @@ msgstr ""
 #: vlcplayer/src/VlcServerList.py:98
 msgid "List of known VLC-Server Profiles"
 msgstr "Bilinen VLC Sunucu Profilleri"
+
+#: pushservice/src/Controller/DeactivatedTimers.py:47
+msgid "List similar timer(s)"
+msgstr ""
 
 #: merlinepgcenter/src/ConfigTabs.py:219
 msgid "List style:"
@@ -8152,11 +8205,11 @@ msgstr "Yükle"
 msgid "Load Bouquet"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:138
-msgid "Load Web-Channels..."
+#: seriesplugin/src/ChannelEditor.py:142
+msgid "Load channels for bouquet"
 msgstr ""
 
-#: mytube/src/MyTubeSearch.py:341
+#: mytube/src/MyTubeSettings.py:61
 msgid "Load feed on startup:"
 msgstr "Açılırken seçilen beslemeyi yükle:"
 
@@ -8280,6 +8333,10 @@ msgstr ""
 msgid "Location '%s' removed successfully"
 msgstr ""
 
+#: autotimer/src/AutoTimerSettings.py:63
+msgid "Location and name of log file"
+msgstr ""
+
 #: weatherplugin/src/setup.py:199
 msgid "Location code"
 msgstr ""
@@ -8316,14 +8373,6 @@ msgstr ""
 msgid "Logging-Path: %s"
 msgstr ""
 
-#: mytube/src/plugin.py:446
-msgid "Login OK"
-msgstr ""
-
-#: mytube/src/plugin.py:449
-msgid "Login failed"
-msgstr ""
-
 #: youtubeplayer/src/YouTubeList.py:495 youtubeplayer/src/YouTubeList.py:521
 #: youtubeplayer/src/YouTubeList.py:547 youtubeplayer/src/YouTubeList.py:577
 #: youtubeplayer/src/plugin.py:93 youtubeplayer/src/plugin.py:113
@@ -8331,7 +8380,7 @@ msgid "Login not successful"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: ofdb/src/plugin.py:70 imdb/src/plugin.py:91 fritzcall/src/plugin.py:1150
+#: ofdb/src/plugin.py:70 imdb/src/plugin.py:91 fritzcall/src/plugin.py:1164
 msgid "Lookup"
 msgstr "Sorgula"
 
@@ -8377,7 +8426,7 @@ msgstr ""
 msgid "MSN location search result"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1941
+#: fritzcall/src/plugin.py:1955
 msgid "MSN to show (separated by ,)"
 msgstr "MSN göster (virgülle ayrılmış)"
 
@@ -8401,7 +8450,7 @@ msgstr ""
 msgid "Mail to or leave empty (From will be used)"
 msgstr ""
 
-#: fritzcall/src/plugin.py:492
+#: fritzcall/src/plugin.py:506
 msgid "Mailbox"
 msgstr "Posta kutusu"
 
@@ -8413,7 +8462,7 @@ msgstr ""
 msgid "Main Picture"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:171
+#: seriesplugin/src/SeriesPluginConfiguration.py:180
 msgid "Main bouquet for channel editor"
 msgstr ""
 
@@ -8521,7 +8570,7 @@ msgstr ""
 msgid "Match Timespan: %02d:%02d - %02d:%02d"
 msgstr "Zaman aralığı eşleştir:  %02d:%02d - %02d:%02d"
 
-#: autotimer/src/AutoTimerEditor.py:549 autotimer/src/AutoTimerWizard.py:112
+#: autotimer/src/AutoTimerEditor.py:549 autotimer/src/AutoTimerWizard.py:114
 msgid "Match title"
 msgstr "Anahtar Kelime"
 
@@ -8557,7 +8606,7 @@ msgstr ""
 msgid "Max Toplist Entries"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:184
+#: seriesplugin/src/SeriesPluginConfiguration.py:193
 msgid "Max time drift to match episode"
 msgstr ""
 
@@ -8589,6 +8638,11 @@ msgstr ""
 msgid ""
 "Maximum Timeshift length per Event reached!\n"
 "Restarting Timeshift now ..."
+msgstr ""
+
+#: satipclient/src/SatIPTunerSetup.py:138
+#, python-brace-format
+msgid "Maximum amount of tuners for {0} configured!"
 msgstr ""
 
 #: autotimer/src/AutoTimerEditor.py:593
@@ -8701,7 +8755,7 @@ msgstr ""
 msgid "Message"
 msgstr "Mesaj"
 
-#: webinterface/src/WebComponents/Sources/Message.py:62
+#: webinterface/src/WebComponents/Sources/Message.py:66
 msgid "Message sent successfully!"
 msgstr ""
 
@@ -8747,7 +8801,7 @@ msgstr ""
 msgid "Minimum Priority"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1964
+#: fritzcall/src/plugin.py:1978
 msgid "Minutes of uptime of WLAN guest network"
 msgstr ""
 
@@ -8759,11 +8813,11 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1009
+#: fritzcall/src/plugin.py:1023
 msgid "Missed"
 msgstr "Cevapsız"
 
-#: fritzcall/src/plugin.py:154
+#: fritzcall/src/plugin.py:168
 msgid "Missed calls"
 msgstr "Cevapsız aramalar"
 
@@ -9074,7 +9128,7 @@ msgstr ""
 msgid "Movie-EPG Configuration"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:92
+#: infobartunerstate/src/IBTSConfiguration.py:90
 msgid "MoviePlayer integration"
 msgstr ""
 
@@ -9168,6 +9222,10 @@ msgstr "Çoklu EPR"
 msgid "Multi Sat"
 msgstr "Çoklu uydu"
 
+#: satipclient/src/SatIPTunerSetup.py:134
+msgid "Multiple Tuner Types available!"
+msgstr ""
+
 #: easymedia/src/plugin.py:389 mytube/src/plugin.py:70
 #: youtubeplayer/src/YouTubeSearchDialog.py:61
 msgid "Music"
@@ -9185,7 +9243,7 @@ msgstr "Sessiz"
 msgid "Mute button remote control"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1943
+#: fritzcall/src/plugin.py:1957
 msgid "Mute on call"
 msgstr "Çağrı olduğunda sessize al"
 
@@ -9197,7 +9255,7 @@ msgstr "Sessiz"
 msgid "My Bookmarks"
 msgstr ""
 
-#: mytube/src/plugin.py:1842
+#: mytube/src/plugin.py:1557
 msgid "My TubePlayer"
 msgstr "MyTube oynatıcı"
 
@@ -9209,31 +9267,31 @@ msgstr ""
 msgid "MyTube Plugin is not installed!"
 msgstr ""
 
-#: mytube/src/plugin.py:529 mytube/src/plugin.py:535
+#: mytube/src/plugin.py:520 mytube/src/plugin.py:526
 msgid "MyTube Settings"
 msgstr "MyTube ayarları"
 
-#: mytube/src/plugin.py:430
+#: mytube/src/plugin.py:433
 msgid "MyTubePlayer"
 msgstr "MyTube oynatıcı"
 
-#: mytube/src/plugin.py:508 mytube/src/plugin.py:510 mytube/src/plugin.py:517
+#: mytube/src/plugin.py:499 mytube/src/plugin.py:501 mytube/src/plugin.py:508
 msgid "MyTubePlayer Help"
 msgstr "MyTube oynatıcı yardım"
 
-#: mytube/src/MyTubeSearch.py:479 mytube/src/MyTubeSearch.py:495
+#: mytube/src/MyTubeSearch.py:329 mytube/src/MyTubeSearch.py:345
 msgid "MyTubePlayer active video downloads"
 msgstr "MyTube oynatıcı indirilen videolar"
 
-#: mytube/src/MyTubeSearch.py:330 mytube/src/MyTubeSearch.py:333
+#: mytube/src/MyTubeSettings.py:55 mytube/src/MyTubeSettings.py:58
 msgid "MyTubePlayer settings"
 msgstr "MyTube oynatıcı ayarları"
 
-#: mytube/src/plugin.py:1393
+#: mytube/src/plugin.py:1386
 msgid "MyTubeVideoInfoScreen"
 msgstr "MyTube video bilgi ekranı"
 
-#: mytube/src/plugin.py:1536
+#: mytube/src/plugin.py:1529
 msgid "MyTubeVideohelpScreen"
 msgstr "MyTube video yardım ekranı"
 
@@ -9318,7 +9376,7 @@ msgstr ""
 #: partnerbox/src/RemoteTimerEntry.py:158
 #: partnerbox/src/RemoteTimerEntry.py:470 growlee/src/plugin.py:167
 #: infobartunerstate/src/plugin.py:63 elektro/src/plugin.py:480
-#: fritzcall/src/plugin.py:1734 showclock/src/plugin.py:124
+#: fritzcall/src/plugin.py:1748 showclock/src/plugin.py:124
 #: birthdayreminder/src/BirthdayReminder.py:221
 #: birthdayreminder/src/plugin.py:47
 #: youtubeplayer/src/YouTubeAddPlayList.py:36
@@ -9337,7 +9395,7 @@ msgstr ""
 msgid "Name of DVD"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1960
+#: fritzcall/src/plugin.py:1974
 msgid "Name of WLAN guest network"
 msgstr ""
 
@@ -9416,7 +9474,7 @@ msgstr ""
 #: autotimer/src/AutoTimerEditor.py:1107 growlee/src/plugin.py:101
 #: webbouqueteditor/src/WebComponents/Sources/SatellitesList.py:56
 #: epgrefresh/src/EPGRefreshChannelEditor.py:82
-#: curlytx/src/CurlyTxSettings.py:51 fritzcall/src/plugin.py:1571
+#: curlytx/src/CurlyTxSettings.py:51 fritzcall/src/plugin.py:1585
 #: simplerss/src/RSSSetup.py:75 tageditor/src/plugin.py:49
 msgid "New"
 msgstr "Yeni"
@@ -9437,6 +9495,10 @@ msgstr "Yeni Arama"
 msgid "New Shadow"
 msgstr ""
 
+#: satipclient/src/SatIPTunerSetup.py:151
+msgid "New Tuner added! GUI restart required!"
+msgstr ""
+
 #: valixdcontrol/src/plugin.py:49
 msgid "New Vision"
 msgstr ""
@@ -9449,7 +9511,7 @@ msgstr ""
 msgid "New Zealand"
 msgstr "Yeni Zelanda"
 
-#: fritzcall/src/plugin.py:2221
+#: fritzcall/src/plugin.py:2235
 msgid "New call"
 msgstr ""
 
@@ -9482,7 +9544,7 @@ msgstr ""
 msgid "New password:"
 msgstr "Yeni parola:"
 
-#: mytube/src/MyTubeService.py:255
+#: mytube/src/MyTubeService.py:201
 msgid "New subscription added"
 msgstr ""
 
@@ -9507,11 +9569,15 @@ msgstr ""
 msgid "Next birthday"
 msgstr ""
 
+#: seriesplugin/src/ChannelEditor.py:90
+msgid "Next bouquet"
+msgstr ""
+
 #: elektro/src/plugin.py:262 elektro/src/plugin.py:267
 msgid "Next day starts at"
 msgstr "Sonraki gün başlangıcı"
 
-#: seriesplugin/src/ChannelEditor.py:102
+#: seriesplugin/src/ChannelEditor.py:85
 msgid "Next page"
 msgstr ""
 
@@ -9530,7 +9596,7 @@ msgstr ""
 #: webadmin/src/WebComponents/Sources/PkgList.py:106
 #: partnerbox/src/RemoteTimerEntry.py:303 dreammediathek/src/plugin.py:115
 #: epgrefresh/src/plugin.py:50 mytube/src/plugin.py:61
-#: mytube/src/plugin.py:638 mytube/src/plugin.py:644
+#: mytube/src/plugin.py:629 mytube/src/plugin.py:635
 #: moviecut/src_py/plugin.py:96 youtubeplayer/src/YouTubeSearchDialog.py:55
 #: autotimer/srcautotimerwizard.xml
 msgid "No"
@@ -9544,7 +9610,7 @@ msgstr ""
 msgid "No Bouquets to Display"
 msgstr ""
 
-#: fritzcall/src/plugin.py:842
+#: fritzcall/src/plugin.py:856
 msgid "No DECT phone registered"
 msgstr "DECT telefon tanıtılmamış"
 
@@ -9606,7 +9672,7 @@ msgstr ""
 msgid "No Timeshift found to save as recording!"
 msgstr ""
 
-#: fritzcall/src/plugin.py:874
+#: fritzcall/src/plugin.py:888
 msgid "No call redirection active"
 msgstr "Çağrı yönlendirme etkin değil"
 
@@ -9618,7 +9684,7 @@ msgstr "Oyuncu listesi veritabanında bulunamadı."
 msgid "No cuts specified"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginTimer.py:236
+#: seriesplugin/src/SeriesPluginTimer.py:188
 msgid "No data available"
 msgstr ""
 
@@ -9631,8 +9697,8 @@ msgid "No details found."
 msgstr "Detay bilgisi bulunamadı."
 
 #: ncidclient/src/plugin.py:525 ncidclient/src/plugin.py:542
-#: ncidclient/src/plugin.py:634 fritzcall/src/plugin.py:1666
-#: fritzcall/src/plugin.py:1683 fritzcall/src/plugin.py:1789
+#: ncidclient/src/plugin.py:634 fritzcall/src/plugin.py:1680
+#: fritzcall/src/plugin.py:1697 fritzcall/src/plugin.py:1803
 msgid "No entry selected"
 msgstr "Seçim yapılmadı"
 
@@ -9659,17 +9725,18 @@ msgstr ""
 msgid "No lyrics found"
 msgstr ""
 
-#: fritzcall/src/plugin.py:822
+#: fritzcall/src/plugin.py:836
 msgid "No mailbox active"
 msgstr "Etkin posta kutusu yok"
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:320
+#: seriesplugin/src/SeriesPluginInfoScreen.py:321
 msgid "No matching episode found"
 msgstr ""
 
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:186
-#: seriesplugin/src/Identifiers/Fernsehserien.py:193
-#: seriesplugin/src/Identifiers/Wunschliste.py:162
+#: seriesplugin/src/Identifiers/WunschlisteFeed.py:213
+#: seriesplugin/src/Identifiers/SerienServer.py:112
+#: seriesplugin/src/Identifiers/Fernsehserien.py:242
+#: seriesplugin/src/Identifiers/Wunschliste.py:187
 msgid "No matching series found"
 msgstr ""
 
@@ -9708,12 +9775,12 @@ msgstr "Ağ aygıtı bulunamadı!"
 msgid "No page feed URL defined"
 msgstr ""
 
-#: ncidclient/src/plugin.py:798 fritzcall/src/plugin.py:2040
-#: fritzcall/src/plugin.py:2673
+#: ncidclient/src/plugin.py:798 fritzcall/src/plugin.py:2054
+#: fritzcall/src/plugin.py:2687
 msgid "No phonebook"
 msgstr ""
 
-#: dreammediathek/src/MoviePlayer.py:287 mytube/src/plugin.py:1796
+#: dreammediathek/src/MoviePlayer.py:287 mytube/src/MyTubePlayer.py:260
 msgid "No playable video found! Stop playing this movie?"
 msgstr "Oynatılabilir video bulunamadı! Film durdurulsun mu?"
 
@@ -9729,15 +9796,15 @@ msgstr "Önceki dosya bu klasörde yok"
 msgid "No reconnect"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1275
+#: fritzcall/src/plugin.py:1289
 msgid "No result from LDIF"
 msgstr "LDIF içeriğinde sonuç bulunamadı"
 
-#: fritzcall/src/plugin.py:1273
+#: fritzcall/src/plugin.py:1287
 msgid "No result from Outlook export"
 msgstr "Outlook adres defterinde sonuç bulunamadı"
 
-#: fritzcall/src/plugin.py:1271
+#: fritzcall/src/plugin.py:1285
 msgid "No result from reverse lookup"
 msgstr "Hizmet sağlayıcı rehberinde kayıt bulunamadı"
 
@@ -9769,19 +9836,19 @@ msgstr ""
 "VLC stream oynatım becerisi olan, bilinen bir enigma servisi bulunamadı\n"
 "Ayarlarınızı kontrol edin ve tekrar deneyin!"
 
-#: mytube/src/plugin.py:492
+#: mytube/src/plugin.py:481
 msgid "No videos to display"
 msgstr "Gösterilecek video yok"
 
-#: dreammediathek/src/MoviePlayer.py:280 mytube/src/plugin.py:1789
+#: dreammediathek/src/MoviePlayer.py:280 mytube/src/MyTubePlayer.py:253
 msgid "No, but play video again"
 msgstr "Hayır, ama videoyu yeniden oynat"
 
-#: mytube/src/plugin.py:639
+#: mytube/src/plugin.py:630
 msgid "No, but switch to video entries."
 msgstr "Hayır, ama video sonuçlarına geç."
 
-#: mytube/src/plugin.py:645
+#: mytube/src/plugin.py:636
 msgid "No, but switch to video search."
 msgstr "Hayır, ama arama ekranına geç."
 
@@ -9815,6 +9882,10 @@ msgstr "sonra değil"
 msgid "Not before"
 msgstr "önce değil"
 
+#: fritzcall/src/plugin.py:148
+msgid "Not deactivating after time"
+msgstr ""
+
 #: easymedia/src/plugin.py:75
 msgid "Not easy way to start EasyMedia"
 msgstr ""
@@ -9829,7 +9900,7 @@ msgid ""
 "Path: %s"
 msgstr ""
 
-#: mytube/src/plugin.py:494
+#: mytube/src/plugin.py:483
 msgid "Not fetching feed entries"
 msgstr "Bilgiler youtube'dan alınamadı"
 
@@ -9866,7 +9937,7 @@ msgstr "Sonuç bulunamadı, üzgünüm."
 msgid "Nothing found..."
 msgstr "Birşey bulunamadı"
 
-#: infobartunerstate/src/InfoBarTunerState.py:804
+#: infobartunerstate/src/InfoBarTunerState.py:376
 msgid "Nothing running"
 msgstr ""
 
@@ -9898,7 +9969,7 @@ msgstr ""
 msgid "Nr"
 msgstr ""
 
-#: ncidclient/src/plugin.py:594 fritzcall/src/plugin.py:1735
+#: ncidclient/src/plugin.py:594 fritzcall/src/plugin.py:1749
 msgid "Number"
 msgstr "Numara"
 
@@ -9910,12 +9981,12 @@ msgstr ""
 msgid "Number of WebIF-Log-Entries"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:97
-msgid "Number of finished records in list"
+#: infobartunerstate/src/IBTSConfiguration.py:93
+msgid "Number of finished entries in list"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:95
-msgid "Number of pending records in list"
+#: infobartunerstate/src/Handler/Timers.py:125
+msgid "Number of pending timer(s)"
 msgstr ""
 
 #: autotimer/src/AutoTimerEditor.py:532
@@ -9926,8 +9997,8 @@ msgstr ""
 msgid "Number of search results to display at most."
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:98
-msgid "Number of seconds for displaying finished records"
+#: infobartunerstate/src/IBTSConfiguration.py:94
+msgid "Number of seconds for displaying finished entries"
 msgstr ""
 
 #: merlinepgcenter/src/ConfigTabs.py:221
@@ -9968,7 +10039,7 @@ msgstr "OFDb sorgusunda hata oluştu."
 #: autotimer/src/AutoTimerEditor.py:444 autotimer/src/AutoTimerEditor.py:1105
 #: autotimer/src/AutoTimerImporter.py:46
 #: autotimer/src/AutoTimerImporter.py:120
-#: autotimer/src/AutoTimerSettings.py:77 webinterface/src/WebIfConfig.py:33
+#: autotimer/src/AutoTimerSettings.py:80 webinterface/src/WebIfConfig.py:33
 #: partnerbox/src/PartnerboxSetup.py:70 partnerbox/src/PartnerboxSetup.py:237
 #: partnerbox/src/RemoteTimerEntry.py:72 namezap/src/NamezapSetup.py:56
 #: epgsearch/src/EPGSearch.py:378 epgsearch/src/EPGSearchSetup.py:57
@@ -9978,8 +10049,8 @@ msgstr "OFDb sorgusunda hata oluştu."
 #: videocolorspace/src/VideoColorSpace.py:81 remotetimer/src/plugin.py:231
 #: satloader/src/plugin.py:286 growlee/src/plugin.py:100
 #: movieepg/src/MovieEpgSetup.py:54 vlcplayer/src/VlcServerConfig.py:297
-#: seriesplugin/src/SeriesPluginConfiguration.py:80
-#: seriesplugin/src/ChannelEditor.py:90
+#: seriesplugin/src/SeriesPluginConfiguration.py:81
+#: seriesplugin/src/ChannelEditor.py:73
 #: infobartunerstate/src/IBTSConfiguration.py:50
 #: merlinmusicplayer/src/plugin.py:2795 merlinmusicplayer/src/plugin.py:2916
 #: lastfm/src/LastFMConfig.py:56 audiosync/src/AC3main.py:67
@@ -9991,8 +10062,8 @@ msgstr "OFDb sorgusunda hata oluştu."
 #: 3dsettings/src/plugin.py:173 automatictimerlistcleanup/src/plugin.py:54
 #: curlytx/src/CurlyTxSettings.py:50 curlytx/src/CurlyTxSettings.py:210
 #: emission/src/EmissionBandwidth.py:71 emission/src/EmissionSetup.py:38
-#: babelzapper/src/plugin.py:76 fritzcall/src/plugin.py:1719
-#: fritzcall/src/plugin.py:1873 simplerss/src/RSSSetup.py:27
+#: babelzapper/src/plugin.py:76 fritzcall/src/plugin.py:1733
+#: fritzcall/src/plugin.py:1887 simplerss/src/RSSSetup.py:27
 #: simplerss/src/RSSSetup.py:74 ftpbrowser/src/FTPServerManager.py:152
 #: virtualzap/src/plugin.py:729 ecasa/src/EcasaSetup.py:70
 #: showclock/src/plugin.py:146 movielistpreview/src/plugin.py:144
@@ -10113,23 +10184,23 @@ msgstr "Herhangi bir kanalda"
 msgid "On same service"
 msgstr "Benzer kanalda"
 
-#: fritzcall/src/plugin.py:845
+#: fritzcall/src/plugin.py:859
 msgid "One DECT phone registered"
 msgstr "Bir DECT telefon tanıtılmış"
 
-#: fritzcall/src/plugin.py:868
+#: fritzcall/src/plugin.py:882
 msgid "One call redirection active"
 msgstr "Bir çağrı yönlendirmesi etkin"
 
-#: fritzcall/src/plugin.py:834
+#: fritzcall/src/plugin.py:848
 msgid "One mailbox active"
 msgstr "Bir posta kutusu etkin"
 
-#: seriesplugin/src/ChannelEditor.py:104
+#: seriesplugin/src/ChannelEditor.py:87
 msgid "One row down"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:103
+#: seriesplugin/src/ChannelEditor.py:86
 msgid "One row up"
 msgstr ""
 
@@ -10153,7 +10224,7 @@ msgstr ""
 msgid "Only keep EPG-Backup-Files younger than this days."
 msgstr ""
 
-#: autotimer/src/AutoTimerEditor.py:561 autotimer/src/AutoTimerWizard.py:97
+#: autotimer/src/AutoTimerEditor.py:561 autotimer/src/AutoTimerWizard.py:99
 msgid "Only match during timespan"
 msgstr "Yalnızca belirtilen zaman aralığında"
 
@@ -10167,15 +10238,15 @@ msgstr "Yalnızca %s kanalında"
 msgid "Only on Weekday: %s"
 msgstr "Yalnız haftada: %s"
 
-#: infobartunerstate/src/IBTSConfiguration.py:190
+#: infobartunerstate/src/IBTSConfiguration.py:208
 msgid "Only one Graphical Progress field allowed:"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:185
+#: infobartunerstate/src/IBTSConfiguration.py:203
 msgid "Only one Icon field allowed:"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:181
+#: infobartunerstate/src/IBTSConfiguration.py:199
 msgid "Only one Name field allowed:"
 msgstr ""
 
@@ -10251,7 +10322,7 @@ msgstr ""
 msgid "Oryginal file name: %s"
 msgstr ""
 
-#: fritzcall/src/plugin.py:144
+#: fritzcall/src/plugin.py:158
 msgid "Others"
 msgstr ""
 
@@ -10268,11 +10339,11 @@ msgid "Outer Bound (+/-)"
 msgstr "Azami Gecikme (+/-)"
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1013
+#: fritzcall/src/plugin.py:1027
 msgid "Outgoing"
 msgstr "Giden"
 
-#: fritzcall/src/plugin.py:2353
+#: fritzcall/src/plugin.py:2367
 #, python-format
 msgid ""
 "Outgoing Call on %(date)s at %(time)s to\n"
@@ -10283,7 +10354,7 @@ msgid ""
 "from: %(phone)s"
 msgstr ""
 
-#: fritzcall/src/plugin.py:155
+#: fritzcall/src/plugin.py:169
 msgid "Outgoing calls"
 msgstr "Giden aramalar"
 
@@ -10304,7 +10375,7 @@ msgstr "Overscan Doğrulama [Video genişliğinin %(percentsign)s 'i]"
 msgid "Overwrite HBBTV-red-button"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:122
+#: infobartunerstate/src/IBTSConfiguration.py:131
 msgid "Overwrite Infobar timeout"
 msgstr ""
 
@@ -10472,7 +10543,7 @@ msgstr ""
 msgid "Password (uploaded.to):"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1957
+#: fritzcall/src/plugin.py:1971
 msgid "Password Accessing FRITZ!Box"
 msgstr "FRITZ!Box yönetici parolası"
 
@@ -10481,7 +10552,7 @@ msgstr "FRITZ!Box yönetici parolası"
 msgid "Password Changer"
 msgstr "Parola Değiştirici"
 
-#: fritzcall/src/plugin.py:1963
+#: fritzcall/src/plugin.py:1977
 msgid "Password of WLAN guest network"
 msgstr ""
 
@@ -10592,8 +10663,8 @@ msgstr "Hayvanlar"
 
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1052 fritzcall/src/plugin.py:1875
-#: fritzcall/src/plugin.py:2707
+#: fritzcall/src/plugin.py:1066 fritzcall/src/plugin.py:1889
+#: fritzcall/src/plugin.py:2721
 msgid "Phone calls"
 msgstr "Aramalar"
 
@@ -10601,14 +10672,14 @@ msgstr "Aramalar"
 msgid "PhoneBook Location"
 msgstr "Rehber konumu"
 
-#: fritzcall/src/plugin.py:1982 fritzcall/src/plugin.py:2000
+#: fritzcall/src/plugin.py:1996 fritzcall/src/plugin.py:2014
 msgid "PhoneBook and Faces Location"
 msgstr ""
 
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
-#: ncidclient/src/plugin.py:467 fritzcall/src/plugin.py:1608
-#: fritzcall/src/plugin.py:1877 fritzcall/src/plugin.py:2708
+#: ncidclient/src/plugin.py:467 fritzcall/src/plugin.py:1622
+#: fritzcall/src/plugin.py:1891 fritzcall/src/plugin.py:2722
 msgid "Phonebook"
 msgstr "Rehber"
 
@@ -10656,7 +10727,7 @@ msgstr ""
 msgid "Place the cut movie in a new file ending with \" cut\""
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:119
+#: infobartunerstate/src/IBTSConfiguration.py:128
 msgid "Placeholder for Progressbar"
 msgstr ""
 
@@ -10695,7 +10766,7 @@ msgstr ""
 msgid "Play Web and ipTV streams"
 msgstr ""
 
-#: mytube/src/plugin.py:1843
+#: mytube/src/plugin.py:1558
 msgid "Play YouTube movies"
 msgstr "YouTube filmlerini oynatın"
 
@@ -10817,7 +10888,7 @@ msgstr "Lütfen geçerli şifreyi girin"
 msgid "Please enter the new tag"
 msgstr "Lütfen yeni etiket girin"
 
-#: mytube/src/plugin.py:494
+#: mytube/src/plugin.py:483
 msgid "Please enter your search term."
 msgstr "Lütfen arama terimini girin."
 
@@ -10851,7 +10922,7 @@ msgid ""
 "manually and make local convertion."
 msgstr ""
 
-#: mytube/src/plugin.py:492
+#: mytube/src/plugin.py:481
 msgid "Please select a standard feed or try searching for videos."
 msgstr "Lütfen 'Beslemeler'i seçin veya video aramayı deneyin."
 
@@ -10893,8 +10964,16 @@ msgstr "Lütfen aradığınız başlığı seçin"
 msgid "Please select the movie path..."
 msgstr "Lütfen film yol adını seçin..."
 
+#: satipclient/src/SatIPTunerSetup.py:133
+msgid "Please select the type of tuner you want to add!"
+msgstr ""
+
 #: kiddytimer/src/KTmain.py:402
 msgid "Please select your KiddyTimer- option"
+msgstr ""
+
+#: seriesplugin/src/Identifiers/SerienServer.py:110
+msgid "Please try Fernsehserien.de"
 msgstr ""
 
 #: showclock/src/plugin.py:216
@@ -10913,6 +10992,13 @@ msgstr ""
 "Lütfen depolama aygıtınız var ve ayarlarını yaptıysanız tanımların "
 "doğruluğunu, Menü -> Kurulum -> Sistem -> Kayıt ayarları bölümünden kontrol "
 "ediniz."
+
+#: mytube/src/plugin.py:492
+#, python-format
+msgid ""
+"Please visit: %s\n"
+"And enter: %s"
+msgstr ""
 
 #: genuinedreambox/src/plugin.py:137
 msgid "Please wait (Step 2)"
@@ -10965,9 +11051,9 @@ msgstr ""
 msgid "Plugin not active"
 msgstr ""
 
-#: fritzcall/src/plugin.py:2031 fritzcall/src/plugin.py:2038
-#: fritzcall/src/plugin.py:2052 fritzcall/src/plugin.py:2664
-#: fritzcall/src/plugin.py:2671 fritzcall/src/plugin.py:2682
+#: fritzcall/src/plugin.py:2045 fritzcall/src/plugin.py:2052
+#: fritzcall/src/plugin.py:2066 fritzcall/src/plugin.py:2678
+#: fritzcall/src/plugin.py:2685 fritzcall/src/plugin.py:2696
 msgid "Plugin not enabled"
 msgstr ""
 
@@ -11194,11 +11280,11 @@ msgstr "satellites.xml yüklemek için OK veya yeşil düğmeye basın"
 msgid "Prev"
 msgstr "Önceki"
 
-#: seriesplugin/src/ChannelEditor.py:101
+#: seriesplugin/src/ChannelEditor.py:84
 msgid "Previeous page"
 msgstr ""
 
-#: autotimer/src/AutoTimerOverview.py:217 simplerss/src/plugin.py:16
+#: autotimer/src/AutoTimerOverview.py:218 simplerss/src/plugin.py:16
 msgid "Preview"
 msgstr "Önizleme"
 
@@ -11230,6 +11316,10 @@ msgstr "Önceki"
 
 #: lastfm/src/plugin.py:202
 msgid "Previous Selection"
+msgstr ""
+
+#: seriesplugin/src/ChannelEditor.py:91
+msgid "Previous bouquet"
 msgstr ""
 
 #: merlinepgcenter/src/MerlinEPGCenter.py:43
@@ -11515,10 +11605,10 @@ msgid "Quick switching via remote control"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: lastfm/src/plugin.py:210 fritzcall/src/plugin.py:507
-#: fritzcall/src/plugin.py:509 fritzcall/src/plugin.py:664
-#: fritzcall/src/plugin.py:666 fritzcall/src/plugin.py:1027
-#: fritzcall/src/plugin.py:1589
+#: lastfm/src/plugin.py:210 fritzcall/src/plugin.py:521
+#: fritzcall/src/plugin.py:523 fritzcall/src/plugin.py:678
+#: fritzcall/src/plugin.py:680 fritzcall/src/plugin.py:1041
+#: fritzcall/src/plugin.py:1603
 msgid "Quit"
 msgstr "Çık"
 
@@ -11534,6 +11624,14 @@ msgstr "RS İndirici"
 #: simplerss/meta/plugin_simplerss.xml./simplerss/meta/plugin_simplerss.xml
 msgid "RSS viewer"
 msgstr "RSS gösterici"
+
+#: webinterface/src/WebComponents/Sources/Strings.py:181
+msgid "RTSP Path"
+msgstr ""
+
+#: webinterface/src/WebComponents/Sources/Strings.py:180
+msgid "RTSP Port"
+msgstr ""
 
 #
 #: webinterface/src/WebComponents/Sources/Strings.py:16
@@ -11580,7 +11678,7 @@ msgstr "%s IMDb'de yeniden sorgulanıyor..."
 msgid "Re-Query OFDb: %s..."
 msgstr "%s OFDb'de yeniden sorgulanıyor..."
 
-#: fritzcall/src/plugin.py:1965
+#: fritzcall/src/plugin.py:1979
 msgid "Read PhoneBook from FRITZ!Box"
 msgstr "FRITZ!Box telefon rehberini oku"
 
@@ -11595,9 +11693,9 @@ msgstr ""
 #: vps/src_py/Vps_setup.py:111 autotimer/src/AutoTimerEditor.py:705
 #: autotimer/src/AutoTimerEditor.py:1047 autotimer/src/AutoTimerEditor.py:1218
 #: autotimer/src/AutoTimerImporter.py:235
-#: autotimer/src/AutoTimerOverview.py:202
-#: seriesplugin/src/SeriesPluginConfiguration.py:317
-#: infobartunerstate/src/IBTSConfiguration.py:153
+#: autotimer/src/AutoTimerOverview.py:203
+#: seriesplugin/src/SeriesPluginConfiguration.py:322
+#: infobartunerstate/src/IBTSConfiguration.py:162
 #: epgrefresh/src/EPGRefreshConfiguration.py:348
 #: pushservice/src/ConfigScreen.py:341 serienfilm/src/SerienFilm.py:90
 #: epgbackup/src/EPGBackupConfig.py:263
@@ -11654,7 +11752,7 @@ msgstr ""
 msgid "Really delete torrent?"
 msgstr ""
 
-#: mytube/src/plugin.py:647
+#: mytube/src/plugin.py:638
 msgid "Really quit MyTube Player?"
 msgstr "MyTube oynatıcı'dan çıkmak istiyor musunuz?"
 
@@ -11720,8 +11818,7 @@ msgstr ""
 #: webinterface/src/WebComponents/Sources/Strings.py:52
 #: internetradio/src/InternetRadioScreen.py:252
 #: internetradio/src/InternetRadioScreen.py:514
-#: seriesplugin/src/SeriesPluginInfoScreen.py:399
-#: infobartunerstate/src/InfoBarTunerState.py:1216
+#: seriesplugin/src/SeriesPluginInfoScreen.py:400
 #: permanenttimeshift/src/plugin.py:538
 msgid "Record"
 msgstr "Kayıt"
@@ -11746,8 +11843,12 @@ msgstr ""
 msgid "Record current event"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:164
+#: seriesplugin/src/SeriesPluginConfiguration.py:168
 msgid "Record description episode pattern"
+msgstr ""
+
+#: seriesplugin/src/SeriesPluginConfiguration.py:171
+msgid "Record directory pattern"
 msgstr ""
 
 #: pushservice/src/Controller/RecordNotification.py:109
@@ -11762,7 +11863,7 @@ msgstr "Kaydedilecek"
 msgid "Record or zap timer"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginRenamer.py:308
+#: seriesplugin/src/SeriesPluginRenamer.py:316
 #, python-format
 msgid "Record rename has been finished with %d errors:\n"
 msgstr ""
@@ -11775,7 +11876,7 @@ msgstr ""
 msgid "Record started:\n"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:163
+#: seriesplugin/src/SeriesPluginConfiguration.py:167
 msgid "Record title episode pattern"
 msgstr ""
 
@@ -11823,7 +11924,7 @@ msgid "Refresh now"
 msgstr "Şimdi yenile"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:515 fritzcall/src/plugin.py:674
+#: fritzcall/src/plugin.py:529 fritzcall/src/plugin.py:688
 msgid "Refresh status"
 msgstr "Durumu yenile"
 
@@ -11832,7 +11933,7 @@ msgstr "Durumu yenile"
 msgid "Refreshing"
 msgstr "Yenileniyor"
 
-#: fritzcall/src/plugin.py:752
+#: fritzcall/src/plugin.py:766
 msgid "Refreshing..."
 msgstr ""
 
@@ -11857,7 +11958,7 @@ msgstr ""
 msgid "Related Pip Service"
 msgstr ""
 
-#: mytube/src/plugin.py:537
+#: mytube/src/plugin.py:528
 msgid "Related videos"
 msgstr ""
 
@@ -11874,7 +11975,7 @@ msgstr "Yenile"
 msgid "Reload current page URL"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1976
+#: fritzcall/src/plugin.py:1990
 msgid "Reload interval for phonebooks (hours)"
 msgstr ""
 
@@ -11958,8 +12059,9 @@ msgid "Remote-Control for the Transmission BitTorrent client."
 msgstr ""
 
 #
-#: seriesplugin/src/ChannelEditor.py:91
+#: seriesplugin/src/ChannelEditor.py:74
 #: merlinepgcenter/src/MerlinEPGCenter.py:1300
+#: satipclient/src/SatIPTunerSetup.py:38
 #: birthdayreminder/src/BirthdayReminder.py:268
 msgid "Remove"
 msgstr "Kaldır"
@@ -11969,7 +12071,7 @@ msgstr "Kaldır"
 msgid "Remove %s from playlist"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:320
+#: seriesplugin/src/ChannelEditor.py:322
 #, python-format
 msgid "Remove '%s'?"
 msgstr ""
@@ -11986,7 +12088,7 @@ msgstr ""
 msgid "Remove Tag"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:109
+#: seriesplugin/src/ChannelEditor.py:96
 msgid "Remove channel"
 msgstr ""
 
@@ -11995,7 +12097,7 @@ msgstr ""
 msgid "Remove controller"
 msgstr ""
 
-#: pushservice/src/Controller/DeactivatedTimers.py:47
+#: pushservice/src/Controller/DeactivatedTimers.py:46
 msgid "Remove deactivated timer(s)"
 msgstr ""
 
@@ -12048,7 +12150,7 @@ msgstr "%s kaldırıldı."
 msgid "Removing directories is not supported."
 msgstr "Klasör kaldırma özelliği desteklenmiyor."
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:391
+#: seriesplugin/src/SeriesPluginInfoScreen.py:392
 #: subsdownloader2/src/plugin.py:1079 ftpbrowser/src/FTPBrowser.py:187
 msgid "Rename"
 msgstr "Ad değiştir "
@@ -12061,7 +12163,7 @@ msgstr ""
 msgid "Rename file..."
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:173
+#: seriesplugin/src/SeriesPluginConfiguration.py:182
 msgid "Rename files"
 msgstr ""
 
@@ -12069,7 +12171,7 @@ msgstr ""
 msgid "Rename log(s)"
 msgstr ""
 
-#: seriesplugin/src/plugin.py:34
+#: seriesplugin/src/plugin.py:36
 msgid "Rename serie(s) (SP)"
 msgstr ""
 
@@ -12093,7 +12195,7 @@ msgstr ""
 msgid "Renamed %s to %s."
 msgstr "%s dosyasının adı %s olarak değiştirildi."
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:432
+#: seriesplugin/src/SeriesPluginInfoScreen.py:433
 msgid "Renaming failed"
 msgstr ""
 
@@ -12131,7 +12233,7 @@ msgstr ""
 msgid "Replace original:"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:167
+#: seriesplugin/src/SeriesPluginConfiguration.py:176
 msgid "Replace special characters in title"
 msgstr ""
 
@@ -12167,16 +12269,16 @@ msgstr "Yeniden ara"
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:459 fritzcall/src/plugin.py:513
-#: fritzcall/src/plugin.py:672 fritzcall/src/plugin.py:677
+#: fritzcall/src/plugin.py:473 fritzcall/src/plugin.py:527
+#: fritzcall/src/plugin.py:686 fritzcall/src/plugin.py:691
 msgid "Reset"
 msgstr "Y.başlat"
 
-#: seriesplugin/src/ChannelEditor.py:335
+#: seriesplugin/src/ChannelEditor.py:337
 msgid "Reset channel list?"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:98
+#: seriesplugin/src/ChannelEditor.py:81
 msgid "Reset channels"
 msgstr ""
 
@@ -12196,7 +12298,7 @@ msgstr "Kayıtlı pozisyonu sıfırla"
 msgid "Reset todays remaining time"
 msgstr ""
 
-#: mytube/src/MyTubeSearch.py:358
+#: mytube/src/MyTubeSettings.py:84
 msgid "Reset tv-screen after playback:"
 msgstr ""
 
@@ -12275,12 +12377,12 @@ msgstr "Tarih aralığını sınırlandır"
 msgid "Restricted Content"
 msgstr ""
 
-#: mytube/src/plugin.py:1050
+#: mytube/src/plugin.py:1043
 #, python-format
 msgid "Results: %s - Page: %s "
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:271
+#: seriesplugin/src/SeriesPluginInfoScreen.py:272
 msgid "Retrieving Season, Episode and Title..."
 msgstr ""
 
@@ -12310,11 +12412,11 @@ msgstr ""
 msgid "Reusable Help-component for other plugins."
 msgstr ""
 
-#: ncidclient/src/plugin.py:741 fritzcall/src/plugin.py:1950
+#: ncidclient/src/plugin.py:741 fritzcall/src/plugin.py:1964
 msgid "Reverse Lookup Caller ID (select country below)"
 msgstr "Arayan kimliğini hizmet sağlayıcıdan sorgula (ülke seçin)"
 
-#: fritzcall/src/plugin.py:1248
+#: fritzcall/src/plugin.py:1262
 msgid "Reverse searching..."
 msgstr "Hizmet sağlayıcı rehberi aranıyor..."
 
@@ -12417,8 +12519,12 @@ msgstr ""
 msgid "SNR"
 msgstr "SNR"
 
-#: seriesplugin/src/ChannelEditor.py:221
-msgid "STB-Channels / Web-Channel"
+#: seriesplugin/src/SeriesPluginBare.py:65
+msgid "SP has been finished with errors:\n"
+msgstr ""
+
+#: seriesplugin/src/ChannelEditor.py:223
+msgid "STB- / Web-Channel for bouquet:"
 msgstr ""
 
 #: svdrp/meta/plugin_svdrp.xml./svdrp/meta/plugin_svdrp.xml
@@ -12454,6 +12560,22 @@ msgstr ""
 msgid "Sat"
 msgstr "Ctesi"
 
+#: satipclient/meta/plugin_satipclient.xml./satipclient/meta/plugin_satipclient.xml
+msgid "Sat>IP Client Setup"
+msgstr ""
+
+#: satipclient/src/plugin.py:10 satipclient/src/plugin.py:14
+msgid "Sat>IP Tuner"
+msgstr ""
+
+#: satipclient/src/SatIPTuner.py:65
+msgid "Sat>IP Tuner Overview"
+msgstr ""
+
+#: satipclient/src/SatIPTunerSetup.py:36 satipclient/src/plugin.py:14
+msgid "Sat>IP Tuner Setup"
+msgstr ""
+
 #
 #: webinterface/src/WebComponents/Sources/Strings.py:31
 msgid "Satellites"
@@ -12474,13 +12596,14 @@ msgstr "Cumartesi"
 #: satloader/src/plugin.py:410 aspectratioswitch/src/plugin.py:121
 #: yttrailer/src/plugin.py:307 kiddytimer/src/KTsetup.py:79
 #: audiosync/src/AC3setup.py:64 serienfilm/src/SerienFilm.py:65
-#: fritzcall/src/plugin.py:1154 ftpbrowser/src/FTPServerManager.py:261
+#: fritzcall/src/plugin.py:1168 ftpbrowser/src/FTPServerManager.py:261
 #: epgbackup/src/EPGBackupConfig.py:56
 #: birthdayreminder/src/BirthdayReminder.py:563
 #: birthdayreminder/src/BirthdayReminder.py:623
-#: birthdayreminder/src/BirthdayReminder.py:652 mytube/src/MyTubeSearch.py:317
-#: podcast/src/plugin.py:557 dreamirc/src/dreamIRCSetup.py:72
-#: fancontrol2/src/plugin.py:672 youtubeplayer/src/YouTubeUserConfig.py:136
+#: birthdayreminder/src/BirthdayReminder.py:652
+#: mytube/src/MyTubeSettings.py:42 podcast/src/plugin.py:557
+#: dreamirc/src/dreamIRCSetup.py:72 fancontrol2/src/plugin.py:672
+#: youtubeplayer/src/YouTubeUserConfig.py:136
 #: youtubeplayer/src/YouTubeAddPlayList.py:54
 msgid "Save"
 msgstr "Kaydet"
@@ -12498,7 +12621,7 @@ msgstr ""
 msgid "Save Timeshift as Movie and stop recording"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:108
+#: seriesplugin/src/ChannelEditor.py:95
 msgid "Save and close"
 msgstr ""
 
@@ -12627,13 +12750,13 @@ msgstr ""
 #: rsdownloader/src/plugin.py:1351 ncidclient/src/plugin.py:447
 #: epgsearch/src/EPGSearch.py:72 epgsearch/src/EPGSearch.py:443
 #: internetradio/src/InternetRadioScreen.py:814 googlemaps/src/plugin.py:211
-#: merlinepgcenter/src/MerlinEPGCenter.py:43 fritzcall/src/plugin.py:1575
+#: merlinepgcenter/src/MerlinEPGCenter.py:43 fritzcall/src/plugin.py:1589
 #: ecasa/src/EcasaGui.py:109 youtubeplayer/src/YouTubeSearchDialog.py:269
 msgid "Search"
 msgstr "Ara"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1597
+#: fritzcall/src/plugin.py:1611
 msgid "Search (case insensitive)"
 msgstr "Ara (büyük-küçük harf duyarlı)"
 
@@ -12651,7 +12774,7 @@ msgstr "EPG'de ara"
 msgid "Search History"
 msgstr ""
 
-#: mytube/src/plugin.py:434 youtubeplayer/src/YouTubeSearchDialog.py:274
+#: mytube/src/plugin.py:437 youtubeplayer/src/YouTubeSearchDialog.py:274
 msgid "Search Term(s)"
 msgstr "Arama terim(ler)i"
 
@@ -12680,11 +12803,11 @@ msgstr "http://rapidshare-search-engine.com 'da ara:"
 msgid "Search in iDream database"
 msgstr ""
 
-#: ncidclient/src/plugin.py:643 fritzcall/src/plugin.py:1798
+#: ncidclient/src/plugin.py:643 fritzcall/src/plugin.py:1812
 msgid "Search phonebook"
 msgstr "Rehberde ara"
 
-#: mytube/src/MyTubeSearch.py:340
+#: mytube/src/MyTubeSettings.py:67
 msgid "Search region:"
 msgstr "Arama bölgesi:"
 
@@ -12733,11 +12856,11 @@ msgstr ""
 msgid "Searching InternetRadio for %s..."
 msgstr ""
 
-#: fritzcall/src/plugin.py:1259
+#: fritzcall/src/plugin.py:1273
 msgid "Searching in LDIF..."
 msgstr "LDIF dosyası içinde aranıyor..."
 
-#: fritzcall/src/plugin.py:1252
+#: fritzcall/src/plugin.py:1266
 msgid "Searching in Outlook export..."
 msgstr "Outlook adres defteri içinde aranıyor..."
 
@@ -12749,14 +12872,14 @@ msgstr "Ağınız aranıyor. Lütfen bekleyin..."
 msgid "Searching, be patient ..."
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:306
+#: seriesplugin/src/SeriesPluginInfoScreen.py:307
 #, python-brace-format
 msgid ""
 "Season: {season:d}\n"
 "{title:s}"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:309
+#: seriesplugin/src/SeriesPluginInfoScreen.py:310
 #, python-brace-format
 msgid ""
 "Season: {season:d}  Episode: {episode:d}\n"
@@ -12771,7 +12894,7 @@ msgstr ""
 msgid "Second foreground:"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1961
+#: fritzcall/src/plugin.py:1975
 msgid "Secure WLAN guest network"
 msgstr ""
 
@@ -12877,15 +13000,15 @@ msgstr ""
 msgid "Select from EPG"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:156
+#: seriesplugin/src/SeriesPluginConfiguration.py:160
 msgid "Select identifier for elapsed events"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:160
+#: seriesplugin/src/SeriesPluginConfiguration.py:164
 msgid "Select identifier for future events"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:158
+#: seriesplugin/src/SeriesPluginConfiguration.py:162
 msgid "Select identifier for today events"
 msgstr ""
 
@@ -12893,7 +13016,7 @@ msgstr ""
 msgid "Select local file list"
 msgstr "Yerel için dosya listesini seç"
 
-#: mytube/src/plugin.py:836
+#: mytube/src/plugin.py:829
 msgid "Select new feed to view."
 msgstr "Görmek istediğiniz beslemeyi seçin."
 
@@ -12959,7 +13082,7 @@ msgstr ""
 msgid "Select whether or not you want to enforce case correctness."
 msgstr ""
 
-#: mytube/src/plugin.py:532 mytube/src/plugin.py:554
+#: mytube/src/plugin.py:523 mytube/src/plugin.py:545
 msgid "Select your choice."
 msgstr "Seçiminizi yapınız."
 
@@ -13006,6 +13129,10 @@ msgstr ""
 
 #: pushservice/src/Services/GNTP.py:52
 msgid "Send as sticky"
+msgstr ""
+
+#: autotimer/src/AutoTimerSettings.py:61
+msgid "Send debug messages to shell"
 msgstr ""
 
 #: pushservice/src/Controller/StandbyNotification.py:44
@@ -13057,34 +13184,38 @@ msgstr "Sırpça"
 msgid "Serbo-Croatian"
 msgstr ""
 
-#: seriesplugin/src/plugin.py:32
+#: seriesplugin/src/plugin.py:34
 msgid "SeriesPlugin"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:136
+#: seriesplugin/src/SeriesPluginInfoScreen.py:140
 msgid "SeriesPlugin Info"
 msgstr ""
 
-#: seriesplugin/src/plugin.py:189 seriesplugin/src/plugin.py:202
-#: seriesplugin/src/plugin.py:233
+#: seriesplugin/src/plugin.py:147 seriesplugin/src/plugin.py:160
+#: seriesplugin/src/plugin.py:191
 msgid "SeriesPlugin extension exception "
 msgstr ""
 
-#: seriesplugin/src/plugin.py:176 seriesplugin/src/plugin.py:446
+#: seriesplugin/src/spChannelContextMenu.py:58 seriesplugin/src/plugin.py:136
 msgid "SeriesPlugin info exception "
 msgstr ""
 
-#: seriesplugin/src/plugin.py:247 seriesplugin/src/plugin.py:256
-#: seriesplugin/src/plugin.py:266 seriesplugin/src/plugin.py:276
+#: seriesplugin/src/plugin.py:219 seriesplugin/src/plugin.py:229
+#: seriesplugin/src/plugin.py:239 seriesplugin/src/plugin.py:249
 msgid "SeriesPlugin label exception "
 msgstr ""
 
-#: seriesplugin/src/plugin.py:223
+#: seriesplugin/src/plugin.py:181
 msgid "SeriesPlugin renamer exception "
 msgstr ""
 
-#: seriesplugin/src/plugin.py:164
+#: seriesplugin/src/plugin.py:126
 msgid "SeriesPlugin setup exception "
+msgstr ""
+
+#: seriesplugin/src/plugin.py:97
+msgid "SeriesPlugin test exception "
 msgstr ""
 
 #: vlcplayer/src/VlcServerConfig.py:304
@@ -13132,7 +13263,7 @@ msgstr "Sunucular"
 msgid "Service"
 msgstr "Kanal"
 
-#: pushservice/src/PushServiceBase.py:356
+#: pushservice/src/PushServiceBase.py:357
 #, python-format
 msgid "Service %s returned error(s)"
 msgstr ""
@@ -13250,7 +13381,7 @@ msgstr ""
 msgid "Setting key canceled"
 msgstr "Tuş tanımlama iptal edildi"
 
-#: fritzcall/src/plugin.py:897 fritzcall/src/plugin.py:912
+#: fritzcall/src/plugin.py:911 fritzcall/src/plugin.py:926
 msgid "Setting..."
 msgstr ""
 
@@ -13261,8 +13392,8 @@ msgstr ""
 msgid "Settings"
 msgstr "Ayarlar"
 
-#: autotimer/src/AutoTimerOverview.py:220 epgsearch/src/EPGSearch.py:238
-#: seriesplugin/src/plugin.py:286 seriesplugin/src/plugin.py:287
+#: autotimer/src/AutoTimerOverview.py:221 epgsearch/src/EPGSearch.py:238
+#: seriesplugin/src/plugin.py:273 seriesplugin/src/plugin.py:274
 #: lastfm/src/LastFMConfig.py:27 lastfm/src/plugin.py:209
 #: simplerss/src/RSSScreens.py:459 simplerss/src/RSSScreens.py:464
 #: ecasa/src/EcasaGui.py:353
@@ -13322,9 +13453,9 @@ msgstr ""
 msgid "Short Movies"
 msgstr "Kısa Film"
 
-#: fritzcall/src/FritzCallFBF.py:357 fritzcall/src/FritzCallFBF.py:384
-#: fritzcall/src/FritzCallFBF.py:1366 fritzcall/src/FritzCallFBF.py:2035
-#: fritzcall/src/FritzCallFBF.py:2775
+#: fritzcall/src/FritzCallFBF.py:364 fritzcall/src/FritzCallFBF.py:391
+#: fritzcall/src/FritzCallFBF.py:1375 fritzcall/src/FritzCallFBF.py:2050
+#: fritzcall/src/FritzCallFBF.py:2817
 msgid "Shortcut"
 msgstr "Kısayol"
 
@@ -13423,7 +13554,7 @@ msgstr ""
 msgid "Show Advanced Options"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1945
+#: fritzcall/src/plugin.py:1959
 msgid "Show Blocked Calls"
 msgstr ""
 
@@ -13472,7 +13603,7 @@ msgstr ""
 msgid "Show Help"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:151
+#: seriesplugin/src/SeriesPluginConfiguration.py:155
 msgid "Show Info in movie list menu"
 msgstr ""
 
@@ -13480,7 +13611,7 @@ msgstr ""
 msgid "Show InfoBarTunerState"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:81
+#: seriesplugin/src/SeriesPluginConfiguration.py:82
 msgid "Show Log"
 msgstr ""
 
@@ -13501,7 +13632,7 @@ msgid "Show Merlin-iDream:"
 msgstr ""
 
 #
-#: infobartunerstate/src/IBTSConfiguration.py:128
+#: infobartunerstate/src/IBTSConfiguration.py:137
 msgid "Show Message when Recording starts"
 msgstr "Zamanlanmış kayıt başladığında mesaj göster"
 
@@ -13509,7 +13640,7 @@ msgstr "Zamanlanmış kayıt başladığında mesaj göster"
 msgid "Show Monitor in Extension-Menu"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1946
+#: fritzcall/src/plugin.py:1960
 msgid "Show Outgoing Calls"
 msgstr "Giden aramalarda göster"
 
@@ -13529,7 +13660,7 @@ msgstr ""
 msgid "Show Plugin in Extension-Menu"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:152
+#: seriesplugin/src/SeriesPluginConfiguration.py:156
 msgid "Show Rename in movie list menu"
 msgstr ""
 
@@ -13558,7 +13689,7 @@ msgstr ""
 msgid "Show Weather Forecast"
 msgstr ""
 
-#: ncidclient/src/plugin.py:736 fritzcall/src/plugin.py:1937
+#: ncidclient/src/plugin.py:736 fritzcall/src/plugin.py:1951
 msgid "Show after Standby"
 msgstr "Hazırda bekletme kipine geçtikten sonra"
 
@@ -13605,7 +13736,7 @@ msgid "Show cover arts"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1025 fritzcall/src/plugin.py:1587
+#: fritzcall/src/plugin.py:1039 fritzcall/src/plugin.py:1601
 msgid "Show details of entry"
 msgstr "Kaydın detaylarını göster"
 
@@ -13645,11 +13776,11 @@ msgstr ""
 msgid "Show in User-Scripts"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:150
+#: seriesplugin/src/SeriesPluginConfiguration.py:154
 msgid "Show in channel menu"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:149
+#: seriesplugin/src/SeriesPluginConfiguration.py:153
 msgid "Show in epg menu"
 msgstr ""
 
@@ -13661,12 +13792,12 @@ msgstr "Eklentiler menüsünde göster"
 msgid "Show in extension menu:"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:148
+#: seriesplugin/src/SeriesPluginConfiguration.py:152
 #: curlytx/src/CurlyTxSettings.py:70
 msgid "Show in extensions menu"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:147
+#: seriesplugin/src/SeriesPluginConfiguration.py:151
 msgid "Show in info menu"
 msgstr ""
 
@@ -13688,6 +13819,10 @@ msgstr ""
 
 #: merlinepgcenter/src/ConfigTabs.py:206
 msgid "Show list numbers:"
+msgstr ""
+
+#: infobartunerstate/src/Handler/Live.py:38
+msgid "Show live tuner"
 msgstr ""
 
 #: rsdownloader/src/plugin.py:1382
@@ -13722,16 +13857,20 @@ msgstr "Benzerleri bulunduğunda bilgilendir"
 msgid "Show on events"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:91
+#: infobartunerstate/src/IBTSConfiguration.py:89
 msgid "Show on key press"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1939
+#: fritzcall/src/plugin.py:1953
 msgid "Show only calls for specific MSN"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:96
-msgid "Show pending records only within x hours"
+#: infobartunerstate/src/Handler/Timers.py:126
+msgid "Show pending records only within x hour(s)"
+msgstr ""
+
+#: infobartunerstate/src/Handler/Timers.py:124
+msgid "Show pending timer(s)"
 msgstr ""
 
 #: merlinepgcenter/src/ConfigTabs.py:207
@@ -13742,7 +13881,7 @@ msgstr ""
 msgid "Show plugin in extensions menu:"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:96
+#: seriesplugin/src/ChannelEditor.py:79
 msgid "Show popup to add Stb Channel"
 msgstr ""
 
@@ -13754,7 +13893,11 @@ msgstr ""
 msgid "Show program settings"
 msgstr ""
 
-#: seriesplugin/src/plugin.py:33
+#: infobartunerstate/src/Handler/Records.py:47
+msgid "Show record(s)"
+msgstr ""
+
+#: seriesplugin/src/plugin.py:35
 msgid "Show series info (SP)"
 msgstr ""
 
@@ -13774,15 +13917,15 @@ msgstr ""
 msgid "Show side by side option in extension menu"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:90
-msgid "Show streams"
+#: infobartunerstate/src/Handler/StreamWebIf.py:69
+msgid "Show stream(s) (WebIf)"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:180
+#: seriesplugin/src/SeriesPluginConfiguration.py:189
 msgid "Show success after Record renaming"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:195
+#: seriesplugin/src/SeriesPluginConfiguration.py:206
 msgid "Show success after Timer handling"
 msgstr ""
 
@@ -13810,8 +13953,20 @@ msgstr ""
 msgid "Show top/bottom option in extension menu"
 msgstr ""
 
+#: infobartunerstate/src/Handler/StreamOpenWebIf.py:68
+msgid "Show transcoded stream(s) (OpenWebIf)"
+msgstr ""
+
+#: infobartunerstate/src/Handler/StreamServer.py:70
+msgid "Show transcoded stream(s) (WebIf)"
+msgstr ""
+
 #: easymedia/src/plugin.py:208
 msgid "Show tv/radio switch:"
+msgstr ""
+
+#: infobartunerstate/src/Handler/Unknown.py:40
+msgid "Show undefined service(s)"
 msgstr ""
 
 #: youtubeplayer/src/YouTubeList.py:628 youtubeplayer/src/YouTubeList.py:653
@@ -13827,11 +13982,11 @@ msgstr ""
 msgid "Show volumebar when volume-value was changed"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:179
+#: seriesplugin/src/SeriesPluginConfiguration.py:188
 msgid "Show warnings after Record renaming"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:194
+#: seriesplugin/src/SeriesPluginConfiguration.py:205
 msgid "Show warnings after Timer handling"
 msgstr ""
 
@@ -13908,6 +14063,10 @@ msgstr ""
 msgid "Similar"
 msgstr "Benzer"
 
+#: pushservice/src/Controller/DeactivatedTimers.py:75
+msgid "Similar:"
+msgstr ""
+
 #
 #: aihdcontroler/src/plugin.py:53 aihdcontroler/src/plugin.py:57
 #: valixdcontrol/src/plugin.py:55
@@ -13976,30 +14135,6 @@ msgstr ""
 msgid "Skip"
 msgstr ""
 
-#: seriesplugin/src/Identifiers/Fernsehserien.py:128
-#: seriesplugin/src/Identifiers/Fernsehserien.py:129
-msgid "Skip Fernsehserien: No begin timestamp specified"
-msgstr ""
-
-#: seriesplugin/src/Identifiers/Fernsehserien.py:125
-#: seriesplugin/src/Identifiers/Fernsehserien.py:126
-msgid "Skip Fernsehserien: No show name specified"
-msgstr ""
-
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:161
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:162
-#: seriesplugin/src/Identifiers/Wunschliste.py:137
-#: seriesplugin/src/Identifiers/Wunschliste.py:138
-msgid "Skip Wunschliste: No begin timestamp specified"
-msgstr ""
-
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:158
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:159
-#: seriesplugin/src/Identifiers/Wunschliste.py:134
-#: seriesplugin/src/Identifiers/Wunschliste.py:135
-msgid "Skip Wunschliste: No show name specified"
-msgstr ""
-
 #: lastfm/src/plugin.py:206
 msgid "Skip current Track"
 msgstr ""
@@ -14016,12 +14151,33 @@ msgstr ""
 msgid "Skip protected Services"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:187
+#: seriesplugin/src/SeriesPluginConfiguration.py:197
 msgid "Skip search during records"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:165
+#: seriesplugin/src/SeriesPluginConfiguration.py:196
 msgid "Skip search if pattern matches"
+msgstr ""
+
+#: seriesplugin/src/Identifiers/WunschlisteFeed.py:174
+#: seriesplugin/src/Identifiers/SerienServer.py:74
+#: seriesplugin/src/Identifiers/Fernsehserien.py:141
+#: seriesplugin/src/Identifiers/Wunschliste.py:148
+msgid "Skip: No begin timestamp specified"
+msgstr ""
+
+#: seriesplugin/src/Identifiers/WunschlisteFeed.py:178
+#: seriesplugin/src/Identifiers/SerienServer.py:78
+#: seriesplugin/src/Identifiers/Fernsehserien.py:145
+#: seriesplugin/src/Identifiers/Wunschliste.py:152
+msgid "Skip: No service specified"
+msgstr ""
+
+#: seriesplugin/src/Identifiers/WunschlisteFeed.py:170
+#: seriesplugin/src/Identifiers/SerienServer.py:70
+#: seriesplugin/src/Identifiers/Fernsehserien.py:137
+#: seriesplugin/src/Identifiers/Wunschliste.py:144
+msgid "Skip: No show name specified"
 msgstr ""
 
 #: pushservice/src/ModuleBase.py:94
@@ -14082,7 +14238,7 @@ msgstr "Animasyon"
 msgid "So that's all you can do?"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:203
+#: seriesplugin/src/SeriesPluginConfiguration.py:214
 msgid "Socket timeout"
 msgstr ""
 
@@ -14090,11 +14246,11 @@ msgstr ""
 msgid "Softlink name error !"
 msgstr ""
 
-#: fritzcall/src/plugin.py:856
+#: fritzcall/src/plugin.py:870
 msgid "Software fax active"
 msgstr "Yazılım bazlı faks etkin"
 
-#: fritzcall/src/plugin.py:860
+#: fritzcall/src/plugin.py:874
 msgid "Software fax inactive"
 msgstr ""
 
@@ -14127,7 +14283,7 @@ msgstr ""
 "Üzgünüm, bu besleme tipi desteklenmiyor:\n"
 "%s"
 
-#: mytube/src/plugin.py:741
+#: mytube/src/plugin.py:734
 msgid "Sorry, video is not available!"
 msgstr "Üzgünüm, video mevcut değil!"
 
@@ -14430,7 +14586,7 @@ msgstr ""
 msgid "Start update check if not done yet"
 msgstr ""
 
-#: mytube/src/MyTubeSearch.py:344
+#: mytube/src/MyTubeSettings.py:72
 msgid "Start with following feed:"
 msgstr "Açılışta yüklenecek besleme:"
 
@@ -14480,12 +14636,12 @@ msgstr ""
 msgid "Stations"
 msgstr ""
 
-#: fritzcall/src/plugin.py:757 fritzcall/src/plugin.py:785
-#: fritzcall/src/plugin.py:813
+#: fritzcall/src/plugin.py:771 fritzcall/src/plugin.py:799
+#: fritzcall/src/plugin.py:827
 msgid "Status not available"
 msgstr "Durum bilgisi uygun değil"
 
-#: mytube/src/plugin.py:269
+#: mytube/src/plugin.py:265
 msgid "Std. Feeds"
 msgstr "Beslemeler"
 
@@ -14545,7 +14701,7 @@ msgid "Stop monitoring"
 msgstr ""
 
 #: dreammediathek/src/MoviePlayer.py:285 porncenter/src/plugin.py:159
-#: mytube/src/plugin.py:1794 podcast/src/plugin.py:62
+#: mytube/src/MyTubePlayer.py:258 podcast/src/plugin.py:62
 msgid "Stop playing this movie?"
 msgstr "Film durdurulsun mu?"
 
@@ -14571,7 +14727,6 @@ msgid "Stop timeshift while recording?"
 msgstr ""
 
 #: webinterface/src/WebComponents/Sources/Strings.py:97
-#: infobartunerstate/src/InfoBarTunerState.py:1218
 msgid "Stream"
 msgstr ""
 
@@ -14621,7 +14776,7 @@ msgstr ""
 msgid "Strictly"
 msgstr ""
 
-#: ncidclient/src/plugin.py:765 fritzcall/src/plugin.py:1988
+#: ncidclient/src/plugin.py:765 fritzcall/src/plugin.py:2002
 msgid "Strip Leading 0"
 msgstr "Öndeki 0'ı ayır"
 
@@ -14649,7 +14804,7 @@ msgstr ""
 msgid "Subscribe Newsfeed..."
 msgstr "Haber beslemesine abone ol..."
 
-#: mytube/src/plugin.py:543
+#: mytube/src/plugin.py:534
 msgid "Subscribe to channel"
 msgstr ""
 
@@ -14678,7 +14833,7 @@ msgstr "Başarılı"
 msgid "Successfully moved the movie %s"
 msgstr "%s filmi başarıyla taşındı."
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:430
+#: seriesplugin/src/SeriesPluginInfoScreen.py:431
 msgid "Successfully renamed"
 msgstr ""
 
@@ -14749,7 +14904,7 @@ msgstr ""
 msgid "Switch to selected Station"
 msgstr ""
 
-#: ncidclient/src/plugin.py:48 fritzcall/src/plugin.py:142
+#: ncidclient/src/plugin.py:48 fritzcall/src/plugin.py:156
 msgid "Switzerland"
 msgstr "İsviçre"
 
@@ -14974,11 +15129,11 @@ msgstr ""
 msgid "Text only"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:116
+#: infobartunerstate/src/IBTSConfiguration.py:125
 msgid "Text padding offset in pixel"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:117
+#: infobartunerstate/src/IBTSConfiguration.py:126
 msgid "Text spacing offset in pixel"
 msgstr ""
 
@@ -15074,7 +15229,7 @@ msgstr ""
 msgid "The Internet Movie Database"
 msgstr "Internet Film Veritabanı (imdb.com)"
 
-#: ncidclient/src/plugin.py:45 fritzcall/src/plugin.py:139
+#: ncidclient/src/plugin.py:45 fritzcall/src/plugin.py:153
 msgid "The Netherlands"
 msgstr "Hollanda"
 
@@ -15341,7 +15496,7 @@ msgid ""
 "There is still a refresh running. The Operation isn't allowed at this moment."
 msgstr ""
 
-#: mytube/src/plugin.py:489
+#: mytube/src/plugin.py:478
 msgid "There was an error getting the feed entries. Please try again."
 msgstr "Sonuçlar youtube'dan alınırken hata oluştu. Lütfen tekrar deneyin."
 
@@ -15519,7 +15674,7 @@ msgid ""
 "The BLUE key opens the service editor (next page)."
 msgstr ""
 
-#: mytube/src/plugin.py:1531
+#: mytube/src/plugin.py:1524
 msgid "This is the help screen. Feed me with something to display."
 msgstr "Bu yardım ekranıdır."
 
@@ -15615,7 +15770,7 @@ msgstr ""
 msgid "Ticker"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:175
+#: seriesplugin/src/SeriesPluginConfiguration.py:184
 msgid "Tidy up filename on rename"
 msgstr ""
 
@@ -15635,11 +15790,11 @@ msgstr ""
 msgid "Time Left / Duration"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:93
+#: infobartunerstate/src/IBTSConfiguration.py:91
 msgid "Time format begin"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:94
+#: infobartunerstate/src/IBTSConfiguration.py:92
 msgid "Time format end"
 msgstr ""
 
@@ -15665,15 +15820,15 @@ msgstr ""
 msgid "Timeout Statustext (seconds)"
 msgstr ""
 
-#: ncidclient/src/plugin.py:740 fritzcall/src/plugin.py:1949
+#: ncidclient/src/plugin.py:740 fritzcall/src/plugin.py:1963
 msgid "Timeout for Call Notifications (seconds)"
 msgstr "Arama uyarıları için zaman aşımı süresi (saniye)"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:182
+#: seriesplugin/src/SeriesPluginConfiguration.py:191
 msgid "Timeout for Rename Popup"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:197
+#: seriesplugin/src/SeriesPluginConfiguration.py:208
 msgid "Timeout for Timer Popup"
 msgstr ""
 
@@ -15718,13 +15873,17 @@ msgstr "Zamanlayıcı Tipi"
 msgid "Timer can not be added...no locations on partnerbox available."
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginTimer.py:256
+#: pushservice/src/Controller/DeactivatedTimers.py:72
+msgid "Timer has no EIT"
+msgstr ""
+
+#: seriesplugin/src/SeriesPluginTimer.py:208
 #, python-format
 msgid "Timer rename has been finished with %d errors:\n"
 msgstr ""
 
 #: autotimer/src/AutoTimerEditor.py:555 autotimer/src/AutoTimerImporter.py:191
-#: autotimer/src/AutoTimerWizard.py:113
+#: autotimer/src/AutoTimerWizard.py:115
 msgid "Timer type"
 msgstr "Zamanlayıcı tipi"
 
@@ -15817,7 +15976,7 @@ msgstr "Başlık ve kısa açıklama"
 msgid "Title and all descriptions"
 msgstr "Başlık ve tüm açıklamalar"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:185
+#: seriesplugin/src/SeriesPluginConfiguration.py:194
 msgid "Title search depths"
 msgstr ""
 
@@ -15848,7 +16007,7 @@ msgstr ""
 msgid "To be used as simple downloading application by other Plugins."
 msgstr ""
 
-#: fritzcall/src/plugin.py:2601
+#: fritzcall/src/plugin.py:2615
 msgid ""
 "To enjoy more functionalities of your FRITZ!Box, configure the firmware "
 "version!"
@@ -15878,27 +16037,27 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:483
+#: fritzcall/src/plugin.py:497
 msgid "Toggle 1. mailbox"
 msgstr "1. posta kutusunu aç/kapat"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:485
+#: fritzcall/src/plugin.py:499
 msgid "Toggle 2. mailbox"
 msgstr "2. posta kutusunu aç/kapat"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:487
+#: fritzcall/src/plugin.py:501
 msgid "Toggle 3. mailbox"
 msgstr "3. posta kutusunu aç/kapat"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:489
+#: fritzcall/src/plugin.py:503
 msgid "Toggle 4. mailbox"
 msgstr "4. posta kutusunu aç/kapat"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:491
+#: fritzcall/src/plugin.py:505
 msgid "Toggle 5. mailbox"
 msgstr "5. posta kutusunu aç/kapat"
 
@@ -15911,25 +16070,25 @@ msgid "Toggle List"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:465
+#: fritzcall/src/plugin.py:479
 msgid "Toggle Mailbox"
 msgstr "Posta aç/kapa"
 
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:461 fritzcall/src/plugin.py:511
-#: fritzcall/src/plugin.py:668 fritzcall/src/plugin.py:679
+#: fritzcall/src/plugin.py:475 fritzcall/src/plugin.py:525
+#: fritzcall/src/plugin.py:682 fritzcall/src/plugin.py:693
 msgid "Toggle WLAN"
 msgstr "WLAN aç/kapa"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:670
+#: fritzcall/src/plugin.py:684
 msgid "Toggle WLAN guest access"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:481
+#: fritzcall/src/plugin.py:495
 msgid "Toggle all mailboxes"
 msgstr "Posta kutularını aç/kapat"
 
@@ -16047,11 +16206,11 @@ msgstr "Transponder seçimi"
 msgid "Travel & Events"
 msgstr "Gezi"
 
-#: mytube/src/plugin.py:417 mytube/src/plugin.py:485
+#: mytube/src/plugin.py:410 mytube/src/plugin.py:474
 msgid "Trying to download the Youtube feed entries. Please wait..."
 msgstr "Youtube sonuçları alınıyor. Lütfen bekleyin..."
 
-#: mytube/src/plugin.py:487
+#: mytube/src/plugin.py:476
 msgid "Trying to download the Youtube search results. Please wait..."
 msgstr "Youtube arama sonuçları getiriliyor. Lütfen bekleyin..."
 
@@ -16079,6 +16238,16 @@ msgstr "Tuner"
 
 #: infobartunerstate/src/plugin.py:60
 msgid "Tuner Type"
+msgstr ""
+
+#: satipclient/src/SatIPTunerSetup.py:107
+#, python-brace-format
+msgid "Tuner {0} / {1} NOT REMOVED. Consicentcy Check failed!"
+msgstr ""
+
+#: satipclient/src/SatIPTunerSetup.py:105
+#, python-brace-format
+msgid "Tuner {0} / {1} removed"
 msgstr ""
 
 #: webinterface/src/WebComponents/Sources/Strings.py:123
@@ -16148,11 +16317,11 @@ msgstr ""
 
 #: ncidclient/src/plugin.py:836 ncidclient/src/plugin.py:839
 #: ncidclient/src/plugin.py:941 ncidclient/src/plugin.py:995
-#: fritzcall/src/FritzCallFBF.py:70 fritzcall/src/plugin.py:1120
-#: fritzcall/src/plugin.py:2102 fritzcall/src/plugin.py:2105
-#: fritzcall/src/plugin.py:2146 fritzcall/src/plugin.py:2441
-#: fritzcall/src/plugin.py:2541 fritzcall/src/plugin.py:2546
-#: fritzcall/src/plugin.py:2570
+#: fritzcall/src/FritzCallFBF.py:74 fritzcall/src/plugin.py:1134
+#: fritzcall/src/plugin.py:2116 fritzcall/src/plugin.py:2119
+#: fritzcall/src/plugin.py:2160 fritzcall/src/plugin.py:2455
+#: fritzcall/src/plugin.py:2555 fritzcall/src/plugin.py:2560
+#: fritzcall/src/plugin.py:2584
 msgid "UNKNOWN"
 msgstr "BİLİNMİYOR"
 
@@ -16234,7 +16403,7 @@ msgstr ""
 msgid "Unknown command (%s)"
 msgstr ""
 
-#: mytube/src/MyTubeService.py:257 mytube/src/MyTubeService.py:273
+#: mytube/src/MyTubeService.py:203 mytube/src/MyTubeService.py:219
 msgid "Unknown error"
 msgstr ""
 
@@ -16296,7 +16465,7 @@ msgid ""
 "Unselecting the only file scheduled for download is not possible through RPC."
 msgstr ""
 
-#: webinterface/src/WebComponents/Sources/Message.py:50
+#: webinterface/src/WebComponents/Sources/Message.py:54
 #, python-format
 msgid "Unsupported Messagetype %s"
 msgstr ""
@@ -16436,15 +16605,15 @@ msgstr ""
 msgid "Use hardware-decoder for MP3"
 msgstr ""
 
-#: ncidclient/src/plugin.py:745 fritzcall/src/plugin.py:1978
+#: ncidclient/src/plugin.py:745 fritzcall/src/plugin.py:1992
 msgid "Use internal PhoneBook"
 msgstr "FRITZ!Box rehberini kullan"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:176
+#: seriesplugin/src/SeriesPluginConfiguration.py:185
 msgid "Use legacy filenames"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:199
+#: seriesplugin/src/SeriesPluginConfiguration.py:210
 msgid "Use local caching"
 msgstr ""
 
@@ -16481,6 +16650,10 @@ msgstr ""
 msgid "Used Tag"
 msgstr ""
 
+#: infobartunerstate/src/Handler/Unknown.py:125
+msgid "Used by unknown service"
+msgstr ""
+
 #: dreamirc/src/plugin.py:107
 msgid "User Online"
 msgstr ""
@@ -16505,7 +16678,7 @@ msgstr "Kullanıcı yönetimi"
 msgid "User name"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1956
+#: fritzcall/src/plugin.py:1970
 msgid "User name Accessing FRITZ!Box"
 msgstr ""
 
@@ -16665,13 +16838,13 @@ msgstr ""
 msgid "Validator"
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:359 fritzcall/src/FritzCallFBF.py:386
-#: fritzcall/src/FritzCallFBF.py:1368 fritzcall/src/FritzCallFBF.py:2037
-#: fritzcall/src/FritzCallFBF.py:2777
+#: fritzcall/src/FritzCallFBF.py:366 fritzcall/src/FritzCallFBF.py:393
+#: fritzcall/src/FritzCallFBF.py:1377 fritzcall/src/FritzCallFBF.py:2052
+#: fritzcall/src/FritzCallFBF.py:2819
 msgid "Vanity"
 msgstr "Vanity"
 
-#: infobartunerstate/src/IBTSConfiguration.py:118
+#: infobartunerstate/src/IBTSConfiguration.py:127
 msgid "Variable field width"
 msgstr ""
 
@@ -16685,7 +16858,7 @@ msgstr ""
 msgid "Ver."
 msgstr "Sürüm"
 
-#: mytube/src/plugin.py:390 mytube/src/plugin.py:409 mytube/src/plugin.py:472
+#: mytube/src/plugin.py:383 mytube/src/plugin.py:402 mytube/src/plugin.py:463
 msgid ""
 "Verify your Dreambox authenticity by running the genuine dreambox plugin!"
 msgstr ""
@@ -16698,7 +16871,7 @@ msgstr ""
 msgid "Version: "
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:115
+#: infobartunerstate/src/IBTSConfiguration.py:124
 msgid "Vertical offset in pixel"
 msgstr ""
 
@@ -16706,6 +16879,7 @@ msgstr ""
 msgid "Very simple"
 msgstr ""
 
+#: webinterface/src/WebComponents/Sources/Strings.py:182
 #: vlcplayer/src/VlcServerConfig.py:313
 msgid "Video Bitrate"
 msgstr "Video bit oranı"
@@ -16738,7 +16912,7 @@ msgstr ""
 msgid "Video streaming from the orf.at web page"
 msgstr ""
 
-#: mytube/src/MyTubeService.py:271
+#: mytube/src/MyTubeService.py:217
 msgid "Video successfully added to favorites"
 msgstr ""
 
@@ -16750,11 +16924,11 @@ msgstr ""
 msgid "VideoDB is not installed!"
 msgstr ""
 
-#: mytube/src/MyTubeSearch.py:346
+#: mytube/src/MyTubeSettings.py:76
 msgid "Videobrowser exit behavior:"
 msgstr "Video gezgininden çıkıldığında:"
 
-#: mytube/src/MyTubeSearch.py:345
+#: mytube/src/MyTubeSettings.py:75
 msgid "Videoplayer stop/exit behavior:"
 msgstr "Video oynatıcı durdurulduğunda/çıkıldığında:"
 
@@ -16782,7 +16956,7 @@ msgstr "Google haritaları, Dreambox'ınızdan görüntüleyin."
 msgid "View RSS..."
 msgstr "RSS'lere bak..."
 
-#: mytube/src/plugin.py:550
+#: mytube/src/plugin.py:541
 msgid "View active downloads"
 msgstr "İndirilen dosyaları göster"
 
@@ -16808,7 +16982,7 @@ msgid "Views"
 msgstr ""
 
 #: webcamviewer/src/WebcamTravel.py:247 webcamviewer/src/WebcamTravel.py:250
-#: mytube/src/plugin.py:1156 mytube/src/plugin.py:1390
+#: mytube/src/plugin.py:1149 mytube/src/plugin.py:1383
 msgid "Views: "
 msgstr "İzlenme: "
 
@@ -17045,7 +17219,7 @@ msgstr ""
 msgid "WebcamViewer"
 msgstr ""
 
-#: webinterface/src/plugin.py:588 webinterface/src/plugin.py:616
+#: webinterface/src/plugin.py:589 webinterface/src/plugin.py:617
 msgid "Webinterface"
 msgstr "Web arayüzü"
 
@@ -17107,7 +17281,7 @@ msgstr ""
 msgid "Welcome to the AutoTimer-Plugin"
 msgstr ""
 
-#: mytube/src/plugin.py:259
+#: mytube/src/plugin.py:255
 msgid ""
 "Welcome to the MyTube Youtube Player.\n"
 "\n"
@@ -17135,7 +17309,7 @@ msgstr ""
 "\n"
 "bu yardım ekranına ulaşmak için ise HELP tuşunu kullanın. "
 
-#: mytube/src/plugin.py:258
+#: mytube/src/plugin.py:254
 msgid ""
 "Welcome to the MyTube Youtube Player.\n"
 "\n"
@@ -17422,6 +17596,10 @@ msgstr ""
 msgid "Wolof"
 msgstr ""
 
+#: autotimer/src/AutoTimerSettings.py:62
+msgid "Write debug messages into file"
+msgstr ""
+
 #: rsdownloader/src/plugin.py:837
 msgid "Write log:"
 msgstr "Günlüğe yaz:"
@@ -17462,8 +17640,8 @@ msgstr "Yıl:"
 #: webadmin/src/WebComponents/Sources/PkgList.py:105
 #: webadmin/src/WebComponents/Sources/PkgList.py:106
 #: dreammediathek/src/plugin.py:114 dreammediathek/src/MoviePlayer.py:279
-#: epgrefresh/src/plugin.py:49 mytube/src/plugin.py:637
-#: mytube/src/plugin.py:643 mytube/src/plugin.py:1788
+#: epgrefresh/src/plugin.py:49 mytube/src/MyTubePlayer.py:252
+#: mytube/src/plugin.py:628 mytube/src/plugin.py:634
 #: moviecut/src_py/plugin.py:96 youtubeplayer/src/YouTubeSearchDialog.py:54
 #: autotimer/srcautotimerwizard.xml
 msgid "Yes"
@@ -17474,11 +17652,11 @@ msgstr "Evet"
 msgid "Yes (safe mode)"
 msgstr ""
 
-#: dreammediathek/src/MoviePlayer.py:281 mytube/src/plugin.py:1790
+#: dreammediathek/src/MoviePlayer.py:281 mytube/src/MyTubePlayer.py:254
 msgid "Yes, but play next video"
 msgstr "Evet, ama sonraki videoyu oynat"
 
-#: dreammediathek/src/MoviePlayer.py:282 mytube/src/plugin.py:1791
+#: dreammediathek/src/MoviePlayer.py:282 mytube/src/MyTubePlayer.py:255
 msgid "Yes, but play previous video"
 msgstr "Evet, ama önceki videoyu oynat"
 
@@ -17596,8 +17774,18 @@ msgid ""
 "how things are."
 msgstr ""
 
+#: seriesplugin/src/ChannelEditor.py:130
+msgid "You have to match SD and HD channels separately!"
+msgstr ""
+
 #: partnerbox/src/plugin.py:118
 msgid "You have to restart Enigma2 to activate your new preferences!"
+msgstr ""
+
+#: webinterface/src/WebComponents/Sources/Strings.py:184
+msgid ""
+"You have to set your encoder into TV-Services Mode for things to work as "
+"expected!"
 msgstr ""
 
 #: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:291
@@ -17608,7 +17796,7 @@ msgstr ""
 msgid "You need GUI-restart to load the new settings!"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1866
+#: fritzcall/src/plugin.py:1880
 msgid "You need to enable the monitoring on your FRITZ!Box by dialing #96*5*!"
 msgstr ""
 "FRITZ!Box'ta çağrı görüntülemeyi etkinleştirmek için #96*5* 'ı aramalısınız!"
@@ -17624,7 +17812,7 @@ msgstr ""
 msgid "You need to include at least %d aspect ratio modes!"
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:487
+#: fritzcall/src/FritzCallFBF.py:494
 msgid ""
 "You need to set the password of the FRITZ!Box\n"
 "in the configuration dialog to display calls\n"
@@ -17689,7 +17877,7 @@ msgstr ""
 "'Anahtar Kelime' den sonra bir boşluk bırakmışsınız.\n"
 "Lütfen boşluğu bilinçli olarak, tutmak isteyip istemediğinizi belirtiniz?"
 
-#: autotimer/src/plugin.py:111
+#: autotimer/src/plugin.py:116
 #, python-format
 msgid ""
 "Your config file is not well-formed:\n"
@@ -17912,12 +18100,12 @@ msgid "add"
 msgstr "ekle"
 
 #. TRANSLATORS: AutoTimer title in MovieList (automatically opens importer, I consider this no further interaction)
-#: autotimer/src/plugin.py:206
+#: autotimer/src/plugin.py:211
 msgid "add AutoTimer"
 msgstr "Otomatik zamanlayıcı ekle"
 
 #. TRANSLATORS: AutoTimer title in EventInfo dialog (requires the user to select an event to base the AutoTimer on)
-#: autotimer/src/plugin.py:208
+#: autotimer/src/plugin.py:213
 msgid "add AutoTimer..."
 msgstr "Otomatik zamanlayıcı ekle..."
 
@@ -18104,7 +18292,7 @@ msgstr ""
 msgid "auto"
 msgstr "otomatik"
 
-#: autotimer/src/AutoTimerResource.py:210
+#: autotimer/src/AutoTimerResource.py:281
 msgid "autotimers need a match attribute"
 msgstr "otomatik zamanlayıcıya denk nitelik lazım"
 
@@ -18116,7 +18304,7 @@ msgstr ""
 msgid "backup timer disabled"
 msgstr ""
 
-#: fritzcall/src/plugin.py:93
+#: fritzcall/src/plugin.py:107
 msgid "before 05.27"
 msgstr ""
 
@@ -18160,7 +18348,7 @@ msgstr ""
 msgid "by speed"
 msgstr ""
 
-#: fritzcall/src/plugin.py:870
+#: fritzcall/src/plugin.py:884
 msgid "call redirections active"
 msgstr "çağrı yönlendirmesi etkin"
 
@@ -18231,11 +18419,11 @@ msgstr ""
 msgid "close"
 msgstr "Kapat"
 
-#: autotimer/src/AutoTimerResource.py:460
+#: autotimer/src/AutoTimerResource.py:531
 msgid "config changed."
 msgstr "ayarlar değisti"
 
-#: infobartunerstate/src/plugin.py:183 pushservice/src/plugin.py:113
+#: infobartunerstate/src/plugin.py:185 pushservice/src/plugin.py:113
 #: podcast/src/plugin.py:627
 msgid "configuration"
 msgstr "ayarlar"
@@ -18354,7 +18542,7 @@ msgstr "açıklama denk"
 msgid "device name: "
 msgstr ""
 
-#: fritzcall/src/plugin.py:804
+#: fritzcall/src/plugin.py:818
 msgid "devices active"
 msgstr "cihaz etkin"
 
@@ -18402,7 +18590,7 @@ msgid "display Info"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1900
+#: fritzcall/src/plugin.py:1914
 msgid "display calls"
 msgstr "aramaları göster"
 
@@ -18411,7 +18599,7 @@ msgid "display connection errors"
 msgstr "bağlantı hatalarını göster"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1902
+#: fritzcall/src/plugin.py:1916
 msgid "display phonebook"
 msgstr "rehberi göster"
 
@@ -18445,7 +18633,7 @@ msgstr "birşey yapma"
 msgid "don't record"
 msgstr "kaydetme"
 
-#: fritzcall/src/FritzCallFBF.py:485
+#: fritzcall/src/FritzCallFBF.py:492
 msgid "done"
 msgstr "tamamlandı"
 
@@ -18456,7 +18644,7 @@ msgstr "tamamlandı"
 msgid "done!"
 msgstr "tamamlandı!"
 
-#: fritzcall/src/FritzCallFBF.py:498
+#: fritzcall/src/FritzCallFBF.py:505
 msgid "done, using last list"
 msgstr "tamamlandı, son liste kullanıyor"
 
@@ -18566,7 +18754,7 @@ msgstr "taşıma kipini aç"
 msgid "enabled"
 msgstr "etkin"
 
-#: fritzcall/src/plugin.py:797
+#: fritzcall/src/plugin.py:811
 msgid "encrypted"
 msgstr "şifrelenmiş"
 
@@ -18702,8 +18890,8 @@ msgstr "filtre açık"
 msgid "finish fetching remote data..."
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:475 fritzcall/src/FritzCallFBF.py:1389
-#: fritzcall/src/FritzCallFBF.py:2075 fritzcall/src/FritzCallFBF.py:2812
+#: fritzcall/src/FritzCallFBF.py:482 fritzcall/src/FritzCallFBF.py:1398
+#: fritzcall/src/FritzCallFBF.py:2090 fritzcall/src/FritzCallFBF.py:2854
 msgid "finishing"
 msgstr "sonlandırılıyor"
 
@@ -18805,7 +18993,7 @@ msgstr ""
 
 #: fritzcall/src/FritzLDIF.py:102 fritzcall/src/FritzLDIF.py:175
 #: fritzcall/src/FritzOutlookCSV.py:123 fritzcall/src/FritzOutlookCSV.py:204
-#: fritzcall/src/FritzCallFBF.py:352
+#: fritzcall/src/FritzCallFBF.py:359
 msgid "home"
 msgstr "ev"
 
@@ -18990,7 +19178,7 @@ msgstr ""
 msgid "logging into last.FM"
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:118 fritzcall/src/FritzCallFBF.py:1135
+#: fritzcall/src/FritzCallFBF.py:125 fritzcall/src/FritzCallFBF.py:1144
 msgid "login"
 msgstr "oturum açılıyor"
 
@@ -18998,8 +19186,8 @@ msgstr "oturum açılıyor"
 msgid "login failed! "
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:209 fritzcall/src/FritzCallFBF.py:1215
-#: fritzcall/src/FritzCallFBF.py:1901 fritzcall/src/FritzCallFBF.py:2678
+#: fritzcall/src/FritzCallFBF.py:216 fritzcall/src/FritzCallFBF.py:1224
+#: fritzcall/src/FritzCallFBF.py:1917 fritzcall/src/FritzCallFBF.py:2719
 msgid "login ok"
 msgstr "oturum açıldı"
 
@@ -19007,8 +19195,8 @@ msgstr "oturum açıldı"
 msgid "login successful"
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:200 fritzcall/src/FritzCallFBF.py:1206
-#: fritzcall/src/FritzCallFBF.py:1883 fritzcall/src/FritzCallFBF.py:2660
+#: fritzcall/src/FritzCallFBF.py:207 fritzcall/src/FritzCallFBF.py:1215
+#: fritzcall/src/FritzCallFBF.py:1899 fritzcall/src/FritzCallFBF.py:2701
 msgid "login verification"
 msgstr "oturum doğrulama"
 
@@ -19016,7 +19204,7 @@ msgstr "oturum doğrulama"
 msgid "mail check interval (minutes)"
 msgstr "eposta kontrol sıklığı (dakika)"
 
-#: fritzcall/src/plugin.py:836
+#: fritzcall/src/plugin.py:850
 msgid "mailboxes active"
 msgstr "posta kutusu etkin"
 
@@ -19107,13 +19295,13 @@ msgid ""
 "only, %i=transponders, %i=parentalcontrol white-/blacklist]"
 msgstr ""
 
-#: autotimer/src/AutoTimerResource.py:179
+#: autotimer/src/AutoTimerResource.py:250
 msgid "missing parameter \"id\""
 msgstr "paramtre eksik \"id\""
 
 #: fritzcall/src/FritzLDIF.py:100 fritzcall/src/FritzLDIF.py:173
 #: fritzcall/src/FritzOutlookCSV.py:121 fritzcall/src/FritzOutlookCSV.py:202
-#: fritzcall/src/FritzCallFBF.py:350
+#: fritzcall/src/FritzCallFBF.py:357
 msgid "mobile"
 msgstr "cep"
 
@@ -19235,7 +19423,7 @@ msgstr ""
 msgid "no account selected"
 msgstr "hesap seçilmedi"
 
-#: ncidclient/src/plugin.py:825 fritzcall/src/plugin.py:2078
+#: ncidclient/src/plugin.py:825 fritzcall/src/plugin.py:2092
 msgid "no calls"
 msgstr ""
 
@@ -19243,7 +19431,7 @@ msgstr ""
 msgid "no date"
 msgstr "tarih yok"
 
-#: fritzcall/src/plugin.py:800
+#: fritzcall/src/plugin.py:814
 msgid "no device active"
 msgstr "etkin cihaz yok"
 
@@ -19283,13 +19471,13 @@ msgstr ""
 msgid "not active"
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:1519 fritzcall/src/FritzCallFBF.py:1568
-#: fritzcall/src/FritzCallFBF.py:2320 fritzcall/src/FritzCallFBF.py:2900
-#: fritzcall/src/FritzCallFBF.py:3056
+#: fritzcall/src/FritzCallFBF.py:1528 fritzcall/src/FritzCallFBF.py:1577
+#: fritzcall/src/FritzCallFBF.py:2331 fritzcall/src/FritzCallFBF.py:2942
+#: fritzcall/src/FritzCallFBF.py:3083
 msgid "not available with this firmware version"
 msgstr ""
 
-#: fritzcall/src/plugin.py:93
+#: fritzcall/src/plugin.py:107
 msgid "not configured"
 msgstr "henüz yapılandırılmamış"
 
@@ -19297,7 +19485,7 @@ msgstr "henüz yapılandırılmamış"
 msgid "not configured yet. please do so in the settings."
 msgstr ""
 
-#: fritzcall/src/plugin.py:795
+#: fritzcall/src/plugin.py:809
 msgid "not encrypted"
 msgstr "şifrelenmemiş"
 
@@ -19309,10 +19497,10 @@ msgstr ""
 msgid "not successfully please check your config (FTPERROR)"
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:3397 fritzcall/src/FritzCallFBF.py:3404
-#: fritzcall/src/FritzCallFBF.py:3414 fritzcall/src/FritzCallFBF.py:3424
-#: fritzcall/src/FritzCallFBF.py:3434 fritzcall/src/FritzCallFBF.py:3445
-#: fritzcall/src/FritzCallFBF.py:3455 fritzcall/src/FritzCallFBF.py:3462
+#: fritzcall/src/FritzCallFBF.py:3431 fritzcall/src/FritzCallFBF.py:3438
+#: fritzcall/src/FritzCallFBF.py:3448 fritzcall/src/FritzCallFBF.py:3458
+#: fritzcall/src/FritzCallFBF.py:3468 fritzcall/src/FritzCallFBF.py:3479
+#: fritzcall/src/FritzCallFBF.py:3489 fritzcall/src/FritzCallFBF.py:3496
 msgid "not yet implemented"
 msgstr ""
 
@@ -19320,7 +19508,7 @@ msgstr ""
 msgid "nothing playing..."
 msgstr ""
 
-#: ncidclient/src/plugin.py:1007 fritzcall/src/plugin.py:2545
+#: ncidclient/src/plugin.py:1007 fritzcall/src/plugin.py:2559
 msgid "number suppressed"
 msgstr ""
 
@@ -19402,7 +19590,7 @@ msgstr ""
 msgid "on with top/bottom"
 msgstr ""
 
-#: fritzcall/src/plugin.py:802
+#: fritzcall/src/plugin.py:816
 msgid "one device active"
 msgstr "Bir cihaz etkin"
 
@@ -19553,8 +19741,8 @@ msgstr ""
 msgid "preferred"
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:464 fritzcall/src/FritzCallFBF.py:1399
-#: fritzcall/src/FritzCallFBF.py:2065 fritzcall/src/FritzCallFBF.py:2801
+#: fritzcall/src/FritzCallFBF.py:471 fritzcall/src/FritzCallFBF.py:1408
+#: fritzcall/src/FritzCallFBF.py:2080 fritzcall/src/FritzCallFBF.py:2843
 msgid "preparing"
 msgstr "hazırlanıyor"
 
@@ -19587,7 +19775,7 @@ msgid "private"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1896 fritzcall/src/plugin.py:1906
+#: fritzcall/src/plugin.py:1910 fritzcall/src/plugin.py:1920
 #: eparted/src/eparted.py:581 eparted/src/eparted.py:587
 msgid "quit"
 msgstr "çık"
@@ -19688,15 +19876,15 @@ msgstr ""
 msgid "required"
 msgstr ""
 
-#: startupservice/src/plugin.py:117
+#: startupservice/src/plugin.py:109
 msgid "reset startup service"
 msgstr ""
 
-#: startupservice/src/plugin.py:127
+#: startupservice/src/plugin.py:119
 msgid "reset startup service for booting..."
 msgstr ""
 
-#: startupservice/src/plugin.py:128
+#: startupservice/src/plugin.py:120
 msgid "reset startup service for leaving standby mode..."
 msgstr ""
 
@@ -19729,7 +19917,7 @@ msgid "save Filesystemposition on exit"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1898 fritzcall/src/plugin.py:1904
+#: fritzcall/src/plugin.py:1912 fritzcall/src/plugin.py:1918
 msgid "save and quit"
 msgstr "kaydet ve çık"
 
@@ -19852,15 +20040,15 @@ msgstr ""
 msgid "selected bouquets are installed"
 msgstr "seçilen bouquetler yüklendi"
 
-#: startupservice/src/plugin.py:116
+#: startupservice/src/plugin.py:108
 msgid "set as startup service"
 msgstr ""
 
-#: startupservice/src/plugin.py:122
+#: startupservice/src/plugin.py:114
 msgid "set as startup service after booting..."
 msgstr ""
 
-#: startupservice/src/plugin.py:123
+#: startupservice/src/plugin.py:115
 msgid "set as startup service after leaving standby mode..."
 msgstr ""
 
@@ -19913,7 +20101,7 @@ msgstr ""
 msgid "show all"
 msgstr "tümünü göster"
 
-#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:100
+#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:114
 msgid "show as list"
 msgstr "liste olarak göster"
 
@@ -19925,7 +20113,7 @@ msgstr "silinen kayıtları göster"
 msgid "show details"
 msgstr ""
 
-#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:100
+#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:114
 msgid "show each call"
 msgstr "aramaları ayrı göster"
 
@@ -19959,7 +20147,7 @@ msgstr ""
 msgid "show next page"
 msgstr ""
 
-#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:100
+#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:114
 msgid "show nothing"
 msgstr "birşey gösterme"
 
@@ -20147,7 +20335,7 @@ msgstr ""
 msgid "type %s is not a number"
 msgstr ""
 
-#: autotimer/src/AutoTimerResource.py:204
+#: autotimer/src/AutoTimerResource.py:275
 #, python-format
 msgid "unable to find timer with id %i"
 msgstr "%i ile bir zamanyalıci bulunamadı"
@@ -20288,7 +20476,7 @@ msgid "with short description"
 msgstr ""
 
 #: fritzcall/src/FritzOutlookCSV.py:93 fritzcall/src/FritzOutlookCSV.py:176
-#: fritzcall/src/FritzCallFBF.py:354
+#: fritzcall/src/FritzCallFBF.py:361
 msgid "work"
 msgstr "iş"
 
@@ -20296,7 +20484,7 @@ msgstr "iş"
 msgid "wrong filetype!"
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:1897 fritzcall/src/FritzCallFBF.py:2674
+#: fritzcall/src/FritzCallFBF.py:1913 fritzcall/src/FritzCallFBF.py:2715
 msgid "wrong user or password?"
 msgstr ""
 
@@ -20349,6 +20537,11 @@ msgstr "kanal değiştirildi"
 msgid "zoom / increase height"
 msgstr ""
 
+#: satipclient/src/SatIPTuner.py:50
+#, python-brace-format
+msgid "{0}x {1}"
+msgstr ""
+
 #: pushservice/src/Services/SMTP.py:32 pushservice/src/Services/GNTP.py:34
 #, python-brace-format
 msgid ""
@@ -20384,7 +20577,7 @@ msgid ""
 "{body:s}"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:300
+#: seriesplugin/src/SeriesPluginInfoScreen.py:301
 #, python-brace-format
 msgid "{title:s}"
 msgstr ""
