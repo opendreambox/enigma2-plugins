@@ -1059,7 +1059,7 @@ var BaseCore = Class.create({
 		this.popUpBlockerHinted = false;
 		this.hideNotifierTimeout = '';
 		this.sessionProvider = new SessionProvider( this.onSessionAvailable.bind(this) );
-		if(userprefs.data.style != "dark" && userprefs.data.style != "light" && userprefs.data.style != "modern"){
+		if(userprefs.data.style != "merlin_dark" && userprefs.data.style != "modern"){
 			userprefs.data.style = "modern";
 			userprefs.save();
 		}
@@ -1155,26 +1155,18 @@ var BaseCore = Class.create({
 			return "";
 		}
 	},
-	
+
 	styleChanged: function(){
-		$('style_modern').disabled = false;
-//	switch(userprefs.data.style){
-//		case 'light':
-//			$('style_dark').disabled = true;
-//			$('style_light').disabled = false;
-//			$('style_modern').disabled = true;
-//			break;
-//		case 'dark':
-//			$('style_dark').disabled = false;
-//			$('style_light').disabled = true;
-//			$('style_modern').disabled = true;
-//			break;
-//		default:
-//			$('style_dark').disabled = true;
-//			$('style_light').disabled = true;
-//			$('style_modern').disabled = false;
-//			break;
-//		}
+		switch(userprefs.data.style){
+			case 'merlin_dark':
+				$('style_merlin_dark').disabled = false;
+				$('style_modern').disabled = true;
+				break;
+			default:
+				$('style_merlin_dark').disabled = true;
+				$('style_modern').disabled = false;
+				break;
+		}
 	}
 });
 
@@ -2029,7 +2021,7 @@ var E2WebCore = Class.create(BaseCore, {
 		userprefs.load();
 		var changed = false;
 
-		/*
+
 		var l = $('interfaceStyle');
 		var style = l.options[l.selectedIndex].value;
 		if(style != userprefs.data.style){
@@ -2037,7 +2029,6 @@ var E2WebCore = Class.create(BaseCore, {
 			changed = true;
 			this.styleChanged();
 		}
-		*/
 
 		var debug = $('enableDebug').checked;
 		if(debug != undefined){
