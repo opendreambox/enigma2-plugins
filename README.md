@@ -1,5 +1,5 @@
-1. Licensing
-Whenever you think about adding your stuff to schwerkraft, you should 
+# Licensing
+Whenever you think about adding your stuff to github.com/opendreambox, you should 
 think about the license you want to apply to your code/resources.
 It is a common agreement in the open source world to put a file called 
 LICENSE or COPYING into the root directory of your project and/or to add
@@ -8,13 +8,13 @@ the license text to the head of all your sources.
 Please always take care not to violate the license of code you didn't 
 actually write yourself but got somewhere else.
 
-2. Adding new plugins
-Everyone is welcome to publish their plugins and/or skins on schwerkraft.
-Every plugin and skin added to schwerkraft can be added to the
+# Adding new plugins or skins
+Everyone is welcome to publish their plugins and/or skins on github.com/opendreambox.
+Every plugin and skin added to github.com/opendreambox can be added to the
 official build system and will usually be available via the official 
 experimental mirrors within a day.
 
-2.1 Directory structures and paths
+## Directory structures and paths
 Before you start you should have a rough look at existing directory
 structures and structure your things accordingly.
 Please do not use any absolute paths, neither in the Makefiles nor in a plugin.
@@ -26,8 +26,8 @@ In enimga2 and any of its plugins you could use eEnv.resolve() to do the same.
 In addition you can use enigma2's Tools.Directories.resolveFilename() 
 in conjunction with the according SCOPE_* constants.
 
-2.2 Add your plugin to the build system
-Basically everything on schwerkraft will automatically be built on a
+## Add your plugin to the build system
+Basically everything on github.com/opendreambox will automatically be built on a
 daily basis. This is done using "autotools" in an openembedded build environment.
 If you want to set up your own openembedded you can take a look at
 http://opendreambox.org/ (you will need a Linux system for that).
@@ -47,7 +47,7 @@ finding and fixing things a lot easier.
 If you are not familiar with Makefiles or configure.ac, just try to take a look
 at existing content. You'll find lots of examples in enigma2-plugins.
 
-2.3 Become the maintainer of what you created
+## Become the maintainer of what you created
 If you're adding an enigma2-plugin, please also consider adding a proper 
 maintainer.info for your plugin.
 A maintainer.info just contains two things: the mail address of the author
@@ -56,10 +56,11 @@ It enables users to send a crashlog to the actual maintainer of a plugin
 that seems to have caused a crash.
 
 Example:
+```
 stephan@reichholf.net
 WebInterface
-
-3. Changing other people's plugins or skins
+```
+# Changing other people's plugins or skins
 Before changing anything in someone else's sources, please try to contact 
 him/her and discuss the things you want to change.
 Sometimes people have good reasons why they don't want particular things to
@@ -69,14 +70,12 @@ Sometimes though, the original author doesn't maintain a plugin anymore.
 So if you have any fixes or enhancements for some existing plugin that 
 doesn't seem to be maintained anymore or you cannot get any feedback from 
 the original author, you can always go ahead and commit your changes.
-As schwerkraft uses git, you can undo your changes at any time, if you want
+As github.com/opendreambox uses git, you can undo your changes at any time, if you want
 or have to.
 But again, please check that whatever you're going to change doesn't violate 
 any licenses!
 
-4. Getting in contact
+# Getting in contact
 If you want to get in contact with some of the people that created and
-maintain the projects on schwerkraft.elitedvb.net you are always welcome 
+maintain the projects on github.com/opendreambox you are always welcome 
 to join us on #enigma2 in the freenode.net IRC network.
-
-
