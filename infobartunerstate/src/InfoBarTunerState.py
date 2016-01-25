@@ -743,18 +743,68 @@ class TunerState(TunerStateBase):
 		self.progress    = progress and progress is not None and       int( progress )
 		#print "IBTS duration, timeleft, timeelapsed, progress", self.duration, self.timeleft, self.timeelapsed, self.progress
 		
+		
+		#Adapted from: from Components.Harddisk import findMountPoint
+		def mountpoint(path):
+			path = os.path.realpath(path)
+			if os.path.ismount(path) or len(path)==0: return path
+			return mountpoint(os.path.dirname(path))
+		
+		def getDevicebyMountpoint(hdm, mountpoint):
+			for x in hdm.partitions[:]:
+				if x.mountpoint == mountpoint:
+					return x.device
+			return None
+		
+		def getHDD(hdm, part):
+			for hdd in hdm.hdd:
+				if hdd.device == part[:3]:
+					return hdd
+			return None
+		
+		def hddIsAvailable(path):
+			# User specified to avoid HDD wakeup if it is sleeping
+			from Components.Harddisk import harddiskmanager
+			dev = getDevicebyMountpoint( harddiskmanager, mountpoint(path) )
+			if dev is not None:
+				hdd = getHDD( harddiskmanager, dev )
+				if hdd is not None:
+					if not hdd.isSleeping():
+						return True
+			return False
+		
 		# File site and free disk space
 		filename = self.filename
-		if filename and os.path.exists( filename ):
-			filesize = os.path.getsize( filename ) 
-			self.filesize = int( filesize / (1024*1024) )
+		self.filesize = None
+		self.freespace = None
+		if filename:
 			
-			try:
-				stat = os.statvfs( filename )
-				self.freespace = int ( ( stat.f_bfree / 1000 * stat.f_bsize / 1000 ) / 1024 )
-				#self.freespace = os.stat(filename).st_size/1048576)
-			except OSError:
+			for c in config.infobartunerstate.fields.dict().itervalues():
+				if c.value == "FileSize":
+					break
+				if c.value == "FreeSpace":
+					break
+			else:
+				# We do not need to calculate the following values
+				return
+			
+			# We need a replacement function for ismount
+			# Bad workaround - skip all pathes which start with /mnt
+			if config.infobartunerstate.skip_mounts.value and filename.startswith("/mnt/"): #os.path.ismount( filename ):
 				pass
+			
+			elif config.infobartunerstate.wake_hdd.value or hddIsAvailable( filename ):
+			
+				if os.path.exists( filename ):
+					filesize = os.path.getsize( filename ) 
+					self.filesize = int( filesize / (1024*1024) )
+					
+					try:
+						stat = os.statvfs( filename )
+						self.freespace = int ( ( stat.f_bfree / 1000 * stat.f_bsize / 1000 ) / 1024 )
+						#self.freespace = os.stat(filename).st_size/1048576)
+					except OSError:
+						pass
 
 	def update(self):
 		

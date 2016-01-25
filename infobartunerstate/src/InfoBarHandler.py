@@ -71,7 +71,6 @@ def recoverInfoBar():
 
 def InfoBarShowTunerState(self):
 	from Plugins.Extensions.InfoBarTunerState.plugin import gInfoBarTunerState
-	global gInfoBarTunerState
 	global InfoBarShow
 	if InfoBarShow:
 		InfoBarShow(self)
@@ -80,7 +79,6 @@ def InfoBarShowTunerState(self):
 
 def InfoBarHideTunerState(self):
 	from Plugins.Extensions.InfoBarTunerState.plugin import gInfoBarTunerState
-	global gInfoBarTunerState
 	global InfoBarHide
 	if InfoBarHide:
 		InfoBarHide(self)
@@ -89,7 +87,6 @@ def InfoBarHideTunerState(self):
 
 def InfoBarToggleTunerState(self):
 	from Plugins.Extensions.InfoBarTunerState.plugin import gInfoBarTunerState
-	global gInfoBarTunerState
 	global InfoBarToggle
 	if InfoBarToggle:
 		InfoBarToggle(self)

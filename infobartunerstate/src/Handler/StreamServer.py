@@ -121,8 +121,9 @@ class StreamServer(PluginBase):
 				client = getClient(ip)
 				
 				from Plugins.Extensions.InfoBarTunerState.plugin import gInfoBarTunerState
-				gInfoBarTunerState.addEntry(id, self.getPluginName(), self.getType(), self.getText(), "", "", 0, "", 0, time(), 0, True, "", client, ip, "")
-				gInfoBarTunerState.onEvent()
+				if gInfoBarTunerState:
+					gInfoBarTunerState.addEntry(id, self.getPluginName(), self.getType(), self.getText(), "", "", 0, "", 0, time(), 0, True, "", client, ip, "")
+					gInfoBarTunerState.onEvent()
 			
 		else:
 			
@@ -135,8 +136,9 @@ class StreamServer(PluginBase):
 				del self.ids[0]
 				
 				from Plugins.Extensions.InfoBarTunerState.plugin import gInfoBarTunerState
-				gInfoBarTunerState.finishEntry(id)
-				gInfoBarTunerState.onEvent()
+				if gInfoBarTunerState:
+					gInfoBarTunerState.finishEntry(id)
+					gInfoBarTunerState.onEvent()
 
 	def onEventParametersChanged(self, params):
 		try:
@@ -168,8 +170,9 @@ class StreamServer(PluginBase):
 							client = getClient(ip)
 							
 							from Plugins.Extensions.InfoBarTunerState.plugin import gInfoBarTunerState
-							gInfoBarTunerState.addEntry(id, self.getPluginName(), self.getType(), self.getText(), tuner, tunertype, tunernumber, name, number, channel, time(), 0, True, "", client, ip)
-							gInfoBarTunerState.onEvent()
+							if gInfoBarTunerState:
+								gInfoBarTunerState.addEntry(id, self.getPluginName(), self.getType(), self.getText(), tuner, tunertype, tunernumber, name, number, channel, time(), 0, True, "", client, ip)
+								gInfoBarTunerState.onEvent()
 		except Exception, e:
 			print "IBTS exception " + str(e)
 			import os, sys, traceback

@@ -31,13 +31,15 @@ from Screens.Setup import SetupSummary
 
 # Plugin internal
 from InfoBarTunerState import InfoBarTunerState
+from InfoBarTunerStatePlugins import InfoBarTunerStatePlugins
 
 
 #######################################################
 # Configuration screen
-class InfoBarTunerStateConfiguration(Screen, ConfigListScreen):
+class InfoBarTunerStateConfiguration(Screen, ConfigListScreen, InfoBarTunerStatePlugins):
 	def __init__(self, session):
 		Screen.__init__(self, session)
+		InfoBarTunerStatePlugins.__init__(self)
 		self.skinName = [ "InfoBarTunerStateConfiguration", "Setup" ]
 		
 		# Summary
@@ -95,8 +97,7 @@ class InfoBarTunerStateConfiguration(Screen, ConfigListScreen):
 			(  separator                                              , config.infobartunerstate.about ),
 		]
 		
-		from Plugins.Extensions.InfoBarTunerState.plugin import gInfoBarTunerState
-		for plugin in gInfoBarTunerState.getPlugins():
+		for plugin in self.getPlugins():
 			options = plugin.getOptions()
 			if options:
 				for text, element in plugin.getOptions():
@@ -114,7 +115,7 @@ class InfoBarTunerStateConfiguration(Screen, ConfigListScreen):
 			)
 		for i, configinfobartunerstatefieldwidth in enumerate( config.infobartunerstate.fieldswidth.dict().itervalues() ):
 			self.config.append(
-			(  _("Field %d width") % (i)                             , configinfobartunerstatefieldwidth )
+			(  _("Field %d width") % (i)                              , configinfobartunerstatefieldwidth )
 			)
 		
 		self.config.extend( [
@@ -126,9 +127,11 @@ class InfoBarTunerStateConfiguration(Screen, ConfigListScreen):
 			(  _("Text spacing offset in pixel")                      , config.infobartunerstate.offset_spacing ),
 			(  _("Variable field width")                              , config.infobartunerstate.variable_field_width ),
 			(  _("Placeholder for Progressbar")                       , config.infobartunerstate.placeholder_pogressbar ),
-			(  _("List goes up")                       				  , config.infobartunerstate.list_goesup ),
+			(  _("List goes up")                                      , config.infobartunerstate.list_goesup ),
 			(  _("Background transparency")                           , config.infobartunerstate.background_transparency ),
 			(  _("Overwrite Infobar timeout")                         , config.infobartunerstate.infobar_timeout ),
+			(  _("Wake HDD for free space statistics")                , config.infobartunerstate.wake_hdd ),
+			(  _("Skip mounts for free space statistics")             , config.infobartunerstate.skip_mounts ),
 		] )
 		
 		self.config.extend( [
