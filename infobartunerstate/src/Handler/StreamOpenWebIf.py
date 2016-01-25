@@ -126,8 +126,9 @@ class StreamOpenWebIf(PluginBase):
 				client = getClient(ip)
 				
 				from Plugins.Extensions.InfoBarTunerState.plugin import gInfoBarTunerState
-				gInfoBarTunerState.addEntry(id, self.getPluginName(), self.getType(), self.getText(), tuner, tunertype, tunernumber, name, number, channel, time(), 0, True, "", client, ip)
-				gInfoBarTunerState.onEvent()
+				if gInfoBarTunerState:
+					gInfoBarTunerState.addEntry(id, self.getPluginName(), self.getType(), self.getText(), tuner, tunertype, tunernumber, name, number, channel, time(), 0, True, "", client, ip)
+					gInfoBarTunerState.onEvent()
 			
 			elif event == StreamAdapter.EV_STOP:
 				
@@ -139,8 +140,9 @@ class StreamOpenWebIf(PluginBase):
 				del stream
 				
 				from Plugins.Extensions.InfoBarTunerState.plugin import gInfoBarTunerState
-				gInfoBarTunerState.finishEntry(id)
-				gInfoBarTunerState.onEvent()
+				if gInfoBarTunerState:
+					gInfoBarTunerState.finishEntry(id)
+					gInfoBarTunerState.onEvent()
 
 	def update(self, id, tunerstate):
 		

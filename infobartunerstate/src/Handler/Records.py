@@ -125,8 +125,9 @@ class Records(PluginBase):
 				del timer
 				
 				from Plugins.Extensions.InfoBarTunerState.plugin import gInfoBarTunerState
-				gInfoBarTunerState.finishEntry(id)
-				gInfoBarTunerState.onEvent()
+				if gInfoBarTunerState:
+					gInfoBarTunerState.finishEntry(id)
+					gInfoBarTunerState.onEvent()
 
 	def update(self, id, tunerstate):
 		
