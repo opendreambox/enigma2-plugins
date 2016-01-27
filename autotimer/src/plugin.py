@@ -18,7 +18,7 @@ from AutoTimer import AutoTimer
 autotimer = AutoTimer()
 autopoller = None
 
-AUTOTIMER_VERSION = "4.0.7"
+AUTOTIMER_VERSION = "4.0.8"
 
 #pragma mark - Help
 try:
