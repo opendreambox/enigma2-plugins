@@ -93,6 +93,7 @@ class RecordNotification(ControllerBase):
 			pass
 		
 		elif timer.state == timer.StateRunning:
+			timer.ps_running = True
 			if self.getValue('send_on_start'):
 				text += _("Record started:\n") \
 							+ str(timer.name) + "\t" \
@@ -105,15 +106,17 @@ class RecordNotification(ControllerBase):
 			
 		# Finished repeating timer will report the state StateEnded+1 or StateWaiting
 		elif timer.state == timer.StateEnded or timer.repeated and timer.state == timer.StateWaiting:
-			if self.getValue('send_on_end'):
-				text += _("Record finished:\n") \
-							+ str(timer.name) + "\t" \
-							+ strftime(_("%Y.%m.%d %H:%M"), localtime(timer.begin)) + " - " \
-							+ strftime(_("%H:%M"), localtime(timer.end)) + "\t" \
-							+ str(timer.service_ref and timer.service_ref.getServiceName() or "")
-				if include_description:
-					text += "\n\n" + str(timer.description)
-				del timer
+			if hasattr(timer, "ps_running") and timer.ps_running:
+				timer.ps_running = False
+				if self.getValue('send_on_end'):
+					text += _("Record finished:\n") \
+								+ str(timer.name) + "\t" \
+								+ strftime(_("%Y.%m.%d %H:%M"), localtime(timer.begin)) + " - " \
+								+ strftime(_("%H:%M"), localtime(timer.end)) + "\t" \
+								+ str(timer.service_ref and timer.service_ref.getServiceName() or "")
+					if include_description:
+						text += "\n\n" + str(timer.description)
+					del timer
 		
 		if text:
 			#TODO Problem test run won't get the message
