@@ -34,7 +34,7 @@ from enigma import eServiceReference
 from enigma import eListboxPythonMultiContent, eListbox, gFont, \
 	RT_HALIGN_LEFT, RT_HALIGN_RIGHT, RT_VALIGN_CENTER
 from Tools.LoadPixmap import LoadPixmap
-from Tools.Directories import resolveFilename, SCOPE_SKIN_IMAGE
+from Tools.Directories import resolveFilename, SCOPE_CURRENT_SKIN
 from Tools.FuzzyDate import FuzzyTime
 from timer import TimerEntry
 from enigma import eTimer
@@ -62,6 +62,7 @@ from Components.ConfigList import ConfigList, ConfigListScreen
 from Components.config import ConfigSubsection, ConfigSubList, ConfigIP, ConfigInteger, ConfigSelection, ConfigText, ConfigYesNo, getConfigListEntry, configfile
 
 from Components.GUIComponent import GUIComponent
+from skin import TemplatedListFonts, componentSizes
 
 # for localized messages
 from . import _
@@ -1244,6 +1245,15 @@ class RemoteTimerEPGList(Screen):
 				self.getEPGList()
 				
 class E2TimerMenu(GUIComponent, object):
+	SKIN_COMPONENT_KEY = "PartnerboxList"
+	SKIN_COMPONENT_LISTBIG_HEIGHT = "listbigHeight"
+	SKIN_COMPONENT_SERVICENAME_HEIGHT = "servicenameHeight"
+	SKIN_COMPONENT_NAME_HEIGHT = "nameHeight"
+	SKIN_COMPONENT_STATE_WIDTH = "stateWidth"	
+	SKIN_COMPONENT_STATEE1_WIDTH = "stateE1Width"
+	SKIN_COMPONENT_ICON_HEIGHT = "iconHeight"
+	SKIN_COMPONENT_ICON_WIDTH = "iconWidth"	
+	SKIN_COMPONENT_ICON_POS = "iconPos"
 
 	def __init__(self,enigma_type):
 		GUIComponent.__init__(self)
@@ -1252,15 +1262,25 @@ class E2TimerMenu(GUIComponent, object):
 			self.l.setBuildFunc(self.buildEntry)
 		else:
 			self.l.setBuildFunc(self.buildEntryE1)
-		self.l.setFont(0, gFont("Regular", 20))
-		self.l.setFont(1, gFont("Regular", 18))
-		self.l.setItemHeight(70)
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
+		self.l.setFont(1, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
+		sizes = componentSizes[E2TimerMenu.SKIN_COMPONENT_KEY]
+		listbigHeight = sizes.get(E2TimerMenu.SKIN_COMPONENT_LISTBIG_HEIGHT, 70)
+		self.l.setItemHeight(listbigHeight)
 
 	def buildEntry(self, timer):
+		sizes = componentSizes[E2TimerMenu.SKIN_COMPONENT_KEY]
+		servicenameHeight = sizes.get(E2TimerMenu.SKIN_COMPONENT_SERVICENAME_HEIGHT, 30)
+		nameHeight = sizes.get(E2TimerMenu.SKIN_COMPONENT_NAME_HEIGHT, 20)	
+		stateWidth = sizes.get(E2TimerMenu.SKIN_COMPONENT_STATE_WIDTH, 150)
+		iconWidth = sizes.get(E2TimerMenu.SKIN_COMPONENT_ICON_WIDTH, 40)
+		iconHeight = sizes.get(E2TimerMenu.SKIN_COMPONENT_ICON_HEIGHT, 40)
+		iconPos = sizes.get(E2TimerMenu.SKIN_COMPONENT_ICON_POS, 490)
 		width = self.l.getItemSize().width()
 		res = [ timer ]
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, 30, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.servicename))
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 30, width, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.name))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, servicenameHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.servicename))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight, width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.name))
 		repeatedtext = ""
 		days = [ _("Mon"), _("Tue"), _("Wed"), _("Thu"), _("Fri"), _("Sat"), _("Sun") ]
 		if timer.repeated:
@@ -1274,14 +1294,14 @@ class E2TimerMenu(GUIComponent, object):
 						count += 1
 					flags = flags >> 1
 			if timer.justplay:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 50, width-150, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + ((" %s "+ _("(ZAP)")) % (FuzzyTime(timer.timebegin)[1]))))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight+nameHeight, width-stateWidth, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + ((" %s "+ _("(ZAP)")) % (FuzzyTime(timer.timebegin)[1]))))
 			else:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 50, width-150, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + ((" %s ... %s (%d " + _("mins") + ")") % (FuzzyTime(timer.timebegin)[1], FuzzyTime(timer.timeend)[1], (timer.timeend - timer.timebegin) / 60))))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight+nameHeight, width-stateWidth, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + ((" %s ... %s (%d " + _("mins") + ")") % (FuzzyTime(timer.timebegin)[1], FuzzyTime(timer.timeend)[1], (timer.timeend - timer.timebegin) / 60))))
 		else:
 			if timer.justplay:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 50, width-150, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + (("%s, %s " + _("(ZAP)")) % (FuzzyTime(timer.timebegin)))))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight+nameHeight, width-stateWidth, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + (("%s, %s " + _("(ZAP)")) % (FuzzyTime(timer.timebegin)))))
 			else:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 50, width-150, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + (("%s, %s ... %s (%d " + _("mins") + ")") % (FuzzyTime(timer.timebegin) + FuzzyTime(timer.timeend)[1:] + ((timer.timeend - timer.timebegin) / 60,)))))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight+nameHeight, width-stateWidth, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + (("%s, %s ... %s (%d " + _("mins") + ")") % (FuzzyTime(timer.timebegin) + FuzzyTime(timer.timeend)[1:] + ((timer.timeend - timer.timebegin) / 60,)))))
 		
 		if timer.state == TimerEntry.StateWaiting:
 			state = _("waiting")
@@ -1300,19 +1320,23 @@ class E2TimerMenu(GUIComponent, object):
 		if timer.disabled:
 			state = _("disabled")
 
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, width-150, 50, 150, 20, 1, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, state))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, width-stateWidth, servicenameHeight+nameHeight, stateWidth, nameHeight, 1, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, state))
 
 		if timer.disabled:
-			png = LoadPixmap(resolveFilename(SCOPE_SKIN_IMAGE, "skin_default/icons/redx.png"))
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 490, 5, 40, 40, png))
+			png = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, "skin_default/icons/redx.png"))
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, iconPos, 5, iconWidth,iconHeight, png))
 		
 		return res
 		
 	def buildEntryE1(self,timer):
+		sizes = componentSizes[E2TimerMenu.SKIN_COMPONENT_KEY]
+		servicenameHeight = sizes.get(E2TimerMenu.SKIN_COMPONENT_SERVICENAME_HEIGHT, 30)
+		nameHeight = sizes.get(E2TimerMenu.SKIN_COMPONENT_NAME_HEIGHT, 20)	
+		stateE1Width = sizes.get(E2TimerMenu.SKIN_COMPONENT_STATEE1_WIDTH, 170)	
 		width = self.l.getItemSize().width()
 		res = [ timer ]
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, 30, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.servicename))
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 30, width, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.description))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, servicenameHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.servicename))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight, width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.description))
 
 		repeatedtext = ""
 		days = [ _("Sun"), _("Mon"), _("Tue"), _("Wed"), _("Thu"), _("Fri"), _("Sat") ]
@@ -1327,14 +1351,14 @@ class E2TimerMenu(GUIComponent, object):
 					count += 1
 				mask *= 2
 			if timer.type & PlaylistEntry.SwitchTimerEntry:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 50, width-170, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + ((" %s "+ _("(ZAP)")) % (FuzzyTime(timer.timebegin)[1]))))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight+nameHeight, width-stateE1Width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + ((" %s "+ _("(ZAP)")) % (FuzzyTime(timer.timebegin)[1]))))
 			elif timer.type & PlaylistEntry.RecTimerEntry:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 50, width-170, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + ((" %s ... %s (%d " + _("mins") + ")") % (FuzzyTime(timer.timebegin)[1], FuzzyTime(timer.timeend)[1], (timer.timeend - timer.timebegin) / 60))))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight+nameHeight, width-stateE1Width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + ((" %s ... %s (%d " + _("mins") + ")") % (FuzzyTime(timer.timebegin)[1], FuzzyTime(timer.timeend)[1], (timer.timeend - timer.timebegin) / 60))))
 		else:
 			if timer.type & PlaylistEntry.SwitchTimerEntry:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 50, width-170, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + (("%s, %s ... %s (%d " + _("mins") + ") ") % (FuzzyTime(timer.timebegin) + FuzzyTime(timer.timeend)[1:] + ((timer.timeend - timer.timebegin) / 60,))) + _("(ZAP)")))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight+nameHeight, width-stateE1Width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + (("%s, %s ... %s (%d " + _("mins") + ") ") % (FuzzyTime(timer.timebegin) + FuzzyTime(timer.timeend)[1:] + ((timer.timeend - timer.timebegin) / 60,))) + _("(ZAP)")))
 			elif timer.type & PlaylistEntry.RecTimerEntry:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 50, width-170, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + (("%s, %s ... %s (%d " + _("mins") + ")") % (FuzzyTime(timer.timebegin) + FuzzyTime(timer.timeend)[1:] + ((timer.timeend - timer.timebegin) / 60,)))))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight+nameHeight, width-stateE1Width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + (("%s, %s ... %s (%d " + _("mins") + ")") % (FuzzyTime(timer.timebegin) + FuzzyTime(timer.timeend)[1:] + ((timer.timeend - timer.timebegin) / 60,)))))
 		
 		if timer.type & PlaylistEntry.stateWaiting:
 			state = _("waiting")
@@ -1358,7 +1382,7 @@ class E2TimerMenu(GUIComponent, object):
 				state = "Error: " + _("<unknown>")
 		else:
 			state = _("<unknown>")
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, width-170, 50, 170, 20, 1, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, state))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, width-stateE1Width, servicenameHeight+nameHeight, stateE1Width, nameHeight, 1, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, state))
 		return res
 	def getCurrent(self):
 		cur = self.l.getCurrentSelection()
@@ -1385,35 +1409,52 @@ class E2TimerMenu(GUIComponent, object):
 		self.l.setList(list)	
 		
 class E2BouquetList(MenuList):
+	SKIN_COMPONENT_KEY = "PartnerboxList"
+	SKIN_COMPONENT_LISTSMALL_HEIGHT = "listsmallHeight"
+	SKIN_COMPONENT_SERVICENAME_HEIGHT = "servicenameHeight"	
+	
 	def __init__(self, list, enableWrapAround = True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-		self.l.setFont(0, gFont("Regular", 20))
-		self.l.setFont(1, gFont("Regular", 18))
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
 	def postWidgetCreate(self, instance):
 		MenuList.postWidgetCreate(self, instance)
-		instance.setItemHeight(30)
+		sizes = componentSizes[E2BouquetList.SKIN_COMPONENT_KEY]
+		listsmallHeight = sizes.get(E2BouquetList.SKIN_COMPONENT_LISTSMALL_HEIGHT, 30)
+		instance.setItemHeight(listsmallHeight)
 
 	def buildList(self,listnew):
 		self.list=[]
+		sizes = componentSizes[E2BouquetList.SKIN_COMPONENT_KEY]
+		servicenameHeight = sizes.get(E2BouquetList.SKIN_COMPONENT_SERVICENAME_HEIGHT, 30)		
 		width = self.l.getItemSize().width()
 		for bouquets in listnew:
 			res = [ bouquets ]
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, 30, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, bouquets.servicename))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, servicenameHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, bouquets.servicename))
 			self.list.append(res)
 		self.l.setList(self.list)
 		self.moveToIndex(0)
 
 class E2ChannelList(MenuList):
+	SKIN_COMPONENT_KEY = "PartnerboxList"
+	SKIN_COMPONENT_LISTBIG_HEIGHT = "listbigHeight"
+	SKIN_COMPONENT_SERVICENAME_HEIGHT = "servicenameHeight"
+	SKIN_COMPONENT_NAME_HEIGHT = "nameHeight"
+	SKIN_COMPONENT_STATE_WIDTH = "stateWidth"	
+	
 	def __init__(self, list, selChangedCB=None, enableWrapAround = True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 		self.onSelChanged = [ ]
 		if selChangedCB is not None:
 			self.onSelChanged.append(selChangedCB)
-		self.l.setFont(0, gFont("Regular", 20))
-		self.l.setFont(1, gFont("Regular", 18))
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
+		self.l.setFont(1, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
 	def postWidgetCreate(self, instance):
 		MenuList.postWidgetCreate(self, instance)
-		instance.setItemHeight(70)
+		sizes = componentSizes[E2ChannelList.SKIN_COMPONENT_KEY]
+		listbigHeight = sizes.get(E2ChannelList.SKIN_COMPONENT_LISTBIG_HEIGHT, 70)
+		self.l.setItemHeight(listbigHeight)
 		self.selectionChanged_conn = instance.selectionChanged.connect(self.selectionChanged)
 	
 	def preWidgetRemove(self, instance):
@@ -1435,37 +1476,50 @@ class E2ChannelList(MenuList):
 
 	def buildList(self,listnew):
 		self.list=[]
+		sizes = componentSizes[E2ChannelList.SKIN_COMPONENT_KEY]
+		servicenameHeight = sizes.get(E2ChannelList.SKIN_COMPONENT_SERVICENAME_HEIGHT, 30)
+		nameHeight = sizes.get(E2ChannelList.SKIN_COMPONENT_NAME_HEIGHT, 20)	
+		stateWidth = sizes.get(E2ChannelList.SKIN_COMPONENT_STATE_WIDTH, 150)		
 		width = self.l.getItemSize().width()
 		for epgdata in listnew:
 			res = [ epgdata ]
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, 30, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, epgdata.servicename))
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 30, width, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, epgdata.eventtitle))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, servicenameHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, epgdata.servicename))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight, width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, epgdata.eventtitle))
 			if epgdata.eventstart != 0:
 				endtime = int(epgdata.eventstart + epgdata.eventduration)
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 50, width-150, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, (("%s ... %s (%d " + _("mins") + ")") % (FuzzyTime(epgdata.eventstart)[1], FuzzyTime(endtime)[1], (endtime - epgdata.eventstart) / 60))))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight+nameHeight, width-stateWidth, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, (("%s ... %s (%d " + _("mins") + ")") % (FuzzyTime(epgdata.eventstart)[1], FuzzyTime(endtime)[1], (endtime - epgdata.eventstart) / 60))))
 			self.list.append(res)
 		self.l.setList(self.list)
 		self.moveToIndex(0)
 
 class E2EPGList(MenuList):
+	SKIN_COMPONENT_KEY = "PartnerboxList"
+	SKIN_COMPONENT_LISTSMALL_HEIGHT = "listsmallHeight"
+	SKIN_COMPONENT_CLOCK_HEIGHT = "clockHeight"
+	SKIN_COMPONENT_CLOCK_WIDTH = "clockWidth"
+	SKIN_COMPONENT_CLOCK_HPOS = "clockHPos"		
+	
 	def __init__(self, list, selChangedCB=None, enableWrapAround = True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 		self.onSelChanged = [ ]
 		if selChangedCB is not None:
 			self.onSelChanged.append(selChangedCB)
-		self.l.setFont(0, gFont("Regular", 22))
-		self.l.setFont(1, gFont("Regular", 16))
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
+		self.l.setFont(1, gFont(tlf.face(tlf.SMALLER), tlf.size(tlf.SMALLER)))
 		self.days = [ _("Mon"), _("Tue"), _("Wed"), _("Thu"), _("Fri"), _("Sat"), _("Sun") ]
 		self.timer_list = []
-		self.clock_pixmap = LoadPixmap(resolveFilename(SCOPE_SKIN_IMAGE, 'skin_default/icons/epgclock.png'))
-		self.clock_add_pixmap = LoadPixmap(resolveFilename(SCOPE_SKIN_IMAGE, 'skin_default/icons/epgclock_add.png'))
-		self.clock_pre_pixmap = LoadPixmap(resolveFilename(SCOPE_SKIN_IMAGE, 'skin_default/icons/epgclock_pre.png'))
-		self.clock_post_pixmap = LoadPixmap(resolveFilename(SCOPE_SKIN_IMAGE, 'skin_default/icons/epgclock_post.png'))
-		self.clock_prepost_pixmap = LoadPixmap(resolveFilename(SCOPE_SKIN_IMAGE, 'skin_default/icons/epgclock_prepost.png'))
+		self.clock_pixmap = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, 'skin_default/icons/epgclock.png'))
+		self.clock_add_pixmap = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, 'skin_default/icons/epgclock_add.png'))
+		self.clock_pre_pixmap = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, 'skin_default/icons/epgclock_pre.png'))
+		self.clock_post_pixmap = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, 'skin_default/icons/epgclock_post.png'))
+		self.clock_prepost_pixmap = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, 'skin_default/icons/epgclock_prepost.png'))
 		
 	def postWidgetCreate(self, instance):
 		MenuList.postWidgetCreate(self, instance)
-		instance.setItemHeight(30)
+		sizes = componentSizes[E2EPGList.SKIN_COMPONENT_KEY]
+		listsmallHeight = sizes.get(E2EPGList.SKIN_COMPONENT_LISTSMALL_HEIGHT, 30)
+		instance.setItemHeight(listsmallHeight)
 		self.selectionChanged_conn = instance.selectionChanged.connect(self.selectionChanged)
 	
 	def preWidgetRemove(self, instance):
@@ -1485,9 +1539,13 @@ class E2EPGList(MenuList):
 	def buildList(self,listnew, timerlist):
 		self.list=[]
 		self.timer_list = timerlist
-		for epgdata in listnew:
+		for epgdata in listnew:	
 			res = [ epgdata ]
 			rec=epgdata.eventstart and (self.isInTimer(epgdata.eventstart, epgdata.eventduration, epgdata.servicereference))
+			sizes = componentSizes[E2EPGList.SKIN_COMPONENT_KEY]
+			clockWidth = sizes.get(E2EPGList.SKIN_COMPONENT_CLOCK_WIDTH, 24)
+			clockHeight = sizes.get(E2EPGList.SKIN_COMPONENT_CLOCK_HEIGHT, 21)
+			clockHPos = sizes.get(E2EPGList.SKIN_COMPONENT_CLOCK_HPOS, 5)
 			esize = self.l.getItemSize()
 			width = esize.width()
 			height = esize.height()
@@ -1495,14 +1553,14 @@ class E2EPGList(MenuList):
 			r2 = Rect(width/20*2, 0, width/20*5-15, height)
 			r3 = Rect(width/20*7, 0, width/20*13, height)
 			t = localtime(epgdata.eventstart)
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, r1.left(), r1.top(), r1.width(), r1.height(), 0, RT_HALIGN_RIGHT, self.days[t[6]]))
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, r2.left(), r2.top(), r2.width(), r1.height(), 0, RT_HALIGN_RIGHT, "%02d.%02d, %02d:%02d"%(t[2],t[1],t[3],t[4])))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, r1.left(), r1.top(), r1.width(), r1.height(), 0, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, self.days[t[6]]))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, r2.left(), r2.top(), r2.width(), r1.height(), 0, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, "%02d.%02d, %02d:%02d"%(t[2],t[1],t[3],t[4])))
 			if rec:
 				clock_pic = self.getClockPixmap(epgdata.servicereference, epgdata.eventstart, epgdata.eventduration, epgdata.eventid)
-				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r3.left(), r3.top(), 21, 21, clock_pic))
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, r3.left() + 25, r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT, epgdata.eventtitle))
+				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r3.left(), clockHPos, clockWidth, clockHeight, clock_pic))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, r3.left() +clockWidth, r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, epgdata.eventtitle))
 			else:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, r3.left(), r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT, epgdata.eventtitle))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, r3.left(), r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, epgdata.eventtitle))
 			
 			self.list.append(res)
 		self.l.setList(self.list)

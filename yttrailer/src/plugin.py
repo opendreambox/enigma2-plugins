@@ -34,6 +34,7 @@ from Components.ConfigList import ConfigListScreen
 
 from Screens.InfoBarGenerics import InfoBarShowHide, InfoBarSeek, InfoBarAudioSelection, InfoBarNotifications, InfoBarServiceNotifications, InfoBarPVRState, InfoBarMoviePlayerSummarySupport
 from Components.ServiceEventTracker import InfoBarBase
+from skin import TemplatedListFonts, componentSizes
 
 # for localized messages
 from . import _
@@ -179,8 +180,8 @@ class YTTrailer:
 class YTTrailerList(Screen, YTTrailer):
 
 	skin = """
-		<screen name="YTTrailerList" position="center,center" size="580,436" title="YT Trailer-List" backgroundColor="#ff000000">
-			<widget name="list" position="0,0" size="580,436" />
+		<screen name="YTTrailerList" position="center,center" size="620,391" title="YT Trailer-List">
+			<widget name="list" position="0,2" size="620,385" />
 		</screen>"""
 
 	def __init__(self, session, eventname):
@@ -215,6 +216,11 @@ class YTTrailerList(Screen, YTTrailer):
 				self.session.open(TrailerPlayer, ref)
 
 class TrailerList(GUIComponent, object):
+	SKIN_COMPONENT_KEY = "YTTrailerList"
+	SKIN_COMPONENT_TITLE_HEIGHT = "titleHeight"
+	SKIN_COMPONENT_DESCRIPTION_HEIGHT = "descriptionHeight"
+	SKIN_COMPONENT_LINE_SPACING = "lineSpacing"
+
 
 	GUI_WIDGET = eListbox
 
@@ -222,15 +228,20 @@ class TrailerList(GUIComponent, object):
 		GUIComponent.__init__(self)
 		self.l = eListboxPythonMultiContent()
 		self.l.setBuildFunc(self.buildList)
-		self.l.setFont(0, gFont("Regular", 22))
-		self.l.setFont(1, gFont("Regular", 18))
-		self.l.setItemHeight(75)
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
+		self.l.setFont(1, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
+		self.l.setItemHeight(componentSizes.itemHeight(self.SKIN_COMPONENT_KEY, 77))
 
 	def buildList(self, entry):
-		width = self.l.getItemSize().width()
+		sizes = componentSizes[TrailerList.SKIN_COMPONENT_KEY]
+		configEntryWidth = sizes.get(componentSizes.ITEM_WIDTH, 620)
+		titleHeight = sizes.get(TrailerList.SKIN_COMPONENT_TITLE_HEIGHT, 25)
+		descriptionHeight = sizes.get(TrailerList.SKIN_COMPONENT_DESCRIPTION_HEIGHT, 40)
+		lineSpacing = sizes.get(TrailerList.SKIN_COMPONENT_LINE_SPACING, 3)		
 		res = [ entry ]
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width , 24, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, entry.title))
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 28, width , 40, 1, RT_WRAP, entry.description))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 2, configEntryWidth , titleHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, entry.title))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, titleHeight+lineSpacing, configEntryWidth , descriptionHeight, 1, RT_WRAP, entry.description))
 		return res
 
 	def getCurrent(self):
