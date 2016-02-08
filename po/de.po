@@ -2024,7 +2024,7 @@ msgstr "BER"
 
 #: dreamexplorer/src/plugin.py:272 subsdownloader2/src/plugin.py:941
 msgid "BZ2-package:\\n"
-msgstr "BZ2-Archiv:\n"
+msgstr "BZ2-Archiv:\\n"
 
 #: babelzapper/src/plugin.py:91
 msgid "Babelzapper Plugin"
@@ -2302,7 +2302,7 @@ msgstr "Verzögerung nach Start"
 
 #: dreamexplorer/src/plugin.py:262
 msgid "Bootlogo-package:\\n"
-msgstr "Bootlogo-Paket:\n"
+msgstr "Bootlogo-Paket:\\n"
 
 #: elektro/src/plugin.py:459
 msgid ""
@@ -4522,7 +4522,7 @@ msgstr ""
 
 #: dreamexplorer/src/plugin.py:290 subsdownloader2/src/plugin.py:954
 msgid "Do you want to execute?\\n"
-msgstr "Ausführen?\n"
+msgstr "Ausführen?\\n"
 
 #: flashexpander/src/flashexpander.py:278
 msgid "Do you want to reboot your Dreambox?"
@@ -6970,7 +6970,7 @@ msgstr "GUI zum Ändern des FTP-und Telnet-Passworts"
 
 #: dreamexplorer/src/plugin.py:267 subsdownloader2/src/plugin.py:936
 msgid "GZ-package:\\n"
-msgstr "GZ-Archiv:\n"
+msgstr "GZ-Archiv:\\n"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:129
 msgid "Galician"
@@ -7557,7 +7557,7 @@ msgstr "IPKG Aktualisierungs Benachrichtigung"
 
 #: dreamexplorer/src/plugin.py:280 subsdownloader2/src/plugin.py:949
 msgid "IPKG-package:\\n"
-msgstr "IPKG-Paket:\n"
+msgstr "IPKG-Paket:\\n"
 
 #: dreamirc/meta/plugin_dreamirc.xml./dreamirc/meta/plugin_dreamirc.xml
 msgid "IRC Client for Enigma2"
