@@ -1,5 +1,7 @@
-# -*- coding: UTF-8 -*-
-from __future__ import print_function
+﻿# -*- coding: UTF-8 -*-
+# for localized messages
+from . import _
+
 from Plugins.Plugin import PluginDescriptor
 from Tools.Downloader import downloadWithProgress
 from enigma import ePicLoad, eServiceReference
@@ -7,6 +9,7 @@ from Screens.Screen import Screen
 from Screens.EpgSelection import EPGSelection
 from Screens.ChannelSelection import SimpleChannelSelection
 from Screens.ChoiceBox import ChoiceBox
+from Screens.VirtualKeyBoard import VirtualKeyBoard
 from Components.ActionMap import ActionMap
 from Components.Pixmap import Pixmap
 from Components.Label import Label
@@ -17,10 +20,8 @@ from Components.MenuList import MenuList
 from Components.Language import language
 from Components.ProgressBar import ProgressBar
 from Components.Sources.StaticText import StaticText
-from Components.config import config, ConfigSubsection, ConfigYesNo
+from Components.Sources.Boolean import Boolean
 from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN_IMAGE
-from os import environ as os_environ
-from Plugins.SystemPlugins.Toolkit.NTIVirtualKeyBoard import NTIVirtualKeyBoard
 import os, re
 try:
 	import htmlentitydefs
@@ -31,7 +32,13 @@ except ImportError as ie:
 	from urllib.parse import quote_plus
 	iteritems = lambda d: d.items()
 	unichr = chr
-import gettext
+import os, gettext
+
+# Configuration
+from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigYesNo, ConfigText
+from Components.ConfigList import ConfigListScreen
+from Components.PluginComponent import plugins
+from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 
 from HTMLParser import HTMLParser
 
@@ -40,22 +47,15 @@ def transHTML(text):
 	return h.unescape(text)
 
 config.plugins.imdb = ConfigSubsection()
+config.plugins.imdb.showinplugins = ConfigYesNo(default = True)
 config.plugins.imdb.force_english = ConfigYesNo(default=False)
+config.plugins.imdb.ignore_tags = ConfigText(visible_width = 50, fixed_size = False)
 
-def localeInit():
-	lang = language.getLanguage()[:2] # getLanguage returns e.g. "fi_FI" for "language_country"
-	os_environ["LANGUAGE"] = lang # Enigma doesn't set this (or LC_ALL, LC_MESSAGES, LANG). gettext needs it!
-	gettext.bindtextdomain("IMDb", resolveFilename(SCOPE_PLUGINS, "Extensions/IMDb/locale"))
-
-def _(txt):
-	t = gettext.dgettext("IMDb", txt)
-	if t == txt:
-		print("[IMDb] fallback to default translation for", txt)
-		t = gettext.gettext(txt)
-	return t
-
-localeInit()
-language.addCallback(localeInit)
+def quoteEventName(eventName, safe="/()" + ''.join(map(chr,range(192,255)))):
+	# BBC uses '\x86' markers in program names, remove them
+	text = eventName.decode('utf8').replace(u'\x86', u'').replace(u'\x87', u'').encode('utf8')
+	# IMDb doesn't seem to like urlencoded characters at all, hence the big "safe" list
+	return quote_plus(text, safe=safe)
 
 class IMDBChannelSelection(SimpleChannelSelection):
 	def __init__(self, session):
@@ -98,7 +98,7 @@ class IMDBEPGSelection(EPGSelection):
 		cur = self["list"].getCurrent()
 		evt = cur[0]
 		sref = cur[1]
-		if not evt: 
+		if not evt:
 			return
 
 		if self.openPlugin:
@@ -136,14 +136,22 @@ class IMDB(Screen):
 			<widget name="stars" position="340,40" size="210,21" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_filled.png" transparent="1" />
 		</screen>"""
 
-	def __init__(self, session, eventName, callbackNeeded=False):
+	def __init__(self, session, eventName, callbackNeeded=False, save=False, savepath=None, localpath=None):
 		Screen.__init__(self, session)
 
+		for tag in config.plugins.imdb.ignore_tags.getValue().split(','):
+			eventName = eventName.replace(tag,'')
+
 		self.eventName = eventName
-		
+
 		self.callbackNeeded = callbackNeeded
 		self.callbackData = ""
 		self.callbackGenre = ""
+
+		self.saving = save
+		self.savingpath = savepath
+		self.localpath = localpath
+		self.fetchurl = None
 
 		self.dictionary_init()
 
@@ -199,6 +207,14 @@ class IMDB(Screen):
 
 		self.getIMDB()
 
+		if self.localpath is not None:                                # otherwise the stars are not correctly shown if we call details directly
+			self.onLayoutFinish.append(self._layoutFinished)
+
+	def _layoutFinished(self):
+		self["menu"].hide()
+		self["extralabel"].hide()
+		self["stars"].setValue(self.ratingstars)
+
 	def exit(self):
 		if fileExists("/tmp/poster.jpg"):
 			os.remove("/tmp/poster.jpg")
@@ -211,13 +227,12 @@ class IMDB(Screen):
 		else:
 			self.close()
 
-	event_quoted = property(lambda self: quote_plus(self.eventName,"äöüÄÖÜß()"))
-
 	def dictionary_init(self):
 		syslang = language.getLanguage()
 		if 1: #"de" not in syslang or config.plugins.imdb.force_english.value is True:
 			self.generalinfomask = re.compile(
-			'<h1 class="header".*?>(?P<title>.*?)<.*?</h1>.*?'
+			#'<h1 class="header".*?>(?P<title>.*?)<.*?</h1>.*?'
+			'<h1 itemprop="name" class="".*?>(?P<title>.*?)<.*?/h1>*'
 			'(?:.*?<h4 class="inline">\s*(?P<g_director>Regisseur|Directors?):\s*</h4>.*?<a.*?>(?P<director>.*?)</a>)*'
 			'(?:.*?<h4 class="inline">\s*(?P<g_creator>Sch\S*?pfer|Creators?):\s*</h4>.*?<a.*?>(?P<creator>.*?)</a>)*'
 			'(?:.*?<h4 class="inline">\s*(?P<g_seasons>Seasons?):\s*</h4>.*?<a.*?>(?P<seasons>(?:\d+|unknown)?)</a>)*'
@@ -251,7 +266,8 @@ class IMDB(Screen):
 			self.genreblockmask = re.compile('<h4 class="inline">Genre:</h4>\s<div class="info-content">\s+?(.*?)\s+?(?:Mehr|See more|</p|<a class|</div>)', re.DOTALL)
 			self.ratingmask = re.compile('<span itemprop="ratingValue">(?P<rating>.*?)</', re.DOTALL)
 			self.castmask = re.compile('itemprop=.url.> <span class="itemprop" itemprop="name">(?P<actor>.*?)</span>.*?<a href="/character/.*?" >(?P<character>.*?)</a>', re.DOTALL)
-			self.postermask = re.compile('<td .*?id="img_primary">.*?<img .*?src=\"(http.*?)\"', re.DOTALL)
+			#self.postermask = re.compile('<td .*?id="img_primary">.*?<img .*?src=\"(http.*?)\"', re.DOTALL)
+			self.postermask = re.compile('<div class="poster">.*?<img .*?src=\"(http.*?)\"', re.DOTALL)
 
 		self.htmltags = re.compile('<.*?>')
 
@@ -299,6 +315,16 @@ class IMDB(Screen):
 			self["key_yellow"].setText(_("Details"))
 			self.Page = 0
 
+	def getLocalDetails(self):
+		localfile = self.localpath
+		self.html2utf8(open(localfile, "r").read())
+		self.generalinfos = self.generalinfomask.search(self.inhtml)
+		self.IMDBparse()
+		if self.ratingstars > 0:
+			self["starsbg"].show()
+			self["stars"].show()
+		self.Page = 1
+
 	def showDetails(self):
 		self["ratinglabel"].show()
 		self["castlabel"].show()
@@ -313,6 +339,7 @@ class IMDB(Screen):
 			print("[IMDB] showDetails() downloading query " + fetchurl + " to " + localfile)
 			download = downloadWithProgress(fetchurl,localfile)
 			download.start().addCallback(self.IMDBquery2).addErrback(self.http_failed)
+			self.fetchurl = fetchurl
 			self["menu"].hide()
 			self.resetLabels()
 			self.Page = 1
@@ -342,7 +369,17 @@ class IMDB(Screen):
 		list = [
 			(_("Enter search"), self.openVirtualKeyBoard),
 			(_("Select from EPG"), self.openChannelSelection),
+			(_("Setup"), self.setup),
 		]
+
+		if self.saving:
+			if self.savingpath is not None:
+				# TODO: save Poster also as option for .html
+				list.extend((
+					(_("Save current Details as .html for offline using"), self.saveHtmlDetails),
+					(_("Save current Details as .txt"), self.saveTxtDetails),
+					(_("Save current Poster and Details as .txt"), self.savePosterTxtDetails),
+				))
 
 		if fileExists(resolveFilename(SCOPE_PLUGINS, "Extensions/YTTrailer/plugin.py")):
 			list.extend((
@@ -353,11 +390,135 @@ class IMDB(Screen):
 		self.session.openWithCallback(
 			self.menuCallback,
 			ChoiceBox,
+			title=_("IMDb Menu"),
 			list = list,
 		)
 
 	def menuCallback(self, ret = None):
 		ret and ret[1]()
+
+	def saveHtmlDetails(self):
+		try:
+			if self.savingpath is not None:
+				isave = self.savingpath + ".imdbquery2.html"
+				if self.fetchurl is not None:
+					download = downloadWithProgress(self.fetchurl,isave)
+					download.start().addCallback(self.IMDBsave).addErrback(self.http_failed)
+		except Exception, e:
+			print('[IMDb] saveHtmlDetails exception failure: ', str(e))
+
+	def saveTxtDetails(self):
+		try:
+			if self.savingpath is not None:
+				getTXT = self.IMDBsavetxt()
+				if getTXT is not None:
+					file(self.savingpath + ".txt",'w').write(getTXT)
+				else:
+					from Screens.MessageBox import MessageBox
+					self.session.open(MessageBox, (_('IMDb can not get Movie Information, to\n write .txt-file!')), MessageBox.TYPE_INFO, 10)
+		except Exception, e:
+			print('[IMDb] saveTxtDetails exception failure: ', str(e))
+
+	def savePosterTxtDetails(self):
+		try:
+			if self.savingpath is not None:
+				getTXT = self.IMDBsavetxt(True)
+				if getTXT is not None:
+					file(self.savingpath + ".txt",'w').write(getTXT)
+				else:
+					from Screens.MessageBox import MessageBox
+					self.session.open(MessageBox, (_('IMDb can not get Movie Information, to\n write .jpg and .txt-file!')), MessageBox.TYPE_INFO, 10)
+		except Exception, e:
+			print('[IMDb] savePosterTxtDetails exception failure: ', str(e))
+
+	def IMDBsave(self,string):
+		self["statusbar"].setText(_("IMDb Save-Download completed"))
+		self.html2utf8(open("/tmp/imdbquery2.html", "r").read())
+		self.generalinfos = self.generalinfomask.search(self.inhtml)
+		self.IMDBparse()
+
+	def IMDBsavetxt(self, poster=False):
+		overview = ""
+		runtime = ""
+		genre = ""
+		country = ""
+		release = ""
+		rating = ""
+
+		if self.generalinfos:
+			extrainfos = self.extrainfomask.search(self.inhtml)
+			if extrainfos:
+				# get entry 1 = Overview(details)
+				try:
+					text = self.htmltags.sub('',extrainfos.group("synopsis").replace("\n",'').replace("<br>", '\n').replace("<br />",'\n').replace('&view=simple&sort=alpha&ref_=tt_stry_pl" >',' '))
+					overview = (_("Content:") + " " + text.encode('utf-8'))
+				except Exception, e:
+					print('[IMDb] IMDBsavetxt exception failure in get overview: ', str(e))
+					overview = (_("Content:"))
+#				print'[IMDb] IMDBsavetxt overview: ', overview
+
+				# get entry 2 = Runtime
+				try:
+					time = self.htmltags.sub('',extrainfos.group("runtime").replace("\n",'').replace("<br>", '\n').replace("<br />",'\n').replace('&view=simple&sort=alpha&ref_=tt_stry_pl" >',' '))
+					runtime = (_("Runtime:") + " " + time.encode('utf-8'))
+				except Exception, e:
+					print('[IMDb] IMDBsavetxt exception failure in get runtime: ', str(e))
+					runtime = (_("Runtime:"))
+#				print'[IMDb] IMDBsavetxt runtime: ', runtime
+
+			# get entry 3 = Genre
+			genreblock = self.genreblockmask.findall(self.inhtml)
+			if genreblock:
+				genres = self.htmltags.sub('', genreblock[0])
+				if genres:
+					genre = (_("Genre:") + " " + genres.encode('utf-8'))
+			else:
+				genre = (_("Genre:"))
+#			print'[IMDb] IMDBsavetxt genre: ', genre
+
+			# get entry 4 = Country
+			try:
+				land = self.htmltags.sub('', self.generalinfos.group("country").replace('\n',' ').replace("<br>", '\n').replace("<br />",'\n'))
+				country = (_("Production Countries:") + " " + land.encode('utf-8'))
+			except Exception, e:
+				print('[IMDb] IMDBsavetxt exception failure in get country: ', str(e))
+				country = (_("Production Countries:"))
+#			print'[IMDb] IMDBsavetxt country: ', country
+
+			# get entry 5 = ReleaseDate
+			try:
+				date = self.htmltags.sub('', self.generalinfos.group("premiere").replace('\n',' ').replace("<br>", '\n').replace("<br />",'\n'))
+				release = (_("Release Date:") + " " + date.encode('utf-8'))
+			except Exception, e:
+				print('[IMDb] IMDBsavetxt exception failure in get release: ', str(e))
+				release = (_("Release Date:"))
+#			print'[IMDb] IMDBsavetxt release: ', release
+
+			# get entry 5 = Vote
+			ratingtext = self.ratingmask.search(self.inhtml)
+			if ratingtext:
+				ratingtext = ratingtext.group("rating")
+				if ratingtext != '<span id="voteuser"></span>':
+					text = ratingtext                                # + " / 10"
+					rating = (_("User Rating") + ": " + text.encode('utf-8'))
+			else:
+				rating = (_("User Rating") + ": ")
+#			print'[IMDb] IMDBsavetxt rating: ', rating
+
+			# get the poster.jpg
+			if poster:
+				try:
+					posterurl = self.postermask.search(self.inhtml)
+					if posterurl and posterurl.group(1).find("jpg") > 0:
+						posterurl = posterurl.group(1)
+						postersave = self.savingpath + ".poster.jpg"
+						print("[IMDB] downloading poster " + posterurl + " to " + postersave)
+						download = downloadWithProgress(posterurl,postersave)
+						download.start().addErrback(self.http_failed)
+				except Exception, e:
+					print('[IMDb] IMDBsavetxt exception failure in get poster: ', str(e))
+
+		return overview + "\n\n" + runtime + "\n" + genre + "\n" + country + "\n" + release + "\n" + rating + "\n"
 
 	def openYttrailer(self):
 		try:
@@ -383,8 +544,9 @@ class IMDB(Screen):
 	def openVirtualKeyBoard(self):
 		self.session.openWithCallback(
 			self.gotSearchString,
-			NTIVirtualKeyBoard,
-			title = _("Enter text to search for")
+			VirtualKeyBoard,
+			title = _("Enter text to search for"),
+			text = self.eventName
 		)
 
 	def openChannelSelection(self):
@@ -405,9 +567,9 @@ class IMDB(Screen):
 			self["poster"].hide()
 			self["stars"].hide()
 			self["starsbg"].hide()
-			self.getIMDB()
+			self.getIMDB(search=True)
 
-	def getIMDB(self):
+	def getIMDB(self, search=False):
 		self.resetLabels()
 		if not self.eventName:
 			s = self.session.nav.getCurrentService()
@@ -415,16 +577,31 @@ class IMDB(Screen):
 			event = info and info.getEvent(0) # 0 = now, 1 = next
 			if event:
 				self.eventName = event.getEventName()
-		if self.eventName:
-			self["statusbar"].setText(_("Query IMDb: %s...") % (self.eventName))
-			localfile = "/tmp/imdbquery.html"
-			fetchurl = "http://imdb.com/find?q=" + self.event_quoted + "&s=tt&site=aka"
-			print("[IMDB] getIMDB() Downloading Query " + fetchurl + " to " + localfile)
-			download = downloadWithProgress(fetchurl,localfile)
-			download.start().addCallback(self.IMDBquery).addErrback(self.http_failed)
+			else:
+				self.eventName = self.session.nav.getCurrentlyPlayingServiceReference().toString()
+				self.eventName = self.eventName.split('/')
+				self.eventName = self.eventName[-1]
+				self.eventName = self.eventName.replace('.',' ')
+				self.eventName = self.eventName.split('-')
+				self.eventName = self.eventName[0]
+				if self.eventName.endswith(' '):
+					self.eventName = self.eventName[:-1]
+
+		if self.localpath is not None and not search:
+			if os.path.exists(self.localpath):
+				self.getLocalDetails()
 
 		else:
-			self["statusbar"].setText(_("Could't get Eventname"))
+			if self.eventName:
+				self["statusbar"].setText(_("Query IMDb: %s") % (self.eventName))
+				localfile = "/tmp/imdbquery.html"
+				fetchurl = "http://imdb.com/find?q=" + quoteEventName(self.eventName) + "&s=tt&site=aka"
+				print("[IMDB] getIMDB() Downloading Query " + fetchurl + " to " + localfile)
+				download = downloadWithProgress(fetchurl,localfile)
+				download.start().addCallback(self.IMDBquery).addErrback(self.http_failed)
+
+			else:
+				self["statusbar"].setText(_("Could't get Eventname"))
 
 	def html2utf8(self,in_html):
 		in_html = (re.subn(r'<(script).*?</\1>(?s)', '', in_html)[0])
@@ -482,7 +659,7 @@ class IMDB(Screen):
 					self["statusbar"].setText(_("Re-Query IMDb: %s...") % (self.resultlist[0][0],))
 					self.eventName = self.resultlist[0][1]
 					localfile = "/tmp/imdbquery.html"
-					fetchurl = "http://imdb.com/find?q=" + self.event_quoted + "&s=tt&site=aka"
+					fetchurl = "http://imdb.com/find?q=" + quoteEventName(self.eventName) + "&s=tt&site=aka"
 					download = downloadWithProgress(fetchurl,localfile)
 					download.start().addCallback(self.IMDBquery).addErrback(self.http_failed)
 				elif Len > 1:
@@ -490,14 +667,15 @@ class IMDB(Screen):
 					self.showMenu()
 				else:
 					self["detailslabel"].setText(_("No IMDb match."))
-					self["statusbar"].setText(_("No IMDb match."))
+					self["statusbar"].setText(_("No IMDb match.") + ' ' + self.eventName)
 			else:
 				splitpos = self.eventName.find('(')
 				if splitpos > 0 and self.eventName.endswith(')'):
 					self.eventName = self.eventName[splitpos+1:-1]
 					self["statusbar"].setText(_("Re-Query IMDb: %s...") % (self.eventName))
+					# event_quoted = quoteEventName(self.eventName)
 					localfile = "/tmp/imdbquery.html"
-					fetchurl = "http://imdb.com/find?q=" + self.event_quoted + "&s=tt&site=aka"
+					fetchurl = "http://imdb.com/find?q=" + quoteEventName(self.eventName) + "&s=tt&site=aka"
 					download = downloadWithProgress(fetchurl,localfile)
 					download.start().addCallback(self.IMDBquery).addErrback(self.http_failed)
 				else:
@@ -619,6 +797,9 @@ class IMDB(Screen):
 			self["poster"].instance.setPixmap(ptr)
 			self["poster"].show()
 
+	def setup(self):
+		self.session.open(IMDbSetup)
+
 	def createSummary(self):
 		return IMDbLCDScreen
 
@@ -633,25 +814,172 @@ class IMDbLCDScreen(Screen):
 		Screen.__init__(self, session, parent)
 		self["headline"] = Label(_("IMDb Plugin"))
 
+class IMDbSetup(Screen, ConfigListScreen):
+	skin = """<screen name="EPGSearchSetup" position="center,center" size="565,370">
+		<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" alphatest="on" />
+		<widget source="key_red" render="Label" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
+		<widget source="key_green" render="Label" position="140,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
+		<widget name="config" position="5,50" size="555,250" scrollbarMode="showOnDemand" />
+		<ePixmap pixmap="skin_default/div-h.png" position="0,301" zPosition="1" size="565,2" />
+		<widget source="help" render="Label" position="5,305" size="555,63" font="Regular;21" />
+	</screen>"""
+
+	def __init__(self, session):
+		Screen.__init__(self, session)
+		self.skinName = ["Setup" ]
+
+		self['footnote'] = Label(_("* = Restart Required"))
+		self["HelpWindow"] = Pixmap()
+		self["HelpWindow"].hide()
+		self["VKeyIcon"] = Boolean(False)
+
+		# Summary
+		self.setup_title = _("IMDb Setup")
+		self.onChangedEntry = []
+
+		# Initialize widgets
+		self["key_green"] = StaticText(_("OK"))
+		self["key_red"] = StaticText(_("Cancel"))
+		self["description"] = Label("")
+
+		# Define Actions
+		self["actions"] = ActionMap(["SetupActions"],
+			{
+				"cancel": self.keyCancel,
+				"save": self.keySave,
+			}, -2)
+
+		self["VirtualKB"] = ActionMap(["VirtualKeyboardActions"],
+		{
+			"showVirtualKeyboard": self.KeyText,
+		}, -2)
+		self["VirtualKB"].setEnabled(False)
+
+		self.list = []
+		ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.changedEntry)
+		self.createSetup()
+		if not self.handleInputHelpers in self["config"].onSelectionChanged:
+			self["config"].onSelectionChanged.append(self.handleInputHelpers)
+		self.changedEntry()
+		self.onLayoutFinish.append(self.layoutFinished)
+
+	def createSetup(self):
+		self.list = []
+		self.list.append(getConfigListEntry(_("Show in plugin browser"), config.plugins.imdb.showinplugins, _("Enable this to be able to access the IMDb from within the plugin browser.")))
+		self.list.append(getConfigListEntry(_("Words / phrases to ignore "), config.plugins.imdb.ignore_tags, _("This option allows you add words/phrases for IMDb to ignore when searching. please seperaate with a comma")))
+		self["config"].list = self.list
+		self["config"].l.setList(self.list)
+
+	def handleInputHelpers(self):
+		if self["config"].getCurrent() is not None:
+			try:
+				if isinstance(self["config"].getCurrent()[1], ConfigText) or isinstance(self["config"].getCurrent()[1], ConfigPassword):
+					if self.has_key("VKeyIcon"):
+						self["VirtualKB"].setEnabled(True)
+						self["VKeyIcon"].boolean = True
+					if self.has_key("HelpWindow"):
+						if self["config"].getCurrent()[1].help_window.instance is not None:
+							helpwindowpos = self["HelpWindow"].getPosition()
+							from enigma import ePoint
+							self["config"].getCurrent()[1].help_window.instance.move(ePoint(helpwindowpos[0],helpwindowpos[1]))
+				else:
+					if self.has_key("VKeyIcon"):
+						self["VirtualKB"].setEnabled(False)
+						self["VKeyIcon"].boolean = False
+			except:
+				if self.has_key("VKeyIcon"):
+					self["VirtualKB"].setEnabled(False)
+					self["VKeyIcon"].boolean = False
+		else:
+			if self.has_key("VKeyIcon"):
+				self["VirtualKB"].setEnabled(False)
+				self["VKeyIcon"].boolean = False
+
+	def HideHelp(self):
+		try:
+			if isinstance(self["config"].getCurrent()[1], ConfigText):
+				if self["config"].getCurrent()[1].help_window.instance is not None:
+					self["config"].getCurrent()[1].help_window.hide()
+		except:
+			pass
+
+	def KeyText(self):
+		if isinstance(self["config"].getCurrent()[1], ConfigText):
+			if self["config"].getCurrent()[1].help_window.instance is not None:
+				self["config"].getCurrent()[1].help_window.hide()
+		self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title = self["config"].getCurrent()[0], text = self["config"].getCurrent()[1].getValue())
+
+	def VirtualKeyBoardCallback(self, callback = None):
+		if callback is not None and len(callback):
+			self["config"].getCurrent()[1].setValue(callback)
+			self["config"].invalidate(self["config"].getCurrent())
+
+	def layoutFinished(self):
+		self.setTitle(_(self.setup_title))
+
+	# for summary:
+	def changedEntry(self):
+		self.item = self["config"].getCurrent()
+		for x in self.onChangedEntry:
+			x()
+		try:
+			if isinstance(self["config"].getCurrent()[1], ConfigYesNo) or isinstance(self["config"].getCurrent()[1], ConfigSelection):
+				self.createSetup()
+		except:
+			pass
+
+	def getCurrentEntry(self):
+		return self["config"].getCurrent() and self["config"].getCurrent()[0] or ""
+
+	def getCurrentValue(self):
+		return self["config"].getCurrent() and str(self["config"].getCurrent()[1].getText()) or ""
+
+	def getCurrentDescription(self):
+		return self["config"].getCurrent() and len(self["config"].getCurrent()) > 2 and self["config"].getCurrent()[2] or ""
+
+	def createSummary(self):
+		from Screens.Setup import SetupSummary
+		return SetupSummary
+
+	def keySave(self):
+		self.saveAll()
+		if not config.plugins.imdb.showinplugins.value:
+			for plugin in plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU):
+				if plugin.name == _("IMDb Details"):
+					plugins.removePlugin(plugin)
+
+		plugins.readPluginList(resolveFilename(SCOPE_PLUGINS))
+		self.close()
+
+	def createSummary(self):
+		from Screens.Setup import SetupSummary
+		return SetupSummary
+
 def eventinfo(session, eventName="", **kwargs):
+	if not eventName:
+		s = session.nav.getCurrentService()
+		if s:
+			info = s.info()
+			event = info.getEvent(0) # 0 = now, 1 = next
+			eventName = event and event.getEventName() or ''
 	session.open(IMDB, eventName)
 
 def main(session, eventName="", **kwargs):
-	ref = session.nav.getCurrentlyPlayingServiceReference()
-	session.open(IMDBEPGSelection, ref)
+	session.open(IMDB, eventName)
+
+pluginlist = PluginDescriptor(name=_("IMDb Details"), description=_("Query details from the Internet Movie Database"), icon="imdb.png", where=PluginDescriptor.WHERE_PLUGINMENU, fnc=main, needsRestart=False)
 
 def Plugins(**kwargs):
-	return [PluginDescriptor(name="IMDb Details",
-			description=_("Query details from the Internet Movie Database"),
-			icon="imdb.png",
-			where=PluginDescriptor.WHERE_PLUGINMENU,
-			fnc=main,
-			needsRestart=False,
-			),
-			PluginDescriptor(name="IMDb Details",
+	l = [PluginDescriptor(name=_("IMDb Details") + "...",
 			description=_("Query details from the Internet Movie Database"),
 			where=PluginDescriptor.WHERE_EVENTINFO,
 			fnc=eventinfo,
 			needsRestart=False,
 			),
 		]
+
+	if config.plugins.imdb.showinplugins.value:
+		l.append(pluginlist)
+
+	return l

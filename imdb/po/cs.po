@@ -1,0 +1,143 @@
+# Czech translations for enigma2-plugins package.
+# Copyright (C) 2012 THE enigma2-plugins'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the enigma2-plugins package.
+# Automatically generated, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: enigma2-plugins 3.2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-27 21:28+0100\n"
+"PO-Revision-Date: 2012-03-15 14:10+0000\n"
+"Last-Translator: jerry\n"
+"Language-Team: jerry\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+msgid " as "
+msgstr " jako"
+
+msgid "Ambiguous results"
+msgstr "Nejednoznačné výsledky"
+
+msgid "Cancel"
+msgstr "Zrušit"
+
+msgid "Cast: "
+msgstr ""
+
+msgid "Channel Selection"
+msgstr "Výběr stanice"
+
+msgid "Could't get Eventname"
+msgstr "Nelze načíst název události"
+
+msgid "Details"
+msgstr "Detaily"
+
+#, python-format
+msgid "Downloading Movie Poster: %s..."
+msgstr "Stahuji plakát filmu: %s..."
+
+msgid ""
+"Enable this to be able to access the IMDb from within the plugin browser."
+msgstr "Povolit = mít přístup na IMDB v rámci Prohlížeče pluginů."
+
+msgid "Enter search"
+msgstr "Vložte hledané"
+
+msgid "Enter text to search for"
+msgstr "Vložte hledaný text"
+
+msgid "Exit"
+msgstr "Konec"
+
+msgid "Extra Info"
+msgstr ""
+
+msgid "IMDb Details"
+msgstr "Detaily z IMDb"
+
+msgid "IMDb Details parsed"
+msgstr "Analýza z IMDb"
+
+msgid "IMDb Download completed"
+msgstr "Stažení z IMDb dokončeno"
+
+msgid "IMDb Download failed"
+msgstr "Stažení z IMDb selhalo"
+
+msgid "IMDb Plugin"
+msgstr "Plugin IMDb"
+
+msgid "IMDb Re-Download completed"
+msgstr "Re-Stažení z IMDb dokončeno"
+
+msgid "IMDb Setup"
+msgstr "Nastavení IMDb"
+
+msgid "IMDb query failed!"
+msgstr "IMDb dotaz selhal!"
+
+msgid "Lookup"
+msgstr "Vyhledat"
+
+msgid "No IMDb match."
+msgstr "IMDb-Žádná shoda"
+
+msgid "No cast list found in the database."
+msgstr "Žádné seznam obsazení v databázi nenalezen."
+
+msgid "No details found."
+msgstr "Nenalezeny detaily."
+
+msgid "OK"
+msgstr ""
+
+msgid "Play Trailer"
+msgstr "Přehrát upoutávku"
+
+msgid "Please select the matching entry"
+msgstr "Prosím, zvolte odpovídající položku"
+
+#, python-format
+msgid "Query IMDb: %s..."
+msgstr "Dotaz na IMDb: %s..."
+
+msgid "Query details from the Internet Movie Database"
+msgstr "Dotaz na podrobnosti z internetové filmové databáze"
+
+#, python-format
+msgid "Re-Query IMDb: %s..."
+msgstr "Re-Dotaz na IMDb: %s..."
+
+msgid "Search Trailer"
+msgstr "Najít upoutávku"
+
+msgid "Select from EPG"
+msgstr "Vybrat z EPG"
+
+msgid "Setup"
+msgstr "Nastavit"
+
+msgid "Show in plugin browser"
+msgstr "Zobrazit v Prohlížeči pluginů"
+
+msgid "The Internet Movie Database"
+msgstr "Internetová filmová databáze"
+
+msgid "Title Menu"
+msgstr "Tituly"
+
+msgid "User Rating"
+msgstr "Hodnocení"
+
+msgid "no user rating yet"
+msgstr "bez hodnocení"
+
+#
+#~ msgid "Internet Movie Database Details Plugin"
+#~ msgstr "Plugin detailů z Internetové filmové databáze"
