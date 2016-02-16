@@ -40,7 +40,7 @@ from twisted.web.client import getPage
 from xml.etree.cElementTree import fromstring as cElementTree_fromstring
 from base64 import encodestring
 
-import urllib
+from urllib import quote_plus
 #------------------------------------------------------------------------------------------
 
 config.plugins.remoteTimer = ConfigSubsection()
@@ -150,7 +150,9 @@ class RemoteTimerScreen(Screen):
 			sel = self["timerlist"].getCurrent()
 			if not sel:
 				return
-			url = "http://%s/web/timerdelete?sRef=%s&begin=%s&end=%s" % (self.remoteurl, sel.service_ref.ref, sel.begin, sel.end)
+			sref = quote_plus(sel.service_ref.ref.toString().decode('utf-8'))
+			url = "http://%s/web/timerdelete?sRef=%s&begin=%s&end=%s" % (self.remoteurl, sref, sel.begin, sel.end)
+			print "[RemoteTimer] debug remote", url
 			localGetPage(url).addCallback(self.getInfo).addErrback(self.errorLoad)
 
 	def settings(self):
@@ -311,8 +313,8 @@ def newnigma2KeyGo(self):
 		if end < begin:
 			end += 86400
 
-		rt_name = urllib.quote(self.timerentry_name.value.decode('utf8').encode('utf8','ignore'))
-		rt_description = urllib.quote(self.timerentry_description.value.decode('utf8').encode('utf8','ignore'))
+		rt_name = quote_plus(self.timerentry_name.value.decode('utf8').encode('utf8','ignore'))
+		rt_description = quote_plus(self.timerentry_description.value.decode('utf8').encode('utf8','ignore'))
 		rt_disabled = 0 # XXX: do we really want to hardcode this? why do we offer this option then?
 		rt_repeated = 0 # XXX: same here
 
@@ -330,10 +332,11 @@ def newnigma2KeyGo(self):
 		# Add Timer on RemoteBox via WebIf Command
 		# http://192.168.178.20/web/timeradd?sRef=&begin=&end=&name=&description=&disabled=&justplay=&afterevent=&repeated=
 		remoteip = "%d.%d.%d.%d" % tuple(config.plugins.remoteTimer.httpip.value)
+		sref = quote_plus(str(service_ref).decode('utf-8'))
 		remoteurl = "http://%s:%s/web/timeradd?sRef=%s&begin=%s&end=%s&name=%s&description=%s&disabled=%s&justplay=%s&afterevent=%s&repeated=%s" % (
 			remoteip,
 			config.plugins.remoteTimer.httpport.value,
-			service_ref,
+			sref,
 			begin,
 			end,
 			rt_name,
