@@ -33,7 +33,7 @@ msgstr "پخش کردن :"
 msgid "Channel Selection"
 msgstr "انتخاب کانال"
 
-msgid "Could't get Eventname"
+msgid "Couldn't get Eventname"
 msgstr "تهیه کردن نام رویداد ها ممکن نیست"
 
 msgid "Details"

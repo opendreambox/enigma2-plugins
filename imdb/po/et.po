@@ -38,7 +38,7 @@ msgid "Channel Selection"
 msgstr "Kanalite valik"
 
 #: ../src/plugin.py:470
-msgid "Could't get Eventname"
+msgid "Couldn't get Eventname"
 msgstr "Saate nime ei tuvastatud"
 
 #: ../src/plugin.py:340

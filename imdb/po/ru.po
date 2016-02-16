@@ -27,7 +27,7 @@ msgstr "Состав: "
 msgid "Channel Selection"
 msgstr "Выбор канала"
 
-msgid "Could't get Eventname"
+msgid "Couldn't get Eventname"
 msgstr "Не удалось получить описание события"
 
 msgid "Details"

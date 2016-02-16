@@ -33,7 +33,7 @@ msgstr "Uloge: "
 msgid "Channel Selection"
 msgstr "Izbor kanala"
 
-msgid "Could't get Eventname"
+msgid "Couldn't get Eventname"
 msgstr "Nema naziva dešavanja"
 
 msgid "Details"

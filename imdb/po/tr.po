@@ -33,7 +33,7 @@ msgstr "Oyuncular: "
 msgid "Channel Selection"
 msgstr "Kanal Seçimi"
 
-msgid "Could't get Eventname"
+msgid "Couldn't get Eventname"
 msgstr "Program adı alınamıyor"
 
 msgid "Details"

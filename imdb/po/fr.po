@@ -29,7 +29,7 @@ msgstr "Cast: "
 msgid "Channel Selection"
 msgstr "Sélection chaîne"
 
-msgid "Could't get Eventname"
+msgid "Couldn't get Eventname"
 msgstr "Impossible d'obtenir nom événement"
 
 msgid "Details"

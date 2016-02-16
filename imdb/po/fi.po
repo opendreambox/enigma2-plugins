@@ -38,7 +38,7 @@ msgstr "Pääosissa:"
 msgid "Channel Selection"
 msgstr "Kanavavalinta"
 
-msgid "Could't get Eventname"
+msgid "Couldn't get Eventname"
 msgstr "Ei löytynyt tuloksia"
 
 msgid "Details"

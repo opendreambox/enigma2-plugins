@@ -59,7 +59,7 @@ msgstr "Darsteller: "
 msgid "Channel Selection"
 msgstr "Kanalliste"
 
-msgid "Could't get Eventname"
+msgid "Couldn't get Eventname"
 msgstr "Konnte Sendungstitel nicht feststellen"
 
 msgid "Details"

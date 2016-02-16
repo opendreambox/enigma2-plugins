@@ -32,7 +32,7 @@ msgstr "Roll: "
 msgid "Channel Selection"
 msgstr "Kanallista"
 
-msgid "Could't get Eventname"
+msgid "Couldn't get Eventname"
 msgstr "Kunde inte få händelsenamn"
 
 msgid "Details"

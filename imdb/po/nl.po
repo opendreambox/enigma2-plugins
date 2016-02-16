@@ -42,7 +42,7 @@ msgstr "Kanaallijst"
 msgid "Content:"
 msgstr "Inhoud:"
 
-msgid "Could't get Eventname"
+msgid "Couldn't get Eventname"
 msgstr "Kon de naam van het event niet bepalen"
 
 msgid "Details"

@@ -32,7 +32,7 @@ msgstr ""
 msgid "Channel Selection"
 msgstr "Výběr stanice"
 
-msgid "Could't get Eventname"
+msgid "Couldn't get Eventname"
 msgstr "Nelze načíst název události"
 
 msgid "Details"
