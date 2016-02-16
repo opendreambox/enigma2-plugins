@@ -3,7 +3,7 @@
 					<tag type="System" />
 	  </prerequisites>
           <info>
-                    <author>Vali</author>
+                    <author>Vali / dre</author>
                     <name>Dream-Explorer</name>
                     <packagename>enigma2-plugin-extensions-dreamexplorer</packagename>
                     <shortdescription>Manage files on your Dreambox</shortdescription>

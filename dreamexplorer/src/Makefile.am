@@ -4,4 +4,4 @@ SUBDIRS = res
 
 install_PYTHON = *.py
 
-install_DATA = maintainer.info LICENSE pyc2xml dreamexplorer.png
+install_DATA = maintainer.info LICENSE dreamexplorer.png
