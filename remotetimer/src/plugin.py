@@ -32,7 +32,7 @@ from Screens.TimerEntry import TimerEntry
 from Screens.MessageBox import MessageBox
 from RecordTimer import AFTEREVENT
 
-from enigma import eEPGCache
+from enigma import eEPGCache, eServiceReference
 
 from Tools.BoundFunction import boundFunction
 
@@ -64,7 +64,7 @@ def localGetPage(url):
 
 class RemoteService:
 	def __init__(self, sref, sname):
-		self.sref = sref
+		self.ref = eServiceReference(sref or "")
 		self.sname = sname
 
 	getServiceName = lambda self: self.sname
@@ -150,7 +150,7 @@ class RemoteTimerScreen(Screen):
 			sel = self["timerlist"].getCurrent()
 			if not sel:
 				return
-			url = "http://%s/web/timerdelete?sRef=%s&begin=%s&end=%s" % (self.remoteurl, sel.service_ref.sref, sel.begin, sel.end)
+			url = "http://%s/web/timerdelete?sRef=%s&begin=%s&end=%s" % (self.remoteurl, sel.service_ref.ref, sel.begin, sel.end)
 			localGetPage(url).addCallback(self.getInfo).addErrback(self.errorLoad)
 
 	def settings(self):
