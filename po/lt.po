@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tuxbox-enigma 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-19 13:04+0100\n"
-"PO-Revision-Date: 2016-01-16 23:04+0000\n"
+"POT-Creation-Date: 2016-02-08 12:22+0100\n"
+"PO-Revision-Date: 2016-02-06 22:19+0000\n"
 "Last-Translator: Adga <adga@zebra.lt>\n"
 "Language-Team: Adga / enigma2 (c) <audrgrin@takas.lt>\n"
 "Language: lt\n"
@@ -20,7 +20,7 @@ msgstr ""
 "%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Pootle 2.7\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-POOTLE-MTIME: 1452985467.000000\n"
+"X-POOTLE-MTIME: 1454797183.000000\n"
 
 #: permanenttimeshift/src/plugin.py:1062
 msgid ""
@@ -146,8 +146,8 @@ msgid "%(name)s (%(user)s@%(server)s)"
 msgstr "%(name)s (%(user)s@%(server)s)"
 
 #: pushservice/src/Controller/RecordSummary.py:60
-#: pushservice/src/Controller/RecordNotification.py:100
-#: pushservice/src/Controller/RecordNotification.py:112
+#: pushservice/src/Controller/RecordNotification.py:101
+#: pushservice/src/Controller/RecordNotification.py:115
 #: pushservice/src/Controller/DeactivatedTimers.py:61
 #: pushservice/src/Controller/ActiveTimers.py:56
 msgid "%H:%M"
@@ -158,19 +158,19 @@ msgid "%Y.%m.%d"
 msgstr "%Y.%m.%d"
 
 #: pushservice/src/Controller/RecordSummary.py:59
-#: pushservice/src/Controller/RecordNotification.py:99
-#: pushservice/src/Controller/RecordNotification.py:111
+#: pushservice/src/Controller/RecordNotification.py:100
+#: pushservice/src/Controller/RecordNotification.py:114
 #: pushservice/src/Controller/DeactivatedTimers.py:60
 #: pushservice/src/Controller/ActiveTimers.py:55
 msgid "%Y.%m.%d %H:%M"
 msgstr "%Y.%m.%d %H:%M"
 
-#: infobartunerstate/src/InfoBarTunerState.py:817
+#: infobartunerstate/src/InfoBarTunerState.py:867
 #, python-format
 msgid "%d"
 msgstr "%d"
 
-#: infobartunerstate/src/InfoBarTunerState.py:874
+#: infobartunerstate/src/InfoBarTunerState.py:924
 #, python-format
 msgid "%d %%"
 msgstr "%d %%"
@@ -180,21 +180,21 @@ msgstr "%d %%"
 msgid "%d Feed(s) were added to configuration."
 msgstr "%d Feed(s) buvo įtraukti į konfigūraciją."
 
-#: infobartunerstate/src/InfoBarTunerState.py:909
+#: infobartunerstate/src/InfoBarTunerState.py:959
 #, python-format
 msgid "%d GB"
 msgstr "%d Gb"
 
-#: infobartunerstate/src/InfoBarTunerState.py:905
+#: infobartunerstate/src/InfoBarTunerState.py:955
 #, python-format
 msgid "%d MB"
 msgstr "%d MB"
 
-#: infobartunerstate/src/InfoBarTunerState.py:833
-#: infobartunerstate/src/InfoBarTunerState.py:837
-#: infobartunerstate/src/InfoBarTunerState.py:846
-#: infobartunerstate/src/InfoBarTunerState.py:849
-#: infobartunerstate/src/InfoBarTunerState.py:870
+#: infobartunerstate/src/InfoBarTunerState.py:883
+#: infobartunerstate/src/InfoBarTunerState.py:887
+#: infobartunerstate/src/InfoBarTunerState.py:896
+#: infobartunerstate/src/InfoBarTunerState.py:899
+#: infobartunerstate/src/InfoBarTunerState.py:920
 #, python-format
 msgid "%d Min"
 msgstr "%d min"
@@ -227,7 +227,7 @@ msgstr ""
 msgid "%d error while moving Movie '%s' to '%s': %s"
 msgstr "%d klaida perkeliant filmą '%s' į '%s': %s"
 
-#: merlinmusicplayer/src/plugin.py:246
+#: merlinmusicplayer/src/plugin.py:247
 #, python-format
 msgid ""
 "%d files added to database!\n"
@@ -292,7 +292,7 @@ msgstr ""
 msgid "%i ms"
 msgstr "%i ms"
 
-#: merlinmusicplayer/src/plugin.py:227
+#: merlinmusicplayer/src/plugin.py:228
 #, python-format
 msgid ""
 "%s\n"
@@ -301,7 +301,7 @@ msgstr ""
 "%s\n"
 "Įtraukta į duomenų bazę"
 
-#: merlinmusicplayer/src/plugin.py:231 merlinmusicplayer/src/plugin.py:235
+#: merlinmusicplayer/src/plugin.py:232 merlinmusicplayer/src/plugin.py:236
 #, python-format
 msgid ""
 "%s\n"
@@ -310,7 +310,7 @@ msgstr ""
 "%s\n"
 "jau yra duomenų bazėje!"
 
-#: merlinmusicplayer/src/plugin.py:2541 merlinmusicplayer/src/plugin.py:3292
+#: merlinmusicplayer/src/plugin.py:2542 merlinmusicplayer/src/plugin.py:3307
 #, python-format
 msgid ""
 "%s\n"
@@ -319,7 +319,7 @@ msgstr ""
 "%s\n"
 "pridedama prie grojaraščio"
 
-#: merlinmusicplayer/src/plugin.py:2551 merlinmusicplayer/src/plugin.py:3303
+#: merlinmusicplayer/src/plugin.py:2552 merlinmusicplayer/src/plugin.py:3318
 #, python-format
 msgid ""
 "%s\n"
@@ -436,8 +436,8 @@ msgstr "'%s' nerasta grojaraštyje"
 msgid "'%s' removed from playlist"
 msgstr "'%s' pašalinta iš grojaraščio"
 
-#: partnerbox/src/plugin.py:1277 partnerbox/src/plugin.py:1282
-#: partnerbox/src/plugin.py:1330 partnerbox/src/plugin.py:1335
+#: partnerbox/src/plugin.py:1297 partnerbox/src/plugin.py:1302
+#: partnerbox/src/plugin.py:1354 partnerbox/src/plugin.py:1359
 msgid "(ZAP)"
 msgstr "(JUNGTI)"
 
@@ -521,7 +521,7 @@ msgstr "10 sekundžių"
 msgid "10 min."
 msgstr "10 min."
 
-#: yttrailer/src/plugin.py:43
+#: yttrailer/src/plugin.py:44
 msgid "1080p"
 msgstr "1080p"
 
@@ -652,7 +652,7 @@ msgstr "6 valandos"
 msgid "60 min."
 msgstr "60 min."
 
-#: yttrailer/src/plugin.py:43
+#: yttrailer/src/plugin.py:44
 msgid "720p"
 msgstr "720p"
 
@@ -666,8 +666,8 @@ msgid "<empty>"
 msgstr "(tuščia)"
 
 #
-#: partnerbox/src/plugin.py:1298 partnerbox/src/plugin.py:1358
-#: partnerbox/src/plugin.py:1360 merlinepgcenter/src/EpgCenterList.py:985
+#: partnerbox/src/plugin.py:1318 partnerbox/src/plugin.py:1382
+#: partnerbox/src/plugin.py:1384 merlinepgcenter/src/EpgCenterList.py:985
 msgid "<unknown>"
 msgstr "<nežinomas>"
 
@@ -820,7 +820,7 @@ msgid "Abkhazian"
 msgstr "Abchazų"
 
 #
-#: partnerbox/src/plugin.py:1834 dvdbackup/src/plugin.py:250
+#: partnerbox/src/plugin.py:1892 dvdbackup/src/plugin.py:250
 msgid "Abort"
 msgstr "Nutraukti"
 
@@ -900,7 +900,7 @@ msgstr "Įjungti WLAN svečio abonentą"
 msgid "Activate permanent clock"
 msgstr "Įjungti nuolatinį laikrodį"
 
-#: merlinmusicplayer/src/plugin.py:2930
+#: merlinmusicplayer/src/plugin.py:2945
 msgid "Activate screensaver"
 msgstr "Įjungti ekrano užsklandą"
 
@@ -955,12 +955,12 @@ msgstr "ActiveTimerPushed"
 #: webadmin/src/WebChilds/UploadPkg.py:80
 #: webadmin/src/WebChilds/UploadPkg.py:85
 #: webadmin/src/WebChilds/UploadPkg.py:117
-#: partnerbox/src/PartnerboxSetup.py:129 pipservicerelation/src/plugin.py:87
+#: partnerbox/src/PartnerboxSetup.py:130 pipservicerelation/src/plugin.py:87
 #: teletext/src/plugin.py:1716 merlinepgcenter/src/MerlinEPGCenter.py:1298
 #: ftpbrowser/src/FTPServerManager.py:259
 #: satipclient/src/SatIPTunerSetup.py:39
 #: birthdayreminder/src/BirthdayReminder.py:216
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:138
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:139
 msgid "Add"
 msgstr "Pridėti"
 
@@ -981,11 +981,11 @@ msgstr "Pridėti valdiklį"
 msgid "Add Service"
 msgstr "Pridėti kanalą"
 
-#: infobartunerstate/src/IBTSConfiguration.py:85
+#: infobartunerstate/src/IBTSConfiguration.py:87
 msgid "Add Setup to extension menu"
 msgstr "Pridėti valdymą išplėstame meniu"
 
-#: infobartunerstate/src/IBTSConfiguration.py:84
+#: infobartunerstate/src/IBTSConfiguration.py:86
 msgid "Add Show to extension menu"
 msgstr "Pridėti rodymą išplėstame meniu"
 
@@ -1017,15 +1017,15 @@ msgstr "Pridėti gimtadienį"
 msgid "Add a new NFS or CIFS mount point to your Dreambox."
 msgstr "Pridėti naują NFS arba CIFS pajungimo tašką jūsų imtuvui."
 
-#: merlinmusicplayer/src/plugin.py:1841 merlinmusicplayer/src/plugin.py:1855
+#: merlinmusicplayer/src/plugin.py:1842 merlinmusicplayer/src/plugin.py:1856
 msgid "Add all songs from selected album to a playlist"
 msgstr "Iš pasirinkto albumo į grojaraštį įtraukti visas dainas"
 
-#: merlinmusicplayer/src/plugin.py:1843 merlinmusicplayer/src/plugin.py:1853
+#: merlinmusicplayer/src/plugin.py:1844 merlinmusicplayer/src/plugin.py:1854
 msgid "Add all songs from selected artist to a playlist"
 msgstr "Įtraukti visas albumo dainas iš pasirinkto atlikėjo į grojaraštį"
 
-#: merlinmusicplayer/src/plugin.py:1857
+#: merlinmusicplayer/src/plugin.py:1858
 msgid "Add all songs from selected genre to a playlist"
 msgstr "Iš pasirinkto žanro į grojaraštį įtraukti visas albumo dainas"
 
@@ -1105,7 +1105,7 @@ msgstr "Pridėti naują žymę..."
 msgid "Add season and episode information to Your recordings."
 msgstr "Pridėti sezono ir epizodo informaciją į savo įrašus."
 
-#: merlinmusicplayer/src/plugin.py:1839
+#: merlinmusicplayer/src/plugin.py:1840
 msgid "Add selected song to a playlist"
 msgstr "Pridėti pasirinktą dainą į grojaraštį"
 
@@ -1125,7 +1125,7 @@ msgstr "Pridėkite panašų konfliktų laikmatį"
 msgid "Add tags to recorded movies"
 msgstr "Pridėkite korteles įrašytiems filmams"
 
-#: partnerbox/src/plugin.py:986 partnerbox/src/plugin.py:1045
+#: partnerbox/src/plugin.py:987 partnerbox/src/plugin.py:1046
 #: epgsearch/src/EPGSearch.py:153 easyinfo/src/plugin.py:737
 #: merlinepgcenter/src/MerlinEPGCenter.py:1321
 #: merlinepgcenter/src/MerlinEPGCenter.py:1329
@@ -1196,8 +1196,8 @@ msgstr "Reguliuoti šrifto dydį:"
 msgid "Adjust service name column width:"
 msgstr "Nustatyti kanalo pavadinimo stulpelio plotį:"
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:137
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:263
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:138
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:273
 msgid "Adjustment value"
 msgstr "Patikslinimo vertė"
 
@@ -1289,7 +1289,7 @@ msgstr "Albanų"
 msgid "Album"
 msgstr "Albumas"
 
-#: merlinmusicplayer/src/plugin.py:2346
+#: merlinmusicplayer/src/plugin.py:2347
 #, python-format
 msgid "Album (%s) -> Song List"
 msgstr "Albumas (%s)-> dainų sąrašas"
@@ -1298,12 +1298,12 @@ msgstr "Albumas (%s)-> dainų sąrašas"
 msgid "Albums"
 msgstr "Albumai"
 
-#: merlinmusicplayer/src/plugin.py:2374
+#: merlinmusicplayer/src/plugin.py:2375
 #, python-format
 msgid "Albums (%d)"
 msgstr "Albumai (%d)"
 
-#: merlinmusicplayer/src/plugin.py:2443
+#: merlinmusicplayer/src/plugin.py:2444
 msgid "Albums List"
 msgstr "Albumų sąrašas"
 
@@ -1338,7 +1338,7 @@ msgstr "Visi žanrai"
 msgid "All Photos"
 msgstr "Visos fotografijos"
 
-#: merlinmusicplayer/src/plugin.py:2258
+#: merlinmusicplayer/src/plugin.py:2259
 msgid "All Songs"
 msgstr "Visos dainos"
 
@@ -1407,7 +1407,7 @@ msgstr "Leisti jungti per web sąsają"
 
 #: satipclient/meta/plugin_satipclient.xml./satipclient/meta/plugin_satipclient.xml
 msgid "Allows setting up Sat>IP Based virtual Tuners"
-msgstr "Leidžia nustatyti Set> IP grindžiamas virtualių Tunerių"
+msgstr "Leidžia nustatyti Set>IP grindžiamą virtualių Tunerių"
 
 #: menusort/meta/plugin_menusort.xml./menusort/meta/plugin_menusort.xml
 msgid "Allows to change the order of entries in the main menu manually."
@@ -1511,11 +1511,11 @@ msgstr "Bet kokia paslauga/įrašas"
 msgid "Append '_' if file exist"
 msgstr "Pridėti '_' Jei failo nėra"
 
-#: merlinmusicplayer/src/plugin.py:1846
+#: merlinmusicplayer/src/plugin.py:1847
 msgid "Append file to current playing songlist"
 msgstr "Pridėti failą prie dabar grojančio dainų sąrašo"
 
-#: merlinmusicplayer/src/plugin.py:3255
+#: merlinmusicplayer/src/plugin.py:3270
 msgid "Append file to current songlist"
 msgstr "Pridėti failą prie dabartinio dainų sąrašo"
 
@@ -1531,7 +1531,7 @@ msgstr "Papildyti numerio tipą"
 msgid "Append vanity name"
 msgstr "Pridėti prabangų vardą"
 
-#: partnerbox/src/plugin.py:1830
+#: partnerbox/src/plugin.py:1888
 msgid "Apply"
 msgstr "Taikyti"
 
@@ -1588,22 +1588,22 @@ msgstr "Armėnų"
 msgid "Artist"
 msgstr "Atlikėjas"
 
-#: merlinmusicplayer/src/plugin.py:2430
+#: merlinmusicplayer/src/plugin.py:2431
 #, python-format
 msgid "Artist (%s) -> Album List"
 msgstr "Atlikėjas (%s)-> albumų sąrašas"
 
-#: merlinmusicplayer/src/plugin.py:2320
+#: merlinmusicplayer/src/plugin.py:2321
 #, python-format
 msgid "Artist (%s) -> Song List"
 msgstr "Atlikėjas (%s)-> dainų sąrašas"
 
-#: merlinmusicplayer/src/plugin.py:2370
+#: merlinmusicplayer/src/plugin.py:2371
 #, python-format
 msgid "Artists (%d)"
 msgstr "Atlikėjai (%d)"
 
-#: merlinmusicplayer/src/plugin.py:2394
+#: merlinmusicplayer/src/plugin.py:2395
 msgid "Artists List"
 msgstr "Atlikėjų sąrašas"
 
@@ -1770,11 +1770,11 @@ msgstr "Austrija"
 
 #: mytube/src/MyTubeSettings.py:85
 msgid "Authenticate with Youtube"
-msgstr "Atpažinimas su \"YouTube\""
+msgstr "Autentifikuoti su YouTube"
 
 #: mytube/src/plugin.py:492
 msgid "Authentication awaiting"
-msgstr "Laukiama atpažinimo"
+msgstr "Laukiama autentifikacija"
 
 #: youtubeplayer/src/YouTubeList.py:105
 msgid "Author:"
@@ -1908,15 +1908,15 @@ msgstr "Automatinis laikmačio sąrašo išvalymo nustatymas"
 msgid "Automatic Volume Adjustment"
 msgstr "Automatinis garso reguliavimas"
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:53
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:54
 msgid "Automatic Volume Adjustment - Config"
 msgstr "Automatinio garso reguliavimo nustatymas - konfig"
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:240
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:250
 msgid "Automatic Volume Adjustment - Entry Config"
 msgstr "Automatinio garso reguliavimo nustatymas - įrašo konfig"
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:135
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:136
 msgid "Automatic Volume Adjustment - Service Config"
 msgstr "Automatinis garso reguliavimas - kanalų konfig"
 
@@ -2088,7 +2088,7 @@ msgstr "Fono spartinimas"
 msgid "Background only"
 msgstr "Tik fonas"
 
-#: infobartunerstate/src/IBTSConfiguration.py:130
+#: infobartunerstate/src/IBTSConfiguration.py:131
 msgid "Background transparency"
 msgstr "Fono skaidrumas"
 
@@ -2228,7 +2228,7 @@ msgstr "Prasideda"
 msgid "Bengali"
 msgstr "Bengalų"
 
-#: yttrailer/src/plugin.py:312
+#: yttrailer/src/plugin.py:323
 msgid "Best resolution"
 msgstr "Geriausia raiška"
 
@@ -2624,7 +2624,7 @@ msgstr "Kanada"
 #: autotimer/src/AutoTimerImporter.py:45
 #: autotimer/src/AutoTimerImporter.py:119
 #: autotimer/src/AutoTimerSettings.py:81 webinterface/src/WebIfConfig.py:32
-#: partnerbox/src/PartnerboxSetup.py:69 partnerbox/src/PartnerboxSetup.py:236
+#: partnerbox/src/PartnerboxSetup.py:70 partnerbox/src/PartnerboxSetup.py:251
 #: partnerbox/src/RemoteTimerEntry.py:73 audiorestart/src/plugin.py:107
 #: namezap/src/NamezapSetup.py:57 epgsearch/src/EPGSearch.py:377
 #: epgsearch/src/EPGSearchSetup.py:58 dreammediathek/src/plugin.py:81
@@ -2638,9 +2638,9 @@ msgstr "Kanada"
 #: movieepg/src/MovieEpgSetup.py:55 vlcplayer/src/VlcServerConfig.py:296
 #: seriesplugin/src/SeriesPluginConfiguration.py:80
 #: seriesplugin/src/ChannelEditor.py:72 aspectratioswitch/src/plugin.py:120
-#: infobartunerstate/src/IBTSConfiguration.py:49 setpasswd/src/plugin.py:51
-#: merlinmusicplayer/src/plugin.py:277 merlinmusicplayer/src/plugin.py:2794
-#: merlinmusicplayer/src/plugin.py:2915 yttrailer/src/plugin.py:306
+#: infobartunerstate/src/IBTSConfiguration.py:51 setpasswd/src/plugin.py:51
+#: merlinmusicplayer/src/plugin.py:278 merlinmusicplayer/src/plugin.py:2809
+#: merlinmusicplayer/src/plugin.py:2930 yttrailer/src/plugin.py:317
 #: lastfm/src/LastFMConfig.py:55 kiddytimer/src/KTsetup.py:78
 #: audiosync/src/AC3main.py:66 audiosync/src/AC3setup.py:63
 #: quickbutton/src/plugin.py:197 epgrefresh/src/EPGRefreshChannelEditor.py:79
@@ -2676,8 +2676,8 @@ msgstr "Kanada"
 #: birthdayreminder/src/BirthdayReminder.py:729
 #: automaticcleanup/src/plugin.py:173 tageditor/src/plugin.py:47
 #: antiscrollbar/src/plugin.py:125
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:61
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:248
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:62
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:258
 #: movieretitle/src/plugin.py:44 pipzap/src/PipzapSetup.py:60
 #: tvcharts/src/plugin.py:403 moviecut/src_py/plugin.py:88
 #: dreamirc/src/dreamIRCSetup.py:71 fancontrol2/src/plugin.py:671
@@ -2780,7 +2780,7 @@ msgstr "Keisti įrašymo vietą"
 msgid "Change permanent clock position"
 msgstr "Pakeisti nuolatinio laikrodžio poziciją"
 
-#: partnerbox/src/plugin.py:1717
+#: partnerbox/src/plugin.py:1775
 msgid "Change pin code"
 msgstr "Keisti PIN kodą"
 
@@ -2856,7 +2856,7 @@ msgstr "Kanalo numeris"
 #: ofdb/src/plugin.py:41 autotimer/src/AutoTimerEditor.py:103
 #: imdb/src/plugin.py:62 epgsearch/src/EPGSearch.py:415
 #: pipservicerelation/src/plugin.py:211
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:271
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:281
 msgid "Channel Selection"
 msgstr "Kanalo pasirinkimas"
 
@@ -2919,7 +2919,7 @@ msgstr "Patikrinkite IPs (spauskite OK, kad redaguoti)"
 
 #: seriesplugin/src/SeriesPluginConfiguration.py:204
 msgid "Check Timer for corresponding EPG events"
-msgstr "Patikrinkite laikmatį, atitinkanti EPG įvykius"
+msgstr "Patikrinkite laikmatį, atitinkantį EPG įvykius"
 
 #: reconstructapsc/src_py/plugin.py:36
 msgid "Check any running reconstruct process"
@@ -2941,6 +2941,9 @@ msgid ""
 "EPG event. Due to compatible issues with SerienRecorder and IPRec, only "
 "timer created by AutoTimer are affected."
 msgstr ""
+"Patikrinkite Įvykio id (eit) ir pašalinkite laikmatį, jei nėra atitinkamo "
+"EPG įvykio. Dėl suderinamumo problemų su Serijų Įrašymo ir IPSec, veikia tik "
+"laikmatis, sukurtas su Auto laikmačiu."
 
 #: seriesplugin/src/SeriesPluginConfiguration.py:201
 msgid "Check timer every x minutes"
@@ -2995,11 +2998,11 @@ msgstr "Miestas"
 msgid "Classic"
 msgstr "Klasika"
 
-#: partnerbox/src/plugin.py:247
+#: partnerbox/src/plugin.py:248
 msgid "Clean up"
 msgstr "Išvalyti"
 
-#: partnerbox/src/plugin.py:332
+#: partnerbox/src/plugin.py:333
 msgid "Cleaning up finished timer entries..."
 msgstr "Valykite baigtus laikmačio įrašus..."
 
@@ -3078,7 +3081,7 @@ msgstr ""
 "Bus panaikintos visos žymes, visuose įrašuose!\n"
 "Ar tikrai to norite?"
 
-#: merlinmusicplayer/src/plugin.py:1845 merlinmusicplayer/src/plugin.py:3254
+#: merlinmusicplayer/src/plugin.py:1846 merlinmusicplayer/src/plugin.py:3269
 msgid "Clear current songlist and play selected entry"
 msgstr "Išvalyti dabartinį dainų grojaraštį ir groti pasirinktą įrašą"
 
@@ -3139,7 +3142,7 @@ msgstr "Uždaryti"
 msgid "Close MediaPlayer"
 msgstr "Uždaryti medija grotuvą"
 
-#: yttrailer/src/plugin.py:314
+#: yttrailer/src/plugin.py:325
 msgid "Close Player with exit-key"
 msgstr "Uždaryti grotuvą su exit mygtuku"
 
@@ -3232,8 +3235,8 @@ msgid "Config file %s not found."
 msgstr "Config failas %s nerastas."
 
 #: seriesplugin/src/SeriesPluginConfiguration.py:75
-#: infobartunerstate/src/IBTSConfiguration.py:45
-#: merlinmusicplayer/src/plugin.py:1831 merlinmusicplayer/src/plugin.py:3250
+#: infobartunerstate/src/IBTSConfiguration.py:47
+#: merlinmusicplayer/src/plugin.py:1832 merlinmusicplayer/src/plugin.py:3265
 #: pushservice/src/ConfigScreen.py:67
 msgid "Configuration"
 msgstr "Konfigūracija"
@@ -3613,7 +3616,7 @@ msgstr "Nepavyko atidaryti išėjimo .ts failo"
 
 #: satipclient/src/SatIPTunerSetup.py:76
 msgid "Count - Type (host)"
-msgstr "Skaičiuoti - tipą (host)"
+msgstr "Skaičiuoti - tipą (mazgas)"
 
 #: mosaic/src/plugin.py:326
 msgid "Countdown:"
@@ -3686,7 +3689,7 @@ msgstr "Sukurti naują failą"
 msgid "Create new file in..."
 msgstr "Sukurti naują failą..."
 
-#: merlinmusicplayer/src/plugin.py:1834
+#: merlinmusicplayer/src/plugin.py:1835
 msgid "Create new playlist"
 msgstr "Sukurti naują grojaraštį"
 
@@ -4015,7 +4018,7 @@ msgstr "Numatytas sezonas"
 msgid "Default storage device is not available!"
 msgstr "Numatytojo saugojimo įrenginio nėra!"
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:78
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:79
 msgid "Default volume adjustment value for AC3/DTS"
 msgstr "Numatytasis AC3/DTS kanalų garso lygis"
 
@@ -4082,14 +4085,14 @@ msgstr "Vėluoti x sekundžių po kanalo starto"
 #: advhdmi/src/AdvHdmiCecSetup.py:215 autotimer/src/AutoTimerOverview.py:71
 #: zaphistorybrowser/src/plugin.py:195
 #: webinterface/src/WebComponents/Sources/Strings.py:44
-#: partnerbox/src/PartnerboxSetup.py:131 partnerbox/src/PartnerboxSetup.py:238
-#: partnerbox/src/plugin.py:244 pipservicerelation/src/plugin.py:85
+#: partnerbox/src/PartnerboxSetup.py:132 partnerbox/src/PartnerboxSetup.py:253
+#: partnerbox/src/plugin.py:245 pipservicerelation/src/plugin.py:85
 #: remotetimer/src/plugin.py:104 zapstatistic/src/plugin.py:431
 #: growlee/src/plugin.py:102 teletext/src/plugin.py:1718
 #: curlytx/src/CurlyTxSettings.py:52 subsdownloader2/src/plugin.py:1076
 #: fritzcall/src/plugin.py:1583 simplerss/src/RSSSetup.py:76
 #: ftpbrowser/src/FTPBrowser.py:188 ftpbrowser/src/FTPServerManager.py:258
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:141
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:142
 #: fancontrol2/src/FC2webSite.py:177 fancontrol2/src/FC2webSite.py:213
 #: networkbrowser/src/UserManager.py:53
 msgid "Delete"
@@ -4181,15 +4184,15 @@ msgstr "Trinti našlaičių filmų failus"
 msgid "Delete selected page"
 msgstr "Trinti pasirinktą puslapį"
 
-#: merlinmusicplayer/src/plugin.py:1851
+#: merlinmusicplayer/src/plugin.py:1852
 msgid "Delete selected playlist"
 msgstr "Trinti pasirinktą grojaraštį"
 
-#: merlinmusicplayer/src/plugin.py:1837
+#: merlinmusicplayer/src/plugin.py:1838
 msgid "Delete song from current playlist"
 msgstr "Trinti dainą iš dabartinio grojaraščio"
 
-#: merlinmusicplayer/src/plugin.py:1844
+#: merlinmusicplayer/src/plugin.py:1845
 msgid "Delete song from database"
 msgstr "Trinti dainą iš duomenų bazės"
 
@@ -4466,15 +4469,15 @@ msgstr "Ką daryti?"
 msgid "Do you really want to DELETE:\n"
 msgstr "Ar tikrai norite tai TRINTI:\n"
 
-#: merlinmusicplayer/src/plugin.py:1901
+#: merlinmusicplayer/src/plugin.py:1902
 msgid "Do you really want to add all songs from that album to a playlist?"
 msgstr "Ar tikrai norite pridėti visas dainas iš to albumo grojaraščio?"
 
-#: merlinmusicplayer/src/plugin.py:1891
+#: merlinmusicplayer/src/plugin.py:1892
 msgid "Do you really want to add all songs from that artist to a playlist?"
 msgstr "Ar tikrai norite pridėti visas dainas iš to atlikėjo grojaraščio?"
 
-#: merlinmusicplayer/src/plugin.py:1881
+#: merlinmusicplayer/src/plugin.py:1882
 msgid "Do you really want to add all songs from that genre to a playlist?"
 msgstr "Ar tikrai norite iš šio žanro į grojaraščio įtraukti visas dainas?"
 
@@ -4525,15 +4528,15 @@ msgstr ""
 "Ar tikrai norite naikinti visas žymes \"%s\" visur?\n"
 "(Atkreipkite dėmesį, kad \"Atšaukus\" tai bus anuliuota!)"
 
-#: merlinmusicplayer/src/plugin.py:1935
+#: merlinmusicplayer/src/plugin.py:1936
 msgid "Do you really want to delete that song from the database?"
 msgstr "Ar tikrai norite naikinti šią dainą iš duomenų bazės?"
 
-#: merlinmusicplayer/src/plugin.py:1924
+#: merlinmusicplayer/src/plugin.py:1925
 msgid "Do you really want to delete that song the current playlist?"
 msgstr "Ar tikrai norite naikinti šią dainą dabartinio grojaraščio?"
 
-#: merlinmusicplayer/src/plugin.py:1911
+#: merlinmusicplayer/src/plugin.py:1912
 msgid "Do you really want to delete the current playlist?"
 msgstr "Ar tikrai norite naikinti dabartinį grojaraštį?"
 
@@ -4542,8 +4545,8 @@ msgstr "Ar tikrai norite naikinti dabartinį grojaraštį?"
 msgid "Do you really want to delete the entry for %s?"
 msgstr "Ar tikrai norite naikinti įrašą dėl %s?"
 
-#: partnerbox/src/PartnerboxEPGSelection.py:128 partnerbox/src/plugin.py:351
-#: partnerbox/src/plugin.py:1194 remotetimer/src/plugin.py:145
+#: partnerbox/src/PartnerboxEPGSelection.py:128 partnerbox/src/plugin.py:352
+#: partnerbox/src/plugin.py:1195 remotetimer/src/plugin.py:145
 #, python-format
 msgid ""
 "Do you really want to delete the timer \n"
@@ -4553,7 +4556,7 @@ msgstr ""
 "%s ?"
 
 #: pipservicerelation/src/plugin.py:123
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:182
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:183
 msgid "Do you really want to delete this entry?"
 msgstr "Ar tikrai norite ištrinti įrašą?"
 
@@ -4835,7 +4838,7 @@ msgstr "DreamExplorer"
 msgid "DreamMediathek"
 msgstr "DreamMediathek"
 
-#: merlinmusicplayer/src/plugin.py:3413 merlinmusicplayer/src/plugin.py:3416
+#: merlinmusicplayer/src/plugin.py:3428 merlinmusicplayer/src/plugin.py:3431
 msgid "Dreambox Music Database"
 msgstr "Dreambox muzikos duomenų bazė"
 
@@ -4928,8 +4931,8 @@ msgid "EPG Search"
 msgstr "EPG paieška"
 
 #
-#: partnerbox/src/plugin.py:246 partnerbox/src/plugin.py:521
-#: partnerbox/src/plugin.py:680
+#: partnerbox/src/plugin.py:247 partnerbox/src/plugin.py:522
+#: partnerbox/src/plugin.py:681
 msgid "EPG Selection"
 msgstr "EPG pasirinkimas"
 
@@ -5163,12 +5166,12 @@ msgstr "Paprasta medija parametrai ..."
 #
 #. TRANSLATORS: keep it short, this is a button
 #: ncidclient/src/plugin.py:445 weatherplugin/src/setup.py:79
-#: advhdmi/src/AdvHdmiCecSetup.py:214 partnerbox/src/PartnerboxSetup.py:130
+#: advhdmi/src/AdvHdmiCecSetup.py:214 partnerbox/src/PartnerboxSetup.py:131
 #: pipservicerelation/src/plugin.py:88 teletext/src/plugin.py:1720
 #: serienfilm/src/SerienFilm.py:65 fritzcall/src/plugin.py:1587
 #: ftpbrowser/src/FTPServerManager.py:260
 #: birthdayreminder/src/BirthdayReminder.py:267
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:140
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:141
 msgid "Edit"
 msgstr "Redaguoti"
 
@@ -5332,7 +5335,7 @@ msgstr "Tuščias .ap failas"
 
 #
 #: webinterface/src/WebComponents/Sources/Strings.py:40
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:72
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:73
 msgid "Enable"
 msgstr "Įjungti"
 
@@ -5423,7 +5426,7 @@ msgstr "Įjungti HTTPS autentifikavimą"
 msgid "Enable Hotkey"
 msgstr "Įjungti greitąjį mygtuką"
 
-#: infobartunerstate/src/IBTSConfiguration.py:82
+#: infobartunerstate/src/IBTSConfiguration.py:84
 msgid "Enable InfoBarTunerState"
 msgstr "Įjungti InfoBarTunerState"
 
@@ -5435,11 +5438,11 @@ msgstr "Įjungti KiddyTimer"
 msgid "Enable KiddyTimer for x minutes"
 msgstr "Įjungti KiddyTimer X minučių"
 
-#: partnerbox/src/PartnerboxSetup.py:79
+#: partnerbox/src/PartnerboxSetup.py:80
 msgid "Enable Partnerbox-Function in EPGList"
 msgstr "Įjungti Partnerbox-funkcija EPGList"
 
-#: partnerbox/src/PartnerboxSetup.py:78
+#: partnerbox/src/PartnerboxSetup.py:79
 msgid "Enable Partnerbox-Function in TimerEvent"
 msgstr "Įjungti Partnerbox-funkciją TimerEvent"
 
@@ -5487,7 +5490,7 @@ msgstr "Įjungti VPS-priedą"
 msgid "Enable encoder"
 msgstr "Įjungti enkoderį"
 
-#: partnerbox/src/PartnerboxSetup.py:80
+#: partnerbox/src/PartnerboxSetup.py:81
 msgid "Enable first Partnerbox-entry in Timeredit as default"
 msgstr "Įjungti pirmą kartą Partnerbox įrašymą į Timeredit kaip numatytąjį"
 
@@ -5604,15 +5607,15 @@ msgstr "Baigiasi"
 msgid "English"
 msgstr "Anglų"
 
-#: partnerbox/src/PartnerboxSetup.py:40
+#: partnerbox/src/PartnerboxSetup.py:41
 msgid "Enigma 1"
 msgstr "Enigma 1"
 
-#: partnerbox/src/PartnerboxSetup.py:40
+#: partnerbox/src/PartnerboxSetup.py:41
 msgid "Enigma 2"
 msgstr "Enigma 2"
 
-#: partnerbox/src/PartnerboxSetup.py:128 partnerbox/src/PartnerboxSetup.py:251
+#: partnerbox/src/PartnerboxSetup.py:129 partnerbox/src/PartnerboxSetup.py:266
 msgid "Enigma Type"
 msgstr "Enigma tipas"
 
@@ -5677,7 +5680,7 @@ msgstr "Įrašykite failo pavadinimą išsaugotam sąrašui:"
 msgid "Enter in minutes (0 means unlimited)"
 msgstr "Įrašykite minutėmis (0 reiškia neribotas)"
 
-#: merlinmusicplayer/src/plugin.py:1965
+#: merlinmusicplayer/src/plugin.py:1966
 msgid "Enter name for playlist"
 msgstr "Įrašykite grojaraščio pavadinimą"
 
@@ -5713,7 +5716,7 @@ msgstr "Įrašykite pin kodą"
 msgid "Enter search"
 msgstr "Įrašykite paiešką"
 
-#: merlinmusicplayer/src/plugin.py:1982
+#: merlinmusicplayer/src/plugin.py:1983
 msgid "Enter search-text"
 msgstr "Įrašykite paieškos tekstą"
 
@@ -5740,7 +5743,7 @@ msgstr "Įrašykite tekstą jei norite ieškoti"
 msgid "Enter the new Tag"
 msgstr "Įrašykite naują žymę"
 
-#: partnerbox/src/plugin.py:1717
+#: partnerbox/src/plugin.py:1775
 msgid "Enter the service pin"
 msgstr "Įrašykite kanalo PIN"
 
@@ -6112,7 +6115,7 @@ msgstr ""
 msgid "Error writing to %s!"
 msgstr "Klaida rašant į %s!"
 
-#: merlinmusicplayer/src/plugin.py:248
+#: merlinmusicplayer/src/plugin.py:249
 msgid ""
 "Error!\n"
 "Can not open database!\n"
@@ -6138,19 +6141,19 @@ msgstr ""
 msgid "Error..."
 msgstr "Klaida..."
 
-#: partnerbox/src/plugin.py:1350
+#: partnerbox/src/plugin.py:1374
 msgid "Error: No space left"
 msgstr "Klaida: Neliko vietos įrenginyje"
 
-#: partnerbox/src/plugin.py:1356
+#: partnerbox/src/plugin.py:1380
 msgid "Error: Outdated"
 msgstr "Klaida: pasenusi"
 
-#: partnerbox/src/plugin.py:1352
+#: partnerbox/src/plugin.py:1376
 msgid "Error: User aborted"
 msgstr "Klaida: Vartotojo nutraukta"
 
-#: partnerbox/src/plugin.py:1354
+#: partnerbox/src/plugin.py:1378
 msgid "Error: Zap failed"
 msgstr "Klaida: Zap nepavyko"
 
@@ -6282,7 +6285,7 @@ msgstr "Išplėsta vardų paieška"
 msgid "Extended configuratin menu:"
 msgstr "Išplėstos konfigūracijos meniu:"
 
-#: yttrailer/src/plugin.py:311
+#: yttrailer/src/plugin.py:322
 msgid "Extended search filter"
 msgstr "Išplėsti paieškos filtrą"
 
@@ -6596,12 +6599,12 @@ msgstr "Perdavimo serverio nustatymas"
 msgid "Fetching search entries"
 msgstr "Paieškos įėjimų nusistatymas"
 
-#: infobartunerstate/src/IBTSConfiguration.py:113
+#: infobartunerstate/src/IBTSConfiguration.py:114
 #, python-format
 msgid "Field %d content"
 msgstr "Laukelio %d turinys"
 
-#: infobartunerstate/src/IBTSConfiguration.py:117
+#: infobartunerstate/src/IBTSConfiguration.py:118
 #, python-format
 msgid "Field %d width"
 msgstr "Laukelio %d plotis"
@@ -6638,7 +6641,7 @@ msgstr ""
 msgid "Filebrowser"
 msgstr "Failų naršyklė"
 
-#: merlinmusicplayer/src/plugin.py:2933
+#: merlinmusicplayer/src/plugin.py:2948
 msgid "Filebrowser startup path"
 msgstr "Failų naršyklės paleidimo kelias"
 
@@ -6646,7 +6649,7 @@ msgstr "Failų naršyklės paleidimo kelias"
 msgid "Filelist"
 msgstr "Failų sąrašas"
 
-#: merlinmusicplayer/src/plugin.py:3333
+#: merlinmusicplayer/src/plugin.py:3348
 #, python-format
 msgid "Filelist: %s"
 msgstr "Failų sąrašas: %s"
@@ -6795,6 +6798,8 @@ msgid ""
 "Forces deep standby, even when not in standby mode. Scheduled recordings "
 "remain unaffected."
 msgstr ""
+"Priverstinis ėjimas į gilų laukimą, net kai veikia budėjimo režime. "
+"Suplanuoti įrašai nesikeičia."
 
 #: epgrefresh/src/plugin.py:42
 msgid "Foreground also"
@@ -6893,8 +6898,8 @@ msgstr "Dažnai užduodami klausimai"
 msgid "Frequently asked questions about the AutoTimer"
 msgstr "Dažnai užduodami klausimai apie į AutoTimer"
 
-#: partnerbox/src/plugin.py:1265 partnerbox/src/plugin.py:1318
-#: partnerbox/src/plugin.py:1458
+#: partnerbox/src/plugin.py:1285 partnerbox/src/plugin.py:1342
+#: partnerbox/src/plugin.py:1510
 msgid "Fri"
 msgstr "Pen"
 
@@ -6911,7 +6916,7 @@ msgstr "Draugai"
 
 #: lastfm/src/plugin.py:283
 msgid "Friends loaded"
-msgstr "Draugai užkrauti"
+msgstr "Draugai įkelti"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:128
 msgid "Frisian"
@@ -7064,12 +7069,12 @@ msgstr ""
 msgid "Generic setup"
 msgstr "Bendrasis nustatymas"
 
-#: merlinmusicplayer/src/plugin.py:2175
+#: merlinmusicplayer/src/plugin.py:2176
 #, python-format
 msgid "Genre (%s) -> Song List"
 msgstr "Žanras (%s)-> dainų sąrašas"
 
-#: merlinmusicplayer/src/plugin.py:2141
+#: merlinmusicplayer/src/plugin.py:2142
 msgid "Genre List"
 msgstr "Žanrų sąrašas"
 
@@ -7079,7 +7084,7 @@ msgstr "Žanrų sąrašas"
 msgid "Genres"
 msgstr "Žanrai"
 
-#: merlinmusicplayer/src/plugin.py:2382
+#: merlinmusicplayer/src/plugin.py:2383
 #, python-format
 msgid "Genres (%d)"
 msgstr "Žanrai (%d)"
@@ -7141,11 +7146,11 @@ msgstr "Gauti vaizdo atsakymus"
 msgid "Getting %s"
 msgstr "Gaunama %s"
 
-#: partnerbox/src/plugin.py:526
+#: partnerbox/src/plugin.py:527
 msgid "Getting Channel Information..."
 msgstr "Gaunama kanalo informacija..."
 
-#: partnerbox/src/plugin.py:990
+#: partnerbox/src/plugin.py:991
 msgid "Getting EPG Information..."
 msgstr "Gaunama EPG informacija..."
 
@@ -7158,11 +7163,11 @@ msgstr "Nepavyko gauti įvykio informacijos!"
 msgid "Getting InternetRadio %s list..."
 msgstr "Gaunamas InternetRadio %s sąrašas..."
 
-#: partnerbox/src/plugin.py:413
+#: partnerbox/src/plugin.py:414
 msgid "Getting Partnerbox Bouquet Information..."
 msgstr "Gaunama Partnerbox paketo informacija..."
 
-#: partnerbox/src/plugin.py:248
+#: partnerbox/src/plugin.py:249
 msgid "Getting Partnerbox Information..."
 msgstr "Gaunama Partnerbox informacija..."
 
@@ -7237,7 +7242,7 @@ msgstr "Google slaptažodis"
 msgid "Google Username"
 msgstr "Google vartotojas"
 
-#: merlinmusicplayer/src/plugin.py:2928
+#: merlinmusicplayer/src/plugin.py:2943
 msgid "Google image path"
 msgstr "Google atvaizdo kelias"
 
@@ -7460,11 +7465,11 @@ msgstr "Honkongas"
 msgid "Hook"
 msgstr "Kablys"
 
-#: infobartunerstate/src/IBTSConfiguration.py:122
+#: infobartunerstate/src/IBTSConfiguration.py:123
 msgid "Horizontal offset left in pixel"
 msgstr "Horizontaliai kompensuoti pikselius kairėje"
 
-#: infobartunerstate/src/IBTSConfiguration.py:123
+#: infobartunerstate/src/IBTSConfiguration.py:124
 msgid "Horizontal offset right in pixel"
 msgstr "Horizontaliai kompensuoti pikselius dešinėje"
 
@@ -7485,16 +7490,20 @@ msgid ""
 "How many entries to keep in the search history at most. 0 disables history "
 "entirely!"
 msgstr ""
+"Kiek įrašų išsaugoti į paieškos istoriją daugiausiai. 0 išjungia istoriją "
+"visiškai!"
 
 #: werbezapper/src/WerbeZapper.py:183
 msgid "How many minutes to wait until zapping back?"
-msgstr ""
+msgstr "Kiek minučių palaukti, kol jungiama atgal?"
 
 #: epgbackup/src/EPGBackupConfig.py:172
 msgid ""
 "How many seconds should EPGBackup be wait to check if the EPG-File-Size "
 "didn't change before it starts the Backup."
 msgstr ""
+"Kiek sekundžių turi būti laukiama EPG atsarginės kopijos patikrinimo, ar EPG "
+"failo dydis nesikeitė, kol ji pradeda atsarginę kopiją."
 
 #: moviecut/src_py/plugin.py:43
 #, python-format
@@ -7587,7 +7596,7 @@ msgstr "IMDb informacija"
 msgid "IMDb query failed!"
 msgstr "IMDb užklausa nepavyko!"
 
-#: partnerbox/src/PartnerboxSetup.py:126 partnerbox/src/PartnerboxSetup.py:249
+#: partnerbox/src/PartnerboxSetup.py:127 partnerbox/src/PartnerboxSetup.py:264
 msgid "IP"
 msgstr "IP"
 
@@ -7626,7 +7635,7 @@ msgstr "Neveikos būsena"
 
 #: autotimer/src/AutoTimerSettings.py:59
 msgid "If 0, the popup will remain open."
-msgstr "Jei 0, tada iššokantys langai išliks atidaryti."
+msgstr "Jei 0, tada iššokantys langai išliks atviri."
 
 #: epgbackup/srcmphelp.xml
 msgid ""
@@ -7644,16 +7653,32 @@ msgid ""
 "there won't be a bootloop. So EPG-Backup counts unsuccesfully boots and "
 "won't be restore a backupfile if the counter reaches a configurable value."
 msgstr ""
+"Jei EPG atsarginė kopija įjungta, EPG failas sugeneruotas Enigmos bus "
+"atsargine kopija.\n"
+"Paprastai Enigma išsaugo EPG atmintyje ir įrašo failą po GUI išsijungimo. "
+"Jei ten buvo programinės įrangos lūžimas (žalias ekranas) EPG informacija "
+"bus prarasta.\n"
+"Atsarginės kopijos funkcionalumas ims paskutinį arba didžiausią atsarginės "
+"kopijos failą ir nukopijuos jį į Enigma EPG failą prieš startuojant GUI.\n"
+"\n"
+"Techninė informacija:\n"
+"EPG atsarginė kopija yra su \"Boot-Loop apsauga\". Jei Enigma lūžo dėl "
+"neteisingų EPG duomenų, normaliai EPG failas nebus ten per kitą užkrovimą, "
+"todėl nebus bootloop. Taigi EPG atsarginė kopija skaičiuoja nesėkmingus "
+"užkrovimus ir neatkurs atsarginės kopijos, jei skaitiklis pasiekia "
+"konfigūruojamą reikšmę."
 
 #: pushservice/src/ConfigScreen.py:431
 msgid "If You can see this, Your configuration is correct."
-msgstr ""
+msgstr "Jei matote tai, Jūsų konfigūracija yra teisinga."
 
 #: vps/src_py/Vps_setup.py:88
 msgid ""
 "If a programme is interrupted and divided into separate events, the plugin "
 "will search for the connected events."
 msgstr ""
+"Jei programa yra nutraukiama ir suskirstoma į atskirus įvykius, priedas "
+"ieškos susijusių įvykių."
 
 #: autotimer/src/AutoTimerSettings.py:49
 msgid ""
@@ -7668,6 +7693,8 @@ msgid ""
 "If caching is disabled, each teletext page will searched when you entered "
 "its number."
 msgstr ""
+"Jei spartinimo yra išjungtas, kiekvienas teleteksto puslapis ieškos, kai "
+"įrašysite savo numerį."
 
 #: vps/src_py/Vps_setup.py:86
 msgid ""
@@ -7675,12 +7702,16 @@ msgid ""
 "Standby for the defined starting time to control whether the programme "
 "begins earlier."
 msgstr ""
+"Jei įjungta ir būtina, priedas pabudins Dreambox iš gilaus budėjimo dėl "
+"apibrėžtos pradinio laiko kontrolės, ar programa prasideda anksčiau."
 
 #: automaticcleanup/src/plugin.py:136
 msgid ""
 "If enabled, orphaned movie files will be automatically deleted from movie "
 "directories."
 msgstr ""
+"Jei įjungta, vieniši likę filmų failai bus automatiškai ištrinti iš filmų "
+"katalogų."
 
 #: autotimer/src/AutoTimerSettings.py:58
 msgid ""
@@ -7706,6 +7737,8 @@ msgid ""
 "If possible, x minutes before a timer starts VPS-Plugin will control whether "
 "the programme begins earlier. (0 disables feature)"
 msgstr ""
+"Jei įmanoma, x minučių prieš laikmačio pradžią VPS priedas kontroliuos, ar "
+"programa prasideda anksčiau. (0 Išjungia funkciją)"
 
 #: elektro/src/plugin.py:263 elektro/src/plugin.py:268
 msgid ""
@@ -7713,12 +7746,17 @@ msgid ""
 "actually is already tuesday. To enable this anyway, differing next day start "
 "time can be specified here."
 msgstr ""
+"Jei šis imtuvas turėtų patekti gilų laukimą pvz pirmadienį vakare 1 val, o "
+"iš tikrųjų jau antradienį. Jeigu įjungsite tai vistiek, čia bus nurodytas "
+"kitos dienos pradžios laikas."
 
 #: epgrefresh/src/EPGRefreshConfiguration.py:161
 msgid ""
 "If the receiver currently isn't in standby, this is the duration which "
 "EPGRefresh will wait before retry."
 msgstr ""
+"Jei imtuvas dabar nėra budėjimo režime, tai yra trukmė, kuri EPG atnaujinimo "
+"lauks prieš bandant pakartoti iš naujo."
 
 #: autotimer/src/AutoTimerSettings.py:48
 #, python-format
@@ -7731,13 +7769,15 @@ msgstr ""
 
 #: epgrefresh/src/EPGRefreshConfiguration.py:174
 msgid "If this is enabled, the Plugin save the epg.db /etc/enigma2/epg.db."
-msgstr ""
+msgstr "Jei tai yra įjungta, priedas išsaugos epg.db /etc/enigma2/epg.db."
 
 #: epgrefresh/src/EPGRefreshConfiguration.py:171
 msgid ""
 "If this is enabled, the plugin will wake up the receiver from standby if "
 "possible. Otherwise it needs to be switched on already."
 msgstr ""
+"Jei tai yra įjungta, priedas pažadins imtuvą iš budėjimo jei įmanoma. "
+"Priešingu atveju jis jau turi būti įjungtas."
 
 #: autotimer/src/AutoTimerSettings.py:52
 msgid ""
@@ -7760,12 +7800,16 @@ msgid ""
 "If this setting is enabled, the plugin adds a \"Search\" Button to the "
 "regular EPG."
 msgstr ""
+"Jei šis nustatymas įjungtas, priedas pridės mygtuką \"Ieškoti\" į įprastą "
+"meniu."
 
 #: startupservice/src/plugin.py:145
 msgid ""
 "If you see this message, please switch to the service you want to mark as "
 "startservice and try again."
 msgstr ""
+"Jei matote šį pranešimą, prašome perjungti į kanalą, kurį norite pažymėti "
+"kaip startuojantį kanalą ir bandykite dar kartą."
 
 #: epgrefresh/src/EPGRefreshConfiguration.py:163
 msgid ""
@@ -7773,10 +7817,13 @@ msgid ""
 "which best suits your needs here, e.g. hidden, fake reocrding or regular "
 "Picture in Picture."
 msgstr ""
+"Jei norite atnaujinti fone EPG, galite pasirinkti metodą, kuris geriausiai "
+"atitinka jūsų poreikius čia pvz paslėptas, netikras įrašymas arba normalus "
+"paveikslėlis paveikslėlyje."
 
 #: fritzcall/src/plugin.py:2005
 msgid "Ignore callers with no phone number"
-msgstr ""
+msgstr "Ignoruoti į skambučius, be telefono numerio"
 
 #: rsdownloader/src/plugin.py:825
 msgid "Ignore download times:"
@@ -7796,27 +7843,27 @@ msgstr "Neteisėta parametro reikšmė parametrui pradėti: \"%s'"
 #: webinterface/src/WebComponents/Sources/Timer.py:264
 #, python-format
 msgid "Illegal Parameter value for Parameter eit : '%s'"
-msgstr ""
+msgstr "Neleistina parametro reikšmė parametrui: '%s'"
 
 #: multirc/src/plugin.py:21
 msgid "Illuminated RC layer 1"
-msgstr ""
+msgstr "Apšviestas RC 1 sluoksnis"
 
 #: multirc/src/plugin.py:22
 msgid "Illuminated RC layer 2"
-msgstr ""
+msgstr "Apšviestas RC 2 sluoksnis"
 
 #: multirc/src/plugin.py:23
 msgid "Illuminated RC layer 3"
-msgstr ""
+msgstr "Apšviestas RC 3 sluoksnis"
 
 #: multirc/src/plugin.py:24
 msgid "Illuminated RC layer 4"
-msgstr ""
+msgstr "Apšviestas RC 4 sluoksnis"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:120
 msgid "Image Version"
-msgstr ""
+msgstr "Atvaizdo versija"
 
 #: autotimer/src/AutoTimerImporter.py:229
 msgid "Import AutoTimer"
@@ -7824,7 +7871,7 @@ msgstr "Importuoti Auto Laikmatį"
 
 #: birthdayreminder/src/BirthdayReminder.py:272
 msgid "Import CSV file"
-msgstr ""
+msgstr "Importuoti CSV failą"
 
 #: autotimer/src/AutoTimerOverview.py:219
 msgid "Import existing Timer"
@@ -7832,7 +7879,7 @@ msgstr "Importuoti egzistuojantį laikmatį"
 
 #: epgsearch/src/EPGSearch.py:231
 msgid "Import from AutoTimer"
-msgstr ""
+msgstr "Importuoti iš autolaikmačio"
 
 #: autotimer/src/AutoTimerOverview.py:220 epgsearch/src/EPGSearch.py:226
 msgid "Import from EPG"
@@ -7840,13 +7887,15 @@ msgstr "Importuoti iš EPG"
 
 #: epgsearch/src/EPGSearch.py:225
 msgid "Import from Timer"
-msgstr ""
+msgstr "Importuoti iš laikmačio"
 
 #: moviesearch/src/plugin.py:90
 msgid ""
 "Improperly launched plugin.\n"
 "Aborting!"
 msgstr ""
+"Netinkamai paleistas priedas.\n"
+"Nutraukiama!"
 
 #: pluginsort/srcmphelp.xml
 msgid ""
@@ -7862,6 +7911,17 @@ msgid ""
 "The changes are applied when leaving the editor using the RED or EXIT button "
 "on your remote control."
 msgstr ""
+"Be to, tai galėtų pakeisti įdiegtų priedų tvarką Priedų naršyklėje, jeigu "
+"jūs paspausite MENU mygtuką taip pat galite pakeisti priedų tvarką "
+"išplėstame meniu, Įvykių info meniu (laikykite mygtuką INFO, kai žiūri "
+"televizorių) arba Filmų pasirinkimo meniu (paspauskite MENU, kai esate Filmų "
+"pasirinkime).\n"
+"\n"
+"Kai jūs pasirinkote vieną iš šių parinkčių, galite eiti į modifikuotą Priedų "
+"naršyklę, kuri rodo atitinkamus priedus ir jūs galite pakeisti savo tvarką, "
+"kaip aprašyta ankstesniame puslapyje. \n"
+"Pokyčiai būtų taikomi, kai redaktorius naudoja Raudoną arba EXIT mygtuką "
+"nuotolinio valdymo pulte."
 
 #: vps/src_py/Vps.py:407
 msgid ""
@@ -7882,7 +7942,7 @@ msgstr "Įtraukti \"AutoTimer\" į užduotis"
 #: aspectratioswitch/src/plugin.py:112
 #, python-format
 msgid "Include %s"
-msgstr ""
+msgstr "Įtraukti %s"
 
 #: autotimer/src/AutoTimerSettings.py:52
 msgid "Include AutoTimer name in tags"
@@ -7891,16 +7951,16 @@ msgstr "Įtraukti AutoTimer pavadinimą į užduotis"
 #: pushservice/src/Controller/RecordSummary.py:48
 #: pushservice/src/Controller/RecordNotification.py:53
 msgid "Include timer description"
-msgstr ""
+msgstr "Įtraukti laikmačio aprašymą"
 
 #: merlinepgcenter/src/MerlinEPGCenter.py:1073
 msgid "Included days:"
-msgstr ""
+msgstr "Įtraukta dienų:"
 
 #. TRANSLATORS: keep it short, this is a button
 #: fritzcall/src/plugin.py:1025
 msgid "Incoming"
-msgstr ""
+msgstr "Gaunama"
 
 #: fritzcall/src/plugin.py:2365
 #, python-format
@@ -7912,6 +7972,12 @@ msgid ""
 "---------------------------------------------\n"
 "to: %(phone)s"
 msgstr ""
+"Priimamas skambutis %(date)s į %(time)s nuo\n"
+"---------------------------------------------\n"
+"%(number)s\n"
+"%(caller)s\n"
+"---------------------------------------------\n"
+"į: %(phone)s"
 
 #: ncidclient/src/plugin.py:875
 #, python-format
@@ -7922,14 +7988,19 @@ msgid ""
 "%s\n"
 "---------------------------------------------"
 msgstr ""
+"Priimamas skambutis %s iš\n"
+"---------------------------------------------\n"
+"%s\n"
+"%s\n"
+"---------------------------------------------"
 
 #: fritzcall/src/plugin.py:167
 msgid "Incoming calls"
-msgstr ""
+msgstr "Įeinantys skambučiai"
 
 #: dreamexplorer/src/plugin.py:240 subsdownloader2/src/plugin.py:914
 msgid "Incompatible MerlinMusicPlayer version!"
-msgstr ""
+msgstr "Nesuderinama Merlin muzikos grotuvo versija!"
 
 #: passwordchanger/src/plugin.py:67
 msgid ""
@@ -7937,6 +8008,9 @@ msgid ""
 "Minimum length: 5\n"
 "Maximum length: 8"
 msgstr ""
+"Neteisingas naujas slaptažodį!\n"
+"Minimalus ilgis: 5\n"
+"Maksimalus ilgis: 8"
 
 #: audiosync/src/AC3main.py:78
 msgid "Increase delay"
@@ -7950,11 +8024,11 @@ msgstr "Padidinti uždelsimą prie %i ms (gali būti nustatyta)"
 
 #: merlinepgcenter/src/ConfigTabs.py:217
 msgid "Increase list item height:"
-msgstr ""
+msgstr "Padidinti sąrašo elemento aukštį:"
 
 #: kiddytimer/src/KTmain.py:391
 msgid "Increase remaining time"
-msgstr ""
+msgstr "Padidinti likusį laiką"
 
 #: mytube/src/plugin.py:97
 msgid "India"
@@ -7962,30 +8036,30 @@ msgstr "Indija"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:141
 msgid "Indonesian"
-msgstr ""
+msgstr "Indonezijos"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:84
-#: partnerbox/src/plugin.py:524 partnerbox/src/plugin.py:681
-#: partnerbox/src/plugin.py:989 partnerbox/src/plugin.py:1040
+#: partnerbox/src/plugin.py:525 partnerbox/src/plugin.py:682
+#: partnerbox/src/plugin.py:990 partnerbox/src/plugin.py:1041
 #: babelzapper/src/plugin.py:77
 msgid "Info"
 msgstr "Informacija"
 
 #: dreamexplorer/src/plugin.py:444
 msgid "Info..."
-msgstr ""
+msgstr "Info..."
 
 #: infobartunerstate/src/plugin.py:37
 msgid "InfoBarTunerState"
-msgstr ""
+msgstr "Imtuvo būsenos informacinė juosta"
 
 #: infobartunerstate/src/plugin.py:39
 msgid "InfoBarTunerState Setup"
-msgstr ""
+msgstr "Imtuvo būsenos informacinė juostos valdymas"
 
-#: infobartunerstate/src/plugin.py:244
+#: infobartunerstate/src/plugin.py:246
 msgid "InfoBarTunerState is disabled"
-msgstr ""
+msgstr "Imtuvo būsenos informacinė juosta išjungta"
 
 #: infobartunerstate/meta/plugin_infobartunerstate.xml./infobartunerstate/meta/plugin_infobartunerstate.xml
 msgid ""
@@ -7997,13 +8071,13 @@ msgstr ""
 
 #: valixdcontrol/src/plugin.py:115
 msgid "Infobar and Window Style:"
-msgstr ""
+msgstr "Informacinės juostos ir Ekrano stilius:"
 
 #: aihdcontroler/src/plugin.py:95
 msgid "Infobar and window style:"
-msgstr ""
+msgstr "Informacinės juostos ir ekrano stilius:"
 
-#: infobartunerstate/src/IBTSConfiguration.py:136
+#: infobartunerstate/src/IBTSConfiguration.py:139
 msgid "Infobar timeout"
 msgstr "Infojuosta išsijungs po"
 
@@ -8013,31 +8087,31 @@ msgstr "Informacija"
 
 #: meteoitalia/src/plugin.py:264 meteoitalia/src/plugin.py:308
 msgid "Informazioni"
-msgstr ""
+msgstr "Informacija"
 
 #: epgrefresh/src/EPGRefreshConfiguration.py:179
 msgid "Inherit Services from AutoTimer"
-msgstr ""
+msgstr "Gauti kanalus iš auto laikamčio"
 
 #: fancontrol2/src/plugin.py:666
 msgid "Initial PWM"
-msgstr ""
+msgstr "Pradinis PWM"
 
 #: fancontrol2/src/plugin.py:665
 msgid "Initial Voltage"
-msgstr ""
+msgstr "Pradinė įtampa"
 
 #: dreamexplorer/src/vInputBox.py:40 dreamexplorer/src/plugin.py:1057
 msgid "Input"
 msgstr "Įėjimas"
 
-#: merlinmusicplayer/src/plugin.py:1848
+#: merlinmusicplayer/src/plugin.py:1849
 msgid "Insert file to current playing songlist and play next"
-msgstr ""
+msgstr "Įterpkite failą į dabar veikiantį dainų grojaraštį ir grokite kitą"
 
-#: merlinmusicplayer/src/plugin.py:3257
+#: merlinmusicplayer/src/plugin.py:3272
 msgid "Insert file to current songlist and play next"
-msgstr ""
+msgstr "Įterpkite failą į dabartinį dainų grojaraštį ir grokite kitą"
 
 #: satloader/src/plugin.py:55
 msgid "Install"
@@ -8045,111 +8119,111 @@ msgstr "Įdiegti"
 
 #: valixdcontrol/src/plugin.py:267
 msgid "Install magic buttons"
-msgstr ""
+msgstr "Įdiekite stebuklingus mygtukus"
 
 #: dreamexplorer/src/plugin.py:261
 msgid "Install new bootlogo..."
-msgstr ""
+msgstr "Įdiekite naują įkrovos logotipą..."
 
 #: subsdownloader2/src/pluginOnlineContent.py:88
 msgid "Install plugin"
-msgstr ""
+msgstr "Įdiegti priedą"
 
 #: valixdcontrol/src/plugin.py:266
 msgid "Install round buttons"
-msgstr ""
+msgstr "Įdiekite apvalius mygtukus"
 
 #: dreamexplorer/src/plugin.py:266 dreamexplorer/src/plugin.py:271
 #: dreamexplorer/src/plugin.py:279 subsdownloader2/src/plugin.py:935
 #: subsdownloader2/src/plugin.py:940 subsdownloader2/src/plugin.py:948
 msgid "Install this package"
-msgstr ""
+msgstr "Įdiegti šį paketą"
 
 #: rsdownloader/src/plugin.py:1387
 msgid "Install unrar"
-msgstr ""
+msgstr "Įdiegti archyvatorių"
 
 #: rsdownloader/src/plugin.py:1420
 msgid "Installing unrar..."
-msgstr ""
+msgstr "Diegiamas archyvatorius..."
 
 #: webinterface/src/WebComponents/Sources/Strings.py:98
 msgid "Instant Record"
-msgstr ""
+msgstr "Momentinis įrašymas"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:142
 msgid "Interlingua"
-msgstr ""
+msgstr "Interlingua"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:143
 msgid "Interlingue"
-msgstr ""
+msgstr "Interlingue"
 
 #: internetradio/src/InternetRadioOledDisplay.py:123
 msgid "Internet Radio"
-msgstr ""
+msgstr "Interneto radijas"
 
 #: easymedia/src/plugin.py:407
 msgid "InternetRadio"
-msgstr ""
+msgstr "Interneto radijas"
 
 #: internetradio/src/InternetRadioScreen.py:562
 #: internetradio/src/InternetRadioScreen.py:611
 #, python-format
 msgid "InternetRadio filter list (%s)"
-msgstr ""
+msgstr "Interneto radijo filtrų sąrašas (%s)"
 
 #: easymedia/src/plugin.py:213
 msgid "InternetRadio player:"
-msgstr ""
+msgstr "Interneto radijo grotuvas:"
 
 #: internetradio/src/InternetRadioScreen.py:762
 #, python-format
 msgid "InternetRadio station list for filter: %s"
-msgstr ""
+msgstr "Interneto radijo stočių sąrašas filtravimui: %s"
 
 #: internetradio/src/InternetRadioScreen.py:904
 #, python-format
 msgid "InternetRadio station list for search-criteria: %s"
-msgstr ""
+msgstr "Interneto Radijo stočių sąrašo paieškos kriterijus: %s"
 
 #: lastfm/src/LastFMConfig.py:52
 msgid "Interval for Coverart Animation"
-msgstr ""
+msgstr "Intervalas viršelio apipavidalinimo animacijai"
 
 #: ecasa/src/EcasaSetup.py:43
 msgid "Interval in slideshow before new picture is being shown."
-msgstr ""
+msgstr "Skaidrių demonstravimo intervalas prieš naujos nuotraukos rodymą."
 
 #: dyndns/src/plugin.py:34
 msgid "Interval to check IP-Adress"
-msgstr ""
+msgstr "IP adreso patikrinimo intervalas"
 
 #: lastfm/src/LastFMConfig.py:46
 msgid "Interval to refresh Metadata (seconds)"
-msgstr ""
+msgstr "Metaduomenų atnaujinimo intervalas (sekundėmis)"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:145
 msgid "Inuktitut (Eskimo)"
-msgstr ""
+msgstr "Eskimų"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:144
 msgid "Inupiak"
-msgstr ""
+msgstr "Inupiakų"
 
 #: internetradio/src/InternetRadioSetup.py:159
-#: merlinmusicplayer/src/plugin.py:2829
+#: merlinmusicplayer/src/plugin.py:2844
 #: birthdayreminder/src/BirthdayReminder.py:764
 msgid "Invalid Location"
 msgstr "Neteisinga vieta"
 
 #: birthdayreminder/src/BirthdayReminder.py:564
 msgid "Invalid date!"
-msgstr ""
+msgstr "Neteisinga data!"
 
 #: curlytx/src/CurlyTx.py:168
 msgid "Invalid page"
-msgstr ""
+msgstr "Klaidingas puslapis"
 
 #: genuinedreambox/src/plugin.py:304
 msgid "Invalid response from Security service pls restart again"
@@ -8175,11 +8249,11 @@ msgstr "Airija"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:146
 msgid "Irish"
-msgstr ""
+msgstr "Airių"
 
 #: multirc/src/plugin.py:80
 msgid "Is the RC still working?"
-msgstr ""
+msgstr "Ar RC dar veikia?"
 
 #: mytube/src/plugin.py:99
 msgid "Israel"
@@ -8219,11 +8293,11 @@ msgstr "Italija"
 
 #: subsdownloader2/src/plugin.py:1169
 msgid "Itasa server password:"
-msgstr ""
+msgstr "Itasa serverio slaptažodis:"
 
 #: subsdownloader2/src/plugin.py:1168
 msgid "Itasa server user:"
-msgstr ""
+msgstr "Itasa serverio vartotojas:"
 
 #: mytube/src/plugin.py:101
 msgid "Japan"
@@ -8231,23 +8305,23 @@ msgstr "Japonija"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:148
 msgid "Japanese"
-msgstr ""
+msgstr "Japonų"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:115
 msgid "JavaScript Libraries"
-msgstr ""
+msgstr "JavaScript bibliotekos"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:149
 msgid "Javanese"
-msgstr ""
+msgstr "Javiečių"
 
 #: seekbar/src/plugin.py:88
 msgid "Jump x minutes back:"
-msgstr ""
+msgstr "Peršokti x minučių atgal:"
 
 #: seekbar/src/plugin.py:86
 msgid "Jump x minutes forward:"
-msgstr ""
+msgstr "Peršokti x minučių į priekį:"
 
 #: quickbutton/src/plugin.py:145
 msgid "Just Scale"
@@ -8255,27 +8329,27 @@ msgstr "Tik skalė"
 
 #: easyinfo/src/plugin.py:100
 msgid "Just zap"
-msgstr ""
+msgstr "Tiesiog jungti"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:150
 msgid "Kannada"
-msgstr ""
+msgstr "Kanadiečių"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:151
 msgid "Kashmiri"
-msgstr ""
+msgstr "Kašmyrų"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:152
 msgid "Kazakh"
-msgstr ""
+msgstr "Kazachų"
 
 #: epgbackup/src/plugin.py:200
 msgid "Keep EPG-Data over Crashes"
-msgstr ""
+msgstr "Išlaikyti EPG-DUOMENIS per gedimus"
 
 #: simplerss/src/RSSSetup.py:105
 msgid "Keep running in background"
-msgstr ""
+msgstr "Nuolat veikia fone"
 
 #: audiosync/src/AC3main.py:264
 #, python-format
@@ -8289,11 +8363,11 @@ msgstr "Mygtukas %(key)s (dabartinė reikšmė: %(value)i ms)"
 
 #: epgrefresh/src/EPGRefreshConfiguration.py:43
 msgid "Key Help"
-msgstr ""
+msgstr "Pagalbos klavišas"
 
 #: aspectratioswitch/src/plugin.py:109
 msgid "Key mapping"
-msgstr ""
+msgstr "Klavišų išdėstymas"
 
 #: dvdbackup/src/plugin.py:324
 msgid "Keyboard"
@@ -8301,16 +8375,16 @@ msgstr "Klaviatūra"
 
 #: merlinepgcenter/src/MerlinEPGCenter.py:44
 msgid "Keys"
-msgstr ""
+msgstr "Klavišai"
 
 #: ecasa/src/EcasaGui.py:778
 #, python-format
 msgid "Keywords: %s"
-msgstr ""
+msgstr "Raktažodžiai: %s"
 
 #: kiddytimer/src/plugin.py:54 kiddytimer/src/plugin.py:55
 msgid "KiddyTimer"
-msgstr ""
+msgstr "Laikmatis vaikams"
 
 #: kiddytimer/meta/plugin_kiddytimer.xml./kiddytimer/meta/plugin_kiddytimer.xml
 msgid "KiddyTimer allows to control your kids's daily tv usage."
@@ -8319,27 +8393,27 @@ msgstr ""
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:153
 msgid "Kinyarwanda"
-msgstr ""
+msgstr "Kinyarwanda"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:154
 msgid "Kirghiz"
-msgstr ""
+msgstr "Kirgizų"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:155
 msgid "Kirundi"
-msgstr ""
+msgstr "Kirundžio"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:156
 msgid "Korean"
-msgstr ""
+msgstr "Korėjiečių"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:157
 msgid "Kurdish"
-msgstr ""
+msgstr "Kurdų"
 
 #: webinterface/src/WebComponents/Sources/TPMChallenge.py:29
 msgid "LEVEL2 and LEVEL3 Certifcates (Base64-encoded)"
-msgstr ""
+msgstr "2 LYGIO ir 3 LYGIO sertifikatai (Bazė64-koduoti)"
 
 #: autotimer/src/AutoTimerEditor.py:539
 msgid ""
@@ -8355,16 +8429,16 @@ msgstr "Serijų etiketė"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:158
 msgid "Laothian"
-msgstr ""
+msgstr "Laosiečių"
 
 #: ncidclient/src/plugin.py:828 fritzcall/src/plugin.py:2095
 msgid "Last 10 calls:\n"
-msgstr ""
+msgstr "Paskutinių 10 skambučių: \n"
 
 #: kiddytimer/src/KTsetup.py:75
 #, python-format
 msgid "Last day started: %s"
-msgstr ""
+msgstr "Paskutinė diena prasideda: %s"
 
 #: autotimer/src/AutoTimerEditor.py:521
 msgid ""
@@ -8377,27 +8451,27 @@ msgstr ""
 #: epgrefresh/src/EPGRefreshConfiguration.py:332
 #, python-format
 msgid "Last refresh was %s"
-msgstr ""
+msgstr "Paskutinis atnaujinimas buvo %s"
 
 #: webcamviewer/src/WebcamTravel.py:247 webcamviewer/src/WebcamTravel.py:250
 msgid "Last updated: "
-msgstr ""
+msgstr "Paskutinis atnaujinimas:"
 
 #: lastfm/src/LastFMConfig.py:14 lastfm/src/plugin.py:35
 msgid "Last.FM"
-msgstr ""
+msgstr "Last.fm"
 
 #: lastfm/src/LastFMConfig.py:37
 msgid "Last.FM Username"
-msgstr ""
+msgstr "Last.FM vartotojas"
 
 #: lastfm/src/LastFMConfig.py:41
 msgid "LastFM Proxy port"
-msgstr ""
+msgstr "LastFm Tarpinio serverio jungtis"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:159
 msgid "Latin"
-msgstr ""
+msgstr "Lotynų"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:160
 msgid "Latvian"
@@ -8406,62 +8480,62 @@ msgstr "Latvių"
 #: pushservice/src/Controller/FreeSpace.py:35
 #, python-format
 msgid "Left:  %s"
-msgstr ""
+msgstr "Kairėje:  %s"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:46
 msgid "Legend"
-msgstr ""
+msgstr "Legenda"
 
 #: podcast/src/plugin.py:304
 msgid "Length"
-msgstr ""
+msgstr "Ilgis"
 
 #: epgsearch/src/EPGSearchSetup.py:39
 msgid "Length of History"
-msgstr ""
+msgstr "Istorijos ilgis"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:116
 msgid "License"
-msgstr ""
+msgstr "Licenzija"
 
 #: aihdcontroler/src/plugin.py:45
 msgid "LigaLine"
-msgstr ""
+msgstr "Liga linija"
 
 #: mytube/src/plugin.py:1149
 msgid "Likes: "
-msgstr ""
+msgstr "Mėgsta:"
 
 #: emission/src/EmissionBandwidth.py:33 emission/src/EmissionBandwidth.py:37
 #: emission/src/EmissionBandwidth.py:54 emission/src/EmissionBandwidth.py:56
 #: emission/src/EmissionBandwidth.py:93 emission/src/EmissionBandwidth.py:96
 msgid "Limit"
-msgstr ""
+msgstr "Riba"
 
 #: merlinepgcenter/src/ConfigTabs.py:190
 msgid "Limit search results to bouquet services:"
-msgstr ""
+msgstr "Apriboti paieškos rezultatus kanalų paketuose"
 
 #: pushservice/src/Controller/FreeSpace.py:34
 #, python-format
 msgid "Limit: %d GB\n"
-msgstr ""
+msgstr "Riba: %d GB\n"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:161
 msgid "Lingala"
-msgstr ""
+msgstr "Lingala"
 
-#: infobartunerstate/src/IBTSConfiguration.py:129
+#: infobartunerstate/src/IBTSConfiguration.py:130
 msgid "List goes up"
-msgstr ""
+msgstr "Sąrašas eina aukštyn"
 
 #: pushservice/src/Controller/ListDir.py:32
 msgid "List of Files"
-msgstr ""
+msgstr "Failų sąrašas"
 
 #: webinterface/src/WebComponents/Sources/ReadPluginList.py:14
 msgid "List of Plugins has been read"
-msgstr ""
+msgstr "Priedų sąrašas buvo perskaitytas"
 
 #: dreamexplorer/src/myFileList.py:208
 #: subsdownloader2/src/SourceCode/myFileList.py:205
@@ -8470,35 +8544,35 @@ msgstr "Išsaugotų įrenginių sąrašas"
 
 #: webinterface/src/WebComponents/Sources/Timer.py:70
 msgid "List of Timers has been cleaned"
-msgstr ""
+msgstr "Laikmačių sąrašas buvo išvalytas"
 
 #: vlcplayer/src/VlcServerList.py:98
 msgid "List of known VLC-Server Profiles"
-msgstr ""
+msgstr "Žinomų VLC serverių profilių sąrašas"
 
 #: pushservice/src/Controller/DeactivatedTimers.py:47
 msgid "List similar timer(s)"
-msgstr ""
+msgstr "Panašių laikmačių sąrašas"
 
 #: merlinepgcenter/src/ConfigTabs.py:219
 msgid "List style:"
-msgstr ""
+msgstr "Sąrašo stilius:"
 
 #: multirc/src/plugin.py:55
 msgid "Listen on Remote Control"
-msgstr ""
+msgstr "Nuotolinių valdiklių sąrašas"
 
 #: lastfm/src/plugin.py:36
 msgid "Listen to Last.FM Internet Radio"
-msgstr ""
+msgstr "Last.FM interneto radijų sąrašas"
 
 #: merlinepgcenter/src/MerlinEPGCenter.py:44
 msgid "Lists"
-msgstr ""
+msgstr "Sąrašai"
 
 #: rsdownloader/src/plugin.py:823
 msgid "Lists directory:"
-msgstr ""
+msgstr "Katalogų sąrašas"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:162
 msgid "Lithuanian"
@@ -8510,11 +8584,11 @@ msgstr "Užkraunama"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:104
 msgid "Load Bouquet"
-msgstr ""
+msgstr "Įkelti paketą"
 
 #: seriesplugin/src/ChannelEditor.py:142
 msgid "Load channels for bouquet"
-msgstr ""
+msgstr "Įkelti kanalus į paketą"
 
 #: mytube/src/MyTubeSettings.py:61
 msgid "Load feed on startup:"
@@ -8522,7 +8596,7 @@ msgstr "Užkrauti serverį startuojant:"
 
 #: youtubeplayer/src/YouTubeList.py:259 youtubeplayer/src/YouTubeList.py:270
 msgid "Load further entries of current Feed?"
-msgstr ""
+msgstr "Įkelti galimybę įvesti dabartinį kanalą?"
 
 #: webinterface/src/WebIfConfig.py:65
 msgid "Load movie-length"
@@ -8530,72 +8604,72 @@ msgstr "Keisti filmo ilgį"
 
 #: curlytx/src/CurlyTxSettings.py:87
 msgid "Load pages from feed"
-msgstr ""
+msgstr "Įkelti puslapius iš naujienų kanalo"
 
 #: curlytx/src/CurlyTx.py:183
 msgid "Loading ..."
-msgstr ""
+msgstr "Įkeliama ..."
 
 #: lastfm/src/plugin.py:521
 msgid "Loading Friends"
-msgstr ""
+msgstr "Įkeliami draugai"
 
 #: lastfm/src/plugin.py:497
 msgid "Loading Global Tags"
-msgstr ""
+msgstr "Įkeliamos bendros žymės"
 
 #: lastfm/src/plugin.py:509 lastfm/src/plugin.py:513
 msgid "Loading Loved Tracks"
-msgstr ""
+msgstr "Įkeliami mėgstami takeliai"
 
 #: lastfm/src/plugin.py:517
 msgid "Loading Neighbours"
-msgstr ""
+msgstr "Įkeliami kaimynai"
 
 #: lastfm/src/plugin.py:505
 msgid "Loading Recent Tracks"
-msgstr ""
+msgstr "Įkeliami naujausi takeliai"
 
 #: lastfm/src/plugin.py:501
 msgid "Loading Top Tacks"
-msgstr ""
+msgstr "Įkeliami top takeliai"
 
 #: youtubeplayer/src/YouTubeList.py:397 youtubeplayer/src/YouTubeList.py:406
 msgid "Loading additional videos, be patient ..."
-msgstr ""
+msgstr "Įkeliami papildomi vaizdo įrašai, būkite kantrūs ..."
 
 #: webcamviewer/src/plugin.py:98
 #, python-format
 msgid "Loading config file %s failed: %s"
-msgstr ""
+msgstr "Įkelti konfigūracinio failo %s nepavyko: %s"
 
 #: youtubeplayer/src/YouTubeList.py:365
 msgid "Loading favorits, be patient ..."
-msgstr ""
+msgstr "Įkeliami mėgstamiausi, būkite kantrūs ..."
 
 #: rsdownloader/src/plugin.py:983
 msgid "Loading next page... please wait!"
-msgstr ""
+msgstr "Įkeliamas kitas puslapis... prašome palaukti!"
 
 #: youtubeplayer/src/YouTubeList.py:349
 msgid "Loading playlist, be patient ..."
-msgstr ""
+msgstr "Įkeliamas grojaraštis, būkite kantrūs ..."
 
 #: rsdownloader/src/plugin.py:977
 msgid "Loading previous page... please wait!"
-msgstr ""
+msgstr "Įkeliamas buvęs puslapis... prašome palaukti!"
 
 #: youtubeplayer/src/YouTubeList.py:411
 msgid "Loading related videos, be patient ..."
-msgstr ""
+msgstr "Įkeliami susiję vaizdo įrašai, būkite kantrūs ..."
 
 #: youtubeplayer/src/YouTubeList.py:416
 msgid "Loading response videos, be patient ..."
-msgstr ""
+msgstr "Įkeliami vaizdo atsakymai, būkite kantrūs ..."
 
 #: youtubeplayer/src/YouTubeList.py:371
 msgid "Loading standard feed, be patient ..."
-msgstr ""
+msgstr "Įkeliamas standartinis naujienų kanalas, būkite kantrūs ..."
 
 #: ftpbrowser/src/FTPBrowser.py:179
 msgid "Local"
@@ -8611,6 +8685,8 @@ msgid ""
 "Local subtitle convertion for:\n"
 "%s."
 msgstr ""
+"Vietinių subtitrų keitimas dėl:\n"
+"%s."
 
 #: autotimer/src/AutoTimerImporter.py:200
 #: webinterface/src/WebComponents/Sources/Strings.py:62
@@ -8623,26 +8699,26 @@ msgstr "Vieta"
 #: webinterface/src/WebComponents/Sources/LocationsAndTags.py:78
 #, python-format
 msgid "Location '%s' added successfully"
-msgstr ""
+msgstr "Vietovė '%s' sėkmingai pridėta"
 
 #: webinterface/src/WebComponents/Sources/LocationsAndTags.py:94
 #, python-format
 msgid "Location '%s' does not exist"
-msgstr ""
+msgstr "Vietovė '%s' neegzistuoja"
 
 #: webinterface/src/WebComponents/Sources/LocationsAndTags.py:74
 #, python-format
 msgid "Location '%s' is already existing"
-msgstr ""
+msgstr "Vietovė '%s' jau yra"
 
 #: webinterface/src/WebComponents/Sources/LocationsAndTags.py:92
 #, python-format
 msgid "Location '%s' removed successfully"
-msgstr ""
+msgstr "Vietovė '%s' sėkmingai pašalinta"
 
 #: autotimer/src/AutoTimerSettings.py:63
 msgid "Location and name of log file"
-msgstr ""
+msgstr "Loginio failo vieta ir pavadinimas"
 
 #: weatherplugin/src/setup.py:199
 msgid "Location code"
@@ -8675,47 +8751,47 @@ msgstr ""
 
 #: fancontrol2/src/plugin.py:536
 msgid "Logging path"
-msgstr ""
+msgstr "Žurnalo kelias"
 
 #: fancontrol2/src/FC2webSite.py:223
 #, python-format
 msgid "Logging-Path: %s"
-msgstr ""
+msgstr "Žurnalo kelias: %s"
 
 #: youtubeplayer/src/YouTubeList.py:495 youtubeplayer/src/YouTubeList.py:521
 #: youtubeplayer/src/YouTubeList.py:547 youtubeplayer/src/YouTubeList.py:577
 #: youtubeplayer/src/plugin.py:93 youtubeplayer/src/plugin.py:113
 msgid "Login not successful"
-msgstr ""
+msgstr "Prisijungti nepavyko"
 
 #. TRANSLATORS: keep it short, this is a button
 #: ofdb/src/plugin.py:70 imdb/src/plugin.py:91 fritzcall/src/plugin.py:1164
 msgid "Lookup"
-msgstr ""
+msgstr "Paieška"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:106
 msgid "Lookup on IMDb.com"
-msgstr ""
+msgstr "Paieška IMDb.com"
 
 #: lastfm/src/plugin.py:180
 msgid "Love"
-msgstr ""
+msgstr "Patinka"
 
 #: lastfm/src/plugin.py:154 lastfm/src/plugin.py:457
 msgid "Loved Tracks"
-msgstr ""
+msgstr "Mėgiami takeliai"
 
 #: lastfm/src/plugin.py:275
 msgid "Loved Tracks loaded"
-msgstr ""
+msgstr "Mėgiami takeliai įkelti"
 
 #: growlee/src/plugin.py:31 growlee/src/plugin.py:52
 msgid "Low (Yes/No)"
-msgstr ""
+msgstr "Žemas (Taip/Ne)"
 
 #: youtubeplayer/src/YouTubeUserConfig.py:48
 msgid "Low Quality (Mono)"
-msgstr ""
+msgstr "Žema kokybė (Mono)"
 
 #: autotimer/src/AutoTimerEditor.py:529
 msgid "Lower bound of timespan."
@@ -8731,35 +8807,35 @@ msgstr ""
 
 #: infobartunerstate/src/plugin.py:88
 msgid "MM/DD HH:MM"
-msgstr ""
+msgstr "MM/DD HH:MM"
 
 #: weatherplugin/src/setup.py:293
 msgid "MSN location search result"
-msgstr ""
+msgstr "MSN vietovės paieškos rezultatas"
 
 #: fritzcall/src/plugin.py:1955
 msgid "MSN to show (separated by ,)"
-msgstr ""
+msgstr "MSN parodyti (atskirtų ,)"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:128
 msgid "Mac Address"
-msgstr ""
+msgstr "Mac adresas"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:163
 msgid "Macedonian"
-msgstr ""
+msgstr "Makedonų"
 
 #: valixdcontrol/src/plugin.py:45
 msgid "Magic Shadow"
-msgstr ""
+msgstr "Magiškas šešėlis"
 
 #: pushservice/src/Services/SMTP.py:58
 msgid "Mail from"
-msgstr ""
+msgstr "Laiškai nuo"
 
 #: pushservice/src/Services/SMTP.py:59
 msgid "Mail to or leave empty (From will be used)"
-msgstr ""
+msgstr "Rašykite arba palikti tuščią (Iš kur bus naudojamas)"
 
 #: fritzcall/src/plugin.py:506
 msgid "Mailbox"
@@ -8775,7 +8851,7 @@ msgstr "Pagrindinis vaizdas"
 
 #: seriesplugin/src/SeriesPluginConfiguration.py:180
 msgid "Main bouquet for channel editor"
-msgstr ""
+msgstr "Pagrindinis paketas kanalų redaktoriui"
 
 #: epgbackup/src/plugin.py:136
 msgid "Make Backup"
@@ -8787,7 +8863,7 @@ msgstr "Padaryti EPG atsarginę kopiją"
 
 #: epgbackup/src/EPGBackupConfig.py:165
 msgid "Make a backup after EPGRefresh."
-msgstr ""
+msgstr "Padarykite atsarginę kopiją po EPG atnaujinimo."
 
 #: epgbackup/src/EPGBackupConfig.py:163
 msgid ""
@@ -8796,10 +8872,15 @@ msgid ""
 "Note: It's logically the same as making a backup at the ending of enigma, "
 "because the file didn't change in the meanwhile."
 msgstr ""
+"Padarykite atsarginę kopiją prieš startuojant enigmai. Atsarginės kopijos "
+"failas bus sukurtas tik tada, kai negali būti atstatytas atsarginės kopijos "
+"failas.\n"
+"Pastaba: Tai logiškai tas pats, kaip padaryti čia atsarginę kopiją Enigmos "
+"pabaigoje, nes failas byloje nebuvo pakeistas."
 
 #: epgbackup/src/EPGBackupConfig.py:166
 msgid "Make backups periodically?"
-msgstr ""
+msgstr "Daryti atsargines kopijas periodiškai?"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:164
 msgid "Malagasy"
@@ -8842,7 +8923,7 @@ msgstr "Valdykite emblemas, kad rodyti paleidžiant"
 msgid "Manage network mounts..."
 msgstr "Valdykite tinklo pajungimus..."
 
-#: partnerbox/src/plugin.py:134 partnerbox/src/plugin.py:147
+#: partnerbox/src/plugin.py:135 partnerbox/src/plugin.py:148
 msgid "Manage timer for other dreamboxes in network"
 msgstr "Valdykite laikmatį, kituose dreambox'uose tinkle"
 
@@ -8898,64 +8979,66 @@ msgstr "Pavadinimas: %s"
 #: fancontrol2/src/plugin.py:372
 #, python-format
 msgid "Max Fan %d rpm at PWM=255 (%s)"
-msgstr ""
+msgstr "Maksimalus ventiliatoriaus %d rpm nuo PWM=255 (%s)"
 
 #: fancontrol2/src/plugin.py:394
 #, python-format
 msgid "Max Fan %d rpm at PWM=255 and VLT=255 (%s)"
-msgstr ""
+msgstr "Maksimalus ventiliatoriaus %d rpm nuo PWM=255 ir VLT=255 (%s)"
 
 #: fancontrol2/src/plugin.py:410
 #, python-format
 msgid "Max Fan %d rpm at VLT=255 (%s)"
-msgstr ""
+msgstr "Maksimalus ventiliatoriaus %d rpm nuo VLT=255 (%s)"
 
 #: tvcharts/src/plugin.py:416
 msgid "Max Timerlist Entries"
-msgstr ""
+msgstr "Didžiausi laikmačio sąrašo įrašai"
 
 #: tvcharts/src/plugin.py:415
 msgid "Max Toplist Entries"
-msgstr ""
+msgstr "Didžiausi top sąrašo įrašai"
 
 #: seriesplugin/src/SeriesPluginConfiguration.py:193
 msgid "Max time drift to match episode"
-msgstr ""
+msgstr "Didžiausia laiko tėkmė, kad sutaptų epizodas"
 
-#: yttrailer/src/plugin.py:313
+#: yttrailer/src/plugin.py:324
 msgid "Max. results in list-mode"
-msgstr ""
+msgstr "Maks. rezultatai sąrašo režime"
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:79
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:80
 msgid "Max. volume for mpeg audio"
-msgstr ""
+msgstr "Maks. garsumas MPEG garsui"
 
 #: rsdownloader/src/plugin.py:835
 msgid "Maximal downloads:"
-msgstr ""
+msgstr "Maksimalūs atsisiuntimai:"
 
 #: epgbackup/src/EPGBackupConfig.py:173
 msgid "Maximum Boot-Count"
-msgstr ""
+msgstr "Maksimalus paleidimo skaičius"
 
 #: emission/src/EmissionBandwidth.py:97
 msgid "Maximum Connections"
-msgstr ""
+msgstr "Maksimalus prisijungimų skaičius"
 
 #: epgbackup/src/EPGBackupSupport.py:150
 msgid "Maximum Number of unsuccessfully boots reached!"
-msgstr ""
+msgstr "Pasiektas maksimalus skaičius nesėkmingų paleidimų!"
 
 #: permanenttimeshift/src/plugin.py:1521
 msgid ""
 "Maximum Timeshift length per Event reached!\n"
 "Restarting Timeshift now ..."
 msgstr ""
+"Maksimalus laiko poslinkio įvykio ilgis pasiektas!\n"
+"Atnaujinamas laiko poslinkis dabar ..."
 
 #: satipclient/src/SatIPTunerSetup.py:138
 #, python-brace-format
 msgid "Maximum amount of tuners for {0} configured!"
-msgstr ""
+msgstr "Didžiausias kiekis imtuvų dėl {0} suderintas!"
 
 #: autotimer/src/AutoTimerEditor.py:593
 msgid "Maximum duration (in m)"
@@ -8971,21 +9054,23 @@ msgstr ""
 
 #: automaticcleanup/src/plugin.py:139
 msgid "Maximum number of crashlogs"
-msgstr ""
+msgstr "Maksimalus gedimų skaičius"
 
 #: automaticcleanup/src/plugin.py:133
 msgid "Maximum number of system setting backups"
-msgstr ""
+msgstr "Maksimalus atsarginių sisteminių nustatymų kopijų skaičius"
 
 #: automaticcleanup/src/plugin.py:134
 msgid ""
 "Maximum number of system setting backups to keep, regardless of retention "
 "period."
 msgstr ""
+"Maksimalus atsarginių sisteminių nustatymų kopijų laikymo skaičius, "
+"nepriklausomai nuo saugojimo laikotarpio."
 
 #: zaphistorybrowser/src/plugin.py:114
 msgid "Maximum zap history entries:"
-msgstr ""
+msgstr "Maksimalus jungimo istorijos įrašas:"
 
 #: ncidclient/src/plugin.py:94
 msgid "Media directory"
@@ -9035,16 +9120,16 @@ msgstr "Laiko poslinkio failai sujungiami"
 msgid "Merlin EPG"
 msgstr "Merlin EPG"
 
-#: merlinmusicplayer/src/plugin.py:3403 merlinmusicplayer/src/plugin.py:3414
-#: merlinmusicplayer/src/plugin.py:3418 merlinmusicplayer/src/plugin.py:3420
+#: merlinmusicplayer/src/plugin.py:3418 merlinmusicplayer/src/plugin.py:3429
+#: merlinmusicplayer/src/plugin.py:3433 merlinmusicplayer/src/plugin.py:3435
 msgid "Merlin Music Player"
 msgstr "Merlin muzikos grotuvas"
 
-#: merlinmusicplayer/src/plugin.py:1531
+#: merlinmusicplayer/src/plugin.py:1532
 msgid "Merlin Music Player Lyrics"
 msgstr "Merlin muzikos grotuvo dainų tekstai"
 
-#: merlinmusicplayer/src/plugin.py:1626
+#: merlinmusicplayer/src/plugin.py:1627
 msgid "Merlin Music Player Songlist"
 msgstr "Merlin muzikos grotuvo dainų tekstai"
 
@@ -9083,32 +9168,32 @@ msgstr "Meksika"
 #: fancontrol2/src/plugin.py:360
 #, python-format
 msgid "Min Fan Start %d rpm at PWM=%d"
-msgstr ""
+msgstr "Minimali ventiliatoriaus paleistis %d rpm prie PWM=%d"
 
 #: fancontrol2/src/plugin.py:402
 #, python-format
 msgid "Min Fan Start %d rpm at VLT=%d"
-msgstr ""
+msgstr "Minimali ventiliatoriaus paleistis %d rpm prie VLT=%d"
 
 #: fancontrol2/src/plugin.py:384
 #, python-format
 msgid "Min Fan Start %d rpm at VLT=%d and PWM=0"
-msgstr ""
+msgstr "Minimali ventiliatoriaus paleistis %d rpm prie VLT=%d ir PWM=0"
 
 #: fancontrol2/src/plugin.py:366
 #, python-format
 msgid "Min Fan Stop %d rpm at PWM=%d (%s)"
-msgstr ""
+msgstr "Minimalus ventiliatoriaus stabdymas %d rpm prie PWM=%d (%s)"
 
 #: fancontrol2/src/plugin.py:405
 #, python-format
 msgid "Min Fan Stop %d rpm at VLT=%d (%s)"
-msgstr ""
+msgstr "Minimalus ventiliatoriaus stabdymas %d rpm prie VLT=%d (%s)"
 
 #: fancontrol2/src/plugin.py:387
 #, python-format
 msgid "Min Fan Stop %d rpm at VLT=%d and PWM=0 (%s)"
-msgstr ""
+msgstr "Minimalus ventiliatoriaus stabdymas %d rpm prie VLT=%d ir PWM=0 (%s)"
 
 #: growlee/src/plugin.py:169
 msgid "Minimum Priority"
@@ -9116,7 +9201,7 @@ msgstr "Minimalus prioritetas"
 
 #: fritzcall/src/plugin.py:1978
 msgid "Minutes of uptime of WLAN guest network"
-msgstr ""
+msgstr "WLAN svečių tinklo veikimo laikas minutėmis"
 
 #: subsdownloader2/src/plugin.py:1153
 msgid ""
@@ -9124,6 +9209,9 @@ msgid ""
 "\n"
 "Please supplie requires binaries by Yourself."
 msgstr ""
+"Mipsel architektūra neaptikta.\n"
+"\n"
+"Prašome pateikti reikalingus binarinius failus patiems."
 
 #. TRANSLATORS: keep it short, this is a button
 #: fritzcall/src/plugin.py:1023
@@ -9227,17 +9315,28 @@ msgid ""
 "If GP3 is installed, weekday shows up in selected language, otherwise always "
 "in english."
 msgstr ""
+"Pakeiskite parametrus, kad atitiktų jūsų pageidavimus. Norėdami pakeisti "
+"laikrodžio poziciją, pasirinkite \"Perkelti laikrodį\" ir perkelkite "
+"naudodami kursoriaus mygtukus. Paspauskite OK, jei norite išsaugoti esamą "
+"padėtį ir grįžti į sąrankos meniu arba iš jo išeiti atšaukus perkėlimą.\n"
+"\n"
+"Spustelkite ilgai \"Exit\" mygtuką, tada rodys laikrodį žiūrint televizorių. "
+"Laikrodis išnyks po nurodytos pauzės arba kai ilgai spausite mygtuką \"Exit"
+"\".\n"
+"\n"
+"Jei GP3 yra įdiegtas, šiokiadienius rodys jūsų pasirinkta kalba, nes kitaip "
+"visada bus anglų kalba."
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:75
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:76
 msgid "Modus"
-msgstr ""
+msgstr "Modus"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:170
 msgid "Moldavian"
 msgstr "Moldavų"
 
-#: partnerbox/src/plugin.py:1265 partnerbox/src/plugin.py:1318
-#: partnerbox/src/plugin.py:1458
+#: partnerbox/src/plugin.py:1285 partnerbox/src/plugin.py:1342
+#: partnerbox/src/plugin.py:1510
 msgid "Mon"
 msgstr "Pir"
 
@@ -9268,7 +9367,7 @@ msgstr "Mėnuo"
 
 #: merlinepgcenter/src/plugin.py:183
 msgid "More than just an EPG..."
-msgstr ""
+msgstr "Daugiau nei tik EPG..."
 
 #: mosaic/src/plugin.py:383
 msgid "Mosaic"
@@ -9276,23 +9375,23 @@ msgstr "Mozaika"
 
 #: youtubeplayer/src/YouTubeStdFeedSelection.py:44
 msgid "Most Discussed"
-msgstr ""
+msgstr "Daugiausiai aptariami"
 
 #: youtubeplayer/src/YouTubeStdFeedSelection.py:46
 msgid "Most Linked"
-msgstr ""
+msgstr "Daugiausiai saistomi"
 
 #: youtubeplayer/src/YouTubeStdFeedSelection.py:48
 msgid "Most Recent"
-msgstr ""
+msgstr "Naujausi"
 
 #: youtubeplayer/src/YouTubeStdFeedSelection.py:47
 msgid "Most Responded"
-msgstr ""
+msgstr "Daugiausiai atsakymų"
 
 #: youtubeplayer/src/YouTubeStdFeedSelection.py:40
 msgid "Most Viewed"
-msgstr ""
+msgstr "Dažniausiai žiūrimi"
 
 #: networkbrowser/src/plugin.py:36 networkbrowser/src/plugin.py:45
 msgid "Mount Manager"
@@ -9301,7 +9400,7 @@ msgstr "Pajungimo vadovas"
 #: flashexpander/src/flashexpander.py:235
 #, python-format
 msgid "Mount failed (%s)"
-msgstr ""
+msgstr "Prijungti nepavyko (%s)"
 
 #: networkbrowser/src/MountView.py:59
 msgid "Mount informations"
@@ -9333,7 +9432,7 @@ msgstr "Pajungimo taškų valdymas"
 
 #: networkbrowser/src/NetworkBrowser.py:115
 msgid "Mounts"
-msgstr ""
+msgstr "Prijungimai"
 
 #: networkbrowser/src/MountEdit.py:68
 msgid "Mounts editor"
@@ -9350,12 +9449,12 @@ msgstr "Perkelti laikrodį"
 #: epgrefresh/src/EPGRefreshConfiguration.py:129
 #: epgbackup/src/EPGBackupConfig.py:79
 msgid "Move page down"
-msgstr ""
+msgstr "Perkelti puslapį žemyn"
 
 #: epgrefresh/src/EPGRefreshConfiguration.py:128
 #: epgbackup/src/EPGBackupConfig.py:78
 msgid "Move page up"
-msgstr ""
+msgstr "Perkelti puslapį aukštyn"
 
 #: audiosync/src/AC3main.py:202
 msgid "Move plugin screen"
@@ -9408,41 +9507,41 @@ msgstr "Perkelkite ekraną į viršų"
 #: webinterface/src/WebComponents/Sources/Movie.py:59
 #, python-format
 msgid "Movie '%s' deleted"
-msgstr ""
+msgstr "Filmas '%s' ištrintas"
 
 #: webinterface/src/WebComponents/Sources/Movie.py:118
 #, python-format
 msgid "Movie '%s' has unknown suffix '%s'."
-msgstr ""
+msgstr "Filmas '%s' turi nežinomą priesagą '%s'."
 
 #: webinterface/src/WebComponents/Sources/Movie.py:151
 #, python-format
 msgid "Movie '%s' moved to '%s' without errors."
-msgstr ""
+msgstr "Filmas '%s' perkeltas į '%s' be klaidų."
 
 #: vlcplayer/src/VlcServerConfig.py:308
 msgid "Movie Directory"
-msgstr ""
+msgstr "Filmų aplankas"
 
 #: movieepg/src/plugin.py:17
 msgid "Movie Player"
-msgstr ""
+msgstr "Filmų grotuvas"
 
 #: movietagger/src/plugin.py:259
 msgid "Movie Tagger"
-msgstr ""
+msgstr "Filmų žymų tvarkytuvė"
 
 #: movietagger/src/plugin.py:315
 msgid "Movie Tagger..."
-msgstr ""
+msgstr "Filmų žymų tvarkytuvė..."
 
 #: movieepg/src/MovieEpgSetup.py:30 movieepg/src/MovieEpgSetup.py:72
 msgid "Movie-EPG Configuration"
-msgstr ""
+msgstr "Filmo EPG konfigūracija"
 
-#: infobartunerstate/src/IBTSConfiguration.py:90
+#: infobartunerstate/src/IBTSConfiguration.py:92
 msgid "MoviePlayer integration"
-msgstr ""
+msgstr "Filmų grotuvo integravimas"
 
 #: movietagger/meta/plugin_movietagger.xml./movietagger/meta/plugin_movietagger.xml
 msgid ""
@@ -9455,7 +9554,7 @@ msgstr ""
 #: movielistpreview/src/plugin.py:355 movielistpreview/src/plugin.py:459
 #: movielistpreview/src/plugin.py:561
 msgid "Movielist Preview"
-msgstr ""
+msgstr "Filmų sąrašo peržiūra"
 
 #: movielistpreview/meta/plugin_movielistpreview.xml./movielistpreview/meta/plugin_movielistpreview.xml
 msgid ""
@@ -9469,64 +9568,64 @@ msgstr ""
 #: easymedia/src/plugin.py:323 easymedia/src/plugin.py:374
 #: youtubeplayer/src/YouTubeSearchDialog.py:76
 msgid "Movies"
-msgstr ""
+msgstr "Filmai"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:79
 msgid "Movies - Action/Adventure"
-msgstr ""
+msgstr "Filmai - Veiksmo / Nuotykių"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:75
 msgid "Movies - Anime/Animation"
-msgstr ""
+msgstr "Filmai - Anime / Animaciniai"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:80
 msgid "Movies - Classics"
-msgstr ""
+msgstr "Filmai - Klasikiniai"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:78
 msgid "Movies - Documentary"
-msgstr ""
+msgstr "Filmai - Dokumentiniai"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:83
 msgid "Movies - Drama"
-msgstr ""
+msgstr "Filmai - Dramos"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:84
 msgid "Movies - Family"
-msgstr ""
+msgstr "Filmai - Šeimyniniai"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:81
 msgid "Movies - Foreign"
-msgstr ""
+msgstr "Filmai - Užsienio"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:82
 msgid "Movies - Horror"
-msgstr ""
+msgstr "Filmai - Siaubo"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:86
 msgid "Movies - Sci-Fi/Fantasy"
-msgstr ""
+msgstr "Filmai - Mokslinė fantastika / fantastika"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:85
 msgid "Movies - Shorts"
-msgstr ""
+msgstr "Filmai - Trumpametražiniai"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:87
 msgid "Movies - Thriller"
-msgstr ""
+msgstr "Filmai - Trileriai"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:77
 msgid "Moview - Comedy"
-msgstr ""
+msgstr "Filmai - Komedijos"
 
 #: webinterface/src/WebComponents/Sources/Movie.py:147
 #, python-format
 msgid "Moving Movie '%s' to '%s' in background."
-msgstr ""
+msgstr "Filmo perkėlimas '%s' į '%s' fone."
 
 #: multirc/src/plugin.py:142
 msgid "Multi Dreambox RC layer setup"
-msgstr ""
+msgstr "Daugiafunkcinių Dreambox RC lygmens nustatymas"
 
 #: easyinfo/src/plugin.py:68 easyinfo/src/plugin.py:97
 #: easyinfo/src/plugin.py:98 quickbutton/src/plugin.py:126
@@ -9536,11 +9635,11 @@ msgstr "Kanalų EPG"
 
 #: satloader/src/plugin.py:57
 msgid "Multi Sat"
-msgstr ""
+msgstr "Daugiafunkcinė palydovinė"
 
 #: satipclient/src/SatIPTunerSetup.py:134
 msgid "Multiple Tuner Types available!"
-msgstr ""
+msgstr "Galimi keli imtuvų tipai!"
 
 #: easymedia/src/plugin.py:389 mytube/src/plugin.py:70
 #: youtubeplayer/src/YouTubeSearchDialog.py:61
@@ -9549,7 +9648,7 @@ msgstr "Muzika"
 
 #: easymedia/src/plugin.py:203
 msgid "Music player:"
-msgstr ""
+msgstr "Muzikos grotuvas"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:150
 msgid "Mute"
@@ -9557,19 +9656,19 @@ msgstr "Nutildyti"
 
 #: babelzapper/src/plugin.py:54
 msgid "Mute button remote control"
-msgstr ""
+msgstr "Garso išjungimo mygtukas nuotolinio valdymo pulte"
 
 #: fritzcall/src/plugin.py:1957
 msgid "Mute on call"
-msgstr ""
+msgstr "Išjungti garsą skambinant"
 
 #: webinterface/src/WebComponents/Sources/Volume.py:26
 msgid "Mute toggled"
-msgstr ""
+msgstr "Išjungti garsą perjungiant"
 
 #: dreamexplorer/src/plugin.py:518
 msgid "My Bookmarks"
-msgstr ""
+msgstr "Mano žymės"
 
 #: mytube/src/plugin.py:1557
 msgid "My TubePlayer"
@@ -9577,11 +9676,11 @@ msgstr "My Tube grotuvas"
 
 #: easymedia/src/plugin.py:413
 msgid "MyTube Player"
-msgstr ""
+msgstr "MyTube grotuvas"
 
 #: easymedia/src/plugin.py:573
 msgid "MyTube Plugin is not installed!"
-msgstr ""
+msgstr "MyTube priedas neįdiegtas."
 
 #: mytube/src/plugin.py:520 mytube/src/plugin.py:526
 msgid "MyTube Settings"
@@ -9613,15 +9712,15 @@ msgstr "MyTube vaizdo pagalbos ekranas"
 
 #: easymedia/src/plugin.py:422
 msgid "MyVideo"
-msgstr ""
+msgstr "Mano vaizdai"
 
 #: easymedia/src/plugin.py:604
 msgid "MyVideo Player is not installed!"
-msgstr ""
+msgstr "Mano vaizdo grotuvas neįdiegtas!"
 
 #: easymedia/src/plugin.py:216
 msgid "MyVideo player:"
-msgstr ""
+msgstr "Mano vaizdo grotuvas"
 
 #: webinterface/src/WebComponents/Converter/HddInfo.py:32
 msgid "N/A"
@@ -9634,6 +9733,10 @@ msgid ""
 "Both IMDB and movie name haven't values. \n"
 "Please give at least one correct searching value."
 msgstr ""
+"NAPISY24 paieškos metodo klaida:\n"
+"\n"
+"Abiejų IMDB ir kino pavadinimo nėra reikšmės.\n"
+"Prašome pateikti bent vieną teisingą paieškos reikšmę."
 
 #: subsdownloader2/src/plugin.py:800
 msgid ""
@@ -9642,6 +9745,10 @@ msgid ""
 "Can't find IMDB identifier for this movie.\n"
 "Please try another searching method."
 msgstr ""
+"NAPISY24 paieškos metodo klaida:\n"
+"\n"
+"Nerandame IMDB identifikatorių šiam filmui.\n"
+"Bandykite kitą paieškos metodą."
 
 #: subsdownloader2/src/plugin.py:804
 msgid ""
@@ -9649,19 +9756,22 @@ msgid ""
 "\n"
 "Please enter movie name to search."
 msgstr ""
+"NAPISY24 paieškos metodo klaida:\n"
+"\n"
+"Įrašykite filmo pavadinimą paieškai."
 
 #: elektro/src/plugin.py:472
 msgid "NAS Poweroff (press OK to edit)"
-msgstr ""
+msgstr "NAS išsijungimas (paspauskite OK, kad redaguoti)"
 
 #: elektro/src/plugin.py:388
 msgid "NAS/Server Name or IP"
-msgstr ""
+msgstr "NAS / Serverio pavadinimas arba IP"
 
 #. TRANSLATORS: this is a window title.
 #: ncidclient/src/plugin.py:719
 msgid "NCID Client - Setup"
-msgstr ""
+msgstr "NCID Klientas - Valdymas"
 
 #: ncidclient/meta/plugin_ncidclient.xml./ncidclient/meta/plugin_ncidclient.xml
 msgid ""
@@ -9673,11 +9783,11 @@ msgstr ""
 
 #: ncidclient/src/plugin.py:733
 msgid "NCID server (Name or IP)"
-msgstr ""
+msgstr "NCID serveris (Pavadinimas arba IP)"
 
 #: ncidclient/src/plugin.py:734
 msgid "NCID server listening port (1-65535)"
-msgstr ""
+msgstr "NCID serverio klausymo jungtis (1-65535)"
 
 #: networkbrowser/src/MountEdit.py:86
 msgid "NFS share"
@@ -9686,11 +9796,11 @@ msgstr "NFS bendrinimas"
 #: partnerbox/src/RemoteTimerEntry.py:132
 #: partnerbox/src/RemoteTimerEntry.py:438
 msgid "NGRAB"
-msgstr ""
+msgstr "NGRAB"
 
 #: ncidclient/src/plugin.py:593
 #: webinterface/src/WebComponents/Sources/Strings.py:60
-#: partnerbox/src/PartnerboxSetup.py:125 partnerbox/src/PartnerboxSetup.py:248
+#: partnerbox/src/PartnerboxSetup.py:126 partnerbox/src/PartnerboxSetup.py:263
 #: partnerbox/src/RemoteTimerEntry.py:158
 #: partnerbox/src/RemoteTimerEntry.py:470 growlee/src/plugin.py:167
 #: infobartunerstate/src/plugin.py:63 elektro/src/plugin.py:480
@@ -9703,19 +9813,19 @@ msgstr "Pavadinimas"
 
 #: lastfm/src/LastFMConfig.py:35
 msgid "Name (needs GUI restart)"
-msgstr ""
+msgstr "Pavadinimas (reikia perkrauti GUI)"
 
 #: movieretitle/src/plugin.py:74
 msgid "Name and Description Input"
-msgstr ""
+msgstr "Pavadinimo ir aprašymo įvestis"
 
 #: dvdbackup/src/plugin.py:50 dvdbackup/src/plugin.py:401
 msgid "Name of DVD"
-msgstr ""
+msgstr "DVD pavadinimas"
 
 #: fritzcall/src/plugin.py:1974
 msgid "Name of WLAN guest network"
-msgstr ""
+msgstr "WLAN tinklo svečių pavadinimas "
 
 #: porncenter/src/plugin.py:252 dvdbackup/src/plugin.py:333
 #: ftpbrowser/src/FTPServerManager.py:157
@@ -9726,19 +9836,19 @@ msgstr "Pavadinimas:"
 #: namezap/src/NamezapSetup.py:33 namezap/src/NamezapSetup.py:74
 #: namezap/src/plugin.py:107
 msgid "NameZAP Setup"
-msgstr ""
+msgstr "NameZAP valdymas"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:172
 msgid "Nauru"
-msgstr ""
+msgstr "Nauriečių"
 
 #: lastfm/src/plugin.py:157
 msgid "Neighbours"
-msgstr ""
+msgstr "Kaimynai"
 
 #: lastfm/src/plugin.py:452
 msgid "Neighbours Tracks"
-msgstr ""
+msgstr "Kaimyniniai takeliai"
 
 #: lastfm/src/plugin.py:279
 msgid "Neighbours loaded"
@@ -9818,7 +9928,7 @@ msgstr "Naujas šešėlis"
 
 #: satipclient/src/SatIPTunerSetup.py:151
 msgid "New Tuner added! GUI restart required!"
-msgstr ""
+msgstr "Naujas imtuvas pridėtas! GUI reikia paleisti iš naujo!"
 
 #: valixdcontrol/src/plugin.py:49
 msgid "New Vision"
@@ -9893,7 +10003,7 @@ msgstr "Kitas gimtadienis"
 
 #: seriesplugin/src/ChannelEditor.py:90
 msgid "Next bouquet"
-msgstr ""
+msgstr "Kitas paketas"
 
 #: elektro/src/plugin.py:262 elektro/src/plugin.py:267
 msgid "Next day starts at"
@@ -9930,28 +10040,28 @@ msgstr "Atsarginių kopijų nerasta!"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:28
 msgid "No Bouquets to Display"
-msgstr ""
+msgstr "Nėra paketų atvaizdavimui"
 
 #: fritzcall/src/plugin.py:856
 msgid "No DECT phone registered"
-msgstr ""
+msgstr "DECT telefonas neįregistruotas"
 
 #: epgbackup/src/EPGBackupSupport.py:144
 #, python-format
 msgid "No EPG-File found at %s!"
-msgstr ""
+msgstr "EPG failo nerasta %s!"
 
 #: podcast/src/plugin.py:455
 msgid "No Feedly configuration"
-msgstr ""
+msgstr "Nėra Feedly konfigūracijos"
 
 #: easymedia/src/plugin.py:555
 msgid "No File-Manager installed!"
-msgstr ""
+msgstr "Failų valdytojas neįdiegtas!"
 
-#: yttrailer/src/plugin.py:43
+#: yttrailer/src/plugin.py:44
 msgid "No HD streaming"
-msgstr ""
+msgstr "Nėra HD srauto"
 
 #: permanenttimeshift/src/plugin.py:911
 msgid "No HDD found or HDD not initialized!"
@@ -9960,54 +10070,55 @@ msgstr "Kietas diskas nerastas arba neinicializuotas!"
 #: flashexpander/src/flashexpander.py:134
 msgid "No HDD-, SSD- or USB-Device found. Please first initialized."
 msgstr ""
+"HDD-, SSD- arba USB įrenginių nerasta. Prašome visų pirma inicializuoti."
 
 #: advhdmi/src/AdvHdmiCecSetup.py:141
 msgid "No HDMI-Cec-Hooks are registered!"
-msgstr ""
+msgstr "HDMI-CEC-Kabeliai neįregistruoti!"
 
 #: imdb/src/plugin.py:492 imdb/src/plugin.py:493
 msgid "No IMDb match."
-msgstr ""
+msgstr "Nėra IMDb atitikimo."
 
 #: webinterface/src/WebComponents/Sources/Message.py:31
 msgid "No Messagetext given"
-msgstr ""
+msgstr "Pranešimo tekstas nepateiktas"
 
 #: easymedia/src/plugin.py:543
 msgid "No Music-Player installed!"
-msgstr ""
+msgstr "Muzikos grotuvas neįdiegtas!"
 
 #: ofdb/src/plugin.py:369 ofdb/src/plugin.py:370
 msgid "No OFDb match."
-msgstr ""
+msgstr "Nėra OFDb atitikimo."
 
 #: webinterface/src/WebComponents/Sources/Strings.py:110
 msgid "No Service to show"
-msgstr ""
+msgstr "Nėra kanalo rodymui"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:38
 msgid "No Timer Available!"
-msgstr ""
+msgstr "Nėra laikamčio!"
 
 #: permanenttimeshift/src/plugin.py:614
 msgid "No Timeshift found to save as recording!"
-msgstr ""
+msgstr "Laiko poslinkis nenustatytas, kad išsaugoti tuos įrašus!"
 
 #: fritzcall/src/plugin.py:888
 msgid "No call redirection active"
-msgstr ""
+msgstr "Skambučių peradresavimas neaktyvus"
 
 #: ofdb/src/plugin.py:437 imdb/src/plugin.py:573
 msgid "No cast list found in the database."
-msgstr ""
+msgstr "Aktorių sąrašas duomenų bazėje nerastas."
 
 #: moviecut/src_py/plugin.py:255
 msgid "No cuts specified"
-msgstr ""
+msgstr "Iškirpimai nenurodyti"
 
 #: seriesplugin/src/SeriesPluginTimer.py:188
 msgid "No data available"
-msgstr ""
+msgstr "Nėra datos"
 
 #: permanenttimeshift/src/plugin.py:900
 msgid "No default storage device found!"
@@ -10037,51 +10148,53 @@ msgid ""
 "No locations defined...\n"
 "Press 'Menu' to do that."
 msgstr ""
+"Nėra apibrėžtos vietos...\n"
+"Paspauskite 'Meniu', kad tai padaryti."
 
 #: seriesplugin/src/ShowLogScreen.py:72
 msgid "No log file found"
-msgstr ""
+msgstr "Loginio failo nerasta"
 
-#: merlinmusicplayer/src/plugin.py:1581
+#: merlinmusicplayer/src/plugin.py:1582
 msgid "No lyrics found"
-msgstr ""
+msgstr "Dainos žodžių nerasta"
 
 #: fritzcall/src/plugin.py:836
 msgid "No mailbox active"
-msgstr ""
+msgstr "Nėra aktyvios pašto dėžutės "
 
 #: seriesplugin/src/SeriesPluginInfoScreen.py:321
 msgid "No matching episode found"
-msgstr ""
+msgstr "Sutampančių epizodų nerasta"
 
 #: seriesplugin/src/Identifiers/WunschlisteFeed.py:213
 #: seriesplugin/src/Identifiers/SerienServer.py:112
 #: seriesplugin/src/Identifiers/Fernsehserien.py:242
 #: seriesplugin/src/Identifiers/Wunschliste.py:187
 msgid "No matching series found"
-msgstr ""
+msgstr "Sutampančių serijų nerasta"
 
 #: vlcplayer/src/VlcPlayer.py:449 youtubeplayer/src/DirectYouTubePlayer.py:216
 msgid "No more files in this directory"
-msgstr ""
+msgstr "Šiame aplanke failų nerasta"
 
 #: dreamexplorer/src/plugin.py:904 dreamexplorer/src/plugin.py:917
 #: subsdownloader2/src/plugin.py:1373 subsdownloader2/src/plugin.py:1386
 msgid "No more picture-files."
-msgstr ""
+msgstr "Daugiau nėra paveikslėlių failų."
 
 #: dreamexplorer/src/plugin.py:1005 dreamexplorer/src/plugin.py:1015
 #: subsdownloader2/src/plugin.py:1552 subsdownloader2/src/plugin.py:1562
 msgid "No more playable files."
-msgstr ""
+msgstr "Daugiau nėra grojimo failų."
 
 #: webinterface/src/WebComponents/Sources/Strings.py:146
 msgid "No movies to show..."
-msgstr ""
+msgstr "Nėra filmų, kad parodyti..."
 
-#: merlinmusicplayer/src/plugin.py:3205 merlinmusicplayer/src/plugin.py:3242
+#: merlinmusicplayer/src/plugin.py:3220 merlinmusicplayer/src/plugin.py:3257
 msgid "No music files found!"
-msgstr ""
+msgstr "Nerasta muzikos failų!"
 
 #: pushservice/src/Controller/IPKGUpdateNotification.py:84
 msgid "No network connection available."
@@ -10093,12 +10206,12 @@ msgstr "Jokie tinklo įrenginiai nesurasti"
 
 #: curlytx/src/CurlyTxSettings.py:143
 msgid "No page feed URL defined"
-msgstr ""
+msgstr "Nėra apibrėžtų naujienų kanalų puslapių"
 
 #: ncidclient/src/plugin.py:798 fritzcall/src/plugin.py:2054
 #: fritzcall/src/plugin.py:2687
 msgid "No phonebook"
-msgstr ""
+msgstr "Nėra telefonų knygos"
 
 #: dreammediathek/src/MoviePlayer.py:287 mytube/src/MyTubePlayer.py:260
 msgid "No playable video found! Stop playing this movie?"
@@ -10106,39 +10219,39 @@ msgstr "Nerasta vaizdo rodymui! Sustabdyti šio filmo žiūrėjimą ?"
 
 #: movieselectionquickbutton/src/plugin.py:157 quickbutton/src/plugin.py:180
 msgid "No plugin assigned!"
-msgstr ""
+msgstr "Nėra priskirtų priedų!"
 
 #: vlcplayer/src/VlcPlayer.py:476 youtubeplayer/src/DirectYouTubePlayer.py:229
 msgid "No previous file in this directory"
-msgstr ""
+msgstr "Nėra ankstesių bylų šiame aplanke"
 
 #: rsdownloader/src/plugin.py:59
 msgid "No reconnect"
-msgstr ""
+msgstr "Nėra prisijungimo iš naujo"
 
 #: fritzcall/src/plugin.py:1289
 msgid "No result from LDIF"
-msgstr ""
+msgstr "Nėra rezultatų iš LDIF"
 
 #: fritzcall/src/plugin.py:1287
 msgid "No result from Outlook export"
-msgstr ""
+msgstr "Nėra rezultatų iš Outlook eksporto"
 
 #: fritzcall/src/plugin.py:1285
 msgid "No result from reverse lookup"
-msgstr ""
+msgstr "Nėra rezultato iš atvirkštinės paieškos"
 
 #: internetradio/src/InternetRadioScreen.py:759
 msgid "No streaming data found..."
-msgstr ""
+msgstr "Srauto duomenų nerasta..."
 
 #: simplerss/src/RSSScreens.py:152 simplerss/src/RSSScreens.py:215
 msgid "No such Item."
-msgstr ""
+msgstr "Nėra tokio elemento."
 
 #: mediadownloader/src/MediaDownloader.py:233
 msgid "No suitable Viewer found!"
-msgstr ""
+msgstr "Nėra tinkamos peržiūros priemonės!"
 
 #: serienfilm/src/MovieSelection.py:516
 msgid "No tags are set on these movies."
@@ -10146,13 +10259,15 @@ msgstr "Jokios kortelės su užrašu nėra nustatytos šiems kino filmams"
 
 #: teletext/src/plugin.py:1860
 msgid "No teletext available."
-msgstr ""
+msgstr "Teleteksto nėra."
 
 #: vlcplayer/src/VlcPlayer.py:324
 msgid ""
 "No valid Enigma-Service to play a VLC-Stream\n"
 "Check your installation and try again!"
 msgstr ""
+"Nėra galiojančio Enigma serviso, kad groti VLC srautą\n"
+"Patikrinkite savo įdiegimą ir bandykite dar kartą!"
 
 #: mytube/src/plugin.py:481
 msgid "No videos to display"
@@ -10185,7 +10300,7 @@ msgstr "Ne nauda ir Aktyvumas"
 
 #: growlee/src/plugin.py:31 growlee/src/plugin.py:52
 msgid "Normal (Information)"
-msgstr ""
+msgstr "Normali (informacija)"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:174
 msgid "Norwegian"
@@ -10201,11 +10316,11 @@ msgstr "Ne iki"
 
 #: fritzcall/src/plugin.py:148
 msgid "Not deactivating after time"
-msgstr ""
+msgstr "Nedeaktyvuoti po laiko"
 
 #: easymedia/src/plugin.py:75
 msgid "Not easy way to start EasyMedia"
-msgstr ""
+msgstr "Nėra paprasto būdo, kad startuotų EasyMedia"
 
 #: permanenttimeshift/src/plugin.py:751
 #, python-format
@@ -10216,6 +10331,11 @@ msgid ""
 "Free Space: %sMB\n"
 "Path: %s"
 msgstr ""
+"Nepakanka laisvos vietos diske!\n"
+"\n"
+"Failo dydis: %sMB\n"
+"Laisvos vietos: %sMB\n"
+"Kelias: %s"
 
 #: mytube/src/plugin.py:483
 msgid "Not fetching feed entries"
@@ -10227,11 +10347,11 @@ msgstr "Ne dabar"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:55
 msgid "Note: For one-time events the days don't have to be specified."
-msgstr ""
+msgstr "Pastaba: Dėl vienkartinių įvykių dienos neturi būti nurodytos."
 
 #: webinterface/src/WebComponents/Sources/Strings.py:54
 msgid "Note: For recurring events dates are not mandatory."
-msgstr ""
+msgstr "Pastaba: Dėl pasikartojančių įvykių datos nėra privalomos."
 
 #: movieselectionquickbutton/src/plugin.py:39
 #: movieselectionquickbutton/src/plugin.py:40
@@ -10244,31 +10364,31 @@ msgstr ""
 #: quickbutton/src/plugin.py:39 quickbutton/src/plugin.py:120
 #: quickbutton/src/plugin.py:221
 msgid "Nothing"
-msgstr ""
+msgstr "Nieko"
 
 #: rsdownloader/src/plugin.py:929
 msgid "Nothing found, sorry."
-msgstr ""
+msgstr "Nieko nerasta, atsiprašome."
 
 #: webinterface/src/WebComponents/Sources/Strings.py:145
 msgid "Nothing found..."
-msgstr ""
+msgstr "Nieko nerasta..."
 
 #: infobartunerstate/src/InfoBarTunerState.py:376
 msgid "Nothing running"
-msgstr ""
+msgstr "Niekas neveikia"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:143
 msgid "Nothing running..."
-msgstr ""
+msgstr "Niekas neveikia..."
 
 #: pushservice/src/ConfigScreen.py:448
 msgid "Nothing to push"
-msgstr ""
+msgstr "Nėra ką paspausti"
 
 #: pushservice/src/ConfigScreen.py:423
 msgid "Nothing to test"
-msgstr ""
+msgstr "Nėra ką bandyti"
 
 #: simplerss/src/plugin.py:15
 msgid "Notification"
@@ -10276,7 +10396,7 @@ msgstr "Pranešimas"
 
 #: birthdayreminder/src/BirthdayReminder.py:635
 msgid "Notification time:"
-msgstr ""
+msgstr "Perspėjimo laikas:"
 
 #: merlinepgcenter/src/MerlinEPGCenter.py:43
 msgid "Now"
@@ -10288,23 +10408,23 @@ msgstr "Nr"
 
 #: ncidclient/src/plugin.py:594 fritzcall/src/plugin.py:1749
 msgid "Number"
-msgstr ""
+msgstr "Numeris"
 
 #: namezap/src/plugin.py:19
 msgid "Number and Name"
-msgstr ""
+msgstr "Numeris ir pavadinimas"
 
 #: fancontrol2/src/plugin.py:535
 msgid "Number of WebIF-Log-Entries"
-msgstr ""
+msgstr "WebIF žurnalo įrašų skaičius"
 
-#: infobartunerstate/src/IBTSConfiguration.py:93
+#: infobartunerstate/src/IBTSConfiguration.py:95
 msgid "Number of finished entries in list"
-msgstr ""
+msgstr "Baigtų Įrašų kiekis į sąrašą"
 
-#: infobartunerstate/src/Handler/Timers.py:125
+#: infobartunerstate/src/Handler/Timers.py:124
 msgid "Number of pending timer(s)"
-msgstr ""
+msgstr "Laukiančių laikmačių kiekis"
 
 #: autotimer/src/AutoTimerEditor.py:532
 msgid "Number of scheduled recordings left."
@@ -10312,39 +10432,39 @@ msgstr "Suplanuotų įrašų skaičius padarytas."
 
 #: ecasa/src/EcasaSetup.py:42
 msgid "Number of search results to display at most."
-msgstr ""
+msgstr "Paieškos rezultatų skaičius, kad būtų rodoma daugiausiai."
 
-#: infobartunerstate/src/IBTSConfiguration.py:94
+#: infobartunerstate/src/IBTSConfiguration.py:96
 msgid "Number of seconds for displaying finished entries"
-msgstr ""
+msgstr "Sekundžių kiekis baigtų įrašų parodymui"
 
 #: merlinepgcenter/src/ConfigTabs.py:221
 msgid "Number of upcoming events to show:"
-msgstr ""
+msgstr "Artėjančių renginių skaičius, kad rodyti:"
 
 #: ofdb/src/plugin.py:386 ofdb/src/plugin.py:455
 msgid "OFDb Details parsed"
-msgstr ""
+msgstr "OFDb išsami analizė"
 
 #: ofdb/src/plugin.py:347
 msgid "OFDb Download completed"
-msgstr ""
+msgstr "OFDb atsisiuntimas baigtas"
 
 #: ofdb/src/plugin.py:320
 msgid "OFDb Download failed"
-msgstr ""
+msgstr "OFDb atsiuntimas nepavyko"
 
 #: ofdb/src/plugin.py:484
 msgid "OFDb Plugin"
-msgstr ""
+msgstr "OFDb priedas"
 
 #: ofdb/src/plugin.py:375
 msgid "OFDb Re-Download completed"
-msgstr ""
+msgstr "OFDb parsisiuntimas iš naujo baigtas"
 
 #: ofdb/src/plugin.py:372
 msgid "OFDb query failed!"
-msgstr ""
+msgstr "OFDb užklausa nesėkminga!"
 
 #. TRANSLATORS: keep it short, this is a button
 #: pluginhider/src/PluginHiderSetup.py:52 autoresolution/src/plugin.py:300
@@ -10357,7 +10477,7 @@ msgstr ""
 #: autotimer/src/AutoTimerImporter.py:46
 #: autotimer/src/AutoTimerImporter.py:120
 #: autotimer/src/AutoTimerSettings.py:80 webinterface/src/WebIfConfig.py:33
-#: partnerbox/src/PartnerboxSetup.py:70 partnerbox/src/PartnerboxSetup.py:237
+#: partnerbox/src/PartnerboxSetup.py:71 partnerbox/src/PartnerboxSetup.py:252
 #: partnerbox/src/RemoteTimerEntry.py:72 namezap/src/NamezapSetup.py:56
 #: epgsearch/src/EPGSearch.py:378 epgsearch/src/EPGSearchSetup.py:57
 #: dreammediathek/src/plugin.py:82 internetradio/src/InternetRadioSetup.py:50
@@ -10368,8 +10488,8 @@ msgstr ""
 #: movieepg/src/MovieEpgSetup.py:54 vlcplayer/src/VlcServerConfig.py:297
 #: seriesplugin/src/SeriesPluginConfiguration.py:81
 #: seriesplugin/src/ChannelEditor.py:73
-#: infobartunerstate/src/IBTSConfiguration.py:50
-#: merlinmusicplayer/src/plugin.py:2795 merlinmusicplayer/src/plugin.py:2916
+#: infobartunerstate/src/IBTSConfiguration.py:52
+#: merlinmusicplayer/src/plugin.py:2810 merlinmusicplayer/src/plugin.py:2931
 #: lastfm/src/LastFMConfig.py:56 audiosync/src/AC3main.py:67
 #: quickbutton/src/plugin.py:198 epgrefresh/src/EPGRefreshChannelEditor.py:80
 #: epgrefresh/src/EPGRefreshConfiguration.py:108
@@ -10387,9 +10507,9 @@ msgstr ""
 #: birthdayreminder/src/BirthdayReminder.py:730
 #: automaticcleanup/src/plugin.py:174 tageditor/src/plugin.py:48
 #: antiscrollbar/src/plugin.py:126
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:62
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:139
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:249
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:63
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:140
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:259
 #: movieretitle/src/plugin.py:43 pipzap/src/PipzapSetup.py:59
 #: tvcharts/src/plugin.py:402 moviecut/src_py/plugin.py:87
 #: cdinfo/src/plugin.py:57
@@ -10398,19 +10518,19 @@ msgstr "Gerai"
 
 #: easyinfo/src/plugin.py:252
 msgid "OK function in Easy-PG:"
-msgstr ""
+msgstr "OK funkcija Easy-PG:"
 
 #: valixdcontrol/src/plugin.py:119
 msgid "OLED Layout like:"
-msgstr ""
+msgstr "OLED išdėstymas, kaip:"
 
 #: aihdcontroler/src/plugin.py:97
 msgid "OLED display style:"
-msgstr ""
+msgstr "OLED rodymo stilius:"
 
 #: internetradio/src/plugin.py:41
 msgid "OLED only"
-msgstr ""
+msgstr "Tik OLED"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:141
 msgid "ONID"
@@ -10418,44 +10538,46 @@ msgstr "ONID"
 
 #: pushservice/src/Controller/OPKGUpdateNotification.py:34
 msgid "OPKG Update Notification"
-msgstr ""
+msgstr "OPKG atnaujinimo perspėjimas"
 
 #: orfteletext/src/plugin.py:45
 msgid "ORF-Teletext"
-msgstr ""
+msgstr "ORF-Teletekstas"
 
 #: webinterface/src/WebComponents/Sources/TPMChallenge.py:39
 #, python-format
 msgid "Obligatory parameter \"random\" for cmd=\"%s\" missing"
-msgstr ""
+msgstr "Privalomo parametro \"atsitiktinis\" dėl cmd=\"%s\" trūksta"
 
 #: webinterface/src/WebComponents/Sources/RemoteControl.py:46
 msgid "Obligatory parameter 'command' is missing!"
-msgstr ""
+msgstr "Privalomo parametro 'komanda' nėra!"
 
 #: webinterface/src/WebComponents/Sources/SwitchService.py:69
 msgid "Obligatory parameter 'sRef' is missing"
-msgstr ""
+msgstr "Privalomo parametro 'sRef' nėra"
 
 #: webinterface/src/WebComponents/Sources/SwitchService.py:12
 msgid "Obligatory parameter sRef is missing"
-msgstr ""
+msgstr "Privalomo parametro sRef nėra"
 
 #: webinterface/src/WebComponents/Sources/SleepTimer.py:16
 msgid ""
 "Obligatory parameters missing [cmd [set,get], time [0-999], action [standby,"
 "shutdown], enabled [True,False]"
 msgstr ""
+"Privalomų parametrų [cmd [nustatyti, gauti], laikas [0-999], veiksmas "
+"[laukimo režimas, išjungimas], įjungta [Tiesa, Klaidingai] nėra"
 
 #: weatherplugin/src/plugin.py:213
 #, python-format
 msgid "Observation point: %s"
-msgstr ""
+msgstr "Stebėjimo taškas: %s"
 
 #: weatherplugin/src/plugin.py:212
 #, python-format
 msgid "Observation time: %s"
-msgstr ""
+msgstr "Stebėjimo laikas: %s"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:175
 msgid "Occitan"
@@ -10553,25 +10675,25 @@ msgstr "Tik kanale: %s"
 msgid "Only on Weekday: %s"
 msgstr "Tik savaitės diena:%s"
 
-#: infobartunerstate/src/IBTSConfiguration.py:208
+#: infobartunerstate/src/IBTSConfiguration.py:211
 msgid "Only one Graphical Progress field allowed:"
-msgstr ""
+msgstr "Leidžiama viena Grafinės pažangos sritis:"
 
-#: infobartunerstate/src/IBTSConfiguration.py:203
+#: infobartunerstate/src/IBTSConfiguration.py:206
 msgid "Only one Icon field allowed:"
-msgstr ""
+msgstr "Leidžiama viena piktogramų sritis:"
 
-#: infobartunerstate/src/IBTSConfiguration.py:199
+#: infobartunerstate/src/IBTSConfiguration.py:202
 msgid "Only one Name field allowed:"
-msgstr ""
+msgstr "Leidžiamas tik vienas pavadinimo laukas:"
 
 #: internetradio/src/InternetRadioScreen.py:556
 msgid "Only running streamings can be recorded!"
-msgstr ""
+msgstr "Tik veikiantis srautas gali būti įrašytas!"
 
 #: epgbackup/src/plugin.py:47
 msgid "Only younger"
-msgstr ""
+msgstr "Tik jaunesnis"
 
 #: lastfm/src/plugin.py:209
 msgid "Open"
@@ -10584,15 +10706,15 @@ msgstr "Atidaryti konteksto meniu"
 #: webinterface/src/WebComponents/Sources/Strings.py:103
 #, python-format
 msgid "Open Multi-EPG for %s"
-msgstr ""
+msgstr "Atidaryti daugialypį EPG dėl %s"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:101
 msgid "Open Signal Panel"
-msgstr ""
+msgstr "Atidaryti signalo pultą"
 
 #: fstabeditor/src/plugin.py:111
 msgid "Open editor"
-msgstr ""
+msgstr "Atidaryti redaktorių"
 
 #: audiosync/src/AC3main.py:73
 msgid "Open plugin menu"
@@ -10600,19 +10722,19 @@ msgstr "Atidaryti papildomų programų meniu"
 
 #: epgsearch/src/EPGSearch.py:236
 msgid "Open selected in IMDb"
-msgstr ""
+msgstr "Atidaryti pasirinktą IMDb"
 
 #: fstabeditor/src/plugin.py:210
 msgid "Open selector"
-msgstr ""
+msgstr "Atidaryti selektorių"
 
 #: birthdayreminder/src/BirthdayReminder.py:200
 msgid "Open the extras menu"
-msgstr ""
+msgstr "Atidarykite išplėstinį meniu"
 
 #: rsdownloader/src/plugin.py:1385
 msgid "Open unrar Manager"
-msgstr ""
+msgstr "Atidaryti unrar vadovą"
 
 #: dreamexplorer/src/plugin.py:341 dreamexplorer/src/plugin.py:350
 #: dreamexplorer/src/plugin.py:364
@@ -10635,7 +10757,7 @@ msgstr "Originalus pavadinimas: %s"
 #: subsdownloader2/src/plugin.py:404
 #, python-format
 msgid "Oryginal file name: %s"
-msgstr ""
+msgstr "Originalus failo pavadinimas: %s"
 
 #: fritzcall/src/plugin.py:158
 msgid "Others"
@@ -10656,7 +10778,7 @@ msgstr "Išorinis Susijęs (+/-)"
 #. TRANSLATORS: keep it short, this is a button
 #: fritzcall/src/plugin.py:1027
 msgid "Outgoing"
-msgstr ""
+msgstr "Išsiunčiamas"
 
 #: fritzcall/src/plugin.py:2367
 #, python-format
@@ -10668,10 +10790,16 @@ msgid ""
 "---------------------------------------------\n"
 "from: %(phone)s"
 msgstr ""
+"Siunčiamas skambutis %(data)s nuo %(laikas)s į\n"
+"---------------------------------------------\n"
+"%(numeris)s\n"
+"%(skambintojas)s\n"
+"---------------------------------------------\n"
+"nuo: %(telefonas)s"
 
 #: fritzcall/src/plugin.py:169
 msgid "Outgoing calls"
-msgstr ""
+msgstr "Siunčiami skambučiai"
 
 #: antiscrollbar/meta/plugin_antiscrollbar.xml./antiscrollbar/meta/plugin_antiscrollbar.xml
 msgid "Overlay for scrolling bars"
@@ -10684,19 +10812,19 @@ msgstr "Nepaisyti rastų alternatyvių kanalų"
 #: vlcplayer/src/VlcServerConfig.py:315
 #, python-format
 msgid "Overscan Correction [in %(percentsign)s of Video width]"
-msgstr ""
+msgstr "Skenavimo korekcija [į %(procentų ženklas)s vaizdo plotis]"
 
 #: quickbutton/src/plugin.py:249
 msgid "Overwrite HBBTV-red-button"
-msgstr ""
+msgstr "Perrašyti HbbTV raudoną mygtuką"
 
-#: infobartunerstate/src/IBTSConfiguration.py:131
+#: infobartunerstate/src/IBTSConfiguration.py:132
 msgid "Overwrite Infobar timeout"
-msgstr ""
+msgstr "Perrašyti Informacinės juostos pauzę"
 
 #: seekbar/src/plugin.py:93
 msgid "Overwrite left and right buttons:"
-msgstr ""
+msgstr "Perrašyti 'kairėn' ir 'dešinėn' mygtukus:"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:137
 msgid "PCR PID"
@@ -10705,7 +10833,7 @@ msgstr "PCR PID"
 #: fancontrol2/src/plugin.py:764
 #, python-format
 msgid "PID Ctl Err %03.2f %%"
-msgstr ""
+msgstr "PID Ctl Err %03.2f %%"
 
 #: kiddytimer/src/KTsetup.py:53
 msgid "PIN"
@@ -10713,7 +10841,7 @@ msgstr "PIN kodas"
 
 #: epgrefresh/src/plugin.py:294
 msgid "PLUGINNAME_EPGRefresh"
-msgstr ""
+msgstr "PRIEDO PAVADINIMAS_EPG atnaujintojas"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:138
 msgid "PMT PID"
@@ -10722,7 +10850,7 @@ msgstr "PMT PID"
 #: permanenttimeshift/src/plugin.py:611
 #, python-format
 msgid "PTS Plugin Error: %s"
-msgstr ""
+msgstr "PTS priedo klaida: %s"
 
 #: aspectratioswitch/src/plugin.py:78
 msgid "PVR key long"
@@ -10735,48 +10863,48 @@ msgstr "PWM %03d"
 
 #: dreamexplorer/src/plugin.py:348
 msgid "Pack my bootlogo"
-msgstr ""
+msgstr "Pakuoti mano įkrovos logotipą"
 
 #: rsdownloader/src/plugin.py:945
 #, python-format
 msgid "Page %d / %d. Push < > to switch the page..."
-msgstr ""
+msgstr "Puslapis %d / %d. Spausti < > perjungti į puslapį..."
 
 #: curlytx/src/CurlyTxSettings.py:221
 msgid "Page URL"
-msgstr ""
+msgstr "Puslapio URL"
 
 #: lastfm/src/plugin.py:204
 msgid "Page backward Selections"
-msgstr ""
+msgstr "Puslapio atgal pasirinkimas"
 
 #: pushservice/src/ConfigScreen.py:89
 msgid "Page down"
-msgstr ""
+msgstr "Puslapis žemyn"
 
 #: curlytx/src/CurlyTxSettings.py:72
 msgid "Page feed URL"
-msgstr ""
+msgstr "Puslapio URL adresas"
 
 #: lastfm/src/plugin.py:203
 msgid "Page forward Selections"
-msgstr ""
+msgstr "Puslapio pirmyn pasirinkimas"
 
 #: pushservice/src/ConfigScreen.py:88
 msgid "Page up"
-msgstr ""
+msgstr "Puslapis aukštyn"
 
 #: merlinepg/src/plugin.py:118
 msgid "Page-up/down with bouquet+/- :"
-msgstr ""
+msgstr "Puslapis aukštyn/žemyn su bouquet+/- :"
 
 #: curlytx/src/CurlyTxSettings.py:64
 msgid "Page:"
-msgstr ""
+msgstr "Puslapis:"
 
 #: webcamviewer/src/WebcamTravel.py:81 webcamviewer/src/WebcamTravel.py:241
 msgid "Page: "
-msgstr ""
+msgstr "Puslapis: "
 
 #: letterbox/src/plugin.py:40 quickbutton/src/plugin.py:144
 msgid "Pan&Scan"
@@ -10790,7 +10918,7 @@ msgstr "Pagrindinė direktorija"
 
 #: satloader/src/plugin.py:236 satloader/src/plugin.py:365
 msgid "Parsing failed!"
-msgstr ""
+msgstr "Analizavimas nepavyko!"
 
 #: advhdmi/src/AdvHdmiCecSetup.py:90
 msgid ""
@@ -10798,6 +10926,9 @@ msgid ""
 "It can be prevented only the signals that are sent from the Dreambox. "
 "Signals received by the Dreambox will not be prevented."
 msgstr ""
+"Dalinai išjungti HDMI-CEC?\n"
+"Tai gali sutrukdyti tik signalams, kurie siunčiami iš Dreambox. Signalams "
+"gaunamiems su Dreambox nebus trukdoma."
 
 #: eparted/meta/plugin_eparted.xml./eparted/meta/plugin_eparted.xml
 msgid "Partition tool"
@@ -10810,10 +10941,12 @@ msgid ""
 "Partnerbox Answer: \n"
 "%s"
 msgstr ""
+"Partnerbox atsakymas: \n"
+"%s"
 
-#: partnerbox/src/PartnerboxSetup.py:71
+#: partnerbox/src/PartnerboxSetup.py:72
 msgid "Partnerbox Entries"
-msgstr ""
+msgstr "Partnerbox įrašai"
 
 #: partnerbox/meta/plugin_partnerbox.xml./partnerbox/meta/plugin_partnerbox.xml
 msgid ""
@@ -10823,27 +10956,27 @@ msgstr ""
 "Partnerbox leidžia redaguoti nuotolinio Dreambox įrašų laikmačius ir srautus "
 "jo televizijos programa."
 
-#: partnerbox/src/PartnerboxSetup.py:222
+#: partnerbox/src/PartnerboxSetup.py:237
 msgid "Partnerbox: Edit Entry"
-msgstr ""
+msgstr "Partnerbox: redaguoti įrašą"
 
-#: partnerbox/src/PartnerboxSetup.py:120
+#: partnerbox/src/PartnerboxSetup.py:121
 msgid "Partnerbox: List of Entries"
-msgstr ""
+msgstr "Partnerbox: įrašų sąrašas"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:177
 msgid "Pashto"
-msgstr ""
+msgstr "Puštūnų"
 
 #: ftpbrowser/src/FTPServerManager.py:162
 msgid "Passive:"
-msgstr ""
+msgstr "Pasyvus:"
 
 #: dreamirc/src/dreamIRCSetup.py:59
 msgid "Passwd"
-msgstr ""
+msgstr "Slaptažodis"
 
-#: partnerbox/src/PartnerboxSetup.py:252 growlee/src/plugin.py:182
+#: partnerbox/src/PartnerboxSetup.py:267 growlee/src/plugin.py:182
 #: lastfm/src/LastFMConfig.py:38 pushservice/src/Services/SMTP.py:56
 #: pushservice/src/Services/GNTP.py:51 elektro/src/plugin.py:390
 #: emission/src/EmissionSetup.py:29 dyndns/src/plugin.py:37
@@ -10854,28 +10987,28 @@ msgstr "Slaptažodis"
 
 #: rsdownloader/src/plugin.py:820
 msgid "Password (netload.in):"
-msgstr ""
+msgstr "Slaptažodis (netload.in):"
 
 #: rsdownloader/src/plugin.py:822
 msgid "Password (uploaded.to):"
-msgstr ""
+msgstr "Slaptažodis (uploaded.to):"
 
 #: fritzcall/src/plugin.py:1971
 msgid "Password Accessing FRITZ!Box"
-msgstr ""
+msgstr "Slaptažodis prieigai prie FRITZ!Box"
 
 #: passwordchanger/src/plugin.py:48 passwordchanger/src/plugin.py:81
 #: passwordchanger/src/plugin.py:168 passwordchanger/src/plugin.py:173
 msgid "Password Changer"
-msgstr ""
+msgstr "Slaptažodžio keitiklis"
 
 #: fritzcall/src/plugin.py:1977
 msgid "Password of WLAN guest network"
-msgstr ""
+msgstr "Slaptažodis WLAN tinklo svečių"
 
 #: ecasa/src/EcasaSetup.py:39
 msgid "Password to the google account."
-msgstr ""
+msgstr "Slaptažodis google paskyrai."
 
 #: rsdownloader/src/plugin.py:818 ftpbrowser/src/FTPServerManager.py:160
 msgid "Password:"
@@ -10884,37 +11017,37 @@ msgstr "Slaptažodis:"
 #: webinterface/src/WebComponents/Sources/LocationsAndTags.py:69
 #, python-format
 msgid "Path %s can not be created"
-msgstr ""
+msgstr "Kelias %s negali būti sukurtas"
 
 #: webinterface/src/WebComponents/Sources/LocationsAndTags.py:71
 #, python-format
 msgid "Path %s does not exist"
-msgstr ""
+msgstr "Kelio %s nėra"
 
 #: birthdayreminder/src/BirthdayReminder.py:631
 msgid "Path to birthday file:"
-msgstr ""
+msgstr "Kelias į gimtadienio failą:"
 
 #: pushservice/src/Controller/SendLog.py:46
 msgid "Path to check"
-msgstr ""
+msgstr "Kelio tikrinimas"
 
 #: pushservice/src/Controller/FreeSpace.py:33
 #, python-format
 msgid "Path:  %s\n"
-msgstr ""
+msgstr "Kelias: %s\n"
 
 #: emission/src/EmissionOverview.py:287
 msgid "Pause all"
-msgstr ""
+msgstr "Sustabdyti visus"
 
 #: emission/src/EmissionOverview.py:285
 msgid "Pause shown"
-msgstr ""
+msgstr "Pauzė parodyta"
 
 #: epgrefresh/src/EPGRefreshConfiguration.py:57 epgrefresh/src/plugin.py:242
 msgid "Pending Services"
-msgstr ""
+msgstr "Laukiantys kanalai"
 
 #: mytube/src/plugin.py:77 youtubeplayer/src/YouTubeSearchDialog.py:68
 msgid "People & Blogs"
@@ -10922,24 +11055,24 @@ msgstr "Liaudis ir Blogai"
 
 #: pushservice/src/ConfigScreen.py:192
 msgid "Period in hours (0=disabled)"
-msgstr ""
+msgstr "Laikotarpis valandomis (0=išjungta)"
 
 #: permanentclock/src/plugin.py:48 permanentclock/src/plugin.py:162
 #: permanentclock/src/plugin.py:206 permanentclock/src/plugin.py:213
 msgid "Permanent Clock"
-msgstr ""
+msgstr "Pastovus laikrodis"
 
 #: permanenttimeshift/src/plugin.py:1618
 msgid "Permanent Timeshift Enable"
-msgstr ""
+msgstr "Pastovus laiko poslinkis įjungtas"
 
 #: permanenttimeshift/src/plugin.py:1621
 msgid "Permanent Timeshift Max Events"
-msgstr ""
+msgstr "Pastovaus laiko poslinkio maksimalūs įvykiai"
 
 #: permanenttimeshift/src/plugin.py:1622
 msgid "Permanent Timeshift Max Length"
-msgstr ""
+msgstr "Pastovaus laiko poslinkio maksimalus ilgis"
 
 #: permanenttimeshift/meta/plugin_permanenttimeshift.xml./permanenttimeshift/meta/plugin_permanenttimeshift.xml
 msgid "Permanent Timeshift Plugin for E2 Dreamboxes"
@@ -10947,16 +11080,16 @@ msgstr "Nuolatinio laiko poslinkio priedas dėl E2 Dreambox'ų"
 
 #: permanenttimeshift/src/plugin.py:1678
 msgid "Permanent Timeshift Settings"
-msgstr ""
+msgstr "Pastovaus laiko poslinkio nustatymai"
 
 #: permanenttimeshift/src/plugin.py:1594
 #, python-format
 msgid "Permanent Timeshift Settings Version %s"
-msgstr ""
+msgstr "Pastovaus laiko poslinkio nustatymų versija %s"
 
 #: permanenttimeshift/src/plugin.py:1623
 msgid "Permanent Timeshift Start Delay"
-msgstr ""
+msgstr "Pastovaus laiko poslinkio paleidimo delsimas"
 
 #: permanentclock/meta/plugin_permanentclock.xml./permanentclock/meta/plugin_permanentclock.xml
 msgid "PermanentClock shows the clock permanently on the screen."
@@ -10968,11 +11101,11 @@ msgstr "Persų"
 
 #: lastfm/src/plugin.py:447
 msgid "Personal Recommendations"
-msgstr ""
+msgstr "Asmeninės rekomendacijos"
 
 #: lastfm/src/plugin.py:150
 msgid "Personal Stations"
-msgstr ""
+msgstr "Asmeninės stotys"
 
 #: mytube/src/plugin.py:71 youtubeplayer/src/YouTubeSearchDialog.py:62
 msgid "Pets & Animals"
@@ -10983,46 +11116,46 @@ msgstr "Numylėtiniai ir Gyvūnai"
 #: fritzcall/src/plugin.py:1066 fritzcall/src/plugin.py:1889
 #: fritzcall/src/plugin.py:2721
 msgid "Phone calls"
-msgstr ""
+msgstr "Skambučiai"
 
 #: ncidclient/src/plugin.py:761
 msgid "PhoneBook Location"
-msgstr ""
+msgstr "Telefonų knygos vieta"
 
 #: fritzcall/src/plugin.py:1996 fritzcall/src/plugin.py:2014
 msgid "PhoneBook and Faces Location"
-msgstr ""
+msgstr "Telefonų knygos ir veidų vieta"
 
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
 #: ncidclient/src/plugin.py:467 fritzcall/src/plugin.py:1622
 #: fritzcall/src/plugin.py:1891 fritzcall/src/plugin.py:2722
 msgid "Phonebook"
-msgstr ""
+msgstr "Telefonų knyga"
 
 #: epgrefresh/src/PipAdapter.py:82
 msgid "PiP available now."
-msgstr ""
+msgstr "PiP pasiekiamas jau dabar"
 
 #: epgrefresh/src/plugin.py:58
 msgid "Picture in Picture"
-msgstr ""
+msgstr "Paveikslėlis paveikslėlyje"
 
 #: epgrefresh/src/plugin.py:59
 msgid "Picture in Picture (hidden)"
-msgstr ""
+msgstr "Paveikslėlis paveikslėlyje (paslėptas)"
 
 #: dreamexplorer/src/plugin.py:385
 msgid "Picture-Player not aviable."
-msgstr ""
+msgstr "Paveikslėlių grotuvo nėra."
 
 #: easymedia/src/plugin.py:533
 msgid "Picture-player is not installed!"
-msgstr ""
+msgstr "Paveikslėlių grotuvas neįdiegtas!"
 
 #: easymedia/src/plugin.py:207
 msgid "PicturePlayer:"
-msgstr ""
+msgstr "Paveikslėlių grotuvas:"
 
 #: easymedia/src/plugin.py:386
 msgid "Pictures"
@@ -11034,19 +11167,19 @@ msgstr "Pillarbox"
 
 #: pipservicerelation/src/plugin.py:82
 msgid "PipServiceRelation - Config"
-msgstr ""
+msgstr "Pip paslaugos ryšio - konfigūracija"
 
 #: pipservicerelation/src/plugin.py:180
 msgid "PipServiceRelation - Entry Config"
-msgstr ""
+msgstr "Pip paslaugos ryšio - Įėjimo konfigūracija"
 
 #: moviecut/src_py/plugin.py:40
 msgid "Place the cut movie in a new file ending with \" cut\""
-msgstr ""
+msgstr "Patalpinti iškirptą filmą į naują failą, kuris baigiasi su \" cut\""
 
-#: infobartunerstate/src/IBTSConfiguration.py:128
+#: infobartunerstate/src/IBTSConfiguration.py:129
 msgid "Placeholder for Progressbar"
-msgstr ""
+msgstr "Eigos juostos patalpinimo vieta"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:164
 #: lastfm/src/plugin.py:178 lastfm/src/plugin.py:407
@@ -11057,15 +11190,15 @@ msgstr "Groti"
 #: webinterface/src/WebComponents/Sources/Strings.py:165
 #, python-format
 msgid "Play %s"
-msgstr ""
+msgstr "Groti %s"
 
 #: lastfm/src/plugin.py:462
 msgid "Play Artist Radio..."
-msgstr ""
+msgstr "Groti atlikėjų radiją..."
 
 #: lastfm/src/plugin.py:467
 msgid "Play Group Radio..."
-msgstr ""
+msgstr "Groti grupės radiją..."
 
 #: lastfm/meta/plugin_lastfm.xml./lastfm/meta/plugin_lastfm.xml
 msgid "Play Internet Radio downloaded from Last.FM"
@@ -11073,15 +11206,15 @@ msgstr "Groti Last.FM atsisiųstą iš interneto radijo"
 
 #: lastfm/src/plugin.py:472
 msgid "Play Tag Radio..."
-msgstr ""
+msgstr "Groti gairių radiją..."
 
 #: imdb/src/plugin.py:349
 msgid "Play Trailer"
-msgstr ""
+msgstr "Groti anonsą"
 
 #: dreammediathek/src/plugin.py:188
 msgid "Play Web and ipTV streams"
-msgstr ""
+msgstr "Žiūrėti Web ir ipTV srautus"
 
 #: mytube/src/plugin.py:1558
 msgid "Play YouTube movies"
@@ -11089,11 +11222,11 @@ msgstr "Rodyti YouTube filmus"
 
 #: zapstatistic/src/plugin.py:561
 msgid "Play entry"
-msgstr ""
+msgstr "Groti įrašus"
 
-#: merlinmusicplayer/src/plugin.py:2921
+#: merlinmusicplayer/src/plugin.py:2936
 msgid "Play last used songlist after starting"
-msgstr ""
+msgstr "Groti paskutinį naudotą dainų sąrašą, po paleidimo"
 
 #: dreammediathek/src/plugin.py:31 dreammediathek/src/MoviePlayer.py:31
 #: mytube/src/plugin.py:121
@@ -11112,7 +11245,7 @@ msgstr "Rodyti vaizdo įrašus iš kompiuterio į savo Dreambox"
 #: webinterface/src/WebComponents/Sources/MP.py:149
 #, python-format
 msgid "Playback of '%s' started"
-msgstr ""
+msgstr "Atkūrimas '%s' prasidėjo"
 
 #: youtubeplayer/meta/plugin_youtubeplayer.xml./youtubeplayer/meta/plugin_youtubeplayer.xml
 msgid "Playback of Youtube through a PC"
@@ -11129,73 +11262,73 @@ msgstr "Tinklo ir interneto srautų grotuvas."
 #: webinterface/src/WebComponents/Sources/Strings.py:174
 #: vlcplayer/src/VlcMediaList.py:63
 msgid "Playlist"
-msgstr ""
+msgstr "Grojaraštis"
 
 #: webinterface/src/WebComponents/Sources/MP.py:190
 #, python-format
 msgid "Playlist '%s' does not exist"
-msgstr ""
+msgstr "Grojaraštis '%s' neegzistuoja"
 
-#: merlinmusicplayer/src/plugin.py:2128
+#: merlinmusicplayer/src/plugin.py:2129
 #, python-format
 msgid "Playlist (%s) -> Song List"
-msgstr ""
+msgstr "Grojaraštis (%s) -> Dainų sąrašas"
 
 #: youtubeplayer/src/YouTubeAddPlayList.py:60
 msgid "Playlist Description"
-msgstr ""
+msgstr "Grojaraščio aprašymas"
 
 #: youtubeplayer/src/YouTubeAddPlayList.py:59
 msgid "Playlist Name"
-msgstr ""
+msgstr "Grojaraščio pavadinimas"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:105
 #, python-format
 msgid "Playlist for %s"
-msgstr ""
+msgstr "Grojaraštis dėl %s"
 
 #: webinterface/src/WebComponents/Sources/MP.py:205
 #, python-format
 msgid "Playlist saved to '%s'"
-msgstr ""
+msgstr "Grojaraštis išsaugotas į '%s'"
 
-#: merlinmusicplayer/src/plugin.py:2094
+#: merlinmusicplayer/src/plugin.py:2095
 #: youtubeplayer/src/YouTubeSearchDialog.py:270
 msgid "Playlists"
 msgstr "Grojaraščiai"
 
-#: merlinmusicplayer/src/plugin.py:2366
+#: merlinmusicplayer/src/plugin.py:2367
 #, python-format
 msgid "Playlists (%d)"
-msgstr ""
+msgstr "Grojaraštis (%d)"
 
 #: eparted/src/eparted.py:595
 msgid "Please Wait"
-msgstr ""
+msgstr "Prašome palaukti"
 
 #: rsdownloader/src/plugin.py:1389 zapstatistic/src/plugin.py:571
 msgid "Please choose a function..."
-msgstr ""
+msgstr "Prašome pasirinkti funkciją"
 
 #: epgrefresh/src/PipAdapter.py:32
 msgid "Please don't use PiP meanwhile!"
-msgstr ""
+msgstr "Prašome nenaudoti pip kol kas!"
 
 #: webcamviewer/src/WebcamTravel.py:131
 msgid "Please enter a searchkey:"
-msgstr ""
+msgstr "Prašome įvesti paieškos raktą:"
 
 #: weatherplugin/src/setup.py:228
 msgid "Please enter a valid city name."
-msgstr ""
+msgstr "Prašome įrašyti galiojantį miesto pavadinimą."
 
 #: weatherplugin/src/setup.py:230
 msgid "Please enter a valid location code for the city."
-msgstr ""
+msgstr "Prašome įrašyti galiojantį vietos kodą miestui."
 
 #: fstabeditor/src/plugin.py:242
 msgid "Please enter a value for every input field"
-msgstr ""
+msgstr "Prašome įrašyti reikšmę kiekvienam įvesties laukui"
 
 #: kiddytimer/src/KTmain.py:255
 msgid "Please enter the correct pin code"
@@ -11203,7 +11336,7 @@ msgstr "Prašome įrašyti teisingą PIN kodą"
 
 #: tageditor/src/plugin.py:85
 msgid "Please enter the new tag"
-msgstr ""
+msgstr "Prašome įrašyti naują žymę"
 
 #: mytube/src/plugin.py:483
 msgid "Please enter your search term."
@@ -11238,6 +11371,12 @@ msgid ""
 " You can download package from project Google Code page or unpack rar "
 "manually and make local convertion."
 msgstr ""
+"Prašome iš naujo paleisti GUI, kad pritaikyti pakeitimus.\n"
+"\n"
+"Jei UNRAR paketas nebuvo įdiegtas, tai reiškia, kad Jūsų įvaizdis neturi "
+"jo.\n"
+"Galite atsisiųsti paketą iš projekto Google Code puslapio arba išpakuoti rar "
+"rankiniu būdu ir padaryti vietinį pakeitimą."
 
 #: mytube/src/plugin.py:481
 msgid "Please select a standard feed or try searching for videos."
@@ -11249,23 +11388,23 @@ msgstr "Prašome išsirinkti subkanalą dėl įrašymo..."
 
 #: merlinepgcenter/src/MerlinEPGCenter.py:817
 msgid "Please select a timer type to add:"
-msgstr ""
+msgstr "Prašome pasirinkti laikmačio tipą, kad pridėti:"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:29
 msgid "Please select any bouquet"
-msgstr ""
+msgstr "Prašome pasirinkti bet kokį paketą"
 
 #: satloader/src/plugin.py:206
 msgid "Please select at least one bouquet"
-msgstr ""
+msgstr "Prašome pasirinkti bent vieną paketą"
 
 #: satloader/src/plugin.py:329
 msgid "Please select at least one satellite"
-msgstr ""
+msgstr "Prašome pasirinkti bent vieną palydovą"
 
 #: satloader/src/plugin.py:468
 msgid "Please select at least one transponder"
-msgstr ""
+msgstr "Prašome pasirinkti bent vieną transponderį"
 
 #: serienfilm/src/MovieSelection.py:513
 msgid "Please select tag to filter..."
@@ -11273,7 +11412,7 @@ msgstr "Prašome išsirinkti kortelę filtravimui..."
 
 #: ofdb/src/plugin.py:220 imdb/src/plugin.py:295
 msgid "Please select the matching entry"
-msgstr ""
+msgstr "Prašome pasirinkti sutampantį įrašą"
 
 #: serienfilm/src/MovieSelection.py:457
 msgid "Please select the movie path..."
@@ -11281,15 +11420,15 @@ msgstr "Prašome išsirinkti filmo kelią..."
 
 #: satipclient/src/SatIPTunerSetup.py:133
 msgid "Please select the type of tuner you want to add!"
-msgstr ""
+msgstr "Prašome pasirinkti imtuvo tipą, kurį norite pridėti!"
 
 #: kiddytimer/src/KTmain.py:402
 msgid "Please select your KiddyTimer- option"
-msgstr ""
+msgstr "Prašome pasirinkti savo KiddyTimer- parinktį"
 
 #: seriesplugin/src/Identifiers/SerienServer.py:110
 msgid "Please try Fernsehserien.de"
-msgstr ""
+msgstr "Prašome bandyti Fernsehserien.de"
 
 #: showclock/src/plugin.py:216
 msgid ""
@@ -11298,6 +11437,10 @@ msgid ""
 "Press OK to store current position and return to the setup menu or EXIT to "
 "cancel the moving."
 msgstr ""
+"Prašome naudoti kursoriaus klavišus, kad perkelti laikrodį.\n"
+"\n"
+"Paspauskite OK, jei norite išsaugoti esamą padėtį ir grįžti į nustatymų "
+"meniu arba EXIT, kad atšaukti perkėlimą."
 
 #: permanenttimeshift/src/plugin.py:907
 msgid ""
@@ -11314,6 +11457,8 @@ msgid ""
 "Please visit: %s\n"
 "And enter: %s"
 msgstr ""
+"Prašome apsilankyti: %s\n"
+"Ir įrašykite: %s"
 
 #: genuinedreambox/src/plugin.py:137
 msgid "Please wait (Step 2)"
@@ -11321,7 +11466,7 @@ msgstr "Prašome laukti (Step 2)"
 
 #: networkbrowser/src/MountEdit.py:239
 msgid "Please wait while I'm saving your network mount..."
-msgstr ""
+msgstr "Prašome palaukti, kol bus išsaugotas jūsų tinklo pajungimas..."
 
 #: networkbrowser/src/MountView.py:112
 msgid "Please wait while removing your network mount..."
@@ -11337,7 +11482,7 @@ msgstr "Prašome laukti, kol atnaujinamas jūsų tinklo pajungimas..."
 
 #: flashexpander/src/flashexpander.py:223
 msgid "Please wait, Flash memory will be copied."
-msgstr ""
+msgstr "Prašome palaukti, vidinė atmintis bus nukopijuota."
 
 #: satloader/src/plugin.py:84 satloader/src/plugin.py:178
 msgid "Please wait..."
@@ -11349,7 +11494,7 @@ msgstr "Prašome laukti... Užkraunamas sąrašas..."
 
 #: subsdownloader2/src/plugin.py:1186
 msgid "Plugin autoupdate:"
-msgstr ""
+msgstr "Priedo automatinis atnaujinimas:"
 
 #: quickbutton/src/plugin.py:138 quickbutton/src/plugin.py:225
 #: quickbutton/src/plugin.py:272
@@ -11359,25 +11504,25 @@ msgstr "Papildomų programų naršyklė"
 #: aspectratioswitch/src/plugin.py:83 lastfm/src/plugin.py:34
 #: elektro/src/plugin.py:110 showclock/src/plugin.py:76
 msgid "Plugin menu"
-msgstr ""
+msgstr "Priedų meniu"
 
 #: ncidclient/src/plugin.py:796
 msgid "Plugin not active"
-msgstr ""
+msgstr "Priedas neaktyvus"
 
 #: fritzcall/src/plugin.py:2045 fritzcall/src/plugin.py:2052
 #: fritzcall/src/plugin.py:2066 fritzcall/src/plugin.py:2678
 #: fritzcall/src/plugin.py:2685 fritzcall/src/plugin.py:2696
 msgid "Plugin not enabled"
-msgstr ""
+msgstr "Priedas neįjungtas"
 
 #: movieselectionquickbutton/src/plugin.py:155 quickbutton/src/plugin.py:178
 msgid "Plugin not found!"
-msgstr ""
+msgstr "Priedas nerastas!"
 
 #: fstabeditor/src/plugin.py:288
 msgid "Plugin to edit fstab"
-msgstr ""
+msgstr "Priedas fstab redagavimui"
 
 #: audiorestart/src/plugin.py:104 kiddytimer/src/KTsetup.py:73
 #: audiosync/src/AC3setup.py:60
@@ -11387,11 +11532,11 @@ msgstr "Papildoma programa: %(plugin)s , Versija: %(version)s"
 
 #: pluginhider/src/PluginHiderSetup.py:122
 msgid "PluginHider Setup"
-msgstr ""
+msgstr "PluginHider valdymas"
 
 #: pluginsort/srcmphelp.xml
 msgid "PluginSort Help"
-msgstr ""
+msgstr "PluginSort pagalba"
 
 #: pluginhider/src/PluginHiderSetup.py:56
 msgid "Plugins"
@@ -11404,7 +11549,7 @@ msgstr "Papildomos programos"
 #: podcast/src/plugin.py:552 podcast/src/plugin.py:613
 #: podcast/src/plugin.py:656
 msgid "Podcast"
-msgstr ""
+msgstr "Tinklalaidės"
 
 #: podcast/meta/plugin_podcast.xml./podcast/meta/plugin_podcast.xml
 msgid "Podcast streams podcasts to your Dreambox."
@@ -11428,19 +11573,19 @@ msgstr "Apklausa automatiškai"
 
 #: epgbackup/src/EPGBackupConfig.py:181
 msgid "Pop a notification if called in background?"
-msgstr ""
+msgstr "Iššokantis pranešimas, jei skambinama fone?"
 
 #: autotimer/src/AutoTimerSettings.py:59
 msgid "Popup timeout in seconds"
-msgstr ""
+msgstr "Iššokančio lango limitas sekundėmis"
 
 #: porncenter/src/plugin.py:54 porncenter/src/plugin.py:108
 #: porncenter/src/plugin.py:171 porncenter/src/plugin.py:189
 #: porncenter/src/plugin.py:237
 msgid "Porn Center"
-msgstr ""
+msgstr "Porno centras"
 
-#: partnerbox/src/PartnerboxSetup.py:127 partnerbox/src/PartnerboxSetup.py:250
+#: partnerbox/src/PartnerboxSetup.py:128 partnerbox/src/PartnerboxSetup.py:265
 #: emission/src/EmissionBandwidth.py:103 emission/src/EmissionSetup.py:30
 #: dreamirc/src/dreamIRCSetup.py:66
 msgid "Port"
@@ -11448,7 +11593,7 @@ msgstr "Jungtis"
 
 #: ftpbrowser/src/FTPServerManager.py:161
 msgid "Port:"
-msgstr ""
+msgstr "Jungtis:"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:180
 msgid "Portuguese"
@@ -11456,59 +11601,59 @@ msgstr "Portugalų"
 
 #: googlemaps/src/plugin.py:422 googlemaps/src/plugin.py:423
 msgid "Pos."
-msgstr ""
+msgstr "Poz."
 
 #: easyinfo/src/plugin.py:257
 msgid "Position 1 (info button):"
-msgstr ""
+msgstr "Pozicija 1 (info mygtukas):"
 
 #: easyinfo/src/plugin.py:266
 msgid "Position 10:"
-msgstr ""
+msgstr "Pozicija 10:"
 
 #: easyinfo/src/plugin.py:267
 msgid "Position 11:"
-msgstr ""
+msgstr "Pozicija 11:"
 
 #: easyinfo/src/plugin.py:258
 msgid "Position 2 (red button):"
-msgstr ""
+msgstr "Pozicija 2 (raudonas mygtukas):"
 
 #: easyinfo/src/plugin.py:259
 msgid "Position 3 (green button):"
-msgstr ""
+msgstr "Pozicija 3 (žalias mygtukas):"
 
 #: easyinfo/src/plugin.py:260
 msgid "Position 4 (yellow button):"
-msgstr ""
+msgstr "Pozicija 4 (geltonas mygtukas):"
 
 #: easyinfo/src/plugin.py:261
 msgid "Position 5 (blue button):"
-msgstr ""
+msgstr "Pozicija 5 (mėlynas mygtukas):"
 
 #: easyinfo/src/plugin.py:262
 msgid "Position 6:"
-msgstr ""
+msgstr "Pozicija 6:"
 
 #: easyinfo/src/plugin.py:263
 msgid "Position 7:"
-msgstr ""
+msgstr "Pozicija 7:"
 
 #: easyinfo/src/plugin.py:264
 msgid "Position 8:"
-msgstr ""
+msgstr "Pozicija 8:"
 
 #: easyinfo/src/plugin.py:265
 msgid "Position 9:"
-msgstr ""
+msgstr "Pozicija 9:"
 
 #: teletext/src/plugin.py:1337 teletext/src/plugin.py:1342
 msgid "Position and size"
-msgstr ""
+msgstr "Pozicija ir dydis"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:71
 msgid "Power Control"
-msgstr ""
+msgstr "Energijos valdymas"
 
 #: autotimer/src/AutoTimerEditor.py:527
 msgid ""
@@ -11520,15 +11665,15 @@ msgstr ""
 
 #: movietagger/src/plugin.py:264
 msgid "Predefined Tag"
-msgstr ""
+msgstr "Pasirengimo žymė"
 
 #: infobartunerstate/src/plugin.py:106
 msgid "Prepare / Start / End record"
-msgstr ""
+msgstr "Paruošti / Paleisti / Įrašo pabaiga"
 
 #: infobartunerstate/src/plugin.py:102
 msgid "Prepare record"
-msgstr ""
+msgstr "Paruošti įrašą"
 
 #: networkbrowser/src/MountEdit.py:63
 msgid "Press OK to activate the settings."
@@ -11564,12 +11709,12 @@ msgstr "Spauskite OK norėdami išsaugoti nustatymus."
 
 #: pipservicerelation/src/plugin.py:195
 msgid "Press OK to select a related PiP service"
-msgstr ""
+msgstr "Paspauskite OK, kad pasirinktumėte atitinkamą PIP kanalą"
 
 #: pipservicerelation/src/plugin.py:194
 #: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentConfig.py:88
 msgid "Press OK to select a service"
-msgstr ""
+msgstr "Paspauskite OK norėdami pasirinkti kanalą"
 
 #: networkbrowser/src/MountManager.py:53
 msgid "Press OK to select."
@@ -11577,15 +11722,15 @@ msgstr "Spauskite OK pasirinkimui."
 
 #: satloader/src/plugin.py:232
 msgid "Press ok button to select bouquet"
-msgstr ""
+msgstr "Paspauskite OK mygtuką, kad pasirinktumėte paketą"
 
 #: satloader/src/plugin.py:361
 msgid "Press ok button to select satellite"
-msgstr ""
+msgstr "Paspauskite OK mygtuką, kad pasirinktumėte palydovą"
 
 #: satloader/src/plugin.py:77
 msgid "Press ok or green button to install satellites.xml"
-msgstr ""
+msgstr "Paspauskite OK arba žalią mygtuką, kad įdiegti satellites.xml"
 
 #: curlytx/src/CurlyTx.py:52 curlytx/src/CurlyTx.py:123
 msgid "Prev"
@@ -11593,7 +11738,7 @@ msgstr "Buvęs"
 
 #: seriesplugin/src/ChannelEditor.py:84
 msgid "Previeous page"
-msgstr ""
+msgstr "Ankstesnis puslapis"
 
 #: autotimer/src/AutoTimerOverview.py:218 simplerss/src/plugin.py:16
 msgid "Preview"
@@ -11605,11 +11750,11 @@ msgstr "Peržiūrėti Auto Laikmatį"
 
 #: dreamexplorer/src/plugin.py:357
 msgid "Preview all pictures"
-msgstr ""
+msgstr "Peržiūrėti visus paveikslėlius"
 
 #: movielistpreview/src/plugin.py:342
 msgid "Preview created."
-msgstr ""
+msgstr "Peržiūra sukurta"
 
 #: mosaic/meta/plugin_mosaic.xml./mosaic/meta/plugin_mosaic.xml
 msgid "Preview screenshots of running tv shows"
@@ -11621,59 +11766,62 @@ msgstr "Peržiūrėti momentines ekrano kopijas iš veikiančių tv laidų."
 
 #: webinterface/src/WebComponents/Sources/Strings.py:163
 msgid "Previous"
-msgstr ""
+msgstr "Ankstesnis"
 
 #: lastfm/src/plugin.py:202
 msgid "Previous Selection"
-msgstr ""
+msgstr "Ankstesnis pasirinkimas"
 
 #: seriesplugin/src/ChannelEditor.py:91
 msgid "Previous bouquet"
-msgstr ""
+msgstr "Ankstesnis paketas"
 
 #: merlinepgcenter/src/MerlinEPGCenter.py:43
 msgid "Prime Time"
-msgstr ""
+msgstr "Geriausias laikas"
 
 #: easyinfo/src/plugin.py:79
 msgid "Prime Time Manager"
-msgstr ""
+msgstr "Geriausio laiko valdymas"
 
 #: easyinfo/src/plugin.py:644
 msgid "Prime Time Manager is not installed!"
-msgstr ""
+msgstr "Geriausio laiko valdytojas neįdiegtas!"
 
 #: merlinepgcenter/src/ConfigTabs.py:185
 msgid "Prime time:"
-msgstr ""
+msgstr "Geriausias laikas:"
 
 #: merlinepg/src/plugin.py:113
 msgid "Primetime (h):"
-msgstr ""
+msgstr "Geriausias laikas (h):"
 
 #: merlinepg/src/plugin.py:114
 msgid "Primetime from (m):"
-msgstr ""
+msgstr "Geriausias laikas nuo (m):"
 
 #: merlinepg/src/plugin.py:115
 msgid "Primetime to (m):"
-msgstr ""
+msgstr "Geriausias laikas į (m):"
 
 #: teletext/src/plugin.py:79
 msgid "Print debug messages to /tmp/dbttcp.log."
-msgstr ""
+msgstr "Spausdinti derinimo pranešimus /tmp/dbttcp.log."
 
 #: emission/src/EmissionDetailview.py:260
 #, python-format
 msgid "Private: %s"
-msgstr ""
+msgstr "Privatus: %s"
 
-#: merlinmusicplayer/src/plugin.py:244
+#: merlinmusicplayer/src/plugin.py:245
 msgid ""
 "Process aborted.\n"
 " 0 files added to database!\n"
 "Press OK to close."
 msgstr ""
+"Procesų nutrauktas.\n"
+" 0 failų įtraukta į duomenų bazę!\n"
+"Paspauskite OK, kad uždaryti."
 
 #: reconstructapsc/src_py/plugin.py:104
 #, python-format
@@ -11681,19 +11829,21 @@ msgid ""
 "Processing failed for the %s \"%s\":\n"
 "%s"
 msgstr ""
+"Apdorojimas nesėkmingas dėl %s \"%s\":\n"
+"%s"
 
 #: dvdbackup/src/plugin.py:322
 msgid "Progress"
-msgstr ""
+msgstr "Eiga"
 
 #: merlinepgcenter/src/ConfigTabs.py:220
 msgid "Progress bar style:"
-msgstr ""
+msgstr "Eigos juostos stilius:"
 
 #: pushservice/src/Services/SMTP.py:33
 #, python-brace-format
 msgid "Provided by Dreambox Plugin {name:s} {version:s} - {plugin:s}\n"
-msgstr ""
+msgstr "Pateiktas Dreambox priedas {pavadinimas:s} {versija:s} - {priedas:s}\n"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:30
 msgid "Providers"
@@ -11705,11 +11855,11 @@ msgstr "Publikuotas"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:181
 msgid "Punjabi"
-msgstr ""
+msgstr "Pandžabų"
 
 #: showclock/src/plugin.py:75
 msgid "Push \"Exit\" long to show/hide clock"
-msgstr ""
+msgstr "Ilgai spausti \"Exit\", kad rodyti / slėpti laikrodį"
 
 #: pushservice/src/ConfigScreen.py:197
 msgid "Push errors"
@@ -11734,128 +11884,128 @@ msgstr ""
 
 #: pushservice/src/ConfigScreen.py:431
 msgid "Push test"
-msgstr ""
+msgstr "Paspauskite testą"
 
 #: pushservice/src/ConfigScreen.py:431
 msgid "PushService Config"
-msgstr ""
+msgstr "PushService konfigūracija"
 
 #: pushservice/src/ConfigFile.py:71
 msgid "PushService Exception in readXML: "
-msgstr ""
+msgstr "PushService išimtinai skaityti XML: "
 
 #: pushservice/src/ConfigFile.py:92
 msgid "PushService Exception in writeXML: "
-msgstr ""
+msgstr "PushService išimtinai rašytiXML: "
 
 #: pushservice/src/Modules.py:60
 msgid "PushService Find module exception: "
-msgstr ""
+msgstr "PushService Ieškoti modulio išimties: "
 
 #: pushservice/src/Modules.py:105
 msgid "PushService Instantiate exception: "
-msgstr ""
+msgstr "PushService momentinė išimtis: "
 
 #: pushservice/src/Modules.py:70
 msgid "PushService Load exception: "
-msgstr ""
+msgstr "PushService įkėlimo išimtis: "
 
 #: pushservice/src/ModuleBase.py:93
 #, python-format
 msgid "PushService Module %s:\n"
-msgstr ""
+msgstr "PushService modulis %s:\n"
 
 #: pushservice/src/Modules.py:110
 msgid "PushService Module is not callable"
-msgstr ""
+msgstr "PushService į modulį nesikreipia"
 
 #: pushservice/src/ConfigFile.py:58
 msgid "PushService No configuration file present"
-msgstr ""
+msgstr "PushService nėra failo konfigūracijos pristatymo"
 
 #: pushservice/src/Modules.py:76
 msgid "PushService No module available: "
-msgstr ""
+msgstr "PushService nėra modulio: "
 
 #: pushservice/src/Modules.py:64
 msgid "PushService No module found: "
-msgstr ""
+msgstr "PushService modulis nerastas: "
 
 #: pushservice/src/Services/SMTP.py:88
 #, python-format
 msgid "PushService PushMail: Sending message: %s"
-msgstr ""
+msgstr "PushService PushMail: siunčiama žinutė: %s"
 
 #: pushservice/src/PushServiceBase.py:341
 msgid "PushService Service push() exception"
-msgstr ""
+msgstr "PushService kanalo paspaudimo() išimtis"
 
 #: pushservice/src/ConfigScreen.py:435
 msgid "PushService Test exception:"
-msgstr ""
+msgstr "PushService testo išimtis:"
 
 #: pushservice/src/Modules.py:81
 msgid "PushService Warning attribute not available: "
-msgstr ""
+msgstr "PushService perspėjimo požymis nepasiekiamas: "
 
 #: pushservice/src/Modules.py:87
 msgid "PushService Warning no class definition: "
-msgstr ""
+msgstr "PushService įspėja nėra klasės aptikimo: "
 
 #: pushservice/src/Modules.py:92
 msgid "PushService Warning no subclass of base: "
-msgstr ""
+msgstr "PushService įspėja nėra poklasio bazės: "
 
 #: pushservice/src/plugin.py:97
 msgid "PushService autostart exception "
-msgstr ""
+msgstr "PushService autosatarto išimtis "
 
 #: pushservice/src/PushServiceBase.py:283
 #: pushservice/src/PushServiceBase.py:320
 msgid "PushService controller run() exception"
-msgstr ""
+msgstr "PushService valdiklio paleidimo() išimtis"
 
 #: pushservice/src/PushServiceBase.py:275
 msgid "PushService running: "
-msgstr ""
+msgstr "PushService veikia: "
 
 #: pushservice/src/plugin.py:82
 msgid "PushService setup exception "
-msgstr ""
+msgstr "PushService valdymo išimtis "
 
 #: pushservice/src/PushServiceBase.py:265
 msgid "PushService started: "
-msgstr ""
+msgstr "PushService veikia: "
 
 #: elektro/src/plugin.py:461
 msgid "Puts the box in standby mode after boot."
-msgstr ""
+msgstr "Perveda imtuvą į budėjimo režimą po paleidimo."
 
 #: dreamexplorer/src/plugin.py:285
 msgid "Pyc-Script:\\n"
-msgstr ""
+msgstr "Pyc-Scenarijus:\\n"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:182
 msgid "Quechua"
-msgstr ""
+msgstr "Kečujų"
 
 #: imdb/src/plugin.py:419
 #, python-format
 msgid "Query IMDb: %s..."
-msgstr ""
+msgstr "IMDb užklausa: %s..."
 
 #: ofdb/src/plugin.py:306
 #, python-format
 msgid "Query OFDb: %s..."
-msgstr ""
+msgstr "OFDb užklausa: %s..."
 
 #: imdb/src/plugin.py:645 imdb/src/plugin.py:652
 msgid "Query details from the Internet Movie Database"
-msgstr ""
+msgstr "Užklausos informacija iš interneto filmų duomenų bazės"
 
 #: ofdb/src/plugin.py:496 ofdb/src/plugin.py:501 ofdb/src/plugin.py:508
 msgid "Query details from the Online-Filmdatenbank"
-msgstr ""
+msgstr "Užklausos informacija iš Interneto filmų duomenų banko"
 
 #: autotimer/srcfaq.xml
 msgid ""
@@ -11871,6 +12021,19 @@ msgid ""
 "A: From the Overview press MENU and enter the &quot;Setup&quot;. In this "
 "screen enable &quot;Poll automatically&quot; and you should be good to go."
 msgstr ""
+"Klausimas: Radau problemą su auto laikmačiu, galite ją išspręsti?\n"
+"Atsakymas: Pirmiausia pabandykite auto laikmačio versiją su neseniai "
+"išleistu (eksperimentiniu) atvaizdu, norėdami pamatyti ar problema buvo "
+"išspręsta. Tada skaitykite pagalbą ir einamus DUK, įsitikinkite kad iš "
+"tikrųjų tai yra problema, o ne elgsena.\n"
+"Jei vis dar manote, kad yra kažkas negerai su auto laikmačiu, apsilankykite "
+"http://www.dream-multimedia-tv.de/board ir parašykite savo problemą ten.\n"
+"\n"
+"Klausimas: priedas tik prideda laikmačius išeinant iš konfigūracijos, o ne "
+"automatiškai. Ką aš galiu padaryti?\n"
+"Atsakymas: Apžvalgai paspauskite Meniu ir įrašykite &quot;Setup&quot;. Šiame "
+"ekrane įjungs &quot;Poll automatically&quot; ir jums turėtų būti gerai eiti "
+"pirmyn."
 
 #: autotimer/srcfaq.xml
 msgid ""
@@ -11889,6 +12052,20 @@ msgid ""
 "A: From the Overview press MENU and enter the &quot;Setup&quot;. In this "
 "screen disable &quot;Guess existing timer based on begin/end&quot;."
 msgstr ""
+"Klausimas: Mano auto laikmatis dėl &quot;Nachrichten&quot; does not record "
+"the &quot;Sptnachrichten&quot;. \n"
+"Atsakymas: Patikrinkite &quot;Search type&quot; and &quot;Search "
+"strictness&quot; esamam auto laikmačiui. \n"
+"\n"
+"Klausimas: Bandau įrašyti turinį pavadinime. Auto laikmatis neranda. \n"
+"A: Patikrinkite &quot;EPG koduotę&quot; esamam auto laikmačiui. Vokiečių "
+"stotims &quot;ISO8859-15&quot; turėtų būti pasirinkta. \n"
+"\n"
+"Klausimas: man atrodo, kad gali nepavykti įrašyti dviejų vėlesnių įvykių. "
+"Yra tik vienas laikmatis sukurtas, kuris apima (dalis) abiejuose "
+"įvykiuose. \n"
+"A: Apžvalgai paspauskite MENU ir įrašykite &quot;Setup&quot;. Šio ekrano "
+"išjungimas &quot; atspės esamą laikmatį remiantis pradėti / baigti &quot;."
 
 #: autotimer/srcfaq.xml
 msgid ""
@@ -11901,11 +12078,11 @@ msgstr ""
 
 #: ftpbrowser/src/FTPBrowser.py:265
 msgid "Queue Manager"
-msgstr ""
+msgstr "Eilės Valdymas"
 
 #: ftpbrowser/src/FTPBrowser.py:465
 msgid "Queue processed."
-msgstr ""
+msgstr "Eilė tvarkoma."
 
 #: aspectratioswitch/src/plugin.py:287 aspectratioswitch/src/plugin.py:291
 #: aspectratioswitch/meta/plugin_aspectratioswitch.xml./aspectratioswitch/meta/plugin_aspectratioswitch.xml
@@ -11914,7 +12091,7 @@ msgstr "Greitas formato perjungimo nustatymas"
 
 #: aspectratioswitch/src/plugin.py:108
 msgid "Quick switching via remote control"
-msgstr ""
+msgstr "Greitas jungimas su nuotolinio valdymo pultu"
 
 #. TRANSLATORS: keep it short, this is a help text
 #: lastfm/src/plugin.py:210 fritzcall/src/plugin.py:521
@@ -11922,16 +12099,16 @@ msgstr ""
 #: fritzcall/src/plugin.py:680 fritzcall/src/plugin.py:1041
 #: fritzcall/src/plugin.py:1603
 msgid "Quit"
-msgstr ""
+msgstr "Baigti"
 
 #: webinterface/src/WebComponents/Sources/RemoteControl.py:85
 #, python-format
 msgid "RC command '%s' has been issued"
-msgstr ""
+msgstr "RC komanda '% s' buvo paskelbta"
 
 #: rsdownloader/src/plugin.py:774 rsdownloader/src/plugin.py:1530
 msgid "RS Downloader"
-msgstr ""
+msgstr "RS atsiuntėjas"
 
 #: simplerss/meta/plugin_simplerss.xml./simplerss/meta/plugin_simplerss.xml
 msgid "RSS viewer"
@@ -11939,11 +12116,11 @@ msgstr "RSS žiūrėjimas"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:181
 msgid "RTSP Path"
-msgstr ""
+msgstr "RTSP kelias"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:180
 msgid "RTSP Port"
-msgstr ""
+msgstr "RTSP jungtis"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:16
 #: easymedia/src/plugin.py:395
@@ -11952,11 +12129,11 @@ msgstr "Radijas"
 
 #: aspectratioswitch/src/plugin.py:78
 msgid "Radio key long"
-msgstr ""
+msgstr "Radijo klavišo ilgas spaudimas"
 
 #: easymedia/src/plugin.py:514
 msgid "Radio-mode"
-msgstr ""
+msgstr "Radijo režimas"
 
 #: youtubeplayer/src/YouTubeList.py:92
 msgid "Rate"
@@ -11995,18 +12172,18 @@ msgstr "Skaityti telefonų knygą iš FRITZ!Box"
 
 #: moviecut/src_py/plugin.py:256
 msgid "Read/write error (disk full?)"
-msgstr ""
+msgstr "Skaitymo/rašymo klaida (diskas pilnas?)"
 
 #: seriesplugin/src/ShowLogScreen.py:66
 msgid "Reading log file...\n"
-msgstr ""
+msgstr "Skaitomas log failas…\n"
 
 #: vps/src_py/Vps_setup.py:111 autotimer/src/AutoTimerEditor.py:705
 #: autotimer/src/AutoTimerEditor.py:1047 autotimer/src/AutoTimerEditor.py:1218
 #: autotimer/src/AutoTimerImporter.py:235
 #: autotimer/src/AutoTimerOverview.py:203
 #: seriesplugin/src/SeriesPluginConfiguration.py:322
-#: infobartunerstate/src/IBTSConfiguration.py:162
+#: infobartunerstate/src/IBTSConfiguration.py:165
 #: epgrefresh/src/EPGRefreshConfiguration.py:348
 #: pushservice/src/ConfigScreen.py:341 serienfilm/src/SerienFilm.py:90
 #: epgbackup/src/EPGBackupConfig.py:263
@@ -12016,33 +12193,33 @@ msgstr "Tikrai uždaryti be nustatymų išsaugojimo ?"
 #: youtubeplayer/src/YouTubePlayList.py:91
 #, python-format
 msgid "Really delete %(playlist)s?"
-msgstr ""
+msgstr "Tikrai trinti %(grojaraštį)s?"
 
 #: youtubeplayer/src/YouTubeUserList.py:122
 #, python-format
 msgid "Really delete %(user)s?"
-msgstr ""
+msgstr "Tikrai trinti %(vartotoją)s?"
 
 #: emailclient/src/plugin.py:1049
 #, python-format
 msgid "Really delete account %s?"
-msgstr ""
+msgstr "Tikrai trinti paskyrą %s?"
 
 #: advhdmi/src/AdvHdmiCecSetup.py:261
 msgid "Really delete this HDMI-Cec-Timespan Entry?"
-msgstr ""
+msgstr "Ar tikrai norite ištrinti šį HDMI-CEC-laiko atkarpos įrašą?"
 
-#: partnerbox/src/PartnerboxSetup.py:170 partnerbox/src/PartnerboxSetup.py:277
+#: partnerbox/src/PartnerboxSetup.py:171 partnerbox/src/PartnerboxSetup.py:292
 msgid "Really delete this Partnerbox Entry?"
-msgstr ""
+msgstr "Ar tikrai norite ištrinti šį Partnerbox įrašą?"
 
 #: vlcplayer/src/VlcServerList.py:144
 msgid "Really delete this Server?"
-msgstr ""
+msgstr "Tikrai trinti šį serverį?"
 
 #: weatherplugin/src/setup.py:119 weatherplugin/src/setup.py:241
 msgid "Really delete this WeatherPlugin Entry?"
-msgstr ""
+msgstr "Ar tikrai norite ištrinti šį Orų priedo įrašą?"
 
 #: growlee/src/plugin.py:137 simplerss/src/RSSSetup.py:145
 #: ftpbrowser/src/FTPServerManager.py:314
@@ -12050,12 +12227,14 @@ msgid ""
 "Really delete this entry?\n"
 "It cannot be recovered!"
 msgstr ""
+"Ar tikrai norite ištrinti šį įrašą?\n"
+"Jo nebus galima atstatyti!"
 
 #: curlytx/src/CurlyTxSettings.py:110
 msgid ""
 "Really delete this page?\n"
 "It cannot be recovered!"
-msgstr ""
+msgstr "Ar tikrai norite ištrinti šį puslapį? \\ IrJo nebus galima atstatyti!"
 
 #: emission/src/EmissionDetailview.py:192
 msgid "Really delete torrent?"
@@ -12075,32 +12254,32 @@ msgstr "Perjungti"
 
 #: growlee/src/plugin.py:178
 msgid "Receive Notifications?"
-msgstr ""
+msgstr "Gauti perspėjimas?"
 
 #: simplerss/src/RSSPoller.py:193
 #, python-format
 msgid "Received %d new news item(s)."
-msgstr ""
+msgstr "Gautas %d naujas naujienų elementas(i)."
 
 #: lastfm/src/plugin.py:153
 msgid "Recent Tracks"
-msgstr ""
+msgstr "Paskutiniai takeliai"
 
 #: lastfm/src/plugin.py:267
 msgid "Recent Tracks loaded"
-msgstr ""
+msgstr "Paskutiniai takeliai įkelti"
 
 #: youtubeplayer/src/YouTubeStdFeedSelection.py:42
 msgid "Recently Featured"
-msgstr ""
+msgstr "Neseniai pasirodę"
 
 #: lastfm/src/LastFMConfig.py:42
 msgid "Recommendation level"
-msgstr ""
+msgstr "Rekomenduojamas lygis"
 
 #: rsdownloader/src/plugin.py:838
 msgid "Reconnect type:"
-msgstr ""
+msgstr "Persijungimo tipas:"
 
 #: reconstructapsc/meta/plugin_reconstructapsc.xml./reconstructapsc/meta/plugin_reconstructapsc.xml
 msgid "Reconstruct .ap and .sc files"
@@ -12137,7 +12316,7 @@ msgstr ""
 
 #: pushservice/src/Controller/RecordSummary.py:32
 msgid "Record Summary"
-msgstr ""
+msgstr "Įrašų santrauka"
 
 #: autotimer/src/AutoTimerEditor.py:608
 msgid "Record a maximum of x times"
@@ -12145,21 +12324,21 @@ msgstr "Įrašas daugiausiai x kartų"
 
 #: merlinepgcenter/src/MerlinEPGCenter.py:1080
 msgid "Record a maximum of x times:"
-msgstr ""
+msgstr "Įrašas daugiausiai x kartų:"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:99
 msgid "Record current event"
-msgstr ""
+msgstr "Dabartinio įvykio įrašymas"
 
 #: seriesplugin/src/SeriesPluginConfiguration.py:168
 msgid "Record description episode pattern"
-msgstr ""
+msgstr "Įrašo aprašymo epizodo modelio šablonas"
 
 #: seriesplugin/src/SeriesPluginConfiguration.py:171
 msgid "Record directory pattern"
-msgstr ""
+msgstr "Įrašų katalogo modelis"
 
-#: pushservice/src/Controller/RecordNotification.py:109
+#: pushservice/src/Controller/RecordNotification.py:112
 msgid "Record finished:\n"
 msgstr ""
 "Įrašas baigtas:\n"
@@ -12171,7 +12350,7 @@ msgstr "Įrašas ant"
 
 #: merlinepgcenter/src/MerlinEPGCenter.py:815
 msgid "Record or zap timer"
-msgstr ""
+msgstr "Įrašo arba jungimo laikmatis"
 
 #: seriesplugin/src/SeriesPluginRenamer.py:316
 #, python-format
@@ -12182,7 +12361,7 @@ msgstr ""
 msgid "Record started! Stopping timeshift now ..."
 msgstr ""
 
-#: pushservice/src/Controller/RecordNotification.py:97
+#: pushservice/src/Controller/RecordNotification.py:98
 msgid "Record started:\n"
 msgstr ""
 
@@ -12297,7 +12476,7 @@ msgstr ""
 msgid "Remaining: %s"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2932
+#: merlinmusicplayer/src/plugin.py:2947
 msgid "Remember last path of filebrowser"
 msgstr ""
 
@@ -12442,7 +12621,7 @@ msgstr "Pašalinti kanalą"
 msgid "Remove the selected entry"
 msgstr "Pašalinti pasirinktą įrašą"
 
-#: partnerbox/src/PartnerboxEPGSelection.py:179 partnerbox/src/plugin.py:1049
+#: partnerbox/src/PartnerboxEPGSelection.py:179 partnerbox/src/plugin.py:1050
 #: easyinfo/src/plugin.py:734 merlinepgcenter/src/MerlinEPGCenter.py:1318
 msgid "Remove timer"
 msgstr "Pašalinti laikmatį"
@@ -12505,7 +12684,7 @@ msgstr ""
 msgid "Renaming failed"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1456
+#: merlinmusicplayer/src/plugin.py:1457
 msgid "Repeat is not available yet with cue-files!"
 msgstr ""
 
@@ -12604,7 +12783,7 @@ msgstr ""
 msgid "Reset tv-screen after playback:"
 msgstr "Iš naujo nustatyti TV ekraną po žiūrėjimo:"
 
-#: merlinmusicplayer/src/plugin.py:1578
+#: merlinmusicplayer/src/plugin.py:1579
 #, python-format
 msgid "Response -> lyrics for: %s (%s)"
 msgstr ""
@@ -12819,11 +12998,11 @@ msgstr "SNR"
 
 #: seriesplugin/src/SeriesPluginBare.py:65
 msgid "SP has been finished with errors:\n"
-msgstr ""
+msgstr "SP buvo baigtas su klaidomis:\n"
 
 #: seriesplugin/src/ChannelEditor.py:223
 msgid "STB- / Web-Channel for bouquet:"
-msgstr ""
+msgstr "STB- / Web kanalas skirtas paketui:"
 
 #: svdrp/meta/plugin_svdrp.xml./svdrp/meta/plugin_svdrp.xml
 msgid ""
@@ -12859,26 +13038,26 @@ msgstr ""
 msgid "Sanskrit"
 msgstr ""
 
-#: partnerbox/src/plugin.py:1265 partnerbox/src/plugin.py:1318
-#: partnerbox/src/plugin.py:1458
+#: partnerbox/src/plugin.py:1285 partnerbox/src/plugin.py:1342
+#: partnerbox/src/plugin.py:1510
 msgid "Sat"
 msgstr "Šeš"
 
 #: satipclient/meta/plugin_satipclient.xml./satipclient/meta/plugin_satipclient.xml
 msgid "Sat>IP Client Setup"
-msgstr ""
+msgstr "Sat>IP Kliento valdymas"
 
 #: satipclient/src/plugin.py:10 satipclient/src/plugin.py:14
 msgid "Sat>IP Tuner"
-msgstr ""
+msgstr "Sat>IP Imtuvas"
 
 #: satipclient/src/SatIPTuner.py:65
 msgid "Sat>IP Tuner Overview"
-msgstr ""
+msgstr "Sat>IP imtuvo apžvalga"
 
 #: satipclient/src/SatIPTunerSetup.py:36 satipclient/src/plugin.py:14
 msgid "Sat>IP Tuner Setup"
-msgstr ""
+msgstr "Sat>IP Imtuvo valdymas"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:31
 msgid "Satellites"
@@ -12897,7 +13076,7 @@ msgstr "Šeštadienis"
 #: webinterface/src/WebComponents/Sources/Strings.py:70
 #: audiorestart/src/plugin.py:108 satloader/src/plugin.py:166
 #: satloader/src/plugin.py:410 aspectratioswitch/src/plugin.py:121
-#: yttrailer/src/plugin.py:307 kiddytimer/src/KTsetup.py:79
+#: yttrailer/src/plugin.py:318 kiddytimer/src/KTsetup.py:79
 #: audiosync/src/AC3setup.py:64 serienfilm/src/SerienFilm.py:65
 #: fritzcall/src/plugin.py:1168 ftpbrowser/src/FTPServerManager.py:261
 #: epgbackup/src/EPGBackupConfig.py:56
@@ -12988,7 +13167,7 @@ msgstr ""
 msgid "Scan NFS share"
 msgstr "Skenuoti NFS bendrinimą"
 
-#: merlinmusicplayer/src/plugin.py:1832
+#: merlinmusicplayer/src/plugin.py:1833
 msgid "Scan path for music files and add them to database"
 msgstr ""
 
@@ -13101,7 +13280,7 @@ msgstr ""
 msgid "Search http://rapidshare-search-engine.com for:"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1831
+#: merlinmusicplayer/src/plugin.py:1832
 msgid "Search in iDream database"
 msgstr ""
 
@@ -13117,22 +13296,22 @@ msgstr "Ieškokite srities:"
 msgid "Search results"
 msgstr "Paieškos rezultatai"
 
-#: merlinmusicplayer/src/plugin.py:1995
+#: merlinmusicplayer/src/plugin.py:1996
 #, python-format
 msgid "Search results for \"%s\" in all albums"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1992
+#: merlinmusicplayer/src/plugin.py:1993
 #, python-format
 msgid "Search results for \"%s\" in all artists"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1989
+#: merlinmusicplayer/src/plugin.py:1990
 #, python-format
 msgid "Search results for \"%s\" in all titles"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1998
+#: merlinmusicplayer/src/plugin.py:1999
 #, python-format
 msgid "Search results for \"%s\" in title, artist or album"
 msgstr ""
@@ -13436,7 +13615,7 @@ msgstr "Siųsti kaip priklijuojamą"
 
 #: autotimer/src/AutoTimerSettings.py:61
 msgid "Send debug messages to shell"
-msgstr ""
+msgstr "Siųsti derinimo pranešimusi apvalkalui"
 
 #: pushservice/src/Controller/StandbyNotification.py:44
 msgid "Send notification after bootup"
@@ -13518,7 +13697,7 @@ msgstr ""
 
 #: seriesplugin/src/plugin.py:97
 msgid "SeriesPlugin test exception "
-msgstr ""
+msgstr "Serijų priedo bandymo išimtis"
 
 #: vlcplayer/src/VlcServerConfig.py:304
 msgid "Server Address"
@@ -13577,18 +13756,18 @@ msgstr "Kanalo pavadinimas"
 msgid "Service delay"
 msgstr "Kanalo užlaikymas"
 
-#: partnerbox/src/PartnerboxSetup.py:253
+#: partnerbox/src/PartnerboxSetup.py:268
 msgid "Servicelists/EPG"
 msgstr "Kanalų sąrašas / EPG"
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:136
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:261
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:137
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:271
 msgid "Servicename"
 msgstr "Kanalo pavadinimas"
 
 #: webbouqueteditor/src/WebComponents/Sources/SatellitesList.py:58
 #: pushservice/src/ConfigScreen.py:177
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:80
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:81
 msgid "Services"
 msgstr "Kanalai"
 
@@ -13839,15 +14018,15 @@ msgstr ""
 msgid "Show 'EPGRefresh Start now' in extension menu"
 msgstr ""
 
-#: partnerbox/src/PartnerboxSetup.py:76
+#: partnerbox/src/PartnerboxSetup.py:77
 msgid "Show 'RemoteTV Player' in E-Menu"
 msgstr ""
 
-#: partnerbox/src/PartnerboxSetup.py:75
+#: partnerbox/src/PartnerboxSetup.py:76
 msgid "Show 'RemoteTimer' in E-Menu"
 msgstr ""
 
-#: partnerbox/src/PartnerboxSetup.py:77
+#: partnerbox/src/PartnerboxSetup.py:78
 msgid "Show 'Stream current Service' in E-Menu"
 msgstr ""
 
@@ -13921,11 +14100,11 @@ msgstr "Rodyti registracijos žurnalą"
 msgid "Show Log file"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2936
+#: merlinmusicplayer/src/plugin.py:2951
 msgid "Show Merlin Music Player in extended-pluginlist"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2938
+#: merlinmusicplayer/src/plugin.py:2953
 msgid "Show Merlin Music Player in mainmenu"
 msgstr ""
 
@@ -13933,7 +14112,7 @@ msgstr ""
 msgid "Show Merlin-iDream:"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:137
+#: infobartunerstate/src/IBTSConfiguration.py:140
 msgid "Show Message when Recording starts"
 msgstr "Rodyti žinutę, kai prasideda įrašymas"
 
@@ -13974,7 +14153,7 @@ msgid "Show Setup in"
 msgstr ""
 
 #: movieselectionquickbutton/src/plugin.py:209
-#: webinterface/src/WebIfConfig.py:61 yttrailer/src/plugin.py:310
+#: webinterface/src/WebIfConfig.py:61 yttrailer/src/plugin.py:321
 msgid "Show Setup in Extensions menu"
 msgstr "Rodyti nustatymus išplėtiniame meniu"
 
@@ -14004,7 +14183,7 @@ msgstr ""
 msgid "Show all Plugins in MoviePlayer?"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:87
+#: infobartunerstate/src/IBTSConfiguration.py:89
 msgid "Show and hide with InfoBar"
 msgstr ""
 
@@ -14053,11 +14232,11 @@ msgstr ""
 msgid "Show event information:"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2935
+#: merlinmusicplayer/src/plugin.py:2950
 msgid "Show iDream in extended-pluginlist"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2937
+#: merlinmusicplayer/src/plugin.py:2952
 msgid "Show iDream in mainmenu"
 msgstr ""
 
@@ -14124,7 +14303,7 @@ msgstr ""
 
 #: infobartunerstate/src/Handler/Live.py:38
 msgid "Show live tuner"
-msgstr ""
+msgstr "Rodyti tiesioginį imtuvą"
 
 #: rsdownloader/src/plugin.py:1382
 msgid "Show log"
@@ -14154,11 +14333,11 @@ msgstr "Rodyti pranešimą apie konfliktus"
 msgid "Show notification on similars"
 msgstr "Rodyti pranešimą apie panašius"
 
-#: infobartunerstate/src/IBTSConfiguration.py:88
+#: infobartunerstate/src/IBTSConfiguration.py:90
 msgid "Show on events"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:89
+#: infobartunerstate/src/IBTSConfiguration.py:91
 msgid "Show on key press"
 msgstr ""
 
@@ -14166,13 +14345,13 @@ msgstr ""
 msgid "Show only calls for specific MSN"
 msgstr ""
 
-#: infobartunerstate/src/Handler/Timers.py:126
+#: infobartunerstate/src/Handler/Timers.py:125
 msgid "Show pending records only within x hour(s)"
-msgstr ""
+msgstr "Rodyti laukiančius įrašus tik per x valandų"
 
-#: infobartunerstate/src/Handler/Timers.py:124
+#: infobartunerstate/src/Handler/Timers.py:123
 msgid "Show pending timer(s)"
-msgstr ""
+msgstr "Rodyti laukiančius laikmačius"
 
 #: merlinepgcenter/src/ConfigTabs.py:207
 msgid "Show picons:"
@@ -14196,7 +14375,7 @@ msgstr ""
 
 #: infobartunerstate/src/Handler/Records.py:47
 msgid "Show record(s)"
-msgstr ""
+msgstr "Rodyti įrašus"
 
 #: seriesplugin/src/plugin.py:35
 msgid "Show series info (SP)"
@@ -14220,7 +14399,7 @@ msgstr ""
 
 #: infobartunerstate/src/Handler/StreamWebIf.py:69
 msgid "Show stream(s) (WebIf)"
-msgstr ""
+msgstr "Rodyti srautus (Webif)"
 
 #: seriesplugin/src/SeriesPluginConfiguration.py:189
 msgid "Show success after Record renaming"
@@ -14256,11 +14435,11 @@ msgstr ""
 
 #: infobartunerstate/src/Handler/StreamOpenWebIf.py:68
 msgid "Show transcoded stream(s) (OpenWebIf)"
-msgstr ""
+msgstr "Rodyti perkoduotus srautus (OpenWebif)"
 
 #: infobartunerstate/src/Handler/StreamServer.py:70
 msgid "Show transcoded stream(s) (WebIf)"
-msgstr ""
+msgstr "Rodyti perkoduotus srautus (Webif)"
 
 #: easymedia/src/plugin.py:208
 msgid "Show tv/radio switch:"
@@ -14268,7 +14447,7 @@ msgstr ""
 
 #: infobartunerstate/src/Handler/Unknown.py:40
 msgid "Show undefined service(s)"
-msgstr ""
+msgstr "Rodyti neapibrėžtus kanalus"
 
 #: youtubeplayer/src/YouTubeList.py:628 youtubeplayer/src/YouTubeList.py:653
 #: youtubeplayer/src/YouTubeList.py:693
@@ -14279,7 +14458,7 @@ msgstr ""
 msgid "Show video picture:"
 msgstr ""
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:83
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:84
 msgid "Show volumebar when volume-value was changed"
 msgstr ""
 
@@ -14339,7 +14518,7 @@ msgstr "Rodo kanalo pavadinimą vietoj kanalo numerio, jungiant."
 msgid "Shows the watched services with some statistic"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1444
+#: merlinmusicplayer/src/plugin.py:1445
 msgid "Shuffle is not available yet with cue-files!"
 msgstr ""
 
@@ -14366,7 +14545,7 @@ msgstr "Panašios"
 
 #: pushservice/src/Controller/DeactivatedTimers.py:75
 msgid "Similar:"
-msgstr ""
+msgstr "Panašus:"
 
 #: aihdcontroler/src/plugin.py:53 aihdcontroler/src/plugin.py:57
 #: valixdcontrol/src/plugin.py:55
@@ -14438,6 +14617,10 @@ msgstr ""
 msgid "Skip current Track"
 msgstr ""
 
+#: infobartunerstate/src/IBTSConfiguration.py:134
+msgid "Skip mounts for free space statistics"
+msgstr ""
+
 #: autotimer/src/AutoTimerSettings.py:58
 msgid "Skip poll during epg refresh"
 msgstr "Praleisti apklausos metu epg atnaujinimą"
@@ -14463,21 +14646,21 @@ msgstr ""
 #: seriesplugin/src/Identifiers/Fernsehserien.py:141
 #: seriesplugin/src/Identifiers/Wunschliste.py:148
 msgid "Skip: No begin timestamp specified"
-msgstr ""
+msgstr "Praleisti: Nėra nurodyta pradžios laiko žyma"
 
 #: seriesplugin/src/Identifiers/WunschlisteFeed.py:178
 #: seriesplugin/src/Identifiers/SerienServer.py:78
 #: seriesplugin/src/Identifiers/Fernsehserien.py:145
 #: seriesplugin/src/Identifiers/Wunschliste.py:152
 msgid "Skip: No service specified"
-msgstr ""
+msgstr "Praleisti: Nenurodytas kanalas"
 
 #: seriesplugin/src/Identifiers/WunschlisteFeed.py:170
 #: seriesplugin/src/Identifiers/SerienServer.py:70
 #: seriesplugin/src/Identifiers/Fernsehserien.py:137
 #: seriesplugin/src/Identifiers/Wunschliste.py:144
 msgid "Skip: No show name specified"
-msgstr ""
+msgstr "Praleisti: Nėra laidos pavadinimo"
 
 #: pushservice/src/ModuleBase.py:94
 msgid "Skipping config option:"
@@ -14560,7 +14743,7 @@ msgstr "Somalio"
 msgid "Some plugins are not available:\n"
 msgstr "Kai kurių papildomų programų nėra:\n"
 
-#: merlinmusicplayer/src/plugin.py:2378
+#: merlinmusicplayer/src/plugin.py:2379
 #, python-format
 msgid "Songs (%d)"
 msgstr "Dainos (%d)"
@@ -15040,11 +15223,11 @@ msgstr "Srauto klientas"
 msgid "Stream Client with Port"
 msgstr "Srautas klientas su jungtimi"
 
-#: partnerbox/src/plugin.py:150
+#: partnerbox/src/plugin.py:151
 msgid "Stream TV from your Partnerbox"
 msgstr "Strauto TV iš jūsų Partnerbox"
 
-#: partnerbox/src/plugin.py:152
+#: partnerbox/src/plugin.py:153
 msgid "Stream current service from partnerbox"
 msgstr "Dabartinio kanalo srautas iš partnerbox"
 
@@ -15142,8 +15325,8 @@ msgstr ""
 msgid "Sudanese"
 msgstr "Sudano"
 
-#: partnerbox/src/plugin.py:1265 partnerbox/src/plugin.py:1318
-#: partnerbox/src/plugin.py:1458
+#: partnerbox/src/plugin.py:1285 partnerbox/src/plugin.py:1342
+#: partnerbox/src/plugin.py:1510
 msgid "Sun"
 msgstr "Sek"
 
@@ -15426,11 +15609,11 @@ msgstr "Teksto lygis"
 msgid "Text only"
 msgstr "Tik tekstas"
 
-#: infobartunerstate/src/IBTSConfiguration.py:125
+#: infobartunerstate/src/IBTSConfiguration.py:126
 msgid "Text padding offset in pixel"
 msgstr "Teksto užpildymo poslinkis pikseliais"
 
-#: infobartunerstate/src/IBTSConfiguration.py:126
+#: infobartunerstate/src/IBTSConfiguration.py:127
 msgid "Text spacing offset in pixel"
 msgstr "Teksto tarpų poslinkis pikseliais"
 
@@ -15676,7 +15859,7 @@ msgstr ""
 msgid "The movie is moved in the background from %s to %s."
 msgstr ""
 
-#: partnerbox/src/plugin.py:1723 kiddytimer/src/KTsetup.py:98
+#: partnerbox/src/plugin.py:1781 kiddytimer/src/KTsetup.py:98
 msgid "The pin code you entered is wrong."
 msgstr "Surinktas PIN kodas neteisingas."
 
@@ -15737,7 +15920,7 @@ msgid ""
 "The PlugIn will use default colors."
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1827 merlinmusicplayer/src/plugin.py:1951
+#: merlinmusicplayer/src/plugin.py:1828 merlinmusicplayer/src/plugin.py:1952
 msgid ""
 "There are no playlists defined.\n"
 "Do you want to create a new playlist?"
@@ -15822,7 +16005,7 @@ msgstr ""
 "Yra pasiekiamas sertifikato atnaujinimas jūsų imtuvui. Ar norėtumėte taikyti "
 "šį naujinimą dabar?"
 
-#: merlinmusicplayer/src/plugin.py:1314
+#: merlinmusicplayer/src/plugin.py:1315
 #, python-format
 msgid "This Dreambox can't decode %s streams!"
 msgstr "Šis Dreambox negali iššifruoti %s srautų!"
@@ -16073,8 +16256,8 @@ msgstr ""
 "prieštarauja galiojančiam laikmačiui, jis negali ignoruoti šio įvykio, bet "
 "įtraukia jį išjungimui."
 
-#: partnerbox/src/plugin.py:1265 partnerbox/src/plugin.py:1318
-#: partnerbox/src/plugin.py:1458
+#: partnerbox/src/plugin.py:1285 partnerbox/src/plugin.py:1342
+#: partnerbox/src/plugin.py:1510
 msgid "Thu"
 msgstr "Ket"
 
@@ -16113,11 +16296,11 @@ msgstr "Likęs laikas"
 msgid "Time Left / Duration"
 msgstr "Laiko liko / trukmė"
 
-#: infobartunerstate/src/IBTSConfiguration.py:91
+#: infobartunerstate/src/IBTSConfiguration.py:93
 msgid "Time format begin"
 msgstr "Laiko formato pradžia"
 
-#: infobartunerstate/src/IBTSConfiguration.py:92
+#: infobartunerstate/src/IBTSConfiguration.py:94
 msgid "Time format end"
 msgstr "Laiko formato pabaiga"
 
@@ -16197,7 +16380,7 @@ msgstr ""
 
 #: pushservice/src/Controller/DeactivatedTimers.py:72
 msgid "Timer has no EIT"
-msgstr ""
+msgstr "Laikmatis neturi ETI"
 
 #: seriesplugin/src/SeriesPluginTimer.py:208
 #, python-format
@@ -16543,8 +16726,8 @@ msgstr "Bandoma parsisiųsti Youtube pasieškos rezultatus. Prašome laukti..."
 msgid "Tsonga"
 msgstr "Tsongų"
 
-#: partnerbox/src/plugin.py:1265 partnerbox/src/plugin.py:1318
-#: partnerbox/src/plugin.py:1458
+#: partnerbox/src/plugin.py:1285 partnerbox/src/plugin.py:1342
+#: partnerbox/src/plugin.py:1510
 msgid "Tue"
 msgstr "Ant"
 
@@ -16566,12 +16749,12 @@ msgstr "Imtuvo tipas"
 #: satipclient/src/SatIPTunerSetup.py:107
 #, python-brace-format
 msgid "Tuner {0} / {1} NOT REMOVED. Consicentcy Check failed!"
-msgstr ""
+msgstr "Imtuvas {0} / {1} NEPAŠALINTAS. Nuoseklumo patikrinti nepavyko!"
 
 #: satipclient/src/SatIPTunerSetup.py:105
 #, python-brace-format
 msgid "Tuner {0} / {1} removed"
-msgstr ""
+msgstr "Imtuvas {0} / {1} pašalintas"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:123
 msgid "Tuners"
@@ -16889,7 +17072,7 @@ msgstr ""
 msgid "Urdu"
 msgstr "Urdu"
 
-#: infobartunerstate/src/IBTSConfiguration.py:76 virtualzap/src/plugin.py:731
+#: infobartunerstate/src/IBTSConfiguration.py:78 virtualzap/src/plugin.py:731
 msgid "Usage"
 msgstr "Naudojimas"
 
@@ -16921,11 +17104,11 @@ msgstr "Naudoti bei kontroliuoti kelis Dreambox su skirtingais RC."
 msgid "Use both profiles alternately"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2927
+#: merlinmusicplayer/src/plugin.py:2942
 msgid "Use google-images for cover art"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2920
+#: merlinmusicplayer/src/plugin.py:2935
 msgid "Use hardware-decoder for MP3"
 msgstr ""
 
@@ -16974,9 +17157,9 @@ msgstr ""
 msgid "Used Tag"
 msgstr "Naudota gairė"
 
-#: infobartunerstate/src/Handler/Unknown.py:125
+#: infobartunerstate/src/Handler/Unknown.py:127
 msgid "Used by unknown service"
-msgstr ""
+msgstr "Naudojamas nežinomo kanalo"
 
 #: dreamirc/src/plugin.py:107
 msgid "User Online"
@@ -17170,7 +17353,7 @@ msgstr "Tikrintojas"
 msgid "Vanity"
 msgstr "Tuštumas"
 
-#: infobartunerstate/src/IBTSConfiguration.py:127
+#: infobartunerstate/src/IBTSConfiguration.py:128
 msgid "Variable field width"
 msgstr ""
 
@@ -17198,7 +17381,7 @@ msgstr "Versija"
 msgid "Version: "
 msgstr "Versija:"
 
-#: infobartunerstate/src/IBTSConfiguration.py:124
+#: infobartunerstate/src/IBTSConfiguration.py:125
 msgid "Vertical offset in pixel"
 msgstr "Vertikalus poslinkis pikseliais"
 
@@ -17426,7 +17609,7 @@ msgstr "WD, DD.MM. HH:MM"
 msgid "Wait before Screensaver (seconds)"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2931
+#: merlinmusicplayer/src/plugin.py:2946
 msgid "Wait for screensaver (in min)"
 msgstr ""
 
@@ -17455,6 +17638,10 @@ msgstr "Laukite"
 
 #: elektro/src/plugin.py:393
 msgid "Waiting until poweroff"
+msgstr ""
+
+#: infobartunerstate/src/IBTSConfiguration.py:133
+msgid "Wake HDD for free space statistics"
 msgstr ""
 
 #: epgrefresh/src/EPGRefreshConfiguration.py:171
@@ -17566,8 +17753,8 @@ msgstr "Interneto kamerų versijos"
 msgid "Webinterface: Main Setup"
 msgstr "Web sąsaja: Svarbiausi nustatymai"
 
-#: partnerbox/src/plugin.py:1265 partnerbox/src/plugin.py:1318
-#: partnerbox/src/plugin.py:1458
+#: partnerbox/src/plugin.py:1285 partnerbox/src/plugin.py:1342
+#: partnerbox/src/plugin.py:1510
 msgid "Wed"
 msgstr "Tre"
 
@@ -17951,7 +18138,7 @@ msgstr "Volofų"
 
 #: autotimer/src/AutoTimerSettings.py:62
 msgid "Write debug messages into file"
-msgstr ""
+msgstr "Rašyti derinimo palaikymo pranešimus į failą"
 
 #: rsdownloader/src/plugin.py:837
 msgid "Write log:"
@@ -18040,7 +18227,7 @@ msgstr ""
 "Jūs galite kontroliuoti, kiek dienų būsimuose laikmačiuose yra pridėta. "
 "Nustatykite 0, kad išjungti šią funkciją."
 
-#: partnerbox/src/plugin.py:1714
+#: partnerbox/src/plugin.py:1772
 msgid ""
 "You can not add services or bouquets from Enigma1-receivers into the "
 "channellist..."
@@ -18135,9 +18322,9 @@ msgstr ""
 
 #: seriesplugin/src/ChannelEditor.py:130
 msgid "You have to match SD and HD channels separately!"
-msgstr ""
+msgstr "Jums turi sutapti su SD ir HD kanalais atskirai!"
 
-#: partnerbox/src/plugin.py:118
+#: partnerbox/src/plugin.py:119
 msgid "You have to restart Enigma2 to activate your new preferences!"
 msgstr ""
 
@@ -18146,8 +18333,10 @@ msgid ""
 "You have to set your encoder into TV-Services Mode for things to work as "
 "expected!"
 msgstr ""
+"Jūs turite nustatyti savo dekoderį į TV kanalų režimą, kad dirbti kaip "
+"tikėtasi!!"
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:291
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:301
 msgid "You must select a valid service!"
 msgstr ""
 
@@ -18215,7 +18404,7 @@ msgstr ""
 msgid "YouTube player:"
 msgstr "YouTube grotuvas:"
 
-#: yttrailer/src/plugin.py:87 yttrailer/src/plugin.py:89
+#: yttrailer/src/plugin.py:88 yttrailer/src/plugin.py:90
 msgid "YouTube-Trailer Setup"
 msgstr "YouTube anonsų valdymas"
 
@@ -18271,7 +18460,7 @@ msgid "ZDFmediathek player:"
 msgstr "ZDFmediathek grotuvas:"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:53
-#: partnerbox/src/plugin.py:518
+#: partnerbox/src/plugin.py:519
 msgid "Zap"
 msgstr "Perjungti"
 
@@ -18305,7 +18494,7 @@ msgstr "Perjungti pagrindinio ekrano centrą"
 msgid "Zap to %s"
 msgstr "Perjungti į %s"
 
-#: partnerbox/src/PartnerboxSetup.py:254
+#: partnerbox/src/PartnerboxSetup.py:269
 msgid "Zap to service when streaming"
 msgstr "Perjungti į kanalą, kai srautinis perdavimas"
 
@@ -18405,12 +18594,12 @@ msgstr "[PTS-Plugin] įrašų sujungti nepavyko!"
 msgid "[PTS-Plugin] Restarting Timeshift!"
 msgstr "[Taškai-Plugin] laiko poslinkis paleidžiamas iš naujo!"
 
-#: merlinmusicplayer/src/plugin.py:2100 merlinmusicplayer/src/plugin.py:2122
-#: merlinmusicplayer/src/plugin.py:2147 merlinmusicplayer/src/plugin.py:2169
-#: merlinmusicplayer/src/plugin.py:2264 merlinmusicplayer/src/plugin.py:2290
-#: merlinmusicplayer/src/plugin.py:2314 merlinmusicplayer/src/plugin.py:2340
-#: merlinmusicplayer/src/plugin.py:2400 merlinmusicplayer/src/plugin.py:2420
-#: merlinmusicplayer/src/plugin.py:2449
+#: merlinmusicplayer/src/plugin.py:2101 merlinmusicplayer/src/plugin.py:2123
+#: merlinmusicplayer/src/plugin.py:2148 merlinmusicplayer/src/plugin.py:2170
+#: merlinmusicplayer/src/plugin.py:2265 merlinmusicplayer/src/plugin.py:2291
+#: merlinmusicplayer/src/plugin.py:2315 merlinmusicplayer/src/plugin.py:2341
+#: merlinmusicplayer/src/plugin.py:2401 merlinmusicplayer/src/plugin.py:2421
+#: merlinmusicplayer/src/plugin.py:2450
 msgid "[back]"
 msgstr "[atgal]"
 
@@ -18422,7 +18611,7 @@ msgstr "[rūšiuoti pagal datą]"
 msgid "[sort by Name] "
 msgstr "[Rūšiuoti pagal pavadinimą]"
 
-#: partnerbox/src/plugin.py:1289 merlinepgcenter/src/EpgCenterList.py:973
+#: partnerbox/src/plugin.py:1309 merlinepgcenter/src/EpgCenterList.py:973
 msgid "about to start"
 msgstr "apie pradžią"
 
@@ -18467,11 +18656,11 @@ msgstr "pridėti Auto Laikmatį ..."
 msgid "add Entry to Main Menu"
 msgstr "Pridėti įrašą į pagrindinį meniu"
 
-#: partnerbox/src/plugin.py:1698
+#: partnerbox/src/plugin.py:1756
 msgid "add Partnerbox bouquet"
 msgstr "pridėti Partnerbox paketą"
 
-#: partnerbox/src/plugin.py:1691
+#: partnerbox/src/plugin.py:1749
 msgid "add Partnerbox service"
 msgstr "Pridėti Partnerbox paslauga"
 
@@ -18775,7 +18964,7 @@ msgstr "Uždaryti"
 msgid "config changed."
 msgstr "config pasikeitė."
 
-#: infobartunerstate/src/plugin.py:185 pushservice/src/plugin.py:113
+#: infobartunerstate/src/plugin.py:187 pushservice/src/plugin.py:113
 #: podcast/src/plugin.py:627
 msgid "configuration"
 msgstr "konfigūracija"
@@ -18923,7 +19112,7 @@ msgstr "išjungti perkėlimą"
 
 #: zaphistorybrowser/src/plugin.py:44
 #: webinterface/src/WebComponents/Sources/Movie.py:178
-#: partnerbox/src/plugin.py:1301 audiorestart/src/plugin.py:15
+#: partnerbox/src/plugin.py:1321 audiorestart/src/plugin.py:15
 #: merlinepgcenter/src/ConfigTabs.py:63
 #: merlinepgcenter/src/EpgCenterList.py:992
 #: automatictimerlistcleanup/src/plugin.py:36 fancontrol2/src/plugin.py:145
@@ -18985,7 +19174,7 @@ msgstr "nerašyti"
 msgid "done"
 msgstr "baigta"
 
-#: partnerbox/src/plugin.py:1296 partnerbox/src/plugin.py:1347
+#: partnerbox/src/plugin.py:1316 partnerbox/src/plugin.py:1371
 #: merlinepgcenter/src/EpgCenterList.py:982
 #: merlinepgcenter/src/EpgCenterList.py:988
 msgid "done!"
@@ -19339,16 +19528,16 @@ msgstr "slėpti pasirinktą priedą"
 msgid "home"
 msgstr "pradinis"
 
-#: merlinmusicplayer/src/plugin.py:3408 merlinmusicplayer/src/plugin.py:3422
+#: merlinmusicplayer/src/plugin.py:3423 merlinmusicplayer/src/plugin.py:3437
 #: easymedia/src/plugin.py:410
 msgid "iDream"
 msgstr "iDream"
 
-#: merlinmusicplayer/src/plugin.py:1774 merlinmusicplayer/src/plugin.py:2357
+#: merlinmusicplayer/src/plugin.py:1775 merlinmusicplayer/src/plugin.py:2358
 msgid "iDream Main Menu"
 msgstr "iDream Pagrindinis meniu"
 
-#: merlinmusicplayer/src/plugin.py:2923
+#: merlinmusicplayer/src/plugin.py:2938
 msgid "iDream database path"
 msgstr "iDream duomenų bazės kelias"
 
@@ -19439,7 +19628,7 @@ msgstr "sluoksnis 3"
 msgid "layer 4"
 msgstr "sluoksnis 4"
 
-#: yttrailer/src/plugin.py:260 yttrailer/src/plugin.py:266
+#: yttrailer/src/plugin.py:271 yttrailer/src/plugin.py:277
 msgid "leave movie player..."
 msgstr "palikti grotuvą..."
 
@@ -19610,11 +19799,11 @@ msgstr "min Greitis rpm"
 msgid "mini TV"
 msgstr "mini TV"
 
-#: autotimer/src/AutoTimerPreview.py:52 partnerbox/src/plugin.py:835
-#: partnerbox/src/plugin.py:921 partnerbox/src/plugin.py:1279
-#: partnerbox/src/plugin.py:1284 partnerbox/src/plugin.py:1332
-#: partnerbox/src/plugin.py:1335 partnerbox/src/plugin.py:1337
-#: partnerbox/src/plugin.py:1445 partnerbox/src/plugin.py:1642
+#: autotimer/src/AutoTimerPreview.py:52 partnerbox/src/plugin.py:836
+#: partnerbox/src/plugin.py:922 partnerbox/src/plugin.py:1299
+#: partnerbox/src/plugin.py:1304 partnerbox/src/plugin.py:1356
+#: partnerbox/src/plugin.py:1359 partnerbox/src/plugin.py:1361
+#: partnerbox/src/plugin.py:1490 partnerbox/src/plugin.py:1700
 msgid "mins"
 msgstr "min (ių)"
 
@@ -20150,7 +20339,7 @@ msgstr "tikrai atstatyti paštą?"
 msgid "record"
 msgstr "įrašas"
 
-#: partnerbox/src/plugin.py:1294 partnerbox/src/plugin.py:1345
+#: partnerbox/src/plugin.py:1314 partnerbox/src/plugin.py:1369
 #: merlinepgcenter/src/EpgCenterList.py:979
 msgid "recording..."
 msgstr "įrašoma..."
@@ -20282,19 +20471,19 @@ msgstr "Ieškoti EPG"
 msgid "search EPG..."
 msgstr "Ieškoti EPG..."
 
-#: merlinmusicplayer/src/plugin.py:1976
+#: merlinmusicplayer/src/plugin.py:1977
 msgid "search for album"
 msgstr "albumo paieška"
 
-#: merlinmusicplayer/src/plugin.py:1975
+#: merlinmusicplayer/src/plugin.py:1976
 msgid "search for artist"
 msgstr "atlikėjo paieška"
 
-#: merlinmusicplayer/src/plugin.py:1974
+#: merlinmusicplayer/src/plugin.py:1975
 msgid "search for title"
 msgstr "pavadinimo paieška"
 
-#: merlinmusicplayer/src/plugin.py:1977
+#: merlinmusicplayer/src/plugin.py:1978
 msgid "search in all of them"
 msgstr "Ieškoti visuose iš jų"
 
@@ -20403,7 +20592,7 @@ msgstr "PiPServiceRelation nustatymas"
 msgid "setup for Quickbutton"
 msgstr "Quickbutton nustatymas"
 
-#: partnerbox/src/plugin.py:145
+#: partnerbox/src/plugin.py:146
 msgid "setup for partnerbox"
 msgstr "partnerbox nustatymas"
 
@@ -20688,7 +20877,7 @@ msgstr "nežinoma"
 msgid "unknown command (%s)"
 msgstr "nežinoma komanda (%s)"
 
-#: partnerbox/src/plugin.py:1627
+#: partnerbox/src/plugin.py:1685
 msgid "unknown service"
 msgstr "nežinomas kanalas"
 
@@ -20720,11 +20909,11 @@ msgstr "Naudoti URl filtrą:"
 msgid "use as HDD replacement"
 msgstr "naudoti kaip HDD keitimui"
 
-#: partnerbox/src/PartnerboxSetup.py:42
+#: partnerbox/src/PartnerboxSetup.py:43
 msgid "use external"
 msgstr "naudoti išorinį"
 
-#: partnerbox/src/PartnerboxSetup.py:42
+#: partnerbox/src/PartnerboxSetup.py:43
 msgid "use internal"
 msgstr "naudoti vidinį"
 
@@ -20770,7 +20959,7 @@ msgstr "niekinis"
 msgid "wait..."
 msgstr "laukite..."
 
-#: partnerbox/src/plugin.py:1287 partnerbox/src/plugin.py:1340
+#: partnerbox/src/plugin.py:1307 partnerbox/src/plugin.py:1364
 #: merlinepgcenter/src/EpgCenterList.py:970
 msgid "waiting"
 msgstr "laukimas"
@@ -20847,7 +21036,7 @@ msgstr "jungti"
 msgid "zap in pip window..."
 msgstr "Zap pip lange..."
 
-#: partnerbox/src/plugin.py:1292 partnerbox/src/plugin.py:1343
+#: partnerbox/src/plugin.py:1312 partnerbox/src/plugin.py:1367
 #: merlinepgcenter/src/EpgCenterList.py:977
 msgid "zapped"
 msgstr "įjungta"
@@ -20859,7 +21048,7 @@ msgstr "mastelio keitimas / padidinti aukštis"
 #: satipclient/src/SatIPTuner.py:50
 #, python-brace-format
 msgid "{0}x {1}"
-msgstr ""
+msgstr "{0}x {1}"
 
 #: pushservice/src/Services/SMTP.py:32 pushservice/src/Services/GNTP.py:34
 #, python-brace-format

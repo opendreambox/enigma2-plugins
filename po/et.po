@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-19 13:04+0100\n"
-"PO-Revision-Date: 2016-01-16 08:35+0000\n"
+"POT-Creation-Date: 2016-02-08 12:22+0100\n"
+"PO-Revision-Date: 2016-01-19 12:15+0000\n"
 "Last-Translator: Anonymous Pootle User\n"
 "Language-Team: none\n"
 "Language: et\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.7\n"
-"X-POOTLE-MTIME: 1452933359.000000\n"
+"X-POOTLE-MTIME: 1453205725.000000\n"
 
 #: permanenttimeshift/src/plugin.py:1062
 msgid ""
@@ -128,8 +128,8 @@ msgstr ""
 
 #
 #: pushservice/src/Controller/RecordSummary.py:60
-#: pushservice/src/Controller/RecordNotification.py:100
-#: pushservice/src/Controller/RecordNotification.py:112
+#: pushservice/src/Controller/RecordNotification.py:101
+#: pushservice/src/Controller/RecordNotification.py:115
 #: pushservice/src/Controller/DeactivatedTimers.py:61
 #: pushservice/src/Controller/ActiveTimers.py:56
 msgid "%H:%M"
@@ -140,19 +140,19 @@ msgid "%Y.%m.%d"
 msgstr ""
 
 #: pushservice/src/Controller/RecordSummary.py:59
-#: pushservice/src/Controller/RecordNotification.py:99
-#: pushservice/src/Controller/RecordNotification.py:111
+#: pushservice/src/Controller/RecordNotification.py:100
+#: pushservice/src/Controller/RecordNotification.py:114
 #: pushservice/src/Controller/DeactivatedTimers.py:60
 #: pushservice/src/Controller/ActiveTimers.py:55
 msgid "%Y.%m.%d %H:%M"
 msgstr ""
 
-#: infobartunerstate/src/InfoBarTunerState.py:817
+#: infobartunerstate/src/InfoBarTunerState.py:867
 #, python-format
 msgid "%d"
 msgstr ""
 
-#: infobartunerstate/src/InfoBarTunerState.py:874
+#: infobartunerstate/src/InfoBarTunerState.py:924
 #, python-format
 msgid "%d %%"
 msgstr ""
@@ -162,21 +162,21 @@ msgstr ""
 msgid "%d Feed(s) were added to configuration."
 msgstr ""
 
-#: infobartunerstate/src/InfoBarTunerState.py:909
+#: infobartunerstate/src/InfoBarTunerState.py:959
 #, python-format
 msgid "%d GB"
 msgstr ""
 
-#: infobartunerstate/src/InfoBarTunerState.py:905
+#: infobartunerstate/src/InfoBarTunerState.py:955
 #, python-format
 msgid "%d MB"
 msgstr ""
 
-#: infobartunerstate/src/InfoBarTunerState.py:833
-#: infobartunerstate/src/InfoBarTunerState.py:837
-#: infobartunerstate/src/InfoBarTunerState.py:846
-#: infobartunerstate/src/InfoBarTunerState.py:849
-#: infobartunerstate/src/InfoBarTunerState.py:870
+#: infobartunerstate/src/InfoBarTunerState.py:883
+#: infobartunerstate/src/InfoBarTunerState.py:887
+#: infobartunerstate/src/InfoBarTunerState.py:896
+#: infobartunerstate/src/InfoBarTunerState.py:899
+#: infobartunerstate/src/InfoBarTunerState.py:920
 #, python-format
 msgid "%d Min"
 msgstr ""
@@ -209,7 +209,7 @@ msgstr ""
 msgid "%d error while moving Movie '%s' to '%s': %s"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:246
+#: merlinmusicplayer/src/plugin.py:247
 #, python-format
 msgid ""
 "%d files added to database!\n"
@@ -269,28 +269,28 @@ msgstr ""
 msgid "%i ms"
 msgstr "%i ms"
 
-#: merlinmusicplayer/src/plugin.py:227
+#: merlinmusicplayer/src/plugin.py:228
 #, python-format
 msgid ""
 "%s\n"
 " added to database"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:231 merlinmusicplayer/src/plugin.py:235
+#: merlinmusicplayer/src/plugin.py:232 merlinmusicplayer/src/plugin.py:236
 #, python-format
 msgid ""
 "%s\n"
 " already exists in database!"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2541 merlinmusicplayer/src/plugin.py:3292
+#: merlinmusicplayer/src/plugin.py:2542 merlinmusicplayer/src/plugin.py:3307
 #, python-format
 msgid ""
 "%s\n"
 "appended to songlist"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2551 merlinmusicplayer/src/plugin.py:3303
+#: merlinmusicplayer/src/plugin.py:2552 merlinmusicplayer/src/plugin.py:3318
 #, python-format
 msgid ""
 "%s\n"
@@ -401,8 +401,8 @@ msgstr ""
 msgid "'%s' removed from playlist"
 msgstr ""
 
-#: partnerbox/src/plugin.py:1277 partnerbox/src/plugin.py:1282
-#: partnerbox/src/plugin.py:1330 partnerbox/src/plugin.py:1335
+#: partnerbox/src/plugin.py:1297 partnerbox/src/plugin.py:1302
+#: partnerbox/src/plugin.py:1354 partnerbox/src/plugin.py:1359
 msgid "(ZAP)"
 msgstr "(Ainult kanalivahetus)"
 
@@ -486,7 +486,7 @@ msgstr ""
 msgid "10 min."
 msgstr ""
 
-#: yttrailer/src/plugin.py:43
+#: yttrailer/src/plugin.py:44
 msgid "1080p"
 msgstr ""
 
@@ -617,7 +617,7 @@ msgstr ""
 msgid "60 min."
 msgstr ""
 
-#: yttrailer/src/plugin.py:43
+#: yttrailer/src/plugin.py:44
 msgid "720p"
 msgstr ""
 
@@ -631,8 +631,8 @@ msgid "<empty>"
 msgstr ""
 
 #
-#: partnerbox/src/plugin.py:1298 partnerbox/src/plugin.py:1358
-#: partnerbox/src/plugin.py:1360 merlinepgcenter/src/EpgCenterList.py:985
+#: partnerbox/src/plugin.py:1318 partnerbox/src/plugin.py:1382
+#: partnerbox/src/plugin.py:1384 merlinepgcenter/src/EpgCenterList.py:985
 msgid "<unknown>"
 msgstr "<tundmatu>"
 
@@ -777,7 +777,7 @@ msgid "Abkhazian"
 msgstr ""
 
 #
-#: partnerbox/src/plugin.py:1834 dvdbackup/src/plugin.py:250
+#: partnerbox/src/plugin.py:1892 dvdbackup/src/plugin.py:250
 msgid "Abort"
 msgstr "Katkesta"
 
@@ -856,7 +856,7 @@ msgstr ""
 msgid "Activate permanent clock"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2930
+#: merlinmusicplayer/src/plugin.py:2945
 msgid "Activate screensaver"
 msgstr ""
 
@@ -908,12 +908,12 @@ msgstr ""
 #: webadmin/src/WebChilds/UploadPkg.py:80
 #: webadmin/src/WebChilds/UploadPkg.py:85
 #: webadmin/src/WebChilds/UploadPkg.py:117
-#: partnerbox/src/PartnerboxSetup.py:129 pipservicerelation/src/plugin.py:87
+#: partnerbox/src/PartnerboxSetup.py:130 pipservicerelation/src/plugin.py:87
 #: teletext/src/plugin.py:1716 merlinepgcenter/src/MerlinEPGCenter.py:1298
 #: ftpbrowser/src/FTPServerManager.py:259
 #: satipclient/src/SatIPTunerSetup.py:39
 #: birthdayreminder/src/BirthdayReminder.py:216
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:138
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:139
 msgid "Add"
 msgstr "Lisa"
 
@@ -934,11 +934,11 @@ msgstr ""
 msgid "Add Service"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:85
+#: infobartunerstate/src/IBTSConfiguration.py:87
 msgid "Add Setup to extension menu"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:84
+#: infobartunerstate/src/IBTSConfiguration.py:86
 msgid "Add Show to extension menu"
 msgstr ""
 
@@ -970,15 +970,15 @@ msgstr ""
 msgid "Add a new NFS or CIFS mount point to your Dreambox."
 msgstr "Lisa uus NFS või CIFS haakepunkt oma tuunerile."
 
-#: merlinmusicplayer/src/plugin.py:1841 merlinmusicplayer/src/plugin.py:1855
+#: merlinmusicplayer/src/plugin.py:1842 merlinmusicplayer/src/plugin.py:1856
 msgid "Add all songs from selected album to a playlist"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1843 merlinmusicplayer/src/plugin.py:1853
+#: merlinmusicplayer/src/plugin.py:1844 merlinmusicplayer/src/plugin.py:1854
 msgid "Add all songs from selected artist to a playlist"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1857
+#: merlinmusicplayer/src/plugin.py:1858
 msgid "Add all songs from selected genre to a playlist"
 msgstr ""
 
@@ -1059,7 +1059,7 @@ msgstr ""
 msgid "Add season and episode information to Your recordings."
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1839
+#: merlinmusicplayer/src/plugin.py:1840
 msgid "Add selected song to a playlist"
 msgstr ""
 
@@ -1080,7 +1080,7 @@ msgid "Add tags to recorded movies"
 msgstr "Lisa märkeid salvestisele"
 
 #
-#: partnerbox/src/plugin.py:986 partnerbox/src/plugin.py:1045
+#: partnerbox/src/plugin.py:987 partnerbox/src/plugin.py:1046
 #: epgsearch/src/EPGSearch.py:153 easyinfo/src/plugin.py:737
 #: merlinepgcenter/src/MerlinEPGCenter.py:1321
 #: merlinepgcenter/src/MerlinEPGCenter.py:1329
@@ -1147,8 +1147,8 @@ msgstr ""
 msgid "Adjust service name column width:"
 msgstr ""
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:137
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:263
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:138
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:273
 msgid "Adjustment value"
 msgstr ""
 
@@ -1237,7 +1237,7 @@ msgstr ""
 msgid "Album"
 msgstr "Album"
 
-#: merlinmusicplayer/src/plugin.py:2346
+#: merlinmusicplayer/src/plugin.py:2347
 #, python-format
 msgid "Album (%s) -> Song List"
 msgstr ""
@@ -1246,12 +1246,12 @@ msgstr ""
 msgid "Albums"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2374
+#: merlinmusicplayer/src/plugin.py:2375
 #, python-format
 msgid "Albums (%d)"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2443
+#: merlinmusicplayer/src/plugin.py:2444
 msgid "Albums List"
 msgstr ""
 
@@ -1286,7 +1286,7 @@ msgstr ""
 msgid "All Photos"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2258
+#: merlinmusicplayer/src/plugin.py:2259
 msgid "All Songs"
 msgstr ""
 
@@ -1441,11 +1441,11 @@ msgstr "Iga teenus/salvestis"
 msgid "Append '_' if file exist"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1846
+#: merlinmusicplayer/src/plugin.py:1847
 msgid "Append file to current playing songlist"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:3255
+#: merlinmusicplayer/src/plugin.py:3270
 msgid "Append file to current songlist"
 msgstr ""
 
@@ -1461,7 +1461,7 @@ msgstr ""
 msgid "Append vanity name"
 msgstr ""
 
-#: partnerbox/src/plugin.py:1830
+#: partnerbox/src/plugin.py:1888
 msgid "Apply"
 msgstr ""
 
@@ -1513,22 +1513,22 @@ msgstr ""
 msgid "Artist"
 msgstr "Esitaja"
 
-#: merlinmusicplayer/src/plugin.py:2430
+#: merlinmusicplayer/src/plugin.py:2431
 #, python-format
 msgid "Artist (%s) -> Album List"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2320
+#: merlinmusicplayer/src/plugin.py:2321
 #, python-format
 msgid "Artist (%s) -> Song List"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2370
+#: merlinmusicplayer/src/plugin.py:2371
 #, python-format
 msgid "Artists (%d)"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2394
+#: merlinmusicplayer/src/plugin.py:2395
 msgid "Artists List"
 msgstr ""
 
@@ -1820,15 +1820,15 @@ msgstr ""
 msgid "Automatic Volume Adjustment"
 msgstr ""
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:53
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:54
 msgid "Automatic Volume Adjustment - Config"
 msgstr ""
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:240
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:250
 msgid "Automatic Volume Adjustment - Entry Config"
 msgstr ""
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:135
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:136
 msgid "Automatic Volume Adjustment - Service Config"
 msgstr ""
 
@@ -1996,7 +1996,7 @@ msgstr ""
 msgid "Background only"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:130
+#: infobartunerstate/src/IBTSConfiguration.py:131
 msgid "Background transparency"
 msgstr ""
 
@@ -2128,7 +2128,7 @@ msgstr ""
 msgid "Bengali"
 msgstr ""
 
-#: yttrailer/src/plugin.py:312
+#: yttrailer/src/plugin.py:323
 msgid "Best resolution"
 msgstr ""
 
@@ -2509,7 +2509,7 @@ msgstr "Kanada"
 #: autotimer/src/AutoTimerImporter.py:45
 #: autotimer/src/AutoTimerImporter.py:119
 #: autotimer/src/AutoTimerSettings.py:81 webinterface/src/WebIfConfig.py:32
-#: partnerbox/src/PartnerboxSetup.py:69 partnerbox/src/PartnerboxSetup.py:236
+#: partnerbox/src/PartnerboxSetup.py:70 partnerbox/src/PartnerboxSetup.py:251
 #: partnerbox/src/RemoteTimerEntry.py:73 audiorestart/src/plugin.py:107
 #: namezap/src/NamezapSetup.py:57 epgsearch/src/EPGSearch.py:377
 #: epgsearch/src/EPGSearchSetup.py:58 dreammediathek/src/plugin.py:81
@@ -2523,9 +2523,9 @@ msgstr "Kanada"
 #: movieepg/src/MovieEpgSetup.py:55 vlcplayer/src/VlcServerConfig.py:296
 #: seriesplugin/src/SeriesPluginConfiguration.py:80
 #: seriesplugin/src/ChannelEditor.py:72 aspectratioswitch/src/plugin.py:120
-#: infobartunerstate/src/IBTSConfiguration.py:49 setpasswd/src/plugin.py:51
-#: merlinmusicplayer/src/plugin.py:277 merlinmusicplayer/src/plugin.py:2794
-#: merlinmusicplayer/src/plugin.py:2915 yttrailer/src/plugin.py:306
+#: infobartunerstate/src/IBTSConfiguration.py:51 setpasswd/src/plugin.py:51
+#: merlinmusicplayer/src/plugin.py:278 merlinmusicplayer/src/plugin.py:2809
+#: merlinmusicplayer/src/plugin.py:2930 yttrailer/src/plugin.py:317
 #: lastfm/src/LastFMConfig.py:55 kiddytimer/src/KTsetup.py:78
 #: audiosync/src/AC3main.py:66 audiosync/src/AC3setup.py:63
 #: quickbutton/src/plugin.py:197 epgrefresh/src/EPGRefreshChannelEditor.py:79
@@ -2561,8 +2561,8 @@ msgstr "Kanada"
 #: birthdayreminder/src/BirthdayReminder.py:729
 #: automaticcleanup/src/plugin.py:173 tageditor/src/plugin.py:47
 #: antiscrollbar/src/plugin.py:125
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:61
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:248
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:62
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:258
 #: movieretitle/src/plugin.py:44 pipzap/src/PipzapSetup.py:60
 #: tvcharts/src/plugin.py:403 moviecut/src_py/plugin.py:88
 #: dreamirc/src/dreamIRCSetup.py:71 fancontrol2/src/plugin.py:671
@@ -2665,7 +2665,7 @@ msgid "Change permanent clock position"
 msgstr ""
 
 #
-#: partnerbox/src/plugin.py:1717
+#: partnerbox/src/plugin.py:1775
 msgid "Change pin code"
 msgstr "Vaheta parool"
 
@@ -2743,7 +2743,7 @@ msgstr ""
 #: ofdb/src/plugin.py:41 autotimer/src/AutoTimerEditor.py:103
 #: imdb/src/plugin.py:62 epgsearch/src/EPGSearch.py:415
 #: pipservicerelation/src/plugin.py:211
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:271
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:281
 msgid "Channel Selection"
 msgstr "Kanalite valik"
 
@@ -2876,11 +2876,11 @@ msgstr ""
 msgid "Classic"
 msgstr "Classikaline"
 
-#: partnerbox/src/plugin.py:247
+#: partnerbox/src/plugin.py:248
 msgid "Clean up"
 msgstr ""
 
-#: partnerbox/src/plugin.py:332
+#: partnerbox/src/plugin.py:333
 msgid "Cleaning up finished timer entries..."
 msgstr ""
 
@@ -2946,7 +2946,7 @@ msgid ""
 "Are you sure?"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1845 merlinmusicplayer/src/plugin.py:3254
+#: merlinmusicplayer/src/plugin.py:1846 merlinmusicplayer/src/plugin.py:3269
 msgid "Clear current songlist and play selected entry"
 msgstr ""
 
@@ -3006,7 +3006,7 @@ msgstr "Sulge"
 msgid "Close MediaPlayer"
 msgstr ""
 
-#: yttrailer/src/plugin.py:314
+#: yttrailer/src/plugin.py:325
 msgid "Close Player with exit-key"
 msgstr ""
 
@@ -3092,8 +3092,8 @@ msgid "Config file %s not found."
 msgstr ""
 
 #: seriesplugin/src/SeriesPluginConfiguration.py:75
-#: infobartunerstate/src/IBTSConfiguration.py:45
-#: merlinmusicplayer/src/plugin.py:1831 merlinmusicplayer/src/plugin.py:3250
+#: infobartunerstate/src/IBTSConfiguration.py:47
+#: merlinmusicplayer/src/plugin.py:1832 merlinmusicplayer/src/plugin.py:3265
 #: pushservice/src/ConfigScreen.py:67
 msgid "Configuration"
 msgstr ""
@@ -3519,7 +3519,7 @@ msgstr ""
 msgid "Create new file in..."
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1834
+#: merlinmusicplayer/src/plugin.py:1835
 msgid "Create new playlist"
 msgstr ""
 
@@ -3849,7 +3849,7 @@ msgstr ""
 msgid "Default storage device is not available!"
 msgstr "Vaikimisi salvestusseade pole saadaval!"
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:78
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:79
 msgid "Default volume adjustment value for AC3/DTS"
 msgstr ""
 
@@ -3914,14 +3914,14 @@ msgstr "Oota x sekundit peale saate algust"
 #: advhdmi/src/AdvHdmiCecSetup.py:215 autotimer/src/AutoTimerOverview.py:71
 #: zaphistorybrowser/src/plugin.py:195
 #: webinterface/src/WebComponents/Sources/Strings.py:44
-#: partnerbox/src/PartnerboxSetup.py:131 partnerbox/src/PartnerboxSetup.py:238
-#: partnerbox/src/plugin.py:244 pipservicerelation/src/plugin.py:85
+#: partnerbox/src/PartnerboxSetup.py:132 partnerbox/src/PartnerboxSetup.py:253
+#: partnerbox/src/plugin.py:245 pipservicerelation/src/plugin.py:85
 #: remotetimer/src/plugin.py:104 zapstatistic/src/plugin.py:431
 #: growlee/src/plugin.py:102 teletext/src/plugin.py:1718
 #: curlytx/src/CurlyTxSettings.py:52 subsdownloader2/src/plugin.py:1076
 #: fritzcall/src/plugin.py:1583 simplerss/src/RSSSetup.py:76
 #: ftpbrowser/src/FTPBrowser.py:188 ftpbrowser/src/FTPServerManager.py:258
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:141
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:142
 #: fancontrol2/src/FC2webSite.py:177 fancontrol2/src/FC2webSite.py:213
 #: networkbrowser/src/UserManager.py:53
 msgid "Delete"
@@ -4014,15 +4014,15 @@ msgstr ""
 msgid "Delete selected page"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1851
+#: merlinmusicplayer/src/plugin.py:1852
 msgid "Delete selected playlist"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1837
+#: merlinmusicplayer/src/plugin.py:1838
 msgid "Delete song from current playlist"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1844
+#: merlinmusicplayer/src/plugin.py:1845
 msgid "Delete song from database"
 msgstr ""
 
@@ -4294,15 +4294,15 @@ msgstr ""
 msgid "Do you really want to DELETE:\n"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1901
+#: merlinmusicplayer/src/plugin.py:1902
 msgid "Do you really want to add all songs from that album to a playlist?"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1891
+#: merlinmusicplayer/src/plugin.py:1892
 msgid "Do you really want to add all songs from that artist to a playlist?"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1881
+#: merlinmusicplayer/src/plugin.py:1882
 msgid "Do you really want to add all songs from that genre to a playlist?"
 msgstr ""
 
@@ -4345,15 +4345,15 @@ msgid ""
 "(Note that 'Cancel' will not undo this!)"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1935
+#: merlinmusicplayer/src/plugin.py:1936
 msgid "Do you really want to delete that song from the database?"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1924
+#: merlinmusicplayer/src/plugin.py:1925
 msgid "Do you really want to delete that song the current playlist?"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1911
+#: merlinmusicplayer/src/plugin.py:1912
 msgid "Do you really want to delete the current playlist?"
 msgstr ""
 
@@ -4362,8 +4362,8 @@ msgstr ""
 msgid "Do you really want to delete the entry for %s?"
 msgstr ""
 
-#: partnerbox/src/PartnerboxEPGSelection.py:128 partnerbox/src/plugin.py:351
-#: partnerbox/src/plugin.py:1194 remotetimer/src/plugin.py:145
+#: partnerbox/src/PartnerboxEPGSelection.py:128 partnerbox/src/plugin.py:352
+#: partnerbox/src/plugin.py:1195 remotetimer/src/plugin.py:145
 #, python-format
 msgid ""
 "Do you really want to delete the timer \n"
@@ -4371,7 +4371,7 @@ msgid ""
 msgstr ""
 
 #: pipservicerelation/src/plugin.py:123
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:182
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:183
 msgid "Do you really want to delete this entry?"
 msgstr ""
 
@@ -4649,7 +4649,7 @@ msgstr ""
 msgid "DreamMediathek"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:3413 merlinmusicplayer/src/plugin.py:3416
+#: merlinmusicplayer/src/plugin.py:3428 merlinmusicplayer/src/plugin.py:3431
 msgid "Dreambox Music Database"
 msgstr ""
 
@@ -4741,8 +4741,8 @@ msgid "EPG Search"
 msgstr ""
 
 #
-#: partnerbox/src/plugin.py:246 partnerbox/src/plugin.py:521
-#: partnerbox/src/plugin.py:680
+#: partnerbox/src/plugin.py:247 partnerbox/src/plugin.py:522
+#: partnerbox/src/plugin.py:681
 msgid "EPG Selection"
 msgstr "EPG Valik"
 
@@ -4964,12 +4964,12 @@ msgstr ""
 #
 #. TRANSLATORS: keep it short, this is a button
 #: ncidclient/src/plugin.py:445 weatherplugin/src/setup.py:79
-#: advhdmi/src/AdvHdmiCecSetup.py:214 partnerbox/src/PartnerboxSetup.py:130
+#: advhdmi/src/AdvHdmiCecSetup.py:214 partnerbox/src/PartnerboxSetup.py:131
 #: pipservicerelation/src/plugin.py:88 teletext/src/plugin.py:1720
 #: serienfilm/src/SerienFilm.py:65 fritzcall/src/plugin.py:1587
 #: ftpbrowser/src/FTPServerManager.py:260
 #: birthdayreminder/src/BirthdayReminder.py:267
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:140
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:141
 msgid "Edit"
 msgstr "Välju"
 
@@ -5121,7 +5121,7 @@ msgstr ""
 
 #
 #: webinterface/src/WebComponents/Sources/Strings.py:40
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:72
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:73
 msgid "Enable"
 msgstr "Luba"
 
@@ -5206,7 +5206,7 @@ msgstr "Luba HTTPS autoriseerimine"
 msgid "Enable Hotkey"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:82
+#: infobartunerstate/src/IBTSConfiguration.py:84
 msgid "Enable InfoBarTunerState"
 msgstr ""
 
@@ -5218,11 +5218,11 @@ msgstr ""
 msgid "Enable KiddyTimer for x minutes"
 msgstr ""
 
-#: partnerbox/src/PartnerboxSetup.py:79
+#: partnerbox/src/PartnerboxSetup.py:80
 msgid "Enable Partnerbox-Function in EPGList"
 msgstr ""
 
-#: partnerbox/src/PartnerboxSetup.py:78
+#: partnerbox/src/PartnerboxSetup.py:79
 msgid "Enable Partnerbox-Function in TimerEvent"
 msgstr ""
 
@@ -5271,7 +5271,7 @@ msgstr ""
 msgid "Enable encoder"
 msgstr ""
 
-#: partnerbox/src/PartnerboxSetup.py:80
+#: partnerbox/src/PartnerboxSetup.py:81
 msgid "Enable first Partnerbox-entry in Timeredit as default"
 msgstr ""
 
@@ -5381,15 +5381,15 @@ msgstr ""
 msgid "English"
 msgstr "Inglise"
 
-#: partnerbox/src/PartnerboxSetup.py:40
+#: partnerbox/src/PartnerboxSetup.py:41
 msgid "Enigma 1"
 msgstr ""
 
-#: partnerbox/src/PartnerboxSetup.py:40
+#: partnerbox/src/PartnerboxSetup.py:41
 msgid "Enigma 2"
 msgstr ""
 
-#: partnerbox/src/PartnerboxSetup.py:128 partnerbox/src/PartnerboxSetup.py:251
+#: partnerbox/src/PartnerboxSetup.py:129 partnerbox/src/PartnerboxSetup.py:266
 msgid "Enigma Type"
 msgstr ""
 
@@ -5453,7 +5453,7 @@ msgstr ""
 msgid "Enter in minutes (0 means unlimited)"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1965
+#: merlinmusicplayer/src/plugin.py:1966
 msgid "Enter name for playlist"
 msgstr ""
 
@@ -5490,7 +5490,7 @@ msgstr "Sisesta pin kood"
 msgid "Enter search"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1982
+#: merlinmusicplayer/src/plugin.py:1983
 msgid "Enter search-text"
 msgstr ""
 
@@ -5520,7 +5520,7 @@ msgid "Enter the new Tag"
 msgstr ""
 
 #
-#: partnerbox/src/plugin.py:1717
+#: partnerbox/src/plugin.py:1775
 msgid "Enter the service pin"
 msgstr "Sisesta kood"
 
@@ -5844,7 +5844,7 @@ msgstr ""
 msgid "Error writing to %s!"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:248
+#: merlinmusicplayer/src/plugin.py:249
 msgid ""
 "Error!\n"
 "Can not open database!\n"
@@ -5864,19 +5864,19 @@ msgstr ""
 msgid "Error..."
 msgstr ""
 
-#: partnerbox/src/plugin.py:1350
+#: partnerbox/src/plugin.py:1374
 msgid "Error: No space left"
 msgstr ""
 
-#: partnerbox/src/plugin.py:1356
+#: partnerbox/src/plugin.py:1380
 msgid "Error: Outdated"
 msgstr ""
 
-#: partnerbox/src/plugin.py:1352
+#: partnerbox/src/plugin.py:1376
 msgid "Error: User aborted"
 msgstr ""
 
-#: partnerbox/src/plugin.py:1354
+#: partnerbox/src/plugin.py:1378
 msgid "Error: Zap failed"
 msgstr ""
 
@@ -6010,7 +6010,7 @@ msgstr ""
 msgid "Extended configuratin menu:"
 msgstr ""
 
-#: yttrailer/src/plugin.py:311
+#: yttrailer/src/plugin.py:322
 msgid "Extended search filter"
 msgstr ""
 
@@ -6312,12 +6312,12 @@ msgstr "Fiidide sisestuste võtmine"
 msgid "Fetching search entries"
 msgstr "Otsingute sisestuste võtmine"
 
-#: infobartunerstate/src/IBTSConfiguration.py:113
+#: infobartunerstate/src/IBTSConfiguration.py:114
 #, python-format
 msgid "Field %d content"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:117
+#: infobartunerstate/src/IBTSConfiguration.py:118
 #, python-format
 msgid "Field %d width"
 msgstr ""
@@ -6351,7 +6351,7 @@ msgstr ""
 msgid "Filebrowser"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2933
+#: merlinmusicplayer/src/plugin.py:2948
 msgid "Filebrowser startup path"
 msgstr ""
 
@@ -6359,7 +6359,7 @@ msgstr ""
 msgid "Filelist"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:3333
+#: merlinmusicplayer/src/plugin.py:3348
 #, python-format
 msgid "Filelist: %s"
 msgstr ""
@@ -6604,8 +6604,8 @@ msgid "Frequently asked questions about the AutoTimer"
 msgstr ""
 
 #
-#: partnerbox/src/plugin.py:1265 partnerbox/src/plugin.py:1318
-#: partnerbox/src/plugin.py:1458
+#: partnerbox/src/plugin.py:1285 partnerbox/src/plugin.py:1342
+#: partnerbox/src/plugin.py:1510
 msgid "Fri"
 msgstr "R"
 
@@ -6770,12 +6770,12 @@ msgstr ""
 msgid "Generic setup"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2175
+#: merlinmusicplayer/src/plugin.py:2176
 #, python-format
 msgid "Genre (%s) -> Song List"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2141
+#: merlinmusicplayer/src/plugin.py:2142
 msgid "Genre List"
 msgstr ""
 
@@ -6785,7 +6785,7 @@ msgstr ""
 msgid "Genres"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2382
+#: merlinmusicplayer/src/plugin.py:2383
 #, python-format
 msgid "Genres (%d)"
 msgstr ""
@@ -6849,11 +6849,11 @@ msgstr ""
 msgid "Getting %s"
 msgstr ""
 
-#: partnerbox/src/plugin.py:526
+#: partnerbox/src/plugin.py:527
 msgid "Getting Channel Information..."
 msgstr ""
 
-#: partnerbox/src/plugin.py:990
+#: partnerbox/src/plugin.py:991
 msgid "Getting EPG Information..."
 msgstr ""
 
@@ -6866,11 +6866,11 @@ msgstr ""
 msgid "Getting InternetRadio %s list..."
 msgstr ""
 
-#: partnerbox/src/plugin.py:413
+#: partnerbox/src/plugin.py:414
 msgid "Getting Partnerbox Bouquet Information..."
 msgstr ""
 
-#: partnerbox/src/plugin.py:248
+#: partnerbox/src/plugin.py:249
 msgid "Getting Partnerbox Information..."
 msgstr ""
 
@@ -6943,7 +6943,7 @@ msgstr ""
 msgid "Google Username"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2928
+#: merlinmusicplayer/src/plugin.py:2943
 msgid "Google image path"
 msgstr ""
 
@@ -7165,11 +7165,11 @@ msgstr "Hong Kong"
 msgid "Hook"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:122
+#: infobartunerstate/src/IBTSConfiguration.py:123
 msgid "Horizontal offset left in pixel"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:123
+#: infobartunerstate/src/IBTSConfiguration.py:124
 msgid "Horizontal offset right in pixel"
 msgstr ""
 
@@ -7293,7 +7293,7 @@ msgstr ""
 msgid "IMDb query failed!"
 msgstr ""
 
-#: partnerbox/src/PartnerboxSetup.py:126 partnerbox/src/PartnerboxSetup.py:249
+#: partnerbox/src/PartnerboxSetup.py:127 partnerbox/src/PartnerboxSetup.py:264
 msgid "IP"
 msgstr ""
 
@@ -7670,8 +7670,8 @@ msgid "Indonesian"
 msgstr ""
 
 #: webinterface/src/WebComponents/Sources/Strings.py:84
-#: partnerbox/src/plugin.py:524 partnerbox/src/plugin.py:681
-#: partnerbox/src/plugin.py:989 partnerbox/src/plugin.py:1040
+#: partnerbox/src/plugin.py:525 partnerbox/src/plugin.py:682
+#: partnerbox/src/plugin.py:990 partnerbox/src/plugin.py:1041
 #: babelzapper/src/plugin.py:77
 msgid "Info"
 msgstr "Info"
@@ -7688,7 +7688,7 @@ msgstr ""
 msgid "InfoBarTunerState Setup"
 msgstr ""
 
-#: infobartunerstate/src/plugin.py:244
+#: infobartunerstate/src/plugin.py:246
 msgid "InfoBarTunerState is disabled"
 msgstr ""
 
@@ -7709,7 +7709,7 @@ msgid "Infobar and window style:"
 msgstr ""
 
 #
-#: infobartunerstate/src/IBTSConfiguration.py:136
+#: infobartunerstate/src/IBTSConfiguration.py:139
 msgid "Infobar timeout"
 msgstr "Inforiba kuvamise aeg"
 
@@ -7737,11 +7737,11 @@ msgstr ""
 msgid "Input"
 msgstr "Sisend"
 
-#: merlinmusicplayer/src/plugin.py:1848
+#: merlinmusicplayer/src/plugin.py:1849
 msgid "Insert file to current playing songlist and play next"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:3257
+#: merlinmusicplayer/src/plugin.py:3272
 msgid "Insert file to current songlist and play next"
 msgstr ""
 
@@ -7845,7 +7845,7 @@ msgstr ""
 
 #
 #: internetradio/src/InternetRadioSetup.py:159
-#: merlinmusicplayer/src/plugin.py:2829
+#: merlinmusicplayer/src/plugin.py:2844
 #: birthdayreminder/src/BirthdayReminder.py:764
 msgid "Invalid Location"
 msgstr "Vale asukoht"
@@ -8170,7 +8170,7 @@ msgstr ""
 msgid "Lingala"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:129
+#: infobartunerstate/src/IBTSConfiguration.py:130
 msgid "List goes up"
 msgstr ""
 
@@ -8567,7 +8567,7 @@ msgstr "Sea logod näitamiseks alustamisel"
 msgid "Manage network mounts..."
 msgstr ""
 
-#: partnerbox/src/plugin.py:134 partnerbox/src/plugin.py:147
+#: partnerbox/src/plugin.py:135 partnerbox/src/plugin.py:148
 msgid "Manage timer for other dreamboxes in network"
 msgstr ""
 
@@ -8647,11 +8647,11 @@ msgstr ""
 msgid "Max time drift to match episode"
 msgstr ""
 
-#: yttrailer/src/plugin.py:313
+#: yttrailer/src/plugin.py:324
 msgid "Max. results in list-mode"
 msgstr ""
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:79
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:80
 msgid "Max. volume for mpeg audio"
 msgstr ""
 
@@ -8763,16 +8763,16 @@ msgstr ""
 msgid "Merlin EPG"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:3403 merlinmusicplayer/src/plugin.py:3414
-#: merlinmusicplayer/src/plugin.py:3418 merlinmusicplayer/src/plugin.py:3420
+#: merlinmusicplayer/src/plugin.py:3418 merlinmusicplayer/src/plugin.py:3429
+#: merlinmusicplayer/src/plugin.py:3433 merlinmusicplayer/src/plugin.py:3435
 msgid "Merlin Music Player"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1531
+#: merlinmusicplayer/src/plugin.py:1532
 msgid "Merlin Music Player Lyrics"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1626
+#: merlinmusicplayer/src/plugin.py:1627
 msgid "Merlin Music Player Songlist"
 msgstr ""
 
@@ -8959,7 +8959,7 @@ msgid ""
 "in english."
 msgstr ""
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:75
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:76
 msgid "Modus"
 msgstr ""
 
@@ -8968,8 +8968,8 @@ msgid "Moldavian"
 msgstr ""
 
 #
-#: partnerbox/src/plugin.py:1265 partnerbox/src/plugin.py:1318
-#: partnerbox/src/plugin.py:1458
+#: partnerbox/src/plugin.py:1285 partnerbox/src/plugin.py:1342
+#: partnerbox/src/plugin.py:1510
 msgid "Mon"
 msgstr "E"
 
@@ -9193,7 +9193,7 @@ msgstr ""
 msgid "Movie-EPG Configuration"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:90
+#: infobartunerstate/src/IBTSConfiguration.py:92
 msgid "MoviePlayer integration"
 msgstr ""
 
@@ -9453,7 +9453,7 @@ msgstr ""
 #
 #: ncidclient/src/plugin.py:593
 #: webinterface/src/WebComponents/Sources/Strings.py:60
-#: partnerbox/src/PartnerboxSetup.py:125 partnerbox/src/PartnerboxSetup.py:248
+#: partnerbox/src/PartnerboxSetup.py:126 partnerbox/src/PartnerboxSetup.py:263
 #: partnerbox/src/RemoteTimerEntry.py:158
 #: partnerbox/src/RemoteTimerEntry.py:470 growlee/src/plugin.py:167
 #: infobartunerstate/src/plugin.py:63 elektro/src/plugin.py:480
@@ -9712,7 +9712,7 @@ msgstr ""
 msgid "No File-Manager installed!"
 msgstr ""
 
-#: yttrailer/src/plugin.py:43
+#: yttrailer/src/plugin.py:44
 msgid "No HD streaming"
 msgstr ""
 
@@ -9805,7 +9805,7 @@ msgstr ""
 msgid "No log file found"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1581
+#: merlinmusicplayer/src/plugin.py:1582
 msgid "No lyrics found"
 msgstr ""
 
@@ -9842,7 +9842,7 @@ msgstr ""
 msgid "No movies to show..."
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:3205 merlinmusicplayer/src/plugin.py:3242
+#: merlinmusicplayer/src/plugin.py:3220 merlinmusicplayer/src/plugin.py:3257
 msgid "No music files found!"
 msgstr ""
 
@@ -10071,11 +10071,11 @@ msgstr ""
 msgid "Number of WebIF-Log-Entries"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:93
+#: infobartunerstate/src/IBTSConfiguration.py:95
 msgid "Number of finished entries in list"
 msgstr ""
 
-#: infobartunerstate/src/Handler/Timers.py:125
+#: infobartunerstate/src/Handler/Timers.py:124
 msgid "Number of pending timer(s)"
 msgstr ""
 
@@ -10088,7 +10088,7 @@ msgstr "Järgijäänud määratud salvestuste arv."
 msgid "Number of search results to display at most."
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:94
+#: infobartunerstate/src/IBTSConfiguration.py:96
 msgid "Number of seconds for displaying finished entries"
 msgstr ""
 
@@ -10132,7 +10132,7 @@ msgstr ""
 #: autotimer/src/AutoTimerImporter.py:46
 #: autotimer/src/AutoTimerImporter.py:120
 #: autotimer/src/AutoTimerSettings.py:80 webinterface/src/WebIfConfig.py:33
-#: partnerbox/src/PartnerboxSetup.py:70 partnerbox/src/PartnerboxSetup.py:237
+#: partnerbox/src/PartnerboxSetup.py:71 partnerbox/src/PartnerboxSetup.py:252
 #: partnerbox/src/RemoteTimerEntry.py:72 namezap/src/NamezapSetup.py:56
 #: epgsearch/src/EPGSearch.py:378 epgsearch/src/EPGSearchSetup.py:57
 #: dreammediathek/src/plugin.py:82 internetradio/src/InternetRadioSetup.py:50
@@ -10143,8 +10143,8 @@ msgstr ""
 #: movieepg/src/MovieEpgSetup.py:54 vlcplayer/src/VlcServerConfig.py:297
 #: seriesplugin/src/SeriesPluginConfiguration.py:81
 #: seriesplugin/src/ChannelEditor.py:73
-#: infobartunerstate/src/IBTSConfiguration.py:50
-#: merlinmusicplayer/src/plugin.py:2795 merlinmusicplayer/src/plugin.py:2916
+#: infobartunerstate/src/IBTSConfiguration.py:52
+#: merlinmusicplayer/src/plugin.py:2810 merlinmusicplayer/src/plugin.py:2931
 #: lastfm/src/LastFMConfig.py:56 audiosync/src/AC3main.py:67
 #: quickbutton/src/plugin.py:198 epgrefresh/src/EPGRefreshChannelEditor.py:80
 #: epgrefresh/src/EPGRefreshConfiguration.py:108
@@ -10162,9 +10162,9 @@ msgstr ""
 #: birthdayreminder/src/BirthdayReminder.py:730
 #: automaticcleanup/src/plugin.py:174 tageditor/src/plugin.py:48
 #: antiscrollbar/src/plugin.py:126
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:62
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:139
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:249
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:63
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:140
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:259
 #: movieretitle/src/plugin.py:43 pipzap/src/PipzapSetup.py:59
 #: tvcharts/src/plugin.py:402 moviecut/src_py/plugin.py:87
 #: cdinfo/src/plugin.py:57
@@ -10337,15 +10337,15 @@ msgstr "Ainult kanalil: %s"
 msgid "Only on Weekday: %s"
 msgstr "Ainult nädalapäeval: %s"
 
-#: infobartunerstate/src/IBTSConfiguration.py:208
+#: infobartunerstate/src/IBTSConfiguration.py:211
 msgid "Only one Graphical Progress field allowed:"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:203
+#: infobartunerstate/src/IBTSConfiguration.py:206
 msgid "Only one Icon field allowed:"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:199
+#: infobartunerstate/src/IBTSConfiguration.py:202
 msgid "Only one Name field allowed:"
 msgstr ""
 
@@ -10478,7 +10478,7 @@ msgstr ""
 msgid "Overwrite HBBTV-red-button"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:131
+#: infobartunerstate/src/IBTSConfiguration.py:132
 msgid "Overwrite Infobar timeout"
 msgstr ""
 
@@ -10600,7 +10600,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: partnerbox/src/PartnerboxSetup.py:71
+#: partnerbox/src/PartnerboxSetup.py:72
 msgid "Partnerbox Entries"
 msgstr ""
 
@@ -10612,11 +10612,11 @@ msgstr ""
 "Partnerbox lubab muuta server tuuneri salvestustaimereid ja voogesitada TV   "
 "programme."
 
-#: partnerbox/src/PartnerboxSetup.py:222
+#: partnerbox/src/PartnerboxSetup.py:237
 msgid "Partnerbox: Edit Entry"
 msgstr ""
 
-#: partnerbox/src/PartnerboxSetup.py:120
+#: partnerbox/src/PartnerboxSetup.py:121
 msgid "Partnerbox: List of Entries"
 msgstr ""
 
@@ -10633,7 +10633,7 @@ msgid "Passwd"
 msgstr ""
 
 #
-#: partnerbox/src/PartnerboxSetup.py:252 growlee/src/plugin.py:182
+#: partnerbox/src/PartnerboxSetup.py:267 growlee/src/plugin.py:182
 #: lastfm/src/LastFMConfig.py:38 pushservice/src/Services/SMTP.py:56
 #: pushservice/src/Services/GNTP.py:51 elektro/src/plugin.py:390
 #: emission/src/EmissionSetup.py:29 dyndns/src/plugin.py:37
@@ -10836,7 +10836,7 @@ msgstr ""
 msgid "Place the cut movie in a new file ending with \" cut\""
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:128
+#: infobartunerstate/src/IBTSConfiguration.py:129
 msgid "Placeholder for Progressbar"
 msgstr ""
 
@@ -10885,7 +10885,7 @@ msgstr "Mängi YouTube filme"
 msgid "Play entry"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2921
+#: merlinmusicplayer/src/plugin.py:2936
 msgid "Play last used songlist after starting"
 msgstr ""
 
@@ -10932,7 +10932,7 @@ msgstr ""
 msgid "Playlist '%s' does not exist"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2128
+#: merlinmusicplayer/src/plugin.py:2129
 #, python-format
 msgid "Playlist (%s) -> Song List"
 msgstr ""
@@ -10955,12 +10955,12 @@ msgstr ""
 msgid "Playlist saved to '%s'"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2094
+#: merlinmusicplayer/src/plugin.py:2095
 #: youtubeplayer/src/YouTubeSearchDialog.py:270
 msgid "Playlists"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2366
+#: merlinmusicplayer/src/plugin.py:2367
 #, python-format
 msgid "Playlists (%d)"
 msgstr ""
@@ -11242,7 +11242,7 @@ msgstr ""
 msgid "Porn Center"
 msgstr ""
 
-#: partnerbox/src/PartnerboxSetup.py:127 partnerbox/src/PartnerboxSetup.py:250
+#: partnerbox/src/PartnerboxSetup.py:128 partnerbox/src/PartnerboxSetup.py:265
 #: emission/src/EmissionBandwidth.py:103 emission/src/EmissionSetup.py:30
 #: dreamirc/src/dreamIRCSetup.py:66
 msgid "Port"
@@ -11481,7 +11481,7 @@ msgstr ""
 msgid "Private: %s"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:244
+#: merlinmusicplayer/src/plugin.py:245
 msgid ""
 "Process aborted.\n"
 " 0 files added to database!\n"
@@ -11820,7 +11820,7 @@ msgstr ""
 #: autotimer/src/AutoTimerImporter.py:235
 #: autotimer/src/AutoTimerOverview.py:203
 #: seriesplugin/src/SeriesPluginConfiguration.py:322
-#: infobartunerstate/src/IBTSConfiguration.py:162
+#: infobartunerstate/src/IBTSConfiguration.py:165
 #: epgrefresh/src/EPGRefreshConfiguration.py:348
 #: pushservice/src/ConfigScreen.py:341 serienfilm/src/SerienFilm.py:90
 #: epgbackup/src/EPGBackupConfig.py:263
@@ -11846,7 +11846,7 @@ msgstr ""
 msgid "Really delete this HDMI-Cec-Timespan Entry?"
 msgstr ""
 
-#: partnerbox/src/PartnerboxSetup.py:170 partnerbox/src/PartnerboxSetup.py:277
+#: partnerbox/src/PartnerboxSetup.py:171 partnerbox/src/PartnerboxSetup.py:292
 msgid "Really delete this Partnerbox Entry?"
 msgstr ""
 
@@ -11976,7 +11976,7 @@ msgstr ""
 msgid "Record directory pattern"
 msgstr ""
 
-#: pushservice/src/Controller/RecordNotification.py:109
+#: pushservice/src/Controller/RecordNotification.py:112
 msgid "Record finished:\n"
 msgstr ""
 
@@ -11998,7 +11998,7 @@ msgstr ""
 msgid "Record started! Stopping timeshift now ..."
 msgstr ""
 
-#: pushservice/src/Controller/RecordNotification.py:97
+#: pushservice/src/Controller/RecordNotification.py:98
 msgid "Record started:\n"
 msgstr ""
 
@@ -12115,7 +12115,7 @@ msgstr ""
 msgid "Remaining: %s"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2932
+#: merlinmusicplayer/src/plugin.py:2947
 msgid "Remember last path of filebrowser"
 msgstr ""
 
@@ -12261,7 +12261,7 @@ msgstr ""
 msgid "Remove the selected entry"
 msgstr ""
 
-#: partnerbox/src/PartnerboxEPGSelection.py:179 partnerbox/src/plugin.py:1049
+#: partnerbox/src/PartnerboxEPGSelection.py:179 partnerbox/src/plugin.py:1050
 #: easyinfo/src/plugin.py:734 merlinepgcenter/src/MerlinEPGCenter.py:1318
 msgid "Remove timer"
 msgstr "Eemalda taimer"
@@ -12325,7 +12325,7 @@ msgstr ""
 msgid "Renaming failed"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1456
+#: merlinmusicplayer/src/plugin.py:1457
 msgid "Repeat is not available yet with cue-files!"
 msgstr ""
 
@@ -12429,7 +12429,7 @@ msgstr ""
 msgid "Reset tv-screen after playback:"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1578
+#: merlinmusicplayer/src/plugin.py:1579
 #, python-format
 msgid "Response -> lyrics for: %s (%s)"
 msgstr ""
@@ -12690,8 +12690,8 @@ msgid "Sanskrit"
 msgstr ""
 
 #
-#: partnerbox/src/plugin.py:1265 partnerbox/src/plugin.py:1318
-#: partnerbox/src/plugin.py:1458
+#: partnerbox/src/plugin.py:1285 partnerbox/src/plugin.py:1342
+#: partnerbox/src/plugin.py:1510
 msgid "Sat"
 msgstr "L"
 
@@ -12731,7 +12731,7 @@ msgstr "Laupäev"
 #: webinterface/src/WebComponents/Sources/Strings.py:70
 #: audiorestart/src/plugin.py:108 satloader/src/plugin.py:166
 #: satloader/src/plugin.py:410 aspectratioswitch/src/plugin.py:121
-#: yttrailer/src/plugin.py:307 kiddytimer/src/KTsetup.py:79
+#: yttrailer/src/plugin.py:318 kiddytimer/src/KTsetup.py:79
 #: audiosync/src/AC3setup.py:64 serienfilm/src/SerienFilm.py:65
 #: fritzcall/src/plugin.py:1168 ftpbrowser/src/FTPServerManager.py:261
 #: epgbackup/src/EPGBackupConfig.py:56
@@ -12828,7 +12828,7 @@ msgstr ""
 msgid "Scan NFS share"
 msgstr "Otsi NFS võrgukohta"
 
-#: merlinmusicplayer/src/plugin.py:1832
+#: merlinmusicplayer/src/plugin.py:1833
 msgid "Scan path for music files and add them to database"
 msgstr ""
 
@@ -12944,7 +12944,7 @@ msgstr ""
 msgid "Search http://rapidshare-search-engine.com for:"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1831
+#: merlinmusicplayer/src/plugin.py:1832
 msgid "Search in iDream database"
 msgstr ""
 
@@ -12961,22 +12961,22 @@ msgstr "Otsi piirkond:"
 msgid "Search results"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1995
+#: merlinmusicplayer/src/plugin.py:1996
 #, python-format
 msgid "Search results for \"%s\" in all albums"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1992
+#: merlinmusicplayer/src/plugin.py:1993
 #, python-format
 msgid "Search results for \"%s\" in all artists"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1989
+#: merlinmusicplayer/src/plugin.py:1990
 #, python-format
 msgid "Search results for \"%s\" in all titles"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1998
+#: merlinmusicplayer/src/plugin.py:1999
 #, python-format
 msgid "Search results for \"%s\" in title, artist or album"
 msgstr ""
@@ -13435,19 +13435,19 @@ msgstr ""
 msgid "Service delay"
 msgstr "Kanali viide"
 
-#: partnerbox/src/PartnerboxSetup.py:253
+#: partnerbox/src/PartnerboxSetup.py:268
 msgid "Servicelists/EPG"
 msgstr ""
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:136
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:261
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:137
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:271
 msgid "Servicename"
 msgstr ""
 
 #
 #: webbouqueteditor/src/WebComponents/Sources/SatellitesList.py:58
 #: pushservice/src/ConfigScreen.py:177
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:80
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:81
 msgid "Services"
 msgstr "Kanalid"
 
@@ -13710,15 +13710,15 @@ msgstr ""
 msgid "Show 'EPGRefresh Start now' in extension menu"
 msgstr ""
 
-#: partnerbox/src/PartnerboxSetup.py:76
+#: partnerbox/src/PartnerboxSetup.py:77
 msgid "Show 'RemoteTV Player' in E-Menu"
 msgstr ""
 
-#: partnerbox/src/PartnerboxSetup.py:75
+#: partnerbox/src/PartnerboxSetup.py:76
 msgid "Show 'RemoteTimer' in E-Menu"
 msgstr ""
 
-#: partnerbox/src/PartnerboxSetup.py:77
+#: partnerbox/src/PartnerboxSetup.py:78
 msgid "Show 'Stream current Service' in E-Menu"
 msgstr ""
 
@@ -13792,11 +13792,11 @@ msgstr ""
 msgid "Show Log file"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2936
+#: merlinmusicplayer/src/plugin.py:2951
 msgid "Show Merlin Music Player in extended-pluginlist"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2938
+#: merlinmusicplayer/src/plugin.py:2953
 msgid "Show Merlin Music Player in mainmenu"
 msgstr ""
 
@@ -13804,7 +13804,7 @@ msgstr ""
 msgid "Show Merlin-iDream:"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:137
+#: infobartunerstate/src/IBTSConfiguration.py:140
 msgid "Show Message when Recording starts"
 msgstr "Näita kui Salvestus algab"
 
@@ -13845,7 +13845,7 @@ msgid "Show Setup in"
 msgstr ""
 
 #: movieselectionquickbutton/src/plugin.py:209
-#: webinterface/src/WebIfConfig.py:61 yttrailer/src/plugin.py:310
+#: webinterface/src/WebIfConfig.py:61 yttrailer/src/plugin.py:321
 msgid "Show Setup in Extensions menu"
 msgstr "Näita Setup laienduste menüüs"
 
@@ -13875,7 +13875,7 @@ msgstr ""
 msgid "Show all Plugins in MoviePlayer?"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:87
+#: infobartunerstate/src/IBTSConfiguration.py:89
 msgid "Show and hide with InfoBar"
 msgstr ""
 
@@ -13924,11 +13924,11 @@ msgstr ""
 msgid "Show event information:"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2935
+#: merlinmusicplayer/src/plugin.py:2950
 msgid "Show iDream in extended-pluginlist"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2937
+#: merlinmusicplayer/src/plugin.py:2952
 msgid "Show iDream in mainmenu"
 msgstr ""
 
@@ -14026,11 +14026,11 @@ msgstr "Näita teadet konfliktide puhul"
 msgid "Show notification on similars"
 msgstr "Näita teadet samaste puhul"
 
-#: infobartunerstate/src/IBTSConfiguration.py:88
+#: infobartunerstate/src/IBTSConfiguration.py:90
 msgid "Show on events"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:89
+#: infobartunerstate/src/IBTSConfiguration.py:91
 msgid "Show on key press"
 msgstr ""
 
@@ -14038,11 +14038,11 @@ msgstr ""
 msgid "Show only calls for specific MSN"
 msgstr ""
 
-#: infobartunerstate/src/Handler/Timers.py:126
+#: infobartunerstate/src/Handler/Timers.py:125
 msgid "Show pending records only within x hour(s)"
 msgstr ""
 
-#: infobartunerstate/src/Handler/Timers.py:124
+#: infobartunerstate/src/Handler/Timers.py:123
 msgid "Show pending timer(s)"
 msgstr ""
 
@@ -14151,7 +14151,7 @@ msgstr ""
 msgid "Show video picture:"
 msgstr ""
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:83
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:84
 msgid "Show volumebar when volume-value was changed"
 msgstr ""
 
@@ -14211,7 +14211,7 @@ msgstr "Näitab kanali vahetusel selle nime kanali numbri asemel."
 msgid "Shows the watched services with some statistic"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1444
+#: merlinmusicplayer/src/plugin.py:1445
 msgid "Shuffle is not available yet with cue-files!"
 msgstr ""
 
@@ -14311,6 +14311,10 @@ msgstr ""
 
 #: lastfm/src/plugin.py:206
 msgid "Skip current Track"
+msgstr ""
+
+#: infobartunerstate/src/IBTSConfiguration.py:134
+msgid "Skip mounts for free space statistics"
 msgstr ""
 
 #: autotimer/src/AutoTimerSettings.py:58
@@ -14436,7 +14440,7 @@ msgstr ""
 msgid "Some plugins are not available:\n"
 msgstr "Need laiendused pole saadaval:\n"
 
-#: merlinmusicplayer/src/plugin.py:2378
+#: merlinmusicplayer/src/plugin.py:2379
 #, python-format
 msgid "Songs (%d)"
 msgstr ""
@@ -14927,11 +14931,11 @@ msgstr ""
 msgid "Stream Client with Port"
 msgstr ""
 
-#: partnerbox/src/plugin.py:150
+#: partnerbox/src/plugin.py:151
 msgid "Stream TV from your Partnerbox"
 msgstr ""
 
-#: partnerbox/src/plugin.py:152
+#: partnerbox/src/plugin.py:153
 msgid "Stream current service from partnerbox"
 msgstr ""
 
@@ -15030,8 +15034,8 @@ msgid "Sudanese"
 msgstr ""
 
 #
-#: partnerbox/src/plugin.py:1265 partnerbox/src/plugin.py:1318
-#: partnerbox/src/plugin.py:1458
+#: partnerbox/src/plugin.py:1285 partnerbox/src/plugin.py:1342
+#: partnerbox/src/plugin.py:1510
 msgid "Sun"
 msgstr "P"
 
@@ -15315,11 +15319,11 @@ msgstr ""
 msgid "Text only"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:125
+#: infobartunerstate/src/IBTSConfiguration.py:126
 msgid "Text padding offset in pixel"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:126
+#: infobartunerstate/src/IBTSConfiguration.py:127
 msgid "Text spacing offset in pixel"
 msgstr ""
 
@@ -15560,7 +15564,7 @@ msgstr ""
 msgid "The movie is moved in the background from %s to %s."
 msgstr ""
 
-#: partnerbox/src/plugin.py:1723 kiddytimer/src/KTsetup.py:98
+#: partnerbox/src/plugin.py:1781 kiddytimer/src/KTsetup.py:98
 msgid "The pin code you entered is wrong."
 msgstr "Vale kood."
 
@@ -15621,7 +15625,7 @@ msgid ""
 "The PlugIn will use default colors."
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1827 merlinmusicplayer/src/plugin.py:1951
+#: merlinmusicplayer/src/plugin.py:1828 merlinmusicplayer/src/plugin.py:1952
 msgid ""
 "There are no playlists defined.\n"
 "Do you want to create a new playlist?"
@@ -15698,7 +15702,7 @@ msgid ""
 msgstr "Teie Dreamboxile on sertifikaadi uuendus? Kas uuendame kohe?"
 
 #
-#: merlinmusicplayer/src/plugin.py:1314
+#: merlinmusicplayer/src/plugin.py:1315
 #, python-format
 msgid "This Dreambox can't decode %s streams!"
 msgstr "Vastuvõtja ei suuda dekodeerida %s video voogesitust!"
@@ -15952,8 +15956,8 @@ msgstr ""
 "lubatuna."
 
 #
-#: partnerbox/src/plugin.py:1265 partnerbox/src/plugin.py:1318
-#: partnerbox/src/plugin.py:1458
+#: partnerbox/src/plugin.py:1285 partnerbox/src/plugin.py:1342
+#: partnerbox/src/plugin.py:1510
 msgid "Thu"
 msgstr "N"
 
@@ -15993,11 +15997,11 @@ msgstr ""
 msgid "Time Left / Duration"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:91
+#: infobartunerstate/src/IBTSConfiguration.py:93
 msgid "Time format begin"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:92
+#: infobartunerstate/src/IBTSConfiguration.py:94
 msgid "Time format end"
 msgstr ""
 
@@ -16433,8 +16437,8 @@ msgid "Tsonga"
 msgstr ""
 
 #
-#: partnerbox/src/plugin.py:1265 partnerbox/src/plugin.py:1318
-#: partnerbox/src/plugin.py:1458
+#: partnerbox/src/plugin.py:1285 partnerbox/src/plugin.py:1342
+#: partnerbox/src/plugin.py:1510
 msgid "Tue"
 msgstr "T"
 
@@ -16785,7 +16789,7 @@ msgstr ""
 msgid "Urdu"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:76 virtualzap/src/plugin.py:731
+#: infobartunerstate/src/IBTSConfiguration.py:78 virtualzap/src/plugin.py:731
 msgid "Usage"
 msgstr ""
 
@@ -16818,11 +16822,11 @@ msgstr "Kasuta ja juhi mitut vastuvõtjat erinevate pultidega."
 msgid "Use both profiles alternately"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2927
+#: merlinmusicplayer/src/plugin.py:2942
 msgid "Use google-images for cover art"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2920
+#: merlinmusicplayer/src/plugin.py:2935
 msgid "Use hardware-decoder for MP3"
 msgstr ""
 
@@ -16871,7 +16875,7 @@ msgstr ""
 msgid "Used Tag"
 msgstr ""
 
-#: infobartunerstate/src/Handler/Unknown.py:125
+#: infobartunerstate/src/Handler/Unknown.py:127
 msgid "Used by unknown service"
 msgstr ""
 
@@ -17068,7 +17072,7 @@ msgstr ""
 msgid "Vanity"
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:127
+#: infobartunerstate/src/IBTSConfiguration.py:128
 msgid "Variable field width"
 msgstr ""
 
@@ -17095,7 +17099,7 @@ msgstr ""
 msgid "Version: "
 msgstr ""
 
-#: infobartunerstate/src/IBTSConfiguration.py:124
+#: infobartunerstate/src/IBTSConfiguration.py:125
 msgid "Vertical offset in pixel"
 msgstr ""
 
@@ -17320,7 +17324,7 @@ msgstr ""
 msgid "Wait before Screensaver (seconds)"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2931
+#: merlinmusicplayer/src/plugin.py:2946
 msgid "Wait for screensaver (in min)"
 msgstr ""
 
@@ -17351,6 +17355,10 @@ msgstr "Ootan"
 
 #: elektro/src/plugin.py:393
 msgid "Waiting until poweroff"
+msgstr ""
+
+#: infobartunerstate/src/IBTSConfiguration.py:133
+msgid "Wake HDD for free space statistics"
 msgstr ""
 
 #: epgrefresh/src/EPGRefreshConfiguration.py:171
@@ -17465,8 +17473,8 @@ msgid "Webinterface: Main Setup"
 msgstr "Veebiliides: Seaded"
 
 #
-#: partnerbox/src/plugin.py:1265 partnerbox/src/plugin.py:1318
-#: partnerbox/src/plugin.py:1458
+#: partnerbox/src/plugin.py:1285 partnerbox/src/plugin.py:1342
+#: partnerbox/src/plugin.py:1510
 msgid "Wed"
 msgstr "K"
 
@@ -17921,7 +17929,7 @@ msgstr ""
 "Saad seada, mitme päeva jaoks tulevikus saab lisada taimereid. Sea see 0 "
 "peale võimaluse kõrvaldamiseks."
 
-#: partnerbox/src/plugin.py:1714
+#: partnerbox/src/plugin.py:1772
 msgid ""
 "You can not add services or bouquets from Enigma1-receivers into the "
 "channellist..."
@@ -18016,7 +18024,7 @@ msgstr ""
 msgid "You have to match SD and HD channels separately!"
 msgstr ""
 
-#: partnerbox/src/plugin.py:118
+#: partnerbox/src/plugin.py:119
 msgid "You have to restart Enigma2 to activate your new preferences!"
 msgstr ""
 
@@ -18026,7 +18034,7 @@ msgid ""
 "expected!"
 msgstr ""
 
-#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:291
+#: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:301
 msgid "You must select a valid service!"
 msgstr ""
 
@@ -18094,7 +18102,7 @@ msgstr ""
 msgid "YouTube player:"
 msgstr ""
 
-#: yttrailer/src/plugin.py:87 yttrailer/src/plugin.py:89
+#: yttrailer/src/plugin.py:88 yttrailer/src/plugin.py:90
 msgid "YouTube-Trailer Setup"
 msgstr ""
 
@@ -18153,7 +18161,7 @@ msgid "ZDFmediathek player:"
 msgstr ""
 
 #: webinterface/src/WebComponents/Sources/Strings.py:53
-#: partnerbox/src/plugin.py:518
+#: partnerbox/src/plugin.py:519
 msgid "Zap"
 msgstr ""
 
@@ -18187,7 +18195,7 @@ msgstr ""
 msgid "Zap to %s"
 msgstr ""
 
-#: partnerbox/src/PartnerboxSetup.py:254
+#: partnerbox/src/PartnerboxSetup.py:269
 msgid "Zap to service when streaming"
 msgstr ""
 
@@ -18280,12 +18288,12 @@ msgstr ""
 msgid "[PTS-Plugin] Restarting Timeshift!"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2100 merlinmusicplayer/src/plugin.py:2122
-#: merlinmusicplayer/src/plugin.py:2147 merlinmusicplayer/src/plugin.py:2169
-#: merlinmusicplayer/src/plugin.py:2264 merlinmusicplayer/src/plugin.py:2290
-#: merlinmusicplayer/src/plugin.py:2314 merlinmusicplayer/src/plugin.py:2340
-#: merlinmusicplayer/src/plugin.py:2400 merlinmusicplayer/src/plugin.py:2420
-#: merlinmusicplayer/src/plugin.py:2449
+#: merlinmusicplayer/src/plugin.py:2101 merlinmusicplayer/src/plugin.py:2123
+#: merlinmusicplayer/src/plugin.py:2148 merlinmusicplayer/src/plugin.py:2170
+#: merlinmusicplayer/src/plugin.py:2265 merlinmusicplayer/src/plugin.py:2291
+#: merlinmusicplayer/src/plugin.py:2315 merlinmusicplayer/src/plugin.py:2341
+#: merlinmusicplayer/src/plugin.py:2401 merlinmusicplayer/src/plugin.py:2421
+#: merlinmusicplayer/src/plugin.py:2450
 msgid "[back]"
 msgstr ""
 
@@ -18298,7 +18306,7 @@ msgid "[sort by Name] "
 msgstr ""
 
 #
-#: partnerbox/src/plugin.py:1289 merlinepgcenter/src/EpgCenterList.py:973
+#: partnerbox/src/plugin.py:1309 merlinepgcenter/src/EpgCenterList.py:973
 msgid "about to start"
 msgstr "just algab"
 
@@ -18343,11 +18351,11 @@ msgstr "lisa autotaimer..."
 msgid "add Entry to Main Menu"
 msgstr ""
 
-#: partnerbox/src/plugin.py:1698
+#: partnerbox/src/plugin.py:1756
 msgid "add Partnerbox bouquet"
 msgstr ""
 
-#: partnerbox/src/plugin.py:1691
+#: partnerbox/src/plugin.py:1749
 msgid "add Partnerbox service"
 msgstr ""
 
@@ -18653,7 +18661,7 @@ msgstr ""
 msgid "config changed."
 msgstr "muudetud konf."
 
-#: infobartunerstate/src/plugin.py:185 pushservice/src/plugin.py:113
+#: infobartunerstate/src/plugin.py:187 pushservice/src/plugin.py:113
 #: podcast/src/plugin.py:627
 msgid "configuration"
 msgstr ""
@@ -18804,7 +18812,7 @@ msgstr "keela move mode"
 #
 #: zaphistorybrowser/src/plugin.py:44
 #: webinterface/src/WebComponents/Sources/Movie.py:178
-#: partnerbox/src/plugin.py:1301 audiorestart/src/plugin.py:15
+#: partnerbox/src/plugin.py:1321 audiorestart/src/plugin.py:15
 #: merlinepgcenter/src/ConfigTabs.py:63
 #: merlinepgcenter/src/EpgCenterList.py:992
 #: automatictimerlistcleanup/src/plugin.py:36 fancontrol2/src/plugin.py:145
@@ -18866,7 +18874,7 @@ msgstr "ära salvesta"
 msgid "done"
 msgstr ""
 
-#: partnerbox/src/plugin.py:1296 partnerbox/src/plugin.py:1347
+#: partnerbox/src/plugin.py:1316 partnerbox/src/plugin.py:1371
 #: merlinepgcenter/src/EpgCenterList.py:982
 #: merlinepgcenter/src/EpgCenterList.py:988
 msgid "done!"
@@ -19228,16 +19236,16 @@ msgstr ""
 msgid "home"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:3408 merlinmusicplayer/src/plugin.py:3422
+#: merlinmusicplayer/src/plugin.py:3423 merlinmusicplayer/src/plugin.py:3437
 #: easymedia/src/plugin.py:410
 msgid "iDream"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1774 merlinmusicplayer/src/plugin.py:2357
+#: merlinmusicplayer/src/plugin.py:1775 merlinmusicplayer/src/plugin.py:2358
 msgid "iDream Main Menu"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:2923
+#: merlinmusicplayer/src/plugin.py:2938
 msgid "iDream database path"
 msgstr ""
 
@@ -19328,7 +19336,7 @@ msgstr ""
 msgid "layer 4"
 msgstr ""
 
-#: yttrailer/src/plugin.py:260 yttrailer/src/plugin.py:266
+#: yttrailer/src/plugin.py:271 yttrailer/src/plugin.py:277
 msgid "leave movie player..."
 msgstr "lõpeta salvestise taasesitus..."
 
@@ -19500,11 +19508,11 @@ msgid "mini TV"
 msgstr ""
 
 #
-#: autotimer/src/AutoTimerPreview.py:52 partnerbox/src/plugin.py:835
-#: partnerbox/src/plugin.py:921 partnerbox/src/plugin.py:1279
-#: partnerbox/src/plugin.py:1284 partnerbox/src/plugin.py:1332
-#: partnerbox/src/plugin.py:1335 partnerbox/src/plugin.py:1337
-#: partnerbox/src/plugin.py:1445 partnerbox/src/plugin.py:1642
+#: autotimer/src/AutoTimerPreview.py:52 partnerbox/src/plugin.py:836
+#: partnerbox/src/plugin.py:922 partnerbox/src/plugin.py:1299
+#: partnerbox/src/plugin.py:1304 partnerbox/src/plugin.py:1356
+#: partnerbox/src/plugin.py:1359 partnerbox/src/plugin.py:1361
+#: partnerbox/src/plugin.py:1490 partnerbox/src/plugin.py:1700
 msgid "mins"
 msgstr "min"
 
@@ -20050,7 +20058,7 @@ msgstr ""
 msgid "record"
 msgstr "salvestus"
 
-#: partnerbox/src/plugin.py:1294 partnerbox/src/plugin.py:1345
+#: partnerbox/src/plugin.py:1314 partnerbox/src/plugin.py:1369
 #: merlinepgcenter/src/EpgCenterList.py:979
 msgid "recording..."
 msgstr "salvestan..."
@@ -20182,19 +20190,19 @@ msgstr ""
 msgid "search EPG..."
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1976
+#: merlinmusicplayer/src/plugin.py:1977
 msgid "search for album"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1975
+#: merlinmusicplayer/src/plugin.py:1976
 msgid "search for artist"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1974
+#: merlinmusicplayer/src/plugin.py:1975
 msgid "search for title"
 msgstr ""
 
-#: merlinmusicplayer/src/plugin.py:1977
+#: merlinmusicplayer/src/plugin.py:1978
 msgid "search in all of them"
 msgstr ""
 
@@ -20305,7 +20313,7 @@ msgstr ""
 msgid "setup for Quickbutton"
 msgstr ""
 
-#: partnerbox/src/plugin.py:145
+#: partnerbox/src/plugin.py:146
 msgid "setup for partnerbox"
 msgstr ""
 
@@ -20593,7 +20601,7 @@ msgid "unknown command (%s)"
 msgstr ""
 
 #
-#: partnerbox/src/plugin.py:1627
+#: partnerbox/src/plugin.py:1685
 msgid "unknown service"
 msgstr "tundmatu kanal"
 
@@ -20625,11 +20633,11 @@ msgstr ""
 msgid "use as HDD replacement"
 msgstr "kasuta HDD asenduseks"
 
-#: partnerbox/src/PartnerboxSetup.py:42
+#: partnerbox/src/PartnerboxSetup.py:43
 msgid "use external"
 msgstr ""
 
-#: partnerbox/src/PartnerboxSetup.py:42
+#: partnerbox/src/PartnerboxSetup.py:43
 msgid "use internal"
 msgstr ""
 
@@ -20676,7 +20684,7 @@ msgid "wait..."
 msgstr ""
 
 #
-#: partnerbox/src/plugin.py:1287 partnerbox/src/plugin.py:1340
+#: partnerbox/src/plugin.py:1307 partnerbox/src/plugin.py:1364
 #: merlinepgcenter/src/EpgCenterList.py:970
 msgid "waiting"
 msgstr "ootan"
@@ -20756,7 +20764,7 @@ msgid "zap in pip window..."
 msgstr ""
 
 #
-#: partnerbox/src/plugin.py:1292 partnerbox/src/plugin.py:1343
+#: partnerbox/src/plugin.py:1312 partnerbox/src/plugin.py:1367
 #: merlinepgcenter/src/EpgCenterList.py:977
 msgid "zapped"
 msgstr "vahetatud"

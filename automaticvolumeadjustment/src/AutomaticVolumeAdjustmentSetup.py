@@ -32,6 +32,7 @@ from Components.config import getConfigListEntry, config
 from ServiceReference import ServiceReference
 from AutomaticVolumeAdjustment import AutomaticVolumeAdjustment
 from AutomaticVolumeAdjustmentConfig import AutomaticVolumeAdjustmentConfig
+from skin import TemplatedListFonts, componentSizes
 
 		
 class AutomaticVolumeAdjustmentConfigScreen(ConfigListScreen, Screen):
@@ -191,15 +192,19 @@ class AutomaticVolumeAdjustmentEntriesListConfigScreen(Screen):
 		self.updateList()
 
 class AutomaticVolumeAdjustmentEntryList(MenuList):
+	SKIN_COMPONENT_KEY = "AutomaticVolumeAdjustmentList"
+	SKIN_COMPONENT_TEXT_WIDTH = "textWidth"
+	SKIN_COMPONENT_TEXT_HEIGHT = "textHeight"
+	
 	def __init__(self, list, enableWrapAround = True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-		self.l.setFont(0, gFont("Regular", 20))
-		self.l.setFont(1, gFont("Regular", 18))
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
 		self.configVA = None
 
 	def postWidgetCreate(self, instance):
 		MenuList.postWidgetCreate(self, instance)
-		instance.setItemHeight(20)
+		instance.setItemHeight(componentSizes.itemHeight(self.SKIN_COMPONENT_KEY, 20))
 
 	def getCurrentIndex(self):
 		return self.instance.getCurrentIndex()
@@ -209,12 +214,17 @@ class AutomaticVolumeAdjustmentEntryList(MenuList):
 		
 	def buildList(self):
 		list = []
+		
+		sizes = componentSizes[AutomaticVolumeAdjustmentEntryList.SKIN_COMPONENT_KEY]
+		textWidth = sizes.get(AutomaticVolumeAdjustmentEntryList.SKIN_COMPONENT_TEXT_WIDTH, 355)
+		textHeight = sizes.get(AutomaticVolumeAdjustmentEntryList.SKIN_COMPONENT_TEXT_HEIGHT, 20)
+				
 		for c in self.configVA.config.Entries:
 			c.name.value = ServiceReference(eServiceReference(c.servicereference.value)).getServiceName()
 			res = [
 				c,
-				(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, 350, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, c.name.value),
-				(eListboxPythonMultiContent.TYPE_TEXT, 355, 0,200, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, str(c.adjustvalue.value)),
+				(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, textWidth-10, textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, c.name.value),
+				(eListboxPythonMultiContent.TYPE_TEXT, textWidth, 0,textWidth, textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, str(c.adjustvalue.value)),
 			]
 			list.append(res)
 		self.list = list

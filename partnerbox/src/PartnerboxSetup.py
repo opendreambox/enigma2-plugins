@@ -27,6 +27,7 @@ from Components.config import config
 from Components.ActionMap import ActionMap, NumberActionMap
 from Components.ConfigList import ConfigList, ConfigListScreen
 from Components.config import ConfigSubsection, ConfigSubList, ConfigIP, ConfigInteger, ConfigSelection, ConfigText, ConfigYesNo, getConfigListEntry, configfile
+from skin import TemplatedListFonts, componentSizes
 
 # for localized messages
 from . import _
@@ -182,28 +183,42 @@ class PartnerboxEntriesListConfigScreen(Screen):
 		self.updateList()
 
 class PartnerboxEntryList(MenuList):
+	SKIN_COMPONENT_KEY = "PartnerboxList"
+	SKIN_COMPONENT_NAME_WIDTH = "nameWidth"
+	SKIN_COMPONENT_IP_WIDTH = "ipWidth"
+	SKIN_COMPONENT_PORT_WIDTH = "portWidth"
+	SKIN_COMPONENT_ENIGMA_WIDTH = "enigmaWidth"
+	
 	def __init__(self, list, enableWrapAround = True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-		self.l.setFont(0, gFont("Regular", 20))
-		self.l.setFont(1, gFont("Regular", 18))
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
 	def postWidgetCreate(self, instance):
 		MenuList.postWidgetCreate(self, instance)
-		instance.setItemHeight(20)
+		instance.setItemHeight(componentSizes.itemHeight(self.SKIN_COMPONENT_KEY, 20))
 
 	def buildList(self):
 		self.list=[]
+		
+		sizes = componentSizes[PartnerboxEntryList.SKIN_COMPONENT_KEY]
+		configEntryHeight = sizes.get(componentSizes.ITEM_HEIGHT, 20)
+		nameWidth = sizes.get(PartnerboxEntryList.SKIN_COMPONENT_NAME_WIDTH, 200)
+		ipWidth = sizes.get(PartnerboxEntryList.SKIN_COMPONENT_IP_WIDTH, 135)
+		portWidth = sizes.get(PartnerboxEntryList.SKIN_COMPONENT_PORT_WIDTH, 80)
+		enigmaWidth = sizes.get(PartnerboxEntryList.SKIN_COMPONENT_ENIGMA_WIDTH, 120)
+				
 		for c in config.plugins.Partnerbox.Entries:
 			res = [c]
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, 0, 200, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, str(c.name.value)))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, 0, nameWidth, configEntryHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, str(c.name.value)))
 			ip = "%d.%d.%d.%d" % tuple(c.ip.value)
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 210, 0, 130, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, str(ip)))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 10+nameWidth, 0, ipWidth, configEntryHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, str(ip)))
 			port = "%d"%(c.port.value)
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 350, 0, 80, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, str(port)))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 15+nameWidth+ipWidth, 0, portWidth, configEntryHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, str(port)))
 			if int(c.enigma.value) == 0:
 				e_type = "Enigma2"
 			else:
 				e_type = "Enigma1"
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 430, 0, 120, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, str(e_type)))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 15+nameWidth+ipWidth+portWidth, 0, enigmaWidth, configEntryHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, str(e_type)))
 			self.list.append(res)
 		self.l.setList(self.list)
 		self.moveToIndex(0)

@@ -4,6 +4,7 @@
 #    based on FileList(Enigma-2)
 #
 #    Coded by Vali (c)2009-2011
+#    New version by dre (c) 2016
 #    Main idea and getTSLength/getTSInfo/Sort functions by DarkVolli
 #    Support: www.dreambox-tools.info
 #
@@ -19,25 +20,26 @@
 #
 #######################################################################
 
-
+from enigma import RT_HALIGN_LEFT, RT_VALIGN_CENTER, eListboxPythonMultiContent, eServiceReference, eServiceCenter, gFont, iServiceInformation
+from skin import componentSizes, TemplatedListFonts
+from Components.Harddisk import harddiskmanager
+from Components.MenuList import MenuList
+from Tools.LoadPixmap import LoadPixmap
 
 from re import compile as re_compile
 from os import path as os_path, listdir, stat as os_stat
-from Components.MenuList import MenuList
-from Components.Harddisk import harddiskmanager
-from Components.config import config
-from enigma import RT_HALIGN_LEFT, eListboxPythonMultiContent, eServiceReference, eServiceCenter, gFont, iServiceInformation
-from Tools.LoadPixmap import LoadPixmap
 
+from Components.config import config
 
 
 EXTENSIONS = {
+		"m4a": "music",
 		"mp2": "music",
 		"mp3": "music",
 		"wav": "music",
+		"wma": "music",
 		"ogg": "music",
 		"flac": "music",
-		"m4a": "music",
 		"jpg": "picture",
 		"jpeg": "picture",
 		"jpe": "picture",
@@ -45,19 +47,20 @@ EXTENSIONS = {
 		"bmp": "picture",
 		"mvi": "picture",
 		"ts": "movie",
-		"m2ts": "movie",
 		"avi": "movie",
 		"divx": "movie",
-		"wmv": "movie",
+		"m4v": "movie",		
 		"mpg": "movie",
 		"mpeg": "movie",
 		"mkv": "movie",
 		"mp4": "movie",
 		"mov": "movie",
+		"m2ts": "movie",
+		"flv": "movie",
+		"wmv": "movie",
 		"vob": "movie",
 		"ifo": "movie",
 		"iso": "movie",
-		"flv": "movie",
 		"3gp": "movie",
 		"mod": "movie",
 		"ipk": "package",
@@ -66,25 +69,32 @@ EXTENSIONS = {
 		"sh": "script"
 	}
 
-
-
-def FileEntryComponent(name, absolute = None, isDir = False):
+def FileEntryComponent(name, absolute = None, isDir = False, isMovie=False):
+	sizes = componentSizes[componentSizes.FILE_LIST]
+	tx = sizes.get("textX", 35)
+	ty = sizes.get("textY", 0)
+	tw = sizes.get("textWidth", 1000)
+	th = sizes.get("textHeight", 25)
+	pxw = sizes.get("pixmapWidth", 20)
+	pxh = sizes.get("pixmapHeight", 20)
+	
 	res = [ (absolute, isDir) ]
-	res.append((eListboxPythonMultiContent.TYPE_TEXT, 40, 2, 1000, 22, 0, RT_HALIGN_LEFT, name))
+	res.append((eListboxPythonMultiContent.TYPE_TEXT, tx, ty, tw, th, 0, RT_HALIGN_LEFT, name))
 	if isDir:
-		png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/dir.png")
+		png = LoadPixmap(cached=True, path="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/dir.png")
 	else:
 		extension = name.split('.')
 		extension = extension[-1].lower()
 		if EXTENSIONS.has_key(extension):
 			png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/" + EXTENSIONS[extension] + ".png")
+		elif isMovie:
+			png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/movie.png")
 		else:
 			png = None
 	if png is not None:
-		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 12, 3, 20, 20, png))
+		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, 10, (th-pxh)/2, pxw, pxh, png))
+		
 	return res
-
-
 
 class FileList(MenuList):
 	def __init__(self, directory, showDirectories = True, showFiles = True, showMountpoints = True, matchingPattern = None, useServiceRef = False, inhibitDirs = False, inhibitMounts = False, isTop = False, enableWrapAround = True, additionalExtensions = None):
@@ -98,13 +108,18 @@ class FileList(MenuList):
 		self.showMountpoints = showMountpoints
 		self.showFiles = showFiles
 		self.isTop = isTop
+		# example: matching .nfi and .ts files: "^.*\.(nfi|ts)"		
 		self.matchingPattern = matchingPattern
 		self.inhibitDirs = inhibitDirs or []
 		self.inhibitMounts = inhibitMounts or []
+		
 		self.refreshMountpoints()
 		self.changeDir(directory)
-		self.l.setFont(0, gFont("Regular", 18))
-		self.l.setItemHeight(26)
+		
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
+		itemHeight = componentSizes.itemHeight(componentSizes.FILE_LIST, 25)
+		self.l.setItemHeight(itemHeight)
 		self.serviceHandler = eServiceCenter.getInstance()
 
 	def refreshMountpoints(self):
@@ -156,6 +171,8 @@ class FileList(MenuList):
 
 	def changeDir(self, directory, select = None):
 		self.list = []
+		
+		# if we are just entering from the list of mount points:		
 		if self.current_directory is None:
 			if directory and self.showMountpoints:
 				self.current_mountpoint = self.getMountpointLink(directory)
@@ -164,7 +181,8 @@ class FileList(MenuList):
 		self.current_directory = directory
 		directories = []
 		files = []
-		if directory is None and self.showMountpoints:
+		
+		if directory is None and self.showMountpoints: # present available mountpoints
 			for p in harddiskmanager.getMountedPartitions():
 				path = os_path.join(p.mountpoint, "")
 				if path not in self.inhibitMounts and not self.inParentDirs(path, self.inhibitDirs):
@@ -180,6 +198,7 @@ class FileList(MenuList):
 				root.setName(self.additional_extensions)
 			serviceHandler = eServiceCenter.getInstance()
 			list = serviceHandler.list(root)
+			
 			while 1:
 				s = list.getNext()
 				if not s.valid():
@@ -203,16 +222,19 @@ class FileList(MenuList):
 					if os_path.isdir(directory + x):
 						directories.append(directory + x + "/")
 						files.remove(x)
+						
 		if directory is not None and self.showDirectories and not self.isTop:
 			if directory == self.current_mountpoint and self.showMountpoints:
 				self.list.append(FileEntryComponent(name = "<" +_("List of Storage Devices") + ">", absolute = None, isDir = True))
 			elif (directory != "/") and not (self.inhibitMounts and self.getMountpoint(directory) in self.inhibitMounts):
 				self.list.append(FileEntryComponent(name = "<" +_("Parent Directory") + ">", absolute = '/'.join(directory.split('/')[:-2]) + '/', isDir = True))
+				
 		if self.showDirectories:
 			for x in directories:
 				if not (self.inhibitMounts and self.getMountpoint(x) in self.inhibitMounts) and not self.inParentDirs(x, self.inhibitDirs):
 					name = x.split('/')[-2]
 					self.list.append(FileEntryComponent(name = name, absolute = x, isDir = True))
+					
 		if self.showFiles:
 			for x in files:
 				if self.useServiceRef:
@@ -221,33 +243,31 @@ class FileList(MenuList):
 				else:
 					path = directory + x
 					name = x
+				
+				if (self.matchingPattern is None) or re_compile(self.matchingPattern).search(path):
 					nx = None
-					if (config.plugins.DreamExplorer.MediaFilter.value == "on"):
+					if (config.plugins.DreamExplorer.useMediaFilter.value == "on"):
 						nx = self.getTSInfo(path)
 						if nx is not None:
 							name = nx
-				EXext = os_path.splitext(path)[1]
-				EXext = EXext.replace(".", "")
-				EXext = EXext.lower()
-				if (EXext == ""):
-					EXext = "nothing"
-				if (self.matchingPattern is None) or (EXext in self.matchingPattern):
+					
 					if nx is None:
 						self.list.append(FileEntryComponent(name = name, absolute = x , isDir = False))
 					else:
-						res = [ (x, False) ]
-						res.append((eListboxPythonMultiContent.TYPE_TEXT, 40, 2, 1000, 22, 0, RT_HALIGN_LEFT, name + " [" + self.getTSLength(path) + "]"))
-						png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/movie.png")
-						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 12, 3, 20, 20, png))
-						self.list.append(res)
+						extname = name + " [" + self.getTSLength(path) + "]"
+						self.list.append(FileEntryComponent(name = extname, absolute = x, isDir = False, isMovie=True)) 
+						
 		self.l.setList(self.list)
+		
 		if select is not None:
 			i = 0
 			self.moveToIndex(0)
 			for x in self.list:
 				p = x[0][0]
+				
 				if isinstance(p, eServiceReference):
 					p = p.getPath()
+					
 				if p == select:
 					self.moveToIndex(i)
 				i += 1
@@ -294,7 +314,7 @@ class FileList(MenuList):
 		self.refreshMountpoints()
 		if self.current_directory is None:
 			self.refresh()
-
+	
 	def getTSInfo(self, path):
 		if path.endswith(".ts"):
 			serviceref = eServiceReference("1:0:0:0:0:0:0:0:0:0:" + path)
@@ -352,5 +372,4 @@ class FileList(MenuList):
 		#self.l.invalidate()
 		self.l.setList(self.list)
 		self.moveToIndex(0)
-
 

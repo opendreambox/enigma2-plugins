@@ -76,6 +76,7 @@ from Screens.EpgSelection import EPGSelection
 from Screens.EventView import  EventViewEPGSelect
 from enigma import ePoint, eEPGCache
 from Screens.InfoBarGenerics import NumberZap
+from skin import TemplatedListFonts, componentSizes
 
 
 START_MERLIN_PLAYER_SCREEN_TIMER_VALUE = 7000
@@ -2598,27 +2599,39 @@ class iDreamMerlin(Screen):
 
 		
 class iDreamList(GUIComponent, object):
+	SKIN_COMPONENT_KEY = "MerliniDreamList"
+	SKIN_COMPONENT_LINE_SPACING = "lineSpacing"	
+	SKIN_COMPONENT_LISTBIG_HEIGHT = "listbigHeight"
+	SKIN_COMPONENT_TEXT_HEIGHT = "textHeight"
+	SKIN_COMPONENT_TEXT_WIDTH = "textWidth"
+	SKIN_COMPONENT_TEXT2_WIDTH = "text2Width"
+	
 	def buildEntry(self, item):
 		width = self.l.getItemSize().width()
+		sizes = componentSizes[iDreamList.SKIN_COMPONENT_KEY]
+		lineSpacing = sizes.get(iDreamList.SKIN_COMPONENT_LINE_SPACING, 5)		
+		textHeight = sizes.get(iDreamList.SKIN_COMPONENT_TEXT_HEIGHT, 22)
+		textWidth = sizes.get(iDreamList.SKIN_COMPONENT_TEXT_WIDTH, 100)
+		text2Width = sizes.get(iDreamList.SKIN_COMPONENT_TEXT_WIDTH, 200)
 		res = [ None ]
 		if self.displaySongMode:
 			if item.navigator:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 3, width , 20, 0, RT_HALIGN_CENTER|RT_VALIGN_CENTER, "%s" % item.text))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width , textHeight, 0, RT_HALIGN_CENTER|RT_VALIGN_CENTER, "%s" % item.text))
 			else:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 3, width - 100 , 20, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, "%s - %s" % (item.title, item.artist)))
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, width - 100,3,100, 20, 1, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, "%s" % item.track))
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 26,width -200, 18, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, "%s%s" % (item.album, item.date)))
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, width -200, 26,200, 18, 1, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, "%s" % item.length))
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 47,width -200, 18, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, "%s" % item.genre))
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, width -200, 47,200, 18, 1, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, "%s" % item.bitrate))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width - textWidth , textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, "%s - %s" % (item.title, item.artist)))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, width - textWidth,2,textWidth, textHeight, 1, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, "%s" % item.track))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, textHeight+lineSpacing,width -text2Width, textHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, "%s%s" % (item.album, item.date)))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, width -text2Width, textHeight+lineSpacing,text2Width, textHeight, 1, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, "%s" % item.length))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, textHeight+textHeight,width -text2Width, textHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, "%s" % item.genre))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, width -text2Width, textHeight+textHeight,text2Width, textHeight, 1, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, "%s" % item.bitrate))
 		else:
 			if item.navigator:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 3, width , 20, 0, RT_HALIGN_CENTER|RT_VALIGN_CENTER, "%s" % item.text))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width , textHeight, 0, RT_HALIGN_CENTER|RT_VALIGN_CENTER, "%s" % item.text))
 			else:
 				if item.PTS is None:
-					res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 3, width , 20, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, "%s" % item.text))
+					res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width , textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, "%s" % item.text))
 				else:
-					res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 3, width , 20, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, "%s" % item.title))
+					res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width , textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, "%s" % item.title))
 		
 		return res
 	
@@ -2626,9 +2639,9 @@ class iDreamList(GUIComponent, object):
 		GUIComponent.__init__(self)
 		self.l = eListboxPythonMultiContent()
 		self.l.setBuildFunc(self.buildEntry)
-		self.l.setFont(0, gFont("Regular", 20))
-		self.l.setFont(1, gFont("Regular", 16))
-		self.l.setItemHeight(22)
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
+		self.l.setFont(1, gFont(tlf.face(tlf.SMALLER), tlf.size(tlf.SMALLER)))
 		self.onSelectionChanged = [ ]
 		self.mode = 0
 		self.displaySongMode = False
@@ -2692,10 +2705,12 @@ class iDreamList(GUIComponent, object):
 		self.mode = mode
 		if mode == 2 or mode == 6 or mode == 8 or mode == 10 or mode == 18 or mode == 19 or mode == 14 or mode == 20:
 			self.displaySongMode = True
-			self.l.setItemHeight(68)
+			sizes = componentSizes[iDreamList.SKIN_COMPONENT_KEY]
+			listbigHeight = sizes.get(iDreamList.SKIN_COMPONENT_LISTBIG_HEIGHT, 68)
+			self.l.setItemHeight(listbigHeight)
 		else:
 			self.displaySongMode = False
-			self.l.setItemHeight(22)
+			self.l.setItemHeight(componentSizes.itemHeight(self.SKIN_COMPONENT_KEY, 22))
 
 
 class MerlinMediaPixmap(Pixmap):

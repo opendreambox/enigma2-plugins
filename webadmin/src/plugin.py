@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from os import listdir as os_listdir
+from Tools.Directories import SCOPE_PLUGINS, resolveFilename, copyfile
 from Plugins.Plugin import PluginDescriptor
 from Plugins.Extensions.WebInterface.WebChilds.Toplevel import addExternalChild
 from Plugins.Extensions.WebInterface.WebChilds.Screenpage import ScreenPage
@@ -10,6 +12,21 @@ from twisted.web import static
 from twisted.python import util
 from enigma import eEnv
 
+tpl_dir = resolveFilename(SCOPE_PLUGINS, "Extensions/WebAdmin/web-data/tpl/")
+
+def getProc(myproc):
+	for proc in os_listdir('/proc'):
+		if proc == 'curproc':
+			continue
+		try:
+			with open('/proc/{}/cmdline'.format(proc), mode='rb') as fd:
+				content = fd.read().decode().split('\x00')
+				if myproc in content[0]:
+					return True
+		except Exception:
+			continue
+	return False
+
 if hasattr(static.File, 'render_GET'):
 	class File(static.File):
 		def render_POST(self, request):
@@ -20,6 +37,10 @@ else:
 def autostart(reason, **kwargs):
 	if reason == 0 and "session" in kwargs:
 		session = kwargs["session"]
+		if getProc("shellinaboxd"):
+			copyfile(tpl_dir + "tplTerminal.htm.shellinabox", tpl_dir + "tplTerminal.htm")
+		else:
+			copyfile(tpl_dir + "tplTerminal.htm.default", tpl_dir + "tplTerminal.htm")
 		root = File(eEnv.resolve("${libdir}/enigma2/python/Plugins/Extensions/WebAdmin/web-data"))
 		root.putChild("web", ScreenPage(session, util.sibpath(__file__, "web"), True) )
 		root.putChild("mobile", ScreenPage(session, util.sibpath(__file__, "mobile"), True) )
