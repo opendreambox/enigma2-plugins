@@ -188,7 +188,7 @@ msgstr "Titel menu"
 msgid "User Rating"
 msgstr "Gebruikers waardering"
 
-msgid "Words / phrases to ignore "
+msgid "Words / phrases to ignore (comma separated)"
 msgstr "Woorden/zinnen die genegeerd worden"
 
 msgid "no user rating yet"
