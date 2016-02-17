@@ -18,7 +18,7 @@ from AutoTimer import AutoTimer
 autotimer = AutoTimer()
 autopoller = None
 
-AUTOTIMER_VERSION = "4.0.8"
+AUTOTIMER_VERSION = "4.0.9"
 
 #pragma mark - Help
 try:
@@ -146,6 +146,8 @@ def handleAutoPoller():
 def editCallback(session):
 	# Don't parse EPG if editing was canceled
 	if session is not None:
+		if config.plugins.autotimer.always_write_config.value:
+			autotimer.writeXml()
 		delay = config.plugins.autotimer.editdelay.value
 		parseFunc = lambda: autotimer.parseEPGAsync().addCallback(parseEPGCallback)#.addErrback(parseEPGErrback)
 		reactor.callLater(delay, parseFunc)
@@ -158,7 +160,8 @@ def editCallback(session):
 #	)
 #
 #	# Save xml
-#	autotimer.writeXml()
+#	if config.plugins.autotimer.always_write_config.value:
+#		autotimer.writeXml()
 #	handleAutoPoller()
 
 def parseEPGCallback(ret):
@@ -170,7 +173,8 @@ def parseEPGCallback(ret):
 	)
 
 	# Save xml
-	autotimer.writeXml()
+	if config.plugins.autotimer.always_write_config.value:
+		autotimer.writeXml()
 	handleAutoPoller()
 
 # Movielist
