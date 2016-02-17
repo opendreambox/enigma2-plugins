@@ -1387,5 +1387,6 @@ def editorCallback(ret):
 		autotimer.add(ret)
 
 		# Save modified xml
-		autotimer.writeXml()
+		if config.plugins.autotimer.always_write_config.value:
+			autotimer.writeXml()
 

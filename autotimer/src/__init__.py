@@ -40,6 +40,7 @@ config.plugins.autotimer.skip_during_records = ConfigYesNo(default=False)
 config.plugins.autotimer.skip_during_epgrefresh = ConfigYesNo(default=False)
 config.plugins.autotimer.popup_timeout = ConfigNumber(default=5)
 config.plugins.autotimer.check_eit_and_remove = ConfigOnOff(default=False)
+config.plugins.autotimer.always_write_config = ConfigOnOff(default=False)
 
 config.plugins.autotimer.log_shell = ConfigYesNo(default = False)
 config.plugins.autotimer.log_write = ConfigYesNo(default = False)
