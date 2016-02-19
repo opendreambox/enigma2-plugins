@@ -32,29 +32,29 @@ logger = None
 def initLog():
 	global logger
 	logger = logger or logging.getLogger("AutoTimer")
-	logger.setLevel(logging.WARNING)
+	logger.setLevel(logging.DEBUG)
 	
 	logger.handlers = [] 
 	
 	if config.plugins.autotimer.log_shell.value:
 		shandler = logging.StreamHandler(sys.stdout)
-		shandler.setLevel(logging.INFO)
+		shandler.setLevel(logging.DEBUG)
 
 		sformatter = logging.Formatter('[%(name)s] %(levelname)s - %(message)s')
 		shandler.setFormatter(sformatter)
 
 		logger.addHandler(shandler)
-		logger.setLevel(logging.INFO)
+		logger.setLevel(logging.DEBUG)
 		
 	if config.plugins.autotimer.log_write.value:
 		fhandler = logging.FileHandler(config.plugins.autotimer.log_file.value)
-		fhandler.setLevel(logging.INFO)
+		fhandler.setLevel(logging.DEBUG)
 
 		fformatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 		fhandler.setFormatter(fformatter)
 
 		logger.addHandler(fhandler)
-		logger.setLevel(logging.INFO)
+		logger.setLevel(logging.DEBUG)
 
 def shutdownLog():
 	global logger
