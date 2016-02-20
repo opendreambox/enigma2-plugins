@@ -17,6 +17,8 @@
 #
 #######################################################################
 
+import os
+
 # for localized messages
 from . import _
 
@@ -52,7 +54,7 @@ class SeriesPluginTimer(object):
 			# We do not want to execute the blocking code here
 			return
 		
-		self.getSeasonAndEpisode(timer, name, begin, end, block)
+		return self.getSeasonAndEpisode(timer, name, begin, end, block)
 
 	def getSeasonAndEpisode(self, timer, name, begin, end, block=True):
 		
@@ -153,25 +155,16 @@ class SeriesPluginTimer(object):
 		logDebug("SPT: timerCallback", data)
 		logDebug(data)
 		
-		if data and len(data) == 4 and timer:
+		if data and isinstance(data, dict) and timer:
 			
 			# Episode data available, refactor name and description
-			#from SeriesPluginRenamer import newLegacyEncode
 			timer.name = str(refactorTitle(timer.name, data))
-			#timer.name = newLegacyEncode(refactorTitle(timer.name, data))
 			timer.description = str(refactorDescription(timer.description, data))
 			
-			#try: timer.Filename
-			#except: timer.calculateFilename()
-			if not hasattr(timer, 'Filename'):
-				timer.calculateFilename()
+			timer.dirname = str(refactorDirectory(timer.dirname or config.usage.default_path.value, data))
+			timer.calculateFilename()
 			
-			if not timer.dirname:
-				logDebug("SPT: SeriesPluginTimer: No dirname")
-				timer.dirname  = str(refactorDirectory(config.usage.default_path.value, data))
-			else:
-				timer.dirname  = str(refactorDirectory(timer.dirname, data))
-			
+			logDebug("SPT: Success: Changed name:", timer.name)
 			timer.log(610, "[SeriesPlugin] Success: Changed name: %s." % (timer.name))
 			
 			timer.tags.append(TAG)
