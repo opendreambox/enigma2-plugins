@@ -225,7 +225,7 @@ class IMDB(Screen):
 		self.extrainfomask = re.compile(
 		'(?:.*?<h4 class="inline">(?P<g_keywords>Plot Keywords):</h4>(?P<keywords>.*?)(?:See All|</div>))*'
 		'(?:.*?<h4 class="inline">(?P<g_tagline>Taglines?):</h4>\s*(?P<tagline>.*?)<)*'
-		'(?:.*?<h4 class="inline">(?P<g_cert>Certificate?):\s*(?P<cert>.*?)(?:See all|</div>))*'
+		'(?:.*?<h4 class="inline">(?P<g_cert>Certificate?):.*?>(?P<cert>\d{1,2})<.*?(?:certification))*'
 		'(?:.*?<h4 class="inline">(?P<g_language>Language):</h4>\s*(?P<language>.*?)</div>)*'
 		'(?:.*?<h4 class="inline">(?P<g_locations>Filming Locations):</h4>.*?<a.*?>(?P<locations>.*?)</a>)*'
 		'(?:.*?<h4 class="inline">(?P<g_company>Production Co?):</h4>\s*(?P<company>.*?)(?:See more|</div>))*'
