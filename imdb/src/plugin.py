@@ -211,11 +211,11 @@ class IMDB(Screen):
 
 	def dictionary_init(self):
 		self.generalinfomask = re.compile(
-		'<h1 itemprop="name" class="".*?>(?P<title>.*?)<.*?/h1>*'
+		'<h1 itemprop="name" class=".*?>(?P<title>.*?)<.*?/h1>*'
 		'(?:.*?<div class="originalTitle">(?P<originaltitle>.*?)\s*\((?P<g_originaltitle>original title))*'
-		'(?:.*?<h4 class="inline">\s*(?P<g_director>Directors?):\s*</h4>.*?<a.*?>(?P<director>.*?)</a>)*'
-		'(?:.*?<h4 class="inline">\s*(?P<g_creator>Creators?):\s*</h4>.*?<a.*?>(?P<creator>.*?)</a>)*'
-		'(?:.*?<h4 class="inline">\s*(?P<g_writer>Writers?).*?</h4>.*?<a.*?>(?P<writer>.*?)</a>)*'
+		'(?:.*?<h4 class="inline">\s*(?P<g_director>Directors?):\s*</h4>.*?<a.*?>(?P<director>.*?)(?:\d+ more|</div>))*'
+		'(?:.*?<h4 class="inline">\s*(?P<g_creator>Creators?):\s*</h4>.*?<a.*?>(?P<creator>.*?)(?:\d+ more|</div>))*'
+		'(?:.*?<h4 class="inline">\s*(?P<g_writer>Writers?):\s*</h4>.*?<a.*?>(?P<writer>.*?)(?:\d+ more|</div>))*'
 		'(?:.*?<h4 class="float-left">(?P<g_seasons>Seasons?)\s*</h4>.*?<a.*?>(?P<seasons>(?:\d+|unknown)?)</a>)*'
 		'(?:.*?<h4 class="inline">\s*(?P<g_country>Country):\s*</h4>.*?<a.*?>(?P<country>.*?)</a>)*'
 		'(?:.*?<h4 class="inline">\s*(?P<g_premiere>Release Date).*?</h4>\s+(?P<premiere>.*?)\D+\s+<span)*'
@@ -241,7 +241,7 @@ class IMDB(Screen):
 		, re.S)
 
 		self.genreblockmask = re.compile('href="/genre/.*?\?ref_=tt_stry_gnr.*?\n.*?\s(?P<genre>.*?)</a>', re.S)
-		self.ratingmask = re.compile('<span itemprop="ratingValue">(?P<rating>.*?)</', re.S)
+		self.ratingmask = re.compile('<span itemprop="ratingValue">(?P<rating>.*?)</.*?itemprop="ratingCount">(?P<ratingcount>.*?)</', re.S)
 		self.castmask = re.compile('itemprop="actor".*?class="itemprop"\sitemprop="name">(?P<actor>.*?)</span>.*?class="character">(?P<character>.*?)(?:</a>|</div>|\()', re.S)
 		self.postermask = re.compile('<div class="poster">.*?<img .*?src=\"(http.*?)\"', re.S)
 		self.storylinemask = re.compile('(?:.*?<h2>(?P<g_storyline>Storyline)</h2>.*?(?P<storyline>.*?)(?:see-more inline|</p>|Written))*', re.S)
@@ -552,7 +552,9 @@ class IMDB(Screen):
 
 			genreblock = self.genreblockmask.findall(self.inhtml)
 			if genreblock:
-				Detailstext += "Genres: "
+				s = ''
+				if len(genreblock) > 1: s = 's'
+				Detailstext += "Genre%s: " % s
 				for x in genreblock:
 					genres = self.htmltags.sub('', x)
 					Detailstext += genres + ", "
@@ -562,15 +564,19 @@ class IMDB(Screen):
 
 			for category in ("director", "creator", "writer"):
 				if self.generalinfos.group(category):
-					Detailstext += self.generalinfos.group('g_'+category) + ": " + stripmask.sub(' ', self.htmltags.sub('', self.generalinfos.group(category)).replace('\n','')) + "\n"
+					striplink1 = re.compile('<a href="/name/nm\d+\?ref_=tt_ov_.."itemprop=\'url\'>', re.S)
+					striplink2 = re.compile('(<a href="fullcredits\?ref_=tt_ov_..#.*?">)', re.S)
+					Detailstext += self.generalinfos.group('g_'+category) + ": " + striplink2.sub('', striplink1.sub('', stripmask.sub(' ', self.htmltags.sub('', self.generalinfos.group(category)).replace('\n','').replace('|','')))) + "\n"
 
 			rating = self.ratingmask.search(self.inhtml)
 			Ratingtext = _("no user rating yet")
 			if rating:
-				rating = rating.group("rating")
-				if rating != '<span id="voteuser"></span>':
-					Ratingtext = _("User Rating") + ": " + rating + " / 10"
-					self.ratingstars = int(10*round(float(rating.replace(',','.')),1))
+				ratingval = rating.group("rating")
+				if ratingval != '<span id="voteuser"></span>':
+					count = ''
+					if rating.group("ratingcount"): count = ' (' + rating.group("ratingcount").replace(',','.') + ' ' + _("votes") +')'
+					Ratingtext = _("User Rating") + ": " + ratingval + "/10" + count
+					self.ratingstars = int(10*round(float(ratingval.replace(',','.')),1))
 					self["stars"].show()
 					self["stars"].setValue(self.ratingstars)
 					self["starsbg"].show()
