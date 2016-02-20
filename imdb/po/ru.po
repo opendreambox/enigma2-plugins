@@ -2,133 +2,170 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2-plugins 3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-27 21:28+0100\n"
-"PO-Revision-Date: 2012-08-25 15:22+0200\n"
-"Last-Translator: WadimArt <WadimArt@GiClub.tv>\n"
+"POT-Creation-Date: 2016-02-20 15:43+0100\n"
+"PO-Revision-Date: 2016-02-20 15:43+0100\n"
+"Last-Translator: dhwz <dhwz@gmx.net>\n"
 "Language-Team: none\n"
-"Language: en\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Basepath: ../src\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.8.6\n"
+"X-Poedit-SearchPath-0: .\n"
 
-msgid " as "
-msgstr " как"
-
-msgid "Ambiguous results"
-msgstr "Результаты поиска"
-
-msgid "Cancel"
-msgstr "Отмена"
-
-msgid "Cast: "
-msgstr "Состав: "
-
+#: plugin.py:50
 msgid "Channel Selection"
 msgstr "Выбор канала"
 
-msgid "Couldn't get Eventname"
-msgstr "Не удалось получить описание события"
-
-msgid "Details"
-msgstr "Подробнее"
-
-#, python-format
-msgid "Downloading Movie Poster: %s..."
-msgstr "Загрузка постера: %s..."
-
-msgid ""
-"Enable this to be able to access the IMDb from within the plugin browser."
-msgstr "Включить это, чтобы получить доступ к IMDb из меню плагинов."
-
-msgid "Enter search"
-msgstr "Введите условия поиска"
-
-msgid "Enter text to search for"
-msgstr "Введите текст для поиска"
-
-msgid "Exit"
-msgstr "Выход"
-
-msgid "Extra Info"
-msgstr "Дополнительно"
-
-msgid "IMDb Details"
-msgstr "Данные IMDb"
-
-msgid "IMDb Details parsed"
-msgstr "Подробное описание из IMDb"
-
-msgid "IMDb Download completed"
-msgstr "Загрузка данных IMDb выполнена"
-
-msgid "IMDb Download failed"
-msgstr "Загрузка данных IMDb неудачна"
-
-msgid "IMDb Plugin"
-msgstr "Плагин IMDb"
-
-msgid "IMDb Re-Download completed"
-msgstr "Повторная загрузка данных IMDb выполнена"
-
-msgid "IMDb Setup"
-msgstr "Настройка IMDb"
-
-msgid "IMDb query failed!"
-msgstr "Запрос в IMDb не удался!"
-
+#: plugin.py:79
 msgid "Lookup"
 msgstr "Искать"
 
-msgid "No IMDb match."
-msgstr "Описание не найдено в IMDb!"
+#: plugin.py:155
+#, fuzzy
+msgid "IMDb - Internet Movie Database"
+msgstr "База данных фильмов в Интернете"
 
-msgid "No cast list found in the database."
-msgstr "Список исполнителей не найден."
+#: plugin.py:168
+msgid "Exit"
+msgstr "Выход"
 
-msgid "No details found."
-msgstr "Подробностей не найдено."
-
-msgid "OK"
-msgstr "OK"
-
-msgid "Play Trailer"
-msgstr "Воспроизвести трейлер"
-
+#: plugin.py:310
 msgid "Please select the matching entry"
 msgstr "Пожалуйста, выберите соответствующую запись"
 
-#, python-format
-msgid "Query IMDb: %s..."
-msgstr "Запрос в IMDb: %s..."
+#: plugin.py:312
+msgid "Title Menu"
+msgstr "Основное меню"
 
-msgid "Query details from the Internet Movie Database"
-msgstr "Запрос подробностей в IMDb"
+#: plugin.py:313 plugin.py:537
+msgid "Details"
+msgstr "Подробнее"
 
+#: plugin.py:325 plugin.py:486 plugin.py:501 plugin.py:510
 #, python-format
 msgid "Re-Query IMDb: %s..."
 msgstr "Повторный запрос в IMDb: %s..."
 
-msgid "Search Trailer"
-msgstr "Поиск трейлера"
+#: plugin.py:360
+msgid "Enter search"
+msgstr "Введите условия поиска"
 
+#: plugin.py:361
 msgid "Select from EPG"
 msgstr "Выбор из EPG"
 
+#: plugin.py:362
 msgid "Setup"
 msgstr "Настройка"
 
-msgid "Show in plugin browser"
-msgstr "Показать в меню плагинов"
+#: plugin.py:367
+msgid "Play Trailer"
+msgstr "Воспроизвести трейлер"
 
-msgid "The Internet Movie Database"
-msgstr "База данных фильмов в Интернете"
+#: plugin.py:368
+msgid "Search Trailer"
+msgstr "Поиск трейлера"
 
-msgid "Title Menu"
-msgstr "Основное меню"
+#: plugin.py:374
+#, fuzzy
+msgid "IMDb Menu"
+msgstr "Настройка IMDb"
 
+#: plugin.py:406
+msgid "Enter text to search for"
+msgstr "Введите текст для поиска"
+
+#: plugin.py:450
+#, fuzzy, python-format
+msgid "Query IMDb: %s"
+msgstr "Запрос в IMDb: %s..."
+
+#: plugin.py:458
+msgid "Couldn't get Eventname"
+msgstr "Не удалось получить описание события"
+
+#: plugin.py:466
+msgid "IMDb Download completed"
+msgstr "Загрузка данных IMDb выполнена"
+
+#: plugin.py:496
+msgid "No IMDb match."
+msgstr "Описание не найдено в IMDb!"
+
+#: plugin.py:516
+msgid "IMDb query failed!"
+msgstr "Запрос в IMDb не удался!"
+
+#: plugin.py:519
+msgid "IMDb Download failed"
+msgstr "Загрузка данных IMDb неудачна"
+
+#: plugin.py:527
+msgid "IMDb Re-Download completed"
+msgstr "Повторная загрузка данных IMDb выполнена"
+
+#: plugin.py:535
+msgid "No details found."
+msgstr "Подробностей не найдено."
+
+#: plugin.py:538 plugin.py:630
+msgid "IMDb Details parsed"
+msgstr "Подробное описание из IMDb"
+
+#: plugin.py:565
+msgid "no user rating yet"
+msgstr "рейтинг отсутствует"
+
+#: plugin.py:569
 msgid "User Rating"
 msgstr "Рейтинг пользователей"
 
-msgid "no user rating yet"
-msgstr "рейтинг отсутствует"
+#: plugin.py:587
+msgid "No cast list found in the database."
+msgstr "Список исполнителей не найден."
+
+#: plugin.py:604
+#, python-format
+msgid "Downloading Movie Poster: %s..."
+msgstr "Загрузка постера: %s..."
+
+#: plugin.py:625
+msgid "Extra Info"
+msgstr "Дополнительно"
+
+#: plugin.py:660
+msgid "IMDb Plugin"
+msgstr "Плагин IMDb"
+
+#: plugin.py:667
+msgid "IMDb Setup"
+msgstr "Настройка IMDb"
+
+#: plugin.py:670
+msgid "OK"
+msgstr "OK"
+
+#: plugin.py:671
+msgid "Cancel"
+msgstr "Отмена"
+
+#: plugin.py:688
+msgid "Show in plugin browser"
+msgstr "Показать в меню плагинов"
+
+#: plugin.py:689
+msgid "Words / phrases to ignore (comma separated)"
+msgstr ""
+
+#: plugin.py:723 plugin.py:741 plugin.py:744
+msgid "IMDb Details"
+msgstr "Данные IMDb"
+
+#: plugin.py:741 plugin.py:745
+msgid "Query details from the Internet Movie Database"
+msgstr "Запрос подробностей в IMDb"

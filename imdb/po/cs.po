@@ -7,137 +7,171 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2-plugins 3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-27 21:28+0100\n"
-"PO-Revision-Date: 2012-03-15 14:10+0000\n"
-"Last-Translator: jerry\n"
+"POT-Creation-Date: 2016-02-20 15:40+0100\n"
+"PO-Revision-Date: 2016-02-20 15:41+0100\n"
+"Last-Translator: dhwz <dhwz@gmx.net>\n"
 "Language-Team: jerry\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Poedit-Basepath: ../src\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.8.6\n"
+"X-Poedit-SearchPath-0: .\n"
 
-msgid " as "
-msgstr " jako"
-
-msgid "Ambiguous results"
-msgstr "Nejednoznačné výsledky"
-
-msgid "Cancel"
-msgstr "Zrušit"
-
-msgid "Cast: "
-msgstr ""
-
+#: plugin.py:50
 msgid "Channel Selection"
 msgstr "Výběr stanice"
 
-msgid "Couldn't get Eventname"
-msgstr "Nelze načíst název události"
-
-msgid "Details"
-msgstr "Detaily"
-
-#, python-format
-msgid "Downloading Movie Poster: %s..."
-msgstr "Stahuji plakát filmu: %s..."
-
-msgid ""
-"Enable this to be able to access the IMDb from within the plugin browser."
-msgstr "Povolit = mít přístup na IMDB v rámci Prohlížeče pluginů."
-
-msgid "Enter search"
-msgstr "Vložte hledané"
-
-msgid "Enter text to search for"
-msgstr "Vložte hledaný text"
-
-msgid "Exit"
-msgstr "Konec"
-
-msgid "Extra Info"
-msgstr ""
-
-msgid "IMDb Details"
-msgstr "Detaily z IMDb"
-
-msgid "IMDb Details parsed"
-msgstr "Analýza z IMDb"
-
-msgid "IMDb Download completed"
-msgstr "Stažení z IMDb dokončeno"
-
-msgid "IMDb Download failed"
-msgstr "Stažení z IMDb selhalo"
-
-msgid "IMDb Plugin"
-msgstr "Plugin IMDb"
-
-msgid "IMDb Re-Download completed"
-msgstr "Re-Stažení z IMDb dokončeno"
-
-msgid "IMDb Setup"
-msgstr "Nastavení IMDb"
-
-msgid "IMDb query failed!"
-msgstr "IMDb dotaz selhal!"
-
+#: plugin.py:79
 msgid "Lookup"
 msgstr "Vyhledat"
 
-msgid "No IMDb match."
-msgstr "IMDb-Žádná shoda"
+#: plugin.py:155
+#, fuzzy
+msgid "IMDb - Internet Movie Database"
+msgstr "Internetová filmová databáze"
 
-msgid "No cast list found in the database."
-msgstr "Žádné seznam obsazení v databázi nenalezen."
+#: plugin.py:168
+msgid "Exit"
+msgstr "Konec"
 
-msgid "No details found."
-msgstr "Nenalezeny detaily."
-
-msgid "OK"
-msgstr ""
-
-msgid "Play Trailer"
-msgstr "Přehrát upoutávku"
-
+#: plugin.py:310
 msgid "Please select the matching entry"
 msgstr "Prosím, zvolte odpovídající položku"
 
-#, python-format
-msgid "Query IMDb: %s..."
-msgstr "Dotaz na IMDb: %s..."
+#: plugin.py:312
+msgid "Title Menu"
+msgstr "Tituly"
 
-msgid "Query details from the Internet Movie Database"
-msgstr "Dotaz na podrobnosti z internetové filmové databáze"
+#: plugin.py:313 plugin.py:537
+msgid "Details"
+msgstr "Detaily"
 
+#: plugin.py:325 plugin.py:486 plugin.py:501 plugin.py:510
 #, python-format
 msgid "Re-Query IMDb: %s..."
 msgstr "Re-Dotaz na IMDb: %s..."
 
-msgid "Search Trailer"
-msgstr "Najít upoutávku"
+#: plugin.py:360
+msgid "Enter search"
+msgstr "Vložte hledané"
 
+#: plugin.py:361
 msgid "Select from EPG"
 msgstr "Vybrat z EPG"
 
+#: plugin.py:362
 msgid "Setup"
 msgstr "Nastavit"
 
-msgid "Show in plugin browser"
-msgstr "Zobrazit v Prohlížeči pluginů"
+#: plugin.py:367
+msgid "Play Trailer"
+msgstr "Přehrát upoutávku"
 
-msgid "The Internet Movie Database"
-msgstr "Internetová filmová databáze"
+#: plugin.py:368
+msgid "Search Trailer"
+msgstr "Najít upoutávku"
 
-msgid "Title Menu"
-msgstr "Tituly"
+#: plugin.py:374
+#, fuzzy
+msgid "IMDb Menu"
+msgstr "Nastavení IMDb"
 
-msgid "User Rating"
-msgstr "Hodnocení"
+#: plugin.py:406
+msgid "Enter text to search for"
+msgstr "Vložte hledaný text"
 
+#: plugin.py:450
+#, fuzzy, python-format
+msgid "Query IMDb: %s"
+msgstr "Dotaz na IMDb: %s..."
+
+#: plugin.py:458
+msgid "Couldn't get Eventname"
+msgstr "Nelze načíst název události"
+
+#: plugin.py:466
+msgid "IMDb Download completed"
+msgstr "Stažení z IMDb dokončeno"
+
+#: plugin.py:496
+msgid "No IMDb match."
+msgstr "IMDb-Žádná shoda"
+
+#: plugin.py:516
+msgid "IMDb query failed!"
+msgstr "IMDb dotaz selhal!"
+
+#: plugin.py:519
+msgid "IMDb Download failed"
+msgstr "Stažení z IMDb selhalo"
+
+#: plugin.py:527
+msgid "IMDb Re-Download completed"
+msgstr "Re-Stažení z IMDb dokončeno"
+
+#: plugin.py:535
+msgid "No details found."
+msgstr "Nenalezeny detaily."
+
+#: plugin.py:538 plugin.py:630
+msgid "IMDb Details parsed"
+msgstr "Analýza z IMDb"
+
+#: plugin.py:565
 msgid "no user rating yet"
 msgstr "bez hodnocení"
 
-#
-#~ msgid "Internet Movie Database Details Plugin"
-#~ msgstr "Plugin detailů z Internetové filmové databáze"
+#: plugin.py:569
+msgid "User Rating"
+msgstr "Hodnocení"
+
+#: plugin.py:587
+msgid "No cast list found in the database."
+msgstr "Žádné seznam obsazení v databázi nenalezen."
+
+#: plugin.py:604
+#, python-format
+msgid "Downloading Movie Poster: %s..."
+msgstr "Stahuji plakát filmu: %s..."
+
+#: plugin.py:625
+msgid "Extra Info"
+msgstr ""
+
+#: plugin.py:660
+msgid "IMDb Plugin"
+msgstr "Plugin IMDb"
+
+#: plugin.py:667
+msgid "IMDb Setup"
+msgstr "Nastavení IMDb"
+
+#: plugin.py:670
+#, fuzzy
+msgid "OK"
+msgstr "OK"
+
+#: plugin.py:671
+msgid "Cancel"
+msgstr "Zrušit"
+
+#: plugin.py:688
+msgid "Show in plugin browser"
+msgstr "Zobrazit v Prohlížeči pluginů"
+
+#: plugin.py:689
+msgid "Words / phrases to ignore (comma separated)"
+msgstr ""
+
+#: plugin.py:723 plugin.py:741 plugin.py:744
+msgid "IMDb Details"
+msgstr "Detaily z IMDb"
+
+#: plugin.py:741 plugin.py:745
+msgid "Query details from the Internet Movie Database"
+msgstr "Dotaz na podrobnosti z internetové filmové databáze"

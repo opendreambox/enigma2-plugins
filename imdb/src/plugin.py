@@ -16,7 +16,6 @@ from Components.ScrollLabel import ScrollLabel
 from Components.Button import Button
 from Components.AVSwitch import AVSwitch
 from Components.MenuList import MenuList
-from Components.Language import language
 from Components.ProgressBar import ProgressBar
 from Components.Sources.StaticText import StaticText
 from Components.Sources.Boolean import Boolean
@@ -26,7 +25,6 @@ try:
 	from urllib import quote_plus
 except ImportError as ie:
 	from urllib.parse import quote_plus
-import os, gettext
 
 from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigYesNo, ConfigText
 from Components.ConfigList import ConfigListScreen
@@ -41,14 +39,11 @@ def transHTML(text):
 
 config.plugins.imdb = ConfigSubsection()
 config.plugins.imdb.showinplugins = ConfigYesNo(default = True)
-config.plugins.imdb.force_english = ConfigYesNo(default=False)
 config.plugins.imdb.ignore_tags = ConfigText(visible_width = 50, fixed_size = False)
 
-def quoteEventName(eventName, safe="/()" + ''.join(map(chr,range(192,255)))):
-	# BBC uses '\x86' markers in program names, remove them
-	text = eventName.decode('utf8').replace(u'\x86', u'').replace(u'\x87', u'').encode('utf8')
-	# IMDb doesn't seem to like urlencoded characters at all, hence the big "safe" list
-	return quote_plus(text, safe=safe)
+def quoteEventName(eventName):
+	eventName = eventName.replace(' ','+')
+	return quote_plus(eventName, safe='+')
 
 class IMDBChannelSelection(SimpleChannelSelection):
 	def __init__(self, session):
@@ -107,30 +102,32 @@ class IMDBEPGSelection(EPGSelection):
 
 class IMDB(Screen):
 	skin = """
-		<screen name="IMDB" position="center,center" size="600,420" title="Internet Movie Database Details Plugin" >
-			<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/blue.png" position="420,0" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/key_menu.png" position="565,5" zPosition="0" size="35,25" alphatest="on" />
-			<widget name="key_red" position="0,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#9f1313" transparent="1" />
-			<widget name="key_green" position="140,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget name="key_yellow" position="280,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#a08500" transparent="1" />
-			<widget name="key_blue" position="420,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#18188b" transparent="1" />
-			<widget source="title" render="Label" position="10,40" size="330,45" valign="center" font="Regular;22"/>
-			<widget name="detailslabel" position="105,90" size="485,140" font="Regular;18" />
-			<widget name="castlabel" position="10,235" size="580,155" font="Regular;18" />
-			<widget name="extralabel" position="10,40" size="580,350" font="Regular;18" />
-			<widget name="ratinglabel" position="340,62" size="250,20" halign="center" font="Regular;18" foregroundColor="#f0b400"/>
-			<widget name="statusbar" position="10,404" size="580,16" font="Regular;16" foregroundColor="#cccccc" />
-			<widget name="poster" position="4,90" size="96,140" alphatest="on" />
-			<widget name="menu" position="10,115" size="580,275" zPosition="3" scrollbarMode="showOnDemand" />
-			<widget name="starsbg" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_empty.png" position="340,40" zPosition="0" size="210,21" transparent="1" alphatest="on" />
-			<widget name="stars" position="340,40" size="210,21" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_filled.png" transparent="1" />
+		<screen name="IMDBv2" position="center,center" size="920,520" title="IMDb - Internet Movie Database">
+			<eLabel position="1,1" size="918,2" backgroundColor="grey" zPosition="5" />
+			<eLabel position="1,475" size="918,2" backgroundColor="grey" zPosition="5" />
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,483" size="21,21" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="250,483" size="21,21" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/yellow.png" position="490,483" size="21,21" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/blue.png" position="730,483" size="21,21" alphatest="on" />
+			<widget name="key_red" position="40,480" size="200,30" font="Regular;24" halign="left" />
+			<widget name="key_green" position="280,480" size="200,30" font="Regular;24" halign="left" />
+			<widget name="key_yellow" position="520,480" size="200,30" font="Regular;24" halign="left" />
+			<widget name="key_blue" position="760,480" size="200,30" font="Regular;24" halign="left" />
+			<widget name="titlelabel" position="10,5" size="900,50" valign="center" font="Regular;24" />
+			<widget name="statusbar" position="10,453" size="900,18" font="Regular;16" foregroundColor="#cccccc" />
+			<widget name="extralabel" position="10,60" size="900,365" font="Regular;24" />
+			<widget name="ratinglabel" position="610,40" size="300,22" font="Regular;20" halign="center" foregroundColor="#f0b400" />
+			<widget name="starsbg" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_empty.png" position="660,10" zPosition="0" size="210,21" transparent="1" alphatest="on" />
+			<widget name="stars" position="660,10" size="210,21" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_filled.png" transparent="1" />
+			<widget name="detailslabel" position="115,70" size="795,140" font="Regular;20" />
+			<widget name="poster" position="10,70" size="96,140" alphatest="on" />
+			<widget name="castlabel" position="10,220" size="445,230" font="Regular;20" />
+			<widget name="storylinelabel" position="465,220" size="445,230" font="Regular;20" />
+			<widget name="menu" position="10,60" size="900,365" zPosition="3" scrollbarMode="showOnDemand" enableWrapAround="1" />
 		</screen>"""
-
 	def __init__(self, session, eventName, callbackNeeded=False):
 		Screen.__init__(self, session)
+		self.skinName = "IMDBv2"
 
 		for tag in config.plugins.imdb.ignore_tags.getValue().split(','):
 			eventName = eventName.replace(tag,'')
@@ -155,15 +152,12 @@ class IMDB(Screen):
 		self["starsbg"].hide()
 		self.ratingstars = -1
 
-		self["title"] = StaticText(_("The Internet Movie Database"))
-		# map new source -> old component
-		def setText(txt):
-			StaticText.setText(self["title"], txt)
-			self["titellabel"].setText(txt)
-		self["title"].setText = setText
-		self["titellabel"] = Label()
+		self.setTitle(_("IMDb - Internet Movie Database"))
+		self["titlelabel"] = Label("")
+		self["titlelcd"] = StaticText("")
 		self["detailslabel"] = ScrollLabel("")
 		self["castlabel"] = ScrollLabel("")
+		self["storylinelabel"] = ScrollLabel("")
 		self["extralabel"] = ScrollLabel("")
 		self["statusbar"] = Label("")
 		self["ratinglabel"] = Label("")
@@ -187,6 +181,8 @@ class IMDB(Screen):
 			"cancel": self.exit,
 			"down": self.pageDown,
 			"up": self.pageUp,
+			"right": self.keyRight,
+			"left": self.keyLeft,
 			"red": self.exit,
 			"green": self.showMenu,
 			"yellow": self.showDetails,
@@ -196,6 +192,10 @@ class IMDB(Screen):
 		}, -1)
 
 		self.getIMDB()
+
+	def title_setText(self, txt):
+		StaticText.setText(self["titlelcd"], txt)
+		self["titlelabel"].setText(txt)
 
 	def exit(self):
 		if fileExists("/tmp/poster.jpg"):
@@ -210,53 +210,49 @@ class IMDB(Screen):
 			self.close()
 
 	def dictionary_init(self):
-		syslang = language.getLanguage()
-		if 1: #"de" not in syslang or config.plugins.imdb.force_english.value is True:
-			self.generalinfomask = re.compile(
-			'<h1 itemprop="name" class="".*?>(?P<title>.*?)<.*?/h1>*'
-			'(?:.*?<h4 class="inline">\s*(?P<g_director>Regisseur|Directors?):\s*</h4>.*?<a.*?>(?P<director>.*?)</a>)*'
-			'(?:.*?<h4 class="inline">\s*(?P<g_creator>Sch\S*?pfer|Creators?):\s*</h4>.*?<a.*?>(?P<creator>.*?)</a>)*'
-			'(?:.*?<h4 class="inline">\s*(?P<g_seasons>Seasons?):\s*</h4>.*?<a.*?>(?P<seasons>(?:\d+|unknown)?)</a>)*'
-			'(?:.*?<h4 class="inline">\s*(?P<g_writer>Drehbuch|Writer).*?</h4>.*?<a.*?>(?P<writer>.*?)</a>)*'
-			'(?:.*?<h4 class="inline">\s*(?P<g_country>Land|Country):\s*</h4>.*?<a.*?>(?P<country>.*?)</a>)*'
-			'(?:.*?<h4 class="inline">\s*(?P<g_premiere>Premiere|Release Date).*?</h4>\s+(?P<premiere>.*?)\D+\s+<span)*'
-			'(?:.*?<h4 class="inline">\s*(?P<g_alternativ>Auch bekannt als|Also Known As):\s*</h4>\s*(?P<alternativ>.*?)\s*<span)*'
-			, re.S)
+		self.generalinfomask = re.compile(
+		'<h1 itemprop="name" class="".*?>(?P<title>.*?)<.*?/h1>*'
+		'(?:.*?<h4 class="inline">\s*(?P<g_director>Directors?):\s*</h4>.*?<a.*?>(?P<director>.*?)</a>)*'
+		'(?:.*?<h4 class="inline">\s*(?P<g_creator>Creators?):\s*</h4>.*?<a.*?>(?P<creator>.*?)</a>)*'
+		'(?:.*?<h4 class="inline">\s*(?P<g_writer>Writer).*?</h4>.*?<a.*?>(?P<writer>.*?)</a>)*'
+		'(?:.*?<h4 class="inline">\s*(?P<g_country>Country):\s*</h4>.*?<a.*?>(?P<country>.*?)</a>)*'
+		'(?:.*?<h4 class="inline">\s*(?P<g_premiere>Release Date).*?</h4>\s+(?P<premiere>.*?)\D+\s+<span)*'
+		'(?:.*?<h4 class="inline">\s*(?P<g_alternativ>Also Known As):\s*</h4>\s*(?P<alternativ>.*?)\s*<span)*'
+		'(?:.*?<h4 class="float-left">(?P<g_seasons>Seasons?)\s*</h4>.*?<a.*?>(?P<seasons>(?:\d+|unknown)?)</a>)*'
+		'(?:.*?<h4 class="inline">(?P<g_runtime>Runtime):</h4>\s*(?P<runtime>.*?)</div>)*'
+		, re.S)
 
-			self.extrainfomask = re.compile(
-			'(?:.*?<h4 class="inline">(?P<g_outline>Kurzbeschreibung|Plot Outline):</h4>(?P<outline>.+?)<)*'
-			'(?:.*?<h2>(?P<g_synopsis>Storyline)</h2>.*?<p>(?P<synopsis>.+?)\s*</p>)*'
-			'(?:.*?<h4 class="inline">(?P<g_keywords>Plot Keywords):</h4>(?P<keywords>.+?)(?:Mehr|See more</a>|</div>))*'
-			'(?:.*?<h4 class="inline">(?P<g_tagline>Werbezeile|Tagline?):</h4>\s*(?P<tagline>.+?)<)*'
-			'(?:.*?<h4 class="inline">(?P<g_awards>Filmpreise|Awards):</h4>\s*(?P<awards>.+?)(?:Mehr|See more</a>|</div>))*'
-			'(?:.*?<h4 class="inline">(?P<g_language>Sprache|Language):</h4>\s*(?P<language>.+?)</div>)*'
-			'(?:.*?<h4 class="inline">(?P<g_locations>Drehorte|Filming Locations):</h4>.*?<a.*?>(?P<locations>.+?)</a>)*'
-			'(?:.*?<h4 class="inline">(?P<g_runtime>L\S*?nge|Runtime):</h4>\s*(?P<runtime>.+?)</div>)*'
-			'(?:.*?<h4 class="inline">(?P<g_sound>Tonverfahren|Sound Mix):</h4>\s*(?P<sound>.+?)</div>)*'
-			'(?:.*?<h4 class="inline">(?P<g_color>Farbe|Color):</h4>\s*(?P<color>.+?)</div>)*'
-			'(?:.*?<h4 class="inline">(?P<g_aspect>Seitenverh\S*?ltnis|Aspect Ratio):</h4>\s*(?P<aspect>.+?)(?:Mehr|See more</a>|</div>))*'
-			'(?:.*?<h4 class="inline">(?P<g_cert>Altersfreigabe|Certification):</h4>\s*(?P<cert>.+?)</div>)*'
-			'(?:.*?<h4 class="inline">(?P<g_company>Firma|Company):</h4>\s*(?P<company>.+?)(?:Mehr|See more</a>|</div>))*'
-			'(?:.*?<h4>(?P<g_trivia>Dies und das|Trivia)</h4>\s*(?P<trivia>.+?)(?:<span))*'
-			'(?:.*?<h4>(?P<g_goofs>Pannen|Goofs)</h4>\s*(?P<goofs>.+?)(?:<span))*'
-			'(?:.*?<h4>(?P<g_quotes>Dialogzitate|Quotes)</h4>\s*(?P<quotes>.+?)(?:<span))*'
-			'(?:.*?<h4>(?P<g_connections>Bez\S*?ge zu anderen Titeln|Movie Connections)</h4>\s*(?P<connections>.+?)(?:<span))*'
-			'(?:.*?<h2>(?P<g_comments>Nutzerkommentare|User Reviews)</h2>.*?<a href="/user/ur\d{7,7}/comments">(?P<commenter>.+?)</a>.*?<p>(?P<comment>.+?)</p>)*'
-			, re.S)
+		self.extrainfomask = re.compile(
+		'(?:.*?<h4 class="inline">(?P<g_keywords>Plot Keywords):</h4>(?P<keywords>.*?)(?:See All|</div>))*'
+		'(?:.*?<h4 class="inline">(?P<g_tagline>Taglines?):</h4>\s*(?P<tagline>.*?)<)*'
+		'(?:.*?<h4 class="inline">(?P<g_language>Language):</h4>\s*(?P<language>.*?)</div>)*'
+		'(?:.*?<h4 class="inline">(?P<g_locations>Filming Locations):</h4>.*?<a.*?>(?P<locations>.*?)</a>)*'
+		'(?:.*?<h4 class="inline">(?P<g_sound>Sound Mix):</h4>\s*(?P<sound>.*?)</div>)*'
+		'(?:.*?<h4 class="inline">(?P<g_color>Color):</h4>\s*(?P<color>.*?)</div>)*'
+		'(?:.*?<h4 class="inline">(?P<g_aspect>Aspect Ratio):</h4>\s*(?P<aspect>.*?)(?:See more</a>|</div>))*'
+		'(?:.*?<h4 class="inline">(?P<g_cert>Certificate?):\s*(?P<cert>.*?)(?:See all|</div>))*'
+		'(?:.*?Company Credits</h3>.*?(?P<g_company>Production Co?):\s*(?P<company>.*?)(?:See All|</div>))*'
+		'(?:.*?<h4>(?P<g_trivia>Trivia)</h4>\s*(?P<trivia>.*?)(?:See more|<span))*'
+		'(?:.*?<h4>(?P<g_goofs>Goofs)</h4>\s*(?P<goofs>.*?)(?:See more|<span))*'
+		'(?:.*?<h4>(?P<g_quotes>Quotes)</h4>.*?class="character">(?P<quotes>.*?)(?:See more))*'
+		'(?:.*?<h4>(?P<g_connections>Connections)</h4>\s*(?P<connections>.*?)(?:See more|<span))*'
+		'(?:.*?<h2>(?P<g_comments>User Reviews)</h2>.*?href="/user/ur\d+/\?ref_=tt_urv".{0,1}>(?:<span itemprop="author">)(?P<commenter>.*?)</span>.*?<p\sitemprop="reviewBody">(?P<comment>.*?)</p>)*'
+		, re.S)
 
-			self.genreblockmask = re.compile('href="/genre/.*?\?ref_=tt_stry_gnr.*?\n.*?\s(?P<genre>.*?)</a>', re.S)
-			self.ratingmask = re.compile('<span itemprop="ratingValue">(?P<rating>.*?)</', re.S)
-			self.castmask = re.compile('itemprop="actor".*?class="itemprop"\sitemprop="name">(?P<actor>.*?)</span>.*?class="character">(?P<character>.*?)(?:</a>|</div>|\()', re.S)
-			self.postermask = re.compile('<div class="poster">.*?<img .*?src=\"(http.*?)\"', re.S)
+		self.genreblockmask = re.compile('href="/genre/.*?\?ref_=tt_stry_gnr.*?\n.*?\s(?P<genre>.*?)</a>', re.S)
+		self.ratingmask = re.compile('<span itemprop="ratingValue">(?P<rating>.*?)</', re.S)
+		self.castmask = re.compile('itemprop="actor".*?class="itemprop"\sitemprop="name">(?P<actor>.*?)</span>.*?class="character">(?P<character>.*?)(?:</a>|</div>|\()', re.S)
+		self.postermask = re.compile('<div class="poster">.*?<img .*?src=\"(http.*?)\"', re.S)
+		self.storylinemask = re.compile('(?:.*?<h2>(?P<g_storyline>Storyline)</h2>.*?(?P<storyline>.*?)(?:see-more inline|</p>|Written))*', re.S)
 
 		self.htmltags = re.compile('<.*?>')
 
 	def resetLabels(self):
 		self["detailslabel"].setText("")
 		self["ratinglabel"].setText("")
-		self["title"].setText("")
 		self["castlabel"].setText("")
-		self["titellabel"].setText("")
+		self["storylinelabel"].setText("")
+		self.title_setText("")
 		self["extralabel"].setText("")
 		self.ratingstars = -1
 
@@ -266,6 +262,7 @@ class IMDB(Screen):
 		if self.Page == 1:
 			self["castlabel"].pageUp()
 			self["detailslabel"].pageUp()
+			self["storylinelabel"].pageUp()
 		if self.Page == 2:
 			self["extralabel"].pageUp()
 
@@ -275,6 +272,27 @@ class IMDB(Screen):
 		if self.Page == 1:
 			self["castlabel"].pageDown()
 			self["detailslabel"].pageDown()
+			self["storylinelabel"].pageDown()
+		if self.Page == 2:
+			self["extralabel"].pageDown()
+
+	def keyLeft(self):
+		if self.Page == 0:
+			self["menu"].pageUp()
+		if self.Page == 1:
+			self["castlabel"].pageUp()
+			self["detailslabel"].pageUp()
+			self["storylinelabel"].pageUp()
+		if self.Page == 2:
+			self["extralabel"].pageUp()
+
+	def keyRight(self):
+		if self.Page == 0:
+			self["menu"].pageDown()
+		if self.Page == 1:
+			self["castlabel"].pageDown()
+			self["detailslabel"].pageDown()
+			self["storylinelabel"].pageDown()
 		if self.Page == 2:
 			self["extralabel"].pageDown()
 
@@ -285,11 +303,11 @@ class IMDB(Screen):
 			self["starsbg"].hide()
 			self["ratinglabel"].hide()
 			self["castlabel"].hide()
+			self["storylinelabel"].hide()
 			self["poster"].hide()
 			self["extralabel"].hide()
-			self["title"].setText(_("Ambiguous results"))
-			self["detailslabel"].setText(_("Please select the matching entry"))
-			self["detailslabel"].show()
+			self["detailslabel"].hide()
+			self.title_setText(_("Please select the matching entry"))
 			self["key_blue"].setText("")
 			self["key_green"].setText(_("Title Menu"))
 			self["key_yellow"].setText(_("Details"))
@@ -299,13 +317,14 @@ class IMDB(Screen):
 		self["ratinglabel"].show()
 		self["castlabel"].show()
 		self["detailslabel"].show()
+		self["storylinelabel"].show()
 
 		if self.resultlist and self.Page == 0:
 			link = self["menu"].getCurrent()[1]
 			title = self["menu"].getCurrent()[0]
 			self["statusbar"].setText(_("Re-Query IMDb: %s...") % (title))
 			localfile = "/tmp/imdbquery2.html"
-			fetchurl = "http://imdb.com/title/" + link
+			fetchurl = "http://www.imdb.com/title/" + link
 			print("[IMDB] showDetails() downloading query " + fetchurl + " to " + localfile)
 			download = downloadWithProgress(fetchurl,localfile)
 			download.start().addCallback(self.IMDBquery2).addErrback(self.http_failed)
@@ -329,6 +348,7 @@ class IMDB(Screen):
 			self["extralabel"].show()
 			self["detailslabel"].hide()
 			self["castlabel"].hide()
+			self["storylinelabel"].hide()
 			self["poster"].hide()
 			self["stars"].hide()
 			self["starsbg"].hide()
@@ -401,6 +421,7 @@ class IMDB(Screen):
 			self["menu"].hide()
 			self["ratinglabel"].show()
 			self["castlabel"].show()
+			self["storylinelabel"].show()
 			self["detailslabel"].show()
 			self["poster"].hide()
 			self["stars"].hide()
@@ -428,7 +449,7 @@ class IMDB(Screen):
 		if self.eventName:
 			self["statusbar"].setText(_("Query IMDb: %s") % (self.eventName))
 			localfile = "/tmp/imdbquery.html"
-			fetchurl = "http://imdb.com/find?q=" + quoteEventName(self.eventName) + "&s=tt&site=aka"
+			fetchurl = "http://www.imdb.com/find?ref_=nv_sr_fn&q=" + quoteEventName(self.eventName) + "&s=all"
 			print("[IMDB] getIMDB() Downloading Query " + fetchurl + " to " + localfile)
 			download = downloadWithProgress(fetchurl,localfile)
 			download.start().addCallback(self.IMDBquery).addErrback(self.http_failed)
@@ -436,22 +457,23 @@ class IMDB(Screen):
 		else:
 			self["statusbar"].setText(_("Couldn't get Eventname"))
 
-	def html2utf8(self,in_html):
+	def cleanhtml(self, in_html):
 		in_html = (re.subn(r'<(script).*?</\1>(?s)', '', in_html)[0])
 		in_html = (re.subn(r'<(style).*?</\1>(?s)', '', in_html)[0])
-		self.inhtml = in_html
+		return in_html
 
 	def IMDBquery(self,string):
 		self["statusbar"].setText(_("IMDb Download completed"))
 
-		self.html2utf8(open("/tmp/imdbquery.html", "r").read())
+		self.inhtml = open("/tmp/imdbquery.html", "r").read()
+		self.inhtml = self.cleanhtml(self.inhtml)
 
 		self.generalinfos = self.generalinfomask.search(self.inhtml)
 
 		if self.generalinfos:
 			self.IMDBparse()
 		else:
-			if re.search("<title>Find - IMDb</title>", self.inhtml):
+			if not re.search('class="findHeader">No results found for', self.inhtml):
 				pos = self.inhtml.find("<table class=\"findList\">")
 				pos2 = self.inhtml.find("</table>",pos)
 				findlist = self.inhtml[pos:pos2]
@@ -464,26 +486,34 @@ class IMDB(Screen):
 					self["statusbar"].setText(_("Re-Query IMDb: %s...") % (self.resultlist[0][0],))
 					self.eventName = self.resultlist[0][1]
 					localfile = "/tmp/imdbquery.html"
-					fetchurl = "http://imdb.com/find?q=" + quoteEventName(self.eventName) + "&s=tt&site=aka"
+					fetchurl = "http://www.imdb.com/find?ref_=nv_sr_fn&q=" + quoteEventName(self.eventName) + "&s=all"
 					download = downloadWithProgress(fetchurl,localfile)
 					download.start().addCallback(self.IMDBquery).addErrback(self.http_failed)
 				elif Len > 1:
 					self.Page = 1
 					self.showMenu()
 				else:
-					self["detailslabel"].setText(_("No IMDb match."))
 					self["statusbar"].setText(_("No IMDb match.") + ' ' + self.eventName)
 			else:
 				splitpos = self.eventName.find('(')
-				if splitpos > 0 and self.eventName.endswith(')'):
-					self.eventName = self.eventName[splitpos+1:-1]
+				if splitpos > 0:
+					self.eventName = self.eventName[:splitpos-1]
 					self["statusbar"].setText(_("Re-Query IMDb: %s...") % (self.eventName))
 					localfile = "/tmp/imdbquery.html"
-					fetchurl = "http://imdb.com/find?q=" + quoteEventName(self.eventName) + "&s=tt&site=aka"
+					fetchurl = "http://www.imdb.com/find?ref_=nv_sr_fn&q=" + quoteEventName(self.eventName) + "&s=all"
 					download = downloadWithProgress(fetchurl,localfile)
 					download.start().addCallback(self.IMDBquery).addErrback(self.http_failed)
 				else:
-					self["detailslabel"].setText(_("IMDb query failed!"))
+					splitpos = self.eventName.find('-')
+					if splitpos > 0:
+						self.eventName = self.eventName[:splitpos-1].strip()
+						self["statusbar"].setText(_("Re-Query IMDb: %s...") % (self.eventName))
+						localfile = "/tmp/imdbquery.html"
+						fetchurl = "http://www.imdb.com/find?ref_=nv_sr_fn&q=" + quoteEventName(self.eventName) + "&s=all"
+						download = downloadWithProgress(fetchurl,localfile)
+						download.start().addCallback(self.IMDBquery).addErrback(self.http_failed)
+					else:
+						self["statusbar"].setText(_("IMDb query failed!"))
 
 	def http_failed(self, failure_instance=None, error_message=""):
 		text = _("IMDb Download failed")
@@ -495,7 +525,8 @@ class IMDB(Screen):
 
 	def IMDBquery2(self,string):
 		self["statusbar"].setText(_("IMDb Re-Download completed"))
-		self.html2utf8(open("/tmp/imdbquery2.html", "r").read())
+		self.inhtml = open("/tmp/imdbquery2.html", "r").read()
+		self.inhtml = self.cleanhtml(self.inhtml)
 		self.generalinfos = self.generalinfomask.search(self.inhtml)
 		self.IMDBparse()
 
@@ -508,7 +539,7 @@ class IMDB(Screen):
 			Titeltext = self.generalinfos.group("title").replace('&nbsp;',' ').strip()
 			if len(Titeltext) > 57:
 				Titeltext = Titeltext[0:54] + "..."
-			self["title"].setText(Titeltext)
+			self.title_setText(Titeltext)
 
 			Detailstext = ""
 
@@ -521,13 +552,14 @@ class IMDB(Screen):
 				if Detailstext[-2:] == ", ":
 					Detailstext = Detailstext[:-2]
 
-			for category in ("director", "creator", "writer", "seasons"):
+			for category in ("director", "creator", "writer", "seasons", "runtime"):
 				if self.generalinfos.group(category):
-					Detailstext += "\n" + self.generalinfos.group('g_'+category) + ": " + self.generalinfos.group(category).replace('<span class="itemprop" itemprop="name">','').replace('</span>','')
+					stripmask = re.compile('\s{2,}', re.S)
+					Detailstext += "\n" + self.generalinfos.group('g_'+category) + ": " + stripmask.sub(' ', self.htmltags.sub('', self.generalinfos.group(category)).replace('\n','').replace(' | ',', ')).strip()
 
 			for category in ("premiere", "country", "alternativ"):
 				if self.generalinfos.group(category):
-					Detailstext += "\n" + self.generalinfos.group('g_'+category) + ": " + self.htmltags.sub('', self.generalinfos.group(category).replace('\n',' ').replace("<br>", '\n').replace("<br />",'\n'))
+					Detailstext += "\n" + self.generalinfos.group('g_'+category) + ": " + self.htmltags.sub('', self.generalinfos.group(category).replace('\n',' ').replace('<br>', '\n').replace('<br />','\n'))
 
 			rating = self.ratingmask.search(self.inhtml)
 			Ratingtext = _("no user rating yet")
@@ -547,12 +579,24 @@ class IMDB(Screen):
 				for x in castresult:
 					Casttext += "\n" + self.htmltags.sub('', x.group('actor'))
 					if x.group('character'):
-						Casttext += _(" as ") + self.htmltags.sub('', x.group('character').replace('/ ...','').replace('\n','').replace('&nbsp;','')).strip()
+						stripmask = re.compile('\s{2,}', re.S)
+						Casttext += " as " + stripmask.sub(' ', self.htmltags.sub('', x.group('character').replace('/ ...','').replace('\n','').replace('&nbsp;',''))).strip()
 				if Casttext:
-					Casttext = _("Cast: ") + Casttext
+					Casttext = "Cast: " + Casttext
 				else:
 					Casttext = _("No cast list found in the database.")
 				self["castlabel"].setText(str(Casttext))
+
+			storylineresult = self.storylinemask.search(self.inhtml)
+			if storylineresult:
+				Storyline = ""
+				if storylineresult.group("g_storyline"):
+					Storyline = storylineresult.group('g_storyline') + ":\n" + re.sub('\s{5,30}',', ', self.htmltags.sub('', storylineresult.group('storyline').replace('\n','').replace('<br>', '\n').replace('<br />','\n').replace('&nbsp;','').replace('&quot;','"').replace('<span class="','')).strip())
+
+				if Storyline == storylineresult.group('g_storyline') + ":\n":
+					self["storylinelabel"].hide()
+				else:
+					self["storylinelabel"].setText(str(Storyline))
 
 			posterurl = self.postermask.search(self.inhtml)
 			if posterurl and posterurl.group(1).find("jpg") > 0:
@@ -567,22 +611,20 @@ class IMDB(Screen):
 			extrainfos = self.extrainfomask.search(self.inhtml)
 
 			if extrainfos:
-				Extratext = "Extra Info\n"
+				Extratext = ""
 
-				for category in ("tagline","outline","synopsis","keywords","awards","runtime","language","color","aspect","sound","cert","locations","company","trivia","goofs","quotes","connections"):
+				for category in ("tagline","keywords","cert","language","color","aspect","company","sound","locations","trivia","goofs","quotes","connections"):
 					if extrainfos.group('g_'+category):
-						Extratext += extrainfos.group('g_'+category) + ": " + self.htmltags.sub('',extrainfos.group(category).replace("\n",'').replace("<br>", '\n').replace("<br />",'\n').replace('&view=simple&sort=alpha&ref_=tt_stry_pl" >',' ')) + "\n"
+						Extratext += extrainfos.group('g_'+category) + ":\n" + re.sub('\s{5,30}',', ', self.htmltags.sub('', extrainfos.group(category).replace('\n','').replace('<br>', '\n').replace('<br />','\n').replace('&view=simple&sort=alpha&ref_=tt_stry_pl" >',' ').replace('&nbsp;','').replace('&quot;','"').replace('|','').replace(' : ',':')).strip()) + "\n\n"
 				if extrainfos.group("g_comments"):
 					stripmask = re.compile('\s{2,}', re.S)
-					Extratext += extrainfos.group("g_comments") + " [" + stripmask.sub(' ', self.htmltags.sub('',extrainfos.group("commenter"))) + "]: " + self.htmltags.sub('',extrainfos.group("comment").replace("\n",' ')) + "\n"
+					Extratext += extrainfos.group("g_comments") + " [" + stripmask.sub(' ', self.htmltags.sub('', extrainfos.group("commenter"))) + "]:\n" + transHTML(self.htmltags.sub('',extrainfos.group("comment").replace("\n",' ')))
 
-				Extratext = transHTML(Extratext)
 				self["extralabel"].setText(str(Extratext))
 				self["extralabel"].hide()
 				self["key_blue"].setText(_("Extra Info"))
 
 		self["detailslabel"].setText(str(Detailstext))
-		self.callbackData = Detailstext
 
 	def IMDBPoster(self,string):
 		self["statusbar"].setText(_("IMDb Details parsed"))
@@ -604,13 +646,13 @@ class IMDB(Screen):
 		self.session.open(IMDbSetup)
 
 	def createSummary(self):
-		return IMDbLCDScreen
+		return IMDbLCDScreenV2
 
-class IMDbLCDScreen(Screen):
+class IMDbLCDScreenV2(Screen):
 	skin = """
 	<screen position="0,0" size="132,64" title="IMDB Plugin">
 		<widget name="headline" position="4,0" size="128,22" font="Regular;20"/>
-		<widget source="parent.title" render="Label" position="6,26" size="120,34" font="Regular;14"/>
+		<widget source="parent.titlelcd" render="Label" position="6,26" size="120,34" font="Regular;14"/>
 	</screen>"""
 
 	def __init__(self, session, parent):
@@ -620,7 +662,7 @@ class IMDbLCDScreen(Screen):
 class IMDbSetup(Screen, ConfigListScreen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		self.skinName = ["Setup"]
+		self.skinName = "Setup"
 
 		self.setup_title = _("IMDb Setup")
 		self.onChangedEntry = []

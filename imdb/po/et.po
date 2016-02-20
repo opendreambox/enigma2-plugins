@@ -7,180 +7,169 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2-plugins 3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-15 14:10+0000\n"
-"PO-Revision-Date: 2012-08-25 12:58+0300\n"
-"Last-Translator: rimas\n"
+"POT-Creation-Date: 2016-02-20 15:41+0100\n"
+"PO-Revision-Date: 2016-02-20 15:41+0100\n"
+"Last-Translator: dhwz <dhwz@gmx.net>\n"
 "Language-Team: rimas\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../src\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.8.6\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: ../src/plugin.py:598
-msgid " as "
-msgstr " - "
-
-#: ../src/plugin.py:335
-msgid "Ambiguous results"
-msgstr "Mitu varianti"
-
-#: ../src/plugin.py:707
-msgid "Cancel"
-msgstr "Tühista"
-
-#: ../src/plugin.py:602
-msgid "Cast: "
-msgstr "Osades: "
-
-#: ../src/plugin.py:68
+#: plugin.py:50
 msgid "Channel Selection"
 msgstr "Kanalite valik"
 
-#: ../src/plugin.py:470
-msgid "Couldn't get Eventname"
-msgstr "Saate nime ei tuvastatud"
-
-#: ../src/plugin.py:340
-#: ../src/plugin.py:555
-msgid "Details"
-msgstr "Üksikasjad"
-
-#: ../src/plugin.py:610
-#, python-format
-msgid "Downloading Movie Poster: %s..."
-msgstr "Filmi plakati tõmbamine: %s..."
-
-#: ../src/plugin.py:689
-msgid "Enable this to be able to access the IMDb from within the plugin browser."
-msgstr "Luba see, et IMDb oleks ka laienduste lehitsejas"
-
-#: ../src/plugin.py:383
-msgid "Enter search"
-msgstr "Sisesta otsitav"
-
-#: ../src/plugin.py:428
-msgid "Enter text to search for"
-msgstr "Sisesta otsitav tekst"
-
-#: ../src/plugin.py:182
-msgid "Exit"
-msgstr "Välju"
-
-#: ../src/plugin.py:630
-msgid "Extra Info"
-msgstr "Lisateave"
-
-#: ../src/plugin.py:745
-#: ../src/plugin.py:765
-msgid "IMDb Details"
-msgstr "IMDb andmed"
-
-#: ../src/plugin.py:556
-#: ../src/plugin.py:636
-msgid "IMDb Details parsed"
-msgstr "IMDb andmed töödeldud"
-
-#: ../src/plugin.py:503
-msgid "IMDb Download completed"
-msgstr "Allalaadimine tehtud"
-
-#: ../src/plugin.py:474
-msgid "IMDb Download failed"
-msgstr "Allalaadimine nurjus"
-
-#: ../src/plugin.py:666
-msgid "IMDb Plugin"
-msgstr "IMDb laiendus"
-
-#: ../src/plugin.py:545
-msgid "IMDb Re-Download completed"
-msgstr "Taasallalaadimine tehtud"
-
-#: ../src/plugin.py:683
-#: ../src/plugin.py:724
-msgid "IMDb Setup"
-msgstr "IMDb seaded"
-
-#: ../src/plugin.py:542
-msgid "IMDb query failed!"
-msgstr "IMDb päring nurjus!"
-
-#: ../src/plugin.py:97
+#: plugin.py:79
 msgid "Lookup"
 msgstr "Otsing"
 
-#: ../src/plugin.py:529
-#: ../src/plugin.py:530
-msgid "No IMDb match."
-msgstr "Vastet ei leitud"
+#: plugin.py:155
+#, fuzzy
+msgid "IMDb - Internet Movie Database"
+msgstr "IMDb päringu üksikasjad"
 
-#: ../src/plugin.py:604
-msgid "No cast list found in the database."
-msgstr "Andmebaasist osatäitjaid ei leitud."
+#: plugin.py:168
+msgid "Exit"
+msgstr "Välju"
 
-#: ../src/plugin.py:553
-msgid "No details found."
-msgstr "Üksikasju ei leitud."
-
-#: ../src/plugin.py:706
-msgid "OK"
-msgstr "OK"
-
-#: ../src/plugin.py:390
-msgid "Play Trailer"
-msgstr "Esita treiler"
-
-#: ../src/plugin.py:336
+#: plugin.py:310
 msgid "Please select the matching entry"
 msgstr "Vali sobiv vaste"
 
-#: ../src/plugin.py:460
-#, python-format
-msgid "Query IMDb: %s..."
-msgstr "IMDb päring: %s..."
+#: plugin.py:312
+msgid "Title Menu"
+msgstr "Peamenüü"
 
-#: ../src/plugin.py:765
-#: ../src/plugin.py:769
-msgid "Query details from the Internet Movie Database"
-msgstr "IMDb päringu üksikasjad"
+#: plugin.py:313 plugin.py:537
+msgid "Details"
+msgstr "Üksikasjad"
 
-#: ../src/plugin.py:351
-#: ../src/plugin.py:519
-#: ../src/plugin.py:535
+#: plugin.py:325 plugin.py:486 plugin.py:501 plugin.py:510
 #, python-format
 msgid "Re-Query IMDb: %s..."
 msgstr "Uus päring: %s..."
 
-#: ../src/plugin.py:391
-msgid "Search Trailer"
-msgstr "Otsi treilerit"
+#: plugin.py:360
+msgid "Enter search"
+msgstr "Sisesta otsitav"
 
-#: ../src/plugin.py:384
+#: plugin.py:361
 msgid "Select from EPG"
 msgstr "Vali saatekavast"
 
-#: ../src/plugin.py:385
+#: plugin.py:362
 msgid "Setup"
 msgstr "Seadistamine"
 
-#: ../src/plugin.py:689
-msgid "Show in plugin browser"
-msgstr "Näita laienduste lehitsejas"
+#: plugin.py:367
+msgid "Play Trailer"
+msgstr "Esita treiler"
 
-#: ../src/plugin.py:166
-msgid "The Internet Movie Database"
-msgstr ""
+#: plugin.py:368
+msgid "Search Trailer"
+msgstr "Otsi treilerit"
 
-#: ../src/plugin.py:339
-msgid "Title Menu"
-msgstr "Peamenüü"
+#: plugin.py:374
+#, fuzzy
+msgid "IMDb Menu"
+msgstr "IMDb seaded"
 
-#: ../src/plugin.py:585
-msgid "User Rating"
-msgstr "Kasutajahinnang"
+#: plugin.py:406
+msgid "Enter text to search for"
+msgstr "Sisesta otsitav tekst"
 
-#: ../src/plugin.py:581
+#: plugin.py:450
+#, fuzzy, python-format
+msgid "Query IMDb: %s"
+msgstr "Uus päring: %s..."
+
+#: plugin.py:458
+msgid "Couldn't get Eventname"
+msgstr "Saate nime ei tuvastatud"
+
+#: plugin.py:466
+msgid "IMDb Download completed"
+msgstr "Allalaadimine tehtud"
+
+#: plugin.py:496
+msgid "No IMDb match."
+msgstr "Vastet ei leitud"
+
+#: plugin.py:516
+msgid "IMDb query failed!"
+msgstr "IMDb päring nurjus!"
+
+#: plugin.py:519
+msgid "IMDb Download failed"
+msgstr "Allalaadimine nurjus"
+
+#: plugin.py:527
+msgid "IMDb Re-Download completed"
+msgstr "Taasallalaadimine tehtud"
+
+#: plugin.py:535
+msgid "No details found."
+msgstr "Üksikasju ei leitud."
+
+#: plugin.py:538 plugin.py:630
+msgid "IMDb Details parsed"
+msgstr "IMDb andmed töödeldud"
+
+#: plugin.py:565
 msgid "no user rating yet"
 msgstr "kasutajahinnang puudub"
 
+#: plugin.py:569
+msgid "User Rating"
+msgstr "Kasutajahinnang"
+
+#: plugin.py:587
+msgid "No cast list found in the database."
+msgstr "Andmebaasist osatäitjaid ei leitud."
+
+#: plugin.py:604
+#, python-format
+msgid "Downloading Movie Poster: %s..."
+msgstr "Filmi plakati tõmbamine: %s..."
+
+#: plugin.py:625
+msgid "Extra Info"
+msgstr "Lisateave"
+
+#: plugin.py:660
+msgid "IMDb Plugin"
+msgstr "IMDb laiendus"
+
+#: plugin.py:667
+msgid "IMDb Setup"
+msgstr "IMDb seaded"
+
+#: plugin.py:670
+msgid "OK"
+msgstr "OK"
+
+#: plugin.py:671
+msgid "Cancel"
+msgstr "Tühista"
+
+#: plugin.py:688
+msgid "Show in plugin browser"
+msgstr "Näita laienduste lehitsejas"
+
+#: plugin.py:689
+msgid "Words / phrases to ignore (comma separated)"
+msgstr ""
+
+#: plugin.py:723 plugin.py:741 plugin.py:744
+msgid "IMDb Details"
+msgstr "IMDb andmed"
+
+#: plugin.py:741 plugin.py:745
+msgid "Query details from the Internet Movie Database"
+msgstr "IMDb päringu üksikasjad"
