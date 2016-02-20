@@ -115,7 +115,7 @@ class IMDB(Screen):
 			<widget name="key_blue" position="760,480" size="200,30" font="Regular;24" halign="left" />
 			<widget name="titlelabel" position="10,5" size="900,50" valign="center" font="Regular;24" />
 			<widget name="statusbar" position="10,453" size="900,18" font="Regular;16" foregroundColor="#cccccc" />
-			<widget name="extralabel" position="10,60" size="900,365" font="Regular;24" />
+			<widget name="extralabel" position="10,60" size="900,390" font="Regular;24" />
 			<widget name="ratinglabel" position="610,40" size="300,22" font="Regular;20" halign="center" foregroundColor="#f0b400" />
 			<widget name="starsbg" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_empty.png" position="660,10" zPosition="0" size="210,21" transparent="1" alphatest="on" />
 			<widget name="stars" position="660,10" size="210,21" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_filled.png" transparent="1" />
@@ -123,7 +123,7 @@ class IMDB(Screen):
 			<widget name="poster" position="10,70" size="96,140" alphatest="on" />
 			<widget name="castlabel" position="10,220" size="445,230" font="Regular;20" />
 			<widget name="storylinelabel" position="465,220" size="445,230" font="Regular;20" />
-			<widget name="menu" position="10,60" size="900,365" zPosition="3" scrollbarMode="showOnDemand" enableWrapAround="1" />
+			<widget name="menu" position="10,60" size="900,390" zPosition="3" scrollbarMode="showOnDemand" enableWrapAround="1" />
 		</screen>"""
 	def __init__(self, session, eventName, callbackNeeded=False):
 		Screen.__init__(self, session)
@@ -212,29 +212,30 @@ class IMDB(Screen):
 	def dictionary_init(self):
 		self.generalinfomask = re.compile(
 		'<h1 itemprop="name" class="".*?>(?P<title>.*?)<.*?/h1>*'
+		'(?:.*?<div class="originalTitle">(?P<originaltitle>.*?)\s*\((?P<g_originaltitle>original title))*'
 		'(?:.*?<h4 class="inline">\s*(?P<g_director>Directors?):\s*</h4>.*?<a.*?>(?P<director>.*?)</a>)*'
 		'(?:.*?<h4 class="inline">\s*(?P<g_creator>Creators?):\s*</h4>.*?<a.*?>(?P<creator>.*?)</a>)*'
-		'(?:.*?<h4 class="inline">\s*(?P<g_writer>Writer).*?</h4>.*?<a.*?>(?P<writer>.*?)</a>)*'
+		'(?:.*?<h4 class="inline">\s*(?P<g_writer>Writers?).*?</h4>.*?<a.*?>(?P<writer>.*?)</a>)*'
+		'(?:.*?<h4 class="float-left">(?P<g_seasons>Seasons?)\s*</h4>.*?<a.*?>(?P<seasons>(?:\d+|unknown)?)</a>)*'
 		'(?:.*?<h4 class="inline">\s*(?P<g_country>Country):\s*</h4>.*?<a.*?>(?P<country>.*?)</a>)*'
 		'(?:.*?<h4 class="inline">\s*(?P<g_premiere>Release Date).*?</h4>\s+(?P<premiere>.*?)\D+\s+<span)*'
-		'(?:.*?<h4 class="inline">\s*(?P<g_alternativ>Also Known As):\s*</h4>\s*(?P<alternativ>.*?)\s*<span)*'
-		'(?:.*?<h4 class="float-left">(?P<g_seasons>Seasons?)\s*</h4>.*?<a.*?>(?P<seasons>(?:\d+|unknown)?)</a>)*'
 		'(?:.*?<h4 class="inline">(?P<g_runtime>Runtime):</h4>\s*(?P<runtime>.*?)</div>)*'
 		, re.S)
 
 		self.extrainfomask = re.compile(
 		'(?:.*?<h4 class="inline">(?P<g_keywords>Plot Keywords):</h4>(?P<keywords>.*?)(?:See All|</div>))*'
 		'(?:.*?<h4 class="inline">(?P<g_tagline>Taglines?):</h4>\s*(?P<tagline>.*?)<)*'
+		'(?:.*?<h4 class="inline">(?P<g_cert>Certificate?):\s*(?P<cert>.*?)(?:See all|</div>))*'
 		'(?:.*?<h4 class="inline">(?P<g_language>Language):</h4>\s*(?P<language>.*?)</div>)*'
 		'(?:.*?<h4 class="inline">(?P<g_locations>Filming Locations):</h4>.*?<a.*?>(?P<locations>.*?)</a>)*'
+		'(?:.*?<h4 class="inline">(?P<g_company>Production Co?):</h4>\s*(?P<company>.*?)(?:See more|</div>))*'
 		'(?:.*?<h4 class="inline">(?P<g_sound>Sound Mix):</h4>\s*(?P<sound>.*?)</div>)*'
 		'(?:.*?<h4 class="inline">(?P<g_color>Color):</h4>\s*(?P<color>.*?)</div>)*'
 		'(?:.*?<h4 class="inline">(?P<g_aspect>Aspect Ratio):</h4>\s*(?P<aspect>.*?)(?:See more</a>|</div>))*'
-		'(?:.*?<h4 class="inline">(?P<g_cert>Certificate?):\s*(?P<cert>.*?)(?:See all|</div>))*'
-		'(?:.*?Company Credits</h3>.*?(?P<g_company>Production Co?):\s*(?P<company>.*?)(?:See All|</div>))*'
 		'(?:.*?<h4>(?P<g_trivia>Trivia)</h4>\s*(?P<trivia>.*?)(?:See more|<span))*'
 		'(?:.*?<h4>(?P<g_goofs>Goofs)</h4>\s*(?P<goofs>.*?)(?:See more|<span))*'
 		'(?:.*?<h4>(?P<g_quotes>Quotes)</h4>.*?class="character">(?P<quotes>.*?)(?:See more))*'
+		'(?:.*?<h4>(?P<g_crazy>Crazy Credits)</h4>\s*(?P<crazy>.*?)(?:See more))*'
 		'(?:.*?<h4>(?P<g_connections>Connections)</h4>\s*(?P<connections>.*?)(?:See more|<span))*'
 		'(?:.*?<h2>(?P<g_comments>User Reviews)</h2>.*?href="/user/ur\d+/\?ref_=tt_urv".{0,1}>(?:<span itemprop="author">)(?P<commenter>.*?)</span>.*?<p\sitemprop="reviewBody">(?P<comment>.*?)</p>)*'
 		, re.S)
@@ -483,6 +484,7 @@ class IMDB(Screen):
 				Len = len(self.resultlist)
 				self["menu"].l.setList(self.resultlist)
 				if Len == 1:
+					self["key_green"].setText("")
 					self["statusbar"].setText(_("Re-Query IMDb: %s...") % (self.resultlist[0][0],))
 					self.eventName = self.resultlist[0][1]
 					localfile = "/tmp/imdbquery.html"
@@ -542,6 +544,11 @@ class IMDB(Screen):
 			self.title_setText(Titeltext)
 
 			Detailstext = ""
+			stripmask = re.compile('\s{2,}', re.S)
+
+			for category in ("originaltitle", "premiere", "country", "runtime", "seasons"):
+				if self.generalinfos.group(category):
+					Detailstext += self.generalinfos.group('g_'+category).title() + ": " + stripmask.sub(' ', self.htmltags.sub('', self.generalinfos.group(category).replace('\n',' ').replace('<br>', '\n').replace('<br />','\n'))).replace(' | ',', ').strip() + "\n"
 
 			genreblock = self.genreblockmask.findall(self.inhtml)
 			if genreblock:
@@ -551,15 +558,11 @@ class IMDB(Screen):
 					Detailstext += genres + ", "
 				if Detailstext[-2:] == ", ":
 					Detailstext = Detailstext[:-2]
+				Detailstext += "\n"
 
-			for category in ("director", "creator", "writer", "seasons", "runtime"):
+			for category in ("director", "creator", "writer"):
 				if self.generalinfos.group(category):
-					stripmask = re.compile('\s{2,}', re.S)
-					Detailstext += "\n" + self.generalinfos.group('g_'+category) + ": " + stripmask.sub(' ', self.htmltags.sub('', self.generalinfos.group(category)).replace('\n','').replace(' | ',', ')).strip()
-
-			for category in ("premiere", "country", "alternativ"):
-				if self.generalinfos.group(category):
-					Detailstext += "\n" + self.generalinfos.group('g_'+category) + ": " + self.htmltags.sub('', self.generalinfos.group(category).replace('\n',' ').replace('<br>', '\n').replace('<br />','\n'))
+					Detailstext += self.generalinfos.group('g_'+category) + ": " + stripmask.sub(' ', self.htmltags.sub('', self.generalinfos.group(category)).replace('\n','')) + "\n"
 
 			rating = self.ratingmask.search(self.inhtml)
 			Ratingtext = _("no user rating yet")
@@ -579,7 +582,6 @@ class IMDB(Screen):
 				for x in castresult:
 					Casttext += "\n" + self.htmltags.sub('', x.group('actor'))
 					if x.group('character'):
-						stripmask = re.compile('\s{2,}', re.S)
 						Casttext += " as " + stripmask.sub(' ', self.htmltags.sub('', x.group('character').replace('/ ...','').replace('\n','').replace('&nbsp;',''))).strip()
 				if Casttext:
 					Casttext = "Cast: " + Casttext
@@ -608,14 +610,13 @@ class IMDB(Screen):
 				download.start().addCallback(self.IMDBPoster).addErrback(self.http_failed)
 			else:
 				self.IMDBPoster("kein Poster")
-			extrainfos = self.extrainfomask.search(self.inhtml)
 
+			extrainfos = self.extrainfomask.search(self.inhtml)
 			if extrainfos:
 				Extratext = ""
-
-				for category in ("tagline","keywords","cert","language","color","aspect","company","sound","locations","trivia","goofs","quotes","connections"):
+				for category in ("tagline","keywords","cert","language","color","aspect","company","sound","locations","trivia","goofs","quotes","crazy","connections"):
 					if extrainfos.group('g_'+category):
-						Extratext += extrainfos.group('g_'+category) + ":\n" + re.sub('\s{5,30}',', ', self.htmltags.sub('', extrainfos.group(category).replace('\n','').replace('<br>', '\n').replace('<br />','\n').replace('&view=simple&sort=alpha&ref_=tt_stry_pl" >',' ').replace('&nbsp;','').replace('&quot;','"').replace('|','').replace(' : ',':')).strip()) + "\n\n"
+						Extratext += extrainfos.group('g_'+category) + ":\n" + re.sub('\s{5,30}',', ', self.htmltags.sub('', extrainfos.group(category).replace('\n','').replace('<br>', '\n').replace('<br />','\n').replace('&view=simple&sort=alpha&ref_=tt_stry_pl" >',' ').replace('&nbsp;','').replace('&quot;','"').replace('|','').replace(' : ',':').replace(',        ',' / ')).strip()) + "\n\n"
 				if extrainfos.group("g_comments"):
 					stripmask = re.compile('\s{2,}', re.S)
 					Extratext += extrainfos.group("g_comments") + " [" + stripmask.sub(' ', self.htmltags.sub('', extrainfos.group("commenter"))) + "]:\n" + transHTML(self.htmltags.sub('',extrainfos.group("comment").replace("\n",' ')))
@@ -623,6 +624,8 @@ class IMDB(Screen):
 				self["extralabel"].setText(str(Extratext))
 				self["extralabel"].hide()
 				self["key_blue"].setText(_("Extra Info"))
+			else:
+				self["key_blue"].setText("")
 
 		self["detailslabel"].setText(str(Detailstext))
 
