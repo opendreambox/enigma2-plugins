@@ -17,14 +17,17 @@
 #
 #######################################################################
 
+import os
+import json
+
 # for localized messages
 from . import _
 
 # Config
 from Components.config import *
 
-import os
-import json
+from Tools.Notifications import AddPopup
+from Screens.MessageBox import MessageBox
 
 # Plugin internal
 from Logger import logDebug, logInfo
@@ -33,7 +36,24 @@ from Logger import logDebug, logInfo
 scheme_fallback = [
 		("Off", "Disabled"),
 		
-		("{org:s}\{series:s}\S{season:02d}",  "Series\Season S01E01")
+		("{org:s}/{series:s}/{season:02d}/"               , "Original/Series/01/"),
+		("{org:s}/{series:s}/S{season:02d}/"              , "Original/Series/S01/"),
+		("{org:s}/{series:s}/{rawseason:s}/"              , "Original/Series/Raw/"),
+		
+		("{org:s}/{series:s}/Season {season:02d}/"        , "Original/Series/Season 01/"),
+		("{org:s}/{series:s}/Season {rawseason:s}/"       , "Original/Series/Season Raw/"),
+		
+		("{org:s}/{series:s} {season:02d}/"               , "Original/Series 01/"),
+		("{org:s}/{series:s} S{season:02d}/"              , "Original/Series S01/"),
+		
+		("{org:s}/{series:s} Season {season:02d}/"        , "Original/Series Season 01/"),
+		("{org:s}/{series:s} Season {rawseason:s}/"       , "Original/Series Season Raw/"),
+		
+		("{org:s}/{service:s}/{series:s}/Season {rawseason:s}/" , "Original/Service/Series/Season Raw/"),
+		("{org:s}/{channel:s}/{series:s}/Season {rawseason:s}/" , "Original/Channel/Series/Season Raw/"),
+		
+		("{org:s}/{date:s}/{series:s}/" , "Date/Series/"),
+		("{org:s}/{time:s}/{series:s}/" , "Time/Series/")
 	]
 
 def readDirectoryPatterns():
@@ -42,14 +62,20 @@ def readDirectoryPatterns():
 	patterns = None
 	
 	if os.path.exists(path):
-		logDebug("[SeriesPlugin] Found pattern file")
+		logDebug("Found directory pattern file")
 		f = None
 		try:
 			f = open(path, 'rb')
 			header, patterns = json.load(f)
 			patterns = [tuple(p) for p in patterns]
 		except Exception as e:
-			logDebug("[SeriesPlugin] Exception in readDirectoryPatterns: " + str(e))
+			logDebug("Exception in readDirectoryPatterns: " + str(e))
+			AddPopup(
+					_("Your pattern file is corrupt")  + "\n" + path + "\n\n" + str(e),
+					MessageBox.TYPE_ERROR,
+					-1,
+					'SP_PopUp_ID_Error_DirectoryPatterns'
+				)
 		finally:
 			if f is not None:
 				f.close()

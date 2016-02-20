@@ -6,37 +6,25 @@ import re
 
 from Components.config import config
 
-from Tools.BoundFunction import boundFunction
-
-from urllib import urlencode
+from Screens.MessageBox import MessageBox
+from Tools.Notifications import AddPopup
 
 from time import time, mktime
 from datetime import datetime
 
 # Internal
-from Plugins.Extensions.SeriesPlugin.IdentifierBase import IdentifierBase
+from Plugins.Extensions.SeriesPlugin.__init__ import _
+from Plugins.Extensions.SeriesPlugin.IdentifierBase import IdentifierBase2
 from Plugins.Extensions.SeriesPlugin.Logger import logDebug, logInfo
-from Plugins.Extensions.SeriesPlugin import _
-
-# Constants
-SERIEN_SERVER_URL = 'http://176.9.54.54/serienserver/cache/cache.php'
-
-CompiledRegexpReplaceChars = re.compile("[^a-zA-Z0-9-\*]")
-
-try:
-	import xmlrpclib
-except ImportError as ie:
-	xmlrpclib = None
+from Plugins.Extensions.SeriesPlugin.Channels import lookupChannelByReference
+from Plugins.Extensions.SeriesPlugin.TimeoutServerProxy import TimeoutServerProxy
 
 
-class SerienServer(IdentifierBase):
+class SerienServer(IdentifierBase2):
 	def __init__(self):
-		IdentifierBase.__init__(self)
+		IdentifierBase2.__init__(self)
 		
-		# Check dependencies
-		if xmlrpclib is not None:
-			from Plugins.Extensions.SeriesPlugin.plugin import REQUEST_PARAMETER
-			self.server = xmlrpclib.ServerProxy(SERIEN_SERVER_URL + REQUEST_PARAMETER, verbose=False)
+		self.server = TimeoutServerProxy()
 	
 	@classmethod
 	def knowsElapsed(cls):
@@ -50,19 +38,17 @@ class SerienServer(IdentifierBase):
 	def knowsFuture(cls):
 		return True
 
-	def getName(self):
-		return "Wunschliste"
+	def getLogo(self, future=True, today=False, elapsed=False):
+		if future:
+			return "Wunschliste"
+		elif today:
+			return "Wunschliste"
+		else:
+			return "Fernsehserien"
 
 	def getEpisode(self, name, begin, end=None, service=None):
 		# On Success: Return a single season, episode, title tuple
 		# On Failure: Return a empty list or String or None
-		
-		
-		# Check dependencies
-		if xmlrpclib is None:
-			msg = _("Error install")  + " python-xmlrpclib"
-			logInfo(msg)
-			return msg
 		
 		
 		# Check preconditions
@@ -75,38 +61,42 @@ class SerienServer(IdentifierBase):
 			logInfo(msg)
 			return msg
 		if not service:
-			msg = _("Skip: No service specified")
+			msg = _("Skip: No service / channel specified")
 			logInfo(msg)
 			return msg
-		
-		
-		self.name = name
-		self.begin = begin
-		self.end = end
-		self.service = service
-		
-		self.knownids = []
 		
 		logInfo("SerienServer getEpisode, name, begin, end=None, service", name, begin, end, service)
 		
 		# Prepare parameters
-		name = CompiledRegexpReplaceChars.sub(" ", name.lower())
-		webChannels = self.lookupChannelByReference(service)
-		unixtime = str(int(mktime(begin.timetuple())))
+		webChannels = lookupChannelByReference(service)
+		if not webChannels:
+			msg = _("No matching channel found.") + "\n\n" + _("Please open the Channel Editor and add the channel manually.")
+			logInfo(msg)
+			AddPopup(
+				msg,
+				MessageBox.TYPE_ERROR,
+				-1,
+				'SP_PopUp_ID_Error'
+			)
+			return msg
+		
+		unixtime = str(begin)
 		max_time_drift = self.max_time_drift
 		
 		# Lookup
 		for webChannel in webChannels:
-			logInfo("SerienServer getSeasonEpisode():", name, webChannel, unixtime)
+			logDebug("SerienServer getSeasonEpisode(): [\"%s\",\"%s\",\"%s\",%s]" % (name, webChannel, unixtime, max_time_drift))
 			
-			result = self.server.sp.cache.getSeasonEpisode( name, webChannel, unixtime, max_time_drift )
-			logDebug("SerienServer getSeasonEpisode result:", result)
+			result = self.server.getSeasonEpisode( name, webChannel, unixtime, self.max_time_drift )
 			
-			if result:
-				return ( result['season'], result['episode'], result['title'], result['series'] )
+			if result and isinstance(result, dict):
+				result['service'] = service
+				result['channel'] = webChannel
+				result['begin'] = begin
+			
+			logDebug("SerienServer getSeasonEpisode result:", type(result), result)
+			
+			return result
 
 		else:
-			if unixtime < time():
-				return ( _("Please try Fernsehserien.de") )
-			else:
-				return ( _("No matching series found") )
+			return ( _("No match found") )

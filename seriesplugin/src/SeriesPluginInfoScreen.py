@@ -52,6 +52,8 @@ from Screens.TimerEdit import TimerSanityConflict
 from Tools.BoundFunction import boundFunction
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 
+from skin import loadSkin
+from enigma import getDesktop
 
 # Plugin internal
 from SeriesPlugin import getInstance
@@ -63,13 +65,31 @@ PIXMAP_PATH = os.path.join( resolveFilename(SCOPE_PLUGINS), "Extensions/SeriesPl
 
 instance = None
 
+def getChannel(eservicereference):
+	if isinstance(eservicereference, eServiceReference):
+		servicereference = ServiceReference(eservicereference)
+		if servicereference:
+			return servicereference.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
+	return ""
+
 
 #######################################################
 # Info screen
 class SeriesPluginInfoScreen(Screen):
 	
-	skinfile = os.path.join( resolveFilename(SCOPE_PLUGINS), "Extensions/SeriesPlugin/skin.xml" )
-	skin = open(skinfile).read()
+	desktop = getDesktop(0)
+	desktopSize = desktop and desktop.size()
+	dwidth = desktopSize and desktopSize.width()
+	if dwidth == 1920:
+		skinFile = os.path.join( resolveFilename(SCOPE_PLUGINS), "Extensions/SeriesPlugin/Skins/InfoScreenFULLHD.xml" )
+	elif dwidth == 1280:
+		skinFile = os.path.join( resolveFilename(SCOPE_PLUGINS), "Extensions/SeriesPlugin/Skins/InfoScreenHD.xml" )
+	elif dwidth == 1024:
+		skinFile = os.path.join( resolveFilename(SCOPE_PLUGINS), "Extensions/SeriesPlugin/Skins/InfoScreenXD.xml" )
+	else:
+		skinFile = os.path.join( resolveFilename(SCOPE_PLUGINS), "Extensions/SeriesPlugin/Skins/InfoScreenSD.xml" )
+	
+	skin = open(skinFile).read()
 	
 	def __init__(self, session, service=None, event=None):
 		if session:
@@ -148,7 +168,8 @@ class SeriesPluginInfoScreen(Screen):
 		begin, end, duration = 0, 0, 0
 		ext, channel = "", ""
 		
-		today = True #OR future
+		future = True
+		today = False
 		elapsed = False
 		
 		service = self.service
@@ -172,20 +193,21 @@ class SeriesPluginInfoScreen(Screen):
 					sref = ServiceReference(ref)
 					ref = sref.ref
 					channel = sref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
-				#ref = eServiceReference(str(service))
-				#ref = service
 				# Get information from record meta files
 				self.event = info and info.getEvent(service)
+				future = False
 				today = False
 				elapsed = True
 				logDebug("SPI: eServiceReference movie", str(ref))
 			else:
 				# Service is channel reference
-				#ref = eServiceReference(str(service))
 				ref = service
-				#channel = ServiceReference(ref).getServiceName() or ""
 				channel = ServiceReference(str(service)).getServiceName() or ""
-				#ref = eServiceReference(service.toString())#
+				if not channel:
+					try:
+						channel = ServiceReference(service.toString()).getServiceName() or ""
+					except:
+						pass
 				# Get information from event
 				logDebug("SPI: eServiceReference channel", str(ref))
 		
@@ -201,17 +223,8 @@ class SeriesPluginInfoScreen(Screen):
 		
 		# Fallbacks
 		if ref is None:
-			#ref = self.session and self.session.nav.getCurrentService()
-			#ref = eServiceReference(ref.info().getInfoString(iServiceInformation.sServiceref))
-			#ref = eServiceReference(str(ref))
-
-			#service = self.session.nav.getCurrentService()
-			#info = service and service.info()
-			#event = info and info.getEvent(0)
-			
-			sref = self.session and self.session.nav.getCurrentlyPlayingServiceReference().toString()
-			ref = eServiceReference(sref)
-			channel = ServiceReference(str(ref)).getServiceName() or ""
+			ref = self.session and self.session.nav.getCurrentlyPlayingServiceReference()
+			channel = getChannel(ref)
 			
 			logDebug("SPI: Fallback ref", ref, str(ref), channel)
 		
@@ -226,6 +239,7 @@ class SeriesPluginInfoScreen(Screen):
 				logDebug("SPI: No valid selection", str(ref))
 				return
 			# Get information from epg
+			future = False
 			today = True
 			elapsed = False
 			logDebug("SPI: Fallback event", self.event)
@@ -271,17 +285,17 @@ class SeriesPluginInfoScreen(Screen):
 		if self.session:
 			self.updateScreen(self.name, _("Retrieving Season, Episode and Title..."), self.short, ext, begin, duration, channel)
 		
-		identifier = self.seriesPlugin.getIdentifier(False, today, elapsed)
-		if identifier:
-			path = os.path.join(PIXMAP_PATH, identifier+".png")
+		logo = self.seriesPlugin.getLogo(future, today, elapsed)
+		if logo:
+			logopath = os.path.join(PIXMAP_PATH, logo+".png")
 			
-			if self.session and os.path.exists(path):
-				self.loadPixmap("logo", path )
+			if self.session and os.path.exists(logopath):
+				self.loadPixmap("logo", logopath )
 		try:
 			logDebug("SPI: getEpisode:", self.name, begin, end, ref)
-			identifier = self.seriesPlugin.getEpisode(
+			self.seriesPlugin.getEpisode(
 					self.episodeCallback, 
-					self.name, begin, end, ref, today=today, elapsed=elapsed
+					self.name, begin, end, ref, future=future, today=today, elapsed=elapsed
 				)
 		except Exception as e:
 			logDebug("SPI: exception:", str(e))
@@ -293,22 +307,21 @@ class SeriesPluginInfoScreen(Screen):
 		
 		logDebug("SPI: episodeCallback", data)
 		#logDebug(data)
-		if data and len(data) == 4:
+		if data and isinstance(data, dict):
 			# Episode data available
-			season, episode, title, series = self.data = data
+			self.data = data
 		
-			if season == 0 and episode == 0:
-				custom = _("{title:s}").format( 
-							**{'season': season, 'episode': episode, 'title': title} )
-			elif season == 0:
-				custom = _("Episode: {episode:d}\n{title:s}").format( 
-							**{'season': season, 'episode': episode, 'title': title} )
-			elif episode == 0:
-				custom = _("Season: {season:d}\n{title:s}").format( 
-							**{'season': season, 'episode': episode, 'title': title} )
+			if data['rawseason'] == "" and data['rawepisode'] == "":
+				custom = _("{title:s}").format( **data )
+				
+			elif data['rawseason'] == "":
+				custom = _("Episode: {rawepisode:s}\n{title:s}").format( **data )
+				
+			elif data['rawepisode'] == "":
+				custom = _("Season: {rawseason:s}\n{title:s}").format( **data )
+				
 			else:
-				custom = _("Season: {season:d}  Episode: {episode:d}\n{title:s}").format( 
-							**{'season': season, 'episode': episode, 'title': title} )
+				custom = _("Season: {rawseason:s}  Episode: {rawepisode:s}\n{title:s}").format( **data )
 			
 			try:
 				self.setColorButtons()
@@ -384,27 +397,30 @@ class SeriesPluginInfoScreen(Screen):
 
 
 	def setColorButtons(self):
-		logDebug("SPI: event eit", self.event and self.event.getEventId())
-		if self.service and self.data:
-			
-			if self.path and os.path.exists(self.path):
-				# Record file exists
-				self["key_red"].setText(_("Rename"))
-				self.redButtonFunction = self.rename
-			elif self.event and self.event.getEventId():
-				# Event exists
-				#if (not self.service.flags & eServiceReference.isGroup) and self.service.getPath() and self.service.getPath()[0] == '/'
-				#for timer in self.session.nav.RecordTimer.timer_list:
-				#	if timer.eit == eventid and timer.service_ref.ref.toString() == refstr:
-				#		cb_func = lambda ret : not ret or self.removeTimer(timer)
-				self["key_red"].setText(_("Record"))
-				self.redButtonFunction = self.record
+		try:
+			logDebug("SPI: event eit", self.event and self.event.getEventId())
+			if self.service and self.data:
+				
+				if self.path and os.path.exists(self.path):
+					# Record file exists
+					self["key_red"].setText(_("Rename"))
+					self.redButtonFunction = self.keyRename
+				elif self.event and self.event.getEventId():
+					# Event exists
+					#if (not self.service.flags & eServiceReference.isGroup) and self.service.getPath() and self.service.getPath()[0] == '/'
+					#for timer in self.session.nav.RecordTimer.timer_list:
+					#	if timer.eit == eventid and timer.service_ref.ref.toString() == refstr:
+					#		cb_func = lambda ret : not ret or self.removeTimer(timer)
+					self["key_red"].setText(_("Record"))
+					self.redButtonFunction = self.keyRecord
+				else:
+					self["key_red"].setText("")
+					self.redButtonFunction = None
 			else:
 				self["key_red"].setText("")
 				self.redButtonFunction = None
-		else:
-			self["key_red"].setText("")
-			self.redButtonFunction = None
+		except:
+			pass
 
 	def redButton(self):
 		if callable(self.redButtonFunction):
@@ -418,8 +434,8 @@ class SeriesPluginInfoScreen(Screen):
 		if self.service and self.data:
 			pass
 
-	def rename(self):
-		logDebug("SPI: rename")
+	def keyRename(self):
+		logDebug("SPI: keyRename")
 		ref = self.eservice
 		if ref and self.data:
 			path = ref.getPath()
@@ -433,8 +449,8 @@ class SeriesPluginInfoScreen(Screen):
 					self.session.open( MessageBox, _("Renaming failed"), MessageBox.TYPE_INFO )
 
 	# Adapted from EventView
-	def record(self):
-		logDebug("SPI: record")
+	def keyRecord(self):
+		logDebug("SPI: keyRecord")
 		if self.event and self.service:
 			event = self.event
 			ref = self.service

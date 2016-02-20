@@ -73,26 +73,26 @@ def rename(servicepath, name, short, data):
 	#MAYBE Check if it is already renamed?
 	try:
 		# Before renaming change content
-		renameMeta(servicepath, name, data)
+		rewriteMeta(servicepath, name, data)
 	except Exception as e:
-		logDebug("SPR: renameMeta:", str(e) )
-		result = "SPR: renameMeta:" + str(e)
+		logDebug("SPR: rewriteMeta:", str(e) )
+		result = "SPR: rewriteMeta:" + str(e)
 	
 	if config.plugins.seriesplugin.pattern_title.value and not config.plugins.seriesplugin.pattern_title.value == "Off":
 
 		if config.plugins.seriesplugin.rename_file.value == True:
 			
 			try:
-				renameFile(servicepath, name, data)
+				renameFiles(servicepath, name, data)
 			except Exception as e:
-				logDebug("SPR: renameFile:", str(e) )
-				result = "SPR: renameFile:" + str(e)
+				logDebug("SPR: renameFiles:", str(e) )
+				result = "SPR: renameFiles:" + str(e)
 	
 	return result
 
 
 # Adapted from MovieRetitle setTitleDescr
-def renameMeta(servicepath, name, data):
+def rewriteMeta(servicepath, name, data):
 	#TODO Use MetaSupport EitSupport classes from EMC ?
 	if servicepath.endswith(".ts"):
 		meta_file = servicepath + ".meta"
@@ -137,7 +137,7 @@ def renameMeta(servicepath, name, data):
 		metafile.close()
 	return True
 
-def renameFile(servicepath, name, data, tidy=False):
+def renameFiles(servicepath, name, data):
 	logDebug("SPR: servicepath", servicepath)
 	
 	path = os.path.dirname(servicepath)
@@ -146,10 +146,7 @@ def renameFile(servicepath, name, data, tidy=False):
 	
 	logDebug("SPR: name     ", name)
 	# Refactor title
-	if config.plugins.seriesplugin.rename_tidy.value or tidy:
-		name = refactorTitle(name, data)
-	else:
-		name = refactorTitle(file_name, data)
+	name = refactorTitle(file_name, data)
 	logDebug("SPR: name     ", name)
 	#if config.recording.ascii_filenames.value:
 	#	filename = ASCIItranslit.legacyEncode(filename)
@@ -163,7 +160,10 @@ def renameFile(servicepath, name, data, tidy=False):
 	path = refactorDirectory(path, data)
 	dst = os.path.join(path, name)
 	logDebug("SPR: servicepathDst", dst)
-
+	
+	return osrename(src, dst)
+	
+def osrename(src, dst):
 	#Py3 for f in glob( escape(src) + "*" ):
 	glob_src = CompiledRegexpGlobEscape.sub("[\\1]", src)
 	logDebug("SPR: glob_src      ", glob_src)
@@ -172,10 +172,6 @@ def renameFile(servicepath, name, data, tidy=False):
 		to = f.replace(src, dst)
 		logDebug("SPR: servicepathTo ", to)
 		
-		
-		#TODO Check and create directory
-		
-		
 		if not os.path.exists(to):
 			try:
 				os.rename(f, to)
@@ -183,10 +179,10 @@ def renameFile(servicepath, name, data, tidy=False):
 				logDebug("SPR: rename error", f, to)
 		elif config.plugins.seriesplugin.rename_existing_files.value:
 			logDebug("SPR: Destination file already exists", to, " - Append _")
-			renameFile(servicepath, name + "_", data, True)
+			return osrename( src, dst + "_")
 			break
 		else:
-			logDebug("SPR: Destination file alreadey exists", to, " - Skip rename")
+			logInfo("SPR: Destination file alreadey exists", to, " - Skip rename")
 	return True
 
 
@@ -292,7 +288,7 @@ class SeriesPluginRenamer(object):
 		
 		result = None
 		
-		if data and len(data) == 4:
+		if data and isinstance(data, dict):
 			result = rename(servicepath, name, short, data)
 		
 		
