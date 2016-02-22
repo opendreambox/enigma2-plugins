@@ -584,9 +584,6 @@ seriesplugin/src/Makefile
 seriesplugin/src/Images/Makefile
 seriesplugin/src/Logos/Makefile
 seriesplugin/src/Identifiers/Makefile
-seriesplugin/src/Identifiers/bs4/Makefile
-seriesplugin/src/Identifiers/bs4/builder/Makefile
-seriesplugin/src/Identifiers/pkg/Makefile
 
 setpasswd/Makefile
 setpasswd/meta/Makefile
