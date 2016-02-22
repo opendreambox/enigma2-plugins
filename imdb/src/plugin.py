@@ -26,7 +26,7 @@ try:
 except ImportError as ie:
 	from urllib.parse import quote_plus
 
-from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigYesNo, ConfigText
+from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigYesNo, ConfigText, ConfigSelection
 from Components.ConfigList import ConfigListScreen
 from Components.PluginComponent import plugins
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS
@@ -40,6 +40,9 @@ def transHTML(text):
 config.plugins.imdb = ConfigSubsection()
 config.plugins.imdb.showinplugins = ConfigYesNo(default = True)
 config.plugins.imdb.ignore_tags = ConfigText(visible_width = 50, fixed_size = False)
+config.plugins.imdb.language = ConfigSelection(default = "en-us", choices = [("en-us", _("English")),("fr-fr", _("French")),("de-de", _("German")),("it-it", _("Italian")),("es-es", _("Spanish"))])
+
+imdb_headers = {}
 
 def quoteEventName(eventName):
 	eventName = eventName.replace(' ','+')
@@ -224,11 +227,12 @@ class IMDB(Screen):
 
 		self.extrainfomask = re.compile(
 		'(?:.*?<h4 class="inline">(?P<g_keywords>Plot Keywords):</h4>(?P<keywords>.*?)(?:See All|</div>))*'
-		'(?:.*?<h4 class="inline">(?P<g_tagline>Taglines?):</h4>\s*(?P<tagline>.*?)<)*'
-		'(?:.*?<h4 class="inline">(?P<g_cert>Certificate?):.*?>(?P<cert>\d{1,2})<.*?(?:certification))*'
+		'(?:.*?<h4 class="inline">(?P<g_tagline>Taglines):</h4>\s*(?P<tagline>.*?)<)*'
+		'(?:.*?<h4 class="inline">(?P<g_cert>Certificate):.*?>(?P<cert>\d{1,2})<.*?(?:certification))*'
+		'(?:.*?<h4>(?P<g_mpaa>Motion Picture Rating).*?</h4>*(?P<mpaa>.*?)</span.*?(?:certification))*'
 		'(?:.*?<h4 class="inline">(?P<g_language>Language):</h4>\s*(?P<language>.*?)</div>)*'
 		'(?:.*?<h4 class="inline">(?P<g_locations>Filming Locations):</h4>.*?<a.*?>(?P<locations>.*?)</a>)*'
-		'(?:.*?<h4 class="inline">(?P<g_company>Production Co?):</h4>\s*(?P<company>.*?)(?:See more|</div>))*'
+		'(?:.*?<h4 class="inline">(?P<g_company>Production Co):</h4>\s*(?P<company>.*?)(?:See more|</div>))*'
 		'(?:.*?<h4 class="inline">(?P<g_sound>Sound Mix):</h4>\s*(?P<sound>.*?)</div>)*'
 		'(?:.*?<h4 class="inline">(?P<g_color>Color):</h4>\s*(?P<color>.*?)</div>)*'
 		'(?:.*?<h4 class="inline">(?P<g_aspect>Aspect Ratio):</h4>\s*(?P<aspect>.*?)(?:See more</a>|</div>))*'
@@ -327,7 +331,7 @@ class IMDB(Screen):
 			localfile = "/tmp/imdbquery2.html"
 			fetchurl = "http://www.imdb.com/title/" + link
 			print("[IMDB] showDetails() downloading query " + fetchurl + " to " + localfile)
-			download = downloadWithProgress(fetchurl,localfile)
+			download = downloadWithProgress(fetchurl,localfile,headers=imdb_headers)
 			download.start().addCallback(self.IMDBquery2).addErrback(self.http_failed)
 			self.fetchurl = fetchurl
 			self["menu"].hide()
@@ -430,6 +434,8 @@ class IMDB(Screen):
 			self.getIMDB(search=True)
 
 	def getIMDB(self, search=False):
+		global imdb_headers
+		imdb_headers = {'Accept-Language': config.plugins.imdb.language.value}
 		self.resetLabels()
 		if not self.eventName:
 			s = self.session.nav.getCurrentService()
@@ -452,7 +458,7 @@ class IMDB(Screen):
 			localfile = "/tmp/imdbquery.html"
 			fetchurl = "http://www.imdb.com/find?ref_=nv_sr_fn&q=" + quoteEventName(self.eventName) + "&s=all"
 			print("[IMDB] getIMDB() Downloading Query " + fetchurl + " to " + localfile)
-			download = downloadWithProgress(fetchurl,localfile)
+			download = downloadWithProgress(fetchurl,localfile,headers=imdb_headers)
 			download.start().addCallback(self.IMDBquery).addErrback(self.http_failed)
 
 		else:
@@ -489,7 +495,7 @@ class IMDB(Screen):
 					self.eventName = self.resultlist[0][1]
 					localfile = "/tmp/imdbquery.html"
 					fetchurl = "http://www.imdb.com/find?ref_=nv_sr_fn&q=" + quoteEventName(self.eventName) + "&s=all"
-					download = downloadWithProgress(fetchurl,localfile)
+					download = downloadWithProgress(fetchurl,localfile,headers=imdb_headers)
 					download.start().addCallback(self.IMDBquery).addErrback(self.http_failed)
 				elif Len > 1:
 					self.Page = 1
@@ -503,7 +509,7 @@ class IMDB(Screen):
 					self["statusbar"].setText(_("Re-Query IMDb: %s...") % (self.eventName))
 					localfile = "/tmp/imdbquery.html"
 					fetchurl = "http://www.imdb.com/find?ref_=nv_sr_fn&q=" + quoteEventName(self.eventName) + "&s=all"
-					download = downloadWithProgress(fetchurl,localfile)
+					download = downloadWithProgress(fetchurl,localfile,headers=imdb_headers)
 					download.start().addCallback(self.IMDBquery).addErrback(self.http_failed)
 				else:
 					splitpos = self.eventName.find('-')
@@ -512,7 +518,7 @@ class IMDB(Screen):
 						self["statusbar"].setText(_("Re-Query IMDb: %s...") % (self.eventName))
 						localfile = "/tmp/imdbquery.html"
 						fetchurl = "http://www.imdb.com/find?ref_=nv_sr_fn&q=" + quoteEventName(self.eventName) + "&s=all"
-						download = downloadWithProgress(fetchurl,localfile)
+						download = downloadWithProgress(fetchurl,localfile,headers=imdb_headers)
 						download.start().addCallback(self.IMDBquery).addErrback(self.http_failed)
 					else:
 						self["statusbar"].setText(_("IMDb query failed!"))
@@ -612,7 +618,7 @@ class IMDB(Screen):
 				self["statusbar"].setText(_("Downloading Movie Poster: %s...") % (posterurl))
 				localfile = "/tmp/poster.jpg"
 				print("[IMDB] downloading poster " + posterurl + " to " + localfile)
-				download = downloadWithProgress(posterurl,localfile)
+				download = downloadWithProgress(posterurl,localfile,headers=imdb_headers)
 				download.start().addCallback(self.IMDBPoster).addErrback(self.http_failed)
 			else:
 				self.IMDBPoster("kein Poster")
@@ -620,12 +626,12 @@ class IMDB(Screen):
 			extrainfos = self.extrainfomask.search(self.inhtml)
 			if extrainfos:
 				Extratext = ""
-				for category in ("tagline","keywords","cert","language","color","aspect","company","sound","locations","trivia","goofs","quotes","crazy","connections"):
+				for category in ("tagline","keywords","cert","mpaa","language","color","aspect","company","sound","locations","trivia","goofs","quotes","crazy","connections"):
 					if extrainfos.group('g_'+category):
 						Extratext += extrainfos.group('g_'+category) + ":\n" + re.sub('\s{5,30}',', ', self.htmltags.sub('', extrainfos.group(category).replace('\n','').replace('<br>', '\n').replace('<br />','\n').replace('&view=simple&sort=alpha&ref_=tt_stry_pl" >',' ').replace('&nbsp;','').replace('&quot;','"').replace('|','').replace(' : ',':').replace(',        ',' / ')).strip()) + "\n\n"
 				if extrainfos.group("g_comments"):
 					stripmask = re.compile('\s{2,}', re.S)
-					Extratext += extrainfos.group("g_comments") + " [" + stripmask.sub(' ', self.htmltags.sub('', extrainfos.group("commenter"))) + "]:\n" + transHTML(self.htmltags.sub('',extrainfos.group("comment").replace("\n",' ')))
+					Extratext += extrainfos.group("g_comments") + " [" + stripmask.sub(' ', self.htmltags.sub('', extrainfos.group("commenter"))) + "]:\n" + transHTML(self.htmltags.sub('',extrainfos.group("comment").replace("\n",' '))).strip()
 
 				self["extralabel"].setText(str(Extratext))
 				self["extralabel"].hide()
@@ -694,6 +700,7 @@ class IMDbSetup(Screen, ConfigListScreen):
 
 	def createSetup(self):
 		self.list = []
+		self.list.append(getConfigListEntry(_("IMDb query language"), config.plugins.imdb.language))
 		self.list.append(getConfigListEntry(_("Show in plugin browser"), config.plugins.imdb.showinplugins))
 		self.list.append(getConfigListEntry(_("Words / phrases to ignore (comma separated)"), config.plugins.imdb.ignore_tags))
 		self["config"].list = self.list
@@ -727,6 +734,8 @@ class IMDbSetup(Screen, ConfigListScreen):
 
 	def keySave(self):
 		self.saveAll()
+		global imdb_headers
+		imdb_headers = {'Accept-Language': config.plugins.imdb.language.value}
 		if not config.plugins.imdb.showinplugins.value:
 			for plugin in plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU):
 				if plugin.name == _("IMDb Details"):

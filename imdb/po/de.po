@@ -6,171 +6,195 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Enigma 2 IMDb Plugin\n"
-"POT-Creation-Date: 2016-02-20 23:30+0100\n"
-"PO-Revision-Date: 2016-02-20 23:30+0100\n"
+"POT-Creation-Date: 2016-02-22 21:38+0100\n"
+"PO-Revision-Date: 2016-02-22 21:58+0100\n"
 "Last-Translator: dhwz <dhwz@gmx.net>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.8.7\n"
 "X-Poedit-Basepath: ../src\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: plugin.py:50
+#: plugin.py:43
+msgid "English"
+msgstr "Englisch"
+
+#: plugin.py:43
+msgid "French"
+msgstr "Französisch"
+
+#: plugin.py:43
+msgid "German"
+msgstr "Deutsch"
+
+#: plugin.py:43
+msgid "Italian"
+msgstr "Italienisch"
+
+#: plugin.py:43
+msgid "Spanish"
+msgstr "Spanisch"
+
+#: plugin.py:53
 msgid "Channel Selection"
 msgstr "Kanalliste"
 
-#: plugin.py:79
+#: plugin.py:82
 msgid "Lookup"
 msgstr "Suchen"
 
-#: plugin.py:155
+#: plugin.py:158
 msgid "IMDb - Internet Movie Database"
 msgstr "IMDb - Internet Movie Database"
 
-#: plugin.py:168
+#: plugin.py:171
 msgid "Exit"
 msgstr "Beenden"
 
-#: plugin.py:311
+#: plugin.py:314
 msgid "Please select the matching entry"
 msgstr "Bitte passenden Eintrag auswählen"
 
-#: plugin.py:313
+#: plugin.py:316
 msgid "Title Menu"
 msgstr "Titelauswahl"
 
-#: plugin.py:314 plugin.py:539
+#: plugin.py:317 plugin.py:544
 msgid "Details"
 msgstr "Details"
 
-#: plugin.py:326 plugin.py:488 plugin.py:503 plugin.py:512
+#: plugin.py:329 plugin.py:493 plugin.py:508 plugin.py:517
 #, python-format
 msgid "Re-Query IMDb: %s..."
 msgstr "Frage erneut bei IMDb an: %s..."
 
-#: plugin.py:361
+#: plugin.py:364
 msgid "Enter search"
 msgstr "Suche"
 
-#: plugin.py:362
+#: plugin.py:365
 msgid "Select from EPG"
 msgstr "Aus  EPG wählen"
 
-#: plugin.py:363
+#: plugin.py:366
 msgid "Setup"
 msgstr "Einstellungen"
 
-#: plugin.py:368
+#: plugin.py:371
 msgid "Play Trailer"
 msgstr "Trailer abspielen"
 
-#: plugin.py:369
+#: plugin.py:372
 msgid "Search Trailer"
 msgstr "Suche Trailer"
 
-#: plugin.py:375
+#: plugin.py:378
 msgid "IMDb Menu"
 msgstr "IMDb Menü"
 
-#: plugin.py:407
+#: plugin.py:410
 msgid "Enter text to search for"
 msgstr "Bitte Suchtext eingeben"
 
-#: plugin.py:451
+#: plugin.py:456
 #, python-format
 msgid "Query IMDb: %s"
 msgstr "Frage bei IMDb an: %s"
 
-#: plugin.py:459
+#: plugin.py:464
 msgid "Couldn't get Eventname"
 msgstr "Konnte Sendungstitel nicht feststellen"
 
-#: plugin.py:467
+#: plugin.py:472
 msgid "IMDb Download completed"
 msgstr "Download von IMDb abgeschlossen"
 
-#: plugin.py:498
+#: plugin.py:503
 msgid "No IMDb match."
 msgstr "Kein IMDb Treffer."
 
-#: plugin.py:518
+#: plugin.py:523
 msgid "IMDb query failed!"
 msgstr "Anfrage an IMDb fehlgeschlagen!"
 
-#: plugin.py:521
+#: plugin.py:526
 msgid "IMDb Download failed"
 msgstr "Download von IMDb fehlgeschlagen"
 
-#: plugin.py:529
+#: plugin.py:534
 msgid "IMDb Re-Download completed"
-msgstr "Erneuten Download ausgeführt"
+msgstr "Erneuter Download von IMDb abgeschlossen"
 
-#: plugin.py:537
+#: plugin.py:542
 msgid "No details found."
 msgstr "Keine Details gefunden."
 
-#: plugin.py:540 plugin.py:639
+#: plugin.py:545 plugin.py:644
 msgid "IMDb Details parsed"
-msgstr "Filminformationen eingelesen"
+msgstr "IMDb Details eingelesen"
 
-#: plugin.py:572
+#: plugin.py:577
 msgid "no user rating yet"
 msgstr "noch keine Nutzerwertung"
 
-#: plugin.py:577
+#: plugin.py:582
 msgid "votes"
 msgstr "Stimmen"
 
-#: plugin.py:578
+#: plugin.py:583
 msgid "User Rating"
 msgstr "Nutzer-Bewertung"
 
-#: plugin.py:595
+#: plugin.py:600
 msgid "No cast list found in the database."
 msgstr "Keine Darstellerliste in der Datenbank gefunden."
 
-#: plugin.py:612
+#: plugin.py:617
 #, python-format
 msgid "Downloading Movie Poster: %s..."
 msgstr "Lade Filmplakat herunter: %s..."
 
-#: plugin.py:632
+#: plugin.py:637
 msgid "Extra Info"
 msgstr "Zusatzinfos"
 
-#: plugin.py:669
+#: plugin.py:674
 msgid "IMDb Plugin"
 msgstr "IMDb Plugin"
 
-#: plugin.py:676
+#: plugin.py:681
 msgid "IMDb Setup"
 msgstr "IMDb Einstellungen"
 
-#: plugin.py:679
+#: plugin.py:684
 msgid "OK"
 msgstr "OK"
 
-#: plugin.py:680
+#: plugin.py:685
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: plugin.py:697
+#: plugin.py:702
 msgid "Show in plugin browser"
 msgstr "Zeige im Plugin Browser"
 
-#: plugin.py:698
+#: plugin.py:703
 msgid "Words / phrases to ignore (comma separated)"
 msgstr "Wörter / Phrasen ignorieren (Komma separiert)"
 
-#: plugin.py:732 plugin.py:750 plugin.py:753
+#: plugin.py:704
+msgid "IMDb query language"
+msgstr "IMDb Abfragesprache"
+
+#: plugin.py:740 plugin.py:758 plugin.py:761
 msgid "IMDb Details"
 msgstr "IMDb Details"
 
-#: plugin.py:750 plugin.py:754
+#: plugin.py:758 plugin.py:762
 msgid "Query details from the Internet Movie Database"
-msgstr "Filminformationen aus der Internet Movie Database"
+msgstr "Details aus der Internet Movie Database abfragen"
