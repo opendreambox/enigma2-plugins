@@ -40,7 +40,7 @@ def transHTML(text):
 config.plugins.imdb = ConfigSubsection()
 config.plugins.imdb.showinplugins = ConfigYesNo(default = True)
 config.plugins.imdb.ignore_tags = ConfigText(visible_width = 50, fixed_size = False)
-config.plugins.imdb.language = ConfigSelection(default = "en-us", choices = [("en-us", _("English")),("fr-fr", _("French")),("de-de", _("German")),("it-it", _("Italian")),("es-es", _("Spanish"))])
+config.plugins.imdb.language = ConfigSelection(default = "", choices = [(None, _("Default")),("en-us", _("English")),("fr-fr", _("French")),("de-de", _("German")),("it-it", _("Italian")),("es-es", _("Spanish"))])
 
 imdb_headers = {}
 
@@ -106,8 +106,6 @@ class IMDBEPGSelection(EPGSelection):
 class IMDB(Screen):
 	skin = """
 		<screen name="IMDBv2" position="center,center" size="920,520" title="IMDb - Internet Movie Database">
-			<eLabel position="1,1" size="918,2" backgroundColor="grey" zPosition="5" />
-			<eLabel position="1,475" size="918,2" backgroundColor="grey" zPosition="5" />
 			<ePixmap pixmap="skin_default/buttons/red.png" position="10,483" size="21,21" alphatest="on" />
 			<ePixmap pixmap="skin_default/buttons/green.png" position="250,483" size="21,21" alphatest="on" />
 			<ePixmap pixmap="skin_default/buttons/yellow.png" position="490,483" size="21,21" alphatest="on" />
@@ -119,9 +117,9 @@ class IMDB(Screen):
 			<widget name="titlelabel" position="10,5" size="900,50" valign="center" font="Regular;24" />
 			<widget name="statusbar" position="10,453" size="900,18" font="Regular;16" foregroundColor="#cccccc" />
 			<widget name="extralabel" position="10,60" size="900,390" font="Regular;24" />
-			<widget name="ratinglabel" position="610,40" size="300,22" font="Regular;20" halign="center" foregroundColor="#f0b400" />
-			<widget name="starsbg" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_empty.png" position="660,10" zPosition="0" size="210,21" transparent="1" alphatest="on" />
-			<widget name="stars" position="660,10" size="210,21" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_filled.png" transparent="1" />
+			<widget name="ratinglabel" position="490,40" size="410,23" font="Regular;19" halign="center" foregroundColor="#f0b400" />
+			<widget name="starsbg" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_empty.png" position="600,12" zPosition="0" size="210,21" transparent="1" alphatest="on" />
+			<widget name="stars" position="600,12" size="210,21" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_filled.png" transparent="1" />
 			<widget name="detailslabel" position="115,70" size="795,140" font="Regular;20" />
 			<widget name="poster" position="10,70" size="96,140" alphatest="on" />
 			<widget name="castlabel" position="10,220" size="445,230" font="Regular;20" />
@@ -435,7 +433,10 @@ class IMDB(Screen):
 
 	def getIMDB(self, search=False):
 		global imdb_headers
-		imdb_headers = {'Accept-Language': config.plugins.imdb.language.value}
+		if config.plugins.imdb.language.value:
+			imdb_headers = {'Accept-Language': config.plugins.imdb.language.value}
+		else:
+			imdb_headers = {}
 		self.resetLabels()
 		if not self.eventName:
 			s = self.session.nav.getCurrentService()
@@ -735,7 +736,10 @@ class IMDbSetup(Screen, ConfigListScreen):
 	def keySave(self):
 		self.saveAll()
 		global imdb_headers
-		imdb_headers = {'Accept-Language': config.plugins.imdb.language.value}
+		if config.plugins.imdb.language.value:
+			imdb_headers = {'Accept-Language': config.plugins.imdb.language.value}
+		else:
+			imdb_headers = {}
 		if not config.plugins.imdb.showinplugins.value:
 			for plugin in plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU):
 				if plugin.name == _("IMDb Details"):
