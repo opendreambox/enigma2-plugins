@@ -2,155 +2,172 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2 - imdb\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-18 17:45+0100\n"
-"PO-Revision-Date: 2011-09-20 21:42+0100\n"
-"Last-Translator: Spaeleus <spaeleus@croci.org>\n"
+"POT-Creation-Date: 2016-02-20 15:42+0100\n"
+"PO-Revision-Date: 2016-02-20 15:42+0100\n"
+"Last-Translator: dhwz <dhwz@gmx.net>\n"
 "Language-Team: www.linsat.net <spaeleus@croci.org>\n"
-"Language: \n"
+"Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-Language: Italian\n"
-"X-Poedit-Country: ITALY\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Basepath: .../enigma2-plugins/imdb\n"
-"X-Poedit-SearchPath-0: .../enigma2-plugins/imdb\n"
+"X-Poedit-Basepath: ../src\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.8.6\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:56
+#: plugin.py:50
 msgid "Channel Selection"
 msgstr "Selezione Canale"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:85
+#: plugin.py:79
 msgid "Lookup"
 msgstr "Ricerca"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:154
-msgid "The Internet Movie Database"
+#: plugin.py:155
+#, fuzzy
+msgid "IMDb - Internet Movie Database"
 msgstr "Il Database Internet dei Film"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:170
+#: plugin.py:168
 msgid "Exit"
 msgstr "Uscire"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:323
-msgid "Ambiguous results"
-msgstr "Risultati ambigui"
-
-#: .../enigma2-plugins/imdb/src/plugin.py:324
+#: plugin.py:310
 msgid "Please select the matching entry"
 msgstr "Selezionare la voce di confronto"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:327
+#: plugin.py:312
 msgid "Title Menu"
 msgstr "Menu Titolo"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:328
-#: .../enigma2-plugins/imdb/src/plugin.py:540
+#: plugin.py:313 plugin.py:537
 msgid "Details"
 msgstr "Dettagli"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:339
-#: .../enigma2-plugins/imdb/src/plugin.py:505
-#: .../enigma2-plugins/imdb/src/plugin.py:521
+#: plugin.py:325 plugin.py:486 plugin.py:501 plugin.py:510
 #, python-format
 msgid "Re-Query IMDb: %s..."
 msgstr "Ripetere ricerca IMDb: %s"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:371
+#: plugin.py:360
 msgid "Enter search"
 msgstr "Testo ricerca"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:372
+#: plugin.py:361
 msgid "Select from EPG"
 msgstr "Selezionare da EPG"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:377
+#: plugin.py:362
+msgid "Setup"
+msgstr ""
+
+#: plugin.py:367
 msgid "Play Trailer"
 msgstr "Riprodurre trailer"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:378
+#: plugin.py:368
 msgid "Search Trailer"
 msgstr "Ricercare trailer"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:415
+#: plugin.py:374
+#, fuzzy
+msgid "IMDb Menu"
+msgstr "Plugin IMDb"
+
+#: plugin.py:406
 msgid "Enter text to search for"
 msgstr "Inserire il testo per la ricerca"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:447
-#, python-format
-msgid "Query IMDb: %s..."
+#: plugin.py:450
+#, fuzzy, python-format
+msgid "Query IMDb: %s"
 msgstr "Ricerca IMDb: %s"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:456
-msgid "Could't get Eventname"
+#: plugin.py:458
+msgid "Couldn't get Eventname"
 msgstr "Nome evento non ottenibile!"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:460
-msgid "IMDb Download failed"
-msgstr "Download IMDb fallito!"
-
-#: .../enigma2-plugins/imdb/src/plugin.py:489
+#: plugin.py:466
 msgid "IMDb Download completed"
 msgstr "Download IMDb completato!"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:515
-#: .../enigma2-plugins/imdb/src/plugin.py:516
+#: plugin.py:496
 msgid "No IMDb match."
 msgstr "Nessun riscontro IMDb!"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:527
+#: plugin.py:516
 msgid "IMDb query failed!"
 msgstr "Ricerca IMDb fallita!"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:530
+#: plugin.py:519
+msgid "IMDb Download failed"
+msgstr "Download IMDb fallito!"
+
+#: plugin.py:527
 msgid "IMDb Re-Download completed"
 msgstr "Ripetizione Download IMDb completato"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:538
+#: plugin.py:535
 msgid "No details found."
 msgstr "Nessun dettaglio trovato!"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:541
-#: .../enigma2-plugins/imdb/src/plugin.py:621
+#: plugin.py:538 plugin.py:630
 msgid "IMDb Details parsed"
 msgstr "Dettagli IMDb analizzati"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:566
+#: plugin.py:565
 msgid "no user rating yet"
 msgstr "Valutazioni non ancora disponibili!"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:570
+#: plugin.py:569
 msgid "User Rating"
 msgstr "Valutazione utente"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:583
-msgid " as "
-msgstr " nel ruolo di  "
-
-#: .../enigma2-plugins/imdb/src/plugin.py:587
-msgid "Cast: "
-msgstr "Cast: "
-
-#: .../enigma2-plugins/imdb/src/plugin.py:589
+#: plugin.py:587
 msgid "No cast list found in the database."
 msgstr "Nessuna lista cast trovata nel database!"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:595
+#: plugin.py:604
 #, python-format
 msgid "Downloading Movie Poster: %s..."
 msgstr "Download Poster Film: %s"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:615
+#: plugin.py:625
 msgid "Extra Info"
 msgstr "Info Extra"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:648
+#: plugin.py:660
 msgid "IMDb Plugin"
 msgstr "Plugin IMDb"
 
-#: .../enigma2-plugins/imdb/src/plugin.py:659
-#: .../enigma2-plugins/imdb/src/plugin.py:666
+#: plugin.py:667
+msgid "IMDb Setup"
+msgstr ""
+
+#: plugin.py:670
+msgid "OK"
+msgstr ""
+
+#: plugin.py:671
+#, fuzzy
+msgid "Cancel"
+msgstr "Annull."
+
+#: plugin.py:688
+msgid "Show in plugin browser"
+msgstr ""
+
+#: plugin.py:689
+msgid "Words / phrases to ignore (comma separated)"
+msgstr ""
+
+#: plugin.py:723 plugin.py:741 plugin.py:744
+msgid "IMDb Details"
+msgstr ""
+
+#: plugin.py:741 plugin.py:745
 msgid "Query details from the Internet Movie Database"
 msgstr "Ricerca dettagli da \"Internet Movie Database\""
-
