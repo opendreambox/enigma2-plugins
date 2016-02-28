@@ -1,17 +1,12 @@
-# German translations for enigma package.
-# Copyright (C) 2009 THE enigma'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the enigma package.
-# Automatically generated, 2009.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: Enigma 2 IMDb Plugin\n"
+"Project-Id-Version: enigma2 - IMDb\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-20 15:43+0100\n"
-"PO-Revision-Date: 2016-02-20 15:43+0100\n"
+"POT-Creation-Date: 2016-02-20 15:42+0100\n"
+"PO-Revision-Date: 2016-02-20 15:42+0100\n"
 "Last-Translator: dhwz <dhwz@gmx.net>\n"
-"Language-Team: veselin & majevica CRNABERZA <jovanovic@gmx.ch>\n"
-"Language: sr\n"
+"Language-Team: french-EGAMI\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,148 +14,149 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.8.6\n"
+"X-Poedit-SourceCharset: iso-8859-15\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: plugin.py:50
 msgid "Channel Selection"
-msgstr "Izbor kanala"
+msgstr "Sélection chaîne"
 
 #: plugin.py:79
 msgid "Lookup"
-msgstr "Pregledanje"
+msgstr "Chercher"
 
 #: plugin.py:155
 #, fuzzy
 msgid "IMDb - Internet Movie Database"
-msgstr "Internet filmska baza podataka"
+msgstr "La base de données internet des films"
 
 #: plugin.py:168
 msgid "Exit"
-msgstr "Izlaz"
+msgstr "Quitter"
 
 #: plugin.py:310
 msgid "Please select the matching entry"
-msgstr "Molim,izaberite odgovarajući unos"
+msgstr "Veuillez sélectionner l'entrée correspondante"
 
 #: plugin.py:312
 msgid "Title Menu"
-msgstr "Meni naslova"
+msgstr "Menu titre"
 
 #: plugin.py:313 plugin.py:537
 msgid "Details"
-msgstr "Detalji"
+msgstr "Détails"
 
 #: plugin.py:325 plugin.py:486 plugin.py:501 plugin.py:510
 #, python-format
 msgid "Re-Query IMDb: %s..."
-msgstr "Ponovni upit IMDb: %s..."
+msgstr "Re-Récupération IMDb: %s..."
 
 #: plugin.py:360
 msgid "Enter search"
-msgstr ""
+msgstr "Entrer recherche"
 
 #: plugin.py:361
 msgid "Select from EPG"
-msgstr ""
+msgstr "Sélectionner depuis EPG"
 
 #: plugin.py:362
 msgid "Setup"
-msgstr ""
+msgstr "Configuration"
 
 #: plugin.py:367
 msgid "Play Trailer"
-msgstr ""
+msgstr "Lire bande annonce"
 
 #: plugin.py:368
 msgid "Search Trailer"
-msgstr ""
+msgstr "Recherche bande annonce"
 
 #: plugin.py:374
 #, fuzzy
 msgid "IMDb Menu"
-msgstr "IMDb dodatak"
+msgstr "IMDb Configuration"
 
 #: plugin.py:406
 msgid "Enter text to search for"
-msgstr ""
+msgstr "Entrer le texte à rechercher"
 
 #: plugin.py:450
 #, fuzzy, python-format
 msgid "Query IMDb: %s"
-msgstr "Upit IMDb: %s..."
+msgstr "Récupération IMDb: %s..."
 
 #: plugin.py:458
 msgid "Couldn't get Eventname"
-msgstr "Nema naziva dešavanja"
+msgstr "Impossible d'obtenir nom événement"
 
 #: plugin.py:466
 msgid "IMDb Download completed"
-msgstr "Skidanje sa IMDb završeno"
+msgstr "IMDb Téléchargement terminé"
 
 #: plugin.py:496
 msgid "No IMDb match."
-msgstr "Nema IMDb pogodaka."
+msgstr "Aucune IMDb correspondante."
 
 #: plugin.py:516
 msgid "IMDb query failed!"
-msgstr "IMDb upit neuspešan!"
+msgstr "IMDb requête échoué!"
 
 #: plugin.py:519
 msgid "IMDb Download failed"
-msgstr "Skidanje sa IMDb neuspešno"
+msgstr "IMDb Téléchargement échoué"
 
 #: plugin.py:527
 msgid "IMDb Re-Download completed"
-msgstr "Ponovno skidanje sa IMDb završeno"
+msgstr "IMDb Re-Téléchargement terminé"
 
 #: plugin.py:535
 msgid "No details found."
-msgstr "Nisu nađeni detalji."
+msgstr "Aucuns détails trouvés."
 
 #: plugin.py:538 plugin.py:630
 msgid "IMDb Details parsed"
-msgstr "IMDb detalji analizirani"
+msgstr "IMDb Détails filtrés"
 
 #: plugin.py:565
 msgid "no user rating yet"
-msgstr "Još nema korisn. ocena"
+msgstr "pas d'appréciation encore"
 
 #: plugin.py:569
 msgid "User Rating"
-msgstr ""
+msgstr "Appréciation moyenne"
 
 #: plugin.py:587
 msgid "No cast list found in the database."
-msgstr "Nije nađena lista uloga u bazi podataka."
+msgstr "Aucune liste des acteurs trouvée dans la base de données."
 
 #: plugin.py:604
 #, python-format
 msgid "Downloading Movie Poster: %s..."
-msgstr "Skidam poster filma: %s..."
+msgstr "Téléchargement affiche du film: %s..."
 
 #: plugin.py:625
 msgid "Extra Info"
-msgstr "Dodatni info"
+msgstr "Infos suplémentaires"
 
 #: plugin.py:660
 msgid "IMDb Plugin"
-msgstr "IMDb dodatak"
+msgstr "IMDb plugiciel"
 
 #: plugin.py:667
 msgid "IMDb Setup"
-msgstr ""
+msgstr "IMDb Configuration"
 
 #: plugin.py:670
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: plugin.py:671
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: plugin.py:688
 msgid "Show in plugin browser"
-msgstr ""
+msgstr "Afficher dans le navigateur plugiciels"
 
 #: plugin.py:689
 msgid "Words / phrases to ignore (comma separated)"
@@ -168,8 +164,8 @@ msgstr ""
 
 #: plugin.py:723 plugin.py:741 plugin.py:744
 msgid "IMDb Details"
-msgstr ""
+msgstr "IMDb Détails"
 
 #: plugin.py:741 plugin.py:745
 msgid "Query details from the Internet Movie Database"
-msgstr "Upit za detalje sa Internet filmske baze podataka"
+msgstr "Récupérer détails depuis la base de données internet des films"
