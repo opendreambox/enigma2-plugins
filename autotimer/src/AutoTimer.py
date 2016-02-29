@@ -627,9 +627,9 @@ class AutoTimer:
 					new += tup[0]
 					modified += tup[1]
 		
-		if not simulateOnly:
-			if sp_showResult is not None:
-				sp_showResult()
+		#if not simulateOnly:
+		#	if sp_showResult is not None:
+		#		sp_showResult()
 		
 		return (len(timers), new, modified, timers, conflicting, similars)
 
