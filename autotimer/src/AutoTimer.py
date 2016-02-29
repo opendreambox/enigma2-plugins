@@ -559,9 +559,6 @@ class AutoTimer:
 						# We might want to do the sanity check locally so we don't run it twice - but I consider this workaround a hack anyway
 						conflicts = recordHandler.record(newEntry)
 		
-		if sp_showResult is not None:
-			sp_showResult()
-		
 		return (new, modified)
 
 	def parseEPG(self, simulateOnly=False, uniqueId=None, callback=None):
@@ -622,7 +619,11 @@ class AutoTimer:
 				else:
 					new += tup[0]
 					modified += tup[1]
-
+		
+		if not simulateOnly:
+			if sp_showResult is not None:
+				sp_showResult()
+		
 		return (len(timers), new, modified, timers, conflicting, similars)
 
 # Supporting functions
