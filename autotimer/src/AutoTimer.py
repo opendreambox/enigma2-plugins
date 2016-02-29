@@ -662,11 +662,8 @@ class AutoTimer:
 		del remove
 
 	def modifyTimer(self, timer, name, shortdesc, begin, end, serviceref, eit=None):
-		# Only update the name and description if we got a "new" one
-		if len(timer.name) < len(name):
-			timer.name = name
-		if len(timer.description) < len(shortdesc):
-			timer.description = shortdesc
+		timer.name = name
+		timer.description = shortdesc
 		timer.begin = int(begin)
 		timer.end = int(end)
 		timer.service_ref = ServiceReference(serviceref)
