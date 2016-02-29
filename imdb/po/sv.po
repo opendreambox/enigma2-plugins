@@ -7,133 +7,169 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enigma 2 IMDb Plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-27 18:11+0100\n"
-"PO-Revision-Date: 2013-03-19 22:23+0100\n"
-"Last-Translator: xxx\n"
+"POT-Creation-Date: 2016-02-20 15:43+0100\n"
+"PO-Revision-Date: 2016-02-20 15:43+0100\n"
+"Last-Translator: dhwz <dhwz@gmx.net>\n"
 "Language-Team: none\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../src\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.8.6\n"
+"X-Poedit-SearchPath-0: .\n"
 
-msgid " as "
-msgstr " som "
-
-msgid "Ambiguous results"
-msgstr "Tvetydigt resultat"
-
-msgid "Cancel"
-msgstr "Avbryt"
-
-msgid "Cast: "
-msgstr "Roll: "
-
+#: plugin.py:50
 msgid "Channel Selection"
 msgstr "Kanallista"
 
-msgid "Couldn't get Eventname"
-msgstr "Kunde inte få händelsenamn"
-
-msgid "Details"
-msgstr "Info"
-
-#, python-format
-msgid "Downloading Movie Poster: %s..."
-msgstr "Ladda ner Film poster: %s..."
-
-msgid "Enable this to be able to access the IMDb from within the plugin browser."
-msgstr "Aktivera detta för att kunna få tillgång till IMDb i Pluginlistan."
-
-msgid "Enter search"
-msgstr "Skriv in sökning"
-
-msgid "Enter text to search for"
-msgstr "Skriv text att söka efter"
-
-msgid "Exit"
-msgstr "Avsluta"
-
-msgid "Extra Info"
-msgstr "Extra info"
-
-msgid "IMDb Details"
-msgstr "IMDb-information"
-
-msgid "IMDb Details parsed"
-msgstr "IMDb info analyseras"
-
-msgid "IMDb Download completed"
-msgstr "IMDb nedladdning klar"
-
-msgid "IMDb Download failed"
-msgstr "IMDb nedladdning misslyckades"
-
-msgid "IMDb Plugin"
-msgstr "IMDb Plugin"
-
-msgid "IMDb Re-Download completed"
-msgstr "IMDb omnedladdning klar"
-
-msgid "IMDb Setup"
-msgstr "IMDb-inställningar"
-
-msgid "IMDb query failed!"
-msgstr "IMDb förfrågan misslyckades!"
-
+#: plugin.py:79
 msgid "Lookup"
 msgstr "Sök"
 
-msgid "No IMDb match."
-msgstr "Ingen IMDb matchning."
+#: plugin.py:155
+#, fuzzy
+msgid "IMDb - Internet Movie Database"
+msgstr "Internet Movie Databas"
 
-msgid "No cast list found in the database."
-msgstr "Ingen rolllista funnen i databasen."
+#: plugin.py:168
+msgid "Exit"
+msgstr "Avsluta"
 
-msgid "No details found."
-msgstr "Ingen info funnen."
-
-msgid "OK"
-msgstr "OK"
-
-msgid "Play Trailer"
-msgstr "Spela upp Trailer"
-
+#: plugin.py:310
 msgid "Please select the matching entry"
 msgstr "Vänligen välj matchande post"
 
-#, python-format
-msgid "Query IMDb: %s..."
-msgstr "Frågar IMDb om: %s..."
+#: plugin.py:312
+msgid "Title Menu"
+msgstr "Titelmeny"
 
-msgid "Query details from the Internet Movie Database"
-msgstr "Filminformation från Internet Movie Databas"
+#: plugin.py:313 plugin.py:537
+msgid "Details"
+msgstr "Info"
 
+#: plugin.py:325 plugin.py:486 plugin.py:501 plugin.py:510
 #, python-format
 msgid "Re-Query IMDb: %s..."
 msgstr "Omfråga IMDb om: %s..."
 
-msgid "Search Trailer"
-msgstr "Sök Trailer"
+#: plugin.py:360
+msgid "Enter search"
+msgstr "Skriv in sökning"
 
+#: plugin.py:361
 msgid "Select from EPG"
 msgstr "Välj från EPG"
 
+#: plugin.py:362
 msgid "Setup"
 msgstr "Ställ in"
 
-msgid "Show in plugin browser"
-msgstr "Visa i Pluginlista"
+#: plugin.py:367
+msgid "Play Trailer"
+msgstr "Spela upp Trailer"
 
-msgid "The Internet Movie Database"
-msgstr "Internet Movie Databas"
+#: plugin.py:368
+msgid "Search Trailer"
+msgstr "Sök Trailer"
 
-msgid "Title Menu"
-msgstr "Titelmeny"
+#: plugin.py:374
+#, fuzzy
+msgid "IMDb Menu"
+msgstr "IMDb-inställningar"
 
-msgid "User Rating"
-msgstr "Betyg"
+#: plugin.py:406
+msgid "Enter text to search for"
+msgstr "Skriv text att söka efter"
 
+#: plugin.py:450
+#, fuzzy, python-format
+msgid "Query IMDb: %s"
+msgstr "Frågar IMDb om: %s..."
+
+#: plugin.py:458
+msgid "Couldn't get Eventname"
+msgstr "Kunde inte få händelsenamn"
+
+#: plugin.py:466
+msgid "IMDb Download completed"
+msgstr "IMDb nedladdning klar"
+
+#: plugin.py:496
+msgid "No IMDb match."
+msgstr "Ingen IMDb matchning."
+
+#: plugin.py:516
+msgid "IMDb query failed!"
+msgstr "IMDb förfrågan misslyckades!"
+
+#: plugin.py:519
+msgid "IMDb Download failed"
+msgstr "IMDb nedladdning misslyckades"
+
+#: plugin.py:527
+msgid "IMDb Re-Download completed"
+msgstr "IMDb omnedladdning klar"
+
+#: plugin.py:535
+msgid "No details found."
+msgstr "Ingen info funnen."
+
+#: plugin.py:538 plugin.py:630
+msgid "IMDb Details parsed"
+msgstr "IMDb info analyseras"
+
+#: plugin.py:565
 msgid "no user rating yet"
 msgstr "Inte betygsatt ännu"
 
+#: plugin.py:569
+msgid "User Rating"
+msgstr "Betyg"
+
+#: plugin.py:587
+msgid "No cast list found in the database."
+msgstr "Ingen rolllista funnen i databasen."
+
+#: plugin.py:604
+#, python-format
+msgid "Downloading Movie Poster: %s..."
+msgstr "Ladda ner Film poster: %s..."
+
+#: plugin.py:625
+msgid "Extra Info"
+msgstr "Extra info"
+
+#: plugin.py:660
+msgid "IMDb Plugin"
+msgstr "IMDb Plugin"
+
+#: plugin.py:667
+msgid "IMDb Setup"
+msgstr "IMDb-inställningar"
+
+#: plugin.py:670
+msgid "OK"
+msgstr "OK"
+
+#: plugin.py:671
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: plugin.py:688
+msgid "Show in plugin browser"
+msgstr "Visa i Pluginlista"
+
+#: plugin.py:689
+msgid "Words / phrases to ignore (comma separated)"
+msgstr ""
+
+#: plugin.py:723 plugin.py:741 plugin.py:744
+msgid "IMDb Details"
+msgstr "IMDb-information"
+
+#: plugin.py:741 plugin.py:745
+msgid "Query details from the Internet Movie Database"
+msgstr "Filminformation från Internet Movie Databas"
