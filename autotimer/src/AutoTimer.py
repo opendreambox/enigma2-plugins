@@ -292,12 +292,14 @@ class AutoTimer:
 			# Initialize
 			newEntry = None
 			oldExists = False
+			allow_modify = True
 			
 			# Eventually change service to alternative
 			if timer.overrideAlternatives:
 				serviceref = timer.getAlternative(serviceref)
 
 			if timer.series_labeling and sp_getSeasonEpisode is not None:
+				allow_modify = False
 				#doLog("Request name, desc, path %s %s %s" % (name,shortdesc,dest))
 				sp = sp_getSeasonEpisode(serviceref, name, evtBegin, evtEnd, shortdesc, dest)
 				if sp and type(sp) in (tuple, list) and len(sp) == 4:
@@ -306,6 +308,7 @@ class AutoTimer:
 					dest = sp[2] or dest
 					doLog(str(sp[3]))
 					#doLog("Returned name, desc, path %s %s %s" % (name,shortdesc,dest))
+					allow_modify = True
 				else:
 					# Nothing found
 					doLog(str(sp))
@@ -320,6 +323,7 @@ class AutoTimer:
 							dest = sp[2] or dest
 							doLog(str(sp[3]))
 							#doLog("Returned name, desc, path %s %s %s" % (name,shortdesc,dest))
+							allow_modify = True
 						else:
 							doLog(str(sp))
 
@@ -449,11 +453,14 @@ class AutoTimer:
 
 				modified += 1
 
-				self.modifyTimer(newEntry, name, shortdesc, begin, end, serviceref, eit)
-				msg = "[AutoTimer] AutoTimer modified timer: %s ." % (newEntry.name)
-				doLog(msg)
-				newEntry.log(501, msg)
-				
+				if allow_modify:
+					self.modifyTimer(newEntry, name, shortdesc, begin, end, serviceref, eit)
+					msg = "[AutoTimer] AutoTimer modified timer: %s ." % (newEntry.name)
+					doLog(msg)
+					newEntry.log(501, msg)
+				else:
+					msg = "[AutoTimer] AutoTimer modification not allowed for timer: %s ." % (newEntry.name)
+					doLog(msg)
 			else:
 				newEntry = RecordTimerEntry(ServiceReference(serviceref), begin, end, name, shortdesc, eit)
 				msg = "[AutoTimer] Try to add new timer based on AutoTimer %s." % (timer.name)
