@@ -45,7 +45,7 @@ class AutoTimerSettings(Screen, ConfigListScreen):
 				getConfigListEntry(_("Show in extension menu"), config.plugins.autotimer.show_in_extensionsmenu, _("Enable this to be able to access the AutoTimer Overview from within the extension menu.")),
 				getConfigListEntry(_("Modify existing timers"), config.plugins.autotimer.refresh, _("This setting controls the behavior when a timer matches a found event.")),
 				# TRANSLATORS: the double-percent is intentional and required, please don't make me hunt you down individually
-				getConfigListEntry(_("Guess existing timer based on begin/end"), config.plugins.autotimer.try_guessing, _("If this is enabled an existing timer will also be considered recording an event if it records at least 80%% of it.")),
+				getConfigListEntry(_("Guess existing timer based on begin/end"), config.plugins.autotimer.try_guessing, _("If this is enabled an existing timer will also be considered recording an event if it records at least 80% of it.")),
 				getConfigListEntry(_("Add similar timer on conflict"), config.plugins.autotimer.addsimilar_on_conflict, _("If a timer conflict occurs, AutoTimer will search outside the timespan for a similar event and add it.")),
 				getConfigListEntry(_("Add timer as disabled on conflict"), config.plugins.autotimer.disabled_on_conflict, _("This toggles the behavior on timer conflicts. If an AutoTimer matches an event that conflicts with an existing timer it will not ignore this event but add it disabled.")),
 				getConfigListEntry(_("Include \"AutoTimer\" in tags"), config.plugins.autotimer.add_autotimer_to_tags, _("If this is selected, the tag \"AutoTimer\" will be given to timers created by this plugin.")),
@@ -59,9 +59,9 @@ class AutoTimerSettings(Screen, ConfigListScreen):
 				getConfigListEntry(_("Popup timeout in seconds"), config.plugins.autotimer.popup_timeout, _("If 0, the popup will remain open.")),
 				getConfigListEntry(_("Remove not existing events"), config.plugins.autotimer.check_eit_and_remove, _("Check the event id (eit) and remove the timer if there is no corresponding EPG event. Due to compatible issues with SerienRecorder and IPRec, only timer created by AutoTimer are affected.")),
 				getConfigListEntry(_("Always write config"), config.plugins.autotimer.always_write_config, _("Write the config file after every change which the user quits by saving.")),
-				getConfigListEntry(_("Send debug messages to shell"), config.plugins.autotimer.log_shell, _("")),
-				getConfigListEntry(_("Write debug messages into file"), config.plugins.autotimer.log_write, _("")),
-				getConfigListEntry(_("Location and name of log file"), config.plugins.autotimer.log_file, _("")),
+				getConfigListEntry(_("Send debug messages to shell"), config.plugins.autotimer.log_shell, _("Send debug messages to shell")),
+				getConfigListEntry(_("Write debug messages into file"), config.plugins.autotimer.log_write, _("Write debug messages into file")),
+				getConfigListEntry(_("Location and name of log file"), config.plugins.autotimer.log_file, _("Location and name of log file")),
 			],
 			session = session,
 			on_change = self.changed

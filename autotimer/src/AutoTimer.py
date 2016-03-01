@@ -629,7 +629,7 @@ class AutoTimer:
 		
 		if not simulateOnly:
 			if sp_showResult is not None:
-				sp_showResult()
+				blockingCallFromMainThread(sp_showResult)
 		
 		return (len(timers), new, modified, timers, conflicting, similars)
 
