@@ -25,6 +25,7 @@ from Plugins.Extensions.PushService.ControllerBase import ControllerBase
 
 # Plugin specific
 import os
+from time import localtime, strftime, time
 
 
 # Constants
@@ -33,6 +34,31 @@ BODY    = _("Free disk space limit has been reached:\n") \
 				+ _("Path:  %s\n") \
 				+ _("Limit: %d GB\n") \
 				+ _("Left:  %s")
+
+#Adapted from: from Components.Harddisk import findMountPoint
+def mountpoint(path):
+	path = os.path.realpath(path)
+	if os.path.ismount(path) or len(path)==0: return path
+	return mountpoint(os.path.dirname(path))
+			
+def getDevicebyMountpoint(hdm, mountpoint):
+	for x in hdm.partitions[:]:
+		if x.mountpoint == mountpoint:
+			return x.device
+	return None
+
+def getHDD(hdm, part):
+	for hdd in hdm.hdd:
+		if hdd.device == part[:3]:
+			return hdd
+	return None
+
+def timerToString(timer):
+	return str(timer.name) + "\t" \
+			+ strftime(_("%Y.%m.%d %H:%M"), localtime(timer.begin)) + " - " \
+			+ strftime(_("%H:%M"), localtime(timer.end)) + "\t" \
+			+ str(timer.service_ref and timer.service_ref.getServiceName() or "") \
+			+ "\t" + str(timer.tags)
 
 
 class FreeSpace(ControllerBase):
@@ -47,6 +73,7 @@ class FreeSpace(ControllerBase):
 		self.setOption( 'wakehdd',  NoSave(ConfigYesNo(  default = False )),                                  _("Allow HDD wake up") )
 		self.setOption( 'path',     NoSave(ConfigText(   default = "/media/hdd/movie", fixed_size = False )), _("Where to check free space") )
 		self.setOption( 'limit',    NoSave(ConfigNumber( default = 100 )),                                    _("Free space limit in GB") )
+		self.setOption( 'listtimer',NoSave(ConfigYesNo(  default = False )),                                  _("List upcoming timer") )
 	
 	def run(self, callback, errback):
 		# At the end a plugin has to call one of the functions: callback or errback
@@ -56,24 +83,7 @@ class FreeSpace(ControllerBase):
 		limit = self.getValue('limit')
 		
 		if not self.getValue('wakehdd'):
-			#Adapted from: from Components.Harddisk import findMountPoint
-			def mountpoint(path):
-				path = os.path.realpath(path)
-				if os.path.ismount(path) or len(path)==0: return path
-				return mountpoint(os.path.dirname(path))
-						
-			def getDevicebyMountpoint(hdm, mountpoint):
-				for x in hdm.partitions[:]:
-					if x.mountpoint == mountpoint:
-						return x.device
-				return None
-			
-			def getHDD(hdm, part):
-				for hdd in hdm.hdd:
-					if hdd.device == part[:3]:
-						return hdd
-				return None
-			
+
 			# User specified to avoid HDD wakeup if it is sleeping
 			from Components.Harddisk import harddiskmanager
 			dev = getDevicebyMountpoint( harddiskmanager, mountpoint(path) )
@@ -95,7 +105,19 @@ class FreeSpace(ControllerBase):
 				else:
 					free = "%d MB" %(free)
 				# Not enough free space
-				callback( SUBJECT, BODY % (path, limit, free) )
+				text = ""
+				if self.getValue('listtimer'):
+					text = "\r\n\r\n" 
+					text += _("Next timer:") 
+					text += "\r\n"
+					import NavigationInstance
+					now = time()
+					limit = now + 86400 # Add one day
+					for t in NavigationInstance.instance.RecordTimer.timer_list + NavigationInstance.instance.RecordTimer.processed_timers:
+						if not t.disabled and not t.justplay and now < t.begin and t.end < limit:
+							text += "\t" + timerToString(t)  + "\r\n"
+					
+				callback( SUBJECT, BODY % (path, limit, free) + text )
 			else:
 				# There is enough free space
 				callback()
