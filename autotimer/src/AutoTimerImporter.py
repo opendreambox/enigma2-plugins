@@ -14,6 +14,10 @@ from Components.SelectionList import SelectionList, SelectionEntryComponent
 from Components.Sources.StaticText import StaticText
 from Components.TimerList import TimerList
 
+# Enables EPG events in timer list
+from Components.Sources.Event import Event
+from Components.Sources.ServiceEvent import ServiceEvent
+
 # Timer
 from RecordTimer import AFTEREVENT
 
@@ -46,7 +50,14 @@ class AutoTimerImportSelector(Screen):
 		self["key_green"] = Button(_("OK"))
 		self["key_yellow"] = Button("")
 		self["key_blue"] = Button("")
-
+		
+		try:
+			# Enables EPG events in timer list
+			self["Event"] = Event()
+			self["ServiceEvent"] = ServiceEvent()
+		except:
+			pass
+		
 		self["actions"] = ActionMap(["OkCancelActions", "ColorActions"],
 		{
 			"ok": self.openImporter,
