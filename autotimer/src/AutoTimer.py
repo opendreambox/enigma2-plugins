@@ -49,6 +49,11 @@ except ImportError as ie:
 
 from . import config, xrange, itervalues
 
+try:
+	from Components.ServiceRecordingSettings import ServiceRecordingSettings
+except ImportError as ie:
+	ServiceRecordingSettings = None
+
 XML_CONFIG = "/etc/enigma2/autotimer.xml"
 
 TAG = "AutoTimer"
@@ -337,8 +342,12 @@ class AutoTimer:
 				begin, end = timer.applyOffset(begin, end)
 			else:
 				# Apply E2 Offset
-				begin -= config.recording.margin_before.value * 60
-				end += config.recording.margin_after.value * 60
+				if ServiceRecordingSettings:
+					begin -= ServiceRecordingSettings.instance.getMarginBefore(eserviceref)
+					end += ServiceRecordingSettings.instance.getMarginAfter(eserviceref)
+				else:
+					begin -= config.recording.margin_before.value * 60
+					end += config.recording.margin_after.value * 60
 
 			# Overwrite endtime if requested
 			if timer.justplay and not timer.setEndtime:
