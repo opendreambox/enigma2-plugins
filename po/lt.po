@@ -2,13 +2,11 @@
 # This file is distributed under the same license as the tuxbox-enigma package.
 # Automatically generated, 2005.
 #
-#: autotimer/src/AutoTimerSettings.py:61 autotimer/src/AutoTimerSettings.py:62
-#: autotimer/src/AutoTimerSettings.py:63
 msgid ""
 msgstr ""
 "Project-Id-Version: tuxbox-enigma 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-08 12:22+0100\n"
+"POT-Creation-Date: 2016-03-08 15:01+0100\n"
 "PO-Revision-Date: 2016-02-06 22:19+0000\n"
 "Last-Translator: Adga <adga@zebra.lt>\n"
 "Language-Team: Adga / enigma2 (c) <audrgrin@takas.lt>\n"
@@ -110,6 +108,14 @@ msgstr "arba jei tiesiog norite pasakyti \"Ačiū\",\n"
 msgid "  {lookups:d} successful lookups.\n"
 msgstr "  {lookups:d} sėkminga paieška.\n"
 
+#: dreamexplorer/src/plugin.py:404
+msgid " B"
+msgstr ""
+
+#: dreamexplorer/src/plugin.py:406
+msgid " KB"
+msgstr ""
+
 #: subsdownloader2/src/SourceCode/xbmc_subtitles/services/Itasa/service.py:133
 #: subsdownloader2/src/SourceCode/xbmc_subtitles/services/Itasa/service.py:203
 msgid ""
@@ -119,10 +125,9 @@ msgstr ""
 "Prisijunk prie Itasa nepavyko. Patikrinkite savo vartotojo vardą ir "
 "slaptažodį konfigūravimo meniu."
 
-#: dreamexplorer/src/plugin.py:333 dreamexplorer/src/plugin.py:345
-#: dreamexplorer/src/plugin.py:354
-msgid " Media-filter"
-msgstr "Media-filtras"
+#: dreamexplorer/src/plugin.py:408
+msgid " MB"
+msgstr ""
 
 #: mytube/src/MyTubeSearch.py:227
 msgid " Results"
@@ -131,10 +136,6 @@ msgstr "Rezultatai"
 #: easymedia/src/plugin.py:293
 msgid " added to EasyMedia"
 msgstr "įtraukta į EasyMedia"
-
-#: imdb/src/plugin.py:567
-msgid " as "
-msgstr "kaip"
 
 #: easymedia/src/plugin.py:299
 msgid " removed from EasyMedia"
@@ -243,7 +244,7 @@ msgstr ""
 msgid "%d kb/s"
 msgstr "%d kb/s"
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:347 easyinfo/src/plugin.py:723
+#: seriesplugin/src/SeriesPluginInfoScreen.py:360 easyinfo/src/plugin.py:723
 #, python-format
 msgid "%d min"
 msgstr "%d min"
@@ -253,13 +254,13 @@ msgstr "%d min"
 msgid "%d more services"
 msgstr "%d daugiau kanalų"
 
-#: seriesplugin/src/SeriesPluginRenamer.py:323
+#: seriesplugin/src/SeriesPluginRenamer.py:319
 #, python-format
 msgid "%d records renamed successfully"
 msgstr "%d įrašų pervadinta sėkmingai"
 
-#: seriesplugin/src/SeriesPluginBare.py:58
-#: seriesplugin/src/SeriesPluginTimer.py:215
+#: seriesplugin/src/SeriesPluginBare.py:65
+#: seriesplugin/src/SeriesPluginTimer.py:208
 #, python-format
 msgid "%d timer renamed successfully"
 msgstr "%d laikmatis pervadintas sėkmingai"
@@ -328,10 +329,7 @@ msgstr ""
 "%s \n"
 "įtraukta ir bus grojama kaip kita daina"
 
-#: dreamexplorer/src/plugin.py:543 dreamexplorer/src/plugin.py:555
-#: dreamexplorer/src/plugin.py:610 dreamexplorer/src/plugin.py:629
-#: dreamexplorer/src/plugin.py:1138 dreamexplorer/src/plugin.py:1156
-#: dreamexplorer/src/plugin.py:1161 subsdownloader2/src/plugin.py:344
+#: subsdownloader2/src/plugin.py:344
 #, python-format
 msgid ""
 "%s \n"
@@ -339,6 +337,21 @@ msgid ""
 msgstr ""
 "%s \n"
 "NEPAVYKO!"
+
+#: dreamexplorer/src/plugin.py:477 dreamexplorer/src/plugin.py:870
+#, python-format
+msgid ""
+"%s \n"
+"executed!"
+msgstr ""
+
+#: dreamexplorer/src/plugin.py:475 dreamexplorer/src/plugin.py:557
+#: dreamexplorer/src/plugin.py:574 dreamexplorer/src/plugin.py:868
+#, python-format
+msgid ""
+"%s \n"
+"failed!"
+msgstr ""
 
 #: fancontrol2/src/plugin.py:485 fancontrol2/src/plugin.py:487
 #: fancontrol2/src/plugin.py:491
@@ -390,6 +403,13 @@ msgstr "%s įsijungs %s į %s!"
 #, python-format
 msgid "%s's Gallery"
 msgstr "%s's Galerija"
+
+#: dreamexplorer/src/plugin.py:223
+#, python-format
+msgid ""
+"%s-archive:\n"
+"%s"
+msgstr ""
 
 #: internetradio/src/InternetRadioScreen.py:626
 #, python-format
@@ -485,11 +505,11 @@ msgstr "... yra naudojama, %dMB laisva"
 msgid "01:00"
 msgstr "01:00"
 
-#: fritzcall/src/plugin.py:107
+#: fritzcall/src/plugin.py:108
 msgid "05.29 until below 6.35"
 msgstr "05.29 iki žemiau 6.35"
 
-#: fritzcall/src/plugin.py:107
+#: fritzcall/src/plugin.py:108
 msgid "06.35 and newer"
 msgstr "06.35 ir naujesnė"
 
@@ -799,22 +819,6 @@ msgstr ""
 "API raktas naudojamas norint pasiekti Flickr. Galite užsisakyti vieną "
 "prisijungimą prie Flickr iš kompiuterio."
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:221
-msgid "AT: Poll Interval (in h)"
-msgstr "AT: Apklausos intervalas (h)"
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:219
-msgid "AT: Poll automatically"
-msgstr "AT: Apklausa automatiškai"
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:220
-msgid "AT: Startup delay (in min)"
-msgstr "AT: Paleisties vėlavimas (min)"
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:222
-msgid "AT: Timeout (in min)"
-msgstr "AT: Skirtasis laikas (min)"
-
 #: youtubeplayer/src/YouTubeSearchDialog.py:93
 msgid "Abkhazian"
 msgstr "Abchazų"
@@ -839,8 +843,7 @@ msgstr "Nutraukti perdavimą"
 
 #
 #: webinterface/src/WebComponents/Sources/Strings.py:93
-#: satloader/src/plugin.py:120 dreamexplorer/src/plugin.py:340
-#: dreamexplorer/src/plugin.py:349 dreamexplorer/src/plugin.py:363
+#: satloader/src/plugin.py:120 dreamexplorer/src/plugin.py:308
 #: babelzapper/src/plugin.py:78
 msgid "About"
 msgstr "Apie"
@@ -848,8 +851,8 @@ msgstr "Apie"
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:308 fritzcall/src/plugin.py:1893
-#: fritzcall/src/plugin.py:1924
+#: fritzcall/src/plugin.py:310 fritzcall/src/plugin.py:1898
+#: fritzcall/src/plugin.py:1929
 msgid "About FritzCall"
 msgstr "Apie FritzCall"
 
@@ -892,7 +895,7 @@ msgid "Activate VPS"
 msgstr "Aktyvuokite VPS"
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:695 fritzcall/src/plugin.py:904
+#: fritzcall/src/plugin.py:697 fritzcall/src/plugin.py:906
 msgid "Activate WLAN guest access"
 msgstr "Įjungti WLAN svečio abonentą"
 
@@ -1001,7 +1004,7 @@ msgstr "Pridėti žymę"
 msgid "Add Timer"
 msgstr "Pridėti laikmatį"
 
-#: seriesplugin/src/ChannelEditor.py:266
+#: seriesplugin/src/ChannelEditor.py:311
 msgid "Add Web Channel"
 msgstr "Pridėti interneto kanalo"
 
@@ -1033,7 +1036,7 @@ msgstr "Iš pasirinkto žanro į grojaraštį įtraukti visas albumo dainas"
 msgid "Add birthday"
 msgstr "Pridėti gimtadienį"
 
-#: seriesplugin/src/ChannelEditor.py:290
+#: seriesplugin/src/ChannelEditor.py:335
 msgid "Add channel (Yes) or replace it (No)"
 msgstr "Pridėti kanalą (taip) arba pakeisti jį (ne)"
 
@@ -1053,6 +1056,10 @@ msgstr "Pridėti dabar pasirinktą žanrą į mėgstamiausius"
 msgid "Add current selected station to favorite"
 msgstr "Pridėti dabar pasirinktą stotį į mėgstamiausius"
 
+#: dreamexplorer/src/plugin.py:290
+msgid "Add directory to Bookmarks"
+msgstr ""
+
 #: rsdownloader/src/plugin.py:1376
 msgid "Add downloads from txt files"
 msgstr "Pridėti parsisiuntimus iš txt failų"
@@ -1064,8 +1071,8 @@ msgstr "Pridėti įrašą"
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a help text
 #. TRANSLATORS: this is a window title.
-#: ncidclient/src/plugin.py:601 fritzcall/src/plugin.py:1607
-#: fritzcall/src/plugin.py:1756
+#: ncidclient/src/plugin.py:601 fritzcall/src/plugin.py:1612
+#: fritzcall/src/plugin.py:1761
 msgid "Add entry to phonebook"
 msgstr "Pridėti įrašą į telefonų knygą"
 
@@ -1316,7 +1323,7 @@ msgstr "Albumai iš"
 #: webinterface/src/WebComponents/Sources/Strings.py:32
 #: serienfilm/src/MovieSelection.py:256 emission/src/EmissionOverview.py:150
 #: emission/src/EmissionOverview.py:303 emission/src/EmissionOverview.py:310
-#: fritzcall/src/plugin.py:1021 mytube/src/plugin.py:67
+#: fritzcall/src/plugin.py:1023 mytube/src/plugin.py:67
 #: youtubeplayer/src/YouTubeSearchDialog.py:59
 #: youtubeplayer/src/YouTubeSearchDialog.py:91
 msgid "All"
@@ -1351,7 +1358,7 @@ msgstr "Visas laikas"
 msgid "All Timers"
 msgstr "Visi laikmačiai"
 
-#: fritzcall/src/plugin.py:166
+#: fritzcall/src/plugin.py:168
 msgid "All calls"
 msgstr "Visi skambučiai"
 
@@ -1440,15 +1447,11 @@ msgstr ""
 "EMC. Tai gali sugadinti, jūs turėtumėte nenaudoti filmų grotuvo, kol "
 "nepašalinsite konfliktinių papildomų programų."
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:178
-msgid "Alternative channel names file"
-msgstr "Kitas kanalo pavadinimo failas"
+#: autotimer/src/AutoTimerSettings.py:61
+msgid "Always write config"
+msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:202
-msgid "Always retry to find series info"
-msgstr "Visada kartoti norint rasti serijų info"
-
-#: ofdb/src/plugin.py:219 imdb/src/plugin.py:294
+#: ofdb/src/plugin.py:219
 msgid "Ambiguous results"
 msgstr "Dviprasmiški rezultatai"
 
@@ -1507,7 +1510,7 @@ msgstr ""
 msgid "Any service/recording"
 msgstr "Bet kokia paslauga/įrašas"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:186
+#: seriesplugin/src/SeriesPluginConfiguration.py:211
 msgid "Append '_' if file exist"
 msgstr "Pridėti '_' Jei failo nėra"
 
@@ -1519,15 +1522,15 @@ msgstr "Pridėti failą prie dabar grojančio dainų sąrašo"
 msgid "Append file to current songlist"
 msgstr "Pridėti failą prie dabartinio dainų sąrašo"
 
-#: fritzcall/src/plugin.py:1984
+#: fritzcall/src/plugin.py:1989
 msgid "Append shortcut number"
 msgstr "Pridėti nuorodų skaičių"
 
-#: fritzcall/src/plugin.py:1983
+#: fritzcall/src/plugin.py:1988
 msgid "Append type of number"
 msgstr "Papildyti numerio tipą"
 
-#: fritzcall/src/plugin.py:1985
+#: fritzcall/src/plugin.py:1990
 msgid "Append vanity name"
 msgstr "Pridėti prabangų vardą"
 
@@ -1575,7 +1578,7 @@ msgstr ""
 "Jūs esate įsitikinęs, kad norite išsaugoti šį tinklo pajungimą?\n"
 "\n"
 
-#: ncidclient/src/plugin.py:739 fritzcall/src/plugin.py:1962
+#: ncidclient/src/plugin.py:739 fritzcall/src/plugin.py:1967
 msgid "Areacode to add to calls without one (if necessary)"
 msgstr "Vietovės kodas pridėti ragina be vieno (jei reikia)"
 
@@ -1764,7 +1767,7 @@ msgstr ""
 msgid "Australia"
 msgstr "Australija"
 
-#: ncidclient/src/plugin.py:49 fritzcall/src/plugin.py:157
+#: ncidclient/src/plugin.py:49 fritzcall/src/plugin.py:158
 msgid "Austria"
 msgstr "Austrija"
 
@@ -1789,7 +1792,7 @@ msgstr "Autoriai"
 msgid "Auto"
 msgstr "Automatinis"
 
-#: seriesplugin/src/ChannelEditor.py:75 seriesplugin/src/ChannelEditor.py:97
+#: seriesplugin/src/ChannelEditor.py:149 seriesplugin/src/ChannelEditor.py:171
 msgid "Auto match"
 msgstr "Automatinis"
 
@@ -1851,7 +1854,7 @@ msgstr "Auto laikmačio nustatymai"
 msgid "AutoTimer failed with error %s"
 msgstr "Auto laikmatis nepavyko dėl klaidos %s"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:199
+#: seriesplugin/src/SeriesPluginConfiguration.py:224
 msgid "AutoTimer independent mode"
 msgstr "AutoTimer nepriklausomas režimas"
 
@@ -1932,7 +1935,7 @@ msgstr "Automatinis garso reguliavimas"
 msgid "Automatic volume adjustment for ac3/dts services."
 msgstr "Automatinis ac3/dts kanalų garso reguliavimas."
 
-#: ncidclient/src/plugin.py:763 fritzcall/src/plugin.py:1995
+#: ncidclient/src/plugin.py:763 fritzcall/src/plugin.py:2000
 msgid "Automatically add new Caller to PhoneBook"
 msgstr "Automatiškai pridėti naują skambinantį į telefonų knygą"
 
@@ -2046,7 +2049,7 @@ msgstr "Azerbaidžano"
 msgid "BER"
 msgstr "BER"
 
-#: dreamexplorer/src/plugin.py:272 subsdownloader2/src/plugin.py:941
+#: subsdownloader2/src/plugin.py:941
 msgid "BZ2-package:\\n"
 msgstr "BZ2-paketas: \\n"
 
@@ -2330,9 +2333,9 @@ msgstr "Žymės"
 msgid "Boot delay"
 msgstr "Įkrovos vėlavimas"
 
-#: dreamexplorer/src/plugin.py:262
-msgid "Bootlogo-package:\\n"
-msgstr "Įkrovos logo-paketas:\\n"
+#: dreamexplorer/src/plugin.py:214
+msgid "Bootlogo-package:\n"
+msgstr ""
 
 #: elektro/src/plugin.py:459
 msgid ""
@@ -2495,33 +2498,29 @@ msgstr "CSV importavimas sėkmingas!"
 msgid "Cable"
 msgstr "Kabelinė"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:212
-msgid "Cache expires after x hours"
-msgstr "Talpykla baigsis po x valandų"
-
 #: ecasa/src/EcasaSetup.py:45
 msgid "Cache size"
 msgstr "Talpyklos dydis"
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1166
+#: fritzcall/src/plugin.py:1171
 msgid "Call"
 msgstr "Skambinti"
 
 #
-#: ncidclient/src/plugin.py:731 fritzcall/src/plugin.py:1946
+#: ncidclient/src/plugin.py:731 fritzcall/src/plugin.py:1951
 msgid "Call monitoring"
 msgstr "Skambučio kontrolė"
 
-#: fritzcall/src/plugin.py:564 fritzcall/src/plugin.py:730
+#: fritzcall/src/plugin.py:566 fritzcall/src/plugin.py:732
 msgid "Call redirection"
 msgstr "Skambučių peradresavimas"
 
-#: fritzcall/src/plugin.py:880
+#: fritzcall/src/plugin.py:882
 msgid "Call redirection active"
 msgstr "Skambučių peradresavimo aktyvus"
 
-#: fritzcall/src/plugin.py:1298
+#: fritzcall/src/plugin.py:1303
 #, python-format
 msgid "Calling %s"
 msgstr "Skambiname %s"
@@ -2623,21 +2622,21 @@ msgstr "Kanada"
 #: autotimer/src/AutoTimerEditor.py:901 autotimer/src/AutoTimerEditor.py:1104
 #: autotimer/src/AutoTimerImporter.py:45
 #: autotimer/src/AutoTimerImporter.py:119
-#: autotimer/src/AutoTimerSettings.py:81 webinterface/src/WebIfConfig.py:32
-#: partnerbox/src/PartnerboxSetup.py:70 partnerbox/src/PartnerboxSetup.py:251
-#: partnerbox/src/RemoteTimerEntry.py:73 audiorestart/src/plugin.py:107
-#: namezap/src/NamezapSetup.py:57 epgsearch/src/EPGSearch.py:377
-#: epgsearch/src/EPGSearchSetup.py:58 dreammediathek/src/plugin.py:81
-#: internetradio/src/InternetRadioSetup.py:49
+#: autotimer/src/AutoTimerSettings.py:82 imdb/src/plugin.py:687
+#: webinterface/src/WebIfConfig.py:32 partnerbox/src/PartnerboxSetup.py:70
+#: partnerbox/src/PartnerboxSetup.py:251 partnerbox/src/RemoteTimerEntry.py:73
+#: audiorestart/src/plugin.py:107 namezap/src/NamezapSetup.py:57
+#: epgsearch/src/EPGSearch.py:377 epgsearch/src/EPGSearchSetup.py:58
+#: dreammediathek/src/plugin.py:81 internetradio/src/InternetRadioSetup.py:49
 #: internetradio/src/InternetRadioSetup.py:124
 #: pipservicerelation/src/plugin.py:188
 #: videocolorspace/src/VideoColorSpace.py:80 remotetimer/src/plugin.py:105
-#: remotetimer/src/plugin.py:230 satloader/src/plugin.py:54
+#: remotetimer/src/plugin.py:232 satloader/src/plugin.py:54
 #: satloader/src/plugin.py:165 satloader/src/plugin.py:285
 #: satloader/src/plugin.py:409 growlee/src/plugin.py:99
 #: movieepg/src/MovieEpgSetup.py:55 vlcplayer/src/VlcServerConfig.py:296
 #: seriesplugin/src/SeriesPluginConfiguration.py:80
-#: seriesplugin/src/ChannelEditor.py:72 aspectratioswitch/src/plugin.py:120
+#: seriesplugin/src/ChannelEditor.py:146 aspectratioswitch/src/plugin.py:120
 #: infobartunerstate/src/IBTSConfiguration.py:51 setpasswd/src/plugin.py:51
 #: merlinmusicplayer/src/plugin.py:278 merlinmusicplayer/src/plugin.py:2809
 #: merlinmusicplayer/src/plugin.py:2930 yttrailer/src/plugin.py:317
@@ -2649,11 +2648,9 @@ msgstr "Kanada"
 #: epgrefresh/src/EPGRefreshConfiguration.py:107
 #: pushservice/src/ConfigScreen.py:171 permanenttimeshift/src/plugin.py:1609
 #: teletext/src/plugin.py:1132 teletext/src/plugin.py:1277
-#: dreamexplorer/src/plugin.py:261 dreamexplorer/src/plugin.py:266
-#: dreamexplorer/src/plugin.py:271 dreamexplorer/src/plugin.py:279
-#: dreamexplorer/src/plugin.py:284 dreamexplorer/src/plugin.py:289
-#: dreamexplorer/src/plugin.py:332 dreamexplorer/src/plugin.py:344
-#: dreamexplorer/src/plugin.py:353 dreamexplorer/src/plugin.py:515
+#: dreamexplorer/src/plugin.py:213 dreamexplorer/src/plugin.py:223
+#: dreamexplorer/src/plugin.py:228 dreamexplorer/src/plugin.py:234
+#: dreamexplorer/src/plugin.py:276 dreamexplorer/src/plugin.py:468
 #: serienfilm/src/SerienFilm.py:65 3dsettings/src/plugin.py:172
 #: automatictimerlistcleanup/src/plugin.py:53
 #: curlytx/src/CurlyTxSettings.py:49 curlytx/src/CurlyTxSettings.py:209
@@ -2662,8 +2659,8 @@ msgstr "Kanada"
 #: elektro/src/plugin.py:272 elektro/src/plugin.py:318
 #: elektro/src/plugin.py:397 elektro/src/plugin.py:500
 #: emission/src/EmissionBandwidth.py:72 emission/src/EmissionSetup.py:39
-#: babelzapper/src/plugin.py:75 fritzcall/src/plugin.py:1731
-#: fritzcall/src/plugin.py:1885 simplerss/src/RSSSetup.py:26
+#: babelzapper/src/plugin.py:75 fritzcall/src/plugin.py:1736
+#: fritzcall/src/plugin.py:1890 simplerss/src/RSSSetup.py:26
 #: simplerss/src/RSSSetup.py:73 ftpbrowser/src/FTPBrowser.py:750
 #: epgbackup/src/EPGBackupSupport.py:219 epgbackup/src/EPGBackupConfig.py:55
 #: virtualzap/src/plugin.py:728 ecasa/src/EcasaSetup.py:71
@@ -2687,15 +2684,15 @@ msgstr "Kanada"
 msgid "Cancel"
 msgstr "Atšaukti"
 
-#: seriesplugin/src/ChannelEditor.py:80 seriesplugin/src/ChannelEditor.py:94
+#: seriesplugin/src/ChannelEditor.py:154 seriesplugin/src/ChannelEditor.py:168
 msgid "Cancel and close"
 msgstr "Atšaukite ir uždarykite"
 
-#: fritzcall/src/plugin.py:2043 fritzcall/src/plugin.py:2676
+#: fritzcall/src/plugin.py:2048 fritzcall/src/plugin.py:2681
 msgid "Cannot get calls from FRITZ!Box"
 msgstr "Nepavyksta gauti skambučių iš FRITZ!Box"
 
-#: fritzcall/src/plugin.py:2064 fritzcall/src/plugin.py:2694
+#: fritzcall/src/plugin.py:2069 fritzcall/src/plugin.py:2699
 msgid ""
 "Cannot get infos from FRITZ!Box yet\n"
 "Still initialising or wrong firmware version"
@@ -2711,7 +2708,7 @@ msgstr "Negalima jungti, kai įrenginys veikia laukimo režimu"
 msgid "Capacity"
 msgstr "Talpa"
 
-#: ofdb/src/plugin.py:435 imdb/src/plugin.py:571
+#: ofdb/src/plugin.py:435
 msgid "Cast: "
 msgstr "Vaidino:"
 
@@ -2822,17 +2819,17 @@ msgstr "Pakeisti laikmatį, '%s' nepavyko!"
 msgid "Channel"
 msgstr "Kanalas"
 
-#: seriesplugin/src/ChannelEditor.py:284 seriesplugin/src/ChannelEditor.py:300
+#: seriesplugin/src/ChannelEditor.py:329 seriesplugin/src/ChannelEditor.py:345
 #, python-format
 msgid "Channel '- %(servicename)s - %(remote)s -' added."
 msgstr "Kanalas '- %(servicename)s - %(remote)s -' pridėta."
 
-#: seriesplugin/src/ChannelEditor.py:306
+#: seriesplugin/src/ChannelEditor.py:351
 #, python-format
 msgid "Channel '- %(servicename)s - %(remote)s -' replaced."
 msgstr "Kanalas ' %(servicename)s - %(remote)s -'pakeistas."
 
-#: seriesplugin/src/ChannelEditor.py:331
+#: seriesplugin/src/ChannelEditor.py:376
 #, python-format
 msgid "Channel '- %s -' removed."
 msgstr "Kanalas '- %s -' pašalintas."
@@ -2841,7 +2838,7 @@ msgstr "Kanalas '- %s -' pašalintas."
 msgid "Channel Edit"
 msgstr "Kanalo redagavimas"
 
-#: seriesplugin/src/ChannelEditor.py:69
+#: seriesplugin/src/ChannelEditor.py:143
 msgid "Channel Editor"
 msgstr "Kanalas redaktorius"
 
@@ -2854,7 +2851,7 @@ msgid "Channel Number"
 msgstr "Kanalo numeris"
 
 #: ofdb/src/plugin.py:41 autotimer/src/AutoTimerEditor.py:103
-#: imdb/src/plugin.py:62 epgsearch/src/EPGSearch.py:415
+#: imdb/src/plugin.py:53 epgsearch/src/EPGSearch.py:415
 #: pipservicerelation/src/plugin.py:211
 #: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:281
 msgid "Channel Selection"
@@ -2876,7 +2873,11 @@ msgstr "Garso kanalas:"
 msgid "Channel info"
 msgstr "Kanalo informacija"
 
-#: seriesplugin/src/ChannelEditor.py:178
+#: seriesplugin/src/SeriesPluginConfiguration.py:240
+msgid "Channel matching file"
+msgstr ""
+
+#: seriesplugin/src/ChannelEditor.py:249
 msgid "Channel matching..."
 msgstr "Kanalo atitikimas..."
 
@@ -2917,7 +2918,7 @@ msgstr "Tikrinti"
 msgid "Check IPs (press OK to edit)"
 msgstr "Patikrinkite IPs (spauskite OK, kad redaguoti)"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:204
+#: seriesplugin/src/SeriesPluginConfiguration.py:228
 msgid "Check Timer for corresponding EPG events"
 msgstr "Patikrinkite laikmatį, atitinkantį EPG įvykius"
 
@@ -2929,12 +2930,6 @@ msgstr "Patikrinkite visus veikiančius atkūrimo procesus"
 msgid "Check for uniqueness in"
 msgstr "Patikrinkite dėl unikalumo"
 
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:337
-#: seriesplugin/src/Identifiers/Fernsehserien.py:535
-#: seriesplugin/src/Identifiers/Wunschliste.py:305
-msgid "Check the channel name"
-msgstr "Patikrinkite kanalo pavadinimą"
-
 #: autotimer/src/AutoTimerSettings.py:60
 msgid ""
 "Check the event id (eit) and remove the timer if there is no corresponding "
@@ -2945,7 +2940,7 @@ msgstr ""
 "EPG įvykio. Dėl suderinamumo problemų su Serijų Įrašymo ir IPSec, veikia tik "
 "laikmatis, sukurtas su Auto laikmačiu."
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:201
+#: seriesplugin/src/SeriesPluginConfiguration.py:226
 msgid "Check timer every x minutes"
 msgstr "Patikrinkite laikmatį kas x minučių"
 
@@ -2953,7 +2948,7 @@ msgstr "Patikrinkite laikmatį kas x minučių"
 msgid "Check timer list for series (SP)"
 msgstr "Patikrinkite laikmačių sąrašą serijai (SP)"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:157
+#: seriesplugin/src/SeriesPluginConfiguration.py:186
 msgid "Check timer list from extension menu"
 msgstr "Patikrinkite laikmačio sąrašą iš išplėtimo meniu"
 
@@ -3215,6 +3210,10 @@ msgstr "Komanda [maitinimo įtampos išjungimas, išjungimas -h,...]"
 msgid "Compact Flash"
 msgstr "Kompaktinė atmintinė"
 
+#: seriesplugin/src/SeriesPluginConfiguration.py:198
+msgid "Composition of the recording filenames"
+msgstr ""
+
 #: aihdcontroler/src/plugin.py:46
 msgid "Concinnity"
 msgstr "Concinnity"
@@ -3258,7 +3257,7 @@ msgid "Configuration tool for Vali-XD skins"
 msgstr "Konfigūracijos priemonė Vali-XD temai"
 
 #
-#: autotimer/src/AutoTimerSettings.py:99
+#: autotimer/src/AutoTimerSettings.py:100
 msgid "Configure AutoTimer behavior"
 msgstr "Konfigūruokite Auto Laikmačio elgseną"
 
@@ -3311,11 +3310,11 @@ msgstr "Prisijungti prie"
 msgid "Connect to FTP..."
 msgstr "Prisijungti prie FTP..."
 
-#: fritzcall/src/plugin.py:775
+#: fritzcall/src/plugin.py:777
 msgid "Connected since"
 msgstr "Prisijungta prie"
 
-#: fritzcall/src/plugin.py:2608
+#: fritzcall/src/plugin.py:2613
 msgid "Connected to FRITZ!Box!"
 msgstr "Prisijungta prie FRITZ!Box!"
 
@@ -3327,7 +3326,7 @@ msgstr "Prisijungta prie IRC serverio"
 msgid "Connected to NCID Server"
 msgstr "Prisijungta prie NCID serverio"
 
-#: fritzcall/src/plugin.py:2643
+#: fritzcall/src/plugin.py:2648
 #, python-format
 msgid ""
 "Connecting to FRITZ!Box failed\n"
@@ -3339,7 +3338,7 @@ msgstr ""
 " \n"
 "nepavyko, bandoma iš naujo..."
 
-#: fritzcall/src/plugin.py:2602
+#: fritzcall/src/plugin.py:2607
 msgid "Connecting to FRITZ!Box..."
 msgstr "Jungiamasi prie FRITZ!Box..."
 
@@ -3362,7 +3361,7 @@ msgstr "Jungiamasi prie NCID serverio ..."
 msgid "Connection Error"
 msgstr "Prisijungimo klaida"
 
-#: fritzcall/src/plugin.py:2635
+#: fritzcall/src/plugin.py:2640
 #, python-format
 msgid ""
 "Connection to FRITZ!Box! lost\n"
@@ -3560,7 +3559,7 @@ msgstr ""
 msgid "Could not start Plugin:"
 msgstr "Nepavyko paleisti priedo:"
 
-#: ofdb/src/plugin.py:316 imdb/src/plugin.py:427
+#: ofdb/src/plugin.py:316
 msgid "Could't get Eventname"
 msgstr "Nepavyko gauti pavadinimo"
 
@@ -3574,6 +3573,10 @@ msgstr ""
 "Nepavyko sukurti atsarginės kopijos.\n"
 "Priežastis: %s.\n"
 "Spauskite OK, kad pamatyti loginį failą!"
+
+#: imdb/src/plugin.py:466
+msgid "Couldn't get Eventname"
+msgstr ""
 
 #: epgbackup/src/EPGBackupSupport.py:242
 #, python-format
@@ -3632,7 +3635,7 @@ msgstr "Atgalinės atskaitos režimas:"
 msgid "Countries"
 msgstr "Valstybės"
 
-#: ncidclient/src/plugin.py:743 fritzcall/src/plugin.py:1966
+#: ncidclient/src/plugin.py:743 fritzcall/src/plugin.py:1971
 msgid "Country"
 msgstr "Valstybė"
 
@@ -3673,19 +3676,19 @@ msgstr "Sukurti naują laikmatį, naudodami vedlį"
 msgid "Create iso:"
 msgstr "Sukurti iso:"
 
-#: dreamexplorer/src/plugin.py:338 dreamexplorer/src/plugin.py:359
+#: dreamexplorer/src/plugin.py:294 dreamexplorer/src/plugin.py:302
 msgid "Create new directory"
 msgstr "Sukurti naują katalogą"
 
-#: dreamexplorer/src/plugin.py:432
+#: dreamexplorer/src/plugin.py:362
 msgid "Create new directory in..."
 msgstr "Sukurti naują katalogą..."
 
-#: dreamexplorer/src/plugin.py:337 dreamexplorer/src/plugin.py:358
+#: dreamexplorer/src/plugin.py:293 dreamexplorer/src/plugin.py:301
 msgid "Create new file"
 msgstr "Sukurti naują failą"
 
-#: dreamexplorer/src/plugin.py:430
+#: dreamexplorer/src/plugin.py:360
 msgid "Create new file in..."
 msgstr "Sukurti naują failą..."
 
@@ -3705,9 +3708,9 @@ msgstr "Sukurti savo Kino filmų peržiūros paveikslėlius"
 msgid "Create remote timers"
 msgstr "Sukurti tolimus laikmačius"
 
-#: dreamexplorer/src/plugin.py:360
-msgid "Create softlink..."
-msgstr "Sukurti softlink..."
+#: dreamexplorer/src/plugin.py:295 dreamexplorer/src/plugin.py:303
+msgid "Create softlink to selected"
+msgstr ""
 
 #: remotetimer/meta/plugin_remotetimer.xml./remotetimer/meta/plugin_remotetimer.xml
 msgid "Create timers on remote Dreamboxes."
@@ -3824,11 +3827,15 @@ msgstr "DD.MM. HH:MM"
 msgid "DD.MM.YYYY HH:MM"
 msgstr "DD.MM.YYYY HH:MM"
 
-#: fritzcall/src/plugin.py:865
+#: dreamexplorer/src/plugin.py:229
+msgid "DEB-package:\n"
+msgstr ""
+
+#: fritzcall/src/plugin.py:867
 msgid "DECT inactive"
 msgstr "DECT neaktyvus"
 
-#: fritzcall/src/plugin.py:861
+#: fritzcall/src/plugin.py:863
 msgid "DECT phones registered"
 msgstr "DECT telefonas registruotas"
 
@@ -3936,7 +3943,7 @@ msgid "Deactivate Movielist Preview"
 msgstr "Išjungti Filmų sąrašo peržiūrą"
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:901
+#: fritzcall/src/plugin.py:903
 msgid "Deactivate WLAN guest access"
 msgstr "Išjungti WLAN svečio abonentą"
 
@@ -3957,28 +3964,20 @@ msgstr ""
 msgid "DeactivatedTimerPushed"
 msgstr "Išjungtas laikmačio postūmis"
 
-#: teletext/src/plugin.py:1344 fritzcall/src/plugin.py:2006
+#: teletext/src/plugin.py:1344 fritzcall/src/plugin.py:2011
 #: dreamirc/src/dreamIRCSetup.py:69
 msgid "Debug"
 msgstr "Derinti"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:230
-msgid "Debug: Forum user name"
-msgstr "Derinti: Forumo vartotojo vardas"
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:229
+#: seriesplugin/src/SeriesPluginConfiguration.py:255
 msgid "Debug: Log file path"
 msgstr "Derinti: Žurnalo failo kelias"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:226
+#: seriesplugin/src/SeriesPluginConfiguration.py:252
 msgid "Debug: Print debug messages (Shell)"
 msgstr "Derinti: Spausdinti derinimo pranešimus (Shell)"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:231
-msgid "Debug: User mail address"
-msgstr "Derinti: Vartotojo pašto adresas"
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:227
+#: seriesplugin/src/SeriesPluginConfiguration.py:253
 msgid "Debug: Write Log"
 msgstr "Derinti: Rašyti žurnalą"
 
@@ -3998,11 +3997,11 @@ msgid "Decrease remaining time"
 msgstr "Sumažinti likusį laiką"
 
 #
-#: teletext/src/plugin.py:1278
+#: imdb/src/plugin.py:43 teletext/src/plugin.py:1278
 msgid "Default"
 msgstr "Numatyta"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:174
+#: seriesplugin/src/SeriesPluginConfiguration.py:202
 msgid "Default episode"
 msgstr "Numatytas epizodas"
 
@@ -4010,7 +4009,7 @@ msgstr "Numatytas epizodas"
 msgid "Default page"
 msgstr "Numatytasis puslapis"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:173
+#: seriesplugin/src/SeriesPluginConfiguration.py:201
 msgid "Default season"
 msgstr "Numatytas sezonas"
 
@@ -4041,6 +4040,10 @@ msgstr "Nustatykite paleisties kanalą"
 #: startupservice/meta/plugin_startupservice.xml./startupservice/meta/plugin_startupservice.xml
 msgid "Define a startup service for your Dreambox."
 msgstr "Nustatykite paleisties kanalą jūsų imtuve."
+
+#: dreamexplorer/src/plugin.py:949
+msgid "Define the new symlink name here:"
+msgstr ""
 
 #: autotimer/src/AutoTimerEditor.py:535
 msgid ""
@@ -4090,7 +4093,7 @@ msgstr "Vėluoti x sekundžių po kanalo starto"
 #: remotetimer/src/plugin.py:104 zapstatistic/src/plugin.py:431
 #: growlee/src/plugin.py:102 teletext/src/plugin.py:1718
 #: curlytx/src/CurlyTxSettings.py:52 subsdownloader2/src/plugin.py:1076
-#: fritzcall/src/plugin.py:1583 simplerss/src/RSSSetup.py:76
+#: fritzcall/src/plugin.py:1588 simplerss/src/RSSSetup.py:76
 #: ftpbrowser/src/FTPBrowser.py:188 ftpbrowser/src/FTPServerManager.py:258
 #: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:142
 #: fancontrol2/src/FC2webSite.py:177 fancontrol2/src/FC2webSite.py:213
@@ -4143,7 +4146,7 @@ msgstr "Trinti parsisiuntimus"
 
 #
 #. TRANSLATORS: keep it short, this is a help text
-#: zapstatistic/src/plugin.py:562 fritzcall/src/plugin.py:1605
+#: zapstatistic/src/plugin.py:562 fritzcall/src/plugin.py:1610
 msgid "Delete entry"
 msgstr "Trinti užduotį"
 
@@ -4248,8 +4251,8 @@ msgstr "Paskirtis / klientas"
 msgid "Destination dir '%s' does not exist."
 msgstr "Paskirties dir '%s' neegzistuoja."
 
-#: ofdb/src/plugin.py:224 ofdb/src/plugin.py:385 imdb/src/plugin.py:299
-#: imdb/src/plugin.py:524
+#: ofdb/src/plugin.py:224 ofdb/src/plugin.py:385 imdb/src/plugin.py:316
+#: imdb/src/plugin.py:546
 msgid "Details"
 msgstr "Išsamiau"
 
@@ -4291,11 +4294,11 @@ msgstr "Direktorijos %s nėra."
 msgid "Directory for the Logfiles."
 msgstr "Log failų katalogas."
 
-#: dreamexplorer/src/plugin.py:619
+#: dreamexplorer/src/plugin.py:565
 msgid "Directory name error !"
 msgstr "Katalogo pavadinimo klaida!"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:170
+#: seriesplugin/src/SeriesPluginConfiguration.py:242
 msgid "Directory pattern file"
 msgstr "Failų šablonų katalogas"
 
@@ -4320,6 +4323,10 @@ msgstr "Išjungti HDMI-CEC chronologine tvarka"
 msgid "Disable KiddyTimer"
 msgstr "Išjungti KiddyTimer"
 
+#: dreamexplorer/src/plugin.py:272
+msgid "Disable media filter"
+msgstr ""
+
 #
 #: easyinfo/src/plugin.py:65 easyinfo/src/plugin.py:96
 #: easyinfo/src/plugin.py:104 easymedia/src/plugin.py:55
@@ -4333,10 +4340,6 @@ msgstr "Išjungti KiddyTimer"
 #: teletext/src/plugin.py:70 birthdayreminder/src/plugin.py:42
 msgid "Disabled"
 msgstr "Išjungtas"
-
-#: dreamexplorer/src/plugin.py:284
-msgid "Disassemble to bytecode..."
-msgstr "Ardyti į baitinį kodą..."
 
 #
 #: audiosync/src/AC3main.py:75 audiosync/src/AC3main.py:80
@@ -4371,7 +4374,7 @@ msgstr "Atmesti visus parametrų pakeitimus"
 msgid "Display 4:3 content as"
 msgstr "Rodyti kaip 4:3"
 
-#: fritzcall/src/plugin.py:2720
+#: fritzcall/src/plugin.py:2725
 msgid "Display FRITZ!box-Fon calls on screen"
 msgstr "Rodyti FRITZ!box- Fon skambučius ekrane"
 
@@ -4380,11 +4383,11 @@ msgid "Display Fon calls on screen"
 msgstr "Rodyti Fon skambučius ekrane"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1043
+#: fritzcall/src/plugin.py:1045
 msgid "Display all calls"
 msgstr "Rodyti visus skambučius"
 
-#: fritzcall/src/plugin.py:2004
+#: fritzcall/src/plugin.py:2009
 msgid "Display connection infos"
 msgstr "Rodyti prisijungimo informaciją"
 
@@ -4397,12 +4400,12 @@ msgid "Display first and last row."
 msgstr "Rodyti pirmą ir paskutinę eilutes."
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1047
+#: fritzcall/src/plugin.py:1049
 msgid "Display incoming calls"
 msgstr "Ekranas gaunamus skambučius"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1045
+#: fritzcall/src/plugin.py:1047
 msgid "Display missed calls"
 msgstr "Rodyti praleistus skambučius"
 
@@ -4412,7 +4415,7 @@ msgid "Display more Options"
 msgstr "Rodyti daugiau parinkčių"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1049
+#: fritzcall/src/plugin.py:1051
 msgid "Display outgoing calls"
 msgstr "Rodyti Išeinančius skambučius"
 
@@ -4452,7 +4455,7 @@ msgstr "Ar tikrai norite ištrinti: /n %s"
 msgid "Do You want to restart GUI to apply changes?"
 msgstr "Ar norite iš naujo paleisti GUI, kad pritaikyti pakeitimus?"
 
-#: seriesplugin/src/SeriesPluginRenamer.py:211
+#: seriesplugin/src/SeriesPluginRenamer.py:207
 msgid "Do You want to start renaming?"
 msgstr "Ar norite pradėti pervardijimą?"
 
@@ -4461,13 +4464,9 @@ msgid "Do not wake up at the end of next deep standby interval."
 msgstr "Negalima pabusti iš gilaus budėjimo kito intervalo pabaigoje."
 
 #. TRANSLATORS: this is a window title.
-#: fritzcall/src/plugin.py:1197
+#: fritzcall/src/plugin.py:1202
 msgid "Do what?"
 msgstr "Ką daryti?"
-
-#: dreamexplorer/src/plugin.py:528 dreamexplorer/src/plugin.py:532
-msgid "Do you really want to DELETE:\n"
-msgstr "Ar tikrai norite tai TRINTI:\n"
 
 #: merlinmusicplayer/src/plugin.py:1902
 msgid "Do you really want to add all songs from that album to a playlist?"
@@ -4491,7 +4490,7 @@ msgstr ""
 "%s?"
 
 #: autotimer/src/AutoTimerOverview.py:189 merlinepg/src/plugin.py:588
-#: merlinepg/src/plugin.py:908 seriesplugin/src/SeriesPluginInfoScreen.py:449
+#: merlinepg/src/plugin.py:908 seriesplugin/src/SeriesPluginInfoScreen.py:465
 #, python-format
 msgid "Do you really want to delete %s?"
 msgstr "Ar tikrai norite naikinti %s?"
@@ -4504,7 +4503,7 @@ msgstr ""
 "Ar tikrai norite naikinti visas žymes visur?\n"
 "(Atkreipkite dėmesį, kad \"Atšaukus\" tai bus anuliuota!)"
 
-#: ncidclient/src/plugin.py:521 fritzcall/src/plugin.py:1676
+#: ncidclient/src/plugin.py:521 fritzcall/src/plugin.py:1681
 #, python-format
 msgid ""
 "Do you really want to delete entry for\n"
@@ -4560,6 +4559,10 @@ msgstr ""
 msgid "Do you really want to delete this entry?"
 msgstr "Ar tikrai norite ištrinti įrašą?"
 
+#: dreamexplorer/src/plugin.py:498
+msgid "Do you really want to delete:\n"
+msgstr ""
+
 #: internetradio/src/InternetRadioScreen.py:551
 msgid "Do you really want to stop the recording?"
 msgstr "Ar tikrai norite sustabdyti įrašymą?"
@@ -4569,7 +4572,12 @@ msgstr "Ar tikrai norite sustabdyti įrašymą?"
 msgid "Do you want to enter a username and password for this host?\n"
 msgstr "Ar norite įrašyti vartotojo vardą ir slaptažodį šiam hostui?\n"
 
-#: dreamexplorer/src/plugin.py:290 subsdownloader2/src/plugin.py:954
+#: dreamexplorer/src/plugin.py:235
+#, python-format
+msgid "Do you want to execute %s?\n"
+msgstr ""
+
+#: subsdownloader2/src/plugin.py:954
 msgid "Do you want to execute?\\n"
 msgstr "Ar norite vykdyti?\\n"
 
@@ -4587,7 +4595,7 @@ msgstr "Ar norite iš naujo paleisti GUI dabar?"
 msgid "Do you want to see more entries?"
 msgstr "Jūs norite pamatyti daugiau įėjimų?"
 
-#: dreamexplorer/src/plugin.py:435
+#: dreamexplorer/src/plugin.py:365
 msgid "Do you want to set\n"
 msgstr "Ar norite nustatyti\n"
 
@@ -4611,7 +4619,8 @@ msgstr "Neatsisiųsti po:"
 msgid "Don't download before:"
 msgstr "Neatsisiųsti prieš:"
 
-#: seriesplugin/src/Channels.py:336 pushservice/src/PushServiceBase.py:220
+#: seriesplugin/src/Channels.py:278 seriesplugin/src/XMLTVBase.py:74
+#: pushservice/src/PushServiceBase.py:220
 msgid "Don't edit this manually unless you really know what you are doing"
 msgstr "Nereikia pakeisti tai rankiniu būdu jei tikrai žinote, ką darote"
 
@@ -4746,7 +4755,7 @@ msgstr "Atsisiųsta %d iš %d MB (%d %%)"
 msgid "Downloading"
 msgstr "Parsisiunčiama"
 
-#: ofdb/src/plugin.py:444 imdb/src/plugin.py:579
+#: ofdb/src/plugin.py:444 imdb/src/plugin.py:619
 #, python-format
 msgid "Downloading Movie Poster: %s..."
 msgstr "Parsisiųsta filmo plakatų: %s..."
@@ -4787,46 +4796,37 @@ msgstr "Atsisiunčiama..."
 msgid "Downloads directory:"
 msgstr "Parsisiuntimų katalogas:"
 
-#: dreamexplorer/src/plugin.py:1219
+#: dreamexplorer/src/plugin.py:949
 msgid "Dream Explorer..."
 msgstr "Dream Explorer..."
 
-#: dreamexplorer/src/plugin.py:91 dreamexplorer/src/plugin.py:303
-#: dreamexplorer/src/plugin.py:316 dreamexplorer/src/plugin.py:342
-#: dreamexplorer/src/plugin.py:351 dreamexplorer/src/plugin.py:365
-#: dreamexplorer/src/plugin.py:386 dreamexplorer/src/plugin.py:392
-#: dreamexplorer/src/plugin.py:409 dreamexplorer/src/plugin.py:489
-#: dreamexplorer/src/plugin.py:519 dreamexplorer/src/plugin.py:544
-#: dreamexplorer/src/plugin.py:556 dreamexplorer/src/plugin.py:580
-#: dreamexplorer/src/plugin.py:592 dreamexplorer/src/plugin.py:601
-#: dreamexplorer/src/plugin.py:611 dreamexplorer/src/plugin.py:620
-#: dreamexplorer/src/plugin.py:630 dreamexplorer/src/plugin.py:661
-#: dreamexplorer/src/plugin.py:671 dreamexplorer/src/plugin.py:1139
-#: dreamexplorer/src/plugin.py:1157 dreamexplorer/src/plugin.py:1162
-#: dreamexplorer/src/plugin.py:1226 dreamexplorer/src/plugin.py:1250
+#: dreamexplorer/src/plugin.py:78 dreamexplorer/src/plugin.py:242
+#: dreamexplorer/src/plugin.py:255 dreamexplorer/src/plugin.py:268
+#: dreamexplorer/src/plugin.py:311 dreamexplorer/src/plugin.py:329
+#: dreamexplorer/src/plugin.py:334 dreamexplorer/src/plugin.py:442
+#: dreamexplorer/src/plugin.py:471 dreamexplorer/src/plugin.py:475
+#: dreamexplorer/src/plugin.py:477 dreamexplorer/src/plugin.py:540
+#: dreamexplorer/src/plugin.py:548 dreamexplorer/src/plugin.py:557
+#: dreamexplorer/src/plugin.py:565 dreamexplorer/src/plugin.py:574
+#: dreamexplorer/src/plugin.py:812 dreamexplorer/src/plugin.py:822
+#: dreamexplorer/src/plugin.py:868 dreamexplorer/src/plugin.py:870
+#: dreamexplorer/src/plugin.py:955
 msgid "Dream-Explorer"
 msgstr "Dream Explorer"
 
-#: dreamexplorer/src/plugin.py:533
-msgid "Dream-Explorer - DELETE DIRECTORY..."
-msgstr "Dream-Explorer - IŠTRINTI KATALOGĄ..."
+#: dreamexplorer/src/plugin.py:498
+#, python-format
+msgid "Dream-Explorer - Delete %s..."
+msgstr ""
 
-#: dreamexplorer/src/plugin.py:529
-msgid "Dream-Explorer - DELETE file..."
-msgstr "Dream-Explorer - IŠTRINTI failą..."
-
-#: dreamexplorer/src/plugin.py:286
-msgid "Dream-Explorer : Disassemble..."
-msgstr "Dream Explorer: Ardyti..."
-
-#: dreamexplorer/src/plugin.py:263 dreamexplorer/src/plugin.py:268
-#: dreamexplorer/src/plugin.py:273 dreamexplorer/src/plugin.py:281
+#: dreamexplorer/src/plugin.py:215 dreamexplorer/src/plugin.py:224
+#: dreamexplorer/src/plugin.py:230
 msgid "Dream-Explorer : Install..."
 msgstr "Dream Explorer: įdiegti..."
 
-#: dreamexplorer/src/plugin.py:436 dreamexplorer/src/plugin.py:524
-#: dreamexplorer/src/plugin.py:562 dreamexplorer/src/plugin.py:636
-#: dreamexplorer/src/plugin.py:757 subsdownloader2/src/plugin.py:1246
+#: dreamexplorer/src/plugin.py:365 dreamexplorer/src/plugin.py:483
+#: dreamexplorer/src/plugin.py:511 dreamexplorer/src/plugin.py:579
+#: dreamexplorer/src/plugin.py:667 subsdownloader2/src/plugin.py:1246
 msgid "Dream-Explorer..."
 msgstr "Dream-Explorer..."
 
@@ -4846,11 +4846,24 @@ msgstr "Dreambox muzikos duomenų bazė"
 msgid "Dreambox OS Version"
 msgstr "Dreambox OS versija"
 
+#: dreamexplorer/src/plugin.py:442
+msgid "Dreambox model: "
+msgstr ""
+
 #: pushservice/src/ConfigScreen.py:188
 msgid "Dreambox name"
 msgstr "Dreambox pavadinimas"
 
-#: dreamexplorer/src/plugin.py:488 subsdownloader2/src/plugin.py:359
+#: dreamexplorer/src/plugin.py:371
+msgid ""
+"Dreambox-Explorer\n"
+"original version by Vali (2010)\n"
+"new version by Dre (2016)\n"
+"\n"
+"Support & help: board.dreambox-tools.info"
+msgstr ""
+
+#: subsdownloader2/src/plugin.py:359
 msgid "Dreambox: "
 msgstr "Dreambox:"
 
@@ -4893,14 +4906,6 @@ msgstr "E"
 #: youtubeplayer/src/YouTubeUserConfig.py:142
 msgid "E-Mail Address"
 msgstr "E-pašto adresas"
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:216
-msgid "E2: Composition of the recording filenames"
-msgstr "E2: sudėtis įrašymo varduose"
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:234
-msgid "E2: Enable recording debug (Timer log)"
-msgstr "E2: Įjungti įrašymo derinimą (laikmačio žurnalas)"
 
 #: epgcopy/src/plugin.py:154
 msgid "EPG Copy - Password"
@@ -5073,7 +5078,7 @@ msgstr "EPG paieškos valdymas"
 msgid "EPGsearch is not installed!"
 msgstr "EPG paieška nėra įdiegta!"
 
-#: remotetimer/src/plugin.py:372
+#: remotetimer/src/plugin.py:375
 #, python-format
 msgid ""
 "ERROR - Set Timer on Remote DreamBox via WebIf:\n"
@@ -5168,7 +5173,7 @@ msgstr "Paprasta medija parametrai ..."
 #: ncidclient/src/plugin.py:445 weatherplugin/src/setup.py:79
 #: advhdmi/src/AdvHdmiCecSetup.py:214 partnerbox/src/PartnerboxSetup.py:131
 #: pipservicerelation/src/plugin.py:88 teletext/src/plugin.py:1720
-#: serienfilm/src/SerienFilm.py:65 fritzcall/src/plugin.py:1587
+#: serienfilm/src/SerienFilm.py:65 fritzcall/src/plugin.py:1592
 #: ftpbrowser/src/FTPServerManager.py:260
 #: birthdayreminder/src/BirthdayReminder.py:267
 #: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:141
@@ -5223,7 +5228,7 @@ msgstr "Redaguoti laikmatį"
 
 #
 #. TRANSLATORS: description of AutoTimer in PluginBrowser
-#: autotimer/src/plugin.py:202 autotimer/src/plugin.py:209
+#: autotimer/src/plugin.py:206 autotimer/src/plugin.py:213
 msgid "Edit Timers and scan for new Events"
 msgstr "Redaguoti laikmačius ir ieškoti naujų įvykių"
 
@@ -5235,9 +5240,14 @@ msgstr "Redaguoti gimtadienį"
 msgid "Edit birthdays"
 msgstr "Redaguoti gimtadienius"
 
-#: dreamexplorer/src/plugin.py:776 subsdownloader2/src/plugin.py:1265
+#: subsdownloader2/src/plugin.py:1265
 msgid "Edit line "
 msgstr "Redaguoti liniją"
+
+#: dreamexplorer/src/plugin.py:690
+#, python-format
+msgid "Edit line: %d"
+msgstr ""
 
 #
 #: autotimer/src/AutoTimerOverview.py:222
@@ -5250,7 +5260,7 @@ msgid "Edit selected AutoTimer"
 msgstr "Suredaguokite išsirinktą Auto Laikmatį"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1609
+#: fritzcall/src/plugin.py:1614
 msgid "Edit selected entry"
 msgstr "Redaguoti pasirinktą įrašą"
 
@@ -5454,7 +5464,7 @@ msgstr "Įjungti Port-Forwarding"
 msgid "Enable PushService"
 msgstr "Įjungti PushService"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:148
+#: seriesplugin/src/SeriesPluginConfiguration.py:160
 msgid "Enable SeriesPlugin"
 msgstr "Įjungti SeriesPlugin"
 
@@ -5493,6 +5503,14 @@ msgstr "Įjungti enkoderį"
 #: partnerbox/src/PartnerboxSetup.py:81
 msgid "Enable first Partnerbox-entry in Timeredit as default"
 msgstr "Įjungti pirmą kartą Partnerbox įrašymą į Timeredit kaip numatytąjį"
+
+#: dreamexplorer/src/plugin.py:274
+msgid "Enable media filter"
+msgstr ""
+
+#: seriesplugin/src/SeriesPluginConfiguration.py:268
+msgid "Enable recording debug (Timer log)"
+msgstr ""
 
 #: autotimer/src/AutoTimerSettings.py:45
 msgid ""
@@ -5603,7 +5621,7 @@ msgstr "Pabaigos laikas"
 msgid "Ends"
 msgstr "Baigiasi"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:121
+#: imdb/src/plugin.py:43 youtubeplayer/src/YouTubeSearchDialog.py:121
 msgid "English"
 msgstr "Anglų"
 
@@ -5652,7 +5670,7 @@ msgstr "Enigma2 žadina po budėjimo"
 msgid "Enter IP to scan..."
 msgstr "Įrašykite IP skanavimui..."
 
-#: ncidclient/src/plugin.py:643 fritzcall/src/plugin.py:1812
+#: ncidclient/src/plugin.py:643 fritzcall/src/plugin.py:1817
 msgid "Enter Search Terms"
 msgstr "Įrašykite paieškos žodžius"
 
@@ -5712,7 +5730,7 @@ msgstr "Įrašykite slaptažodį:"
 msgid "Enter pin code"
 msgstr "Įrašykite pin kodą"
 
-#: imdb/src/plugin.py:343
+#: imdb/src/plugin.py:363
 msgid "Enter search"
 msgstr "Įrašykite paiešką"
 
@@ -5733,7 +5751,7 @@ msgstr "Įrašykite bendrinimo pavadinimą:"
 msgid "Enter text for page %s"
 msgstr "Įrašykite tekstą puslapiui %s"
 
-#: imdb/src/plugin.py:387 epgsearch/src/EPGSearch.py:220
+#: imdb/src/plugin.py:409 epgsearch/src/EPGSearch.py:220
 #: internetradio/src/InternetRadioScreen.py:900 ecasa/src/EcasaGui.py:334
 #: moviesearch/src/plugin.py:85
 msgid "Enter text to search for"
@@ -5797,22 +5815,20 @@ msgstr "Įrašai"
 msgid "Entry %s/%s"
 msgstr "Įrašas %s/%s"
 
-#: ncidclient/src/plugin.py:609 fritzcall/src/plugin.py:1764
+#: ncidclient/src/plugin.py:609 fritzcall/src/plugin.py:1769
 msgid "Entry incomplete."
 msgstr "Įrašas neišsamus"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:166
+#: seriesplugin/src/SeriesPluginConfiguration.py:241
 msgid "Episode pattern file"
 msgstr "Epizodas modelio failo"
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:304
+#: seriesplugin/src/SeriesPluginInfoScreen.py:318
 #, python-brace-format
 msgid ""
-"Episode: {episode:d}\n"
+"Episode: {rawepisode:s}\n"
 "{title:s}"
 msgstr ""
-"Epizodas: {epizodas: d}\n"
-"{pavadinimas: s}"
 
 #: webinterface/src/WebComponents/Sources/AudioTracks.py:39
 #: webinterface/src/WebComponents/Sources/AudioTracks.py:41
@@ -5844,15 +5860,7 @@ msgstr ""
 msgid "Error by processing the skin file !!!"
 msgstr "Klaida apdorojant temos failą!!!"
 
-#: dreamexplorer/src/plugin.py:302
-msgid "Error by reading bookmarks !!!"
-msgstr "Klaida skaitant žymes!"
-
-#: dreamexplorer/src/plugin.py:391 dreamexplorer/src/plugin.py:408
-msgid "Error by writing bookmarks !!!"
-msgstr "Klaida rašant žymes!"
-
-#: seriesplugin/src/ChannelEditor.py:175 seriesplugin/src/ChannelEditor.py:220
+#: seriesplugin/src/ChannelEditor.py:246 seriesplugin/src/ChannelEditor.py:291
 msgid "Error check log file"
 msgstr "Klaida tikrinant log failą"
 
@@ -5899,16 +5907,6 @@ msgstr "Klaida gaunant URL:"
 msgid "Error getting movies"
 msgstr "Klaida gaunant filmus"
 
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:159
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:163
-#: seriesplugin/src/Identifiers/SerienServer.py:63
-#: seriesplugin/src/Identifiers/Fernsehserien.py:126
-#: seriesplugin/src/Identifiers/Fernsehserien.py:130
-#: seriesplugin/src/Identifiers/Wunschliste.py:133
-#: seriesplugin/src/Identifiers/Wunschliste.py:137
-msgid "Error install"
-msgstr "Įdiegimo klaida"
-
 #: vlcplayer/src/VlcMediaList.py:186
 #, python-format
 msgid ""
@@ -5950,6 +5948,10 @@ msgstr ""
 "Klaida įkeliant grojaraščius:\n"
 "%s"
 
+#: seriesplugin/src/SeriesPlugin.py:141
+msgid "Error missing dependency"
+msgstr ""
+
 #: youtubeplayer/src/YouTubeList.py:358
 #, python-format
 msgid ""
@@ -5985,6 +5987,10 @@ msgid ""
 msgstr ""
 "Vykdymo klaida iš grojaraščių-serverių į grojaraštį %s:\n"
 " %s"
+
+#: dreamexplorer/src/plugin.py:254
+msgid "Error reading bookmarks"
+msgstr ""
 
 #: birthdayreminder/src/BirthdayReminder.py:73
 #: birthdayreminder/src/BirthdayReminder.py:102
@@ -6098,6 +6104,10 @@ msgstr ""
 "Klaida su VLC serveriu:\n"
 "%s"
 
+#: dreamexplorer/src/plugin.py:334
+msgid "Error writing bookmarks"
+msgstr ""
+
 #: birthdayreminder/src/BirthdayReminder.py:86
 #: birthdayreminder/src/BirthdayReminder.py:126
 #, python-format
@@ -6137,7 +6147,7 @@ msgstr ""
 "Klaida!\n"
 "Klaida tekste: %s"
 
-#: dreamexplorer/src/plugin.py:779 subsdownloader2/src/plugin.py:1268
+#: subsdownloader2/src/plugin.py:1268
 msgid "Error..."
 msgstr "Klaida..."
 
@@ -6218,6 +6228,10 @@ msgstr "Vykdyti \"po įvykio \" per laiko atkarpą"
 msgid "Execute cuts..."
 msgstr "Vykdyti iškirpimus..."
 
+#: dreamexplorer/src/plugin.py:234
+msgid "Execute script"
+msgstr ""
+
 #: moviecut/meta/plugin_moviecut.xml./moviecut/meta/plugin_moviecut.xml
 msgid ""
 "Execute the cuts, as set by the CutlistEditor,by physically removing "
@@ -6226,7 +6240,7 @@ msgstr ""
 "Vykdyti iškirpimą, kaip nustatyta su CutlistEditor, fiziškai pašalinti "
 "nenorimas dalis iš failų."
 
-#: ofdb/src/plugin.py:141 imdb/src/plugin.py:176
+#: ofdb/src/plugin.py:141 imdb/src/plugin.py:169
 #: serienfilm/src/SerienFilm.py:59 subsdownloader2/src/plugin.py:1075
 #: ftpbrowser/src/FTPBrowser.py:186 ftpbrowser/src/FTPServerManager.py:151
 msgid "Exit"
@@ -6253,7 +6267,7 @@ msgstr ""
 msgid "Expert"
 msgstr "Išplėstinis"
 
-#: dreamexplorer/src/plugin.py:90
+#: dreamexplorer/src/plugin.py:77
 msgid "Explore your Dreambox."
 msgstr "Naršyti jūsų Dreambox."
 
@@ -6273,11 +6287,11 @@ msgstr "Ar išplėsti atnaujintinų kanalų sąrašą ir naudojantis auto laikma
 msgid "Extended Control Range"
 msgstr "Išplėsta kontrolės zona"
 
-#: fritzcall/src/plugin.py:2000
+#: fritzcall/src/plugin.py:2005
 msgid "Extended Search for faces"
 msgstr "Išplėsta veidų paieška"
 
-#: fritzcall/src/plugin.py:1999
+#: fritzcall/src/plugin.py:2004
 msgid "Extended Search for names"
 msgstr "Išplėsta vardų paieška"
 
@@ -6289,7 +6303,7 @@ msgstr "Išplėstos konfigūracijos meniu:"
 msgid "Extended search filter"
 msgstr "Išplėsti paieškos filtrą"
 
-#: fritzcall/src/plugin.py:1972
+#: fritzcall/src/plugin.py:1977
 msgid "Extension number to initiate call on"
 msgstr "Numerio išplėtimas kad pradėti skambinti dėl"
 
@@ -6302,7 +6316,7 @@ msgstr "Išplėtimai"
 msgid "Extensions menu"
 msgstr "Išplėtimų meniu"
 
-#: imdb/src/plugin.py:601
+#: imdb/src/plugin.py:639
 msgid "Extra Info"
 msgstr "Papildoma informacija"
 
@@ -6328,37 +6342,37 @@ msgid "FILELIST_YOUNGEST"
 msgstr "FAILŲ SARAŠAS_JAUNIAUSIAS"
 
 #: fritzcall/src/FritzCallFBF.py:558 fritzcall/src/FritzCallFBF.py:1478
-#: fritzcall/src/FritzCallFBF.py:2166 fritzcall/src/FritzCallFBF.py:2929
+#: fritzcall/src/FritzCallFBF.py:2169 fritzcall/src/FritzCallFBF.py:2939
 #, python-format
 msgid "FRITZ!Box - Could not load calls: %s"
 msgstr "FRITZ!Box - nepavyko įkelti skambučius: %s"
 
 #: fritzcall/src/FritzCallFBF.py:414 fritzcall/src/FritzCallFBF.py:1387
-#: fritzcall/src/FritzCallFBF.py:2064 fritzcall/src/FritzCallFBF.py:2829
+#: fritzcall/src/FritzCallFBF.py:2064 fritzcall/src/FritzCallFBF.py:2837
 #, python-format
 msgid "FRITZ!Box - Could not load phonebook: %s"
 msgstr "FRITZ!Box - nepavyko įkelti telefonų knygos: %s"
 
 #: fritzcall/src/FritzCallFBF.py:602 fritzcall/src/FritzCallFBF.py:1522
-#: fritzcall/src/FritzCallFBF.py:2204
+#: fritzcall/src/FritzCallFBF.py:2207
 #, python-format
 msgid "FRITZ!Box - Dialling failed: %s"
 msgstr "FRITZ!Box - numerio surinkti nepavyko: %s"
 
 #: fritzcall/src/FritzCallFBF.py:1099 fritzcall/src/FritzCallFBF.py:1798
-#: fritzcall/src/FritzCallFBF.py:2603 fritzcall/src/FritzCallFBF.py:3395
+#: fritzcall/src/FritzCallFBF.py:2611 fritzcall/src/FritzCallFBF.py:3403
 #, python-format
 msgid "FRITZ!Box - Error getting blacklist: %s"
 msgstr "FRITZ!Box - klaida gaunant juodąjį sąrašą: %s"
 
 #: fritzcall/src/FritzCallFBF.py:1001 fritzcall/src/FritzCallFBF.py:1716
-#: fritzcall/src/FritzCallFBF.py:2513 fritzcall/src/FritzCallFBF.py:3302
+#: fritzcall/src/FritzCallFBF.py:2521 fritzcall/src/FritzCallFBF.py:3312
 #, python-format
 msgid "FRITZ!Box - Error getting status: %s"
 msgstr "FRITZ! Dėžė - gaunama būsena klaida: %s"
 
 #: fritzcall/src/FritzCallFBF.py:212 fritzcall/src/FritzCallFBF.py:1220
-#: fritzcall/src/FritzCallFBF.py:1913 fritzcall/src/FritzCallFBF.py:2715
+#: fritzcall/src/FritzCallFBF.py:1913 fritzcall/src/FritzCallFBF.py:2723
 msgid ""
 "FRITZ!Box - Error logging in\n"
 "\n"
@@ -6372,7 +6386,7 @@ msgid "FRITZ!Box - Error logging in: %s"
 msgstr "FRITZ!Box - prisijungimo klaida: %s"
 
 #: fritzcall/src/FritzCallFBF.py:226 fritzcall/src/FritzCallFBF.py:1241
-#: fritzcall/src/FritzCallFBF.py:1928 fritzcall/src/FritzCallFBF.py:2730
+#: fritzcall/src/FritzCallFBF.py:1928 fritzcall/src/FritzCallFBF.py:2738
 #, python-format
 msgid ""
 "FRITZ!Box - Error logging in: %s\n"
@@ -6382,18 +6396,18 @@ msgstr ""
 "Išjungti priedą."
 
 #: fritzcall/src/FritzCallFBF.py:248 fritzcall/src/FritzCallFBF.py:1263
-#: fritzcall/src/FritzCallFBF.py:1949 fritzcall/src/FritzCallFBF.py:2750
+#: fritzcall/src/FritzCallFBF.py:1949 fritzcall/src/FritzCallFBF.py:2758
 #, python-format
 msgid "FRITZ!Box - Error logging out: %s"
 msgstr "FRITZ!Box - atsijungimo klaida: %s"
 
 #: fritzcall/src/FritzCallFBF.py:1049 fritzcall/src/FritzCallFBF.py:1762
-#: fritzcall/src/FritzCallFBF.py:2553 fritzcall/src/FritzCallFBF.py:3342
+#: fritzcall/src/FritzCallFBF.py:2561 fritzcall/src/FritzCallFBF.py:3352
 #, python-format
 msgid "FRITZ!Box - Error resetting: %s"
 msgstr "FRITZ!Box - klaidos atstatymas: %s"
 
-#: fritzcall/src/FritzCallFBF.py:2324 fritzcall/src/FritzCallFBF.py:3070
+#: fritzcall/src/FritzCallFBF.py:2327 fritzcall/src/FritzCallFBF.py:3080
 #, python-format
 msgid "FRITZ!Box - Failed changing GuestAccess: %s"
 msgstr "FRITZ!Box - Nepavyko pakeisti svečio prisijungimo: %s"
@@ -6404,32 +6418,32 @@ msgid "FRITZ!Box - Failed changing Mailbox: %s"
 msgstr "FRITZ!Box - Nepavyko pakeisti pašto dėžutės: %s"
 
 #: fritzcall/src/FritzCallFBF.py:649 fritzcall/src/FritzCallFBF.py:1570
-#: fritzcall/src/FritzCallFBF.py:2260 fritzcall/src/FritzCallFBF.py:3000
+#: fritzcall/src/FritzCallFBF.py:2263 fritzcall/src/FritzCallFBF.py:3010
 #, python-format
 msgid "FRITZ!Box - Failed changing WLAN: %s"
 msgstr "FRITZ!Box - Nepavyko pakeisti WLAN: %s"
 
-#: fritzcall/src/plugin.py:1948
+#: fritzcall/src/plugin.py:1953
 msgid "FRITZ!Box FON address (Name or IP)"
 msgstr "FRITZ! Box FON adresas (Vardas arba IP)"
 
-#: fritzcall/src/plugin.py:1949
+#: fritzcall/src/plugin.py:1954
 msgid "FRITZ!Box FON firmware version"
 msgstr "FRITZ! Box FON programinės įrangos versija"
 
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:748 fritzcall/src/plugin.py:1895
-#: fritzcall/src/plugin.py:1922 fritzcall/src/plugin.py:2723
+#: fritzcall/src/plugin.py:750 fritzcall/src/plugin.py:1900
+#: fritzcall/src/plugin.py:1927 fritzcall/src/plugin.py:2728
 msgid "FRITZ!Box Fon Status"
 msgstr "FRITZ! Box Fon Būsena"
 
-#: fritzcall/src/plugin.py:1982
+#: fritzcall/src/plugin.py:1987
 msgid "FRITZ!Box PhoneBook to read"
 msgstr "Skaityti telefonų knygą iš FRITZ!Box"
 
-#: fritzcall/src/plugin.py:2627
+#: fritzcall/src/plugin.py:2632
 msgid ""
 "FRITZ!Box firmware version not configured! Please set it in the "
 "configuration."
@@ -6437,7 +6451,7 @@ msgstr ""
 "FRITZ!Box programinės įrangos versija dar nesukonfigūruota! Prašome "
 "pirmiausiai nustatyti konfigūraciją."
 
-#: fritzcall/src/plugin.py:1302
+#: fritzcall/src/plugin.py:1307
 msgid "FRITZ!Box not available for calling"
 msgstr "FRITZ!Box - nėra šaukimo"
 
@@ -6622,7 +6636,11 @@ msgstr "Failo %s nėra"
 msgid "File Size"
 msgstr "Failo dydis"
 
-#: dreamexplorer/src/plugin.py:600
+#: dreamexplorer/src/plugin.py:242
+msgid "File is too big to display content"
+msgstr ""
+
+#: dreamexplorer/src/plugin.py:548
 msgid "File name error !"
 msgstr "Failo pavadinimo klaida!"
 
@@ -6696,7 +6714,7 @@ msgstr "Filtras"
 msgid "Filter Services"
 msgstr "Filtruoti kanalus"
 
-#: fritzcall/src/plugin.py:1956
+#: fritzcall/src/plugin.py:1961
 msgid "Filter also list of calls"
 msgstr "Filtruoti skambučių sąrašą"
 
@@ -6817,7 +6835,7 @@ msgstr "Rasta, CrashLog(s)"
 msgid "Found Log(s)"
 msgstr "Rasta, Log(s)"
 
-#: autotimer/src/plugin.py:166 autotimer/src/AutoTimerResource.py:96
+#: autotimer/src/plugin.py:169 autotimer/src/AutoTimerResource.py:96
 #: epgrefresh/src/EPGRefresh.py:419
 #, python-format
 msgid ""
@@ -6846,7 +6864,7 @@ msgstr "Rasti neaktyvūs laikmačiai(s)"
 msgid "Found no Enclosure we can display."
 msgstr "Nerasta jokių gaubtų, ką galima rodyti."
 
-#: fritzcall/src/plugin.py:1206 fritzcall/src/plugin.py:2240
+#: fritzcall/src/plugin.py:1211 fritzcall/src/plugin.py:2245
 #, python-format
 msgid ""
 "Found picture\n"
@@ -6860,7 +6878,7 @@ msgstr ""
 " %s\n"
 "Bet neužkrautos. Tikriausiai ne PNG, 8-bit"
 
-#: ncidclient/src/plugin.py:46 fritzcall/src/plugin.py:154
+#: ncidclient/src/plugin.py:46 fritzcall/src/plugin.py:155
 #: mytube/src/plugin.py:91
 msgid "France"
 msgstr "Prancūzija"
@@ -6882,7 +6900,7 @@ msgstr "Laisvos vietos riba GB"
 msgid "Free space warning"
 msgstr "Laisvos vietos įspėjimas"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:127
+#: imdb/src/plugin.py:43 youtubeplayer/src/YouTubeSearchDialog.py:127
 msgid "French"
 msgstr "Prancūzų"
 
@@ -6923,7 +6941,7 @@ msgid "Frisian"
 msgstr "Frizų"
 
 #. TRANSLATORS: this is a window title.
-#: fritzcall/src/plugin.py:1934
+#: fritzcall/src/plugin.py:1939
 msgid "FritzCall Setup"
 msgstr "FritzCall nustatymas"
 
@@ -7032,7 +7050,7 @@ msgstr "GUI, kuri leidžia vartotojui keisti Dreambox ftp-/telnet-slaptažodį."
 msgid "GUI to change the ftp and telnet-password"
 msgstr "GUI pakeisti ftp ir telnet ir slaptažodį"
 
-#: dreamexplorer/src/plugin.py:267 subsdownloader2/src/plugin.py:936
+#: subsdownloader2/src/plugin.py:936
 msgid "GZ-package:\\n"
 msgstr "GZ-paketas: \\n"
 
@@ -7106,7 +7124,7 @@ msgstr "Dreambox originalumo tikrinimas"
 msgid "Georgian"
 msgstr "Gruzinų"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:131
+#: imdb/src/plugin.py:43 youtubeplayer/src/YouTubeSearchDialog.py:131
 msgid "German"
 msgstr "Vokiečių"
 
@@ -7118,7 +7136,7 @@ msgstr "Vokietijos audrų informacija"
 msgid "German traffic information"
 msgstr "Vokietijos informacija apie eismą"
 
-#: ncidclient/src/plugin.py:44 fritzcall/src/plugin.py:152
+#: ncidclient/src/plugin.py:44 fritzcall/src/plugin.py:153
 #: mytube/src/plugin.py:92
 msgid "Germany"
 msgstr "Vokietija"
@@ -7171,11 +7189,11 @@ msgstr "Gaunama Partnerbox paketo informacija..."
 msgid "Getting Partnerbox Information..."
 msgstr "Gaunama Partnerbox informacija..."
 
-#: fritzcall/src/plugin.py:1051 fritzcall/src/plugin.py:1106
+#: fritzcall/src/plugin.py:1053 fritzcall/src/plugin.py:1111
 msgid "Getting calls from FRITZ!Box..."
 msgstr "Gaunami skambučiai iš FRITZ!Box"
 
-#: fritzcall/src/plugin.py:531 fritzcall/src/plugin.py:697
+#: fritzcall/src/plugin.py:533 fritzcall/src/plugin.py:699
 msgid "Getting status from FRITZ!Box Fon..."
 msgstr "Gaunamas statusas iš FRITZ!Box"
 
@@ -7306,15 +7324,15 @@ msgstr "Gvaranių"
 msgid "Guess existing timer based on begin/end"
 msgstr "Spėti esamą laikmatį remiantis pradžia/pabaiga"
 
-#: fritzcall/src/plugin.py:736 fritzcall/src/plugin.py:926
+#: fritzcall/src/plugin.py:738 fritzcall/src/plugin.py:928
 msgid "Guest access"
 msgstr "Svečių prieiga"
 
-#: fritzcall/src/plugin.py:897
+#: fritzcall/src/plugin.py:899
 msgid "Guest access not active"
 msgstr "Svečių prieiga neaktyvi"
 
-#: fritzcall/src/plugin.py:893
+#: fritzcall/src/plugin.py:895
 msgid "Guest access on "
 msgstr "Svečių prieiga ant"
 
@@ -7568,33 +7586,53 @@ msgstr "IMDB fino filmo failo pavadinimas"
 msgid "IMDb"
 msgstr "IMDb"
 
-#: imdb/src/plugin.py:525 imdb/src/plugin.py:607
+#: imdb/src/plugin.py:156
+msgid "IMDb - Internet Movie Database"
+msgstr ""
+
+#: imdb/src/plugin.py:745 imdb/src/plugin.py:763 imdb/src/plugin.py:766
+msgid "IMDb Details"
+msgstr ""
+
+#: imdb/src/plugin.py:547 imdb/src/plugin.py:646
 msgid "IMDb Details parsed"
 msgstr "IMDb informacija apdorota"
 
-#: imdb/src/plugin.py:463
+#: imdb/src/plugin.py:474
 msgid "IMDb Download completed"
 msgstr "IMDb parsisiuntimas baigtas"
 
-#: imdb/src/plugin.py:507
+#: imdb/src/plugin.py:528
 msgid "IMDb Download failed"
 msgstr "IMDb atsisiųsti nepavyko"
 
-#: imdb/src/plugin.py:634
+#: imdb/src/plugin.py:377
+msgid "IMDb Menu"
+msgstr ""
+
+#: imdb/src/plugin.py:676
 msgid "IMDb Plugin"
 msgstr "IMDb priedas"
 
-#: imdb/src/plugin.py:515
+#: imdb/src/plugin.py:536
 msgid "IMDb Re-Download completed"
 msgstr "IMDb iš naujo atsisiuntimas baigtas"
+
+#: imdb/src/plugin.py:683
+msgid "IMDb Setup"
+msgstr ""
 
 #: merlinepg/src/plugin.py:552
 msgid "IMDb info"
 msgstr "IMDb informacija"
 
-#: imdb/src/plugin.py:504
+#: imdb/src/plugin.py:525
 msgid "IMDb query failed!"
 msgstr "IMDb užklausa nepavyko!"
+
+#: imdb/src/plugin.py:704
+msgid "IMDb query language"
+msgstr ""
 
 #: partnerbox/src/PartnerboxSetup.py:127 partnerbox/src/PartnerboxSetup.py:264
 msgid "IP"
@@ -7605,7 +7643,7 @@ msgstr "IP"
 msgid "IP Address"
 msgstr "IP adresas"
 
-#: fritzcall/src/plugin.py:775 fritzcall/src/plugin.py:777
+#: fritzcall/src/plugin.py:777 fritzcall/src/plugin.py:779
 msgid "IP Address:"
 msgstr "IP adresas:"
 
@@ -7617,7 +7655,7 @@ msgstr "IP:"
 msgid "IPKG Update Notification"
 msgstr "IPKG atnaujinimo pranešimas"
 
-#: dreamexplorer/src/plugin.py:280 subsdownloader2/src/plugin.py:949
+#: subsdownloader2/src/plugin.py:949
 msgid "IPKG-package:\\n"
 msgstr "IPKG-paketas:\\n"
 
@@ -7667,6 +7705,12 @@ msgstr ""
 "todėl nebus bootloop. Taigi EPG atsarginė kopija skaičiuoja nesėkmingus "
 "užkrovimus ir neatkurs atsarginės kopijos, jei skaitiklis pasiekia "
 "konfigūruojamą reikšmę."
+
+#: seriesplugin/src/ChannelEditor.py:195
+msgid ""
+"If You are using SD and HD channels in parallel, You have to match both "
+"channels separately!"
+msgstr ""
 
 #: pushservice/src/ConfigScreen.py:431
 msgid "If You can see this, Your configuration is correct."
@@ -7762,10 +7806,8 @@ msgstr ""
 #, python-format
 msgid ""
 "If this is enabled an existing timer will also be considered recording an "
-"event if it records at least 80%% of it."
+"event if it records at least 80% of it."
 msgstr ""
-"Jeigu tai įjungta esamam laikmačiui, taip pat bus laikomasi įrašymo įvykio, "
-"jei jis fiksuoja bent 80 %% jį."
 
 #: epgrefresh/src/EPGRefreshConfiguration.py:174
 msgid "If this is enabled, the Plugin save the epg.db /etc/enigma2/epg.db."
@@ -7821,7 +7863,7 @@ msgstr ""
 "atitinka jūsų poreikius čia pvz paslėptas, netikras įrašymas arba normalus "
 "paveikslėlis paveikslėlyje."
 
-#: fritzcall/src/plugin.py:2005
+#: fritzcall/src/plugin.py:2010
 msgid "Ignore callers with no phone number"
 msgstr "Ignoruoti į skambučius, be telefono numerio"
 
@@ -7958,11 +8000,11 @@ msgid "Included days:"
 msgstr "Įtraukta dienų:"
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1025
+#: fritzcall/src/plugin.py:1027
 msgid "Incoming"
 msgstr "Gaunama"
 
-#: fritzcall/src/plugin.py:2365
+#: fritzcall/src/plugin.py:2370
 #, python-format
 msgid ""
 "Incoming Call on %(date)s at %(time)s from\n"
@@ -7994,11 +8036,11 @@ msgstr ""
 "%s\n"
 "---------------------------------------------"
 
-#: fritzcall/src/plugin.py:167
+#: fritzcall/src/plugin.py:169
 msgid "Incoming calls"
 msgstr "Įeinantys skambučiai"
 
-#: dreamexplorer/src/plugin.py:240 subsdownloader2/src/plugin.py:914
+#: dreamexplorer/src/plugin.py:185 subsdownloader2/src/plugin.py:914
 msgid "Incompatible MerlinMusicPlayer version!"
 msgstr "Nesuderinama Merlin muzikos grotuvo versija!"
 
@@ -8045,7 +8087,7 @@ msgstr "Indonezijos"
 msgid "Info"
 msgstr "Informacija"
 
-#: dreamexplorer/src/plugin.py:444
+#: dreamexplorer/src/plugin.py:371
 msgid "Info..."
 msgstr "Info..."
 
@@ -8101,10 +8143,6 @@ msgstr "Pradinis PWM"
 msgid "Initial Voltage"
 msgstr "Pradinė įtampa"
 
-#: dreamexplorer/src/vInputBox.py:40 dreamexplorer/src/plugin.py:1057
-msgid "Input"
-msgstr "Įėjimas"
-
 #: merlinmusicplayer/src/plugin.py:1849
 msgid "Insert file to current playing songlist and play next"
 msgstr "Įterpkite failą į dabar veikiantį dainų grojaraštį ir grokite kitą"
@@ -8121,7 +8159,7 @@ msgstr "Įdiegti"
 msgid "Install magic buttons"
 msgstr "Įdiekite stebuklingus mygtukus"
 
-#: dreamexplorer/src/plugin.py:261
+#: dreamexplorer/src/plugin.py:213
 msgid "Install new bootlogo..."
 msgstr "Įdiekite naują įkrovos logotipą..."
 
@@ -8133,9 +8171,9 @@ msgstr "Įdiegti priedą"
 msgid "Install round buttons"
 msgstr "Įdiekite apvalius mygtukus"
 
-#: dreamexplorer/src/plugin.py:266 dreamexplorer/src/plugin.py:271
-#: dreamexplorer/src/plugin.py:279 subsdownloader2/src/plugin.py:935
-#: subsdownloader2/src/plugin.py:940 subsdownloader2/src/plugin.py:948
+#: dreamexplorer/src/plugin.py:223 dreamexplorer/src/plugin.py:228
+#: subsdownloader2/src/plugin.py:935 subsdownloader2/src/plugin.py:940
+#: subsdownloader2/src/plugin.py:948
 msgid "Install this package"
 msgstr "Įdiegti šį paketą"
 
@@ -8274,7 +8312,7 @@ msgstr ""
 "Spauskite MĖLYNĄ, kad pridėti naują apribojimą ir GELTONĄ, kad pašalinti "
 "vieną išsirinktą."
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:147
+#: imdb/src/plugin.py:43 youtubeplayer/src/YouTubeSearchDialog.py:147
 msgid "Italian"
 msgstr "Italų"
 
@@ -8286,7 +8324,7 @@ msgstr "Italų Orų prognozė Dreambox"
 msgid "Italian Weather forecast on Dreambox from www.google.it."
 msgstr "Italų Orų prognozė Dreambox iš www.google.it."
 
-#: ncidclient/src/plugin.py:47 fritzcall/src/plugin.py:155
+#: ncidclient/src/plugin.py:47 fritzcall/src/plugin.py:156
 #: mytube/src/plugin.py:100
 msgid "Italy"
 msgstr "Italija"
@@ -8431,7 +8469,7 @@ msgstr "Serijų etiketė"
 msgid "Laothian"
 msgstr "Laosiečių"
 
-#: ncidclient/src/plugin.py:828 fritzcall/src/plugin.py:2095
+#: ncidclient/src/plugin.py:828 fritzcall/src/plugin.py:2100
 msgid "Last 10 calls:\n"
 msgstr "Paskutinių 10 skambučių: \n"
 
@@ -8537,7 +8575,7 @@ msgstr "Failų sąrašas"
 msgid "List of Plugins has been read"
 msgstr "Priedų sąrašas buvo perskaitytas"
 
-#: dreamexplorer/src/myFileList.py:208
+#: dreamexplorer/src/myFileList.py:228
 #: subsdownloader2/src/SourceCode/myFileList.py:205
 msgid "List of Storage Devices"
 msgstr "Išsaugotų įrenginių sąrašas"
@@ -8586,9 +8624,13 @@ msgstr "Užkraunama"
 msgid "Load Bouquet"
 msgstr "Įkelti paketą"
 
-#: seriesplugin/src/ChannelEditor.py:142
-msgid "Load channels for bouquet"
-msgstr "Įkelti kanalus į paketą"
+#: seriesplugin/src/ChannelEditor.py:216
+msgid "Load STB channels for bouquet"
+msgstr ""
+
+#: seriesplugin/src/ChannelEditor.py:220
+msgid "Load Web channels for bouquet"
+msgstr ""
 
 #: mytube/src/MyTubeSettings.py:61
 msgid "Load feed on startup:"
@@ -8716,7 +8758,8 @@ msgstr "Vietovė '%s' jau yra"
 msgid "Location '%s' removed successfully"
 msgstr "Vietovė '%s' sėkmingai pašalinta"
 
-#: autotimer/src/AutoTimerSettings.py:63
+#: autotimer/src/AutoTimerSettings.py:64
+#: seriesplugin/src/SeriesPluginConfiguration.py:263
 msgid "Location and name of log file"
 msgstr "Loginio failo vieta ir pavadinimas"
 
@@ -8765,7 +8808,7 @@ msgid "Login not successful"
 msgstr "Prisijungti nepavyko"
 
 #. TRANSLATORS: keep it short, this is a button
-#: ofdb/src/plugin.py:70 imdb/src/plugin.py:91 fritzcall/src/plugin.py:1164
+#: ofdb/src/plugin.py:70 imdb/src/plugin.py:82 fritzcall/src/plugin.py:1169
 msgid "Lookup"
 msgstr "Paieška"
 
@@ -8813,7 +8856,7 @@ msgstr "MM/DD HH:MM"
 msgid "MSN location search result"
 msgstr "MSN vietovės paieškos rezultatas"
 
-#: fritzcall/src/plugin.py:1955
+#: fritzcall/src/plugin.py:1960
 msgid "MSN to show (separated by ,)"
 msgstr "MSN parodyti (atskirtų ,)"
 
@@ -8837,7 +8880,7 @@ msgstr "Laiškai nuo"
 msgid "Mail to or leave empty (From will be used)"
 msgstr "Rašykite arba palikti tuščią (Iš kur bus naudojamas)"
 
-#: fritzcall/src/plugin.py:506
+#: fritzcall/src/plugin.py:508
 msgid "Mailbox"
 msgstr "Pašto dėžutė"
 
@@ -8849,7 +8892,7 @@ msgstr "Pagrindinis"
 msgid "Main Picture"
 msgstr "Pagrindinis vaizdas"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:180
+#: seriesplugin/src/SeriesPluginConfiguration.py:206
 msgid "Main bouquet for channel editor"
 msgstr "Pagrindinis paketas kanalų redaktoriui"
 
@@ -8999,7 +9042,7 @@ msgstr "Didžiausi laikmačio sąrašo įrašai"
 msgid "Max Toplist Entries"
 msgstr "Didžiausi top sąrašo įrašai"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:193
+#: seriesplugin/src/SeriesPluginConfiguration.py:218
 msgid "Max time drift to match episode"
 msgstr "Didžiausia laiko tėkmė, kad sutaptų epizodas"
 
@@ -9199,7 +9242,7 @@ msgstr "Minimalus ventiliatoriaus stabdymas %d rpm prie VLT=%d ir PWM=0 (%s)"
 msgid "Minimum Priority"
 msgstr "Minimalus prioritetas"
 
-#: fritzcall/src/plugin.py:1978
+#: fritzcall/src/plugin.py:1983
 msgid "Minutes of uptime of WLAN guest network"
 msgstr "WLAN svečių tinklo veikimo laikas minutėmis"
 
@@ -9214,11 +9257,11 @@ msgstr ""
 "Prašome pateikti reikalingus binarinius failus patiems."
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1023
+#: fritzcall/src/plugin.py:1025
 msgid "Missed"
 msgstr "Praleista"
 
-#: fritzcall/src/plugin.py:168
+#: fritzcall/src/plugin.py:170
 msgid "Missed calls"
 msgstr "Praleisti skambučiai"
 
@@ -9658,7 +9701,7 @@ msgstr "Nutildyti"
 msgid "Mute button remote control"
 msgstr "Garso išjungimo mygtukas nuotolinio valdymo pulte"
 
-#: fritzcall/src/plugin.py:1957
+#: fritzcall/src/plugin.py:1962
 msgid "Mute on call"
 msgstr "Išjungti garsą skambinant"
 
@@ -9666,7 +9709,7 @@ msgstr "Išjungti garsą skambinant"
 msgid "Mute toggled"
 msgstr "Išjungti garsą perjungiant"
 
-#: dreamexplorer/src/plugin.py:518
+#: dreamexplorer/src/plugin.py:471
 msgid "My Bookmarks"
 msgstr "Mano žymės"
 
@@ -9804,7 +9847,7 @@ msgstr "NGRAB"
 #: partnerbox/src/RemoteTimerEntry.py:158
 #: partnerbox/src/RemoteTimerEntry.py:470 growlee/src/plugin.py:167
 #: infobartunerstate/src/plugin.py:63 elektro/src/plugin.py:480
-#: fritzcall/src/plugin.py:1748 showclock/src/plugin.py:124
+#: fritzcall/src/plugin.py:1753 showclock/src/plugin.py:124
 #: birthdayreminder/src/BirthdayReminder.py:221
 #: birthdayreminder/src/plugin.py:47
 #: youtubeplayer/src/YouTubeAddPlayList.py:36
@@ -9823,7 +9866,7 @@ msgstr "Pavadinimo ir aprašymo įvestis"
 msgid "Name of DVD"
 msgstr "DVD pavadinimas"
 
-#: fritzcall/src/plugin.py:1974
+#: fritzcall/src/plugin.py:1979
 msgid "Name of WLAN guest network"
 msgstr "WLAN tinklo svečių pavadinimas "
 
@@ -9905,7 +9948,7 @@ msgstr ""
 #: autotimer/src/AutoTimerEditor.py:1107 growlee/src/plugin.py:101
 #: webbouqueteditor/src/WebComponents/Sources/SatellitesList.py:56
 #: epgrefresh/src/EPGRefreshChannelEditor.py:82
-#: curlytx/src/CurlyTxSettings.py:51 fritzcall/src/plugin.py:1585
+#: curlytx/src/CurlyTxSettings.py:51 fritzcall/src/plugin.py:1590
 #: simplerss/src/RSSSetup.py:75 tageditor/src/plugin.py:49
 msgid "New"
 msgstr "Naujas"
@@ -9942,7 +9985,7 @@ msgstr "Nauja\"YouTube\" paieška"
 msgid "New Zealand"
 msgstr "Naujoji Zelandija"
 
-#: fritzcall/src/plugin.py:2235
+#: fritzcall/src/plugin.py:2240
 msgid "New call"
 msgstr "Naujas skambutis"
 
@@ -9968,9 +10011,6 @@ msgid ""
 "New mail arrived for account %s:\n"
 "\n"
 msgstr ""
-"Naujas pašto atvyko į %s:\n"
-"\n"
-"\n"
 
 #: passwordchanger/src/plugin.py:56
 msgid "New password:"
@@ -10001,7 +10041,7 @@ msgstr "Kitas pasirinkimas"
 msgid "Next birthday"
 msgstr "Kitas gimtadienis"
 
-#: seriesplugin/src/ChannelEditor.py:90
+#: seriesplugin/src/ChannelEditor.py:164
 msgid "Next bouquet"
 msgstr "Kitas paketas"
 
@@ -10009,7 +10049,7 @@ msgstr "Kitas paketas"
 msgid "Next day starts at"
 msgstr "Kita diena prasideda nuo"
 
-#: seriesplugin/src/ChannelEditor.py:85
+#: seriesplugin/src/ChannelEditor.py:159
 msgid "Next page"
 msgstr "Kitas puslapis"
 
@@ -10042,7 +10082,7 @@ msgstr "Atsarginių kopijų nerasta!"
 msgid "No Bouquets to Display"
 msgstr "Nėra paketų atvaizdavimui"
 
-#: fritzcall/src/plugin.py:856
+#: fritzcall/src/plugin.py:858
 msgid "No DECT phone registered"
 msgstr "DECT telefonas neįregistruotas"
 
@@ -10076,7 +10116,7 @@ msgstr ""
 msgid "No HDMI-Cec-Hooks are registered!"
 msgstr "HDMI-CEC-Kabeliai neįregistruoti!"
 
-#: imdb/src/plugin.py:492 imdb/src/plugin.py:493
+#: imdb/src/plugin.py:505
 msgid "No IMDb match."
 msgstr "Nėra IMDb atitikimo."
 
@@ -10104,11 +10144,11 @@ msgstr "Nėra laikamčio!"
 msgid "No Timeshift found to save as recording!"
 msgstr "Laiko poslinkis nenustatytas, kad išsaugoti tuos įrašus!"
 
-#: fritzcall/src/plugin.py:888
+#: fritzcall/src/plugin.py:890
 msgid "No call redirection active"
 msgstr "Skambučių peradresavimas neaktyvus"
 
-#: ofdb/src/plugin.py:437 imdb/src/plugin.py:573
+#: ofdb/src/plugin.py:437 imdb/src/plugin.py:602
 msgid "No cast list found in the database."
 msgstr "Aktorių sąrašas duomenų bazėje nerastas."
 
@@ -10116,7 +10156,7 @@ msgstr "Aktorių sąrašas duomenų bazėje nerastas."
 msgid "No cuts specified"
 msgstr "Iškirpimai nenurodyti"
 
-#: seriesplugin/src/SeriesPluginTimer.py:188
+#: seriesplugin/src/SeriesPluginTimer.py:181
 msgid "No data available"
 msgstr "Nėra datos"
 
@@ -10124,13 +10164,13 @@ msgstr "Nėra datos"
 msgid "No default storage device found!"
 msgstr "Pagal nutylėjimą saugojimo įrenginio nerasta!"
 
-#: ofdb/src/plugin.py:383 imdb/src/plugin.py:522
+#: ofdb/src/plugin.py:383 imdb/src/plugin.py:544
 msgid "No details found."
 msgstr "Išsamiau nėra."
 
 #: ncidclient/src/plugin.py:525 ncidclient/src/plugin.py:542
-#: ncidclient/src/plugin.py:634 fritzcall/src/plugin.py:1680
-#: fritzcall/src/plugin.py:1697 fritzcall/src/plugin.py:1803
+#: ncidclient/src/plugin.py:634 fritzcall/src/plugin.py:1685
+#: fritzcall/src/plugin.py:1702 fritzcall/src/plugin.py:1808
 msgid "No entry selected"
 msgstr "Nėra pasirinkto įrašo"
 
@@ -10159,31 +10199,31 @@ msgstr "Loginio failo nerasta"
 msgid "No lyrics found"
 msgstr "Dainos žodžių nerasta"
 
-#: fritzcall/src/plugin.py:836
+#: fritzcall/src/plugin.py:838
 msgid "No mailbox active"
 msgstr "Nėra aktyvios pašto dėžutės "
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:321
+#: seriesplugin/src/Identifiers/SerienServer.py:102
+msgid "No match found"
+msgstr ""
+
+#: seriesplugin/src/Identifiers/SerienServer.py:73
+msgid "No matching channel found."
+msgstr ""
+
+#: seriesplugin/src/SeriesPluginInfoScreen.py:334
 msgid "No matching episode found"
 msgstr "Sutampančių epizodų nerasta"
-
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:213
-#: seriesplugin/src/Identifiers/SerienServer.py:112
-#: seriesplugin/src/Identifiers/Fernsehserien.py:242
-#: seriesplugin/src/Identifiers/Wunschliste.py:187
-msgid "No matching series found"
-msgstr "Sutampančių serijų nerasta"
 
 #: vlcplayer/src/VlcPlayer.py:449 youtubeplayer/src/DirectYouTubePlayer.py:216
 msgid "No more files in this directory"
 msgstr "Šiame aplanke failų nerasta"
 
-#: dreamexplorer/src/plugin.py:904 dreamexplorer/src/plugin.py:917
 #: subsdownloader2/src/plugin.py:1373 subsdownloader2/src/plugin.py:1386
 msgid "No more picture-files."
 msgstr "Daugiau nėra paveikslėlių failų."
 
-#: dreamexplorer/src/plugin.py:1005 dreamexplorer/src/plugin.py:1015
+#: dreamexplorer/src/plugin.py:812 dreamexplorer/src/plugin.py:822
 #: subsdownloader2/src/plugin.py:1552 subsdownloader2/src/plugin.py:1562
 msgid "No more playable files."
 msgstr "Daugiau nėra grojimo failų."
@@ -10208,8 +10248,8 @@ msgstr "Jokie tinklo įrenginiai nesurasti"
 msgid "No page feed URL defined"
 msgstr "Nėra apibrėžtų naujienų kanalų puslapių"
 
-#: ncidclient/src/plugin.py:798 fritzcall/src/plugin.py:2054
-#: fritzcall/src/plugin.py:2687
+#: ncidclient/src/plugin.py:798 fritzcall/src/plugin.py:2059
+#: fritzcall/src/plugin.py:2692
 msgid "No phonebook"
 msgstr "Nėra telefonų knygos"
 
@@ -10229,15 +10269,15 @@ msgstr "Nėra ankstesių bylų šiame aplanke"
 msgid "No reconnect"
 msgstr "Nėra prisijungimo iš naujo"
 
-#: fritzcall/src/plugin.py:1289
+#: fritzcall/src/plugin.py:1294
 msgid "No result from LDIF"
 msgstr "Nėra rezultatų iš LDIF"
 
-#: fritzcall/src/plugin.py:1287
+#: fritzcall/src/plugin.py:1292
 msgid "No result from Outlook export"
 msgstr "Nėra rezultatų iš Outlook eksporto"
 
-#: fritzcall/src/plugin.py:1285
+#: fritzcall/src/plugin.py:1290
 msgid "No result from reverse lookup"
 msgstr "Nėra rezultato iš atvirkštinės paieškos"
 
@@ -10314,7 +10354,7 @@ msgstr "Ne po"
 msgid "Not before"
 msgstr "Ne iki"
 
-#: fritzcall/src/plugin.py:148
+#: fritzcall/src/plugin.py:149
 msgid "Not deactivating after time"
 msgstr "Nedeaktyvuoti po laiko"
 
@@ -10406,7 +10446,7 @@ msgstr "Dabar"
 msgid "Nr"
 msgstr "Nr"
 
-#: ncidclient/src/plugin.py:594 fritzcall/src/plugin.py:1749
+#: ncidclient/src/plugin.py:594 fritzcall/src/plugin.py:1754
 msgid "Number"
 msgstr "Numeris"
 
@@ -10476,18 +10516,19 @@ msgstr "OFDb užklausa nesėkminga!"
 #: autotimer/src/AutoTimerEditor.py:444 autotimer/src/AutoTimerEditor.py:1105
 #: autotimer/src/AutoTimerImporter.py:46
 #: autotimer/src/AutoTimerImporter.py:120
-#: autotimer/src/AutoTimerSettings.py:80 webinterface/src/WebIfConfig.py:33
-#: partnerbox/src/PartnerboxSetup.py:71 partnerbox/src/PartnerboxSetup.py:252
-#: partnerbox/src/RemoteTimerEntry.py:72 namezap/src/NamezapSetup.py:56
-#: epgsearch/src/EPGSearch.py:378 epgsearch/src/EPGSearchSetup.py:57
-#: dreammediathek/src/plugin.py:82 internetradio/src/InternetRadioSetup.py:50
+#: autotimer/src/AutoTimerSettings.py:81 imdb/src/plugin.py:686
+#: webinterface/src/WebIfConfig.py:33 partnerbox/src/PartnerboxSetup.py:71
+#: partnerbox/src/PartnerboxSetup.py:252 partnerbox/src/RemoteTimerEntry.py:72
+#: namezap/src/NamezapSetup.py:56 epgsearch/src/EPGSearch.py:378
+#: epgsearch/src/EPGSearchSetup.py:57 dreammediathek/src/plugin.py:82
+#: internetradio/src/InternetRadioSetup.py:50
 #: internetradio/src/InternetRadioSetup.py:125
 #: pipservicerelation/src/plugin.py:189
-#: videocolorspace/src/VideoColorSpace.py:81 remotetimer/src/plugin.py:231
+#: videocolorspace/src/VideoColorSpace.py:81 remotetimer/src/plugin.py:233
 #: satloader/src/plugin.py:286 growlee/src/plugin.py:100
 #: movieepg/src/MovieEpgSetup.py:54 vlcplayer/src/VlcServerConfig.py:297
 #: seriesplugin/src/SeriesPluginConfiguration.py:81
-#: seriesplugin/src/ChannelEditor.py:73
+#: seriesplugin/src/ChannelEditor.py:147
 #: infobartunerstate/src/IBTSConfiguration.py:52
 #: merlinmusicplayer/src/plugin.py:2810 merlinmusicplayer/src/plugin.py:2931
 #: lastfm/src/LastFMConfig.py:56 audiosync/src/AC3main.py:67
@@ -10499,8 +10540,8 @@ msgstr "OFDb užklausa nesėkminga!"
 #: 3dsettings/src/plugin.py:173 automatictimerlistcleanup/src/plugin.py:54
 #: curlytx/src/CurlyTxSettings.py:50 curlytx/src/CurlyTxSettings.py:210
 #: emission/src/EmissionBandwidth.py:71 emission/src/EmissionSetup.py:38
-#: babelzapper/src/plugin.py:76 fritzcall/src/plugin.py:1733
-#: fritzcall/src/plugin.py:1887 simplerss/src/RSSSetup.py:27
+#: babelzapper/src/plugin.py:76 fritzcall/src/plugin.py:1738
+#: fritzcall/src/plugin.py:1892 simplerss/src/RSSSetup.py:27
 #: simplerss/src/RSSSetup.py:74 ftpbrowser/src/FTPServerManager.py:152
 #: virtualzap/src/plugin.py:729 ecasa/src/EcasaSetup.py:70
 #: showclock/src/plugin.py:146 movielistpreview/src/plugin.py:144
@@ -10609,6 +10650,17 @@ msgstr "OK"
 msgid "Old password:"
 msgstr "Senas slaptažodis"
 
+#: dreamexplorer/src/plugin.py:690
+#, python-format
+msgid ""
+"Old:\n"
+" %s"
+msgstr ""
+
+#: dreamexplorer/src/plugin.py:525
+msgid "Old:  "
+msgstr ""
+
 #: internetradio/src/plugin.py:39
 msgid "On"
 msgstr "Įjungta"
@@ -10621,23 +10673,23 @@ msgstr "Ant to pačio kanalo"
 msgid "On same service"
 msgstr "Ant to pačio kanalo"
 
-#: fritzcall/src/plugin.py:859
+#: fritzcall/src/plugin.py:861
 msgid "One DECT phone registered"
 msgstr "Vienas DECT telefonas registruotas"
 
-#: fritzcall/src/plugin.py:882
+#: fritzcall/src/plugin.py:884
 msgid "One call redirection active"
 msgstr "Vienas skambučių peradresavimo aktyvus"
 
-#: fritzcall/src/plugin.py:848
+#: fritzcall/src/plugin.py:850
 msgid "One mailbox active"
 msgstr "Viena pašto dėžutė aktyvi"
 
-#: seriesplugin/src/ChannelEditor.py:87
+#: seriesplugin/src/ChannelEditor.py:161
 msgid "One row down"
 msgstr "Viena eilute žemyn"
 
-#: seriesplugin/src/ChannelEditor.py:86
+#: seriesplugin/src/ChannelEditor.py:160
 msgid "One row up"
 msgstr "Viena eilute aukštyn"
 
@@ -10736,8 +10788,7 @@ msgstr "Atidarykite išplėstinį meniu"
 msgid "Open unrar Manager"
 msgstr "Atidaryti unrar vadovą"
 
-#: dreamexplorer/src/plugin.py:341 dreamexplorer/src/plugin.py:350
-#: dreamexplorer/src/plugin.py:364
+#: dreamexplorer/src/plugin.py:311
 msgid "Options:\n"
 msgstr "Parinktys:\n"
 
@@ -10759,7 +10810,7 @@ msgstr "Originalus pavadinimas: %s"
 msgid "Oryginal file name: %s"
 msgstr "Originalus failo pavadinimas: %s"
 
-#: fritzcall/src/plugin.py:158
+#: fritzcall/src/plugin.py:159
 msgid "Others"
 msgstr "Kiti"
 
@@ -10776,11 +10827,11 @@ msgid "Outer Bound (+/-)"
 msgstr "Išorinis Susijęs (+/-)"
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1027
+#: fritzcall/src/plugin.py:1029
 msgid "Outgoing"
 msgstr "Išsiunčiamas"
 
-#: fritzcall/src/plugin.py:2367
+#: fritzcall/src/plugin.py:2372
 #, python-format
 msgid ""
 "Outgoing Call on %(date)s at %(time)s to\n"
@@ -10797,7 +10848,7 @@ msgstr ""
 "---------------------------------------------\n"
 "nuo: %(telefonas)s"
 
-#: fritzcall/src/plugin.py:169
+#: fritzcall/src/plugin.py:171
 msgid "Outgoing calls"
 msgstr "Siunčiami skambučiai"
 
@@ -10861,10 +10912,6 @@ msgstr "Ilgas 'PVR' paspaudimas"
 msgid "PWM  %03d"
 msgstr "PWM %03d"
 
-#: dreamexplorer/src/plugin.py:348
-msgid "Pack my bootlogo"
-msgstr "Pakuoti mano įkrovos logotipą"
-
 #: rsdownloader/src/plugin.py:945
 #, python-format
 msgid "Page %d / %d. Push < > to switch the page..."
@@ -10910,7 +10957,7 @@ msgstr "Puslapis: "
 msgid "Pan&Scan"
 msgstr "Pan&Scan"
 
-#: dreamexplorer/src/myFileList.py:210
+#: dreamexplorer/src/myFileList.py:230
 #: subsdownloader2/src/SourceCode/myFileList.py:207
 #: ftpbrowser/src/FTPBrowser.py:103 ftpbrowser/src/FTPBrowser.py:125
 msgid "Parent Directory"
@@ -10993,7 +11040,7 @@ msgstr "Slaptažodis (netload.in):"
 msgid "Password (uploaded.to):"
 msgstr "Slaptažodis (uploaded.to):"
 
-#: fritzcall/src/plugin.py:1971
+#: fritzcall/src/plugin.py:1976
 msgid "Password Accessing FRITZ!Box"
 msgstr "Slaptažodis prieigai prie FRITZ!Box"
 
@@ -11002,7 +11049,7 @@ msgstr "Slaptažodis prieigai prie FRITZ!Box"
 msgid "Password Changer"
 msgstr "Slaptažodžio keitiklis"
 
-#: fritzcall/src/plugin.py:1977
+#: fritzcall/src/plugin.py:1982
 msgid "Password of WLAN guest network"
 msgstr "Slaptažodis WLAN tinklo svečių"
 
@@ -11113,8 +11160,8 @@ msgstr "Numylėtiniai ir Gyvūnai"
 
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1066 fritzcall/src/plugin.py:1889
-#: fritzcall/src/plugin.py:2721
+#: fritzcall/src/plugin.py:1068 fritzcall/src/plugin.py:1894
+#: fritzcall/src/plugin.py:2726
 msgid "Phone calls"
 msgstr "Skambučiai"
 
@@ -11122,14 +11169,14 @@ msgstr "Skambučiai"
 msgid "PhoneBook Location"
 msgstr "Telefonų knygos vieta"
 
-#: fritzcall/src/plugin.py:1996 fritzcall/src/plugin.py:2014
+#: fritzcall/src/plugin.py:2001 fritzcall/src/plugin.py:2019
 msgid "PhoneBook and Faces Location"
 msgstr "Telefonų knygos ir veidų vieta"
 
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
-#: ncidclient/src/plugin.py:467 fritzcall/src/plugin.py:1622
-#: fritzcall/src/plugin.py:1891 fritzcall/src/plugin.py:2722
+#: ncidclient/src/plugin.py:467 fritzcall/src/plugin.py:1627
+#: fritzcall/src/plugin.py:1896 fritzcall/src/plugin.py:2727
 msgid "Phonebook"
 msgstr "Telefonų knyga"
 
@@ -11145,13 +11192,13 @@ msgstr "Paveikslėlis paveikslėlyje"
 msgid "Picture in Picture (hidden)"
 msgstr "Paveikslėlis paveikslėlyje (paslėptas)"
 
-#: dreamexplorer/src/plugin.py:385
-msgid "Picture-Player not aviable."
-msgstr "Paveikslėlių grotuvo nėra."
-
 #: easymedia/src/plugin.py:533
 msgid "Picture-player is not installed!"
 msgstr "Paveikslėlių grotuvas neįdiegtas!"
+
+#: dreamexplorer/src/plugin.py:329
+msgid "PicturePlayer not available."
+msgstr ""
 
 #: easymedia/src/plugin.py:207
 msgid "PicturePlayer:"
@@ -11208,7 +11255,7 @@ msgstr "Groti Last.FM atsisiųstą iš interneto radijo"
 msgid "Play Tag Radio..."
 msgstr "Groti gairių radiją..."
 
-#: imdb/src/plugin.py:349
+#: imdb/src/plugin.py:370
 msgid "Play Trailer"
 msgstr "Groti anonsą"
 
@@ -11342,6 +11389,10 @@ msgstr "Prašome įrašyti naują žymę"
 msgid "Please enter your search term."
 msgstr "Prašome įrašyti jūsų paieškos terminą."
 
+#: seriesplugin/src/SeriesPlugin.py:141
+msgid "Please install missing python paket manually"
+msgstr ""
+
 #: permanenttimeshift/src/plugin.py:901
 msgid ""
 "Please make sure to set up your default storage device in menu -> setup -> "
@@ -11357,6 +11408,10 @@ msgid ""
 msgstr ""
 "Prašome nustatyti savo saugojimo įrenginius su saugojimo valdymo meniu -> "
 "Valdymas -> Sistema -> Saugojimo įrenginiai."
+
+#: seriesplugin/src/Identifiers/SerienServer.py:73
+msgid "Please open the Channel Editor and add the channel manually."
+msgstr ""
 
 #: autotimer/src/AutoTimerImporter.py:316
 msgid "Please provide a Text to match"
@@ -11382,7 +11437,7 @@ msgstr ""
 msgid "Please select a standard feed or try searching for videos."
 msgstr "Prašome išsirinkti standartinį perdavimą ar pabandyti ieškoti vaizdo."
 
-#: remotetimer/src/plugin.py:301
+#: remotetimer/src/plugin.py:303
 msgid "Please select a subservice to record..."
 msgstr "Prašome išsirinkti subkanalą dėl įrašymo..."
 
@@ -11410,7 +11465,7 @@ msgstr "Prašome pasirinkti bent vieną transponderį"
 msgid "Please select tag to filter..."
 msgstr "Prašome išsirinkti kortelę filtravimui..."
 
-#: ofdb/src/plugin.py:220 imdb/src/plugin.py:295
+#: ofdb/src/plugin.py:220 imdb/src/plugin.py:313
 msgid "Please select the matching entry"
 msgstr "Prašome pasirinkti sutampantį įrašą"
 
@@ -11426,9 +11481,9 @@ msgstr "Prašome pasirinkti imtuvo tipą, kurį norite pridėti!"
 msgid "Please select your KiddyTimer- option"
 msgstr "Prašome pasirinkti savo KiddyTimer- parinktį"
 
-#: seriesplugin/src/Identifiers/SerienServer.py:110
-msgid "Please try Fernsehserien.de"
-msgstr "Prašome bandyti Fernsehserien.de"
+#: seriesplugin/src/SeriesPlugin.py:124
+msgid "Please update it"
+msgstr ""
 
 #: showclock/src/plugin.py:216
 msgid ""
@@ -11510,9 +11565,9 @@ msgstr "Priedų meniu"
 msgid "Plugin not active"
 msgstr "Priedas neaktyvus"
 
-#: fritzcall/src/plugin.py:2045 fritzcall/src/plugin.py:2052
-#: fritzcall/src/plugin.py:2066 fritzcall/src/plugin.py:2678
-#: fritzcall/src/plugin.py:2685 fritzcall/src/plugin.py:2696
+#: fritzcall/src/plugin.py:2050 fritzcall/src/plugin.py:2057
+#: fritzcall/src/plugin.py:2071 fritzcall/src/plugin.py:2683
+#: fritzcall/src/plugin.py:2690 fritzcall/src/plugin.py:2701
 msgid "Plugin not enabled"
 msgstr "Priedas neįjungtas"
 
@@ -11564,10 +11619,12 @@ msgid "Polish"
 msgstr "Lenkų"
 
 #: autotimer/src/AutoTimerSettings.py:42
+#: seriesplugin/src/SeriesPluginConfiguration.py:247
 msgid "Poll Interval (in h)"
 msgstr "Apklausos Intervalas (h)"
 
 #: autotimer/src/AutoTimerSettings.py:39
+#: seriesplugin/src/SeriesPluginConfiguration.py:245
 msgid "Poll automatically"
 msgstr "Apklausa automatiškai"
 
@@ -11736,7 +11793,7 @@ msgstr "Paspauskite OK arba žalią mygtuką, kad įdiegti satellites.xml"
 msgid "Prev"
 msgstr "Buvęs"
 
-#: seriesplugin/src/ChannelEditor.py:84
+#: seriesplugin/src/ChannelEditor.py:158
 msgid "Previeous page"
 msgstr "Ankstesnis puslapis"
 
@@ -11748,7 +11805,7 @@ msgstr "Peržiūra"
 msgid "Preview AutoTimer"
 msgstr "Peržiūrėti Auto Laikmatį"
 
-#: dreamexplorer/src/plugin.py:357
+#: dreamexplorer/src/plugin.py:300
 msgid "Preview all pictures"
 msgstr "Peržiūrėti visus paveikslėlius"
 
@@ -11772,7 +11829,7 @@ msgstr "Ankstesnis"
 msgid "Previous Selection"
 msgstr "Ankstesnis pasirinkimas"
 
-#: seriesplugin/src/ChannelEditor.py:91
+#: seriesplugin/src/ChannelEditor.py:165
 msgid "Previous bouquet"
 msgstr "Ankstesnis paketas"
 
@@ -11812,6 +11869,10 @@ msgstr "Spausdinti derinimo pranešimus /tmp/dbttcp.log."
 #, python-format
 msgid "Private: %s"
 msgstr "Privatus: %s"
+
+#: seriesplugin/src/ChannelEditor.py:225
+msgid "Problem during loading Webchannels"
+msgstr ""
 
 #: merlinmusicplayer/src/plugin.py:245
 msgid ""
@@ -11981,25 +12042,21 @@ msgstr "PushService veikia: "
 msgid "Puts the box in standby mode after boot."
 msgstr "Perveda imtuvą į budėjimo režimą po paleidimo."
 
-#: dreamexplorer/src/plugin.py:285
-msgid "Pyc-Script:\\n"
-msgstr "Pyc-Scenarijus:\\n"
-
 #: youtubeplayer/src/YouTubeSearchDialog.py:182
 msgid "Quechua"
 msgstr "Kečujų"
 
-#: imdb/src/plugin.py:419
+#: imdb/src/plugin.py:458
 #, python-format
-msgid "Query IMDb: %s..."
-msgstr "IMDb užklausa: %s..."
+msgid "Query IMDb: %s"
+msgstr ""
 
 #: ofdb/src/plugin.py:306
 #, python-format
 msgid "Query OFDb: %s..."
 msgstr "OFDb užklausa: %s..."
 
-#: imdb/src/plugin.py:645 imdb/src/plugin.py:652
+#: imdb/src/plugin.py:763 imdb/src/plugin.py:767
 msgid "Query details from the Internet Movie Database"
 msgstr "Užklausos informacija iš interneto filmų duomenų bazės"
 
@@ -12094,10 +12151,10 @@ msgid "Quick switching via remote control"
 msgstr "Greitas jungimas su nuotolinio valdymo pultu"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: lastfm/src/plugin.py:210 fritzcall/src/plugin.py:521
-#: fritzcall/src/plugin.py:523 fritzcall/src/plugin.py:678
-#: fritzcall/src/plugin.py:680 fritzcall/src/plugin.py:1041
-#: fritzcall/src/plugin.py:1603
+#: lastfm/src/plugin.py:210 fritzcall/src/plugin.py:523
+#: fritzcall/src/plugin.py:525 fritzcall/src/plugin.py:680
+#: fritzcall/src/plugin.py:682 fritzcall/src/plugin.py:1043
+#: fritzcall/src/plugin.py:1608
 msgid "Quit"
 msgstr "Baigti"
 
@@ -12156,7 +12213,8 @@ msgstr "Įvertinimai:"
 msgid "Ratio: %.2f"
 msgstr "Santykis: %.2f"
 
-#: imdb/src/plugin.py:310 imdb/src/plugin.py:482 imdb/src/plugin.py:498
+#: imdb/src/plugin.py:328 imdb/src/plugin.py:495 imdb/src/plugin.py:510
+#: imdb/src/plugin.py:519
 #, python-format
 msgid "Re-Query IMDb: %s..."
 msgstr "Iš naujo užklausti IMDb: %s..."
@@ -12166,7 +12224,7 @@ msgstr "Iš naujo užklausti IMDb: %s..."
 msgid "Re-Query OFDb: %s..."
 msgstr "Iš naujo užklausti OFDb: %s..."
 
-#: fritzcall/src/plugin.py:1979
+#: fritzcall/src/plugin.py:1984
 msgid "Read PhoneBook from FRITZ!Box"
 msgstr "Skaityti telefonų knygą iš FRITZ!Box"
 
@@ -12182,7 +12240,7 @@ msgstr "Skaitomas log failas…\n"
 #: autotimer/src/AutoTimerEditor.py:1047 autotimer/src/AutoTimerEditor.py:1218
 #: autotimer/src/AutoTimerImporter.py:235
 #: autotimer/src/AutoTimerOverview.py:203
-#: seriesplugin/src/SeriesPluginConfiguration.py:322
+#: seriesplugin/src/SeriesPluginConfiguration.py:360
 #: infobartunerstate/src/IBTSConfiguration.py:165
 #: epgrefresh/src/EPGRefreshConfiguration.py:348
 #: pushservice/src/ConfigScreen.py:341 serienfilm/src/SerienFilm.py:90
@@ -12305,7 +12363,7 @@ msgstr ""
 #: webinterface/src/WebComponents/Sources/Strings.py:52
 #: internetradio/src/InternetRadioScreen.py:252
 #: internetradio/src/InternetRadioScreen.py:514
-#: seriesplugin/src/SeriesPluginInfoScreen.py:400
+#: seriesplugin/src/SeriesPluginInfoScreen.py:414
 #: permanenttimeshift/src/plugin.py:538
 msgid "Record"
 msgstr "Įrašas"
@@ -12330,11 +12388,11 @@ msgstr "Įrašas daugiausiai x kartų:"
 msgid "Record current event"
 msgstr "Dabartinio įvykio įrašymas"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:168
+#: seriesplugin/src/SeriesPluginConfiguration.py:196
 msgid "Record description episode pattern"
 msgstr "Įrašo aprašymo epizodo modelio šablonas"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:171
+#: seriesplugin/src/SeriesPluginConfiguration.py:199
 msgid "Record directory pattern"
 msgstr "Įrašų katalogo modelis"
 
@@ -12352,7 +12410,7 @@ msgstr "Įrašas ant"
 msgid "Record or zap timer"
 msgstr "Įrašo arba jungimo laikmatis"
 
-#: seriesplugin/src/SeriesPluginRenamer.py:316
+#: seriesplugin/src/SeriesPluginRenamer.py:312
 #, python-format
 msgid "Record rename has been finished with %d errors:\n"
 msgstr ""
@@ -12365,7 +12423,7 @@ msgstr ""
 msgid "Record started:\n"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:167
+#: seriesplugin/src/SeriesPluginConfiguration.py:195
 msgid "Record title episode pattern"
 msgstr ""
 
@@ -12411,7 +12469,7 @@ msgid "Refresh now"
 msgstr "Atnaujinti dabar"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:529 fritzcall/src/plugin.py:688
+#: fritzcall/src/plugin.py:531 fritzcall/src/plugin.py:690
 msgid "Refresh status"
 msgstr "Naujinti būseną"
 
@@ -12420,7 +12478,7 @@ msgstr "Naujinti būseną"
 msgid "Refreshing"
 msgstr "Atnaujinama"
 
-#: fritzcall/src/plugin.py:766
+#: fritzcall/src/plugin.py:768
 msgid "Refreshing..."
 msgstr "Atnaujinama..."
 
@@ -12462,7 +12520,7 @@ msgstr "Užkrauti"
 msgid "Reload current page URL"
 msgstr "Perkrauti dabartinio puslapio URL"
 
-#: fritzcall/src/plugin.py:1990
+#: fritzcall/src/plugin.py:1995
 msgid "Reload interval for phonebooks (hours)"
 msgstr ""
 
@@ -12509,27 +12567,27 @@ msgstr "Nuotolinis"
 msgid "Remote (not connected)"
 msgstr ""
 
-#: partnerbox/src/RemoteTimerEntry.py:344 remotetimer/src/plugin.py:264
+#: partnerbox/src/RemoteTimerEntry.py:344 remotetimer/src/plugin.py:266
 msgid "Remote Timer"
 msgstr ""
 
-#: remotetimer/src/plugin.py:234
+#: remotetimer/src/plugin.py:236
 msgid "Remote Timer - Hostname"
 msgstr ""
 
-#: remotetimer/src/plugin.py:235
+#: remotetimer/src/plugin.py:237
 msgid "Remote Timer - Network IP"
 msgstr ""
 
-#: remotetimer/src/plugin.py:238
+#: remotetimer/src/plugin.py:240
 msgid "Remote Timer - Password"
 msgstr ""
 
-#: remotetimer/src/plugin.py:237
+#: remotetimer/src/plugin.py:239
 msgid "Remote Timer - Username"
 msgstr ""
 
-#: remotetimer/src/plugin.py:236
+#: remotetimer/src/plugin.py:238
 msgid "Remote Timer - WebIf Port"
 msgstr ""
 
@@ -12545,7 +12603,7 @@ msgstr "Nuotolinio laikmačio ir nuotolinės televizijos grotuvas"
 msgid "Remote-Control for the Transmission BitTorrent client."
 msgstr "Nuotolinio valdymo perdavimo BitTorrent klientas."
 
-#: seriesplugin/src/ChannelEditor.py:74
+#: seriesplugin/src/ChannelEditor.py:148
 #: merlinepgcenter/src/MerlinEPGCenter.py:1300
 #: satipclient/src/SatIPTunerSetup.py:38
 #: birthdayreminder/src/BirthdayReminder.py:268
@@ -12557,7 +12615,7 @@ msgstr "Pašalinti"
 msgid "Remove %s from playlist"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:322
+#: seriesplugin/src/ChannelEditor.py:367
 #, python-format
 msgid "Remove '%s'?"
 msgstr ""
@@ -12574,7 +12632,7 @@ msgstr ""
 msgid "Remove Tag"
 msgstr "Šalinti žymę"
 
-#: seriesplugin/src/ChannelEditor.py:96
+#: seriesplugin/src/ChannelEditor.py:170
 msgid "Remove channel"
 msgstr "Pašalinti kanalą"
 
@@ -12586,6 +12644,10 @@ msgstr "Pašalinti duomenų valdytoją"
 #: pushservice/src/Controller/DeactivatedTimers.py:46
 msgid "Remove deactivated timer(s)"
 msgstr "Pašalinti nebeaktyvų laikmatį(s)"
+
+#: dreamexplorer/src/plugin.py:286
+msgid "Remove directory from Bookmarks"
+msgstr ""
 
 #: fstabeditor/src/plugin.py:195 fstabeditor/src/plugin.py:204
 msgid "Remove entry"
@@ -12635,20 +12697,17 @@ msgstr "Pašalinta %s."
 msgid "Removing directories is not supported."
 msgstr "Šalinamas katalogas nepalaikomas."
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:392
+#: seriesplugin/src/SeriesPluginInfoScreen.py:406
 #: subsdownloader2/src/plugin.py:1079 ftpbrowser/src/FTPBrowser.py:187
 msgid "Rename"
 msgstr "Pervardinti"
 
-#: dreamexplorer/src/plugin.py:569
-msgid "Rename directory..."
-msgstr "Pervardyti katalogą..."
+#: dreamexplorer/src/plugin.py:525
+#, python-format
+msgid "Rename %s..."
+msgstr ""
 
-#: dreamexplorer/src/plugin.py:566
-msgid "Rename file..."
-msgstr "Pervadinti failą..."
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:182
+#: seriesplugin/src/SeriesPluginConfiguration.py:208
 msgid "Rename files"
 msgstr ""
 
@@ -12658,7 +12717,7 @@ msgstr ""
 
 #: seriesplugin/src/plugin.py:36
 msgid "Rename serie(s) (SP)"
-msgstr ""
+msgstr "Pervadinti seriją(s) (SP)"
 
 #: tageditor/src/plugin.py:260
 msgid "Rename this tag..."
@@ -12668,11 +12727,11 @@ msgstr ""
 msgid "Rename your movies"
 msgstr "Pervadinti savo filmus"
 
-#: dreamexplorer/src/plugin.py:579 dreamexplorer/src/plugin.py:591
+#: dreamexplorer/src/plugin.py:540
 #, python-format
 msgid ""
 "Rename: %s \n"
-"FAILED!"
+"failed!"
 msgstr ""
 
 #: ftpbrowser/src/FTPBrowser.py:328 ftpbrowser/src/FTPBrowser.py:347
@@ -12680,7 +12739,7 @@ msgstr ""
 msgid "Renamed %s to %s."
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:433
+#: seriesplugin/src/SeriesPluginInfoScreen.py:449
 msgid "Renaming failed"
 msgstr ""
 
@@ -12716,7 +12775,7 @@ msgstr ""
 msgid "Replace original:"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:176
+#: seriesplugin/src/SeriesPluginConfiguration.py:204
 msgid "Replace special characters in title"
 msgstr ""
 
@@ -12750,16 +12809,16 @@ msgstr "Perskanuoti"
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:473 fritzcall/src/plugin.py:527
-#: fritzcall/src/plugin.py:686 fritzcall/src/plugin.py:691
+#: fritzcall/src/plugin.py:475 fritzcall/src/plugin.py:529
+#: fritzcall/src/plugin.py:688 fritzcall/src/plugin.py:693
 msgid "Reset"
 msgstr "Perjungti"
 
-#: seriesplugin/src/ChannelEditor.py:337
+#: seriesplugin/src/ChannelEditor.py:382
 msgid "Reset channel list?"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:81
+#: seriesplugin/src/ChannelEditor.py:155
 msgid "Reset channels"
 msgstr ""
 
@@ -12861,7 +12920,7 @@ msgstr ""
 msgid "Results: %s - Page: %s "
 msgstr "Rezultatai: %s - Puslapis: %s"
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:272
+#: seriesplugin/src/SeriesPluginInfoScreen.py:286
 msgid "Retrieving Season, Episode and Title..."
 msgstr ""
 
@@ -12892,11 +12951,11 @@ msgid "Reusable Help-component for other plugins."
 msgstr ""
 "Daugkartinio naudojimo Pagalbos komponentas kitoms papildomoms programoms."
 
-#: ncidclient/src/plugin.py:741 fritzcall/src/plugin.py:1964
+#: ncidclient/src/plugin.py:741 fritzcall/src/plugin.py:1969
 msgid "Reverse Lookup Caller ID (select country below)"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1262
+#: fritzcall/src/plugin.py:1267
 msgid "Reverse searching..."
 msgstr ""
 
@@ -12943,6 +13002,10 @@ msgstr "Veikiantis"
 #: autoresolution/src/plugin.py:321
 msgid "Running in testmode"
 msgstr "Veikia testavimo būdu"
+
+#: dreamexplorer/src/plugin.py:438
+msgid "Running processes: "
+msgstr ""
 
 #: mytube/src/plugin.py:105
 msgid "Russia"
@@ -12996,11 +13059,11 @@ msgstr ""
 msgid "SNR"
 msgstr "SNR"
 
-#: seriesplugin/src/SeriesPluginBare.py:65
+#: seriesplugin/src/SeriesPluginBare.py:58
 msgid "SP has been finished with errors:\n"
 msgstr "SP buvo baigtas su klaidomis:\n"
 
-#: seriesplugin/src/ChannelEditor.py:223
+#: seriesplugin/src/ChannelEditor.py:230
 msgid "STB- / Web-Channel for bouquet:"
 msgstr "STB- / Web kanalas skirtas paketui:"
 
@@ -13078,7 +13141,7 @@ msgstr "Šeštadienis"
 #: satloader/src/plugin.py:410 aspectratioswitch/src/plugin.py:121
 #: yttrailer/src/plugin.py:318 kiddytimer/src/KTsetup.py:79
 #: audiosync/src/AC3setup.py:64 serienfilm/src/SerienFilm.py:65
-#: fritzcall/src/plugin.py:1168 ftpbrowser/src/FTPServerManager.py:261
+#: fritzcall/src/plugin.py:1173 ftpbrowser/src/FTPServerManager.py:261
 #: epgbackup/src/EPGBackupConfig.py:56
 #: birthdayreminder/src/BirthdayReminder.py:563
 #: birthdayreminder/src/BirthdayReminder.py:623
@@ -13102,7 +13165,7 @@ msgstr ""
 msgid "Save Timeshift as Movie and stop recording"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:95
+#: seriesplugin/src/ChannelEditor.py:169
 msgid "Save and close"
 msgstr ""
 
@@ -13231,13 +13294,13 @@ msgstr ""
 #: rsdownloader/src/plugin.py:1351 ncidclient/src/plugin.py:447
 #: epgsearch/src/EPGSearch.py:72 epgsearch/src/EPGSearch.py:443
 #: internetradio/src/InternetRadioScreen.py:814 googlemaps/src/plugin.py:211
-#: merlinepgcenter/src/MerlinEPGCenter.py:43 fritzcall/src/plugin.py:1589
+#: merlinepgcenter/src/MerlinEPGCenter.py:43 fritzcall/src/plugin.py:1594
 #: ecasa/src/EcasaGui.py:109 youtubeplayer/src/YouTubeSearchDialog.py:269
 msgid "Search"
 msgstr "Paieška"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1611
+#: fritzcall/src/plugin.py:1616
 msgid "Search (case insensitive)"
 msgstr ""
 
@@ -13259,7 +13322,7 @@ msgstr "Paieškos istorija"
 msgid "Search Term(s)"
 msgstr "Paieškos žodis (-iai)"
 
-#: imdb/src/plugin.py:350
+#: imdb/src/plugin.py:371
 msgid "Search Trailer"
 msgstr "Paieškos platforma"
 
@@ -13284,7 +13347,7 @@ msgstr ""
 msgid "Search in iDream database"
 msgstr ""
 
-#: ncidclient/src/plugin.py:643 fritzcall/src/plugin.py:1812
+#: ncidclient/src/plugin.py:643 fritzcall/src/plugin.py:1817
 msgid "Search phonebook"
 msgstr ""
 
@@ -13337,11 +13400,11 @@ msgstr "Paieškos tipas:"
 msgid "Searching InternetRadio for %s..."
 msgstr ""
 
-#: fritzcall/src/plugin.py:1273
+#: fritzcall/src/plugin.py:1278
 msgid "Searching in LDIF..."
 msgstr "Ieškoti į LDIF..."
 
-#: fritzcall/src/plugin.py:1266
+#: fritzcall/src/plugin.py:1271
 msgid "Searching in Outlook export..."
 msgstr "Ieškoti \"Outlook\" eksporto..."
 
@@ -13353,17 +13416,17 @@ msgstr "Jūsų tinklo ieškojimas. Prašome laukti..."
 msgid "Searching, be patient ..."
 msgstr "Ieškoma, būkite kantrūs ..."
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:307
+#: seriesplugin/src/SeriesPluginInfoScreen.py:321
 #, python-brace-format
 msgid ""
-"Season: {season:d}\n"
+"Season: {rawseason:s}\n"
 "{title:s}"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:310
+#: seriesplugin/src/SeriesPluginInfoScreen.py:324
 #, python-brace-format
 msgid ""
-"Season: {season:d}  Episode: {episode:d}\n"
+"Season: {rawseason:s}  Episode: {rawepisode:s}\n"
 "{title:s}"
 msgstr ""
 
@@ -13375,7 +13438,7 @@ msgstr ""
 msgid "Second foreground:"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1975
+#: fritzcall/src/plugin.py:1980
 msgid "Secure WLAN guest network"
 msgstr ""
 
@@ -13478,20 +13541,8 @@ msgstr ""
 msgid "Select contrast."
 msgstr ""
 
-#: imdb/src/plugin.py:344
+#: imdb/src/plugin.py:364
 msgid "Select from EPG"
-msgstr ""
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:160
-msgid "Select identifier for elapsed events"
-msgstr ""
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:164
-msgid "Select identifier for future events"
-msgstr ""
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:162
-msgid "Select identifier for today events"
 msgstr ""
 
 #: ftpbrowser/src/FTPBrowser.py:202
@@ -13613,7 +13664,8 @@ msgstr "Siųsti \\\"long\\\" paspaudimas"
 msgid "Send as sticky"
 msgstr "Siųsti kaip priklijuojamą"
 
-#: autotimer/src/AutoTimerSettings.py:61
+#: autotimer/src/AutoTimerSettings.py:62
+#: seriesplugin/src/SeriesPluginConfiguration.py:260
 msgid "Send debug messages to shell"
 msgstr "Siųsti derinimo pranešimusi apvalkalui"
 
@@ -13669,33 +13721,37 @@ msgstr "Serbų-kroatų"
 msgid "SeriesPlugin"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:140
+#: seriesplugin/src/SeriesPluginInfoScreen.py:160
 msgid "SeriesPlugin Info"
 msgstr ""
 
-#: seriesplugin/src/plugin.py:147 seriesplugin/src/plugin.py:160
-#: seriesplugin/src/plugin.py:191
+#: seriesplugin/src/plugin.py:153 seriesplugin/src/plugin.py:166
+#: seriesplugin/src/plugin.py:197
 msgid "SeriesPlugin extension exception "
 msgstr ""
 
-#: seriesplugin/src/spChannelContextMenu.py:58 seriesplugin/src/plugin.py:136
+#: seriesplugin/src/spChannelContextMenu.py:58 seriesplugin/src/plugin.py:142
 msgid "SeriesPlugin info exception "
 msgstr ""
 
-#: seriesplugin/src/plugin.py:219 seriesplugin/src/plugin.py:229
-#: seriesplugin/src/plugin.py:239 seriesplugin/src/plugin.py:249
+#: seriesplugin/src/SeriesPluginBare.py:22
+msgid "SeriesPlugin is deactivated"
+msgstr ""
+
+#: seriesplugin/src/plugin.py:225 seriesplugin/src/plugin.py:235
+#: seriesplugin/src/plugin.py:245 seriesplugin/src/plugin.py:255
 msgid "SeriesPlugin label exception "
 msgstr ""
 
-#: seriesplugin/src/plugin.py:181
+#: seriesplugin/src/plugin.py:187
 msgid "SeriesPlugin renamer exception "
 msgstr ""
 
-#: seriesplugin/src/plugin.py:126
+#: seriesplugin/src/plugin.py:132
 msgid "SeriesPlugin setup exception "
 msgstr ""
 
-#: seriesplugin/src/plugin.py:97
+#: seriesplugin/src/plugin.py:100
 msgid "SeriesPlugin test exception "
 msgstr "Serijų priedo bandymo išimtis"
 
@@ -13795,7 +13851,7 @@ msgstr "Nustatyti slaptažodį..."
 msgid "Set Restore-File for next boot"
 msgstr ""
 
-#: remotetimer/src/plugin.py:364
+#: remotetimer/src/plugin.py:367
 #, python-format
 msgid ""
 "Set Timer on Remote DreamBox via WebIf:\n"
@@ -13810,7 +13866,7 @@ msgstr ""
 "Nustatykite laikmačiui pabaigos laiką. Jei tai padarysite, užduoties trukmė "
 "gali būti blokuojama įrašų."
 
-#: dreamexplorer/src/plugin.py:361
+#: dreamexplorer/src/plugin.py:304
 msgid "Set archive mode (644)"
 msgstr ""
 
@@ -13824,7 +13880,7 @@ msgstr ""
 msgid "Set delay to %i ms (can be set)"
 msgstr "Nustatyti vėlavimą %i ms (galima nustatyti)"
 
-#: dreamexplorer/src/plugin.py:362
+#: dreamexplorer/src/plugin.py:305
 msgid "Set executable mode (755)"
 msgstr ""
 
@@ -13840,7 +13896,7 @@ msgstr ""
 msgid "Set search term"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:339
+#: dreamexplorer/src/plugin.py:296
 msgid "Set start directory"
 msgstr ""
 
@@ -13862,7 +13918,7 @@ msgstr ""
 msgid "Setting key canceled"
 msgstr "Nustatymų mygtukas panaikintas"
 
-#: fritzcall/src/plugin.py:911 fritzcall/src/plugin.py:926
+#: fritzcall/src/plugin.py:913 fritzcall/src/plugin.py:928
 msgid "Setting..."
 msgstr ""
 
@@ -13873,11 +13929,11 @@ msgstr ""
 msgid "Settings"
 msgstr "Nustatymai"
 
-#: autotimer/src/AutoTimerOverview.py:221 epgsearch/src/EPGSearch.py:238
-#: seriesplugin/src/plugin.py:273 seriesplugin/src/plugin.py:274
-#: lastfm/src/LastFMConfig.py:27 lastfm/src/plugin.py:209
-#: simplerss/src/RSSScreens.py:459 simplerss/src/RSSScreens.py:464
-#: ecasa/src/EcasaGui.py:353
+#: autotimer/src/AutoTimerOverview.py:221 imdb/src/plugin.py:365
+#: epgsearch/src/EPGSearch.py:238 seriesplugin/src/plugin.py:279
+#: seriesplugin/src/plugin.py:280 lastfm/src/LastFMConfig.py:27
+#: lastfm/src/plugin.py:209 simplerss/src/RSSScreens.py:459
+#: simplerss/src/RSSScreens.py:464 ecasa/src/EcasaGui.py:353
 msgid "Setup"
 msgstr "Valdymas"
 
@@ -13938,7 +13994,7 @@ msgstr "Rūšiuoti Filmus"
 
 #: fritzcall/src/FritzCallFBF.py:364 fritzcall/src/FritzCallFBF.py:391
 #: fritzcall/src/FritzCallFBF.py:1375 fritzcall/src/FritzCallFBF.py:2050
-#: fritzcall/src/FritzCallFBF.py:2817
+#: fritzcall/src/FritzCallFBF.py:2825
 msgid "Shortcut"
 msgstr ""
 
@@ -14035,7 +14091,7 @@ msgstr ""
 msgid "Show Advanced Options"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1959
+#: fritzcall/src/plugin.py:1964
 msgid "Show Blocked Calls"
 msgstr ""
 
@@ -14084,7 +14140,7 @@ msgstr ""
 msgid "Show Help"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:155
+#: seriesplugin/src/SeriesPluginConfiguration.py:184
 msgid "Show Info in movie list menu"
 msgstr ""
 
@@ -14120,7 +14176,7 @@ msgstr "Rodyti žinutę, kai prasideda įrašymas"
 msgid "Show Monitor in Extension-Menu"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1960
+#: fritzcall/src/plugin.py:1965
 msgid "Show Outgoing Calls"
 msgstr ""
 
@@ -14140,7 +14196,7 @@ msgstr ""
 msgid "Show Plugin in Extension-Menu"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:156
+#: seriesplugin/src/SeriesPluginConfiguration.py:185
 msgid "Show Rename in movie list menu"
 msgstr ""
 
@@ -14169,7 +14225,7 @@ msgstr "Rodyti televiziją"
 msgid "Show Weather Forecast"
 msgstr ""
 
-#: ncidclient/src/plugin.py:736 fritzcall/src/plugin.py:1951
+#: ncidclient/src/plugin.py:736 fritzcall/src/plugin.py:1956
 msgid "Show after Standby"
 msgstr ""
 
@@ -14216,7 +14272,7 @@ msgid "Show cover arts"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1039 fritzcall/src/plugin.py:1601
+#: fritzcall/src/plugin.py:1041 fritzcall/src/plugin.py:1606
 msgid "Show details of entry"
 msgstr ""
 
@@ -14256,11 +14312,11 @@ msgstr ""
 msgid "Show in User-Scripts"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:154
+#: seriesplugin/src/SeriesPluginConfiguration.py:183
 msgid "Show in channel menu"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:153
+#: seriesplugin/src/SeriesPluginConfiguration.py:182
 msgid "Show in epg menu"
 msgstr ""
 
@@ -14272,17 +14328,21 @@ msgstr "Rodyti išplėstame meniu"
 msgid "Show in extension menu:"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:152
+#: seriesplugin/src/SeriesPluginConfiguration.py:181
 #: curlytx/src/CurlyTxSettings.py:70
 msgid "Show in extensions menu"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:151
+#: seriesplugin/src/SeriesPluginConfiguration.py:180
 msgid "Show in info menu"
 msgstr ""
 
 #: curlytx/src/CurlyTxSettings.py:69
 msgid "Show in main menu"
+msgstr ""
+
+#: imdb/src/plugin.py:705
+msgid "Show in plugin browser"
 msgstr ""
 
 #: pipzap/src/PipzapSetup.py:42
@@ -14341,7 +14401,7 @@ msgstr ""
 msgid "Show on key press"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1953
+#: fritzcall/src/plugin.py:1958
 msgid "Show only calls for specific MSN"
 msgstr ""
 
@@ -14361,7 +14421,7 @@ msgstr ""
 msgid "Show plugin in extensions menu:"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:79
+#: seriesplugin/src/ChannelEditor.py:153
 msgid "Show popup to add Stb Channel"
 msgstr ""
 
@@ -14401,11 +14461,11 @@ msgstr ""
 msgid "Show stream(s) (WebIf)"
 msgstr "Rodyti srautus (Webif)"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:189
+#: seriesplugin/src/SeriesPluginConfiguration.py:214
 msgid "Show success after Record renaming"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:206
+#: seriesplugin/src/SeriesPluginConfiguration.py:230
 msgid "Show success after Timer handling"
 msgstr ""
 
@@ -14462,11 +14522,11 @@ msgstr ""
 msgid "Show volumebar when volume-value was changed"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:188
+#: seriesplugin/src/SeriesPluginConfiguration.py:213
 msgid "Show warnings after Record renaming"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:205
+#: seriesplugin/src/SeriesPluginConfiguration.py:229
 msgid "Show warnings after Timer handling"
 msgstr ""
 
@@ -14613,6 +14673,10 @@ msgstr ""
 msgid "Skip"
 msgstr ""
 
+#: seriesplugin/src/SeriesPlugin.py:400
+msgid "Skip check during running records (Can be disabled)"
+msgstr ""
+
 #: lastfm/src/plugin.py:206
 msgid "Skip current Track"
 msgstr ""
@@ -14633,32 +14697,23 @@ msgstr "Praleisti apklausą įrašų metu"
 msgid "Skip protected Services"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:197
+#: seriesplugin/src/SeriesPluginConfiguration.py:222
 msgid "Skip search during records"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:196
+#: seriesplugin/src/SeriesPluginConfiguration.py:221
 msgid "Skip search if pattern matches"
 msgstr ""
 
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:174
-#: seriesplugin/src/Identifiers/SerienServer.py:74
-#: seriesplugin/src/Identifiers/Fernsehserien.py:141
-#: seriesplugin/src/Identifiers/Wunschliste.py:148
+#: seriesplugin/src/Identifiers/SerienServer.py:60
 msgid "Skip: No begin timestamp specified"
 msgstr "Praleisti: Nėra nurodyta pradžios laiko žyma"
 
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:178
-#: seriesplugin/src/Identifiers/SerienServer.py:78
-#: seriesplugin/src/Identifiers/Fernsehserien.py:145
-#: seriesplugin/src/Identifiers/Wunschliste.py:152
-msgid "Skip: No service specified"
-msgstr "Praleisti: Nenurodytas kanalas"
+#: seriesplugin/src/Identifiers/SerienServer.py:64
+msgid "Skip: No service / channel specified"
+msgstr ""
 
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:170
-#: seriesplugin/src/Identifiers/SerienServer.py:70
-#: seriesplugin/src/Identifiers/Fernsehserien.py:137
-#: seriesplugin/src/Identifiers/Wunschliste.py:144
+#: seriesplugin/src/Identifiers/SerienServer.py:56
 msgid "Skip: No show name specified"
 msgstr "Praleisti: Nėra laidos pavadinimo"
 
@@ -14719,19 +14774,15 @@ msgstr "Šypsenėlės"
 msgid "So that's all you can do?"
 msgstr "Taigi, tai viskas, ką gali padaryti?"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:214
+#: seriesplugin/src/SeriesPluginConfiguration.py:238
 msgid "Socket timeout"
 msgstr "Lizdo pauzė"
 
-#: dreamexplorer/src/plugin.py:1225 dreamexplorer/src/plugin.py:1249
-msgid "Softlink name error !"
-msgstr "Softlink pavadinimo klaida!"
-
-#: fritzcall/src/plugin.py:870
+#: fritzcall/src/plugin.py:872
 msgid "Software fax active"
 msgstr "Programinės įrangos faksas aktyvus"
 
-#: fritzcall/src/plugin.py:874
+#: fritzcall/src/plugin.py:876
 msgid "Software fax inactive"
 msgstr "Programinės įrangos faksas aktyvus"
 
@@ -14836,8 +14887,7 @@ msgstr "Rūšiuoti gimtadienius pagal:"
 msgid "Sort by date (ascending)"
 msgstr "Rūšiuoti pagal datą (abėcėlės tvarka)"
 
-#: dreamexplorer/src/plugin.py:335 dreamexplorer/src/plugin.py:347
-#: dreamexplorer/src/plugin.py:356
+#: dreamexplorer/src/plugin.py:279
 msgid "Sort by date (bouquet-)"
 msgstr "Rūšiuoti pagal datą (paketas-)"
 
@@ -14849,8 +14899,7 @@ msgstr "Rūšiuoti pagal datą (mažėjimo tvarka)"
 msgid "Sort by name (ascending)"
 msgstr "Rūšiuoti pagal vardą (abėcėlės tvarka)"
 
-#: dreamexplorer/src/plugin.py:334 dreamexplorer/src/plugin.py:346
-#: dreamexplorer/src/plugin.py:355
+#: dreamexplorer/src/plugin.py:278
 msgid "Sort by name (bouquet+)"
 msgstr "Rūšiuoti pagal vardą (paketas +)"
 
@@ -14890,7 +14939,7 @@ msgstr "Atstumas tarp stulpelių:"
 msgid "Spain"
 msgstr "Ispanija"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:201
+#: imdb/src/plugin.py:43 youtubeplayer/src/YouTubeSearchDialog.py:201
 msgid "Spanish"
 msgstr "Ispanų"
 
@@ -15024,7 +15073,7 @@ msgstr ""
 msgid "Start easy your multimedia plugins with the PVR-button."
 msgstr "Pradėti lengvą multimedijos priedą su PVR mygtuku"
 
-#: dreamexplorer/src/plugin.py:289 subsdownloader2/src/plugin.py:953
+#: subsdownloader2/src/plugin.py:953
 msgid "Start execution"
 msgstr ""
 
@@ -15095,6 +15144,7 @@ msgid "Startup aspect ratio"
 msgstr ""
 
 #: autotimer/src/AutoTimerSettings.py:40
+#: seriesplugin/src/SeriesPluginConfiguration.py:246
 msgid "Startup delay (in min)"
 msgstr "Paleisties vėlavimas (minutėmis)"
 
@@ -15118,8 +15168,8 @@ msgstr "Stotis pakeista"
 msgid "Stations"
 msgstr "Stotys"
 
-#: fritzcall/src/plugin.py:771 fritzcall/src/plugin.py:799
-#: fritzcall/src/plugin.py:827
+#: fritzcall/src/plugin.py:773 fritzcall/src/plugin.py:801
+#: fritzcall/src/plugin.py:829
 msgid "Status not available"
 msgstr "Būklė nežinoma"
 
@@ -15256,7 +15306,7 @@ msgstr "Srautiniai moduliai orf.at IPTV web puslapyje."
 msgid "Strictly"
 msgstr "Griežtai"
 
-#: ncidclient/src/plugin.py:765 fritzcall/src/plugin.py:2002
+#: ncidclient/src/plugin.py:765 fritzcall/src/plugin.py:2007
 msgid "Strip Leading 0"
 msgstr "Juostelės pirmaujančių 0"
 
@@ -15313,7 +15363,7 @@ msgstr "Sėkmingai"
 msgid "Successfully moved the movie %s"
 msgstr "Sėkmingai perkeltas filmas %s"
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:431
+#: seriesplugin/src/SeriesPluginInfoScreen.py:447
 msgid "Successfully renamed"
 msgstr "Sėkmingai pervardyta"
 
@@ -15382,13 +15432,17 @@ msgstr ""
 msgid "Switch to selected Station"
 msgstr ""
 
-#: ncidclient/src/plugin.py:48 fritzcall/src/plugin.py:156
+#: ncidclient/src/plugin.py:48 fritzcall/src/plugin.py:157
 msgid "Switzerland"
 msgstr "Šveicarų"
 
 #: satloader/src/plugin.py:439
 msgid "Symbol Rate:"
 msgstr "Simbolių dažnis:"
+
+#: dreamexplorer/src/plugin.py:955
+msgid "Symlink name error!"
+msgstr ""
 
 #: weatherplugin/src/setup.py:76 weatherplugin/src/setup.py:200
 msgid "System"
@@ -15711,11 +15765,7 @@ msgid ""
 "Make sure it is formated in EXT2 or EXT3!"
 msgstr ""
 
-#: imdb/src/plugin.py:160
-msgid "The Internet Movie Database"
-msgstr ""
-
-#: ncidclient/src/plugin.py:45 fritzcall/src/plugin.py:153
+#: ncidclient/src/plugin.py:45 fritzcall/src/plugin.py:154
 msgid "The Netherlands"
 msgstr "Nyderlandų"
 
@@ -16192,7 +16242,7 @@ msgstr ""
 "Tai yra tai, kas bus ieškoma įvykių pavadinimuose. Žinokite, kad ieškojimas "
 "gali būti sudėtingas, kadangi jūs turite žinoti kanalo naudojamą kodavimą."
 
-#: dreamexplorer/src/plugin.py:778 subsdownloader2/src/plugin.py:1267
+#: subsdownloader2/src/plugin.py:1267
 msgid "This line is not editable!"
 msgstr ""
 
@@ -16276,10 +16326,6 @@ msgstr "Tibeto"
 msgid "Ticker"
 msgstr "Simbolis"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:184
-msgid "Tidy up filename on rename"
-msgstr ""
-
 #: youtubeplayer/src/YouTubeSearchDialog.py:212
 msgid "Tigrinya"
 msgstr "Tigrajų"
@@ -16319,6 +16365,7 @@ msgid "Timeout"
 msgstr "Pertrauka"
 
 #: autotimer/src/AutoTimerSettings.py:43
+#: seriesplugin/src/SeriesPluginConfiguration.py:248
 msgid "Timeout (in min)"
 msgstr "Pertrauka (min)"
 
@@ -16326,15 +16373,15 @@ msgstr "Pertrauka (min)"
 msgid "Timeout Statustext (seconds)"
 msgstr "Pertrauka (sekundėmis)"
 
-#: ncidclient/src/plugin.py:740 fritzcall/src/plugin.py:1963
+#: ncidclient/src/plugin.py:740 fritzcall/src/plugin.py:1968
 msgid "Timeout for Call Notifications (seconds)"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:191
+#: seriesplugin/src/SeriesPluginConfiguration.py:216
 msgid "Timeout for Rename Popup"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:208
+#: seriesplugin/src/SeriesPluginConfiguration.py:232
 msgid "Timeout for Timer Popup"
 msgstr ""
 
@@ -16382,7 +16429,7 @@ msgstr ""
 msgid "Timer has no EIT"
 msgstr "Laikmatis neturi ETI"
 
-#: seriesplugin/src/SeriesPluginTimer.py:208
+#: seriesplugin/src/SeriesPluginTimer.py:201
 #, python-format
 msgid "Timer rename has been finished with %d errors:\n"
 msgstr ""
@@ -16473,7 +16520,7 @@ msgstr "Laikas"
 msgid "Title"
 msgstr "Antraštė"
 
-#: ofdb/src/plugin.py:223 imdb/src/plugin.py:298
+#: ofdb/src/plugin.py:223 imdb/src/plugin.py:315
 msgid "Title Menu"
 msgstr "Pavadinimų meniu"
 
@@ -16485,7 +16532,7 @@ msgstr "Pavadinimas ir trumpas aprašymas"
 msgid "Title and all descriptions"
 msgstr "Pavadinimas ir visi aprašymai"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:194
+#: seriesplugin/src/SeriesPluginConfiguration.py:219
 msgid "Title search depths"
 msgstr "Pavadinimo paieškos gylis"
 
@@ -16516,7 +16563,7 @@ msgstr ""
 msgid "To be used as simple downloading application by other Plugins."
 msgstr "Tai naudojama kaip paprastam atsisiuntimui kitų priedų."
 
-#: fritzcall/src/plugin.py:2615
+#: fritzcall/src/plugin.py:2620
 msgid ""
 "To enjoy more functionalities of your FRITZ!Box, configure the firmware "
 "version!"
@@ -16546,27 +16593,27 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:497
+#: fritzcall/src/plugin.py:499
 msgid "Toggle 1. mailbox"
 msgstr "Perjungti 1. pašto dėžutę"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:499
+#: fritzcall/src/plugin.py:501
 msgid "Toggle 2. mailbox"
 msgstr "Perjungti 2. pašto dėžutę"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:501
+#: fritzcall/src/plugin.py:503
 msgid "Toggle 3. mailbox"
 msgstr "Perjungti 3. pašto dėžutę"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:503
+#: fritzcall/src/plugin.py:505
 msgid "Toggle 4. mailbox"
 msgstr "Perjungti 4. pašto dėžutę"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:505
+#: fritzcall/src/plugin.py:507
 msgid "Toggle 5. mailbox"
 msgstr "Perjungti 5. pašto dėžutę"
 
@@ -16579,25 +16626,25 @@ msgid "Toggle List"
 msgstr "Perjungimo sąrašas"
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:479
+#: fritzcall/src/plugin.py:481
 msgid "Toggle Mailbox"
 msgstr "Perjungti pašto dėžutę"
 
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:475 fritzcall/src/plugin.py:525
-#: fritzcall/src/plugin.py:682 fritzcall/src/plugin.py:693
+#: fritzcall/src/plugin.py:477 fritzcall/src/plugin.py:527
+#: fritzcall/src/plugin.py:684 fritzcall/src/plugin.py:695
 msgid "Toggle WLAN"
 msgstr "Perjungti WLAN"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:684
+#: fritzcall/src/plugin.py:686
 msgid "Toggle WLAN guest access"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:495
+#: fritzcall/src/plugin.py:497
 msgid "Toggle all mailboxes"
 msgstr ""
 
@@ -16776,8 +16823,8 @@ msgstr "Turkmėnų"
 msgid "Turn off display"
 msgstr "Išjunkti monitorių"
 
-#: dreamexplorer/src/plugin.py:523 dreamexplorer/src/plugin.py:561
-#: dreamexplorer/src/plugin.py:635
+#: dreamexplorer/src/plugin.py:483 dreamexplorer/src/plugin.py:511
+#: dreamexplorer/src/plugin.py:579
 msgid "Turn off the media-filter first."
 msgstr ""
 
@@ -16822,11 +16869,11 @@ msgstr "UL: %d kb/s"
 
 #: ncidclient/src/plugin.py:836 ncidclient/src/plugin.py:839
 #: ncidclient/src/plugin.py:941 ncidclient/src/plugin.py:995
-#: fritzcall/src/FritzCallFBF.py:74 fritzcall/src/plugin.py:1134
-#: fritzcall/src/plugin.py:2116 fritzcall/src/plugin.py:2119
-#: fritzcall/src/plugin.py:2160 fritzcall/src/plugin.py:2455
-#: fritzcall/src/plugin.py:2555 fritzcall/src/plugin.py:2560
-#: fritzcall/src/plugin.py:2584
+#: fritzcall/src/FritzCallFBF.py:74 fritzcall/src/plugin.py:1139
+#: fritzcall/src/plugin.py:2121 fritzcall/src/plugin.py:2124
+#: fritzcall/src/plugin.py:2165 fritzcall/src/plugin.py:2460
+#: fritzcall/src/plugin.py:2560 fritzcall/src/plugin.py:2565
+#: fritzcall/src/plugin.py:2589
 msgid "UNKNOWN"
 msgstr "NEŽINOMA"
 
@@ -17112,16 +17159,12 @@ msgstr ""
 msgid "Use hardware-decoder for MP3"
 msgstr ""
 
-#: ncidclient/src/plugin.py:745 fritzcall/src/plugin.py:1992
+#: ncidclient/src/plugin.py:745 fritzcall/src/plugin.py:1997
 msgid "Use internal PhoneBook"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:185
-msgid "Use legacy filenames"
-msgstr ""
-
 #: seriesplugin/src/SeriesPluginConfiguration.py:210
-msgid "Use local caching"
+msgid "Use legacy filenames"
 msgstr ""
 
 #: subsdownloader2/src/plugin.py:1183
@@ -17169,7 +17212,7 @@ msgstr "Prisijungę vartotojai"
 msgid "User Profile Name"
 msgstr "Vartotojo profilio pavadinimas"
 
-#: imdb/src/plugin.py:554
+#: imdb/src/plugin.py:585
 msgid "User Rating"
 msgstr "Vartotojo reitingas"
 
@@ -17185,7 +17228,7 @@ msgstr "Vartotojo valdymas"
 msgid "User name"
 msgstr "Vartotojo vardas"
 
-#: fritzcall/src/plugin.py:1970
+#: fritzcall/src/plugin.py:1975
 msgid "User name Accessing FRITZ!Box"
 msgstr "Vartotojo vardas prieigai FRITZ!Box"
 
@@ -17349,7 +17392,7 @@ msgstr "Tikrintojas"
 
 #: fritzcall/src/FritzCallFBF.py:366 fritzcall/src/FritzCallFBF.py:393
 #: fritzcall/src/FritzCallFBF.py:1377 fritzcall/src/FritzCallFBF.py:2052
-#: fritzcall/src/FritzCallFBF.py:2819
+#: fritzcall/src/FritzCallFBF.py:2827
 msgid "Vanity"
 msgstr "Tuštumas"
 
@@ -17474,7 +17517,7 @@ msgstr "Peržiūrėti aktyvius parsisiuntimus"
 msgid "View remote text files"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:289 subsdownloader2/src/plugin.py:953
+#: dreamexplorer/src/plugin.py:234 subsdownloader2/src/plugin.py:953
 msgid "View this shell-script"
 msgstr ""
 
@@ -17585,12 +17628,8 @@ msgstr ""
 "Informacija, kaip iš naujo sukonfigūruoti RC pasiekiama adresu http://www."
 "dream-multimedia-tv.de/board/thread.php?threadid=5613</Ok>"
 
-#: dreamexplorer/src/plugin.py:1104
-msgid "WARNING! they doing now COPY or MOVE\n"
-msgstr "DĖMESIO! jie daro dabar KOPIJUOTI arba PERKELTI\n"
-
-#: dreamexplorer/src/plugin.py:1230
-msgid "WARNING! they make now a softlink from\n"
+#: dreamexplorer/src/plugin.py:848
+msgid "WARNING! You're about to move or copy\n"
 msgstr ""
 
 #: webinterface/src/WebComponents/Sources/Strings.py:158
@@ -18136,7 +18175,12 @@ msgstr ""
 msgid "Wolof"
 msgstr "Volofų"
 
-#: autotimer/src/AutoTimerSettings.py:62
+#: imdb/src/plugin.py:706
+msgid "Words / phrases to ignore (comma separated)"
+msgstr ""
+
+#: autotimer/src/AutoTimerSettings.py:63
+#: seriesplugin/src/SeriesPluginConfiguration.py:261
 msgid "Write debug messages into file"
 msgstr "Rašyti derinimo palaikymo pranešimus į failą"
 
@@ -18144,8 +18188,9 @@ msgstr "Rašyti derinimo palaikymo pranešimus į failą"
 msgid "Write log:"
 msgstr "Rašyti žurnalą:"
 
-#: dreamexplorer/src/plugin.py:1219
-msgid "Write the new softlink name here:"
+#: autotimer/src/AutoTimerSettings.py:61
+msgid ""
+"Write the config file after every change which the user quits by saving."
 msgstr ""
 
 #: webinterface/src/WebComponents/Sources/Volume.py:39
@@ -18320,10 +18365,6 @@ msgid ""
 "how things are."
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:130
-msgid "You have to match SD and HD channels separately!"
-msgstr "Jums turi sutapti su SD ir HD kanalais atskirai!"
-
 #: partnerbox/src/plugin.py:119
 msgid "You have to restart Enigma2 to activate your new preferences!"
 msgstr ""
@@ -18344,7 +18385,7 @@ msgstr ""
 msgid "You need GUI-restart to load the new settings!"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1880
+#: fritzcall/src/plugin.py:1885
 msgid "You need to enable the monitoring on your FRITZ!Box by dialing #96*5*!"
 msgstr ""
 
@@ -18400,6 +18441,14 @@ msgstr ""
 "\n"
 "Jeigu norite grįžti žingsnį atgal, spauskite EXIT ant valdymo pulto."
 
+#: dreamexplorer/src/plugin.py:946
+#, python-format
+msgid ""
+"You're about to create a symlink to %s\n"
+"from\n"
+"%s%s"
+msgstr ""
+
 #: easymedia/src/plugin.py:209
 msgid "YouTube player:"
 msgstr "YouTube grotuvas:"
@@ -18420,6 +18469,10 @@ msgstr ""
 "Jūsų 'Pasirinktame pavadinime' požymio pabaiga su tuščiais tarpais.\n"
 "Prašome patvirtinti, jei tai buvo padaryta tyčia, jei ne jie bus pašalinti."
 
+#: seriesplugin/src/SeriesPlugin.py:124
+msgid "Your autotimer is deprecated"
+msgstr ""
+
 #: autotimer/src/plugin.py:116
 #, python-format
 msgid ""
@@ -18436,6 +18489,11 @@ msgstr "Jūsų tinklo pajungimas pašalintas."
 #: networkbrowser/src/MountEdit.py:252
 msgid "Your network mount has been saved."
 msgstr "Jūsų tinklo pajungimas išsaugotas."
+
+#: seriesplugin/src/FilePatterns.py:123
+#: seriesplugin/src/DirectoryPatterns.py:74
+msgid "Your pattern file is corrupt"
+msgstr ""
 
 #: emission/src/plugin.py:86
 msgid ""
@@ -18557,7 +18615,7 @@ msgstr "Padidinti į letterboxed/anamorfa filmus."
 msgid "Zulu"
 msgstr "Zulų"
 
-#: dreamexplorer/src/plugin.py:314
+#: dreamexplorer/src/plugin.py:266
 msgid "[All files] "
 msgstr "[Visi failai] "
 
@@ -18582,7 +18640,7 @@ msgstr ""
 msgid "[FreeSpace] HDD is idle: "
 msgstr "[Laisva vieta] HDD yra laukimo būsenoje:"
 
-#: dreamexplorer/src/plugin.py:312
+#: dreamexplorer/src/plugin.py:264
 msgid "[Media files] "
 msgstr "[Medija failai]"
 
@@ -18603,11 +18661,11 @@ msgstr "[Taškai-Plugin] laiko poslinkis paleidžiamas iš naujo!"
 msgid "[back]"
 msgstr "[atgal]"
 
-#: dreamexplorer/src/plugin.py:667 dreamexplorer/src/plugin.py:669
+#: dreamexplorer/src/plugin.py:602
 msgid "[sort by Date] "
 msgstr "[rūšiuoti pagal datą]"
 
-#: dreamexplorer/src/plugin.py:657 dreamexplorer/src/plugin.py:659
+#: dreamexplorer/src/plugin.py:598
 msgid "[sort by Name] "
 msgstr "[Rūšiuoti pagal pavadinimą]"
 
@@ -18643,12 +18701,12 @@ msgid "add"
 msgstr "pridėti"
 
 #. TRANSLATORS: AutoTimer title in MovieList (automatically opens importer, I consider this no further interaction)
-#: autotimer/src/plugin.py:211
+#: autotimer/src/plugin.py:215
 msgid "add AutoTimer"
 msgstr "pridėti Auto laikmatį"
 
 #. TRANSLATORS: AutoTimer title in EventInfo dialog (requires the user to select an event to base the AutoTimer on)
-#: autotimer/src/plugin.py:213
+#: autotimer/src/plugin.py:217
 msgid "add AutoTimer..."
 msgstr "pridėti Auto Laikmatį ..."
 
@@ -18846,7 +18904,7 @@ msgstr "atgal į istoriją"
 msgid "backup timer disabled"
 msgstr "atsarginės kopijos laikmatis išjungtas"
 
-#: fritzcall/src/plugin.py:107
+#: fritzcall/src/plugin.py:108
 msgid "before 05.27"
 msgstr "prieš 05.27"
 
@@ -18890,7 +18948,7 @@ msgstr "vykdoma"
 msgid "by speed"
 msgstr "pagal greitį"
 
-#: fritzcall/src/plugin.py:884
+#: fritzcall/src/plugin.py:886
 msgid "call redirections active"
 msgstr "skambučių peradresavimus aktyvus"
 
@@ -19081,11 +19139,12 @@ msgstr "aprašymas"
 msgid "device name: "
 msgstr "Įrenginio pavadinimas:"
 
-#: fritzcall/src/plugin.py:818
+#: fritzcall/src/plugin.py:820
 msgid "devices active"
 msgstr "veikiantys įrenginiai"
 
-#: reconstructapsc/src_py/plugin.py:49
+#: reconstructapsc/src_py/plugin.py:49 dreamexplorer/src/plugin.py:494
+#: dreamexplorer/src/plugin.py:521
 msgid "directory"
 msgstr "aplankas"
 
@@ -19128,7 +19187,7 @@ msgid "display Info"
 msgstr "informacija ekrane"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1914
+#: fritzcall/src/plugin.py:1919
 msgid "display calls"
 msgstr "skambučiai ekrane"
 
@@ -19137,7 +19196,7 @@ msgid "display connection errors"
 msgstr "prijungimo klaidos ekrane"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1916
+#: fritzcall/src/plugin.py:1921
 msgid "display phonebook"
 msgstr "telefonų knyga ekrane"
 
@@ -19289,7 +19348,7 @@ msgstr "įjungti perkėlimą"
 msgid "enabled"
 msgstr "įjungtas"
 
-#: fritzcall/src/plugin.py:811
+#: fritzcall/src/plugin.py:813
 msgid "encrypted"
 msgstr "koduota"
 
@@ -19348,7 +19407,7 @@ msgid ""
 "%(failure)s"
 msgstr ""
 
-#: remotetimer/src/plugin.py:164
+#: remotetimer/src/plugin.py:166
 msgid "error parsing incoming data."
 msgstr ""
 
@@ -19394,6 +19453,10 @@ msgstr "mėgstamiausi / sumažintas aukštis"
 msgid "fetching remote data..."
 msgstr ""
 
+#: dreamexplorer/src/plugin.py:489 dreamexplorer/src/plugin.py:517
+msgid "file"
+msgstr ""
+
 #: pushservice/src/Controller/ListDir.py:48
 msgid "file extension"
 msgstr "Failo plėtinys"
@@ -19423,7 +19486,7 @@ msgid "finish fetching remote data..."
 msgstr ""
 
 #: fritzcall/src/FritzCallFBF.py:482 fritzcall/src/FritzCallFBF.py:1398
-#: fritzcall/src/FritzCallFBF.py:2090 fritzcall/src/FritzCallFBF.py:2854
+#: fritzcall/src/FritzCallFBF.py:2090 fritzcall/src/FritzCallFBF.py:2862
 msgid "finishing"
 msgstr "baigta"
 
@@ -19700,9 +19763,8 @@ msgstr "įkelti žemėlapio perdangos"
 msgid "loading headers ..."
 msgstr "Įkeliamos antraštės ..."
 
-#: dreamexplorer/src/plugin.py:858 dreamexplorer/src/plugin.py:899
-#: dreamexplorer/src/plugin.py:912 subsdownloader2/src/plugin.py:1327
-#: subsdownloader2/src/plugin.py:1368 subsdownloader2/src/plugin.py:1381
+#: subsdownloader2/src/plugin.py:1327 subsdownloader2/src/plugin.py:1368
+#: subsdownloader2/src/plugin.py:1381
 msgid "loading... "
 msgstr "Įkeliama..."
 
@@ -19719,7 +19781,7 @@ msgid "login failed! "
 msgstr "Prisijungti nepavyko"
 
 #: fritzcall/src/FritzCallFBF.py:216 fritzcall/src/FritzCallFBF.py:1224
-#: fritzcall/src/FritzCallFBF.py:1917 fritzcall/src/FritzCallFBF.py:2719
+#: fritzcall/src/FritzCallFBF.py:1917 fritzcall/src/FritzCallFBF.py:2727
 msgid "login ok"
 msgstr "Prisijungti pavyko"
 
@@ -19728,7 +19790,7 @@ msgid "login successful"
 msgstr "Prisijungti nepavyko"
 
 #: fritzcall/src/FritzCallFBF.py:207 fritzcall/src/FritzCallFBF.py:1215
-#: fritzcall/src/FritzCallFBF.py:1899 fritzcall/src/FritzCallFBF.py:2701
+#: fritzcall/src/FritzCallFBF.py:1899 fritzcall/src/FritzCallFBF.py:2709
 msgid "login verification"
 msgstr "prisijungimo patikra"
 
@@ -19736,7 +19798,7 @@ msgstr "prisijungimo patikra"
 msgid "mail check interval (minutes)"
 msgstr "pašto tikrinimo intervalas (minutėmis)"
 
-#: fritzcall/src/plugin.py:850
+#: fritzcall/src/plugin.py:852
 msgid "mailboxes active"
 msgstr "aktyvios pašto dėžutės"
 
@@ -19951,7 +20013,7 @@ msgstr ""
 msgid "no account selected"
 msgstr ""
 
-#: ncidclient/src/plugin.py:825 fritzcall/src/plugin.py:2092
+#: ncidclient/src/plugin.py:825 fritzcall/src/plugin.py:2097
 msgid "no calls"
 msgstr "be skambučių"
 
@@ -19959,7 +20021,7 @@ msgstr "be skambučių"
 msgid "no date"
 msgstr "datos nėra"
 
-#: fritzcall/src/plugin.py:814
+#: fritzcall/src/plugin.py:816
 msgid "no device active"
 msgstr "nėra aktyvaus įrenginio"
 
@@ -19983,7 +20045,7 @@ msgstr "nėra siuntėjo"
 msgid "no subject"
 msgstr "be temos"
 
-#: ofdb/src/plugin.py:416 imdb/src/plugin.py:550
+#: ofdb/src/plugin.py:416 imdb/src/plugin.py:579
 msgid "no user rating yet"
 msgstr "nė vienas vartotojas dar nereitingavo"
 
@@ -20000,12 +20062,12 @@ msgid "not active"
 msgstr "neaktyvus"
 
 #: fritzcall/src/FritzCallFBF.py:1528 fritzcall/src/FritzCallFBF.py:1577
-#: fritzcall/src/FritzCallFBF.py:2331 fritzcall/src/FritzCallFBF.py:2942
-#: fritzcall/src/FritzCallFBF.py:3083
+#: fritzcall/src/FritzCallFBF.py:2334 fritzcall/src/FritzCallFBF.py:2952
+#: fritzcall/src/FritzCallFBF.py:3093
 msgid "not available with this firmware version"
 msgstr "nepasiekiama su šia programinės įrangos versija"
 
-#: fritzcall/src/plugin.py:107
+#: fritzcall/src/plugin.py:108
 msgid "not configured"
 msgstr "nesukonfigūruotas"
 
@@ -20013,7 +20075,7 @@ msgstr "nesukonfigūruotas"
 msgid "not configured yet. please do so in the settings."
 msgstr ""
 
-#: fritzcall/src/plugin.py:809
+#: fritzcall/src/plugin.py:811
 msgid "not encrypted"
 msgstr "neužkoduota"
 
@@ -20025,10 +20087,10 @@ msgstr "nerasta"
 msgid "not successfully please check your config (FTPERROR)"
 msgstr "nesėkmingai, prašome patikrinti savo config (FTPERROR)"
 
-#: fritzcall/src/FritzCallFBF.py:3431 fritzcall/src/FritzCallFBF.py:3438
-#: fritzcall/src/FritzCallFBF.py:3448 fritzcall/src/FritzCallFBF.py:3458
-#: fritzcall/src/FritzCallFBF.py:3468 fritzcall/src/FritzCallFBF.py:3479
-#: fritzcall/src/FritzCallFBF.py:3489 fritzcall/src/FritzCallFBF.py:3496
+#: fritzcall/src/FritzCallFBF.py:3439 fritzcall/src/FritzCallFBF.py:3446
+#: fritzcall/src/FritzCallFBF.py:3456 fritzcall/src/FritzCallFBF.py:3466
+#: fritzcall/src/FritzCallFBF.py:3476 fritzcall/src/FritzCallFBF.py:3487
+#: fritzcall/src/FritzCallFBF.py:3497 fritzcall/src/FritzCallFBF.py:3504
 msgid "not yet implemented"
 msgstr "dar neįdiegta"
 
@@ -20036,7 +20098,7 @@ msgstr "dar neįdiegta"
 msgid "nothing playing..."
 msgstr "niekas nerodoma..."
 
-#: ncidclient/src/plugin.py:1007 fritzcall/src/plugin.py:2559
+#: ncidclient/src/plugin.py:1007 fritzcall/src/plugin.py:2564
 msgid "number suppressed"
 msgstr "skaičius slopinamas"
 
@@ -20057,8 +20119,7 @@ msgstr "išjungta"
 msgid "ok"
 msgstr "OK"
 
-#: dreamexplorer/src/plugin.py:566 dreamexplorer/src/plugin.py:569
-#: dreamexplorer/src/plugin.py:776 subsdownloader2/src/plugin.py:1265
+#: subsdownloader2/src/plugin.py:1265
 msgid "old:  "
 msgstr "senas:"
 
@@ -20116,7 +20177,7 @@ msgstr "su vienas greta kito"
 msgid "on with top/bottom"
 msgstr "su viršutiniu/apatiniu"
 
-#: fritzcall/src/plugin.py:816
+#: fritzcall/src/plugin.py:818
 msgid "one device active"
 msgstr "vienas prietaisas aktyvus"
 
@@ -20267,7 +20328,7 @@ msgid "preferred"
 msgstr "Pageidaujamas"
 
 #: fritzcall/src/FritzCallFBF.py:471 fritzcall/src/FritzCallFBF.py:1408
-#: fritzcall/src/FritzCallFBF.py:2080 fritzcall/src/FritzCallFBF.py:2843
+#: fritzcall/src/FritzCallFBF.py:2080 fritzcall/src/FritzCallFBF.py:2851
 msgid "preparing"
 msgstr "paruošimas"
 
@@ -20300,7 +20361,7 @@ msgid "private"
 msgstr "privatus"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1910 fritzcall/src/plugin.py:1920
+#: fritzcall/src/plugin.py:1915 fritzcall/src/plugin.py:1925
 #: eparted/src/eparted.py:581 eparted/src/eparted.py:587
 msgid "quit"
 msgstr "baigti"
@@ -20321,7 +20382,7 @@ msgstr "skaityti UUID"
 msgid "readme.txt"
 msgstr "readme.txt"
 
-#: dreamexplorer/src/plugin.py:888 subsdownloader2/src/plugin.py:1357
+#: subsdownloader2/src/plugin.py:1357
 msgid "ready..."
 msgstr "Paruoštas..."
 
@@ -20441,7 +20502,7 @@ msgid "save Filesystemposition on exit"
 msgstr "išsaugoti failų sistemos poziciją išeinant"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1912 fritzcall/src/plugin.py:1918
+#: fritzcall/src/plugin.py:1917 fritzcall/src/plugin.py:1923
 msgid "save and quit"
 msgstr "įrašyti ir uždaryti"
 
@@ -20620,7 +20681,7 @@ msgstr "rodyti albumą"
 msgid "show all"
 msgstr "rodyti viską"
 
-#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:114
+#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:115
 msgid "show as list"
 msgstr "rodyti sąrašą"
 
@@ -20632,7 +20693,7 @@ msgstr "rodyti ištrintus įrašus"
 msgid "show details"
 msgstr "rodyti išsamiai"
 
-#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:114
+#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:115
 msgid "show each call"
 msgstr "rodyti kiekvieną skambutį"
 
@@ -20664,7 +20725,7 @@ msgstr "rodyti kitą sąrašą"
 msgid "show next page"
 msgstr "rodyti kitą puslapį"
 
-#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:114
+#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:115
 msgid "show nothing"
 msgstr "nieko nerodyti"
 
@@ -20953,9 +21014,12 @@ msgstr "Virtuali klaviatūra"
 msgid "void"
 msgstr "niekinis"
 
-#: dreamexplorer/src/plugin.py:902 dreamexplorer/src/plugin.py:915
-#: dreamexplorer/src/plugin.py:921 subsdownloader2/src/plugin.py:1371
-#: subsdownloader2/src/plugin.py:1384 subsdownloader2/src/plugin.py:1390
+#: imdb/src/plugin.py:584
+msgid "votes"
+msgstr ""
+
+#: subsdownloader2/src/plugin.py:1371 subsdownloader2/src/plugin.py:1384
+#: subsdownloader2/src/plugin.py:1390
 msgid "wait..."
 msgstr "laukite..."
 
@@ -20993,7 +21057,7 @@ msgstr "darbas"
 msgid "wrong filetype!"
 msgstr "neteisingas failo tipas!"
 
-#: fritzcall/src/FritzCallFBF.py:1913 fritzcall/src/FritzCallFBF.py:2715
+#: fritzcall/src/FritzCallFBF.py:1913 fritzcall/src/FritzCallFBF.py:2723
 msgid "wrong user or password?"
 msgstr "neteisingas vartotojas arba slaptažodis?"
 
@@ -21090,7 +21154,7 @@ msgstr ""
 "{subjektas: s}\n"
 "{institucija: S}"
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:301
+#: seriesplugin/src/SeriesPluginInfoScreen.py:315
 #, python-brace-format
 msgid "{title:s}"
 msgstr "{pavadinimas: ai}"

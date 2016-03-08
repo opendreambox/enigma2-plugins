@@ -3,13 +3,11 @@
 # This file is distributed under the same license as the tuxbox-enigma package.
 # Automatically generated, 2005.
 #
-#: autotimer/src/AutoTimerSettings.py:61 autotimer/src/AutoTimerSettings.py:62
-#: autotimer/src/AutoTimerSettings.py:63
 msgid ""
 msgstr ""
 "Project-Id-Version: tuxbox-enigma 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-08 12:22+0100\n"
+"POT-Creation-Date: 2016-03-08 15:01+0100\n"
 "PO-Revision-Date: 2016-01-19 12:15+0000\n"
 "Last-Translator: Anonymous Pootle User\n"
 "Language-Team: Arabic <moustafagamal@hotmail.com>\n"
@@ -98,6 +96,14 @@ msgstr ""
 msgid "  {lookups:d} successful lookups.\n"
 msgstr ""
 
+#: dreamexplorer/src/plugin.py:404
+msgid " B"
+msgstr ""
+
+#: dreamexplorer/src/plugin.py:406
+msgid " KB"
+msgstr ""
+
 #: subsdownloader2/src/SourceCode/xbmc_subtitles/services/Itasa/service.py:133
 #: subsdownloader2/src/SourceCode/xbmc_subtitles/services/Itasa/service.py:203
 msgid ""
@@ -105,9 +111,8 @@ msgid ""
 "menu."
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:333 dreamexplorer/src/plugin.py:345
-#: dreamexplorer/src/plugin.py:354
-msgid " Media-filter"
+#: dreamexplorer/src/plugin.py:408
+msgid " MB"
 msgstr ""
 
 #
@@ -117,10 +122,6 @@ msgstr "תוצאות"
 
 #: easymedia/src/plugin.py:293
 msgid " added to EasyMedia"
-msgstr ""
-
-#: imdb/src/plugin.py:567
-msgid " as "
 msgstr ""
 
 #: easymedia/src/plugin.py:299
@@ -229,7 +230,7 @@ msgid "%d kb/s"
 msgstr ""
 
 #
-#: seriesplugin/src/SeriesPluginInfoScreen.py:347 easyinfo/src/plugin.py:723
+#: seriesplugin/src/SeriesPluginInfoScreen.py:360 easyinfo/src/plugin.py:723
 #, python-format
 msgid "%d min"
 msgstr "דקות %d"
@@ -239,13 +240,13 @@ msgstr "דקות %d"
 msgid "%d more services"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginRenamer.py:323
+#: seriesplugin/src/SeriesPluginRenamer.py:319
 #, python-format
 msgid "%d records renamed successfully"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginBare.py:58
-#: seriesplugin/src/SeriesPluginTimer.py:215
+#: seriesplugin/src/SeriesPluginBare.py:65
+#: seriesplugin/src/SeriesPluginTimer.py:208
 #, python-format
 msgid "%d timer renamed successfully"
 msgstr ""
@@ -303,14 +304,26 @@ msgid ""
 "inserted and will be played as next song"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:543 dreamexplorer/src/plugin.py:555
-#: dreamexplorer/src/plugin.py:610 dreamexplorer/src/plugin.py:629
-#: dreamexplorer/src/plugin.py:1138 dreamexplorer/src/plugin.py:1156
-#: dreamexplorer/src/plugin.py:1161 subsdownloader2/src/plugin.py:344
+#: subsdownloader2/src/plugin.py:344
 #, python-format
 msgid ""
 "%s \n"
 "FAILED!"
+msgstr ""
+
+#: dreamexplorer/src/plugin.py:477 dreamexplorer/src/plugin.py:870
+#, python-format
+msgid ""
+"%s \n"
+"executed!"
+msgstr ""
+
+#: dreamexplorer/src/plugin.py:475 dreamexplorer/src/plugin.py:557
+#: dreamexplorer/src/plugin.py:574 dreamexplorer/src/plugin.py:868
+#, python-format
+msgid ""
+"%s \n"
+"failed!"
 msgstr ""
 
 #: fancontrol2/src/plugin.py:485 fancontrol2/src/plugin.py:487
@@ -362,6 +375,13 @@ msgstr ""
 #: ecasa/src/EcasaGui.py:694
 #, python-format
 msgid "%s's Gallery"
+msgstr ""
+
+#: dreamexplorer/src/plugin.py:223
+#, python-format
+msgid ""
+"%s-archive:\n"
+"%s"
 msgstr ""
 
 #: internetradio/src/InternetRadioScreen.py:626
@@ -456,11 +476,11 @@ msgstr ""
 msgid "01:00"
 msgstr ""
 
-#: fritzcall/src/plugin.py:107
+#: fritzcall/src/plugin.py:108
 msgid "05.29 until below 6.35"
 msgstr ""
 
-#: fritzcall/src/plugin.py:107
+#: fritzcall/src/plugin.py:108
 msgid "06.35 and newer"
 msgstr ""
 
@@ -762,22 +782,6 @@ msgid ""
 "from your computer."
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:221
-msgid "AT: Poll Interval (in h)"
-msgstr ""
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:219
-msgid "AT: Poll automatically"
-msgstr ""
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:220
-msgid "AT: Startup delay (in min)"
-msgstr ""
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:222
-msgid "AT: Timeout (in min)"
-msgstr ""
-
 #: youtubeplayer/src/YouTubeSearchDialog.py:93
 msgid "Abkhazian"
 msgstr ""
@@ -801,8 +805,7 @@ msgstr ""
 
 #
 #: webinterface/src/WebComponents/Sources/Strings.py:93
-#: satloader/src/plugin.py:120 dreamexplorer/src/plugin.py:340
-#: dreamexplorer/src/plugin.py:349 dreamexplorer/src/plugin.py:363
+#: satloader/src/plugin.py:120 dreamexplorer/src/plugin.py:308
 #: babelzapper/src/plugin.py:78
 msgid "About"
 msgstr "אודות"
@@ -810,8 +813,8 @@ msgstr "אודות"
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:308 fritzcall/src/plugin.py:1893
-#: fritzcall/src/plugin.py:1924
+#: fritzcall/src/plugin.py:310 fritzcall/src/plugin.py:1898
+#: fritzcall/src/plugin.py:1929
 msgid "About FritzCall"
 msgstr ""
 
@@ -854,7 +857,7 @@ msgid "Activate VPS"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:695 fritzcall/src/plugin.py:904
+#: fritzcall/src/plugin.py:697 fritzcall/src/plugin.py:906
 msgid "Activate WLAN guest access"
 msgstr ""
 
@@ -961,7 +964,7 @@ msgstr ""
 msgid "Add Timer"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:266
+#: seriesplugin/src/ChannelEditor.py:311
 msgid "Add Web Channel"
 msgstr ""
 
@@ -994,7 +997,7 @@ msgstr ""
 msgid "Add birthday"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:290
+#: seriesplugin/src/ChannelEditor.py:335
 msgid "Add channel (Yes) or replace it (No)"
 msgstr ""
 
@@ -1014,6 +1017,10 @@ msgstr ""
 msgid "Add current selected station to favorite"
 msgstr ""
 
+#: dreamexplorer/src/plugin.py:290
+msgid "Add directory to Bookmarks"
+msgstr ""
+
 #: rsdownloader/src/plugin.py:1376
 msgid "Add downloads from txt files"
 msgstr ""
@@ -1025,8 +1032,8 @@ msgstr ""
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a help text
 #. TRANSLATORS: this is a window title.
-#: ncidclient/src/plugin.py:601 fritzcall/src/plugin.py:1607
-#: fritzcall/src/plugin.py:1756
+#: ncidclient/src/plugin.py:601 fritzcall/src/plugin.py:1612
+#: fritzcall/src/plugin.py:1761
 msgid "Add entry to phonebook"
 msgstr ""
 
@@ -1273,7 +1280,7 @@ msgstr ""
 #: webinterface/src/WebComponents/Sources/Strings.py:32
 #: serienfilm/src/MovieSelection.py:256 emission/src/EmissionOverview.py:150
 #: emission/src/EmissionOverview.py:303 emission/src/EmissionOverview.py:310
-#: fritzcall/src/plugin.py:1021 mytube/src/plugin.py:67
+#: fritzcall/src/plugin.py:1023 mytube/src/plugin.py:67
 #: youtubeplayer/src/YouTubeSearchDialog.py:59
 #: youtubeplayer/src/YouTubeSearchDialog.py:91
 msgid "All"
@@ -1308,7 +1315,7 @@ msgstr "כל הזמן"
 msgid "All Timers"
 msgstr ""
 
-#: fritzcall/src/plugin.py:166
+#: fritzcall/src/plugin.py:168
 msgid "All calls"
 msgstr ""
 
@@ -1389,15 +1396,11 @@ msgid ""
 "unusable movie player until you uninstall one of the conflicting plugins."
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:178
-msgid "Alternative channel names file"
+#: autotimer/src/AutoTimerSettings.py:61
+msgid "Always write config"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:202
-msgid "Always retry to find series info"
-msgstr ""
-
-#: ofdb/src/plugin.py:219 imdb/src/plugin.py:294
+#: ofdb/src/plugin.py:219
 msgid "Ambiguous results"
 msgstr ""
 
@@ -1448,7 +1451,7 @@ msgstr ""
 msgid "Any service/recording"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:186
+#: seriesplugin/src/SeriesPluginConfiguration.py:211
 msgid "Append '_' if file exist"
 msgstr ""
 
@@ -1460,15 +1463,15 @@ msgstr ""
 msgid "Append file to current songlist"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1984
+#: fritzcall/src/plugin.py:1989
 msgid "Append shortcut number"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1983
+#: fritzcall/src/plugin.py:1988
 msgid "Append type of number"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1985
+#: fritzcall/src/plugin.py:1990
 msgid "Append vanity name"
 msgstr ""
 
@@ -1509,7 +1512,7 @@ msgstr ""
 "? האם ברצונך לשמור את המיפוי\n"
 "\n"
 
-#: ncidclient/src/plugin.py:739 fritzcall/src/plugin.py:1962
+#: ncidclient/src/plugin.py:739 fritzcall/src/plugin.py:1967
 msgid "Areacode to add to calls without one (if necessary)"
 msgstr ""
 
@@ -1687,7 +1690,7 @@ msgstr ""
 msgid "Australia"
 msgstr "אוסטרליה"
 
-#: ncidclient/src/plugin.py:49 fritzcall/src/plugin.py:157
+#: ncidclient/src/plugin.py:49 fritzcall/src/plugin.py:158
 msgid "Austria"
 msgstr ""
 
@@ -1712,7 +1715,7 @@ msgstr ""
 msgid "Auto"
 msgstr "אוטומטי"
 
-#: seriesplugin/src/ChannelEditor.py:75 seriesplugin/src/ChannelEditor.py:97
+#: seriesplugin/src/ChannelEditor.py:149 seriesplugin/src/ChannelEditor.py:171
 msgid "Auto match"
 msgstr ""
 
@@ -1770,7 +1773,7 @@ msgstr "הגדרות טיימר אוטומטי"
 msgid "AutoTimer failed with error %s"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:199
+#: seriesplugin/src/SeriesPluginConfiguration.py:224
 msgid "AutoTimer independent mode"
 msgstr ""
 
@@ -1848,7 +1851,7 @@ msgstr ""
 msgid "Automatic volume adjustment for ac3/dts services."
 msgstr ""
 
-#: ncidclient/src/plugin.py:763 fritzcall/src/plugin.py:1995
+#: ncidclient/src/plugin.py:763 fritzcall/src/plugin.py:2000
 msgid "Automatically add new Caller to PhoneBook"
 msgstr ""
 
@@ -1957,7 +1960,7 @@ msgstr ""
 msgid "BER"
 msgstr "BER"
 
-#: dreamexplorer/src/plugin.py:272 subsdownloader2/src/plugin.py:941
+#: subsdownloader2/src/plugin.py:941
 msgid "BZ2-package:\\n"
 msgstr ""
 
@@ -2227,8 +2230,8 @@ msgstr "סימניות"
 msgid "Boot delay"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:262
-msgid "Bootlogo-package:\\n"
+#: dreamexplorer/src/plugin.py:214
+msgid "Bootlogo-package:\n"
 msgstr ""
 
 #: elektro/src/plugin.py:459
@@ -2378,32 +2381,28 @@ msgstr ""
 msgid "Cable"
 msgstr "Cable"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:212
-msgid "Cache expires after x hours"
-msgstr ""
-
 #: ecasa/src/EcasaSetup.py:45
 msgid "Cache size"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1166
+#: fritzcall/src/plugin.py:1171
 msgid "Call"
 msgstr ""
 
-#: ncidclient/src/plugin.py:731 fritzcall/src/plugin.py:1946
+#: ncidclient/src/plugin.py:731 fritzcall/src/plugin.py:1951
 msgid "Call monitoring"
 msgstr ""
 
-#: fritzcall/src/plugin.py:564 fritzcall/src/plugin.py:730
+#: fritzcall/src/plugin.py:566 fritzcall/src/plugin.py:732
 msgid "Call redirection"
 msgstr ""
 
-#: fritzcall/src/plugin.py:880
+#: fritzcall/src/plugin.py:882
 msgid "Call redirection active"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1298
+#: fritzcall/src/plugin.py:1303
 #, python-format
 msgid "Calling %s"
 msgstr ""
@@ -2495,21 +2494,21 @@ msgstr "קנדה"
 #: autotimer/src/AutoTimerEditor.py:901 autotimer/src/AutoTimerEditor.py:1104
 #: autotimer/src/AutoTimerImporter.py:45
 #: autotimer/src/AutoTimerImporter.py:119
-#: autotimer/src/AutoTimerSettings.py:81 webinterface/src/WebIfConfig.py:32
-#: partnerbox/src/PartnerboxSetup.py:70 partnerbox/src/PartnerboxSetup.py:251
-#: partnerbox/src/RemoteTimerEntry.py:73 audiorestart/src/plugin.py:107
-#: namezap/src/NamezapSetup.py:57 epgsearch/src/EPGSearch.py:377
-#: epgsearch/src/EPGSearchSetup.py:58 dreammediathek/src/plugin.py:81
-#: internetradio/src/InternetRadioSetup.py:49
+#: autotimer/src/AutoTimerSettings.py:82 imdb/src/plugin.py:687
+#: webinterface/src/WebIfConfig.py:32 partnerbox/src/PartnerboxSetup.py:70
+#: partnerbox/src/PartnerboxSetup.py:251 partnerbox/src/RemoteTimerEntry.py:73
+#: audiorestart/src/plugin.py:107 namezap/src/NamezapSetup.py:57
+#: epgsearch/src/EPGSearch.py:377 epgsearch/src/EPGSearchSetup.py:58
+#: dreammediathek/src/plugin.py:81 internetradio/src/InternetRadioSetup.py:49
 #: internetradio/src/InternetRadioSetup.py:124
 #: pipservicerelation/src/plugin.py:188
 #: videocolorspace/src/VideoColorSpace.py:80 remotetimer/src/plugin.py:105
-#: remotetimer/src/plugin.py:230 satloader/src/plugin.py:54
+#: remotetimer/src/plugin.py:232 satloader/src/plugin.py:54
 #: satloader/src/plugin.py:165 satloader/src/plugin.py:285
 #: satloader/src/plugin.py:409 growlee/src/plugin.py:99
 #: movieepg/src/MovieEpgSetup.py:55 vlcplayer/src/VlcServerConfig.py:296
 #: seriesplugin/src/SeriesPluginConfiguration.py:80
-#: seriesplugin/src/ChannelEditor.py:72 aspectratioswitch/src/plugin.py:120
+#: seriesplugin/src/ChannelEditor.py:146 aspectratioswitch/src/plugin.py:120
 #: infobartunerstate/src/IBTSConfiguration.py:51 setpasswd/src/plugin.py:51
 #: merlinmusicplayer/src/plugin.py:278 merlinmusicplayer/src/plugin.py:2809
 #: merlinmusicplayer/src/plugin.py:2930 yttrailer/src/plugin.py:317
@@ -2521,11 +2520,9 @@ msgstr "קנדה"
 #: epgrefresh/src/EPGRefreshConfiguration.py:107
 #: pushservice/src/ConfigScreen.py:171 permanenttimeshift/src/plugin.py:1609
 #: teletext/src/plugin.py:1132 teletext/src/plugin.py:1277
-#: dreamexplorer/src/plugin.py:261 dreamexplorer/src/plugin.py:266
-#: dreamexplorer/src/plugin.py:271 dreamexplorer/src/plugin.py:279
-#: dreamexplorer/src/plugin.py:284 dreamexplorer/src/plugin.py:289
-#: dreamexplorer/src/plugin.py:332 dreamexplorer/src/plugin.py:344
-#: dreamexplorer/src/plugin.py:353 dreamexplorer/src/plugin.py:515
+#: dreamexplorer/src/plugin.py:213 dreamexplorer/src/plugin.py:223
+#: dreamexplorer/src/plugin.py:228 dreamexplorer/src/plugin.py:234
+#: dreamexplorer/src/plugin.py:276 dreamexplorer/src/plugin.py:468
 #: serienfilm/src/SerienFilm.py:65 3dsettings/src/plugin.py:172
 #: automatictimerlistcleanup/src/plugin.py:53
 #: curlytx/src/CurlyTxSettings.py:49 curlytx/src/CurlyTxSettings.py:209
@@ -2534,8 +2531,8 @@ msgstr "קנדה"
 #: elektro/src/plugin.py:272 elektro/src/plugin.py:318
 #: elektro/src/plugin.py:397 elektro/src/plugin.py:500
 #: emission/src/EmissionBandwidth.py:72 emission/src/EmissionSetup.py:39
-#: babelzapper/src/plugin.py:75 fritzcall/src/plugin.py:1731
-#: fritzcall/src/plugin.py:1885 simplerss/src/RSSSetup.py:26
+#: babelzapper/src/plugin.py:75 fritzcall/src/plugin.py:1736
+#: fritzcall/src/plugin.py:1890 simplerss/src/RSSSetup.py:26
 #: simplerss/src/RSSSetup.py:73 ftpbrowser/src/FTPBrowser.py:750
 #: epgbackup/src/EPGBackupSupport.py:219 epgbackup/src/EPGBackupConfig.py:55
 #: virtualzap/src/plugin.py:728 ecasa/src/EcasaSetup.py:71
@@ -2559,15 +2556,15 @@ msgstr "קנדה"
 msgid "Cancel"
 msgstr "בטל"
 
-#: seriesplugin/src/ChannelEditor.py:80 seriesplugin/src/ChannelEditor.py:94
+#: seriesplugin/src/ChannelEditor.py:154 seriesplugin/src/ChannelEditor.py:168
 msgid "Cancel and close"
 msgstr ""
 
-#: fritzcall/src/plugin.py:2043 fritzcall/src/plugin.py:2676
+#: fritzcall/src/plugin.py:2048 fritzcall/src/plugin.py:2681
 msgid "Cannot get calls from FRITZ!Box"
 msgstr ""
 
-#: fritzcall/src/plugin.py:2064 fritzcall/src/plugin.py:2694
+#: fritzcall/src/plugin.py:2069 fritzcall/src/plugin.py:2699
 msgid ""
 "Cannot get infos from FRITZ!Box yet\n"
 "Still initialising or wrong firmware version"
@@ -2581,7 +2578,7 @@ msgstr ""
 msgid "Capacity"
 msgstr ""
 
-#: ofdb/src/plugin.py:435 imdb/src/plugin.py:571
+#: ofdb/src/plugin.py:435
 msgid "Cast: "
 msgstr ""
 
@@ -2701,17 +2698,17 @@ msgstr ""
 msgid "Channel"
 msgstr "ערוץ"
 
-#: seriesplugin/src/ChannelEditor.py:284 seriesplugin/src/ChannelEditor.py:300
+#: seriesplugin/src/ChannelEditor.py:329 seriesplugin/src/ChannelEditor.py:345
 #, python-format
 msgid "Channel '- %(servicename)s - %(remote)s -' added."
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:306
+#: seriesplugin/src/ChannelEditor.py:351
 #, python-format
 msgid "Channel '- %(servicename)s - %(remote)s -' replaced."
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:331
+#: seriesplugin/src/ChannelEditor.py:376
 #, python-format
 msgid "Channel '- %s -' removed."
 msgstr ""
@@ -2720,7 +2717,7 @@ msgstr ""
 msgid "Channel Edit"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:69
+#: seriesplugin/src/ChannelEditor.py:143
 msgid "Channel Editor"
 msgstr ""
 
@@ -2734,7 +2731,7 @@ msgstr ""
 
 #
 #: ofdb/src/plugin.py:41 autotimer/src/AutoTimerEditor.py:103
-#: imdb/src/plugin.py:62 epgsearch/src/EPGSearch.py:415
+#: imdb/src/plugin.py:53 epgsearch/src/EPGSearch.py:415
 #: pipservicerelation/src/plugin.py:211
 #: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:281
 msgid "Channel Selection"
@@ -2756,7 +2753,11 @@ msgstr ":ערוץ קול"
 msgid "Channel info"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:178
+#: seriesplugin/src/SeriesPluginConfiguration.py:240
+msgid "Channel matching file"
+msgstr ""
+
+#: seriesplugin/src/ChannelEditor.py:249
 msgid "Channel matching..."
 msgstr ""
 
@@ -2793,7 +2794,7 @@ msgstr "בדוק"
 msgid "Check IPs (press OK to edit)"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:204
+#: seriesplugin/src/SeriesPluginConfiguration.py:228
 msgid "Check Timer for corresponding EPG events"
 msgstr ""
 
@@ -2805,12 +2806,6 @@ msgstr ""
 msgid "Check for uniqueness in"
 msgstr ""
 
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:337
-#: seriesplugin/src/Identifiers/Fernsehserien.py:535
-#: seriesplugin/src/Identifiers/Wunschliste.py:305
-msgid "Check the channel name"
-msgstr ""
-
 #: autotimer/src/AutoTimerSettings.py:60
 msgid ""
 "Check the event id (eit) and remove the timer if there is no corresponding "
@@ -2818,7 +2813,7 @@ msgid ""
 "timer created by AutoTimer are affected."
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:201
+#: seriesplugin/src/SeriesPluginConfiguration.py:226
 msgid "Check timer every x minutes"
 msgstr ""
 
@@ -2826,7 +2821,7 @@ msgstr ""
 msgid "Check timer list for series (SP)"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:157
+#: seriesplugin/src/SeriesPluginConfiguration.py:186
 msgid "Check timer list from extension menu"
 msgstr ""
 
@@ -3063,6 +3058,10 @@ msgstr ""
 msgid "Compact Flash"
 msgstr "Compact Flash"
 
+#: seriesplugin/src/SeriesPluginConfiguration.py:198
+msgid "Composition of the recording filenames"
+msgstr ""
+
 #: aihdcontroler/src/plugin.py:46
 msgid "Concinnity"
 msgstr ""
@@ -3104,7 +3103,7 @@ msgstr ""
 msgid "Configuration tool for Vali-XD skins"
 msgstr ""
 
-#: autotimer/src/AutoTimerSettings.py:99
+#: autotimer/src/AutoTimerSettings.py:100
 msgid "Configure AutoTimer behavior"
 msgstr "הגדרת פעולת טיימר אוטומטי"
 
@@ -3155,11 +3154,11 @@ msgstr ""
 msgid "Connect to FTP..."
 msgstr ""
 
-#: fritzcall/src/plugin.py:775
+#: fritzcall/src/plugin.py:777
 msgid "Connected since"
 msgstr ""
 
-#: fritzcall/src/plugin.py:2608
+#: fritzcall/src/plugin.py:2613
 msgid "Connected to FRITZ!Box!"
 msgstr ""
 
@@ -3171,7 +3170,7 @@ msgstr ""
 msgid "Connected to NCID Server"
 msgstr ""
 
-#: fritzcall/src/plugin.py:2643
+#: fritzcall/src/plugin.py:2648
 #, python-format
 msgid ""
 "Connecting to FRITZ!Box failed\n"
@@ -3179,7 +3178,7 @@ msgid ""
 "retrying..."
 msgstr ""
 
-#: fritzcall/src/plugin.py:2602
+#: fritzcall/src/plugin.py:2607
 msgid "Connecting to FRITZ!Box..."
 msgstr ""
 
@@ -3199,7 +3198,7 @@ msgstr ""
 msgid "Connection Error"
 msgstr ""
 
-#: fritzcall/src/plugin.py:2635
+#: fritzcall/src/plugin.py:2640
 #, python-format
 msgid ""
 "Connection to FRITZ!Box! lost\n"
@@ -3383,7 +3382,7 @@ msgstr ""
 msgid "Could not start Plugin:"
 msgstr ""
 
-#: ofdb/src/plugin.py:316 imdb/src/plugin.py:427
+#: ofdb/src/plugin.py:316
 msgid "Could't get Eventname"
 msgstr ""
 
@@ -3393,6 +3392,10 @@ msgid ""
 "Couldn't create a backup.\n"
 "Reason: %s.\n"
 "Press OK to see the logfile!"
+msgstr ""
+
+#: imdb/src/plugin.py:466
+msgid "Couldn't get Eventname"
 msgstr ""
 
 #: epgbackup/src/EPGBackupSupport.py:242
@@ -3449,7 +3452,7 @@ msgstr ""
 msgid "Countries"
 msgstr ""
 
-#: ncidclient/src/plugin.py:743 fritzcall/src/plugin.py:1966
+#: ncidclient/src/plugin.py:743 fritzcall/src/plugin.py:1971
 msgid "Country"
 msgstr ""
 
@@ -3489,19 +3492,19 @@ msgstr "צור טיימר חדש בעזרת האשף"
 msgid "Create iso:"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:338 dreamexplorer/src/plugin.py:359
+#: dreamexplorer/src/plugin.py:294 dreamexplorer/src/plugin.py:302
 msgid "Create new directory"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:432
+#: dreamexplorer/src/plugin.py:362
 msgid "Create new directory in..."
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:337 dreamexplorer/src/plugin.py:358
+#: dreamexplorer/src/plugin.py:293 dreamexplorer/src/plugin.py:301
 msgid "Create new file"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:430
+#: dreamexplorer/src/plugin.py:360
 msgid "Create new file in..."
 msgstr ""
 
@@ -3521,8 +3524,8 @@ msgstr ""
 msgid "Create remote timers"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:360
-msgid "Create softlink..."
+#: dreamexplorer/src/plugin.py:295 dreamexplorer/src/plugin.py:303
+msgid "Create softlink to selected"
 msgstr ""
 
 #: remotetimer/meta/plugin_remotetimer.xml./remotetimer/meta/plugin_remotetimer.xml
@@ -3642,11 +3645,15 @@ msgstr ""
 msgid "DD.MM.YYYY HH:MM"
 msgstr ""
 
-#: fritzcall/src/plugin.py:865
+#: dreamexplorer/src/plugin.py:229
+msgid "DEB-package:\n"
+msgstr ""
+
+#: fritzcall/src/plugin.py:867
 msgid "DECT inactive"
 msgstr ""
 
-#: fritzcall/src/plugin.py:861
+#: fritzcall/src/plugin.py:863
 msgid "DECT phones registered"
 msgstr ""
 
@@ -3751,7 +3758,7 @@ msgid "Deactivate Movielist Preview"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:901
+#: fritzcall/src/plugin.py:903
 msgid "Deactivate WLAN guest access"
 msgstr ""
 
@@ -3770,28 +3777,20 @@ msgstr ""
 msgid "DeactivatedTimerPushed"
 msgstr ""
 
-#: teletext/src/plugin.py:1344 fritzcall/src/plugin.py:2006
+#: teletext/src/plugin.py:1344 fritzcall/src/plugin.py:2011
 #: dreamirc/src/dreamIRCSetup.py:69
 msgid "Debug"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:230
-msgid "Debug: Forum user name"
-msgstr ""
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:229
+#: seriesplugin/src/SeriesPluginConfiguration.py:255
 msgid "Debug: Log file path"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:226
+#: seriesplugin/src/SeriesPluginConfiguration.py:252
 msgid "Debug: Print debug messages (Shell)"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:231
-msgid "Debug: User mail address"
-msgstr ""
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:227
+#: seriesplugin/src/SeriesPluginConfiguration.py:253
 msgid "Debug: Write Log"
 msgstr ""
 
@@ -3809,11 +3808,11 @@ msgstr "(ניתן להגדרה) %i ms הקטן את העיכוב ב"
 msgid "Decrease remaining time"
 msgstr ""
 
-#: teletext/src/plugin.py:1278
+#: imdb/src/plugin.py:43 teletext/src/plugin.py:1278
 msgid "Default"
 msgstr "ברירת מחדל"
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:174
+#: seriesplugin/src/SeriesPluginConfiguration.py:202
 msgid "Default episode"
 msgstr ""
 
@@ -3821,7 +3820,7 @@ msgstr ""
 msgid "Default page"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:173
+#: seriesplugin/src/SeriesPluginConfiguration.py:201
 msgid "Default season"
 msgstr ""
 
@@ -3851,6 +3850,10 @@ msgstr ""
 
 #: startupservice/meta/plugin_startupservice.xml./startupservice/meta/plugin_startupservice.xml
 msgid "Define a startup service for your Dreambox."
+msgstr ""
+
+#: dreamexplorer/src/plugin.py:949
+msgid "Define the new symlink name here:"
 msgstr ""
 
 #: autotimer/src/AutoTimerEditor.py:535
@@ -3897,7 +3900,7 @@ msgstr " שניות אחרי שהשירותים הופעלו x עיקוב"
 #: remotetimer/src/plugin.py:104 zapstatistic/src/plugin.py:431
 #: growlee/src/plugin.py:102 teletext/src/plugin.py:1718
 #: curlytx/src/CurlyTxSettings.py:52 subsdownloader2/src/plugin.py:1076
-#: fritzcall/src/plugin.py:1583 simplerss/src/RSSSetup.py:76
+#: fritzcall/src/plugin.py:1588 simplerss/src/RSSSetup.py:76
 #: ftpbrowser/src/FTPBrowser.py:188 ftpbrowser/src/FTPServerManager.py:258
 #: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:142
 #: fancontrol2/src/FC2webSite.py:177 fancontrol2/src/FC2webSite.py:213
@@ -3948,7 +3951,7 @@ msgid "Delete download"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: zapstatistic/src/plugin.py:562 fritzcall/src/plugin.py:1605
+#: zapstatistic/src/plugin.py:562 fritzcall/src/plugin.py:1610
 msgid "Delete entry"
 msgstr "מחק רשומה"
 
@@ -4052,8 +4055,8 @@ msgstr ""
 msgid "Destination dir '%s' does not exist."
 msgstr ""
 
-#: ofdb/src/plugin.py:224 ofdb/src/plugin.py:385 imdb/src/plugin.py:299
-#: imdb/src/plugin.py:524
+#: ofdb/src/plugin.py:224 ofdb/src/plugin.py:385 imdb/src/plugin.py:316
+#: imdb/src/plugin.py:546
 msgid "Details"
 msgstr ""
 
@@ -4095,11 +4098,11 @@ msgstr " .לא קיימת %s הספרייה"
 msgid "Directory for the Logfiles."
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:619
+#: dreamexplorer/src/plugin.py:565
 msgid "Directory name error !"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:170
+#: seriesplugin/src/SeriesPluginConfiguration.py:242
 msgid "Directory pattern file"
 msgstr ""
 
@@ -4123,6 +4126,10 @@ msgstr ""
 msgid "Disable KiddyTimer"
 msgstr ""
 
+#: dreamexplorer/src/plugin.py:272
+msgid "Disable media filter"
+msgstr ""
+
 #
 #: easyinfo/src/plugin.py:65 easyinfo/src/plugin.py:96
 #: easyinfo/src/plugin.py:104 easymedia/src/plugin.py:55
@@ -4136,10 +4143,6 @@ msgstr ""
 #: teletext/src/plugin.py:70 birthdayreminder/src/plugin.py:42
 msgid "Disabled"
 msgstr "הושבת"
-
-#: dreamexplorer/src/plugin.py:284
-msgid "Disassemble to bytecode..."
-msgstr ""
 
 #: audiosync/src/AC3main.py:75 audiosync/src/AC3main.py:80
 msgid "Discard changes and close plugin"
@@ -4173,7 +4176,7 @@ msgstr ""
 msgid "Display 4:3 content as"
 msgstr "Display 4:3 content as"
 
-#: fritzcall/src/plugin.py:2720
+#: fritzcall/src/plugin.py:2725
 msgid "Display FRITZ!box-Fon calls on screen"
 msgstr ""
 
@@ -4182,11 +4185,11 @@ msgid "Display Fon calls on screen"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1043
+#: fritzcall/src/plugin.py:1045
 msgid "Display all calls"
 msgstr ""
 
-#: fritzcall/src/plugin.py:2004
+#: fritzcall/src/plugin.py:2009
 msgid "Display connection infos"
 msgstr ""
 
@@ -4199,12 +4202,12 @@ msgid "Display first and last row."
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1047
+#: fritzcall/src/plugin.py:1049
 msgid "Display incoming calls"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1045
+#: fritzcall/src/plugin.py:1047
 msgid "Display missed calls"
 msgstr ""
 
@@ -4214,7 +4217,7 @@ msgid "Display more Options"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1049
+#: fritzcall/src/plugin.py:1051
 msgid "Display outgoing calls"
 msgstr ""
 
@@ -4251,7 +4254,7 @@ msgstr ""
 msgid "Do You want to restart GUI to apply changes?"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginRenamer.py:211
+#: seriesplugin/src/SeriesPluginRenamer.py:207
 msgid "Do You want to start renaming?"
 msgstr ""
 
@@ -4260,12 +4263,8 @@ msgid "Do not wake up at the end of next deep standby interval."
 msgstr ""
 
 #. TRANSLATORS: this is a window title.
-#: fritzcall/src/plugin.py:1197
+#: fritzcall/src/plugin.py:1202
 msgid "Do what?"
-msgstr ""
-
-#: dreamexplorer/src/plugin.py:528 dreamexplorer/src/plugin.py:532
-msgid "Do you really want to DELETE:\n"
 msgstr ""
 
 #: merlinmusicplayer/src/plugin.py:1902
@@ -4288,7 +4287,7 @@ msgid ""
 msgstr ""
 
 #: autotimer/src/AutoTimerOverview.py:189 merlinepg/src/plugin.py:588
-#: merlinepg/src/plugin.py:908 seriesplugin/src/SeriesPluginInfoScreen.py:449
+#: merlinepg/src/plugin.py:908 seriesplugin/src/SeriesPluginInfoScreen.py:465
 #, python-format
 msgid "Do you really want to delete %s?"
 msgstr "? %s האם ברצוך למחוק את"
@@ -4299,7 +4298,7 @@ msgid ""
 "(Note that 'Cancel' will not undo this!)"
 msgstr ""
 
-#: ncidclient/src/plugin.py:521 fritzcall/src/plugin.py:1676
+#: ncidclient/src/plugin.py:521 fritzcall/src/plugin.py:1681
 #, python-format
 msgid ""
 "Do you really want to delete entry for\n"
@@ -4346,6 +4345,10 @@ msgstr ""
 msgid "Do you really want to delete this entry?"
 msgstr ""
 
+#: dreamexplorer/src/plugin.py:498
+msgid "Do you really want to delete:\n"
+msgstr ""
+
 #: internetradio/src/InternetRadioScreen.py:551
 msgid "Do you really want to stop the recording?"
 msgstr ""
@@ -4355,7 +4358,12 @@ msgstr ""
 msgid "Do you want to enter a username and password for this host?\n"
 msgstr "?האם אתה מעוניין להכניס משתמש וסיסמא לשרת הזה\n"
 
-#: dreamexplorer/src/plugin.py:290 subsdownloader2/src/plugin.py:954
+#: dreamexplorer/src/plugin.py:235
+#, python-format
+msgid "Do you want to execute %s?\n"
+msgstr ""
+
+#: subsdownloader2/src/plugin.py:954
 msgid "Do you want to execute?\\n"
 msgstr ""
 
@@ -4373,7 +4381,7 @@ msgstr ""
 msgid "Do you want to see more entries?"
 msgstr "? האם ברצונך לראות עוד ערכים"
 
-#: dreamexplorer/src/plugin.py:435
+#: dreamexplorer/src/plugin.py:365
 msgid "Do you want to set\n"
 msgstr ""
 
@@ -4397,7 +4405,8 @@ msgstr ""
 msgid "Don't download before:"
 msgstr ""
 
-#: seriesplugin/src/Channels.py:336 pushservice/src/PushServiceBase.py:220
+#: seriesplugin/src/Channels.py:278 seriesplugin/src/XMLTVBase.py:74
+#: pushservice/src/PushServiceBase.py:220
 msgid "Don't edit this manually unless you really know what you are doing"
 msgstr ""
 
@@ -4527,7 +4536,7 @@ msgstr ""
 msgid "Downloading"
 msgstr "מוריד"
 
-#: ofdb/src/plugin.py:444 imdb/src/plugin.py:579
+#: ofdb/src/plugin.py:444 imdb/src/plugin.py:619
 #, python-format
 msgid "Downloading Movie Poster: %s..."
 msgstr ""
@@ -4567,46 +4576,37 @@ msgstr ""
 msgid "Downloads directory:"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:1219
+#: dreamexplorer/src/plugin.py:949
 msgid "Dream Explorer..."
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:91 dreamexplorer/src/plugin.py:303
-#: dreamexplorer/src/plugin.py:316 dreamexplorer/src/plugin.py:342
-#: dreamexplorer/src/plugin.py:351 dreamexplorer/src/plugin.py:365
-#: dreamexplorer/src/plugin.py:386 dreamexplorer/src/plugin.py:392
-#: dreamexplorer/src/plugin.py:409 dreamexplorer/src/plugin.py:489
-#: dreamexplorer/src/plugin.py:519 dreamexplorer/src/plugin.py:544
-#: dreamexplorer/src/plugin.py:556 dreamexplorer/src/plugin.py:580
-#: dreamexplorer/src/plugin.py:592 dreamexplorer/src/plugin.py:601
-#: dreamexplorer/src/plugin.py:611 dreamexplorer/src/plugin.py:620
-#: dreamexplorer/src/plugin.py:630 dreamexplorer/src/plugin.py:661
-#: dreamexplorer/src/plugin.py:671 dreamexplorer/src/plugin.py:1139
-#: dreamexplorer/src/plugin.py:1157 dreamexplorer/src/plugin.py:1162
-#: dreamexplorer/src/plugin.py:1226 dreamexplorer/src/plugin.py:1250
+#: dreamexplorer/src/plugin.py:78 dreamexplorer/src/plugin.py:242
+#: dreamexplorer/src/plugin.py:255 dreamexplorer/src/plugin.py:268
+#: dreamexplorer/src/plugin.py:311 dreamexplorer/src/plugin.py:329
+#: dreamexplorer/src/plugin.py:334 dreamexplorer/src/plugin.py:442
+#: dreamexplorer/src/plugin.py:471 dreamexplorer/src/plugin.py:475
+#: dreamexplorer/src/plugin.py:477 dreamexplorer/src/plugin.py:540
+#: dreamexplorer/src/plugin.py:548 dreamexplorer/src/plugin.py:557
+#: dreamexplorer/src/plugin.py:565 dreamexplorer/src/plugin.py:574
+#: dreamexplorer/src/plugin.py:812 dreamexplorer/src/plugin.py:822
+#: dreamexplorer/src/plugin.py:868 dreamexplorer/src/plugin.py:870
+#: dreamexplorer/src/plugin.py:955
 msgid "Dream-Explorer"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:533
-msgid "Dream-Explorer - DELETE DIRECTORY..."
+#: dreamexplorer/src/plugin.py:498
+#, python-format
+msgid "Dream-Explorer - Delete %s..."
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:529
-msgid "Dream-Explorer - DELETE file..."
-msgstr ""
-
-#: dreamexplorer/src/plugin.py:286
-msgid "Dream-Explorer : Disassemble..."
-msgstr ""
-
-#: dreamexplorer/src/plugin.py:263 dreamexplorer/src/plugin.py:268
-#: dreamexplorer/src/plugin.py:273 dreamexplorer/src/plugin.py:281
+#: dreamexplorer/src/plugin.py:215 dreamexplorer/src/plugin.py:224
+#: dreamexplorer/src/plugin.py:230
 msgid "Dream-Explorer : Install..."
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:436 dreamexplorer/src/plugin.py:524
-#: dreamexplorer/src/plugin.py:562 dreamexplorer/src/plugin.py:636
-#: dreamexplorer/src/plugin.py:757 subsdownloader2/src/plugin.py:1246
+#: dreamexplorer/src/plugin.py:365 dreamexplorer/src/plugin.py:483
+#: dreamexplorer/src/plugin.py:511 dreamexplorer/src/plugin.py:579
+#: dreamexplorer/src/plugin.py:667 subsdownloader2/src/plugin.py:1246
 msgid "Dream-Explorer..."
 msgstr ""
 
@@ -4626,11 +4626,24 @@ msgstr ""
 msgid "Dreambox OS Version"
 msgstr ""
 
+#: dreamexplorer/src/plugin.py:442
+msgid "Dreambox model: "
+msgstr ""
+
 #: pushservice/src/ConfigScreen.py:188
 msgid "Dreambox name"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:488 subsdownloader2/src/plugin.py:359
+#: dreamexplorer/src/plugin.py:371
+msgid ""
+"Dreambox-Explorer\n"
+"original version by Vali (2010)\n"
+"new version by Dre (2016)\n"
+"\n"
+"Support & help: board.dreambox-tools.info"
+msgstr ""
+
+#: subsdownloader2/src/plugin.py:359
 msgid "Dreambox: "
 msgstr ""
 
@@ -4671,14 +4684,6 @@ msgstr ""
 
 #: youtubeplayer/src/YouTubeUserConfig.py:142
 msgid "E-Mail Address"
-msgstr ""
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:216
-msgid "E2: Composition of the recording filenames"
-msgstr ""
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:234
-msgid "E2: Enable recording debug (Timer log)"
 msgstr ""
 
 #: epgcopy/src/plugin.py:154
@@ -4843,7 +4848,7 @@ msgstr ""
 msgid "EPGsearch is not installed!"
 msgstr ""
 
-#: remotetimer/src/plugin.py:372
+#: remotetimer/src/plugin.py:375
 #, python-format
 msgid ""
 "ERROR - Set Timer on Remote DreamBox via WebIf:\n"
@@ -4929,7 +4934,7 @@ msgstr ""
 #: ncidclient/src/plugin.py:445 weatherplugin/src/setup.py:79
 #: advhdmi/src/AdvHdmiCecSetup.py:214 partnerbox/src/PartnerboxSetup.py:131
 #: pipservicerelation/src/plugin.py:88 teletext/src/plugin.py:1720
-#: serienfilm/src/SerienFilm.py:65 fritzcall/src/plugin.py:1587
+#: serienfilm/src/SerienFilm.py:65 fritzcall/src/plugin.py:1592
 #: ftpbrowser/src/FTPServerManager.py:260
 #: birthdayreminder/src/BirthdayReminder.py:267
 #: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:141
@@ -4981,7 +4986,7 @@ msgid "Edit Timer"
 msgstr ""
 
 #. TRANSLATORS: description of AutoTimer in PluginBrowser
-#: autotimer/src/plugin.py:202 autotimer/src/plugin.py:209
+#: autotimer/src/plugin.py:206 autotimer/src/plugin.py:213
 msgid "Edit Timers and scan for new Events"
 msgstr "ערוך טיימרים וסרוק לאירועים חדשים"
 
@@ -4993,8 +4998,13 @@ msgstr ""
 msgid "Edit birthdays"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:776 subsdownloader2/src/plugin.py:1265
+#: subsdownloader2/src/plugin.py:1265
 msgid "Edit line "
+msgstr ""
+
+#: dreamexplorer/src/plugin.py:690
+#, python-format
+msgid "Edit line: %d"
 msgstr ""
 
 #: autotimer/src/AutoTimerOverview.py:222
@@ -5006,7 +5016,7 @@ msgid "Edit selected AutoTimer"
 msgstr "ערוך טיימר אוטומטי נבחר"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1609
+#: fritzcall/src/plugin.py:1614
 msgid "Edit selected entry"
 msgstr ""
 
@@ -5209,7 +5219,7 @@ msgstr ""
 msgid "Enable PushService"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:148
+#: seriesplugin/src/SeriesPluginConfiguration.py:160
 msgid "Enable SeriesPlugin"
 msgstr ""
 
@@ -5248,6 +5258,14 @@ msgstr ""
 
 #: partnerbox/src/PartnerboxSetup.py:81
 msgid "Enable first Partnerbox-entry in Timeredit as default"
+msgstr ""
+
+#: dreamexplorer/src/plugin.py:274
+msgid "Enable media filter"
+msgstr ""
+
+#: seriesplugin/src/SeriesPluginConfiguration.py:268
+msgid "Enable recording debug (Timer log)"
 msgstr ""
 
 #
@@ -5354,7 +5372,7 @@ msgid "Ends"
 msgstr ""
 
 #
-#: youtubeplayer/src/YouTubeSearchDialog.py:121
+#: imdb/src/plugin.py:43 youtubeplayer/src/YouTubeSearchDialog.py:121
 msgid "English"
 msgstr "אנגלית"
 
@@ -5401,7 +5419,7 @@ msgstr ""
 msgid "Enter IP to scan..."
 msgstr ""
 
-#: ncidclient/src/plugin.py:643 fritzcall/src/plugin.py:1812
+#: ncidclient/src/plugin.py:643 fritzcall/src/plugin.py:1817
 msgid "Enter Search Terms"
 msgstr ""
 
@@ -5462,7 +5480,7 @@ msgstr ":הכנס סיסמא"
 msgid "Enter pin code"
 msgstr ":הכנס קוד אבטחה"
 
-#: imdb/src/plugin.py:343
+#: imdb/src/plugin.py:363
 msgid "Enter search"
 msgstr ""
 
@@ -5483,7 +5501,7 @@ msgstr ":הכנס שם שיתוף"
 msgid "Enter text for page %s"
 msgstr ""
 
-#: imdb/src/plugin.py:387 epgsearch/src/EPGSearch.py:220
+#: imdb/src/plugin.py:409 epgsearch/src/EPGSearch.py:220
 #: internetradio/src/InternetRadioScreen.py:900 ecasa/src/EcasaGui.py:334
 #: moviesearch/src/plugin.py:85
 msgid "Enter text to search for"
@@ -5545,18 +5563,18 @@ msgstr ""
 msgid "Entry %s/%s"
 msgstr ""
 
-#: ncidclient/src/plugin.py:609 fritzcall/src/plugin.py:1764
+#: ncidclient/src/plugin.py:609 fritzcall/src/plugin.py:1769
 msgid "Entry incomplete."
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:166
+#: seriesplugin/src/SeriesPluginConfiguration.py:241
 msgid "Episode pattern file"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:304
+#: seriesplugin/src/SeriesPluginInfoScreen.py:318
 #, python-brace-format
 msgid ""
-"Episode: {episode:d}\n"
+"Episode: {rawepisode:s}\n"
 "{title:s}"
 msgstr ""
 
@@ -5586,15 +5604,7 @@ msgstr ""
 msgid "Error by processing the skin file !!!"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:302
-msgid "Error by reading bookmarks !!!"
-msgstr ""
-
-#: dreamexplorer/src/plugin.py:391 dreamexplorer/src/plugin.py:408
-msgid "Error by writing bookmarks !!!"
-msgstr ""
-
-#: seriesplugin/src/ChannelEditor.py:175 seriesplugin/src/ChannelEditor.py:220
+#: seriesplugin/src/ChannelEditor.py:246 seriesplugin/src/ChannelEditor.py:291
 msgid "Error check log file"
 msgstr ""
 
@@ -5639,16 +5649,6 @@ msgstr ""
 msgid "Error getting movies"
 msgstr ""
 
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:159
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:163
-#: seriesplugin/src/Identifiers/SerienServer.py:63
-#: seriesplugin/src/Identifiers/Fernsehserien.py:126
-#: seriesplugin/src/Identifiers/Fernsehserien.py:130
-#: seriesplugin/src/Identifiers/Wunschliste.py:133
-#: seriesplugin/src/Identifiers/Wunschliste.py:137
-msgid "Error install"
-msgstr ""
-
 #: vlcplayer/src/VlcMediaList.py:186
 #, python-format
 msgid ""
@@ -5682,6 +5682,10 @@ msgid ""
 "%s"
 msgstr ""
 
+#: seriesplugin/src/SeriesPlugin.py:141
+msgid "Error missing dependency"
+msgstr ""
+
 #: youtubeplayer/src/YouTubeList.py:358
 #, python-format
 msgid ""
@@ -5708,6 +5712,10 @@ msgstr ""
 msgid ""
 "Error querying playlist-feed for playlist %s:\n"
 "%s"
+msgstr ""
+
+#: dreamexplorer/src/plugin.py:254
+msgid "Error reading bookmarks"
 msgstr ""
 
 #: birthdayreminder/src/BirthdayReminder.py:73
@@ -5801,6 +5809,10 @@ msgid ""
 "%s"
 msgstr ""
 
+#: dreamexplorer/src/plugin.py:334
+msgid "Error writing bookmarks"
+msgstr ""
+
 #: birthdayreminder/src/BirthdayReminder.py:86
 #: birthdayreminder/src/BirthdayReminder.py:126
 #, python-format
@@ -5831,7 +5843,7 @@ msgid ""
 "Error Text: %s"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:779 subsdownloader2/src/plugin.py:1268
+#: subsdownloader2/src/plugin.py:1268
 msgid "Error..."
 msgstr ""
 
@@ -5914,13 +5926,17 @@ msgstr ""
 msgid "Execute cuts..."
 msgstr ""
 
+#: dreamexplorer/src/plugin.py:234
+msgid "Execute script"
+msgstr ""
+
 #: moviecut/meta/plugin_moviecut.xml./moviecut/meta/plugin_moviecut.xml
 msgid ""
 "Execute the cuts, as set by the CutlistEditor,by physically removing "
 "unwanted parts from the files."
 msgstr ""
 
-#: ofdb/src/plugin.py:141 imdb/src/plugin.py:176
+#: ofdb/src/plugin.py:141 imdb/src/plugin.py:169
 #: serienfilm/src/SerienFilm.py:59 subsdownloader2/src/plugin.py:1075
 #: ftpbrowser/src/FTPBrowser.py:186 ftpbrowser/src/FTPServerManager.py:151
 msgid "Exit"
@@ -5946,7 +5962,7 @@ msgstr ""
 msgid "Expert"
 msgstr "הגדרות מומחים"
 
-#: dreamexplorer/src/plugin.py:90
+#: dreamexplorer/src/plugin.py:77
 msgid "Explore your Dreambox."
 msgstr ""
 
@@ -5966,11 +5982,11 @@ msgstr ""
 msgid "Extended Control Range"
 msgstr ""
 
-#: fritzcall/src/plugin.py:2000
+#: fritzcall/src/plugin.py:2005
 msgid "Extended Search for faces"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1999
+#: fritzcall/src/plugin.py:2004
 msgid "Extended Search for names"
 msgstr ""
 
@@ -5982,7 +5998,7 @@ msgstr ""
 msgid "Extended search filter"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1972
+#: fritzcall/src/plugin.py:1977
 msgid "Extension number to initiate call on"
 msgstr ""
 
@@ -5995,7 +6011,7 @@ msgstr "תוספות"
 msgid "Extensions menu"
 msgstr ""
 
-#: imdb/src/plugin.py:601
+#: imdb/src/plugin.py:639
 msgid "Extra Info"
 msgstr ""
 
@@ -6021,37 +6037,37 @@ msgid "FILELIST_YOUNGEST"
 msgstr ""
 
 #: fritzcall/src/FritzCallFBF.py:558 fritzcall/src/FritzCallFBF.py:1478
-#: fritzcall/src/FritzCallFBF.py:2166 fritzcall/src/FritzCallFBF.py:2929
+#: fritzcall/src/FritzCallFBF.py:2169 fritzcall/src/FritzCallFBF.py:2939
 #, python-format
 msgid "FRITZ!Box - Could not load calls: %s"
 msgstr ""
 
 #: fritzcall/src/FritzCallFBF.py:414 fritzcall/src/FritzCallFBF.py:1387
-#: fritzcall/src/FritzCallFBF.py:2064 fritzcall/src/FritzCallFBF.py:2829
+#: fritzcall/src/FritzCallFBF.py:2064 fritzcall/src/FritzCallFBF.py:2837
 #, python-format
 msgid "FRITZ!Box - Could not load phonebook: %s"
 msgstr ""
 
 #: fritzcall/src/FritzCallFBF.py:602 fritzcall/src/FritzCallFBF.py:1522
-#: fritzcall/src/FritzCallFBF.py:2204
+#: fritzcall/src/FritzCallFBF.py:2207
 #, python-format
 msgid "FRITZ!Box - Dialling failed: %s"
 msgstr ""
 
 #: fritzcall/src/FritzCallFBF.py:1099 fritzcall/src/FritzCallFBF.py:1798
-#: fritzcall/src/FritzCallFBF.py:2603 fritzcall/src/FritzCallFBF.py:3395
+#: fritzcall/src/FritzCallFBF.py:2611 fritzcall/src/FritzCallFBF.py:3403
 #, python-format
 msgid "FRITZ!Box - Error getting blacklist: %s"
 msgstr ""
 
 #: fritzcall/src/FritzCallFBF.py:1001 fritzcall/src/FritzCallFBF.py:1716
-#: fritzcall/src/FritzCallFBF.py:2513 fritzcall/src/FritzCallFBF.py:3302
+#: fritzcall/src/FritzCallFBF.py:2521 fritzcall/src/FritzCallFBF.py:3312
 #, python-format
 msgid "FRITZ!Box - Error getting status: %s"
 msgstr ""
 
 #: fritzcall/src/FritzCallFBF.py:212 fritzcall/src/FritzCallFBF.py:1220
-#: fritzcall/src/FritzCallFBF.py:1913 fritzcall/src/FritzCallFBF.py:2715
+#: fritzcall/src/FritzCallFBF.py:1913 fritzcall/src/FritzCallFBF.py:2723
 msgid ""
 "FRITZ!Box - Error logging in\n"
 "\n"
@@ -6063,7 +6079,7 @@ msgid "FRITZ!Box - Error logging in: %s"
 msgstr ""
 
 #: fritzcall/src/FritzCallFBF.py:226 fritzcall/src/FritzCallFBF.py:1241
-#: fritzcall/src/FritzCallFBF.py:1928 fritzcall/src/FritzCallFBF.py:2730
+#: fritzcall/src/FritzCallFBF.py:1928 fritzcall/src/FritzCallFBF.py:2738
 #, python-format
 msgid ""
 "FRITZ!Box - Error logging in: %s\n"
@@ -6071,18 +6087,18 @@ msgid ""
 msgstr ""
 
 #: fritzcall/src/FritzCallFBF.py:248 fritzcall/src/FritzCallFBF.py:1263
-#: fritzcall/src/FritzCallFBF.py:1949 fritzcall/src/FritzCallFBF.py:2750
+#: fritzcall/src/FritzCallFBF.py:1949 fritzcall/src/FritzCallFBF.py:2758
 #, python-format
 msgid "FRITZ!Box - Error logging out: %s"
 msgstr ""
 
 #: fritzcall/src/FritzCallFBF.py:1049 fritzcall/src/FritzCallFBF.py:1762
-#: fritzcall/src/FritzCallFBF.py:2553 fritzcall/src/FritzCallFBF.py:3342
+#: fritzcall/src/FritzCallFBF.py:2561 fritzcall/src/FritzCallFBF.py:3352
 #, python-format
 msgid "FRITZ!Box - Error resetting: %s"
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:2324 fritzcall/src/FritzCallFBF.py:3070
+#: fritzcall/src/FritzCallFBF.py:2327 fritzcall/src/FritzCallFBF.py:3080
 #, python-format
 msgid "FRITZ!Box - Failed changing GuestAccess: %s"
 msgstr ""
@@ -6093,38 +6109,38 @@ msgid "FRITZ!Box - Failed changing Mailbox: %s"
 msgstr ""
 
 #: fritzcall/src/FritzCallFBF.py:649 fritzcall/src/FritzCallFBF.py:1570
-#: fritzcall/src/FritzCallFBF.py:2260 fritzcall/src/FritzCallFBF.py:3000
+#: fritzcall/src/FritzCallFBF.py:2263 fritzcall/src/FritzCallFBF.py:3010
 #, python-format
 msgid "FRITZ!Box - Failed changing WLAN: %s"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1948
+#: fritzcall/src/plugin.py:1953
 msgid "FRITZ!Box FON address (Name or IP)"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1949
+#: fritzcall/src/plugin.py:1954
 msgid "FRITZ!Box FON firmware version"
 msgstr ""
 
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:748 fritzcall/src/plugin.py:1895
-#: fritzcall/src/plugin.py:1922 fritzcall/src/plugin.py:2723
+#: fritzcall/src/plugin.py:750 fritzcall/src/plugin.py:1900
+#: fritzcall/src/plugin.py:1927 fritzcall/src/plugin.py:2728
 msgid "FRITZ!Box Fon Status"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1982
+#: fritzcall/src/plugin.py:1987
 msgid "FRITZ!Box PhoneBook to read"
 msgstr ""
 
-#: fritzcall/src/plugin.py:2627
+#: fritzcall/src/plugin.py:2632
 msgid ""
 "FRITZ!Box firmware version not configured! Please set it in the "
 "configuration."
 msgstr ""
 
-#: fritzcall/src/plugin.py:1302
+#: fritzcall/src/plugin.py:1307
 msgid "FRITZ!Box not available for calling"
 msgstr ""
 
@@ -6299,7 +6315,11 @@ msgstr ""
 msgid "File Size"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:600
+#: dreamexplorer/src/plugin.py:242
+msgid "File is too big to display content"
+msgstr ""
+
+#: dreamexplorer/src/plugin.py:548
 msgid "File name error !"
 msgstr ""
 
@@ -6370,7 +6390,7 @@ msgstr "מסנן"
 msgid "Filter Services"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1956
+#: fritzcall/src/plugin.py:1961
 msgid "Filter also list of calls"
 msgstr ""
 
@@ -6484,7 +6504,7 @@ msgstr ""
 msgid "Found Log(s)"
 msgstr ""
 
-#: autotimer/src/plugin.py:166 autotimer/src/AutoTimerResource.py:96
+#: autotimer/src/plugin.py:169 autotimer/src/AutoTimerResource.py:96
 #: epgrefresh/src/EPGRefresh.py:419
 #, python-format
 msgid ""
@@ -6507,7 +6527,7 @@ msgstr ""
 msgid "Found no Enclosure we can display."
 msgstr ""
 
-#: fritzcall/src/plugin.py:1206 fritzcall/src/plugin.py:2240
+#: fritzcall/src/plugin.py:1211 fritzcall/src/plugin.py:2245
 #, python-format
 msgid ""
 "Found picture\n"
@@ -6517,7 +6537,7 @@ msgid ""
 "But did not load. Probably not PNG, 8-bit"
 msgstr ""
 
-#: ncidclient/src/plugin.py:46 fritzcall/src/plugin.py:154
+#: ncidclient/src/plugin.py:46 fritzcall/src/plugin.py:155
 #: mytube/src/plugin.py:91
 msgid "France"
 msgstr "צרפת"
@@ -6540,7 +6560,7 @@ msgid "Free space warning"
 msgstr ""
 
 #
-#: youtubeplayer/src/YouTubeSearchDialog.py:127
+#: imdb/src/plugin.py:43 youtubeplayer/src/YouTubeSearchDialog.py:127
 msgid "French"
 msgstr "צרפתית"
 
@@ -6584,7 +6604,7 @@ msgid "Frisian"
 msgstr ""
 
 #. TRANSLATORS: this is a window title.
-#: fritzcall/src/plugin.py:1934
+#: fritzcall/src/plugin.py:1939
 msgid "FritzCall Setup"
 msgstr ""
 
@@ -6687,7 +6707,7 @@ msgstr ""
 msgid "GUI to change the ftp and telnet-password"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:267 subsdownloader2/src/plugin.py:936
+#: subsdownloader2/src/plugin.py:936
 msgid "GZ-package:\\n"
 msgstr ""
 
@@ -6763,7 +6783,7 @@ msgid "Georgian"
 msgstr ""
 
 #
-#: youtubeplayer/src/YouTubeSearchDialog.py:131
+#: imdb/src/plugin.py:43 youtubeplayer/src/YouTubeSearchDialog.py:131
 msgid "German"
 msgstr "גרמנית"
 
@@ -6775,7 +6795,7 @@ msgstr ""
 msgid "German traffic information"
 msgstr ""
 
-#: ncidclient/src/plugin.py:44 fritzcall/src/plugin.py:152
+#: ncidclient/src/plugin.py:44 fritzcall/src/plugin.py:153
 #: mytube/src/plugin.py:92
 msgid "Germany"
 msgstr "גרמניה"
@@ -6828,11 +6848,11 @@ msgstr ""
 msgid "Getting Partnerbox Information..."
 msgstr ""
 
-#: fritzcall/src/plugin.py:1051 fritzcall/src/plugin.py:1106
+#: fritzcall/src/plugin.py:1053 fritzcall/src/plugin.py:1111
 msgid "Getting calls from FRITZ!Box..."
 msgstr ""
 
-#: fritzcall/src/plugin.py:531 fritzcall/src/plugin.py:697
+#: fritzcall/src/plugin.py:533 fritzcall/src/plugin.py:699
 msgid "Getting status from FRITZ!Box Fon..."
 msgstr ""
 
@@ -6960,15 +6980,15 @@ msgstr ""
 msgid "Guess existing timer based on begin/end"
 msgstr ""
 
-#: fritzcall/src/plugin.py:736 fritzcall/src/plugin.py:926
+#: fritzcall/src/plugin.py:738 fritzcall/src/plugin.py:928
 msgid "Guest access"
 msgstr ""
 
-#: fritzcall/src/plugin.py:897
+#: fritzcall/src/plugin.py:899
 msgid "Guest access not active"
 msgstr ""
 
-#: fritzcall/src/plugin.py:893
+#: fritzcall/src/plugin.py:895
 msgid "Guest access on "
 msgstr ""
 
@@ -7221,32 +7241,52 @@ msgstr ""
 msgid "IMDb"
 msgstr ""
 
-#: imdb/src/plugin.py:525 imdb/src/plugin.py:607
+#: imdb/src/plugin.py:156
+msgid "IMDb - Internet Movie Database"
+msgstr ""
+
+#: imdb/src/plugin.py:745 imdb/src/plugin.py:763 imdb/src/plugin.py:766
+msgid "IMDb Details"
+msgstr ""
+
+#: imdb/src/plugin.py:547 imdb/src/plugin.py:646
 msgid "IMDb Details parsed"
 msgstr ""
 
-#: imdb/src/plugin.py:463
+#: imdb/src/plugin.py:474
 msgid "IMDb Download completed"
 msgstr ""
 
-#: imdb/src/plugin.py:507
+#: imdb/src/plugin.py:528
 msgid "IMDb Download failed"
 msgstr ""
 
-#: imdb/src/plugin.py:634
+#: imdb/src/plugin.py:377
+msgid "IMDb Menu"
+msgstr ""
+
+#: imdb/src/plugin.py:676
 msgid "IMDb Plugin"
 msgstr ""
 
-#: imdb/src/plugin.py:515
+#: imdb/src/plugin.py:536
 msgid "IMDb Re-Download completed"
+msgstr ""
+
+#: imdb/src/plugin.py:683
+msgid "IMDb Setup"
 msgstr ""
 
 #: merlinepg/src/plugin.py:552
 msgid "IMDb info"
 msgstr ""
 
-#: imdb/src/plugin.py:504
+#: imdb/src/plugin.py:525
 msgid "IMDb query failed!"
+msgstr ""
+
+#: imdb/src/plugin.py:704
+msgid "IMDb query language"
 msgstr ""
 
 #: partnerbox/src/PartnerboxSetup.py:127 partnerbox/src/PartnerboxSetup.py:264
@@ -7259,7 +7299,7 @@ msgstr ""
 msgid "IP Address"
 msgstr "IP כתובת"
 
-#: fritzcall/src/plugin.py:775 fritzcall/src/plugin.py:777
+#: fritzcall/src/plugin.py:777 fritzcall/src/plugin.py:779
 msgid "IP Address:"
 msgstr ""
 
@@ -7272,7 +7312,7 @@ msgstr ""
 msgid "IPKG Update Notification"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:280 subsdownloader2/src/plugin.py:949
+#: subsdownloader2/src/plugin.py:949
 msgid "IPKG-package:\\n"
 msgstr ""
 
@@ -7308,6 +7348,12 @@ msgid ""
 "of invalid EPG-Data, normaly the EPG-File will not be there on next boot, so "
 "there won't be a bootloop. So EPG-Backup counts unsuccesfully boots and "
 "won't be restore a backupfile if the counter reaches a configurable value."
+msgstr ""
+
+#: seriesplugin/src/ChannelEditor.py:195
+msgid ""
+"If You are using SD and HD channels in parallel, You have to match both "
+"channels separately!"
 msgstr ""
 
 #: pushservice/src/ConfigScreen.py:431
@@ -7384,7 +7430,7 @@ msgstr ""
 #, python-format
 msgid ""
 "If this is enabled an existing timer will also be considered recording an "
-"event if it records at least 80%% of it."
+"event if it records at least 80% of it."
 msgstr ""
 
 #: epgrefresh/src/EPGRefreshConfiguration.py:174
@@ -7428,7 +7474,7 @@ msgid ""
 "Picture in Picture."
 msgstr ""
 
-#: fritzcall/src/plugin.py:2005
+#: fritzcall/src/plugin.py:2010
 msgid "Ignore callers with no phone number"
 msgstr ""
 
@@ -7554,11 +7600,11 @@ msgid "Included days:"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1025
+#: fritzcall/src/plugin.py:1027
 msgid "Incoming"
 msgstr ""
 
-#: fritzcall/src/plugin.py:2365
+#: fritzcall/src/plugin.py:2370
 #, python-format
 msgid ""
 "Incoming Call on %(date)s at %(time)s from\n"
@@ -7579,11 +7625,11 @@ msgid ""
 "---------------------------------------------"
 msgstr ""
 
-#: fritzcall/src/plugin.py:167
+#: fritzcall/src/plugin.py:169
 msgid "Incoming calls"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:240 subsdownloader2/src/plugin.py:914
+#: dreamexplorer/src/plugin.py:185 subsdownloader2/src/plugin.py:914
 msgid "Incompatible MerlinMusicPlayer version!"
 msgstr ""
 
@@ -7630,7 +7676,7 @@ msgstr ""
 msgid "Info"
 msgstr "פרטים"
 
-#: dreamexplorer/src/plugin.py:444
+#: dreamexplorer/src/plugin.py:371
 msgid "Info..."
 msgstr ""
 
@@ -7685,10 +7731,6 @@ msgstr ""
 msgid "Initial Voltage"
 msgstr ""
 
-#: dreamexplorer/src/vInputBox.py:40 dreamexplorer/src/plugin.py:1057
-msgid "Input"
-msgstr "Input"
-
 #: merlinmusicplayer/src/plugin.py:1849
 msgid "Insert file to current playing songlist and play next"
 msgstr ""
@@ -7706,7 +7748,7 @@ msgstr "התקן"
 msgid "Install magic buttons"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:261
+#: dreamexplorer/src/plugin.py:213
 msgid "Install new bootlogo..."
 msgstr ""
 
@@ -7718,9 +7760,9 @@ msgstr ""
 msgid "Install round buttons"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:266 dreamexplorer/src/plugin.py:271
-#: dreamexplorer/src/plugin.py:279 subsdownloader2/src/plugin.py:935
-#: subsdownloader2/src/plugin.py:940 subsdownloader2/src/plugin.py:948
+#: dreamexplorer/src/plugin.py:223 dreamexplorer/src/plugin.py:228
+#: subsdownloader2/src/plugin.py:935 subsdownloader2/src/plugin.py:940
+#: subsdownloader2/src/plugin.py:948
 msgid "Install this package"
 msgstr ""
 
@@ -7859,7 +7901,7 @@ msgid ""
 "Press BLUE to add a new restriction and YELLOW to remove the selected one."
 msgstr ""
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:147
+#: imdb/src/plugin.py:43 youtubeplayer/src/YouTubeSearchDialog.py:147
 msgid "Italian"
 msgstr "איטלקית"
 
@@ -7871,7 +7913,7 @@ msgstr ""
 msgid "Italian Weather forecast on Dreambox from www.google.it."
 msgstr ""
 
-#: ncidclient/src/plugin.py:47 fritzcall/src/plugin.py:155
+#: ncidclient/src/plugin.py:47 fritzcall/src/plugin.py:156
 #: mytube/src/plugin.py:100
 msgid "Italy"
 msgstr "איטליה"
@@ -8016,7 +8058,7 @@ msgstr ""
 msgid "Laothian"
 msgstr ""
 
-#: ncidclient/src/plugin.py:828 fritzcall/src/plugin.py:2095
+#: ncidclient/src/plugin.py:828 fritzcall/src/plugin.py:2100
 msgid "Last 10 calls:\n"
 msgstr ""
 
@@ -8122,7 +8164,7 @@ msgid "List of Plugins has been read"
 msgstr ""
 
 #
-#: dreamexplorer/src/myFileList.py:208
+#: dreamexplorer/src/myFileList.py:228
 #: subsdownloader2/src/SourceCode/myFileList.py:205
 msgid "List of Storage Devices"
 msgstr "רשימת התקני אחסון"
@@ -8173,8 +8215,12 @@ msgstr "טען"
 msgid "Load Bouquet"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:142
-msgid "Load channels for bouquet"
+#: seriesplugin/src/ChannelEditor.py:216
+msgid "Load STB channels for bouquet"
+msgstr ""
+
+#: seriesplugin/src/ChannelEditor.py:220
+msgid "Load Web channels for bouquet"
 msgstr ""
 
 #
@@ -8304,7 +8350,8 @@ msgstr ""
 msgid "Location '%s' removed successfully"
 msgstr ""
 
-#: autotimer/src/AutoTimerSettings.py:63
+#: autotimer/src/AutoTimerSettings.py:64
+#: seriesplugin/src/SeriesPluginConfiguration.py:263
 msgid "Location and name of log file"
 msgstr ""
 
@@ -8351,7 +8398,7 @@ msgid "Login not successful"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: ofdb/src/plugin.py:70 imdb/src/plugin.py:91 fritzcall/src/plugin.py:1164
+#: ofdb/src/plugin.py:70 imdb/src/plugin.py:82 fritzcall/src/plugin.py:1169
 msgid "Lookup"
 msgstr ""
 
@@ -8399,7 +8446,7 @@ msgstr ""
 msgid "MSN location search result"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1955
+#: fritzcall/src/plugin.py:1960
 msgid "MSN to show (separated by ,)"
 msgstr ""
 
@@ -8423,7 +8470,7 @@ msgstr ""
 msgid "Mail to or leave empty (From will be used)"
 msgstr ""
 
-#: fritzcall/src/plugin.py:506
+#: fritzcall/src/plugin.py:508
 msgid "Mailbox"
 msgstr ""
 
@@ -8435,7 +8482,7 @@ msgstr ""
 msgid "Main Picture"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:180
+#: seriesplugin/src/SeriesPluginConfiguration.py:206
 msgid "Main bouquet for channel editor"
 msgstr ""
 
@@ -8582,7 +8629,7 @@ msgstr ""
 msgid "Max Toplist Entries"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:193
+#: seriesplugin/src/SeriesPluginConfiguration.py:218
 msgid "Max time drift to match episode"
 msgstr ""
 
@@ -8779,7 +8826,7 @@ msgstr ""
 msgid "Minimum Priority"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1978
+#: fritzcall/src/plugin.py:1983
 msgid "Minutes of uptime of WLAN guest network"
 msgstr ""
 
@@ -8791,11 +8838,11 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1023
+#: fritzcall/src/plugin.py:1025
 msgid "Missed"
 msgstr ""
 
-#: fritzcall/src/plugin.py:168
+#: fritzcall/src/plugin.py:170
 msgid "Missed calls"
 msgstr ""
 
@@ -9230,7 +9277,7 @@ msgstr "השתק"
 msgid "Mute button remote control"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1957
+#: fritzcall/src/plugin.py:1962
 msgid "Mute on call"
 msgstr ""
 
@@ -9238,7 +9285,7 @@ msgstr ""
 msgid "Mute toggled"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:518
+#: dreamexplorer/src/plugin.py:471
 msgid "My Bookmarks"
 msgstr ""
 
@@ -9374,7 +9421,7 @@ msgstr ""
 #: partnerbox/src/RemoteTimerEntry.py:158
 #: partnerbox/src/RemoteTimerEntry.py:470 growlee/src/plugin.py:167
 #: infobartunerstate/src/plugin.py:63 elektro/src/plugin.py:480
-#: fritzcall/src/plugin.py:1748 showclock/src/plugin.py:124
+#: fritzcall/src/plugin.py:1753 showclock/src/plugin.py:124
 #: birthdayreminder/src/BirthdayReminder.py:221
 #: birthdayreminder/src/plugin.py:47
 #: youtubeplayer/src/YouTubeAddPlayList.py:36
@@ -9393,7 +9440,7 @@ msgstr ""
 msgid "Name of DVD"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1974
+#: fritzcall/src/plugin.py:1979
 msgid "Name of WLAN guest network"
 msgstr ""
 
@@ -9473,7 +9520,7 @@ msgstr ""
 #: autotimer/src/AutoTimerEditor.py:1107 growlee/src/plugin.py:101
 #: webbouqueteditor/src/WebComponents/Sources/SatellitesList.py:56
 #: epgrefresh/src/EPGRefreshChannelEditor.py:82
-#: curlytx/src/CurlyTxSettings.py:51 fritzcall/src/plugin.py:1585
+#: curlytx/src/CurlyTxSettings.py:51 fritzcall/src/plugin.py:1590
 #: simplerss/src/RSSSetup.py:75 tageditor/src/plugin.py:49
 msgid "New"
 msgstr "חדש"
@@ -9511,7 +9558,7 @@ msgstr ""
 msgid "New Zealand"
 msgstr "ניו זילנד"
 
-#: fritzcall/src/plugin.py:2235
+#: fritzcall/src/plugin.py:2240
 msgid "New call"
 msgstr ""
 
@@ -9569,7 +9616,7 @@ msgstr ""
 msgid "Next birthday"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:90
+#: seriesplugin/src/ChannelEditor.py:164
 msgid "Next bouquet"
 msgstr ""
 
@@ -9577,7 +9624,7 @@ msgstr ""
 msgid "Next day starts at"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:85
+#: seriesplugin/src/ChannelEditor.py:159
 msgid "Next page"
 msgstr ""
 
@@ -9611,7 +9658,7 @@ msgstr ""
 msgid "No Bouquets to Display"
 msgstr ""
 
-#: fritzcall/src/plugin.py:856
+#: fritzcall/src/plugin.py:858
 msgid "No DECT phone registered"
 msgstr ""
 
@@ -9645,7 +9692,7 @@ msgstr ""
 msgid "No HDMI-Cec-Hooks are registered!"
 msgstr ""
 
-#: imdb/src/plugin.py:492 imdb/src/plugin.py:493
+#: imdb/src/plugin.py:505
 msgid "No IMDb match."
 msgstr ""
 
@@ -9673,11 +9720,11 @@ msgstr ""
 msgid "No Timeshift found to save as recording!"
 msgstr ""
 
-#: fritzcall/src/plugin.py:888
+#: fritzcall/src/plugin.py:890
 msgid "No call redirection active"
 msgstr ""
 
-#: ofdb/src/plugin.py:437 imdb/src/plugin.py:573
+#: ofdb/src/plugin.py:437 imdb/src/plugin.py:602
 msgid "No cast list found in the database."
 msgstr ""
 
@@ -9685,7 +9732,7 @@ msgstr ""
 msgid "No cuts specified"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginTimer.py:188
+#: seriesplugin/src/SeriesPluginTimer.py:181
 msgid "No data available"
 msgstr ""
 
@@ -9693,13 +9740,13 @@ msgstr ""
 msgid "No default storage device found!"
 msgstr ""
 
-#: ofdb/src/plugin.py:383 imdb/src/plugin.py:522
+#: ofdb/src/plugin.py:383 imdb/src/plugin.py:544
 msgid "No details found."
 msgstr ""
 
 #: ncidclient/src/plugin.py:525 ncidclient/src/plugin.py:542
-#: ncidclient/src/plugin.py:634 fritzcall/src/plugin.py:1680
-#: fritzcall/src/plugin.py:1697 fritzcall/src/plugin.py:1803
+#: ncidclient/src/plugin.py:634 fritzcall/src/plugin.py:1685
+#: fritzcall/src/plugin.py:1702 fritzcall/src/plugin.py:1808
 msgid "No entry selected"
 msgstr ""
 
@@ -9726,31 +9773,31 @@ msgstr ""
 msgid "No lyrics found"
 msgstr ""
 
-#: fritzcall/src/plugin.py:836
+#: fritzcall/src/plugin.py:838
 msgid "No mailbox active"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:321
-msgid "No matching episode found"
+#: seriesplugin/src/Identifiers/SerienServer.py:102
+msgid "No match found"
 msgstr ""
 
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:213
-#: seriesplugin/src/Identifiers/SerienServer.py:112
-#: seriesplugin/src/Identifiers/Fernsehserien.py:242
-#: seriesplugin/src/Identifiers/Wunschliste.py:187
-msgid "No matching series found"
+#: seriesplugin/src/Identifiers/SerienServer.py:73
+msgid "No matching channel found."
+msgstr ""
+
+#: seriesplugin/src/SeriesPluginInfoScreen.py:334
+msgid "No matching episode found"
 msgstr ""
 
 #: vlcplayer/src/VlcPlayer.py:449 youtubeplayer/src/DirectYouTubePlayer.py:216
 msgid "No more files in this directory"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:904 dreamexplorer/src/plugin.py:917
 #: subsdownloader2/src/plugin.py:1373 subsdownloader2/src/plugin.py:1386
 msgid "No more picture-files."
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:1005 dreamexplorer/src/plugin.py:1015
+#: dreamexplorer/src/plugin.py:812 dreamexplorer/src/plugin.py:822
 #: subsdownloader2/src/plugin.py:1552 subsdownloader2/src/plugin.py:1562
 msgid "No more playable files."
 msgstr ""
@@ -9777,8 +9824,8 @@ msgstr "!לא נמצא התקן רשת"
 msgid "No page feed URL defined"
 msgstr ""
 
-#: ncidclient/src/plugin.py:798 fritzcall/src/plugin.py:2054
-#: fritzcall/src/plugin.py:2687
+#: ncidclient/src/plugin.py:798 fritzcall/src/plugin.py:2059
+#: fritzcall/src/plugin.py:2692
 msgid "No phonebook"
 msgstr ""
 
@@ -9798,15 +9845,15 @@ msgstr ""
 msgid "No reconnect"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1289
+#: fritzcall/src/plugin.py:1294
 msgid "No result from LDIF"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1287
+#: fritzcall/src/plugin.py:1292
 msgid "No result from Outlook export"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1285
+#: fritzcall/src/plugin.py:1290
 msgid "No result from reverse lookup"
 msgstr ""
 
@@ -9887,7 +9934,7 @@ msgstr ""
 msgid "Not before"
 msgstr ""
 
-#: fritzcall/src/plugin.py:148
+#: fritzcall/src/plugin.py:149
 msgid "Not deactivating after time"
 msgstr ""
 
@@ -9975,7 +10022,7 @@ msgstr ""
 msgid "Nr"
 msgstr ""
 
-#: ncidclient/src/plugin.py:594 fritzcall/src/plugin.py:1749
+#: ncidclient/src/plugin.py:594 fritzcall/src/plugin.py:1754
 msgid "Number"
 msgstr ""
 
@@ -10046,18 +10093,19 @@ msgstr ""
 #: autotimer/src/AutoTimerEditor.py:444 autotimer/src/AutoTimerEditor.py:1105
 #: autotimer/src/AutoTimerImporter.py:46
 #: autotimer/src/AutoTimerImporter.py:120
-#: autotimer/src/AutoTimerSettings.py:80 webinterface/src/WebIfConfig.py:33
-#: partnerbox/src/PartnerboxSetup.py:71 partnerbox/src/PartnerboxSetup.py:252
-#: partnerbox/src/RemoteTimerEntry.py:72 namezap/src/NamezapSetup.py:56
-#: epgsearch/src/EPGSearch.py:378 epgsearch/src/EPGSearchSetup.py:57
-#: dreammediathek/src/plugin.py:82 internetradio/src/InternetRadioSetup.py:50
+#: autotimer/src/AutoTimerSettings.py:81 imdb/src/plugin.py:686
+#: webinterface/src/WebIfConfig.py:33 partnerbox/src/PartnerboxSetup.py:71
+#: partnerbox/src/PartnerboxSetup.py:252 partnerbox/src/RemoteTimerEntry.py:72
+#: namezap/src/NamezapSetup.py:56 epgsearch/src/EPGSearch.py:378
+#: epgsearch/src/EPGSearchSetup.py:57 dreammediathek/src/plugin.py:82
+#: internetradio/src/InternetRadioSetup.py:50
 #: internetradio/src/InternetRadioSetup.py:125
 #: pipservicerelation/src/plugin.py:189
-#: videocolorspace/src/VideoColorSpace.py:81 remotetimer/src/plugin.py:231
+#: videocolorspace/src/VideoColorSpace.py:81 remotetimer/src/plugin.py:233
 #: satloader/src/plugin.py:286 growlee/src/plugin.py:100
 #: movieepg/src/MovieEpgSetup.py:54 vlcplayer/src/VlcServerConfig.py:297
 #: seriesplugin/src/SeriesPluginConfiguration.py:81
-#: seriesplugin/src/ChannelEditor.py:73
+#: seriesplugin/src/ChannelEditor.py:147
 #: infobartunerstate/src/IBTSConfiguration.py:52
 #: merlinmusicplayer/src/plugin.py:2810 merlinmusicplayer/src/plugin.py:2931
 #: lastfm/src/LastFMConfig.py:56 audiosync/src/AC3main.py:67
@@ -10069,8 +10117,8 @@ msgstr ""
 #: 3dsettings/src/plugin.py:173 automatictimerlistcleanup/src/plugin.py:54
 #: curlytx/src/CurlyTxSettings.py:50 curlytx/src/CurlyTxSettings.py:210
 #: emission/src/EmissionBandwidth.py:71 emission/src/EmissionSetup.py:38
-#: babelzapper/src/plugin.py:76 fritzcall/src/plugin.py:1733
-#: fritzcall/src/plugin.py:1887 simplerss/src/RSSSetup.py:27
+#: babelzapper/src/plugin.py:76 fritzcall/src/plugin.py:1738
+#: fritzcall/src/plugin.py:1892 simplerss/src/RSSSetup.py:27
 #: simplerss/src/RSSSetup.py:74 ftpbrowser/src/FTPServerManager.py:152
 #: virtualzap/src/plugin.py:729 ecasa/src/EcasaSetup.py:70
 #: showclock/src/plugin.py:146 movielistpreview/src/plugin.py:144
@@ -10180,6 +10228,17 @@ msgstr ""
 msgid "Old password:"
 msgstr ""
 
+#: dreamexplorer/src/plugin.py:690
+#, python-format
+msgid ""
+"Old:\n"
+" %s"
+msgstr ""
+
+#: dreamexplorer/src/plugin.py:525
+msgid "Old:  "
+msgstr ""
+
 #
 #: internetradio/src/plugin.py:39
 msgid "On"
@@ -10195,23 +10254,23 @@ msgstr "על כל שירות"
 msgid "On same service"
 msgstr "על חלק מהשירותים"
 
-#: fritzcall/src/plugin.py:859
+#: fritzcall/src/plugin.py:861
 msgid "One DECT phone registered"
 msgstr ""
 
-#: fritzcall/src/plugin.py:882
+#: fritzcall/src/plugin.py:884
 msgid "One call redirection active"
 msgstr ""
 
-#: fritzcall/src/plugin.py:848
+#: fritzcall/src/plugin.py:850
 msgid "One mailbox active"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:87
+#: seriesplugin/src/ChannelEditor.py:161
 msgid "One row down"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:86
+#: seriesplugin/src/ChannelEditor.py:160
 msgid "One row up"
 msgstr ""
 
@@ -10311,8 +10370,7 @@ msgstr ""
 msgid "Open unrar Manager"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:341 dreamexplorer/src/plugin.py:350
-#: dreamexplorer/src/plugin.py:364
+#: dreamexplorer/src/plugin.py:311
 msgid "Options:\n"
 msgstr ""
 
@@ -10334,7 +10392,7 @@ msgstr ""
 msgid "Oryginal file name: %s"
 msgstr ""
 
-#: fritzcall/src/plugin.py:158
+#: fritzcall/src/plugin.py:159
 msgid "Others"
 msgstr ""
 
@@ -10352,11 +10410,11 @@ msgid "Outer Bound (+/-)"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1027
+#: fritzcall/src/plugin.py:1029
 msgid "Outgoing"
 msgstr ""
 
-#: fritzcall/src/plugin.py:2367
+#: fritzcall/src/plugin.py:2372
 #, python-format
 msgid ""
 "Outgoing Call on %(date)s at %(time)s to\n"
@@ -10367,7 +10425,7 @@ msgid ""
 "from: %(phone)s"
 msgstr ""
 
-#: fritzcall/src/plugin.py:169
+#: fritzcall/src/plugin.py:171
 msgid "Outgoing calls"
 msgstr ""
 
@@ -10432,10 +10490,6 @@ msgstr ""
 msgid "PWM  %03d"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:348
-msgid "Pack my bootlogo"
-msgstr ""
-
 #: rsdownloader/src/plugin.py:945
 #, python-format
 msgid "Page %d / %d. Push < > to switch the page..."
@@ -10483,7 +10537,7 @@ msgid "Pan&Scan"
 msgstr ""
 
 #
-#: dreamexplorer/src/myFileList.py:210
+#: dreamexplorer/src/myFileList.py:230
 #: subsdownloader2/src/SourceCode/myFileList.py:207
 #: ftpbrowser/src/FTPBrowser.py:103 ftpbrowser/src/FTPBrowser.py:125
 msgid "Parent Directory"
@@ -10560,7 +10614,7 @@ msgstr ""
 msgid "Password (uploaded.to):"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1971
+#: fritzcall/src/plugin.py:1976
 msgid "Password Accessing FRITZ!Box"
 msgstr ""
 
@@ -10569,7 +10623,7 @@ msgstr ""
 msgid "Password Changer"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1977
+#: fritzcall/src/plugin.py:1982
 msgid "Password of WLAN guest network"
 msgstr ""
 
@@ -10682,8 +10736,8 @@ msgstr ""
 
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1066 fritzcall/src/plugin.py:1889
-#: fritzcall/src/plugin.py:2721
+#: fritzcall/src/plugin.py:1068 fritzcall/src/plugin.py:1894
+#: fritzcall/src/plugin.py:2726
 msgid "Phone calls"
 msgstr ""
 
@@ -10691,14 +10745,14 @@ msgstr ""
 msgid "PhoneBook Location"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1996 fritzcall/src/plugin.py:2014
+#: fritzcall/src/plugin.py:2001 fritzcall/src/plugin.py:2019
 msgid "PhoneBook and Faces Location"
 msgstr ""
 
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
-#: ncidclient/src/plugin.py:467 fritzcall/src/plugin.py:1622
-#: fritzcall/src/plugin.py:1891 fritzcall/src/plugin.py:2722
+#: ncidclient/src/plugin.py:467 fritzcall/src/plugin.py:1627
+#: fritzcall/src/plugin.py:1896 fritzcall/src/plugin.py:2727
 msgid "Phonebook"
 msgstr ""
 
@@ -10714,12 +10768,12 @@ msgstr ""
 msgid "Picture in Picture (hidden)"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:385
-msgid "Picture-Player not aviable."
-msgstr ""
-
 #: easymedia/src/plugin.py:533
 msgid "Picture-player is not installed!"
+msgstr ""
+
+#: dreamexplorer/src/plugin.py:329
+msgid "PicturePlayer not available."
 msgstr ""
 
 #: easymedia/src/plugin.py:207
@@ -10778,7 +10832,7 @@ msgstr ""
 msgid "Play Tag Radio..."
 msgstr ""
 
-#: imdb/src/plugin.py:349
+#: imdb/src/plugin.py:370
 msgid "Play Trailer"
 msgstr ""
 
@@ -10915,6 +10969,10 @@ msgstr ""
 msgid "Please enter your search term."
 msgstr ".אנא הכנס את מילות המפתח לחיפוש"
 
+#: seriesplugin/src/SeriesPlugin.py:141
+msgid "Please install missing python paket manually"
+msgstr ""
+
 #: permanenttimeshift/src/plugin.py:901
 msgid ""
 "Please make sure to set up your default storage device in menu -> setup -> "
@@ -10925,6 +10983,10 @@ msgstr ""
 msgid ""
 "Please make sure to set up your storage devices with the storage management "
 "in menu -> setup -> system -> storage devices."
+msgstr ""
+
+#: seriesplugin/src/Identifiers/SerienServer.py:73
+msgid "Please open the Channel Editor and add the channel manually."
 msgstr ""
 
 #: autotimer/src/AutoTimerImporter.py:316
@@ -10945,7 +11007,7 @@ msgstr ""
 msgid "Please select a standard feed or try searching for videos."
 msgstr "Please select a standard feed or try searching for videos."
 
-#: remotetimer/src/plugin.py:301
+#: remotetimer/src/plugin.py:303
 msgid "Please select a subservice to record..."
 msgstr "Please select a subservice to record..."
 
@@ -10974,7 +11036,7 @@ msgstr ""
 msgid "Please select tag to filter..."
 msgstr ""
 
-#: ofdb/src/plugin.py:220 imdb/src/plugin.py:295
+#: ofdb/src/plugin.py:220 imdb/src/plugin.py:313
 msgid "Please select the matching entry"
 msgstr ""
 
@@ -10990,8 +11052,8 @@ msgstr ""
 msgid "Please select your KiddyTimer- option"
 msgstr ""
 
-#: seriesplugin/src/Identifiers/SerienServer.py:110
-msgid "Please try Fernsehserien.de"
+#: seriesplugin/src/SeriesPlugin.py:124
+msgid "Please update it"
 msgstr ""
 
 #: showclock/src/plugin.py:216
@@ -11069,9 +11131,9 @@ msgstr ""
 msgid "Plugin not active"
 msgstr ""
 
-#: fritzcall/src/plugin.py:2045 fritzcall/src/plugin.py:2052
-#: fritzcall/src/plugin.py:2066 fritzcall/src/plugin.py:2678
-#: fritzcall/src/plugin.py:2685 fritzcall/src/plugin.py:2696
+#: fritzcall/src/plugin.py:2050 fritzcall/src/plugin.py:2057
+#: fritzcall/src/plugin.py:2071 fritzcall/src/plugin.py:2683
+#: fritzcall/src/plugin.py:2690 fritzcall/src/plugin.py:2701
 msgid "Plugin not enabled"
 msgstr ""
 
@@ -11127,11 +11189,13 @@ msgstr "פולנית"
 
 #
 #: autotimer/src/AutoTimerSettings.py:42
+#: seriesplugin/src/SeriesPluginConfiguration.py:247
 msgid "Poll Interval (in h)"
 msgstr ""
 
 #
 #: autotimer/src/AutoTimerSettings.py:39
+#: seriesplugin/src/SeriesPluginConfiguration.py:245
 msgid "Poll automatically"
 msgstr ""
 
@@ -11305,7 +11369,7 @@ msgstr ""
 msgid "Prev"
 msgstr "Prev"
 
-#: seriesplugin/src/ChannelEditor.py:84
+#: seriesplugin/src/ChannelEditor.py:158
 msgid "Previeous page"
 msgstr ""
 
@@ -11317,7 +11381,7 @@ msgstr "תצוגה מקדימה"
 msgid "Preview AutoTimer"
 msgstr "תצוגה מקדימה לטיימר אוטומטי"
 
-#: dreamexplorer/src/plugin.py:357
+#: dreamexplorer/src/plugin.py:300
 msgid "Preview all pictures"
 msgstr ""
 
@@ -11341,7 +11405,7 @@ msgstr ""
 msgid "Previous Selection"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:91
+#: seriesplugin/src/ChannelEditor.py:165
 msgid "Previous bouquet"
 msgstr ""
 
@@ -11380,6 +11444,10 @@ msgstr ""
 #: emission/src/EmissionDetailview.py:260
 #, python-format
 msgid "Private: %s"
+msgstr ""
+
+#: seriesplugin/src/ChannelEditor.py:225
+msgid "Problem during loading Webchannels"
 msgstr ""
 
 #: merlinmusicplayer/src/plugin.py:245
@@ -11542,17 +11610,13 @@ msgstr ""
 msgid "Puts the box in standby mode after boot."
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:285
-msgid "Pyc-Script:\\n"
-msgstr ""
-
 #: youtubeplayer/src/YouTubeSearchDialog.py:182
 msgid "Quechua"
 msgstr ""
 
-#: imdb/src/plugin.py:419
+#: imdb/src/plugin.py:458
 #, python-format
-msgid "Query IMDb: %s..."
+msgid "Query IMDb: %s"
 msgstr ""
 
 #: ofdb/src/plugin.py:306
@@ -11560,7 +11624,7 @@ msgstr ""
 msgid "Query OFDb: %s..."
 msgstr ""
 
-#: imdb/src/plugin.py:645 imdb/src/plugin.py:652
+#: imdb/src/plugin.py:763 imdb/src/plugin.py:767
 msgid "Query details from the Internet Movie Database"
 msgstr ""
 
@@ -11628,10 +11692,10 @@ msgid "Quick switching via remote control"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: lastfm/src/plugin.py:210 fritzcall/src/plugin.py:521
-#: fritzcall/src/plugin.py:523 fritzcall/src/plugin.py:678
-#: fritzcall/src/plugin.py:680 fritzcall/src/plugin.py:1041
-#: fritzcall/src/plugin.py:1603
+#: lastfm/src/plugin.py:210 fritzcall/src/plugin.py:523
+#: fritzcall/src/plugin.py:525 fritzcall/src/plugin.py:680
+#: fritzcall/src/plugin.py:682 fritzcall/src/plugin.py:1043
+#: fritzcall/src/plugin.py:1608
 msgid "Quit"
 msgstr ""
 
@@ -11691,7 +11755,8 @@ msgstr "Ratings: "
 msgid "Ratio: %.2f"
 msgstr ""
 
-#: imdb/src/plugin.py:310 imdb/src/plugin.py:482 imdb/src/plugin.py:498
+#: imdb/src/plugin.py:328 imdb/src/plugin.py:495 imdb/src/plugin.py:510
+#: imdb/src/plugin.py:519
 #, python-format
 msgid "Re-Query IMDb: %s..."
 msgstr ""
@@ -11701,7 +11766,7 @@ msgstr ""
 msgid "Re-Query OFDb: %s..."
 msgstr ""
 
-#: fritzcall/src/plugin.py:1979
+#: fritzcall/src/plugin.py:1984
 msgid "Read PhoneBook from FRITZ!Box"
 msgstr ""
 
@@ -11717,7 +11782,7 @@ msgstr ""
 #: autotimer/src/AutoTimerEditor.py:1047 autotimer/src/AutoTimerEditor.py:1218
 #: autotimer/src/AutoTimerImporter.py:235
 #: autotimer/src/AutoTimerOverview.py:203
-#: seriesplugin/src/SeriesPluginConfiguration.py:322
+#: seriesplugin/src/SeriesPluginConfiguration.py:360
 #: infobartunerstate/src/IBTSConfiguration.py:165
 #: epgrefresh/src/EPGRefreshConfiguration.py:348
 #: pushservice/src/ConfigScreen.py:341 serienfilm/src/SerienFilm.py:90
@@ -11838,7 +11903,7 @@ msgstr ""
 #: webinterface/src/WebComponents/Sources/Strings.py:52
 #: internetradio/src/InternetRadioScreen.py:252
 #: internetradio/src/InternetRadioScreen.py:514
-#: seriesplugin/src/SeriesPluginInfoScreen.py:400
+#: seriesplugin/src/SeriesPluginInfoScreen.py:414
 #: permanenttimeshift/src/plugin.py:538
 msgid "Record"
 msgstr "הקלטה"
@@ -11864,11 +11929,11 @@ msgstr ""
 msgid "Record current event"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:168
+#: seriesplugin/src/SeriesPluginConfiguration.py:196
 msgid "Record description episode pattern"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:171
+#: seriesplugin/src/SeriesPluginConfiguration.py:199
 msgid "Record directory pattern"
 msgstr ""
 
@@ -11885,7 +11950,7 @@ msgstr ""
 msgid "Record or zap timer"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginRenamer.py:316
+#: seriesplugin/src/SeriesPluginRenamer.py:312
 #, python-format
 msgid "Record rename has been finished with %d errors:\n"
 msgstr ""
@@ -11898,7 +11963,7 @@ msgstr ""
 msgid "Record started:\n"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:167
+#: seriesplugin/src/SeriesPluginConfiguration.py:195
 msgid "Record title episode pattern"
 msgstr ""
 
@@ -11944,7 +12009,7 @@ msgid "Refresh now"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:529 fritzcall/src/plugin.py:688
+#: fritzcall/src/plugin.py:531 fritzcall/src/plugin.py:690
 msgid "Refresh status"
 msgstr ""
 
@@ -11953,7 +12018,7 @@ msgstr ""
 msgid "Refreshing"
 msgstr ""
 
-#: fritzcall/src/plugin.py:766
+#: fritzcall/src/plugin.py:768
 msgid "Refreshing..."
 msgstr ""
 
@@ -11996,7 +12061,7 @@ msgstr "טען מחדש"
 msgid "Reload current page URL"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1990
+#: fritzcall/src/plugin.py:1995
 msgid "Reload interval for phonebooks (hours)"
 msgstr ""
 
@@ -12043,27 +12108,27 @@ msgstr ""
 msgid "Remote (not connected)"
 msgstr ""
 
-#: partnerbox/src/RemoteTimerEntry.py:344 remotetimer/src/plugin.py:264
+#: partnerbox/src/RemoteTimerEntry.py:344 remotetimer/src/plugin.py:266
 msgid "Remote Timer"
 msgstr ""
 
-#: remotetimer/src/plugin.py:234
+#: remotetimer/src/plugin.py:236
 msgid "Remote Timer - Hostname"
 msgstr ""
 
-#: remotetimer/src/plugin.py:235
+#: remotetimer/src/plugin.py:237
 msgid "Remote Timer - Network IP"
 msgstr ""
 
-#: remotetimer/src/plugin.py:238
+#: remotetimer/src/plugin.py:240
 msgid "Remote Timer - Password"
 msgstr ""
 
-#: remotetimer/src/plugin.py:237
+#: remotetimer/src/plugin.py:239
 msgid "Remote Timer - Username"
 msgstr ""
 
-#: remotetimer/src/plugin.py:236
+#: remotetimer/src/plugin.py:238
 msgid "Remote Timer - WebIf Port"
 msgstr ""
 
@@ -12079,7 +12144,7 @@ msgstr ""
 msgid "Remote-Control for the Transmission BitTorrent client."
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:74
+#: seriesplugin/src/ChannelEditor.py:148
 #: merlinepgcenter/src/MerlinEPGCenter.py:1300
 #: satipclient/src/SatIPTunerSetup.py:38
 #: birthdayreminder/src/BirthdayReminder.py:268
@@ -12091,7 +12156,7 @@ msgstr "הסר"
 msgid "Remove %s from playlist"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:322
+#: seriesplugin/src/ChannelEditor.py:367
 #, python-format
 msgid "Remove '%s'?"
 msgstr ""
@@ -12108,7 +12173,7 @@ msgstr ""
 msgid "Remove Tag"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:96
+#: seriesplugin/src/ChannelEditor.py:170
 msgid "Remove channel"
 msgstr ""
 
@@ -12119,6 +12184,10 @@ msgstr ""
 
 #: pushservice/src/Controller/DeactivatedTimers.py:46
 msgid "Remove deactivated timer(s)"
+msgstr ""
+
+#: dreamexplorer/src/plugin.py:286
+msgid "Remove directory from Bookmarks"
 msgstr ""
 
 #: fstabeditor/src/plugin.py:195 fstabeditor/src/plugin.py:204
@@ -12169,20 +12238,17 @@ msgstr ""
 msgid "Removing directories is not supported."
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:392
+#: seriesplugin/src/SeriesPluginInfoScreen.py:406
 #: subsdownloader2/src/plugin.py:1079 ftpbrowser/src/FTPBrowser.py:187
 msgid "Rename"
 msgstr "שנה שם"
 
-#: dreamexplorer/src/plugin.py:569
-msgid "Rename directory..."
+#: dreamexplorer/src/plugin.py:525
+#, python-format
+msgid "Rename %s..."
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:566
-msgid "Rename file..."
-msgstr ""
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:182
+#: seriesplugin/src/SeriesPluginConfiguration.py:208
 msgid "Rename files"
 msgstr ""
 
@@ -12202,11 +12268,11 @@ msgstr ""
 msgid "Rename your movies"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:579 dreamexplorer/src/plugin.py:591
+#: dreamexplorer/src/plugin.py:540
 #, python-format
 msgid ""
 "Rename: %s \n"
-"FAILED!"
+"failed!"
 msgstr ""
 
 #: ftpbrowser/src/FTPBrowser.py:328 ftpbrowser/src/FTPBrowser.py:347
@@ -12214,7 +12280,7 @@ msgstr ""
 msgid "Renamed %s to %s."
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:433
+#: seriesplugin/src/SeriesPluginInfoScreen.py:449
 msgid "Renaming failed"
 msgstr ""
 
@@ -12251,7 +12317,7 @@ msgstr ""
 msgid "Replace original:"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:176
+#: seriesplugin/src/SeriesPluginConfiguration.py:204
 msgid "Replace special characters in title"
 msgstr ""
 
@@ -12286,16 +12352,16 @@ msgstr "Rescan"
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:473 fritzcall/src/plugin.py:527
-#: fritzcall/src/plugin.py:686 fritzcall/src/plugin.py:691
+#: fritzcall/src/plugin.py:475 fritzcall/src/plugin.py:529
+#: fritzcall/src/plugin.py:688 fritzcall/src/plugin.py:693
 msgid "Reset"
 msgstr "Reset"
 
-#: seriesplugin/src/ChannelEditor.py:337
+#: seriesplugin/src/ChannelEditor.py:382
 msgid "Reset channel list?"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:81
+#: seriesplugin/src/ChannelEditor.py:155
 msgid "Reset channels"
 msgstr ""
 
@@ -12401,7 +12467,7 @@ msgstr ""
 msgid "Results: %s - Page: %s "
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:272
+#: seriesplugin/src/SeriesPluginInfoScreen.py:286
 msgid "Retrieving Season, Episode and Title..."
 msgstr ""
 
@@ -12431,11 +12497,11 @@ msgstr ""
 msgid "Reusable Help-component for other plugins."
 msgstr ""
 
-#: ncidclient/src/plugin.py:741 fritzcall/src/plugin.py:1964
+#: ncidclient/src/plugin.py:741 fritzcall/src/plugin.py:1969
 msgid "Reverse Lookup Caller ID (select country below)"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1262
+#: fritzcall/src/plugin.py:1267
 msgid "Reverse searching..."
 msgstr ""
 
@@ -12482,6 +12548,10 @@ msgstr ""
 
 #: autoresolution/src/plugin.py:321
 msgid "Running in testmode"
+msgstr ""
+
+#: dreamexplorer/src/plugin.py:438
+msgid "Running processes: "
 msgstr ""
 
 #
@@ -12539,11 +12609,11 @@ msgstr ""
 msgid "SNR"
 msgstr "SNR"
 
-#: seriesplugin/src/SeriesPluginBare.py:65
+#: seriesplugin/src/SeriesPluginBare.py:58
 msgid "SP has been finished with errors:\n"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:223
+#: seriesplugin/src/ChannelEditor.py:230
 msgid "STB- / Web-Channel for bouquet:"
 msgstr ""
 
@@ -12617,7 +12687,7 @@ msgstr "שבת"
 #: satloader/src/plugin.py:410 aspectratioswitch/src/plugin.py:121
 #: yttrailer/src/plugin.py:318 kiddytimer/src/KTsetup.py:79
 #: audiosync/src/AC3setup.py:64 serienfilm/src/SerienFilm.py:65
-#: fritzcall/src/plugin.py:1168 ftpbrowser/src/FTPServerManager.py:261
+#: fritzcall/src/plugin.py:1173 ftpbrowser/src/FTPServerManager.py:261
 #: epgbackup/src/EPGBackupConfig.py:56
 #: birthdayreminder/src/BirthdayReminder.py:563
 #: birthdayreminder/src/BirthdayReminder.py:623
@@ -12641,7 +12711,7 @@ msgstr ""
 msgid "Save Timeshift as Movie and stop recording"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:95
+#: seriesplugin/src/ChannelEditor.py:169
 msgid "Save and close"
 msgstr ""
 
@@ -12771,13 +12841,13 @@ msgstr ""
 #: rsdownloader/src/plugin.py:1351 ncidclient/src/plugin.py:447
 #: epgsearch/src/EPGSearch.py:72 epgsearch/src/EPGSearch.py:443
 #: internetradio/src/InternetRadioScreen.py:814 googlemaps/src/plugin.py:211
-#: merlinepgcenter/src/MerlinEPGCenter.py:43 fritzcall/src/plugin.py:1589
+#: merlinepgcenter/src/MerlinEPGCenter.py:43 fritzcall/src/plugin.py:1594
 #: ecasa/src/EcasaGui.py:109 youtubeplayer/src/YouTubeSearchDialog.py:269
 msgid "Search"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1611
+#: fritzcall/src/plugin.py:1616
 msgid "Search (case insensitive)"
 msgstr ""
 
@@ -12799,7 +12869,7 @@ msgstr ""
 msgid "Search Term(s)"
 msgstr "Search Term(s)"
 
-#: imdb/src/plugin.py:350
+#: imdb/src/plugin.py:371
 msgid "Search Trailer"
 msgstr ""
 
@@ -12824,7 +12894,7 @@ msgstr ""
 msgid "Search in iDream database"
 msgstr ""
 
-#: ncidclient/src/plugin.py:643 fritzcall/src/plugin.py:1812
+#: ncidclient/src/plugin.py:643 fritzcall/src/plugin.py:1817
 msgid "Search phonebook"
 msgstr ""
 
@@ -12877,11 +12947,11 @@ msgstr ""
 msgid "Searching InternetRadio for %s..."
 msgstr ""
 
-#: fritzcall/src/plugin.py:1273
+#: fritzcall/src/plugin.py:1278
 msgid "Searching in LDIF..."
 msgstr ""
 
-#: fritzcall/src/plugin.py:1266
+#: fritzcall/src/plugin.py:1271
 msgid "Searching in Outlook export..."
 msgstr ""
 
@@ -12893,17 +12963,17 @@ msgstr "Searching your network. Please wait..."
 msgid "Searching, be patient ..."
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:307
+#: seriesplugin/src/SeriesPluginInfoScreen.py:321
 #, python-brace-format
 msgid ""
-"Season: {season:d}\n"
+"Season: {rawseason:s}\n"
 "{title:s}"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:310
+#: seriesplugin/src/SeriesPluginInfoScreen.py:324
 #, python-brace-format
 msgid ""
-"Season: {season:d}  Episode: {episode:d}\n"
+"Season: {rawseason:s}  Episode: {rawepisode:s}\n"
 "{title:s}"
 msgstr ""
 
@@ -12915,7 +12985,7 @@ msgstr ""
 msgid "Second foreground:"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1975
+#: fritzcall/src/plugin.py:1980
 msgid "Secure WLAN guest network"
 msgstr ""
 
@@ -13016,20 +13086,8 @@ msgstr ""
 msgid "Select contrast."
 msgstr ""
 
-#: imdb/src/plugin.py:344
+#: imdb/src/plugin.py:364
 msgid "Select from EPG"
-msgstr ""
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:160
-msgid "Select identifier for elapsed events"
-msgstr ""
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:164
-msgid "Select identifier for future events"
-msgstr ""
-
-#: seriesplugin/src/SeriesPluginConfiguration.py:162
-msgid "Select identifier for today events"
 msgstr ""
 
 #: ftpbrowser/src/FTPBrowser.py:202
@@ -13153,7 +13211,8 @@ msgstr ""
 msgid "Send as sticky"
 msgstr ""
 
-#: autotimer/src/AutoTimerSettings.py:61
+#: autotimer/src/AutoTimerSettings.py:62
+#: seriesplugin/src/SeriesPluginConfiguration.py:260
 msgid "Send debug messages to shell"
 msgstr ""
 
@@ -13210,33 +13269,37 @@ msgstr ""
 msgid "SeriesPlugin"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:140
+#: seriesplugin/src/SeriesPluginInfoScreen.py:160
 msgid "SeriesPlugin Info"
 msgstr ""
 
-#: seriesplugin/src/plugin.py:147 seriesplugin/src/plugin.py:160
-#: seriesplugin/src/plugin.py:191
+#: seriesplugin/src/plugin.py:153 seriesplugin/src/plugin.py:166
+#: seriesplugin/src/plugin.py:197
 msgid "SeriesPlugin extension exception "
 msgstr ""
 
-#: seriesplugin/src/spChannelContextMenu.py:58 seriesplugin/src/plugin.py:136
+#: seriesplugin/src/spChannelContextMenu.py:58 seriesplugin/src/plugin.py:142
 msgid "SeriesPlugin info exception "
 msgstr ""
 
-#: seriesplugin/src/plugin.py:219 seriesplugin/src/plugin.py:229
-#: seriesplugin/src/plugin.py:239 seriesplugin/src/plugin.py:249
+#: seriesplugin/src/SeriesPluginBare.py:22
+msgid "SeriesPlugin is deactivated"
+msgstr ""
+
+#: seriesplugin/src/plugin.py:225 seriesplugin/src/plugin.py:235
+#: seriesplugin/src/plugin.py:245 seriesplugin/src/plugin.py:255
 msgid "SeriesPlugin label exception "
 msgstr ""
 
-#: seriesplugin/src/plugin.py:181
+#: seriesplugin/src/plugin.py:187
 msgid "SeriesPlugin renamer exception "
 msgstr ""
 
-#: seriesplugin/src/plugin.py:126
+#: seriesplugin/src/plugin.py:132
 msgid "SeriesPlugin setup exception "
 msgstr ""
 
-#: seriesplugin/src/plugin.py:97
+#: seriesplugin/src/plugin.py:100
 msgid "SeriesPlugin test exception "
 msgstr ""
 
@@ -13339,7 +13402,7 @@ msgstr ""
 msgid "Set Restore-File for next boot"
 msgstr ""
 
-#: remotetimer/src/plugin.py:364
+#: remotetimer/src/plugin.py:367
 #, python-format
 msgid ""
 "Set Timer on Remote DreamBox via WebIf:\n"
@@ -13352,7 +13415,7 @@ msgid ""
 "blocked for recordings."
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:361
+#: dreamexplorer/src/plugin.py:304
 msgid "Set archive mode (644)"
 msgstr ""
 
@@ -13366,7 +13429,7 @@ msgstr ""
 msgid "Set delay to %i ms (can be set)"
 msgstr "Set delay to %i ms (can be set)"
 
-#: dreamexplorer/src/plugin.py:362
+#: dreamexplorer/src/plugin.py:305
 msgid "Set executable mode (755)"
 msgstr ""
 
@@ -13382,7 +13445,7 @@ msgstr ""
 msgid "Set search term"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:339
+#: dreamexplorer/src/plugin.py:296
 msgid "Set start directory"
 msgstr ""
 
@@ -13406,7 +13469,7 @@ msgstr ""
 msgid "Setting key canceled"
 msgstr "Setting key canceled"
 
-#: fritzcall/src/plugin.py:911 fritzcall/src/plugin.py:926
+#: fritzcall/src/plugin.py:913 fritzcall/src/plugin.py:928
 msgid "Setting..."
 msgstr ""
 
@@ -13418,11 +13481,11 @@ msgid "Settings"
 msgstr "הגדרות"
 
 #
-#: autotimer/src/AutoTimerOverview.py:221 epgsearch/src/EPGSearch.py:238
-#: seriesplugin/src/plugin.py:273 seriesplugin/src/plugin.py:274
-#: lastfm/src/LastFMConfig.py:27 lastfm/src/plugin.py:209
-#: simplerss/src/RSSScreens.py:459 simplerss/src/RSSScreens.py:464
-#: ecasa/src/EcasaGui.py:353
+#: autotimer/src/AutoTimerOverview.py:221 imdb/src/plugin.py:365
+#: epgsearch/src/EPGSearch.py:238 seriesplugin/src/plugin.py:279
+#: seriesplugin/src/plugin.py:280 lastfm/src/LastFMConfig.py:27
+#: lastfm/src/plugin.py:209 simplerss/src/RSSScreens.py:459
+#: simplerss/src/RSSScreens.py:464 ecasa/src/EcasaGui.py:353
 msgid "Setup"
 msgstr "הגדרות"
 
@@ -13482,7 +13545,7 @@ msgstr "סרטים קצרים"
 
 #: fritzcall/src/FritzCallFBF.py:364 fritzcall/src/FritzCallFBF.py:391
 #: fritzcall/src/FritzCallFBF.py:1375 fritzcall/src/FritzCallFBF.py:2050
-#: fritzcall/src/FritzCallFBF.py:2817
+#: fritzcall/src/FritzCallFBF.py:2825
 msgid "Shortcut"
 msgstr ""
 
@@ -13580,7 +13643,7 @@ msgstr ""
 msgid "Show Advanced Options"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1959
+#: fritzcall/src/plugin.py:1964
 msgid "Show Blocked Calls"
 msgstr ""
 
@@ -13629,7 +13692,7 @@ msgstr ""
 msgid "Show Help"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:155
+#: seriesplugin/src/SeriesPluginConfiguration.py:184
 msgid "Show Info in movie list menu"
 msgstr ""
 
@@ -13666,7 +13729,7 @@ msgstr "הצג הודעה כאשר הקלטה מתחילה"
 msgid "Show Monitor in Extension-Menu"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1960
+#: fritzcall/src/plugin.py:1965
 msgid "Show Outgoing Calls"
 msgstr ""
 
@@ -13686,7 +13749,7 @@ msgstr ""
 msgid "Show Plugin in Extension-Menu"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:156
+#: seriesplugin/src/SeriesPluginConfiguration.py:185
 msgid "Show Rename in movie list menu"
 msgstr ""
 
@@ -13715,7 +13778,7 @@ msgstr ""
 msgid "Show Weather Forecast"
 msgstr ""
 
-#: ncidclient/src/plugin.py:736 fritzcall/src/plugin.py:1951
+#: ncidclient/src/plugin.py:736 fritzcall/src/plugin.py:1956
 msgid "Show after Standby"
 msgstr ""
 
@@ -13762,7 +13825,7 @@ msgid "Show cover arts"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1039 fritzcall/src/plugin.py:1601
+#: fritzcall/src/plugin.py:1041 fritzcall/src/plugin.py:1606
 msgid "Show details of entry"
 msgstr ""
 
@@ -13802,11 +13865,11 @@ msgstr ""
 msgid "Show in User-Scripts"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:154
+#: seriesplugin/src/SeriesPluginConfiguration.py:183
 msgid "Show in channel menu"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:153
+#: seriesplugin/src/SeriesPluginConfiguration.py:182
 msgid "Show in epg menu"
 msgstr ""
 
@@ -13818,17 +13881,21 @@ msgstr "הראה במסך תוספות"
 msgid "Show in extension menu:"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:152
+#: seriesplugin/src/SeriesPluginConfiguration.py:181
 #: curlytx/src/CurlyTxSettings.py:70
 msgid "Show in extensions menu"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:151
+#: seriesplugin/src/SeriesPluginConfiguration.py:180
 msgid "Show in info menu"
 msgstr ""
 
 #: curlytx/src/CurlyTxSettings.py:69
 msgid "Show in main menu"
+msgstr ""
+
+#: imdb/src/plugin.py:705
+msgid "Show in plugin browser"
 msgstr ""
 
 #: pipzap/src/PipzapSetup.py:42
@@ -13887,7 +13954,7 @@ msgstr ""
 msgid "Show on key press"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1953
+#: fritzcall/src/plugin.py:1958
 msgid "Show only calls for specific MSN"
 msgstr ""
 
@@ -13907,7 +13974,7 @@ msgstr ""
 msgid "Show plugin in extensions menu:"
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:79
+#: seriesplugin/src/ChannelEditor.py:153
 msgid "Show popup to add Stb Channel"
 msgstr ""
 
@@ -13947,11 +14014,11 @@ msgstr ""
 msgid "Show stream(s) (WebIf)"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:189
+#: seriesplugin/src/SeriesPluginConfiguration.py:214
 msgid "Show success after Record renaming"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:206
+#: seriesplugin/src/SeriesPluginConfiguration.py:230
 msgid "Show success after Timer handling"
 msgstr ""
 
@@ -14008,11 +14075,11 @@ msgstr ""
 msgid "Show volumebar when volume-value was changed"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:188
+#: seriesplugin/src/SeriesPluginConfiguration.py:213
 msgid "Show warnings after Record renaming"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:205
+#: seriesplugin/src/SeriesPluginConfiguration.py:229
 msgid "Show warnings after Timer handling"
 msgstr ""
 
@@ -14161,6 +14228,10 @@ msgstr ""
 msgid "Skip"
 msgstr ""
 
+#: seriesplugin/src/SeriesPlugin.py:400
+msgid "Skip check during running records (Can be disabled)"
+msgstr ""
+
 #: lastfm/src/plugin.py:206
 msgid "Skip current Track"
 msgstr ""
@@ -14181,32 +14252,23 @@ msgstr ""
 msgid "Skip protected Services"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:197
+#: seriesplugin/src/SeriesPluginConfiguration.py:222
 msgid "Skip search during records"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:196
+#: seriesplugin/src/SeriesPluginConfiguration.py:221
 msgid "Skip search if pattern matches"
 msgstr ""
 
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:174
-#: seriesplugin/src/Identifiers/SerienServer.py:74
-#: seriesplugin/src/Identifiers/Fernsehserien.py:141
-#: seriesplugin/src/Identifiers/Wunschliste.py:148
+#: seriesplugin/src/Identifiers/SerienServer.py:60
 msgid "Skip: No begin timestamp specified"
 msgstr ""
 
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:178
-#: seriesplugin/src/Identifiers/SerienServer.py:78
-#: seriesplugin/src/Identifiers/Fernsehserien.py:145
-#: seriesplugin/src/Identifiers/Wunschliste.py:152
-msgid "Skip: No service specified"
+#: seriesplugin/src/Identifiers/SerienServer.py:64
+msgid "Skip: No service / channel specified"
 msgstr ""
 
-#: seriesplugin/src/Identifiers/WunschlisteFeed.py:170
-#: seriesplugin/src/Identifiers/SerienServer.py:70
-#: seriesplugin/src/Identifiers/Fernsehserien.py:137
-#: seriesplugin/src/Identifiers/Wunschliste.py:144
+#: seriesplugin/src/Identifiers/SerienServer.py:56
 msgid "Skip: No show name specified"
 msgstr ""
 
@@ -14268,19 +14330,15 @@ msgstr ""
 msgid "So that's all you can do?"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:214
+#: seriesplugin/src/SeriesPluginConfiguration.py:238
 msgid "Socket timeout"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:1225 dreamexplorer/src/plugin.py:1249
-msgid "Softlink name error !"
-msgstr ""
-
-#: fritzcall/src/plugin.py:870
+#: fritzcall/src/plugin.py:872
 msgid "Software fax active"
 msgstr ""
 
-#: fritzcall/src/plugin.py:874
+#: fritzcall/src/plugin.py:876
 msgid "Software fax inactive"
 msgstr ""
 
@@ -14382,8 +14440,7 @@ msgstr ""
 msgid "Sort by date (ascending)"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:335 dreamexplorer/src/plugin.py:347
-#: dreamexplorer/src/plugin.py:356
+#: dreamexplorer/src/plugin.py:279
 msgid "Sort by date (bouquet-)"
 msgstr ""
 
@@ -14395,8 +14452,7 @@ msgstr ""
 msgid "Sort by name (ascending)"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:334 dreamexplorer/src/plugin.py:346
-#: dreamexplorer/src/plugin.py:355
+#: dreamexplorer/src/plugin.py:278
 msgid "Sort by name (bouquet+)"
 msgstr ""
 
@@ -14439,7 +14495,7 @@ msgid "Spain"
 msgstr "ספרד"
 
 #
-#: youtubeplayer/src/YouTubeSearchDialog.py:201
+#: imdb/src/plugin.py:43 youtubeplayer/src/YouTubeSearchDialog.py:201
 msgid "Spanish"
 msgstr "ספרדית"
 
@@ -14571,7 +14627,7 @@ msgstr ""
 msgid "Start easy your multimedia plugins with the PVR-button."
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:289 subsdownloader2/src/plugin.py:953
+#: subsdownloader2/src/plugin.py:953
 msgid "Start execution"
 msgstr ""
 
@@ -14645,6 +14701,7 @@ msgid "Startup aspect ratio"
 msgstr ""
 
 #: autotimer/src/AutoTimerSettings.py:40
+#: seriesplugin/src/SeriesPluginConfiguration.py:246
 msgid "Startup delay (in min)"
 msgstr ""
 
@@ -14668,8 +14725,8 @@ msgstr ""
 msgid "Stations"
 msgstr ""
 
-#: fritzcall/src/plugin.py:771 fritzcall/src/plugin.py:799
-#: fritzcall/src/plugin.py:827
+#: fritzcall/src/plugin.py:773 fritzcall/src/plugin.py:801
+#: fritzcall/src/plugin.py:829
 msgid "Status not available"
 msgstr ""
 
@@ -14814,7 +14871,7 @@ msgstr ""
 msgid "Strictly"
 msgstr ""
 
-#: ncidclient/src/plugin.py:765 fritzcall/src/plugin.py:2002
+#: ncidclient/src/plugin.py:765 fritzcall/src/plugin.py:2007
 msgid "Strip Leading 0"
 msgstr ""
 
@@ -14869,7 +14926,7 @@ msgstr ""
 msgid "Successfully moved the movie %s"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:431
+#: seriesplugin/src/SeriesPluginInfoScreen.py:447
 msgid "Successfully renamed"
 msgstr ""
 
@@ -14942,12 +14999,16 @@ msgstr ""
 msgid "Switch to selected Station"
 msgstr ""
 
-#: ncidclient/src/plugin.py:48 fritzcall/src/plugin.py:156
+#: ncidclient/src/plugin.py:48 fritzcall/src/plugin.py:157
 msgid "Switzerland"
 msgstr ""
 
 #: satloader/src/plugin.py:439
 msgid "Symbol Rate:"
+msgstr ""
+
+#: dreamexplorer/src/plugin.py:955
+msgid "Symlink name error!"
 msgstr ""
 
 #
@@ -15262,11 +15323,7 @@ msgid ""
 "Make sure it is formated in EXT2 or EXT3!"
 msgstr ""
 
-#: imdb/src/plugin.py:160
-msgid "The Internet Movie Database"
-msgstr ""
-
-#: ncidclient/src/plugin.py:45 fritzcall/src/plugin.py:153
+#: ncidclient/src/plugin.py:45 fritzcall/src/plugin.py:154
 msgid "The Netherlands"
 msgstr ""
 
@@ -15730,7 +15787,7 @@ msgid ""
 "uses."
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:778 subsdownloader2/src/plugin.py:1267
+#: subsdownloader2/src/plugin.py:1267
 msgid "This line is not editable!"
 msgstr ""
 
@@ -15814,10 +15871,6 @@ msgstr ""
 msgid "Ticker"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:184
-msgid "Tidy up filename on rename"
-msgstr ""
-
 #: youtubeplayer/src/YouTubeSearchDialog.py:212
 msgid "Tigrinya"
 msgstr ""
@@ -15859,6 +15912,7 @@ msgid "Timeout"
 msgstr ""
 
 #: autotimer/src/AutoTimerSettings.py:43
+#: seriesplugin/src/SeriesPluginConfiguration.py:248
 msgid "Timeout (in min)"
 msgstr ""
 
@@ -15866,15 +15920,15 @@ msgstr ""
 msgid "Timeout Statustext (seconds)"
 msgstr ""
 
-#: ncidclient/src/plugin.py:740 fritzcall/src/plugin.py:1963
+#: ncidclient/src/plugin.py:740 fritzcall/src/plugin.py:1968
 msgid "Timeout for Call Notifications (seconds)"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:191
+#: seriesplugin/src/SeriesPluginConfiguration.py:216
 msgid "Timeout for Rename Popup"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:208
+#: seriesplugin/src/SeriesPluginConfiguration.py:232
 msgid "Timeout for Timer Popup"
 msgstr ""
 
@@ -15924,7 +15978,7 @@ msgstr ""
 msgid "Timer has no EIT"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginTimer.py:208
+#: seriesplugin/src/SeriesPluginTimer.py:201
 #, python-format
 msgid "Timer rename has been finished with %d errors:\n"
 msgstr ""
@@ -16014,7 +16068,7 @@ msgstr ""
 msgid "Title"
 msgstr "כותרת"
 
-#: ofdb/src/plugin.py:223 imdb/src/plugin.py:298
+#: ofdb/src/plugin.py:223 imdb/src/plugin.py:315
 msgid "Title Menu"
 msgstr ""
 
@@ -16026,7 +16080,7 @@ msgstr ""
 msgid "Title and all descriptions"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:194
+#: seriesplugin/src/SeriesPluginConfiguration.py:219
 msgid "Title search depths"
 msgstr ""
 
@@ -16057,7 +16111,7 @@ msgstr ""
 msgid "To be used as simple downloading application by other Plugins."
 msgstr ""
 
-#: fritzcall/src/plugin.py:2615
+#: fritzcall/src/plugin.py:2620
 msgid ""
 "To enjoy more functionalities of your FRITZ!Box, configure the firmware "
 "version!"
@@ -16088,27 +16142,27 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:497
+#: fritzcall/src/plugin.py:499
 msgid "Toggle 1. mailbox"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:499
+#: fritzcall/src/plugin.py:501
 msgid "Toggle 2. mailbox"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:501
+#: fritzcall/src/plugin.py:503
 msgid "Toggle 3. mailbox"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:503
+#: fritzcall/src/plugin.py:505
 msgid "Toggle 4. mailbox"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:505
+#: fritzcall/src/plugin.py:507
 msgid "Toggle 5. mailbox"
 msgstr ""
 
@@ -16121,25 +16175,25 @@ msgid "Toggle List"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:479
+#: fritzcall/src/plugin.py:481
 msgid "Toggle Mailbox"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:475 fritzcall/src/plugin.py:525
-#: fritzcall/src/plugin.py:682 fritzcall/src/plugin.py:693
+#: fritzcall/src/plugin.py:477 fritzcall/src/plugin.py:527
+#: fritzcall/src/plugin.py:684 fritzcall/src/plugin.py:695
 msgid "Toggle WLAN"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:684
+#: fritzcall/src/plugin.py:686
 msgid "Toggle WLAN guest access"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:495
+#: fritzcall/src/plugin.py:497
 msgid "Toggle all mailboxes"
 msgstr ""
 
@@ -16327,8 +16381,8 @@ msgstr ""
 msgid "Turn off display"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:523 dreamexplorer/src/plugin.py:561
-#: dreamexplorer/src/plugin.py:635
+#: dreamexplorer/src/plugin.py:483 dreamexplorer/src/plugin.py:511
+#: dreamexplorer/src/plugin.py:579
 msgid "Turn off the media-filter first."
 msgstr ""
 
@@ -16374,11 +16428,11 @@ msgstr ""
 
 #: ncidclient/src/plugin.py:836 ncidclient/src/plugin.py:839
 #: ncidclient/src/plugin.py:941 ncidclient/src/plugin.py:995
-#: fritzcall/src/FritzCallFBF.py:74 fritzcall/src/plugin.py:1134
-#: fritzcall/src/plugin.py:2116 fritzcall/src/plugin.py:2119
-#: fritzcall/src/plugin.py:2160 fritzcall/src/plugin.py:2455
-#: fritzcall/src/plugin.py:2555 fritzcall/src/plugin.py:2560
-#: fritzcall/src/plugin.py:2584
+#: fritzcall/src/FritzCallFBF.py:74 fritzcall/src/plugin.py:1139
+#: fritzcall/src/plugin.py:2121 fritzcall/src/plugin.py:2124
+#: fritzcall/src/plugin.py:2165 fritzcall/src/plugin.py:2460
+#: fritzcall/src/plugin.py:2560 fritzcall/src/plugin.py:2565
+#: fritzcall/src/plugin.py:2589
 msgid "UNKNOWN"
 msgstr ""
 
@@ -16666,16 +16720,12 @@ msgstr ""
 msgid "Use hardware-decoder for MP3"
 msgstr ""
 
-#: ncidclient/src/plugin.py:745 fritzcall/src/plugin.py:1992
+#: ncidclient/src/plugin.py:745 fritzcall/src/plugin.py:1997
 msgid "Use internal PhoneBook"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginConfiguration.py:185
-msgid "Use legacy filenames"
-msgstr ""
-
 #: seriesplugin/src/SeriesPluginConfiguration.py:210
-msgid "Use local caching"
+msgid "Use legacy filenames"
 msgstr ""
 
 #: subsdownloader2/src/plugin.py:1183
@@ -16723,7 +16773,7 @@ msgstr ""
 msgid "User Profile Name"
 msgstr ""
 
-#: imdb/src/plugin.py:554
+#: imdb/src/plugin.py:585
 msgid "User Rating"
 msgstr ""
 
@@ -16740,7 +16790,7 @@ msgstr "User management"
 msgid "User name"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1970
+#: fritzcall/src/plugin.py:1975
 msgid "User name Accessing FRITZ!Box"
 msgstr ""
 
@@ -16904,7 +16954,7 @@ msgstr ""
 
 #: fritzcall/src/FritzCallFBF.py:366 fritzcall/src/FritzCallFBF.py:393
 #: fritzcall/src/FritzCallFBF.py:1377 fritzcall/src/FritzCallFBF.py:2052
-#: fritzcall/src/FritzCallFBF.py:2819
+#: fritzcall/src/FritzCallFBF.py:2827
 msgid "Vanity"
 msgstr ""
 
@@ -17031,7 +17081,7 @@ msgstr "View active downloads"
 msgid "View remote text files"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:289 subsdownloader2/src/plugin.py:953
+#: dreamexplorer/src/plugin.py:234 subsdownloader2/src/plugin.py:953
 msgid "View this shell-script"
 msgstr ""
 
@@ -17135,12 +17185,8 @@ msgid ""
 "multimedia-tv.de/board/thread.php?threadid=5613"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:1104
-msgid "WARNING! they doing now COPY or MOVE\n"
-msgstr ""
-
-#: dreamexplorer/src/plugin.py:1230
-msgid "WARNING! they make now a softlink from\n"
+#: dreamexplorer/src/plugin.py:848
+msgid "WARNING! You're about to move or copy\n"
 msgstr ""
 
 #: webinterface/src/WebComponents/Sources/Strings.py:158
@@ -17670,7 +17716,12 @@ msgstr ""
 msgid "Wolof"
 msgstr ""
 
-#: autotimer/src/AutoTimerSettings.py:62
+#: imdb/src/plugin.py:706
+msgid "Words / phrases to ignore (comma separated)"
+msgstr ""
+
+#: autotimer/src/AutoTimerSettings.py:63
+#: seriesplugin/src/SeriesPluginConfiguration.py:261
 msgid "Write debug messages into file"
 msgstr ""
 
@@ -17678,8 +17729,9 @@ msgstr ""
 msgid "Write log:"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:1219
-msgid "Write the new softlink name here:"
+#: autotimer/src/AutoTimerSettings.py:61
+msgid ""
+"Write the config file after every change which the user quits by saving."
 msgstr ""
 
 #: webinterface/src/WebComponents/Sources/Volume.py:39
@@ -17844,10 +17896,6 @@ msgid ""
 "how things are."
 msgstr ""
 
-#: seriesplugin/src/ChannelEditor.py:130
-msgid "You have to match SD and HD channels separately!"
-msgstr ""
-
 #: partnerbox/src/plugin.py:119
 msgid "You have to restart Enigma2 to activate your new preferences!"
 msgstr ""
@@ -17866,7 +17914,7 @@ msgstr ""
 msgid "You need GUI-restart to load the new settings!"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1880
+#: fritzcall/src/plugin.py:1885
 msgid "You need to enable the monitoring on your FRITZ!Box by dialing #96*5*!"
 msgstr ""
 
@@ -17922,6 +17970,14 @@ msgstr ""
 "\n"
 "You can go back a step by pressing EXIT on your remote."
 
+#: dreamexplorer/src/plugin.py:946
+#, python-format
+msgid ""
+"You're about to create a symlink to %s\n"
+"from\n"
+"%s%s"
+msgstr ""
+
 #: easymedia/src/plugin.py:209
 msgid "YouTube player:"
 msgstr ""
@@ -17940,6 +17996,10 @@ msgid ""
 "Please confirm if this was intentional, if not they will be removed."
 msgstr ""
 
+#: seriesplugin/src/SeriesPlugin.py:124
+msgid "Your autotimer is deprecated"
+msgstr ""
+
 #: autotimer/src/plugin.py:116
 #, python-format
 msgid ""
@@ -17955,6 +18015,11 @@ msgstr "Your network mount has been removed."
 
 #: networkbrowser/src/MountEdit.py:252
 msgid "Your network mount has been saved."
+msgstr ""
+
+#: seriesplugin/src/FilePatterns.py:123
+#: seriesplugin/src/DirectoryPatterns.py:74
+msgid "Your pattern file is corrupt"
 msgstr ""
 
 #: emission/src/plugin.py:86
@@ -18076,7 +18141,7 @@ msgstr ""
 msgid "Zulu"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:314
+#: dreamexplorer/src/plugin.py:266
 msgid "[All files] "
 msgstr ""
 
@@ -18095,7 +18160,7 @@ msgstr ""
 msgid "[FreeSpace] HDD is idle: "
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:312
+#: dreamexplorer/src/plugin.py:264
 msgid "[Media files] "
 msgstr ""
 
@@ -18116,11 +18181,11 @@ msgstr ""
 msgid "[back]"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:667 dreamexplorer/src/plugin.py:669
+#: dreamexplorer/src/plugin.py:602
 msgid "[sort by Date] "
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:657 dreamexplorer/src/plugin.py:659
+#: dreamexplorer/src/plugin.py:598
 msgid "[sort by Name] "
 msgstr ""
 
@@ -18156,12 +18221,12 @@ msgid "add"
 msgstr ""
 
 #. TRANSLATORS: AutoTimer title in MovieList (automatically opens importer, I consider this no further interaction)
-#: autotimer/src/plugin.py:211
+#: autotimer/src/plugin.py:215
 msgid "add AutoTimer"
 msgstr ""
 
 #. TRANSLATORS: AutoTimer title in EventInfo dialog (requires the user to select an event to base the AutoTimer on)
-#: autotimer/src/plugin.py:213
+#: autotimer/src/plugin.py:217
 msgid "add AutoTimer..."
 msgstr "add AutoTimer..."
 
@@ -18355,7 +18420,7 @@ msgstr ""
 msgid "backup timer disabled"
 msgstr ""
 
-#: fritzcall/src/plugin.py:107
+#: fritzcall/src/plugin.py:108
 msgid "before 05.27"
 msgstr ""
 
@@ -18400,7 +18465,7 @@ msgstr ""
 msgid "by speed"
 msgstr ""
 
-#: fritzcall/src/plugin.py:884
+#: fritzcall/src/plugin.py:886
 msgid "call redirections active"
 msgstr ""
 
@@ -18593,11 +18658,12 @@ msgstr ""
 msgid "device name: "
 msgstr ""
 
-#: fritzcall/src/plugin.py:818
+#: fritzcall/src/plugin.py:820
 msgid "devices active"
 msgstr ""
 
-#: reconstructapsc/src_py/plugin.py:49
+#: reconstructapsc/src_py/plugin.py:49 dreamexplorer/src/plugin.py:494
+#: dreamexplorer/src/plugin.py:521
 msgid "directory"
 msgstr ""
 
@@ -18640,7 +18706,7 @@ msgid "display Info"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1914
+#: fritzcall/src/plugin.py:1919
 msgid "display calls"
 msgstr ""
 
@@ -18649,7 +18715,7 @@ msgid "display connection errors"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1916
+#: fritzcall/src/plugin.py:1921
 msgid "display phonebook"
 msgstr ""
 
@@ -18802,7 +18868,7 @@ msgstr "enable move mode"
 msgid "enabled"
 msgstr "אופשר"
 
-#: fritzcall/src/plugin.py:811
+#: fritzcall/src/plugin.py:813
 msgid "encrypted"
 msgstr ""
 
@@ -18861,7 +18927,7 @@ msgid ""
 "%(failure)s"
 msgstr ""
 
-#: remotetimer/src/plugin.py:164
+#: remotetimer/src/plugin.py:166
 msgid "error parsing incoming data."
 msgstr ""
 
@@ -18907,6 +18973,10 @@ msgstr ""
 msgid "fetching remote data..."
 msgstr ""
 
+#: dreamexplorer/src/plugin.py:489 dreamexplorer/src/plugin.py:517
+msgid "file"
+msgstr ""
+
 #: pushservice/src/Controller/ListDir.py:48
 msgid "file extension"
 msgstr ""
@@ -18936,7 +19006,7 @@ msgid "finish fetching remote data..."
 msgstr ""
 
 #: fritzcall/src/FritzCallFBF.py:482 fritzcall/src/FritzCallFBF.py:1398
-#: fritzcall/src/FritzCallFBF.py:2090 fritzcall/src/FritzCallFBF.py:2854
+#: fritzcall/src/FritzCallFBF.py:2090 fritzcall/src/FritzCallFBF.py:2862
 msgid "finishing"
 msgstr ""
 
@@ -19213,9 +19283,8 @@ msgstr ""
 msgid "loading headers ..."
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:858 dreamexplorer/src/plugin.py:899
-#: dreamexplorer/src/plugin.py:912 subsdownloader2/src/plugin.py:1327
-#: subsdownloader2/src/plugin.py:1368 subsdownloader2/src/plugin.py:1381
+#: subsdownloader2/src/plugin.py:1327 subsdownloader2/src/plugin.py:1368
+#: subsdownloader2/src/plugin.py:1381
 msgid "loading... "
 msgstr ""
 
@@ -19232,7 +19301,7 @@ msgid "login failed! "
 msgstr ""
 
 #: fritzcall/src/FritzCallFBF.py:216 fritzcall/src/FritzCallFBF.py:1224
-#: fritzcall/src/FritzCallFBF.py:1917 fritzcall/src/FritzCallFBF.py:2719
+#: fritzcall/src/FritzCallFBF.py:1917 fritzcall/src/FritzCallFBF.py:2727
 msgid "login ok"
 msgstr ""
 
@@ -19241,7 +19310,7 @@ msgid "login successful"
 msgstr ""
 
 #: fritzcall/src/FritzCallFBF.py:207 fritzcall/src/FritzCallFBF.py:1215
-#: fritzcall/src/FritzCallFBF.py:1899 fritzcall/src/FritzCallFBF.py:2701
+#: fritzcall/src/FritzCallFBF.py:1899 fritzcall/src/FritzCallFBF.py:2709
 msgid "login verification"
 msgstr ""
 
@@ -19249,7 +19318,7 @@ msgstr ""
 msgid "mail check interval (minutes)"
 msgstr ""
 
-#: fritzcall/src/plugin.py:850
+#: fritzcall/src/plugin.py:852
 msgid "mailboxes active"
 msgstr ""
 
@@ -19465,7 +19534,7 @@ msgstr ""
 msgid "no account selected"
 msgstr ""
 
-#: ncidclient/src/plugin.py:825 fritzcall/src/plugin.py:2092
+#: ncidclient/src/plugin.py:825 fritzcall/src/plugin.py:2097
 msgid "no calls"
 msgstr ""
 
@@ -19473,7 +19542,7 @@ msgstr ""
 msgid "no date"
 msgstr ""
 
-#: fritzcall/src/plugin.py:814
+#: fritzcall/src/plugin.py:816
 msgid "no device active"
 msgstr ""
 
@@ -19497,7 +19566,7 @@ msgstr ""
 msgid "no subject"
 msgstr ""
 
-#: ofdb/src/plugin.py:416 imdb/src/plugin.py:550
+#: ofdb/src/plugin.py:416 imdb/src/plugin.py:579
 msgid "no user rating yet"
 msgstr ""
 
@@ -19515,12 +19584,12 @@ msgid "not active"
 msgstr ""
 
 #: fritzcall/src/FritzCallFBF.py:1528 fritzcall/src/FritzCallFBF.py:1577
-#: fritzcall/src/FritzCallFBF.py:2331 fritzcall/src/FritzCallFBF.py:2942
-#: fritzcall/src/FritzCallFBF.py:3083
+#: fritzcall/src/FritzCallFBF.py:2334 fritzcall/src/FritzCallFBF.py:2952
+#: fritzcall/src/FritzCallFBF.py:3093
 msgid "not available with this firmware version"
 msgstr ""
 
-#: fritzcall/src/plugin.py:107
+#: fritzcall/src/plugin.py:108
 msgid "not configured"
 msgstr "not configured"
 
@@ -19528,7 +19597,7 @@ msgstr "not configured"
 msgid "not configured yet. please do so in the settings."
 msgstr ""
 
-#: fritzcall/src/plugin.py:809
+#: fritzcall/src/plugin.py:811
 msgid "not encrypted"
 msgstr ""
 
@@ -19540,10 +19609,10 @@ msgstr ""
 msgid "not successfully please check your config (FTPERROR)"
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:3431 fritzcall/src/FritzCallFBF.py:3438
-#: fritzcall/src/FritzCallFBF.py:3448 fritzcall/src/FritzCallFBF.py:3458
-#: fritzcall/src/FritzCallFBF.py:3468 fritzcall/src/FritzCallFBF.py:3479
-#: fritzcall/src/FritzCallFBF.py:3489 fritzcall/src/FritzCallFBF.py:3496
+#: fritzcall/src/FritzCallFBF.py:3439 fritzcall/src/FritzCallFBF.py:3446
+#: fritzcall/src/FritzCallFBF.py:3456 fritzcall/src/FritzCallFBF.py:3466
+#: fritzcall/src/FritzCallFBF.py:3476 fritzcall/src/FritzCallFBF.py:3487
+#: fritzcall/src/FritzCallFBF.py:3497 fritzcall/src/FritzCallFBF.py:3504
 msgid "not yet implemented"
 msgstr ""
 
@@ -19551,7 +19620,7 @@ msgstr ""
 msgid "nothing playing..."
 msgstr ""
 
-#: ncidclient/src/plugin.py:1007 fritzcall/src/plugin.py:2559
+#: ncidclient/src/plugin.py:1007 fritzcall/src/plugin.py:2564
 msgid "number suppressed"
 msgstr ""
 
@@ -19573,8 +19642,7 @@ msgstr "כבוי"
 msgid "ok"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:566 dreamexplorer/src/plugin.py:569
-#: dreamexplorer/src/plugin.py:776 subsdownloader2/src/plugin.py:1265
+#: subsdownloader2/src/plugin.py:1265
 msgid "old:  "
 msgstr ""
 
@@ -19633,7 +19701,7 @@ msgstr ""
 msgid "on with top/bottom"
 msgstr ""
 
-#: fritzcall/src/plugin.py:816
+#: fritzcall/src/plugin.py:818
 msgid "one device active"
 msgstr ""
 
@@ -19784,7 +19852,7 @@ msgid "preferred"
 msgstr ""
 
 #: fritzcall/src/FritzCallFBF.py:471 fritzcall/src/FritzCallFBF.py:1408
-#: fritzcall/src/FritzCallFBF.py:2080 fritzcall/src/FritzCallFBF.py:2843
+#: fritzcall/src/FritzCallFBF.py:2080 fritzcall/src/FritzCallFBF.py:2851
 msgid "preparing"
 msgstr ""
 
@@ -19817,7 +19885,7 @@ msgid "private"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1910 fritzcall/src/plugin.py:1920
+#: fritzcall/src/plugin.py:1915 fritzcall/src/plugin.py:1925
 #: eparted/src/eparted.py:581 eparted/src/eparted.py:587
 msgid "quit"
 msgstr ""
@@ -19838,7 +19906,7 @@ msgstr ""
 msgid "readme.txt"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:888 subsdownloader2/src/plugin.py:1357
+#: subsdownloader2/src/plugin.py:1357
 msgid "ready..."
 msgstr ""
 
@@ -19958,7 +20026,7 @@ msgid "save Filesystemposition on exit"
 msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1912 fritzcall/src/plugin.py:1918
+#: fritzcall/src/plugin.py:1917 fritzcall/src/plugin.py:1923
 msgid "save and quit"
 msgstr ""
 
@@ -20138,7 +20206,7 @@ msgstr ""
 msgid "show all"
 msgstr "הראה הכל"
 
-#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:114
+#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:115
 msgid "show as list"
 msgstr ""
 
@@ -20150,7 +20218,7 @@ msgstr ""
 msgid "show details"
 msgstr ""
 
-#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:114
+#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:115
 msgid "show each call"
 msgstr ""
 
@@ -20183,7 +20251,7 @@ msgstr ""
 msgid "show next page"
 msgstr ""
 
-#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:114
+#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:115
 msgid "show nothing"
 msgstr ""
 
@@ -20476,9 +20544,12 @@ msgstr ""
 msgid "void"
 msgstr ""
 
-#: dreamexplorer/src/plugin.py:902 dreamexplorer/src/plugin.py:915
-#: dreamexplorer/src/plugin.py:921 subsdownloader2/src/plugin.py:1371
-#: subsdownloader2/src/plugin.py:1384 subsdownloader2/src/plugin.py:1390
+#: imdb/src/plugin.py:584
+msgid "votes"
+msgstr ""
+
+#: subsdownloader2/src/plugin.py:1371 subsdownloader2/src/plugin.py:1384
+#: subsdownloader2/src/plugin.py:1390
 msgid "wait..."
 msgstr ""
 
@@ -20516,7 +20587,7 @@ msgstr ""
 msgid "wrong filetype!"
 msgstr ""
 
-#: fritzcall/src/FritzCallFBF.py:1913 fritzcall/src/FritzCallFBF.py:2715
+#: fritzcall/src/FritzCallFBF.py:1913 fritzcall/src/FritzCallFBF.py:2723
 msgid "wrong user or password?"
 msgstr ""
 
@@ -20609,7 +20680,7 @@ msgid ""
 "{body:s}"
 msgstr ""
 
-#: seriesplugin/src/SeriesPluginInfoScreen.py:301
+#: seriesplugin/src/SeriesPluginInfoScreen.py:315
 #, python-brace-format
 msgid "{title:s}"
 msgstr ""
