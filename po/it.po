@@ -5888,6 +5888,7 @@ msgid ""
 "Error querying feed for search term %s:\n"
 "%s"
 msgstr "Errore di ricerca feed per %s:\n"
+"%s"
 
 #: youtubeplayer/src/YouTubeList.py:342
 #, python-format
@@ -5895,6 +5896,7 @@ msgid ""
 "Error querying playlist-feed for playlist %s:\n"
 "%s"
 msgstr "Errore di ricerca nella lista playlist per %s:\n"
+"%s"
 
 #: dreamexplorer/src/plugin.py:254
 msgid "Error reading bookmarks"
