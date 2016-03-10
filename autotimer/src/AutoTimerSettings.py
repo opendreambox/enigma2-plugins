@@ -83,10 +83,12 @@ class AutoTimerSettings(Screen, ConfigListScreen):
 		self["help"] = StaticText()
 
 		# Define Actions
-		self["actions"] = ActionMap(["SetupActions"],
+		self["actions"] = ActionMap(["SetupActions", "ChannelSelectBaseActions"],
 			{
 				"cancel": self.keyCancel,
 				"save": self.keySave,
+				"nextBouquet":	self.pageUp,
+				"prevBouquet":	self.pageDown,
 			}
 		)
 
@@ -116,4 +118,10 @@ class AutoTimerSettings(Screen, ConfigListScreen):
 
 	def createSummary(self):
 		return SetupSummary
+
+	def pageUp(self):
+		self["config"].instance.moveSelection(self["config"].instance.pageUp)
+
+	def pageDown(self):
+		self["config"].instance.moveSelection(self["config"].instance.pageDown)
 
