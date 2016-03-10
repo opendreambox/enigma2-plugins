@@ -42,7 +42,8 @@ class AutoPollerThread(Thread):
 		conflicts = ret[4]
 		if conflicts and config.plugins.autotimer.notifconflict.value:
 			AddPopup(
-				_("%d conflict(s) encountered when trying to add new timers:\n%s") % (len(conflicts), '\n'.join([_("%s: %s at %s") % (x[4], x[0], FuzzyTime(x[2])) for x in conflicts])),
+				_("%(conflicts)d conflict(s) encountered when trying to add new timers:\n%(timers)s") % \
+				{ "conflicts":len(conflicts), "timers":'\n'.join( [ _("%(tname)s: %(name)s at %(begin)s") % ("tname":x[4], "name":x[0], "begin":FuzzyTime(x[2]) ) for x in conflicts ] ) },
 				MessageBox.TYPE_INFO,
 				config.plugins.autotimer.popup_timeout.value,
 				NOTIFICATIONID
@@ -50,7 +51,8 @@ class AutoPollerThread(Thread):
 		similars = ret[5]
 		if similars and config.plugins.autotimer.notifsimilar.value:
 			AddPopup(
-				_("%d conflict(s) solved with similar timer(s):\n%s") % (len(similars), '\n'.join([_("%s: %s at %s") % (x[4], x[0], FuzzyTime(x[2])) for x in similars])),
+				_("%(similars)d conflict(s) solved with similar timer(s):\n%(timers)s") % \
+				{ "similars":len(similars), "timers":'\n'.join( [ _("%(tname)s: %(name)s at %(begin)s") % ("tname":x[4], "name":x[0], "begin":FuzzyTime(x[2]) ) for x in similars ] ) },
 				MessageBox.TYPE_INFO,
 				config.plugins.autotimer.popup_timeout.value,
 				SIMILARNOTIFICATIONID

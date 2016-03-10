@@ -165,7 +165,8 @@ class AutoTimerImporter(Screen):
 			end = localtime(end)
 			append(
 				SelectionEntryComponent(
-					_("Match Timespan: %02d:%02d - %02d:%02d") % (begin[3], begin[4], end[3], end[4]),
+					_("Match Timespan: %(begin_hour)02d:%(begin_minutes)02d - %(end_hour)02d:%(end_minutes)02d") % \
+					{"begin_hour":begin[3], "begin_minutes":begin[4], "end_hour":end[3], "end_minutes":end[4]},
 					((begin[3], begin[4]), (end[3], end[4])),
 					2,
 					True
