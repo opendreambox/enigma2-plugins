@@ -166,7 +166,8 @@ def editCallback(session):
 
 def parseEPGCallback(ret):
 	AddPopup(
-		_("Found a total of %d matching Events.\n%d Timer were added and\n%d modified,\n%d conflicts encountered,\n%d similars added.") % (ret[0], ret[1], ret[2], len(ret[4]), len(ret[5])),
+		_("Found a total of %(matches)d matching Events.\n%(timer)d Timer were added and\n%(modified)d modified,\n%(conflicts)d conflicts encountered,\n%(similars)d similars added.") % \
+		{"matches":ret[0], "timer":ret[1], "modified":ret[2], "conflicts":len(ret[4]), "similars":len(ret[5])},
 		MessageBox.TYPE_INFO,
 		config.plugins.autotimer.popup_timeout.value,
 		'AT_PopUp_ID_ParseEPGCallback'

@@ -636,7 +636,6 @@ class AutoTimer:
 					new += tup[0]
 					modified += tup[1]
 		
-
 		if not simulateOnly:
 			if sp_showResult is not None:
 				blockingCallFromMainThread(sp_showResult)
