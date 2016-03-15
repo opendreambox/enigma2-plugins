@@ -2,9 +2,15 @@
 '''
 Update rev
 $Author: michael $
+<<<<<<< master
 $Revision: 1270 $
 $Date: 2016-03-17 15:07:36 +0100 (Thu, 17 Mar 2016) $
 $Id: plugin.py 1270 2016-03-17 14:07:36Z michael $
+=======
+$Revision: 1269 $
+$Date: 2016-03-13 22:28:42 +0100 (Sun, 13 Mar 2016) $
+$Id: plugin.py 1269 2016-03-13 21:28:42Z michael $
+>>>>>>> d43249e [FritzCall] FIX Mehrfachanzeigen von Anrufen bzw. Plugin-Instanzen
 '''
 
 # C0111 (Missing docstring)
