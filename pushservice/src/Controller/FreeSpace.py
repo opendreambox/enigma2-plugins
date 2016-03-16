@@ -112,9 +112,9 @@ class FreeSpace(ControllerBase):
 					text += "\r\n"
 					import NavigationInstance
 					now = time()
-					limit = now + 86400 # Add one day
+					next_day = now + 86400 # Add one day
 					for t in NavigationInstance.instance.RecordTimer.timer_list + NavigationInstance.instance.RecordTimer.processed_timers:
-						if not t.disabled and not t.justplay and now < t.begin and t.end < limit:
+						if not t.disabled and not t.justplay and now < t.begin and t.end < next_day:
 							text += "\t" + timerToString(t)  + "\r\n"
 					
 				callback( SUBJECT, BODY % (path, limit, free) + text )
