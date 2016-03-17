@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1268 $
-$Date: 2016-02-26 18:20:04 +0100 (Fri, 26 Feb 2016) $
-$Id: FritzCallFBF.py 1268 2016-02-26 17:20:04Z michael $
+$Revision: 1270 $
+$Date: 2016-03-17 15:07:36 +0100 (Thu, 17 Mar 2016) $
+$Id: FritzCallFBF.py 1270 2016-03-17 14:07:36Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -2409,7 +2409,7 @@ class FritzCallFBF_05_50:
 		# encrypted == 2 means unknown
 		#                                      <tr id="uiTrWlan"><td class="led_green"></td><td><a href="/wlan/wlan_settings.lua?sid=9c824da3ecfc7168">WLAN</a></td><td title="an
 		# <tr id="uiTrWlan"><td class="led_green"></td><td><a href="/wlan/wlan_settings.lua?sid=af3b8ddd6a9176da">WLAN</a></td><td title="an">an, Funknetz: mms</td></tr>
-		found = re.match('.*<tr id="uiTrWlan"><td class="(led_gray|led_green|led_red)"></td><td><a href="[^"]*">WLAN</a></td><td[^>]*>((aus|an)[^<]*)', html, re.S)
+		found = re.match('.*<tr id="uiTrWlan"><td class="(led_gray|led_green|led_red)"></td><td><a href="[^"]*">WLAN</a></td><td title="((aus|an)[^"]*)"', html, re.S)
 		if found:
 			if found.group(1) == "led_green":
 				if found.group(2):
