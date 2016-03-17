@@ -72,7 +72,7 @@ class ExtendedConfigText(ConfigText):
 
 		# Workaround some characters currently not "typeable" using NumericalTextInput
 		mapping = self.mapping
-		if mapping:
+		if mapping and isinstance(mapping, list):
 			if "&" not in mapping[0]:
 				mapping[0] += "&"
 			if ";" not in mapping[0]:
