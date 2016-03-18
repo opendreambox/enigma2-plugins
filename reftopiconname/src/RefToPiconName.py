@@ -2,7 +2,7 @@
 #
 # ServiceReference to PiconName  - Converter
 #
-# Coded by dre (c) 2014
+# Coded by dre (c) 2014 - 2016
 # Support: www.dreambox-tools.info
 # E-Mail: dre@dreambox-tools.info
 #
@@ -22,7 +22,7 @@
 
 from Components.Converter.Converter import Converter
 from Components.Element import cached
-from enigma import eServiceCenter, eServiceReference
+from enigma import eServiceCenter, eServiceReference, iPlayableServicePtr, iServiceInformation
 
 class RefToPiconName(Converter, object):
 	def __init__(self, type):
@@ -31,19 +31,28 @@ class RefToPiconName(Converter, object):
 	@cached
 	def getText(self):
 		ref = self.source.service
-		if ref is not None:
-			#bouquet or marker
-			if ref.flags & (eServiceReference.isDirectory|eServiceReference.isMarker):
-				info = eServiceCenter.getInstance().info(ref)
-				if info:
-					return info.getName(ref).replace(" ","_")
-			#alternatives
-			elif ref.flags & (eServiceReference.isGroup):
-				return eServiceCenter.getInstance().list(ref).getContent("S")[0]
-			#channel
-			else:
-				return ref.toString()
 		
-		return ""
+		if ref is not None:
+			if not isinstance(ref, iPlayableServicePtr):
+				#bouquet or marker
+				if ref.flags & (eServiceReference.isDirectory|eServiceReference.isMarker):
+					info = eServiceCenter.getInstance().info(ref)
+					if info:
+						return info.getName(ref).replace(" ","_")
+				#alternatives
+				elif ref.flags & (eServiceReference.isGroup):
+					return eServiceCenter.getInstance().list(ref).getContent("S")[0]
+				#channel
+				return ref.toString()
+			else:
+				info = ref and ref.info()
+				service = None
+			
+				if info:
+					sRef = service and info.getInfoString(service, iServiceInformation.sServiceRef) or info.getInfoString(iServiceInformation.sServiceref)
+					if sRef is None or sRef is "":
+						return info.getName()
+					else:
+						return sRef
 		
 	text = property(getText)
