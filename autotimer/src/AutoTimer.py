@@ -98,8 +98,27 @@ def blockingCallFromMainThread(f, *a, **kw):
 typeMap = {
 	"exact": eEPGCache.EXAKT_TITLE_SEARCH,
 	"partial": eEPGCache.PARTIAL_TITLE_SEARCH,
-	"description": -99
+	"description":     3, #-99 #eEPGCache.EXTENDED_DESCRIPTION_SEARCH,
+	"full":            4, #eEPGCache.FULL_DESCRIPTION_SEARCH,
+	"shortdesc":       5, #eEPGCache.SHORT_DESCRIPTION_SEARCH,
+	"title_shortdesc": 6  #eEPGCache.TITLE_SHORT_DESCRIPTION_SEARCH,
 }
+#TEST
+#try:
+#	typeMap = {
+#		"exact": eEPGCache.EXAKT_TITLE_SEARCH,
+#		"partial": eEPGCache.PARTIAL_TITLE_SEARCH,
+#		"description": eEPGCache.EXTENDED_DESCRIPTION_SEARCH,
+#		"full": eEPGCache.FULL_DESCRIPTION_SEARCH,
+#		"shortdesc": eEPGCache.SHORT_DESCRIPTION_SEARCH,
+#		"title_shortdesc": eEPGCache.TITLE_SHORT_DESCRIPTION_SEARCH
+#	}
+#except:
+#	typeMap = {
+#		"exact": eEPGCache.EXAKT_TITLE_SEARCH,
+#		"partial": eEPGCache.PARTIAL_TITLE_SEARCH,
+#		"description": -99
+#	}
 
 caseMap = {
 	"sensitive": eEPGCache.CASE_CHECK,
@@ -161,7 +180,7 @@ class AutoTimer:
 		# XXX: we probably want to indicate failures in some way :)
 		try:
 			saveFile(XML_CONFIG, buildConfig(self.defaultTimer, self.timers))
-		except :
+		except:
 			with open(XML_CONFIG, 'w') as config:
 				config.writelines(buildConfig(self.defaultTimer, self.timers))
 
@@ -301,8 +320,12 @@ class AutoTimer:
 
 		else:
 			# Search EPG, default to empty list
-			epgmatches = epgcache.search( ('RITBDSE', 1000, typeMap[timer.searchType], match, caseMap[timer.searchCase]) ) or []
-
+			try:
+				epgmatches = epgcache.search( ('RITBDSE', 1000, typeMap[timer.searchType], match, caseMap[timer.searchCase]) ) or []
+			except Exception as e:
+				doLog("Exception: epgcache.search " + str(e))
+				return
+		
 		# Sort list of tuples by begin time 'B'
 		epgmatches.sort(key=itemgetter(3))
 
