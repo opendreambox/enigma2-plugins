@@ -51,7 +51,7 @@ class RefToPiconName(Converter, object):
 				if info:
 					sRef = service and info.getInfoString(service, iServiceInformation.sServiceRef) or info.getInfoString(iServiceInformation.sServiceref)
 					if sRef is None or sRef is "":
-						return info.getName()
+						return info.getName().replace(" ","_")
 					else:
 						return sRef
 		
