@@ -68,5 +68,6 @@ class RefToPiconName(Converter, object):
 						return info.getName().replace(" ","_")
 					else:
 						return sRef
+		return ""
 		
 	text = property(getText)
