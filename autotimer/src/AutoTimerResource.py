@@ -95,9 +95,8 @@ class AutoTimerDoParseResource(AutoTimerBaseResource):
 			ret = """<e2state>True</e2state>
 	<e2statetext>"""+ \
 	_("Found a total of %(matches)d matching Events.\n%(timer)d Timer were added and\n%(modified)d modified,\n%(conflicts)d conflicts encountered,\n%(similars)d similars added.") % \
-	{"matches":ret[0], "timer":ret[1], "modified":ret[2], "conflicts":len(ret[4]), "similars":len(ret[5])} + \
-	
-	"</e2statetext></e2simplexmlresult>"
+	{"matches":ret[0], "timer":ret[1], "modified":ret[2], "conflicts":len(ret[4]), "similars":len(ret[5])} \
+	+ "</e2statetext></e2simplexmlresult>"
 			def finishRequest():
 				self._req.write(ret)
 				self._req.finish()
