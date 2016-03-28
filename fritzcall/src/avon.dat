@@ -18,8 +18,10 @@
 # länderspezifische ortsunabhängige Sondernummern
 #################################################
 
-+49*110:Notruf
-+49*112:Notruf
++49*110:Polizeinotruf
++49*112:Euronotruf
++49*115:Zentrale Behördenrufnummer
++49*116116:Sperr-Notruf
 +49*118:Auskünfte
 
 
@@ -31,19 +33,16 @@
 +49/130:Gebührenfrei
 +49/137:Televotumdienst
 +49/138:Teledialog
-+49/164:Cityruf (Ton)
-+49/165:Funkruf Quix
-+49/166:Funkruf Telmi
-+49/168:Scall/Cityruf
-+49/169:Cityruf
-+49/169-1:Cityruf (Text)
-+49/169-51:Cityruf Service
++49/15:Mobilfunk
++49/16:Mobilfunk
++49/17:Mobilfunk
 +49/180:Service
-+49/180-1:Service (Ortstarif)
++49/180-1:Service (3,9 Ct./Min)
 +49/180-2:Service (6 Ct/Anruf)
 +49/180-3:Service (9 Ct/Min)
-+49/180-4:Service (24 Ct/Anruf)
-+49/180-5:Service (12 Ct/Min)
++49/180-4:Service (20 Ct/Anruf)
++49/180-5:Service (14 Ct/Min)
++49/180-4:Service (20 Ct/Anruf)
 +49/181:VPN-Netze
 +49/190:PremiumRate (Preis lt. Ansage)
 +49/190-1:PremiumRate (0,618 €/Min)
@@ -67,26 +66,6 @@
 ##################
 
 +49-700:Persönliche Rufnummer
-+49-150:QUAM
-+49-151:D1-Netz
-+49-152:D2-Netz
-+49-156:MobilCom
-+49-157:e-Plus Netz
-+49-159:o2-Netz
-+49-160:D1-Netz
-+49-161:C-Netz
-+49-162:D2-Netz
-+49-163:e-Plus Netz
-+49-170:D1-Netz
-+49-171:D1-Netz
-+49-172:D2-Netz
-+49-173:D2-Netz
-+49-174:D2-Netz
-+49-175:D1-Netz
-+49-176:o2-Netz
-+49-177:e-Plus Netz
-+49-178:e-Plus Netz
-+49-179:o2-Netz
 
 +49-201:Essen
 +49-202:Wuppertal
@@ -9070,26 +9049,32 @@
 
 
 +41:[CH]Schweiz
-+41-3:Aarberg
-+41-26:Murten
-+41-31:Riggisberg
-+41-91:S.Bernardino-Passo Sud
-+41-22:Satigny
-+41-61:Therwil
-+41-81:Thusis
++41-1:Zürich
 +41-21:Vevey
-+41-55:Vorderthal
-+41-34:Wasen
++41-22:Satigny
++41-24:Yverdon
++41-26:Murten
++41-27:Zermatt
++41-3:Aarberg
++41-31:Riggisberg
 +41-32:Wengi
-+41-71:Wil
++41-33:Zweisimmen
++41-34:Wasen
++41-41:Zug
 +41-52:Winterthur
 +41-56:Wohlen
-+41-24:Yverdon
-+41-27:Zermatt
++41-55:Vorderthal
++41-61:Therwil
 +41-62:Zofingen
-+41-41:Zug
-+41-33:Zweisimmen
-+41-1:Zürich
++41-71:Wil
++41-74:Mobilfunk
++41-75:Mobilfunk
++41-76:Mobilfunk
++41-77:Mobilfunk
++41-78:Mobilfunk
++41-79:Mobilfunk
++41-81:Thusis
++41-91:S.Bernardino-Passo Sud
 
 
 +221:[SN]Senegal

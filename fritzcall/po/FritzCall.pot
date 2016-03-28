@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-23 19:56+0200\n"
+"POT-Creation-Date: 2016-03-26 17:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -125,6 +125,9 @@ msgid "Could not read FRITZ!Box phonebook; wrong version?"
 msgstr ""
 
 msgid "Country"
+msgstr ""
+
+msgid "Countrycode (e.g. 44 for UK, 34 for Spain, etc.)"
 msgstr ""
 
 msgid "DECT inactive"
@@ -494,7 +497,7 @@ msgstr ""
 msgid "Reset"
 msgstr ""
 
-msgid "Reverse Lookup Caller ID (select country below)"
+msgid "Reverse Lookup Caller ID"
 msgstr ""
 
 msgid "Reverse searching..."
