@@ -6157,7 +6157,7 @@
 +44-1276:Camberley
 +44-1223:Cambridge
 +44-1227:Canterbury
-+44-1222:Cardiff [alt]
++44-1222:Cardiff [old]
 +44-2920:Cardiff
 +44-1239:Cardigan
 +44-1228:Carlisle
@@ -6170,7 +6170,7 @@
 +44-1285:Cirencester
 +44-1900:Cockermouth
 +44-1206:Colchester
-+44-1203:Coventry [alt]
++44-1203:Coventry [old]
 +44-2476:Coventry
 +44-1293:Crawley
 +44-1381:Cromarty
@@ -6261,9 +6261,9 @@
 +44-1597:Llandrindod Wells
 +44-1492:Llandudno
 +44-1520:Lochcarron
-+44-171:London [alt]
++44-171:London [old]
 +44-207:London
-+44-181:London [alt] (outer)
++44-181:London [old] (outer)
 +44-208:London (outer)
 +44-1504:Londonderry
 +44-1507:Louth
@@ -6314,7 +6314,7 @@
 +44-1796:Pitlochry
 +44-1752:Plymouth
 +44-1443:Pontypridd
-+44-1705:Portsmouth [alt]
++44-1705:Portsmouth [old]
 +44-2392:Portsmouth
 +44-1265:Portstewart
 +44-1707:Potters Bar
@@ -6337,7 +6337,7 @@
 +44-114:Sheffield
 +44-1743:Shrewsbury
 +44-1756:Skipton
-+44-1703:Southampton [alt]
++44-1703:Southampton [old]
 +44-2380:Southampton
 +44-1702:Southend-on-Sea
 +44-1704:Southport
@@ -6397,8 +6397,8 @@
 +44-1978:Wrexham
 +44-1935:Yeovil
 +44-1904:York
-+44-4:Mobilfunk
-+44-7:Mobilfunk
++44-4:Mobile number
++44-7:Mobile number
 
 +299:Grönland
 
