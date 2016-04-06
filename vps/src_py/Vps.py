@@ -120,7 +120,8 @@ class vps_timer:
 					if self.timer.state == TimerEntry.StateRunning:
 						self.stop_recording()
 					
-					self.program_abort()
+					# program terminates by itself
+					#self.program_abort()
 					self.stop_simulation()
 			
 			
@@ -129,7 +130,8 @@ class vps_timer:
 					self.timer.start_prepare = int(time())
 					self.session.nav.RecordTimer.doActivate(self.timer)
 				
-				self.program_abort()
+				# program terminates by itself
+				#self.program_abort()
 				self.stop_simulation()
 				vps_timers.checksoon(2000)
 			
@@ -143,7 +145,8 @@ class vps_timer:
 				if evt:
 					self.timer.name = evt.getEventName()
 					self.timer.description = evt.getShortDescription()
-				self.program_abort()
+				# program terminates by itself
+				#self.program_abort()
 				vps_timers.checksoon(500)
 			
 			
