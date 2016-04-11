@@ -642,6 +642,10 @@ teletext/meta/Makefile
 teletext/po/Makefile
 teletext/src/Makefile
 
+trackautoselect/Makefile
+trackautoselect/meta/Makefile
+trackautoselect/src/Makefile
+
 toolkit/Makefile
 toolkit/src/Makefile
 

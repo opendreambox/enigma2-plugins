@@ -1,0 +1,16 @@
+<default>
+	  <prerequisites>
+                    <tag type="System" />
+	  </prerequisites>
+          <info>
+                    <author>Fraxinas</author>
+                    <name>TrackAutoselect</name>
+                    <packagename>enigma2-plugin-extensions-trackautoselect</packagename>
+                    <shortdescription>Automatically select Audio- and Subtitle tracks</shortdescription>
+                    <description>You can customize which audio and subtitle languages and codecs should be chosen by default when playing media to match your personal preferences.</description>
+                    <screenshot src="http://www.dreamboxupdate.com/preview/plugin_trackautoselect.png" />
+          </info>
+	  <files type="package">
+		<file type="package" name="enigma2-plugin-extensions-trackautoselect" />
+	  </files>
+</default>
