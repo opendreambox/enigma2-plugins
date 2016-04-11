@@ -1943,6 +1943,10 @@ msgid ""
 msgstr ""
 "Fügt automatisiert Informationen zu Staffeln und Episoden zu Aufnahmen hinzu."
 
+#: trackautoselect/meta/plugin_trackautoselect.xml./trackautoselect/meta/plugin_trackautoselect.xml
+msgid "Automatically select Audio- and Subtitle tracks"
+msgstr "Automatische Auswahl der Audio- und Untertitelspuren"
+
 #: elektro/src/plugin.py:109
 msgid "Automatically shut down to deep standby"
 msgstr "Elektro Power Save aktivieren"
@@ -3841,6 +3845,10 @@ msgstr ""
 msgid "DMM-Board"
 msgstr ""
 
+#: src/TrackAutoselectConfig.py:60
+msgid "DVD"
+msgstr "DVD"
+
 #: dvdbackup/src/plugin.py:436 dvdbackup/src/plugin.py:439
 msgid "DVD Backup"
 msgstr "DVD Backup"
@@ -4850,6 +4858,10 @@ msgstr "O"
 msgid "E-Mail Address"
 msgstr "E-Mail-Adresse"
 
+#: src/TrackAutoselectSetup.py:85
+msgid "EIT wait timeout (ms) before auto selection"
+msgstr "EIT Wartezeit (ms) vor automatischer Auswahl"
+
 #: epgcopy/src/plugin.py:154
 msgid "EPG Copy - Password"
 msgstr ""
@@ -5424,6 +5436,14 @@ msgstr "VPS bei Sofortaufnahmen aktivieren"
 #: vps/src_py/Vps_setup.py:34
 msgid "Enable VPS-Plugin"
 msgstr "VPS-Plugin eingeschaltet"
+
+#: src/TrackAutoselectSetup.py:62
+msgid "Enable automatic selection of audio tracks"
+msgstr "Aktiviere automatische Auswahl von Audio-Spuren"
+
+#: src/TrackAutoselectSetup.py:73
+msgid "Enable automatic selection of subtitle tracks"
+msgstr "Aktiviere automatische Auswahl von Untertitel-Spuren"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:179
 msgid "Enable encoder"
@@ -9041,6 +9061,10 @@ msgstr ""
 msgid "Maximum zap history entries:"
 msgstr "Maximale Einträge in der Zap-Historie:"
 
+#: src/TrackAutoselectConfig.py:60
+msgid "Media Files"
+msgstr "Mediendateien"
+
 #: ncidclient/src/plugin.py:94
 msgid "Media directory"
 msgstr "Medienverzeichnis"
@@ -11646,6 +11670,26 @@ msgstr ""
 msgid "Predefined Tag"
 msgstr "Vorgegebener Tag"
 
+#: src/TrackAutoselectConfig.py:44
+msgid "Preference of audio description"
+msgstr "Bevorzugte Audio-Beschreibungen"
+
+#: src/TrackAutoselectConfig.py:43
+msgid "Preference of audio format"
+msgstr "Bevorzugte Audio-Formate"
+
+#: src/TrackAutoselectConfig.py:42
+msgid "Preference of audio language"
+msgstr "Bevorzugte Audio-Sprachen"
+
+#: src/TrackAutoselectConfig.py:48
+msgid "Preference of subtitle format"
+msgstr "Bevorzugte Untertitel-Formate"
+
+#: src/TrackAutoselectConfig.py:47
+msgid "Preference of subtitle language"
+msgstr "Bevorzugte Untertitel-Sprachen"
+
 #: infobartunerstate/src/plugin.py:106
 msgid "Prepare / Start / End record"
 msgstr "Vorbereiten / Start / Ende einer Aufnahme"
@@ -13559,6 +13603,10 @@ msgstr ""
 msgid "Selected foreground:"
 msgstr ""
 
+#: src/TrackAutoselectConfig.py:49
+msgid "Selection of handled Services"
+msgstr "Services für automatische Auswahl"
+
 #: webinterface/src/WebComponents/Sources/Strings.py:87
 msgid "Send"
 msgstr "Senden"
@@ -14859,6 +14907,14 @@ msgstr "Sortiere nach Name (absteigend)"
 msgid "Sort main menu"
 msgstr "Hauptmenü sortieren"
 
+#: src/TrackAutoselectConfig.py:41
+msgid "Sort order of audio parameters"
+msgstr "Sortierreihenfolge der Audio-Parameter"
+
+#: src/TrackAutoselectConfig.py:46
+msgid "Sort order of subtitle parameters"
+msgstr "Sortierreihenfolge der Untertitel-Parameter"
+
 #: birthdayreminder/src/BirthdayReminder.py:212
 msgid "Sorting next"
 msgstr "Sortierung vor"
@@ -15432,6 +15488,10 @@ msgstr "TV Charts Einstellungen"
 #: tvcharts/meta/plugin_tvcharts.xml./tvcharts/meta/plugin_tvcharts.xml
 msgid "TV Charts of all users"
 msgstr "TV Charts aller teilnehmenden Nutzer"
+
+#: src/TrackAutoselectConfig.py:60
+msgid "TV Services"
+msgstr "Fernsehkanäle"
 
 #: easymedia/src/plugin.py:513
 msgid "TV-mode"
@@ -16730,6 +16790,10 @@ msgstr "Total Resultate"
 #: lastfm/src/plugin.py:168
 msgid "Track"
 msgstr "Titel"
+
+#: src/plugin.py:20 src/plugin.py:21
+msgid "Track Autoselect"
+msgstr "Automatische Spurauswahl"
 
 #: lastfm/src/plugin.py:253
 msgid "Track banned"
@@ -19194,6 +19258,11 @@ msgstr "Standard"
 msgid "default Zoomlevel for Preview Images"
 msgstr ""
 
+#: src/TrackAutoselectConfig.py:51 src/TrackAutoselectConfig.py:54
+#: src/TrackAutoselectConfig.py:57
+msgid "default flag"
+msgstr "Standardspur"
+
 #: autotimer/src/AutoTimerEditor.py:903 autotimer/src/AutoTimerEditor.py:1106
 #: webadmin/src/WebScreens/WebAdminScreen.py:24 porncenter/src/plugin.py:58
 #: filebrowser/src/plugin.py:112 epgrefresh/src/EPGRefreshChannelEditor.py:81
@@ -19597,6 +19666,14 @@ msgstr ""
 msgid "finishing"
 msgstr "Fertigstellung"
 
+#: src/TrackAutoselectConfig.py:54 src/TrackAutoselectConfig.py:57
+msgid "forced flag"
+msgstr "Erzwungene Spur"
+
+#: src/TrackAutoselectConfig.py:51 src/TrackAutoselectConfig.py:54
+msgid "format"
+msgstr "Format"
+
 #: youtubeplayer/src/YouTubeList.py:448
 msgid "forward in history"
 msgstr ""
@@ -19712,6 +19789,14 @@ msgstr "iDream Hauptmenü"
 #: merlinmusicplayer/src/plugin.py:2938
 msgid "iDream database path"
 msgstr "iDream-Datenbankpfad"
+
+#: src/TrackAutoselectConfig.py:57
+msgid "if audio isn't first language"
+msgstr "1. Sprache nicht vorhandene"
+
+#: src/TrackAutoselectConfig.py:57
+msgid "if no prefered audio language"
+msgstr "keine bevorzugte Sprache vorhanden"
 
 #: webinterface/src/WebComponents/Sources/Movie.py:210
 msgid "illegal call"
@@ -20940,6 +21025,15 @@ msgstr "Aufnahme anhalten"
 #: emission/src/EmissionDetailview.py:249
 msgid "stopped"
 msgstr ""
+
+#: src/TrackAutoselectConfig.py:51 src/TrackAutoselectConfig.py:54
+#: src/TrackAutoselectConfig.py:57
+msgid "stored by service"
+msgstr "im Service gespeichert"
+
+#: src/TrackAutoselectSetup.py:84
+msgid "subtitle and audio language may be the same"
+msgstr "Untertitel- und Audiosprache dürfen identisch sein"
 
 #: epgcopy/src/plugin.py:177
 msgid "successfully load EPG form the server"
