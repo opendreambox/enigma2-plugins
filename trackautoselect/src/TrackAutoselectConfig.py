@@ -2,7 +2,6 @@ from Components.config import config, ConfigSubsection, ConfigYesNo, ConfigInteg
 from Components.Language import language
 from Tools.ISO639 import ISO639Language
 from enigma import eServiceReference
-from . import _
 
 class Autoselect639Language(ISO639Language):
 		def __init__(self):
@@ -42,10 +41,10 @@ class TrackAutoselectConfig():
 	CATEGORY_SUBTITLE_FORMAT = _("Preference of subtitle format")
 	CATEGORY_HANDLE_SERVICES = _("Selection of handled Services")
 
-	audio_order_choices = [("service",_("stored by service")), ("default",_("default flag")), ("format",_("format")), ("language",_("language")), ("Description",_("Description"))]
+	audio_order_choices = [("service",_("stored by service")), ("default",_("default flag")), ("format",_("format")), ("language",_("Language")), ("Description",_("Description"))]
 	[AUDIO_ORDER_SERVICE, AUDIO_ORDER_DEFAULT, AUDIO_ORDER_FORMAT, AUDIO_ORDER_LANGUAGE, AUDIO_ORDER_DESCRIPTION] = [x[0] for x in audio_order_choices]
 
-	subtitle_order_choices = [("service",_("stored by service")), ("default",_("default flag")), ("forced",_("forced flag")), ("language",_("language")), ("format",_("format"))]
+	subtitle_order_choices = [("service",_("stored by service")), ("default",_("default flag")), ("forced",_("forced flag")), ("language",_("Language")), ("format",_("format"))]
 	[SUBTITLE_ORDER_SERVICE, SUBTITLE_ORDER_DEFAULT, SUBTITLE_ORDER_FORCED, SUBTITLE_ORDER_LANGUAGE, SUBTITLE_ORDER_FORMAT] = [x[0] for x in subtitle_order_choices]
 
 	subtitle_enable_choices = [("service",_("stored by service")), ("default",_("default flag")), ("forced",_("forced flag")), ("nofirstlanguage",_("if audio isn't first language")), ("notanylanguage",_("if no prefered audio language")), ("always",_("always"))]
@@ -131,7 +130,7 @@ class TrackAutoselectConfig():
 			elif category == self.CATEGORY_SUBTITLE_ENABLE:
 				choicelist = self.subtitle_enable_choices
 			elif category == self.CATEGORY_HANDLE_SERVICES:
-				choicelist = handle_services_choices
+				choicelist = self.handle_services_choices
 			choicedict = dict(choicelist)
 
 		choicelist = [tuple(reversed(x)) for x in choicelist]
