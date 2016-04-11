@@ -487,9 +487,7 @@ RESULT eServiceWebTS::selectTrack(unsigned int i) {
 
 RESULT eServiceWebTS::getTrackInfo(struct iAudioTrackInfo &info, unsigned int n) {
 	if (m_audioInfo) {
-		info.m_pid = m_audioInfo->audioStreams[n].pid;
-		info.m_description = m_audioInfo->audioStreams[n].description;
-		info.m_language = m_audioInfo->audioStreams[n].language;
+		info = iAudioTrackInfo(m_audioInfo->audioStreams[n].type, m_audioInfo->audioStreams[n].pid, m_audioInfo->audioStreams[n].language, m_audioInfo->audioStreams[n].description);
 		return 0;
 	} else {
 		return -1;
