@@ -33,7 +33,6 @@ class TrackAutoselector(object):
 			iPlayableService.evUpdatedInfo: self.__updatedInfo,
 			iPlayableService.evUpdatedEventInfo: self.__updatedEventInfo
 		})
-		self._infobar = InfoBar.instance
 		self._nav = session.nav
 		self._waitForEventInfoTimer = eTimer()
 		self._waitForEventInfoTimer_conn = self._waitForEventInfoTimer.timeout.connect(self.__updatedInfoTimeoutCB)
@@ -57,6 +56,7 @@ class TrackAutoselector(object):
 			self._waitForEventInfoTimer.start(config.plugins.TrackAutoselect.wait_for_eit.value, True)
 
 	isDVB = property(lambda self: self._stype == self.track_autoselect_config.SERVICE_DVB)
+	infobar = property(lambda self: self.__event_tracker.getActiveInfoBar())
 
 	def __updatedInfoTimeoutCB(self):
 		#print "[TrackAutoselector]:__updatedInfoTimeoutCB"
@@ -156,14 +156,14 @@ class TrackAutoselector(object):
 			audioTracks.selectTrack(top_idx)
 
 	def selectSubtitles(self):
-		subs = self._infobar.getCurrentServiceSubtitle()
+		subs = self.infobar.getCurrentServiceSubtitle()
 		n = subs and subs.getNumberOfSubtitleTracks() or 0
 		if n == 0:
 			return
 
 		C = self.track_autoselect_config
 		audio_matched = self.matchAudiostreamPreference()
-		playing_idx = self._infobar.subtitles_enabled and self._infobar.selected_subtitle or None
+		playing_idx = self.infobar.subtitles_enabled and self.infobar.selected_subtitle or None
 
 		streams = []
 		for idx in range(n):
@@ -238,5 +238,5 @@ class TrackAutoselector(object):
 
 		if enable:
 			print "[TrackAutoselector]:selectSubtitles enable stream", streams[enable_idx]
-			self._infobar.setSelectedSubtitle(streams[enable_idx].idx)
-			self._infobar.setSubtitlesEnable(True)
+			self.infobar.setSelectedSubtitle(streams[enable_idx].idx)
+			self.infobar.setSubtitlesEnable(True)
