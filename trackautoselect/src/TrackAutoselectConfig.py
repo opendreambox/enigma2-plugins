@@ -18,7 +18,7 @@ class Autoselect639Language(ISO639Language):
 					short_id = sorted(id_list, key=len)[0]
 					choices_dict[short_id] = name
 					choices_list.append((short_id, name))
-			choices_list = sorted(choices_list)
+			choices_list.sort(key=lambda x: x[1])
 			syslangname = _(self.name_by_shortid[syslang])
 			choices_list.insert(0, (syslang, syslangname))
 			choices_dict[syslang] = syslangname
