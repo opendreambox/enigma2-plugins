@@ -2,10 +2,11 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1276 $
-$Date: 2016-03-28 11:17:00 +0200 (Mon, 28 Mar 2016) $
-$Id: plugin.py 1276 2016-03-28 09:17:00Z michael $
+$Revision: 1287 $
+$Date: 2016-04-14 19:18:49 +0200 (Thu, 14 Apr 2016) $
+$Id: plugin.py 1287 2016-04-14 17:18:49Z michael $
 '''
+
 
 # C0111 (Missing docstring)
 # C0103 (Invalid name)
@@ -299,8 +300,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1276 $"[1:-2] + "\n" + 
-							"$Date: 2016-03-28 11:17:00 +0200 (Mon, 28 Mar 2016) $"[1:23] + "\n"
+							"$Revision: 1287 $"[1:-2] + "\n" + 
+							"$Date: 2016-04-14 19:18:49 +0200 (Thu, 14 Apr 2016) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -803,7 +804,7 @@ class FritzMenu(Screen, HelpableScreen):
 				self["dsl_inactive"].hide()
 
 			if wlanState:
-				if wlanState[0 ] == '1':
+				if wlanState[0] == '1':
 					self["wlan_inactive"].hide()
 					self["wlan_active"].show()
 					message = 'WLAN'
@@ -1936,7 +1937,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1276 $"[1: - 1] + "$Date: 2016-03-28 11:17:00 +0200 (Mon, 28 Mar 2016) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1287 $"[1: - 1] + "$Date: 2016-04-14 19:18:49 +0200 (Thu, 14 Apr 2016) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -2469,7 +2470,7 @@ class FritzReverseLookupAndNotifier:
 
 class FritzProtocol(LineReceiver): # pylint: disable=W0223
 	def __init__(self):
-		info("[FritzProtocol] " + "$Revision: 1276 $"[1:-1]	+ "$Date: 2016-03-28 11:17:00 +0200 (Mon, 28 Mar 2016) $"[7:23] + " starting")
+		info("[FritzProtocol] " + "$Revision: 1287 $"[1:-1]	+ "$Date: 2016-04-14 19:18:49 +0200 (Thu, 14 Apr 2016) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
