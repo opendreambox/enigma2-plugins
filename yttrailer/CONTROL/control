@@ -1,2 +1,2 @@
 Description: YTTrailer: watch trailer from epglist/eventview
-Depends: enigma2, enigma2-plugin-systemplugins-tubelib, gst-plugins-good-flv
+Depends: enigma2, enigma2-plugin-systemplugins-tubelib, gstreamer1.0-plugins-good-flv

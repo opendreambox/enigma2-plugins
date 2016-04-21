@@ -1,2 +1,2 @@
 Description: Watch eUroticTV via HTTP Live Streaming
-Depends: enigma2, gst-plugins-bad-fragmented
+Depends: enigma2, gstreamer1.0-plugins-bad-fragmented
