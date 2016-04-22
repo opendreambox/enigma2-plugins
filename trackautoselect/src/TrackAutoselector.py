@@ -31,12 +31,15 @@ class TrackAutoselector(object):
 			iPlayableService.evStart: self.__initializeVars,
 			iPlayableService.evEnd: self.__serviceStopped,
 			iPlayableService.evUpdatedInfo: self.__updatedInfo,
-			iPlayableService.evUpdatedEventInfo: self.__updatedEventInfo
+			iPlayableService.evUpdatedEventInfo: self.__updatedEventInfo,
+			iPlayableService.evAudioListChanged: self.__audioListChanged,
+			iPlayableService.evSubtitleListChanged: self.__subtitleListChanged
 		})
 		self._nav = session.nav
 		self._waitForEventInfoTimer = eTimer()
 		self._waitForEventInfoTimer_conn = self._waitForEventInfoTimer.timeout.connect(self.__updatedInfoTimeoutCB)
 		self.__initializeVars()
+		self.deferredSelectSubtitles = False
 
 	def __initializeVars(self):
 		self.audiostreams = []
@@ -48,10 +51,7 @@ class TrackAutoselector(object):
 
 	def __updatedInfo(self):
 		if not self._stype:
-			currentSREF = self._nav.getCurrentlyPlayingServiceReference()
-			stype = currentSREF and currentSREF.valid() and currentSREF.type or None
-			if stype in self.track_autoselect_config.services_dict:
-				self._stype = self.track_autoselect_config.services_dict[stype]
+			self.findsType()
 		if self.isDVB:
 			self._waitForEventInfoTimer.start(config.plugins.TrackAutoselect.wait_for_eit.value, True)
 
@@ -60,19 +60,40 @@ class TrackAutoselector(object):
 
 	def __updatedInfoTimeoutCB(self):
 		#print "[TrackAutoselector]:__updatedInfoTimeoutCB"
-		self.doSelect()
+		self.doSelect(audio=True)
 
 	def __updatedEventInfo(self):
 		#print "[TrackAutoselector]:__updatedEventInfo"
-		self._waitForEventInfoTimer.stop()
-		self.doSelect()
+		if self.isDVB:
+			self._waitForEventInfoTimer.stop()
+			self.doSelect(audio=True)
 
-	def doSelect(self):
-		print "[TrackAutoselector]:doSelect self._stype", self._stype, "in handle_services", config.plugins.TrackAutoselect.handle_services.getValue(), self._stype in config.plugins.TrackAutoselect.handle_services.getValue()
+	def __audioListChanged(self):
+		#print "[TrackAutoselector]:__audioListChanged"
+		if not self._stype:
+			self.findsType()
+		self.doSelect(audio=True)
+
+	def __subtitleListChanged(self):
+		#print "[TrackAutoselector]:__subtitleListChanged", self.audiostreams
+		if self.audiostreams:
+			self.doSelect(subtitles=True)
+		else:
+			self.deferredSelectSubtitles = True
+
+	def findsType(self):
+		currentSREF = self._nav.getCurrentlyPlayingServiceReference()
+		stype = currentSREF and currentSREF.valid() and currentSREF.type or None
+		if stype in self.track_autoselect_config.services_dict:
+			self._stype = self.track_autoselect_config.services_dict[stype]
+			#print "[TrackAutoselector]:findsType =", stype
+
+	def doSelect(self, audio=False, subtitles=False):
+		print "[TrackAutoselector]:doSelect self._stype", self._stype, "in handle_services", config.plugins.TrackAutoselect.handle_services.getValue(), self._stype in config.plugins.TrackAutoselect.handle_services.getValue(), "event", audio and "audio" or "", subtitles and "subtitles" or ""
 		if self._stype in config.plugins.TrackAutoselect.handle_services.getValue():
-			if config.plugins.TrackAutoselect.audio_autoselect_enable.getValue():
+			if audio and config.plugins.TrackAutoselect.audio_autoselect_enable.getValue():
 				self.selectAudio()
-			if config.plugins.TrackAutoselect.subtitle_autoselect_enable.getValue():
+			if subtitles and config.plugins.TrackAutoselect.subtitle_autoselect_enable.getValue():
 				self.selectSubtitles()
 
 	def orderLanguageByPreference(self, stream, preference_list):
@@ -139,10 +160,10 @@ class TrackAutoselector(object):
 			for parameter in config.plugins.TrackAutoselect.audio_parameter_order.value[::-1]:
 				if parameter == C.AUDIO_ORDER_SAVED:
 					self.audiostreams.sort(key=lambda stream: not stream.saved)
-					print "[TrackAutoselector]:selectAudio now sorted by saved (dvb service cache / media database)", self.audiostreams
+					print "[TrackAutoselector]:selectAudio now sorted by saved flag", self.audiostreams
 				elif parameter == C.AUDIO_ORDER_DEFAULT and not self.isDVB:
 					self.audiostreams.sort(key=lambda stream: not stream.default)
-					print "[TrackAutoselector]:selectAudio now sorted by default flag (non-dvb service)", self.audiostreams
+					print "[TrackAutoselector]:selectAudio now sorted by default flag", self.audiostreams
 				elif parameter == C.AUDIO_ORDER_FORMAT:
 					self.audiostreams.sort(key=lambda stream: self.orderFormatByPreference(stream, config.plugins.TrackAutoselect.audio_format_preference.getValue()))
 					print "[TrackAutoselector]:selectAudio now sorted by codec format", self.audiostreams
@@ -154,6 +175,9 @@ class TrackAutoselector(object):
 		top_idx = self.audiostreams[0].idx
 		if top_idx != selectedAudio:
 			audioTracks.selectTrack(top_idx)
+		if self.deferredSelectSubtitles:
+			self.doSelect(subtitles=True)
+			self.deferredSelectSubtitles = False
 
 	def selectSubtitles(self):
 		subs = self.infobar.getCurrentServiceSubtitle()
@@ -177,50 +201,42 @@ class TrackAutoselector(object):
 				codec = C.sub_format_dict[iType]
 			streams.append(Stream(idx, codec, languages, info.isSaved(), info.isDefault(), info.isForced()))
 		print "[TrackAutoselector]:selectSubtitles list of subtitle streams", streams
+		enable = False
 
 		if n > 1:
 			for parameter in config.plugins.TrackAutoselect.subtitle_parameter_order.value[::-1]:
 				if parameter == C.SUBTITLE_ORDER_SAVED:
 					streams.sort(key=lambda stream: not stream.saved)
-					print "[TrackAutoselector]:selectSubtitles now sorted by saved (dvb service cache / media database)", streams
+					enable = any([stream.saved for stream in streams])
+					print "[TrackAutoselector]:selectSubtitles now sorted by saved flag", streams, enable and "ENABLE!" or ""
 				elif parameter == C.SUBTITLE_ORDER_DEFAULT and not self.isDVB:
 					streams.sort(key=lambda stream: not stream.default)
-					print "[TrackAutoselector]:selectSubtitles now sorted by default flag (non-dvb service)", streams
+					enable = any([stream.default for stream in streams])
+					print "[TrackAutoselector]:selectSubtitles now sorted by default flag", streams, enable and "ENABLE!" or ""
 				elif parameter == C.SUBTITLE_ORDER_FORCED:
 					streams.sort(key=lambda stream: not stream.forced)
-					print "[TrackAutoselector]:selectSubtitles now sorted by forced flag", streams
+					enable = any([stream.forced for stream in streams])
+					print "[TrackAutoselector]:selectSubtitles now sorted by forced flag", streams, enable and "ENABLE!" or ""
 				elif parameter == C.SUBTITLE_ORDER_LANGUAGE:
 					streams.sort(key=lambda stream: self.orderLanguageByPreference(stream, config.plugins.TrackAutoselect.subtitle_language_preference.getValue()))
 					print "[TrackAutoselector]:selectSubtitles now sorted by language", streams
 				elif parameter == C.SUBTITLE_ORDER_FORMAT:
 					streams.sort(key=lambda stream: self.orderFormatByPreference(stream, config.plugins.TrackAutoselect.subtitle_format_preference.getValue()))
 					print "[TrackAutoselector]:selectSubtitles now sorted by codec format", streams
-			print "[TrackAutoselector]:selectAudio resorted list of subtitle streams:", streams, "playing_idx:", playing_idx
-
-		enable = False
+				if enable:
+					break
+			print "[TrackAutoselector]:selectSubtitles resorted list of subtitle streams:", streams, "playing_idx:", playing_idx
 
 		for parameter in config.plugins.TrackAutoselect.subtitle_enable_conditions.getValue():
 			if parameter == C.SUBTITLE_ENABLE_ALWAYS:
-				print "[TrackAutoselector]:selectSubtitles enable always"
+				print "[TrackAutoselector]:selectSubtitles always ENABLE!"
 				enable = True
-			elif parameter == C.SUBTITLE_ENABLE_SAVED:
-				saved = any([stream.saved for stream in streams])
-				enable = enable or saved
-				print "[TrackAutoselector]:selectSubtitles enable if saved (by dvb service / media database)", saved
-			elif parameter == C.SUBTITLE_ENABLE_DEFAULT and not self.isDVB:
-				default = any([stream.default for stream in streams])
-				enable = enable or default
-				print "[TrackAutoselector]:selectSubtitles enable if default flag set (non-dvb service)", default
-			elif parameter == C.SUBTITLE_ENABLE_FORCED:
-				forced = any([stream.forced for stream in streams])
-				enable = enable or forced
-				print "[TrackAutoselector]:selectSubtitles enable if forced flag set", forced
 			elif parameter == C.SUBTITLE_ENABLE_NOTFIRSTLANG:
 				enable = enable or audio_matched != self.MATCHED_PRIMARY
-				print "[TrackAutoselector]:selectSubtitles enable if not first audio language", not self.primary_audio_matched
+				print "[TrackAutoselector]:selectSubtitles enable if not first audio language", not self.primary_audio_matched, enable and "ENABLE!" or ""
 			elif parameter == C.SUBTITLE_ENABLE_NOTANYLANG:
 				enable = enable or audio_matched == self.MATCHED_NONE
-				print "[TrackAutoselector]:selectSubtitles enable if no specified audio language", not self.any_audio_matched
+				print "[TrackAutoselector]:selectSubtitles enable if no specified audio language", not self.any_audio_matched, enable and "ENABLE!" or ""
 			if enable:
 				break
 
