@@ -248,6 +248,11 @@ class AutoTimerRemoveAutoTimerResource(AutoTimerBaseResource):
 		id = req.args.get("id")
 		if id:
 			autotimer.remove(int(id[0]))
+			
+			# Save modified xml
+			if config.plugins.autotimer.always_write_config.value:
+				autotimer.writeXml()
+			
 			return self.returnResult(req, True, _("AutoTimer was removed"))
 		else:
 			return self.returnResult(req, False, _("missing parameter \"id\""))
@@ -475,6 +480,10 @@ class AutoTimerAddOrEditAutoTimerResource(AutoTimerBaseResource):
 			message = _("AutoTimer was added successfully")
 		else:
 			message = _("AutoTimer was changed successfully")
+		
+		# Save modified xml
+		if config.plugins.autotimer.always_write_config.value:
+			autotimer.writeXml()
 
 		return self.returnResult(req, True, message)
 
