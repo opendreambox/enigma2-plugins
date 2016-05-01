@@ -2,10 +2,10 @@
 '''
 general functions for FritzCall plugin
 
-$Id: __init__.py 1260 2016-02-20 17:50:18Z michael $
+$Id: __init__.py 1291 2016-05-01 16:41:25Z michael $
 $Author: michael $
-$Revision: 1260 $
-$Date: 2016-02-20 18:50:18 +0100 (Sat, 20 Feb 2016) $
+$Revision: 1291 $
+$Date: 2016-05-01 18:41:25 +0200 (Sun, 01 May 2016) $
 '''
 
 from Components.config import config #@UnresolvedImport
@@ -13,6 +13,7 @@ from Components.Language import language
 from Tools.Directories import resolveFilename, SCOPE_LANGUAGE, SCOPE_PLUGINS, SCOPE_SKIN_IMAGE #@UnresolvedImport
 import gettext, os
 from enigma import eBackgroundFileEraser
+from logging import NOTSET
 
 lang = language.getLanguage()
 os.environ["LANGUAGE"] = lang[:2]
@@ -43,20 +44,20 @@ def __(text, front=True):
 	return out
 
 import logging
-from logging import debug
 def initDebug():
-#	try:
-#		# os.remove("/tmp/FritzDebug.log")
-#		eBackgroundFileEraser.getInstance().erase("/tmp/FritzDebugOld.log")
-#	except OSError:
-#		pass
-	logging.basicConfig(filename='/tmp/FritzDebug.log',
-					filemode='w',
-					level=logging.DEBUG,
-					# format='%(asctime)s %(levelname)s %(module)s %(name)s %(funcName)s %(message)s',
-					format='%(asctime)s %(levelname)-8s %(name)-26s %(funcName)s %(message)-15s',
-					datefmt='%Y-%m-%d %H:%M:%S')
-
+# 
+# 	logging.basicConfig(filename='/tmp/FritzDebug.log',
+# 					filemode='w',
+# 					level=config.plugins.FritzCall.debug.value,
+# 					# format='%(asctime)s %(levelname)s %(module)s %(name)s %(funcName)s %(message)s',
+# 					format='%(asctime)s %(levelname)-8s %(name)-26s %(funcName)s %(message)-15s',
+# 					datefmt='%Y-%m-%d %H:%M:%S')
+# 	logger = logging.getLogger("FritzCall")
+	logger = logging.getLogger("FritzCall")
+	logger.setLevel(config.plugins.FritzCall.debug.value)
+	fileHandler = logging.FileHandler('/tmp/FritzDebug.log', mode='w')
+	fileHandler.setFormatter(logging.Formatter('%(asctime)s %(levelname)-8s %(name)-26s %(funcName)s %(message)-15s', '%Y-%m-%d %H:%M:%S'))
+	logger.addHandler(fileHandler)
 
 #from time import localtime
 #def debug(message):
