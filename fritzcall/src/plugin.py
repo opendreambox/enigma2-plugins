@@ -2,9 +2,9 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1291 $
-$Date: 2016-05-01 18:41:25 +0200 (Sun, 01 May 2016) $
-$Id: plugin.py 1291 2016-05-01 16:41:25Z michael $
+$Revision: 1295 $
+$Date: 2016-05-02 11:19:51 +0200 (Mon, 02 May 2016) $
+$Id: plugin.py 1295 2016-05-02 09:19:51Z michael $
 '''
 
 
@@ -100,13 +100,13 @@ config.plugins.FritzCall.fwVersion = ConfigSelection(choices=[(None, _("not conf
 #config.plugins.FritzCall.fwVersion = ConfigSelection(choices=[(None, _("not configured")), ("old", _("before 05.27")), ("05.27", "05.27, 05.28"), ("05.50", _("05.29 and newer"))], default=None)
 from logging import NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL
 config.plugins.FritzCall.debug = ConfigSelection(choices=[
-														(NOTSET, _("all")),
-														(DEBUG, "DEBUG"),
-														(INFO, "INFO"),
-														(WARNING, "WARNING"),
-														(ERROR, "ERROR"),
-														(CRITICAL, "CRITICAL")],
-												default=ERROR)
+														(str(NOTSET), _("all")),
+														(str(DEBUG), "DEBUG"),
+														(str(INFO), "INFO"),
+														(str(WARNING), "WARNING"),
+														(str(ERROR), "ERROR"),
+														(str(CRITICAL), "CRITICAL")],
+												default=str(ERROR))
 #config.plugins.FritzCall.muteOnCall = ConfigSelection(choices=[(None, _("no")), ("ring", _("on ring")), ("connect", _("on connect"))])
 #config.plugins.FritzCall.muteOnCall = ConfigSelection(choices=[(None, _("no")), ("ring", _("on ring"))])
 config.plugins.FritzCall.muteOnCall = ConfigEnableDisable(default=False)
@@ -180,7 +180,7 @@ initDebug()
 
 # import logging
 # logger = logging.getLogger("FritzCall")
-# logger.setLevel(config.plugins.FritzCall.debug.value)
+# logger.setLevel(int(config.plugins.FritzCall.debug.value))
 # fileHandler = logging.FileHandler('/tmp/FritzDebug.log', mode='w')
 # fileHandler.setFormatter(logging.Formatter('%(asctime)s %(levelname)-8s %(name)-26s %(funcName)s %(message)-15s', '%Y-%m-%d %H:%M:%S'))
 # logger.addHandler(fileHandler)
@@ -316,8 +316,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1291 $"[1:-2] + "\n" + 
-							"$Date: 2016-05-01 18:41:25 +0200 (Sun, 01 May 2016) $"[1:23] + "\n"
+							"$Revision: 1295 $"[1:-2] + "\n" + 
+							"$Date: 2016-05-02 11:19:51 +0200 (Mon, 02 May 2016) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -1953,7 +1953,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1291 $"[1: - 1] + "$Date: 2016-05-01 18:41:25 +0200 (Sun, 01 May 2016) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1295 $"[1: - 1] + "$Date: 2016-05-02 11:19:51 +0200 (Mon, 02 May 2016) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -2047,11 +2047,11 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 		phonebook.reload()
 
 		print "FRITZCALL Debug changed!!!"
-		logger.setLevel(config.plugins.FritzCall.debug.value)
+		logger.setLevel(int(config.plugins.FritzCall.debug.value))
 		global fritzbox
 		if fritzbox:
-			fritzbox.logger.setLevel(config.plugins.FritzCall.debug.value)
-		nrzuname.logger.setLevel(config.plugins.FritzCall.debug.value)
+			fritzbox.logger.setLevel(int(config.plugins.FritzCall.debug.value))
+		nrzuname.logger.setLevel(int(config.plugins.FritzCall.debug.value))
 
 		if fritz_call:
 			if config.plugins.FritzCall.enable.value:
@@ -2495,7 +2495,7 @@ class FritzReverseLookupAndNotifier:
 
 class FritzProtocol(LineReceiver): # pylint: disable=W0223
 	def __init__(self):
-		info("[FritzProtocol] " + "$Revision: 1291 $"[1:-1]	+ "$Date: 2016-05-01 18:41:25 +0200 (Sun, 01 May 2016) $"[7:23] + " starting")
+		info("[FritzProtocol] " + "$Revision: 1295 $"[1:-1]	+ "$Date: 2016-05-02 11:19:51 +0200 (Mon, 02 May 2016) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
@@ -2652,16 +2652,16 @@ class FritzClientFactory(ReconnectingClientFactory):
 			config.plugins.FritzCall.fritzphonebook.value = False
 		elif config.plugins.FritzCall.fwVersion.value == "old":
 			fritzbox = FritzCallFBF.FritzCallFBF()
-			fritzbox.logger.setLevel(config.plugins.FritzCall.debug.value)
+			fritzbox.logger.setLevel(int(config.plugins.FritzCall.debug.value))
 		elif config.plugins.FritzCall.fwVersion.value == "05.27":
 			fritzbox = FritzCallFBF.FritzCallFBF_05_27()
-			fritzbox.logger.setLevel(config.plugins.FritzCall.debug.value)
+			fritzbox.logger.setLevel(int(config.plugins.FritzCall.debug.value))
 		elif config.plugins.FritzCall.fwVersion.value == "05.50":
 			fritzbox = FritzCallFBF.FritzCallFBF_05_50()
-			fritzbox.logger.setLevel(config.plugins.FritzCall.debug.value)
+			fritzbox.logger.setLevel(int(config.plugins.FritzCall.debug.value))
 		elif config.plugins.FritzCall.fwVersion.value == "06.35":
 			fritzbox = FritzCallFBF.FritzCallFBF_06_35()
-			fritzbox.logger.setLevel(config.plugins.FritzCall.debug.value)
+			fritzbox.logger.setLevel(int(config.plugins.FritzCall.debug.value))
 		else:
 			Notifications.AddNotification(MessageBox, _("FRITZ!Box firmware version not configured! Please set it in the configuration."), type=MessageBox.TYPE_INFO, timeout=0)
 		phonebook.reload()

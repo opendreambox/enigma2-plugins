@@ -2,10 +2,10 @@
 '''
 general functions for FritzCall plugin
 
-$Id: __init__.py 1291 2016-05-01 16:41:25Z michael $
+$Id: __init__.py 1295 2016-05-02 09:19:51Z michael $
 $Author: michael $
-$Revision: 1291 $
-$Date: 2016-05-01 18:41:25 +0200 (Sun, 01 May 2016) $
+$Revision: 1295 $
+$Date: 2016-05-02 11:19:51 +0200 (Mon, 02 May 2016) $
 '''
 
 from Components.config import config #@UnresolvedImport
@@ -45,33 +45,12 @@ def __(text, front=True):
 
 import logging
 def initDebug():
-# 
-# 	logging.basicConfig(filename='/tmp/FritzDebug.log',
-# 					filemode='w',
-# 					level=config.plugins.FritzCall.debug.value,
-# 					# format='%(asctime)s %(levelname)s %(module)s %(name)s %(funcName)s %(message)s',
-# 					format='%(asctime)s %(levelname)-8s %(name)-26s %(funcName)s %(message)-15s',
-# 					datefmt='%Y-%m-%d %H:%M:%S')
-# 	logger = logging.getLogger("FritzCall")
 	logger = logging.getLogger("FritzCall")
-	logger.setLevel(config.plugins.FritzCall.debug.value)
+	logger.setLevel(int(config.plugins.FritzCall.debug.value))
 	fileHandler = logging.FileHandler('/tmp/FritzDebug.log', mode='w')
 	fileHandler.setFormatter(logging.Formatter('%(asctime)s %(levelname)-8s %(name)-26s %(funcName)s %(message)-15s', '%Y-%m-%d %H:%M:%S'))
 	logger.addHandler(fileHandler)
 
-#from time import localtime
-#def debug(message):
-#	if config.plugins.FritzCall.debug.value:
-#		try:
-#			# ltim = localtime()
-#			# headerstr = u"%04d%02d%02d %02d:%02d " %(ltim[0],ltim[1],ltim[2],ltim[3],ltim[4])
-#			deb = open("/tmp/FritzDebugOld.log", "aw")
-#			# deb.write(headerstr + message.decode('utf-8') + u"\n")
-#			deb.write(message + "\n")
-#			deb.close()
-#		except Exception, e:
-#			debug("%s (retried debug: %s)" % (repr(message), str(e)))
-#		logging.debug(message)
 
 import re
 def normalizePhoneNumber(intNo):
