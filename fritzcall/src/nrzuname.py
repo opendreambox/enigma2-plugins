@@ -1,10 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 '''
-$Id: nrzuname.py 1291 2016-05-01 16:41:25Z michael $
+$Id: nrzuname.py 1296 2016-05-02 13:52:11Z michael $
 $Author: michael $
-$Revision: 1291 $
-$Date: 2016-05-01 18:41:25 +0200 (Sun, 01 May 2016) $
+$Revision: 1296 $
+$Date: 2016-05-02 15:52:11 +0200 (Mon, 02 May 2016) $
 '''
 
 # W0603 (global statement); W0141 (map, filter, etc.)
@@ -19,11 +19,6 @@ from Components.config import config
 try:
 	import logging
 	logger = logging.getLogger("FritzCall.nrzuname")
-	# logger.setLevel(config.plugins.FritzCall.debug.value)
-# 	fileHandler = logging.FileHandler('/tmp/FritzDebug.log', mode='w')
-# 	fileHandler.setFormatter(logging.Formatter('%(asctime)s %(levelname)-8s %(name)-26s %(funcName)s %(message)-15s', '%Y-%m-%d %H:%M:%S'))
-# 	logger.addHandler(fileHandler)
-
 	debug = logger.debug
 	info = logger.info
 	warn = logger.warn

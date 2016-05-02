@@ -2,10 +2,10 @@
 '''
 general functions for FritzCall plugin
 
-$Id: __init__.py 1295 2016-05-02 09:19:51Z michael $
+$Id: __init__.py 1296 2016-05-02 13:52:11Z michael $
 $Author: michael $
-$Revision: 1295 $
-$Date: 2016-05-02 11:19:51 +0200 (Mon, 02 May 2016) $
+$Revision: 1296 $
+$Date: 2016-05-02 15:52:11 +0200 (Mon, 02 May 2016) $
 '''
 
 from Components.config import config #@UnresolvedImport
@@ -42,15 +42,6 @@ def __(text, front=True):
 	for i in range(len(text)/2):
 		out = out + text[i*2] + '.'
 	return out
-
-import logging
-def initDebug():
-	logger = logging.getLogger("FritzCall")
-	logger.setLevel(int(config.plugins.FritzCall.debug.value))
-	fileHandler = logging.FileHandler('/tmp/FritzDebug.log', mode='w')
-	fileHandler.setFormatter(logging.Formatter('%(asctime)s %(levelname)-8s %(name)-26s %(funcName)s %(message)-15s', '%Y-%m-%d %H:%M:%S'))
-	logger.addHandler(fileHandler)
-
 
 import re
 def normalizePhoneNumber(intNo):
