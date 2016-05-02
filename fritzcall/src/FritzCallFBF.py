@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1295 $
-$Date: 2016-05-02 11:19:51 +0200 (Mon, 02 May 2016) $
-$Id: FritzCallFBF.py 1295 2016-05-02 09:19:51Z michael $
+$Revision: 1296 $
+$Date: 2016-05-02 15:52:11 +0200 (Mon, 02 May 2016) $
+$Id: FritzCallFBF.py 1296 2016-05-02 13:52:11Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -1805,10 +1805,6 @@ import StringIO, csv
 
 class FritzCallFBF_05_50:
 	logger = logging.getLogger("FritzCall.FBF_05_50")
-# 	logger.setLevel(int(config.plugins.FritzCall.debug.value))
-# 	fileHandler = logging.FileHandler('/tmp/FritzDebug.log', mode='w')
-# 	fileHandler.setFormatter(logging.Formatter('%(asctime)s %(levelname)-8s %(name)-26s %(funcName)s %(message)-15s', '%Y-%m-%d %H:%M:%S'))
-# 	logger.addHandler(fileHandler)
 	debug = logger.debug
 	info = logger.info
 	warn = logger.warn
