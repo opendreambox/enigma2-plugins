@@ -1,10 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 '''
-$Id: nrzuname.py 1296 2016-05-02 13:52:11Z michael $
+$Id: nrzuname.py 1299 2016-05-10 16:54:30Z michael $
 $Author: michael $
-$Revision: 1296 $
-$Date: 2016-05-02 15:52:11 +0200 (Mon, 02 May 2016) $
+$Revision: 1299 $
+$Date: 2016-05-10 18:54:30 +0200 (Tue, 10 May 2016) $
 '''
 
 # W0603 (global statement); W0141 (map, filter, etc.)
@@ -400,8 +400,8 @@ class ReverseLookupAndNotifier:
 			self._gotError("Nothing found at %s" %self.currentWebsite.getAttribute("name"))
 			return False
 			
-	def _gotError(self, error = ""):
-		error("Error: %s" %error)
+	def _gotError(self, errorMsg = ""):
+		error("Error: %s" %errorMsg)
 		if self.nextWebsiteNo >= len(self.websites):
 			debug("I give up")
 			# self.caller = _("UNKNOWN")
