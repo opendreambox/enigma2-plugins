@@ -101,8 +101,8 @@ ChannelSelection.__init__ = newInit
 
 class ZapHistoryConfigurator(ConfigListScreen, Screen):
 	skin = """
-		<screen position="center,center" size="420,80" title="%s" >
-			<widget name="config" position="0,0" size="420,80" scrollbarMode="showOnDemand" />
+		<screen position="center,center" size="620,140" title="%s" >
+			<widget name="config" position="10,10" size="600,120" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>""" % _("Zap-History Configurator")
 
 	def __init__(self, session):
@@ -156,29 +156,30 @@ class ZapHistoryBrowserList(MenuList):
 
 def ZapHistoryBrowserListEntry(serviceName, eventName):
 	sizes = componentSizes[ZapHistoryBrowserList.SKIN_COMPONENT_KEY]
-	textWidth = sizes.get(componentSizes.ITEM_WIDTH, 560)
+	textWidth = sizes.get(componentSizes.ITEM_WIDTH, 800)
 	serviceNameHeight = sizes.get(ZapHistoryBrowserList.SKIN_COMPONENT_SERVICE_NAME_HEIGHT, 22)
 	eventNameHeight = sizes.get(ZapHistoryBrowserList.SKIN_COMPONENT_EVENT_NAME_HEIGHT, 20)
 	lineSpacing = sizes.get(ZapHistoryBrowserList.SKIN_COMPONENT_LINE_SPACING, 5)
 	res = [serviceName]
-	res.append(MultiContentEntryText(pos=(0, 0), size=(textWidth, serviceNameHeight), font=0, flags = RT_VALIGN_CENTER, text=serviceName))
-	res.append(MultiContentEntryText(pos=(0, serviceNameHeight+lineSpacing), size=(textWidth, eventNameHeight), font=1, flags = RT_VALIGN_CENTER, text=eventName))
+	res.append(MultiContentEntryText(pos=(5,0), size=(textWidth, serviceNameHeight), font=0, flags = RT_VALIGN_CENTER, text=serviceName))
+	res.append(MultiContentEntryText(pos=(5, serviceNameHeight+lineSpacing), size=(textWidth, eventNameHeight), font=1, flags = RT_VALIGN_CENTER, text=eventName))
 	return res
 
 ################################################
 
 class ZapHistoryBrowser(Screen, ProtectedScreen):
 	skin = """
-	<screen position="center,center" size="560,440" title="%s" >
-		<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" transparent="1" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" transparent="1" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" transparent="1" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/blue.png" position="420,0" size="140,40" transparent="1" alphatest="on" />
-		<widget name="key_red" position="0,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
-		<widget name="key_green" position="140,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
-		<widget name="key_yellow" position="280,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
-		<widget name="key_blue" position="420,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
-		<widget name="list" position="0,40" size="560,400" scrollbarMode="showOnDemand" />
+	<screen position="center,120" size="820,520" title="%s" >
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on" />
+		<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<widget name="key_green" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<widget name="key_yellow" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<widget name="key_blue" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+		<widget name="list" position="10,60" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand" />
 	</screen>""" % _("Zap-History Browser")
 
 	def __init__(self, session, servicelist):

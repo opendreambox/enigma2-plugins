@@ -153,17 +153,17 @@ class AutoThreeD(Screen):
 
 class ThreeDSettings(Screen, ConfigListScreen):
 	skin = """
-		<screen position="center,center" size="570,420" title="3D settings" >
-			<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/blue.png" position="420,0" size="140,40" alphatest="on" />
-			<widget source="red" render="Label" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-			<widget source="green" render="Label" position="140,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget source="yellow" render="Label" position="280,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
-			<widget source="blue" render="Label" position="420,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
-			
-			<widget name="config" position="10,50" size="550,320" scrollbarMode="showOnDemand" />
+		<screen position="center,center" size="740,260" title="3D settings" >
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="180,40" alphatest="on"/>
+			<ePixmap pixmap="skin_default/buttons/green.png" position="190,5" size="180,40" alphatest="on"/>
+			<ePixmap pixmap="skin_default/buttons/yellow.png" position="370,5" size="180,40" alphatest="on"/>
+			<ePixmap pixmap="skin_default/buttons/blue.png" position="550,5" size="180,40" alphatest="on"/>
+			<widget source="red" render="Label" position="10,5" size="180,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+			<widget source="green" render="Label" position="190,5" size="180,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+			<widget source="yellow" render="Label" position="370,5" size="180,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+			<widget source="blue" render="Label" position="550,5" size="180,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+			<eLabel	position="10,50" size="720,1" backgroundColor="grey"/>
+			<widget name="config" position="10,60" size="720,180" enableWrapAround="1" scrollbarMode="showOnDemand"/>
 		</screen>"""
 
 	def __init__(self, session, args = None):

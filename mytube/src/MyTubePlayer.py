@@ -13,27 +13,57 @@ class MyTubePlayer(Screen, InfoBarNotifications, InfoBarSeek):
 	ENABLE_RESUME_SUPPORT = True
 	ALLOW_SUSPEND = True
 
-	skin = """<screen name="MyTubePlayer" flags="wfNoBorder" position="0,380" size="720,160" title="InfoBar" backgroundColor="transparent">
-		<ePixmap position="0,0" pixmap="skin_default/info-bg_mp.png" zPosition="-1" size="720,160" />
-		<ePixmap position="29,40" pixmap="skin_default/screws_mp.png" size="665,104" alphatest="on" />
-		<ePixmap position="48,70" pixmap="skin_default/icons/mp_buttons.png" size="108,13" alphatest="on" />
-		<ePixmap pixmap="skin_default/icons/icon_event.png" position="207,78" size="15,10" alphatest="on" />
-		<widget source="session.CurrentService" render="Label" position="230,73" size="360,40" font="Regular;20" backgroundColor="#263c59" shadowColor="#1d354c" shadowOffset="-1,-1" transparent="1">
+	skin = """<screen name="MyTubePlayer" position="0,540" size="1280,150" backgroundColor="transparent" flags="wfNoBorder">
+		<ePixmap pixmap="menu/mediacenter.png" position="40,60" zPosition="1" size="70,70" alphatest="on"/>
+		<ePixmap position="0,0" pixmap="skin_default/infobar.png" size="1280,150" zPosition="-1" />
+		<ePixmap pixmap="skin_default/icons/icon_event.png" position="120,17" size="20,13" alphatest="on" />
+		<widget source="session.CurrentService" render="Label" position="150,9" size="760,27" font="Regular;24" valign="top" noWrap="1" backgroundColor="#263c59" transparent="1">
 			<convert type="ServiceName">Name</convert>
 		</widget>
-		<widget source="session.CurrentService" render="Label" position="580,73" size="90,24" font="Regular;20" halign="right" backgroundColor="#4e5a74" transparent="1">
+		<widget source="global.CurrentTime" render="Label" position="40,11" size="70,24" font="Regular;22" foregroundColor="grey" backgroundColor="background" transparent="1">
+			<convert type="ClockToText">Default</convert>
+		</widget>
+		<widget source="session.CurrentService" render="Label" position="550,61" size="200,24" font="Regular;22" halign="center" backgroundColor="#263c59" transparent="1">
 			<convert type="ServicePosition">Length</convert>
 		</widget>
-		<widget source="session.CurrentService" render="Label" position="205,129" size="100,20" font="Regular;18" halign="center" valign="center" backgroundColor="#06224f" shadowColor="#1d354c" shadowOffset="-1,-1" transparent="1">
+		<ePixmap pixmap="skin_default/icons/ico_dolby_off.png" position="1100,30" size="42,20" alphatest="on" />
+		<widget source="session.CurrentService" render="Pixmap" pixmap="skin_default/icons/ico_dolby_on.png" position="1100,30" size="42,20" zPosition="1" alphatest="on">
+			<convert type="ServiceInfo">IsMultichannel</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<ePixmap pixmap="skin_default/icons/ico_format_off.png" position="1150,30" size="42,20" alphatest="on" />
+		<widget source="session.CurrentService" render="Pixmap" pixmap="skin_default/icons/ico_format_on.png" position="1150,30" size="42,20" zPosition="1" alphatest="on">
+			<convert type="ServiceInfo">IsWidescreen</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="skin_default/icons/ico_hd_off.png" position="1200,30" size="42,20" alphatest="on">
+			<convert type="ServiceInfo">VideoWidth</convert>
+			<convert type="ValueRange">0,720</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="skin_default/icons/ico_hd_on.png" position="1200,30" size="42,20" zPosition="1" alphatest="on">
+			<convert type="ServiceInfo">VideoWidth</convert>
+			<convert type="ValueRange">721,1980</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Label" position="960,30" size="60,22" backgroundColor="#263c59" font="Regular;19" halign="right" transparent="1">
+			<convert type="ServiceInfo">VideoWidth</convert>
+		</widget>
+		<eLabel position="1022,30" size="20,20" backgroundColor="#263c59" transparent="1" text="x" font="Regular;19" halign="center"/>
+		<widget source="session.CurrentService" render="Label" position="1044,30" size="60,22" backgroundColor="#263c59" font="Regular;19" halign="left" transparent="1">
+			<convert type="ServiceInfo">VideoHeight</convert>
+		</widget>
+		<widget source="session.CurrentService" render="Label" position="150,88" size="80,24" font="Regular;22" halign="right" backgroundColor="#263c59" transparent="1">
+			<convert type="ServicePosition">Position,ShowHours</convert>
+		</widget>
+		<eLabel position="250,99" size="800,2" backgroundColor="grey" />
+		<widget source="session.CurrentService" render="Progress" position="250,96" size="800,8" zPosition="1" pixmap="skin_default/progress.png" transparent="1">
 			<convert type="ServicePosition">Position</convert>
 		</widget>
-		<widget source="session.CurrentService" render="PositionGauge" position="300,133" size="270,10" zPosition="2" pointer="skin_default/position_pointer.png:540,0" transparent="1" foregroundColor="#20224f">
-			<convert type="ServicePosition">Gauge</convert>
+		<widget source="session.CurrentService" render="Label" position="1070,87" size="160,24" font="Regular;22" halign="left" backgroundColor="#263c59" transparent="1">
+			<convert type="ServicePosition">Remaining,Negate,ShowHours</convert>
 		</widget>
-		<widget source="session.CurrentService" render="Label" position="576,129" size="100,20" font="Regular;18" halign="center" valign="center" backgroundColor="#06224f" shadowColor="#1d354c" shadowOffset="-1,-1" transparent="1">
-			<convert type="ServicePosition">Remaining</convert>
-		</widget>
-		</screen>"""
+	</screen>"""
 
 	def __init__(self, session, service, lastservice, infoCallback = None, nextCallback = None, prevCallback = None):
 		Screen.__init__(self, session)
