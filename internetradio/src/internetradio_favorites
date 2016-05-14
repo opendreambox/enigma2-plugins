@@ -9,7 +9,7 @@ config.Entries.0.tags=Chillout
 config.Entries.0.homepage=http://www.chromanova.de
 config.Entries.0.name=Chromanova Chillout
 config.Entries.0.country=Germany
-config.Entries.2.text=http://www.swr3.de/wraps/musik/webradio/aplayer/stream_extern.php?format=mp3e&channel=0
+config.Entries.2.text=http://mp3-live.swr3.de/swr3_m.m3u
 config.Entries.2.homepage=http://www.swr3.de/
 config.Entries.2.name=SWR 3
 config.Entries.2.country=Germany

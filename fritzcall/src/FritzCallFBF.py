@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1268 $
-$Date: 2016-02-26 18:20:04 +0100 (Fri, 26 Feb 2016) $
-$Id: FritzCallFBF.py 1268 2016-02-26 17:20:04Z michael $
+$Revision: 1296 $
+$Date: 2016-05-02 15:52:11 +0200 (Mon, 02 May 2016) $
+$Id: FritzCallFBF.py 1296 2016-05-02 13:52:11Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -18,7 +18,7 @@ $Id: FritzCallFBF.py 1268 2016-02-26 17:20:04Z michael $
 # pylint: disable=C0111,C0103,C0301,W0603,W0141,W0403,W1401
 
 from . import _, __ #@UnresolvedImport # pylint: disable=W0611,F0401
-from plugin import config, fritzbox, stripCbCPrefix, resolveNumberWithAvon, FBF_IN_CALLS, FBF_OUT_CALLS, FBF_MISSED_CALLS, FBF_BLOCKED_CALLS
+from plugin import config, stripCbCPrefix, resolveNumberWithAvon, FBF_IN_CALLS, FBF_OUT_CALLS, FBF_MISSED_CALLS, FBF_BLOCKED_CALLS
 from Tools import Notifications
 from Screens.MessageBox import MessageBox
 from twisted.web.client import getPage #@UnresolvedImport
@@ -29,7 +29,7 @@ import re, time, hashlib
 
 import logging
 #debug = logging.getLogger(__name__ + "XXX").debug
-debug = logging.getLogger(__name__).debug
+#debug = logging.getLogger(__name__).debug
 
 FBF_boxInfo = 0
 FBF_upTime = 1
@@ -92,7 +92,8 @@ def cleanNumber(number):
 	return number
 		
 class FritzCallFBF:
-	debug = logging.getLogger("[FritzCallFBF]").debug
+	logger = logging.getLogger("FritzCallFBF.old")
+	debug = logger.debug
 
 	def __init__(self):
 		self.debug("")
@@ -1100,7 +1101,8 @@ class FritzCallFBF:
 		self._notify(text)
 
 class FritzCallFBF_05_27:
-	debug = logging.getLogger("[FritzCallFBF_05_27]").debug
+	logger = logging.getLogger("FritzCall.FBF_05_27")
+	debug = logger.debug
 	
 	def __init__(self):
 		self.debug("[FritzCallFBF_05_27] __init__")
@@ -1802,7 +1804,7 @@ import xml.etree.ElementTree as ET
 import StringIO, csv
 
 class FritzCallFBF_05_50:
-	logger = logging.getLogger("[FritzCallFBF_05_50]")
+	logger = logging.getLogger("FritzCall.FBF_05_50")
 	debug = logger.debug
 	info = logger.info
 	warn = logger.warn
@@ -2409,15 +2411,16 @@ class FritzCallFBF_05_50:
 		# encrypted == 2 means unknown
 		#                                      <tr id="uiTrWlan"><td class="led_green"></td><td><a href="/wlan/wlan_settings.lua?sid=9c824da3ecfc7168">WLAN</a></td><td title="an
 		# <tr id="uiTrWlan"><td class="led_green"></td><td><a href="/wlan/wlan_settings.lua?sid=af3b8ddd6a9176da">WLAN</a></td><td title="an">an, Funknetz: mms</td></tr>
-		found = re.match('.*<tr id="uiTrWlan"><td class="(led_gray|led_green|led_red)"></td><td><a href="[^"]*">WLAN</a></td><td[^>]*>((aus|an)[^<]*)', html, re.S)
+		found = re.match('.*<tr id="uiTrWlan"><td class="(led_gray|led_green|led_red)"></td><td><a href="[^"]*">WLAN</a></td><td title="(aus|an[^"]*)">([^<]*)</td>', html, re.S)
 		if found:
 			if found.group(1) == "led_green":
 				if found.group(2):
-					wlans = found.group(2)
-					found = re.match('.*an, ([^"]+)', wlans, re.S)
-					if found:
-						wlanState = [ '1', '2', '', '' ]
-						wlans = found.group(1)
+					wlanState = [ '1', '2', '', '' ]
+					found1 = re.match('.*an, ([^"]+)', found.group(2), re.S)
+					if not found1:
+						found1 = re.match('.*an, ([^"]+)', found.group(3), re.S)
+					if found1:
+						wlans = found1.group(1)
 					else:
 						wlanState = [ '0', '0', '', '' ]
 					found = re.match('.*Funknetz: ([^,"]*)', wlans, re.S)
@@ -2613,7 +2616,7 @@ class FritzCallFBF_05_50:
 		self._logout(md5Sid, "_errorBlacklist")
 
 class FritzCallFBF_06_35:
-	logger = logging.getLogger("[FritzCallFBF_06_35]")
+	logger = logging.getLogger("FritzCall.FBF_06_35")
 	debug = logger.debug
 	info = logger.info
 	warn = logger.warn
@@ -3175,8 +3178,12 @@ class FritzCallFBF_06_35:
 		found = re.match('.*"ipv6": {\s*"txt": \["IPv6, verbunden seit ([^"]+) Uhr",', html, re.S)
 		if found:
 			upTime6 = found.group(1)
-			if upTime and upTime.find(upTime6) == -1:
-				upTime = upTime +'/' + upTime6
+			if upTime:
+				if upTime.find(upTime6) == -1:
+					upTime = upTime +'/' + upTime6
+			else:
+				upTime = upTime6
+					
 			self.info("upTime6: " + upTime)
 
 		#found = re.match('.*"ipv4": {\s*"txt": \["IPv4, verbunden seit ([^"]+) Uhr",( "Anbieter: ([^"]*)",)? "IP-Adresse: ([^"]+)"\],', html, re.S)
@@ -3204,7 +3211,7 @@ class FritzCallFBF_06_35:
 		# dslState = [ state, information, unused ]; state == '5' means up, everything else down
 		#found = re.match('.*<tr id="uiTrDsl"><td class="(led_gray|led_green|led_red)">', html, re.S)
 		# found = re.match('.*<div class="desc (led_gray|led_green|led_red)"><div class="desc title"><a href="">(DSL|Kabel)</a></div><div class="details information">[^<]*<div class="speed"><span class="downstream">([^<]*)</span><span class="upstream">([^<]*)</span></div></div></div>', html, re.S)
-		found = re.match('.*"(?:dsl|cable)": {\s*"txt": "(?:verbunden|aktiviert|deaktiviert)",\s*"led": "(led_gray|led_green|led_red)",\s*"title": "(DSL|Kabel)",\s*"up": "([^"]*)",\s*"down": "([^"]*)",', html, re.S)
+		found = re.match('.*"(?:dsl|cable|docsis)": {\s*"txt": "(?:verbunden|aktiviert|deaktiviert)",\s*"led": "(led_gray|led_green|led_red)",\s*"title": "(DSL|Kabel)",\s*"up": "([^"]*)",\s*"down": "([^"]*)",', html, re.S)
 		if found:
 			if found.group(1) == "led_green":
 				dslState = ['5', None, None]
@@ -3259,7 +3266,7 @@ class FritzCallFBF_06_35:
 		if found:
 			faxActive = True
 			self.info("faxActive: " + repr(faxActive))
- 
+
 		found = re.match('.*"linktxt": "Rufumleitung",\s*"details": "(?:(\d+) )?aktiv",', html, re.S)
 		if found:
 			if found.group(1):
@@ -3267,7 +3274,7 @@ class FritzCallFBF_06_35:
 			else:
 				rufumlActive = -1 # means no number available
 			self.info("rufumlActive: " + repr(rufumlActive))
- 
+
 		guestAccess = ""
 		# found = re.match('.*WLAN-Gastzugang</a></td><td title="[^"]*">aktiv ([^<]*)</td>', html, re.S)
 		found = re.match('.*linktxt": "WLAN-Gastzugang",\s*"details": "aktiv \(([^\)]+)\)(, (ungesichert|gesichert))?,( (\d+) (Minuten|Stunden) verbleiben,)? (\d+ Geräte), ([^"]+)",\s*"link": "wGuest"', html, re.S)
@@ -3406,7 +3413,8 @@ class FritzCallFBF_06_35:
 		self._logout(md5Sid, "_errorBlacklist")
 
 class FritzCallFBF_dummy:
-	debug = logging.getLogger("[FritzCallFBF_dummy]").debug
+	logger = logging.getLogger("FritzCall.FBF_dummy")
+	debug = logger.debug
 
 	def __init__(self):
 		'''

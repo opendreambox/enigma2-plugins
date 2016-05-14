@@ -2,7 +2,7 @@
 #
 # ServiceReference to PiconName  - Converter
 #
-# Coded by dre (c) 2014
+# Coded by dre (c) 2014 - 2016
 # Support: www.dreambox-tools.info
 # E-Mail: dre@dreambox-tools.info
 #
@@ -22,28 +22,52 @@
 
 from Components.Converter.Converter import Converter
 from Components.Element import cached
-from enigma import eServiceCenter, eServiceReference
+from enigma import eServiceCenter, eServiceReference, iPlayableServicePtr, iServiceInformation
 
 class RefToPiconName(Converter, object):
+	REFERENCE = 0
+	NAME = 1
+	
 	def __init__(self, type):
+		if type == "Name":
+			self.type = self.NAME
+		else:
+			self.type = self.REFERENCE
+				
 		Converter.__init__(self, type)
 
 	@cached
 	def getText(self):
 		ref = self.source.service
-		if ref is not None:
-			#bouquet or marker
-			if ref.flags & (eServiceReference.isDirectory|eServiceReference.isMarker):
-				info = eServiceCenter.getInstance().info(ref)
-				if info:
-					return info.getName(ref).replace(" ","_")
-			#alternatives
-			elif ref.flags & (eServiceReference.isGroup):
-				return eServiceCenter.getInstance().list(ref).getContent("S")[0]
-			#channel
-			else:
-				return ref.toString()
 		
+		if ref is not None:
+			if not isinstance(ref, iPlayableServicePtr):
+				#bouquet or marker
+				if ref.flags & (eServiceReference.isDirectory|eServiceReference.isMarker):
+					info = eServiceCenter.getInstance().info(ref)
+					if info:
+						return info.getName(ref).replace(" ","_")
+				#alternatives
+				elif ref.flags & (eServiceReference.isGroup):
+					if self.type == self.NAME:
+						return eServiceCenter.getInstance().list(ref).getContent("N")[0].replace(" ","_")				
+					return eServiceCenter.getInstance().list(ref).getContent("S")[0]
+				#channel
+				if self.type == self.NAME:
+					info = eServiceCenter.getInstance().info(ref)
+					if info:
+						return info.getName(ref).replace(" ", "_")				
+				return ref.toString()
+			else:
+				info = ref and ref.info()
+				service = None
+			
+				if info:
+					sRef = service and info.getInfoString(service, iServiceInformation.sServiceRef) or info.getInfoString(iServiceInformation.sServiceref)
+					if sRef is None or sRef is "" or self.type == self.NAME:
+						return info.getName().replace(" ","_")
+					else:
+						return sRef
 		return ""
 		
 	text = property(getText)

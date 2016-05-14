@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 '''
-$Author$
-$Revision$
-$Date$
-$Id$
+$Author: michael $
+$Revision: 1290 $
+$Date: 2016-05-01 18:09:29 +0200 (Sun, 01 May 2016) $
+$Id: FritzLDIF.py 1290 2016-05-01 16:09:29Z michael $
 '''
 #
 # needs python-ldap for ldif
@@ -11,13 +11,10 @@ $Id$
 
 import ldif, re
 try:
-	from . import _, debug, normalizePhoneNumber #@UnresolvedImport # pylint: disable-msg=F0401
+	from . import _, normalizePhoneNumber #@UnresolvedImport # pylint: disable-msg=F0401
 except ValueError:
 	def _(string): # pylint: disable-msg=C0103
 		return string
-	
-	def debug(text):
-		print text
 	
 	def normalizePhoneNumber(intNo):
 		found = re.match('^\+49(.*)', intNo)
@@ -35,6 +32,10 @@ except ValueError:
 			return found.group(1)
 		else:
 			return '0'
+
+import logging
+logger = logging.getLogger("[FritzCall] LDIF")
+debug = logger.debug
 
 def out(number, name):
 	print number + '#' + name
