@@ -4,7 +4,7 @@ from __init__ import _
 from Components.config import config
 
 # Internal
-from Logger import logDebug, logInfo
+from Logger import log
 from TimeoutServerProxy import TimeoutServerProxy
 
 
@@ -15,9 +15,9 @@ class WebChannels(object):
 
 	def getWebChannels(self):
 		
-		logDebug("SerienServer getWebChannels()")
+		log.debug("SerienServer getWebChannels()")
 		
 		result = self.server.getWebChannels()
-		logDebug("SerienServer getWebChannels result:", result)
+		log.debug("SerienServer getWebChannels result:", result)
 		
 		return result
