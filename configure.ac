@@ -23,7 +23,7 @@ AX_PTHREAD
 TUXBOX_APPS_DVB
 
 PKG_CHECK_MODULES(ENIGMA2, enigma2)
-PKG_CHECK_MODULES(GSTREAMER, gstreamer-0.10 gstreamer-pbutils-0.10)
+PKG_CHECK_MODULES(GSTREAMER, gstreamer-1.0 gstreamer-pbutils-1.0)
 PKG_CHECK_MODULES(LIBCRYPTO, libcrypto)
 
 QT_FOUND=""
@@ -641,6 +641,10 @@ teletext/Makefile
 teletext/meta/Makefile
 teletext/po/Makefile
 teletext/src/Makefile
+
+trackautoselect/Makefile
+trackautoselect/meta/Makefile
+trackautoselect/src/Makefile
 
 toolkit/Makefile
 toolkit/src/Makefile

@@ -107,6 +107,7 @@ SUBDIRS = \
 	tageditor \
 	teletext \
 	toolkit \
+	trackautoselect \
 	tubelib \
 	tvcharts \
 	unwetterinfo \
