@@ -25,7 +25,7 @@ from Tools.BoundFunction import boundFunction
 # Internal
 from ModuleBase import ModuleBase
 from Cacher import Cacher
-from Logger import logDebug, logInfo
+from Logger import log
 
 
 class MyException(Exception):
