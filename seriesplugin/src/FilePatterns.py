@@ -26,11 +26,8 @@ from . import _
 # Config
 from Components.config import *
 
-from Tools.Notifications import AddPopup
-from Screens.MessageBox import MessageBox
-
 # Plugin internal
-from Logger import logDebug, logInfo
+from Logger import log
 
 
 scheme_fallback = [
@@ -89,15 +86,70 @@ scheme_fallback = [
 		("{org:s}_S{season:02d}EP{episode:02d}"                , "Org_S01EP01"),
 		("{org:s}_S{season:02d}EP{episode:02d_}"               , "Org_S01EP01_"),
 		
+		
+		("{org:s} S{season:02d} E{rawepisode:s} {title:s}" , "Org S01 ERaw Title"),
+		("{org:s} S{season:02d}E{rawepisode:s} {title:s}"  , "Org S01ERaw Title"),
+		("{org:s} {season:02d} {rawepisode:s} {title:s}"   , "Org 01 Raw Title"),
+		("{org:s} {season:02d}{rawepisode:s} {title:s}"    , "Org 01Raw Title"),
+		
+		("{org:s} - S{season:02d} E{rawepisode:s} - {title:s}" , "Org - S01 ERaw - Title"),
+		("{org:s} - S{season:02d}E{rawepisode:s} - {title:s}"  , "Org - S01ERaw - Title"),
+		("{org:s} - {season:02d} {rawepisode:s} - {title:s}"   , "Org - 01 Raw - Title"),
+		("{org:s} - {season:02d}{rawepisode:s} - {title:s}"    , "Org - 01Raw - Title"),
+		
+		("{series:s} S{season:02d} E{rawepisode:s} {title:s}" , "Series S01 ERaw Title"),
+		("{series:s} S{season:02d}E{rawepisode:s} {title:s}"  , "Series S01ERaw Title"),
+		("{series:s} {season:02d} {rawepisode:s} {title:s}"   , "Series 01 Raw Title"),
+		("{series:s} {season:02d}{rawepisode:s} {title:s}"    , "Series 01Raw Title"),
+		
+		("{series:s} - S{season:02d} E{rawepisode:s} - {title:s}" , "Series - S01 ERaw - Title"),
+		("{series:s} - S{season:02d}E{rawepisode:s} - {title:s}"  , "Series - S01ERaw - Title"),
+		("{series:s} - {season:02d} {rawepisode:s} - {title:s}"   , "Series - 01 Raw - Title"),
+		("{series:s} - {season:02d}{rawepisode:s} - {title:s}"    , "Series - 01Raw - Title"),
+		
+		
+		("{org:s} S{rawseason:s} E{rawepisode:s} {title:s}" , "Org SRaw ERaw Title"),
+		("{org:s} S{rawseason:s}E{rawepisode:s} {title:s}"  , "Org SRawERaw Title"),
+		("{org:s} {rawseason:s} {rawepisode:s} {title:s}"   , "Org Raw Raw Title"),
+		("{org:s} {rawseason:s}{rawepisode:s} {title:s}"    , "Org RawRaw Title"),
+		
+		("{org:s} - S{rawseason:s} E{rawepisode:s} - {title:s}" , "Org - SRaw ERaw - Title"),
+		("{org:s} - S{rawseason:s}E{rawepisode:s} - {title:s}"  , "Org - SRawERaw - Title"),
+		("{org:s} - {rawseason:s} {rawepisode:s} - {title:s}"   , "Org - Raw Raw - Title"),
+		("{org:s} - {rawseason:s}{rawepisode:s} - {title:s}"    , "Org - RawRaw - Title"),
+		
 		("{series:s} S{rawseason:s} E{rawepisode:s} {title:s}" , "Series SRaw ERaw Title"),
 		("{series:s} S{rawseason:s}E{rawepisode:s} {title:s}"  , "Series SRawERaw Title"),
 		("{series:s} {rawseason:s} {rawepisode:s} {title:s}"   , "Series Raw Raw Title"),
 		("{series:s} {rawseason:s}{rawepisode:s} {title:s}"    , "Series RawRaw Title"),
 		
-		("{series:s} S{season:02d} E{rawepisode:s} {title:s}" , "Series S01 ERaw Title"),
-		("{series:s} S{season:02d}E{rawepisode:s} {title:s}"  , "Series S01ERaw Title"),
-		("{series:s} - S{season:02d}E{rawepisode:s} - {title:s}" , "Series - S01ERaw - Title"),
-
+		("{series:s} - S{rawseason:s} E{rawepisode:s} - {title:s}" , "Series - SRaw ERaw - Title"),
+		("{series:s} - S{rawseason:s}E{rawepisode:s} - {title:s}"  , "Series - SRawERaw - Title"),
+		("{series:s} - {rawseason:s} {rawepisode:s} - {title:s}"   , "Series - Raw Raw - Title"),
+		("{series:s} - {rawseason:s}{rawepisode:s} - {title:s}"    , "Series - RawRaw - Title"),
+		
+		
+		("{org:s} S{season:02d} E{rawepisode:s}" , "Org S01 ERaw"),
+		("{org:s} S{season:02d}E{rawepisode:s}"  , "Org S01ERaw"),
+		("{org:s} {season:02d} {rawepisode:s}"   , "Org 01 Raw"),
+		("{org:s} {season:02d}{rawepisode:s}"    , "Org 01Raw"),
+		
+		("{org:s} - S{season:02d} E{rawepisode:s}" , "Org - S01 ERaw"),
+		("{org:s} - S{season:02d}E{rawepisode:s}"  , "Org - S01ERaw"),
+		("{org:s} - {season:02d} {rawepisode:s}"   , "Org - 01 Raw"),
+		("{org:s} - {season:02d}{rawepisode:s}"    , "Org - 01Raw"),
+		
+		("{series:s} S{season:02d} E{rawepisode:s}" , "Series S01 ERaw"),
+		("{series:s} S{season:02d}E{rawepisode:s}"  , "Series S01ERaw"),
+		("{series:s} {season:02d} {rawepisode:s}"   , "Series 01 Raw"),
+		("{series:s} {season:02d}{rawepisode:s}"    , "Series 01Raw"),
+		
+		("{series:s} - S{season:02d} E{rawepisode:s}" , "Series - S01 ERaw"),
+		("{series:s} - S{season:02d}E{rawepisode:s}"  , "Series - S01ERaw"),
+		("{series:s} - {season:02d} {rawepisode:s}"   , "Series - 01 Raw"),
+		("{series:s} - {season:02d}{rawepisode:s}"    , "Series - 01Raw"),
+		
+		
 		("{channel:s} {series:s} S{season:02d} E{rawepisode:s} {title:s}" , "Channel Series S01 ERaw Title"),
 		("{service:s} {series:s} S{season:02d}E{rawepisode:s} {title:s}"  , "Service Series S01ERaw Title"),
 		
@@ -111,20 +163,14 @@ def readFilePatterns():
 	patterns = None
 	
 	if os.path.exists(path):
-		logDebug("Found title pattern file")
+		log.debug("Found title pattern file")
 		f = None
 		try:
 			f = open(path, 'rb')
 			header, patterns = json.load(f)
 			patterns = [tuple(p) for p in patterns]
 		except Exception as e:
-			logDebug("Exception in readFilePatterns: " + str(e))
-			AddPopup(
-					_("Your pattern file is corrupt")  + "\n" + path + "\n\n" + str(e),
-					MessageBox.TYPE_ERROR,
-					-1,
-					'SP_PopUp_ID_Error_FilePatterns'
-				)
+			log.exception(_("Your pattern file is corrupt")  + "\n" + path + "\n\n" + str(e))
 		finally:
 			if f is not None:
 				f.close()

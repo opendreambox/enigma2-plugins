@@ -30,7 +30,7 @@ from Tools.XMLTools import stringToXML
 
 # Plugin internal
 from . import _
-from Logger import logDebug, logInfo
+from Logger import log
 
 def indent(elem, level=0):
 	i = "\n" + level*"  "
@@ -63,15 +63,15 @@ class XMLFile(object):
 	def readXML(self):
 		
 		path = self.__path
-		logDebug("Read XML from " + str(path))
+		log.debug("Read XML from " + str(path))
 		
 		if not path:
-			logDebug("No configuration file given")
+			log.debug("No configuration file given")
 			return None
 		
 		# Abort if no config found
 		if not os.path.exists(path):
-			logDebug("Configuration file does not exist")
+			log.debug("Configuration file does not exist")
 			return None
 		
 		# Parse if mtime differs from whats saved
@@ -84,7 +84,7 @@ class XMLFile(object):
 		try:
 			etree = parse(path)
 		except Exception as e:
-			logDebug("Exception in read XML: " + str(e))
+			log.exception("Exception in read XML: " + str(e))
 			etree = None
 			mtime = -1
 		
@@ -96,12 +96,12 @@ class XMLFile(object):
 	def writeXML(self, etree):
 		
 		path = self.__path
-		logDebug("Write XML to " + path)
+		log.debug("Write XML to " + path)
 		
 		try:
 			etree.write(path, encoding='utf-8', xml_declaration=True) 
 		except Exception as e:
-			logDebug("Exception in write XML: " + str(e))
+			log.exception("Exception in write XML: " + str(e))
 			etree = None
 			mtime = -1
 		
