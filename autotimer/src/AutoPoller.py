@@ -52,7 +52,7 @@ class AutoPollerThread(Thread):
 		if similars and config.plugins.autotimer.notifsimilar.value:
 			AddPopup(
 				_("%(similars)d conflict(s) solved with similar timer(s):\n%(timers)s") % \
-				{ "similars":len(similars), "timers":'\n'.join( [ _("%(tname)s: %(name)s at %(begin)s") % ("tname":x[4], "name":x[0], "begin":FuzzyTime(x[2]) ) for x in similars ] ) },
+				{ "similars":len(similars), "timers":'\n'.join( [ _("%(tname)s: %(name)s at %(begin)s") % {"tname":x[4], "name":x[0], "begin":FuzzyTime(x[2]} ) for x in similars ] ) },
 				MessageBox.TYPE_INFO,
 				config.plugins.autotimer.popup_timeout.value,
 				SIMILARNOTIFICATIONID
