@@ -39,7 +39,10 @@ def Partnerbox_EPGListInit():
 	if basebuildSingleEntry is None:
 		basebuildSingleEntry = EPGList.buildSingleEntry
 	if basebuildSimilarEntry is None:
-		basebuildSimilarEntry = EPGList.buildSimilarEntry
+		try:
+			basebuildSimilarEntry = EPGList.buildSimilarEntry
+		except:
+			pass
 	if basebuildMultiEntry is None:
 		basebuildMultiEntry = EPGList.buildMultiEntry
 	if partnerboxfunctions.remote_timer_list is None:
