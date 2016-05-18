@@ -148,7 +148,8 @@ class TrackAutoselector(object):
 
 		for idx in range(n):
 			info = audio.getTrackInfo(idx)
-			codec = C.audio_format_dict[info.getType()]
+			atype = info.getType()
+			codec = atype in C.audio_format_dict and C.audio_format_dict[atype] or "?"
 			languages = info.getLanguage().split('/')
 			description = info.getDescription() or ""
 			self.audiostreams.append(Stream(idx, codec, languages, info.isSaved(), info.isDefault(), description=description))
@@ -196,9 +197,9 @@ class TrackAutoselector(object):
 			iType = info.getType()
 			if iType == iSubtitleType_ENUMS.GST:
 				iType = info.getGstSubtype()
-				codec = C.gstsub_format_dict[iType]
+				codec = iType in C.gstsub_format_dict and C.gstsub_format_dict[iType] or "?"
 			else:
-				codec = C.sub_format_dict[iType]
+				codec = iType in C.sub_format_dict and C.sub_format_dict[iType] or "?"
 			streams.append(Stream(idx, codec, languages, info.isSaved(), info.isDefault(), info.isForced()))
 		print "[TrackAutoselector]:selectSubtitles list of subtitle streams", streams
 		enable = False
