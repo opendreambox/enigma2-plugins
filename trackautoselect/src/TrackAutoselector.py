@@ -204,29 +204,28 @@ class TrackAutoselector(object):
 		print "[TrackAutoselector]:selectSubtitles list of subtitle streams", streams
 		enable = False
 
-		if n > 1:
-			for parameter in config.plugins.TrackAutoselect.subtitle_parameter_order.value[::-1]:
-				if parameter == C.SUBTITLE_ORDER_SAVED:
-					streams.sort(key=lambda stream: not stream.saved)
-					enable = any([stream.saved for stream in streams])
-					print "[TrackAutoselector]:selectSubtitles now sorted by saved flag", streams, enable and "ENABLE!" or ""
-				elif parameter == C.SUBTITLE_ORDER_DEFAULT and not self.isDVB:
-					streams.sort(key=lambda stream: not stream.default)
-					enable = any([stream.default for stream in streams])
-					print "[TrackAutoselector]:selectSubtitles now sorted by default flag", streams, enable and "ENABLE!" or ""
-				elif parameter == C.SUBTITLE_ORDER_FORCED:
-					streams.sort(key=lambda stream: not stream.forced)
-					enable = any([stream.forced for stream in streams])
-					print "[TrackAutoselector]:selectSubtitles now sorted by forced flag", streams, enable and "ENABLE!" or ""
-				elif parameter == C.SUBTITLE_ORDER_LANGUAGE:
-					streams.sort(key=lambda stream: self.orderLanguageByPreference(stream, config.plugins.TrackAutoselect.subtitle_language_preference.getValue()))
-					print "[TrackAutoselector]:selectSubtitles now sorted by language", streams
-				elif parameter == C.SUBTITLE_ORDER_FORMAT:
-					streams.sort(key=lambda stream: self.orderFormatByPreference(stream, config.plugins.TrackAutoselect.subtitle_format_preference.getValue()))
-					print "[TrackAutoselector]:selectSubtitles now sorted by codec format", streams
-				if enable:
-					break
-			print "[TrackAutoselector]:selectSubtitles resorted list of subtitle streams:", streams, "playing_idx:", playing_idx
+		for parameter in config.plugins.TrackAutoselect.subtitle_parameter_order.value[::-1]:
+			if parameter == C.SUBTITLE_ORDER_SAVED:
+				streams.sort(key=lambda stream: not stream.saved)
+				enable = any([stream.saved for stream in streams])
+				print "[TrackAutoselector]:selectSubtitles now sorted by saved flag", streams, enable and "ENABLE!" or ""
+			elif parameter == C.SUBTITLE_ORDER_DEFAULT and not self.isDVB:
+				streams.sort(key=lambda stream: not stream.default)
+				enable = any([stream.default for stream in streams])
+				print "[TrackAutoselector]:selectSubtitles now sorted by default flag", streams, enable and "ENABLE!" or ""
+			elif parameter == C.SUBTITLE_ORDER_FORCED:
+				streams.sort(key=lambda stream: not stream.forced)
+				enable = any([stream.forced for stream in streams])
+				print "[TrackAutoselector]:selectSubtitles now sorted by forced flag", streams, enable and "ENABLE!" or ""
+			elif parameter == C.SUBTITLE_ORDER_LANGUAGE:
+				streams.sort(key=lambda stream: self.orderLanguageByPreference(stream, config.plugins.TrackAutoselect.subtitle_language_preference.getValue()))
+				print "[TrackAutoselector]:selectSubtitles now sorted by language", streams
+			elif parameter == C.SUBTITLE_ORDER_FORMAT:
+				streams.sort(key=lambda stream: self.orderFormatByPreference(stream, config.plugins.TrackAutoselect.subtitle_format_preference.getValue()))
+				print "[TrackAutoselector]:selectSubtitles now sorted by codec format", streams
+			if enable:
+				break
+		print "[TrackAutoselector]:selectSubtitles resorted list of subtitle streams:", streams, "playing_idx:", playing_idx
 
 		for parameter in config.plugins.TrackAutoselect.subtitle_enable_conditions.getValue():
 			if parameter == C.SUBTITLE_ENABLE_ALWAYS:
