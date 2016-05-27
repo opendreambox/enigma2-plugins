@@ -1,6 +1,7 @@
 from Components.config import config
 from Components.ServiceEventTracker import ServiceEventTracker
 from Screens.InfoBar import InfoBar
+from Screens.InfoBarGenerics import InfoBarSubtitleSupport, InfoBarAudioSelection
 from Screens.Screen import Screen
 from enigma import eTimer, eServiceReference, iPlayableService, iSubtitleFilterType_ENUMS, iSubtitleType_ENUMS
 
@@ -138,8 +139,8 @@ class TrackAutoselector(object):
 
 	def selectAudio(self):
 		service = self._nav.getCurrentService()
-		audioTracks = audio = service and service.audioTracks()
-		n = audio and audio.getNumberOfTracks() or 0
+		audioTracks = service and isinstance(self.infobar, InfoBarAudioSelection) and service.audioTracks() or None
+		n = audioTracks and audioTracks.getNumberOfTracks() or 0
 		if n == 0:
 			return
 
@@ -147,7 +148,7 @@ class TrackAutoselector(object):
 		selectedAudio = audioTracks.getCurrentTrack()
 
 		for idx in range(n):
-			info = audio.getTrackInfo(idx)
+			info = audioTracks.getTrackInfo(idx)
 			atype = info.getType()
 			codec = atype in C.audio_format_dict and C.audio_format_dict[atype] or "?"
 			languages = info.getLanguage().split('/')
@@ -181,7 +182,7 @@ class TrackAutoselector(object):
 			self.deferredSelectSubtitles = False
 
 	def selectSubtitles(self):
-		subs = self.infobar.getCurrentServiceSubtitle()
+		subs = isinstance(self.infobar, InfoBarSubtitleSupport) and self.infobar.getCurrentServiceSubtitle() or None
 		n = subs and subs.getNumberOfSubtitleTracks() or 0
 		if n == 0:
 			return
