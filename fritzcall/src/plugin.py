@@ -2,9 +2,9 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1299 $
-$Date: 2016-05-10 18:54:30 +0200 (Tue, 10 May 2016) $
-$Id: plugin.py 1299 2016-05-10 16:54:30Z michael $
+$Revision: 1313 $
+$Date: 2016-06-01 17:07:18 +0200 (Wed, 01 Jun 2016) $
+$Id: plugin.py 1313 2016-06-01 15:07:18Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -37,8 +37,8 @@ from Components.Button import Button
 from Components.Pixmap import Pixmap
 from Components.Sources.List import List
 from Components.ConfigList import ConfigListScreen
-from Components.config import config, ConfigSubsection, ConfigSelection, ConfigDirectory, getConfigListEntry, ConfigText, ConfigInteger
-import nrzuname
+from Components.config import config, ConfigSubsection, ConfigSelection, ConfigDirectory, getConfigListEntry, ConfigText, ConfigInteger,\
+	ConfigBoolean
 try:
 	from Components.config import ConfigEnableDisable
 except ImportError:
@@ -61,6 +61,18 @@ from twisted.internet.protocol import ReconnectingClientFactory #@UnresolvedImpo
 from twisted.protocols.basic import LineReceiver #@UnresolvedImport
 
 import re, time, os, traceback
+
+#import codecs
+#encode = lambda x : codecs.encode(x, "rot13")
+#decode = lambda x : codecs.decode(x, "rot13")
+
+from itertools import cycle, izip
+import base64
+#decode = encode = lambda x : ''.join(chr(ord(c)^ord(k)) for c,k in izip(x, cycle('secret key')))
+def encode (x):
+	return base64.encodestring(''.join(chr(ord(c)^ord(k)) for c,k in izip(x, cycle('secret key')))).strip()
+def decode (x):
+	return ''.join(chr(ord(c)^ord(k)) for c,k in izip(base64.decodestring(x), cycle('secret key')))
 
 from nrzuname import ReverseLookupAndNotifier
 import FritzOutlookCSV, FritzLDIF
@@ -99,7 +111,7 @@ config.plugins.FritzCall.fwVersion = ConfigSelection(choices=[(None, _("not conf
 #config.plugins.FritzCall.fwVersion = ConfigSelection(choices=[(None, _("not configured")), ("old", _("before 05.27")), ("05.27", "05.27, 05.28"), ("05.50", _("05.29 and newer"))], default=None)
 from logging import NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL
 config.plugins.FritzCall.debug = ConfigSelection(choices=[
-														(str(NOTSET), _("all")),
+														(str(NOTSET), _("nothing")),
 														(str(DEBUG), "DEBUG"),
 														(str(INFO), "INFO"),
 														(str(WARNING), "WARNING"),
@@ -142,7 +154,7 @@ config.plugins.FritzCall.FritzExtendedSearchNames = ConfigEnableDisable(default=
 config.plugins.FritzCall.phonebookLocation = ConfigDirectory(default = resolveFilename(SCOPE_CONFIG))
 config.plugins.FritzCall.guestSSID = ConfigText(default="FRITZ!Box Gastzugang", fixed_size=False)
 config.plugins.FritzCall.guestSecure = ConfigEnableDisable(default=True)
-config.plugins.FritzCall.guestPassword = ConfigText(default="guestguest!!!", fixed_size=False)
+config.plugins.FritzCall.guestPassword = ConfigPassword(default=encode("guestguest!!!"), fixed_size=False)
 
 guestWLANUptime = [(None, _('Not deactivating after time')), "15", "30", "45", "60", "90", "120", "180", "240", "300", "360", "480", "600", "720", "900", "1080", "1260"]
 config.plugins.FritzCall.guestUptime = ConfigSelection(choices=guestWLANUptime, default="30")
@@ -311,8 +323,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1299 $"[1:-2] + "\n" + 
-							"$Date: 2016-05-10 18:54:30 +0200 (Tue, 10 May 2016) $"[1:23] + "\n"
+							"$Revision: 1313 $"[1:-2] + "\n" + 
+							"$Date: 2016-06-01 17:07:18 +0200 (Wed, 01 Jun 2016) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -1942,13 +1954,22 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 		ConfigListScreen.__init__(self, self.list, session=session)
 
+		try:
+			config.plugins.FritzCall.guestPassword.value = decode(config.plugins.FritzCall.guestPassword.value)
+		except:
+			config.plugins.FritzCall.guestPassword.value = ""
+		try:
+			config.plugins.FritzCall.password.value = decode(config.plugins.FritzCall.password.value)
+		except:
+			config.plugins.FritzCall.password.value = ""
+
 		# get new list of locations for PhoneBook.txt
 		self.createSetup()
 		self.onLayoutFinish.append(self.setWindowTitle)
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1299 $"[1: - 1] + "$Date: 2016-05-10 18:54:30 +0200 (Tue, 10 May 2016) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1313 $"[1: - 1] + "$Date: 2016-06-01 17:07:18 +0200 (Wed, 01 Jun 2016) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -1994,7 +2015,6 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 				if config.plugins.FritzCall.fwVersion.value == "05.50" or config.plugins.FritzCall.fwVersion.value == "06.35":
 					self.list.append(getConfigListEntry(_("Name of WLAN guest network"), config.plugins.FritzCall.guestSSID))
 					self.list.append(getConfigListEntry(_("Secure WLAN guest network"), config.plugins.FritzCall.guestSecure))
-					# TODO: make password unreadable?
 					self.list.append(getConfigListEntry(_("Password of WLAN guest network"), config.plugins.FritzCall.guestPassword))
 					self.list.append(getConfigListEntry(_("Minutes of uptime of WLAN guest network"), config.plugins.FritzCall.guestUptime))
 				self.list.append(getConfigListEntry(_("Read PhoneBook from FRITZ!Box"), config.plugins.FritzCall.fritzphonebook))
@@ -2007,14 +2027,14 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 			else:
 				config.plugins.FritzCall.fritzphonebook.value = False
 
-			if config.plugins.FritzCall.phonebook.value or config.plugins.FritzCall.fritzphonebook.value:
-				self.list.append(getConfigListEntry(_("Reload interval for phonebooks (hours)"), config.plugins.FritzCall.reloadPhonebookTime))
-
 			self.list.append(getConfigListEntry(_("Use internal PhoneBook"), config.plugins.FritzCall.phonebook))
 			if config.plugins.FritzCall.phonebook.value:
 				if config.plugins.FritzCall.lookup.value:
 					self.list.append(getConfigListEntry(_("Automatically add new Caller to PhoneBook"), config.plugins.FritzCall.addcallers))
 			self.list.append(getConfigListEntry(_("PhoneBook and Faces Location"), config.plugins.FritzCall.phonebookLocation))
+
+			if config.plugins.FritzCall.phonebook.value or config.plugins.FritzCall.fritzphonebook.value:
+				self.list.append(getConfigListEntry(_("Reload interval for phonebooks (hours)"), config.plugins.FritzCall.reloadPhonebookTime))
 
 			if config.plugins.FritzCall.phonebook.value or config.plugins.FritzCall.fritzphonebook.value:
 				self.list.append(getConfigListEntry(_("Extended Search for names"), config.plugins.FritzCall.FritzExtendedSearchNames))
@@ -2033,6 +2053,13 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 #		debug("[FritzCallSetup]"
 		if self["config"].getCurrent()[1] == config.plugins.FritzCall.phonebookLocation:
 			self.session.openWithCallback(self.LocationBoxClosed, LocationBox, _("PhoneBook and Faces Location"), currDir=config.plugins.FritzCall.phonebookLocation.value)
+			
+		if fritzbox and config.plugins.FritzCall.password.isChanged():
+			fritzbox.password = config.plugins.FritzCall.password.value
+		config.plugins.FritzCall.password.value = encode(config.plugins.FritzCall.password.value)
+		if fritzbox and config.plugins.FritzCall.guestPassword.isChanged():
+			fritzbox.guestPassword = config.plugins.FritzCall.guestPassword.value
+		config.plugins.FritzCall.guestPassword.value = encode(config.plugins.FritzCall.guestPassword.value)
 
 		for x in self["config"].list:
 			x[1].save()
@@ -2055,6 +2082,8 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def cancel(self):
 #		debug("[FritzCallSetup]"
+		config.plugins.FritzCall.password.value = encode(config.plugins.FritzCall.password.value)
+		config.plugins.FritzCall.guestPassword.value = encode(config.plugins.FritzCall.guestPassword.value)
 		for x in self["config"].list:
 			x[1].cancel()
 		self.close()
@@ -2484,7 +2513,7 @@ class FritzReverseLookupAndNotifier:
 
 class FritzProtocol(LineReceiver): # pylint: disable=W0223
 	def __init__(self):
-		info("[FritzProtocol] " + "$Revision: 1299 $"[1:-1]	+ "$Date: 2016-05-10 18:54:30 +0200 (Tue, 10 May 2016) $"[7:23] + " starting")
+		info("[FritzProtocol] " + "$Revision: 1313 $"[1:-1]	+ "$Date: 2016-06-01 17:07:18 +0200 (Wed, 01 Jun 2016) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
@@ -2634,6 +2663,20 @@ class FritzClientFactory(ReconnectingClientFactory):
 		# initDebug()
 		initCbC()
 		initAvon()
+
+		try:
+			decode(config.plugins.FritzCall.password.value)
+		except:
+			Notifications.AddNotification(MessageBox, _("There might be a problem with your FritzCall %spassword.\nCheck in the configuration.") % "", type=MessageBox.TYPE_WARNING)
+			config.plugins.FritzCall.password.value = encode(config.plugins.FritzCall.password.value)
+			config.plugins.FritzCall.password.save()
+		try:
+			decode(config.plugins.FritzCall.guestPassword.value)
+		except:
+			Notifications.AddNotification(MessageBox, _("There might be a problem with your FritzCall %spassword.\nCheck in the configuration.") % _("guest "), type=MessageBox.TYPE_WARNING)
+			config.plugins.FritzCall.guestPassword.value = encode(config.plugins.FritzCall.guestPassword.value)
+			config.plugins.FritzCall.guestPassword.save()
+
 		# TODO: swithc between FBF FW versions...
 		if not config.plugins.FritzCall.fwVersion.value:
 			Notifications.AddNotification(MessageBox, _("To enjoy more functionalities of your FRITZ!Box, configure the firmware version!"), type=MessageBox.TYPE_INFO, timeout=4)
