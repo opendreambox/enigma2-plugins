@@ -459,13 +459,15 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 		self.renameFilterButton()
 
 		# Define Actions
-		self["actions"] = ActionMap(["SetupActions", "ColorActions"],
+		self["actions"] = ActionMap(["SetupActions", "ColorActions", "ChannelSelectBaseActions"],
 			{
 				"cancel": self.cancel,
 				"save": self.maybeSave,
 				"ok": self.ok,
 				"yellow": self.editFilter,
-				"blue": self.editServices
+				"blue": self.editServices,
+				"nextBouquet": self.pageUp,
+				"prevBouquet": self.pageDown
 			}, -2
 		)
 
@@ -695,6 +697,12 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 			self.chooseTags()
 		else:
 			ConfigListScreen.keyRight(self)
+
+	def pageUp(self):
+		self["config"].instance.moveSelection(self["config"].instance.pageUp)
+
+	def pageDown(self):
+		self["config"].instance.moveSelection(self["config"].instance.pageDown)
 
 	def ok(self):
 		cur = self["config"].getCurrent()

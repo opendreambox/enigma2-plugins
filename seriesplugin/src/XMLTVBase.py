@@ -14,7 +14,7 @@ from Tools.XMLTools import stringToXML
 # Plugin internal
 from . import _
 from XMLFile import XMLFile, indent
-from Logger import logDebug, logInfo
+from Logger import log
 
 
 class XMLTVBase(object):
@@ -25,18 +25,26 @@ class XMLTVBase(object):
 		self.epgimportversion = "0"
 		self.xmltvimport = None
 		self.xmltvimportversion = "0"
+		self.crossepg = None
+		self.crossepgversion = "0"
 		
 		# Check if xmltvimport exists
 		if os.path.exists("/etc/epgimport"):
-			logDebug("readXMLTV: Found epgimport")
+			log.debug("readXMLTV: Found epgimport")
 			path = "/etc/epgimport/wunschliste.sources.xml"
 			self.epgimport = XMLFile(path)
 		
 		# Check if xmltvimport exists
-		elif os.path.exists("/etc/xmltvimport"):
-			logDebug("readXMLTV: Found xmltvimport")
+		if os.path.exists("/etc/xmltvimport"):
+			log.debug("readXMLTV: Found xmltvimport")
 			path = "/etc/xmltvimport/wunschliste.sources.xml"
 			self.xmltvimport = XMLFile(path)
+		
+		# Check if crossepg exists
+		if os.path.exists("/etc/crossepg"):
+			log.debug("readXMLTV: Found crossepg")
+			path = "/etc/crossepg/wunschliste.sources.xml"
+			self.crossepg = XMLFile(path)
 		
 		self.readXMLTVConfig()
 
@@ -46,24 +54,29 @@ class XMLTVBase(object):
 			etree = self.epgimport.readXML()
 			if etree:
 				self.epgimportversion = etree.getroot().get("version", "1")
-				logDebug("readXMLTVConfig: EPGImport Version " + self.epgimportversion)
+				log.debug("readXMLTVConfig: EPGImport Version " + self.epgimportversion)
 		
 		if self.xmltvimport:
 			etree = self.xmltvimport.readXML()
 			if etree:
 				self.xmltvimportversion = etree.getroot().get("version", "1")
-				logDebug("readXMLTVConfig: XMLTVImport Version " + self.xmltvimportversion)
+				log.debug("readXMLTVConfig: XMLTVImport Version " + self.xmltvimportversion)
 		
+		if self.crossepg:
+			etree = self.crossepg.readXML()
+			if etree:
+				self.crossepgversion = etree.getroot().get("version", "1")
+				log.debug("readXMLTVConfig: crossepg Version " + self.crossepgversion)
 	
 	def writeXMLTVConfig(self):
 		
-		if int(self.epgimportversion[0]) >= 5 and int(self.xmltvimportversion[0]) >= 5:
-			return;
-		
-		if self.epgimport is None and self.xmltvimport is None:
+		if self.epgimport is None and self.xmltvimport is None and self.crossepg is None:
 			return
 		
-		if config.plugins.seriesplugin.epgimport.value == False and config.plugins.seriesplugin.xmltvimport.value == False:
+		if int(self.epgimportversion[0]) >= 5 and int(self.xmltvimportversion[0]) >= 5 and int(self.crossepgversion[0]) >= 5:
+			return;
+		
+		if config.plugins.seriesplugin.epgimport.value == False and config.plugins.seriesplugin.xmltvimport.value == False and config.plugins.seriesplugin.crossepg.value == False:
 			return
 		
 		# Build Header
@@ -83,15 +96,25 @@ class XMLTVBase(object):
 		indent(etree.getroot())
 		
 		if config.plugins.seriesplugin.epgimport.value:
-			logDebug("Write: xml channels for epgimport")
-			try:
-				self.epgimport.writeXML( etree )
-			except Exception as e:
-				logDebug("Exception in write XML: " + str(e))
+			log.debug("Write: xml channels for epgimport")
+			if self.epgimport:
+				try:
+					self.epgimport.writeXML( etree )
+				except Exception as e:
+					log.exception("Exception in write XML: " + str(e))
 		
 		if config.plugins.seriesplugin.xmltvimport.value:
-			logDebug("Write: xml channels for xmltvimport")
-			try:
-				self.xmltvimport.writeXML( etree )
-			except Exception as e:
-				logDebug("Exception in write XML: " + str(e))
+			log.debug("Write: xml channels for xmltvimport")
+			if self.xmltvimport:
+				try:
+					self.xmltvimport.writeXML( etree )
+				except Exception as e:
+					log.exception("Exception in write XML: " + str(e))
+		
+		if config.plugins.seriesplugin.crossepg.value:
+			log.debug("Write: xml channels for crossepg")
+			if self.crossepg:
+				try:
+					self.crossepg.writeXML( etree )
+				except Exception as e:
+					log.exception("Exception in write XML: " + str(e))

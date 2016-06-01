@@ -32,7 +32,7 @@ from time import localtime
 
 # Plugin internal
 from SeriesPluginTimer import SeriesPluginTimer
-from Logger import logDebug, logInfo
+from Logger import log
 
 
 # Globals
@@ -54,6 +54,8 @@ def stopIndependent():
 def runIndependent():
 	try:
 		
+		spt = SeriesPluginTimer()
+		
 		for timer in NavigationInstance.instance.RecordTimer.timer_list:
 			
 			#Maybe later
@@ -61,11 +63,10 @@ def runIndependent():
 			# Configured with a dialog
 			# Stored in a db or xml
 			
-			SeriesPluginTimer(timer, timer.name, timer.begin, timer.end)
-
-	
+			spt.getEpisode(timer)
+			
 	except Exception as e:
-		logDebug("SeriesPluginIndependent: run exception " + str(e))
+		log.exception( _("Independent mode exception") + "\n" + str(e))
 
 
 #######################################################
@@ -88,7 +89,7 @@ class SeriesPluginIndependent(object):
 		#self.etimer.start( 10, True )
 
 	def run(self):
-		logDebug("SeriesPluginIndependent: run",  strftime("%a, %d %b %Y %H:%M:%S", localtime()) )
+		log.debug("SeriesPluginIndependent: run",  strftime("%a, %d %b %Y %H:%M:%S", localtime()) )
 
 		runIndependent()
 

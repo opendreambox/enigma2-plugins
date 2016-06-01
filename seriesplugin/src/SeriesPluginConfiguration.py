@@ -43,7 +43,7 @@ from SeriesPlugin import resetInstance, getInstance
 from SeriesPluginIndependent import startIndependent, stopIndependent
 from FilePatterns import readFilePatterns
 from DirectoryPatterns import readDirectoryPatterns
-from Logger import logDebug, logInfo
+from Logger import log
 from ShowLogScreen import ShowLogScreen
 from Channels import getTVBouquets
 from ChannelEditor import ChannelEditor
@@ -73,6 +73,8 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 		
 		from plugin import NAME, VERSION
 		self.setup_title = NAME + " " + _("Configuration") + " " + VERSION
+		
+		log.debug("SeriesPluginConfiguration")
 		
 		self.onChangedEntry = [ ]
 		
@@ -163,19 +165,27 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 			
 			# Check if xmltvimport exists
 			if os.path.exists("/etc/epgimport"):
-				logDebug("Config: Found epgimport")
-#				self.list.append( getConfigListEntry(  _("Enable support for EPGImport")           , config.plugins.seriesplugin.epgimport ) )
+				log.debug("Config: Found epgimport")
+				self.list.append( getConfigListEntry(  _("Enable support for EPGImport")           , config.plugins.seriesplugin.epgimport ) )
 			elif config.plugins.seriesplugin.epgimport.value:
 				self.changesMade = True
 				config.plugins.seriesplugin.epgimport.value = False
 			
 			# Check if xmltvimport exists
 			if os.path.exists("/etc/xmltvimport"):
-				logDebug("Config: Found xmltvimport")
-#				self.list.append( getConfigListEntry(  _("Enable support for XMLTVImport")         , config.plugins.seriesplugin.xmltvimport ) )
+				log.debug("Config: Found xmltvimport")
+				self.list.append( getConfigListEntry(  _("Enable support for XMLTVImport")         , config.plugins.seriesplugin.xmltvimport ) )
 			elif config.plugins.seriesplugin.xmltvimport.value:
 				self.changesMade = True
 				config.plugins.seriesplugin.xmltvimport.value = False
+			
+			# Check if crossepg exists
+			if os.path.exists("/etc/crossepg"):
+				log.debug("Config: Found crossepg")
+				self.list.append( getConfigListEntry(  _("Enable support for crossepg")            , config.plugins.seriesplugin.crossepg ) )
+			elif config.plugins.seriesplugin.crossepg.value:
+				self.changesMade = True
+				config.plugins.seriesplugin.crossepg.value = False
 			
 			self.list.append( getConfigListEntry(  _("Show in info menu")                          , config.plugins.seriesplugin.menu_info ) )
 			self.list.append( getConfigListEntry(  _("Show in extensions menu")                    , config.plugins.seriesplugin.menu_extensions ) )
@@ -202,6 +212,7 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 			self.list.append( getConfigListEntry(  _("Default episode")                            , config.plugins.seriesplugin.default_episode ) )
 			
 			self.list.append( getConfigListEntry(  _("Replace special characters in title")        , config.plugins.seriesplugin.replace_chars ) )
+			self.list.append( getConfigListEntry(  _("Cut series title on dash")                   , config.plugins.seriesplugin.cut_series_title ) )
 			
 			self.list.append( getConfigListEntry(  _("Main bouquet for channel editor")            , self.cfg_bouquet_main ) )
 			
@@ -209,11 +220,6 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 			if config.plugins.seriesplugin.rename_file.value:
 				self.list.append( getConfigListEntry(  _("Use legacy filenames") + " (ä to ae)"    , config.plugins.seriesplugin.rename_legacy ) )
 				self.list.append( getConfigListEntry(  _("Append '_' if file exist")               , config.plugins.seriesplugin.rename_existing_files ) )
-			
-			self.list.append( getConfigListEntry(  _("Show warnings after Record renaming")        , config.plugins.seriesplugin.rename_popups ) )
-			self.list.append( getConfigListEntry(  _("Show success after Record renaming")         , config.plugins.seriesplugin.rename_popups_success ) )
-			if (-1 < config.plugins.seriesplugin.rename_popups.value) or (-1 < config.plugins.seriesplugin.rename_popups_success.value):
-				self.list.append( getConfigListEntry(  _("Timeout for Rename Popup")               , config.plugins.seriesplugin.rename_popups_timeout ) )
 			
 			self.list.append( getConfigListEntry(  _("Max time drift to match episode")            , config.plugins.seriesplugin.max_time_drift ) )
 			self.list.append( getConfigListEntry(  _("Title search depths")                        , config.plugins.seriesplugin.search_depths ) )
@@ -226,16 +232,16 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 				self.list.append( getConfigListEntry(  _("Check timer every x minutes")            , config.plugins.seriesplugin.independent_cycle ) )
 			
 			self.list.append( getConfigListEntry(  _("Check Timer for corresponding EPG events")   , config.plugins.seriesplugin.timer_eit_check ) )
-			self.list.append( getConfigListEntry(  _("Show warnings after Timer handling")         , config.plugins.seriesplugin.timer_popups ) )
-			self.list.append( getConfigListEntry(  _("Show success after Timer handling")          , config.plugins.seriesplugin.timer_popups_success ) )
-			if (-1 < config.plugins.seriesplugin.timer_popups.value) or (-1 < config.plugins.seriesplugin.timer_popups_success.value):
-				self.list.append( getConfigListEntry(  _("Timeout for Timer Popup")                , config.plugins.seriesplugin.timer_popups_timeout ) )
+			self.list.append( getConfigListEntry(  _("Add tag 'SeriesPlugin' to timer")            , config.plugins.seriesplugin.timer_add_tag ) )
+			
+			self.list.append( getConfigListEntry(  _("Socket timeout")                             , config.plugins.seriesplugin.socket_timeout ) )
+			
+			self.list.append( getConfigListEntry(  _("Timeout for Success Popups")                 , config.plugins.seriesplugin.popups_success_timeout  ) )
+			self.list.append( getConfigListEntry(  _("Timeout for Warnings Popups")                , config.plugins.seriesplugin.popups_warning_timeout  ) )
 			
 			#self.list.append( getConfigListEntry(  _("Use local caching")                         , config.plugins.seriesplugin.caching ) )
 			#if config.plugins.seriesplugin.caching.value:
 			#	self.list.append( getConfigListEntry(  _("Cache expires after x hours")            , config.plugins.seriesplugin.caching_expiration ) )
-			
-			self.list.append( getConfigListEntry(  _("Socket timeout")                             , config.plugins.seriesplugin.socket_timeout ) )
 			
 			self.list.append( getConfigListEntry(  _("Channel matching file")                      , config.plugins.seriesplugin.channel_file ) )
 			self.list.append( getConfigListEntry(  _("Episode pattern file")                       , config.plugins.seriesplugin.pattern_file ) )
@@ -280,12 +286,16 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 		current = self["config"].getCurrent()[1]
 		if (current == config.plugins.seriesplugin.enabled or 
 			current == config.plugins.seriesplugin.rename_file or
-			current == config.plugins.seriesplugin.rename_popups.value or 
-			current == config.plugins.seriesplugin.rename_popups_success.value or
 			current == config.plugins.seriesplugin.autotimer_independent or 
-			current == config.plugins.seriesplugin.write_log or
-			current == config.plugins.autotimer.log_write.value):
+			current == config.plugins.seriesplugin.write_log):
 			self.changeConfig()
+			return
+		try:
+			if current == config.plugins.autotimer.log_write.value:
+				self.changeConfig()
+				return
+		except:
+			pass
 
 	# Overwrite ConfigListScreen keySave function
 	def keySave(self):
@@ -353,7 +363,7 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 	# Overwrite ConfigListScreen keyCancel function
 	def keyCancel(self):
 		self.help_window_was_shown = False
-		logDebug("SPC keyCancel")
+		log.debug("SPC keyCancel")
 		#self.seriesPlugin.resetChannels()
 		resetInstance()
 		if self["config"].isChanged() or self.changesMade:
@@ -394,7 +404,7 @@ class SeriesPluginConfiguration(ConfigListScreen, Screen):
 		self.session.openWithCallback(self.channelEditorClosed, ChannelEditor)
 
 	def channelEditorClosed(self, result=None):
-		logDebug("SPC channelEditorClosed", result)
+		log.debug("SPC channelEditorClosed", result)
 		if result:
 			self.changesMade = True
 		else:

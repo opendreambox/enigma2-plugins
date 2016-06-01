@@ -93,7 +93,10 @@ class AutoTimerDoParseResource(AutoTimerBaseResource):
 	def epgCallback(self, ret):
 		if self._stillAlive:
 			ret = """<e2state>True</e2state>
-	<e2statetext>"""+ _("Found a total of %d matching Events.\n%d Timer were added and\n%d modified,\n%d conflicts encountered,\n%d similars added.") % (ret[0], ret[1], ret[2], len(ret[4]), len(ret[5])) + "</e2statetext></e2simplexmlresult>"
+	<e2statetext>"""+ \
+	_("Found a total of %(matches)d matching Events.\n%(timer)d Timer were added and\n%(modified)d modified,\n%(conflicts)d conflicts encountered,\n%(similars)d similars added.") % \
+	{"matches":ret[0], "timer":ret[1], "modified":ret[2], "conflicts":len(ret[4]), "similars":len(ret[5])} \
+	+ "</e2statetext></e2simplexmlresult>"
 			def finishRequest():
 				self._req.write(ret)
 				self._req.finish()
@@ -245,6 +248,11 @@ class AutoTimerRemoveAutoTimerResource(AutoTimerBaseResource):
 		id = req.args.get("id")
 		if id:
 			autotimer.remove(int(id[0]))
+			
+			# Save modified xml
+			if config.plugins.autotimer.always_write_config.value:
+				autotimer.writeXml()
+			
 			return self.returnResult(req, True, _("AutoTimer was removed"))
 		else:
 			return self.returnResult(req, False, _("missing parameter \"id\""))
@@ -475,6 +483,10 @@ class AutoTimerAddOrEditAutoTimerResource(AutoTimerBaseResource):
 			message = _("AutoTimer was added successfully")
 		else:
 			message = _("AutoTimer was changed successfully")
+		
+		# Save modified xml
+		if config.plugins.autotimer.always_write_config.value:
+			autotimer.writeXml()
 
 		return self.returnResult(req, True, message)
 

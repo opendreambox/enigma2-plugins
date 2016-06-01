@@ -6,17 +6,14 @@ import re
 
 from Components.config import config
 
-from Screens.MessageBox import MessageBox
-from Tools.Notifications import AddPopup
-
 from time import time, mktime
 from datetime import datetime
 
 # Internal
 from Plugins.Extensions.SeriesPlugin.__init__ import _
 from Plugins.Extensions.SeriesPlugin.IdentifierBase import IdentifierBase2
-from Plugins.Extensions.SeriesPlugin.Logger import logDebug, logInfo
-from Plugins.Extensions.SeriesPlugin.Channels import lookupChannelByReference
+from Plugins.Extensions.SeriesPlugin.Logger import log
+from Plugins.Extensions.SeriesPlugin.Channels import lookupChannelByReference, getChannel
 from Plugins.Extensions.SeriesPlugin.TimeoutServerProxy import TimeoutServerProxy
 
 
@@ -53,31 +50,31 @@ class SerienServer(IdentifierBase2):
 		
 		# Check preconditions
 		if not name:
-			msg =_("Skip: No show name specified")
-			logInfo(msg)
+			msg =_("Skipping lookup because no show name is specified")
+			log.warning(msg)
 			return msg
 		if not begin:
-			msg = _("Skip: No begin timestamp specified")
-			logInfo(msg)
+			msg = _("Skipping lookup because no begin timestamp is specified")
+			log.warning(msg)
 			return msg
 		if not service:
-			msg = _("Skip: No service / channel specified")
-			logInfo(msg)
+			msg = _("Skipping lookup because no channel is specified")
+			log.warning(msg)
 			return msg
 		
-		logInfo("SerienServer getEpisode, name, begin, end=None, service", name, begin, end, service)
+		
+		self.name = name
+		self.begin = begin
+		self.end = end
+		self.service = service
+		
+		log.info("SerienServer getEpisode, name, begin, end=None, service", name, begin, end, service)
 		
 		# Prepare parameters
 		webChannels = lookupChannelByReference(service)
 		if not webChannels:
-			msg = _("No matching channel found.") + "\n\n" + _("Please open the Channel Editor and add the channel manually.")
-			logInfo(msg)
-			AddPopup(
-				msg,
-				MessageBox.TYPE_ERROR,
-				-1,
-				'SP_PopUp_ID_Error'
-			)
+			msg = _("No matching channel found.") + "\n" + getChannel(service) + " (" + str(service) + ")\n\n" + _("Please open the Channel Editor and add the channel manually.")
+			log.warning(msg)
 			return msg
 		
 		unixtime = str(begin)
@@ -85,7 +82,7 @@ class SerienServer(IdentifierBase2):
 		
 		# Lookup
 		for webChannel in webChannels:
-			logDebug("SerienServer getSeasonEpisode(): [\"%s\",\"%s\",\"%s\",%s]" % (name, webChannel, unixtime, max_time_drift))
+			log.debug("SerienServer getSeasonEpisode(): [\"%s\",\"%s\",\"%s\",%s]" % (name, webChannel, unixtime, max_time_drift))
 			
 			result = self.server.getSeasonEpisode( name, webChannel, unixtime, self.max_time_drift )
 			
@@ -94,7 +91,7 @@ class SerienServer(IdentifierBase2):
 				result['channel'] = webChannel
 				result['begin'] = begin
 			
-			logDebug("SerienServer getSeasonEpisode result:", type(result), result)
+			log.debug("SerienServer getSeasonEpisode result:", type(result), result)
 			
 			return result
 

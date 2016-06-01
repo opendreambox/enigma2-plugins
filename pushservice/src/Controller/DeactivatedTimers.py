@@ -69,13 +69,13 @@ class DeactivatedTimers(ControllerBase):
 				
 				if list_similar:
 					if not timer.eit:
-						text += "\t" + _("Timer has no EIT") + "\r\n\r\n"
+						text += "\r\n\r\n" + _("Timer has no EIT") + "\r\n\r\n"
 						continue
 					
-					text += "\t" + _("Similar:") + "\r\n"
+					text += "\r\n\r\n" + _("Similar:") + "\r\n"
 					
 					for t in NavigationInstance.instance.RecordTimer.timer_list + NavigationInstance.instance.RecordTimer.processed_timers:
-						if not t.disabled and t.name == timer.name and t.eit != timer.eit:
+						if not t.disabled and not t.justplay and t.name == timer.name and t.eit != timer.eit:
 							text += "\t" + timerToString(t)  + "\r\n"
 					
 					text += "\r\n"
