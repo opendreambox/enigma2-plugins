@@ -26,14 +26,6 @@ PKG_CHECK_MODULES(ENIGMA2, enigma2)
 PKG_CHECK_MODULES(GSTREAMER, gstreamer-1.0 gstreamer-pbutils-1.0)
 PKG_CHECK_MODULES(LIBCRYPTO, libcrypto)
 
-QT_FOUND=""
-PKG_CHECK_MODULES(QT, QtCoreE QtSqlE, QT_FOUND="1", QT_FOUND="")
-
-if test -z "$QT_FOUND"; then
-	PKG_CHECK_MODULES(QT, QtCore QtSql)
-fi
-
-
 AC_ARG_WITH(debug,
 	AS_HELP_STRING([--without-debug],[disable debugging code]),
 	[with_debug="$withval"],[with_debug="yes"])
