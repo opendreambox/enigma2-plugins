@@ -25,7 +25,7 @@ from Components.ActionMap import ActionMap
 from Components.Sources.StaticText import StaticText
 from Components.config import config
 from Components.ServiceEventTracker import ServiceEventTracker
-from enigma import iPlayableService, iServiceInformation, eDVBVolumecontrol, eServiceCenter, eServiceReference
+from enigma import iPlayableService, iServiceInformation, eDVBVolumecontrol, eServiceCenter, eServiceReference, iAudioType_ENUMS as iAt
 from ServiceReference import ServiceReference
 from Components.VolumeControl import VolumeControl
 from AutomaticVolumeAdjustmentConfig import AutomaticVolumeAdjustmentConfig, getVolumeDict
@@ -158,8 +158,7 @@ class AutomaticVolumeAdjustment(Screen):
 			try: # uhh, servicemp3 leads sometimes to OverflowError Error
 				tracknr = audio.getCurrentTrack()
 				i = audio.getTrackInfo(tracknr)
-				description = i.getDescription();
-				if "AC3" in description or "DTS" in description:
+				if i.getType() in (iAt.atAC3, iAt.atDDP, iAt.atDTS, iAt.atDTSHD):
 					return True
 			except:
 				return False
