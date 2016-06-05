@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1306 $
-$Date: 2016-05-26 10:06:21 +0200 (Thu, 26 May 2016) $
-$Id: FritzCallFBF.py 1306 2016-05-26 08:06:21Z michael $
+$Revision: 1315 $
+$Date: 2016-06-05 15:36:48 +0200 (Sun, 05 Jun 2016) $
+$Id: FritzCallFBF.py 1315 2016-06-05 13:36:48Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -18,7 +18,7 @@ $Id: FritzCallFBF.py 1306 2016-05-26 08:06:21Z michael $
 # pylint: disable=C0111,C0103,C0301,W0603,W0141,W0403,W1401
 
 from . import _, __ #@UnresolvedImport # pylint: disable=W0611,F0401
-from plugin import config, stripCbCPrefix, resolveNumberWithAvon, FBF_IN_CALLS, FBF_OUT_CALLS, FBF_MISSED_CALLS, FBF_BLOCKED_CALLS, encode, decode
+from plugin import config, stripCbCPrefix, resolveNumberWithAvon, FBF_IN_CALLS, FBF_OUT_CALLS, FBF_MISSED_CALLS, FBF_BLOCKED_CALLS, decode
 from Tools import Notifications
 from Screens.MessageBox import MessageBox
 from twisted.web.client import getPage #@UnresolvedImport
@@ -226,7 +226,6 @@ class FritzCallFBF:
 		global fritzbox
 		self.debug(error)
 		text = _("FRITZ!Box - Error logging in: %s\nDisabling plugin.") % error.getErrorMessage()
-		# config.plugins.FritzCall.enable.value = False
 		fritzbox = None
 		self._notify(text)
 
@@ -1243,7 +1242,6 @@ class FritzCallFBF_05_27:
 		if type(error) != str:
 			error =  error.getErrorMessage()
 		text = _("FRITZ!Box - Error logging in: %s\nDisabling plugin.") % error
-		# config.plugins.FritzCall.enable.value = False
 		fritzbox = None
 		self._notify(text)
 
@@ -1932,7 +1930,6 @@ class FritzCallFBF_05_50:
 		else:
 			text = error.getErrorMessage()
 		text = _("FRITZ!Box - Error logging in: %s\nDisabling plugin.") % text
-		# config.plugins.FritzCall.enable.value = False
 		fritzbox = None
 		self.exception(error)
 		self._notify(text)
@@ -2745,7 +2742,6 @@ class FritzCallFBF_06_35:
 		else:
 			text = error.getErrorMessage()
 		text = _("FRITZ!Box - Error logging in: %s\nDisabling plugin.") % text
-		# config.plugins.FritzCall.enable.value = False
 		fritzbox = None
 		self.exception(error)
 		self._notify(text)
