@@ -320,7 +320,7 @@ class MyTubeTasksScreen(Screen):
 		self.onShown.append(self.setWindowTitle)
 		self.onClose.append(self.__onClose)
 		self._searchTimer = eTimer()
-		self._searchTimer_conn = self.Timer.timeout.connect(self.TimerFire)
+		self._searchTimer.timeout.callback.append(self.TimerFire)
 
 	def __onClose(self):
 		del self._searchTimer

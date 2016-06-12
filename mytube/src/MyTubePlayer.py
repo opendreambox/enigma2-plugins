@@ -70,7 +70,7 @@ class MyTubePlayer(Screen, InfoBarNotifications, InfoBarSeek):
 		self.lastservice = lastservice
 
 		self.hidetimer = eTimer()
-		self.hidetimer_conn = self.hidetimer.timeout.connect(self.ok)
+		self.hidetimer.timeout.callback.append(self.ok)
 		self.returning = False
 
 		self.state = self.STATE_PLAYING
