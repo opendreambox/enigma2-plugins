@@ -6,10 +6,11 @@ from time import time
 from twisted.internet import reactor
 from twisted.internet.defer import succeed
 from twisted.internet.ssl import ClientContextFactory
-from twisted.web.client import Agent, readBody, PartialDownloadError
+from twisted.web.client import Agent, PartialDownloadError
 from twisted.web.http_headers import Headers
 from twisted.web.iweb import IBodyProducer
 from zope.interface import implements
+from readBody import readBody
 
 import json
 
