@@ -138,6 +138,7 @@ class TrackAutoselector(object):
 		return matched
 
 	def selectAudio(self):
+		self.audiostreams = []
 		service = self._nav.getCurrentService()
 		audioTracks = service and isinstance(self.infobar, InfoBarAudioSelection) and service.audioTracks() or None
 		n = audioTracks and audioTracks.getNumberOfTracks() or 0
