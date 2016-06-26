@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-01 17:50+0200\n"
+"POT-Creation-Date: 2016-06-23 17:20+0200\n"
 "PO-Revision-Date: 2009-06-04 20:19+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
@@ -375,6 +375,9 @@ msgstr "Laat MSN zien (door een komma gescheiden)"
 msgid "Mailbox"
 msgstr "Mailbox"
 
+msgid "Make it more skin friendly"
+msgstr ""
+
 msgid "Minutes of uptime of WLAN guest network"
 msgstr ""
 
@@ -645,6 +648,9 @@ msgstr ""
 
 msgid "Vanity"
 msgstr "Trots"
+
+msgid "WLAN not active"
+msgstr ""
 
 msgid "You need to enable the monitoring on your FRITZ!Box by dialing #96*5*!"
 msgstr ""
