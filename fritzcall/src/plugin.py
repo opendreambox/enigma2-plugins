@@ -2,9 +2,9 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1341 $
-$Date: 2016-06-23 17:18:22 +0200 (Thu, 23 Jun 2016) $
-$Id: plugin.py 1341 2016-06-23 15:18:22Z michael $
+$Revision: 1345 $
+$Date: 2016-06-28 18:51:29 +0200 (Tue, 28 Jun 2016) $
+$Id: plugin.py 1345 2016-06-28 16:51:29Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -358,8 +358,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1341 $"[1:-2] + "\n" +
-							"$Date: 2016-06-23 17:18:22 +0200 (Thu, 23 Jun 2016) $"[1:23] + "\n"
+							"$Revision: 1345 $"[1:-2] + "\n" +
+							"$Date: 2016-06-28 18:51:29 +0200 (Tue, 28 Jun 2016) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -1591,7 +1591,7 @@ class FritzOfferAction(Screen):
 		picPixmap = LoadPixmap(faceFile)
 		if not picPixmap:  # that means most probably, that the picture is not 8 bit...
 			Notifications.AddNotification(MessageBox, _("Found picture\n\n%s\n\nBut did not load. Probably not PNG, 8-bit") % faceFile, type = MessageBox.TYPE_ERROR)
-			picPixmap = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, "skin_default/icons/input_error.png"))
+			picPixmap = LoadPixmap(resolveFilename(SCOPE_CURRENT_PLUGIN, "Extensions/FritzCall/images/no-face-error.png"))
 		picSize = picPixmap.size()
 		self["FacePixmap"].instance.setPixmap(picPixmap)
 		if config.plugins.FritzCall.advancedSkin.value:
@@ -2302,8 +2302,12 @@ class FritzCallPhonebook(object):
 					self.onLayoutFinish.append(self.setWindowTitle)
 
 				def setWindowTitle(self):
+					if self.number != "":
+						# TRANSLATORS: this is a window title.
+						self.setTitle(_("Edit selected entry"))
+					else:
 					# TRANSLATORS: this is a window title.
-					self.setTitle(_("Add entry to phonebook"))
+						self.setTitle(_("Add entry to phonebook"))
 
 				def add(self):
 					# get texts from Screen
@@ -2568,7 +2572,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1341 $"[1:-1] + "$Date: 2016-06-23 17:18:22 +0200 (Thu, 23 Jun 2016) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1345 $"[1:-1] + "$Date: 2016-06-28 18:51:29 +0200 (Tue, 28 Jun 2016) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -2921,7 +2925,7 @@ class MessageBoxPixmap(Screen):
 		picPixmap = LoadPixmap(faceFile)
 		if not picPixmap:  # that means most probably, that the picture is not 8 bit...
 			Notifications.AddNotification(MessageBox, _("Found picture\n\n%s\n\nBut did not load. Probably not PNG, 8-bit") % faceFile, type = MessageBox.TYPE_ERROR)
-			picPixmap = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, "skin_default/icons/input_error.png"))
+			picPixmap = LoadPixmap(resolveFilename(SCOPE_CURRENT_PLUGIN, "Extensions/FritzCall/images/no-face-error.png"))
 		picSize = picPixmap.size()
 		self["InfoPixmap"].instance.setPixmap(picPixmap)
 		if config.plugins.FritzCall.advancedSkin.value:
@@ -3145,7 +3149,7 @@ class FritzReverseLookupAndNotifier(object):
 
 class FritzProtocol(LineReceiver):  # pylint: disable=W0223
 	def __init__(self):
-		info("[FritzProtocol] " + "$Revision: 1341 $"[1:-1]	 + "$Date: 2016-06-23 17:18:22 +0200 (Thu, 23 Jun 2016) $"[7:23] + " starting")
+		info("[FritzProtocol] " + "$Revision: 1345 $"[1:-1]	 + "$Date: 2016-06-28 18:51:29 +0200 (Tue, 28 Jun 2016) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
