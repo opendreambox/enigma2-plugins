@@ -238,7 +238,7 @@ class TrackAutoselector(object):
 				print "[TrackAutoselector]:selectSubtitles enable if not first audio language", not self.primary_audio_matched, enable and "ENABLE!" or ""
 			elif parameter == C.SUBTITLE_ENABLE_NOTANYLANG:
 				enable = enable or audio_matched == self.MATCHED_NONE
-				print "[TrackAutoselector]:selectSubtitles enable if no specified audio language", not self.any_audio_matched, enable and "ENABLE!" or ""
+				print "[TrackAutoselector]:selectSubtitles enable if no specified audio language", enable and "ENABLE!" or ""
 			if enable:
 				break
 
