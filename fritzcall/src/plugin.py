@@ -2,9 +2,9 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1345 $
-$Date: 2016-06-28 18:51:29 +0200 (Tue, 28 Jun 2016) $
-$Id: plugin.py 1345 2016-06-28 16:51:29Z michael $
+$Revision: 1347 $
+$Date: 2016-06-30 08:53:55 +0200 (Thu, 30 Jun 2016) $
+$Id: plugin.py 1347 2016-06-30 06:53:55Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -358,8 +358,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1345 $"[1:-2] + "\n" +
-							"$Date: 2016-06-28 18:51:29 +0200 (Tue, 28 Jun 2016) $"[1:23] + "\n"
+							"$Revision: 1347 $"[1:-2] + "\n" +
+							"$Date: 2016-06-30 08:53:55 +0200 (Thu, 30 Jun 2016) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -1225,11 +1225,11 @@ class FritzDisplayCalls(Screen, HelpableScreen):
 							<widget source="entries" render="Listbox" position="10,45" size="600,360" enableWrapAround="1" scrollbarMode="showOnDemand">
 								<convert type="TemplatedMultiContent">
 									{"template": [
-											MultiContentEntryText(pos = (50,24), size = (150,18), font=1, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 0 is the number, index 1 is date
+											MultiContentEntryText(pos = (50,24), size = (150,21), font=1, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 0 is the number, index 1 is date
 											MultiContentEntryPixmapAlphaBlend(pos = (5,5), size = (35,35), png = 2), # index 1 i direction pixmap
-											MultiContentEntryText(pos = (50,3), size = (530,20), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 3), # index 2 is remote name/number
-											MultiContentEntryText(pos = (220,24), size = (80,18), font=1, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 4), # index 3 is length of call
-											MultiContentEntryText(pos = (320,24), size = (240,18), font=1, flags = RT_HALIGN_RIGHT|RT_VALIGN_CENTER, text = 5), # index 4 is my number/name for number
+											MultiContentEntryText(pos = (50,0), size = (530,24), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 3), # index 2 is remote name/number
+											MultiContentEntryText(pos = (220,24), size = (80,21), font=1, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 4), # index 3 is length of call
+											MultiContentEntryText(pos = (320,24), size = (240,21), font=1, flags = RT_HALIGN_RIGHT|RT_VALIGN_CENTER, text = 5), # index 4 is my number/name for number
 										],
 									"fonts": [gFont("Regular", 18), gFont("Regular", 16)],
 									"itemHeight": 45
@@ -1254,11 +1254,11 @@ class FritzDisplayCalls(Screen, HelpableScreen):
 							<widget source="entries" render="Listbox" position="10,50" size="830,440" enableWrapAround="1" scrollbarMode="showOnDemand">
 								<convert type="TemplatedMultiContent">
 									{"template": [
-											MultiContentEntryText(pos = (55,30), size = (200,22), font=1, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 0 is the number, index 1 is date
+											MultiContentEntryText(pos = (55,30), size = (200,25), font=1, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 0 is the number, index 1 is date
 											MultiContentEntryPixmapAlphaBlend(pos = (5,10), size = (35,35), png = 2), # index 1 i direction pixmap
-											MultiContentEntryText(pos = (55,6), size = (760,24), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 3), # index 2 is remote name/number
-											MultiContentEntryText(pos = (270,30), size = (100,22), font=1, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 4), # index 3 is length of call
-											MultiContentEntryText(pos = (390,30), size = (400,22), font=1, flags = RT_HALIGN_RIGHT|RT_VALIGN_CENTER, text = 5), # index 4 is my number/name for number
+											MultiContentEntryText(pos = (55,0), size = (760,30), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 3), # index 2 is remote name/number
+											MultiContentEntryText(pos = (270,30), size = (100,25), font=1, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 4), # index 3 is length of call
+											MultiContentEntryText(pos = (390,30), size = (400,25), font=1, flags = RT_HALIGN_RIGHT|RT_VALIGN_CENTER, text = 5), # index 4 is my number/name for number
 										],
 									"fonts": [gFont("Regular", 20), gFont("Regular", 18)],
 									"itemHeight": 55
@@ -1505,7 +1505,7 @@ class FritzOfferAction(Screen):
 			elif DESKTOP_WIDTH <= 1280:
 				self.skin = """
 				  <!-- HD screen -->
-				    <screen name="FritzOfferAction" position="center,center" size="700,310" title=" ">
+				    <screen name="FritzOfferAction" position="center,center" size="700,320" title=" ">
 				        <widget name="FacePixmap" position="10,10" size="230,230" alphatest="blend" />
 				        <widget name="text" position="290,80" size="400,150" font="Regular;20"/>
 				        <widget font="Regular;20" halign="center" name="key_red" position="10,270" size="200,25" />
@@ -1984,8 +1984,8 @@ class FritzCallPhonebook(object):
 							<widget source="entries" render="Listbox" position="10,5" size="600,400" enableWrapAround="1" scrollbarMode="showOnDemand">
 								<convert type="TemplatedMultiContent">
 									{"template": [
-											MultiContentEntryText(pos = (5,5), size = (400,20), font=0, flags = RT_HALIGN_LEFT, text = 1), # index 0 is the name, index 1 is shortname
-											MultiContentEntryText(pos = (415,5), size = (145,20), font=0, flags = RT_HALIGN_RIGHT, text = 2), # index 2 is number
+											MultiContentEntryText(pos = (5,0), size = (400,25), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 0 is the name, index 1 is shortname
+											MultiContentEntryText(pos = (415,0), size = (145,25), font=0, flags = RT_HALIGN_RIGHT|RT_VALIGN_CENTER, text = 2), # index 2 is number
 										],
 									"fonts": [gFont("Regular", 18)],
 									"itemHeight": 25
@@ -2009,8 +2009,8 @@ class FritzCallPhonebook(object):
 							<widget source="entries" render="Listbox" position="10,10" size="830,480" enableWrapAround="1" scrollbarMode="showOnDemand">
 								<convert type="TemplatedMultiContent">
 									{"template": [
-											MultiContentEntryText(pos = (5,3), size = (500,25), font=0, flags = RT_HALIGN_LEFT, text = 1), # index 0 is the name, index 1 is shortname
-											MultiContentEntryText(pos = (520,3), size = (270,25), font=0, flags = RT_HALIGN_RIGHT, text = 2), # index 2 is number
+											MultiContentEntryText(pos = (5,0), size = (500,30), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 0 is the name, index 1 is shortname
+											MultiContentEntryText(pos = (520,0), size = (270,30), font=0, flags = RT_HALIGN_RIGHT|RT_VALIGN_CENTER, text = 2), # index 2 is number
 										],
 									"fonts": [gFont("Regular", 20)],
 									"itemHeight": 30
@@ -2034,8 +2034,8 @@ class FritzCallPhonebook(object):
 							<widget source="entries" render="Listbox" position="10,10" size="1430,640" enableWrapAround="1" scrollbarMode="showOnDemand">
 								<convert type="TemplatedMultiContent">
 									{"template": [
-											MultiContentEntryText(pos = (5,3), size = (980,35), font=0, flags = RT_HALIGN_LEFT, text = 1), # index 0 is the name, index 1 is shortname
-											MultiContentEntryText(pos = (1000,3), size = (390,35), font=0, flags = RT_HALIGN_RIGHT, text = 2), # index 2 is number
+											MultiContentEntryText(pos = (5,0), size = (980,40), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 0 is the name, index 1 is shortname
+											MultiContentEntryText(pos = (1000,0), size = (390,40), font=0, flags = RT_HALIGN_RIGHT|RT_VALIGN_CENTER, text = 2), # index 2 is number
 										],
 									"fonts": [gFont("Regular", 28)],
 									"itemHeight": 40
@@ -2059,8 +2059,8 @@ class FritzCallPhonebook(object):
 							<widget source="entries" render="Listbox" position="10,10" size="2540,1330" enableWrapAround="1" scrollbarMode="showOnDemand">
 								<convert type="TemplatedMultiContent">
 									{"template": [
-											MultiContentEntryText(pos = (20,3), size = (1900,65), font=0, flags = RT_HALIGN_LEFT, text = 1), # index 0 is the name, index 1 is shortname
-											MultiContentEntryText(pos = (1950,3), size = (550,65), font=0, flags = RT_HALIGN_RIGHT, text = 2), # index 2 is number
+											MultiContentEntryText(pos = (20,0), size = (1900,70), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 0 is the name, index 1 is shortname
+											MultiContentEntryText(pos = (1950,0), size = (550,70), font=0, flags = RT_HALIGN_RIGHT|RT_VALIGN_CENTER, text = 2), # index 2 is number
 										],
 									"fonts": [gFont("Regular", 58)],
 									"itemHeight": 70
@@ -2572,7 +2572,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1345 $"[1:-1] + "$Date: 2016-06-28 18:51:29 +0200 (Tue, 28 Jun 2016) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1347 $"[1:-1] + "$Date: 2016-06-30 08:53:55 +0200 (Thu, 30 Jun 2016) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -3149,7 +3149,7 @@ class FritzReverseLookupAndNotifier(object):
 
 class FritzProtocol(LineReceiver):  # pylint: disable=W0223
 	def __init__(self):
-		info("[FritzProtocol] " + "$Revision: 1345 $"[1:-1]	 + "$Date: 2016-06-28 18:51:29 +0200 (Tue, 28 Jun 2016) $"[7:23] + " starting")
+		info("[FritzProtocol] " + "$Revision: 1347 $"[1:-1]	 + "$Date: 2016-06-30 08:53:55 +0200 (Thu, 30 Jun 2016) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
