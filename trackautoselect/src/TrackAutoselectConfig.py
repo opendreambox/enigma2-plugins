@@ -47,7 +47,7 @@ class TrackAutoselectConfig():
 	subtitle_order_choices = [("saved",_("saved")), ("default",_("default")), ("forced",_("forced")), ("language",_("Language")), ("format",_("format"))]
 	[SUBTITLE_ORDER_SAVED, SUBTITLE_ORDER_DEFAULT, SUBTITLE_ORDER_FORCED, SUBTITLE_ORDER_LANGUAGE, SUBTITLE_ORDER_FORMAT] = [x[0] for x in subtitle_order_choices]
 
-	subtitle_enable_choices = [("nofirstlanguage",_("if audio isn't first language")), ("notanylanguage",_("if no prefered audio language")), ("always",_("always"))]
+	subtitle_enable_choices = [("nofirstlanguage",_("if audio isn't first language")), ("notanylanguage",_("if no preferred audio language")), ("always",_("always"))]
 	[SUBTITLE_ENABLE_NOTFIRSTLANG, SUBTITLE_ENABLE_NOTANYLANG, SUBTITLE_ENABLE_ALWAYS] = [x[0] for x in subtitle_enable_choices]
 
 	handle_services_choices = [("servicegst",_("Media Files")), ("servicedvb",_("TV Services")), ("servicedvd",_("DVD"))]
