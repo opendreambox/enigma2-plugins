@@ -115,26 +115,26 @@ class AutoMountEdit(Screen, ConfigListScreen):
 
 	def createSetup(self):
 		if self._cfgOptions.value == self._cfgOptions.default:
-		if self._cfgMounttype.value == "nfs":
-			self._cfgOptions = NoSave(ConfigText(default = iAutoMount.DEFAULT_OPTIONS_NFS['options'], visible_width = 50, fixed_size = False))
-		else:
-			self._cfgOptions = NoSave(ConfigText(default = iAutoMount.DEFAULT_OPTIONS_CIFS['options'], visible_width = 50, fixed_size = False))
+			if self._cfgMounttype.value == "nfs":
+				self._cfgOptions = NoSave(ConfigText(default = iAutoMount.DEFAULT_OPTIONS_NFS['options'], visible_width = 50, fixed_size = False))
+			else:
+				self._cfgOptions = NoSave(ConfigText(default = iAutoMount.DEFAULT_OPTIONS_CIFS['options'], visible_width = 50, fixed_size = False))
 		optionsEntry = getConfigListEntry(_("Mount options"), self._cfgOptions)
 
 		lst = [
-		getConfigListEntry(_("Active"), self._cfgActive),
-		getConfigListEntry(_("Local share name"), self._cfgSharename),
-		getConfigListEntry(_("Mount type"), self._cfgMounttype),
-		getConfigListEntry(_("Server IP"), self._cfgIp),
-		getConfigListEntry(_("Server share"), self._cfgSharedir),
-		getConfigListEntry(_("use as HDD replacement"), self._cfgHddReplacement),
-		optionsEntry,
+			getConfigListEntry(_("Active"), self._cfgActive),
+			getConfigListEntry(_("Local share name"), self._cfgSharename),
+			getConfigListEntry(_("Mount type"), self._cfgMounttype),
+			getConfigListEntry(_("Server IP"), self._cfgIp),
+			getConfigListEntry(_("Server share"), self._cfgSharedir),
+			getConfigListEntry(_("use as HDD replacement"), self._cfgHddReplacement),
+			optionsEntry,
 		]
 		if self._cfgMounttype.value == "cifs":
-		lst.extend([
-			getConfigListEntry(_("Username"), self._cfgUsername),
-			getConfigListEntry(_("Password"), self._cfgPassword)
-		])
+			lst.extend([
+				getConfigListEntry(_("Username"), self._cfgUsername),
+				getConfigListEntry(_("Password"), self._cfgPassword)
+			])
 		self["config"].list = lst
 		self["config"].onSelectionChanged.append(self.selectionChanged)
 
