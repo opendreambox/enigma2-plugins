@@ -1,3 +1,4 @@
+﻿# encoding: utf-8
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
@@ -6,6 +7,7 @@ from Components.ActionMap import ActionMap
 from Components.Label import Label
 from Components.config import *
 from os import path
+from enigma import getDesktop
 
 CONFIGS = [("1", _("layer 1")),
 	   ("2", _("layer 2")),
@@ -42,11 +44,25 @@ config.plugins.MultiRC = ConfigSubsection()
 config.plugins.MultiRC.mask = ConfigSelection(choices = CONFIGS, default = "f")
 
 class MultiRCSetup(ConfigListScreen, Screen):
-	skin = """
-		<screen position="170,150" size="420,280" title="Multi RemoteControl" >
-		<widget name="config" position="10,10" size="400,40" scrollbarMode="showOnDemand" />
-		<widget name="warning" position="10,50" size="400,220" font="Regular;20" halign="center"/>
-		</screen>"""
+	height = getDesktop(0).size().height()
+	if height == 2160:
+		skin = """
+			<screen position="center,center" size="1500,840" title="Multi RemoteControl" >
+			<widget name="config" position="30,30" size="1440,120" scrollbarMode="showOnDemand" />
+			<widget name="warning" position="30,150" size="1440,660" font="Regular;60" halign="center"/>
+			</screen>"""
+	elif height == 1080:
+		skin = """
+			<screen position="center,center" size="750,420" title="Multi RemoteControl" >
+			<widget name="config" position="15,15" size="720,60" scrollbarMode="showOnDemand" />
+			<widget name="warning" position="15,75" size="720,330" font="Regular;30" halign="center"/>
+			</screen>"""
+	else:
+		skin = """
+			<screen position="center,center" size="500,280" title="Multi RemoteControl" >
+			<widget name="config" position="10,10" size="480,40" scrollbarMode="showOnDemand" />
+			<widget name="warning" position="10,50" size="480,220" font="Regular;20" halign="center"/>
+			</screen>"""
 
 	# most of the following is black magic copied from other plugins.
 	# e2 devs should really make some best practices or wrapper for this!
@@ -145,5 +161,3 @@ def Plugins(**kwargs):
 
 		PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART,
 				fnc = multirc_autostart)]
-
-
