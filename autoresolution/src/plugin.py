@@ -1,3 +1,4 @@
+﻿# encoding: utf-8
 from Screens.Screen import Screen
 from Screens.Setup import SetupSummary
 from Screens.MessageBox import MessageBox
@@ -7,7 +8,7 @@ from Components.ServiceEventTracker import ServiceEventTracker
 from Components.ActionMap import ActionMap
 from Components.Label import Label
 from Components.Sources.StaticText import StaticText
-from enigma import iPlayableService, iServiceInformation, eTimer
+from enigma import iPlayableService, iServiceInformation, eTimer, getDesktop
 from Plugins.Plugin import PluginDescriptor
 from Plugins.SystemPlugins.Videomode.VideoHardware import video_hw # depends on Videomode Plugin
 
@@ -261,11 +262,26 @@ class AutoRes(Screen):
 		self.lastmode = mode
 
 class ResolutionLabel(Screen):
-	skin = """
-		<screen position="50,40" size="250,36" flags="wfNoBorder" >
-			<widget name="content" position="0,0" size="250,18" font="Regular;16" />
-			<widget name="restxt" position="0,18" size="250,18" font="Regular;16" />
-		</screen>"""
+	height = getDesktop(0).size().height()
+	if height == 2160:
+		skin = """
+			<screen position="150,120" size="750,108" flags="wfNoBorder">
+				<widget name="content" position="0,0" size="750,54" font="Regular;48" />
+				<widget name="restxt" position="0,54" size="750,54" font="Regular;48" />
+			</screen>"""
+	elif height == 1080:
+		skin = """
+			<screen position="75,60" size="375,54" flags="wfNoBorder">
+				<widget name="content" position="0,0" size="375,27" font="Regular;24" />
+				<widget name="restxt" position="0,27" size="375,27" font="Regular;24" />
+			</screen>"""
+	else:
+		skin = """
+			<screen position="50,40" size="250,36" flags="wfNoBorder">
+				<widget name="content" position="0,0" size="250,18" font="Regular;16" />
+				<widget name="restxt" position="0,18" size="250,18" font="Regular;16" />
+			</screen>"""
+
 	def __init__(self, session):
 		Screen.__init__(self, session)
 
