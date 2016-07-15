@@ -27,17 +27,14 @@ LIST_PLUGINS = 0
 LIST_EXTENSIONS = 1
 LIST_EVENTINFO = 2
 class PluginHiderSetup(Screen, HelpableScreen):
-	skin = """<screen name="PluginHiderSetup" title="PluginHider Setup" position="center,115" size="950,530">
+	skin = """<screen name="PluginHiderSetup" title="PluginHider Setup" position="center,120" size="820,520">
 		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/blue.png" position="410,5" size="200,40" alphatest="on" />
 		<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
 		<widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
 		<widget source="key_blue" render="Label" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
-		<widget source="global.CurrentTime" render="Label" position="860,12" size="80,24" font="Regular;24" halign="right" backgroundColor="background" shadowColor="black" shadowOffset="-2,-2" transparent="1">
-			<convert type="ClockToText"></convert>
-		</widget>
-		<widget name="list" position="10,95" size="930,420" enableWrapAround="1" scrollbarMode="showOnDemand" />
+		<widget name="list" position="10,93" size="930,420" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		<widget position="0,50" zPosition="1" size="950,35" name="tabbar" pixmaps="skin_default/epg_now.png,skin_default/epg_next.png,skin_default/epg_more.png" />
 		<widget source="plugins" render="Label" position="31,55" zPosition="2" size="200,25" font="Regular;20" halign="center" valign="center" backgroundColor="background" transparent="1" />
 		<widget source="extensions" render="Label" position="231,55" zPosition="2" size="200,25" font="Regular;20" halign="center" valign="center" backgroundColor="background" transparent="1" />

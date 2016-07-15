@@ -12,17 +12,17 @@ VERSION = "1.6"
 
 class VPS_Setup(Screen, ConfigListScreen):
 
-	skin = """<screen name="vpsConfiguration" title="VPS-Plugin" position="center,center" size="600,370">
-		<ePixmap position="5,5" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-		<ePixmap position="155,5" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-		<ePixmap position="305,5" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
-		<ePixmap position="455,5" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
-		<widget source="key_red" render="Label" position="5,5" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;20" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-		<widget source="key_green" render="Label" position="155,5" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;20" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-		<widget source="key_blue" render="Label" position="455,5" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;20" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-		<widget name="config" position="5,50" size="590,185" scrollbarMode="showOnDemand" />
-		<ePixmap pixmap="skin_default/div-h.png" position="0,236" zPosition="1" size="600,2" />
-		<widget source="help" render="Label" position="5,245" size="590,125" font="Regular;21" />
+	skin = """<screen name="vpsConfiguration" position="center,120" size="820,520" title="VPS-Plugin">
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on" />
+		<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<widget source="key_blue" render="Label" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+		<widget name="config" position="10,60" size="800,330" enableWrapAround="1" scrollbarMode="showOnDemand" />
+		<eLabel position="10,400" size="800,1" backgroundColor="grey" />
+		<widget source="help" render="Label" position="10,410" size="800,96" font="Regular;22" />
 	</screen>"""
 	
 	def __init__(self, session):
@@ -122,8 +122,8 @@ class VPS_Setup(Screen, ConfigListScreen):
 
 
 class VPS_Screen_Info(Screen):
-	skin = """<screen name="vpsInfo" position="center,center" size="550,400" title="VPS-Plugin Information">
-		<widget name="text" position="10,10" size="540,390" font="Regular;22" />
+	skin = """<screen name="vpsInfo" position="center,120" size="820,520" title="VPS-Plugin Information">
+		<widget name="text" position="10,10" size="800,500" font="Regular;22" />
 	</screen>"""
 	
 	def __init__(self, session):
