@@ -20,7 +20,7 @@
 #  modify it (if you keep the license), but it may not be commercially 
 #  distributed other than under the conditions noted above.
 #
-from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT, RT_VALIGN_CENTER, eServiceReference
+from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT, RT_HALIGN_RIGHT, RT_VALIGN_CENTER, eServiceReference
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Screens.ChannelSelection import SimpleChannelSelection
@@ -37,16 +37,15 @@ from skin import TemplatedListFonts, componentSizes
 		
 class AutomaticVolumeAdjustmentConfigScreen(ConfigListScreen, Screen):
 	skin = """
-		<screen name="AutomaticVolumeAdjustmentConfigScreen" position="center,center" size="550,400">
-			<widget name="config" position="20,10" size="520,330" scrollbarMode="showOnDemand" />
-			<ePixmap position="0,350" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-			<ePixmap position="140,350" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-			<ePixmap position="280,350" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
-			<ePixmap position="420,350" zPosition="4" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
-
-			<widget source="key_red" render="Label" position="0,350" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget source="key_green" render="Label" position="140,350" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget render="Label" source="key_blue" position="420,350" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+		<screen name="AutomaticVolumeAdjustmentConfigScreen" position="center,center" size="820,400">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on" />
+			<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget source="key_blue" render="Label" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+			<widget name="config" position="10,60" size="800,240" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 
 	def __init__(self, session):
@@ -117,18 +116,20 @@ class AutomaticVolumeAdjustmentConfigScreen(ConfigListScreen, Screen):
 
 class AutomaticVolumeAdjustmentEntriesListConfigScreen(Screen):
 	skin = """
-		<screen position="center,center" size="550,400">
-			<widget render="Label" source="name" position="5,0" size="350,50" font="Regular;20" halign="left"/>
-			<widget render="Label" source="adjustvalue" position="355,0" size="200,50" font="Regular;20" halign="left"/>
-			<widget name="entrylist" position="0,50" size="550,300" scrollbarMode="showOnDemand"/>
-			<widget render="Label" source="key_red" position="0,350" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget source="key_green" render="Label" position="140,350" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget render="Label" source="key_yellow" position="280,350" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="yellow" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget render="Label" source="key_blue" position="420,350" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<ePixmap position="0,350" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-			<ePixmap position="140,350" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-			<ePixmap position="280,350" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
-			<ePixmap position="420,350" zPosition="4" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
+		<screen position="center,120" size="820,520">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on" />
+			<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget source="key_yellow" render="Label" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget source="key_blue" render="Label" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+			<widget source="name" render="Label" position="10,60" size="520,25" font="Regular;21" halign="left"/>
+			<widget source="adjustvalue" render="Label" position="570,60" size="240,25" font="Regular;21" halign="right"/>
+			<eLabel position="10,90" size="800,1" backgroundColor="grey" />
+			<widget name="entrylist" position="10,100" size="800,390" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 
 	def __init__(self, session, configVA):
@@ -199,12 +200,12 @@ class AutomaticVolumeAdjustmentEntryList(MenuList):
 	def __init__(self, list, enableWrapAround = True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 		tlf = TemplatedListFonts()
-		self.l.setFont(0, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
+		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
 		self.configVA = None
 
 	def postWidgetCreate(self, instance):
 		MenuList.postWidgetCreate(self, instance)
-		instance.setItemHeight(componentSizes.itemHeight(self.SKIN_COMPONENT_KEY, 20))
+		instance.setItemHeight(componentSizes.itemHeight(self.SKIN_COMPONENT_KEY, 30))
 
 	def getCurrentIndex(self):
 		return self.instance.getCurrentIndex()
@@ -216,15 +217,15 @@ class AutomaticVolumeAdjustmentEntryList(MenuList):
 		list = []
 		
 		sizes = componentSizes[AutomaticVolumeAdjustmentEntryList.SKIN_COMPONENT_KEY]
-		textWidth = sizes.get(AutomaticVolumeAdjustmentEntryList.SKIN_COMPONENT_TEXT_WIDTH, 355)
-		textHeight = sizes.get(AutomaticVolumeAdjustmentEntryList.SKIN_COMPONENT_TEXT_HEIGHT, 20)
+		textWidth = sizes.get(AutomaticVolumeAdjustmentEntryList.SKIN_COMPONENT_TEXT_WIDTH, 570)
+		textHeight = sizes.get(AutomaticVolumeAdjustmentEntryList.SKIN_COMPONENT_TEXT_HEIGHT, 30)
 				
 		for c in self.configVA.config.Entries:
 			c.name.value = ServiceReference(eServiceReference(c.servicereference.value)).getServiceName()
 			res = [
 				c,
 				(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, textWidth-10, textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, c.name.value),
-				(eListboxPythonMultiContent.TYPE_TEXT, textWidth, 0,textWidth, textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, str(c.adjustvalue.value)),
+				(eListboxPythonMultiContent.TYPE_TEXT, textWidth, 0,220, textHeight, 0, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, str(c.adjustvalue.value)),
 			]
 			list.append(res)
 		self.list = list
@@ -233,15 +234,13 @@ class AutomaticVolumeAdjustmentEntryList(MenuList):
 
 class AutomaticVolumeAdjustmentEntryConfigScreen(ConfigListScreen, Screen):
 	skin = """
-		<screen name="AutomaticVolumeAdjustmentEntryConfigScreen" position="center,center" size="550,400">
-			<widget name="config" position="20,10" size="520,330" scrollbarMode="showOnDemand" />
-			<ePixmap position="0,350" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-			<ePixmap position="140,350" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-			<ePixmap position="280,350" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
-			<ePixmap position="420,350" zPosition="4" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
-
-			<widget source="key_red" render="Label" position="0,350" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget source="key_green" render="Label" position="140,350" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+		<screen name="AutomaticVolumeAdjustmentEntryConfigScreen" position="center,center" size="820,400">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+			<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+			<widget name="config" position="10,60" size="800,240" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 
 	def __init__(self, session, entry, configVA):	
