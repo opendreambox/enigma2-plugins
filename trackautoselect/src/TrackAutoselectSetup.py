@@ -131,7 +131,7 @@ class TrackAutoselectPreferenceListScreen(Screen, SortableListScreen):
 			<widget source="button_yellow" render="Pixmap" position="410,5" size="200,40" pixmap="skin_default/buttons/yellow.png" alphatest="on">
 				<convert type="ConditionalShowHide" />
 			</widget>
-			<widget source="button_yellow" render="Pixmap" position="610,5" size="200,40" pixmap="skin_default/buttons/blue.png" alphatest="on">
+			<widget source="button_blue" render="Pixmap" position="610,5" size="200,40" pixmap="skin_default/buttons/blue.png" alphatest="on">
 				<convert type="ConditionalShowHide" />
 			</widget>
 			<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
