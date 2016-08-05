@@ -125,8 +125,8 @@ rereaddevices = False
 #-------------------------------------------------------------------------------------
 
 class Ceparted(Screen):
-	skin = """<screen position="center,center" size="600,200" title="eParted v0.13">
-			<widget name="list" position="5,5" size="590,190" />
+	skin = """<screen position="center,center" size="820,320" title="eParted v0.13">
+			<widget name="list" position="10,10" size="800,300" enableWrapAround="1" scrollbarMode="showOnDemand"/>
 		</screen>"""
 	def __init__(self, session):
 		Screen.__init__(self, session)
@@ -176,12 +176,13 @@ class Ceparted(Screen):
 #-------------------------------------------------------------------------------------
 
 class AddPart(Screen, ConfigListScreen):
-	skin = """<screen name="AddPart" position="center,center" size="600,190" title="add Partition" >
-			<ePixmap pixmap="skin_default/buttons/red.png" position="5,5" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="155,5" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-			<widget render="Label" source="key_red" position="5,5" size="140,40" zPosition="2" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" />
-			<widget render="Label" source="key_green" position="155,5" size="140,40" zPosition="2" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" />
-			<widget name="config" position="5,60" size="590,120" scrollbarMode="showOnDemand" />
+	skin = """<screen name="AddPart" position="center,center" size="820,320" title="add Partition" >
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+			<widget render="Label" source="key_red" position="10,5" size="200,40" zPosition="1" valign="center" halign="center" backgroundColor="#9f1313" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+			<widget render="Label" source="key_green" position="210,5" size="200,40" zPosition="1" valign="center" halign="center" backgroundColor="#1f771f" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+			<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+			<widget name="config" position="10,60" size="800,240" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 
 	def __init__(self, session, maxsize, unit, countpart):
@@ -241,27 +242,28 @@ class Cpart(Screen):
 	PA_TYPE_LAST = 2
 	PA_TYPE_FREE = 4
 
-	skin = """<screen position="center,center" size="670,200" title="eParted">
-			<widget source="list" render="Listbox" position="0,0" size="670,160" scrollbarMode="showOnDemand" enableWrapAround="on">
+	skin = """<screen position="center,center" size="820,320" title="eParted">
+			<widget name="PixmapRed" pixmaps="skin_default/buttons/button_off.png,skin_default/buttons/button_red.png" position="10,12" size="25,25" alphatest="on" />
+			<widget name="PixmapGreen" pixmaps="skin_default/buttons/button_off.png,skin_default/buttons/button_green.png" position="290,12" size="25,25" alphatest="on" />
+			<widget name="PixmapBlue" pixmaps="skin_default/buttons/button_off.png,skin_default/buttons/button_blue.png" position="570,12" size="25,25" alphatest="on" />
+			<widget name="LabelRed" position="50,5" size="200,40" valign="center" backgroundColor="background" font="Regular;21" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+			<widget name="LabelGreen" position="330,5" size="200,40" valign="center" backgroundColor="background" font="Regular;21" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+			<widget name="LabelBlue" position="610,5" size="200,40" valign="center" backgroundColor="background" font="Regular;21" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+			<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+			<widget source="list" render="Listbox" position="10,60" size="800,300" enableWrapAround="1" scrollbarMode="showOnDemand">
 			<convert type="TemplatedMultiContent">
 				{"template": [
-				MultiContentEntryText(pos = (0,5), size = (50, 30), font=0, flags = RT_HALIGN_LEFT, text=0),
-				MultiContentEntryText(pos = (60,5), size = (150, 30), font=0, flags = RT_HALIGN_LEFT, text=1),
-				MultiContentEntryText(pos = (210,5), size = (150, 30), font=0, flags = RT_HALIGN_LEFT, text=2),
-				MultiContentEntryText(pos = (360,5), size = (150, 30), font=0, flags = RT_HALIGN_LEFT, text=3),
-				MultiContentEntryText(pos = (510,5), size = (160, 30), font=0, flags = RT_HALIGN_LEFT, text=4)
+				MultiContentEntryText(pos = (10,2), size = (60, 30), font=0, flags = RT_HALIGN_LEFT, text=0),
+				MultiContentEntryText(pos = (80,2), size = (170, 30), font=0, flags = RT_HALIGN_LEFT, text=1),
+				MultiContentEntryText(pos = (260,2), size = (170, 30), font=0, flags = RT_HALIGN_LEFT, text=2),
+				MultiContentEntryText(pos = (440,2), size = (170, 30), font=0, flags = RT_HALIGN_LEFT, text=3),
+				MultiContentEntryText(pos = (620,2), size = (190, 30), font=0, flags = RT_HALIGN_LEFT, text=4)
 				],
-				"fonts": [gFont("Regular", 20)],
-				"itemHeight": 35
+				"fonts": [gFont("Regular", 21)],
+				"itemHeight": 30
 				}
 			</convert>
 			</widget>
-			<widget name="PixmapRed" position="25,170" size="15,16" pixmaps="skin_default/buttons/button_red_off.png,skin_default/buttons/button_red.png" transparent="1" alphatest="on" />
-			<widget name="LabelRed" position="50,160" size="150,40" font="Regular;19" valign="center" />
-			<widget name="PixmapGreen" position="225,170" size="15,16" pixmaps="skin_default/buttons/button_green_off.png,skin_default/buttons/button_green.png" transparent="1" alphatest="on" />
-			<widget name="LabelGreen" position="250,160" size="150,40" font="Regular;19" valign="center" />
-			<widget name="PixmapBlue" position="425,170" size="15,16" pixmaps="skin_default/buttons/button_blue_off.png,skin_default/buttons/button_blue.png" transparent="1" alphatest="on" />
-			<widget name="LabelBlue" position="450,160" size="150,40" font="Regular;19" valign="center" />
 		</screen>"""
 
 	def __init__(self, session, entry):
@@ -489,20 +491,21 @@ class Cpart(Screen):
 			self["LabelBlue"].setText("")
 
 class Cpartexe(Screen):
-	skin = """<screen position="center,center" size="670,400" title=" ">
-			<widget source="list" render="Listbox" position="0,0" size="670,360" scrollbarMode="showOnDemand" enableWrapAround="on">
+	skin = """<screen position="center,center" size="820,320" title=" ">
+			<widget name="PixmapButton" pixmaps="skin_default/buttons/button_green.png,skin_default/buttons/button_off.png" position="10,12" size="25,25" alphatest="on" />
+			<widget name="LabelButton" position="50,5" size="200,40" valign="center" backgroundColor="background" font="Regular;21" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+			<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+			<widget source="list" render="Listbox" position="10,60" size="800,304" enableWrapAround="1" scrollbarMode="showOnDemand">
 			<convert type="TemplatedMultiContent">
 				{"template": [
-				MultiContentEntryText(pos = (40,5), size = (630, 30), font=0, flags = RT_HALIGN_LEFT, text=0),
+				MultiContentEntryText(pos = (40,5), size = (760, 30), font=0, flags = RT_HALIGN_LEFT, text=0),
 				MultiContentEntryPixmapAlphaTest(pos = (5, 5), size = (35,35), png=1),
 				],
-				"fonts": [gFont("Regular", 22)],
-				"itemHeight": 40
+				"fonts": [gFont("Regular", 21)],
+				"itemHeight": 38
 				}
 			</convert>
 			</widget>
-			<widget name="PixmapButton" position="25,370" size="15,16" pixmaps="skin_default/buttons/button_green.png,skin_default/buttons/button_green_off.png" transparent="1" alphatest="on" />
-			<widget name="LabelButton" position="50,360" size="620,40" font="Regular;19" valign="center" />
 		</screen>"""
 
 	def __init__(self, session, comlist):
