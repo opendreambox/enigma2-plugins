@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 18:51+0200\n"
+"POT-Creation-Date: 2016-08-06 16:19+0200\n"
 "PO-Revision-Date: 2009-06-04 20:19+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
@@ -125,6 +125,10 @@ msgstr ""
 msgid "Could not get call list; wrong version?"
 msgstr ""
 
+#, python-format
+msgid "Could not load phonebook: %s"
+msgstr ""
+
 msgid "Could not parse FRITZ!Box Phonebook entry"
 msgstr "Fout bij het verwerken van een FRITZ!Box telefoonboek regel"
 
@@ -219,13 +223,12 @@ msgstr ""
 msgid "Extension number to initiate call on"
 msgstr "Voorkies nummer voor een telefoonoproep"
 
+msgid "FRITZ!Box - "
+msgstr ""
+
 #, python-format
 msgid "FRITZ!Box - Could not load calls: %s"
 msgstr ""
-
-#, fuzzy, python-format
-msgid "FRITZ!Box - Could not load phonebook: %s"
-msgstr "Fout bij het laden van het FRITZ!Box telefoonboek -fout: %s"
 
 #, python-format
 msgid "FRITZ!Box - Dialling failed: %s"
@@ -789,6 +792,10 @@ msgstr ""
 
 #~ msgid "Dialling failed - Error: %s"
 #~ msgstr "FRITZ!Box Login mislukt! - Error: %s"
+
+#, fuzzy
+#~ msgid "FRITZ!Box - Could not load phonebook: %s"
+#~ msgstr "Fout bij het laden van het FRITZ!Box telefoonboek -fout: %s"
 
 #~ msgid "FRITZ!Box Login failed! - Wrong Password!"
 #~ msgstr "FRITZ!Box Login mislukt! - Onjuist wachtwoord"
