@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma 2-plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 18:51+0200\n"
+"POT-Creation-Date: 2016-08-06 16:19+0200\n"
 "PO-Revision-Date: 2009-06-04 20:22+0200\n"
 "Last-Translator: José Juan Zapater <josej@zapater.fdns.net>\n"
 "Language-Team: none\n"
@@ -124,6 +124,10 @@ msgstr ""
 msgid "Could not get call list; wrong version?"
 msgstr ""
 
+#, python-format
+msgid "Could not load phonebook: %s"
+msgstr ""
+
 msgid "Could not parse FRITZ!Box Phonebook entry"
 msgstr "No puedo analizar las entradas de la agenda de FRITZ!Box"
 
@@ -218,13 +222,12 @@ msgstr ""
 msgid "Extension number to initiate call on"
 msgstr "Número de extensión para iniciar la llamada"
 
+msgid "FRITZ!Box - "
+msgstr ""
+
 #, python-format
 msgid "FRITZ!Box - Could not load calls: %s"
 msgstr ""
-
-#, fuzzy, python-format
-msgid "FRITZ!Box - Could not load phonebook: %s"
-msgstr "No puedo cargar la agenda desde FRITZ!Box - Error: %s"
 
 #, python-format
 msgid "FRITZ!Box - Dialling failed: %s"
@@ -813,6 +816,10 @@ msgstr ""
 #~ "con\n"
 #~ "\n"
 #~ "%(newname)s?"
+
+#, fuzzy
+#~ msgid "FRITZ!Box - Could not load phonebook: %s"
+#~ msgstr "No puedo cargar la agenda desde FRITZ!Box - Error: %s"
 
 #, fuzzy
 #~ msgid "FRITZ!Box Fon has no mailbox"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enigma2 FritzCall Plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 18:51+0200\n"
+"POT-Creation-Date: 2016-08-06 16:19+0200\n"
 "PO-Revision-Date: 2009-09-10 22:47+0100\n"
 "Last-Translator: maja <jovanovic@gmx.ch>\n"
 "Language-Team: veselin & majevica CRNABERZA <jovanovic@gmx.ch>\n"
@@ -126,6 +126,10 @@ msgstr ""
 msgid "Could not get call list; wrong version?"
 msgstr ""
 
+#, python-format
+msgid "Could not load phonebook: %s"
+msgstr ""
+
 msgid "Could not parse FRITZ!Box Phonebook entry"
 msgstr "Ne mogu tumačiti unos FRITZ!Box imenika"
 
@@ -220,13 +224,12 @@ msgstr ""
 msgid "Extension number to initiate call on"
 msgstr "Dodatni broj za početak poziva"
 
+msgid "FRITZ!Box - "
+msgstr ""
+
 #, python-format
 msgid "FRITZ!Box - Could not load calls: %s"
 msgstr "FRITZ!Box - Ne mogu učitati pozive: %s"
-
-#, python-format
-msgid "FRITZ!Box - Could not load phonebook: %s"
-msgstr "\"FRITZ!Box - Ne mogu učitati imenik: %s"
 
 #, python-format
 msgid "FRITZ!Box - Dialling failed: %s"
@@ -776,6 +779,9 @@ msgstr ""
 
 #~ msgid "Debug"
 #~ msgstr "Debag"
+
+#~ msgid "FRITZ!Box - Could not load phonebook: %s"
+#~ msgstr "\"FRITZ!Box - Ne mogu učitati imenik: %s"
 
 #~ msgid "Flash"
 #~ msgstr "Fleš"

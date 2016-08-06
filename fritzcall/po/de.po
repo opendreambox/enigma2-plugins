@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enigma2 FritzCall Plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 18:51+0200\n"
-"PO-Revision-Date: 2016-06-11 15:39+0200\n"
+"POT-Creation-Date: 2016-08-06 16:19+0200\n"
+"PO-Revision-Date: 2016-08-06 16:21+0200\n"
 "Last-Translator: Michael Schmidt <michael@schmidt-schmitten.com>\n"
 "Language-Team: german <de@li.org>\n"
 "Language: de\n"
@@ -125,6 +125,10 @@ msgstr ""
 msgid "Could not get call list; wrong version?"
 msgstr "Konnte Anrufliste nicht bekommen; falsche Firmware-Version?"
 
+#, python-format
+msgid "Could not load phonebook: %s"
+msgstr "\"Telefonbuch konnte nicht geladen werden: %ss"
+
 msgid "Could not parse FRITZ!Box Phonebook entry"
 msgstr "Konnte Eintrag in FRITZ!Box-Telefonbuch nicht lesen"
 
@@ -220,13 +224,12 @@ msgstr "Erweiterte Suche für Namen"
 msgid "Extension number to initiate call on"
 msgstr "Nebenstelle für Anrufe"
 
+msgid "FRITZ!Box - "
+msgstr "FRITZ!Box - "
+
 #, python-format
 msgid "FRITZ!Box - Could not load calls: %s"
 msgstr "FRITZ!Box - Anrufe konnten nicht geladen werden: %s"
-
-#, python-format
-msgid "FRITZ!Box - Could not load phonebook: %s"
-msgstr "\"FRITZ!Box - Telefonbuch konnte nicht geladen werden: %s"
 
 #, python-format
 msgid "FRITZ!Box - Dialling failed: %s"
@@ -798,3 +801,6 @@ msgstr "Büro"
 
 msgid "wrong user or password?"
 msgstr "falscher Benutzer oder falsches Passwort?"
+
+#~ msgid "FRITZ!Box - Could not load phonebook: %s"
+#~ msgstr "\"FRITZ!Box - Telefonbuch konnte nicht geladen werden: %s"
