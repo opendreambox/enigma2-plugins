@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1363 $
-$Date: 2016-08-06 14:42:29 +0200 (Sat, 06 Aug 2016) $
-$Id: FritzCallFBF.py 1363 2016-08-06 12:42:29Z michael $
+$Revision: 1367 $
+$Date: 2016-08-08 09:08:45 +0200 (Mon, 08 Aug 2016) $
+$Id: FritzCallFBF.py 1367 2016-08-08 07:08:45Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -3156,7 +3156,7 @@ class FritzCallFBF_06_35(object):
 				found = re.match(r'\s*Anbieter: (.*)', item, re.S)
 				if found:
 					provider = found.group(1).encode("utf-8")
-				found = re.match(r'IP-Adresse: (.*)', item, re.S)
+				found = re.match(r'IP(?:v4)?-Adresse: (.*)', item, re.S)
 				if found:
 					ipAddress = found.group(1).encode("utf-8")
 
@@ -3165,20 +3165,22 @@ class FritzCallFBF_06_35(object):
 		self.info("ipAddress: " + repr(ipAddress))
 
 		if "ipv6" in boxData and "txt" in boxData["ipv6"]:
-			for item in boxData["ipv4"]["txt"]:
+			upTime6 = None
+			provider6 = None
+			ipAddress6 = None
+			for item in boxData["ipv6"]["txt"]:
 				found = re.match(r'verbunden seit (.*)', item, re.S)
 				if found:
 					upTime6 = found.group(1).encode("utf-8")
 				found = re.match(r'\s*Anbieter: (.*)', item, re.S)
 				if found:
 					provider6 = found.group(1).encode("utf-8")
-				found = re.match(r'IP-Adresse: (.*)', item, re.S)
+				found = re.match(r'IP(?:v6)?-Adresse: (.*)', item, re.S)
 				if found:
 					ipAddress6 = found.group(1).encode("utf-8")
 
 			if upTime6:
-				if upTime:
-					if upTime.find(upTime6) == -1:
+				if upTime and upTime.find(upTime6) == -1:
 						upTime = upTime + '/' + upTime6
 				else:
 					upTime = upTime6
