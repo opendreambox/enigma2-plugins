@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1363 $
-$Date: 2016-08-06 14:42:29 +0200 (Sat, 06 Aug 2016) $
-$Id: FritzCallFBF.py 1363 2016-08-06 12:42:29Z michael $
+$Revision: 1368 $
+$Date: 2016-08-08 09:10:16 +0200 (Mon, 08 Aug 2016) $
+$Id: FritzCallFBF.py 1368 2016-08-08 07:10:16Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -3177,9 +3177,8 @@ class FritzCallFBF_06_35(object):
 					ipAddress6 = found.group(1).encode("utf-8")
 
 			if upTime6:
-				if upTime:
-					if upTime.find(upTime6) == -1:
-						upTime = upTime + '/' + upTime6
+				if upTime and upTime.find(upTime6) == -1:
+					upTime = upTime + '/' + upTime6
 				else:
 					upTime = upTime6
 
