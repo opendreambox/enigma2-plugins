@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1367 $
-$Date: 2016-08-08 09:08:45 +0200 (Mon, 08 Aug 2016) $
-$Id: FritzCallFBF.py 1367 2016-08-08 07:08:45Z michael $
+$Revision: 1368 $
+$Date: 2016-08-08 09:10:16 +0200 (Mon, 08 Aug 2016) $
+$Id: FritzCallFBF.py 1368 2016-08-08 07:10:16Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -3181,7 +3181,7 @@ class FritzCallFBF_06_35(object):
 
 			if upTime6:
 				if upTime and upTime.find(upTime6) == -1:
-						upTime = upTime + '/' + upTime6
+					upTime = upTime + '/' + upTime6
 				else:
 					upTime = upTime6
 
