@@ -2,11 +2,10 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1363 $
-$Date: 2016-08-06 14:42:29 +0200 (Sat, 06 Aug 2016) $
-$Id: plugin.py 1363 2016-08-06 12:42:29Z michael $
+$Revision: 1371 $
+$Date: 2016-08-10 09:57:34 +0200 (Wed, 10 Aug 2016) $
+$Id: plugin.py 1371 2016-08-10 07:57:34Z michael $
 '''
-
 
 # C0111 (Missing docstring)
 # C0103 (Invalid name)
@@ -361,8 +360,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1363 $"[1:-2] + "\n" +
-							"$Date: 2016-08-06 14:42:29 +0200 (Sat, 06 Aug 2016) $"[1:23] + "\n"
+							"$Revision: 1371 $"[1:-2] + "\n" +
+							"$Date: 2016-08-10 09:57:34 +0200 (Wed, 10 Aug 2016) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -964,7 +963,7 @@ class FritzMenu(Screen, HelpableScreen):
 				self["FBFInfo"].setText(_("Refreshing..."))
 			else:
 				if boxInfo:
-					self["FBFInfo"].setText(boxInfo.replace(', ', '\n'))
+					self["FBFInfo"].setText(boxInfo)
 				else:
 					self["FBFInfo"].setText('BoxInfo ' + _('Status not available'))
 
@@ -1754,6 +1753,7 @@ class FritzCallPhonebook(object):
 
 				try:
 					for k, v in json.loads(open(phonebookFilename).read().decode("utf-8")).items():
+						# TODO if we change the value to a list of lines, we have to adapt this here
 						self.phonebook[k.encode("utf-8")] = v.encode("utf-8")
 				except (ValueError, UnicodeError, IOError) as e:
 					error("[FritzCallPhonebook] Could not load %s: %s", phonebookFilename, str(e))
@@ -1889,7 +1889,7 @@ class FritzCallPhonebook(object):
 		@param name: name of entry, has to be in utf-8
 		'''
 		debug("[FritzCallPhonebook]")
-		name = name.replace("\n", ", ").replace('#', '')  # this is just for safety reasons. add should only be called with newlines converted into commas
+		name = name.replace("\n", ", ")  # this is just for safety reasons. add should only be called with newlines converted into commas
 		self.remove(number)
 		self.phonebook[number] = name
 		if number and number != 0:
@@ -2598,7 +2598,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1363 $"[1:-1] + "$Date: 2016-08-06 14:42:29 +0200 (Sat, 06 Aug 2016) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1371 $"[1:-1] + "$Date: 2016-08-10 09:57:34 +0200 (Wed, 10 Aug 2016) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -3174,7 +3174,7 @@ class FritzReverseLookupAndNotifier(object):
 
 		name = handleReverseLookupResult(caller)
 		if name:
-			self.caller = name.replace(", ", "\n").replace('#', '')
+			self.caller = name.replace(", ", "\n")
 			if self.number != 0 and config.plugins.FritzCall.addcallers.value:
 				info("[FritzReverseLookupAndNotifier] add to phonebook")
 				phonebook.add(self.number, self.caller)
@@ -3189,7 +3189,7 @@ class FritzReverseLookupAndNotifier(object):
 
 class FritzProtocol(LineReceiver):  # pylint: disable=W0223
 	def __init__(self):
-		info("[FritzProtocol] " + "$Revision: 1363 $"[1:-1] + "$Date: 2016-08-06 14:42:29 +0200 (Sat, 06 Aug 2016) $"[7:23] + " starting")
+		info("[FritzProtocol] " + "$Revision: 1371 $"[1:-1] + "$Date: 2016-08-10 09:57:34 +0200 (Wed, 10 Aug 2016) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
