@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1368 $
-$Date: 2016-08-08 09:10:16 +0200 (Mon, 08 Aug 2016) $
-$Id: FritzCallFBF.py 1368 2016-08-08 07:10:16Z michael $
+$Revision: 1371 $
+$Date: 2016-08-10 09:57:34 +0200 (Wed, 10 Aug 2016) $
+$Id: FritzCallFBF.py 1371 2016-08-10 07:57:34Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -772,7 +772,7 @@ class FritzCallFBF(object):
 			self.debug("_okGetInfo")
 			found = re.match(r'.*<table class="tborder" id="tProdukt">\s*<tr>\s*<td style="padding-top:2px;">([^<]*)</td>\s*<td style="padding-top:2px;text-align:right;">\s*([^\s]*)\s*</td>', html, re.S)
 			if found:
-				boxInfo = found.group(1) + ', ' + found.group(2)
+				boxInfo = found.group(1) + '\n' + found.group(2)
 				boxInfo = boxInfo.replace('&nbsp;', ' ')
 				# self.debug("Boxinfo: " + boxInfo)
 			else:
@@ -1639,7 +1639,7 @@ class FritzCallFBF_05_27(object):
 
 		found = re.match(r'.*<table id="tProdukt" class="tborder"> <tr> <td style="[^"]*" >([^<]*)</td> <td style="[^"]*" class="td_right">([^<]*)<a target="[^"]*" onclick="[^"]*" href="[^"]*">([^<]*)</a></td> ', html, re.S)
 		if found:
-			boxInfo = found.group(1) + ', ' + found.group(2) + found.group(3)
+			boxInfo = found.group(1) + '\n' + found.group(2) + found.group(3)
 			boxInfo = boxInfo.replace('&nbsp;', ' ')
 			self.debug("[FritzCallFBF_05_27] _okGetInfo Boxinfo: " + boxInfo)
 
@@ -2369,7 +2369,7 @@ class FritzCallFBF_05_50(object):
 
 		found = re.match(r'.*<table id="tProdukt" class="tborder"> <tr> <td style="[^"]*" >([^<]*)</td> <td style="[^"]*" class="td_right">([^<]*)<a target="[^"]*" onclick="[^"]*" href="[^"]*">([^<]*)</a></td> ', html, re.S)
 		if found:
-			boxInfo = found.group(1) + ', ' + found.group(2) + found.group(3)
+			boxInfo = found.group(1) + '\n' + found.group(2) + found.group(3)
 			boxInfo = boxInfo.replace('&nbsp;', ' ')
 			self.info("Boxinfo: " + boxInfo)
 
@@ -3119,46 +3119,40 @@ class FritzCallFBF_06_35(object):
 
 		self.debug("")
 
-		linkP = open("/tmp/FritzCallGetInfo.lua", "w")
-		linkP.write(html)
-		linkP.close()
+		if self.logger.getEffectiveLevel() == logging.DEBUG:
+			linkP = open("/tmp/FritzCallGetInfo.lua", "w")
+			linkP.write(html)
+			linkP.close()
 
 		(boxInfo, upTime, ipAddress, wlanState, dslState, tamActive, dectActive, faxActive, rufumlActive, guestAccess) = (None, None, None, None, None, None, None, None, None, None)  # @UnusedVariable # pylint: disable=W0613
 
 		boxData = json.loads(html)["data"]
 
 		fritzOs = boxData["fritzos"]
-		boxInfo = fritzOs["Productname"] + ", " + fritzOs["nspver"]
-		if fritzOs["fb_name"]:
-			boxInfo = boxInfo + ", " + fritzOs["fb_name"]
+		if fritzOs["Productname"]:
+			if fritzOs["fb_name"]:
+				boxInfo = fritzOs["Productname"] + " (" + fritzOs["fb_name"] + ")"
+			else:
+				boxInfo = fritzOs["Productname"]
+			if fritzOs["nspver"]:
+				boxInfo = boxInfo + "\n" + fritzOs["nspver"]
 		boxInfo = boxInfo.encode("utf-8")
 
 		self.info("Boxinfo: " + repr(boxInfo))
 
 		provider = None
 		if "ipv4" in boxData and "txt" in boxData["ipv4"]:
-# 				upTime = boxData["ipv4"]["txt"][0]
-# 				if upTime:
-# 					upTime = re.sub(r"^[^\d]*", "", upTime).encode("utf-8")
-# 				provider = None
-# 				if len(boxData["ipv4"]["txt"]) > 1 and boxData["ipv4"]["txt"][1]:
-# 					provider = boxData["ipv4"]["txt"][1].strip()
-# 					if provider.find(":") != -1:
-# 						provider = provider[provider.find(":") + 2:]
-# 				if len(boxData["ipv4"]["txt"]) > 2 and boxData["ipv4"]["txt"][2]:
-# 					ipv4 = boxData["ipv4"]["txt"][2]
-# 				if ipv4 and ipv4.find(":") != -1:
-# 					ipAddress = ipv4[ipv4.find(":") + 2:].encode("utf-8")
 			for item in boxData["ipv4"]["txt"]:
-				found = re.match(r'verbunden seit (.*)', item, re.S)
+				item = item.encode("utf-8")
+				found = re.match(r'.*verbunden seit (.*)', item, re.S)
 				if found:
-					upTime = found.group(1).encode("utf-8")
+					upTime = found.group(1)
 				found = re.match(r'\s*Anbieter: (.*)', item, re.S)
 				if found:
-					provider = found.group(1).encode("utf-8")
+					provider = found.group(1)
 				found = re.match(r'IP(?:v4)?-Adresse: (.*)', item, re.S)
 				if found:
-					ipAddress = found.group(1).encode("utf-8")
+					ipAddress = found.group(1)
 
 		self.info("upTime: " + repr(upTime))
 		self.info("provider: " + repr(provider))
@@ -3169,15 +3163,19 @@ class FritzCallFBF_06_35(object):
 			provider6 = None
 			ipAddress6 = None
 			for item in boxData["ipv6"]["txt"]:
-				found = re.match(r'verbunden seit (.*)', item, re.S)
+				found = re.match(r'.*verbunden seit (.*)', item, re.S)
 				if found:
 					upTime6 = found.group(1).encode("utf-8")
 				found = re.match(r'\s*Anbieter: (.*)', item, re.S)
 				if found:
 					provider6 = found.group(1).encode("utf-8")
-				found = re.match(r'IP(?:v6)?-Adresse: (.*)', item, re.S)
+				found = re.match(r'IP(?:v6)?-(?:Adresse|Prefix): (.*)', item, re.S)
 				if found:
 					ipAddress6 = found.group(1).encode("utf-8")
+
+			self.info("upTime6: " + repr(upTime))
+			self.info("provider6: " + repr(provider))
+			self.info("ipAddress6: " + repr(ipAddress))
 
 			if upTime6:
 				if upTime and upTime.find(upTime6) == -1:
@@ -3201,9 +3199,9 @@ class FritzCallFBF_06_35(object):
 				if upTime:
 					upTime = upTime + ' mit ' + provider
 
-		self.info("upTime6: " + repr(upTime))
-		self.info("provider6: " + repr(provider))
-		self.info("ipAddress6: " + repr(ipAddress))
+		self.info("upTime: " + repr(upTime))
+		self.info("provider: " + repr(provider))
+		self.info("ipAddress: " + repr(ipAddress))
 
 		if "dsl" in boxData or "docsis" in boxData or "cable" in boxData:
 			if "dsl" in boxData:
