@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1371 $
-$Date: 2016-08-10 09:57:34 +0200 (Wed, 10 Aug 2016) $
-$Id: FritzCallFBF.py 1371 2016-08-10 07:57:34Z michael $
+$Revision: 1372 $
+$Date: 2016-08-12 18:20:11 +0200 (Fri, 12 Aug 2016) $
+$Id: FritzCallFBF.py 1372 2016-08-12 16:20:11Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -3195,13 +3195,13 @@ class FritzCallFBF_06_35(object):
 				else:
 					ipAddress = ipAddress6
 
-			if provider:
-				if upTime:
-					upTime = upTime + ' mit ' + provider
+		if provider:
+			if upTime:
+				upTime = upTime + ' mit ' + provider
 
-		self.info("upTime: " + repr(upTime))
-		self.info("provider: " + repr(provider))
-		self.info("ipAddress: " + repr(ipAddress))
+		self.info("upTime final: " + repr(upTime))
+		self.info("provider final: " + repr(provider))
+		self.info("ipAddress final: " + repr(ipAddress))
 
 		if "dsl" in boxData or "docsis" in boxData or "cable" in boxData:
 			if "dsl" in boxData:
