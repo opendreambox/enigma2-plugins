@@ -107,6 +107,14 @@ class IMDB(Screen):
 	skin = """
 		<screen name="IMDBv2" position="center,120" size="920,520" title="IMDb - Internet Movie Database">
 			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="225,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="235,5" size="225,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/yellow.png" position="460,5" size="225,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/blue.png" position="685,5" size="225,40" alphatest="on" />
+			<widget name="key_red" position="10,5" size="225,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_green" position="235,5" size="225,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_yellow" position="460,5" size="225,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_blue" position="685,5" size="225,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<eLabel position="10,50" size="900,1" backgroundColor="grey" />
 			<widget name="titlelabel" position="10,55" size="900,50" valign="center" font="Regular;24" />
 			<widget name="starsbg" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_empty.png" position="600,55" zPosition="0" size="210,21" transparent="1" alphatest="on" />
 			<widget name="stars" position="600,55" size="210,21" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_filled.png" transparent="1" />
