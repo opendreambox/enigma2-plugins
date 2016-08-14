@@ -105,26 +105,19 @@ class IMDBEPGSelection(EPGSelection):
 
 class IMDB(Screen):
 	skin = """
-		<screen name="IMDBv2" position="center,center" size="920,520" title="IMDb - Internet Movie Database">
-			<ePixmap pixmap="skin_default/buttons/red.png" position="10,483" size="21,21" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="250,483" size="21,21" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/yellow.png" position="490,483" size="21,21" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/blue.png" position="730,483" size="21,21" alphatest="on" />
-			<widget name="key_red" position="40,480" size="200,30" font="Regular;24" halign="left" />
-			<widget name="key_green" position="280,480" size="200,30" font="Regular;24" halign="left" />
-			<widget name="key_yellow" position="520,480" size="200,30" font="Regular;24" halign="left" />
-			<widget name="key_blue" position="760,480" size="200,30" font="Regular;24" halign="left" />
-			<widget name="titlelabel" position="10,5" size="900,50" valign="center" font="Regular;24" />
-			<widget name="statusbar" position="10,453" size="900,18" font="Regular;16" foregroundColor="#cccccc" />
-			<widget name="extralabel" position="10,60" size="900,390" font="Regular;24" />
-			<widget name="ratinglabel" position="490,40" size="410,23" font="Regular;19" halign="center" foregroundColor="#f0b400" />
-			<widget name="starsbg" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_empty.png" position="600,12" zPosition="0" size="210,21" transparent="1" alphatest="on" />
-			<widget name="stars" position="600,12" size="210,21" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_filled.png" transparent="1" />
-			<widget name="detailslabel" position="115,70" size="795,140" font="Regular;20" />
-			<widget name="poster" position="10,70" size="96,140" alphatest="on" />
-			<widget name="castlabel" position="10,220" size="445,230" font="Regular;20" />
-			<widget name="storylinelabel" position="465,220" size="445,230" font="Regular;20" />
-			<widget name="menu" position="10,60" size="900,390" zPosition="3" scrollbarMode="showOnDemand" enableWrapAround="1" />
+		<screen name="IMDBv2" position="center,120" size="920,520" title="IMDb - Internet Movie Database">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="225,40" alphatest="on" />
+			<widget name="titlelabel" position="10,55" size="900,50" valign="center" font="Regular;24" />
+			<widget name="starsbg" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_empty.png" position="600,55" zPosition="0" size="210,21" transparent="1" alphatest="on" />
+			<widget name="stars" position="600,55" size="210,21" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_filled.png" transparent="1" />
+			<widget name="ratinglabel" position="490,83" size="410,23" font="Regular;19" halign="center" foregroundColor="#f0b400" />
+			<widget name="menu" position="10,110" size="900,360" zPosition="3" scrollbarMode="showOnDemand" enableWrapAround="1" />
+			<widget name="extralabel" position="10,110" size="900,360" font="Regular;24" />
+			<widget name="detailslabel" position="115,110" size="795,140" font="Regular;20" />
+			<widget name="poster" position="10,110" size="96,140" alphatest="on" />
+			<widget name="castlabel" position="10,260" size="445,230" font="Regular;20" />
+			<widget name="storylinelabel" position="465,260" size="445,230" font="Regular;20" />
+			<widget name="statusbar" position="10,497" size="900,22" font="Regular;17" foregroundColor="#b3b3b9" />
 		</screen>"""
 	def __init__(self, session, eventName, callbackNeeded=False):
 		Screen.__init__(self, session)
