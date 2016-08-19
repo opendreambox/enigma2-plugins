@@ -2,9 +2,9 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1371 $
-$Date: 2016-08-10 09:57:34 +0200 (Wed, 10 Aug 2016) $
-$Id: plugin.py 1371 2016-08-10 07:57:34Z michael $
+$Revision: 1374 $
+$Date: 2016-08-19 16:24:52 +0200 (Fri, 19 Aug 2016) $
+$Id: plugin.py 1374 2016-08-19 14:24:52Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -229,7 +229,7 @@ def resolveNumberWithAvon(number, countrycode):
 	# debug('normNumer: ' + normNumber)
 	for i in reversed(range(min(10, len(number)))):
 		if normNumber[:i] in avon:
-			return '(' + avon[normNumber[:i]].strip() + ')'
+			return '[' + avon[normNumber[:i]].strip() + ']'
 	return ""
 
 def handleReverseLookupResult(name):
@@ -360,8 +360,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1371 $"[1:-2] + "\n" +
-							"$Date: 2016-08-10 09:57:34 +0200 (Wed, 10 Aug 2016) $"[1:23] + "\n"
+							"$Revision: 1374 $"[1:-2] + "\n" +
+							"$Date: 2016-08-19 16:24:52 +0200 (Fri, 19 Aug 2016) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -2598,7 +2598,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1371 $"[1:-1] + "$Date: 2016-08-10 09:57:34 +0200 (Wed, 10 Aug 2016) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1374 $"[1:-1] + "$Date: 2016-08-19 16:24:52 +0200 (Fri, 19 Aug 2016) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -3189,7 +3189,7 @@ class FritzReverseLookupAndNotifier(object):
 
 class FritzProtocol(LineReceiver):  # pylint: disable=W0223
 	def __init__(self):
-		info("[FritzProtocol] " + "$Revision: 1371 $"[1:-1] + "$Date: 2016-08-10 09:57:34 +0200 (Wed, 10 Aug 2016) $"[7:23] + " starting")
+		info("[FritzProtocol] " + "$Revision: 1374 $"[1:-1] + "$Date: 2016-08-19 16:24:52 +0200 (Fri, 19 Aug 2016) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'

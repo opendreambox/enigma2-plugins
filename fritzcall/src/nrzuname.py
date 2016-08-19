@@ -1,10 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 '''
-$Id: nrzuname.py 1329 2016-06-11 16:39:05Z michael $
+$Id: nrzuname.py 1373 2016-08-18 13:27:19Z michael $
 $Author: michael $
-$Revision: 1329 $
-$Date: 2016-06-11 18:39:05 +0200 (Sat, 11 Jun 2016) $
+$Revision: 1373 $
+$Date: 2016-08-18 15:27:19 +0200 (Thu, 18 Aug 2016) $
 '''
 
 # C0111 (Missing docstring)
@@ -408,6 +408,9 @@ class ReverseLookupAndNotifier(object):
 
 			self.notifyAndReset()
 			return True
+		
+		self._gotError("[ReverseLookupAndNotifier] _gotPage: Nothing found at %s" %self.currentWebsite.getAttribute("name"))
+		return False
 
 	def _gotError(self, errorMsg = ""):
 		error("Error: %s", errorMsg)
