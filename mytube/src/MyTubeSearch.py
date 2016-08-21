@@ -1,22 +1,18 @@
 from enigma import eTimer, ePythonMessagePump
 from MyTubeService import GoogleSuggestions
 from Screens.Screen import Screen
-from Screens.LocationBox import MovieLocationBox
-from Components.config import config, ConfigText, getConfigListEntry
+from Components.config import config, ConfigText
 from Components.config import KEY_DELETE, KEY_BACKSPACE, KEY_ASCII, KEY_TIMEOUT
-from Components.ConfigList import ConfigListScreen
 from Components.ActionMap import ActionMap
 from Components.Button import Button
 from Components.Label import Label
 from Components.Sources.List import List
-from Components.MultiContent import MultiContentEntryText
 from Components.Task import job_manager
 from Tools.Directories import resolveFilename, SCOPE_HDD
 
 from threading import Thread
 from ThreadQueue import ThreadQueue
-from xml.etree.cElementTree import fromstring as cet_fromstring
-from StringIO import StringIO
+
 #import urllib
 from urllib import FancyURLopener
 import json
@@ -194,7 +190,6 @@ class MyTubeSuggestionsListScreen(Screen):
 		if suggestions and len(suggestions) > 0:
 			if not self.shown:
 				self.show()
-			#suggestions_tree = cet_fromstring( suggestions )
 			suggestions_tree = json.loads(str(suggestions[20:-1]))
 			if suggestions_tree:
 				self.list = []
@@ -281,172 +276,6 @@ class MyTubeSuggestionsListScreen(Screen):
 	def enableSelection(self,value):
 		self["suggestionslist"].selectionEnabled(value)
 
-
-class MyTubeSettingsScreen(Screen, ConfigListScreen):
-	skin = """
-		<screen name="MyTubeSettingsScreen" flags="wfNoBorder" position="0,0" size="720,576" title="MyTube - Settings" >
-			<ePixmap position="0,0" zPosition="-1" size="720,576" pixmap="~/mytubemain_bg.png" alphatest="on" transparent="1" backgroundColor="transparent"/>
-			<widget name="title" position="60,50" size="600,50" zPosition="5" valign="center" halign="left" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget name="config" zPosition="2" position="60,120" size="610,370" scrollbarMode="showOnDemand" transparent="1" />
-
-			<ePixmap position="100,500" size="100,40" zPosition="0" pixmap="~/plugin.png" alphatest="on" transparent="1" />
-			<ePixmap position="220,500" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-			<ePixmap position="360,500" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-			<widget name="key_red" position="220,500" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget name="key_green" position="360,500" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-		</screen>"""
-
-	def __init__(self, session, plugin_path):
-		Screen.__init__(self, session)
-		self.skin_path = plugin_path
-		self.session = session
-
-		self["shortcuts"] = ActionMap(["ShortcutActions", "WizardActions", "MediaPlayerActions"],
-		{
-			"ok": self.keyOK,
-			"back": self.keyCancel,
-			"red": self.keyCancel,
-			"green": self.keySave,
-			"up": self.keyUp,
-			"down": self.keyDown,
-			"left": self.keyLeft,
-			"right": self.keyRight,
-		}, -1)
-
-		self["key_red"] = Button(_("Close"))
-		self["key_green"] = Button(_("Save"))
-		self["title"] = Label()
-
-		self.searchContextEntries = []
-		self.ProxyEntry = None
-		self.loadFeedEntry = None
-		self.VideoDirname = None
-		ConfigListScreen.__init__(self, self.searchContextEntries, session)
-		self.createSetup()
-		self.onLayoutFinish.append(self.layoutFinished)
-		self.onShown.append(self.setWindowTitle)
-
-	def layoutFinished(self):
-		self["title"].setText(_("MyTubePlayer settings"))
-
-	def setWindowTitle(self):
-		self.setTitle(_("MyTubePlayer settings"))
-
-	def createSetup(self):
-		self.searchContextEntries = []
-		self.searchContextEntries.append(getConfigListEntry(_("Display search results by:"), config.plugins.mytube.search.orderBy))
-		self.searchContextEntries.append(getConfigListEntry(_("Search restricted content:"), config.plugins.mytube.search.racy))
-		self.searchContextEntries.append(getConfigListEntry(_("Search category:"), config.plugins.mytube.search.categories))
-		self.searchContextEntries.append(getConfigListEntry(_("Search region:"), config.plugins.mytube.search.lr))
-		self.loadFeedEntry = getConfigListEntry(_("Load feed on startup:"), config.plugins.mytube.general.loadFeedOnOpen)
-		self.searchContextEntries.append(self.loadFeedEntry)
-		if config.plugins.mytube.general.loadFeedOnOpen.value:
-			self.searchContextEntries.append(getConfigListEntry(_("Start with following feed:"), config.plugins.mytube.general.startFeed))
-		self.searchContextEntries.append(getConfigListEntry(_("Videoplayer stop/exit behavior:"), config.plugins.mytube.general.on_movie_stop))
-		self.searchContextEntries.append(getConfigListEntry(_("Videobrowser exit behavior:"), config.plugins.mytube.general.on_exit))
-		"""self.ProxyEntry = getConfigListEntry(_("Use HTTP Proxy Server:"), config.plugins.mytube.general.useHTTPProxy)
-		self.searchContextEntries.append(self.ProxyEntry)
-		if config.plugins.mytube.general.useHTTPProxy.value:
-			self.searchContextEntries.append(getConfigListEntry(_("HTTP Proxy Server IP:"), config.plugins.mytube.general.ProxyIP))
-			self.searchContextEntries.append(getConfigListEntry(_("HTTP Proxy Server Port:"), config.plugins.mytube.general.ProxyPort))"""
-		# disabled until i have time for some proper tests
-		self.VideoDirname = getConfigListEntry(_("Download location"), config.plugins.mytube.general.videodir)
-		if config.usage.setup_level.index >= 2: # expert+
-			self.searchContextEntries.append(self.VideoDirname)
-		self.searchContextEntries.append(getConfigListEntry(_("Clear history on Exit:"), config.plugins.mytube.general.clearHistoryOnClose))
-		self.searchContextEntries.append(getConfigListEntry(_("Auto paginate on last entry:"), config.plugins.mytube.general.AutoLoadFeeds))
-		self.searchContextEntries.append(getConfigListEntry(_("Reset tv-screen after playback:"), config.plugins.mytube.general.resetPlayService))
-		self.searchContextEntries.append(getConfigListEntry(_("Youtube Username (reopen plugin on change):"), config.plugins.mytube.general.username))
-		self.searchContextEntries.append(getConfigListEntry(_("Youtube Password (reopen plugin on change):"), config.plugins.mytube.general.password))
-
-		self["config"].list = self.searchContextEntries
-		self["config"].l.setList(self.searchContextEntries)
-		if not self.selectionChanged in self["config"].onSelectionChanged:
-			self["config"].onSelectionChanged.append(self.selectionChanged)
-
-	def selectionChanged(self):
-		current = self["config"].getCurrent()
-
-	def newConfig(self):
-		print "newConfig", self["config"].getCurrent()
-		if self["config"].getCurrent() == self.loadFeedEntry:
-			self.createSetup()
-
-	def keyOK(self):
-		cur = self["config"].getCurrent()
-		if config.usage.setup_level.index >= 2 and cur == self.VideoDirname:
-			self.session.openWithCallback(
-				self.pathSelected,
-				MovieLocationBox,
-				_("Choose target folder"),
-				config.plugins.mytube.general.videodir.value,
-				minFree = 100 # We require at least 100MB free space
-			)
-		else:
-			self.keySave()
-
-	def pathSelected(self, res):
-		if res is not None:
-			if config.movielist.videodirs.value != config.plugins.mytube.general.videodir.choices:
-				config.plugins.mytube.general.videodir.setChoices(config.movielist.videodirs.value, default=res)
-			config.plugins.mytube.general.videodir.value = res
-
-	def keyUp(self):
-		self["config"].instance.moveSelection(self["config"].instance.moveUp)
-
-	def keyDown(self):
-		self["config"].instance.moveSelection(self["config"].instance.moveDown)
-
-	def keyRight(self):
-		ConfigListScreen.keyRight(self)
-		self.newConfig()
-
-	def keyLeft(self):
-		ConfigListScreen.keyLeft(self)
-		self.newConfig()
-
-	def keyCancel(self):
-		print "cancel"
-		for x in self["config"].list:
-			x[1].cancel()
-		self.close()
-
-	def keySave(self):
-		print "saving"
-		config.plugins.mytube.search.orderBy.save()
-		config.plugins.mytube.search.racy.save()
-		config.plugins.mytube.search.categories.save()
-		config.plugins.mytube.search.lr.save()
-		config.plugins.mytube.general.loadFeedOnOpen.save()
-		config.plugins.mytube.general.startFeed.save()
-		config.plugins.mytube.general.on_movie_stop.save()
-		config.plugins.mytube.general.on_exit.save()
-		config.plugins.mytube.general.videodir.save()
-		config.plugins.mytube.general.clearHistoryOnClose.save()
-		config.plugins.mytube.general.AutoLoadFeeds.save()
-		config.plugins.mytube.general.username.save()
-		config.plugins.mytube.general.password.save()
-		if config.plugins.mytube.general.clearHistoryOnClose.value:
-			config.plugins.mytube.general.history.value = ""
-			config.plugins.mytube.general.history.save()
-		#config.plugins.mytube.general.useHTTPProxy.save()
-		#config.plugins.mytube.general.ProxyIP.save()
-		#config.plugins.mytube.general.ProxyPort.save()
-		for x in self["config"].list:
-			x[1].save()
-		config.plugins.mytube.general.save()
-		config.plugins.mytube.search.save()
-		config.plugins.mytube.save()
-		"""if config.plugins.mytube.general.useHTTPProxy.value is True:
-			proxy = {'http': 'http://'+str(config.plugins.mytube.general.ProxyIP.getText())+':'+str(config.plugins.mytube.general.ProxyPort.value)}
-			self.myopener = MyOpener(proxies=proxy)
-			urllib.urlopen = MyOpener(proxies=proxy).open
-		else:
-			self.myopener = MyOpener()
-			urllib.urlopen = MyOpener().open"""
-		self.close()
-
-
 class MyTubeTasksScreen(Screen):
 	skin = """
 		<screen name="MyTubeTasksScreen" flags="wfNoBorder" position="0,0" size="720,576" title="MyTube - Tasks" >
@@ -490,18 +319,18 @@ class MyTubeTasksScreen(Screen):
 		self.onLayoutFinish.append(self.layoutFinished)
 		self.onShown.append(self.setWindowTitle)
 		self.onClose.append(self.__onClose)
-		self.Timer = eTimer()
-		self.Timer.callback.append(self.TimerFire)
+		self._searchTimer = eTimer()
+		self._searchTimer.timeout.callback.append(self.TimerFire)
 
 	def __onClose(self):
-		del self.Timer
+		del self._searchTimer
 
 	def layoutFinished(self):
 		self["title"].setText(_("MyTubePlayer active video downloads"))
-		self.Timer.startLongTimer(2)
+		self._searchTimer.startLongTimer(2)
 
 	def TimerFire(self):
-		self.Timer.stop()
+		self._searchTimer.stop()
 		self.rebuildTaskList()
 
 	def rebuildTaskList(self):
@@ -510,7 +339,7 @@ class MyTubeTasksScreen(Screen):
 			self.tasklist.append((job,job.name,job.getStatustext(),int(100*job.progress/float(job.end)) ,str(100*job.progress/float(job.end)) + "%" ))
 		self['tasklist'].setList(self.tasklist)
 		self['tasklist'].updateList(self.tasklist)
-		self.Timer.startLongTimer(2)
+		self._searchTimer.startLongTimer(2)
 
 	def setWindowTitle(self):
 		self.setTitle(_("MyTubePlayer active video downloads"))

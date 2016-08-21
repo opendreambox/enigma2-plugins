@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-01 14:08+0200\n"
+"POT-Creation-Date: 2016-08-06 16:19+0200\n"
 "PO-Revision-Date: 2009-06-04 20:19+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
@@ -125,6 +125,10 @@ msgstr ""
 msgid "Could not get call list; wrong version?"
 msgstr ""
 
+#, python-format
+msgid "Could not load phonebook: %s"
+msgstr ""
+
 msgid "Could not parse FRITZ!Box Phonebook entry"
 msgstr "Fout bij het verwerken van een FRITZ!Box telefoonboek regel"
 
@@ -200,6 +204,7 @@ msgid "Edit"
 msgstr "Bewerken"
 
 #. TRANSLATORS: keep it short, this is a help text
+#. TRANSLATORS: this is a window title.
 msgid "Edit selected entry"
 msgstr "Gesel. regel bewerken"
 
@@ -218,13 +223,12 @@ msgstr ""
 msgid "Extension number to initiate call on"
 msgstr "Voorkies nummer voor een telefoonoproep"
 
+msgid "FRITZ!Box - "
+msgstr ""
+
 #, python-format
 msgid "FRITZ!Box - Could not load calls: %s"
 msgstr ""
-
-#, fuzzy, python-format
-msgid "FRITZ!Box - Could not load phonebook: %s"
-msgstr "Fout bij het laden van het FRITZ!Box telefoonboek -fout: %s"
 
 #, python-format
 msgid "FRITZ!Box - Dialling failed: %s"
@@ -374,6 +378,9 @@ msgstr "Laat MSN zien (door een komma gescheiden)"
 
 msgid "Mailbox"
 msgstr "Mailbox"
+
+msgid "Make it more skin friendly"
+msgstr ""
 
 msgid "Minutes of uptime of WLAN guest network"
 msgstr ""
@@ -582,6 +589,12 @@ msgstr "Zwitzerland"
 msgid "The Netherlands"
 msgstr "Nederland"
 
+#, python-format
+msgid ""
+"There might be a problem with your FritzCall %spassword.\n"
+"Check in the configuration."
+msgstr ""
+
 msgid "Timeout for Call Notifications (seconds)"
 msgstr "Timeout voor gespreksnotificatie (seconden)"
 
@@ -640,6 +653,9 @@ msgstr ""
 msgid "Vanity"
 msgstr "Trots"
 
+msgid "WLAN not active"
+msgstr ""
+
 msgid "You need to enable the monitoring on your FRITZ!Box by dialing #96*5*!"
 msgstr ""
 "U moet de monitorfunctie van de FRITZ!Box inschakelen door het drukken van "
@@ -655,9 +671,6 @@ msgstr ""
 "in het configuratiescherm om gesprekken te laten zien\n"
 "\n"
 "Dit kan een communicatieprobleem zijn, probeer opnieuw."
-
-msgid "all"
-msgstr ""
 
 msgid "before 05.27"
 msgstr ""
@@ -688,6 +701,9 @@ msgstr "gecodeerd"
 
 msgid "finishing"
 msgstr "wordt beëindigd"
+
+msgid "guest "
+msgstr ""
 
 msgid "home"
 msgstr "home"
@@ -724,6 +740,9 @@ msgid "not encrypted"
 msgstr "ongecodeerd "
 
 msgid "not yet implemented"
+msgstr ""
+
+msgid "nothing"
 msgstr ""
 
 msgid "number suppressed"
@@ -773,6 +792,10 @@ msgstr ""
 
 #~ msgid "Dialling failed - Error: %s"
 #~ msgstr "FRITZ!Box Login mislukt! - Error: %s"
+
+#, fuzzy
+#~ msgid "FRITZ!Box - Could not load phonebook: %s"
+#~ msgstr "Fout bij het laden van het FRITZ!Box telefoonboek -fout: %s"
 
 #~ msgid "FRITZ!Box Login failed! - Wrong Password!"
 #~ msgstr "FRITZ!Box Login mislukt! - Onjuist wachtwoord"

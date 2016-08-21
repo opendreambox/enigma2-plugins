@@ -628,6 +628,11 @@ teletext/src/Makefile
 toolkit/Makefile
 toolkit/src/Makefile
 
+tubelib/Makefile
+tubelib/meta/Makefile
+tubelib/src/Makefile
+tubelib/src/youtube/Makefile
+
 tvcharts/Makefile
 tvcharts/meta/Makefile
 tvcharts/src/Makefile

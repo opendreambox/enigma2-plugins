@@ -1,0 +1,15 @@
+<default>
+	<prerequisites>
+		<tag type="System" />
+	</prerequisites>
+	<info>
+		<author>reichi</author>
+		<name>TubeLib</name>
+		<packagename>enigma2-plugin-systemplugins-tubelib</packagename>
+		<shortdescription>Reusable *tube-component for other plugins.</shortdescription>
+		<description>Reusable *tube-component for other plugins.</description>
+	</info>
+	<files type="package"> <!-- without version, without .ipk -->
+		<file type="package" name="enigma2-plugin-systemplugins-tubelib" />
+	</files>
+</default>
