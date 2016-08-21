@@ -1,0 +1,3 @@
+[submodule "seriesplugin"]
+	path = seriesplugin
+	url = git@github.com:betonme/e2openplugin-SeriesPlugin.git
