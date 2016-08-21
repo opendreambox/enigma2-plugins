@@ -718,13 +718,13 @@ class AutoTimer:
 
 		ratio = sequenceMatcher.ratio()
 		doDebug("names ratio %f - %s - %d - %s - %d" % (ratio, name1, len(name1), name2, len(name2)))
-		if name1 in name2 or (0.8 < ratio): # this is probably a match
+		if name1 in name2 or (0.9 < ratio): # this is probably a match
 			foundShort = True
 			if (force or timer.searchForDuplicateDescription > 0) and shortdesc1 and shortdesc2:
 				sequenceMatcher.set_seqs(shortdesc1, shortdesc2)
 				ratio = sequenceMatcher.ratio()
 				doDebug("shortdesc ratio %f - %s - %d - %s - %d" % (ratio, shortdesc1, len(shortdesc1), shortdesc2, len(shortdesc2)))
-				foundShort = shortdesc1 in shortdesc2 or (0.8 < ratio)
+				foundShort = shortdesc1 in shortdesc2 or (0.9 < ratio)
 				if foundShort:
 					doLog("shortdesc ratio %f - %s - %d - %s - %d" % (ratio, shortdesc1, len(shortdesc1), shortdesc2, len(shortdesc2)))
 
@@ -735,7 +735,7 @@ class AutoTimer:
 				sequenceMatcher.set_seqs(extdesc1, extdesc2)
 				ratio = sequenceMatcher.ratio()
 				doDebug("extdesc ratio %f - %s - %d - %s - %d" % (ratio, extdesc1, len(extdesc1), extdesc2, len(extdesc2)))
-				foundExt = (0.8 < ratio)
+				foundExt = (0.9 < ratio)
 				if foundExt:
 					doLog("extdesc ratio %f - %s - %d - %s - %d" % (ratio, extdesc1, len(extdesc1), extdesc2, len(extdesc2)))
 			return foundShort and foundExt
