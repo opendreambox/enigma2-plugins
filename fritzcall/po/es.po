@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma 2-plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-01 14:08+0200\n"
+"POT-Creation-Date: 2016-08-06 16:19+0200\n"
 "PO-Revision-Date: 2009-06-04 20:22+0200\n"
 "Last-Translator: José Juan Zapater <josej@zapater.fdns.net>\n"
 "Language-Team: none\n"
@@ -124,6 +124,10 @@ msgstr ""
 msgid "Could not get call list; wrong version?"
 msgstr ""
 
+#, python-format
+msgid "Could not load phonebook: %s"
+msgstr ""
+
 msgid "Could not parse FRITZ!Box Phonebook entry"
 msgstr "No puedo analizar las entradas de la agenda de FRITZ!Box"
 
@@ -199,6 +203,7 @@ msgid "Edit"
 msgstr "Editar"
 
 #. TRANSLATORS: keep it short, this is a help text
+#. TRANSLATORS: this is a window title.
 msgid "Edit selected entry"
 msgstr "Editar entrada seleccionada"
 
@@ -217,13 +222,12 @@ msgstr ""
 msgid "Extension number to initiate call on"
 msgstr "Número de extensión para iniciar la llamada"
 
+msgid "FRITZ!Box - "
+msgstr ""
+
 #, python-format
 msgid "FRITZ!Box - Could not load calls: %s"
 msgstr ""
-
-#, fuzzy, python-format
-msgid "FRITZ!Box - Could not load phonebook: %s"
-msgstr "No puedo cargar la agenda desde FRITZ!Box - Error: %s"
 
 #, python-format
 msgid "FRITZ!Box - Dialling failed: %s"
@@ -373,6 +377,9 @@ msgstr "MSN a mostrar (separado por ,)"
 
 msgid "Mailbox"
 msgstr "Carpeta de correo"
+
+msgid "Make it more skin friendly"
+msgstr ""
 
 msgid "Minutes of uptime of WLAN guest network"
 msgstr ""
@@ -581,6 +588,12 @@ msgstr "Suiza"
 msgid "The Netherlands"
 msgstr "Holanda"
 
+#, python-format
+msgid ""
+"There might be a problem with your FritzCall %spassword.\n"
+"Check in the configuration."
+msgstr ""
+
 msgid "Timeout for Call Notifications (seconds)"
 msgstr "Tiempo cumplido para Notificaciones de Llamadas (segundos)"
 
@@ -640,6 +653,9 @@ msgstr ""
 msgid "Vanity"
 msgstr "Vanidad"
 
+msgid "WLAN not active"
+msgstr ""
+
 msgid "You need to enable the monitoring on your FRITZ!Box by dialing #96*5*!"
 msgstr "¡Necesitas activar la monitorización en tu FRITZ!Box marcando #96*5*!"
 
@@ -653,9 +669,6 @@ msgstr ""
 "en el diálogo de configuración para visualizar las llamadas\n"
 "\n"
 "Puede hacer un problema de comunicación, sólo reintente otra vez."
-
-msgid "all"
-msgstr ""
 
 msgid "before 05.27"
 msgstr ""
@@ -686,6 +699,9 @@ msgstr "encriptado"
 
 msgid "finishing"
 msgstr "terminando"
+
+msgid "guest "
+msgstr ""
 
 msgid "home"
 msgstr "casa"
@@ -722,6 +738,9 @@ msgid "not encrypted"
 msgstr "no encriptado"
 
 msgid "not yet implemented"
+msgstr ""
+
+msgid "nothing"
 msgstr ""
 
 msgid "number suppressed"
@@ -797,6 +816,10 @@ msgstr ""
 #~ "con\n"
 #~ "\n"
 #~ "%(newname)s?"
+
+#, fuzzy
+#~ msgid "FRITZ!Box - Could not load phonebook: %s"
+#~ msgstr "No puedo cargar la agenda desde FRITZ!Box - Error: %s"
 
 #, fuzzy
 #~ msgid "FRITZ!Box Fon has no mailbox"

@@ -54,14 +54,15 @@ def initConfig():
 
 class PartnerboxSetup(ConfigListScreen, Screen):
 	skin = """
-		<screen position="center,center" size="550,400" title="Partnerbox Setup" >
-			<widget name="config" position="20,10" size="510,330" scrollbarMode="showOnDemand" />
-			<widget name="key_red" position="0,350" size="140,40" valign="center" halign="center" zPosition="5" transparent="1" foregroundColor="white" font="Regular;18"/>
-			<widget name="key_green" position="140,350" size="140,40" valign="center" halign="center" zPosition="5" transparent="1" foregroundColor="white" font="Regular;18"/>
-			<widget name="key_yellow" position="280,350" size="140,40" valign="center" halign="center" zPosition="5" transparent="1" foregroundColor="white" font="Regular;18"/>
-			<ePixmap name="red" pixmap="skin_default/buttons/red.png" position="0,350" size="140,40" zPosition="4" transparent="1" alphatest="on"/>
-			<ePixmap name="green" pixmap="skin_default/buttons/green.png" position="140,350" size="140,40" zPosition="4" transparent="1" alphatest="on"/>
-			<ePixmap name="yellow" pixmap="skin_default/buttons/yellow.png" position="280,350" size="140,40" zPosition="4" transparent="1" alphatest="on"/>
+		<screen position="center,center" size="720,420" title="Partnerbox Setup" >
+			<ePixmap name="red" pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on"/>
+			<ePixmap name="green" pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on"/>
+			<ePixmap name="yellow" pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on"/>
+			<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+			<widget name="key_green" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+			<widget name="key_yellow" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+			<eLabel	position="10,50" size="700,1" backgroundColor="grey"/>
+			<widget name="config" position="10,60" size="700,330" enableWrapAround="1" scrollbarMode="showOnDemand"/>
 		</screen>"""
 
 	def __init__(self, session, args = None):
@@ -105,19 +106,20 @@ class PartnerboxSetup(ConfigListScreen, Screen):
 
 class PartnerboxEntriesListConfigScreen(Screen):
 	skin = """
-		<screen position="center,center" size="550,400" title="%s" >
-			<widget name="name" position="5,0" size="200,50" font="Regular;20" halign="left"/>
-			<widget name="ip" position="215,0" size="140,50" font="Regular;20" halign="left"/>
-			<widget name="port" position="350,0" size="80,50" font="Regular;20" halign="left"/>
-			<widget name="type" position="430,0" size="120,50" font="Regular;20" halign="left"/>
-			<widget name="entrylist" position="0,50" size="550,300" scrollbarMode="showOnDemand"/>
+		<screen position="center,center" size="820,420" title="%s" >
+			<widget name="name" position="10,60" size="250,25" font="Regular;20" halign="left"/>
+			<widget name="ip" position="275,60" size="190,25" font="Regular;20" halign="left"/>
+			<widget name="port" position="460,60" size="120,25" font="Regular;20" halign="left"/>
+			<widget name="type" position="580,60" size="160,25" font="Regular;20" halign="left"/>
 
-			<widget name="key_red" position="0,350" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget name="key_yellow" position="280,350" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="yellow" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget name="key_blue" position="420,350" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<ePixmap name="red" position="0,350" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-			<ePixmap name="yellow" position="280,350" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
-			<ePixmap name="blue" position="420,350" zPosition="4" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
+			<ePixmap name="red" pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on"/>
+			<ePixmap name="yellow" pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on"/>
+			<ePixmap name="blue" pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on"/>
+			<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+			<widget name="key_yellow" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+			<widget name="key_blue" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+			<eLabel	position="10,50" size="800,1" backgroundColor="grey"/>
+			<widget name="entrylist" position="10,90" size="800,300" enableWrapAround="1" scrollbarMode="showOnDemand"/>
 		</screen>""" % _("Partnerbox: List of Entries")
 
 	def __init__(self, session, what = None):
@@ -195,17 +197,17 @@ class PartnerboxEntryList(MenuList):
 		self.l.setFont(0, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
 	def postWidgetCreate(self, instance):
 		MenuList.postWidgetCreate(self, instance)
-		instance.setItemHeight(componentSizes.itemHeight(self.SKIN_COMPONENT_KEY, 20))
+		instance.setItemHeight(componentSizes.itemHeight(self.SKIN_COMPONENT_KEY, 30))
 
 	def buildList(self):
 		self.list=[]
 		
 		sizes = componentSizes[PartnerboxEntryList.SKIN_COMPONENT_KEY]
-		configEntryHeight = sizes.get(componentSizes.ITEM_HEIGHT, 20)
-		nameWidth = sizes.get(PartnerboxEntryList.SKIN_COMPONENT_NAME_WIDTH, 200)
-		ipWidth = sizes.get(PartnerboxEntryList.SKIN_COMPONENT_IP_WIDTH, 135)
-		portWidth = sizes.get(PartnerboxEntryList.SKIN_COMPONENT_PORT_WIDTH, 80)
-		enigmaWidth = sizes.get(PartnerboxEntryList.SKIN_COMPONENT_ENIGMA_WIDTH, 120)
+		configEntryHeight = sizes.get(componentSizes.ITEM_HEIGHT, 30)
+		nameWidth = sizes.get(PartnerboxEntryList.SKIN_COMPONENT_NAME_WIDTH, 250)
+		ipWidth = sizes.get(PartnerboxEntryList.SKIN_COMPONENT_IP_WIDTH, 185)
+		portWidth = sizes.get(PartnerboxEntryList.SKIN_COMPONENT_PORT_WIDTH, 120)
+		enigmaWidth = sizes.get(PartnerboxEntryList.SKIN_COMPONENT_ENIGMA_WIDTH, 160)
 				
 		for c in config.plugins.Partnerbox.Entries:
 			res = [c]
@@ -225,15 +227,15 @@ class PartnerboxEntryList(MenuList):
 
 class PartnerboxEntryConfigScreen(ConfigListScreen, Screen):
 	skin = """
-		<screen name="PartnerboxEntryConfigScreen" position="center,center" size="550,400" title="%s">
-			<widget name="config" position="20,10" size="520,330" scrollbarMode="showOnDemand" />
-			<ePixmap name="red"	position="0,350" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-			<ePixmap name="green" position="140,350" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-			<ePixmap name="blue" position="420,350" zPosition="4" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
-
-			<widget name="key_red" position="0,350" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget name="key_green" position="140,350" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget name="key_blue" position="420,350" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+		<screen name="PartnerboxEntryConfigScreen" position="center,center" size="820,420" title="%s">
+			<ePixmap name="red" pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on"/>
+			<ePixmap name="green" pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on"/>
+			<ePixmap name="blue" pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on"/>
+			<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+			<widget name="key_green" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+			<widget name="key_blue" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+			<eLabel	position="10,50" size="800,1" backgroundColor="grey"/>
+			<widget name="config" position="10,60" size="800,330" enableWrapAround="1" scrollbarMode="showOnDemand"/>
 		</screen>""" % _("Partnerbox: Edit Entry")
 
 	def __init__(self, session, entry):

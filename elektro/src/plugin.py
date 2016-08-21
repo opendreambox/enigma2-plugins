@@ -240,14 +240,13 @@ def main(session,**kwargs):
 
 class ElektroProfile(ConfigListScreen,Screen):
 	skin = """
-			<screen position="center,center" size="600,400" title="Elektro Power Save Profile Times" >
-			<widget name="config" position="0,0" size="600,360" scrollbarMode="showOnDemand" />
-			
-			<widget name="key_red" position="0,360" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1"/> 
-			<widget name="key_green" position="140,360" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1"/> 
-			
-			<ePixmap name="red"    position="0,360"   zPosition="2" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-			<ePixmap name="green"  position="140,360" zPosition="2" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
+			<screen position="center,120" size="820,520" title="Elektro Power Save Profile Times">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+			<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_green" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+			<widget name="config" position="10,60" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 		
 	def __init__(self, session, args = 0):
@@ -294,14 +293,13 @@ class ElektroProfile(ConfigListScreen,Screen):
 
 class ElektroIP(ConfigListScreen,Screen):
 	skin = """
-			<screen position="center,center" size="600,400" title="Elektro Power Save IP Addresses to wait" >
-			<widget name="config" position="0,0" size="600,360" scrollbarMode="showOnDemand" />
-			
-			<widget name="key_red" position="0,360" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1"/> 
-			<widget name="key_green" position="140,360" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1"/> 
-			
-			<ePixmap name="red"    position="0,360"   zPosition="2" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-			<ePixmap name="green"  position="140,360" zPosition="2" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
+			<screen position="center,120" size="820,520" title="Elektro Power Save IP Addresses to wait">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+			<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_green" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+			<widget name="config" position="10,60" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 		
 	def __init__(self, session, args = 0):
@@ -340,8 +338,8 @@ class ElektroIP(ConfigListScreen,Screen):
 
 class ElektroNASrun(ConfigListScreen,Screen):
 	skin = """
-		<screen name="ElektroNASrun" position="center,center" size="600,400" zPosition="1" title="Powerdown...">
-		<widget  source="TextTest" render="Label" position="10,0" size="580,400" font="Regular;20" transparent="1"  />
+		<screen name="ElektroNASrun" position="center,120" size="820,520" title="Powerdown...">
+		<widget source="TextTest" render="Label" position="10,10" size="800,500" font="Regular;20" />
 		</screen>"""
 
 	def __init__(self, session, args = 0):
@@ -368,16 +366,15 @@ class ElektroNASrun(ConfigListScreen,Screen):
 
 class ElektroNAS(ConfigListScreen,Screen):
 	skin = """
-			<screen name="ElektroNAS" position="center,center" size="600,400" title="Elektro Power Save IP Telnet - Poweroff" >
-			<widget name="config" position="0,0" size="600,360" scrollbarMode="showOnDemand" />
-			
-			<widget name="key_red" position="0,360" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1"/> 
-			<widget name="key_green" position="140,360" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1"/> 
-			<widget name="key_yellow" position="280,360" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1"/>
-			
-			<ePixmap name="red"    position="0,360"   zPosition="2" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-			<ePixmap name="green"  position="140,360" zPosition="2" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-			<ePixmap name="yellow" position="280,360" zPosition="2" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" /> 
+			<screen name="ElektroNAS" position="center,120" size="820,520" title="Elektro Power Save IP Telnet - Poweroff">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on" />
+			<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_green" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_yellow" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+			<widget name="config" position="10,60" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 		
 	def __init__(self, session, args = 0):
@@ -424,24 +421,21 @@ class ElektroNAS(ConfigListScreen,Screen):
 
 class Elektro(ConfigListScreen,Screen):
 	skin = """
-		<screen name ="Elektro" position="center,center" size="630,480" title="Elektro Power Save" >
-			<widget name="key_red" position="4,5" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1"/> 
-			<widget name="key_green" position="165,5" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1"/> 
-			<widget name="key_yellow" position="325,5" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1"/>
-			<widget name="key_blue" position="485,5" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1"/>
-			
-			<ePixmap name="red"    position="5,5"   zPosition="2" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-			<ePixmap name="green"  position="165,5" zPosition="2" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-			<ePixmap name="yellow" position="325,5" zPosition="2" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" /> 
-			<ePixmap name="blue"   position="485,5" zPosition="2" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" /> 
-			
-			<widget name="config" position="5,50" size="620,275" scrollbarMode="showOnDemand" />		
-			 
-			<ePixmap pixmap="skin_default/div-h.png" position="0,330" zPosition="1" size="630,2" />
-			<widget source="help" render="Label" position="5,335" size="620,153" font="Regular;21" /> 					
+		<screen name ="Elektro" position="center,120" size="820,520" title="Elektro Power Save">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on" />
+			<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_green" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_yellow" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_blue" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+			<widget name="config" position="10,55" size="800,330" enableWrapAround="1" scrollbarMode="showOnDemand" />
+			<eLabel position="10,390" size="800,1" backgroundColor="grey" />
+			<widget source="help" render="Label" position="10,395" size="800,115" font="Regular;21" halign="center" valign="center"/>
 		</screen>""" 
-                			
-		
+
 	def __init__(self, session, args = 0):
 		self.session = session
 		Screen.__init__(self, session)

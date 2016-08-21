@@ -47,8 +47,8 @@ class TrackAutoselectConfig():
 	subtitle_order_choices = [("saved",_("saved")), ("default",_("default")), ("forced",_("forced")), ("language",_("Language")), ("format",_("format"))]
 	[SUBTITLE_ORDER_SAVED, SUBTITLE_ORDER_DEFAULT, SUBTITLE_ORDER_FORCED, SUBTITLE_ORDER_LANGUAGE, SUBTITLE_ORDER_FORMAT] = [x[0] for x in subtitle_order_choices]
 
-	subtitle_enable_choices = [("nofirstlanguage",_("if audio isn't first language")), ("notanylanguage",_("if no prefered audio language")), ("always",_("always"))]
-	[SUBTITLE_ENABLE_NOTFIRSTLANG, SUBTITLE_ENABLE_NOTANYLANG, SUBTITLE_ENABLE_ALWAYS] = [x[0] for x in subtitle_enable_choices]
+	subtitle_enable_choices = [("saved",_("saved")), ("default",_("default")), ("forced",_("forced")), ("nofirstlanguage",_("if audio isn't first language")), ("notanylanguage",_("if no prefered audio language")), ("always",_("always"))]
+	[SUBTITLE_ENABLE_SAVED, SUBTITLE_ENABLE_DEFAULT, SUBTITLE_ENABLE_FORCED, SUBTITLE_ENABLE_NOTFIRSTLANG, SUBTITLE_ENABLE_NOTANYLANG, SUBTITLE_ENABLE_ALWAYS] = [x[0] for x in subtitle_enable_choices]
 
 	handle_services_choices = [("servicegst",_("Media Files")), ("servicedvb",_("TV Services")), ("servicedvd",_("DVD"))]
 	[SERVICE_GST, SERVICE_DVB, SERVICE_DVD] = [x[0] for x in handle_services_choices]
@@ -91,7 +91,7 @@ class TrackAutoselectConfig():
 		#config.plugins.TrackAutoselect.audio_description_preference = ConfigSet(self.audio_format_choices, default=[x[0] for x in self.audio_description_choices], resort=False)
 
 		config.plugins.TrackAutoselect.subtitle_autoselect_enable = ConfigYesNo(default=True)
-		config.plugins.TrackAutoselect.subtitle_enable_conditions = ConfigSet(self.subtitle_enable_choices, default=[], resort=False)
+		config.plugins.TrackAutoselect.subtitle_enable_conditions = ConfigSet(self.subtitle_enable_choices, default=[x[0] for x in self.subtitle_enable_choices[:3]], resort=False)
 		config.plugins.TrackAutoselect.subtitle_parameter_order = ConfigSet(self.subtitle_order_choices, default=[x[0] for x in self.subtitle_order_choices], resort=False)
 		config.plugins.TrackAutoselect.subtitle_language_preference = ConfigSet(self.language_choices, default=self.language_defaults, resort=False)
 		config.plugins.TrackAutoselect.subtitle_format_preference = ConfigSet(self.sub_format_choices, default=[x[0] for x in self.sub_format_choices], resort=False)

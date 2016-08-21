@@ -177,46 +177,44 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 	Details = {}
 	#(entry, Title, Description, TubeID, thumbnail, PublishedDate,Views,duration,ratings )
 	skin = """
-		<screen name="MyTubePlayerMainScreen" flags="wfNoBorder" position="0,0" size="720,576" title="MyTube - Browser" >
-			<ePixmap position="0,0" zPosition="-1" size="720,576" pixmap="~/mytubemain_bg.png" alphatest="on" transparent="1" backgroundColor="transparent"/>
-			<widget name="config" zPosition="2" position="60,60" size="600,50" scrollbarMode="showNever" transparent="1" />
-			<widget name="result" position="300,60" zPosition="3" size="350,50" font="Regular;21" transparent="1" backgroundColor="transparent" halign="right"/>
-			<widget source="feedlist" render="Listbox" position="49,110" size="628,385" zPosition="1" scrollbarMode="showOnDemand" transparent="1" backgroundPixmap="~/list_bg.png" selectionPixmap="~/list_sel.png" >
-				<convert type="TemplatedMultiContent">
-				{"templates":
-					{"default": (77,[
-							MultiContentEntryPixmapAlphaTest(pos = (0, 0), size = (100, 75), png = 4), # index 4 is the thumbnail
-							MultiContentEntryText(pos = (100, 1), size = (500, 22), font=0, flags = RT_HALIGN_LEFT | RT_VALIGN_TOP| RT_WRAP, text = 1), # index 1 is the Title
-							MultiContentEntryText(pos = (100, 24), size = (300, 18), font=1, flags = RT_HALIGN_LEFT | RT_VALIGN_TOP| RT_WRAP, text = 5), # index 5 is the Published Date
-							MultiContentEntryText(pos = (100, 43), size = (300, 18), font=1, flags = RT_HALIGN_LEFT | RT_VALIGN_TOP| RT_WRAP, text = 6), # index 6 is the Views Count
-							MultiContentEntryText(pos = (400, 24), size = (200, 18), font=1, flags = RT_HALIGN_LEFT | RT_VALIGN_TOP| RT_WRAP, text = 7), # index 7 is the duration
-							MultiContentEntryText(pos = (400, 43), size = (200, 18), font=1, flags = RT_HALIGN_LEFT | RT_VALIGN_TOP| RT_WRAP, text = 8), # index 8 is the ratingcount
-						]),
-					"state": (77,[
-							MultiContentEntryText(pos = (10, 1), size = (560, 28), font=2, flags = RT_HALIGN_LEFT | RT_VALIGN_TOP| RT_WRAP, text = 0), # index 0 is the name
-							MultiContentEntryText(pos = (10, 22), size = (560, 46), font=3, flags = RT_HALIGN_LEFT | RT_VALIGN_TOP| RT_WRAP, text = 1), # index 2 is the description
-						])
-					},
-					"fonts": [gFont("Regular", 22),gFont("Regular", 18),gFont("Regular", 26),gFont("Regular", 20)],
-					"itemHeight": 77
-				}
-				</convert>
-			</widget>
-
-			<ePixmap pixmap="skin_default/buttons/key_info.png" position="50,500" zPosition="4" size="35,25" alphatest="on" transparent="1" />
-			<ePixmap pixmap="skin_default/buttons/key_menu.png" position="50,520" zPosition="4" size="35,25" alphatest="on" transparent="1" />
-			<ePixmap position="90,500" size="100,40" zPosition="4" pixmap="~/plugin.png" alphatest="on" transparent="1" />
-			<ePixmap position="190,500" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-			<ePixmap position="330,500" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-			<ePixmap position="470,500" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
-			<widget name="key_red" position="190,500" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget name="key_green" position="330,500" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget name="key_yellow" position="470,500" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget name="ButtonBlue" pixmap="skin_default/buttons/button_blue.png" position="610,510" zPosition="10" size="15,16" transparent="1" alphatest="on" />
-			<widget name="VKeyIcon" pixmap="skin_default/vkey_icon.png" position="620,495" zPosition="10" size="60,48" transparent="1" alphatest="on" />
-			<widget name="thumbnail" position="0,0" size="100,75" alphatest="on"/> # fake entry for dynamic thumbnail resizing, currently there is no other way doing this.
-			<widget name="HelpWindow" position="160,255" zPosition="1" size="1,1" transparent="1" alphatest="on" />
-		</screen>"""
+		<screen name="MyTubePlayerMainScreen" position="center,95"  size="920,570" title="MyTube - Browser">
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on"/>
+		<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on"/>
+		<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on"/>
+		<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+		<widget name="key_green" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+		<widget name="key_yellow" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+		<ePixmap pixmap="skin_default/icons/info.png" position="670,10" size="70,30" alphatest="on"/>
+		<ePixmap pixmap="skin_default/icons/menu.png" position="755,10" size="70,30" alphatest="on"/>
+		<widget name="VKeyIcon" pixmap="skin_default/icons/text.png" position="840,10" size="70,30" alphatest="on"/>
+		<eLabel position="10,50" size="900,1" backgroundColor="grey"/>
+		<widget name="config" position="10,60" size="900,30" scrollbarMode="showNever" transparent="1"/>
+		<eLabel position="10,95" size="900,1" backgroundColor="grey"/>
+		<widget source="feedlist" render="Listbox" 	position="10,110" size="900,450" enableWrapAround="1" scrollbarMode="showOnDemand" transparent="1">
+			<convert type="TemplatedMultiContent">
+			{"templates":
+				{"default": (90,[
+						MultiContentEntryPixmapAlphaTest(pos=(2,3),size=(130,94),png=4),# index 4 is the thumbnail
+						MultiContentEntryText(pos=(140,2),size=(750,26),font=0,flags=RT_HALIGN_LEFT | RT_VALIGN_TOP| RT_WRAP,text=1),# index 1 is the Title
+						MultiContentEntryText(pos=(150,35),size=(450,20),font=1,flags=RT_HALIGN_LEFT | RT_VALIGN_TOP| RT_WRAP,text=5),# index 5 is the Published Date
+						MultiContentEntryText(pos=(150,62),size=(450,20),font=1,flags=RT_HALIGN_LEFT | RT_VALIGN_TOP| RT_WRAP,text=6),# index 6 is the Views Count
+						MultiContentEntryText(pos=(600,35),size=(280,20),font=1,flags=RT_HALIGN_RIGHT | RT_VALIGN_TOP| RT_WRAP,text=7,color=0xa0a0a0),# index 7 is the duration
+						MultiContentEntryText(pos=(600,62),size=(280,20),font=1,flags=RT_HALIGN_RIGHT | RT_VALIGN_TOP| RT_WRAP,text=8,color=0xa0a0a0),# index 8 is the ratingcount
+					]),
+				"state": (90,[
+						MultiContentEntryText(pos=(10,5),size=(880,28),font=2,flags=RT_HALIGN_LEFT | RT_VALIGN_TOP| RT_WRAP,text=0),# index 0 is the name
+						MultiContentEntryText(pos=(10,37),size=(880,46),font=3,flags=RT_HALIGN_LEFT | RT_VALIGN_TOP| RT_WRAP,text=1),# index 2 is the description
+					])
+				},
+				"fonts": [gFont("Regular",23),gFont("Regular",18),gFont("Regular",26),gFont("Regular",20)],
+				"itemHeight": 90
+			}
+			</convert>
+		</widget>
+		<widget name="HelpWindow" position="360,530" zPosition="1" size="1,1"/>
+		<widget name="thumbnail" position="0,0" size="130,94" alphatest="on"/> # fake entry for dynamic thumbnail resizing,currently there is no other way doing this.
+		<widget name="ButtonBlue" position="0,0" size="0,0"/>
+	</screen>"""
 
 	def __init__(self, session, l2key=None):
 		Screen.__init__(self, session)
@@ -1278,40 +1276,37 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 
 class MyTubeVideoInfoScreen(Screen):
 	skin = """
-		<screen name="MyTubeVideoInfoScreen" flags="wfNoBorder" position="0,0" size="720,576" title="MyTube - Video Info" >
-			<ePixmap position="0,0" zPosition="-1" size="720,576" pixmap="~/mytubemain_bg.png" alphatest="on" transparent="1" backgroundColor="transparent"/>
-			<widget name="title" position="60,50" size="600,50" zPosition="5" valign="center" halign="left" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget name="starsbg" pixmap="~/starsbar_empty.png" position="560,220" zPosition="5" size="100,20" transparent="1" alphatest="on" />
-			<widget name="stars" pixmap="~/starsbar_filled.png" position="560,220" zPosition="6" size="100,20"  transparent="1" />
-			<widget source="infolist" render="Listbox" position="50,110" size="620,110" zPosition="6" scrollbarMode="showNever" selectionDisabled="1" transparent="1">
-				<convert type="TemplatedMultiContent">
+		<screen name="MyTubeVideoInfoScreen" position="center,120" size="920,520" title="MyTube - Video Info">
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on"/>
+		<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+		<widget name="starsbg" position="810,60" size="100,20" zPosition="5" pixmap="~/starsbar_empty.png" alphatest="on"/>
+		<widget name="stars" position="810,60" size="100,20" zPosition="6" pixmap="~/starsbar_filled.png" transparent="1"/>
+		<eLabel	position="0,49" size="920,1" backgroundColor="grey"/>
+		<widget source="infolist" render="Listbox" position="33,56" size="240,180" scrollbarMode="showNever" selectionDisabled="1" transparent="1">
+			<convert type="TemplatedMultiContent">
 				{"templates":
-					{"default": (110,[
-							MultiContentEntryPixmapAlphaTest(pos = (0, 4), size = (130, 98), png = 0), # index 0 is the thumbnail
-							MultiContentEntryPixmapAlphaTest(pos = (130, 4), size = (130, 98), png = 1), # index 0 is the thumbnail
-							MultiContentEntryPixmapAlphaTest(pos = (260, 4), size = (130, 98), png = 2), # index 0 is the thumbnail
-							MultiContentEntryPixmapAlphaTest(pos = (390, 4), size = (130, 98), png = 3), # index 0 is the thumbnail
+					{"default": (180,[
+						MultiContentEntryPixmapAlphaTest(pos=(0,0),size=(240,180),png=0),# index 0 is the thumbnail
 						]),
-					"state": (110,[
-							MultiContentEntryText(pos = (10, 40), size = (550, 38), font=2, flags = RT_HALIGN_LEFT | RT_VALIGN_TOP| RT_WRAP, text = 0), # index 0 is the name
+					"state": (180,[
+						MultiContentEntryText(pos=(0,0),size=(240,180),font=0,flags=RT_HALIGN_CENTER | RT_VALIGN_CENTER| RT_WRAP,text=0,color=0xffffff,color_sel=0xffffff,backcolor=0x000000,backcolor_sel=0x000000),# index 0 is the name
 						])
 					},
-					"fonts": [gFont("Regular", 20),gFont("Regular", 14),gFont("Regular", 28)],
-					"itemHeight": 110
+					"fonts": [gFont("Regular",20)],
+					"itemHeight": 180
 				}
-				</convert>
-			</widget>
-			<widget name="channelTitle" position="60,220" size="300,20" zPosition="10" font="Regular;21" transparent="1" halign="left" valign="top" />
-			<widget name="duration" position="370,220" size="200,20" zPosition="10" font="Regular;21" transparent="1" halign="left" valign="top" />
-			<widget name="published" position="60,245" size="300,20" zPosition="10" font="Regular;21" transparent="1" halign="left" valign="top" />
-			<widget name="views" position="370,245" size="200,20" zPosition="10" font="Regular;21" transparent="1" halign="left" valign="top" />
-			<widget name="tags" position="60,270" size="600,20" zPosition="10" font="Regular;21" transparent="1" halign="left" valign="top" />
-			<widget name="detailtext" position="60,300" size="610,200" zPosition="10" font="Regular;21" transparent="1" halign="left" valign="top"/>
-			<ePixmap position="100,500" size="100,40" zPosition="0" pixmap="~/plugin.png" alphatest="on" transparent="1" />
-			<ePixmap position="220,500" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-			<widget name="key_red" position="220,500" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget name="thumbnail" position="0,0" size="130,98" alphatest="on"/> # fake entry for dynamic thumbnail resizing, currently there is no other way doing this.
-		</screen>"""
+			</convert>
+		</widget>
+		<widget name="author" position="300,60" size="580,25" font="Regular;22"/>
+		<widget name="duration" position="300,90" size="580,25" font="Regular;22"/>
+		<widget name="published" position="300,120" size="590,25" font="Regular;22"/>
+		<widget name="views" position="300,150" size="590,25" font="Regular;22"/>
+		<widget name="tags" position="300,180" size="590,50" font="Regular;22"/>
+		<eLabel	position="10,245" size="900,1" backgroundColor="grey"/>
+		<widget name="detailtext" position="20,255" size="890,270" font="Regular;20"/>
+		<widget name="thumbnail" position="0,0" size="240,180" alphatest="on"/> # fake entry for dynamic thumbnail resizing,currently there is no other way doing this.
+		<widget name="title" position="0,0" size="0,0"/>
+	</screen>"""
 
 	def __init__(self, session, plugin_path, video = None):
 		Screen.__init__(self, session)
@@ -1483,14 +1478,13 @@ class MyTubeVideoInfoScreen(Screen):
 
 class MyTubeVideoHelpScreen(Screen):
 	skin = """
-		<screen name="MyTubeVideoHelpScreen" flags="wfNoBorder" position="0,0" size="720,576" title="MyTube - Help" >
-			<ePixmap position="0,0" zPosition="-1" size="720,576" pixmap="~/mytubemain_bg.png" alphatest="on" transparent="1" backgroundColor="transparent"/>
-			<widget name="title" position="60,50" size="600,50" zPosition="5" valign="center" halign="left" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget name="detailtext" position="60,120" size="610,370" zPosition="10" font="Regular;21" transparent="1" halign="left" valign="top"/>
-			<ePixmap position="100,500" size="100,40" zPosition="0" pixmap="~/plugin.png" alphatest="on" transparent="1" />
-			<ePixmap position="220,500" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-			<widget name="key_red" position="220,500" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-		</screen>"""
+		<screen name="MyTubeVideoHelpScreen" position="center,120" size="820,520" title="MyTube - Help">
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on"/>
+		<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+		<eLabel	position="10,50" size="800,1" backgroundColor="grey"/>
+		<widget name="detailtext" position="10,60" size="800,450" font="Regular;22" halign="left" valign="top"/>
+		<widget name="title" position="0,0" size="0,0"/>
+	</screen>"""
 
 	def __init__(self, session, plugin_path, wantedinfo = None, wantedtitle = None):
 		Screen.__init__(self, session)

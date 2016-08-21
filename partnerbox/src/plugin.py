@@ -225,17 +225,18 @@ class CurrentRemoteTV(Screen):
 class RemoteTimer(Screen):
 	global CurrentParnerBoxName
 	skin = """
-		<screen name="RemoteTimer" position="center,center" size="560,430" title="RemoteTimer Timerlist">
-			<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on"/>
-			<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" alphatest="on"/>
-			<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" alphatest="on"/>
-			<ePixmap pixmap="skin_default/buttons/blue.png" position="420,0" size="140,40" alphatest="on"/>
-			<widget name="key_red" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1"/>
-			<widget name="key_green" position="140,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1"/>
-			<widget name="key_yellow" position="280,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1"/>
-			<widget name="key_blue" position="420,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1"/>
-			<widget name="text" position="0,60" zPosition="1" size="560,350" font="Regular;20" halign="center" valign="center" />
-			<widget name="timerlist" position="0,60" zPosition="2" size="560,350" scrollbarMode="showOnDemand"/>
+		<screen name="RemoteTimer" position="center,120" size="950,520" title="RemoteTimer Timerlist">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on" />
+			<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_green" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_yellow" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_blue" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<eLabel position="10,50" size="930,1" backgroundColor="grey" />
+			<widget name="timerlist" position="10,70" size="930,420" zPosition="2" enableWrapAround="1" scrollbarMode="showOnDemand" />
+			<widget name="text" position="10,60" size="930,450" zPosition="1" font="Regular;20" halign="center" valign="center" />
 		</screen>"""
 	
 	timerlist = []
@@ -402,9 +403,9 @@ class RemoteTimer(Screen):
 
 class RemoteTimerBouquetList(Screen):
 	skin = """
-		<screen name="RemoteTimerBouquetList" position="center,center" size="300,240" title="Choose bouquet">
-		<widget name="text" position="10,10" zPosition="1" size="290,225" font="Regular;20" halign="center" valign="center" />
-		<widget name="bouquetlist" position="10,10" zPosition="2" size="290,225" scrollbarMode="showOnDemand" />
+		<screen name="RemoteTimerBouquetList" position="center,center" size="400,420" title="Choose bouquet">
+		<widget name="text" position="10,10" zPosition="1" size="380,390" font="Regular;20" halign="center" valign="center" />
+		<widget name="bouquetlist" position="10,10" zPosition="2" size="380,390" enableWrapAround="1" scrollbarMode="showOnDemand" />
 	</screen>"""
 	
 	def __init__(self, session, E2Timerlist, partnerboxentry, playeronly):
@@ -498,17 +499,18 @@ class RemoteTimerChannelList(Screen):
 	REMOTE_TIMER_MODE = 0
 	REMOTE_TV_MODE = 1
 	skin = """
-		<screen name="RemoteTimerChannelList" position="center,center" size="560,430" title ="Bouquet List">
-			<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/blue.png" position="420,0" size="140,40" alphatest="on" />
-			<widget name="key_red" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-			<widget name="key_green" position="140,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget name="key_yellow" position="280,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
-			<widget name="key_blue" position="420,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
-			<widget name="text" position="0,40" zPosition="1" size="560,375" font="Regular;20" halign="center" valign="center" />
-			<widget name="channellist" position="0,40" zPosition="2" size="560,375" scrollbarMode="showOnDemand" />
+		<screen name="RemoteTimerChannelList" position="center,120" size="950,520" title="Channel List">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on" />
+			<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_green" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_yellow" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_blue" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<eLabel position="10,50" size="930,1" backgroundColor="grey" />
+			<widget name="channellist" position="10,70" size="930,420" zPosition="2" enableWrapAround="1" scrollbarMode="showOnDemand" />
+			<widget name="text" position="10,60" size="930,450" zPosition="1" font="Regular;20" halign="center" valign="center" />
 		</screen>"""
 	
 	def __init__(self, session, E2Timerlist, ServiceReference, ServiceName, partnerboxentry, E1XMLString,  playeronly):
@@ -965,17 +967,18 @@ class RemoteTimerEPGList(Screen):
 	ADD_TIMER = 1
 	REMOVE_TIMER = 2
 	skin = """
-		<screen name="RemoteTimerEPGList" position="center,center" size="560,430" title ="EPG Selection">
-			<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/blue.png" position="420,0" size="140,40" alphatest="on" />
-			<widget name="key_red" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-			<widget name="key_green" position="140,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget name="key_yellow" position="280,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
-			<widget name="key_blue" position="420,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
-			<widget name="text" position="0,40" zPosition="1" size="560,375" font="Regular;20" halign="center" valign="center" />
-			<widget name="epglist" position="0,40" zPosition="2" size="560,375" scrollbarMode="showOnDemand" />
+		<screen name="RemoteTimerEPGList" position="center,120" size="950,520" title ="EPG Selection">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on" />
+			<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_green" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_yellow" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_blue" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<eLabel position="10,50" size="930,1" backgroundColor="grey" />
+			<widget name="epglist" position="10,60" size="930,450" zPosition="2" enableWrapAround="1" scrollbarMode="showOnDemand" />
+			<widget name="text" position="10,60" size="930,450" zPosition="1" font="Regular;20" halign="center" valign="center" />
 		</screen>"""
 	
 	def __init__(self, session, E2Timerlist, ServiceReference, ServiceName, partnerboxentry):
@@ -1273,14 +1276,14 @@ class E2TimerMenu(GUIComponent, object):
 		sizes = componentSizes[E2TimerMenu.SKIN_COMPONENT_KEY]
 		servicenameHeight = sizes.get(E2TimerMenu.SKIN_COMPONENT_SERVICENAME_HEIGHT, 30)
 		nameHeight = sizes.get(E2TimerMenu.SKIN_COMPONENT_NAME_HEIGHT, 20)	
-		stateWidth = sizes.get(E2TimerMenu.SKIN_COMPONENT_STATE_WIDTH, 150)
+		stateWidth = sizes.get(E2TimerMenu.SKIN_COMPONENT_STATE_WIDTH, 160)
 		iconWidth = sizes.get(E2TimerMenu.SKIN_COMPONENT_ICON_WIDTH, 40)
 		iconHeight = sizes.get(E2TimerMenu.SKIN_COMPONENT_ICON_HEIGHT, 40)
-		iconPos = sizes.get(E2TimerMenu.SKIN_COMPONENT_ICON_POS, 490)
+		iconPos = sizes.get(E2TimerMenu.SKIN_COMPONENT_ICON_POS, 800)
 		width = self.l.getItemSize().width()
 		res = [ timer ]
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, servicenameHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.servicename))
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight, width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.name))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, 0, width, servicenameHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.servicename))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, servicenameHeight, width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.name))
 		repeatedtext = ""
 		days = [ _("Mon"), _("Tue"), _("Wed"), _("Thu"), _("Fri"), _("Sat"), _("Sun") ]
 		if timer.repeated:
@@ -1294,14 +1297,14 @@ class E2TimerMenu(GUIComponent, object):
 						count += 1
 					flags = flags >> 1
 			if timer.justplay:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight+nameHeight, width-stateWidth, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + ((" %s "+ _("(ZAP)")) % (FuzzyTime(timer.timebegin)[1]))))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, servicenameHeight+nameHeight, width-stateWidth, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + ((" %s "+ _("(ZAP)")) % (FuzzyTime(timer.timebegin)[1]))))
 			else:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight+nameHeight, width-stateWidth, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + ((" %s ... %s (%d " + _("mins") + ")") % (FuzzyTime(timer.timebegin)[1], FuzzyTime(timer.timeend)[1], (timer.timeend - timer.timebegin) / 60))))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, servicenameHeight+nameHeight, width-stateWidth, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + ((" %s ... %s (%d " + _("mins") + ")") % (FuzzyTime(timer.timebegin)[1], FuzzyTime(timer.timeend)[1], (timer.timeend - timer.timebegin) / 60))))
 		else:
 			if timer.justplay:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight+nameHeight, width-stateWidth, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + (("%s, %s " + _("(ZAP)")) % (FuzzyTime(timer.timebegin)))))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, servicenameHeight+nameHeight, width-stateWidth, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + (("%s, %s " + _("(ZAP)")) % (FuzzyTime(timer.timebegin)))))
 			else:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight+nameHeight, width-stateWidth, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + (("%s, %s ... %s (%d " + _("mins") + ")") % (FuzzyTime(timer.timebegin) + FuzzyTime(timer.timeend)[1:] + ((timer.timeend - timer.timebegin) / 60,)))))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, servicenameHeight+nameHeight, width-stateWidth, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + (("%s, %s ... %s (%d " + _("mins") + ")") % (FuzzyTime(timer.timebegin) + FuzzyTime(timer.timeend)[1:] + ((timer.timeend - timer.timebegin) / 60,)))))
 		
 		if timer.state == TimerEntry.StateWaiting:
 			state = _("waiting")
@@ -1324,7 +1327,7 @@ class E2TimerMenu(GUIComponent, object):
 
 		if timer.disabled:
 			png = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, "skin_default/icons/redx.png"))
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, iconPos, 5, iconWidth,iconHeight, png))
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, iconPos, 5, iconWidth,iconHeight, png))
 		
 		return res
 		
@@ -1335,8 +1338,8 @@ class E2TimerMenu(GUIComponent, object):
 		stateE1Width = sizes.get(E2TimerMenu.SKIN_COMPONENT_STATEE1_WIDTH, 170)	
 		width = self.l.getItemSize().width()
 		res = [ timer ]
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, servicenameHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.servicename))
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight, width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.description))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, 0, width, servicenameHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.servicename))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, servicenameHeight, width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.description))
 
 		repeatedtext = ""
 		days = [ _("Sun"), _("Mon"), _("Tue"), _("Wed"), _("Thu"), _("Fri"), _("Sat") ]
@@ -1351,14 +1354,14 @@ class E2TimerMenu(GUIComponent, object):
 					count += 1
 				mask *= 2
 			if timer.type & PlaylistEntry.SwitchTimerEntry:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight+nameHeight, width-stateE1Width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + ((" %s "+ _("(ZAP)")) % (FuzzyTime(timer.timebegin)[1]))))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, servicenameHeight+nameHeight, width-stateE1Width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + ((" %s "+ _("(ZAP)")) % (FuzzyTime(timer.timebegin)[1]))))
 			elif timer.type & PlaylistEntry.RecTimerEntry:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight+nameHeight, width-stateE1Width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + ((" %s ... %s (%d " + _("mins") + ")") % (FuzzyTime(timer.timebegin)[1], FuzzyTime(timer.timeend)[1], (timer.timeend - timer.timebegin) / 60))))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, servicenameHeight+nameHeight, width-stateE1Width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + ((" %s ... %s (%d " + _("mins") + ")") % (FuzzyTime(timer.timebegin)[1], FuzzyTime(timer.timeend)[1], (timer.timeend - timer.timebegin) / 60))))
 		else:
 			if timer.type & PlaylistEntry.SwitchTimerEntry:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight+nameHeight, width-stateE1Width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + (("%s, %s ... %s (%d " + _("mins") + ") ") % (FuzzyTime(timer.timebegin) + FuzzyTime(timer.timeend)[1:] + ((timer.timeend - timer.timebegin) / 60,))) + _("(ZAP)")))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, servicenameHeight+nameHeight, width-stateE1Width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + (("%s, %s ... %s (%d " + _("mins") + ") ") % (FuzzyTime(timer.timebegin) + FuzzyTime(timer.timeend)[1:] + ((timer.timeend - timer.timebegin) / 60,))) + _("(ZAP)")))
 			elif timer.type & PlaylistEntry.RecTimerEntry:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight+nameHeight, width-stateE1Width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + (("%s, %s ... %s (%d " + _("mins") + ")") % (FuzzyTime(timer.timebegin) + FuzzyTime(timer.timeend)[1:] + ((timer.timeend - timer.timebegin) / 60,)))))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, servicenameHeight+nameHeight, width-stateE1Width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, repeatedtext + (("%s, %s ... %s (%d " + _("mins") + ")") % (FuzzyTime(timer.timebegin) + FuzzyTime(timer.timeend)[1:] + ((timer.timeend - timer.timebegin) / 60,)))))
 		
 		if timer.type & PlaylistEntry.stateWaiting:
 			state = _("waiting")
@@ -1430,7 +1433,7 @@ class E2BouquetList(MenuList):
 		width = self.l.getItemSize().width()
 		for bouquets in listnew:
 			res = [ bouquets ]
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, servicenameHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, bouquets.servicename))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, 0, width, servicenameHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, bouquets.servicename))
 			self.list.append(res)
 		self.l.setList(self.list)
 		self.moveToIndex(0)
@@ -1477,17 +1480,17 @@ class E2ChannelList(MenuList):
 	def buildList(self,listnew):
 		self.list=[]
 		sizes = componentSizes[E2ChannelList.SKIN_COMPONENT_KEY]
-		servicenameHeight = sizes.get(E2ChannelList.SKIN_COMPONENT_SERVICENAME_HEIGHT, 30)
+		servicenameHeight = sizes.get(E2ChannelList.SKIN_COMPONENT_SERVICENAME_HEIGHT, 28)
 		nameHeight = sizes.get(E2ChannelList.SKIN_COMPONENT_NAME_HEIGHT, 20)	
 		stateWidth = sizes.get(E2ChannelList.SKIN_COMPONENT_STATE_WIDTH, 150)		
 		width = self.l.getItemSize().width()
 		for epgdata in listnew:
 			res = [ epgdata ]
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, servicenameHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, epgdata.servicename))
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight, width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, epgdata.eventtitle))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, 1, width, servicenameHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, epgdata.servicename))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, servicenameHeight, width, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, epgdata.eventtitle))
 			if epgdata.eventstart != 0:
 				endtime = int(epgdata.eventstart + epgdata.eventduration)
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, servicenameHeight+nameHeight, width-stateWidth, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, (("%s ... %s (%d " + _("mins") + ")") % (FuzzyTime(epgdata.eventstart)[1], FuzzyTime(endtime)[1], (endtime - epgdata.eventstart) / 60))))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, servicenameHeight+nameHeight, width-stateWidth, nameHeight, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, (("%s ... %s (%d " + _("mins") + ")") % (FuzzyTime(epgdata.eventstart)[1], FuzzyTime(endtime)[1], (endtime - epgdata.eventstart) / 60))))
 			self.list.append(res)
 		self.l.setList(self.list)
 		self.moveToIndex(0)
@@ -1497,7 +1500,9 @@ class E2EPGList(MenuList):
 	SKIN_COMPONENT_LISTSMALL_HEIGHT = "listsmallHeight"
 	SKIN_COMPONENT_CLOCK_HEIGHT = "clockHeight"
 	SKIN_COMPONENT_CLOCK_WIDTH = "clockWidth"
-	SKIN_COMPONENT_CLOCK_HPOS = "clockHPos"		
+	SKIN_COMPONENT_CLOCK_HPOS = "clockHPos"
+	SKIN_COMPONENT_WEEKDAY_MARGIN = "weekdayMargin"
+	SKIN_COMPONENT_ITEM_MARGIN = "itemMargin"
 	
 	def __init__(self, list, selChangedCB=None, enableWrapAround = True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
@@ -1543,22 +1548,29 @@ class E2EPGList(MenuList):
 			res = [ epgdata ]
 			rec=epgdata.eventstart and (self.isInTimer(epgdata.eventstart, epgdata.eventduration, epgdata.servicereference))
 			sizes = componentSizes[E2EPGList.SKIN_COMPONENT_KEY]
-			clockWidth = sizes.get(E2EPGList.SKIN_COMPONENT_CLOCK_WIDTH, 24)
+			clockWidth = sizes.get(E2EPGList.SKIN_COMPONENT_CLOCK_WIDTH, 21)
 			clockHeight = sizes.get(E2EPGList.SKIN_COMPONENT_CLOCK_HEIGHT, 21)
 			clockHPos = sizes.get(E2EPGList.SKIN_COMPONENT_CLOCK_HPOS, 5)
+			weekdayMargin = sizes.get(E2EPGList.SKIN_COMPONENT_WEEKDAY_MARGIN, 70)
+			self._itemMargin = sizes.get(E2EPGList.SKIN_COMPONENT_ITEM_MARGIN, 10)
 			esize = self.l.getItemSize()
 			width = esize.width()
 			height = esize.height()
-			r1 = Rect(0, 0, width/20*2-10, height)
-			r2 = Rect(width/20*2, 0, width/20*5-15, height)
-			r3 = Rect(width/20*7, 0, width/20*13, height)
+			weekday_width = int(width * 0.08)
+			datetime_x = weekday_width + self._itemMargin - weekdayMargin
+			datetime_width = int(width * 0.23)
+			desc_x = datetime_x + datetime_width + self._itemMargin
+			desc_width = width - desc_x - self._itemMargin
+			r1 = Rect(0, 0, weekday_width, height)
+			r2 = Rect(datetime_x, 0, datetime_width, height)
+			r3 = Rect(desc_x, 0, desc_width, height)
 			t = localtime(epgdata.eventstart)
 			res.append((eListboxPythonMultiContent.TYPE_TEXT, r1.left(), r1.top(), r1.width(), r1.height(), 0, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, self.days[t[6]]))
 			res.append((eListboxPythonMultiContent.TYPE_TEXT, r2.left(), r2.top(), r2.width(), r1.height(), 0, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, "%02d.%02d, %02d:%02d"%(t[2],t[1],t[3],t[4])))
 			if rec:
 				clock_pic = self.getClockPixmap(epgdata.servicereference, epgdata.eventstart, epgdata.eventduration, epgdata.eventid)
-				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r3.left(), clockHPos, clockWidth, clockHeight, clock_pic))
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, r3.left() +clockWidth, r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, epgdata.eventtitle))
+				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.left(), clockHPos, clockWidth, clockHeight, clock_pic))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, r3.left() + clockWidth + self._itemMargin, r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, epgdata.eventtitle))
 			else:
 				res.append((eListboxPythonMultiContent.TYPE_TEXT, r3.left(), r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, epgdata.eventtitle))
 			
@@ -1630,19 +1642,20 @@ class RemoteTimerEventView(Screen):
 	ADD_TIMER = 1
 	REMOVE_TIMER = 2
 	skin = """
-		<screen name="RemoteTimerEventView" position="center,center" size="560,430" title="Eventview">
-			<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/blue.png" position="420,0" size="140,40" alphatest="on" />
-			<widget name="key_red" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-			<widget name="key_green" position="140,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget name="key_yellow" position="280,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
-			<widget name="key_blue" position="420,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
-			<widget name="epg_description" position="10,50" size="540,330" font="Regular;22" />
-			<widget name="datetime" position="10,395" size="130,25" font="Regular;22" />
-			<widget name="duration" position="140,395" size="100,25" font="Regular;22" />
-			<widget name="channel" position="240,395" size="305,25" font="Regular;22" halign="right" />
+		<screen name="RemoteTimerEventView" position="center,120" size="950,520" title="Eventview">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on" />
+			<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_green" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_yellow" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_blue" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<eLabel position="10,50" size="930,1" backgroundColor="grey" />
+			<widget name="epg_description" position="10,60" size="930,400" font="Regular;22" />
+			<widget name="datetime" position="10,480" size="200,25" font="Regular;22" />
+			<widget name="duration" position="220,480" size="200,25" font="Regular;22" />
+			<widget name="channel" position="430,480" size="500,25" font="Regular;22" halign="right" />
 		</screen>"""
 	
 	def __init__(self, session, E2Timerlist, epgdata , partnerboxentry):

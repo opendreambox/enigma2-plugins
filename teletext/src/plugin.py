@@ -1094,24 +1094,22 @@ class TeleTextTransponderMenu(Screen):
     self.ch_index = index
     self.cur_service = self.ch_list[self.ch_index][1]
 
-    width = 420
-    height = 75
+    width = 620
+    height = 90
     left = (dsk_width - width)>>1
     top = (dsk_height - height)>>1
     log("[transponder] screen rect %s %s %s %s" % (left, top, width, height))
     TeleTextTransponderMenu.skin = """<screen position="%d,%d" size="%d,%d" title="%s">
-        <widget name="prev"    position="0,5"   size="35,25"  zPosition="4" pixmap="%s" alphatest="on"/>
-        <widget name="channel" position="40,7"  size="325,20" zPosition="5" valign="center" halign="left"  font="Regular;21" transparent="1" foregroundColor="white"/>
-        <widget name="zapped"  position="365,7" size="20,20"  zPosition="5" valign="center" halign="right" font="Regular;21" transparent="1" foregroundColor="#888888"/>
-        <widget name="next"    position="385,5" size="35,25"  zPosition="4" pixmap="%s" alphatest="on"/>
-
-        <ePixmap pixmap="skin_default/div-h.png" position="0,32" zPosition="1" size="420,2" />
-
-        <ePixmap pixmap="skin_default/buttons/red.png"    position="0,35"   zPosition="0" size="140,40" transparent="1" alphatest="on" />
-        <ePixmap pixmap="skin_default/buttons/green.png"  position="280,35" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-        <widget name="key_r" position="0,35"   size="140,40" zPosition="5" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-        <widget name="key_g" position="280,35" size="140,40" zPosition="5" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-      </screen>""" % (left, top, width, height, _("Select teletext"), resolveFilename(SCOPE_PLUGINS, "Extensions/TeleText/key_lt.png"), resolveFilename(SCOPE_PLUGINS, "Extensions/TeleText/key_gt.png"))
+        <ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+        <ePixmap pixmap="skin_default/buttons/green.png" position="410,5" size="200,40" alphatest="on" />
+        <widget name="key_r" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+        <widget name="key_g" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+        <eLabel position="10,50" size="600,1" backgroundColor="grey"/>
+        <widget name="prev" position="10,60" size="50,25" pixmap="skin_default/icons/left.png" alphatest="on"/>
+        <widget name="channel" position="70,62" size="450,20" valign="center" halign="left" font="Regular;21"/>
+        <widget name="zapped" position="530,62" size="20,20" valign="center" halign="right" font="Regular;21"/>
+        <widget name="next" position="560,60" size="50,25" pixmap="skin_default/icons/right.png" alphatest="on"/>
+      </screen>""" % (left, top, width, height, _("Select teletext"))
     Screen.__init__(self, session)
 
     self["actions"] = ActionMap(["OkCancelActions", "TeleTextActions"],
@@ -1235,22 +1233,23 @@ class TeleTextMenu(ConfigListScreen, Screen):
   parent = None
 
   def __init__(self, session, parent):
-    width = 492
-    height = 460
+    width = 820
+    height = 480
     left = (dsk_width - width)>>1
     top = (dsk_height - height)>>1
     log("[menu] screen rect %s %s %s %s" % (left, top, width, height))
     TeleTextMenu.skin = """<screen position="%d,%d" size="%d,%d" title="%s">
-        <widget name="config" position="0,0"   size="492,335" scrollbarMode="showOnDemand" zPosition="1"/>
-        <ePixmap pixmap="skin_default/div-h.png" position="0,338" zPosition="1" size="492,2" />
-        <widget name="label"  position="0,340" size="492,70" font="Regular;16" zPosition="1" halign="left" valign="top"/>
-        <ePixmap pixmap="skin_default/div-h.png" position="0,415" zPosition="1" size="492,2" />
-        <ePixmap pixmap="skin_default/buttons/red.png"    position="0,420"   zPosition="0" size="140,40" transparent="1" alphatest="on" />
-        <ePixmap pixmap="skin_default/buttons/green.png"  position="176,420" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-        <ePixmap pixmap="skin_default/buttons/yellow.png" position="352,420" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-        <widget name="key_r" position="0,420"   size="140,40" zPosition="5" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-        <widget name="key_g" position="176,420" size="140,40" zPosition="5" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-        <widget name="key_y" position="352,420" size="140,40" zPosition="5" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+        <ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on" />
+		<widget name="key_r" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<widget name="key_g" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<widget name="key_y" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<ePixmap pixmap="skin_default/icons/info.png" position="740,14" size="70,30" alphatest="on"/>
+		<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+		<widget name="config" position="10,60" size="800,330" enableWrapAround="1" scrollbarMode="showOnDemand" />
+		<eLabel position="10,400" size="800,1" backgroundColor="grey" />
+		<widget name="label" position="10,415" size="800,50" font="Regular;21" valign="center" halign="center" />
       </screen>""" % (left, top, width, height, _("TeleText settings"))
 
     Screen.__init__(self, session, parent)
@@ -1616,34 +1615,32 @@ class TeleTextFavoritesMenu(Screen):
   onChangedEntry = [ ]
 
   def __init__(self, session, parent, service, page, favorites):
-    width = 590
-    height = 300
+    width = 820
+    height = 480
     left = (dsk_width - width)>>1
     top = (dsk_height - height)>>1
     log("[fav-menu] screen rect %s %s %s %s" % (left, top, width, height))
     TeleTextFavoritesMenu.skin = """<screen position="%d,%d" size="%d,%d" title="%s [%s]">
-        <ePixmap pixmap="skin_default/buttons/key_1.png" position="0,0"   zPosition="1" size="35,25" transparent="1" alphatest="on"/>
-        <ePixmap pixmap="skin_default/buttons/key_2.png" position="0,25"  zPosition="1" size="35,25" transparent="1" alphatest="on"/>
-        <ePixmap pixmap="skin_default/buttons/key_3.png" position="0,50"  zPosition="1" size="35,25" transparent="1" alphatest="on"/>
-        <ePixmap pixmap="skin_default/buttons/key_4.png" position="0,75"  zPosition="1" size="35,25" transparent="1" alphatest="on"/>
-        <ePixmap pixmap="skin_default/buttons/key_5.png" position="0,100" zPosition="1" size="35,25" transparent="1" alphatest="on"/>
-        <ePixmap pixmap="skin_default/buttons/key_6.png" position="0,125" zPosition="1" size="35,25" transparent="1" alphatest="on"/>
-        <ePixmap pixmap="skin_default/buttons/key_7.png" position="0,150" zPosition="1" size="35,25" transparent="1" alphatest="on"/>
-        <ePixmap pixmap="skin_default/buttons/key_8.png" position="0,175" zPosition="1" size="35,25" transparent="1" alphatest="on"/>
-        <ePixmap pixmap="skin_default/buttons/key_9.png" position="0,200" zPosition="1" size="35,25" transparent="1" alphatest="on"/>
-        <ePixmap pixmap="skin_default/buttons/key_0.png" position="0,225" zPosition="1" size="35,25" transparent="1" alphatest="on"/>
-        <widget name="fav_list" position="40,0"   size="550,250" zPosition="1"/>
-
-        <ePixmap pixmap="skin_default/div-h.png" position="0,255" zPosition="1" size="590,2"/>
-
-        <ePixmap pixmap="skin_default/buttons/red.png"    position="0,260"   zPosition="0" size="140,40" transparent="1" alphatest="on" />
-        <ePixmap pixmap="skin_default/buttons/green.png"  position="150,260" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-        <ePixmap pixmap="skin_default/buttons/yellow.png" position="300,260" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-        <ePixmap pixmap="skin_default/buttons/blue.png"   position="450,260" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-        <widget name="key_r" position="0,260"   size="140,40" zPosition="5" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-        <widget name="key_g" position="150,260" size="140,40" zPosition="5" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-        <widget name="key_y" position="300,260" size="140,40" zPosition="5" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-        <widget name="key_b" position="450,260" size="140,40" zPosition="5" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+        <ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+        <ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+        <ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on" />
+        <ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on" />
+        <widget name="key_r" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+        <widget name="key_g" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+        <widget name="key_y" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+        <widget name="key_b" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+        <eLabel position="10,50" size="800,1" backgroundColor="grey" />
+        <widget name="fav_list" position="63,60" size="754,330" enableWrapAround="1" scrollbarMode="showOnDemand" />
+        <ePixmap pixmap="skin_default/buttons/key_1.png" position="10,63" size="50,25" alphatest="on"/>
+        <ePixmap pixmap="skin_default/buttons/key_2.png" position="10,93" size="50,25" alphatest="on"/>
+        <ePixmap pixmap="skin_default/buttons/key_3.png" position="10,123" size="50,25" alphatest="on"/>
+        <ePixmap pixmap="skin_default/buttons/key_4.png" position="10,153" size="50,25" alphatest="on"/>
+        <ePixmap pixmap="skin_default/buttons/key_5.png" position="10,183" size="50,25" alphatest="on"/>
+        <ePixmap pixmap="skin_default/buttons/key_6.png" position="10,213" size="50,25" alphatest="on"/>
+        <ePixmap pixmap="skin_default/buttons/key_7.png" position="10,243" size="50,25" alphatest="on"/>
+        <ePixmap pixmap="skin_default/buttons/key_8.png" position="10,273" size="50,25" alphatest="on"/>
+        <ePixmap pixmap="skin_default/buttons/key_9.png" position="10,303" size="50,25" alphatest="on"/>
+        <ePixmap pixmap="skin_default/buttons/key_0.png" position="10,333" size="50,25" alphatest="on"/>
       </screen>""" % (left, top, width, height, _("TeleText favorites"), service[1])
 
     self.service = service[0]

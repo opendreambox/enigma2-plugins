@@ -18,23 +18,24 @@ from UserManager import UserManager
 
 class AutoMountManager(Screen):
 	skin = """
-		<screen name="AutoMountManager" position="center,center" size="560,400" title="AutoMountManager">
-			<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on" />
-			<widget source="key_red" render="Label" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-			<widget source="config" render="Listbox" position="5,50" size="540,300" scrollbarMode="showOnDemand" >
-				<convert type="TemplatedMultiContent">
-					{"template": [
-							MultiContentEntryText(pos = (0, 3), size = (480, 25), font=0, flags = RT_HALIGN_LEFT, text = 0), # index 2 is the Menu Titel
-							MultiContentEntryText(pos = (10, 29), size = (480, 17), font=1, flags = RT_HALIGN_LEFT, text = 2), # index 3 is the Description
-							MultiContentEntryPixmapAlphaTest(pos = (500, 1), size = (48, 48), png = 3), # index 4 is the pixmap
-						],
-					"fonts": [gFont("Regular", 20),gFont("Regular", 14)],
-					"itemHeight": 50
-					}
-				</convert>
-			</widget>
-			<ePixmap pixmap="skin_default/div-h.png" position="0,360" zPosition="1" size="560,2" />
-			<widget source="introduction" render="Label" position="10,370" size="540,21" zPosition="10" font="Regular;21" halign="center" valign="center" backgroundColor="#25062748" transparent="1"/>
+		<screen name="AutoMountManager" position="center,120" size="820,520" title="AutoMountManager">
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on"/>
+		<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+		<eLabel	position="10,50" size="800,1" backgroundColor="grey"/>
+		<widget source="config" render="Listbox" position="10,55" size="800,420" enableWrapAround="1" scrollbarMode="showOnDemand" transparent="1" >
+			<convert type="TemplatedMultiContent">
+				{"template": [
+				MultiContentEntryText(pos = (70,5),size = (710,28),font=0,flags = RT_HALIGN_LEFT,text = 0),# index 2 is the Menu Titel
+				MultiContentEntryText(pos = (80,35),size = (700,20),font=1,flags = RT_HALIGN_LEFT,text = 2),# index 3 is the Description
+				MultiContentEntryPixmapAlphaTest(pos = (10,5),size = (50,50),png = 3),# index 4 is the pixmap
+				],
+				"fonts": [gFont("Regular",22),gFont("Regular",18)],
+				"itemHeight": 60
+				}
+			</convert>
+		</widget>
+		<eLabel	position="10,480" size="800,1" backgroundColor="grey"/>
+		<widget source="introduction" render="Label" position="10,488" size="800,25" font="Regular;22" halign="center" transparent="1"/>
 		</screen>"""
 	def __init__(self, session, iface ,plugin_path):
 		self.skin_path = plugin_path

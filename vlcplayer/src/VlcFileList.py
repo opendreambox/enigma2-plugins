@@ -12,14 +12,14 @@
 
 import re
 
-from enigma import eListboxPythonMultiContent, RT_HALIGN_LEFT, gFont
+from enigma import eListboxPythonMultiContent, RT_VALIGN_CENTER, gFont
 from Tools.LoadPixmap import LoadPixmap
 from Tools.Directories import SCOPE_SKIN_IMAGE, SCOPE_PLUGINS, resolveFilename
 from Components.MenuList import MenuList
 
 from pyexpat import ExpatError
 
-from skin import parseFont
+from skin import parseFont, TemplatedListFonts
 
 MEDIA_EXTENSIONS = {
 		"mp3": "music",
@@ -47,9 +47,9 @@ PLAYLIST_EXTENSIONS = {
 class VlcFileList(MenuList):
 	def __init__(self, getFilesAndDirsCB, baseDir, matchingPattern):
 		MenuList.__init__(self, list, False, eListboxPythonMultiContent)
-		self.font = gFont("Regular", 18)
-		self.l.setFont(0, self.font)
-		self.l.setItemHeight(23)
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
+		self.l.setItemHeight(25)
 		self.l.setBuildFunc(self.buildListboxEntry)
 		self.currentDirectory = baseDir
 		self.getFilesAndDirsCB = getFilesAndDirsCB
@@ -74,7 +74,7 @@ class VlcFileList(MenuList):
 		height = size.height()
 		res = [
 			(path, isDir, name),
-			(eListboxPythonMultiContent.TYPE_TEXT, height + 15, 0, size.width() - height - 15, height, 0, RT_HALIGN_LEFT, name)
+			(eListboxPythonMultiContent.TYPE_TEXT, height + 15, 0, size.width() - height - 15, height, 0, RT_VALIGN_CENTER, name)
 		]
 
 		if isDir:

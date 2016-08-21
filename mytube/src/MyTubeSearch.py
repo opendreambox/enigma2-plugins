@@ -163,20 +163,19 @@ if default not in tmp:
 
 class MyTubeSuggestionsListScreen(Screen):
 	skin = """
-		<screen name="MyTubeSuggestionsListScreen" title="MyTube - Search" position="60,93" zPosition="6" size="610,160" flags="wfNoBorder" >
-			<ePixmap position="0,0" zPosition="-1" size="610,160" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MyTube/suggestions_bg.png" alphatest="on" transparent="1" backgroundColor="transparent"/>
-			<widget source="suggestionslist" render="Listbox" position="10,5" zPosition="7" size="580,150" scrollbarMode="showOnDemand" transparent="1" >
-				<convert type="TemplatedMultiContent">
-					{"template": [
-							MultiContentEntryText(pos = (0, 1), size = (340, 24), font=0, flags = RT_HALIGN_LEFT, text = 0), # index 0 is the name
-							MultiContentEntryText(pos = (350, 1), size = (180, 24), font=1, flags = RT_HALIGN_RIGHT, text = 1), # index 1 are the rtesults
-						],
-					"fonts": [gFont("Regular", 22),gFont("Regular", 18)],
-					"itemHeight": 25
-					}
-				</convert>
-			</widget>
-		</screen>"""
+		<screen name="MyTubeSuggestionsListScreen" position="center,205" size="920,450" zPosition="6" title="MyTube - Search" flags="wfNoBorder">
+		<widget source="suggestionslist" render="Listbox" position="10,10" size="900,270" zPosition="2" enableWrapAround="1" scrollbarMode="showOnDemand">
+			<convert type="TemplatedMultiContent">
+				{"template": [
+				MultiContentEntryText(pos=(5,2),size=(590,26),font=0,flags=RT_HALIGN_LEFT,text=0),# index 0 is the name
+				MultiContentEntryText(pos=(610,2),size=(300,26),font=1,flags=RT_HALIGN_RIGHT,text=1),# index 1 are the rtesults
+				],
+				"fonts": [gFont("Regular",22),gFont("Regular",18)],
+				"itemHeight": 30
+				}
+			</convert>
+		</widget>
+	</screen>"""
 
 	def __init__(self, session, configTextWithGoogleSuggestion):
 		Screen.__init__(self, session)
@@ -278,26 +277,25 @@ class MyTubeSuggestionsListScreen(Screen):
 
 class MyTubeTasksScreen(Screen):
 	skin = """
-		<screen name="MyTubeTasksScreen" flags="wfNoBorder" position="0,0" size="720,576" title="MyTube - Tasks" >
-			<ePixmap position="0,0" zPosition="-1" size="720,576" pixmap="~/mytubemain_bg.png" alphatest="on" transparent="1" backgroundColor="transparent"/>
-			<widget name="title" position="60,50" size="600,50" zPosition="5" valign="center" halign="left" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget source="tasklist" render="Listbox" position="60,120" size="610,370" zPosition="7" scrollbarMode="showOnDemand" transparent="1" >
-				<convert type="TemplatedMultiContent">
-					{"template": [
-							MultiContentEntryText(pos = (0, 1), size = (200, 24), font=1, flags = RT_HALIGN_LEFT, text = 1), # index 1 is the name
-							MultiContentEntryText(pos = (210, 1), size = (150, 24), font=1, flags = RT_HALIGN_RIGHT, text = 2), # index 2 is the state
-							MultiContentEntryProgress(pos = (370, 1), size = (100, 24), percent = -3), # index 3 should be progress
-							MultiContentEntryText(pos = (480, 1), size = (100, 24), font=1, flags = RT_HALIGN_RIGHT, text = 4), # index 4 is the percentage
-						],
-					"fonts": [gFont("Regular", 22),gFont("Regular", 18)],
-					"itemHeight": 25
-					}
-				</convert>
-			</widget>
-			<ePixmap position="100,500" size="100,40" zPosition="0" pixmap="~/plugin.png" alphatest="on" transparent="1" />
-			<ePixmap position="220,500" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-			<widget name="key_red" position="220,500" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-		</screen>"""
+		<screen name="MyTubeTasksScreen" position="center,120" size="920,520" title="MyTube - Tasks">
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on"/>
+		<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+		<eLabel	position="10,50" size="900,1" backgroundColor="grey"/>
+		<widget source="tasklist" render="Listbox" position="10,60" size="900,450" enableWrapAround="1" scrollbarMode="showOnDemand">
+			<convert type="TemplatedMultiContent">
+				{"template": [
+				MultiContentEntryText(pos=(10,2),size=(420,25),flags=RT_HALIGN_LEFT,text=1),# index 1 is the name
+				MultiContentEntryText(pos=(440,2),size=(160,25),flags=RT_HALIGN_RIGHT,text=2),# index 2 is the state
+				MultiContentEntryProgress(pos=(630,5),size=(150,20),percent=-3),# index 3 should be progress
+				MultiContentEntryText(pos=(790,2),size=(80,25),flags=RT_HALIGN_RIGHT,text=4),# index 4 is the percentage
+				],
+				"fonts": [gFont("Regular",21)],
+				"itemHeight": 30
+				}
+			</convert>
+		</widget>
+		<widget name="title" position="0,0" size="0,0"/>
+	</screen>"""
 
 	def __init__(self, session, plugin_path, tasklist):
 		Screen.__init__(self, session)
@@ -364,19 +362,18 @@ class MyTubeTasksScreen(Screen):
 
 class MyTubeHistoryScreen(Screen):
 	skin = """
-		<screen name="MyTubeHistoryScreen" position="60,93" zPosition="6" size="610,160" flags="wfNoBorder" title="MyTube - History">
-			<ePixmap position="0,0" zPosition="-1" size="610,160" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MyTube/suggestions_bg.png" alphatest="on" transparent="1" backgroundColor="transparent"/>
-			<widget source="historylist" render="Listbox" position="10,5" zPosition="7" size="580,150" scrollbarMode="showOnDemand" transparent="1" >
-				<convert type="TemplatedMultiContent">
-					{"template": [
-							MultiContentEntryText(pos = (0, 1), size = (340, 24), font=0, flags = RT_HALIGN_LEFT, text = 0), # index 0 is the name
-						],
-					"fonts": [gFont("Regular", 22),gFont("Regular", 18)],
-					"itemHeight": 25
-					}
-				</convert>
-			</widget>
-		</screen>"""
+		<screen name="MyTubeHistoryScreen" position="center,205" size="920,450" zPosition="6" title="MyTube - History" flags="wfNoBorder">
+		<widget source="historylist" render="Listbox" position="10,10" size="900,420" zPosition="2" enableWrapAround="1" scrollbarMode="showOnDemand">
+			<convert type="TemplatedMultiContent">
+				{"template": [
+				MultiContentEntryText(pos=(5,2),size=(900,26),flags=RT_HALIGN_LEFT,text=0),# index 0 is the name
+				],
+				"fonts": [gFont("Regular",22)],
+				"itemHeight": 30
+				}
+			</convert>
+		</widget>
+	</screen>"""
 
 	def __init__(self, session):
 		Screen.__init__(self, session)

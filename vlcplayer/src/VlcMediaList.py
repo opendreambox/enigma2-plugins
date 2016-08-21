@@ -26,22 +26,21 @@ from . import _
 
 class VlcMediaListScreen(Screen):
 	skin ="""
-		<screen size="560,400" position="80,100" name="VlcMediaListScreen" >
-			<ePixmap name="red"    position="0,355"   zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-			<ePixmap name="green"  position="140,355" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-			<ePixmap name="yellow" position="280,355" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
-			<ePixmap name="blue"   position="420,355" zPosition="4" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
-			<widget name="key_red" position="0,355" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget name="key_green" position="140,355" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget name="key_yellow" position="280,355" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget name="key_blue" position="420,355" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<ePixmap size="551,325" alphatest="on" position="5,30" pixmap="skin_default/border_epg.png" />
-			<widget size="320,25" alphatest="on" position="5,10" zPosition="1" name="filelist_button_sel" pixmap="skin_default/epg_now.png" />
-			<widget size="320,25" alphatest="on" position="5,10" zPosition="1" name="playlist_button_sel" pixmap="skin_default/epg_next.png" />
-			<widget valign="center" transparent="1" size="108,22" backgroundColor="#25062748" position="5,10" zPosition="2" name="filelist_text" halign="center" font="Regular;18" />
-			<widget valign="center" transparent="1" size="108,22" backgroundColor="#25062748" position="111,10" zPosition="2" name="playlist_text" halign="center" font="Regular;18" />
-			<widget size="540,320" scrollbarMode="showOnDemand" position="11,35" name="filelist" />
-			<widget size="540,320" scrollbarMode="showOnDemand" position="11,35" name="playlist" />
+		<screen name="VlcMediaListScreen" position="center,center" size="820,410" >
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on" />
+			<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_green" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_yellow" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget name="key_blue" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget size="950,35" alphatest="on" position="0,50" zPosition="1" name="filelist_button_sel" pixmap="skin_default/epg_now.png" />
+			<widget size="950,35" alphatest="on" position="0,50" zPosition="1" name="playlist_button_sel" pixmap="skin_default/epg_next.png" />
+			<widget name="filelist_text" position="31,55" zPosition="2" size="200,25" font="Regular;20" halign="center" valign="center" backgroundColor="background" transparent="1" />
+			<widget name="playlist_text" position="231,55" zPosition="2" size="200,25" font="Regular;20" halign="center" valign="center" backgroundColor="background" transparent="1" />
+			<widget name="filelist" position="10,95" size="800,300" enableWrapAround="1" scrollbarMode="showOnDemand"/>
+			<widget name="playlist" position="10,95" size="800,300" enableWrapAround="1" scrollbarMode="showOnDemand"/>
 		</screen>"""
 	
 	defaultFilter = "(?i)\.(avi|mpeg|mpg|divx|xvid|mp4|mov|ts|vob|wmv|mkv|iso|m3u|pls|xspf|flv)$"

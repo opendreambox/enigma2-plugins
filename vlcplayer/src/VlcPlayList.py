@@ -10,20 +10,20 @@
 #===============================================================================
 
 
-from enigma import eListboxPythonMultiContent, RT_HALIGN_LEFT, gFont
+from enigma import eListboxPythonMultiContent, RT_VALIGN_CENTER, gFont
 
 from Tools.LoadPixmap import LoadPixmap
 from Tools.Directories import SCOPE_SKIN_IMAGE, resolveFilename
 from Components.MenuList import MenuList
 
-from skin import parseFont
+from skin import parseFont, TemplatedListFonts
 
 class VlcPlayList(MenuList):
 	def __init__(self, getPlaylistEntriesCB):
 		MenuList.__init__(self, list, False, eListboxPythonMultiContent)
-		self.font = gFont("Regular", 18)
-		self.l.setFont(0, self.font)
-		self.l.setItemHeight(23)
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
+		self.l.setItemHeight(25)
 		self.l.setBuildFunc(self.buildListboxEntry)
 		self.getPlaylistEntriesCB = getPlaylistEntriesCB
 
@@ -47,7 +47,7 @@ class VlcPlayList(MenuList):
 		height = size.height()
 		res = [
 			(path, name),
-			(eListboxPythonMultiContent.TYPE_TEXT, height + 15, 0, size.width() - height - 15, height, 0, RT_HALIGN_LEFT, name)
+			(eListboxPythonMultiContent.TYPE_TEXT, height + 15, 0, size.width() - height - 15, height, 0, RT_VALIGN_CENTER, name)
 		]
 
 		png = LoadPixmap(resolveFilename(SCOPE_SKIN_IMAGE, "extensions/movie.png"))

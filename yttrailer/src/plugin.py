@@ -180,8 +180,8 @@ class YTTrailer:
 class YTTrailerList(Screen, YTTrailer):
 
 	skin = """
-		<screen name="YTTrailerList" position="center,center" size="620,391" title="YT Trailer-List">
-			<widget name="list" position="0,2" size="620,385" />
+		<screen name="YTTrailerList" position="center,center" size="820,410" title="YT Trailer-List">
+			<widget name="list" position="10,10" size="800,385" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 
 	def __init__(self, session, eventname):
@@ -235,7 +235,7 @@ class TrailerList(GUIComponent, object):
 
 	def buildList(self, entry):
 		sizes = componentSizes[TrailerList.SKIN_COMPONENT_KEY]
-		configEntryWidth = sizes.get(componentSizes.ITEM_WIDTH, 620)
+		configEntryWidth = sizes.get(componentSizes.ITEM_WIDTH, 800)
 		titleHeight = sizes.get(TrailerList.SKIN_COMPONENT_TITLE_HEIGHT, 25)
 		descriptionHeight = sizes.get(TrailerList.SKIN_COMPONENT_DESCRIPTION_HEIGHT, 40)
 		lineSpacing = sizes.get(TrailerList.SKIN_COMPONENT_LINE_SPACING, 3)		
@@ -302,14 +302,13 @@ class TrailerPlayer(InfoBarBase, InfoBarShowHide, InfoBarSeek, InfoBarAudioSelec
 
 class YTTrailerSetup(ConfigListScreen, Screen):
 	skin = """
-		<screen position="center,center" size="560,400" title="YT-Trailer Setup">
-			<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/blue.png" position="420,0" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-			<widget render="Label" source="key_red" position="0,0" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget render="Label" source="key_green" position="140,0" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget name="config" position="20,50" size="520,330" scrollbarMode="showOnDemand" />
+		<screen position="center,center" size="820,410" title="YT-Trailer Setup">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+			<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+			<widget name="config" position="10,60" size="800,330" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 
 	def __init__(self, session, args = None):

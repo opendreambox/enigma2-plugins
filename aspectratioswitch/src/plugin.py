@@ -55,7 +55,7 @@ import os.path
 # 1.0 Switch keys assigned to Bouquet long, Help long, Radio long and PVR long (JuSt611)
 #	Keymap modified to enable Quickbuttons with long key press
 #	Plugin Setup Start optionally shown in Plugin Menu or Extensions Menu
-#	German localization added       
+#	German localization added
 VERSION = "1.0"
 ###############################################################################
 pluginPrintname = "[AspectRatioSwitch Ver. %s]" %VERSION
@@ -89,14 +89,15 @@ aspect_ratio_switch = None
 
 class AspectRatioSwitchSetup(ConfigListScreen, Screen):
 	skin = """
-		<screen position="center,center" size="550,500" title="AspectRatioSwitch Setup">
-			<widget name="config" position="10,0" size="530,335" scrollbarMode="showOnDemand" enableWrapAround="1" />
-			<ePixmap pixmap="skin_default/div-h.png" position="0,340" zPosition="1" size="550,2" />
-			<widget name="label" position="10,355" size="530,100" font="Regular;18" halign="left"  />
-			<ePixmap pixmap="skin_default/buttons/red.png" position="10,460" size="140,40" transparent="1" alphatest="on" />
-			<widget render="Label" source="key_red" position="10,460" size="140,40" transparent="1" halign="center" valign="center" zPosition="2" foregroundColor="white" font="Regular;18" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="180,460" size="140,40" transparent="1" alphatest="on" />
-			<widget render="Label" source="key_green" position="180,460" size="140,40" transparent="1" halign="center" valign="center" zPosition="2" foregroundColor="white" font="Regular;18" />
+		<screen position="center,120" size="820,520" title="AspectRatioSwitch Setup">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+			<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+			<widget name="config" position="10,60" size="800,360" enableWrapAround="1" scrollbarMode="showOnDemand" />
+			<eLabel position="10,430" size="800,1" backgroundColor="grey" />
+			<widget name="label" position="10,435" size="800,80" font="Regular;21" valign="center" halign="center" />
  		</screen>"""
 
 	def __init__(self, session, args=None):

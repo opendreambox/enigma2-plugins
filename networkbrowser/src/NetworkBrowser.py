@@ -63,33 +63,33 @@ class NetworkDescriptor:
 
 class NetworkBrowser(Screen):
 	skin = """
-		<screen name="NetworkBrowser" position="90,80" size="560,450" title="Network Neighbourhood">
-			<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/blue.png" position="420,0" size="140,40" alphatest="on" />
-			<widget source="key_red" render="Label" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-			<widget source="key_green" render="Label" position="140,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget source="key_yellow" render="Label" position="280,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
-			<widget source="key_blue" render="Label" position="420,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
-			<widget source="list" render="Listbox" position="5,50" size="540,350" zPosition="10" scrollbarMode="showOnDemand">
-				<convert type="TemplatedMultiContent">
-					{"template": [
-							MultiContentEntryPixmapAlphaTest(pos = (0, 0), size = (48, 48), png = 1), # index 1 is the expandable/expanded/verticalline icon
-							MultiContentEntryText(pos = (50, 4), size = (420, 26), font=2, flags = RT_HALIGN_LEFT, text = 2), # index 2 is the Hostname
-							MultiContentEntryText(pos = (140, 5), size = (320, 25), font=0, flags = RT_HALIGN_LEFT, text = 3), # index 3 is the sharename
-							MultiContentEntryText(pos = (140, 26), size = (320, 17), font=1, flags = RT_HALIGN_LEFT, text = 4), # index 4 is the sharedescription
-							MultiContentEntryPixmapAlphaTest(pos = (45, 0), size = (48, 48), png = 5), # index 5 is the nfs/cifs icon
-							MultiContentEntryPixmapAlphaTest(pos = (90, 0), size = (48, 48), png = 6), # index 6 is the isMounted icon
-						],
-					"fonts": [gFont("Regular", 20),gFont("Regular", 14),gFont("Regular", 24)],
-					"itemHeight": 50
-					}
-				</convert>
-			</widget>
-			<ePixmap pixmap="skin_default/div-h.png" position="0,410" zPosition="1" size="560,2" />		
-			<widget source="infotext" render="Label" position="0,420" size="560,30" zPosition="10" font="Regular;21" halign="center" valign="center" backgroundColor="#25062748" transparent="1" />
-		</screen>"""
+		<screen name="NetworkBrowser" position="center,120" size="820,520" title="Network Neighbourhood">
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on"/>
+		<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on"/>
+		<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on"/>
+		<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on"/>
+		<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+		<widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+		<widget source="key_yellow" render="Label" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+		<widget source="key_blue" render="Label" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+		<eLabel	position="10,50" size="800,1" backgroundColor="grey"/>
+		<widget source="infotext" render="Label" position="10,55" size="800,420" zPosition="1" font="Regular;22" halign="center" valign="center"/>
+		<widget source="list" render="Listbox" position="10,55" size="800,420" zPosition="2" enableWrapAround="1" scrollbarMode="showOnDemand">
+			<convert type="TemplatedMultiContent">
+				{"template": [
+				MultiContentEntryPixmapAlphaTest(pos = (10,5),size = (50,50),png = 1),# index 1 is the expandable/expanded/verticalline icon
+				MultiContentEntryText(pos = (70,4),size = (700,26),font=2,flags = RT_HALIGN_LEFT,text = 2),# index 2 is the Hostname
+				MultiContentEntryText(pos = (180,5),size = (610,25),font=0,flags = RT_HALIGN_LEFT,text = 3),# index 3 is the sharename
+				MultiContentEntryText(pos = (180,26),size = (610,18),font=1,flags = RT_HALIGN_LEFT,text = 4),# index 4 is the sharedescription
+				MultiContentEntryPixmapAlphaTest(pos = (65,5),size = (50,50),png = 5),# index 5 is the nfs/cifs icon
+				MultiContentEntryPixmapAlphaTest(pos = (125,5),size = (50,50),png = 6),# index 6 is the isMounted icon
+				],
+				"fonts": [gFont("Regular",22),gFont("Regular",18),gFont("Regular",24)],
+				"itemHeight": 60
+				}
+			</convert>
+		</widget>
+	</screen>"""
 
 	def __init__(self, session, iface,plugin_path):
 		Screen.__init__(self, session)
@@ -494,14 +494,14 @@ class NetworkBrowser(Screen):
 
 class ScanIP(Screen, ConfigListScreen):
 	skin = """
-		<screen name="ScanIP" position="center,center" size="560,80" title="Scan IP" >
-			<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" alphatest="on" />
-			<widget source="key_red" render="Label" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-			<widget source="key_green" render="Label" position="140,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget source="key_yellow" render="Label" position="280,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
-			<widget name="config" position="5,50" size="540,25" scrollbarMode="showOnDemand" />
+		<screen name="ScanIP" position="center,center" size="770,110" title="Scan IP">
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="250,50" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/green.png" position="260,5" size="250,50" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/yellow.png" position="510,5" size="250,50" alphatest="on" />
+		<widget source="key_red" render="Label" position="10,5" size="250,50" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<widget source="key_green" render="Label" position="260,5" size="250,50" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<widget source="key_yellow" render="Label" position="510,5" size="250,50" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1"  shadowColor="black" shadowOffset="-2,-2" />
+		<widget name="config" position="10,65" size="750,30"/>
 		</screen>"""
 
 	def __init__(self, session):
