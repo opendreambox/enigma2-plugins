@@ -7,18 +7,18 @@ msgstr ""
 "Project-Id-Version: tuxbox-enigma 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-08-20 11:32+0200\n"
-"PO-Revision-Date: 2016-06-11 08:37+0000\n"
+"PO-Revision-Date: 2016-08-20 14:51+0000\n"
 "Last-Translator: Adga <adga@zebra.lt>\n"
 "Language-Team: Adga / enigma2 (c) <audrgrin@takas.lt>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
-"%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"(n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Pootle 2.7\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-POOTLE-MTIME: 1465634237.000000\n"
+"X-POOTLE-MTIME: 1471704701.000000\n"
 
 #: permanenttimeshift/src/plugin.py:1062
 msgid ""
@@ -3545,7 +3545,7 @@ msgstr "Nepavyko gauti skambučių sąrašo; netinkama versija?"
 #: fritzcall/src/plugin.py:1760
 #, python-format
 msgid "Could not load phonebook: %s"
-msgstr ""
+msgstr "Nepavyko įkelti telefonų knygelės: %s"
 
 #: passwordchanger/src/plugin.py:142
 msgid "Could not log in!"
@@ -6423,7 +6423,7 @@ msgstr "FAILŲ SARAŠAS_JAUNIAUSIAS"
 #: fritzcall/src/FritzCallFBF.py:420 fritzcall/src/FritzCallFBF.py:1394
 #: fritzcall/src/FritzCallFBF.py:2064 fritzcall/src/FritzCallFBF.py:2834
 msgid "FRITZ!Box - "
-msgstr ""
+msgstr "FRITZ!Box - "
 
 #: fritzcall/src/FritzCallFBF.py:564 fritzcall/src/FritzCallFBF.py:1484
 #: fritzcall/src/FritzCallFBF.py:2168 fritzcall/src/FritzCallFBF.py:2935
@@ -9057,7 +9057,7 @@ msgstr "Daryti atsargines kopijas periodiškai?"
 
 #: fritzcall/src/plugin.py:2677
 msgid "Make it more skin friendly"
-msgstr ""
+msgstr "Padaryti daugiau draugišką temą"
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:164
 msgid "Malagasy"
@@ -15723,7 +15723,7 @@ msgstr "Sistemos valymas"
 
 #: merlinepg/src/plugin.py:574
 msgid "TMDb info"
-msgstr ""
+msgstr "TMDb informacija"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:140
 msgid "TSID"
@@ -15755,7 +15755,7 @@ msgstr "TV-režimas"
 
 #: merlinepg/src/plugin.py:574
 msgid "TVDb info"
-msgstr ""
+msgstr "TVDb informacija"
 
 #: serienfilm/src/MovieSelection.py:400
 msgid "Tag 1"
@@ -16413,6 +16413,8 @@ msgid ""
 "There might be a problem with your FritzCall %spassword.\n"
 "Check in the configuration."
 msgstr ""
+"Gali būti problemų su jūsų FritzCall %slaptažodžiu.\n"
+"Patikrinkite konfigūraciją."
 
 #: mytube/src/plugin.py:476
 msgid "There was an error getting the feed entries. Please try again."
@@ -18172,7 +18174,7 @@ msgstr "WD, DD.MM. HH:MM"
 
 #: fritzcall/src/plugin.py:1130
 msgid "WLAN not active"
-msgstr ""
+msgstr "WLAN neaktyvus"
 
 #: lastfm/src/LastFMConfig.py:48
 msgid "Wait before Screensaver (seconds)"
@@ -20213,7 +20215,7 @@ msgstr "žalia teleteksto nuoroda"
 
 #: fritzcall/src/plugin.py:3352
 msgid "guest "
-msgstr ""
+msgstr "svečias "
 
 #: satloader/src/plugin.py:465
 msgid "has been saved."

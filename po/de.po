@@ -34,6 +34,7 @@ msgstr ""
 "Abbrechen?"
 
 #: audiorestart/src/plugin.py:109 audiosync/src/AC3setup.py:65
+#, fuzzy
 msgid " "
 msgstr " "
 
