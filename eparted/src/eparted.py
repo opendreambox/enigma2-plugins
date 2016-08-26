@@ -18,7 +18,7 @@ from Tools.BoundFunction import boundFunction
 from Tools.LoadPixmap import LoadPixmap
 
 from Tools.Directories import resolveFilename, SCOPE_SKIN
-SkinDefaultPath = resolveFilename(SCOPE_SKIN, "skin_default/")
+SkinDefaultPath = resolveFilename(SCOPE_SKIN, "skin_default/icons/")
 
 from Components.ConfigList import ConfigListScreen
 from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigInteger, ConfigYesNo, ConfigText, ConfigSelection, NoSave
@@ -250,14 +250,14 @@ class Cpart(Screen):
 			<widget name="LabelGreen" position="330,5" size="200,40" valign="center" backgroundColor="background" font="Regular;21" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 			<widget name="LabelBlue" position="610,5" size="200,40" valign="center" backgroundColor="background" font="Regular;21" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 			<eLabel position="10,50" size="800,1" backgroundColor="grey" />
-			<widget source="list" render="Listbox" position="10,60" size="800,300" enableWrapAround="1" scrollbarMode="showOnDemand">
+			<widget source="list" render="Listbox" position="10,60" size="800,240" enableWrapAround="1" scrollbarMode="showOnDemand">
 			<convert type="TemplatedMultiContent">
 				{"template": [
 				MultiContentEntryText(pos = (10,2), size = (60, 30), font=0, flags = RT_HALIGN_LEFT, text=0),
 				MultiContentEntryText(pos = (80,2), size = (170, 30), font=0, flags = RT_HALIGN_LEFT, text=1),
 				MultiContentEntryText(pos = (260,2), size = (170, 30), font=0, flags = RT_HALIGN_LEFT, text=2),
 				MultiContentEntryText(pos = (440,2), size = (170, 30), font=0, flags = RT_HALIGN_LEFT, text=3),
-				MultiContentEntryText(pos = (620,2), size = (190, 30), font=0, flags = RT_HALIGN_LEFT, text=4)
+				MultiContentEntryText(pos = (620,2), size = (180, 30), font=0, flags = RT_HALIGN_LEFT, text=4)
 				],
 				"fonts": [gFont("Regular", 21)],
 				"itemHeight": 30
@@ -495,14 +495,14 @@ class Cpartexe(Screen):
 			<widget name="PixmapButton" pixmaps="skin_default/buttons/button_green.png,skin_default/buttons/button_off.png" position="10,12" size="25,25" alphatest="on" />
 			<widget name="LabelButton" position="50,5" size="200,40" valign="center" backgroundColor="background" font="Regular;21" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 			<eLabel position="10,50" size="800,1" backgroundColor="grey" />
-			<widget source="list" render="Listbox" position="10,60" size="800,304" enableWrapAround="1" scrollbarMode="showOnDemand">
+			<widget source="list" render="Listbox" position="10,60" size="800,252" enableWrapAround="1" scrollbarMode="showOnDemand">
 			<convert type="TemplatedMultiContent">
 				{"template": [
-				MultiContentEntryText(pos = (40,5), size = (760, 30), font=0, flags = RT_HALIGN_LEFT, text=0),
-				MultiContentEntryPixmapAlphaTest(pos = (5, 5), size = (35,35), png=1),
+				MultiContentEntryText(pos = (40,0), size = (760,36), font=0, flags=RT_HALIGN_LEFT | RT_VALIGN_CENTER, text=0),
+				MultiContentEntryPixmapAlphaTest(pos = (2,2), size = (32,32), png=1),
 				],
 				"fonts": [gFont("Regular", 21)],
-				"itemHeight": 38
+				"itemHeight": 36
 				}
 			</convert>
 			</widget>
@@ -568,9 +568,9 @@ class Cpartexe(Screen):
 	def __exeList(self):
 		if len(self["list"].list) > self.__state and self.__state > -1:
 			res = myExecute(self["list"].list[self.__state][2], self.session)
-			pic = "test_false.png"
+			pic = "redx.png"
 			if res == 0:
-				pic = "test_true.png"
+				pic = "selectioncross.png"
 
 			self["list"].list[self.__state] = (self["list"].list[self.__state][0], LoadPixmap(path=SkinDefaultPath + pic), self["list"].list[self.__state][2], self["list"].list[self.__state][2])
 			self["list"].updateList(self["list"].list)
