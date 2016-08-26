@@ -5,8 +5,6 @@ from ServiceReference import ServiceReference
 from Tools.Directories import resolveFilename, SCOPE_HDD
 from Tools.FuzzyDate import FuzzyTime
 
-from os import stat as os_stat
-
 class Movie(Source):
 	LIST = 0
 	DEL = 1
@@ -197,7 +195,7 @@ class Movie(Source):
 				info.getInfoString(serviceref, iServiceInformation.sTags),
 				ext,
 				filename,
-				info.getInfo(serviceref, iServiceInformation.sFileSize),
+				info.getInfoObject(serviceref, iServiceInformation.sFileSize),
 			))
 		return lst
 
