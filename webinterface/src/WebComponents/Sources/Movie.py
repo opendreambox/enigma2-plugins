@@ -183,7 +183,7 @@ class Movie(Source):
 			event = info.getEvent(serviceref)
 			ext = event and event.getExtendedDescription() or ""
 
-			filename = "/" + "/".join(serviceref.toString().split("/")[1:])
+			filename = "/%s" %(serviceref.getPath(),)
 			servicename = ServiceReference(serviceref).getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
 
 			append((
@@ -197,7 +197,7 @@ class Movie(Source):
 				info.getInfoString(serviceref, iServiceInformation.sTags),
 				ext,
 				filename,
-				os_stat(filename)[6]
+				info.getInfo(serviceref, iServiceInformation.sFileSize),
 			))
 		return lst
 
