@@ -586,6 +586,7 @@ var RemoteControl = Class.create({
 			case 'dm7080':
 			case 'dm820':
 			case 'dm525':
+			case 'dm520':
 				tpl = 'tplWebRemoteRC10';
 				break;
 			default:
