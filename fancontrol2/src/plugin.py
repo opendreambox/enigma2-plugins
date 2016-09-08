@@ -290,16 +290,16 @@ class ControllerPI:
 		return self.ControlSignal
 # the PI controller class -end
 
-class FanControl2Test(ConfigListScreen,Screen):
+class FanControl2Test(Screen):
 	skin = """
-		<screen position="center,center" size="630,300" title="Fan Control 2 - Test" >
-			<widget source="TextTest1" render="Label" position="5,20" size="620,30" zPosition="10" font="Regular;20" halign="left" valign="center" backgroundColor="#25062748" transparent="1" />
-			<widget source="TextTest2" render="Label" position="5,50" size="620,30" zPosition="10" font="Regular;20" halign="left" valign="center" backgroundColor="#25062748" transparent="1" />
-			<widget source="TextTest3" render="Label" position="5,80" size="620,30" zPosition="10" font="Regular;20" halign="left" valign="center" backgroundColor="#25062748" transparent="1" />
-			<widget source="TextTest4" render="Label" position="5,130" size="620,30" zPosition="10" font="Regular;20" halign="left" valign="center" backgroundColor="#25062748" transparent="1" />
-			<widget source="TextTest5" render="Label" position="5,160" size="620,30" zPosition="10" font="Regular;20" halign="left" valign="center" backgroundColor="#25062748" transparent="1" />
-			<widget source="TextTest6" render="Label" position="5,190" size="620,30" zPosition="10" font="Regular;20" halign="left" valign="center" backgroundColor="#25062748" transparent="1" />
-			<widget source="TextTest7" render="Label" position="5,220" size="620,30" zPosition="10" font="Regular;20" halign="left" valign="center" backgroundColor="#25062748" transparent="1" />
+		<screen position="center,center" size="620,300" title="Fan Control 2 - Test" >
+			<widget source="TextTest1" render="Label" position="5,20" size="610,30" zPosition="10" font="Regular;20" halign="left" valign="center" backgroundColor="#25062748" transparent="1" />
+			<widget source="TextTest2" render="Label" position="5,50" size="610,30" zPosition="10" font="Regular;20" halign="left" valign="center" backgroundColor="#25062748" transparent="1" />
+			<widget source="TextTest3" render="Label" position="5,80" size="610,30" zPosition="10" font="Regular;20" halign="left" valign="center" backgroundColor="#25062748" transparent="1" />
+			<widget source="TextTest4" render="Label" position="5,130" size="610,30" zPosition="10" font="Regular;20" halign="left" valign="center" backgroundColor="#25062748" transparent="1" />
+			<widget source="TextTest5" render="Label" position="5,160" size="610,30" zPosition="10" font="Regular;20" halign="left" valign="center" backgroundColor="#25062748" transparent="1" />
+			<widget source="TextTest6" render="Label" position="5,190" size="610,30" zPosition="10" font="Regular;20" halign="left" valign="center" backgroundColor="#25062748" transparent="1" />
+			<widget source="TextTest7" render="Label" position="5,220" size="610,30" zPosition="10" font="Regular;20" halign="left" valign="center" backgroundColor="#25062748" transparent="1" />
 		</screen>"""
 
 
@@ -419,9 +419,9 @@ class FanControl2Test(ConfigListScreen,Screen):
 	def cancel(self):
 		self.close(False,self.session)
 
-class FanControl2Monitor(Screen, ConfigListScreen):
+class FanControl2Monitor(Screen):
 	skin = """
-		<screen position="center,center" size="600,260" title="Fan Control 2 - Monitor">
+		<screen position="center,center" size="620,300" title="Fan Control 2 - Monitor">
 
 			<widget source="TxtTemp0" render="Label" position="5,30" size="250,25" zPosition="1" font="Regular;17" halign="right" valign="center" backgroundColor="#25062748" transparent="1" />
 			<widget source="TxtTemp1" render="Label" position="5,50" size="250,25" zPosition="1" font="Regular;17" halign="right" valign="center" backgroundColor="#25062748" transparent="1" />
@@ -510,8 +510,8 @@ class FanControl2Monitor(Screen, ConfigListScreen):
 
 class FanControl2SpezialSetup(Screen, ConfigListScreen):
 	skin = """
-		<screen position="center,center" size="600,380" title="Fan Control 2 - Setup" >
-			<widget name="config" position="10,20" size="580,350" scrollbarMode="showOnDemand" />
+		<screen position="center,120" size="820,520" title="Fan Control 2 - Setup" >
+			<widget name="config" position="10,10" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 
 	def __init__(self, session, args = None):
@@ -614,36 +614,35 @@ class FanControl2SpezialSetup(Screen, ConfigListScreen):
 
 class FanControl2Plugin(ConfigListScreen,Screen):
 	skin = """
-		<screen position="center,center" size="600,450" title="Fan Control 2">
-			<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/blue.png" position="420,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/key_info.png" position="560,0" zPosition="4" size="35,25"  transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/key_menu.png" position="560,20" zPosition="4" size="35,25"  transparent="1" alphatest="on" />
-			<widget source="red" render="Label" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-			<widget source="green" render="Label" position="140,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget source="yellow" render="Label" position="280,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
-			<widget source="blue" render="Label" position="420,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
-			<widget source="Version" render="Label" position="5,430" size="60,20" zPosition="1" font="Regular;11" halign="left" valign="center" backgroundColor="#25062748" transparent="1" />
-
-			<widget name="config" position="10,50" size="580,200" scrollbarMode="showOnDemand" />
-			<ePixmap position="20,260" size="560,3" pixmap="skin_default/div-h.png" transparent="1" alphatest="on" />
-			<widget source="introduction" render="Label" position="5,262" size="580,30" zPosition="10" font="Regular;21" halign="center" valign="center" backgroundColor="#25062748" transparent="1" />
-			<ePixmap position="20,290" size="560,3" pixmap="skin_default/div-h.png" transparent="1" alphatest="on" />
-			<widget source="TxtTemp" render="Label" position="5,310" size="200,25" zPosition="1" font="Regular;17" halign="right" valign="center" backgroundColor="#25062748" transparent="1" />
-			<widget source="TxtZielRPM" render="Label" position="5,330" size="200,25" zPosition="1" font="Regular;17" halign="right" valign="center" backgroundColor="#25062748" transparent="1" />
-			<widget source="TxtRPM" render="Label" position="5,350" size="200,25" zPosition="1" font="Regular;17" halign="right" valign="center" backgroundColor="#25062748" transparent="1" />
-			<widget source="TxtVLT" render="Label" position="5,370" size="200,25" zPosition="1" font="Regular;17" halign="right" valign="center" backgroundColor="#25062748" transparent="1" />
-			<widget source="TxtPWM" render="Label" position="5,390" size="200,25" zPosition="1" font="Regular;17" halign="right" valign="center" backgroundColor="#25062748" transparent="1" />
-			<widget source="PixTemp" render="Progress" position="210,320" size="375,5" borderWidth="1" />
-			<widget source="PixZielRPM" render="Progress" position="210,340" size="375,5" borderWidth="1" />
-			<widget source="PixRPM" render="Progress" position="210,360" size="375,5" borderWidth="1" />
-			<widget source="PixVLT" render="Progress" position="210,380" size="375,5" borderWidth="1" />
-			<widget source="PixPWM" render="Progress" position="210,400" size="375,5" borderWidth="1" />
-			<widget source="TxtERR" render="Label" position="5,410" size="200,25" zPosition="1" font="Regular;17" halign="right" valign="center" backgroundColor="#25062748" transparent="1" />
-			<widget source="PixERR" render="Progress" position="210,420" size="375,5" borderWidth="1" />
-			<widget source="T10ERR" render="Label" position="570,422" size="40,20" zPosition="1" font="Regular;11" halign="left" valign="center" backgroundColor="#25062748" transparent="1" />
+		<screen position="center,120" size="820,520" title="Fan Control 2">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on" />
+			<widget source="red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget source="green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget source="yellow" render="Label" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget source="blue" render="Label" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+			<widget name="config" position="10,60" size="800,240" enableWrapAround="1" scrollbarMode="showOnDemand" />
+			<eLabel position="10,310" size="800,1" backgroundColor="grey" />
+			<widget source="introduction" render="Label" position="10,320" size="800,30" font="Regular;21" halign="center"/>
+			<widget source="TxtTemp" render="Label" position="20,360" size="200,25" font="Regular;17" halign="right" valign="center" />
+			<widget source="TxtZielRPM" render="Label" position="20,380" size="200,25" font="Regular;17" halign="right" valign="center" />
+			<widget source="TxtRPM" render="Label" position="20,400" size="200,25" font="Regular;17" halign="right" valign="center" />
+			<widget source="TxtVLT" render="Label" position="20,420" size="200,25" font="Regular;17" halign="right" valign="center" />
+			<widget source="TxtPWM" render="Label" position="20,440" size="200,25" font="Regular;17" halign="right" valign="center" />
+			<widget source="PixTemp" render="Progress" position="230,370" size="400,5" borderWidth="1" />
+			<widget source="PixZielRPM" render="Progress" position="230,390" size="400,5" borderWidth="1" />
+			<widget source="PixRPM" render="Progress" position="230,410" size="400,5" borderWidth="1" />
+			<widget source="PixVLT" render="Progress" position="230,430" size="400,5" borderWidth="1" />
+			<widget source="PixPWM" render="Progress" position="230,450" size="400,5" borderWidth="1" />
+			<widget source="TxtERR" render="Label" position="20,460" size="200,25" font="Regular;17" halign="right" valign="center" />
+			<widget source="PixERR" render="Progress" position="230,470" size="400,5" borderWidth="1" />
+			<widget source="T10ERR" render="Label" position="650,472" size="40,20" font="Regular;11" halign="left" valign="center" />
+			<widget source="Version" render="Label" position="10,490" size="100,22" font="Regular;18" />
+			<ePixmap pixmap="skin_default/buttons/key_info.png" position="720,490" size="40,20" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/key_menu.png" position="770,490" size="40,20" alphatest="on" />
 		</screen>"""
 
 	def __init__(self, session, args = 0):
