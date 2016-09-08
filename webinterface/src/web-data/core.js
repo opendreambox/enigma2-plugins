@@ -580,17 +580,8 @@ var RemoteControl = Class.create({
 			case 'dm8000':
 				tpl = 'tplWebRemote';
 				break;
-			case 'dm7020hd':
-			case 'dm800sev2':
-			case 'dm500hdv2':
-			case 'dm7080':
-			case 'dm820':
-			case 'dm525':
-			case 'dm520':
-				tpl = 'tplWebRemoteRC10';
-				break;
 			default:
-				tpl = 'tplWebRemoteOld';
+				tpl = 'tplWebRemoteRC10';
 			}
 			templateEngine.process(tpl, null, function(html){
 				this.eventsregistered = false;
