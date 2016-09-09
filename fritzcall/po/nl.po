@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-06 16:19+0200\n"
+"POT-Creation-Date: 2016-09-09 14:16+0200\n"
 "PO-Revision-Date: 2009-06-04 20:19+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
@@ -644,6 +644,9 @@ msgstr "Mailbox Aan/Uit"
 msgid "UNKNOWN"
 msgstr "ONBEKEND"
 
+msgid "Update available"
+msgstr ""
+
 msgid "Use internal PhoneBook"
 msgstr "Gebruik het interne telefoonboek"
 
@@ -676,6 +679,9 @@ msgid "before 05.27"
 msgstr ""
 
 msgid "call redirections active"
+msgstr ""
+
+msgid "calls in mailbox"
 msgstr ""
 
 #, fuzzy

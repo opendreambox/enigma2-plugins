@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2  - FRITZ!Box\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-06 16:19+0200\n"
+"POT-Creation-Date: 2016-09-09 14:16+0200\n"
 "PO-Revision-Date: 2015-04-14 23:22+0200\n"
 "Last-Translator: Spaeleus <spaeleus@croci.org>\n"
 "Language-Team: www.linsat.net <spaeleus@croci.org>\n"
@@ -667,6 +667,9 @@ msgstr "Comm. tutte le caselle"
 msgid "UNKNOWN"
 msgstr "SCONOSCIUTO"
 
+msgid "Update available"
+msgstr ""
+
 msgid "Use internal PhoneBook"
 msgstr "Usare la rubrica interna"
 
@@ -698,6 +701,9 @@ msgstr "anteriore a 05.27"
 
 msgid "call redirections active"
 msgstr "deviazione chiamate attiva"
+
+msgid "calls in mailbox"
+msgstr ""
 
 msgid "devices active"
 msgstr "Dispositivi attivi"
