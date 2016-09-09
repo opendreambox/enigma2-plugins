@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1372 $
-$Date: 2016-08-12 18:20:11 +0200 (Fri, 12 Aug 2016) $
-$Id: FritzCallFBF.py 1372 2016-08-12 16:20:11Z michael $
+$Revision: 1380 $
+$Date: 2016-09-09 14:14:14 +0200 (Fri, 09 Sep 2016) $
+$Id: FritzCallFBF.py 1380 2016-09-09 12:14:14Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -3130,12 +3130,24 @@ class FritzCallFBF_06_35(object):
 
 		fritzOs = boxData["fritzos"]
 		if fritzOs["Productname"]:
-			if fritzOs["fb_name"]:
-				boxInfo = fritzOs["Productname"] + " (" + fritzOs["fb_name"] + ")"
-			else:
-				boxInfo = fritzOs["Productname"]
+			boxInfo = fritzOs["Productname"]
 			if fritzOs["nspver"]:
-				boxInfo = boxInfo + "\n" + fritzOs["nspver"]
+				boxInfo = boxInfo + " FRITZ!OS: " + fritzOs["nspver"]
+			if fritzOs["isLabor"] and fritzOs["isLabor"] == "true":
+				boxInfo = boxInfo + " Labor"
+			if fritzOs["isUpdateAvail"]:
+				boxInfo = boxInfo + " (" + _("Update available") + ")"
+
+			boxInfo1 = ""
+			if fritzOs["fb_name"]:
+				boxInfo1 = "Name: " + fritzOs["fb_name"]
+			if boxData["fonnum"] and boxData["fonnum"]["txt"]:
+				boxInfo1 = boxInfo1 + (", " if boxInfo1 else "") + boxData["fonnum"]["txt"]
+			if boxData["tamcalls"] and boxData["tamcalls"]["count"]:
+				boxInfo1 = boxInfo1 + (", " if boxInfo1 else "") + str(boxData["tamcalls"]["count"]) + " " + _("calls in mailbox")
+			if boxInfo1:
+				boxInfo = boxInfo + "\n" + boxInfo1
+
 		boxInfo = boxInfo.encode("utf-8")
 
 		self.info("Boxinfo: " + repr(boxInfo))
@@ -3173,9 +3185,9 @@ class FritzCallFBF_06_35(object):
 				if found:
 					ipAddress6 = found.group(1).encode("utf-8")
 
-			self.info("upTime6: " + repr(upTime))
-			self.info("provider6: " + repr(provider))
-			self.info("ipAddress6: " + repr(ipAddress))
+			self.info("upTime6: " + repr(upTime6))
+			self.info("provider6: " + repr(provider6))
+			self.info("ipAddress6: " + repr(ipAddress6))
 
 			if upTime6:
 				if upTime and upTime.find(upTime6) == -1:

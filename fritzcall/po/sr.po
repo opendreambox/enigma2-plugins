@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enigma2 FritzCall Plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-06 16:19+0200\n"
+"POT-Creation-Date: 2016-09-09 14:16+0200\n"
 "PO-Revision-Date: 2009-09-10 22:47+0100\n"
 "Last-Translator: maja <jovanovic@gmx.ch>\n"
 "Language-Team: veselin & majevica CRNABERZA <jovanovic@gmx.ch>\n"
@@ -642,6 +642,9 @@ msgstr "Prebaci sve pošt. sand."
 msgid "UNKNOWN"
 msgstr "NEPOZNATO"
 
+msgid "Update available"
+msgstr ""
+
 msgid "Use internal PhoneBook"
 msgstr "Koristi interni tel. imenik"
 
@@ -673,6 +676,9 @@ msgstr ""
 
 msgid "call redirections active"
 msgstr "Preusmerenje poziva aktivno"
+
+msgid "calls in mailbox"
+msgstr ""
 
 msgid "devices active"
 msgstr "Aktivni uređaji"

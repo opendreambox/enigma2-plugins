@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-06 16:21+0200\n"
+"POT-Creation-Date: 2016-09-09 14:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -629,6 +629,9 @@ msgstr ""
 msgid "UNKNOWN"
 msgstr ""
 
+msgid "Update available"
+msgstr ""
+
 msgid "Use internal PhoneBook"
 msgstr ""
 
@@ -655,6 +658,9 @@ msgid "before 05.27"
 msgstr ""
 
 msgid "call redirections active"
+msgstr ""
+
+msgid "calls in mailbox"
 msgstr ""
 
 msgid "devices active"
