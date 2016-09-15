@@ -44,6 +44,7 @@ class TrackAutoselector(object):
 
 	def __initializeVars(self):
 		self.audiostreams = []
+		self.primary_audio_matched = False
 		self._stype = None
 
 	def __serviceStopped(self):
