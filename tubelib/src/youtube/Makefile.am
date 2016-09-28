@@ -10,4 +10,5 @@ install_PYTHON = \
 	VideoCategories.py \
 	Videos.py \
 	YoutubeAuth.py \
-	YoutubeQueryBase.py
+	YoutubeQueryBase.py \
+	YoutubeUriResolver.py
