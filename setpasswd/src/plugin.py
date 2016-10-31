@@ -26,18 +26,18 @@ title=_("Change Root Password")
 
 class ChangePasswdScreen(Screen):
 	skin = """
-		<screen position="65,160" size="585,250" title="%s" >
-		<widget name="passwd" position="10,10" size="565,200" scrollbarMode="showOnDemand" />
-		<ePixmap pixmap="skin_default/div-h.png" position="10,205" size="565,2" transparent="1" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/red.png" position="5,210" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/green.png" position="150,210" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/yellow.png" position="295,210" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/blue.png" position="440,210" size="140,40" alphatest="on" />
-		<widget source="key_red" render="Label" position="5,210" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-		<widget source="key_green" render="Label" position="150,210" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-		<widget source="key_yellow" render="Label" position="295,210" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-		<widget source="key_blue" render="Label" position="440,210" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-	</screen>""" % title
+	<screen name="ChangePasswdScreen" position="center,center" size="820,100" title="Change Root Password" >
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on" />
+		<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<widget source="key_yellow" render="Label" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<widget source="key_blue" render="Label" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+		<widget name="passwd" position="10,60" size="820,45" scrollbarMode="showOnDemand" />
+	</screen>"""
 
 	def __init__(self, session, args = 0):
 		Screen.__init__(self, session)
