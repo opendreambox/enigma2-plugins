@@ -2742,7 +2742,7 @@ msgstr "Ändere Position der Filmlistenvorschau"
 
 #: setpasswd/src/plugin.py:25
 msgid "Change Root Password"
-msgstr "Root Passwort aendern"
+msgstr "Root Passwort ändern"
 
 #: audiosync/src/AC3main.py:76 audiosync/src/AC3main.py:77
 msgid "Change active delay"
@@ -2758,7 +2758,7 @@ msgstr "Netzwerkname ändern"
 
 #: setpasswd/src/plugin.py:130
 msgid "Change or reset the root password of your dreambox"
-msgstr "Aendern oder resetten sie das RootPasswort ihrer Dreambox"
+msgstr "Das root-Passwort Ihrer Dreambox ändern oder zurücksetzen"
 
 #: birthdayreminder/src/BirthdayReminder.py:646
 msgid "Change path"
@@ -15547,7 +15547,7 @@ msgstr "Erfolgreich umbenannt"
 
 #: setpasswd/src/plugin.py:88
 msgid "Sucessfully changed password for root user to: "
-msgstr "Passwort fuer root wurde erfolgreich geaendert auf: "
+msgstr "Das Passwort für root wurde erfolgreich geändert auf: "
 
 #: youtubeplayer/src/YouTubeSearchDialog.py:202
 msgid "Sudanese"
