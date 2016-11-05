@@ -535,12 +535,6 @@ remotetimer/Makefile
 remotetimer/meta/Makefile
 remotetimer/src/Makefile
 
-rsdownloader/Makefile
-rsdownloader/meta/Makefile
-rsdownloader/po/Makefile
-rsdownloader/src/Makefile
-rsdownloader/src/container/Makefile
-
 satipclient/Makefile
 satipclient/meta/Makefile
 satipclient/src/Makefile
