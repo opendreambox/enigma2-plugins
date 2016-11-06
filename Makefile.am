@@ -77,7 +77,6 @@ SUBDIRS = \
 	orfat \
 	orfteletext \
 	partnerbox \
-	passwordchanger \
 	permanentclock \
 	permanenttimeshift \
 	pipservicerelation \
