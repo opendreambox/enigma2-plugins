@@ -91,7 +91,6 @@ SUBDIRS = \
 	reconstructapsc \
 	reftopiconname \
 	remotetimer \
-	rsdownloader \
 	satipclient \
 	satloader \
 	seekbar \
