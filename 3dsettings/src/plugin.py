@@ -59,7 +59,9 @@ def toggleDisplay(configElement):
 	elif (config.plugins.threed.disableDisplay.value == True) and (getmode() != THREE_D_OFF): # turn display off
 		print "[3D Settings] turning display off"
 		LCD().setBright(0)
-	eDBoxLCD.getInstance().update()
+	disp = eDBoxLCD.getInstance()
+	if disp: # display found
+		disp.update()
 
 def leaveStandby():
 	toggleDisplay(config.plugins.threed.toggleState)
@@ -80,7 +82,8 @@ def switchmode(mode):
 		print "[3D Settings] switching to mode ", mode
 		open("/proc/stb/fb/primary/3d", "w").write(modes[mode])
 		AutoThreeD.instance.setLastMode(mode)
-		if eDBoxLCD.getInstance().detected(): # display found, update it
+		disp = eDBoxLCD.getInstance()
+		if disp and disp.detected(): # display found, update it
 			config.plugins.threed.toggleState.setValue(getmode() != THREE_D_OFF)
 			toggleDisplay(config.plugins.threed.toggleState)
 
@@ -107,8 +110,8 @@ class AutoThreeD(Screen):
 		self.lastmode = getmode()
 		assert not AutoThreeD.instance, "only one AutoThreeD instance is allowed!"
 		AutoThreeD.instance = self # set instance
-		
-		if eDBoxLCD.getInstance().detected(): # display found
+		disp = eDBoxLCD.getInstance()
+		if disp and disp.detected(): # display found
 			from Components.config import NoSave
 			config.plugins.threed.disableDisplay = ConfigYesNo(default = False)
 			config.plugins.threed.disableDisplay.addNotifier(toggleDisplay, initial_call = False)
@@ -207,7 +210,8 @@ class ThreeDSettings(Screen, ConfigListScreen):
 		self.list.append(getConfigListEntry(_("Show side by side option in extension menu"), config.plugins.threed.showSBSmenu))
 		self.list.append(getConfigListEntry(_("Show top/bottom option in extension menu"), config.plugins.threed.showTBmenu))
 		self.list.append(getConfigListEntry(_("Switch OSD automatically"), config.plugins.threed.autothreed))
-		if eDBoxLCD.getInstance().detected(): # display found
+		disp = eDBoxLCD.getInstance()
+		if disp and disp.detected(): # display found
 			self.list.append(getConfigListEntry(_("Turn off display"), config.plugins.threed.disableDisplay))
 		currentmode = getmode()
 		if currentmode in [THREE_D_SIDE_BY_SIDE, THREE_D_TOP_BOTTOM]:
