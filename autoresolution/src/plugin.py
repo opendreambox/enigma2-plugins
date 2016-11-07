@@ -26,7 +26,9 @@ resolutions = (('sd_i_50', (_("SD 25/50HZ Interlace Mode"))), ('sd_i_60', (_("SD
 			('sd_p_50', (_("SD 25/50HZ Progressive Mode"))), ('sd_p_60', (_("SD 30/60HZ Progressive Mode"))), \
 			('hd_i', (_("HD Interlace Mode"))), ('hd_p', (_("HD Progressive Mode"))), \
 			('p720_24', (_("Enable 720p24 Mode"))), ('p1080_24', (_("Enable 1080p24 Mode"))), \
-			('p1080_25', (_("Enable 1080p25 Mode"))), ('p1080_30', (_("Enable 1080p30 Mode"))))
+			('p1080_25', (_("Enable 1080p25 Mode"))), ('p1080_30', (_("Enable 1080p30 Mode"))), \
+			('uhd_p', (_("UHD Progressive Mode"))), ('p2160_24', (_("Enable 2160p24 Mode"))), \
+			('p2160_25', (_("Enable 2160p25 Mode"))), ('p2160_30', (_("Enable 2160p30 Mode"))))
 
 config.plugins.autoresolution = ConfigSubsection()
 config.plugins.autoresolution.enable = ConfigYesNo(default = False)
@@ -87,6 +89,8 @@ class AutoRes(Screen):
 			config.av.videorate["1080i"].addNotifier(self.__videorate_1080i_changed, initial_call = False, immediate_feedback = False)
 		if "1080p" in config.av.videorate:
 			config.av.videorate["1080p"].addNotifier(self.__videorate_1080p_changed, initial_call = False, immediate_feedback = False)
+		if "2160p" in config.av.videorate:
+			config.av.videorate["2160p"].addNotifier(self.__videorate_2160p_changed, initial_call = False, immediate_feedback = False)
 
 	def __videorate_720p_changed(self, configEntry):
 		if self.lastmode == "720p":
@@ -98,6 +102,10 @@ class AutoRes(Screen):
 
 	def __videorate_1080p_changed(self, configEntry):
 		if self.lastmode == "1080p":
+			self.changeVideomode()
+
+	def __videorate_2160p_changed(self, configEntry):
+		if self.lastmode == "2160p":
 			self.changeVideomode()
 
 	def __evStart(self):
@@ -135,7 +143,9 @@ class AutoRes(Screen):
 			videoresolution_dictionary = {}
 			config.plugins.autoresolution.videoresolution = ConfigSubDict()
 			for mode in resolutions:
-				if mode[0].startswith('p1080'):
+				if mode[0].startswith('p2160'):
+					choices = ['2160p24', '2160p25', '2160p30'] + preferedmodes
+				elif mode[0].startswith('p1080'):
 					choices = ['1080p24', '1080p25', '1080p30'] + preferedmodes
 				elif mode[0] == 'p720_24':
 					choices = ['720p24', '1080p24'] + preferedmodes
@@ -190,7 +200,12 @@ class AutoRes(Screen):
 
 				prog = progressive == 1 and 'p' or 'i'
 
-				if (height >= 900 or width >= 1600) and frate in ('24', '25', '30') and prog == 'p': 	# 1080p content
+				if (height >= 1800 or width >= 3200) and prog == 'p': 	# 2160p content
+					if frate in ('24', '25', '30') and prog == 'p':
+						new_mode = 'p2160_%s' % frate
+					else:
+						new_mode = 'uhd_p'
+				elif (height >= 900 or width >= 1600) and frate in ('24', '25', '30') and prog == 'p': 	# 1080p content
 					new_mode = 'p1080_%s' % frate
 				elif (height > 576 or width > 720) and frate == '24' and prog == 'p': 		# 720p24 detection
 					new_mode = 'p720_24'
@@ -222,7 +237,7 @@ class AutoRes(Screen):
 	def changeVideomode(self):
 		if usable:
 			mode = self.lastmode
-			if mode.find("1080p30") != -1 or mode.find("1080p24") != -1 or mode.find("1080p25") != -1 or mode.find("720p24") != -1:
+			if mode.find("0p30") != -1 or mode.find("0p24") != -1 or mode.find("0p25") != -1:
 				print "[AutoRes] switching to", mode
 				v = open('/proc/stb/video/videomode' , "w")
 				v.write("%s\n" % mode)
@@ -253,9 +268,10 @@ class AutoRes(Screen):
 
 	def setMode(self, mode, set=True):
 		rate = config.av.videorate[mode].value
-		resolutionlabel["restxt"].setText("Videomode: %s %s %s" % (port, mode, rate))
+		port_txt = "HDMI" if port == "DVI" else port
+		resolutionlabel["restxt"].setText("Videomode: %s %s %s" % (port_txt, mode, rate))
 		if set:
-			print "[AutoRes] switching to %s %s %s" % (port, mode, rate)
+			print "[AutoRes] switching to %s %s %s" % (port_txt, mode, rate)
 			if config.plugins.autoresolution.showinfo.value:
 				resolutionlabel.show()
 			video_hw.setMode(port, mode, rate)
@@ -326,12 +342,20 @@ class AutoResSetupMenu(Screen, ConfigListScreen):
 		self.list = [ getConfigListEntry(_("Enable Autoresolution"), config.plugins.autoresolution.enable) ]
 		if config.plugins.autoresolution.enable.value:
 			if usable:
+				have_1080p = config.av.videorate.get("1080p", False)
+				have_2160p = config.av.videorate.get("2160p", False)
 				for mode, label in resolutions:
-					self.list.append(getConfigListEntry(label, videoresolution_dictionary[mode]))
+					if not mode.startswith("2160p") or have_2160p:
+						self.list.append(getConfigListEntry(label, videoresolution_dictionary[mode]))
 				self.list.extend((
 					getConfigListEntry(_("Refresh Rate")+" 720p", config.av.videorate["720p"]),
-					getConfigListEntry(_("Refresh Rate")+" 1080i", config.av.videorate["1080i"]),
-					getConfigListEntry(_("Refresh Rate")+" 1080p", config.av.videorate["1080p"]),
+					getConfigListEntry(_("Refresh Rate")+" 1080i", config.av.videorate["1080i"])
+				))
+				if have_1080p:
+					self.list.append(getConfigListEntry(_("Refresh Rate")+" 1080p", config.av.videorate["1080p"]))
+				if have_2160p:
+					self.list.append(getConfigListEntry(_("Refresh Rate")+" 2160p", config.av.videorate["2160p"]))
+				self.list.extend((
 					getConfigListEntry(_("Show info screen"), config.plugins.autoresolution.showinfo),
 					getConfigListEntry(_("Delay x seconds after service started"), config.plugins.autoresolution.delay_switch_mode),
 					getConfigListEntry(_("Running in testmode"), config.plugins.autoresolution.testmode),
