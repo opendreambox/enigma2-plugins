@@ -11,6 +11,7 @@ from Components.config import config
 from Tools.LoadPixmap import LoadPixmap
 from Components.UsageConfig import preferredPath, defaultMoviePath
 from enigma import eEnv
+from glob import glob
 import copy
 import os.path
 
@@ -371,7 +372,16 @@ class MovieList(GUIComponent):
 			info = self.serviceHandler.info(serviceref)
 			if info is None:
 				continue
-			begin = info.getInfo(serviceref, iServiceInformation.sTimeCreate)
+			txt = info.getName(serviceref)
+			if serviceref.flags & eServiceReference.mustDescent:
+				files = glob(os.path.join(txt, "*.ts"))
+				# skip empty directories
+				if not files:
+					continue
+				# use mtime of latest recording
+				begin = sorted((os.path.getmtime(x) for x in files))[-1]
+			else:
+				begin = info.getInfo(serviceref, iServiceInformation.sTimeCreate)
 			this_tags = info.getInfoString(serviceref, iServiceInformation.sTags).split(' ')
 
 			# convert space-seperated list of tags into a set
@@ -386,7 +396,6 @@ class MovieList(GUIComponent):
 			if filter_tags is not None and not this_tags.issuperset(filter_tags):
 				continue
 
-			txt = info.getName(serviceref)
 			service = ServiceReference(info.getInfoString(serviceref, iServiceInformation.sServiceref)).getServiceName()	# Sender
 			description = info.getInfoString(serviceref, iServiceInformation.sDescription)
 			tinfo = [type, pixmap, txt, description, service, -1]
