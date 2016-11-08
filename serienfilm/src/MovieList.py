@@ -357,6 +357,9 @@ class MovieList(GUIComponent):
 			return
 		tags = set()
 
+		rootinfo = self.serviceHandler.info(root)
+		pwd = rootinfo and rootinfo.getName(root)
+
 		while 1:
 			serviceref = list.getNext()
 			if not serviceref.valid():
@@ -380,6 +383,10 @@ class MovieList(GUIComponent):
 					continue
 				# use mtime of latest recording
 				begin = sorted((os.path.getmtime(x) for x in files))[-1]
+				if pwd and txt.startswith(pwd):
+					txt = txt[len(pwd):]
+				if txt.endswith(os.path.sep):
+					txt = txt[:-len(os.path.sep)]
 			else:
 				begin = info.getInfo(serviceref, iServiceInformation.sTimeCreate)
 			this_tags = info.getInfoString(serviceref, iServiceInformation.sTags).split(' ')
