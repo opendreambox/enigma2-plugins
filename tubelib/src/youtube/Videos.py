@@ -231,13 +231,16 @@ class VideoUrlRequest(object):
 			self._onResult(True, url, format)
 		except Exception as e:
 			Log.w(e)
-			self._onResult(False, None)
+			self._onResult(False, None, -1)
 
 	def _onResult(self, success, url, format):
 		if self._canceled:
 			return
 		for callback in self._callbacks:
-			reactor.callFromThread(callback, url, format)
+			if self._async:
+				reactor.callFromThread(callback, url, format)
+			else:
+				callback(url, format)
 
 	def cancel(self):
 		self._canceled = True
