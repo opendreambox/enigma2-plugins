@@ -36,7 +36,7 @@ class ChangePasswdScreen(Screen):
 		<widget source="key_yellow" render="Label" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
 		<widget source="key_blue" render="Label" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
 		<eLabel position="10,50" size="800,1" backgroundColor="grey" />
-		<widget name="passwd" position="10,60" size="820,45" scrollbarMode="showOnDemand" />
+		<widget name="passwd" position="10,60" size="800,45" scrollbarMode="showOnDemand" />
 	</screen>"""
 
 	def __init__(self, session, args = 0):
