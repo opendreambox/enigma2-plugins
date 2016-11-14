@@ -161,6 +161,9 @@ class Timer(Source):
 			return ( False, "Unknown command: '%s'" % param['command'] )
 
 	def recordNow(self, param):
+		if not config.misc.recording_allowed.value:
+			return (False, _("Recording is currently disabled!"))
+
 		limitEvent = True
 		if param == "undefinitely" or param == "infinite":
 			ret = (True, "Infinite Instant recording started")
@@ -287,6 +290,9 @@ class Timer(Source):
 			if param['justplay'] == "1":
 				justplay = True
 
+		if not justplay and not config.misc.recording_allowed.value:
+			return (False, _("Recording is currently disabled!"))
+
 		afterEvent = 3 #Default to Afterevent: Auto
 		if 'afterevent' in param:
 			if (param['afterevent'] == "0") or (param['afterevent'] == "1") or (param['afterevent'] == "2"):
@@ -411,6 +417,9 @@ class Timer(Source):
 		if param['justplay'] is not None:
 			if param['justplay'] == "1":
 				justplay = True
+
+		if not justplay and not config.misc.recording_allowed.value:
+			return (False, _("Recording is currently disabled!"))
 
 		location = preferredTimerPath()
 		if 'dirname' in param and param['dirname']:
