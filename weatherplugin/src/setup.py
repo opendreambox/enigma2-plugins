@@ -133,9 +133,9 @@ class MSNWeatherPluginEntriesListConfigScreen(Screen):
 		self.updateList()
 
 class WeatherPluginEntryList(MenuList):
-	SKIN_COMPONENT_KEY = "WeatherPluginList"	
+	SKIN_COMPONENT_KEY = "WeatherPluginList"
 	SKIN_COMPONENT_TEXT_HEIGHT = "textHeight"
-	SKIN_COMPONENT_TEXT_WIDTH = "textWidth"	
+	SKIN_COMPONENT_TEXT_WIDTH = "textWidth"
 	SKIN_COMPONENT_TEXT2_WIDTH = "text2Width"
 	SKIN_COMPONENT_ITEM_MARGIN = "itemMargin"
 
@@ -330,11 +330,11 @@ class MSNWeatherPluginSearch(Screen):
 		
 
 class MSNWeatherPluginSearchResultList(MenuList):
-	SKIN_COMPONENT_KEY = "WeatherPluginList"	
-	SKIN_COMPONENT_TEXT_HEIGHT = "textHeight"	
-	SKIN_COMPONENT_TEXT_HEIGHT = "textHeight"	
+	SKIN_COMPONENT_KEY = "WeatherPluginList"
+	SKIN_COMPONENT_TEXT_HEIGHT = "textHeight"
+	SKIN_COMPONENT_TEXT_WIDTH = "textWidth"
 	SKIN_COMPONENT_LINE_SPACING = "lineSpacing"
-	
+
 	def __init__(self, list, enableWrapAround = True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 		tlf = TemplatedListFonts()
@@ -350,8 +350,8 @@ class MSNWeatherPluginSearchResultList(MenuList):
 	def buildList(self, xml):
 		sizes = componentSizes[MSNWeatherPluginSearchResultList.SKIN_COMPONENT_KEY]
 		textHeight = sizes.get(MSNWeatherPluginSearchResultList.SKIN_COMPONENT_TEXT_HEIGHT, 23)
-		textWidth = sizes.get(WeatherPluginEntryList.SKIN_COMPONENT_TEXT_WIDTH, 500)
-		lineSpacing = sizes.get(MSNWeatherPluginSearchResultList.SKIN_COMPONENT_TEXT_HEIGHT, 2)
+		textWidth = sizes.get(MSNWeatherPluginSearchResultList.SKIN_COMPONENT_TEXT_WIDTH, 500)
+		lineSpacing = sizes.get(MSNWeatherPluginSearchResultList.SKIN_COMPONENT_LINE_SPACING, 2)
 		root = cet_fromstring(xml)
 		searchlocation = ""
 		searchresult = ""
