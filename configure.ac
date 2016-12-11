@@ -465,11 +465,6 @@ partnerbox/src/Makefile
 partnerbox/src/icons/Makefile
 partnerbox/src/servicewebts/Makefile
 
-passwordchanger/Makefile
-passwordchanger/meta/Makefile
-passwordchanger/po/Makefile
-passwordchanger/src/Makefile
-
 permanentclock/Makefile
 permanentclock/meta/Makefile
 permanentclock/po/Makefile
@@ -539,12 +534,6 @@ reftopiconname/src/Makefile
 remotetimer/Makefile
 remotetimer/meta/Makefile
 remotetimer/src/Makefile
-
-rsdownloader/Makefile
-rsdownloader/meta/Makefile
-rsdownloader/po/Makefile
-rsdownloader/src/Makefile
-rsdownloader/src/container/Makefile
 
 satipclient/Makefile
 satipclient/meta/Makefile

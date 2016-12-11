@@ -36,11 +36,12 @@ from Screens.InputBox import InputBox
 from timer import TimerEntry
 from Components.ProgressBar import ProgressBar
 from Components.SystemInfo import SystemInfo
+from twisted.web.client import getPage
+import re
 import os
 import string
 import xml.etree.cElementTree
 from Tools.BoundFunction import boundFunction
-from simplejson import loads as simplejson_loads
 
 from InternetRadioFavoriteConfig import InternetRadioFavoriteConfig
 from InternetRadioInformationScreen import InternetRadioInformationScreen
@@ -467,8 +468,9 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				else:
 					sTitle = v[0]
 				if config.plugins.internetradio.googlecover.value:
-					url = "http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=%s" % quote(sTitle)
-					sendUrlCommand(url, None,10).addCallback(self.GoogleImageCallback).addErrback(self.Error)
+					url='https://www.google.de/search?q=%s+-youtube&tbm=isch&source=lnt&tbs=isz:ex,iszw:500,iszh:500' %quote(sTitle)
+					getPage(url, timeout=4, agent='Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.56 Safari/537.17').addCallback(self.GoogleImageCallback).addErrback(self.Error)
+					#sendUrlCommand(url, None,10).addCallback(self.GoogleImageCallback).addErrback(self.Error)
 			else:
 				sTitle = "n/a"
 				self.hideCover()
@@ -952,15 +954,14 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 
 	def GoogleImageCallback(self, result):
 		self.hideCover()
-		results = simplejson_loads(result)
-		try:
-			url = results['responseData']['results'][0]['unescapedUrl']
-		except: # fuck that
-			url = ""
-		if url != "":
-			print "[InternetRadio] downloading cover from %s " % url
-			downloadPage(url,"/tmp/.cover").addCallback(self.coverDownloadFinished).addErrback(self.coverDownloadFailed)
-
+		urlsraw=re.findall('imgres\?imgurl.+?&amp;imgrefurl',result)
+		imageurls=[urlraw[14:-14].encode() for urlraw in urlsraw]
+		if imageurls:
+			print "[InternetRadio] downloading cover from %s " % imageurls[0]
+			downloadPage(imageurls[0], "/tmp/.cover").addCallback(self.coverDownloadFinished).addErrback(self.coverDownloadFailed)
+		else:
+			print 'Google no images found...'
+			
 	def coverDownloadFailed(self,result):
 		print "[InternetRadio] cover download failed: %s " % result
 		self.hideCover()

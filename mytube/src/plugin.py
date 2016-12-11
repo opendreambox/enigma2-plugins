@@ -722,14 +722,26 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 				Log.d(current)
 				video = current[0]
 				if video is not None:
-					myurl = video.url
-					print "Playing URL",myurl
-					if myurl is not None:
-						myreference = eServiceReference(4097,0,myurl)
+					hasUriResolver = False
+					try:
+						from enigma import eUriResolver
+						hasUriResolver = True
+					except:
+						pass
+					if hasUriResolver:
+						uri = "yt://%s" %(video.id,)
+						myreference = eServiceReference(eServiceReference.idURI,0,uri)
 						myreference.setName(video.title)
 						self.session.openWithCallback(self.onPlayerClosed, MyTubePlayer, myreference, self.lastservice, infoCallback = self.showVideoInfo, nextCallback = self.getNextEntry, prevCallback = self.getPrevEntry )
 					else:
-						self.session.open(MessageBox, _("Sorry, video is not available!"), MessageBox.TYPE_INFO)
+						myurl = video.url
+						print "Playing URL",myurl
+						if myurl is not None:
+							myreference = eServiceReference(4097,0,myurl)
+							myreference.setName(video.title)
+							self.session.openWithCallback(self.onPlayerClosed, MyTubePlayer, myreference, self.lastservice, infoCallback = self.showVideoInfo, nextCallback = self.getNextEntry, prevCallback = self.getPrevEntry )
+						else:
+							self.session.open(MessageBox, _("Sorry, video is not available!"), MessageBox.TYPE_INFO)
 		elif self.currList == "historylist":
 			if self.HistoryWindow is not None:
 				config.plugins.mytube.search.searchTerm.value = self.HistoryWindow.getSelection()

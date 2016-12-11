@@ -77,7 +77,6 @@ SUBDIRS = \
 	orfat \
 	orfteletext \
 	partnerbox \
-	passwordchanger \
 	permanentclock \
 	permanenttimeshift \
 	pipservicerelation \
@@ -91,7 +90,6 @@ SUBDIRS = \
 	reconstructapsc \
 	reftopiconname \
 	remotetimer \
-	rsdownloader \
 	satipclient \
 	satloader \
 	seekbar \

@@ -56,6 +56,7 @@ class Video(object):
 	def __init__(self, entry):
 		self._entry = entry
 		self._url = None
+		self._format = 0
 		self._urlRequest = None
 		#self.getUrl()
 
@@ -159,10 +160,11 @@ class Video(object):
 		return str(self._entry["snippet"]["channelTitle"])
 	channelTitle = property(getChannelTitle)
 
-	def _onUrlReady(self, url):
+	def _onUrlReady(self, url, format, *args):
 		Log.d(url)
 		if url:
 			self._url = url
+			self._format = format
 		else:
 			self._url = "broken..."
 
@@ -183,17 +185,27 @@ class Video(object):
 
 class VideoUrlRequest(object):
 	VIDEO_FMT_PRIORITY_MAP = {
-		1 : '38', #MP4 Original (HD)
-		2 : '37', #MP4 1080p (HD)
-		3 : '22', #MP4 720p (HD)
-		4 : '18', #MP4 360p
-		5 : '35', #FLV 480p
-		6 : '34', #FLV 360p
+		1 : '96', #HLS 1080P
+		2 : '95', #HLS 720p
+		3 : '94', #HLS 480p
+		4 : '93', #HLS 360p
+		5 : '92', #HLS 240p
+		6 : '91', #HLS 144p
+		7 : '38', #MP4 Original (HD)
+		8 : '37', #MP4 1080p (HD)
+		9 : '22', #MP4 720p (HD)
+		10 : '18', #MP4 360p
+		11 : '35', #FLV 480p
+		12 : '34', #FLV 360p
 	}
 	KEY_FORMAT_ID = u"format_id"
 	KEY_URL = u"url"
 	KEY_ENTRIES = u"entries"
 	KEY_FORMATS = u"formats"
+
+	@staticmethod
+	def isHls(format):
+		return format >= 91 and format <= 96
 
 	def __init__(self, baseurl, callbacks=[], async=True):
 		self._canceled = False
@@ -208,25 +220,27 @@ class VideoUrlRequest(object):
 	def _request(self):
 		try:
 			format_prio = "/".join(self.VIDEO_FMT_PRIORITY_MAP.itervalues())
-			ytdl = YoutubeDL(params={"youtube_include_dash_manifest": False, "format" : format_prio})
+			ytdl = YoutubeDL(params={"youtube_include_dash_manifest": False, "format" : format_prio, "nocheckcertificate" : True})
 			result = ytdl.extract_info(self._baseurl, download=False)
 			if self.KEY_ENTRIES in result: # Can be a playlist or a list of videos
 				entry = result[self.KEY_ENTRIES][0] #TODO handle properly
 			else:# Just a video
 				entry = result
-			self._onResult(True, str(entry.get(self.KEY_URL)))
+				url = str(entry.get(self.KEY_URL))
+				format = int(entry.get(self.KEY_FORMAT_ID))
+			self._onResult(True, url, format)
 		except Exception as e:
 			Log.w(e)
-			self._onResult(False, None)
+			self._onResult(False, None, -1)
 
-	def _onResult(self, success, data):
+	def _onResult(self, success, url, format):
 		if self._canceled:
 			return
 		for callback in self._callbacks:
 			if self._async:
-				reactor.callFromThread(callback, data)
+				reactor.callFromThread(callback, url, format)
 			else:
-				callback(data)
+				callback(url, format)
 
 	def cancel(self):
 		self._canceled = True
