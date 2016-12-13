@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1383 $
-$Date: 2016-12-08 19:06:40 +0100 (Thu, 08 Dec 2016) $
-$Id: FritzCallFBF.py 1383 2016-12-08 18:06:40Z michael $
+$Revision: 1384 $
+$Date: 2016-12-13 18:08:37 +0100 (Tue, 13 Dec 2016) $
+$Id: FritzCallFBF.py 1384 2016-12-13 17:08:37Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -2789,9 +2789,10 @@ class FritzCallFBF_06_35(object):
 		html = re.sub("<a href[^>]*>", "", html)
 		html = re.sub("</a>", "", html)
 
-		linkP = open("/tmp/FritzCall_Phonebook.htm", "w")
-		linkP.write(html)
-		linkP.close()
+		if self.logger.getEffectiveLevel() == logging.DEBUG:
+			linkP = open("/tmp/FritzCall_Phonebook.htm", "w")
+			linkP.write(html)
+			linkP.close()
 
 		entrymask = re.compile(r'<td class="tname" title="([^"]*)">[^<]*</td><td class="tnum"(?: datalabel="[^"]*")?>((?:<a class="print"[^>]+>)?[^<]+(?:<br>(?:<a class="print"[^>]+>)?[^<]+)*)</td><td class="ttype"(?: datalabel="[^"]*")?>([^<]*(?:<br>[^<]*)*)</td><td class="tcode"(?: datalabel="[^"]*")?>([^<]*(?:<br>[^<]*)*)</td><td class="tvanity"(?: datalabel="[^"]*")?>([^<]*(?:<br>[^<]*)*)</td>', re.S)
 		entries = entrymask.finditer(html)
