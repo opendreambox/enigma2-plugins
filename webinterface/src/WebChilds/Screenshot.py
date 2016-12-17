@@ -14,12 +14,13 @@ class ScreenshotResource(resource.Resource):
 
 		# some presets
 		filename = 'screenshot'
-		imageformat = ePixmap.FMT_JPEG
-		format = 'jpg'
+		imageformat = ePixmap.FMT_PNG
+		format = 'png'
 		jpgquali = '80'
 		osd = False
 		video = False
 		x = y = 0
+		display = False
 
 		for key, value in request.args.items():
 			if key == 'format':
@@ -30,8 +31,8 @@ class ScreenshotResource(resource.Resource):
 					if 'jpgquali' in request.args:
 						jpgquali = request.args["jpgquali"][0]
 						del request.args['jpgquali']
-				if format == 'png':
-					imageformat = ePixmap.FMT_PNG
+				if format == 'jpg':
+					imageformat = ePixmap.FMT_JPEG
 				if format == 'gif':
 					imageformat = ePixmap.FMT_GIF
 			elif key == 'filename':
@@ -46,25 +47,42 @@ class ScreenshotResource(resource.Resource):
 				except Exception as e:
 					print e
 					Log.w("%s is not a valid value for video size. Please use something in the style of '1280x720'" %value)
+			elif key == 'display':
+				display = True
 		if not osd and not video:
-			osd = video = True
-		
+			osd = True
+
 		filename = "%s.%s" %(filename, format)
-		Log.i("osd=%s, video=%s, filename=%s" %(osd, video, filename))
+		Log.i("display=%s, osd=%s, video=%s, filename=%s" %(display, osd, video, filename))
 		request.setHeader('Content-Disposition', 'inline; filename=%s;' %filename)
 		#no caching!
-		request.setHeader('Cache-Control', 'no-cache, must-revalidate');
+		request.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+		request.setHeader('Cache-Directive', 'no-cache');
+		request.setHeader('Pragma-Directive', 'no-cache');
 		request.setHeader('Pragma', 'no-cache');
-		request.setHeader('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
+		request.setHeader('Expires', '0');
 
+		screenid = 1 if display else 0
+		desktop = getDesktop(screenid)
+		if not desktop:
+			request.setResponseCode(http.NOT_FOUND)
+			request.finish()
+			return server.NOT_DONE_YET
 		mimetype = {'jpg' : 'jpeg'}.get(format, format)
 		request.setHeader('Content-Type','image/%s' %mimetype)
 		pixmap = ePixmap(None)
-		size = getDesktop(0).size()
+		size = desktop.size()
 		if x > 0 and y > 0:
 			size = eSize(x,y)
 
-		if osd:
+		if display:
+			try:
+				pixmap.setPixmapFromUI(size, screenid)
+			except:
+				request.setResponseCode(http.INTERNAL_SERVER_ERROR)
+				request.finish()
+				return server.NOT_DONE_YET
+		elif osd:
 			if video:
 				if not pixmap.setPixmapFromScreen(size):
 					Log.w("Failed setting pixmap from Screen!")

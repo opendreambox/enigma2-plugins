@@ -74,6 +74,7 @@ class Strings(Source):
 			["screenshot_all" , _("Screenshot (All)")],
 			["screenshot_video" , _("Screenshot (Video)")],
 			["screenshot_osd" , _("Screenshot (OSD)")],
+			["screenshot_display", _("Screenshot (Display)")],
 			["toggle_standby" , _("Toggle Idle Mode")],
 			["deepstanby" , _("Standby")],
 			["reboot" , _("Reboot")],

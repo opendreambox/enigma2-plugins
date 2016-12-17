@@ -869,6 +869,7 @@ var SimplePages = Class.create({
 	PAGE_POWER : 'tplPower',
 	PAGE_SETTINGS: 'tplSettings',
 	PAGE_TOOLS: 'tplTools',
+	PAGE_DISPLAYSHOT: 'tplDisplay',
 
 	initialize: function(target){
 		this.simpleHandler = new SimplePageHandler(target);
@@ -936,6 +937,11 @@ var SimplePages = Class.create({
 
 	getDeviceInfo: function(callback){
 		this.deviceInfoHandler.get({}, callback);
+	},
+
+	loadDisplayShot: function(){
+		setContentHd(strings.screenshot_display);
+		this.show(this.PAGE_DISPLAYSHOT);
 	}
 });
 
@@ -1230,7 +1236,8 @@ var E2WebCore = Class.create(BaseCore, {
 				'power' : this.simplepages.loadPower.bind(this.simplepages),
 				'osdshot' : this.screenshots.shootOsd.bind(this.screenshots),
 				'screenshot' : this.screenshots.shootAll.bind(this.screenshots),
-				'videoshot' : this.screenshots.shootVideo.bind(this.screenshots)
+				'videoshot' : this.screenshots.shootVideo.bind(this.screenshots),
+				'displayshot' : this.simplepages.loadDisplayShot.bind(this.simplepages)
 			},
 			'extras': {
 				'about' : this.simplepages.loadAbout.bind(this.simplepages),
