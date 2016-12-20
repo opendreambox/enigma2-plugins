@@ -6,7 +6,7 @@ from copy import deepcopy
 from enigma import eTimer, eEnv
 from Components.Console import Console
 from Components.Harddisk import harddiskmanager, Util
-from Tools.Directories import isMount, removeDir, createDir
+from Tools.Directories import isMount, removeDir, createDir, pathExists
 from Tools.Log import Log
 
 from xml.etree.cElementTree import parse as cet_parse
@@ -69,7 +69,7 @@ class AutoMount():
 		self._mounts = {}
 		self._numActive = 0
 
-		if not os_path.exists(XML_FSTAB):
+		if not pathExists(XML_FSTAB):
 			return
 		tree = cet_parse(XML_FSTAB).getroot()
 		self._parse(tree, ['nfs', 'cifs'], [AutoMount.DEFAULT_OPTIONS_NFS, AutoMount.DEFAULT_OPTIONS_CIFS])
@@ -87,9 +87,16 @@ class AutoMount():
 		self._ensureOption(options, 'x-systemd.automount')
 		self._ensureOption(options, 'rsize', 'rsize=8192')
 		self._ensureOption(options, 'wsize', 'wsize=8192')
+		self._ensureOption(options, 'x-systemd.device-timeout', 'x-systemd.device-timeout=2')
+		self._ensureOption(options, 'x-systemd.idle-timeout', 'x-systemd.idle-timeout=60')
 		self._ensureOption(options, 'soft')
-		if not cifs and 'tcp' not in options and 'udp' not in options:
-			options.append('udp')
+		if not cifs:
+			self._ensureOption(options, 'retry', 'retry=0')
+			self._ensureOption(options, 'retrans', 'retrans=1')
+			self._ensureOption(options, 'timeo', 'timeo=2')
+			if not 'tcp' not in options and 'udp' not in options:
+				options.append('udp')
+
 		return options
 
 	def _ensureOption(self, options, key, default=None):
@@ -101,11 +108,10 @@ class AutoMount():
 		options.append(default)
 
 	def _applyShare(self, data, callback):
-		Log.i("activeMounts: %s" %(self._numActive,))
 		if data['active']:
 			mountpoint = AutoMount.MOUNT_BASE + data['sharename']
-			if os_path.exists(mountpoint) is False:
-				createDir(mountpoint)
+			Log.d("mountpoint: %s" %(mountpoint,))
+			createDir(mountpoint)
 			tmpsharedir = data['sharedir'].replace(" ", "\\ ").replace("$", "\\$")
 
 			if data['mounttype'] == 'nfs':
@@ -139,23 +145,22 @@ class AutoMount():
 		for sharename, data in self._mounts.items():
 			mountpoint = AutoMount.MOUNT_BASE + sharename
 			Log.d("mountpoint: %s" %(mountpoint,))
-			if os_path.exists(mountpoint):
-				if os_path.ismount(mountpoint):
-					Log.d("'%s' is mounted" %(mountpoint,))
-					data['isMounted'] = True
-					desc = data['sharename']
-					if data['hdd_replacement']: #hdd replacement hack
-						self._linkAsHdd(mountpoint)
-					harddiskmanager.addMountedPartition(mountpoint, desc)
-				else:
-					Log.d("'%s' is NOT mounted" %(mountpoint,))
-					sharename = self._mounts.get(data['sharename'], None)
-					if sharename:
-						data['isMounted'] = False
-					if os_path.exists(mountpoint):
-						if not os_path.ismount(mountpoint):
-							removeDir(mountpoint)
-							harddiskmanager.removeMountedPartition(mountpoint)
+			if isMount(mountpoint):
+				Log.i("'%s' is mounted" %(mountpoint,))
+				data['isMounted'] = True
+				desc = data['sharename']
+				if data['hdd_replacement']: #hdd replacement hack
+					self._linkAsHdd(mountpoint)
+				harddiskmanager.addMountedPartition(mountpoint, desc)
+			else:
+				Log.w("'%s' is NOT mounted" %(mountpoint,))
+				sharename = self._mounts.get(data['sharename'], None)
+				if sharename:
+					data['isMounted'] = False
+				if pathExists(mountpoint):
+					if not isMount(mountpoint):
+						removeDir(mountpoint)
+						harddiskmanager.removeMountedPartition(mountpoint)
 
 	def _linkAsHdd(self, path):
 		hdd_dir = '/media/hdd'
@@ -171,7 +176,7 @@ class AutoMount():
 			symlink(path, hdd_dir)
 		except OSError:
 			Log.i("adding symlink failed!")
-		if os_path.exists(hdd_dir + '/movie') is False:
+		if pathExists(hdd_dir + '/movie') is False:
 			createDir(hdd_dir + '/movie')
 
 	def getMounts(self):
@@ -250,7 +255,7 @@ class AutoMount():
 			callback(res)
 
 	def _unmount(self, mountpoint):
-		if os_path.ismount(mountpoint):
+		if isMount(mountpoint):
 			self._console.ePopen('umount -fl %s' %mountpoint, self._onConsoleFinished)
 
 	def _reloadSystemd(self, **kwargs):
