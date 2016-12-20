@@ -108,9 +108,10 @@ class AutoMount():
 		options.append(default)
 
 	def _applyShare(self, data, callback):
+		Log.d()
 		if data['active']:
 			mountpoint = AutoMount.MOUNT_BASE + data['sharename']
-			Log.d("mountpoint: %s" %(mountpoint,))
+			Log.i("mountpoint: %s" %(mountpoint,))
 			createDir(mountpoint)
 			tmpsharedir = data['sharedir'].replace(" ", "\\ ").replace("$", "\\$")
 
@@ -144,23 +145,11 @@ class AutoMount():
 		Log.d()
 		for sharename, data in self._mounts.items():
 			mountpoint = AutoMount.MOUNT_BASE + sharename
-			Log.d("mountpoint: %s" %(mountpoint,))
-			if isMount(mountpoint):
-				Log.i("'%s' is mounted" %(mountpoint,))
-				data['isMounted'] = True
-				desc = data['sharename']
-				if data['hdd_replacement']: #hdd replacement hack
-					self._linkAsHdd(mountpoint)
-				harddiskmanager.addMountedPartition(mountpoint, desc)
-			else:
-				Log.w("'%s' is NOT mounted" %(mountpoint,))
-				sharename = self._mounts.get(data['sharename'], None)
-				if sharename:
-					data['isMounted'] = False
-				if pathExists(mountpoint):
-					if not isMount(mountpoint):
-						removeDir(mountpoint)
-						harddiskmanager.removeMountedPartition(mountpoint)
+			data['isMounted'] = True
+			desc = data['sharename']
+			if data['hdd_replacement']: #hdd replacement hack
+				self._linkAsHdd(mountpoint)
+			harddiskmanager.addMountedPartition(mountpoint, desc)
 
 	def _linkAsHdd(self, path):
 		hdd_dir = '/media/hdd'
@@ -174,10 +163,9 @@ class AutoMount():
 				removeDir(hdd_dir)
 		try:
 			symlink(path, hdd_dir)
+			createDir(hdd_dir + '/movie')
 		except OSError:
 			Log.i("adding symlink failed!")
-		if pathExists(hdd_dir + '/movie') is False:
-			createDir(hdd_dir + '/movie')
 
 	def getMounts(self):
 		return self._mounts
