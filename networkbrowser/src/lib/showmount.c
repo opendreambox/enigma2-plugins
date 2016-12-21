@@ -179,7 +179,7 @@ int showNfsShare(const char *hostname, nfsinfo *nfsInfo, unsigned int size)
 	else {
 		if ((hp = gethostbyname(hostname)) == NULL) {
 			strcpy(nfsInfo[0].share, "ERROR: failed to resolve hostname");
-			return 1;
+			return -1;
 		}
 		server_addr.sin_family = AF_INET;
 		memcpy(&server_addr.sin_addr, hp->h_addr, hp->h_length);
@@ -199,7 +199,7 @@ int showNfsShare(const char *hostname, nfsinfo *nfsInfo, unsigned int size)
 		    MOUNTPROG, MOUNTVERS, pertry_timeout, &msock)) == NULL) {
 			//clnt_pcreateerror("mount clntudp_create");
 			strcpy(nfsInfo[0].share, "ERROR: mount clntudp_create");
-			return(1);
+			return -2;
 		}
 	}
 	mclient->cl_auth = authunix_create_default();
@@ -212,8 +212,8 @@ int showNfsShare(const char *hostname, nfsinfo *nfsInfo, unsigned int size)
 			(xdrproc_t) xdr_exports, (caddr_t) &exportlist,
 			total_timeout);
 		if (clnt_stat != RPC_SUCCESS) {
-			strcpy(nfsInfo[0].share, "ERROR: mount clntudp_create");
-			return -1;
+			strcpy(nfsInfo[0].share, "ERROR: mount clnt_stat");
+			return -3;
 		}
 		for (pos = 0; pos < size && exportlist != NULL; pos++) {
 			strcpy(nfsInfo[pos].share, exportlist->ex_dir);
