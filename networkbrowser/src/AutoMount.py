@@ -113,7 +113,7 @@ class AutoMount():
 			mountpoint = AutoMount.MOUNT_BASE + data['sharename']
 			Log.i("mountpoint: %s" %(mountpoint,))
 			createDir(mountpoint)
-			tmpsharedir = data['sharedir'].replace(" ", "\\ ").replace("$", "\\$")
+			tmpsharedir = data['sharedir'].replace(" ", "\\040")
 
 			if data['mounttype'] == 'nfs':
 				opts = self.sanitizeOptions(data['options'].split(','))
