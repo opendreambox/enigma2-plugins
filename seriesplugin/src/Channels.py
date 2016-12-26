@@ -32,6 +32,12 @@ from Tools.BoundFunction import boundFunction
 from xml.etree.cElementTree import ElementTree, parse, Element, SubElement, Comment
 from Tools.XMLTools import stringToXML
 
+def readFromXML(text):
+	#Temp
+	text = re.sub('(amp;)+', 'amp;', text)
+	#End
+	return text.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>').replace('&apos;', "'").replace('&quot;', '"')
+
 # Plugin internal
 from . import _
 from XMLFile import XMLFile, indent
@@ -250,13 +256,13 @@ class ChannelsBase(XMLFile):
 						if root:
 							for element in root.findall("channel"):
 								alternatives = []
-								id = element.get("id", "")
+								id = readFromXML(element.get("id", ""))
 								alternatives.append( id )
-								name = element.get("name", "")
-								reference = element.text
+								name = readFromXML(element.get("name", ""))
+								reference = readFromXML(element.text)
 								#Test customization but XML conform
 								for web in element.findall("web"):
-									alternatives.append( web.text )
+									alternatives.append( readFromXML(web.text) )
 								channels[reference] = (name, list(set(alternatives)))
 								log.debug("Channel", reference, channels[reference] )
 					return channels

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SeriesPlugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-29 12:38+0200\n"
-"PO-Revision-Date: 2016-03-29 12:46+0200\n"
+"POT-Creation-Date: 2016-06-16 23:29+0200\n"
+"PO-Revision-Date: 2016-06-16 23:39+0200\n"
 "Last-Translator: James Blond <jb@unknown.com>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -202,6 +202,9 @@ msgstr "EPGImport Unterstützung aktivieren"
 msgid "Enable support for XMLTVImport"
 msgstr "XMLTVImport Unterstützung aktivieren"
 
+msgid "Enable support for crossepg"
+msgstr "Aktiviere CrossEPG Unterstützung"
+
 msgid "Show in info menu"
 msgstr "Serien-Info im Info Menü anzeigen"
 
@@ -243,6 +246,9 @@ msgstr "Voreingestellte Folge"
 
 msgid "Replace special characters in title"
 msgstr "Sonderzeichen im Titel ersetzen"
+
+msgid "Cut series title on dash"
+msgstr "Schneide Serien Titel mit einem mal"
 
 msgid "Main bouquet for channel editor"
 msgstr "Haupt-Bouquet für Kanal-Editor"

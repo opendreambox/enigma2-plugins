@@ -52,7 +52,14 @@ scheme_fallback = [
 		("{org:s}/{channel:s}/{series:s}/Season {rawseason:s}/" , "Original/Channel/Series/Season Raw/"),
 		
 		("{org:s}/{date:s}/{series:s}/" , "Date/Series/"),
-		("{org:s}/{time:s}/{series:s}/" , "Time/Series/")
+		("{org:s}/{time:s}/{series:s}/" , "Time/Series/"),
+		
+		("{home:s}/{series:s}/{season:02d}/"               , "Home/Series/01/"),
+		("{home:s}/{series:s}/S{season:02d}/"              , "Home/Series/S01/"),
+		("{home:s}/{series:s}/{rawseason:s}/"              , "Home/Series/Raw/"),
+		
+		("{home:s}/{series:s}/Season {season:02d}/"        , "Home/Series/Season 01/"),
+		("{home:s}/{series:s}/Season {rawseason:s}/"       , "Home/Series/Season Raw/")
 	]
 
 def readDirectoryPatterns():

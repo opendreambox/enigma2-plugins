@@ -200,6 +200,7 @@ def refactorDirectory(org, data):
 	if data:
 		if config.plugins.seriesplugin.pattern_directory.value and not config.plugins.seriesplugin.pattern_directory.value == "Off" and not config.plugins.seriesplugin.pattern_directory.value == "Disabled":
 			data["org"] = org
+			data["home"] = "/media/hdd/movie"
 			cust_ = config.plugins.seriesplugin.pattern_directory.value.strip().format( **data )
 			cust_ = cust_.replace("\n", "").replace('&amp;','&').replace('&apos;',"'").replace('&gt;','>').replace('&lt;','<').replace('&quot;','"').replace("  ", " ").replace("//", "/")
 			dir = CompiledRegexpReplaceDirChars.sub(' ', cust_)
