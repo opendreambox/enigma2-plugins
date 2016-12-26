@@ -28,6 +28,7 @@ from Components.config import config
 from Tools.Notifications import AddPopup
 from Screens.MessageBox import MessageBox
 
+from threading import currentThread
 
 log = None
 
@@ -95,7 +96,8 @@ class Logger(object):
 			print strargs
 		
 		if int(config.plugins.seriesplugin.popups_success_timeout.value) != 0:
-			AddPopup(
+			if currentThread().getName() == 'MainThread':
+				AddPopup(
 					strargs,
 					MessageBox.TYPE_INFO,
 					int(config.plugins.seriesplugin.popups_success_timeout.value),
@@ -139,7 +141,8 @@ class Logger(object):
 			print strargs
 		
 		if int(config.plugins.seriesplugin.popups_warning_timeout.value) != 0:
-			AddPopup(
+			if currentThread().getName() == 'MainThread':
+				AddPopup(
 					strargs,
 					MessageBox.TYPE_WARNING,
 					int(config.plugins.seriesplugin.popups_warning_timeout.value),
@@ -157,7 +160,8 @@ class Logger(object):
 		elif config.plugins.seriesplugin.debug_prints.value:
 			print strargs
 
-		AddPopup(
+		if currentThread().getName() == 'MainThread':
+			AddPopup(
 					strargs,
 					MessageBox.TYPE_ERROR,
 					-1,
@@ -175,7 +179,8 @@ class Logger(object):
 		elif config.plugins.seriesplugin.debug_prints.value:
 			print strargs
 		
-		AddPopup(
+		if currentThread().getName() == 'MainThread':
+			AddPopup(
 					strargs,
 					MessageBox.TYPE_ERROR,
 					-1,
