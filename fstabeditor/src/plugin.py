@@ -38,6 +38,7 @@ from Tools.Directories import fileExists
 from dirSelect import dirSelectDlg
 from enigma import RT_HALIGN_LEFT, RT_HALIGN_RIGHT, eListboxPythonMultiContent, gFont
 import os
+from skin import TemplatedListFonts, componentSizes
 
 #global vars
 entryList = []
@@ -49,43 +50,42 @@ def main(session,**kwargs):
 class fstabMenuList(MenuList):
 	def __init__(self, list):
 		MenuList.__init__(self, list, False, eListboxPythonMultiContent)
-		self.l.setFont(0, gFont("Regular", 22))
-		self.l.setFont(1, gFont("Regular", 18))
-		self.l.setItemHeight(220)
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
+		self.l.setFont(1, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
 		
 def fstabMenuListEntry(devicename, mountpoint,fstype, options, dumpfreq, passnum):
 	res = [ (devicename, mountpoint,fstype, options, dumpfreq, passnum) ]
-	res.append(MultiContentEntryText(pos=(230,15),size=(370,25), font=0, text=devicename))
-	res.append(MultiContentEntryText(pos=(230,60),size=(370,25), font=0, text=mountpoint))
-	res.append(MultiContentEntryText(pos=(230,90),size=(370,25), font=0, text=fstype))
-	res.append(MultiContentEntryText(pos=(230,120),size=(370,25), font=0, text=options))
-	res.append(MultiContentEntryText(pos=(230,150),size=(370,25), font=0, text=dumpfreq))
-	res.append(MultiContentEntryText(pos=(230,180),size=(370,25), font=0, text=passnum))
-	res.append(MultiContentEntryText(pos=(0,17),size=(200,25), font=1, flags=RT_HALIGN_RIGHT, text="Device name:"))
-	res.append(MultiContentEntryText(pos=(0,62),size=(200,25), font=1, flags=RT_HALIGN_RIGHT, text="Mount point:"))
-	res.append(MultiContentEntryText(pos=(0,92),size=(200,25), font=1, flags=RT_HALIGN_RIGHT, text="File system type:"))
-	res.append(MultiContentEntryText(pos=(0,122),size=(200,25), font=1, flags=RT_HALIGN_RIGHT, text="Options:"))
-	res.append(MultiContentEntryText(pos=(0,152),size=(200,25), font=1, flags=RT_HALIGN_RIGHT, text="Dump frequency:"))
-	res.append(MultiContentEntryText(pos=(0,182),size=(200,25), font=1, flags=RT_HALIGN_RIGHT, text="Pass number:"))
+	res.append(MultiContentEntryText(pos=(270,15),size=(800,30), font=0, text=devicename))
+	res.append(MultiContentEntryText(pos=(270,60),size=(800,30), font=0, text=mountpoint))
+	res.append(MultiContentEntryText(pos=(270,90),size=(800,30), font=0, text=fstype))
+	res.append(MultiContentEntryText(pos=(270,120),size=(800,30), font=0, text=options))
+	res.append(MultiContentEntryText(pos=(270,150),size=(800,30), font=0, text=dumpfreq))
+	res.append(MultiContentEntryText(pos=(270,180),size=(800,30), font=0, text=passnum))
+	res.append(MultiContentEntryText(pos=(0,17),size=(250,30), font=1, flags=RT_HALIGN_RIGHT, text="Device name:"))
+	res.append(MultiContentEntryText(pos=(0,62),size=(250,30), font=1, flags=RT_HALIGN_RIGHT, text="Mount point:"))
+	res.append(MultiContentEntryText(pos=(0,92),size=(250,30), font=1, flags=RT_HALIGN_RIGHT, text="File system type:"))
+	res.append(MultiContentEntryText(pos=(0,122),size=(250,30), font=1, flags=RT_HALIGN_RIGHT, text="Options:"))
+	res.append(MultiContentEntryText(pos=(0,152),size=(250,30), font=1, flags=RT_HALIGN_RIGHT, text="Dump frequency:"))
+	res.append(MultiContentEntryText(pos=(0,182),size=(250,30), font=1, flags=RT_HALIGN_RIGHT, text="Pass number:"))
 	return res
 	
 	
 class fstabViewerScreen(Screen,HelpableScreen):
 	skin = """
-		<screen position="center,center" size="600,430" title="fstab-Editor" >
-			<widget name="entryinfo" position="500,0" size="100,30" halign="right" font="Regular;18" transparent="1" />
-			<widget name="menulist" position="0,40" size="600,220" scrollbarMode="showNever" />
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/fstabEditor/fstabEditor.png" position="70,304" size="100,40"/>
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/fstabEditor/ok.png" position="230,300" size="35,25"/>
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/fstabEditor/exit.png" position="230,325" size="35,25"/>
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/fstabEditor/green.png" position="230,350" size="35,25"/>
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/fstabEditor/blue.png" position="230,375" size="35,25"/>
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/fstabEditor/yellow.png" position="230,400" size="35,25"/>
-			<eLabel foregroundColor="#f0f0f0" font="Regular;18" position="275,301" size="200,25" text="Edit" transparent="1"/>
-			<eLabel foregroundColor="#f0f0f0" font="Regular;18" position="275,326" size="200,25" text="Cancel" transparent="1"/>
-			<eLabel foregroundColor="#f0f0f0" font="Regular;18" position="275,351" size="200,25" text="Add entry" transparent="1"/>
-			<eLabel foregroundColor="#f0f0f0" font="Regular;18" position="275,376" size="200,25" text="Run mount -a" transparent="1"/>
-			<eLabel foregroundColor="#f0f0f0" font="Regular;18" position="275,401" size="200,25" text="Restore fstab.backup" transparent="1"/>
+		<screen position="center,center" size="820,340" title="fstab-Editor">
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,0" size="200,50" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/green.png" position="210,0" size="200,50" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,0" size="200,50" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/blue.png" position="610,0" size="200,50" alphatest="on" />
+		<eLabel text="Cancel" position="10,0" size="200,50" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<eLabel text="Add entry" position="210,0" size="200,50" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<eLabel text="Run mount -a" position="410,0" size="200,50" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<eLabel text="Restore fstab.backup" position="610,0" size="200,50" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<eLabel position="10,55" size="800,1" backgroundColor="grey" />
+		<widget name="menulist" itemHeight="220" position="10,67" size="800,220" enableWrapAround="1" scrollbarMode="showNever" />
+		<eLabel position="10,300" size="800,1" backgroundColor="grey" />
+		<widget name="entryinfo" position="10,310" size="800,25" font="Regular;22" halign="center" />
 		</screen>"""
 		
 	def __init__(self, session, args = 0):
@@ -172,15 +172,14 @@ class fstabViewerScreen(Screen,HelpableScreen):
 		
 class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
 	skin = """
-		<screen position="center,center" size="600,380" title="fstab-Editor" >
-			<widget itemHeight="28" name="config" position="0,40" size="600,224" scrollbarMode="showOnDemand"/>
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/fstabEditor/fstabEditor.png" position="70,304" size="100,40"/>
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/fstabEditor/green.png" position="230,300" size="35,25"/>
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/fstabEditor/exit.png" position="230,325" size="35,25"/>
-			<widget name="ButtonRed" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/fstabEditor/red.png" position="230,350" zPosition="10" size="35,25" transparent="1" alphatest="on" />
-			<eLabel foregroundColor="#f0f0f0" font="Regular;18" position="275,301" size="200,25" text="Save" transparent="1"/>
-			<eLabel foregroundColor="#f0f0f0" font="Regular;18" position="275,326" size="200,25" text="Cancel" transparent="1"/>
-			<widget name="ButtonRedText" position="275,351" size="200,25" zPosition="10" font="Regular;18" foregroundColor="#f0f0f0" transparent="1" />
+		<screen position="center,center" size="820,340" title="fstab-Editor" >
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,0" size="200,50" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/green.png" position="210,0" size="200,50" alphatest="on" />
+		<eLabel text="Cancel" position="10,0" size="200,50" zPosition="1" valign="center" halign="center" backgroundColor="#9f1313" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+		<eLabel text="Save" position="210,0" size="200,50" zPosition="1" valign="center" halign="center" backgroundColor="#1f771f" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/fstabEditor/ok.png" position="750,15" size="60,30" alphatest="on" />
+		<eLabel position="10,55" size="800,1" backgroundColor="grey" />
+		<widget name="config" position="10,60" size="800,270" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 		
 	def __init__(self, session, selectedEntry, addEntry=False):

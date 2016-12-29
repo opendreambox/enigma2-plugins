@@ -22,14 +22,14 @@ from Components.FileList import FileList
 
 class dirSelectDlg(Screen): # 90,140
 	skin = """
-		<screen name="dirSelectDlg" position="center,center" size="560,360">
-			<widget name="filelist" position="10,10" size="540,210" scrollbarMode="showOnDemand" />
-			<widget name="ButtonGreentext" position="70,270" size="460,25" halign="left" zPosition="10" font="Regular;21" transparent="1" />
-			<widget name="ButtonGreen" pixmap="skin_default/buttons/button_green.png" position="30,270" zPosition="10" size="35,25" transparent="1" alphatest="on" />
-			<widget name="ButtonRedtext" position="70,300" size="460,25" halign="left" zPosition="10" font="Regular;21" transparent="1" />
-			<widget name="ButtonRed" pixmap="skin_default/buttons/button_red.png" position="30,300" zPosition="10" size="35,25" transparent="1" alphatest="on" />
-			<widget name="ButtonOKtext" position="70,330" size="460,25" halign="left" zPosition="10" font="Regular;21" transparent="1" />
-			<widget name="ButtonOK" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/fstabEditor/ok.png" position="30,330" zPosition="10" size="35,25" transparent="1" alphatest="on" />
+		<screen name="dirSelectDlg" position="center,center" size="820,340" title="fstab-Editor">
+		<widget name="ButtonRed" pixmap="skin_default/buttons/red.png" position="10,0" size="260,50" alphatest="on" />
+		<widget name="ButtonGreen" pixmap="skin_default/buttons/green.png" position="270,0" size="260,50" alphatest="on" />
+		<widget name="ButtonRedtext" render="Label" position="10,0" size="260,50" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<widget name="ButtonGreentext" position="280,0" size="240,50" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/fstabEditor/ok.png" position="750,15" size="60,30" alphatest="on" />
+		<eLabel position="10,55" size="800,1" backgroundColor="grey" />
+		<widget name="filelist" position="10,60" size="800,270" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 
 	def __init__(self, session, currDir, showFilesBoolean):
