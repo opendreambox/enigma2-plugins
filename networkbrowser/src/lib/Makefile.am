@@ -5,13 +5,9 @@ plugindir = $(libdir)/enigma2/python/Plugins/SystemPlugins/NetworkBrowser
 plugin_LTLIBRARIES = netscan.la rpcinfo.la
 
 netscan_la_SOURCES = \
-	list.c \
-	list.h \
 	main.c \
 	nbtscan.c \
 	nbtscan.h \
-	range.c \
-	range.h \
 	showmount.c \
 	showmount.h \
 	smb.h \

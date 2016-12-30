@@ -27,19 +27,16 @@
 #ifndef NBTSCAN_H
 #define NBTSCAN_H
 
-#include "statusq.h"
-#include "range.h"
-#include "list.h"
+#include <netinet/in.h>
+#include <stdbool.h>
 
 typedef struct {
 	char name[16];
 	char domain[16];
-	char ip[20];
-	char mac[20];
+	char ip[INET6_ADDRSTRLEN];
 	char service[80];
 } netinfo;
 
-unsigned int netInfo(const char *pythonIp, netinfo *nInfo, unsigned int size);
+bool nodeInfo(const char *node, netinfo *nInfo);
 
 #endif
-

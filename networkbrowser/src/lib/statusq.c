@@ -32,18 +32,17 @@
 ###########################################################################*/
 
 #define BSD_SOURCE
-#include <endian.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <stdlib.h>
-#include <sys/time.h>
-#include "statusq.h"
-#include <string.h>
-#include <stdio.h>
-#include <stddef.h>
 #include <ctype.h>
+#include <endian.h>
+#include <netdb.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include "statusq.h"
 
 #define MIN(a,b)	((a) < (b) ? (a) : (b))
 
@@ -101,18 +100,12 @@ static int name_mangle(const char *In, char *Out, char name_type) {
 /* end of code from Samba */
 
 
-int send_query(int sock, struct in_addr dest_addr, uint32_t rtt_base) {
+int send_query(int sock, const struct sockaddr *sa, uint32_t rtt_base)
+{
         struct nbname_request request;
-	struct sockaddr_in dest_sockaddr;
 	int status;
 	struct timeval tv;
-	char errmsg[80];
 
-        bzero((void*)&dest_sockaddr, sizeof(dest_sockaddr));
-        dest_sockaddr.sin_family = AF_INET;
-        dest_sockaddr.sin_port = htons(NB_DGRAM);
-        dest_sockaddr.sin_addr = dest_addr;
- 
         request.flags = htons(FL_BROADCAST);
         request.question_count = htons(1);
         request.answer_count = 0;
@@ -127,13 +120,13 @@ int send_query(int sock, struct in_addr dest_addr, uint32_t rtt_base) {
 	request.transaction_id = htons((tv.tv_sec-rtt_base)*1000+tv.tv_usec/1000);
 	/* printf("%s: timestamp: %d\n", inet_ntoa(dest_addr), request.transaction_id); */
         
-	status = sendto(sock, (char*)&request, sizeof(request), 0,
-                (struct sockaddr *)&dest_sockaddr, sizeof(dest_sockaddr));
+	status = sendto(sock, (char*)&request, sizeof(request), 0, sa, sizeof(struct sockaddr_storage));
 	if(status==-1) {
-	        snprintf(errmsg, 80, "%s\tSendto failed", inet_ntoa(dest_addr));
-		perror(errmsg);
+		char addrstr[INET6_ADDRSTRLEN];
+		getnameinfo(sa, sizeof(struct sockaddr_storage), addrstr, sizeof(addrstr), NULL, 0, NI_NUMERICHOST);
+		fprintf(stderr, "sendto %s: %m", addrstr);
 		return -1;
-        };
+        }
 	return 0;
 };
 
