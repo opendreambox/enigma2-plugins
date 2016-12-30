@@ -23,6 +23,7 @@ AX_PTHREAD
 PKG_CHECK_MODULES(ENIGMA2, enigma2)
 PKG_CHECK_MODULES(GSTREAMER, gstreamer-1.0 gstreamer-pbutils-1.0)
 PKG_CHECK_MODULES(LIBCRYPTO, libcrypto)
+PKG_CHECK_MODULES(LIBTIRPC, libtirpc)
 
 AC_ARG_WITH(debug,
 	AS_HELP_STRING([--without-debug],[disable debugging code]),
