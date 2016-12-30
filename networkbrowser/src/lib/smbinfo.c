@@ -261,7 +261,9 @@ static int browse_host(shareinfo *sInfo, unsigned int size)
   if (!send_login(inbuf,outbuf,True)) {
     free(inbuf);
     free(outbuf);
-    return -1;
+    strcpy(sInfo[0].comment, "AUTHFAIL");
+    strcpy(sInfo[0].typ, "ERROR");
+    return 1;
   }
 
   /* now send a SMBtrans command with api RNetShareEnum */
