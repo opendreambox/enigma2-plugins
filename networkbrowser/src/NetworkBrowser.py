@@ -275,19 +275,24 @@ class NetworkBrowser(Screen):
 	def getNetworkIPs(self, host):
 		Log.i("Detecting availablility of NFS or SMB services on host %s" % host)
 		info = []
-		has_service = False
+		services = []
 
 		if self._probeTcpPort(host, 139):
 			Log.i("Trying to look up SMB hostname of %s" % host)
-			has_service = True
 			info = netscan.netInfo(host)
-		elif rpcinfo.progping('udp', host, 'nfs') or rpcinfo.progping('tcp', host, 'nfs'):
+			services.append("smb")
+		if rpcinfo.progping('udp', host, 'nfs') or rpcinfo.progping('tcp', host, 'nfs'):
 			Log.i("Found NFS server on %s" % host)
-			has_service = True
+			services.append("nfs")
 
-		if has_service and not info:
-			info = [['host', host, host, '00:00:00:00:00:00', host, 'Master Browser']]
-
+		if services and not info:
+			try:
+				hostname = socket.getnameinfo((host, 0), 0)[0]
+			except:
+				hostname = host
+			info = [['host', hostname, host, '00:00:00:00:00:00', host, 'Master Browser']]
+		if info:
+			info[0].append(services)
 		Log.i(info)
 		reactor.callFromThread(self._onNetworkIPsReady, info)
 
@@ -463,6 +468,10 @@ class NetworkBrowser(Screen):
 						return
 					except:
 						pass
+			if len(sel[0]) < 7 or "smb" in sel[0][6]:
+				self.session.openWithCallback(self.passwordQuestion, MessageBox, text=_("Do you want to enter a username and password for this host?\n"), default=False )
+			else:
+				self.passwordQuestion(False)
 
 		if sel[0][0] == 'nfsShare': # share entry selected
 			print '[Networkbrowser] sel nfsShare'
@@ -477,8 +486,6 @@ class NetworkBrowser(Screen):
 				print '[Networkbrowser] userinfo found from ',self.sharecache_file
 				self.openMountEdit(sel[0])
 				return
-
-		self.session.openWithCallback(self.passwordQuestion, MessageBox, text=_("Do you want to enter a username and password for this host?\n"), default=False )
 
 	def passwordQuestion(self, ret = False):
 		sel = self["list"].getCurrent()
