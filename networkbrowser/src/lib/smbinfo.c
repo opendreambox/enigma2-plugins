@@ -42,107 +42,94 @@
 /****************************************************************************
 lokal prototype
 ****************************************************************************/
-BOOL get_myname(char *myname,struct in_addr *ip);
-struct hostent *Get_Hostbyname(char *name);
-void strlower(char *s);
-void strupper(char *s);
-int browse_host(shareinfo *sInfo, unsigned int size);
-void ssval(char *buf,int pos,uint16 val);
-uint32 ival(char *buf,int pos);
-void *object_byte_swap(void *obj,int size);
-int smb_buflen(char *buf);
-int smb_numwords(char *buf);
-char *skip_string(char *buf,int n);
-uint16 sval(char *buf,int pos);
-char *smb_buf(char *buf);
-int smb_buf_ofs(char *buf);
-BOOL send_login(char *inbuf,char *outbuf,BOOL use_setup);
-int name_len(char *s);
-char *smb_errstr(char *inbuf);
-time_t make_unix_date2(void *date_ptr);
-int TimeDiff(void);
-time_t TimeLocal(struct tm *tm,int timemul);
-void interpret_dos_date(uint32 date,int *year,int *month,int *day,int *hour,int *minute,int *second);
-struct tm *LocalTime(time_t *t,int timemul);
-void sival(char *buf,int pos,uint32 val);
-time_t make_unix_date(void *date_ptr);
-void send_logout(char *inbuf,char *outbuf );
-BOOL send_smb(char *buffer);
-int smb_len(char *buf);
-void log_out(char *buffer,int len);
-void close_sockets(void );
-int write_socket(int fd,char *buf,int len);
-int set_message(char *buf,int num_words,int num_bytes,BOOL zero);
-void smb_setlen(char *buf,int len);
-void setup_pkt(char *outbuf);
-BOOL receive_smb(char *buffer,int timeout);
-void log_in(char *buffer,int len);
-int read_smb_length(int fd,char *inbuf,int timeout);
-int read_with_timeout(int fd,char *buf,int mincnt,int maxcnt,long time_out,BOOL exact);
-int set_blocking(int fd, BOOL set);
-int tval_sub( struct timeval *retval, struct timeval *val1, struct timeval *val2);
-BOOL read_data(int fd,char *buffer,int N);
-BOOL send_keepalive(void);
-BOOL open_sockets(int port );
-int open_socket_out(struct in_addr *addr, int port );
-BOOL big_endian(void );
-int name_mangles(char *In,char *Out);
+static BOOL get_myname(char *myname,struct in_addr *ip);
+static struct hostent *Get_Hostbyname(char *name);
+static void strlower(char *s);
+static void strupper(char *s);
+static int browse_host(shareinfo *sInfo, unsigned int size);
+static void ssval(char *buf,int pos,uint16 val);
+static uint32 ival(char *buf,int pos);
+static void object_byte_swap(void *obj,int size);
+static char *skip_string(char *buf,int n);
+static uint16 sval(char *buf,int pos);
+static char *smb_buf(char *buf);
+static int smb_buf_ofs(char *buf);
+static BOOL send_login(char *inbuf,char *outbuf,BOOL use_setup);
+static int name_len(char *s);
+static char *smb_errstr(char *inbuf);
+static int TimeDiff(void);
+static time_t TimeLocal(struct tm *tm,int timemul);
+static void interpret_dos_date(uint32 date,int *year,int *month,int *day,int *hour,int *minute,int *second);
+static struct tm *LocalTime(time_t *t,int timemul);
+static void sival(char *buf,int pos,uint32 val);
+static time_t make_unix_date(void *date_ptr);
+static void send_logout(char *inbuf,char *outbuf );
+static BOOL send_smb(char *buffer);
+static int smb_len(char *buf);
+static void log_out(char *buffer,int len);
+static void close_sockets(void );
+static int write_socket(int fd,char *buf,int len);
+static int set_message(char *buf,int num_words,int num_bytes,BOOL zero);
+static void smb_setlen(char *buf,int len);
+static void setup_pkt(char *outbuf);
+static BOOL receive_smb(char *buffer,int timeout);
+static void log_in(char *buffer,int len);
+static int read_smb_length(int fd,char *inbuf,int timeout);
+static int read_with_timeout(int fd,char *buf,int mincnt,int maxcnt,long time_out,BOOL exact);
+static int set_blocking(int fd, BOOL set);
+static int tval_sub( struct timeval *retval, struct timeval *val1, struct timeval *val2);
+static BOOL read_data(int fd,char *buffer,int N);
+static BOOL send_keepalive(void);
+static BOOL open_sockets(const char *node, const char *service);
+static int open_socket_out(const char *node, const char *service);
+static int name_mangles(char *In,char *Out);
 /****************************************************************************
 globale variablen
 ****************************************************************************/
-shareinfo	*sInfo = 0;
-struct in_addr myip;
-struct in_addr dest_ip;
-struct timezone tz;
-pstring myname = "";
-pstring service="";
-pstring desthost="";
-pstring password = "";
-pstring username = "";
-pstring scope ="";
-time_t servertime = 0;
-int max_xmit = BUFFER_SIZE;
-int Protocol = PROTOCOL_COREPLUS;
-int extra_time_offset = 0;
-BOOL readbraw_supported = False;
-BOOL writebraw_supported = False;
-BOOL got_pass = False;
-BOOL passive = False;
-BOOL have_ip = False;
+static __thread struct in_addr myip;
+static __thread pstring myname;
+static __thread pstring service;
+static __thread pstring desthost;
+static __thread pstring password;
+static __thread pstring username;
+static __thread pstring scope;
+static __thread time_t servertime;
+static __thread int max_xmit = BUFFER_SIZE;
+static __thread int Protocol = PROTOCOL_COREPLUS;
+static __thread int extra_time_offset;
+static __thread BOOL readbraw_supported;
+static __thread BOOL writebraw_supported;
+static __thread BOOL got_pass;
 
 /****************************************************************************
 hier gehts los 
 ****************************************************************************/
 int smbInfo(char *pythonIp , char *pythonrName, char *pythonUser, char *pythonPass, shareinfo *sInfo, unsigned int size)
 {
-	int port = 139;
-	have_ip = True;
-	NeedSwap = big_endian();
+	int ret = -1;
 	myip.s_addr= inet_addr(pythonrName);
-	dest_ip.s_addr= inet_addr(pythonIp);
 	strcpy(username,pythonUser);
 	strupper(username);
 	strcpy(password,pythonPass);
-	get_myname(*myname?NULL:myname,&myip);
+	get_myname(myname, &myip);
 	strupper(myname);
 	sprintf(service,"\\\\%s\\IPC$",pythonrName);
 	strupper(service);
 #if DEBUG
 	printf("service = %s\n", service);
 #endif
-	if (open_sockets(port))
-	{
-		int ret = browse_host(sInfo, size);
+	if (open_sockets(pythonIp, "139")) {
+		ret = browse_host(sInfo, size);
 		close_sockets();
-		return ret;
 	}
-	return -1;
+
+	return ret;
 }
 
 /****************************************************************************
 get my own name and IP
 ****************************************************************************/
-BOOL get_myname(char *myname,struct in_addr *ip)
+static BOOL get_myname(char *myname,struct in_addr *ip)
 {
   struct hostent *hp;
   pstring myhostname="";
@@ -184,7 +171,7 @@ BOOL get_myname(char *myname,struct in_addr *ip)
 a wrapper for gethostbyname() that tries with all lower and all upper case 
 if the initial name fails
 ****************************************************************************/
-struct hostent *Get_Hostbyname(char *name)
+static struct hostent *Get_Hostbyname(char *name)
 {
   char *name2 = strdup(name);
   struct hostent *ret;
@@ -230,7 +217,7 @@ struct hostent *Get_Hostbyname(char *name)
 /*******************************************************************
   convert a string to lower case
 ********************************************************************/
-void strlower(char *s)
+static void strlower(char *s)
 {
 	while (*s)
 	{
@@ -243,7 +230,7 @@ void strlower(char *s)
 /*******************************************************************
   convert a string to upper case
 ********************************************************************/
-void strupper(char *s)
+static void strupper(char *s)
 {
 	while (*s)
 	{
@@ -256,7 +243,7 @@ void strupper(char *s)
 /****************************************************************************
 try and browse available connections on a host
 ****************************************************************************/
-int browse_host(shareinfo *sInfo, unsigned int size)
+static int browse_host(shareinfo *sInfo, unsigned int size)
 {
   char *p;
   char *params;
@@ -383,7 +370,7 @@ int browse_host(shareinfo *sInfo, unsigned int size)
 /****************************************************************************
   set a value at buf[pos] to int16 val
 ****************************************************************************/
-void ssval(char *buf,int pos,uint16 val)
+static void ssval(char *buf,int pos,uint16 val)
 {
   SWP(&val,sizeof(val));
   memcpy(buf + pos,(char *)&val,sizeof(int16));
@@ -391,7 +378,7 @@ void ssval(char *buf,int pos,uint16 val)
 /****************************************************************************
   get a 32 bit integer value
 ****************************************************************************/
-uint32 ival(char *buf,int pos)
+static uint32 ival(char *buf,int pos)
 {
   uint32 val;
   memcpy((char *)&val,buf + pos,sizeof(int));
@@ -401,7 +388,7 @@ uint32 ival(char *buf,int pos)
 /*******************************************************************
   byte swap an object - the byte order of the object is reversed
 ********************************************************************/
-void *object_byte_swap(void *obj,int size)
+static void object_byte_swap(void *obj,int size)
 {
   int i;
   char c;
@@ -418,26 +405,11 @@ void *object_byte_swap(void *obj,int size)
       p1++;
       p2--;
     }
-  return(obj);
-}
-/*******************************************************************
-return the size of the smb_buf region of a message
-********************************************************************/
-int smb_buflen(char *buf)
-{
-  return(SVAL(buf,smb_vwv0 + smb_numwords(buf)*2));
-}
-/*******************************************************************
-return the number of smb words
-********************************************************************/
-int smb_numwords(char *buf)
-{
-  return (CVAL(buf,smb_wct));
 }
 /*******************************************************************
 skip past some strings in a buffer
 ********************************************************************/
-char *skip_string(char *buf,int n)
+static char *skip_string(char *buf,int n)
 {
   while (n--)
     buf += strlen(buf) + 1;
@@ -446,7 +418,7 @@ char *skip_string(char *buf,int n)
 /****************************************************************************
   get a int16 value
 ****************************************************************************/
-uint16 sval(char *buf,int pos)
+static uint16 sval(char *buf,int pos)
 {
   uint16 val;
   memcpy((char *)&val,buf + pos,sizeof(uint16));
@@ -456,21 +428,21 @@ uint16 sval(char *buf,int pos)
 /*******************************************************************
   return a pointer to the smb_buf data area
 ********************************************************************/
-char *smb_buf(char *buf)
+static char *smb_buf(char *buf)
 {
   return (buf + smb_buf_ofs(buf));
 }
 /*******************************************************************
   return a pointer to the smb_buf data area
 ********************************************************************/
-int smb_buf_ofs(char *buf)
+static int smb_buf_ofs(char *buf)
 {
   return (smb_size + CVAL(buf,smb_wct)*2);
 }
 /****************************************************************************
 send a login command
 ****************************************************************************/
-BOOL send_login(char *inbuf,char *outbuf,BOOL use_setup)
+static BOOL send_login(char *inbuf,char *outbuf,BOOL use_setup)
 {
   int sesskey=0;
   struct {
@@ -767,7 +739,7 @@ BOOL send_login(char *inbuf,char *outbuf,BOOL use_setup)
 /****************************************************************************
 return the total storage length of a mangled name
 ****************************************************************************/
-int name_len(char *s)
+static int name_len(char *s)
 {
   unsigned char c = *(unsigned char *)s;
   if ((c & 0xC0) == 0xC0)
@@ -777,7 +749,7 @@ int name_len(char *s)
 /****************************************************************************
 return a SMB error string from a SMB buffer
 ****************************************************************************/
-char *smb_errstr(char *inbuf)
+static char *smb_errstr(char *inbuf)
 {
   static pstring ret;
   int class = CVAL(inbuf,smb_rcls);
@@ -789,7 +761,7 @@ char *smb_errstr(char *inbuf)
       {
 	if (err_classes[i].err_msgs)
 	  {
-	    err_code_struct *err = err_classes[i].err_msgs;
+	    const err_code_struct *err = err_classes[i].err_msgs;
 	    for (j=0;err[j].name;j++)
 	      if (num == err[j].code)
 		{
@@ -806,42 +778,10 @@ char *smb_errstr(char *inbuf)
   sprintf(ret,"ERROR: Unknown error (%d,%d)",class,num);
   return(ret);
 }
-/*******************************************************************
-  create a unix date from a dos date
-********************************************************************/
-time_t make_unix_date2(void *date_ptr)
-{
-  uint32 dos_date;
-  struct tm t;
-  unsigned char *p = (unsigned char *)&dos_date;
-  unsigned char c;
-
-  memcpy(&dos_date,date_ptr,4);
-
-  if (dos_date == 0) return(0); 
-
-  c = p[0];
-  p[0] = p[2];
-  p[2] = c;
-  c = p[1];
-  p[1] = p[3];
-  p[3] = c;
-
-  
-  interpret_dos_date(dos_date,&t.tm_year,&t.tm_mon,
-		     &t.tm_mday,&t.tm_hour,&t.tm_min,&t.tm_sec);
-  t.tm_wday = 1;
-  t.tm_yday = 1;
-  t.tm_isdst = 0;
-#if DEBUG
-  printf("year=%d month=%d day=%d hr=%d min=%d sec=%d\n",t.tm_year,t.tm_mon,t.tm_mday,t.tm_hour,t.tm_min,t.tm_sec);
-#endif
-  return (TimeLocal(&t,GMT_TO_LOCAL));
-}
 /****************************************************************************
 return the difference between local and GMT time
 ****************************************************************************/
-int TimeDiff(void)
+static int TimeDiff(void)
 {
   static BOOL initialised = False;
   static int timediff = 0;
@@ -877,21 +817,21 @@ int TimeDiff(void)
       initialised = True;
     }
 
-return(timediff + (extra_time_offset*60));
+  return(timediff + (extra_time_offset*60));
 }
 
 
 /****************************************************************************
 try to optimise the timelocal call, it can be quite expenive on some machines
 ****************************************************************************/
-time_t TimeLocal(struct tm *tm,int timemul)
+static time_t TimeLocal(struct tm *tm,int timemul)
 {
   return(mktime(tm) + timemul * TimeDiff());
 }
 /*******************************************************************
   interpret a 32 bit dos packed date/time to some parameters
 ********************************************************************/
-void interpret_dos_date(uint32 date,int *year,int *month,int *day,int *hour,int *minute,int *second)
+static void interpret_dos_date(uint32 date,int *year,int *month,int *day,int *hour,int *minute,int *second)
 {
   unsigned char *p = (unsigned char *)&date;
 
@@ -906,7 +846,7 @@ void interpret_dos_date(uint32 date,int *year,int *month,int *day,int *hour,int 
 try to optimise the localtime call, it can be quite expenive on some machines
 timemul is normally LOCAL_TO_GMT, GMT_TO_LOCAL or 0
 ****************************************************************************/
-struct tm *LocalTime(time_t *t,int timemul)
+static struct tm *LocalTime(time_t *t,int timemul)
 {
   time_t t2 = *t;
 
@@ -917,7 +857,7 @@ struct tm *LocalTime(time_t *t,int timemul)
 /****************************************************************************
   set a value at buf[pos] to integer val
 ****************************************************************************/
-void sival(char *buf,int pos,uint32 val)
+static void sival(char *buf,int pos,uint32 val)
 {
   SWP(&val,sizeof(val));
   memcpy(buf + pos,(char *)&val,sizeof(val));
@@ -925,7 +865,7 @@ void sival(char *buf,int pos,uint32 val)
 /*******************************************************************
   create a unix date from a dos date
 ********************************************************************/
-time_t make_unix_date(void *date_ptr)
+static time_t make_unix_date(void *date_ptr)
 {
   uint32 dos_date;
   struct tm t;
@@ -946,7 +886,7 @@ time_t make_unix_date(void *date_ptr)
 /****************************************************************************
 send a logout command
 ****************************************************************************/
-void send_logout(char *inbuf,char *outbuf )
+static void send_logout(char *inbuf,char *outbuf )
 {
   set_message(outbuf,0,0,True);
   CVAL(outbuf,smb_com) = SMBtdis;
@@ -969,7 +909,7 @@ void send_logout(char *inbuf,char *outbuf )
 /****************************************************************************
   send an smb to a fd 
 ****************************************************************************/
-BOOL send_smb(char *buffer)
+static BOOL send_smb(char *buffer)
 {
   int fd = Client;
   int len;
@@ -998,7 +938,7 @@ BOOL send_smb(char *buffer)
 /*******************************************************************
   return the length of an smb packet
 ********************************************************************/
-int smb_len(char *buf)
+static int smb_len(char *buf)
 {
   int msg_flags = CVAL(buf,1);
   uint16 len = SVAL(buf,2);
@@ -1012,7 +952,7 @@ int smb_len(char *buf)
 /****************************************************************************
 log a packet to logout
 ****************************************************************************/
-void log_out(char *buffer,int len)
+static void log_out(char *buffer,int len)
 {   
 #if DEBUG
   printf("logged %d bytes out\n",len);
@@ -1021,21 +961,18 @@ void log_out(char *buffer,int len)
 /****************************************************************************
   close the socket communication
 ****************************************************************************/
-void close_sockets(void )
+static void close_sockets(void )
 {
-  extern int Client;
   close(Client);
-  Client = 0;
+  Client = -1;
 }
 /****************************************************************************
 write to a socket
 ****************************************************************************/
-int write_socket(int fd,char *buf,int len)
+static int write_socket(int fd,char *buf,int len)
 {
   int ret=0;
 
-  if (passive)
-    return(len);
 #if DEBUG
   printf("write_socket(%d,%d)\n",fd,len);
 #endif
@@ -1048,7 +985,7 @@ int write_socket(int fd,char *buf,int len)
 /*******************************************************************
   setup the word count and byte count for a smb message
 ********************************************************************/
-int set_message(char *buf,int num_words,int num_bytes,BOOL zero)
+static int set_message(char *buf,int num_words,int num_bytes,BOOL zero)
 {
   if (zero)
     memset(buf + smb_size,0,num_words*2 + num_bytes);
@@ -1060,7 +997,7 @@ int set_message(char *buf,int num_words,int num_bytes,BOOL zero)
 /*******************************************************************
   set the length of an smb packet
 ********************************************************************/
-void smb_setlen(char *buf,int len)
+static void smb_setlen(char *buf,int len)
 {
   SSVAL(buf,2,len);
   BSWP(buf+2,2);
@@ -1081,7 +1018,7 @@ void smb_setlen(char *buf,int len)
 /****************************************************************************
 setup basics in a outgoing packet
 ****************************************************************************/
-void setup_pkt(char *outbuf)
+static void setup_pkt(char *outbuf)
 {
   SSVAL(outbuf,smb_pid,pid);
   SSVAL(outbuf,smb_uid,uid);
@@ -1096,7 +1033,7 @@ void setup_pkt(char *outbuf)
   read an smb from a fd and return it's length
 The timeout is in micro seconds
 ****************************************************************************/
-BOOL receive_smb(char *buffer,int timeout)
+static BOOL receive_smb(char *buffer,int timeout)
 {
   int len;
   int fd = Client;
@@ -1134,7 +1071,7 @@ BOOL receive_smb(char *buffer,int timeout)
 /****************************************************************************
 log a packet to login
 ****************************************************************************/
-void log_in(char *buffer,int len)
+static void log_in(char *buffer,int len)
 {
 #if DEBUG    
   printf("logged %d bytes in\n",len);
@@ -1144,7 +1081,7 @@ void log_in(char *buffer,int len)
 read 4 bytes of a smb packet and return the smb length of the packet
 possibly store the result in the buffer
 ****************************************************************************/
-int read_smb_length(int fd,char *inbuf,int timeout)
+static int read_smb_length(int fd,char *inbuf,int timeout)
 {
   char *buffer;
   char buf[4];
@@ -1200,7 +1137,7 @@ read data from a device with a timout in msec.
 mincount = if timeout, minimum to read before returning
 maxcount = number to be read.
 ****************************************************************************/
-int read_with_timeout(int fd,char *buf,int mincnt,int maxcnt,long time_out,BOOL exact)
+static int read_with_timeout(int fd,char *buf,int mincnt,int maxcnt,long time_out,BOOL exact)
 {
   fd_set fds;
   int selrtn;
@@ -1310,7 +1247,7 @@ else
 if SYSV use O_NDELAY
 if BSD use FNDELAY
 ****************************************************************************/
-int set_blocking(int fd, BOOL set)
+static int set_blocking(int fd, BOOL set)
 {
 int val;
 #ifdef O_NONBLOCK
@@ -1337,7 +1274,7 @@ Calculate the difference in timeout values. Return 1 if val1 > val2,
 0 if val1 == val2, -1 if val1 < val2. Stores result in retval. retval
 may be == val1 or val2
 ****************************************************************************/
-int tval_sub( struct timeval *retval, struct timeval *val1, struct timeval *val2)
+static int tval_sub( struct timeval *retval, struct timeval *val1, struct timeval *val2)
 {
 	long usecdiff = val1->tv_usec - val2->tv_usec;
 	long secdiff = val1->tv_sec - val2->tv_sec;
@@ -1356,7 +1293,7 @@ int tval_sub( struct timeval *retval, struct timeval *val1, struct timeval *val2
 /****************************************************************************
   read data from the client, reading exactly N bytes. 
 ****************************************************************************/
-BOOL read_data(int fd,char *buffer,int N)
+static BOOL read_data(int fd,char *buffer,int N)
 {
   int maxtime = keepalive;
   int  nready;
@@ -1405,7 +1342,7 @@ BOOL read_data(int fd,char *buffer,int N)
 /****************************************************************************
 send a keepalive packet (rfc1002)
 ****************************************************************************/
-BOOL send_keepalive(void)
+static BOOL send_keepalive(void)
 {
   unsigned char buf[4];
   int nwritten = 0;
@@ -1425,11 +1362,10 @@ BOOL send_keepalive(void)
 /****************************************************************************
 open the client sockets
 ****************************************************************************/
-BOOL open_sockets(int port )
+static BOOL open_sockets(const char *node, const char *srv)
 {
   char *host;
   pstring service2;
-  extern int Client;
 
   strupper(service);
 
@@ -1445,22 +1381,7 @@ BOOL open_sockets(int port )
       strupper(myname);
     }
 
-  if (!have_ip)
-    {
-      struct hostent *hp;
-
-      if ((hp = Get_Hostbyname(host)) == 0) 
-	{
-#if DEBUG
-	  printf("Get_Hostbyname: Unknown host %s.\n",host);
-#endif
-	  return False;
-	}
-
-      memcpy((char *)&dest_ip,(char *)hp->h_addr,4);
-    }
-
-  Client = open_socket_out(&dest_ip, port);
+  Client = open_socket_out(node, srv);
   if (Client == -1)
     return False;
 #if DEBUG
@@ -1478,55 +1399,67 @@ BOOL open_sockets(int port )
 /****************************************************************************
 create an outgoing socket
 ****************************************************************************/
-int open_socket_out(struct in_addr *addr, int port )
+static int open_socket_out(const char *node, const char *service)
 {
-  struct sockaddr_in sock_out;
-  int res;
+	struct addrinfo hints;
+	struct addrinfo *result, *rp;
+	int sfd, s;
+	struct timeval tv;
+	fd_set fds;
 
-  /* create a socket to write to */
-  res = socket(PF_INET, SOCK_STREAM, 0);
-  if (res == -1) 
-	{ 
-#if DEBUG
-		printf("socket error\n");
-#endif 
-		return -1; 
-	}
-  
-  memset((char *)&sock_out, 0, sizeof(sock_out));
-  memcpy((char *)&sock_out.sin_addr,(char *)addr,4);
-  
-  sock_out.sin_port = htons( port );
-  sock_out.sin_family = PF_INET;
-#if DEBUG
-  printf("Connecting to %s at port %d\n",inet_ntoa(*addr),port);
-  #endif
-  /* and connect it to the destination */
-  if (connect(res,(struct sockaddr *)&sock_out,sizeof(sock_out))<0)
-	{ 
-#if DEBUG
-		printf("connect error: %s\n",strerror(errno)); 
-#endif
-		close(res); 
-		return -1; 
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family = AF_UNSPEC;
+	hints.ai_socktype = SOCK_STREAM;
+	hints.ai_flags = AI_ADDRCONFIG | AI_NUMERICHOST | AI_NUMERICSERV;
+	hints.ai_protocol = IPPROTO_TCP;
+
+	s = getaddrinfo(node, service, &hints, &result);
+	if (s != 0) {
+		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
+		return -1;
 	}
 
-  return res;
-}
-/*******************************************************************
-  true if the machine is big endian
-********************************************************************/
-BOOL big_endian(void )
-{
-  int x = 2;
-  char *s;
-  s = (char *)&x;
-  return(s[0] == 0);
+	for (rp = result; rp != NULL; rp = rp->ai_next) {
+		sfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
+		if (sfd < 0) {
+			perror("socket");
+			continue;
+		}
+
+		set_blocking(sfd, False);
+
+		if (connect(sfd, rp->ai_addr, rp->ai_addrlen) < 0 &&
+		    errno != EINPROGRESS) {
+			perror("connect");
+			close(sfd);
+			continue;
+		}
+
+		FD_ZERO(&fds);
+		FD_SET(sfd,&fds);
+
+		tv.tv_sec = 1;
+		tv.tv_usec = 0;
+
+		if (select(sfd + 1, NULL, &fds, NULL, &tv) == 1) {
+			int err;
+			socklen_t len = sizeof(err);
+			getsockopt(sfd, SOL_SOCKET, SO_ERROR, &err, &len);
+			if (err == 0) {
+				set_blocking(sfd, True);
+				return sfd;
+			}
+		}
+
+		close(sfd);
+	}
+
+	return -1;
 }
 /****************************************************************************
 mangle a name into netbios format
 ****************************************************************************/
-int name_mangles(char *In,char *Out)
+static int name_mangles(char *In,char *Out)
 {
   char *in = (char *)In;
   char *out = (char *)Out;

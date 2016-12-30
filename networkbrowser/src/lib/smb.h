@@ -27,6 +27,10 @@
 #ifndef SMB_H
 #define SMB_H
 
+#ifndef BYTE_ORDER
+#error "no BYTE_ORDER defined!"
+#endif
+
 typedef int BOOL;
 typedef short int16;
 typedef int int32;
@@ -35,14 +39,12 @@ typedef unsigned int uint32;
 typedef char pstring[1024];
 typedef char fstring[128];
 
-int mid = 0;
-int pid;
-int uid;
-int cnum;
-int Client = 0;
-int trans_num = 0;
-int keepalive = 0;
-BOOL NeedSwap;
+static __thread int mid;
+static __thread int pid;
+static __thread int uid;
+static __thread int cnum;
+static __thread int Client = -1;
+static __thread int keepalive;
 
 #define False (0)
 #define True (1)
@@ -99,7 +101,11 @@ BOOL NeedSwap;
 #define CVAL(buf,pos) PVAL(buf,pos,unsigned char)
 #define SSVAL(buf,pos,val) ssval((char *)(buf),pos,val)
 #define SSVALS(buf,pos,val) ssval_s((char *)(buf),pos,val)
-#define SWP(buf,len) (NeedSwap?BSWP(buf,len):((void *)buf))
+#if BYTE_ORDER == LITTLE_ENDIAN
+#define SWP(buf,len)
+#else
+#define SWP(buf,len) BSWP(buf,len)
+#endif
 #define IVAL(buf,pos) ival((char *)(buf),pos)
 #define BSWP(buf,len) object_byte_swap(buf,len)
 #define PTR_DIFF(p1,p2) ((ptrdiff_t)(((char *)(p1)) - (char *)(p2)))
@@ -114,13 +120,13 @@ enum protocol_types {PROTOCOL_NONE,PROTOCOL_CORE,PROTOCOL_COREPLUS,PROTOCOL_LANM
 
 typedef struct
 {
-  char *name;
+  const char *name;
   int code;
-  char *message;
+  const char *message;
 } err_code_struct;
 
 /* Dos Error Messages */
-err_code_struct dos_msgs[] = {
+static const err_code_struct dos_msgs[] = {
   {"ERRbadfunc",1,"Invalid function."},
   {"ERRbadfile",2,"File not found."},
   {"ERRbadpath",3,"Directory invalid."},
@@ -150,7 +156,7 @@ err_code_struct dos_msgs[] = {
   {NULL,-1,NULL}};
 
 /* Server Error Messages */
-err_code_struct server_msgs[] = {
+static const err_code_struct server_msgs[] = {
   {"ERRerror",1,"Non-specific error code."},
   {"ERRbadpw",2,"Bad password - name/password pair in a Tree Connect or Session Setup are invalid."},
   {"ERRbadtype",3,"reserved."},
@@ -185,7 +191,7 @@ err_code_struct server_msgs[] = {
   {"ERRnosupport",0xFFFF,"Function not supported."},
   {NULL,-1,NULL}};
 /* Hard Error Messages */
-err_code_struct hard_msgs[] = {
+static const err_code_struct hard_msgs[] = {
   {"ERRnowrite",19,"Attempt to write on write-protected diskette."},
   {"ERRbadunit",20,"Unknown unit."},
   {"ERRnotready",21,"Drive not ready."},
@@ -209,8 +215,8 @@ err_code_struct hard_msgs[] = {
 struct
 {
   int code;
-  char *class;
-  err_code_struct *err_msgs;
+  const char *class;
+  const err_code_struct *err_msgs;
 } err_classes[] = { 
   {0,"SUCCESS",NULL},
   {0x01,"ERRDOS",dos_msgs},
