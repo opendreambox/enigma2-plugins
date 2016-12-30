@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # for localized messages
 #from __init__ import _
-from enigma import eTimer, eEnv, eNetworkManager
+from enigma import eConsoleAppContainer, eEnv, eNetworkManager, eTimer
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Components.ActionMap import ActionMap
@@ -17,8 +17,11 @@ from cPickle import dump, load
 from os import path as os_path, stat, mkdir, remove
 from time import time
 from stat import ST_MTIME
+from netaddr import IPNetwork
 
 import netscan
+import rpcinfo
+import socket
 from MountManager import AutoMountManager
 from AutoMount import iAutoMount
 from MountEdit import AutoMountEdit
@@ -95,21 +98,17 @@ class NetworkBrowser(Screen):
 		Screen.__init__(self, session)
 		self.skin_path = plugin_path
 		self.session = session
-		self.iface = iface
-		services = eNetworkManager.getInstance().getServices()
-		for service in services:
+		self.iface = iface or 'eth0'
+		for service in eNetworkManager.getInstance().getServices():
 			key = self.getServiceIF(service)
-			if key != None:
+			if key:
 				self.iface = key
 				break
-		if self.iface is None:
-			self.iface = 'eth0'
-		self.networklist = None
-		self.device = None
-		self.mounts = None
+		self.networklist = []
 		self.expanded = []
 		self.cache_ttl = 604800 #Seconds cache is considered valid, 7 Days should be ok
 		self.cache_file = eEnv.resolve("${sysconfdir}/enigma2/networkbrowser.cache") #Path to cache directory
+		self._nrthreads = 0
 
 		self["key_red"] = StaticText(_("Close"))
 		self["key_green"] = StaticText(_("Mounts"))
@@ -152,7 +151,6 @@ class NetworkBrowser(Screen):
 	def startRun(self):
 		self.expanded = []
 		self.setStatus('update')
-		self.mounts = iAutoMount.getMounts()
 		self["infotext"].setText("")
 		self.vc = valid_cache(self.cache_file, self.cache_ttl)
 		if self.cache_ttl > 0 and self.vc != 0:
@@ -180,17 +178,24 @@ class NetworkBrowser(Screen):
 
 	def scanIPclosed(self,result):
 		if result[0]:
+			# scan subnet outside ipv4.address/24
 			if result[1] == "address":
-				print "[Networkbrowser] got IP:",result[1]
-				nwlist = []
-				nwlist.append(netscan.netInfo(result[0] + "/24"))
-				self.networklist += nwlist[0]
+				print "[Networkbrowser] got IP:",result[0]
+				self.setStatus('update')
+				net = IPNetwork('%s/24' % result[0])
+				ipv4 = iNetworkInfo.getConfiguredInterfaces()[self.iface].ipv4
+				localnet = IPNetwork('%s/%s' % (ipv4.address, ipv4.netmask))
+				if localnet.__contains__(net):
+					self._startScan(self.iface, net.cidr)
+				else:
+					for host in net.iter_hosts():
+						self._nrthreads += 1
+						reactor.callInThread(self.getNetworkIPs, str(host))
+			# add offline host
 			elif result[1] == "nfs":
 				self.networklist.append(['host', result[0], result[0] , '00:00:00:00:00:00', result[0], 'Master Browser'])
-
-		if len(self.networklist) > 0:
-			write_cache(self.cache_file, self.networklist)
-			self.updateHostsList()
+				write_cache(self.cache_file, self.networklist)
+				self.updateHostsList()
 
 	def setStatus(self,status = None):
 		if status:
@@ -219,33 +224,88 @@ class NetworkBrowser(Screen):
 				self.inv_cache = 1
 		if self.cache_ttl == 0 or self.inv_cache == 1 or self.vc == 0:
 			Log.i('Getting fresh network list')
-			self._ip = iNetworkInfo.getConfiguredInterfaces()[self.iface].ipv4.address.split(".")
-			reactor.callInThread(self.getNetworkIPs)
 
-	def getNetworkIPs(self):
-		Log.w()
-		info = None
-		sharelist = []
-		if len(self._ip):
-			strIP = "%s.0/24" %( ".".join(self._ip[0:3]) )
-			info = [x for x in netscan.netInfo(strIP) if x[2] != '.'.join(self._ip)]
-			Log.i(info)
+			ipv4 = iNetworkInfo.getConfiguredInterfaces()[self.iface].ipv4
+			net = IPNetwork('%s/%s' % (ipv4.address, ipv4.netmask))
+			if net.prefixlen < 24:
+				net.prefixlen = 24
+
+			self.networklist = []
+			self._startScan(self.iface, net.cidr)
+
+	def _startScan(self, iface, cidr):
+			cmd = "arp-scan -gqNx --retry=1 --interface=%s %s" % (iface, cidr)
+			Log.i("Command: %s" % cmd)
+			self._arpscan_container = eConsoleAppContainer()
+			self._arpscan_appClosed_conn = self._arpscan_container.appClosed.connect(self._onArpScanClosed)
+			self._arpscan_dataAvail_conn = self._arpscan_container.dataAvail.connect(self._onArpScanData)
+
+			self._arpscan_hosts = []
+			self._arpscan_container.execute(cmd)
+
+	def _onArpScanData(self, data):
+		for line in data.splitlines():
+			try:
+				(address, mac) = line.split()
+			except:
+				Log.w('Unexpected line: %s' % line)
+			else:
+				self._arpscan_hosts.append(address)
+
+	def _onArpScanClosed(self, retval):
+		Log.i("arp-scan closed, retval=%d" % retval)
+		for host in self._arpscan_hosts:
+			self._nrthreads += 1
+			reactor.callInThread(self.getNetworkIPs, host)
+
+	def _probeTcpPort(self, host, port):
+		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		sock.settimeout(0.2)
+		try:
+			sock.connect((host, port))
+		except:
+			Log.w("Connection to %s:%d failed" % (host, port))
+			found = False
 		else:
-			Log.w("IP FAULTY! %s" %self._ip)
+			Log.i("Detected service on %s:%d" % (host, port))
+			found = True
+		sock.close()
+		return found
+
+	def getNetworkIPs(self, host):
+		Log.i("Detecting availablility of NFS or SMB services on host %s" % host)
+		info = []
+		has_service = False
+
+		if self._probeTcpPort(host, 139):
+			Log.i("Trying to look up SMB hostname of %s" % host)
+			has_service = True
+			info = netscan.netInfo(host)
+		elif rpcinfo.progping('udp', host, 'nfs') or rpcinfo.progping('tcp', host, 'nfs'):
+			Log.i("Found NFS server on %s" % host)
+			has_service = True
+
+		if has_service and not info:
+			info = [['host', host, host, '00:00:00:00:00:00', host, 'Master Browser']]
+
+		Log.i(info)
 		reactor.callFromThread(self._onNetworkIPsReady, info)
 
 	def _onNetworkIPsReady(self, info):
-		self.networklist = info
-		write_cache(self.cache_file, self.networklist)
-		if len(self.networklist) > 0:
-			self.updateHostsList()
-		else:
-			self.setStatus('error')
+		self.networklist += info
+		self._nrthreads -= 1
+		Log.i("Waiting for %d more threads" % self._nrthreads)
+		if self._nrthreads == 0:
+			write_cache(self.cache_file, self.networklist)
+			if len(self.networklist) > 0:
+				self.updateHostsList()
+			else:
+				self.setStatus('error')
 
 	def _onError(self, *args, **kwargs):
 		Log.w()
 
-	def getNetworkShares(self,hostip,hostname,devicetype):
+	def getNetworkShares(self, hostip, hostname):
 		sharelist = []
 		self.sharecache_file = None
 		self.sharecache_file = eEnv.resolve("${sysconfdir}/enigma2/") + hostname.strip() + '.cache' #Path to cache directory
@@ -261,29 +321,27 @@ class NetworkBrowser(Screen):
 			except:
 				pass
 
-		smblist = netscan.smbShare(hostip, hostname, username, password)
-		for x in smblist:
+		for x in netscan.smbShare(hostip, hostname, username, password):
 			if len(x) == 6:
 				if x[4] == "Disk" and not x[3].endswith('$'):
 					sharelist.append(x)
-		if devicetype == 'unix':
-			nfslist = netscan.nfsShare(hostip, hostname)
-			for x in nfslist:
-				if len(x) == 6:
-					sharelist.append(x)
+		for x in netscan.nfsShare(hostip, hostname):
+			if len(x) == 6:
+				sharelist.append(x)
 
 		return sharelist
 
 	def updateHostsList(self):
+		Log.i()
 		self.list = []
-		self.network = {}
+		network = {}
 		for x in self.networklist:
-			if not self.network.has_key(x[2]):
-				self.network[x[2]] = []
-			self.network[x[2]].append((NetworkDescriptor(name = x[1], description = x[2]), x))
+			if not network.has_key(x[2]):
+				network[x[2]] = []
+			network[x[2]].append((NetworkDescriptor(name = x[1], description = x[2]), x))
 		
-		for x in self.network.keys():
-			hostentry = self.network[x][0][1]
+		for x in network.keys():
+			hostentry = network[x][0][1]
 			name = hostentry[2] + " ( " +hostentry[1].strip() + " )"
 			expandableIcon = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/host.png"))
 			self.list.append(( hostentry, expandableIcon, name, None, None, None, None ))
@@ -298,29 +356,24 @@ class NetworkBrowser(Screen):
 		self["list"].setIndex(self.listindex)
 
 	def updateNetworkList(self):
+		Log.i()
 		self.list = []
-		self.network = {}
-		self.mounts = iAutoMount.getMounts() # reloading mount list
+		network = {}
 		for x in self.networklist:
-			if not self.network.has_key(x[2]):
-				self.network[x[2]] = []
-			self.network[x[2]].append((NetworkDescriptor(name = x[1], description = x[2]), x))
-		self.network.keys().sort()
-		for x in self.network.keys():
-			if self.network[x][0][1][3] == '00:00:00:00:00:00':
-				self.device = 'unix'
-			else:
-				self.device = 'windows'
+			if not network.has_key(x[2]):
+				network[x[2]] = []
+			network[x[2]].append((NetworkDescriptor(name = x[1], description = x[2]), x))
+		for x in sorted(network.keys()):
 			if x in self.expanded:
-				networkshares = self.getNetworkShares(x,self.network[x][0][1][1].strip(),self.device)
-				hostentry = self.network[x][0][1]
+				networkshares = self.getNetworkShares(x, network[x][0][1][1].strip())
+				hostentry = network[x][0][1]
 				name = hostentry[2] + " ( " +hostentry[1].strip() + " )"
 				expandedIcon = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/host.png"))
 				self.list.append(( hostentry, expandedIcon, name, None, None, None, None ))
 				for share in networkshares:
 					self.list.append(self.BuildNetworkShareEntry(share))
 			else: # HOSTLIST - VIEW
-				hostentry = self.network[x][0][1]
+				hostentry = network[x][0][1]
 				name = hostentry[2] + " ( " +hostentry[1].strip() + " )"
 				expandableIcon = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/host.png"))
 				self.list.append(( hostentry, expandableIcon, name, None, None, None, None ))
@@ -352,7 +405,8 @@ class NetworkBrowser(Screen):
 			newpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/i-smb.png"))
 
 		self.isMounted = False
-		for sharename, sharedata in self.mounts.items():
+		mounts = iAutoMount.getMounts()
+		for sharename, sharedata in mounts.items():
 			if sharedata['ip'] == sharehost:
 				if sharetype == 'nfsShare' and sharedata['mounttype'] == 'nfs':
 					if sharedir == sharedata['sharedir']:
