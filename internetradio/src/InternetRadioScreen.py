@@ -86,8 +86,9 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 #				break
 
 		skin = """
-			<screen name="InternetRadioScreen" position="0,0" size="1280,720" flags="wfNoBorder" backgroundColor="#00000000" title="InternetRadio">
+			<screen name="InternetRadio" position="0,0" size="1280,720" flags="wfNoBorder" backgroundColor="#00000000" title="InternetRadio">
 				<widget transparent="1" name="video" position="0,0" size="1280,720" zPosition="1"/>
+				<eLabel backgroundColor="#00000000" position="0,0" size="1280,720" zPosition="1"/>
 				<ePixmap position="50,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
 				<ePixmap position="200,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
 				<ePixmap position="350,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
@@ -97,13 +98,32 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				<widget render="Label" source="key_yellow" position="350,30" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 				<widget render="Label" source="key_blue" position="500,30" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 				<widget name="headertext" position="50,77" zPosition="1" size="1180,23" font="Regular;20" transparent="1"  foregroundColor="#fcc000" backgroundColor="#00000000"/>
-				<widget name="list" position="50,110" zPosition="2" size="1180,340" scrollbarMode="showOnDemand" transparent="0"  backgroundColor="#00000000"/>
-				<widget name="statustext" position="50,470" zPosition="1" size="1240,18" font="Regular;16" transparent="0"  backgroundColor="#00000000"/>
+				
+				
+				
+				<widget source="list" render="Listbox" position="50,110" zPosition="2" size="1180,340" scrollbarMode="showOnDemand" transparent="0" backgroundColor="#00000000">
+					<convert type="TemplatedMultiContent">
+						{"templates": {
+							"default":(30, [
+								MultiContentEntryText(pos=(0,0), size=(1180,28), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text=0),
+							]),
+							"twoliner": (65,						
+							[
+								MultiContentEntryText(pos=(0,0), size=(1180,28), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text=0),
+								MultiContentEntryText(pos=(10,28), size=(1180,26), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text=0),
+							]),
+						},
+							"fonts": [gFont("Regular",22),gFont("Regular",18)],
+						}
+					</convert>				
+				</widget>
+				
+				<widget name="statustext" position="50,470" zPosition="2" size="1240,18" font="Regular;16" transparent="0"  backgroundColor="#00000000"/>
 				<widget name="cover" zPosition="2" position="50,490" size="51,55" />
 				<eLabel name="stationCap" position="50,550" size="85,20" text="Station:" font="Regular;18" transparent="1"  zPosition="1" backgroundColor="#00000000"/>
-				<widget name="station" position="125,550" zPosition="1" size="825,20" font="Regular;18" transparent="1"  backgroundColor="#00000000"/>
+				<widget name="station" position="125,550" zPosition="2" size="825,20" font="Regular;18" transparent="1"  backgroundColor="#00000000"/>
 				<eLabel name="titleCap" position="50,575" size="65,20" text="Title:" font="Regular;18" transparent="1"  zPosition="1" backgroundColor="#00000000"/>
-				<widget name="title" position="105,575" zPosition="1" size="720,40" font="Regular;18" transparent="1"  backgroundColor="#00000000"/>
+				<widget name="title" position="105,575" zPosition="2" size="720,40" font="Regular;18" transparent="1"  backgroundColor="#00000000"/>
 				<widget name="console" position="50,620" zPosition="1" size="900,50" font="Regular;18" transparent="1"  backgroundColor="#00000000"/>
 				<widget name="progress_0" zPosition="3" position="830,470" size="25,200" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green-fs8.png" />
 				<widget name="progress_1" zPosition="3" position="855,470" size="25,200" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green-fs8.png" />
@@ -138,108 +158,79 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				<widget name="top_14" position="1180,465" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
 				<widget name="top_15" position="1205,465" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
 			</screen>"""
-
-	elif sz_w == 1024:
+	else: # assume 1080 skin here...
 		skin = """
-			<screen name="InternetRadioScreen" position="0,0" size="1024,576" flags="wfNoBorder" backgroundColor="#00000000" title="InternetRadio">
-				<widget transparent="1" name="video" position="0,0" size="1024,576" zPosition="1"/>
+			<screen name="InternetRadio" position="0,0" size="1920,1080" flags="wfNoBorder" backgroundColor="#00000000" title="InternetRadio">
+				<widget transparent="1" name="video" position="0,0" size="1280,720" zPosition="1"/>
+				<eLabel backgroundColor="#00000000" position="0,0" size="1280,720" zPosition="1"/>
 				<ePixmap position="50,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
 				<ePixmap position="200,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
 				<ePixmap position="350,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
 				<ePixmap position="500,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
-				<widget render="Label" source="key_red" position="50,30" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-				<widget render="Label" source="key_green" position="200,30" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-				<widget render="Label" source="key_yellow" position="350,30" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-				<widget render="Label" source="key_blue" position="500,30" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-				<widget name="headertext" position="50,77" zPosition="1" size="900,23" font="Regular;20" transparent="1"  foregroundColor="#fcc000" backgroundColor="#00000000"/>
-				<widget name="list" position="50,120" zPosition="2" size="940,249" scrollbarMode="showOnDemand" transparent="0"  backgroundColor="#00000000"/>
-				<widget name="statustext" position="50,370" zPosition="1" size="940,20" font="Regular;16" transparent="0"  backgroundColor="#00000000"/>
-				<widget name="title" position="50,400" zPosition="1" size="825,40" font="Regular;18" transparent="1"  backgroundColor="#00000000"/>
-				<widget name="station" position="50,445" zPosition="1" size="825,40" font="Regular;18" transparent="1"  backgroundColor="#00000000"/>
-				<widget name="console" position="50,490" zPosition="1" size="850,50" font="Regular;18" transparent="1"  backgroundColor="#00000000"/>
-				<widget name="progress_0" zPosition="3" position="810,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_1" zPosition="3" position="820,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_2" zPosition="3" position="830,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_3" zPosition="3" position="840,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_4" zPosition="3" position="850,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_5" zPosition="3" position="860,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_6" zPosition="3" position="870,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_7" zPosition="3" position="880,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_8" zPosition="3" position="890,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_9" zPosition="3" position="900,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_10" zPosition="3" position="910,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_11" zPosition="3" position="920,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_12" zPosition="3" position="930,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_13" zPosition="3" position="940,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_14" zPosition="3" position="950,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_15" zPosition="3" position="960,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="top_0" position="810,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_1" position="820,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_2" position="830,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_3" position="840,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_4" position="850,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_5" position="860,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_6" position="870,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_7" position="880,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_8" position="890,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_9" position="900,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_10" position="910,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_11" position="920,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_12" position="930,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_13" position="940,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_14" position="950,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_15" position="960,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-			</screen>"""
-	else:
-		skin = """
-			<screen name="InternetRadioScreen" position="0,0" size="720,576" flags="wfNoBorder" backgroundColor="#00000000" title="InternetRadio">
-				<widget transparent="1" name="video" position="0,0" size="720,576" zPosition="1"/>
-				<ePixmap position="50,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-				<ePixmap position="210,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-				<ePixmap position="370,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
-				<ePixmap position="530,30" zPosition="4" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
-				<widget render="Label" source="key_red" position="50,30" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-				<widget render="Label" source="key_green" position="210,30" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-				<widget render="Label" source="key_yellow" position="370,30" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-				<widget render="Label" source="key_blue" position="530,30" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-				<widget name="headertext" position="50,77" zPosition="1" size="620,23" font="Regular;20" transparent="1"  foregroundColor="#fcc000" backgroundColor="#00000000"/>
-				<widget name="list" position="50,120" zPosition="2" size="620,249" scrollbarMode="showOnDemand" transparent="0"  backgroundColor="#00000000"/>
-				<widget name="statustext" position="50,370" zPosition="1" size="620,20" font="Regular;16" transparent="0"  backgroundColor="#00000000"/>
-				<widget name="title" position="50,400" zPosition="1" size="525,40" font="Regular;18" transparent="1"  backgroundColor="#00000000"/>
-				<widget name="station" position="50,445" zPosition="1" size="525,40" font="Regular;18" transparent="1"  backgroundColor="#00000000"/>
-				<widget name="console" position="50,490" zPosition="1" size="450,50" font="Regular;18" transparent="1"  backgroundColor="#00000000"/>
-				<widget name="progress_0" zPosition="3" position="510,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_1" zPosition="3" position="520,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_2" zPosition="3" position="530,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_3" zPosition="3" position="540,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_4" zPosition="3" position="550,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_5" zPosition="3" position="560,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_6" zPosition="3" position="570,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_7" zPosition="3" position="580,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_8" zPosition="3" position="590,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_9" zPosition="3" position="600,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_10" zPosition="3" position="610,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_11" zPosition="3" position="620,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_12" zPosition="3" position="630,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_13" zPosition="3" position="640,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_14" zPosition="3" position="650,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="progress_15" zPosition="3" position="660,440" size="10,100" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small-fs8.png" />
-				<widget name="top_0" position="510,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_1" position="520,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_2" position="530,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_3" position="540,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_4" position="550,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_5" position="560,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_6" position="570,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_7" position="580,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_8" position="590,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_9" position="600,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_10" position="610,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_11" position="620,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_12" position="630,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_13" position="640,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_14" position="650,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
-				<widget name="top_15" position="660,440" zPosition="6" size="10,3" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/green_small_top-fs8.png" />
+				<widget render="Label" source="key_red" position="50,30" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;24" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+				<widget render="Label" source="key_green" position="200,30" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;24" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+				<widget render="Label" source="key_yellow" position="350,30" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;24" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+				<widget render="Label" source="key_blue" position="500,30" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;24" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+				<widget name="headertext" position="50,77" zPosition="1" size="1180,23" font="Regular;20" transparent="1"  foregroundColor="#fcc000" backgroundColor="#00000000"/>
+				
+				
+				
+				<widget source="list" render="Listbox" position="50,110" zPosition="2" size="1820,510" scrollbarMode="showOnDemand" transparent="0" backgroundColor="#00000000">
+					<convert type="TemplatedMultiContent">
+						{"templates": {
+							"default":(40, [
+								MultiContentEntryText(pos=(0,0), size=(1820,36), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text=0),
+							]),
+							"twoliner": (86,
+							[
+								MultiContentEntryText(pos=(0,0), size=(1820,36), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text=0),
+								MultiContentEntryText(pos=(10,36), size=(1820,30), font=1, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text=1),
+							]),
+						},
+							"fonts": [gFont("Regular",32),gFont("Regular",28)],
+						}
+					</convert>
+				</widget>
+				
+				<widget name="statustext" position="50,705" zPosition="2" size="1240,30" font="Regular;24" transparent="0"  backgroundColor="#00000000"/>
+				<widget name="cover" zPosition="2" position="50,735" size="51,55" />
+				<eLabel name="stationCap" position="50,825" size="100,32" text="Station:" font="Regular;28" transparent="1"  zPosition="1" backgroundColor="#00000000"/>
+				<widget name="station" position="140,825" zPosition="2" size="1725,32" font="Regular;28" transparent="1"  backgroundColor="#00000000"/>
+				<eLabel name="titleCap" position="50,864" size="80,32" text="Title:" font="Regular;28" transparent="1"  zPosition="1" backgroundColor="#00000000"/>
+				<widget name="title" position="120,864" zPosition="2" size="1705,32" font="Regular;28" transparent="1"  backgroundColor="#00000000"/>
+				<widget name="console" position="50,930" zPosition="1" size="1800,50" font="Regular;28" transparent="1"  backgroundColor="#00000000"/>
+				<widget name="progress_0" zPosition="3" position="1245,705" size="25,200" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green-fs8.png" />
+				<widget name="progress_1" zPosition="3" position="1270,705" size="25,200" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green-fs8.png" />
+				<widget name="progress_2" zPosition="3" position="1295,705" size="25,200" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green-fs8.png" />
+				<widget name="progress_3" zPosition="3" position="1320,705" size="25,200" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green-fs8.png" />
+				<widget name="progress_4" zPosition="3" position="1345,705" size="25,200" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green-fs8.png" />
+				<widget name="progress_5" zPosition="3" position="1370,705" size="25,200" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green-fs8.png" />
+				<widget name="progress_6" zPosition="3" position="1395,705" size="25,200" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green-fs8.png" />
+				<widget name="progress_7" zPosition="3" position="1420,705" size="25,200" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green-fs8.png" />
+				<widget name="progress_8" zPosition="3" position="1445,705" size="25,200" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green-fs8.png" />
+				<widget name="progress_9" zPosition="3" position="1470,705" size="25,200" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green-fs8.png" />
+				<widget name="progress_10" zPosition="3" position="1495,705" size="25,200" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green-fs8.png" />
+				<widget name="progress_11" zPosition="3" position="1520,705" size="25,200" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green-fs8.png" />
+				<widget name="progress_12" zPosition="3" position="1545,705" size="25,200" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green-fs8.png" />
+				<widget name="progress_13" zPosition="3" position="1570,705" size="25,200" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green-fs8.png" />
+				<widget name="progress_14" zPosition="3" position="1595,705" size="25,200" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green-fs8.png" />
+				<widget name="progress_15" zPosition="3" position="1620,705" size="25,200" transparent="1" orientation="orBottomToTop" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green-fs8.png" />
+				<widget name="top_0" position="1245,698" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
+				<widget name="top_1" position="1270,698" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
+				<widget name="top_2" position="1295,698" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
+				<widget name="top_3" position="1320,698" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
+				<widget name="top_4" position="1345,698" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
+				<widget name="top_5" position="1370,698" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
+				<widget name="top_6" position="1395,698" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
+				<widget name="top_7" position="1420,698" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
+				<widget name="top_8" position="1445,698" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
+				<widget name="top_9" position="1470,698" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
+				<widget name="top_10" position="1495,698" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
+				<widget name="top_11" position="1520,698" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
+				<widget name="top_12" position="1545,698" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
+				<widget name="top_13" position="1570,698" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
+				<widget name="top_14" position="1595,698" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
+				<widget name="top_15" position="1620,698" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
 			</screen>"""
 	
 	def __init__(self, session, url = None, radioStation = None):
@@ -248,6 +239,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		InternetRadioVisualization.__init__(self)
 		self.currentService = self.session.nav.getCurrentlyPlayingServiceReference()
 		InternetRadioPiPTVPlayer.__init__(self,session, self.currentService, self.setPiPPlayerEnabled)
+		self.skinName = "InternetRadio"
 		self.session.nav.stopService()
 		self["cover"] = InternetRadioCover(self.coverLoaded)
 		self["key_red"] = StaticText(_("Record"))
@@ -475,6 +467,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				sTitle = "n/a"
 				self.hideCover()
 			self["title"].setText(sTitle)
+			
 			self.summaries.setText(sTitle)
 			if self.fullScreen.isVisible() and config.plugins.internetradio.fullscreenlayout.value in ("0", "1"):
 				self.fullScreen.setText(sTitle)
@@ -657,7 +650,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		if self.visible:
 			sel = None
 			try:
-				sel = self["list"].l.getCurrentSelection()[0]
+				sel = self["list"].getCurrentSelection()
 			except:return
 			if sel is None:
 				return
@@ -994,7 +987,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 	def getSelectedItem(self):
 		sel = None
 		try:
-			sel = self["list"].l.getCurrentSelection()[0]
+			sel = self["list"].getCurrentSelection()
 		except:return None
 		return sel
 		

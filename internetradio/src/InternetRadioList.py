@@ -19,24 +19,22 @@
 # you have to keep MY license and inform me about the modifications by mail.
 #
 
-from enigma import eListboxPythonMultiContent, eListbox, gFont, \
-	RT_HALIGN_LEFT, RT_VALIGN_CENTER
-from Components.GUIComponent import GUIComponent
-	
-	
-class InternetRadioList(GUIComponent, object):
+from Components.Sources.List import List
+from Components.Element import cached
+
+class InternetRadioList(List):
 	def buildEntry(self, item):
-		width = self.l.getItemSize().width()
-		res = [ None ]
+		text1 = ""
+		text2 = ""
 		if self.mode == 0: # GENRELIST
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, 28, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, item.name))
+			text1 =  item.name
 		elif self.mode == 1: # STATIONLIST
 			if len(item.country) != 0:
 				display = "%s (%s)" % (item.name, item.country)
 			else:
 				display = item.name
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, 26, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, display))
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 10, 28, width, 26, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, item.genre))
+			text1 = display
+			text2 = item.genre
 		elif self.mode == 2: # FAVORITELIST
 			if len(item.configItem.country.value) != 0:
 				display = "%s (%s)" % (item.configItem.name.value, item.configItem.country.value)
@@ -51,66 +49,42 @@ class InternetRadioList(GUIComponent, object):
 				display2 = "%s %s" % (_("Filter:"),filtername)
 			else:
 				display2 = item.configItem.tags.value
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, 26, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, display))
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 10, 28, width, 26, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, display2))
-		return res
+			text1 = display
+			text2 = display2
+		return (text1, text2)
 
 	def __init__(self):
-		GUIComponent.__init__(self)
-		self.l = eListboxPythonMultiContent()
-		self.l.setFont(0, gFont("Regular", 22))
-		self.l.setFont(1, gFont("Regular", 18))
-		self.l.setBuildFunc(self.buildEntry)
-		self.l.setItemHeight(29)
-		self.onSelectionChanged = [ ]
+		List.__init__(self, enableWrapAround=True, item_height=28, buildfunc=self.buildEntry)
 		self.mode = 0
 		self.list = []
 
 	def setMode(self, mode):
 		self.mode = mode
 		if mode == 0: # GENRELIST
-			self.l.setItemHeight(30)
+			self.style = "default"
 		elif mode == 1 or mode == 2: # STATIONLIST OR FAVORITELIST
-			self.l.setItemHeight(60)
-
-	def connectSelChanged(self, fnc):
-		if not fnc in self.onSelectionChanged:
-			self.onSelectionChanged.append(fnc)
-
-	def disconnectSelChanged(self, fnc):
-		if fnc in self.onSelectionChanged:
-			self.onSelectionChanged.remove(fnc)
-
-	def selectionChanged(self):
-		for x in self.onSelectionChanged:
-			x()
-	
-	def getCurrent(self):
-		cur = self.l.getCurrentSelection()
-		return cur and cur[0]
-	
-	GUI_WIDGET = eListbox
-	
-	def postWidgetCreate(self, instance):
-		instance.setContent(self.l)
-		self.selectionChanged_conn = instance.selectionChanged.connect(self.selectionChanged)
-
-	def preWidgetRemove(self, instance):
-		instance.setContent(None)
-		self.selectionChanged_conn = None
+			self.style = "twoliner"
 
 	def moveToIndex(self, index):
-		self.instance.moveSelectionTo(index)
+		if self.master is not None:
+			self.master.index = index
 
 	def getCurrentIndex(self):
-		return self.instance.getCurrentIndex()
-
-	currentIndex = property(getCurrentIndex, moveToIndex)
-	currentSelection = property(getCurrent)
+		if self.master is not None:
+			return self.master.getIndex()
+		else:
+			return 0
+			
+	@cached
+	def getCurrentSelection(self):
+		data = self.current and self.current[0]
+		if data:
+			return data
+		return None			
 
 	def setList(self, list):
 		self.list = list
-		self.l.setList(list)
+		List.setList(self, list)
 
 	def moveToFavorite(self, name, text):
 		if self.mode == 2: # FAVORITELIST
