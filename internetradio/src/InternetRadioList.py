@@ -63,7 +63,7 @@ class InternetRadioList(List):
 		if mode == 0: # GENRELIST
 			self.style = "default"
 		elif mode == 1 or mode == 2: # STATIONLIST OR FAVORITELIST
-			self.style = "twoliner"
+			self.style = "favorite"
 
 	def moveToIndex(self, index):
 		if self.master is not None:

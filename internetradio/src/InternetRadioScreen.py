@@ -107,10 +107,10 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 							"default":(30, [
 								MultiContentEntryText(pos=(0,0), size=(1180,28), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text=0),
 							]),
-							"twoliner": (65,						
+							"favorite": (65,
 							[
 								MultiContentEntryText(pos=(0,0), size=(1180,28), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text=0),
-								MultiContentEntryText(pos=(10,28), size=(1180,26), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text=0),
+								MultiContentEntryText(pos=(10,28), size=(1180,26), font=1, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text=1),
 							]),
 						},
 							"fonts": [gFont("Regular",22),gFont("Regular",18)],
@@ -181,7 +181,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 							"default":(40, [
 								MultiContentEntryText(pos=(0,0), size=(1820,36), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text=0),
 							]),
-							"twoliner": (86,
+							"favorite": (86,
 							[
 								MultiContentEntryText(pos=(0,0), size=(1820,36), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text=0),
 								MultiContentEntryText(pos=(10,36), size=(1820,30), font=1, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text=1),
