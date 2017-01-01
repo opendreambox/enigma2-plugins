@@ -5,7 +5,7 @@ from __future__ import print_function
 import Screens.Standby
 
 # eServiceReference
-from enigma import eServiceReference, eServiceCenter
+from enigma import eServiceReference, eServiceCenter, eEPGCache, cachestate
 
 # ...
 from ServiceReference import ServiceReference
@@ -74,6 +74,28 @@ class EPGRefresh:
 
 		# Read in Configuration
 		self.readConfiguration()
+
+		# Initialise myEpgCacheInstance
+		self.myEpgCacheInstance = None
+
+	# _onCacheStateChanged is called whenever an eEPGCache-signal is sent by enigma2
+	#  0 = started, 1 = stopped, 2 = aborted, 3 = deferred, 4 = load_finished, 5 = save_finished
+	def _onCacheStateChanged(self, cState):
+		if cState is None:
+			pass
+		else:
+			if cState.state == cachestate.started:
+				print("[EPGRefresh] - EPG update started")
+			elif cState.state == cachestate.stopped or cState.state == cachestate.deferred:
+				print("[EPGRefresh] - state is:" + str(cState.state))
+				print("[EPGRefresh] - EPG update finished for channel")
+				epgrefreshtimer.add(EPGRefreshTimerEntry(
+						time(),
+						self.refresh,
+						nocheck = True)
+				)
+			else:
+				print("[EPGRefresh] - assuming the state is not relevant for EPGRefresh. State:" + str(cState.state))
 
 	def _initFinishTodos(self):
 		self.finishTodos = [self._ToDoCallAutotimer, self._ToDoAutotimerCalled, self._callFinishNotifiers, self.finish]
@@ -532,13 +554,23 @@ class EPGRefresh:
 			# XXX: we might want to check the return value
 			self.refreshAdapter.play(eServiceReference(service.sref))
 
-			# Start Timer
-			delay = service.duration or config.plugins.epgrefresh.interval_seconds.value
-			epgrefreshtimer.add(EPGRefreshTimerEntry(
-				time() + delay,
-				self.refresh,
-				nocheck = True)
-			)
+			# Check whether the time-based method shall be used or the new eEPGCache-signal based
+			if config.plugins.epgrefresh.usetimebased.value:
+				# Start Timer
+				delay = service.duration or config.plugins.epgrefresh.interval_seconds.value
+				epgrefreshtimer.add(EPGRefreshTimerEntry(
+					time() + delay,
+					self.refresh,
+					nocheck = True)
+				)
+			else:
+				# eEPGCache-signal based
+				print("[EPGRefresh] - using signal-based method for update")
+				# get eEPGCache instance if None
+				if self.myEpgCacheInstance is None:
+					print("[EPGRefresh] - myEpgCacheInstance is None. Get it")
+					self.myEpgCacheInstance = eEPGCache.getInstance()
+					self.EpgCacheStateChanged_conn = self.myEpgCacheInstance.cacheState.connect(self._onCacheStateChanged)			
 	
 	def showPendingServices(self, session):
 		LISTMAX = 10

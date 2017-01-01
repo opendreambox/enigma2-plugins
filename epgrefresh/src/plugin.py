@@ -31,6 +31,8 @@ config.plugins.epgrefresh = ConfigSubsection()
 config.plugins.epgrefresh.enabled = ConfigYesNo(default = False)
 config.plugins.epgrefresh.begin = ConfigClock(default = int(begin))
 config.plugins.epgrefresh.end = ConfigClock(default = int(end))
+#temporary config item until new mode has been successfully tested
+config.plugins.epgrefresh.usetimebased = ConfigYesNo(default = False)
 config.plugins.epgrefresh.interval_seconds = ConfigNumber(default = 120)
 config.plugins.epgrefresh.delay_standby = ConfigNumber(default = 10)
 config.plugins.epgrefresh.inherit_autotimer = ConfigYesNo(default = False)
@@ -58,7 +60,7 @@ config.plugins.epgrefresh.adapter = ConfigSelection(choices = [
 		("pip", _("Picture in Picture")),
 		("pip_hidden", _("Picture in Picture (hidden)")),
 		("record", _("Fake recording")),
-	], default = "main"
+	], default = "record"
 )
 config.plugins.epgrefresh.show_in_extensionsmenu = ConfigYesNo(default = False)
 config.plugins.epgrefresh.show_run_in_extensionsmenu = ConfigYesNo(default = True)
@@ -146,6 +148,7 @@ def autostart(reason, **kwargs):
 			timeCallback(isCallback=False)
 		
 	elif reason == 1:
+		epgrefresh.myEpgCacheInstance = None
 		epgrefresh.stop()
 
 def getNextWakeup():

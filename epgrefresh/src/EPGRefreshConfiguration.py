@@ -33,7 +33,7 @@ from traceback import print_exc
 from sys import stdout
 import os
 
-VERSION = "2.1.5"
+VERSION = "2.2.0"
 class EPGHelpContextMenu(FixedMenu):
 	HELP_RETURN_MAINHELP = 0
 	HELP_RETURN_KEYHELP = 1
@@ -154,7 +154,10 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 		self.list = [] 
 		self.list.append(getConfigListEntry(_("Refresh EPG automatically"), config.plugins.epgrefresh.enabled, _("Unless this is enabled, EPGRefresh won't automatically run but needs to be explicitly started by the yellow button in this menu."), True))
 		if config.plugins.epgrefresh.enabled.value:
-			self.list.append(getConfigListEntry(_("Duration to stay on service (seconds)"), config.plugins.epgrefresh.interval_seconds, _("This is the duration each service/channel will stay active during a refresh."), False))
+			# temporary until new mode is successfully tested
+			self.list.append(getConfigListEntry(_("Use time-based duration to stay on service"), config.plugins.epgrefresh.usetimebased, _("Duration to stay can be automatically detected by enigma2 or manually set by the user"), True))
+			if config.plugins.epgrefresh.usetimebased.value:
+				self.list.append(getConfigListEntry(_("Duration to stay on service (seconds)"), config.plugins.epgrefresh.interval_seconds, _("This is the duration each service/channel will stay active during a refresh."), False))
 			self.list.append(getConfigListEntry(_("EPG refresh auto-start earliest (hh:mm)"), config.plugins.epgrefresh.begin, _("An automated refresh will start after this time of day, but before the time specified in next setting."), False))
 			self.list.append(getConfigListEntry(_("EPG refresh auto-start latest (hh:mm)"), config.plugins.epgrefresh.end, _("An automated refresh will start before this time of day, but after the time specified in previous setting."), False))
 			self.list.append(getConfigListEntry(_("Delay if not in standby (minutes)"), config.plugins.epgrefresh.delay_standby, _("If the receiver currently isn't in standby, this is the duration which EPGRefresh will wait before retry."), False))
