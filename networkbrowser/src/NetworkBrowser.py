@@ -330,9 +330,14 @@ class NetworkBrowser(Screen):
 			if len(x) == 6:
 				if x[4] == "Disk" and not x[3].endswith('$'):
 					sharelist.append(x)
-		for x in netscan.nfsShare(hostip, hostname):
-			if len(x) == 6:
-				sharelist.append(x)
+
+		try:
+			exports = netscan.showmount(hostip)
+		except IOError as e:
+			print '[Networkbrowser] showmount: ' + str(e)
+		else:
+			for ex in exports:
+				sharelist.append(['nfsShare', os_path.basename(ex['dir']), hostip, ','.join(ex['groups']), ex['dir'], ''])
 
 		return sharelist
 

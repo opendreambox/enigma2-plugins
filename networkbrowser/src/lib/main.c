@@ -66,62 +66,16 @@ static PyObject *_netInfo(PyObject *self, PyObject *args)
 	return result;
 }
 
-static PyObject *_nfsShare(PyObject *self, PyObject *args)
+static PyObject *_showmount(PyObject *self, PyObject *args)
 {
-	const unsigned int max_shares = 256;
-	nfsinfo *nfsInfo;
 	char *s;
-	char *r;
-	PyObject *plist, *result;
-	unsigned int i;
-	int n;
 
-	if(!PyArg_ParseTuple(args, "ss", &s, &r)) {
-		PyErr_SetString(PyExc_TypeError, "nfsShare(ip,rechnername)");
+	if (!PyArg_ParseTuple(args, "s", &s)) {
+		PyErr_SetString(PyExc_TypeError, "showmount(node)");
 		return NULL;
 	}
 
-	result = PyList_New(0);
-	if (result == NULL)
-		return NULL;
-
-	nfsInfo = PyMem_New(nfsinfo, max_shares);
-	if (nfsInfo == NULL)
-		return result;
-
-	memset(nfsInfo, 0, sizeof(nfsinfo) * max_shares);
-
-	Py_BEGIN_ALLOW_THREADS
-	n = showNfsShare(s, nfsInfo, max_shares);
-	Py_END_ALLOW_THREADS
-	if (n >= 0)
-	{
-		for (i = 0; i < n; i++) {
-			plist = PyList_New(6);
-			if (plist == NULL)
-				break;
-			PyList_SET_ITEM(plist, 0, PyString_FromString("nfsShare"));
-			PyList_SET_ITEM(plist, 1, PyString_FromString(r));
-			PyList_SET_ITEM(plist, 2, PyString_FromString(s));
-			PyList_SET_ITEM(plist, 3, PyString_FromString(nfsInfo[i].ip));
-			PyList_SET_ITEM(plist, 4, PyString_FromString(nfsInfo[i].share));
-			PyList_SET_ITEM(plist, 5, PyString_FromString(""));
-			PyList_Append(result, plist);
-			Py_DECREF(plist);
-		}
-	}
-	else
-	{
-		plist = PyList_New(1);
-		if (plist != NULL) {
-			PyList_SET_ITEM(plist, 0, PyString_FromString(nfsInfo[0].share));
-			PyList_Append(result, plist);
-			Py_DECREF(plist);
-		}
-	}
-
-	PyMem_Free(nfsInfo);
-	return result;
+	return showmount(s);
 }
 
 static PyObject *_smbShare(PyObject *self, PyObject *args)
@@ -133,7 +87,7 @@ static PyObject *_smbShare(PyObject *self, PyObject *args)
 	char *u;
 	char *p;
 	shareinfo *sInfo;
-	PyObject *plist, *result;
+	PyObject *result;
 
 	if(!PyArg_ParseTuple(args, "ssss", &s,&r,&u,&p)) {
 		PyErr_SetString(PyExc_TypeError, "getInfo(ip, rechnername, username, passwort)");
@@ -155,7 +109,7 @@ static PyObject *_smbShare(PyObject *self, PyObject *args)
 	Py_END_ALLOW_THREADS
 
 	for (i = 0; i < n; i++) {
-		plist = PyList_New(6);
+		PyObject *plist = PyList_New(6);
 		if (plist == NULL)
 			break;
 		PyList_SET_ITEM(plist, 0, PyString_FromString("smbShare"));
@@ -175,7 +129,7 @@ static PyObject *_smbShare(PyObject *self, PyObject *args)
 static PyMethodDef netscanmethods[] = {
 	{"netInfo", _netInfo, METH_VARARGS},
 	{"smbShare", _smbShare, METH_VARARGS},
-	{"nfsShare", _nfsShare, METH_VARARGS},
+	{"showmount", _showmount, METH_VARARGS},
 	{NULL, NULL}
 };
 

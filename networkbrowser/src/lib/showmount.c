@@ -1,28 +1,26 @@
-/*###########################################################################
-#
-# Copyright (C) 1993 by Rick Sladkey <jrs@world.std.com>
-# Copyright (C) 2008 by nixkoenner <nixkoenner@newnigma2.to>
-# 
-# License: GPL
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-#
-###########################################################################*/
+/*
+ * showmount.c -- show mount information for an NFS server
+ * Copyright (C) 1993 Rick Sladkey <jrs@world.std.com>
+ * Copyright (C) 2017 Dream Property GmbH
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+#ifdef HAVE_CONFIG_H
+#include <enigma2-plugins-config.h>
+#endif
 
 #include <stdio.h>
-#include <rpc/rpc.h>
+#include <rpc/clnt.h>
+#include <rpc/pmap_prot.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <sys/time.h>
@@ -31,200 +29,147 @@
 #include <unistd.h>
 #include <memory.h>
 #include <stdlib.h>
+#include <fcntl.h>
 
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <errno.h>
 #include <getopt.h>
+#include <rpcsvc/mount.h>
 #include <unistd.h>
 
+#include "nfsrpc.h"
+
+#include <Python.h>
 #include "showmount.h"
 
-#define MOUNTPROG 100005
-#define MOUNTVERS 1
-#define MOUNTPROC_EXPORT 5
-#define MOUNTPROC_DUMP 2
-#define MNTPATHLEN 1024
-#define MNTNAMLEN 255
+#define TOTAL_TIMEOUT	2
 
-typedef char *dirpath;
-typedef char *name;
-
-typedef struct mountbody *mountlist;
-struct mountbody {
-	name ml_hostname;
-	dirpath ml_directory;
-	mountlist ml_next;
+static const char *mount_pgm_tbl[] = {
+	"showmount",
+	"mount",
+	"mountd",
+	NULL,
 };
-typedef struct mountbody mountbody;
 
-typedef struct groupnode *groups;
-struct groupnode {
-	name gr_name;
-	groups gr_next;
+static rpcvers_t mount_vers_tbl[] = {
+	3, /* MOUNTVERS_NFSV3 */
+	2, /* MOUNTVERS_POSIX */
+	MOUNTVERS,
 };
-typedef struct groupnode groupnode;
+static const unsigned int max_vers_tblsz = 
+	(sizeof(mount_vers_tbl)/sizeof(mount_vers_tbl[0]));
 
-typedef struct exportnode *exports;
-struct exportnode {
-	dirpath ex_dir;
-	groups ex_groups;
-	exports ex_next;
-};
-typedef struct exportnode exportnode;
-/****************************************************************************
-lokal prototype
-****************************************************************************/
-bool_t xdr_mountbody (XDR *xdrs, mountbody *objp);
-bool_t xdr_mountlist (XDR *xdrs, mountlist *objp);
-bool_t xdr_exports (XDR *xdrs, exports *objp);
-bool_t xdr_exportnode (XDR *xdrs, exportnode *objp);
-bool_t xdr_name (XDR *xdrs, name *objp);
-bool_t xdr_dirpath (XDR *xdrs, dirpath *objp);
-bool_t xdr_groups (XDR *xdrs, groups *objp);
-bool_t xdr_groupnode (XDR *xdrs, groupnode *objp);
-int dump_cmp(char **p, char **q);
-
-#define MAXHOSTLEN 256
-
-int dump_cmp(char **p, char **q)
+/*
+ * Generate an RPC client handle connected to the mountd service
+ * at @hostname, or die trying.
+ *
+ * Supports both AF_INET and AF_INET6 server addresses.
+ */
+static CLIENT *nfs_get_mount_client(const char *hostname, rpcvers_t vers)
 {
-	return strcmp(*p, *q);
+	rpcprog_t program = nfs_getrpcbyname(MOUNTPROG, mount_pgm_tbl);
+	CLIENT *client;
+	const struct timeval to = {
+		.tv_sec = 2,
+	};
+
+	client = clnt_create_timed(hostname, program, vers, "tcp", &to);
+	if (client)
+		return client;
+	client = clnt_create_timed(hostname, program, vers, "udp", &to);
+	if (client)
+		return client;
+
+	return NULL;
 }
 
-
-bool_t xdr_mountlist (XDR *xdrs, mountlist *objp)
-{
-	 if (!xdr_pointer (xdrs, (char **)objp, sizeof (struct mountbody), (xdrproc_t) xdr_mountbody))
-		 return FALSE;
-	return TRUE;
-}
-
-bool_t xdr_mountbody (XDR *xdrs, mountbody *objp)
-{
-	 if (!xdr_name (xdrs, &objp->ml_hostname))
-		 return FALSE;
-	 if (!xdr_dirpath (xdrs, &objp->ml_directory))
-		 return FALSE;
-	 if (!xdr_mountlist (xdrs, &objp->ml_next))
-		 return FALSE;
-	return TRUE;
-}
-
-bool_t xdr_exports (XDR *xdrs, exports *objp)
-{
-	 if (!xdr_pointer (xdrs, (char **)objp, sizeof (struct exportnode), (xdrproc_t) xdr_exportnode))
-		 return FALSE;
-	return TRUE;
-}
-
-bool_t xdr_exportnode (XDR *xdrs, exportnode *objp)
-{
-	 if (!xdr_dirpath (xdrs, &objp->ex_dir))
-		 return FALSE;
-	 if (!xdr_groups (xdrs, &objp->ex_groups))
-		 return FALSE;
-	 if (!xdr_exports (xdrs, &objp->ex_next))
-		 return FALSE;
-	return TRUE;
-}
-
-bool_t xdr_dirpath (XDR *xdrs, dirpath *objp)
-{
-	 if (!xdr_string (xdrs, objp, MNTPATHLEN))
-		 return FALSE;
-	return TRUE;
-}
-
-bool_t xdr_name (XDR *xdrs, name *objp)
-{
-	 if (!xdr_string (xdrs, objp, MNTNAMLEN))
-		 return FALSE;
-	return TRUE;
-}
-
-bool_t xdr_groups (XDR *xdrs, groups *objp)
-{
-	 if (!xdr_pointer (xdrs, (char **)objp, sizeof (struct groupnode), (xdrproc_t) xdr_groupnode))
-		 return FALSE;
-	return TRUE;
-}
-
-bool_t xdr_groupnode (XDR *xdrs, groupnode *objp)
-{
-	 if (!xdr_name (xdrs, &objp->gr_name))
-		 return FALSE;
-	 if (!xdr_groups (xdrs, &objp->gr_next))
-		 return FALSE;
-	return TRUE;
-}
-
-int showNfsShare(const char *hostname, nfsinfo *nfsInfo, unsigned int size)
+PyObject *showmount(const char *hostname)
 {
 	enum clnt_stat clnt_stat;
-	struct hostent *hp;
-	struct sockaddr_in server_addr;
-	int msock;
 	struct timeval total_timeout;
-	struct timeval pertry_timeout;
 	CLIENT *mclient;
 	groups grouplist;
 	exports exportlist;
-	int pos;
+	int unsigned vers=0;
+	PyObject *result;
 
-	if (hostname[0] >= '0' && hostname[0] <= '9') {
-		server_addr.sin_family = AF_INET;
-		server_addr.sin_addr.s_addr = inet_addr(hostname);
-	}
-	else {
-		if ((hp = gethostbyname(hostname)) == NULL) {
-			strcpy(nfsInfo[0].share, "ERROR: failed to resolve hostname");
-			return -1;
-		}
-		server_addr.sin_family = AF_INET;
-		memcpy(&server_addr.sin_addr, hp->h_addr, hp->h_length);
-	}
+	result = PyList_New(0);
+	if (result == NULL)
+		return result;
 
-	/* create mount deamon client */
+	Py_BEGIN_ALLOW_THREADS;
 
-	server_addr.sin_port = 0;
-	msock = RPC_ANYSOCK;
-	if ((mclient = clnttcp_create(&server_addr,
-	    MOUNTPROG, MOUNTVERS, &msock, 0, 0)) == NULL) {
-		server_addr.sin_port = 0;
-		msock = RPC_ANYSOCK;
-		pertry_timeout.tv_sec = 3;
-		pertry_timeout.tv_usec = 0;
-		if ((mclient = clntudp_create(&server_addr,
-		    MOUNTPROG, MOUNTVERS, pertry_timeout, &msock)) == NULL) {
-			//clnt_pcreateerror("mount clntudp_create");
-			strcpy(nfsInfo[0].share, "ERROR: mount clntudp_create");
-			return -2;
-		}
+	mclient = nfs_get_mount_client(hostname, mount_vers_tbl[vers]);
+	if (mclient == NULL) {
+		Py_BLOCK_THREADS;
+		Py_DECREF(result);
+		PyErr_SetString(PyExc_IOError, clnt_spcreateerror("clnt_create_timed"));
+		return NULL;
 	}
-	mclient->cl_auth = authunix_create_default();
-	total_timeout.tv_sec = 20;
+	mclient->cl_auth = nfs_authsys_create();
+	if (mclient->cl_auth == NULL) {
+		clnt_destroy(mclient);
+		Py_BLOCK_THREADS;
+		Py_DECREF(result);
+		PyErr_SetString(PyExc_IOError, "Unable to create RPC auth handle");
+		return NULL;
+	}
+	total_timeout.tv_sec = TOTAL_TIMEOUT;
 	total_timeout.tv_usec = 0;
 
-		memset(&exportlist, '\0', sizeof(exportlist));
-		clnt_stat = clnt_call(mclient, MOUNTPROC_EXPORT,
-			(xdrproc_t) xdr_void, NULL,
-			(xdrproc_t) xdr_exports, (caddr_t) &exportlist,
-			total_timeout);
-		if (clnt_stat != RPC_SUCCESS) {
-			strcpy(nfsInfo[0].share, "ERROR: mount clnt_stat");
-			return -3;
+again:
+	exportlist = NULL;
+
+	clnt_stat = clnt_call(mclient, MOUNTPROC_EXPORT,
+		(xdrproc_t)xdr_void, NULL,
+		(xdrproc_t)xdr_exports, &exportlist,
+		total_timeout);
+	if (clnt_stat == RPC_PROGVERSMISMATCH) {
+		if (++vers < max_vers_tblsz) {
+			CLNT_CONTROL(mclient, CLSET_VERS, &mount_vers_tbl[vers]);
+			goto again;
 		}
-		for (pos = 0; pos < size && exportlist != NULL; pos++) {
-			strcpy(nfsInfo[pos].share, exportlist->ex_dir);
-			grouplist = exportlist->ex_groups;
-			//printf ("blubb ex %s, group %s\n", exportlist->ex_dir,grouplist->gr_name);
-			if (grouplist)
-				strcpy(nfsInfo[pos].ip, grouplist->gr_name);
-			else
-				strcpy(nfsInfo[pos].ip, "world");
-			exportlist = exportlist->ex_next;
+	}
+	if (clnt_stat != RPC_SUCCESS) {
+		Py_BLOCK_THREADS;
+		Py_DECREF(result);
+		PyErr_SetString(PyExc_IOError, clnt_sperror(mclient, "rpc mount export"));
+		clnt_destroy(mclient);
+		return NULL;
+	}
+
+	Py_END_ALLOW_THREADS;
+
+	while (exportlist) {
+		PyObject *dict, *dir, *groups;
+
+		dict = PyDict_New();
+		if (dict == NULL)
+			break;
+		groups = PyList_New(0);
+		if (groups == NULL) {
+			Py_DECREF(dict);
+			break;
 		}
 
-	return pos;
+		dir = PyString_FromString(exportlist->ex_dir);
+		PyDict_SetItemString(dict, "dir", dir);
+		Py_DECREF(dir);
+		PyDict_SetItemString(dict, "groups", groups);
+		Py_DECREF(groups);
+		PyList_Append(result, dict);
+		Py_DECREF(dict);
+
+		for (grouplist = exportlist->ex_groups; grouplist; grouplist = grouplist->gr_next) {
+			PyObject *name = PyString_FromString(grouplist->gr_name);
+			PyList_Append(groups, name);
+			Py_DECREF(name);
+		}
+
+		exportlist = exportlist->ex_next;
+	}
+
+	clnt_destroy(mclient);
+	return result;
 }
