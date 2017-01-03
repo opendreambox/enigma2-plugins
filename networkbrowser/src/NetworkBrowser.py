@@ -348,19 +348,22 @@ class NetworkBrowser(Screen):
 				pass
 
 		for port in (445, 139):
-			smbconn = SMBConnection(username, password, self._myhostname, hostname, is_direct_tcp=(port == 445))
-			if smbconn.connect(hostip, port=port, timeout=1):
-				print '[Networkbrowser] established SMB connection to %s:%d' % (hostip, port)
-				for share in smbconn.listShares(timeout=1):
-					if share.type == SharedDevice.DISK_TREE and not share.isSpecial:
-						sharelist.append(['smbShare', hostname, hostip, share.name.encode('utf-8'), 'Disk', share.comments.encode('utf-8')])
-				smbconn.close()
-				break
-
+			try:
+				smbconn = SMBConnection(username, password, self._myhostname, hostname, is_direct_tcp=(port == 445))
+				if smbconn.connect(hostip, port=port, timeout=1):
+					print '[Networkbrowser] established SMB connection to %s:%d' % (hostip, port)
+					for share in smbconn.listShares(timeout=1):
+						if share.type == SharedDevice.DISK_TREE and not share.isSpecial:
+							sharelist.append(['smbShare', hostname, hostip, share.name.encode('utf-8'), 'Disk', share.comments.encode('utf-8')])
+					smbconn.close()
+					break
+			except Exception as e:
+				Log.w('[Networkbrowser] SMBConnection: ' + str(e))
+				pass
 		try:
 			exports = showmount(hostip)
 		except IOError as e:
-			print '[Networkbrowser] showmount: ' + str(e)
+			Log.w('[Networkbrowser] showmount: ' + str(e))
 		else:
 			for ex in exports:
 				sharelist.append(['nfsShare', os_path.basename(ex['dir']), hostip, ','.join(ex['groups']), ex['dir'], ''])
