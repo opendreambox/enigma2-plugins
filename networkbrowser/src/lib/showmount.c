@@ -40,9 +40,6 @@
 
 #include "nfsrpc.h"
 
-#include <Python.h>
-#include "showmount.h"
-
 #define TOTAL_TIMEOUT	2
 
 static const char *mount_pgm_tbl[] = {
@@ -84,7 +81,7 @@ static CLIENT *nfs_get_mount_client(const char *hostname, rpcvers_t vers)
 	return NULL;
 }
 
-PyObject *showmount(const char *hostname)
+static PyObject *showmount(PyObject *self, PyObject *args)
 {
 	enum clnt_stat clnt_stat;
 	struct timeval total_timeout;
@@ -93,6 +90,12 @@ PyObject *showmount(const char *hostname)
 	exports exportlist;
 	int unsigned vers=0;
 	PyObject *result;
+	char *hostname;
+
+	if (!PyArg_ParseTuple(args, "s", &hostname)) {
+		PyErr_SetString(PyExc_TypeError, "showmount(node)");
+		return NULL;
+	}
 
 	result = PyList_New(0);
 	if (result == NULL)
@@ -172,4 +175,14 @@ again:
 
 	clnt_destroy(mclient);
 	return result;
+}
+
+static PyMethodDef ops[] = {
+	{ "showmount", showmount, METH_VARARGS },
+	{ NULL, }
+};
+
+void initnfsutils(void)
+{
+	Py_InitModule("nfsutils", ops);
 }

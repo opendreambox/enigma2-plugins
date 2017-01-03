@@ -18,8 +18,11 @@ from os import path as os_path, stat, mkdir, remove
 from time import time
 from stat import ST_MTIME
 from netaddr import IPNetwork
+from nfsutils import showmount
+from nmb.NetBIOS import NetBIOS
+from smb.base import SharedDevice
+from smb.SMBConnection import SMBConnection
 
-import netscan
 import rpcinfo
 import socket
 from MountManager import AutoMountManager
@@ -109,6 +112,9 @@ class NetworkBrowser(Screen):
 		self.cache_ttl = 604800 #Seconds cache is considered valid, 7 Days should be ok
 		self.cache_file = eEnv.resolve("${sysconfdir}/enigma2/networkbrowser.cache") #Path to cache directory
 		self._nrthreads = 0
+		self._netbios = NetBIOS(broadcast=False)
+		self._ipv4 = iNetworkInfo.getConfiguredInterfaces()[self.iface].ipv4
+		self._myhostname = self._lookupHostname(self._ipv4.address, local=True)
 
 		self["key_red"] = StaticText(_("Close"))
 		self["key_green"] = StaticText(_("Mounts"))
@@ -183,8 +189,7 @@ class NetworkBrowser(Screen):
 				print "[Networkbrowser] got IP:",result[0]
 				self.setStatus('update')
 				net = IPNetwork('%s/24' % result[0])
-				ipv4 = iNetworkInfo.getConfiguredInterfaces()[self.iface].ipv4
-				localnet = IPNetwork('%s/%s' % (ipv4.address, ipv4.netmask))
+				localnet = IPNetwork('%s/%s' % (self._ipv4.address, self._ipv4.netmask))
 				if localnet.__contains__(net):
 					self._startScan(self.iface, net.cidr)
 				else:
@@ -225,8 +230,7 @@ class NetworkBrowser(Screen):
 		if self.cache_ttl == 0 or self.inv_cache == 1 or self.vc == 0:
 			Log.i('Getting fresh network list')
 
-			ipv4 = iNetworkInfo.getConfiguredInterfaces()[self.iface].ipv4
-			net = IPNetwork('%s/%s' % (ipv4.address, ipv4.netmask))
+			net = IPNetwork('%s/%s' % (self._ipv4.address, self._ipv4.netmask))
 			if net.prefixlen < 24:
 				net.prefixlen = 24
 
@@ -260,7 +264,7 @@ class NetworkBrowser(Screen):
 
 	def _probeTcpPort(self, host, port):
 		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		sock.settimeout(0.2)
+		sock.settimeout(1)
 		try:
 			sock.connect((host, port))
 		except:
@@ -277,22 +281,18 @@ class NetworkBrowser(Screen):
 		info = []
 		services = []
 
-		if self._probeTcpPort(host, 139):
-			Log.i("Trying to look up SMB hostname of %s" % host)
-			info = netscan.netInfo(host)
+		if self._probeTcpPort(host, 445) or self._probeTcpPort(host, 139):
+			Log.i("Found SMB server on %s" % host)
 			services.append("smb")
+
 		if rpcinfo.progping('udp', host, 'nfs') or rpcinfo.progping('tcp', host, 'nfs'):
 			Log.i("Found NFS server on %s" % host)
 			services.append("nfs")
 
-		if services and not info:
-			try:
-				hostname = socket.getnameinfo((host, 0), 0)[0]
-			except:
-				hostname = host
-			info = [['host', hostname, host, '00:00:00:00:00:00', host, 'Master Browser']]
-		if info:
-			info[0].append(services)
+		if services:
+			hostname = self._lookupHostname(host)
+			info.append(['host', hostname, host, '00:00:00:00:00:00', host, 'Master Browser', services])
+
 		Log.i(info)
 		reactor.callFromThread(self._onNetworkIPsReady, info)
 
@@ -310,6 +310,27 @@ class NetworkBrowser(Screen):
 	def _onError(self, *args, **kwargs):
 		Log.w()
 
+	def _lookupHostname(self, addr, local=False):
+		names = self._netbios.queryIPForName(addr, timeout=1)
+		if names:
+			return sorted(names)[0]
+
+		try:
+			fqdn = socket.getnameinfo((addr, 0), socket.NI_NAMEREQD)[0]
+		except:
+			pass
+		else:
+			hostname = fqdn.split('.', 1)[0]
+			if hostname:
+				return hostname
+
+		if local:
+			hostname = socket.gethostname()
+			if hostname:
+				return hostname
+
+		return addr
+
 	def getNetworkShares(self, hostip, hostname):
 		sharelist = []
 		self.sharecache_file = None
@@ -326,13 +347,18 @@ class NetworkBrowser(Screen):
 			except:
 				pass
 
-		for x in netscan.smbShare(hostip, hostname, username, password):
-			if len(x) == 6:
-				if x[4] == "Disk" and not x[3].endswith('$'):
-					sharelist.append(x)
+		for port in (445, 139):
+			smbconn = SMBConnection(username, password, self._myhostname, hostname, is_direct_tcp=(port == 445))
+			if smbconn.connect(hostip, port=port, timeout=1):
+				print '[Networkbrowser] established SMB connection to %s:%d' % (hostip, port)
+				for share in smbconn.listShares(timeout=1):
+					if share.type == SharedDevice.DISK_TREE and not share.isSpecial:
+						sharelist.append(['smbShare', hostname, hostip, share.name.encode('utf-8'), 'Disk', share.comments.encode('utf-8')])
+				smbconn.close()
+				break
 
 		try:
-			exports = netscan.showmount(hostip)
+			exports = showmount(hostip)
 		except IOError as e:
 			print '[Networkbrowser] showmount: ' + str(e)
 		else:

@@ -1,2 +1,2 @@
 Description: Networkbrowser and Network-Mountmanager
-Depends: enigma2, arp-scan
+Depends: enigma2, arp-scan, python-pysmb, python-twisted-core, python-xml
