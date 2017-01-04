@@ -553,7 +553,10 @@ class EPGRefresh:
 			# Play next service
 			# XXX: we might want to check the return value
 			self.refreshAdapter.play(eServiceReference(service.sref))
-
+			ref = ServiceReference(service.sref)
+			channelname = ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
+			print("[EPGRefresh] - Service is: %s" %(str(channelname)))
+					
 			# Check whether the time-based method shall be used or the new eEPGCache-signal based
 			if config.plugins.epgrefresh.usetimebased.value:
 				# Start Timer
@@ -566,6 +569,29 @@ class EPGRefresh:
 			else:
 				# eEPGCache-signal based
 				print("[EPGRefresh] - using signal-based method for update")
+				currentref = self.session.nav.getCurrentlyPlayingServiceReference()
+				serviceref = currentref and currentref.toString()
+				if serviceref == service.sref:
+					print("[EPGRefresh] - next service for update is the currently playing service - no update required")
+					self.nextService()
+
+				eref = eServiceReference(service.sref)
+				channelIdScan = '%08x%04x%04x' % (
+				eref.getUnsignedData(4), # NAMESPACE
+				eref.getUnsignedData(2), # TSID
+				eref.getUnsignedData(3), # ONID
+				)
+				
+				channelIdCurrentRef = '%08x%04x%04x' % (
+				currentref.getUnsignedData(4), # NAMESPACE
+				currentref.getUnsignedData(2), # TSID
+				currentref.getUnsignedData(3), # ONID
+				)
+				
+				if channelIdScan == channelIdCurrentRef:
+					print("[EPGRefresh] - next service for update is on the same transponder like the currently playing service - no update required")
+					self.nextService()
+
 				# get eEPGCache instance if None
 				if self.myEpgCacheInstance is None:
 					print("[EPGRefresh] - myEpgCacheInstance is None. Get it")
