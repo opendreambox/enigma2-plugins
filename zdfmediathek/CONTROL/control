@@ -1,2 +1,0 @@
-Description: Zugriff auf die ZDF-Mediathek
-Depends: enigma2, python-html, python-twisted-web

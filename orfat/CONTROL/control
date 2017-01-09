@@ -1,2 +1,0 @@
-Description: Streaming modules for the orf.at web page
-Depends: enigma2, enigma2-plugin-extensions-vlcplayer, python-twisted-web
