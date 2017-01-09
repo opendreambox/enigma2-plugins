@@ -47,6 +47,10 @@ from MainPictureAdapter import MainPictureAdapter
 from PipAdapter import PipAdapter
 from RecordAdapter import RecordAdapter
 
+# timeout timer for eEPGCache-signal based refresh
+from enigma import eTimer
+from enigma import eDVBSatelliteEquipmentControl
+
 # Path to configuration
 CONFIG = "/etc/enigma2/epgrefresh.xml"
 XML_VERSION = "1"
@@ -78,24 +82,40 @@ class EPGRefresh:
 		# Initialise myEpgCacheInstance
 		self.myEpgCacheInstance = None
 
+		# timeout timer for eEPGCache-signal based refresh
+		self.epgTimeoutTimer = eTimer()
+		self.epgTimeoutTimer_conn = self.epgTimeoutTimer.timeout.connect(self.epgTimeout)
+
+	def epgTimeout(self):
+		if eDVBSatelliteEquipmentControl.getInstance().isRotorMoving():
+			# rotor is moving, timeout raised too early...check again in 5 seconds
+			self.epgTimeoutTimer.start(5000, True)
+		else:
+			# epgcache-signal is not responding...maybe service/transponder is already running or cache was already updated...? step to next entry
+			print("[EPGRefresh] - finished channel without epg update. Reason: epgTimeout")
+			epgrefreshtimer.add(EPGRefreshTimerEntry(
+					time(),
+					self.refresh,
+					nocheck = True)
+			)
+
 	# _onCacheStateChanged is called whenever an eEPGCache-signal is sent by enigma2
 	#  0 = started, 1 = stopped, 2 = aborted, 3 = deferred, 4 = load_finished, 5 = save_finished
 	def _onCacheStateChanged(self, cState):
-		if cState is None:
-			pass
+		if cState.state == cachestate.started:
+			print("[EPGRefresh] - EPG update started")
+			self.epgTimeoutTimer.stop()
+		elif cState.state == cachestate.stopped or cState.state == cachestate.deferred:
+			self.epgTimeoutTimer.stop()
+			print("[EPGRefresh] - state is:" + str(cState.state))
+			print("[EPGRefresh] - EPG update finished for channel")
+			epgrefreshtimer.add(EPGRefreshTimerEntry(
+					time(),
+					self.refresh,
+					nocheck = True)
+			)
 		else:
-			if cState.state == cachestate.started:
-				print("[EPGRefresh] - EPG update started")
-			elif cState.state == cachestate.stopped or cState.state == cachestate.deferred:
-				print("[EPGRefresh] - state is:" + str(cState.state))
-				print("[EPGRefresh] - EPG update finished for channel")
-				epgrefreshtimer.add(EPGRefreshTimerEntry(
-						time(),
-						self.refresh,
-						nocheck = True)
-				)
-			else:
-				print("[EPGRefresh] - assuming the state is not relevant for EPGRefresh. State:" + str(cState.state))
+			print("[EPGRefresh] - assuming the state is not relevant for EPGRefresh. State:" + str(cState.state))
 
 	def _initFinishTodos(self):
 		self.finishTodos = [self._ToDoCallAutotimer, self._ToDoAutotimerCalled, self._callFinishNotifiers, self.finish]
@@ -383,7 +403,6 @@ class EPGRefresh:
 			finishTodo = self.finishTodos.pop(0)
 			print("[EPGRefresh] Debug: Call " + str(finishTodo))
 			finishTodo(*args, **kwargs)
-		
 
 	def _ToDoCallAutotimer(self):
 		if config.plugins.epgrefresh.parse_autotimer.value != "never":
@@ -536,6 +555,12 @@ class EPGRefresh:
 			# Clean up
 			self.cleanUp()
 		else:
+			if self.myEpgCacheInstance is None and config.plugins.epgrefresh.usetimebased.value == False:
+				# get eEPGCache instance if None and eEPGCache-signal based is used
+				print("[EPGRefresh] - myEpgCacheInstance is None. Get it")
+				self.myEpgCacheInstance = eEPGCache.getInstance()
+				self.EpgCacheStateChanged_conn = self.myEpgCacheInstance.cacheState.connect(self._onCacheStateChanged)
+
 			if self.isServiceProtected(service):
 				if (not self.forcedScan) or config.plugins.epgrefresh.skipProtectedServices.value == "always":
 					print("[EPGRefresh] Service is protected, skipping!")
@@ -550,6 +575,9 @@ class EPGRefresh:
 				self.refreshAdapter = MainPictureAdapter(self.session)
 				self.refreshAdapter.prepare()
 
+			if config.plugins.epgrefresh.usetimebased.value == False:
+				# set timeout timer for eEPGCache-signal based refresh
+				self.epgTimeoutTimer.start(5000, True)
 			# Play next service
 			# XXX: we might want to check the return value
 			self.refreshAdapter.play(eServiceReference(service.sref))
@@ -557,7 +585,6 @@ class EPGRefresh:
 			channelname = ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
 			print("[EPGRefresh] - Service is: %s" %(str(channelname)))
 					
-			# Check whether the time-based method shall be used or the new eEPGCache-signal based
 			if config.plugins.epgrefresh.usetimebased.value:
 				# Start Timer
 				delay = service.duration or config.plugins.epgrefresh.interval_seconds.value
@@ -566,38 +593,7 @@ class EPGRefresh:
 					self.refresh,
 					nocheck = True)
 				)
-			else:
-				# eEPGCache-signal based
-				print("[EPGRefresh] - using signal-based method for update")
-				currentref = self.session.nav.getCurrentlyPlayingServiceReference()
-				serviceref = currentref and currentref.toString()
-				if serviceref == service.sref:
-					print("[EPGRefresh] - next service for update is the currently playing service - no update required")
-					self.nextService()
 
-				eref = eServiceReference(service.sref)
-				channelIdScan = '%08x%04x%04x' % (
-				eref.getUnsignedData(4), # NAMESPACE
-				eref.getUnsignedData(2), # TSID
-				eref.getUnsignedData(3), # ONID
-				)
-				
-				channelIdCurrentRef = '%08x%04x%04x' % (
-				currentref.getUnsignedData(4), # NAMESPACE
-				currentref.getUnsignedData(2), # TSID
-				currentref.getUnsignedData(3), # ONID
-				)
-				
-				if channelIdScan == channelIdCurrentRef:
-					print("[EPGRefresh] - next service for update is on the same transponder like the currently playing service - no update required")
-					self.nextService()
-
-				# get eEPGCache instance if None
-				if self.myEpgCacheInstance is None:
-					print("[EPGRefresh] - myEpgCacheInstance is None. Get it")
-					self.myEpgCacheInstance = eEPGCache.getInstance()
-					self.EpgCacheStateChanged_conn = self.myEpgCacheInstance.cacheState.connect(self._onCacheStateChanged)			
-	
 	def showPendingServices(self, session):
 		LISTMAX = 10
 		servcounter = 0
