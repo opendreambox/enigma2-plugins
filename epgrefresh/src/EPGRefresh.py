@@ -61,6 +61,7 @@ class EPGRefresh:
 	def __init__(self):
 		# Initialize
 		self.services = (OrderedSet(), OrderedSet())
+		self.currentServiceRef = None
 		self.forcedScan = False
 		self.isrunning = False
 		self.doStopRunningRefresh = False
@@ -102,20 +103,37 @@ class EPGRefresh:
 	# _onCacheStateChanged is called whenever an eEPGCache-signal is sent by enigma2
 	#  0 = started, 1 = stopped, 2 = aborted, 3 = deferred, 4 = load_finished, 5 = save_finished
 	def _onCacheStateChanged(self, cState):
+		sref = self.currentServiceRef
+		if sref is None:
+			print("[EPGRefresh] - got EPG message but no epgrefresh running... ignore")
+			return
+
+		if cState.state in (cachestate.load_finished, cachestate.save_finished, cachestate.aborted):
+			print("[EPGRefresh] - assuming the state is not relevant for EPGRefresh. State:" + str(cState.state))
+			return
+
+		sdata = sref.getUnsignedData
+		tsid = sdata(2)
+		onid = sdata(3)
+		ns = sdata(4)
+
+		if cState.tsid != tsid or cState.onid != onid or cState.dvbnamespace != ns:
+			print("[EPGRefresh] - ignored EPG message for wrong transponder %04x:%04x:%08x <> %04x:%04x:%08x" %(cState.tsid, cState.onid, cState.dvbnamespace, tsid, onid, ns))
+			return
+
+		print("[EPGRefresh] - state is:" + str(cState.state))
+
 		if cState.state == cachestate.started:
-			print("[EPGRefresh] - EPG update started")
+			print("[EPGRefresh] - EPG update started for transponder %04x:%04x:%08x" %(tsid, onid, ns))
 			self.epgTimeoutTimer.stop()
 		elif cState.state == cachestate.stopped or cState.state == cachestate.deferred:
 			self.epgTimeoutTimer.stop()
-			print("[EPGRefresh] - state is:" + str(cState.state))
-			print("[EPGRefresh] - EPG update finished for channel")
+			print("[EPGRefresh] - EPG update finished for transponder %04x:%04x:%08x" %(tsid, onid, ns))
 			epgrefreshtimer.add(EPGRefreshTimerEntry(
 					time(),
 					self.refresh,
 					nocheck = True)
 			)
-		else:
-			print("[EPGRefresh] - assuming the state is not relevant for EPGRefresh. State:" + str(cState.state))
 
 	def _initFinishTodos(self):
 		self.finishTodos = [self._ToDoCallAutotimer, self._ToDoAutotimerCalled, self._callFinishNotifiers, self.finish]
@@ -393,7 +411,8 @@ class EPGRefresh:
 		except:
 			print("[EPGRefresh] Error while removing 'Stop Running EPG-Refresh' to Extensionmenu:")
 			print_exc(file=stdout)
-		
+
+		self.currentServiceRef = None
 		# Start Todo-Chain
 		self._nextTodo()
 
@@ -580,7 +599,8 @@ class EPGRefresh:
 				self.epgTimeoutTimer.start(5000, True)
 			# Play next service
 			# XXX: we might want to check the return value
-			self.refreshAdapter.play(eServiceReference(service.sref))
+			self.currentServiceRef = eServiceReference(service.sref)
+			self.refreshAdapter.play(self.currentServiceRef)
 			ref = ServiceReference(service.sref)
 			channelname = ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
 			print("[EPGRefresh] - Service is: %s" %(str(channelname)))
