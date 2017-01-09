@@ -74,7 +74,6 @@ SUBDIRS = \
 	netcaster \
 	networkbrowser \
 	ofdb \
-	orfat \
 	orfteletext \
 	partnerbox \
 	permanentclock \
@@ -84,7 +83,6 @@ SUBDIRS = \
 	pluginhider \
 	pluginsort \
 	podcast \
-	porncenter \
 	pushservice \
 	quickbutton \
 	reconstructapsc \
@@ -126,7 +124,6 @@ SUBDIRS = \
 	yttrailer \
 	zaphistorybrowser \
 	zapstatistic \
-	zdfmediathek \
 	po
 
 metadir = $(datadir)/meta

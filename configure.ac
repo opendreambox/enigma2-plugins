@@ -452,10 +452,6 @@ ofdb/meta/Makefile
 ofdb/po/Makefile
 ofdb/src/Makefile
 
-orfat/Makefile
-orfat/meta/Makefile
-orfat/src/Makefile
-
 orfteletext/Makefile
 orfteletext/meta/Makefile
 orfteletext/src/Makefile
@@ -503,12 +499,6 @@ podcast/etc/Makefile
 podcast/meta/Makefile
 podcast/po/Makefile
 podcast/src/Makefile
-
-porncenter/Makefile
-porncenter/meta/Makefile
-porncenter/po/Makefile
-porncenter/src/Makefile
-porncenter/src/Additions/Makefile
 
 pushservice/Makefile
 pushservice/etc/Makefile
@@ -768,10 +758,6 @@ zapstatistic/Makefile
 zapstatistic/meta/Makefile
 zapstatistic/po/Makefile
 zapstatistic/src/Makefile
-
-zdfmediathek/Makefile
-zdfmediathek/meta/Makefile
-zdfmediathek/src/Makefile
 
 po/Makefile
 ])
