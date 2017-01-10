@@ -142,15 +142,26 @@ class AutoRes(Screen):
 			print "preferedmodes", preferedmodes
 			videoresolution_dictionary = {}
 			config.plugins.autoresolution.videoresolution = ConfigSubDict()
+			have_2160p = config.av.videorate.get("2160p", False)
 			for mode in resolutions:
-				if mode[0].startswith('p2160'):
-					choices = ['2160p24', '2160p25', '2160p30'] + preferedmodes
-				elif mode[0].startswith('p1080'):
-					choices = ['1080p24', '1080p25', '1080p30'] + preferedmodes
-				elif mode[0] == 'p720_24':
-					choices = ['720p24', '1080p24'] + preferedmodes
+				if have_2160p:
+					if mode[0].startswith('p2160'):
+						choices = ['2160p24', '2160p25', '2160p30'] + preferedmodes
+					elif mode[0].startswith('p1080_24'):
+						choices = ['1080p24', '2160p24'] + preferedmodes
+					elif mode[0].startswith('p1080'):
+						choices = ['1080p24', '1080p25', '1080p30'] + preferedmodes
+					elif mode[0] == 'p720_24':
+						choices = ['720p24', '1080p24', '2160p24'] + preferedmodes
+					else:
+						choices = preferedmodes
 				else:
-					choices = preferedmodes
+					if mode[0].startswith('p1080'):
+						choices = ['1080p24', '1080p25', '1080p30'] + preferedmodes
+					elif mode[0] == 'p720_24':
+						choices = ['720p24', '1080p24'] + preferedmodes
+					else:
+						choices = preferedmodes
 				config.plugins.autoresolution.videoresolution[mode[0]] = ConfigSelection(default = default[0], choices = choices)
 				config.plugins.autoresolution.videoresolution[mode[0]].addNotifier(self.modeConfigChanged, initial_call = False, immediate_feedback = False)
 				videoresolution_dictionary[mode[0]] = (config.plugins.autoresolution.videoresolution[mode[0]])
