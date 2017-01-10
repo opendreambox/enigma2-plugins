@@ -1,5 +1,4 @@
 from Components.Sources.Source import Source
-from Plugins.Extensions.WebInterface import _
 
 class Strings(Source):
 	def __init__(self):

@@ -706,7 +706,6 @@ webbouqueteditor/src/WebScreens/Makefile
 
 webinterface/Makefile
 webinterface/meta/Makefile
-webinterface/po/Makefile
 webinterface/src/Makefile
 webinterface/src/m/Makefile
 webinterface/src/mobile/Makefile

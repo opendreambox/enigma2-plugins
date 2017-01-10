@@ -24,7 +24,7 @@ from OpenSSL import SSL, crypto
 from time import gmtime
 from os.path import isfile as os_isfile, exists as os_exists
 
-from __init__ import _, __version__, decrypt_block
+from __init__ import __version__, decrypt_block
 from webif import get_random, validate_certificate
 
 import random, uuid, time, hashlib
