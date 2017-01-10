@@ -8,7 +8,6 @@ class IPKGResource(resource.Resource):
 
 	SIMPLECMDS = ( "list", "list_installed", "list_upgradable", "update", "upgrade" )
 	PACKAGECMDS = ( "info", "status", "install", "remove" )
-	FILECMDS = ( "search", )
 
 	def render(self, request):
 		self.args = request.args
@@ -23,8 +22,6 @@ class IPKGResource(resource.Resource):
 				return self.execSimpleCmd(request)
 			elif self.command in IPKGResource.PACKAGECMDS:
 				return self.execPackageCmd(request)
-			elif self.command in IPKGResource.FILECMDS:
-				return self.execFileCmd(request)
 			else:
 				return self.doErrorPage(request, "Unknown command: "+ self.command)
 		else:
@@ -53,14 +50,6 @@ class IPKGResource(resource.Resource):
 		else:
 			return self.doErrorPage(request, "Missing parameter: package")
 
-	def execFileCmd(self, request):
-		file = self.getArg("file")
-		if file is not None:
-			return self.execCmd(request, [file])
-
-		else:
-			return self.doErrorPage("Missing parameter: file")
-
 	def doIndexPage(self, request):
 		html = "<html><body>"
 		html += "<h1>Interface to OPKG</h1>"
@@ -69,7 +58,6 @@ class IPKGResource(resource.Resource):
 		html += "list_installed, ?command=list_installed<br>"
 		html += "list_upgradable, ?command=list_upgradable<br>"
 		html += "list, ?command=list<br>"
-		html += "search, ?command=search&file=&lt;filename&gt;<br>"
 		html += "info, ?command=info&package=&lt;packagename&gt;<br>"
 		html += "status, ?command=status&package=&lt;packagename&gt;<br>"
 		html += "install, ?command=install&package=&lt;packagename&gt;<br>"
