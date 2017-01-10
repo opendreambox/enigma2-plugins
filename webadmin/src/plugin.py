@@ -44,7 +44,6 @@ def autostart(reason, **kwargs):
 		root = File(eEnv.resolve("${libdir}/enigma2/python/Plugins/Extensions/WebAdmin/web-data"))
 		root.putChild("web", ScreenPage(session, util.sibpath(__file__, "web"), True) )
 		root.putChild("mobile", ScreenPage(session, util.sibpath(__file__, "mobile"), True) )
-		root.putChild('tmp', File('/tmp'))
 		root.putChild("uploadtext", UploadTextResource())
 		root.putChild("uploadpkg", UploadPkgResource())
 		root.putChild("pkg", PKGResource())
