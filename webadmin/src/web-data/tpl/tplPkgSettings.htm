@@ -8,18 +8,18 @@
     <tr>
      <td style="width: 750px;">
       <a class="sPkgConfsLinkExt" href="#" title="Click to show/hide content of ${file.name}">
-       <img class="sPkgConfBulletToggle" src="/web-data/img/toggle_expand.png" alt="+"></img>
+       <img class="sPkgConfBulletToggle" src="/web-data/img/toggle_expand.png" alt="+"/>
         ${file.name}
       </a>
      </td >
      <td align="right">
       {if file.state == "1"}
       <a class="sPkgConfFeedsLink" data-name="${file.name}" href="#" title="disable ${file.name}" >
-       <img id="${file.name}-pic" src="/web-data/img/minus.png" alt="disable" border="0"></img>
+       <img id="${file.name}-pic" src="/web-data/img/minus.png" alt="disable" border="0"/>
       </a>
       {else}
       <a class="sPkgConfFeedsLink" data-name="${file.name}" href="#" title="enable ${file.name}" >
-       <img id="${file.name}-pic" src="/web-data/img/plus.png" alt="enable" border="0"></img>
+       <img id="${file.name}-pic" src="/web-data/img/plus.png" alt="enable" border="0"/>
       </a>
       {/if}
      </td>
@@ -62,19 +62,21 @@
  {/for}
  <tr>
   <td>
+   <hr/>
    <form target="new feed Upload" action="uploadtext?path=/etc/apt/sources.list.d/" method="post" enctype="multipart/form-data">
     <table>
-    <hr/>
      <tr>
       <td>
-       <tr>
-        <td>Upload new *-feed.list</td>
-        <td><input id="finput" name="text" type="file" onChange="confirm_suffix('.list');"></td>
-        <input type="hidden" name="filename" id="fname" >
-       </tr>
-       <tr>
-        <td colspan="2"><input type="submit" ></td>
-       </tr>
+       <table>
+        <tr>
+         <td>Upload new *-feed.list</td>
+         <td><input id="finput" name="text" type="file" onChange="confirm_suffix('.list');"></td>
+         <td><input type="hidden" name="filename" id="fname" ></td>
+        </tr>
+        <tr>
+         <td colspan="2"><input type="submit" ></td>
+        </tr>
+       </table>
       </td>
      </tr>
     </table>

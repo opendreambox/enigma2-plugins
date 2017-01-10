@@ -8,7 +8,7 @@
     <tr>
      <td style="width: 750px;">
       <a class="sPkgConfsLinkExt" href="#" title="Click to show/hide content of ${file.name}">
-       <img class="sPkgConfBulletToggle" src="/web-data/img/toggle_expand.png" alt="+"></img>
+       <img class="sPkgConfBulletToggle" src="/web-data/img/toggle_expand.png" alt="+" />
         ${file.name}
       </a>
      </td>
@@ -19,12 +19,12 @@
        <tr>
         <td>
          <form target="_blank" action="uploadtext?path=/usr/script/&filename=${file.name}" method="post"  enctype="multipart/form-data">
-          <P>
+          <p>
            <textarea name="text" rows=16 cols=100>${file.text}</textarea><br/>
            <input target="_blank" type="submit" value="Save" onClick="return confirm('save file to dreambox?')" >
            <input type="hidden" name="filename" id="${file.name}-name" value="${file.name}" >
            <input type="reset">
-          </P>
+          </p>
          </form>
         </td>
        </tr>
@@ -54,7 +54,7 @@
   <td>
    <table>
     <tr>
-     <td>No Packages to Display</td>
+     <td>No scripts to display</td>
     </tr>
    </table>
   </td>
@@ -62,19 +62,15 @@
  {/for}
  <tr>
   <td>
+   <hr/>
    <form target="Script Upload" action="uploadtext?path=/usr/script/" method="post" enctype="multipart/form-data">
     <table>
-    <hr/>
      <tr>
       <td>
-       <tr>
-        <td>Upload new *.sh</td>
-        <td><input id="finput" name="text" type="file" onChange="confirm_suffix('.sh');"></td>
-        <input type="hidden" name="filename" id="fname" >
-       </tr>
-       <tr>
-        <td colspan="2"><input type="submit" ></td>
-       </tr>
+       <p>Upload user script:</p>
+       <p><input id="finput" name="text" type="file" onChange="confirm_suffix('.sh');"></p>
+       <p><input type="hidden" name="filename" id="fname"></p>
+       <p><input type="submit"></p>
       </td>
      </tr>
     </table>
