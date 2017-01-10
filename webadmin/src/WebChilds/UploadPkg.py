@@ -1,21 +1,11 @@
 # -*- coding: utf-8 -*-
-from os import rename as os_rename,\
-	chmod as os_chmod,\
-	write as os_write,\
-	close as os_close,\
-	unlink as os_unlink, \
-	popen as os_popen
+from os import close, unlink, write
+from os.path import basename
 from tempfile import mkstemp
-from twisted.web import resource, http
+from twisted.web import http, resource, server
 
-from Plugins.Extensions.WebInterface.WebChilds.Toplevel import addExternalChild
+from PKG import PKGConsoleStream
 
-def mbasename(fname):
-	l = fname.split('/')
-	win = l[len(l)-1]
-	l2 = win.split('\\')
-	return l2[len(l2)-1]
-	
 class UploadPkgResource(resource.Resource):
 	res="""
 	<?xml version="1.0" encoding="UTF-8"?>
@@ -42,12 +32,6 @@ class UploadPkgResource(resource.Resource):
 			
 	def render_POST(self, req):
 		data = req.args['file'][0]
-		print "[filename req.args]", req.args['filename'][0]
-		filename = mbasename(req.args['filename'][0])
-		print "[filename]", filename
-		if not filename.endswith(".deb"):
-			return self.res % (_("wrong filetype!") ,_("Close"), _("Add"))
-		
 		if not data:
 			req.setResponseCode(http.OK)
 			return self.res % ( _("filesize was 0, not uploaded") ,
@@ -55,35 +39,21 @@ class UploadPkgResource(resource.Resource):
 					 _("Add")
 					)
 		
-		fd,fn = mkstemp(dir = "/tmp/")
-		cnt = os_write(fd, data)
-		os_close(fd)
-		os_chmod(fn, 0755)
-		
-		if cnt <= 0: # well, actually we should check against len(data) but lets assume we fail big time or not at all
+		fd, fn = mkstemp(suffix='.deb')
+		cnt = write(fd, data)
+		close(fd)
+		if cnt < len(data):
 			try:
-				os_unlink(fn)
-			except OSError, oe:
+				unlink(fn)
+			except OSError:
 				pass
 			req.setResponseCode(http.OK)
-			return  self.res % (_("error writing to disk, not uploaded"),_("Close"), _("Add"))
-		
-		else:
-			file = "/tmp/" + filename
-			os_rename(fn,(file))
-			if file is not None:
-				out = os_popen("dpkg -i %s" %file)
-				debug = ""
-				for line in out:
-					debug += line
-			else:
-				return  self.res % (_("error writing to disk, not uploaded"),_("Close"), _("Add"))
+			return self.res % (_("error writing to disk, not uploaded"), _("Close"), _("Add"))
 
-			req.setResponseCode(http.OK)
-			return self.res % ((debug),
-					_("Close"),
-					 _("Add")
-					)
+		cmd = ['/usr/bin/dpkg', 'dpkg', '-i', fn]
+		req.setResponseCode(http.OK)
+		PKGConsoleStream(req, cmd)
+		return server.NOT_DONE_YET
 
 	def render_GET(self, req):
 		req.setResponseCode(http.OK)
