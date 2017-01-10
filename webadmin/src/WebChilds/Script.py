@@ -1,28 +1,34 @@
 # -*- coding: utf-8 -*-
+from os import access, X_OK
+from os.path import basename, dirname, isfile, join, realpath
+from twisted.web import server, resource, http
 from PKG import PKGConsoleStream
 
-from twisted.web import server, resource, http
-
 class Script(resource.Resource):
-	
 	def render(self, request):
-		self.args = request.args
-		self.command = self.getArg("command")
+		command = request.args.get('command', [None])[0]
+		if not command:
+			request.setResponseCode(http.BAD_REQUEST)
+			request.setHeader('Content-type', 'text/plain')
+			return 'Missing parameter: command'
 
-		if self.command is not None:
-			return self.execCmd(request)
+		args = command.split()
+		if basename(args[0]) != args[0]:
+			request.setResponseCode(http.BAD_REQUEST)
+			request.setHeader('Content-type', 'text/plain')
+			return 'Invalid command: %s' % args[0]
 
-	def execCmd(self, request):
-		cmd = self.command.split("+")
-		cmd[0] = "/usr/script/" + cmd[0]
-		print "[Script] cmd: %s" % cmd
-		request.setResponseCode(http.OK)
-		PKGConsoleStream(request, cmd)
+		path = join('/usr/script', args[0])
+		if not isfile(path):
+			request.setResponseCode(http.NOT_FOUND)
+			request.setHeader('Content-type', 'text/plain')
+			return 'Requested command not found.'
 
-		return server.NOT_DONE_YET
+		if path.endswith('.sh') and access(path, X_OK):
+			request.setResponseCode(http.OK)
+			PKGConsoleStream(request, [ path ] + args)
+			return server.NOT_DONE_YET
 
-	def getArg(self, key):
-		if key in self.args:
-			return self.args[key][0]
-		else:
-			return None
+		request.setResponseCode(http.FORBIDDEN)
+		request.setHeader('Content-type', 'text/plain')
+		return 'Requested command is not an executable script.'
