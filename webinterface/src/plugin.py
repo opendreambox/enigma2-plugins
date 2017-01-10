@@ -4,6 +4,7 @@ from enigma import eConsoleAppContainer, eTPM
 from Plugins.Plugin import PluginDescriptor
 
 from Components.config import config, ConfigBoolean, ConfigSubsection, ConfigInteger, ConfigYesNo, ConfigText, ConfigOnOff
+from Components.Network import iNetworkInfo
 from Screens.MessageBox import MessageBox
 from WebIfConfig import WebIfConfigScreen
 from WebChilds.Toplevel import getToplevel
@@ -11,6 +12,7 @@ from Tools.HardwareInfo import HardwareInfo
 
 from Tools.Directories import copyfile, resolveFilename, SCOPE_PLUGINS, SCOPE_CONFIG
 from Tools.IO import saveFile
+from Tools.Log import Log
 
 from twisted.internet import reactor, ssl
 from twisted.internet.error import CannotListenError
@@ -26,6 +28,8 @@ from __init__ import _, __version__, decrypt_block
 from webif import get_random, validate_certificate
 
 import random, uuid, time, hashlib
+
+from netaddr import IPNetwork
 
 tpm = eTPM()
 rootkey = ['\x9f', '|', '\xe4', 'G', '\xc9', '\xb4', '\xf4', '#', '&', '\xce', '\xb3', '\xfe', '\xda', '\xc9', 'U', '`', '\xd8', '\x8c', 's', 'o', '\x90', '\x9b', '\\', 'b', '\xc0', '\x89', '\xd1', '\x8c', '\x9e', 'J', 'T', '\xc5', 'X', '\xa1', '\xb8', '\x13', '5', 'E', '\x02', '\xc9', '\xb2', '\xe6', 't', '\x89', '\xde', '\xcd', '\x9d', '\x11', '\xdd', '\xc7', '\xf4', '\xe4', '\xe4', '\xbc', '\xdb', '\x9c', '\xea', '}', '\xad', '\xda', 't', 'r', '\x9b', '\xdc', '\xbc', '\x18', '3', '\xe7', '\xaf', '|', '\xae', '\x0c', '\xe3', '\xb5', '\x84', '\x8d', '\r', '\x8d', '\x9d', '2', '\xd0', '\xce', '\xd5', 'q', '\t', '\x84', 'c', '\xa8', ')', '\x99', '\xdc', '<', '"', 'x', '\xe8', '\x87', '\x8f', '\x02', ';', 'S', 'm', '\xd5', '\xf0', '\xa3', '_', '\xb7', 'T', '\t', '\xde', '\xa7', '\xf1', '\xc9', '\xae', '\x8a', '\xd7', '\xd2', '\xcf', '\xb2', '.', '\x13', '\xfb', '\xac', 'j', '\xdf', '\xb1', '\x1d', ':', '?']
@@ -45,7 +49,7 @@ config.plugins.Webinterface.version = ConfigText(__version__) # used to make the
 config.plugins.Webinterface.http = ConfigSubsection()
 config.plugins.Webinterface.http.enabled = ConfigYesNo(default=True)
 config.plugins.Webinterface.http.port = ConfigInteger(default = 80, limits=(1, 65535) )
-config.plugins.Webinterface.http.auth = ConfigYesNo(default=False)
+config.plugins.Webinterface.http.auth = ConfigYesNo(default=True)
 
 config.plugins.Webinterface.https = ConfigSubsection()
 config.plugins.Webinterface.https.enabled = ConfigYesNo(default=True)
@@ -53,9 +57,10 @@ config.plugins.Webinterface.https.port = ConfigInteger(default = 443, limits=(1,
 config.plugins.Webinterface.https.auth = ConfigYesNo(default=True)
 
 config.plugins.Webinterface.streamauth = ConfigYesNo(default=False)
+config.plugins.Webinterface.localauth = ConfigOnOff(default=False)
 
-config.plugins.Webinterface.anti_hijack = ConfigOnOff(default=False)
-config.plugins.Webinterface.extended_security = ConfigOnOff(default=False)
+config.plugins.Webinterface.anti_hijack = ConfigOnOff(default=True)
+config.plugins.Webinterface.extended_security = ConfigOnOff(default=True)
 
 global running_defered, waiting_shutdown, toplevel
 
@@ -431,31 +436,80 @@ class HTTPRootResource(resource.Resource):
 # Handles HTTP Authorization for a given Resource
 #===============================================================================
 class HTTPAuthResource(HTTPRootResource):
+	LOCALHOSTS = (IPNetwork("127.0.0.1"), IPNetwork("::1"))
+
 	def __init__(self, res, realm):
 		HTTPRootResource.__init__(self, res)
 		self.realm = realm
 		self.authorized = False
 		self.unauthorizedResource = resource.ErrorPage(http.UNAUTHORIZED, "Access denied", "Authentication credentials invalid!")
+		self._localNetworks = []
+
+	def _assignLocalNetworks(self, ifaces):
+			if self._localNetworks:
+				return
+			self._localNetworks = []
+			#LAN
+			for key, iface in ifaces.iteritems():
+				if iface.ipv4.address != "0.0.0.0":
+					v4net = IPNetwork("%s/%s" %(iface.ipv4.address, iface.ipv4.netmask))
+					self._localNetworks.append(v4net)
+				if iface.ipv6.address != "::":
+					v6net = IPNetwork("%s/%s" %(iface.ipv6.address, iface.ipv6.netmask))
+					self._localNetworks.append(v6net)
+			Log.w(self._localNetworks)
 
 	def unauthorized(self, request):
 		request.setHeader('WWW-authenticate', 'Basic realm="%s"' % self.realm)
 		request.setResponseCode(http.UNAUTHORIZED)
 		return self.unauthorizedResource
 
-	def isAuthenticated(self, request):
-		host = request.getHost().host
-		#If streamauth is disabled allow all acces from localhost
-		if not config.plugins.Webinterface.streamauth.value:
-			if( host == "127.0.0.1" or host == "localhost" ):
-				print "[WebInterface.plugin.isAuthenticated] Streaming auth is disabled bypassing authcheck because host is '%s'" %host
+	def _isLocalClient(self, clientip):
+		if self._isLocalHost(clientip):
+			return True
+		for lnw in self._localNetworks:
+			if self._networkContains(lnw, clientip):
 				return True
+		return False
+
+	def _isLocalHost(self, clientip):
+		for host in self.LOCALHOSTS:
+			if self._networkContains(host, clientip):
+				return True
+		return False
+
+	def _networkContains(self, network, ip):
+		if network.__contains__(ip):
+			return True
+		try:
+			# You may get an ipv6 noted ipv4 address like "::ffff:192.168.0.2"
+			# In that case it won't match the ipv4 local network so we have to try converting it to plain ipv4
+			if network.__contains__(ip.ipv4()):
+				return True
+		except:
+			pass
+		return False
+
+	def isAuthenticated(self, request):
+		self._assignLocalNetworks(iNetworkInfo.getConfiguredInterfaces())
+		if request.transport:
+			host = IPNetwork(request.transport.getPeer().host)
+			#If streamauth is disabled allow all acces from localhost
+			if not config.plugins.Webinterface.streamauth.value:
+				if self._isLocalHost(host.ip):
+					Log.i("Streaming auth is disabled - Bypassing Authcheck because host '%s' is local!" %host)
+					return True
+			if not config.plugins.Webinterface.localauth.value:
+				if self._isLocalClient(host.ip):
+					Log.i("Local auth is disabled - Bypassing Authcheck because host '%s' is local!" %host)
+					return True
 
 		# get the Session from the Request
 		http_session = request.getSession().sessionNamespaces
 
 		# if the auth-information has not yet been stored to the http_session
 		if not http_session.has_key('authenticated'):
-			if request.getUser() != '':
+			if request.getUser() and request.getPassword():
 				http_session['authenticated'] = check_passwd(request.getUser(), request.getPassword())
 			else:
 				http_session['authenticated'] = False

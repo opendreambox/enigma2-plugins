@@ -58,11 +58,13 @@ class WebIfConfigScreen(ConfigListScreen, Screen):
 
 		if config.plugins.Webinterface.enabled.value:
 			list.extend( [
+				getConfigListEntry(_("General")),
 				getConfigListEntry(_("Show Setup in Extensions menu"), config.plugins.Webinterface.show_in_extensionsmenu),
 				getConfigListEntry(_("Enable /media"), config.plugins.Webinterface.includemedia),
 				getConfigListEntry(_("Allow zapping via Webinterface"), config.plugins.Webinterface.allowzapping),
 				getConfigListEntry(_("Autowrite timer"), config.plugins.Webinterface.autowritetimer),
 				getConfigListEntry(_("Load movie-length"), config.plugins.Webinterface.loadmovielength),
+				getConfigListEntry(_("HTTP")),
 				getConfigListEntry(_("Enable HTTP Access"), config.plugins.Webinterface.http.enabled)
 			])
 
@@ -72,17 +74,23 @@ class WebIfConfigScreen(ConfigListScreen, Screen):
 					getConfigListEntry(_("Enable HTTP Authentication"), config.plugins.Webinterface.http.auth)
 				])
 
-			list.append( getConfigListEntry(_("Enable HTTPS Access"), config.plugins.Webinterface.https.enabled) )
+			list.extend([
+				getConfigListEntry(_("HTTPS")),
+				getConfigListEntry(_("Enable HTTPS Access"), config.plugins.Webinterface.https.enabled)
+			])
 			if config.plugins.Webinterface.https.enabled.value == True:
 				list.extend([
 					getConfigListEntry(_("HTTPS Port"), config.plugins.Webinterface.https.port),
 					getConfigListEntry(_("Enable HTTPS Authentication"), config.plugins.Webinterface.https.auth)
 				])
 
-			#Auth for Streaming (127.0.0.1 Listener)
-			list.append(getConfigListEntry(_("Enable Streaming Authentication"), config.plugins.Webinterface.streamauth))
-			list.append(getConfigListEntry(_("Simple Anti-Hijack Measures (may break clients)"), config.plugins.Webinterface.anti_hijack))
-			list.append(getConfigListEntry(_("Token-based security (may break clients)"), config.plugins.Webinterface.extended_security))
+			list.extend([
+				getConfigListEntry(_("Additional Security")),
+				getConfigListEntry(_("Enable Streaming Authentication"), config.plugins.Webinterface.streamauth),
+				getConfigListEntry(_("Authentication for local clients"), config.plugins.Webinterface.localauth),
+				getConfigListEntry(_("Simple Anti-Hijack Measures (may break clients)"), config.plugins.Webinterface.anti_hijack),
+				getConfigListEntry(_("Token-based security (may break clients)"), config.plugins.Webinterface.extended_security),
+			])
 		self["config"].list = list
 		self["config"].l.setList(list)
 
@@ -92,13 +100,15 @@ class WebIfConfigScreen(ConfigListScreen, Screen):
 	def save(self):
 		print "[Webinterface] Saving Configuration"
 		for x in self["config"].list:
-			x[1].save()
+			if len(x) > 1:
+				x[1].save()
 		self.close(True, self.session)
 
 	def cancel(self):
 		print "[Webinterface] Cancel setup changes"
 		for x in self["config"].list:
-			x[1].cancel()
+			if len(x) > 1:
+				x[1].cancel()
 		self.close(False, self.session)
 
 
