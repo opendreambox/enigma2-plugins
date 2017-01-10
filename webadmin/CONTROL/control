@@ -1,2 +1,2 @@
-Description: Extension for enigma2 webinterface to install Ipkgs telnet client
+Description: Insecure extension to allow package management with a browser
 Depends: enigma2-plugin-extensions-webinterface
