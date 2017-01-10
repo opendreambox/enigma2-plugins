@@ -5,7 +5,6 @@ install_DATA = \
 	handler.js \
 	helpers.js \
 	index.html \
-	jta26.jar \
 	provider.js \
 	terminal.conf
 

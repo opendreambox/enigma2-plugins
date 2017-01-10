@@ -8,6 +8,5 @@ install_DATA = \
 	tplPkgList.htm \
 	tplPkgSettings.htm \
 	tplScriptList.htm \
-	tplTerminal.htm.default \
-	tplTerminal.htm.shellinabox \
+	tplTerminal.htm \
 	tplVolume.htm
