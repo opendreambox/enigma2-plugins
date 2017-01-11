@@ -12,8 +12,8 @@ from AutoMount import iAutoMount
 from MountEdit import AutoMountEdit
 
 class AutoMountView(Screen):
-        skin = """
-        <screen name="AutoMountView" position="center,120" size="820,520" title="MountView">
+	skin = """
+	<screen name="AutoMountView" position="center,120" size="820,520" title="MountView">
 		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on"/>
 		<ePixmap pixmap="skin_default/buttons/yellow.png" position="210,5" size="200,40" alphatest="on"/>
 		<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
@@ -40,94 +40,94 @@ class AutoMountView(Screen):
 		</widget>
 		<eLabel	position="10,480" size="800,1" backgroundColor="grey"/>
 		<widget source="introduction" render="Label" position="10,488" size="800,25" font="Regular;22" halign="center" transparent="1"/>
-	    </screen>"""
+	</screen>"""
 
-        def __init__(self, session, plugin_path):
-                self.skin_path = plugin_path
-                self.session = session
-                Screen.__init__(self, session)
-                self.mounts = None
-                self.applyConfigRef = None
-                self["shortcuts"] = ActionMap(["ShortcutActions", "WizardActions"],
-                {
-                        "ok": self.keyOK,
-                        "back": self.exit,
-                        "cancel": self.exit,
-                        "red": self.exit,
-                        "yellow": self.delete,
-                })
-                self["legend1"] = StaticText(_("Mounted/\nUnmounted"))
-                self["legend2"] = StaticText(_("Mount informations"))
-                self["legend3"] = StaticText(_("Active/\nInactive"))
-                self["introduction"] = StaticText(_("Press OK to edit the settings."))
-                self["key_red"] = StaticText(_("Close"))
-                self["key_yellow"] = StaticText(_("Delete mount"))
+	def __init__(self, session, plugin_path):
+		self.skin_path = plugin_path
+		self.session = session
+		Screen.__init__(self, session)
+		self.mounts = None
+		self.applyConfigRef = None
+		self["shortcuts"] = ActionMap(["ShortcutActions", "WizardActions"],
+		{
+			"ok": self.keyOK,
+			"back": self.exit,
+			"cancel": self.exit,
+			"red": self.exit,
+			"yellow": self.delete,
+		})
+		self["legend1"] = StaticText(_("Mounted/\nUnmounted"))
+		self["legend2"] = StaticText(_("Mount informations"))
+		self["legend3"] = StaticText(_("Active/\nInactive"))
+		self["introduction"] = StaticText(_("Press OK to edit the settings."))
+		self["key_red"] = StaticText(_("Close"))
+		self["key_yellow"] = StaticText(_("Delete mount"))
 
-                self.list = []
-                self["config"] = List(self.list)
-                self.showMountsList()
+		self.list = []
+		self["config"] = List(self.list)
+		self.showMountsList()
 
-        def showMountsList(self):
-                self.list = []
-                self.mounts = iAutoMount.getMounts()
-                for sharename in self.mounts.keys():
-                        mountentry = iAutoMount.mounts[sharename]
-                        self.list.append(self.buildMountViewItem(mountentry))
-                self["config"].setList(self.list)
+	def showMountsList(self):
+		self.list = []
+		self.mounts = iAutoMount.getMounts()
+		for sharename in self.mounts.keys():
+			mountentry = iAutoMount.mounts[sharename]
+			self.list.append(self.buildMountViewItem(mountentry))
+		self["config"].setList(self.list)
 
-        def buildMountViewItem(self, entry):
-                sharename = entry["sharename"]
-                ip = _("IP:") + " " + str(entry["ip"])
-                mountpoint = _("Dir:") + " " + str(entry["sharedir"])
-                if entry["isMounted"]:
-                        isMountedpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/ok.png"))
-                else:
-                        isMountedpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/cancel.png"))
-                if entry["active"]:
-                        activepng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_SKIN_IMAGE, "skin_default/icons/lock_on.png"))
-                else:
-                        activepng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_SKIN_IMAGE, "skin_default/icons/lock_error.png"))
-                if entry["mounttype"] == 'nfs':
-                        mounttypepng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/i-nfs.png"))
-                if entry["mounttype"] == 'cifs':
-                        mounttypepng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/i-smb.png"))
-                return((isMountedpng, sharename, ip, mountpoint, activepng, mounttypepng))
+	def buildMountViewItem(self, entry):
+		sharename = entry["sharename"]
+		ip = _("IP:") + " " + str(entry["ip"])
+		mountpoint = _("Dir:") + " " + str(entry["sharedir"])
+		if entry["isMounted"]:
+			isMountedpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/ok.png"))
+		else:
+			isMountedpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/cancel.png"))
+		if entry["active"]:
+			activepng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_SKIN_IMAGE, "skin_default/icons/lock_on.png"))
+		else:
+			activepng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_SKIN_IMAGE, "skin_default/icons/lock_error.png"))
+		if entry["mounttype"] == 'nfs':
+			mounttypepng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/i-nfs.png"))
+		if entry["mounttype"] == 'cifs':
+			mounttypepng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/i-smb.png"))
+		return((isMountedpng, sharename, ip, mountpoint, activepng, mounttypepng))
 
-        def exit(self):
-                self.close()
+	def exit(self):
+		self.close()
 
-        def keyOK(self, returnValue = None):
-                cur = self["config"].getCurrent()
-                if cur:
-                        returnValue = cur[1]
-                        self.session.openWithCallback(self.MountEditClosed, AutoMountEdit, self.skin_path, iAutoMount.mounts[returnValue])
+	def keyOK(self, returnValue = None):
+		cur = self["config"].getCurrent()
+		if cur:
+			returnValue = cur[1]
+			self.session.openWithCallback(self.MountEditClosed, AutoMountEdit, self.skin_path, iAutoMount.mounts[returnValue])
 
-        def MountEditClosed(self, returnValue = None):
-                if returnValue == None:
-                        self.showMountsList()
+	def MountEditClosed(self, returnValue = None):
+		if returnValue == None:
+			self.showMountsList()
 
-        def delete(self, returnValue = None):
-                cur = self["config"].getCurrent()
-                if cur:
-                        returnValue = cur[1]
-                        self.applyConfigRef = self.session.openWithCallback(self.applyConfigfinishedCB, MessageBox, _("Please wait while removing your network mount..."), type = MessageBox.TYPE_INFO, enable_input = False)
-                        iAutoMount.removeMount(iAutoMount.MOUNT_BASE + returnValue, self.removeDataAvail)
+	def delete(self, returnValue = None):
+		cur = self["config"].getCurrent()
+		if cur:
+			returnValue = cur[1]
+			self.applyConfigRef = self.session.openWithCallback(self.applyConfigfinishedCB, MessageBox, _("Please wait while removing your network mount..."), type = MessageBox.TYPE_INFO, enable_input = False)
+			iAutoMount.removeMount(iAutoMount.MOUNT_BASE + returnValue, self.removeDataAvail)
 
-        def removeDataAvail(self, data):
-                if data is True:
-                        iAutoMount.save()
-                        iAutoMount.reload(self.deleteDataAvail)
+	def removeDataAvail(self, data):
+		if data is True:
+			iAutoMount.save()
+			iAutoMount.reload(self.deleteDataAvail)
 
-        def deleteDataAvail(self, data):
-                if data is True:
-                        if self.applyConfigRef.execing:
-                                self.applyConfigRef.close(True)
+	def deleteDataAvail(self, data):
+		if data is True:
+			if self.applyConfigRef.execing:
+				self.applyConfigRef.close(True)
 
-        def applyConfigfinishedCB(self,data):
-                if data is True:
-                        self.session.openWithCallback(self.ConfigfinishedCB, MessageBox, _("Your network mount has been removed."), type = MessageBox.TYPE_INFO, timeout = 10)
+	def applyConfigfinishedCB(self,data):
+		if data is True:
+			self.session.openWithCallback(self.ConfigfinishedCB, MessageBox, _("Your network mount has been removed."), type = MessageBox.TYPE_INFO, timeout = 10)
 
-        def ConfigfinishedCB(self,data):
-                if data is not None:
-                        if data is True:
-                                self.showMountsList()
+	def ConfigfinishedCB(self,data):
+		if data is not None:
+			if data is True:
+				self.showMountsList()
