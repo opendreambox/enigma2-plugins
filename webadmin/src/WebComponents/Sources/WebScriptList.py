@@ -1,50 +1,35 @@
 # -*- coding: utf-8 -*-
 from Components.Sources.Source import Source
-from os import popen as os_popen, path as os_path
+from glob import glob
+from os.path import basename
 
 class WebScriptList(Source):
 	LIST=0
-	EXEC=1
-	
+
 	def __init__(self, session, func=LIST, wap=False):
 		Source.__init__(self)
 		self.func = func
 		self.wap = wap
 		self.session = session
 		self.res = ( False, "Missing or Wrong Argument" )
-			
+
 	def handleCommand(self, cmd):
-		if cmd is not None:
-			if self.func is self.EXEC:
-				self.res = self.execScript(cmd)
-			elif self.func is self.LIST:
-				pass
-			
-	def execScript(self, cmd):
-		return (False, "bla")
-			
+		pass
+
 	def getList(self):
-		list = []
-		files = os_popen("ls /usr/script")
-		for n in files:
-			file = n[:-1]
-			if file.endswith(".sh"):
-				print "[WebScriptList] file ", file
-				text =""
-				with open("/usr/script/" + file) as f:
-					text = f.read()
-					print "[WebScriptList] text ",text
-					f.close()
-				list.append((file, text))
-		return list
+		scripts = []
+		for filename in sorted(glob('/usr/script/*.sh')):
+			print "[WebScriptList] filename ", filename
+			with open(filename) as f:
+				text = f.read()
+				print "[WebScriptList] text ",text
+				scripts.append((basename(filename), text))
+		return scripts
 
 	def getResult(self):
-		if self.func is not self.LIST:
-			return self.res
-		return ( False, "illegal call" )
+		return self.res
 
 	result = property(getResult)
-	
 	list = property(getList)
 	lut = {"Name": 0
 			, "Text": 1
