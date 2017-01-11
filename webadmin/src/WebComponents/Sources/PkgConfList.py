@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 from Components.Sources.Source import Source
-from os import popen as os_popen, statvfs as os_statvfs, path as os_path
-from shutil import move as sh_move
+from glob import glob
+from os import statvfs
+from os.path import basename, isfile, join
+from shutil import move
 
 class PkgConfList(Source):
 	LIST=0
 	SWITCH=1
 	MEM=2
-	
+
+	sources_list_d = '/etc/apt/sources.list.d'
+
 	def __init__(self, session, func=LIST, wap=False):
 		Source.__init__(self)
 		self.func = func
@@ -26,39 +30,37 @@ class PkgConfList(Source):
 			
 	def switch(self,cmd):
 		if cmd:
-			try:
-				file = cmd["file"]
-				if os_path.exists("/etc/apt/sources.list.d/" + file):
-					sh_move("/etc/apt/sources.list.d/" + file, "/etc/apt/sources.list.d/" + file + ".off")
-					return (True, file + ".off")
-				else:
-					sh_move("/etc/apt/sources.list.d/" + file + ".off", "/etc/apt/sources.list.d/" + file)
-					return (True, file)
-			except Exception, e:
-				return (False, str(e))
-			
+			filename = cmd.get('file')
+			if not filename or filename != basename(filename):
+				return (False, 'Invalid filename')
+
+			filename = join(self.sources_list_d, filename)
+			backup = filename + '.off'
+			if isfile(filename):
+				move(filename, backup)
+				return (True, backup)
+			elif isfile(backup):
+				move(backup, filename)
+				return (True, filename)
+
 	def getMem(self):
 		try:
-			stat = os_statvfs("/")
+			stat = statvfs(self.sources_list_d)
 		except OSError:
-			return (False, "-1")
+			return (False, "statvfs() failed")
 		freespace = stat.f_bfree / 1000 * stat.f_bsize / 1000
 		return (True, '%d' %freespace)
 			
 	def getList(self):
-		list = []
-		files = os_popen("ls /etc/apt/sources.list.d")
-		for n in files:
-			file = n[:-1]
-			if file.endswith(".list") or file.endswith(".off"):
-				print "[PkgConfList] file ", file
-				text =""
-				with open("/etc/apt/sources.list.d/" + file) as f:
+		sources = []
+		for filename in sorted(glob('%s/*.list*' % self.sources_list_d)):
+			if filename.endswith(".list") or filename.endswith(".list.off"):
+				print "[PkgConfList] file ", filename
+				with open(filename) as f:
 					text = f.read()
-					print "[PkgConfList] text ",text
-					f.close()
-				list.append((file, text))
-		return list
+					print "[PkgConfList] text ", text
+					sources.append((basename(filename), text))
+		return sources
 
 	def getResult(self):
 		if self.func is not self.LIST:
