@@ -1,4 +1,3 @@
-import subprocess
 import os
 try:
 	is_libmediainfo = True
@@ -24,7 +23,7 @@ from os import system as os_system
 from os import stat as os_stat
 from os import walk as os_walk
 from Screens.Screen import Screen
-from Components.config import config, ConfigSubList, ConfigSubsection, ConfigInteger, ConfigYesNo, ConfigText, getConfigListEntry, ConfigDirectory, ConfigSelection, ConfigPassword
+from Components.config import config, ConfigSubsection, ConfigYesNo, ConfigText, getConfigListEntry, ConfigSelection, ConfigPassword
 from Components.ConfigList import ConfigListScreen
 from Components.MenuList import MenuList
 from Components.Label import Label
@@ -36,12 +35,9 @@ from Components.AVSwitch import AVSwitch
 from Components.ActionMap import ActionMap
 from Plugins.Plugin import PluginDescriptor
 from Tools.HardwareInfo import HardwareInfo
-from Tools.Directories import fileExists, pathExists
-from time import strftime as time_strftime
-from time import localtime as time_localtime
-from re import compile as re_compile
+from Tools.Directories import fileExists
 from os import path as os_path, listdir
-from enigma import eConsoleAppContainer, eServiceReference, ePicLoad, getDesktop, eServiceCenter, eTimer
+from enigma import eServiceReference, ePicLoad, getDesktop, eTimer
 
 #import players like Picture player, dvd player, music palyer
 if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/PicturePlayer/plugin.pyo") or os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/PicturePlayer/plugin.pyc"):
