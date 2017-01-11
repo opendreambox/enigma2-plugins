@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from enigma import eConsoleAppContainer, eTimer
 from xml.etree.cElementTree import parse as cet_parse
 from xml.etree.ElementTree import ParseError
 from os import path, listdir
