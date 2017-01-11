@@ -17,66 +17,60 @@
 #
 #######################################################################
 
+from os import chmod, listdir, mkdir, rename, stat, symlink, walk
+from os.path import basename, join
+from subprocess import call, check_output
+from time import localtime, strftime
+
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from Screens.InfoBar import MoviePlayer as MP_parent
-from Screens.InfoBar import InfoBar
 from Screens.Console import Console
 from Screens.ChoiceBox import ChoiceBox
 from Screens.MessageBox import MessageBox
 from Screens.EventView import EventViewSimple
 from Components.ActionMap import ActionMap
-from Components.FileList import FileList
-from Components.MenuList import MenuList
 from Components.MultiContent import MultiContentEntryText
 from Components.Label import Label
-from Components.ScrollLabel import ScrollLabel
 from Components.Sources.List import List
-from Components.Pixmap import Pixmap
-from Components.AVSwitch import AVSwitch
 from Components.config import config, ConfigSubsection, ConfigText, ConfigOnOff
 from Tools.Directories import fileExists, pathExists
 from Tools.HardwareInfo import HardwareInfo
 from ServiceReference import ServiceReference
 from myFileList import FileList as myFileList
 from Screens.InputBox import InputBox
-
 from enigma import eConsoleAppContainer, eServiceReference, eServiceCenter
-from os import system as os_system
-from os import stat as os_stat
-from os import walk as os_walk
-from os import popen as os_popen
-from os import rename as os_rename
-from os import mkdir as os_mkdir
-from os import path as os_path
-from os import listdir as os_listdir
-from time import strftime as time_strftime
-from time import localtime as time_localtime
 
-PicturePlayerInstalled = False
-if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/PicturePlayer/plugin.pyo"):
-	from Plugins.Extensions.PicturePlayer.plugin import Pic_Thumb, picshow, Pic_Full_View
+try:
+	from Plugins.Extensions.PicturePlayer.plugin import Pic_Thumb, Pic_Full_View
 	PicturePlayerInstalled = True
+except:
+	PicturePlayerInstalled = False
 
-DVDPlayerInstalled = False
-if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/DVDPlayer/plugin.pyo"):
+try:
 	from Plugins.Extensions.DVDPlayer.plugin import DVDPlayer
 	DVDPlayerInstalled = True
+except:
+	DVDPlayerInstalled = False
 
-MMPlayerInstalled = False	
-if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/MerlinMusicPlayer/plugin.pyo"):
+try:
 	from Plugins.Extensions.MerlinMusicPlayer.plugin import MerlinMusicPlayerScreen, Item
 	MMPlayerInstalled = True
+except:
+	MMPlayerInstalled = False
 	
 config.plugins.DreamExplorer = ConfigSubsection()
 config.plugins.DreamExplorer.startDir = ConfigText(default="/")
 config.plugins.DreamExplorer.useMediaFilter = ConfigOnOff(default=False)
 config.plugins.DreamExplorer.CopyDest = ConfigText(default="/")
 
-def Plugins(**kwargs):
-	list = [PluginDescriptor(name="Dream-Explorer", description=_("Explore your Dreambox."), where = [PluginDescriptor.WHERE_PLUGINMENU], icon="dreamexplorer.png", fnc=main)]
- 	list.append(PluginDescriptor(name=_("Dream-Explorer"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main))
-	return list
+def Plugins(path, **kwargs):
+	global plugin_path
+	plugin_path = path
+	return [
+		PluginDescriptor(name=_("Dream-Explorer"), description=_("Explore your Dreambox."), where = [PluginDescriptor.WHERE_PLUGINMENU], icon="dreamexplorer.png", fnc=main),
+		PluginDescriptor(name=_("Dream-Explorer"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main)
+	]
 
 def main(session, **kwargs):
 	session.open(DreamExplorerII)
@@ -87,12 +81,12 @@ class DreamExplorerII(Screen):
 		<screen position="center,center" size="900,500" title="Dream-Explorer">
 			<widget name="filelist" position="0,0" scrollbarMode="showOnDemand" size="890,450" zPosition="4"/>
 			<eLabel backgroundColor="#555555" position="5,470" size="890,2" zPosition="5"/>
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/red.png" position="0,475" size="35,25" zPosition="5"/>
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/green.png" position="155,475" size="35,25" zPosition="5"/>
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/yellow.png" position="310,475" size="35,25" zPosition="5"/>
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/blue.png" position="465,475" size="35,25" zPosition="5"/>
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/menu.png" position="620,475" size="35,25" zPosition="5"/>
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/info.png" position="775,475" size="35,25" zPosition="5"/>
+			<ePixmap alphatest="on" pixmap="~/res/red.png" position="0,475" size="35,25" zPosition="5"/>
+			<ePixmap alphatest="on" pixmap="~/res/green.png" position="155,475" size="35,25" zPosition="5"/>
+			<ePixmap alphatest="on" pixmap="~/res/yellow.png" position="310,475" size="35,25" zPosition="5"/>
+			<ePixmap alphatest="on" pixmap="~/res/blue.png" position="465,475" size="35,25" zPosition="5"/>
+			<ePixmap alphatest="on" pixmap="~/res/menu.png" position="620,475" size="35,25" zPosition="5"/>
+			<ePixmap alphatest="on" pixmap="~/res/info.png" position="775,475" size="35,25" zPosition="5"/>
 			<eLabel font="Regular;18" halign="left" position="35,475" size="120,25" text="Delete" transparent="1" valign="center" zPosition="6"/>
 			<eLabel font="Regular;18" halign="left" position="190,475" size="120,25" text="Rename" transparent="1" valign="center" zPosition="6"/>
 			<eLabel font="Regular;18" halign="left" position="345,475" size="120,25" text="Move/Copy" transparent="1" valign="center" zPosition="6"/>
@@ -104,6 +98,7 @@ class DreamExplorerII(Screen):
 	def __init__(self, session, args = None):
 		self.skin = DreamExplorerII.skin
 		Screen.__init__(self, session)
+		self.skin_path = plugin_path
 		self.sesion = session
 		self.currentService = self.session.nav.getCurrentlyPlayingServiceReference()
 		self.boxtype = HardwareInfo().get_device_name()
@@ -235,7 +230,7 @@ class DreamExplorerII(Screen):
 					self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Do you want to execute %s?\n" %(filename)), list=askList)
 					
 				else:
-					xfile=os_stat(filename)
+					xfile=stat(filename)
 					if (xfile.st_size < 1024000):
 						self.session.open(vEditor, filename)
 					else:
@@ -318,7 +313,7 @@ class DreamExplorerII(Screen):
 		elif answer == "YES2ALL":
 			self.session.open(Console, cmdlist = self.command)
 		elif answer == "VIEW":
-			viewfile=os_stat(self.command[0])
+			viewfile=stat(self.command[0])
 			if (viewfile.st_size < 61440):
 				self.session.open(vEditor, self.command[0])
 		elif answer == "PLAYDIRPICTURE":
@@ -379,9 +374,9 @@ class DreamExplorerII(Screen):
 				linkname = self["filelist"].getFilename().split("/")[-2]
 				self.session.openWithCallback(self.callbackCopyMoveManager, SymlinkScreen, target, linkname)				
 		elif answer == "CHMOD644":
-			os_system("chmod 644 " + self["filelist"].getCurrentDirectory() + self["filelist"].getFilename())
+			chmod(self["filelist"].getCurrentDirectory() + self["filelist"].getFilename(), 0644)
 		elif answer == "CHMOD755":
-			os_system("chmod 755 " + self["filelist"].getCurrentDirectory() + self["filelist"].getFilename())
+			chmod(self["filelist"].getCurrentDirectory() + self["filelist"].getFilename(), 0755)
 
 	def up(self):
 		self["filelist"].up()
@@ -412,39 +407,37 @@ class DreamExplorerII(Screen):
 		if self["filelist"].canDescent():
 			if self["filelist"].getSelectionIndex()!=0:
 				curSelDir = self["filelist"].getSelection()[0]
-				dir_stats = os_stat(curSelDir)
+				dir_stats = stat(curSelDir)
 				dir_infos = "size "+str(self.formatSize(dir_stats.st_size))+"    "
-				dir_infos = dir_infos+"last-mod "+time_strftime("%d.%m.%Y %H:%M:%S",time_localtime(dir_stats.st_mtime))+"    "
+				dir_infos = dir_infos+"last-mod "+strftime("%d.%m.%Y %H:%M:%S",localtime(dir_stats.st_mtime))+"    "
 				dir_infos = dir_infos+"mode "+str(dir_stats.st_mode)
 				self.setTitle(_(dir_infos))
 			else:
 				try:
-					ret = ""
-					out_line = os_popen("uptime").readline()
-					ret = ret  + "at" + out_line + "\n"
-					out_lines = []
-					out_lines = os_popen("cat /proc/meminfo").readlines()
-					for lidx in range(len(out_lines)-1):
-						tstLine = out_lines[lidx].split()
-						if "MemTotal:" in tstLine:
-							ret = ret + out_lines[lidx]
-						elif "MemFree:" in tstLine:
-							ret = ret + out_lines[lidx] + "\n"
-					out_lines = []
-					out_lines = os_popen("cat /proc/stat").readlines()
-					for lidx in range(len(out_lines)-1):
-						tstLine = out_lines[lidx].split()
-						if "procs_running" in tstLine:
-							ret = ret + _("Running processes: ") + tstLine[1]
+					out_line = check_output(['uptime'])
+					ret = "at" + out_line + "\n"
+
+					with open('/proc/meminfo', 'r') as f:
+						for line in f.readlines():
+							tokens = line.split()
+							if tokens[0] in ('MemTotal:', 'MemFree:'):
+								ret += line
+					ret += "\n"
+
+					with open('/proc/stat', 'r') as f:
+						for line in f.readlines():
+							tokens = line.split()
+							if tokens[0] == 'procs_running':
+								ret += _("Running processes: ") + tokens[1]
 				except:
 					ret = "N/A"			
 			
 				msg = self.session.open(MessageBox, _("Dreambox model: " + self.boxtype + "\n\n" + ret), MessageBox.TYPE_INFO, windowTitle=_("Dream-Explorer"))
 		else:
 			curSelFile = self["filelist"].getCurrentDirectory() + self["filelist"].getFilename()
-			file_stats = os_stat(curSelFile)
+			file_stats = stat(curSelFile)
 			file_infos = "size "+str(self.formatSize(file_stats.st_size))+"    "
-			file_infos = file_infos+"last-mod "+time_strftime("%d.%m.%Y %H:%M:%S",time_localtime(file_stats.st_mtime))+"    "
+			file_infos = file_infos+"last-mod "+strftime("%d.%m.%Y %H:%M:%S",localtime(file_stats.st_mtime))+"    "
 			file_infos = file_infos+"mode "+str(file_stats.st_mode)
 			self.setTitle(_(file_infos))
 			if curSelFile.endswith(".ts"):
@@ -535,7 +528,7 @@ class DreamExplorerII(Screen):
 				dest = answer
 				
 			try:
-				os_rename(source, dest)
+				rename(source, dest)
 			except:
 				msg = self.session.open(MessageBox,_("Rename: %s \nfailed!" % answer), MessageBox.TYPE_ERROR, windowTitle=_("Dream-Explorer"))
 			self["filelist"].refresh()
@@ -548,10 +541,9 @@ class DreamExplorerII(Screen):
 			msg = self.session.open(MessageBox,_("File name error !"), MessageBox.TYPE_ERROR, windowTitle=_("Dream-Explorer"))
 			return
 		else:
-			order = 'touch ' + dest + answer
+			order = dest + answer
 			try:
-				if not fileExists(dest + answer):
-					os_system(order)
+				open(order, 'a').close()
 				self["filelist"].refresh()
 			except:
 				msg = self.session.open(MessageBox,_("%s \nfailed!" % order), MessageBox.TYPE_ERROR, windowTitle=_("Dream-Explorer"))
@@ -567,8 +559,8 @@ class DreamExplorerII(Screen):
 		else:
 			order = dest + answer
 			try:
-				if not pathExists(dest + answer):
-					os_mkdir(order)
+				if not pathExists(order):
+					mkdir(order)
 				self["filelist"].refresh()
 			except:
 				msg = self.session.open(MessageBox,_("%s \nfailed!" % order), MessageBox.TYPE_ERROR, windowTitle=_("Dream-Explorer"))
@@ -605,12 +597,12 @@ class DreamExplorerII(Screen):
 		slist = []
 		foundIndex = 0
 		index = 0
-		files = os_listdir(self["filelist"].getCurrentDirectory())
+		files = listdir(self["filelist"].getCurrentDirectory())
 		files.sort()
 		for name in files:
 			testname = name.lower()
 			if testname.endswith(".mp3") or name.endswith(".m4a") or name.endswith(".ogg") or name.endswith(".flac"):
-				slist.append((Item(text = name, filename = os_path.join(self["filelist"].getCurrentDirectory(),name)),))
+				slist.append((Item(text = name, filename = join(self["filelist"].getCurrentDirectory(),name)),))
 				if self["filelist"].getFilename() == name:
 					foundIndex = index
 				index = index + 1
@@ -644,6 +636,7 @@ class vEditor(Screen):
 	def __init__(self, session, file):
 		self.skin = vEditor.skin
 		Screen.__init__(self, session)
+		self.skin_path = plugin_path
 		self.session = session
 		self.file_name = file
 		self.list = []
@@ -715,6 +708,7 @@ class MviExplorer(Screen):
 	def __init__(self, session, file):
 		self.skin = MviExplorer.skin
 		Screen.__init__(self, session)
+		self.skin_path = plugin_path
 		self.file_name = file
 		self["actions"] = ActionMap(["WizardActions"],
 		{
@@ -724,7 +718,7 @@ class MviExplorer(Screen):
 		self.onLayoutFinish.append(self.showMvi)
 		
 	def showMvi(self):
-		os_system("/usr/bin/showiframe " + self.file_name)
+		call(['showiframe', self.file_name])
 
 class MoviePlayer(MP_parent):
 	def __init__(self, session, service):
@@ -779,6 +773,7 @@ class MusicExplorer(MoviePlayer):
 	def __init__(self, session, service, MusicDir, theFile):
 		self.session = session
 		MoviePlayer.__init__(self, session, service)
+		self.skin_path = plugin_path
 		self.MusicDir = MusicDir
 		self.musicList = []
 		self.Mindex = 0
@@ -788,11 +783,11 @@ class MusicExplorer(MoviePlayer):
 		MoviePlayer.WithoutStopClose = False
 
 	def showMMI(self):
-		os_system("/usr/bin/showiframe /usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/music.mvi")
+		call(['showiframe', '%s/res/music.mvi' % plugin_path])
 
 	def searchMusic(self):
 		midx = 0
-		for root, dirs, files in os_walk(self.MusicDir ):
+		for root, dirs, files in walk(self.MusicDir):
 			for name in files:
 				name = name.lower()
 				if name.endswith(".mp3") or name.endswith(".mp2") or name.endswith(".ogg") or name.endswith(".wav") or name.endswith(".flac") or name.endswith(".m4a"):
@@ -834,8 +829,8 @@ class CopyMoveManager(Screen):
 				<widget name="Warning" font="Regular;20" halign="center" position="0,0" size="900,100" transparent="1" valign="center" zPosition="4"/>
 				<widget name="TargetDir" position="0,100" scrollbarMode="showOnDemand" size="900,325" zPosition="4"/>
 				<eLabel backgroundColor="#555555" position="5,470" size="890,2" zPosition="5"/>
-				<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/red.png" position="0,475" size="35,25" zPosition="5"/>
-				<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/yellow.png" position="310,475" size="35,25" zPosition="5"/>
+				<ePixmap alphatest="on" pixmap="~/res/red.png" position="0,475" size="35,25" zPosition="5"/>
+				<ePixmap alphatest="on" pixmap="~/res/yellow.png" position="310,475" size="35,25" zPosition="5"/>
 				<eLabel font="Regular;18" halign="left" position="35,475" size="120,25" text="Move" transparent="1" valign="center" zPosition="6"/>
 				<eLabel font="Regular;18" halign="left" position="345,475" size="120,25" text="Copy" transparent="1" valign="center" zPosition="6"/>
 			</screen>"""
@@ -843,6 +838,7 @@ class CopyMoveManager(Screen):
 	def __init__(self, session, source = "/tmp/none"):
 		self.skin = CopyMoveManager.skin
 		Screen.__init__(self, session)
+		self.skin_path = plugin_path
 		self.sesion = session
 		self.source = source
 		self["Warning"] = Label(_("WARNING! You're about to move or copy\n" + source + "\nto:"))
@@ -911,8 +907,8 @@ class SymlinkScreen(Screen):
 				<widget name="Warning" font="Regular;20" halign="center" position="0,0" size="900,100" transparent="1" valign="center" zPosition="4"/>
 				<widget name="Target" position="0,100" scrollbarMode="showOnDemand" size="900,325" zPosition="4"/>
 				<eLabel backgroundColor="#555555" position="5,470" size="890,2" zPosition="5"/>
-				<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/red.png" position="0,475" size="35,25" zPosition="5"/>
-				<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/yellow.png" position="310,475" size="35,25" zPosition="5"/>
+				<ePixmap alphatest="on" pixmap="~/res/red.png" position="0,475" size="35,25" zPosition="5"/>
+				<ePixmap alphatest="on" pixmap="~/res/yellow.png" position="310,475" size="35,25" zPosition="5"/>
 				<eLabel font="Regular;18" halign="left" position="35,475" size="180,25" text="Change symlink name" transparent="1" valign="center" zPosition="6"/>
 				<eLabel font="Regular;18" halign="left" position="345,475" size="220,25" text="Create softlink" transparent="1" valign="center" zPosition="6"/>
 			</screen>"""
@@ -920,6 +916,7 @@ class SymlinkScreen(Screen):
 	def __init__(self, session, target="/tmp", linkname=None, isDir=False):
 		self.skin = SymlinkScreen.skin
 		Screen.__init__(self, session)
+		self.skin_path = plugin_path
 		self.session = session
 		self.target = target
 		self.linkname = linkname
@@ -966,18 +963,6 @@ class SymlinkScreen(Screen):
 		self.close(" ")
 
 	def createSymlink(self):
-		command = "ln -s %s %s%s" %(self.target, self.current, self.linkname)
-		
-		os_system(command)
-		
+		if basename(self.linkname) == self.linkname:
+			symlink(self.target, join(self.current, self.linkname))
 		self.close(" ")
-
-
-
-
-
-
-
-
-
-
