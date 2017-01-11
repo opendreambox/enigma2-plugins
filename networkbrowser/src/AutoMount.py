@@ -58,6 +58,9 @@ class AutoMount():
 						Log.d("%s share %s" %(mounttype.upper(), data,))
 						if data["active"]:
 							self._numActive += 1
+						#Workaround for nfs shares previously being saved without their leading /
+						if mounttype == "nfs" and not data['sharedir'].startswith("/"):
+							data['sharedir'] = "/%s" %(data['sharedir'],)
 						self._mounts[data['sharename']] = data
 					except Exception, e:
 						Log.w("Error reading %s share: %s" %(mounttype.upper(), e))
@@ -117,7 +120,7 @@ class AutoMount():
 
 			if data['mounttype'] == 'nfs':
 				opts = self.sanitizeOptions(data['options'].split(','))
-				remote = '%s:/%s' % (data['ip'], tmpsharedir)
+				remote = '%s:%s' % (data['ip'], tmpsharedir)
 				harddiskmanager.modifyFstabEntry(remote, mountpoint, mode="add_deactivated", extopts=opts, fstype="nfs")
 
 			elif data['mounttype'] == 'cifs':
@@ -186,9 +189,11 @@ class AutoMount():
 	def save(self):
 		# Generate List in RAM
 		list = ['<?xml version="1.0" encoding="UTF-8"?>\n<mountmanager>\n']
-
 		for sharename, sharedata in self._mounts.items():
 			if sharedata['mounttype'] == 'nfs':
+				#Workaround for nfs shares previously being saved without their leading /
+				if not sharedata['sharedir'].startswith("/"):
+					sharedata['sharedir'] = "/%s" %(sharedata['sharedir'],)
 				list.append('<nfs>\n')
 				list.append(' <mount>\n')
 				list.append(''.join(["  <active>", str(sharedata['active']), "</active>\n"]))

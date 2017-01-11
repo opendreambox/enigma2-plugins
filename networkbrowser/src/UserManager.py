@@ -4,12 +4,11 @@
 from enigma import eEnv
 from Screens.Screen import Screen
 from Components.Sources.StaticText import StaticText
-from Components.Pixmap import Pixmap
 from Components.ActionMap import ActionMap
 from Components.Sources.List import List
 
 from Tools.LoadPixmap import LoadPixmap
-from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN_IMAGE
+from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 from UserDialog import UserDialog
 from os import unlink, listdir, path as os_path
 

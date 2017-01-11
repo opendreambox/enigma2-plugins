@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-# for localized messages
-#from __init__ import _
 from enigma import eConsoleAppContainer, eEnv, eNetworkManager, eTimer
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
@@ -30,7 +28,7 @@ from AutoMount import iAutoMount
 from MountEdit import AutoMountEdit
 from UserDialog import UserDialog
 
-from twisted.internet import reactor, threads
+from twisted.internet import reactor
 
 def write_cache(cache_file, cache_data):
 	#Does a cPickle dump
@@ -62,10 +60,38 @@ def load_cache(cache_file):
 	fd.close()
 	return cache_data
 
-class NetworkDescriptor:
-	def __init__(self, name = "NetworkServer", description = ""):
-		self.name = name
-		self.description = description
+class NetworkItem(dict):
+	TYPE_HOST = 'host'
+	TYPE_NFS = 'nfsShare'
+	TYPE_SMB = 'smbShare'
+
+	def __init__(self, itemtype, name, host, path="", group="", comment="", services=[]):
+		dict.__init__(self)
+		self["type"] = itemtype
+		self["name"] = name
+		self["host"] = host
+		self["path"] = path
+		self["group"] = group
+		self["comment"] = comment
+		self["services"] = services
+
+	def __getattr__(self, attr):
+		return self[attr]
+
+	def __setattr__(self, attr, value):
+		self[attr] = value
+
+class NetworkItemHost(NetworkItem):
+	def __init__(self, name, host, services):
+		NetworkItem.__init__(self, self.TYPE_HOST, name, host, comment="Master Browser", services=services)
+
+class NetworkItemNfs(NetworkItem):
+	def __init__(self, name, host, path, group):
+		NetworkItem.__init__(self, self.TYPE_NFS, name, host, path=path, group=group, comment="NFS Share")
+
+class NetworkItemSmb(NetworkItem):
+	def __init__(self, name, host, path, group, comment=""):
+		NetworkItem.__init__(self, self.TYPE_SMB, name, host, path, group=group, comment=comment)
 
 class NetworkBrowser(Screen):
 	skin = """
@@ -136,7 +162,7 @@ class NetworkBrowser(Screen):
 		self.statuslist = []
 		self.listindex = 0
 		self["list"] = List(self.list)
-		self["list"].onSelectionChanged.append(self.selectionChanged)
+		self["list"].onSelectionChanged.append(self._onSelectionChanged)
 
 		self.onLayoutFinish.append(self.startRun)
 		self.onShown.append(self.setWindowTitle)
@@ -198,9 +224,9 @@ class NetworkBrowser(Screen):
 						reactor.callInThread(self.getNetworkIPs, str(host))
 			# add offline host
 			elif result[1] == "nfs":
-				self.networklist.append(['host', result[0], result[0] , '00:00:00:00:00:00', result[0], 'Master Browser'])
+				self.networklist.append(NetworkItemHost(result[0], result[0], ['nfs']))
 				write_cache(self.cache_file, self.networklist)
-				self.updateHostsList()
+				self.updateNetworkList()
 
 	def setStatus(self,status = None):
 		if status:
@@ -222,7 +248,7 @@ class NetworkBrowser(Screen):
 			try:
 				self.networklist = load_cache(self.cache_file)
 				if len(self.networklist) > 0:
-					self.updateHostsList()
+					self.updateNetworkList()
 				else:
 					self.setStatus('error')
 			except:
@@ -278,7 +304,7 @@ class NetworkBrowser(Screen):
 
 	def getNetworkIPs(self, host):
 		Log.i("Detecting availablility of NFS or SMB services on host %s" % host)
-		info = []
+		item = None
 		services = []
 
 		if self._probeTcpPort(host, 445) or self._probeTcpPort(host, 139):
@@ -291,21 +317,27 @@ class NetworkBrowser(Screen):
 
 		if services:
 			hostname = self._lookupHostname(host)
-			info.append(['host', hostname, host, '00:00:00:00:00:00', host, 'Master Browser', services])
+			item = NetworkItemHost(hostname, host, services)
 
-		Log.i(info)
-		reactor.callFromThread(self._onNetworkIPsReady, info)
+		Log.i(item)
+		reactor.callFromThread(self._onNetworkIPsReady, item)
 
-	def _onNetworkIPsReady(self, info):
-		self.networklist += info
+	def _onNetworkIPsReady(self, item):
 		self._nrthreads -= 1
 		Log.i("Waiting for %d more threads" % self._nrthreads)
+		if not item:
+			return
+		self.networklist.append(item)
+		self._updateUI(False)
 		if self._nrthreads == 0:
-			write_cache(self.cache_file, self.networklist)
-			if len(self.networklist) > 0:
-				self.updateHostsList()
-			else:
-				self.setStatus('error')
+			self._updateUI()
+
+	def _updateUI(self, finished=True):
+		write_cache(self.cache_file, self.networklist)
+		if len(self.networklist) > 0:
+			self.updateNetworkList()
+		elif finished:
+			self.setStatus('error')
 
 	def _onError(self, *args, **kwargs):
 		Log.w()
@@ -354,146 +386,95 @@ class NetworkBrowser(Screen):
 					print '[Networkbrowser] established SMB connection to %s:%d' % (hostip, port)
 					for share in smbconn.listShares(timeout=1):
 						if share.type == SharedDevice.DISK_TREE and not share.isSpecial:
-							sharelist.append(['smbShare', hostname, hostip, share.name.encode('utf-8'), 'Disk', share.comments.encode('utf-8')])
+							sharelist.append( NetworkItemSmb(hostname, hostip, share.name.encode('utf-8'), 'Disk', comment=share.comments.encode('utf-8')) )
 					smbconn.close()
 					break
 			except Exception as e:
 				Log.w('[Networkbrowser] SMBConnection: ' + str(e))
-				pass
 		try:
 			exports = showmount(hostip)
 		except IOError as e:
 			Log.w('[Networkbrowser] showmount: ' + str(e))
 		else:
 			for ex in exports:
-				sharelist.append(['nfsShare', os_path.basename(ex['dir']), hostip, ','.join(ex['groups']), ex['dir'], ''])
-
+				sharelist.append( NetworkItemNfs(os_path.basename(ex['dir']), hostip, ex['dir'], ','.join(ex['groups'])) )
 		return sharelist
 
-	def updateHostsList(self):
-		Log.i()
-		self.list = []
-		network = {}
-		for x in self.networklist:
-			if not network.has_key(x[2]):
-				network[x[2]] = []
-			network[x[2]].append((NetworkDescriptor(name = x[1], description = x[2]), x))
-		
-		for x in network.keys():
-			hostentry = network[x][0][1]
-			name = hostentry[2] + " ( " +hostentry[1].strip() + " )"
-			expandableIcon = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/host.png"))
-			self.list.append(( hostentry, expandableIcon, name, None, None, None, None ))
-
-		if len(self.list):
-			for entry in self.list:
-				entry[0][2]= "%3s.%3s.%3s.%3s" % tuple(entry[0][2].split("."))
-			self.list.sort(key=lambda x: x[0][2])
-			for entry in self.list:
-				entry[0][2]= entry[0][2].replace(" ", "")
-		self["list"].setList(self.list)
-		self["list"].setIndex(self.listindex)
-
 	def updateNetworkList(self):
-		Log.i()
 		self.list = []
 		network = {}
-		for x in self.networklist:
-			if not network.has_key(x[2]):
-				network[x[2]] = []
-			network[x[2]].append((NetworkDescriptor(name = x[1], description = x[2]), x))
-		for x in sorted(network.keys()):
-			if x in self.expanded:
-				networkshares = self.getNetworkShares(x, network[x][0][1][1].strip())
-				hostentry = network[x][0][1]
-				name = hostentry[2] + " ( " +hostentry[1].strip() + " )"
-				expandedIcon = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/host.png"))
-				self.list.append(( hostentry, expandedIcon, name, None, None, None, None ))
+		for item in self.networklist:
+			network[item.host] = item
+		Log.i(network)
+		for ip in sorted(network.keys()):
+			host = network[ip]
+			self.list.append(self._buildNetworkHostEntry(host))
+			if ip in self.expanded:
+				networkshares = self.getNetworkShares(ip, host.name.strip())
 				for share in networkshares:
-					self.list.append(self.BuildNetworkShareEntry(share))
-			else: # HOSTLIST - VIEW
-				hostentry = network[x][0][1]
-				name = hostentry[2] + " ( " +hostentry[1].strip() + " )"
-				expandableIcon = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/host.png"))
-				self.list.append(( hostentry, expandableIcon, name, None, None, None, None ))
-		if len(self.list):
-			for entry in self.list:
-				entry[0][2]= "%3s.%3s.%3s.%3s" % tuple(entry[0][2].split("."))
-			self.list.sort(key=lambda x: x[0][2])
-			for entry in self.list:
-				entry[0][2]= entry[0][2].replace(" ", "")
+					self.list.append(self._buildNetworkShareEntry(share))
 		self["list"].setList(self.list)
 		self["list"].setIndex(self.listindex)
 
-	def BuildNetworkShareEntry(self,share):
+	def _buildNetworkHostEntry(self, item):
+		#DO WE NEED THIS? I don't so tbh - reichi
+#		item.host= "%3s.%3s.%3s.%3s" % tuple(item.host.split("."))
+#		item.host = item.host.replace(" ", "")
+		name = item.host + " ( " + item.name.strip() + " )"
+		icon = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/host.png"))
+		return (item, icon, name, None, None, None, None)
+
+	def _buildNetworkShareEntry(self, share):
 		verticallineIcon = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/verticalLine.png"))
-		sharetype = share[0]
-		localsharename = share[1]
-		sharehost = share[2]
-
-		if sharetype == 'smbShare':
-			sharedir = share[3]
-			sharedescription = share[5]
-		else:
-			sharedir = share[4]
-			sharedescription = share[3]
-
-		if sharetype == 'nfsShare':
+		if share.type == NetworkItem.TYPE_NFS:
 			newpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/i-nfs.png"))
 		else:
 			newpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/i-smb.png"))
 
-		self.isMounted = False
+		isMounted = False
 		mounts = iAutoMount.getMounts()
 		for sharename, sharedata in mounts.items():
-			if sharedata['ip'] == sharehost:
-				if sharetype == 'nfsShare' and sharedata['mounttype'] == 'nfs':
-					if sharedir == sharedata['sharedir']:
-						if sharedata["isMounted"] is True:
-							self.isMounted = True
-				if sharetype == 'smbShare' and sharedata['mounttype'] == 'cifs':
-					if sharedir == sharedata['sharedir']:
-						if sharedata["isMounted"] is True:
-							self.isMounted = True
-		if self.isMounted is True:
+			if sharedata['ip'] == share.host:
+				if share.type == NetworkItem.TYPE_NFS and sharedata['mounttype'] == 'nfs':
+					if share.path == sharedata['sharedir'] and sharedata["isMounted"]:
+						isMounted = True
+				elif share.type == NetworkItem.TYPE_SMB and sharedata['mounttype'] == 'cifs':
+					if share.path == sharedata['sharedir'] and sharedata["isMounted"]:
+						isMounted = True
+		if isMounted:
 			isMountedpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/ok.png"))
 		else:
 			isMountedpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/cancel.png"))
 
-		return((share, verticallineIcon, None, sharedir, sharedescription, newpng, isMountedpng))
+		return (share, verticallineIcon, None, share.path, share.comment, newpng, isMountedpng)
 
-	def selectionChanged(self):
+	def _onSelectionChanged(self):
 		current = self["list"].getCurrent()
 		self.listindex = self["list"].getIndex()
 		if current:
-			if len(current[0]) >= 2:
-				if current[0][0] in ("nfsShare", "smbShare"):
-					self["infotext"].setText(_("Press OK to mount this share!"))
+			current = current[0]
+			if not isinstance(current, NetworkItem):
+				return
+			if current.type == NetworkItem.TYPE_HOST:
+				if current.host in self.expanded:
+					self["infotext"].setText(_("Press OK to collapse this host"))
 				else:
-					selectedhost = current[0][2]
-					if selectedhost in self.expanded:
-						self["infotext"].setText(_("Press OK to collapse this host"))
-					else:
-						self["infotext"].setText(_("Press OK to expand this host"))
+					self["infotext"].setText(_("Press OK to expand this host"))
+			else:
+				self["infotext"].setText(_("Press OK to mount this share!"))
 
 	def go(self):
-		sel = self["list"].getCurrent()
-		if sel is None:
+		item = self["list"].getCurrent()[0]
+		if item is None or not isinstance(item, NetworkItem):
 			return
-		if len(sel[0]) <= 1:
-			return
-		selectedhost = sel[0][2]
-		selectedhostname = sel[0][1]
-
 		self.hostcache_file = None
-		if sel[0][0] == 'host': # host entry selected
-			if selectedhost in self.expanded:
-				self.expanded.remove(selectedhost)
+		self.hostcache_file = eEnv.resolve("${sysconfdir}/enigma2/") + item.name.strip() + '.cache' #Path to cache directory
+		if item.type == NetworkItem.TYPE_HOST: # host entry selected
+			if item.host in self.expanded:
+				self.expanded.remove(item.host)
 				self.updateNetworkList()
 				return
 			else:
-				self.hostcache_file = None
-				self.hostcache_file = eEnv.resolve("${sysconfdir}/enigma2/") + selectedhostname.strip() + '.cache' #Path to cache directory
 				if os_path.exists(self.hostcache_file):
 					print '[Networkbrowser] Loading userinfo cache from ',self.hostcache_file
 					try:
@@ -501,74 +482,42 @@ class NetworkBrowser(Screen):
 						self.passwordQuestion(False)
 						return
 					except:
-						pass
-			if len(sel[0]) < 7 or "smb" in sel[0][6]:
+						Log.w("error loading host cache!")
+			if "smb" in item.services:
 				self.session.openWithCallback(self.passwordQuestion, MessageBox, text=_("Do you want to enter a username and password for this host?\n"), default=False )
 			else:
 				self.passwordQuestion(False)
-
-		if sel[0][0] == 'nfsShare': # share entry selected
-			print '[Networkbrowser] sel nfsShare'
-			self.openMountEdit(sel[0])
 			return
-
-		if sel[0][0] == 'smbShare': # share entry selected
-			print '[Networkbrowser] sel cifsShare'
-			self.hostcache_file = None
-			self.hostcache_file = eEnv.resolve("${sysconfdir}/enigma2/") + selectedhostname.strip() + '.cache' #Path to cache directory
-			if os_path.exists(self.hostcache_file):
-				print '[Networkbrowser] userinfo found from ',self.sharecache_file
-				self.openMountEdit(sel[0])
-				return
+		else:
+			self.openMountEdit(item)
 
 	def passwordQuestion(self, ret = False):
-		sel = self["list"].getCurrent()
-		selectedhost = sel[0][2]
-		selectedhostname = sel[0][1]
-		if (ret == True):
-			self.session.openWithCallback(self.UserDialogClosed, UserDialog, self.skin_path, selectedhostname.strip())
+		item = self["list"].getCurrent()[0]
+		if ret:
+			self.session.openWithCallback(self.UserDialogClosed, UserDialog, self.skin_path, item.name)
+			return
+		if item.type == NetworkItem.TYPE_HOST: # host entry selected
+			if item.host in self.expanded:
+				self.expanded.remove(item.host)
+			else:
+				self.expanded.append(item.host)
+			self.updateNetworkList()
 		else:
-			if sel[0][0] == 'host': # host entry selected
-				if selectedhost in self.expanded:
-					self.expanded.remove(selectedhost)
-				else:
-					self.expanded.append(selectedhost)
-				self.updateNetworkList()
-			if sel[0][0] == 'nfsShare': # share entry selected
-				self.openMountEdit(sel[0])
-			if sel[0][0] == 'smbShare': # share entry selected
-				self.openMountEdit(sel[0])
+			self.openMountEdit(item)
 
 	def UserDialogClosed(self, *ret):
 		if ret is not None and len(ret):
 			self.go()
 
-	def openMountEdit(self, selection):
-		if selection:
+	def openMountEdit(self, item):
+		if item and item.type != NetworkItem.TYPE_HOST:
 			mounts = iAutoMount.getMounts()
-			if selection[0] == 'nfsShare': # share entry selected
-				#Initialize blank mount enty
+			self.sharecache_file = None
+			if item.type == NetworkItem.TYPE_NFS: # share entry selected
 				data = iAutoMount.DEFAULT_OPTIONS_NFS
-				# add data
-				data['active'] = True
-				data['ip'] = selection[2]
-				data['sharename'] = selection[1]
-				data['sharedir'] = selection[4]
-
-				for sharename, sharedata in mounts.items():
-					if sharedata['ip'] == selection[2] and sharedata['sharedir'] == selection[4]:
-						data = sharedata
-				self.session.openWithCallback(self.MountEditClosed,AutoMountEdit, self.skin_path, data)
-			if selection[0] == 'smbShare': # share entry selected
-				#Initialize blank mount enty
+			if item.type == NetworkItem.TYPE_SMB: # share entry selected
 				data = iAutoMount.DEFAULT_OPTIONS_CIFS
-				# add data
-				data['active'] = True
-				data['ip'] = selection[2]
-				data['sharename'] = selection[1]
-				data['sharedir'] = selection[3]
-				self.sharecache_file = None
-				self.sharecache_file = eEnv.resolve("${sysconfdir}/enigma2/") + selection[1].strip() + '.cache' #Path to cache directory
+				self.sharecache_file = eEnv.resolve("${sysconfdir}/enigma2/") + item.name.strip() + '.cache' #Path to cache directory
 				if os_path.exists(self.sharecache_file):
 					print '[Networkbrowser] Loading userinfo from ',self.sharecache_file
 					try:
@@ -577,11 +526,16 @@ class NetworkBrowser(Screen):
 						data['password'] = self.hostdata['password']
 					except:
 						pass
-
-				for sharename, sharedata in mounts.items():
-					if sharedata['ip'] == selection[2].strip() and sharedata['sharedir'] == selection[3].strip():
-						data = sharedata
-				self.session.openWithCallback(self.MountEditClosed,AutoMountEdit, self.skin_path, data)
+			data['active'] = True
+			data['ip'] = item.host
+			data['sharename'] = item.name
+			data['sharedir'] = item.path
+			for sharename, sharedata in mounts.items():
+				if sharedata['ip'] == item.host and sharedata['sharedir'] == item.path:
+					data = sharedata
+					break
+			Log.i(data)
+			self.session.openWithCallback(self.MountEditClosed,AutoMountEdit, self.skin_path, data)
 
 	def MountEditClosed(self, returnValue = None):
 		if returnValue == None:

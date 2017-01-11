@@ -194,7 +194,7 @@ class AutoMountEdit(Screen, ConfigListScreen):
 		if self.mounts.has_key(sharename) is True:
 			self.session.openWithCallback(self.updateConfig, MessageBox, (_("A mount entry with this name already exists!\nUpdate existing entry and continue?\n") ) )
 		else:
-			self.session.openWithCallback(self.applyConfig, MessageBox, (_("Are you sure you want to save this network mount?\n\n") ) )
+			self.applyConfig(True)
 
 	def updateConfig(self, ret = False):
 		if ret == True:
@@ -222,8 +222,11 @@ class AutoMountEdit(Screen, ConfigListScreen):
 			self.close()
 
 	def applyConfig(self, ret = False):
-		if ret == True:
-			data = iAutoMount.DEFAULT_OPTIONS_NFS
+		if ret:
+			if self._cfgMounttype.value == 'nfs':
+				data = iAutoMount.DEFAULT_OPTIONS_NFS
+			else:
+				data = iAutoMount.DEFAULT_OPTIONS_CIFS
 			data['active'] = self._cfgActive.value
 			data['ip'] = self._cfgIp.getText()
 			data['sharename'] = re_sub("\W", "", self._cfgSharename.value)

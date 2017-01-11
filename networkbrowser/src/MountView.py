@@ -100,34 +100,30 @@ class AutoMountView(Screen):
 		cur = self["config"].getCurrent()
 		if cur:
 			returnValue = cur[1]
-			self.session.openWithCallback(self.MountEditClosed, AutoMountEdit, self.skin_path, iAutoMount.mounts[returnValue])
+			self.session.openWithCallback(self._onMountEditClosed, AutoMountEdit, self.skin_path, iAutoMount.mounts[returnValue])
 
-	def MountEditClosed(self, returnValue = None):
-		if returnValue == None:
-			self.showMountsList()
+	def _onMountEditClosed(self, returnValue = None):
+		self.showMountsList()
 
 	def delete(self, returnValue = None):
 		cur = self["config"].getCurrent()
 		if cur:
 			returnValue = cur[1]
-			self.applyConfigRef = self.session.openWithCallback(self.applyConfigfinishedCB, MessageBox, _("Please wait while removing your network mount..."), type = MessageBox.TYPE_INFO, enable_input = False)
-			iAutoMount.removeMount(iAutoMount.MOUNT_BASE + returnValue, self.removeDataAvail)
+			self.applyConfigRef = self.session.openWithCallback(self._onDeleteFinished, MessageBox, _("Please wait while removing your network mount..."), type = MessageBox.TYPE_INFO, enable_input = False)
+			iAutoMount.removeMount(iAutoMount.MOUNT_BASE + returnValue, self._onMountRemoved)
 
-	def removeDataAvail(self, data):
-		if data is True:
+	def _onMountRemoved(self, success):
+		if success:
 			iAutoMount.save()
-			iAutoMount.reload(self.deleteDataAvail)
+			iAutoMount.reload(self._onMountsReloaded)
 
-	def deleteDataAvail(self, data):
-		if data is True:
-			if self.applyConfigRef.execing:
-				self.applyConfigRef.close(True)
+	def _onMountsReloaded(self, success):
+		if self.applyConfigRef.execing:
+			self.applyConfigRef.close(success)
 
-	def applyConfigfinishedCB(self,data):
-		if data is True:
-			self.session.openWithCallback(self.ConfigfinishedCB, MessageBox, _("Your network mount has been removed."), type = MessageBox.TYPE_INFO, timeout = 10)
-
-	def ConfigfinishedCB(self,data):
-		if data is not None:
-			if data is True:
-				self.showMountsList()
+	def _onDeleteFinished(self, success):
+		self.showMountsList()
+		text = _("Your network mount has been removed.")
+		if not success:
+			text = _("Sorry! Your network mount has NOT been removed.")
+		self.session.toastManager.showToast(text)
