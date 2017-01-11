@@ -1,62 +1,74 @@
 # -*- coding: utf-8 -*-
-from os import statvfs, path as os_path, chmod as os_chmod, write as os_write, \
-		close as os_close, unlink as os_unlink, open as os_open, rename as os_rename, O_WRONLY, \
-		O_CREAT
-from twisted.web import resource, http
+from os import chmod, close, rename, statvfs, unlink, write
+from os.path import basename, isdir, isfile, join, realpath
 from tempfile import mkstemp
-from re import search
+from twisted.web import resource, http
 
 class UploadTextResource(resource.Resource):
-	default_uploaddir = "/tmp/"
+	default_uploaddir = '/tmp'
+	modelist = {
+		'/etc/apt/sources.list.d': 0644,
+		'/usr/script': 0755,
+		'/tmp': 0644,
+	}
+
+	def getArg(self, req, key, default=None):
+		return req.args.get(key, [default])[0]
 
 	def render_POST(self, req):
-		uploaddir = self.default_uploaddir
 		print "[UploadTextResource] req.args ",req.args
-		if req.args['path'][0]:
-			if os_path.isdir(req.args['path'][0]):
-				uploaddir = req.args['path'][0]
-				if uploaddir[-1] != "/":
-					uploaddir += "/"
-			else:
-				print "[UploadTextResource] not a dir", req.args['path'][0]
-				req.setResponseCode(http.OK)
-				req.setHeader('Content-type', 'text/html')
-				return "path '%s' to upload not existing!" % req.args['path'][0]
-			
-			if uploaddir[:10] == "/etc/opkg/" or uploaddir[:12] == "/usr/script/":
-				pass
-			else:
-				req.setResponseCode(http.OK)
-				req.setHeader('Content-type', 'text/html')
-				return "illegal upload directory: " + req.args['path'][0]
+		path = self.getArg(req, 'path', self.default_uploaddir)
+		filename = self.getArg(req, 'filename')
+		text = self.getArg(req, 'text')
+		if not path or not filename or text is None:
+			req.setResponseCode(http.BAD_REQUEST)
+			req.setHeader('Content-type', 'text/plain')
+			return 'Required parameters are path, filename and text.'
 
-			data = req.args['text'][0].replace('\r\n','\n')
-		if not data:
+		if basename(filename) != filename:
+			req.setResponseCode(http.BAD_REQUEST)
+			req.setHeader('Content-type', 'text/plain')
+			return 'Invalid filename specified.'
+
+		path = realpath(path)
+		if path not in self.modelist.keys():
+			req.setResponseCode(http.FORBIDDEN)
+			req.setHeader('Content-type', 'text/plain')
+			return 'Invalid path specified.'
+
+		if not isdir(path):
+			req.setResponseCode(http.NOT_FOUND)
+			req.setHeader('Content-type', 'text/plain')
+			return 'Path does not exist.'
+
+		filename = join(path, filename)
+		if not text:
+			if not isfile(filename):
+				req.setResponseCode(http.NOT_FOUND)
+				return ''
+			unlink(filename)
 			req.setResponseCode(http.OK)
-			req.setHeader('Content-type', 'text/html')
-			return "filesize was 0, not uploaded"
-		else:
-			print "[UploadTextResource] text:" ,data
+			req.setHeader('Content-type', 'text/plain')
+			return 'Deleted %s' % filename
 
-		filename = req.args['filename'][0]
+		text = text.replace('\r\n','\n')
+		print "[UploadTextResource] text:", text
 
-		fd, fn = mkstemp(dir = uploaddir)
-		cnt = os_write(fd, data)
-		os_close(fd)
-		os_chmod(fn, 0755)
-		
-		if cnt <= 0: # well, actually we should check against len(data) but lets assume we fail big time or not at all
+		fd, fn = mkstemp(dir=path)
+		cnt = write(fd, text)
+		close(fd)
+		if cnt < len(text):
 			try:
-				os_unlink(fn)
-			except OSError, oe:
+				unlink(fn)
+			except OSError:
 				pass
 			req.setResponseCode(http.OK)
-			req.setHeader('Content-type', 'text/html')
+			req.setHeader('Content-type', 'text/plain')
 			return "error writing to disk, not uploaded"
-		else:
-			file = uploaddir + filename
-			os_rename(fn, file)
-			return """
+
+		chmod(fn, self.modelist[path])
+		rename(fn, filename)
+		return """
 					<?xml version="1.0" encoding="UTF-8"?>
 					<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 							"http://www.w3.org/TR/html4/loose.dtd">
@@ -78,13 +90,14 @@ class UploadTextResource(resource.Resource):
 							<input type="button" value="%s" onClick="window.close();">
 						</form>
 					</body>
-					</html>""" %(file, _("Close"))
+					</html>""" %(filename, _("Close"))
 
 	def render_GET(self, req):
 		try:
-			stat = statvfs("/tmp/")
-		except OSError:
-			return - 1
+			stat = statvfs(self.default_uploaddir)
+		except OSError, e:
+			req.setResponseCode(http.INTERNAL_SERVER_ERROR)
+			return str(e)
 
 		freespace = stat.f_bfree / 1000 * stat.f_bsize / 1000
 
@@ -93,10 +106,10 @@ class UploadTextResource(resource.Resource):
 		return """
 				<form method="POST" enctype="multipart/form-data">
 				<table>
-				<tr><td>Path to save (default is '%s')</td><td><input name="path"></td></tr>
+				<tr><td>Path to save (default: '%s')</td><td><input name="path"></td></tr>
 				<tr><td>Filename to save<input name="filename"></td></tr>
-				<tr><textarea name="textarea" rows=10 cols=100>bla...</textarea></tr>
-				<tr><td colspan="2">Filesize must not be greather than %dMB! /tmp/ has not more free space!</td></tr>
+				<tr><td><textarea name="textarea" rows=10 cols=100></textarea></td></tr>
+				<tr><td colspan="2">Maximum file size: %d MB</td></tr>
 				<tr><td colspan="2"><input type="submit"><input type="reset"></td><tr>
 				</table>
 				</form>
