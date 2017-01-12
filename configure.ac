@@ -209,12 +209,6 @@ eparted/meta/Makefile
 eparted/po/Makefile
 eparted/src/Makefile
 
-epgbackup/Makefile
-epgbackup/meta/Makefile
-epgbackup/po/Makefile
-epgbackup/src/Makefile
-epgbackup/src/localehelp/Makefile
-
 epgcopy/Makefile
 epgcopy/meta/Makefile
 epgcopy/src/Makefile
