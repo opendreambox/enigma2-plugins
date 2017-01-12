@@ -275,10 +275,6 @@ growlee/Makefile
 growlee/meta/Makefile
 growlee/src/Makefile
 
-httpproxy/Makefile
-httpproxy/meta/Makefile
-httpproxy/src/Makefile
-
 imdb/Makefile
 imdb/meta/Makefile
 imdb/po/Makefile

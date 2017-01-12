@@ -1,2 +1,0 @@
-Description: use your Dreambox as Web Proxy
-Depends: enigma2, python-twisted-web
