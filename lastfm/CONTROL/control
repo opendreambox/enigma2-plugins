@@ -1,2 +1,0 @@
-Description: Listen to Last.FM Internet Radio, the social music revolution 
-Depends: enigma2, python-twisted-web, python-crypt

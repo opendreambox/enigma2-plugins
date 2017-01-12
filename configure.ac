@@ -305,11 +305,6 @@ kiddytimer/meta/Makefile
 kiddytimer/po/Makefile
 kiddytimer/src/Makefile
 
-lastfm/Makefile
-lastfm/meta/Makefile
-lastfm/po/Makefile
-lastfm/src/Makefile
-
 letterbox/Makefile
 letterbox/src/Makefile
 letterbox/meta/Makefile
