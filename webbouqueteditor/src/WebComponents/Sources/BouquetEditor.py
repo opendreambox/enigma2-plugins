@@ -1,13 +1,16 @@
+from os import remove
+from os.path import exists, join
+from re import compile as re_compile
+from subprocess import call, check_output
 from enigma import eServiceReference, eServiceCenter, eDVBDB
 from Components.Sources.Source import Source
-from Screens.ChannelSelection import service_types_tv, MODE_TV, MODE_RADIO
+from Screens.ChannelSelection import MODE_TV
 from Components.config import config
-from os import remove, path, popen
 from Screens.InfoBar import InfoBar
 from ServiceReference import ServiceReference
 from Components.ParentalControl import parentalControl, IMG_WHITESERVICE, IMG_WHITEBOUQUET, IMG_BLACKSERVICE, IMG_BLACKBOUQUET, LIST_BLACKLIST
-from re import compile as re_compile
-from Components.NimManager import nimmanager 
+from Components.NimManager import nimmanager
+
 
 class BouquetEditor(Source):
 
@@ -120,7 +123,7 @@ class BouquetEditor(Source):
 
 	def addProviderToBouquetlist(self, param):
 		print "[WebComponents.BouquetEditor] addProviderToBouquet with param = ", param
-		refstr = sref = param["sProviderRef"]
+		refstr = param["sProviderRef"]
 		if refstr is None:
 			return (False, "No provider given!")
 		mode = MODE_TV # init
@@ -537,10 +540,10 @@ class BouquetEditor(Source):
 			filename = self.BACKUP_FILENAME
 		invalidCharacters= re_compile(r'[^A-Za-z0-9_. ]+|^\.|\.$|^ | $|^$')
 		tarFilename= "%s.tar" % invalidCharacters.sub('_', filename)
-		backupFilename = path.join(self.BACKUP_PATH, tarFilename)
-		if path.exists(backupFilename):
+		backupFilename = join(self.BACKUP_PATH, tarFilename)
+		if exists(backupFilename):
 			remove(backupFilename)
-		checkfile = path.join(self.BACKUP_PATH,'.webouquetedit')
+		checkfile = join(self.BACKUP_PATH,'.webouquetedit')
 		f = open(checkfile, 'w')
 		if f:
 			files = []
@@ -560,12 +563,12 @@ class BouquetEditor(Source):
 					files.append("/etc/enigma2/whitelist")
 			files += self.getPhysicalFilenamesFromServicereference(eServiceReference('1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "bouquets.tv" ORDER BY bouquet'))
 			files += self.getPhysicalFilenamesFromServicereference(eServiceReference('1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "bouquets.radio" ORDER BY bouquet'))
-			tarFiles = ""
+			tarFiles = []
 			for arg in files:
-				if not path.exists(arg):
+				if not exists(arg):
 					return (False, "Error while preparing backup file, %s does not exists." % arg)
-				tarFiles += "%s " % arg
-			lines = popen("tar cvf %s %s" % (backupFilename,tarFiles)).readlines()
+				tarFiles.append(arg)
+			call(['tar', '-cvf', backupFilename] + tarFiles)
 			remove(checkfile)
 			return (True, tarFilename)
 		else:
@@ -591,24 +594,17 @@ class BouquetEditor(Source):
 		
 	def restoreFiles(self, param):
 		tarFilename = param
-		backupFilename = tarFilename #path.join(self.BACKUP_PATH, tarFilename)
-		if path.exists(backupFilename):
-			check_tar = False
-			lines = popen('tar -tf %s' % backupFilename).readlines()
-			for line in lines:
-				pos = line.find('tmp/.webouquetedit')
-				if pos != -1:
-					check_tar = True
-					break
-			if check_tar:
+		backupFilename = tarFilename  #join(self.BACKUP_PATH, tarFilename)
+		if exists(backupFilename):
+			if 'tmp/.webouquetedit' in check_output(['tar', '-tf', backupFilename]):
 				eDVBDB.getInstance().removeServices()
 				files = []	
 				files += self.getPhysicalFilenamesFromServicereference(eServiceReference('1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "bouquets.tv" ORDER BY bouquet'))
 				files += self.getPhysicalFilenamesFromServicereference(eServiceReference('1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "bouquets.radio" ORDER BY bouquet'))
 				for bouquetfiles in files:
-					if path.exists(bouquetfiles):
+					if exists(bouquetfiles):
 						remove(bouquetfiles)
-				lines = popen('tar xvf %s -C /' % backupFilename).readlines()
+				call(['tar', '-xvf', backupFilename, '-C', '/'])
 				nimmanager.readTransponders()
 				eDVBDB.getInstance().reloadServicelist()
 				eDVBDB.getInstance().reloadBouquets()
@@ -662,11 +658,11 @@ class BouquetEditor(Source):
 		else:
 			suffix = ".radio"
 		filename = '/etc/enigma2/' + prefix + name + suffix
-		if path.exists(filename):
+		if exists(filename):
 			i = 1
 			while True:
 				filename = "/etc/enigma2/%s%s_%d%s" %( prefix , name , i, suffix)
-				if path.exists(filename):
+				if exists(filename):
 					i += 1
 				else:
 					name = "%s_%d" % (name,i)
