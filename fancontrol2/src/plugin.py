@@ -4,14 +4,16 @@
 
 import time
 import os
+from subprocess import call, Popen, PIPE
 from __init__ import _
 
-from globals import *
 
-from enigma import eTimer, eSize
+from globals import FC2Log, FC2werte, Box, Self, TempName, HeadLine, Version, FC2HDDignore, FC2stunde
+
+from enigma import eTimer
 
 # Config
-from Components.config import configfile, config, ConfigSubsection, ConfigNumber, ConfigInteger, ConfigSlider, ConfigSelection, ConfigYesNo, ConfigText
+from Components.config import configfile, config, ConfigSubsection, ConfigInteger, ConfigSlider, ConfigSelection, ConfigYesNo, ConfigText
 from Components.config import getConfigListEntry
 from Components.Label import Label
 from Components.Sources.StaticText import StaticText
@@ -20,7 +22,7 @@ from Components.Sources.Progress import Progress
 # Startup/shutdown notification
 from Tools import Notifications
 from Sensors import sensors
-from time import gmtime, strftime
+from time import strftime
 import datetime
 
 # Plugin
@@ -31,15 +33,14 @@ from Screens.Screen import Screen
 from Components.ConfigList import ConfigListScreen
 from Screens.MessageBox import MessageBox
 from Screens.Console import Console
-from Screens import Standby 
+from Screens import Standby
 from Screens.Standby import TryQuitMainloop
 
 # GUI (Components)
 from Components.ActionMap import ActionMap
-from Components.ActionMap import NumberActionMap
 from Components.Harddisk import harddiskmanager
 
-from threading import Thread, Lock
+from threading import Thread
 import Queue
 Briefkasten = Queue.Queue()
 
@@ -506,7 +507,7 @@ class FanControl2Monitor(Screen):
 			for hdd in harddiskmanager.HDDList():
 				if hdd[1].model().startswith("ATA"):
 					if hdd[1].isSleeping():
-						(stat,wert)=getstatusoutput("hdparm -y %s" % hdd[1].getDeviceName())
+						call(['hdparm', '-y', hdd[1].getDeviceName()])
 
 class FanControl2SpezialSetup(Screen, ConfigListScreen):
 	skin = """
@@ -823,18 +824,9 @@ def DeleteData():
 		FClog("Error Delete Data")
 
 def getstatusoutput(cmd):
-	try:
-		pipe = os.popen('{ ' + cmd + '; } 2>&1', 'r')
-		text = pipe.read()
-		sts = pipe.close()
-		if sts is None: sts = 0
-		if text[-1:] == '\n': text = text[:-1]
-	except:
-		sts = 1
-		text = ""
-		FClog("Error on call OS program (smartctl/hdparm)")
-	finally:
-		return sts, text
+	p = Popen(cmd, stdout=PIPE, close_fds=True)
+	stdout, _ = p.communicate()
+	return p.wait(), stdout
 
 def HDDtestTemp():
 	global disableHDDread
@@ -844,25 +836,36 @@ def HDDtestTemp():
 			if hdd[1].model().startswith("ATA"):
 				FClog("%s %s Mode:%s" % (hdd[1].model(), hdd[1].getDeviceName(), config.plugins.FanControl.CheckHDDTemp.value))
 				if config.plugins.FanControl.CheckHDDTemp.value == "auto":
-					(stat,wert)=getstatusoutput("hdparm -y %s" % hdd[1].getDeviceName())
+					call(['hdparm', '-y', hdd[1].getDeviceName()])
 					time.sleep(0.5)
-					(stat,wert)=ReadHDDtemp(hdd[1].getDeviceName())
+					stat, _ = ReadHDDtemp(hdd[1].getDeviceName())
 					if stat != 0:
-						(stat,wert)=getstatusoutput("smartctl --smart=on %s" % hdd[1].getDeviceName())
+						call(['smartctl', '--smart=on', hdd[1].getDeviceName()])
 						FClog("HDD Temperature not readable -> Ignore")
 						FC2HDDignore.append(hdd[1].getDeviceName())
 					time.sleep(0.5)
-					(stat,wert)=getstatusoutput("hdparm -C %s" % hdd[1].getDeviceName())
+					_, wert = getstatusoutput(['hdparm', '-C', hdd[1].getDeviceName()])
 					if wert.find("standby")>0:
 						FClog("HDD supports Temp reading without Spinup")
 					else:
 						if hdd[1].isSleeping():
-							(stat,wert)=getstatusoutput("hdparm -y %s" % hdd[1].getDeviceName())
+							call(['hdparm', '-y', hdd[1].getDeviceName()])
 						FClog("HDD not supports Temp reading without Spinup -> Ignore")
 						FC2HDDignore.append(hdd[1].getDeviceName())
 
+
 def ReadHDDtemp(D):
-	return getstatusoutput("smartctl -A %s | grep \"194 Temp\" | grep Always" % D)
+	stat, wert = getstatusoutput(['smartctl', '-A', D])
+	if stat == 0:
+		for line in wert.splitlines():
+			tokens = line.split()
+			if len(tokens) >= 10 and tokens[0] == '194' and tokens[1] == 'Temperature_Celsius' and tokens[7] == 'Always':
+				try:
+					return (0, int(tokens[9]))
+				except:
+					pass
+	return (1, "")
+
 
 def GetHDDtemp(OneTime):
 	global AktHDD
@@ -873,12 +876,9 @@ def GetHDDtemp(OneTime):
 				sleeptime = int((time.time() - hdd[1].last_access))
 #				FClog("HDD Temp reading %s %s %ds %s" % (config.plugins.FanControl.CheckHDDTemp.value, disableHDDread, sleeptime, hdd[1].isSleeping()))
 				if config.plugins.FanControl.CheckHDDTemp.value == "true" or (config.plugins.FanControl.CheckHDDTemp.value == "auto" and not disableHDDread) or ((not hdd[1].isSleeping()) and sleeptime < 120) or OneTime == True:
-					(stat,wert)=ReadHDDtemp(hdd[1].getDeviceName())
+					stat, wert = ReadHDDtemp(hdd[1].getDeviceName())
 					if stat == 0:
-						try:
-							AktHDD.append(int(wert[wert.find("Always")+6:].replace(" ","").replace("-","")[:2]))
-						except:
-							AktHDD.append(0)
+						AktHDD.append(wert)
 					if len(AktHDD) == 0:
 						AktHDD = [0]
 					FClog("HDD Temp %dC" % (AktHDD[-1]))
@@ -1075,7 +1075,6 @@ class FanControl2(Screen):
 			self.Vlt        = config.plugins.FanControl.vlt.value
 			id = 0
 			AktRPMtmp = 0
-			sleeptime = 0
 			AktTemp = self.CurrTemp()
 			if int(strftime("%S")) < 10 and strftime("%H:%M") == "00:00":
 				DeleteData()
