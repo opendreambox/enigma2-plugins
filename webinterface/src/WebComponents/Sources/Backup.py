@@ -1,20 +1,20 @@
-from enigma import eServiceReference, iServiceInformation, eServiceCenter
 from Components.Sources.Source import Source
 from Components.config import config, ConfigLocations
 try:
 	from Plugins.SystemPlugins.SoftwareManager import BackupRestore
-except ImportError as ie:
+except ImportError:
 	from enigma import eEnv
 	# defaults from BackupRestore
 	backupdirs = ConfigLocations(default=[eEnv.resolve('${sysconfdir}/enigma2/'), '/etc/network/interfaces', '/etc/wpa_supplicant.conf', '/etc/wpa_supplicant.ath0.conf', '/etc/wpa_supplicant.wlan0.conf', '/etc/resolv.conf', '/etc/default_gw', '/etc/hostname'])
 else:
 	backupdirs = config.plugins.configurationbackup.backupdirs
-from os import remove, path, popen
+from os import remove, path
 from re import compile as re_compile
+from subprocess import call
 
 try:
 	import tarfile
-except ImportError as ie:
+except ImportError:
 	tarfile = None
 
 class Backup(Source):
@@ -52,7 +52,7 @@ class Backup(Source):
 
 	def writeTarFile(self, destfile, filenames):
 		"""
-		  Create a new tar file, either with the tarfile library module or using popen.
+		  Create a new tar file, either with the tarfile library module or using tar.
 		"""
 		compression = self.getCompressionMode(destfile)
 		if tarfile:
@@ -62,8 +62,7 @@ class Backup(Source):
 					f.add(sourcefile)
 			f.close()
 		else:
-			tarFiles = ' '.join(filenames)
-			lines = popen("tar cv%sf %s %s" % (compression, destfile, tarFiles)).readlines()
+			call(['tar', '-cv%sf' % compression, destfile] + filenames)
 		return (True, destfile)
 
 	def backupFiles(self, filename):
@@ -87,12 +86,12 @@ class Backup(Source):
 			f.extractall(path=destination)
 			f.close()
 		else:
-			lines = popen('tar xv%sf %s -C /' % (compression, filename)).readlines()
+			call(['tar', '-xvf', filename, '-C', '/'])
 		return (True, "Backup was successfully restored")
 
 	def restoreFiles(self, filename):
 		if not path.exists(filename):
-			return (False, "Error, %s does not exists, restore is not possible..." % (backupFilename,))
+			return (False, "Error, %s does not exists, restore is not possible..." % filename)
 
 		ret = self.unpackTarFile(filename)
 		if ret[0]:
