@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-from re import compile as re_compile
-from os import path as os_path, symlink, listdir, unlink, readlink, remove
+from os import path as os_path, symlink, readlink, remove
 from copy import deepcopy
 
-from enigma import eTimer, eEnv
+from enigma import eEnv
 from Components.Console import Console
 from Components.Harddisk import harddiskmanager, Util
 from Tools.Directories import isMount, removeDir, createDir, pathExists
@@ -68,7 +67,6 @@ class AutoMount():
 	def reload(self, callback=None):
 		Log.i()
 		# Initialize mounts to empty list
-		automounts = []
 		self._mounts = {}
 		self._numActive = 0
 
@@ -125,10 +123,7 @@ class AutoMount():
 
 			elif data['mounttype'] == 'cifs':
 				opts = self.sanitizeOptions(data['options'].split(','), cifs=True)
-				password = data['password']
-				username = data['username'].replace(" ", "\\ ")
-				if password:
-					username = data['username'].replace(" ", "\\ ")
+				if data['password']:
 					opts.extend([
 						'username=%s' % (data['username']),
 						'password=%s' % (data['password']),
