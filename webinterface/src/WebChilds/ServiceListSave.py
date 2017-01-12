@@ -1,7 +1,9 @@
+from glob import glob
+from os import unlink
+from os.path import isfile, join
 from twisted.web import resource, http, server
 from enigma import eDVBDB
 from Tools.Directories import resolveFilename, SCOPE_CONFIG
-import os
 from xml.dom.minidom import parseString as xml_dom_minidom_parseString
 from urllib import unquote as urllib_unquote
 import Components.ParentalControl
@@ -35,7 +37,7 @@ class ServiceListReload(resource.Resource):
 							<e2statetext>Servicelist reloaded</e2statetext>
 						</e2simplexmlresult>"""
 
-		except Exception, e:
+		except Exception:
 			request.setResponseCode(http.OK)
 
 			return """<?xml version="1.0" encoding="UTF-8"?>
@@ -115,10 +117,14 @@ class ServiceListSave(resource.Resource):
 			#print "having num %i TV Bouquets and num %i Radio Bouquets" %(len(bouquets_tv),len(bouquets_radio))
 
 			#deleting old files
-			os.system("rm " + self.DIR + "userbouquet*.tv ")
-			os.system("rm " + self.DIR + "userbouquet*.radio ")
-			os.system("rm " + self.DIR + "bouquets.tv ")
-			os.system("rm " + self.DIR + "bouquets.radio ")
+			for filename in glob(self.DIR + "userbouquet*.tv"):
+				unlink(filename)
+			for filename in glob(self.DIR + "userbouquet*.radio"):
+				unlink(filename)
+			for filename in ('bouquets.radio', 'bouquets.tv'):
+				path = join(self.DIR, filename)
+				if isfile(path):
+					unlink(path)
 
 			#writing new files
 			self.createIndexFile(self.TYPE_TV, bouquets_tv)
