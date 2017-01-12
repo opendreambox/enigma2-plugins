@@ -236,6 +236,7 @@ class NetworkBrowser(Screen):
 				self.statuslist.append(( ['info'], statuspng, _("Searching your network. Please wait..."), None, None, None, None ))
 				self['list'].setList(self.statuslist)
 			elif status == 'error':
+				#TODO nicer pixmap
 				statuspng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/error.png"))
 				self.statuslist.append(( ['info'], statuspng, _("No network devices found!"), None, None, None, None ))
 				self['list'].setList(self.statuslist)
@@ -325,12 +326,9 @@ class NetworkBrowser(Screen):
 	def _onNetworkIPsReady(self, item):
 		self._nrthreads -= 1
 		Log.i("Waiting for %d more threads" % self._nrthreads)
-		if not item:
-			return
-		self.networklist.append(item)
-		self._updateUI(False)
-		if self._nrthreads == 0:
-			self._updateUI()
+		if item:
+			self.networklist.append(item)
+		self._updateUI(self._nrthreads == 0)
 
 	def _updateUI(self, finished=True):
 		write_cache(self.cache_file, self.networklist)
@@ -410,17 +408,20 @@ class NetworkBrowser(Screen):
 			host = network[ip]
 			self.list.append(self._buildNetworkHostEntry(host))
 			if ip in self.expanded:
-				networkshares = self.getNetworkShares(ip, host.name.strip())
-				for share in networkshares:
+				shares = self.getNetworkShares(ip, host.name.strip())
+				#close empty to avoid permanent reloading
+				if not shares:
+					self.expanded.remove(ip)
+				for share in shares:
 					self.list.append(self._buildNetworkShareEntry(share))
+
 		self["list"].setList(self.list)
 		self["list"].setIndex(self.listindex)
 
 	def _buildNetworkHostEntry(self, item):
-		#DO WE NEED THIS? I don't so tbh - reichi
-#		item.host= "%3s.%3s.%3s.%3s" % tuple(item.host.split("."))
-#		item.host = item.host.replace(" ", "")
-		name = item.host + " ( " + item.name.strip() + " )"
+		name = item.host
+		if item.name != item.host:
+			name = "%s (%s)" %(name, item.name)
 		icon = LoadPixmap(cached=True, path=resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkBrowser/icons/host.png"))
 		return (item, icon, name, None, None, None, None)
 
@@ -467,8 +468,7 @@ class NetworkBrowser(Screen):
 		item = self["list"].getCurrent()[0]
 		if item is None or not isinstance(item, NetworkItem):
 			return
-		self.hostcache_file = None
-		self.hostcache_file = eEnv.resolve("${sysconfdir}/enigma2/") + item.name.strip() + '.cache' #Path to cache directory
+		self.hostcache_file = "%s%s.cache" %(eEnv.resolve("${sysconfdir}/enigma2/"), item.name) #Path to cache directory
 		if item.type == NetworkItem.TYPE_HOST: # host entry selected
 			if item.host in self.expanded:
 				self.expanded.remove(item.host)
@@ -487,7 +487,6 @@ class NetworkBrowser(Screen):
 				self.session.openWithCallback(self.passwordQuestion, MessageBox, text=_("Do you want to enter a username and password for this host?\n"), default=False )
 			else:
 				self.passwordQuestion(False)
-			return
 		else:
 			self.openMountEdit(item)
 
