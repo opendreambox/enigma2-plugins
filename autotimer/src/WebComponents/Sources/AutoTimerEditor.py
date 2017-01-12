@@ -1,6 +1,8 @@
 from Components.Sources.Source import Source
-from os import remove, path, popen
+from os import remove, path
 from re import compile as re_compile
+from subprocess import call, check_output
+
 
 class AutoTimerEditor(Source):
 	BACKUP = 0
@@ -53,12 +55,12 @@ class AutoTimerEditor(Source):
 			f.close()
 			files.append(checkfile)
 			files.append("/etc/enigma2/autotimer.xml")
-			tarFiles = ""
+			tarFiles = []
 			for arg in files:
 				if not path.exists(arg):
 					return (False, "Error while preparing backup file, %s does not exists." % arg)
-				tarFiles += "%s " % arg
-			lines = popen("tar cvf %s %s" % (backupFilename,tarFiles)).readlines()
+				tarFiles.append(arg)
+			call(['tar', '-cvf', backupFilename] + tarFiles)
 			remove(checkfile)
 			return (True, tarFilename)
 		else:
@@ -67,15 +69,8 @@ class AutoTimerEditor(Source):
 	def restoreFiles(self, param):
 		backupFilename = param
 		if path.exists(backupFilename):
-			check_tar = False
-			lines = popen('tar -tf %s' % backupFilename).readlines()
-			for line in lines:
-				pos = line.find('tmp/.autotimeredit')
-				if pos != -1:
-					check_tar = True
-					break
-			if check_tar:
-				lines = popen('tar xvf %s -C /' % backupFilename).readlines()
+			if 'tmp/.autotimeredit' in check_output(['tar', '-tf', backupFilename]):
+				call(['tar', '-xvf', backupFilename, '-C', '/'])
 
 				from Plugins.Extensions.AutoTimer.plugin import autotimer
 				if autotimer is not None:
