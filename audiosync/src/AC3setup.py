@@ -1,15 +1,12 @@
 from AC3utils import PLUGIN_BASE, PLUGIN_VERSION
-from Components.ActionMap import ActionMap, NumberActionMap
+from Components.ActionMap import NumberActionMap
 from Components.Button import Button
 from Components.ConfigList import ConfigListScreen
-from Components.Label import Label,MultiColorLabel
-from Components.ProgressBar import ProgressBar
+from Components.Label import Label
 from Components.config import config, getConfigListEntry
-from Screens.ChoiceBox import ChoiceBox
-from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
 from __init__ import _
-import os
+
 
 class AC3LipSyncSetup(ConfigListScreen, Screen):
     skin = """
