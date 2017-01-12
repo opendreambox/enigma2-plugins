@@ -1,2 +1,0 @@
-Description: Zugriff auf die ARD-Mediathek
-Depends: enigma2, python-twisted-web
