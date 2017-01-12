@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-from re import compile as re_compile
-from os import path as os_path, symlink, listdir, unlink, readlink, remove
-
+from os.path import exists
 from xml.etree.cElementTree import parse as cet_parse
-from Tools.Directories import pathExists, fileExists, resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN_IMAGE, SCOPE_HDD, SCOPE_CURRENT_PLUGIN, SCOPE_CURRENT_SKIN
-#WEBTV_STATIONS = "/etc/enigma2/webtv_stations.xml"
+from Tools.Directories import resolveFilename, SCOPE_CURRENT_PLUGIN
+
 WEBTV_STATIONS = resolveFilename(SCOPE_CURRENT_PLUGIN, "Extensions/dreamMediathek/webtv_stations.xml")
+
 
 class WebTVStations():
 	"""Manages WebTVStations declared in a XML-Document."""
@@ -13,16 +12,14 @@ class WebTVStations():
 		print "[WebTVStations] INIT"
 		self.webtv_stations = {}
 
-	def getWebTVStations(self, callback = None):
-		webtv_stations = []
+	def getWebTVStations(self, callback=None):
 		self.webtv_stations = {}
 
-		if not os_path.exists(WEBTV_STATIONS):
+		if not exists(WEBTV_STATIONS):
 			return
 		tree = cet_parse(WEBTV_STATIONS).getroot()
 
 		def getValue(definitions, default):
-			ret = ""
 			Len = len(definitions)
 			return Len > 0 and definitions[Len-1].text or default
 
@@ -42,4 +39,3 @@ class WebTVStations():
 		return sorted(self.webtv_stations.iterkeys())
 
 iWebTVStations = WebTVStations()
-
