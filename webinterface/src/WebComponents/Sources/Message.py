@@ -1,6 +1,8 @@
 from Components.Sources.Source import Source
 from Screens.MessageBox import MessageBox
-from os import system, path
+from os import unlink
+from os.path import isfile
+
 
 class Message(Source):
 	PRINT = 0
@@ -34,12 +36,12 @@ class Message(Source):
 
 		try:
 			typeint = int(self.cmd['type'])
-		except (ValueError, TypeError), e:
+		except (ValueError, TypeError):
 			return ( False, _("type %s is not a number") % self.cmd['type'] )
 			
 		sel = True
 		if self.cmd['default'] is not None and self.cmd['default'] == "no":
-				sel = False			
+			sel = False
 
 		if typeint == MessageBox.TYPE_YESNO:
 			#dont know how to give the result to the webif back
@@ -55,7 +57,7 @@ class Message(Source):
 
 		try:
 			mtimeout = int(self.cmd['timeout'])
-		except (ValueError, TypeError), e:
+		except (ValueError, TypeError):
 			mtimeout = -1
 
 		if typeint == MessageBox.TYPE_YESNO:
@@ -69,25 +71,17 @@ class Message(Source):
 		print "yesNoAnswer", confirmed
 		#self.session.messageboxanswer = confirmed
 
-		yesnoFile = self.yesnoFile
-
-		cmdstr = "/bin/echo -n yes > %s" % yesnoFile
-		if not confirmed:
-			cmdstr = "/bin/echo -n no > %s" % yesnoFile
-
-		system(cmdstr)
+		with open(self.yesnoFile, 'w') as f:
+			f.write(['no', 'yes'][confirmed])
 
 	def getYesNoAnswer(self, param):
 		print "getYesNoAnswer"#,self.session.messageboxanswer
-		yesnoFile = self.yesnoFile
-		if path.exists(yesnoFile) == True:
-			file = open(yesnoFile, "r")
-			lines = file.readlines()
-			file.close()
-			cmdstr = "rm %s" % yesnoFile
-			system(cmdstr)
-			print "Answer: (%s)" % lines[0]
-			if lines[0] == "yes":
+		if isfile(self.yesnoFile) == True:
+			with open(self.yesnoFile, 'r') as f:
+				data = f.read()
+			unlink(self.yesnoFile)
+			print "Answer: (%s)" % data
+			if data == "yes":
 				return ( True, "Answer is YES!" )
 			else:
 				return ( True, "Answer is NO!" )
