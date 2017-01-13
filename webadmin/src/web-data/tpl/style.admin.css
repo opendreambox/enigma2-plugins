@@ -9,6 +9,32 @@
 
 #memHd {border-bottom:1px solid #DDD;text-align:center;width:150px;padding:5px;display:table-cell;vertical-align:middle;}
 
+.navTable li form {
+	margin: 0px;
+	padding-bottom: 2px;
+}
+
+.navbtn {
+	color: #444;
+	margin:0px;
+	width: 100%;
+	border: none;
+	display: table-cell;
+	vertical-align: middle;
+	box-shadow: none;
+	padding: 10px;
+	text-align: left;
+	font-size: 14px;
+}
+
+.navbtn:hover {
+	color: #444;
+	border: none;
+	background: #ededed;
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
+	transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .sPkgInstallSLink {
 	display: inline-block;
 	margin-right: 5px;

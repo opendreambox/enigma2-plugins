@@ -22,12 +22,12 @@ class PKGConsoleStream(IPKGConsoleStream):
 					<head>
 					<meta content="text/html; charset=UTF-8" http-equiv="content-type">
 					
-					<link href="/web-data/tpl/default/style.min.css" type="text/css" rel="stylesheet">
+					<link href="/web-data/tpl/default/style_modern.min.css" type="text/css" rel="stylesheet">
 					<link rel="shortcut icon" type="image/x-icon" href="/web-data/img/favicon.ico">
 				</head>
 				<body onunload="javascript:opener.location.reload()" onload="window.scrollBy(0,1000000);" >
 					<hr>
-					<p align="left">"""
+					<pre align="left">"""
 				
 		self.request.write(html)
 	
@@ -39,7 +39,13 @@ class PKGConsoleStream(IPKGConsoleStream):
 		self.dataAvail_conn = self.container.dataAvail.connect(self.dataAvail)
 		self.appClosed_conn = self.container.appClosed.connect(self.cmdFinished)
 		self.container.execute(*cmd)
-		
+
+	def dataAvail(self, data):
+		print"[IPKGConsoleStream].dataAvail: '%s'" %data
+		if data != self.lastdata or self.lastdata is None and self.stillAlive:
+			self.lastdata = data
+			self.request.write(data)
+
 	def cmdFinished(self, data):
 		if self.stillAlive:
 			print "[PKGConsoleStream].self.cmd ",self.cmd
@@ -54,7 +60,7 @@ class PKGConsoleStream(IPKGConsoleStream):
 					</body>
 					</html>""" %(_("Restart GUI"), _("Restart"), _("Close"))
 			else:
-				html="""</p>
+				html="""</pre>
 						<hr>
 						<form>
 							<input type="button" value="%s" onClick="window.close();">

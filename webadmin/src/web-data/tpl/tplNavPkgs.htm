@@ -1,16 +1,24 @@
 <!-- tplNavPkgs -->
 <ul class="navTable">
-	<li><div><a href="#!/deb/all" title="List all deb packages" >List all</a></div></li>
-	<li><div><a href="#!/deb/installed" title="List installed deb packages" >List installed</a></div></li>
-	<li><div><a href="#!/deb/upgradable" title="List upgradable deb packages" >List upgradable</a></div></li>
+	<li><a href="#!/deb/all" title="List all deb packages" ><div>List all</div></a></li>
+	<li><a href="#!/deb/installed" title="List installed deb packages" ><div>List installed</div></a></li>
+	<li><a href="#!/deb/upgradable" title="List upgradable deb packages" ><div>List upgradable</div></a></li>
 	<li><hr class="PkgNavSeperator"></li>
-	<li><div><a href="pkg?command=update" target="_blank" title="Update deb feed" >Update</a></div></li>
-	<li><div><a href="pkg?command=upgrade" target="_blank" title="Upgrade all packages" >Upgrade</a></div></li>
+	<li>
+		<form method="post" action="pkg?command=update">
+			<button formtarget="_blank"  title="Update package feed" type="submit" class="navbtn">Update</button>
+		</form>
+	</li>
+	<li>
+		<form method="post" action="pkg?command=upgrade" class="inline">
+			<button formtarget="_blank" title="Upgrade all packages" type="submit" class="navbtn">Upgrade</button>
+		</form>
+	</li>
 	<li><hr class="PkgNavSeperator"></li>
-	<li><div><a href="#" onclick="uploadIkg();" title="Upload *.deb file from PC" >Upload deb</a></div></li>
+	<li><a href="#" onclick="uploadIkg();" title="Upload *.deb file from PC" ><div>Upload deb</div></a></li>
 	<li><hr class="PkgNavSeperator"></li>
-	<li><div><a href="#!/deb/settings" title="Package download feed settings" >Settings</a></div></li>
-	<li><div><a href="#!/deb/scripts" title="User Script Control" >Scripts</a></div></li>
+	<li><a href="#!/deb/settings" title="Package download feed settings" ><div>Settings</div></a></li>
+	<li><a href="#!/deb/scripts" title="User Script Control" ><div>Scripts</div></a></li>
 <!--	<li><div><a href="#!/deb/term" title="Terminal login" >Terminal</a></div></li> -->
 </ul>
 <!-- /tplNavPkgs -->
