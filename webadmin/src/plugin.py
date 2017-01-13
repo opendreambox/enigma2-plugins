@@ -6,6 +6,7 @@ from WebChilds.UploadPkg import UploadPkgResource
 from WebChilds.UploadText import UploadTextResource
 from WebChilds.PKG import PKGResource
 from WebChilds.Script import Script
+from WebChilds.Terminal import TerminalResource
 from twisted.web import static
 from twisted.python import util
 from enigma import eEnv
@@ -27,6 +28,7 @@ def autostart(reason, **kwargs):
 		root.putChild("uploadpkg", UploadPkgResource())
 		root.putChild("pkg", PKGResource())
 		root.putChild("script", Script())
+		root.putChild("terminal", TerminalResource())
 		addExternalChild( ("webadmin", root, "WebAdmin", 1, True, "_self") )
 			
 def Plugins(**kwargs):
