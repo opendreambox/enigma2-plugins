@@ -110,7 +110,7 @@ class AutoMountView(Screen):
 		if cur:
 			returnValue = cur[1]
 			self.applyConfigRef = self.session.openWithCallback(self._onDeleteFinished, MessageBox, _("Please wait while removing your network mount..."), type = MessageBox.TYPE_INFO, enable_input = False)
-			iAutoMount.removeMount(iAutoMount.MOUNT_BASE + returnValue + "kaputt", self._onMountRemoved)
+			iAutoMount.removeMount(iAutoMount.MOUNT_BASE + returnValue, self._onMountRemoved)
 
 	def _onMountRemoved(self, success):
 		text = _("Your network mount has been removed.")
