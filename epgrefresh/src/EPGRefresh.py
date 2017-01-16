@@ -123,12 +123,15 @@ class EPGRefresh:
 
 		print("[EPGRefresh] - state is:" + str(cState.state))
 
+		self.epgTimeoutTimer.stop()
 		if cState.state == cachestate.started:
 			print("[EPGRefresh] - EPG update started for transponder %04x:%04x:%08x" %(tsid, onid, ns))
-			self.epgTimeoutTimer.stop()
 		elif cState.state == cachestate.stopped or cState.state == cachestate.deferred:
-			self.epgTimeoutTimer.stop()
 			print("[EPGRefresh] - EPG update finished for transponder %04x:%04x:%08x" %(tsid, onid, ns))
+
+			if self.refreshAdapter:
+				self.refreshAdapter.stop()
+
 			epgrefreshtimer.add(EPGRefreshTimerEntry(
 					time(),
 					self.refresh,
