@@ -2,13 +2,12 @@
 # for localized messages
 #from __init__ import _
 from Screens.Screen import Screen
-from Screens.VirtualKeyBoard import VirtualKeyBoard
 from Components.config import ConfigText, ConfigPassword, NoSave, getConfigListEntry
 from Components.ConfigList import ConfigListScreen
 from Components.Sources.StaticText import StaticText
 from Components.Pixmap import Pixmap
-from Components.ActionMap import ActionMap, NumberActionMap
-from enigma import ePoint, eEnv
+from Components.ActionMap import NumberActionMap
+from enigma import eEnv
 from cPickle import dump, load
 from os import path as os_path, stat, mkdir
 from time import time
@@ -74,11 +73,6 @@ class UserDialog(Screen, ConfigListScreen):
 			"red": self.close,
 		}, -2)
 
-		self["VirtualKB"] = ActionMap(["VirtualKeyboardActions"],
-		{
-			"showVirtualKeyboard": self.KeyText,
-		}, -2)
-
 		self.list = []
 		ConfigListScreen.__init__(self, self.list,session = self.session)
 		self.createSetup()
@@ -129,41 +123,12 @@ class UserDialog(Screen, ConfigListScreen):
 
 		self["config"].list = self.list
 		self["config"].l.setList(self.list)
-		self["config"].onSelectionChanged.append(self.selectionChanged)
-
-	def KeyText(self):
-		if self["config"].getCurrent() == self.usernameEntry:
-			self.session.openWithCallback(lambda x : self.VirtualKeyBoardCallback(x, 'username'), VirtualKeyBoard, title = (_("Enter username:")), text = self.username.value)
-		if self["config"].getCurrent() == self.passwordEntry:
-			self.session.openWithCallback(lambda x : self.VirtualKeyBoardCallback(x, 'password'), VirtualKeyBoard, title = (_("Enter password:")), text = self.password.value)
-
-	def VirtualKeyBoardCallback(self, callback = None, entry = None):
-		if callback is not None and len(callback) and entry is not None and len(entry):
-			if entry == 'username':
-				self.username.setValue(callback)
-				self["config"].invalidate(self.usernameEntry)
-			if entry == 'password':
-				self.password.setValue(callback)
-				self["config"].invalidate(self.passwordEntry)
 
 	def newConfig(self):
 		if self["config"].getCurrent() == self.InterfaceEntry:
 			self.createSetup()
 
-	def keyLeft(self):
-		ConfigListScreen.keyLeft(self)
-
-	def keyRight(self):
-		ConfigListScreen.keyRight(self)
-
-	def selectionChanged(self):
-		current = self["config"].getCurrent()
-		helpwindowpos = self["HelpWindow"].getPosition()
-		if current[1].help_window.instance is not None:
-			current[1].help_window.instance.move(ePoint(helpwindowpos[0],helpwindowpos[1]))
-
 	def ok(self):
-		current = self["config"].getCurrent()
 		self.hostdata = { 'username': self.username.value, 'password': self.password.value }
 		write_cache(self.cache_file, self.hostdata)
 		self.close(True)
