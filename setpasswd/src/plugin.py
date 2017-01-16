@@ -83,12 +83,7 @@ class ChangePasswdScreen(Screen):
 		self.container = eConsoleAppContainer()
 		self.appClosed_conn = self.container.appClosed.connect(self.runFinished)
 		self.dataAvail_conn = self.container.dataAvail.connect(self.dataAvail)
-		retval = self.container.execute("passwd %s" % self.user)
-		if retval==0:
-			message=_("Sucessfully changed password for root user to: ") + self.password
-		else:
-			message=_("Unable to change/reset password for root user")
-		self.session.open(MessageBox, message , MessageBox.TYPE_ERROR)
+		self.container.execute("passwd %s" % self.user)
 
 	def dataAvail(self,data):
 		self.output_line += data
@@ -104,6 +99,11 @@ class ChangePasswdScreen(Screen):
 			self.container.write("%s\n"%self.password)
 
 	def runFinished(self,retval):
+		if retval==0:
+			message=_("Sucessfully changed password for root user to: ") + self.password
+		else:
+			message=_("Unable to change/reset password for root user")
+		self.session.open(MessageBox, message , MessageBox.TYPE_ERROR)
 		del self.container.dataAvail[:]
 		del self.container.appClosed[:]
 		del self.container
