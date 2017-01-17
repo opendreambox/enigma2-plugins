@@ -11,7 +11,7 @@ default: catalog
 
 catalog : template merge msgmerge
 
-XMLPODIRS := autotimer/src epgbackup/src epgrefresh/src pipzap/src pluginsort/src
+XMLPODIRS := autotimer/src/ epgrefresh/src/ pipzap/src/ pluginsort/src/
 
 template:
 	mkdir -p $(PODIR)
