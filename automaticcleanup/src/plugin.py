@@ -26,9 +26,6 @@
 #  distributed other than under the conditions noted above.
 #
 
-# for localized messages
-from . import _
-
 # Plugin definition
 from Plugins.Plugin import PluginDescriptor
 

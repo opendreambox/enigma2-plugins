@@ -1,19 +1,4 @@
-from Components.Language import language
-from Tools.Directories import resolveFilename, SCOPE_PLUGINS
-import gettext, hashlib
-
-PluginLanguageDomain = "MyTube"
-PluginLanguagePath = "Extensions/MyTube/locale"
-
-def localeInit():
-	gettext.bindtextdomain(PluginLanguageDomain, resolveFilename(SCOPE_PLUGINS, PluginLanguagePath))
-
-def _(txt):
-	t = gettext.dgettext(PluginLanguageDomain, txt)
-	if t == txt:
-		#print "[MyTube] fallback to default translation for", txt
-		t = gettext.gettext(txt)
-	return t
+import hashlib
 
 def bin2long(s):
 	return reduce(lambda x, y:(x << 8L) + y, map(ord, s))
@@ -39,5 +24,3 @@ def decrypt_block(src, mod):
 		return dest
 	return None
 
-localeInit()
-language.addCallback(localeInit)

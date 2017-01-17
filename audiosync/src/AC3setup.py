@@ -5,8 +5,6 @@ from Components.ConfigList import ConfigListScreen
 from Components.Label import Label
 from Components.config import config, getConfigListEntry
 from Screens.Screen import Screen
-from __init__ import _
-
 
 class AC3LipSyncSetup(ConfigListScreen, Screen):
     skin = """

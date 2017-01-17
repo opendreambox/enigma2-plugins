@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from . import _
 from enigma import eTimer, eConsoleAppContainer, getBestPlayableServiceReference, eServiceReference, eEPGCache
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap

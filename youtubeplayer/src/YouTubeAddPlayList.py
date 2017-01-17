@@ -30,8 +30,6 @@ from Components.Button import Button
 
 from ConfigTextWithSuggestions import ConfigTextWithSuggestions
 
-from . import _
-
 playlistContext = Config()
 playlistContext.name = ConfigText(_("Name"), False)
 playlistContext.description = ConfigText(_("Description"), False)

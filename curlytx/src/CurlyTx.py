@@ -2,9 +2,6 @@
 # CurlyTx main window
 # Copyright (C) 2011 Christian Weiske <cweiske@cweiske.de>
 # License: GPLv3 or later
-
-from . import _
-
 from Screens.Screen import Screen
 from Screens.HelpMenu import HelpableScreen
 from Screens.MessageBox import MessageBox

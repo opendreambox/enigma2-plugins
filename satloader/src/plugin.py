@@ -1,4 +1,3 @@
-from __init__ import _
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Screens.Standby import TryQuitMainloop

@@ -13,10 +13,6 @@ from enigma import eSize, ePoint, getDesktop
 from Screens.Screen import Screen
 from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS
 
-# Plugin internal
-from . import _
-
-
 class ShowLogScreen(Screen):
 	def __init__(self, session, logFile):
 		Screen.__init__(self, session)

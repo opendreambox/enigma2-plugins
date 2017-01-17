@@ -24,10 +24,6 @@ from Tools.HardwareInfo import HardwareInfo
 from Components.config import config, ConfigSubsection, ConfigSelection, ConfigDirectory, ConfigYesNo, Config, ConfigText
 from InternetRadioScreen import InternetRadioScreen
 
-# for localized messages
-from . import _
-
-
 config.plugins.internetradio = ConfigSubsection()
 config.plugins.internetradio.showinextensions = ConfigYesNo(default = True)
 config.plugins.internetradio.dirname = ConfigDirectory(default = "/media/hdd/streamripper/")

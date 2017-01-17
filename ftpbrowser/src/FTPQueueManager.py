@@ -1,6 +1,3 @@
-# for localized messages
-from . import _
-
 # GUI (Screens)
 from Screens.Screen import Screen
 

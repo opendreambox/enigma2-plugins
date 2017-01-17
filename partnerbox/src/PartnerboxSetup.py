@@ -29,9 +29,6 @@ from Components.ConfigList import ConfigList, ConfigListScreen
 from Components.config import ConfigSubsection, ConfigSubList, ConfigIP, ConfigInteger, ConfigSelection, ConfigText, ConfigYesNo, getConfigListEntry, configfile
 from skin import TemplatedListFonts, componentSizes
 
-# for localized messages
-from . import _
-
 def initPartnerboxEntryConfig():
 	config.plugins.Partnerbox.Entries.append(ConfigSubsection())
 	i = len(config.plugins.Partnerbox.Entries) -1

@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-
-# for localized messages
-from . import _x
-
 import os
 from Components.ConfigList import ConfigListScreen
 from Screens.Screen import Screen
@@ -27,7 +23,7 @@ class SerienFilmCfg(Screen):
 		print "[SF-Plugin] SerienFilmCfg init"
 		self.session = session
 		Screen.__init__(self, session)
-		self["myLabel"] = Label(_x("This plugin is configured by the MENU key in the movielist\n\nApplication details provides the HELP key in the movielist"))
+		self["myLabel"] = Label(_("This plugin is configured by the MENU key in the movielist\n\nApplication details provides the HELP key in the movielist"))
 		self["myActionMap"] = ActionMap(["SetupActions"],
 		{
 			"ok": self.close,
@@ -47,22 +43,22 @@ class EpiSepCfg(Screen):
 			<widget name="sfBlueBtn" position="460,250" size="140,40" backgroundColor="blue" valign="center" halign="center" zPosition="2"  foregroundColor="white" font="Regular;20"/>
 		</screen>"""
 
-		self.skin = "<screen position=\"130,150\" size=\"610,300\" title=\"" + _x("Configuration of the title:episode separator") + "\" >" + skincontent
+		self.skin = "<screen position=\"130,150\" size=\"610,300\" title=\"" + _("Configuration of the title:episode separator") + "\" >" + skincontent
 
 		self.session = session
-		self.defaultsep = _x(": ")
+		self.defaultsep = _(": ")
 		self.newsep = self.currentsep = separator
 		Screen.__init__(self, session)
 		self.skinName = "skin"
 
-		intro = _x("Usually the episode of a series is tansmitted separate of the title in the description field\nIn a few series however it is appended to the title behind a colon\ne.g. Tatort: Der Fluch der Mumie\n\nA commen part of the title up to this title:episode separator shared by several movies creates a series")
-		self.firstlevel = [intro, _("Exit"), _x("Set default"), _x("Change"), _x("Disable ")]
+		intro = _("Usually the episode of a series is tansmitted separate of the title in the description field\nIn a few series however it is appended to the title behind a colon\ne.g. Tatort: Der Fluch der Mumie\n\nA commen part of the title up to this title:episode separator shared by several movies creates a series")
+		self.firstlevel = [intro, _("Exit"), _("Set default"), _("Change"), _("Disable ")]
 		if not separator:
-			self.firstlevel[4] = _x("Enable ")
+			self.firstlevel[4] = _("Enable ")
 
-		self.secondformat = _x("The current title:episode separator is \"%s\" (%d characters)\nTo change it: first Set size and then Edit")
+		self.secondformat = _("The current title:episode separator is \"%s\" (%d characters)\nTo change it: first Set size and then Edit")
 
-		self.secondlevel = ["", _("Cancel"), _("Save"), _("Edit"), _x("Set size")]
+		self.secondlevel = ["", _("Cancel"), _("Save"), _("Edit"), _("Set size")]
 		self.secondlevel[0] = self.secondformat % (self.currentsep, len(self.currentsep))
 
 		self.level = 1
@@ -112,8 +108,8 @@ class EpiSepCfg(Screen):
 		else:
 			self.session.openWithCallback(self.setSeparator,		# edit serarator
 				InputBox,
-				windowTitle = _x("Edit title:episode separator"),
-				title = _x("Key 0 provides special chracters, key 1 blank"),
+				windowTitle = _("Edit title:episode separator"),
+				title = _("Key 0 provides special chracters, key 1 blank"),
 				text = self.newsep,
 				maxSize=True,
 				type=Input.TEXT)
@@ -129,17 +125,17 @@ class EpiSepCfg(Screen):
 	def gotBlue(self):
 		if self.level == 1:
 			if self.newsep:
-				self.firstlevel[4] = _x("Enable ")
+				self.firstlevel[4] = _("Enable ")
 				self.currentsep = ""
 			else:
-				self.firstlevel[4] = _x("Disable ")
+				self.firstlevel[4] = _("Disable ")
 				self.currentsep = self.defaultsep	# set default
 			self.setSeparator(self.currentsep)
 		else:
 			self.session.openWithCallback(self.setSeparatorSize,	# set size
 				InputBox,
-				title=_x("Number of characters"),
-				windowTitle=_x("Length of the title:episode separator"),
+				title=_("Number of characters"),
+				windowTitle=_("Length of the title:episode separator"),
 				text = str(len(self.newsep)),
 				type=Input.NUMBER)
 

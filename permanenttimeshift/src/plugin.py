@@ -10,7 +10,6 @@ from Components.ConfigList import ConfigList, ConfigListScreen
 from Components.config import config, configfile, getConfigListEntry, ConfigSubsection, ConfigYesNo, ConfigInteger, ConfigSelection, NoSave
 from Components.Harddisk import harddiskmanager
 from Components.Label import Label
-from Components.Language import language
 from Components.Pixmap import Pixmap
 from Components.ServiceEventTracker import ServiceEventTracker
 from Components.Sources.StaticText import StaticText
@@ -28,7 +27,7 @@ from Screens.Standby import Standby, TryQuitMainloop
 from Screens.PVRState import TimeshiftState
 from ServiceReference import ServiceReference
 from Tools import Directories, ASCIItranslit, Notifications
-from Tools.Directories import fileExists, copyfile, resolveFilename, SCOPE_LANGUAGE, SCOPE_PLUGINS
+from Tools.Directories import fileExists, copyfile
 from Plugins.Plugin import PluginDescriptor
 from RecordTimer import RecordTimer, RecordTimerEntry, parseEvent
 
@@ -38,31 +37,10 @@ from os import environ, stat as os_stat, listdir as os_listdir, link as os_link,
 from time import localtime, time, gmtime, strftime
 from timer import TimerEntry
 
-import gettext
 import Screens.InfoBar
 import Screens.Standby
 
 from Tools.Log import Log
-
-##############################
-###   Multilanguage Init   ###
-##############################
-
-def localeInit():
-	lang = language.getLanguage()
-	environ["LANGUAGE"] = lang[:2]
-	gettext.bindtextdomain("enigma2", resolveFilename(SCOPE_LANGUAGE))
-	gettext.textdomain("enigma2")
-	gettext.bindtextdomain("PermanentTimeshift", "%s%s" % (resolveFilename(SCOPE_PLUGINS), "Extensions/PermanentTimeshift/locale/"))
-
-def _(txt):
-	t = gettext.dgettext("PermanentTimeshift", txt)
-	if t == txt:
-		t = gettext.gettext(txt)
-	return t
-
-localeInit()
-language.addCallback(localeInit)
 
 ##############################
 #####  CONFIG SETTINGS   #####

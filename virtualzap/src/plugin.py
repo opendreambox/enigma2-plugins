@@ -48,9 +48,6 @@ InfoBarShowHideINIT = None
 from Components.config import config, ConfigSubsection, ConfigSelection, ConfigYesNo, getConfigListEntry, configfile, ConfigPosition, ConfigText, ConfigInteger
 from Components.ConfigList import ConfigList, ConfigListScreen
 
-# for localized messages
-from . import _
-
 # PiPServiceRelation installed?
 try:
 	from Plugins.SystemPlugins.PiPServiceRelation.plugin import getRelationDict, CONFIG_FILE

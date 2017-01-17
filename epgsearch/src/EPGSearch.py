@@ -1,6 +1,4 @@
 # for localized messages  	 
-from . import _
-
 from enigma import eEPGCache, eServiceReference, RT_HALIGN_LEFT, \
 		RT_HALIGN_RIGHT, RT_VALIGN_CENTER, eListboxPythonMultiContent
 

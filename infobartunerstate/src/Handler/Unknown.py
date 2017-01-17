@@ -9,7 +9,6 @@ from enigma import eDVBResourceManager
 from Components.config import *
 
 # Plugin internal
-from Plugins.Extensions.InfoBarTunerState.__init__ import _
 from Plugins.Extensions.InfoBarTunerState.PluginBase import PluginBase
 from Plugins.Extensions.InfoBarTunerState.Helper import getTunerByPlayableService, getNumber, getChannel, getEventData, getTunerName
 

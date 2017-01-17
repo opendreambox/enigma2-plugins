@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from . import _
 from Screens.Screen import Screen
 from Components.ScrollLabel import ScrollLabel
 from Components.ConfigList import ConfigListScreen

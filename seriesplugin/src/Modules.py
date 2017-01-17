@@ -25,7 +25,6 @@ from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 import imp, inspect
 
 # Plugin internal
-from . import _
 from Logger import log
 
 # Constants

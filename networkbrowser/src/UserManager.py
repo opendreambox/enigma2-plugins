@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-# for localized messages
-#from __init__ import _
 from enigma import eEnv
 from Screens.Screen import Screen
 from Components.Sources.StaticText import StaticText

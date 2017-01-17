@@ -20,7 +20,6 @@
 from Components.config import NoSave, ConfigNumber
 
 # Plugin internal
-from Plugins.Extensions.PushService.__init__ import _
 from Plugins.Extensions.PushService.ServiceBase import ServiceBase
 
 # Plugin specific

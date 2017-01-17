@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __init__ import _
-
 import sys, os, base64, re, time, shutil, datetime, codecs, urllib2
 
 from Components.ActionMap import ActionMap, HelpableActionMap

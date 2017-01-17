@@ -1,8 +1,4 @@
 from __future__ import print_function
-
-# for localized messages
-from . import _
-
 # GUI (Screens)
 from Screens.Screen import Screen
 from Screens.ChoiceBox import ChoiceBox

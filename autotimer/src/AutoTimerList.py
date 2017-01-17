@@ -1,7 +1,4 @@
 # -*- coding: UTF-8 -*-
-# for localized messages
-from . import _
-
 # GUI (Components)
 from Components.MenuList import MenuList
 from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT

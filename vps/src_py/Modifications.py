@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from . import _
 from RecordTimer import RecordTimerEntry, RecordTimer
 from Screens.TimerEntry import TimerEntry
 from Components.config import config, ConfigSelection, ConfigText, ConfigSubList, ConfigDateTime, ConfigClock, ConfigYesNo, getConfigListEntry

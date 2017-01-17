@@ -13,7 +13,6 @@ from Screens.MessageBox import MessageBox
 from Screens.ParentalControlSetup import ProtectedScreen
 from Screens.Screen import Screen
 from Tools import Notifications
-from __init__ import _
 import KTglob
 import time
 

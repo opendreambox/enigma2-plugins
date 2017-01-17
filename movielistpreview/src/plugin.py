@@ -8,7 +8,6 @@ from Components.config import config, ConfigInteger, ConfigSelection, ConfigSubs
 from Components.ConfigList import ConfigListScreen
 from Components.Console import Console
 from Components.Label import Label
-from Components.Language import language
 from Components.MenuList import MenuList
 from Components.MovieList import MovieList
 from Components.Pixmap import Pixmap
@@ -21,8 +20,8 @@ from Screens.InfoBarGenerics import InfoBarSeek, InfoBarCueSheetSupport
 from Screens.MessageBox import MessageBox
 from Screens.MovieSelection import MovieSelection
 from Screens.Screen import Screen
-from Tools.Directories import fileExists, resolveFilename, SCOPE_LANGUAGE, SCOPE_PLUGINS
-import gettext, random
+from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS
+import random
 
 ##############################################################################
 
@@ -31,26 +30,6 @@ config.plugins.MovielistPreview.enabled = ConfigYesNo(default=True)
 config.plugins.MovielistPreview.position_x = ConfigInteger(default=100)
 config.plugins.MovielistPreview.position_y = ConfigInteger(default=100)
 config.plugins.MovielistPreview.size = ConfigSelection(choices=["250x200", "200x160", "150x120", "100x80"], default="250x200")
-
-##############################################################################
-
-def localeInit():
-	lang = language.getLanguage()
-	environ["LANGUAGE"] = lang[:2]
-	gettext.bindtextdomain("enigma2", resolveFilename(SCOPE_LANGUAGE))
-	gettext.textdomain("enigma2")
-	gettext.bindtextdomain("MovielistPreview", "%s%s" % (resolveFilename(SCOPE_PLUGINS), "Extensions/MovielistPreview/locale/"))
-
-def _(txt):
-	t = gettext.dgettext("MovielistPreview", txt)
-	if t == txt:
-		t = gettext.gettext(txt)
-	return t
-
-localeInit()
-language.addCallback(localeInit)
-
-##############################################################################
 
 SKIN = """
 	<screen position="0,0" size="250,200" zPosition="10" flags="wfNoBorder" backgroundColor="#FF000000" >

@@ -22,9 +22,6 @@
 
 
 # for localized messages
-from . import _
-
-
 NUM_EPG_TABS = 5 # 0 based
 NUM_CONFIG_TABS = 3 # 0 based
 

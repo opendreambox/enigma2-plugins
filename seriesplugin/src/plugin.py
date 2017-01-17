@@ -1,9 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
 import os, sys, traceback
-
-# Localization
-from . import _
-
 from time import time
 
 from Components.config import config

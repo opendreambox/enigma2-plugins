@@ -32,7 +32,7 @@ from twisted.web.client import getPage  # @UnresolvedImport
 
 from plugin import config, stripCbCPrefix, resolveNumberWithAvon, FBF_IN_CALLS, FBF_OUT_CALLS, FBF_MISSED_CALLS, FBF_BLOCKED_CALLS, decode
 from nrzuname import html2unicode
-from . import _, __  # @UnresolvedImport # pylint: disable=W0611,F0401
+from . import __  # @UnresolvedImport # pylint: disable=W0611,F0401
 # debug = logging.getLogger(__name__ + "XXX").debug
 # debug = logging.getLogger(__name__).debug
 

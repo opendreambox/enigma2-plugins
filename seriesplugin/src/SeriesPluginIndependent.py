@@ -19,9 +19,6 @@
 
 #TODO Add optional popup
 
-# for localized messages
-from . import _
-
 # Config
 from Components.config import *
 

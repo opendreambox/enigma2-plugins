@@ -36,9 +36,6 @@ from Screens.InfoBarGenerics import InfoBarShowHide, InfoBarSeek, InfoBarAudioSe
 from Components.ServiceEventTracker import InfoBarBase
 from skin import TemplatedListFonts, componentSizes
 
-# for localized messages
-from . import _
-
 config.plugins.yttrailer = ConfigSubsection()
 config.plugins.yttrailer.show_in_extensionsmenu = ConfigYesNo(default = False)
 config.plugins.yttrailer.best_resolution = ConfigSelection(default="2", choices = [("0", _("1080p")),("1", _("720p")), ("2", _("No HD streaming"))])

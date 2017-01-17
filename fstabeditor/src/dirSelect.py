@@ -8,10 +8,6 @@
 # Software Foundation; either version 2, or (at your option) any later
 # version.
 #===============================================================================
-
-# for localized messages
-#from __init__ import _
-
 from Screens.Screen import Screen
 
 from Components.ActionMap import ActionMap

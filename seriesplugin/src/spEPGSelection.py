@@ -1,9 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 import os, sys, traceback
 
-# Localization
-from . import _
-
 from Components.config import config
 
 # Plugin internal

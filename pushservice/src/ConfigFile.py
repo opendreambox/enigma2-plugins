@@ -24,10 +24,6 @@ from Components.config import config
 # XML
 from xml.etree.cElementTree import ElementTree, tostring, parse
 
-# Plugin internal
-from . import _
-
-
 def indent(elem, level=0):
 	i = "\n" + level*"  "
 	if len(elem):

@@ -16,9 +16,6 @@
 #    GNU General Public License for more details.
 #
 #######################################################################
-
-from . import _
-
 import logging
 
 import os, sys, traceback

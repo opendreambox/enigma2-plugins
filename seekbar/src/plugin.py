@@ -6,7 +6,6 @@ from Components.ActionMap import ActionMap
 from Components.config import config, ConfigInteger, ConfigNumber, ConfigSelection, ConfigSubsection, ConfigYesNo, getConfigListEntry
 from Components.ConfigList import ConfigListScreen
 from Components.Label import Label
-from Components.Language import language
 from Components.Pixmap import MovingPixmap
 from enigma import eTimer
 from keyids import KEYIDS
@@ -15,29 +14,13 @@ from Screens.InfoBar import MoviePlayer
 from Screens.Screen import Screen
 from Tools.Directories import fileExists, resolveFilename, SCOPE_LANGUAGE, SCOPE_PLUGINS
 from Tools.KeyBindings import addKeyBinding
-import gettext, keymapparser
+import  keymapparser
 
 ##############################################
 
 config.plugins.Seekbar = ConfigSubsection()
 config.plugins.Seekbar.overwrite_left_right = ConfigYesNo(default=True)
 config.plugins.Seekbar.sensibility = ConfigInteger(default=10, limits=(1, 10))
-
-##############################################
-
-lang = language.getLanguage()
-environ["LANGUAGE"] = lang[:2]
-gettext.bindtextdomain("enigma2", resolveFilename(SCOPE_LANGUAGE))
-gettext.textdomain("enigma2")
-gettext.bindtextdomain("Seekbar", "%s%s" % (resolveFilename(SCOPE_PLUGINS), "Extensions/Seekbar/locale/"))
-
-def _(txt):
-	t = gettext.dgettext("Seekbar", txt)
-	if t == txt:
-		t = gettext.gettext(txt)
-	return t
-
-##############################################
 
 class Seekbar(ConfigListScreen, Screen):
 	skin = """

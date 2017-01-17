@@ -23,8 +23,6 @@ from Components.Sources.List import List
 from Components.ActionMap import ActionMap
 from Components.Sources.StaticText import StaticText
 
-from . import _
-
 class YouTubeStdFeedSelectionScreen(Screen):
 	STD_FEED = "http://gdata.youtube.com/feeds/api/standardfeeds/"
 	

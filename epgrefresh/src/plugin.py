@@ -1,10 +1,10 @@
 from __future__ import print_function
 
 # for localized messages
-from . import _, NOTIFICATIONDOMAIN
+from . import NOTIFICATIONDOMAIN
 
 # Config
-from Components.config import config, ConfigYesNo, ConfigNumber, ConfigSelection, \
+from Components.config import config, ConfigNumber, ConfigSelection, \
 	ConfigSubsection, ConfigClock, ConfigYesNo, ConfigInteger, NoSave
 from Screens.MessageBox import MessageBox
 from Screens.Standby import TryQuitMainloop

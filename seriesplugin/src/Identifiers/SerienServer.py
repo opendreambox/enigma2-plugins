@@ -10,7 +10,6 @@ from time import time, mktime
 from datetime import datetime
 
 # Internal
-from Plugins.Extensions.SeriesPlugin.__init__ import _
 from Plugins.Extensions.SeriesPlugin.IdentifierBase import IdentifierBase2
 from Plugins.Extensions.SeriesPlugin.Logger import log
 from Plugins.Extensions.SeriesPlugin.Channels import lookupChannelByReference, getChannel

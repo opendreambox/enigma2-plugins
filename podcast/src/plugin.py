@@ -19,32 +19,16 @@ from Screens.MessageBox import MessageBox
 from Screens.TextBox import TextBox
 from Screens.Screen import Screen
 from Tools.BoundFunction import boundFunction
-from Tools.Directories import fileExists, resolveFilename, SCOPE_LANGUAGE, SCOPE_PLUGINS
+from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS
 from Tools.Downloader import downloadWithProgress
 from twisted.web.client import getPage
 from xml.etree.cElementTree import parse
 from xml.dom.minidom import parseString as xmlparseString, parse as xmlparse
-import gettext, re, urllib2
+import re, urllib2
 
 ###################################################
 
 configDir = eEnv.resolve("${sysconfdir}") + "/podcast/"
-
-def localeInit():
-	lang = language.getLanguage()
-	environ["LANGUAGE"] = lang[:2]
-	gettext.bindtextdomain("enigma2", resolveFilename(SCOPE_LANGUAGE))
-	gettext.textdomain("enigma2")
-	gettext.bindtextdomain("Podcast", "%s%s" % (resolveFilename(SCOPE_PLUGINS), "Extensions/Podcast/locale/"))
-
-def _(txt):
-	t = gettext.dgettext("Podcast", txt)
-	if t == txt:
-		t = gettext.gettext(txt)
-	return t
-
-localeInit()
-language.addCallback(localeInit)
 
 ###################################################
 

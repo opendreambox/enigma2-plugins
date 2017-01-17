@@ -5,7 +5,6 @@ from Components.config import config, ConfigInteger, ConfigSelection, \
 		ConfigYesNo, ConfigSet, ConfigSubsection, getConfigListEntry
 from Components.ConfigList import ConfigListScreen
 from Components.Label import Label
-from Components.Language import language
 from Components.MenuList import MenuList
 from Components.MultiContent import MultiContentEntryText
 from enigma import eListboxPythonMultiContent, eServiceCenter, \
@@ -15,30 +14,8 @@ from Plugins.Plugin import PluginDescriptor
 from Screens.ChannelSelection import ChannelSelection
 from Screens.ParentalControlSetup import ProtectedScreen
 from Screens.Screen import Screen
-from Tools.Directories import resolveFilename, SCOPE_LANGUAGE, SCOPE_PLUGINS
 from enigma import eServiceReference
 from skin import TemplatedListFonts, componentSizes
-import gettext
-
-################################################
-
-def localeInit():
-	lang = language.getLanguage()
-	environ["LANGUAGE"] = lang[:2]
-	gettext.bindtextdomain("enigma2", resolveFilename(SCOPE_LANGUAGE))
-	gettext.textdomain("enigma2")
-	gettext.bindtextdomain("ZapHistoryBrowser", "%s%s" % (resolveFilename(SCOPE_PLUGINS), "Extensions/ZapHistoryBrowser/locale/"))
-
-def _(txt):
-	t = gettext.dgettext("ZapHistoryBrowser", txt)
-	if t == txt:
-		t = gettext.gettext(txt)
-	return t
-
-localeInit()
-language.addCallback(localeInit)
-
-################################################
 
 config.plugins.ZapHistoryConfigurator = ConfigSubsection()
 config.plugins.ZapHistoryConfigurator.enable_zap_history = ConfigSelection(choices = {"off": _("disabled"), "on": _("enabled"), "parental_lock": _("disabled at parental lock")}, default="on")

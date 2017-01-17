@@ -20,9 +20,6 @@
 import os
 import re
 
-
-# for localized messages
-from . import _
 #from time import time
 from datetime import datetime
 

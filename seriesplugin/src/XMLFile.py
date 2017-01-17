@@ -29,7 +29,6 @@ from xml.etree.cElementTree import ElementTree, parse, Element, SubElement, Comm
 from Tools.XMLTools import stringToXML
 
 # Plugin internal
-from . import _
 from Logger import log
 
 def indent(elem, level=0):

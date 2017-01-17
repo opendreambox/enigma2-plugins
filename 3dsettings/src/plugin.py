@@ -32,9 +32,6 @@ from enigma import iPlayableService, iServiceInformation, eServiceCenter, eServi
 from ServiceReference import ServiceReference
 from os.path import basename as os_basename
 
-# for localized messages
-from . import _
-
 THREE_D_OFF = 0
 THREE_D_SIDE_BY_SIDE = 1
 THREE_D_TOP_BOTTOM = 2

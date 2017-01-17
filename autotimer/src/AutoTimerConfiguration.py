@@ -1,9 +1,6 @@
 # -*- coding: UTF-8 -*-
 from __future__ import print_function
 
-# for localized messages
-from . import _
-
 from AutoTimerComponent import preferredAutoTimerComponent
 from Logger import doLog
 

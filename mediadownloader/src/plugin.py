@@ -1,10 +1,6 @@
 #
 # To be used as simple Downloading Application by other Plugins
 #
-
-# for localized messages
-from . import _
-
 from Components.config import config, ConfigSubsection, ConfigLocations
 from Tools.Directories import resolveFilename, SCOPE_HDD
 

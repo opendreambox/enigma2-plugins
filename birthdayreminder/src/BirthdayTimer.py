@@ -37,10 +37,6 @@ from enigma import eDVBLocalTimeHandler
 from Screens.MessageBox import MessageBox
 from Tools import Notifications
 
-# for localized messages
-from . import _
-
-
 class BirthdayTimerEntry(TimerEntry):
 	def __init__(self, begin, end, preremind):
 		TimerEntry.__init__(self, int(begin), int(end))

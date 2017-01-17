@@ -50,9 +50,6 @@ from Screens.Screen import Screen
 from skin import parseColor
 from Tools import Notifications
 
-# for localized messages
-from . import _
-
 CSVFILE = "/tmp/birthdayreminder.csv"
 
 

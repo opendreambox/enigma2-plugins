@@ -5,7 +5,6 @@ from os import stat
 from Vps import vps_timers
 from Vps_setup import VPS_Setup
 from Modifications import register_vps
-from . import _
 
 # Config
 from Components.config import config, ConfigYesNo, ConfigSubsection, ConfigInteger, ConfigSelection, configfile

@@ -64,10 +64,6 @@ from Components.config import ConfigSubsection, ConfigSubList, ConfigIP, ConfigI
 from Components.GUIComponent import GUIComponent
 from skin import TemplatedListFonts, componentSizes
 
-# for localized messages
-from . import _
-
-
 config.plugins.Partnerbox = ConfigSubsection()
 config.plugins.Partnerbox.showremotetvinextensionsmenu= ConfigYesNo(default = True)
 config.plugins.Partnerbox.showcurrentstreaminextensionsmenu= ConfigYesNo(default = True)

@@ -14,7 +14,6 @@ from Tools import Notifications
 from Tools.Directories import resolveFilename, SCOPE_CONFIG
 from enigma import ePoint, eTimer, eDVBLocalTimeHandler
 
-from __init__ import _
 import KTglob
 import NavigationInstance
 import time

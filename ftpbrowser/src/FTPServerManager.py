@@ -1,6 +1,3 @@
-# for localized messages
-from . import _
-
 # GUI (Screens)
 from Components.ConfigList import ConfigListScreen
 from Screens.MessageBox import MessageBox

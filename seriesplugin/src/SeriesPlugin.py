@@ -8,9 +8,6 @@ import os, sys, traceback
 from time import localtime, strftime
 from datetime import datetime
 
-# Localization
-from . import _
-
 from datetime import datetime
 
 from Components.config import config

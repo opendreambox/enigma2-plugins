@@ -54,10 +54,6 @@ from InternetRadioClasses import InternetRadioFilter, InternetRadioStation
 from InternetRadioVisualization import InternetRadioVisualization
 from InternetRadioPiPTVPlayer import InternetRadioPiPTVPlayer
 
-# for localized messages
-from . import _
-
-
 containerStreamripper = None
 
 class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTVPlayer):

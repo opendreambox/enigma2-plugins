@@ -35,7 +35,7 @@ import re, os
 
 from datetime import datetime
 
-from . import debug, _
+from . import debug
 from reverselookup import ReverseLookupAndNotify
 
 my_global_session = None

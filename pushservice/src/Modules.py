@@ -22,7 +22,6 @@ import os, sys, traceback
 import imp, inspect
 
 # Plugin internal
-from . import _
 from ModuleBase import ModuleBase
 from ServiceBase import ServiceBase
 from ControllerBase import ControllerBase

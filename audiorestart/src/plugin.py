@@ -8,7 +8,7 @@ from enigma import eTimer
 from Plugins.Plugin import PluginDescriptor
 from Screens import Standby
 from Screens.Screen import Screen
-from __init__ import _
+
 import NavigationInstance
 
 config.plugins.AudioRestart = ConfigSubsection()

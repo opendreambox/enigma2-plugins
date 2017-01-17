@@ -6,9 +6,6 @@
 # This is free software. You are allowed to modify and use it as long as you leave the copyright.
 ###############################################################################  
 
-# for localized messages
-from . import _
-
 # Plugin definition
 from Plugins.Plugin import PluginDescriptor
 

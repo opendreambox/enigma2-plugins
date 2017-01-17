@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 # code by GeminiTeam
-
 from enigma import eTimer
 
 from Screens.Screen import Screen
@@ -24,7 +23,6 @@ from Components.ConfigList import ConfigListScreen
 from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigInteger, ConfigYesNo, ConfigText, ConfigSelection, NoSave
 config.plugins.eparted = ConfigSubsection()
 
-from locale import _
 from os import system as os_system, path as os_path, listdir
 
 #from Plugins.Bp.geminimain.gTools import cleanexit

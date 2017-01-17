@@ -28,9 +28,6 @@ from PartnerboxFunctions import  SetPartnerboxTimerlist, isInTimerList, sendPart
 import PartnerboxFunctions as partnerboxfunctions
 from enigma import eServiceReference, eServiceCenter
 
-# for localized messages
-from . import _
-
 baseEPGSelection__init__ = None
 baseEPGSelection_zapTo = None
 baseonSelectionChanged = None

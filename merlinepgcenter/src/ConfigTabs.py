@@ -19,10 +19,6 @@
 #  modify it (if you keep the license), but it may not be commercially 
 #  distributed other than under the conditions noted above.
 #
-	
-
-# for localized messages
-from . import _
 
 # ENIGMA IMPORTS
 from Components.config import config, ConfigSubsection, getConfigListEntry, ConfigSet, ConfigClock, ConfigYesNo, ConfigInteger, ConfigSelection, ConfigText, NoSave, ConfigSelectionNumber

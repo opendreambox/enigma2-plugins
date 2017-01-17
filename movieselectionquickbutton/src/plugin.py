@@ -31,8 +31,6 @@ from Components.ConfigList import ConfigList, ConfigListScreen
 from Components.config import ConfigSubsection, ConfigText, ConfigYesNo, configfile, ConfigSelection, getConfigListEntry
 from Components.config import config
 from Screens.MessageBox import MessageBox
-# for localized messages
-from . import _
 
 config.plugins.MovieSelectionQuickButton = ConfigSubsection()
 config.plugins.MovieSelectionQuickButton.red = ConfigText(default = _("Delete"), visible_width = 50, fixed_size = False)

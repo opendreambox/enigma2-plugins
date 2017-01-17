@@ -4,14 +4,11 @@
 ##
 from Components.ActionMap import ActionMap
 from Components.config import config, ConfigInteger, ConfigSubsection, ConfigYesNo
-from Components.Language import language
 from Components.MenuList import MenuList
 from enigma import ePoint, eTimer, getDesktop
 from os import environ
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
-from Tools.Directories import resolveFilename, SCOPE_LANGUAGE, SCOPE_PLUGINS
-import gettext
 
 ##############################################################################
 
@@ -19,24 +16,6 @@ config.plugins.PermanentClock = ConfigSubsection()
 config.plugins.PermanentClock.enabled = ConfigYesNo(default=False)
 config.plugins.PermanentClock.position_x = ConfigInteger(default=590)
 config.plugins.PermanentClock.position_y = ConfigInteger(default=35)
-
-##############################################################################
-
-def localeInit():
-	lang = language.getLanguage()
-	environ["LANGUAGE"] = lang[:2]
-	gettext.bindtextdomain("enigma2", resolveFilename(SCOPE_LANGUAGE))
-	gettext.textdomain("enigma2")
-	gettext.bindtextdomain("PermanentClock", "%s%s" % (resolveFilename(SCOPE_PLUGINS), "Extensions/PermanentClock/locale/"))
-
-def _(txt):
-	t = gettext.dgettext("PermanentClock", txt)
-	if t == txt:
-		t = gettext.gettext(txt)
-	return t
-
-localeInit()
-language.addCallback(localeInit)
 
 ##############################################################################
 

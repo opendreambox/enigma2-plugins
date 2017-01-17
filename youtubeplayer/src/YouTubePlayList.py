@@ -28,9 +28,6 @@ from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
 from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT, RT_VALIGN_TOP, RT_WRAP
 
-from . import _
-
-
 def YouTubePlaylistEntryComponent(entry):
 	res = [ entry ]
 

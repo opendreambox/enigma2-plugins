@@ -21,9 +21,6 @@ import os
 import re
 from glob import glob #Py3 ,escape
 
-# for localized messages
-from . import _
-
 # Config
 from Components.config import config
 

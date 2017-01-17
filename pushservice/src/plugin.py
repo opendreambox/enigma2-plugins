@@ -24,11 +24,7 @@ from Plugins.Plugin import PluginDescriptor
 # Config
 from Components.config import config, ConfigSubsection, ConfigNothing, ConfigOnOff, ConfigText, ConfigClock, ConfigSelectionNumber
 
-# Default encoding
-#from Components.Language import language
-
 # Plugin internal
-from __init__ import _
 from PushService import PushService
 #from ConfigScreen import ConfigScreen
 

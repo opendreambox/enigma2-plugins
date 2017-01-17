@@ -27,8 +27,6 @@ from Components.config import ConfigSubsection, ConfigText, configfile, ConfigSe
 from Components.config import config
 from Components.Button import Button
 from Screens.MessageBox import MessageBox
-# for localized messages
-from . import _
 
 config.plugins.Quickbutton = ConfigSubsection()
 config.plugins.Quickbutton.overwritehbbtvredbutton = ConfigYesNo(default = False)

@@ -46,10 +46,6 @@ from Components.ActionMap import ActionMap
 from PartnerboxFunctions import PlaylistEntry, SetPartnerboxTimerlist, sendPartnerBoxWebCommand, getServiceRef
 import PartnerboxFunctions as partnerboxfunctions
 
-# for localized messages
-from . import _
-
-
 class RemoteTimerEntry(Screen, ConfigListScreen):
 	skin = """
 		<screen name="RemoteTimerEntry" position="center,center" size="820,420" title="Timer entry">

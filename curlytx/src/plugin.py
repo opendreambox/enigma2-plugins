@@ -6,7 +6,6 @@
 from Plugins.Plugin import PluginDescriptor
 
 import CurlyTx
-from . import config
 from Components.config import config
 
  

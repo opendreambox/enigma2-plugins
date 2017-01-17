@@ -1,6 +1,3 @@
-# for localized messages
-from . import _
-
 from Components.config import config, ConfigSubsection, ConfigSubList, \
 	ConfigOnOff, ConfigNumber, ConfigText, ConfigSelection, \
 	ConfigYesNo, ConfigPassword

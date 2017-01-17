@@ -12,7 +12,6 @@ from xml.etree.cElementTree import ElementTree, parse, Element, SubElement, Comm
 from Tools.XMLTools import stringToXML
 
 # Plugin internal
-from . import _
 from XMLFile import XMLFile, indent
 from Logger import log
 

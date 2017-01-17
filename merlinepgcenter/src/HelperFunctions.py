@@ -19,11 +19,6 @@
 #  modify it (if you keep the license), but it may not be commercially 
 #  distributed other than under the conditions noted above.
 #
-
-
-# for localized messages
-from . import _
-
 #PYTHON IMPORTS
 from datetime import timedelta as dt_timedelta, date as dt_date
 from time import localtime, time

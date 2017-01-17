@@ -31,10 +31,6 @@ from Components.config import config, ConfigSubsection, ConfigText, ConfigSelect
 from Components.PluginComponent import plugins
 from Plugins.Plugin import PluginDescriptor
 
-# for localized messages
-from . import _
-
-
 config.plugins.birthdayreminder = ConfigSubsection()
 config.plugins.birthdayreminder.file = ConfigText(default = "/etc/enigma2/birthdayreminder")
 config.plugins.birthdayreminder.dateFormat = ConfigSelection(default = "ddmmyyyy", choices = [("ddmmyyyy", "DD.MM.YYYY"), ("mmddyyyy", "MM/DD/YYYY")])

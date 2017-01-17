@@ -37,7 +37,6 @@ from Tools.BoundFunction import boundFunction
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 
 # Plugin internal
-from . import _
 from PushService import PushService
 from PushServiceBase import PushServiceBase
 from ModuleBase import ModuleBase

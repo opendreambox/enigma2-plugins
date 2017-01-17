@@ -42,7 +42,7 @@ from Tools import Notifications
 from Tools.BoundFunction import boundFunction
 
 # ... II
-from . import _, ENDNOTIFICATIONID, NOTIFICATIONDOMAIN
+from . import ENDNOTIFICATIONID, NOTIFICATIONDOMAIN
 from MainPictureAdapter import MainPictureAdapter
 from PipAdapter import PipAdapter
 from RecordAdapter import RecordAdapter

@@ -11,7 +11,7 @@ from Tools import Notifications
 # Config
 from Components.config import config
 
-from . import _, STARTNOTIFICATIONID, ENDNOTIFICATIONID, NOTIFICATIONDOMAIN
+from . import STARTNOTIFICATIONID, ENDNOTIFICATIONID, NOTIFICATIONDOMAIN
 
 class PipAdapter:
 	backgroundCapable = False

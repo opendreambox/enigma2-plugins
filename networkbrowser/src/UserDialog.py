@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-# for localized messages
-#from __init__ import _
 from Screens.Screen import Screen
 from Components.config import ConfigText, ConfigPassword, NoSave, getConfigListEntry
 from Components.ConfigList import ConfigListScreen

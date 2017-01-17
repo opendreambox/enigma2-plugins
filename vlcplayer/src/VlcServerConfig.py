@@ -26,7 +26,6 @@ from Components.config import config
 from Components.config import getConfigListEntry
 from Screens.Screen import Screen
 from VlcServer import VlcServer
-from . import _
 
 class ConfigMutable(ConfigElement):
 	def __init__(self, configElementDict, defaultKey):

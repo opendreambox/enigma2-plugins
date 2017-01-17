@@ -1,10 +1,3 @@
-#
-# POC FTP Browser for Enigma2
-#
-
-# for localized messages  	 
-from . import _
-
 # Config
 from Components.config import config, ConfigInteger, ConfigSubList, \
 		ConfigSubsection, ConfigText, ConfigPassword, ConfigYesNo

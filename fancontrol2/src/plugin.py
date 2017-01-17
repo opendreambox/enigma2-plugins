@@ -5,10 +5,8 @@
 import time
 import os
 from subprocess import call, Popen, PIPE
-from __init__ import _
 
-
-from globals import FC2Log, FC2werte, Box, Self, TempName, HeadLine, Version, FC2HDDignore, FC2stunde
+from globals import FC2Log, FC2werte, Box, TempName, HeadLine, Version, FC2HDDignore, FC2stunde
 
 from enigma import eTimer
 
@@ -273,7 +271,7 @@ class ControllerPI:
 		self.looptime += self.timer_delay
 		if self.looptime < self.dt:
 			FClogE("%s : NOT calling control, looptime %d < %d dt" % (self.name, self.looptime, self.dt))
-			return Self.ControlSignal
+			return self.ControlSignal
 		else:
 			FClogE("%s : calling control, looptime %d = %d dt" % (self.name, self.looptime, self.dt))
 			self.looptime = 0

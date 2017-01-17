@@ -3,7 +3,6 @@
 from Components.ActionMap import ActionMap
 from Components.config import config
 from Components.Label import Label
-from Components.Language import language
 from Components.MenuList import MenuList
 from Components.MultiContent import MultiContentEntryText
 from enigma import eListboxPythonMultiContent, eServiceReference, gFont
@@ -14,29 +13,8 @@ from Screens.ParentalControlSetup import ProtectedScreen
 from Screens.Screen import Screen
 from ServiceReference import ServiceReference
 from time import gmtime, localtime, strftime, time
-from Tools.Directories import fileExists, resolveFilename, SCOPE_LANGUAGE, SCOPE_PLUGINS
+from Tools.Directories import fileExists
 from xml.etree.cElementTree import parse
-import gettext
-
-###########################################################
-
-def localeInit():
-	lang = language.getLanguage()
-	environ["LANGUAGE"] = lang[:2]
-	gettext.bindtextdomain("enigma2", resolveFilename(SCOPE_LANGUAGE))
-	gettext.textdomain("enigma2")
-	gettext.bindtextdomain("ZapStatistic", "%s%s" % (resolveFilename(SCOPE_PLUGINS), "Extensions/ZapStatistic/locale/"))
-
-def _(txt):
-	t = gettext.dgettext("ZapStatistic", txt)
-	if t == txt:
-		t = gettext.gettext(txt)
-	return t
-
-localeInit()
-language.addCallback(localeInit)
-
-###########################################################
 
 def decode_charset(str, charset):
 	try:

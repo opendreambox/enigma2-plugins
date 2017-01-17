@@ -30,9 +30,6 @@ from Components.ChoiceList import ChoiceEntryComponent
 from Screens.MessageBox import MessageBox
 from Tools.BoundFunction import boundFunction
 
-# for localized messages
-from . import _
-
 #config for lastservice
 config.startupservice = ConfigSubsection()
 config.startupservice.lastservice = ConfigText(default = "")

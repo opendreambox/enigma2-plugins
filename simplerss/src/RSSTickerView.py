@@ -1,6 +1,3 @@
-# for localized messages
-from . import _
-
 #pragma mark MovingLabel
 
 from Components.Label import Label

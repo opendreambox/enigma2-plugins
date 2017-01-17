@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-from Components.Language import language
-from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LANGUAGE
-from os import environ as os_environ
-import gettext
-
 # Config
 from Components.config import config, ConfigSubsection, ConfigOnOff, \
 	ConfigNumber, ConfigSelection, ConfigYesNo, ConfigText
@@ -46,21 +41,6 @@ config.plugins.autotimer.log_shell = ConfigYesNo(default = False)
 config.plugins.autotimer.log_write = ConfigYesNo(default = False)
 config.plugins.autotimer.log_file  = ConfigText(default = "/tmp/autotimer.log", fixed_size = False)
 
-
-def localeInit():
-	lang = language.getLanguage()[:2] # getLanguage returns e.g. "fi_FI" for "language_country"
-	os_environ["LANGUAGE"] = lang # Enigma doesn't set this (or LC_ALL, LC_MESSAGES, LANG). gettext needs it!
-	gettext.bindtextdomain("AutoTimer", resolveFilename(SCOPE_PLUGINS, "Extensions/AutoTimer/locale"))
-
-def _(txt):
-	t = gettext.dgettext("AutoTimer", txt)
-	if t == txt:
-		t = gettext.gettext(txt)
-	return t
-
-localeInit()
-language.addCallback(localeInit)
-
 try:
 	xrange = xrange
 	iteritems = lambda d: d.iteritems()
@@ -70,4 +50,4 @@ except NameError:
 	iteritems = lambda d: d.items()
 	itervalues = lambda d: d.values()
 
-__all__ = ['_', 'config', 'iteritems', 'itervalues', 'xrange']
+__all__ = ['config', 'iteritems', 'itervalues', 'xrange']

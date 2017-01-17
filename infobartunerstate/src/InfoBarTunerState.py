@@ -16,10 +16,6 @@
 #    GNU General Public License for more details.
 #
 #######################################################################
-
-# for localized messages
-from . import _
-
 import math
 import os
 

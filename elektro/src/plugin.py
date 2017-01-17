@@ -9,11 +9,6 @@
 # In the relative timezone the day starts at "nextday". If it is before nextday the last day will be used.
 #
 #
-
-
-#from enigma import *
-from __init__ import _
-
 from Screens.InfoBarGenerics import *
 
 from RecordTimer import RecordTimerEntry
@@ -37,7 +32,6 @@ from Screens import Standby
 # GUI (Components)
 from Components.ActionMap import ActionMap
 from Components.Button import Button
-from Components.Language import language
 from Components.Harddisk import harddiskmanager
 from Components.Sources.StaticText import StaticText
 

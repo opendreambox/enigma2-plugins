@@ -20,7 +20,6 @@
 from Components.config import *
 
 # Plugin internal
-from Plugins.Extensions.PushService.__init__ import _
 from Plugins.Extensions.PushService.ControllerBase import ControllerBase
 
 # Plugin specific

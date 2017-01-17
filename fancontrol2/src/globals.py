@@ -1,4 +1,3 @@
-from __init__ import _
 Version = "V2.9r3"
 # globale Variablen        
 ZielRPM = 0

@@ -30,17 +30,6 @@ from YouTubeInterface import interface, YouTubeInterface
 from SkinLoader import loadPluginSkin
 from Screens.MessageBox import MessageBox
 
-import gettext
-
-
-def _(txt):
-	t = gettext.dgettext("YouTube", txt)
-	if t == txt:
-		print "[YTB] fallback to default translation for", txt
-		t = gettext.gettext(txt)
-	return t
-
-
 class YouTubeManager():
 	def __init__(self, session):
 		self.session = session

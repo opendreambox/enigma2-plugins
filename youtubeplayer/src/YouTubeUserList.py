@@ -30,8 +30,6 @@ from YouTubeUserConfig import youTubeUserConfig
 from YouTubeUserConfig import YouTubeUserConfigScreen
 from enigma import eListboxPythonMultiContent, RT_HALIGN_LEFT, gFont
 
-from . import _
-
 def YouTubeUserListEntry(youTubeUser, defaultUser):
 	res = [ youTubeUser ]
 	res.append((eListboxPythonMultiContent.TYPE_TEXT, 35, 1, 470, 20, 0, RT_HALIGN_LEFT, youTubeUser.getName()))

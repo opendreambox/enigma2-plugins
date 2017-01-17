@@ -22,7 +22,6 @@ from VlcServerConfig import vlcServerConfig
 from VlcServerConfig import VlcServerConfigScreen
 from enigma import eListboxPythonMultiContent, RT_VALIGN_CENTER, gFont
 from skin import TemplatedListFonts
-from . import _
 
 from skin import parseFont
 

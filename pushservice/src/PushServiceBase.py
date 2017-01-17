@@ -31,7 +31,6 @@ from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 from Tools.BoundFunction import boundFunction
 
 # Plugin internal
-from . import _
 from Modules import Modules
 from ConfigFile import ConfigFile
 from ServiceBase import ServiceBase

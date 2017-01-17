@@ -9,7 +9,6 @@ from Components.config import *
 from enigma import eEPGCache
 
 # Plugin internal
-from Plugins.Extensions.InfoBarTunerState.__init__ import _
 from Plugins.Extensions.InfoBarTunerState.PluginBase import PluginBase
 from Plugins.Extensions.InfoBarTunerState.Helper import getTunerByPlayableService, getNumber, getChannel
 

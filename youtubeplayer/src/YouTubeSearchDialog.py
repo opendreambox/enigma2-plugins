@@ -31,8 +31,6 @@ from Components.Button import Button
 
 from ConfigTextWithSuggestions import ConfigTextWithSuggestions
 
-from . import _
-
 searchContext = Config()
 searchContext.searchTerm = ConfigTextWithSuggestions("", False, threaded = True)
 searchContext.orderBy = ConfigSelection(

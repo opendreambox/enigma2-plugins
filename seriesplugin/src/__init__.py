@@ -1,11 +1,5 @@
 # -*- coding: utf-8 -*-
-
 from Components.config import config, ConfigSubsection, ConfigOnOff, ConfigNumber, ConfigSelection, ConfigYesNo, ConfigText, ConfigSelectionNumber
-from Components.Language import language
-from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LANGUAGE
-from os import environ as os_environ
-import gettext
-
 
 #######################################################
 # Initialize Configuration
@@ -88,13 +82,3 @@ config.plugins.seriesplugin.proxy_url                 = ConfigText(default = 'ht
 config.plugins.seriesplugin.serienserver_url          = ConfigText(default = 'http://www.serienserver.de/cache/cache.php', fixed_size = False)
 config.plugins.seriesplugin.xmltv_url                 = ConfigText(default = 'http://www.serienserver.de/xmltv/wunschliste.xml', fixed_size = False)
 
-
-def localeInit():
-	lang = language.getLanguage()[:2]  # getLanguage returns e.g. "fi_FI" for "language_country"
-	os_environ["LANGUAGE"] = lang      # Enigma doesn't set this (or LC_ALL, LC_MESSAGES, LANG). gettext needs it!
-	gettext.bindtextdomain("SeriesPlugin", resolveFilename(SCOPE_PLUGINS, "Extensions/SeriesPlugin/locale"))
-
-_ = lambda txt: gettext.dgettext("SeriesPlugin", txt) if txt else ""
-
-localeInit()
-language.addCallback(localeInit)

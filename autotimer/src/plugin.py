@@ -1,7 +1,5 @@
 from __future__ import print_function
 
-from . import _, config
-
 from twisted.internet import reactor
 
 # GUI (Screens)
@@ -11,6 +9,8 @@ from Tools.Notifications import AddPopup
 # Plugin
 from Components.PluginComponent import plugins
 from Plugins.Plugin import PluginDescriptor
+
+from Components.config import config
 
 from Logger import doLog
 

@@ -5,7 +5,6 @@ from Components.ProgressBar import ProgressBar
 from KTMultiPixmap import KTmultiPixmap
 from MovableScreen import MovableScreen
 from Screens.Screen import Screen
-from __init__ import _
 import KTglob
 
 class KiddyTimerPositioner(Screen, MovableScreen):

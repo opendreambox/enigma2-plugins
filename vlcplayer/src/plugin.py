@@ -16,16 +16,6 @@ from VlcServerList import VlcServerListScreen
 from VlcMediaList import VlcMediaListScreen
 from VlcServerConfig import vlcServerConfig
 
-import gettext
-
-def _(txt):
-	t = gettext.dgettext("VlcPlayer", txt)
-	if t == txt:
-		print "[VLC] fallback to default translation for", txt
-		t = gettext.gettext(txt)
-	return t
-	
-
 class __VlcManager():
 	def __init__(self, session):
 		print "[VLC] VlcManager"

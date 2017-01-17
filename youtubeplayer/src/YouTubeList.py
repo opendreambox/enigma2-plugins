@@ -56,11 +56,6 @@ from YouTubeUserConfig import youTubeUserConfig
 from YouTubeUserList import YouTubeUserListScreen
 from YouTubePlayList import YouTubePlaylistScreen
 
-#from Screens.InfoBar import MoviePlayer
-#from enigma import eServiceReference
-
-from . import _
-
 def YouTubeEntryComponent(entry):
 	res = [ entry ]
 # 385

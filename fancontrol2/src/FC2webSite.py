@@ -3,7 +3,6 @@ from twisted.web import resource, http
 from globals import *
 from plugin import *
 from Sensors import sensors
-from __init__ import _
 from Components.config import configfile, config
 
 import os
@@ -45,7 +44,7 @@ class FC2web(resource.Resource):
 		html += "<a href=\"/fancontrol/log\"><img border=\"0\" src=\"/fancontrol/FC2Setup.png\" width=\"100\" height=\"40\"></a></td></tr></table>\n"
 		html += "<table border=\"1\" width=\"500\" id=\"table1\">\n"
 		html += "<tr>\n"
-		html += "<td>%s: <b><font color=\"#FFCC00\">%4.1f °C</font></b></td>\n" % (_("Temperature"),FC2werte[0])
+		html += "<td>%s: <b><font color=\"#FFCC00\">%4.1f ï¿½C</font></b></td>\n" % (_("Temperature"),FC2werte[0])
 		html += "<td>%s: <font color=\"#FFCC00\"><b>%4d rpm</b></font></td>\n" % (_("Speed"),FC2werte[1])
 		html += "<td>%s: <font color=\"#FFCC00\"><b>%03d</b></font></td>\n" % (_("Voltage"),FC2werte[2])
 		html += "<td>PWM: <font color=\"#FFCC00\"><b>%03d</b></font></td>\n" % FC2werte[3]
@@ -54,7 +53,7 @@ class FC2web(resource.Resource):
 
 		html += "<table border=\"1\" width=\"500\">\n"
 		html += "<tr>\n"
-		html += "<td>%s °C</td>\n" % _("Sensors")
+		html += "<td>%s ï¿½C</td>\n" % _("Sensors")
 		templist = sensors.getSensorsList(sensors.TYPE_TEMPERATURE)
 		tempcount = len(templist)
 		for count in range(tempcount):
@@ -99,7 +98,7 @@ class FC2web(resource.Resource):
 		html += "<table border=\"1\" width=\"500\">\n"
 		html += "<tr>\n"
 		html += "<td>Version: %s </td>\n" % Version
-		html += "<td>Settings: %s-%s °C</td>\n" % (config.plugins.FanControl.temp.value,config.plugins.FanControl.tempmax.value)
+		html += "<td>Settings: %s-%s ï¿½C</td>\n" % (config.plugins.FanControl.temp.value,config.plugins.FanControl.tempmax.value)
 		html += "<td>%s-%s rpm</td>\n" % (config.plugins.FanControl.minRPM.value,config.plugins.FanControl.maxRPM.value)
 		html += "</tr>\n"
 		html += "</table>\n"

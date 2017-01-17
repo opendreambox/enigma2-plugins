@@ -21,8 +21,6 @@ from pyexpat import ExpatError
 
 from VlcFileList import VlcFileList
 from VlcPlayList import VlcPlayList
-from . import _
-
 
 class VlcMediaListScreen(Screen):
 	skin ="""

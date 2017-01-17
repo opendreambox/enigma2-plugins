@@ -4,7 +4,6 @@ from Components.ActionMap import NumberActionMap
 from Components.config import config, ConfigSubsection, ConfigInteger
 from Components.Console import Console
 from Components.Label import Label
-from Components.Language import language
 from Components.Pixmap import Pixmap
 from Components.VideoWindow import VideoWindow
 from enigma import eServiceCenter, eServiceReference, eTimer, getDesktop, loadPNG
@@ -15,7 +14,6 @@ from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
 from Tools.Directories import resolveFilename, SCOPE_SKIN_IMAGE, SCOPE_LANGUAGE, SCOPE_PLUGINS
 from Tools.LoadPixmap import LoadPixmap
-import gettext
 
 ################################################
 
@@ -29,22 +27,6 @@ config.plugins.Mosaic.countdown = ConfigInteger(default=5, limits=config_limits)
 
 playingIcon = loadPNG(resolveFilename(SCOPE_SKIN_IMAGE, 'skin_default/icons/ico_mp_play.png'))
 pausedIcon = loadPNG(resolveFilename(SCOPE_SKIN_IMAGE, 'skin_default/icons/ico_mp_pause.png'))
-
-################################################
-
-lang = language.getLanguage()
-environ["LANGUAGE"] = lang[:2]
-gettext.bindtextdomain("enigma2", resolveFilename(SCOPE_LANGUAGE))
-gettext.textdomain("enigma2")
-gettext.bindtextdomain("Mosaic", "%s%s" % (resolveFilename(SCOPE_PLUGINS), "Extensions/Mosaic/locale/"))
-
-def _(txt):
-	t = gettext.dgettext("Mosaic", txt)
-	if t == txt:
-		t = gettext.gettext(txt)
-	return t
-
-################################################
 
 class Mosaic(Screen):
 	PLAY = 0

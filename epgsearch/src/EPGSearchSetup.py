@@ -1,6 +1,4 @@
 # for localized messages  	 
-from . import _
-
 # GUI (Screens)
 from Screens.Screen import Screen
 from Components.ConfigList import ConfigListScreen

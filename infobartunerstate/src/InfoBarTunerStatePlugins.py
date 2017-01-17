@@ -24,8 +24,6 @@ from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 # Plugin framework
 import imp, inspect
 
-# Plugin internal
-from . import _
 from PluginBase import PluginBase
 
 # Constants

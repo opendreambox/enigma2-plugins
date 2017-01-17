@@ -21,7 +21,6 @@
 import commands
 from os import system
 
-from __init__ import _
 from Components.ConfigList import ConfigListScreen
 from Components.config import getConfigListEntry, config, ConfigSubsection, ConfigSelection
 from Components.ActionMap import ActionMap

@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# for localized messages     
-from . import _x
-
 from Components.GUIComponent import GUIComponent
 from Tools.FuzzyDate import FuzzyTime
 from ServiceReference import ServiceReference
@@ -441,7 +438,7 @@ class MovieList(GUIComponent):
 						self.redrawList()
 					if tinfo[0] & self.VIRT_DIR:
 						count = 0							# select VIRT_UP in sublist
-						self.MovieSelectionSelf.setTitle("%s: %s" % (_x("Series"), tinfo[2]))
+						self.MovieSelectionSelf.setTitle("%s: %s" % (_("Series"), tinfo[2]))
 					elif tinfo[0] & self.VIRT_UP:
 						rv = self.moveTo(serviceref, False)
 						return rv
@@ -595,9 +592,9 @@ class MovieList(GUIComponent):
 			for l in list:
 				if isinstance(l[3][1], str) and l[3][1][0] == "#" and l[3][1] != "#0":
 					repcnt += 1
-			s = "%d %s" % (len(list)-1, _x("Movies"))
+			s = "%d %s" % (len(list)-1, _("Movies"))
 			if repcnt:
-				s += ", %d %s" % (repcnt, _x("duplicated"))
+				s += ", %d %s" % (repcnt, _("duplicated"))
 			return s
 
 

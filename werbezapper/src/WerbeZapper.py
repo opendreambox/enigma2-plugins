@@ -1,8 +1,5 @@
 import math
 
-# for localized messages
-from . import _
-
 # GUI (Screens)
 from Screens.ChoiceBox import ChoiceBox
 from Screens.MessageBox import MessageBox

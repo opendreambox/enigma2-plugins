@@ -1,8 +1,5 @@
 from __future__ import print_function
 
-# for localized messages
-from . import _
-
 from enigma import eTimer
 
 from Screens.Screen import Screen

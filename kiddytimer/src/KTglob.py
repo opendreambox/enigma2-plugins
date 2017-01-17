@@ -1,4 +1,3 @@
-from __init__ import _
 from Components.config import config
 import time
 

@@ -20,23 +20,7 @@ from enigma import eTimer, eListbox, gFont, eListboxPythonMultiContent, \
 from socket import *
 import xml.dom.minidom
 
-from Components.Language import language
 from os import environ as os_environ
-import gettext
-
-def localeInit():
-	lang = language.getLanguage()[:2] # getLanguage returns e.g. "fi_FI" for "language_country"
-	os_environ["LANGUAGE"] = lang # Enigma doesn't set this (or LC_ALL, LC_MESSAGES, LANG). gettext needs it!
-	gettext.bindtextdomain("EIBox", resolveFilename(SCOPE_PLUGINS, "Extensions/EIBox/locale"))
-
-def _(txt):
-	t = gettext.dgettext("EIBox", txt)
-	if t == txt:
-		t = gettext.gettext(txt)
-	return t
-
-localeInit()
-language.addCallback(localeInit)
 
 config.eib = ConfigSubsection()
 config.eib.xmlfile = ConfigText(default="design.xml")
@@ -528,7 +512,8 @@ class EIBox(Screen, ConfigListScreen):
 
 	def __init__(self, session, args = None):		
 		Screen.__init__(self, session)
-
+		self.setup_title = "E.I.B.ox"
+		ConfigListScreen.__init__(self, [], session)
 		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "DirectionActions"], 
 		{
 			"cancel": self.close,

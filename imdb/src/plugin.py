@@ -1,6 +1,4 @@
 ﻿# -*- coding: UTF-8 -*-
-from . import _
-
 from Plugins.Plugin import PluginDescriptor
 from Tools.Downloader import downloadWithProgress
 from enigma import ePicLoad, eServiceReference

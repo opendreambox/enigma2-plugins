@@ -7,42 +7,20 @@ from Components.config import config, ConfigSubsection, ConfigText, ConfigYesNo,
 from Components.ConfigList import ConfigListScreen
 from Components.Console import Console as eConsole
 from Components.Label import Label
-from Components.Language import language
 from Components.MenuList import MenuList
 from Components.MultiContent import MultiContentEntryText, MultiContentEntryProgress
 from Components.Scanner import Scanner, ScanPath
 from enigma import eListboxPythonMultiContent, eTimer, gFont, RT_HALIGN_CENTER
 from fcntl import ioctl
 from Plugins.Plugin import PluginDescriptor
-from Screens.Console import Console as ConsoleScreen
 from Screens.LocationBox import LocationBox
 from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
 from Screens.VirtualKeyBoard import VirtualKeyBoard
 from time import time
 from Tools.BoundFunction import boundFunction
-from Tools.Directories import fileExists, resolveFilename, SCOPE_LANGUAGE, SCOPE_PLUGINS
-import gettext, os, stat
-
-#################################################
-
-def localeInit():
-	lang = language.getLanguage()
-	os.environ["LANGUAGE"] = lang[:2]
-	gettext.bindtextdomain("enigma2", resolveFilename(SCOPE_LANGUAGE))
-	gettext.textdomain("enigma2")
-	gettext.bindtextdomain("DVDBackup", "%s%s" % (resolveFilename(SCOPE_PLUGINS), "Extensions/DVDBackup/locale/"))
-
-def _(txt):
-	t = gettext.dgettext("DVDBackup", txt)
-	if t == txt:
-		t = gettext.gettext(txt)
-	return t
-
-localeInit()
-language.addCallback(localeInit)
-
-#################################################
+from Tools.Directories import fileExists
+import os, stat
 
 config.plugins.DVDBackup = ConfigSubsection()
 config.plugins.DVDBackup.device = ConfigText(default="/dev/sr0", fixed_size=False)

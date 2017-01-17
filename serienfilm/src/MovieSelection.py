@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-# for localized messages     
-from . import _x
-
 from Screens.Screen import Screen
 from Components.Button import Button
 from Components.ActionMap import HelpableActionMap, ActionMap
@@ -31,7 +28,7 @@ from SerienFilm import EpiSepCfg
 config.movielist.sfmoviesort = ConfigInteger(default=MovieList.SORT_RECORDED)
 config.movielist.sflisttype = ConfigInteger(default=MovieList.LISTTYPE_MINIMAL)
 config.movielist.sftimes = ConfigInteger(default=MovieList.SHOW_DURATION | MovieList.SHOW_DIRECTORIES)
-config.movielist.sftitle_episode_separator = ConfigText(default=_x(": "))
+config.movielist.sftitle_episode_separator = ConfigText(default=_(": "))
 
 def setPreferredTagEditor(te):
 	global preferredTagEditor
@@ -69,30 +66,29 @@ class MovieContextMenu(Screen):
 		menu.extend([(p.description, boundFunction(self.execPlugin, p)) for p in plugins.getPlugins(PluginDescriptor.WHERE_MOVIELIST)])
 
 		if config.movielist.sfmoviesort.value == MovieList.SORT_ALPHANUMERIC:
-			menu.append((_x("sort by date  (quick toggle by key 0)"), boundFunction(self.sortBy, MovieList.SORT_RECORDED)))
+			menu.append((_("sort by date  (quick toggle by key 0)"), boundFunction(self.sortBy, MovieList.SORT_RECORDED)))
 		else:
-			menu.append((_x("alphabetic sort  (quick toggle by key 0)"), boundFunction(self.sortBy, MovieList.SORT_ALPHANUMERIC)))
-		
-		menu.extend((
-			(_x("list style elaborately"), boundFunction(self.listType, MovieList.LISTTYPE_ORIGINAL)),
-			(_x("list style compact with service  (quick toggle by key 8)"), boundFunction(self.listType, MovieList.LISTTYPE_COMPACT_SERVICE)),
-			(_x("list style compact with tags  (quick toggle by key 8)"), boundFunction(self.listType, MovieList.LISTTYPE_COMPACT_TAGS)),
-			(_x("list style single line  (key = service, 8 = tags)"), boundFunction(self.listType, MovieList.LISTTYPE_MINIMAL))
-		))
+			menu.append((_("alphabetic sort  (quick toggle by key 0)"), boundFunction(self.sortBy, MovieList.SORT_ALPHANUMERIC)))
 
+		menu.extend((
+			(_("list style elaborately"), boundFunction(self.listType, MovieList.LISTTYPE_ORIGINAL)),
+			(_("list style compact with service  (quick toggle by key 8)"), boundFunction(self.listType, MovieList.LISTTYPE_COMPACT_SERVICE)),
+			(_("list style compact with tags  (quick toggle by key 8)"), boundFunction(self.listType, MovieList.LISTTYPE_COMPACT_TAGS)),
+			(_("list style single line  (key = service, 8 = tags)"), boundFunction(self.listType, MovieList.LISTTYPE_MINIMAL))
+		))
 		if config.movielist.sftimes.value & MovieList.SHOW_RECORDINGTIME:
-			menu.append((_x("hide recordingtime"), boundFunction(self.showTimes, MovieList.SHOW_RECORDINGTIME)))
+			menu.append((_("hide recordingtime"), boundFunction(self.showTimes, MovieList.SHOW_RECORDINGTIME)))
 		else:
-			menu.append((_x("show recordingtime"), boundFunction(self.showTimes, MovieList.SHOW_RECORDINGTIME)))
+			menu.append((_("show recordingtime"), boundFunction(self.showTimes, MovieList.SHOW_RECORDINGTIME)))
 		if config.movielist.sftimes.value & MovieList.SHOW_DURATION:
-			menu.append((_x("hide duration"), boundFunction(self.showTimes, MovieList.SHOW_DURATION)))
+			menu.append((_("hide duration"), boundFunction(self.showTimes, MovieList.SHOW_DURATION)))
 		else:
-			menu.append((_x("show duration"), boundFunction(self.showTimes, MovieList.SHOW_DURATION)))
-		menu.append((_x("Configuration of the title:episode separator"), boundFunction(self.sfconfigure, None)))
+			menu.append((_("show duration"), boundFunction(self.showTimes, MovieList.SHOW_DURATION)))
+		menu.append((_("Configuration of the title:episode separator"), boundFunction(self.sfconfigure, None)))
 		if config.movielist.sftimes.value & MovieList.SHOW_DIRECTORIES:
-			menu.append((_x("hide the red real directories"), boundFunction(self.showTimes, MovieList.SHOW_DIRECTORIES)))
+			menu.append((_("hide the red real directories"), boundFunction(self.showTimes, MovieList.SHOW_DIRECTORIES)))
 		else:
-			menu.append((_x("show real directories in red"), boundFunction(self.showTimes, MovieList.SHOW_DIRECTORIES)))
+			menu.append((_("show real directories in red"), boundFunction(self.showTimes, MovieList.SHOW_DIRECTORIES)))
 
 		self["menu"] = MenuList(menu)
 
@@ -146,9 +142,9 @@ class MovieContextMenu(Screen):
 			self.virtlist = self.csel["list"].getVirtDirList(name)
 			if self.virtlist:
 				self.session.openWithCallback(self.deleteVirtDirConfirmed, MessageBox,
-					_x("Do you really want to delete series\n  %s\nwith %d movies?") % (self.virtlist[0][3][3], len(self.virtlist)-1))
+					_("Do you really want to delete series\n  %s\nwith %d movies?") % (self.virtlist[0][3][3], len(self.virtlist)-1))
 			else:
-				self.session.openWithCallback(self.close, MessageBox, _x("Please delete the files in this Directory!"), MessageBox.TYPE_ERROR)
+				self.session.openWithCallback(self.close, MessageBox, _("Please delete the files in this Directory!"), MessageBox.TYPE_ERROR)
 			return
 		dsc = info and info.getInfoString(self.service, iServiceInformation.sDescription)
 		result = False
@@ -289,11 +285,11 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo):
 
 		self["NumberActions"] = HelpableActionMap(self, "SetupActions",
 			{
-				"0": (self.toggleSort, _x("Toggle date / alphabetic sort mode")),
-				"deleteBackward": (self.moveToIndexStrt, _x("Jump to listbegin")),
-				"deleteForward": (self.moveToIndexEnd, _x("Jump to listend")),
-				"5": (self.toggleMinimal, _x("Toggle style minimal / compact")),
-				"8": (self.toggleTags, _x("Toggle description / tags display")),
+				"0": (self.toggleSort, _("Toggle date / alphabetic sort mode")),
+				"deleteBackward": (self.moveToIndexStrt, _("Jump to listbegin")),
+				"deleteForward": (self.moveToIndexEnd, _("Jump to listend")),
+				"5": (self.toggleMinimal, _("Toggle style minimal / compact")),
+				"8": (self.toggleTags, _("Toggle description / tags display")),
 			})
 
 

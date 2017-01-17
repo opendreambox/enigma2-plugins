@@ -31,8 +31,6 @@ from Components.config import getConfigListEntry
 from Screens.Screen import Screen
 from YouTubeInterface import YouTubeUser
 
-from . import _
-
 # This should be executed only once during an enigma2-session
 config.plugins.youtubeplayer = ConfigSubsection()
 config.plugins.youtubeplayer.serverprofile = ConfigText("", False)
