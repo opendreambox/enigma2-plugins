@@ -55,11 +55,6 @@ Makefile
 3dsettings/meta/Makefile
 3dsettings/src/Makefile
 
-advhdmi/Makefile
-advhdmi/meta/Makefile
-advhdmi/po/Makefile
-advhdmi/src/Makefile
-
 aihdcontroler/Makefile
 aihdcontroler/meta/Makefile
 aihdcontroler/src/Makefile
