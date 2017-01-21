@@ -203,6 +203,14 @@ class VideoUrlRequest(object):
 	KEY_ENTRIES = u"entries"
 	KEY_FORMATS = u"formats"
 
+	_format_prio = "/".join(VIDEO_FMT_PRIORITY_MAP.itervalues())
+	_ytdl = YoutubeDL(params={
+			"youtube_include_dash_manifest": False,
+			"format" : _format_prio,
+			"nocheckcertificate" : True,
+			"noplaylist" : False
+		})
+
 	@staticmethod
 	def isHls(format):
 		return format >= 91 and format <= 96
@@ -218,10 +226,9 @@ class VideoUrlRequest(object):
 			self._request()
 
 	def _request(self):
+		ie_key = "YoutubeLive" if "live" in self._baseurl.lower() else "Youtube"
 		try:
-			format_prio = "/".join(self.VIDEO_FMT_PRIORITY_MAP.itervalues())
-			ytdl = YoutubeDL(params={"youtube_include_dash_manifest": False, "format" : format_prio, "nocheckcertificate" : True})
-			result = ytdl.extract_info(self._baseurl, download=False)
+			result = self._ytdl.extract_info(self._baseurl, ie_key=ie_key, download=False, process=True)
 			if self.KEY_ENTRIES in result: # Can be a playlist or a list of videos
 				entry = result[self.KEY_ENTRIES][0] #TODO handle properly
 			else:# Just a video
