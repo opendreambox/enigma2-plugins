@@ -259,6 +259,9 @@ class EPGRefresh:
 			else:
 				return False
 		self.doStopRunningRefresh = True
+		# stopping the refresh only has an effect when nextService() is still called which is not necessarily happening when signal-based method is used. So, just call it
+		if config.plugins.epgrefresh.usetimebased.value == False:
+			self.nextService()
 
 	def start(self, session = None):
 		if session is not None:
@@ -405,6 +408,8 @@ class EPGRefresh:
 		config.plugins.epgrefresh.lastscan.value = int(time())
 		config.plugins.epgrefresh.lastscan.save()
 		self.doStopRunningRefresh = False
+		# stop the epgTimeoutTimer - just in case one is running
+		self.epgTimeoutTimer.stop()
 		
 		try:
 			from plugin import AdjustExtensionsmenu, housekeepingExtensionsmenu, extStopDescriptor, extPendingServDescriptor
