@@ -1,2 +1,0 @@
-Description: Enigma2 Plugin to search and play YouTube Movies
-Depends: enigma2, enigma2-plugin-extensions-vlcplayer, python-twisted-web, python-gdata, python-misc, python-textutils

@@ -120,7 +120,6 @@ SUBDIRS = \
 	webbouqueteditor \
 	webinterface \
 	werbezapper \
-	youtubeplayer \
 	yttrailer \
 	zaphistorybrowser \
 	zapstatistic \
