@@ -14,7 +14,7 @@ class MyTubePlayer(Screen, InfoBarNotifications, InfoBarSeek):
 	ALLOW_SUSPEND = True
 
 	skin = """<screen name="MyTubePlayer" position="0,540" size="1280,150" backgroundColor="transparent" flags="wfNoBorder">
-		<ePixmap pixmap="menu/mediacenter.png" position="40,60" zPosition="1" size="70,70" alphatest="on"/>
+		<ePixmap pixmap="menu/mediacenter.svg" position="40,60" zPosition="1" size="70,70" alphatest="on"/>
 		<ePixmap position="0,0" pixmap="skin_default/infobar.png" size="1280,150" zPosition="-1" />
 		<ePixmap pixmap="skin_default/icons/icon_event.png" position="120,17" size="20,13" alphatest="on" />
 		<widget source="session.CurrentService" render="Label" position="150,9" size="760,27" font="Regular;24" valign="top" noWrap="1" backgroundColor="#263c59" transparent="1">
