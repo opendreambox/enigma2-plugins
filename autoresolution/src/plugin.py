@@ -143,7 +143,7 @@ class AutoRes(Screen):
 			for mode in resolutions:
 				if have_2160p:
 					if mode[0].startswith('p2160'):
-						choices = ['2160p24', '2160p25', '2160p30'] + preferedmodes
+						choices = ['2160p24', '2160p25', '2160p30', '1080p24', '1080p25', '1080p30'] + preferedmodes
 					elif mode[0].startswith('p1080_24'):
 						choices = ['1080p24', '2160p24'] + preferedmodes
 					elif mode[0].startswith('p1080'):
