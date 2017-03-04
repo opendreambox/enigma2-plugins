@@ -53,8 +53,8 @@ class SatIPTuner(object):
 
 class SatIPTunerOverview(Screen):
 	skin = """
-		<screen name="SatIPTunerOverview" position="center,center" size="560,400" title="Sat>IP Tuner Overview">
-			<widget name="list" position="5,5" size="550,390" scrollbarMode="showOnDemand" zPosition="1"/>
+		<screen name="SatIPTunerOverview" position="center,120" size="720,520" title="Sat>IP Tuner Overview">
+			<widget name="list" position="5,5" size="510,510" scrollbarMode="showOnDemand" zPosition="1"/>
 		</screen>
 	"""
 	def __init__(self, session):
