@@ -947,6 +947,7 @@ class Merlin_PGd(Screen):
 	def removeTimer(self, timer):
 		timer.afterEvent = AFTEREVENT.NONE
 		self.session.nav.RecordTimer.removeEntry(timer)
+		self["epg_list"+str(self.ActiveEPG)].rebuild()
 
 	def finishedAdd(self, answer):
 		if answer[0]:
