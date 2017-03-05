@@ -117,7 +117,7 @@ class SatIPTunerSetup(Screen):
 				choices.append((type, tuner))
 		if choices:
 			if len(choices) == 1:
-				self._addTuner(tuner.host, mapped_type)
+				self._onModulationTypeSelected(choices[0])
 				return
 			self.session.openWithCallback(
 					self._onModulationTypeSelected,
@@ -132,8 +132,8 @@ class SatIPTunerSetup(Screen):
 	def _onModulationTypeSelected(self, choice):
 		if choice:
 			type, tuner = choice
-			type = TunerEntry.MAP_FROM_DLNA.get(type)
-			self._addTuner(tuner.host, type)
+			mapped_type = TunerEntry.MAP_FROM_DLNA.get(type)
+			self._addTuner(tuner.host, mapped_type)
 
 	def _addTuner(self, host, type):
 		self._changed = True
