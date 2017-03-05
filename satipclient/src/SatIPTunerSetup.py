@@ -89,7 +89,7 @@ class SatIPTunerSetup(Screen):
 	def _remove(self):
 		current = self["list"].getCurrent()
 		Log.w(current)
-		if current:
+		if current and len(current) == 3:
 			text, tunerEntry, index = current
 			if vtunerClientConfig.removeTuner(index, tunerEntry):
 				self._changed = True
