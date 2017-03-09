@@ -1,2 +1,2 @@
 Description: E2 Weather Plugin
-Depends: enigma2, python-twisted-web
+Depends: enigma2, python-twisted-web, python-json

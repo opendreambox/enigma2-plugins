@@ -49,8 +49,7 @@ class MSNWeather(Source):
 		if weathermsn.weatherData.weatherItems.has_key(skey):
 			item = weathermsn.weatherData.weatherItems[skey]
 			if item.observationtime != "":
-				c =  time.strptime(item.observationtime, "%H:%M:%S")
-				return  time.strftime("%H:%M",c)
+				return  item.observationtime
 			else:
 				return _("n/a")
 		else:
@@ -152,8 +151,8 @@ class MSNWeather(Source):
 			skey = "1"
 		if weathermsn.weatherData.weatherItems.has_key(skey):
 			item = weathermsn.weatherData.weatherItems[skey]
-			c = time.strptime(item.date,"%Y-%m-%d")
-			return time.strftime("%d. %b",c)
+			c = time.strptime(item.date,"%d %m %Y")
+			return time.strftime("%d.%m",c)
 		else:
 			return _("n/a")
 			

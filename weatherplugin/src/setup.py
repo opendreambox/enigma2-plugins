@@ -29,10 +29,10 @@ from Components.ActionMap import ActionMap
 from Components.ConfigList import ConfigList, ConfigListScreen
 from Components.config import ConfigSubsection, ConfigText, ConfigSelection, \
 	getConfigListEntry, config, configfile
-from xml.etree.cElementTree import fromstring as cet_fromstring
 from twisted.web.client import getPage
 from urllib import quote as urllib_quote
 from skin import TemplatedListFonts, componentSizes
+import json
 
 def initWeatherPluginEntryConfig():
 	s = ConfigSubsection()
@@ -214,13 +214,8 @@ class MSNWeatherPluginEntryConfigScreen(ConfigListScreen, Screen):
 		
 	def searchLocation(self):
 		if self.current.city.value != "":
-			language = config.osd.language.value.replace("_","-")
-			if language == "en-EN": # hack
-				language = "en-US"
-			elif language == "no-NO": # hack
-				language = "nn-NO"
-			url = "http://weather.service.msn.com/find.aspx?src=outlook&outputview=search&weasearchstr=%s&culture=%s" % (urllib_quote(self.current.city.value), language)
-			getPage(url).addCallback(self.xmlCallback).addErrback(self.error)
+			url = "http://query.yahooapis.com/v1/public/yql?q=select+*+from+geo.places+where+text='%s'&format=json" % (urllib_quote(self.current.city.value))
+			getPage(url).addCallback(self.jsonCallback).addErrback(self.error)
 		else:
 			self.session.open(MessageBox, _("You need to enter a valid city name before you can search for the location code."), MessageBox.TYPE_ERROR)
 
@@ -262,18 +257,15 @@ class MSNWeatherPluginEntryConfigScreen(ConfigListScreen, Screen):
 		self.close()
 		
 		
-	def xmlCallback(self, xmlstring):
-		if xmlstring:
-			errormessage = ""
-			root = cet_fromstring(xmlstring)
-			for childs in root:
-				if childs.tag == "weather" and childs.attrib.has_key("errormessage"):
-					errormessage = childs.attrib.get("errormessage").encode("utf-8", 'ignore')
-					break
-			if len(errormessage) !=0:
+	def jsonCallback(self, jsonstring):
+		if jsonstring:
+			response = json.loads(jsonstring)
+			if 'error' in response:
+				data = response['error']
+				errormessage = data['description']
 				self.session.open(MessageBox, errormessage, MessageBox.TYPE_ERROR)					
 			else:
-				self.session.openWithCallback(self.searchCallback, MSNWeatherPluginSearch, xmlstring)
+				self.session.openWithCallback(self.searchCallback, MSNWeatherPluginSearch, response)
 			
 	def error(self, error = None):
 		if error is not None:
@@ -297,9 +289,9 @@ class MSNWeatherPluginSearch(Screen):
 	    	<widget name="entrylist" position="10,60" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>""" 
 
-	def __init__(self, session, xmlstring):
+	def __init__(self, session, response):
 		Screen.__init__(self, session)
-		self.title = _("MSN location search result")
+		self.title = _("Yahoo location search result")
 		self["key_red"] = StaticText(_("Back"))
 		self["key_green"] = StaticText(_("OK"))		
 		self["entrylist"] = MSNWeatherPluginSearchResultList([])
@@ -310,10 +302,10 @@ class MSNWeatherPluginSearch(Screen):
 			 "back"	:	self.keyClose,
 			 "red": self.keyClose,
 			 }, -1)
-		self.updateList(xmlstring)
+		self.updateList(response)
 
-	def updateList(self, xmlstring):
-		self["entrylist"].buildList(xmlstring)
+	def updateList(self, response):
+		self["entrylist"].buildList(response)
 
 	def keyClose(self):
 		self.close(None)
@@ -343,27 +335,41 @@ class MSNWeatherPluginSearchResultList(MenuList):
 	def getCurrentIndex(self):
 		return self.instance.getCurrentIndex()
 
-	def buildList(self, xml):
+	def buildList(self, response):
 		sizes = componentSizes[MSNWeatherPluginSearchResultList.SKIN_COMPONENT_KEY]
 		textHeight = sizes.get(MSNWeatherPluginSearchResultList.SKIN_COMPONENT_TEXT_HEIGHT, 23)
 		textWidth = sizes.get(MSNWeatherPluginSearchResultList.SKIN_COMPONENT_TEXT_WIDTH, 500)
 		lineSpacing = sizes.get(MSNWeatherPluginSearchResultList.SKIN_COMPONENT_LINE_SPACING, 2)
-		root = cet_fromstring(xml)
+		data = []
+		count = response["query"]["count"]
+		if count > 1:
+			data = response["query"]["results"]["place"]
+		elif count == 1:
+			data.append(response["query"]["results"]["place"])
 		searchlocation = ""
 		searchresult = ""
 		weatherlocationcode = ""
 		list = []
-		for childs in root:
-			if childs.tag == "weather":
-				searchlocation = childs.attrib.get("weatherlocationname").encode("utf-8", 'ignore')
-				searchresult = childs.attrib.get("weatherfullname").encode("utf-8", 'ignore')
-				weatherlocationcode = childs.attrib.get("weatherlocationcode").encode("utf-8", 'ignore')
-				res = [
-					(weatherlocationcode, searchlocation),
-					(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, textWidth, textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, searchlocation),
-					(eListboxPythonMultiContent.TYPE_TEXT, 5, textHeight+lineSpacing, textWidth, textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, searchresult),
-				]
-				list.append(res)
+		for item in data:
+			searchresult = ""
+			name = item["name"].encode("utf-8", 'ignore')
+			if 'admin1' in item:
+				admin1 = item['admin1']
+				if admin1:
+					name = "%s, %s" % (name, admin1["code"].encode("utf-8", 'ignore'))
+					searchresult = admin1["content"].encode("utf-8", 'ignore')
+			if 'admin2' in item:
+				admin2 = item['admin2']
+				if admin2:
+					searchresult = searchresult + " (" + admin2["content"].encode("utf-8", 'ignore') + ")"
+			searchlocation = name
+			weatherlocationcode = item["woeid"].encode("utf-8", 'ignore')
+			res = [
+				(weatherlocationcode, searchlocation),
+				(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, textWidth, textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, searchlocation),
+				(eListboxPythonMultiContent.TYPE_TEXT, 5, textHeight+lineSpacing, textWidth, textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, searchresult),
+			]
+			list.append(res)
 		self.list = list
 		self.l.setList(list)
 		self.moveToIndex(0)

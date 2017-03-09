@@ -583,6 +583,7 @@ vps/src_py/WebComponents/Sources/Makefile
 weatherplugin/Makefile
 weatherplugin/meta/Makefile
 weatherplugin/src/Makefile
+weatherplugin/src/weather_icons/Makefile
 
 weathercomponent/Makefile
 weathercomponent/src/Makefile
