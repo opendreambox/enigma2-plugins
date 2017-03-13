@@ -28,9 +28,12 @@ from Components.ServiceEventTracker import ServiceEventTracker
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
-from enigma import iPlayableService, iServiceInformation, eServiceCenter, eServiceReference, eDBoxLCD
+
+from enigma import iPlayableService, iServiceInformation, eServiceCenter, eServiceReference, eDBoxLCD, getDesktop
 from ServiceReference import ServiceReference
-from os.path import basename as os_basename
+from os.path import basename as os_basename, exists
+
+proc_stb_fb_3d_support = exists("/proc/stb/fb/primary/3d")
 
 THREE_D_OFF = 0
 THREE_D_SIDE_BY_SIDE = 1
@@ -42,10 +45,16 @@ modes = {	THREE_D_OFF: "off",
 reversemodes = dict((value, key) for key, value in modes.iteritems())
 
 def setZOffset(configElement):
-	open("/proc/stb/fb/primary/zoffset", "w").write(str(configElement.value))
+	if proc_stb_fb_3d_support:
+		open("/proc/stb/fb/primary/zoffset", "w").write(str(configElement.value))
+	else:
+		getDesktop(0).set3dOffset(configElement.value)
 
 def getmode():
-	mode = reversemodes.get(open("/proc/stb/fb/primary/3d", "r").read().strip(), None)
+	if proc_stb_fb_3d_support:
+		mode = reversemodes.get(open("/proc/stb/fb/primary/3d", "r").read().strip(), None)
+	else:
+		mode = getDesktop(0).get3dMode()
 	return mode
 
 def toggleDisplay(configElement):
@@ -77,7 +86,10 @@ config.plugins.threed.autothreed = ConfigSelection(default="0", choices = [("0",
 def switchmode(mode):
 	if mode in modes.keys():
 		print "[3D Settings] switching to mode ", mode
-		open("/proc/stb/fb/primary/3d", "w").write(modes[mode])
+		if proc_stb_fb_3d_support:
+			open("/proc/stb/fb/primary/3d", "w").write(modes[mode])
+		else:
+			getDesktop(0).set3dMode(mode)
 		AutoThreeD.instance.setLastMode(mode)
 		disp = eDBoxLCD.getInstance()
 		if disp and disp.detected(): # display found, update it
