@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tuxbox-enigma 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-17 13:43+0100\n"
-"PO-Revision-Date: 2016-01-19 12:16+0000\n"
-"Last-Translator: system user <>\n"
+"POT-Creation-Date: 2017-03-10 10:40+0100\n"
+"PO-Revision-Date: 2016-10-06 22:04+0000\n"
+"Last-Translator: ppteam <ppteam.translation@digsat.net>\n"
 "Language-Team: none\n"
 "Language: no\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.7\n"
 "X-Poedit-SourceCharset: iso-8859-15\n"
-"X-POOTLE-MTIME: 1453205760.000000\n"
+"X-POOTLE-MTIME: 1475791488.000000\n"
 
 #: permanenttimeshift/src/plugin.py:1040
 msgid ""
@@ -252,12 +252,12 @@ msgid "%d kb/s"
 msgstr "%d kb/s"
 
 #
-#: easyinfo/src/plugin.py:723 seriesplugin/src/SeriesPluginInfoScreen.py:355
+#: easyinfo/src/plugin.py:725 seriesplugin/src/SeriesPluginInfoScreen.py:355
 #, python-format
 msgid "%d min"
 msgstr "%d min"
 
-#: epgrefresh/src/EPGRefresh.py:633
+#: epgrefresh/src/EPGRefresh.py:641
 #, python-format
 msgid "%d more services"
 msgstr "%d flere kanaler"
@@ -506,11 +506,11 @@ msgstr "."
 msgid "01:00"
 msgstr "01:00"
 
-#: fritzcall/src/plugin.py:109
+#: fritzcall/src/plugin.py:108
 msgid "05.29 until below 6.35"
 msgstr "05.29 until below 6.35"
 
-#: fritzcall/src/plugin.py:109
+#: fritzcall/src/plugin.py:108
 msgid "06.35 and newer"
 msgstr "06.35 and newer"
 
@@ -670,8 +670,9 @@ msgid "720p"
 msgstr "720p"
 
 #: serienfilm/src/MovieSelection.py:31 serienfilm/src/SerienFilm.py:49
+#, fuzzy
 msgid ": "
-msgstr ""
+msgstr ": "
 
 #: antiscrollbar/src/plugin.py:116
 msgid ": Main Setup"
@@ -810,10 +811,6 @@ msgstr ""
 "API nøkkel for tilgang til Flickr. Du kan be om en ved å logge deg på Flickr "
 "igjennom din datamaskin."
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:91
-msgid "Abkhazian"
-msgstr "Abkhazian"
-
 #: partnerbox/src/plugin.py:1901 dvdbackup/src/plugin.py:226
 msgid "Abort"
 msgstr "Avbryt"
@@ -836,8 +833,8 @@ msgstr "Om"
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:372 fritzcall/src/plugin.py:2552
-#: fritzcall/src/plugin.py:2583
+#: fritzcall/src/plugin.py:371 fritzcall/src/plugin.py:2551
+#: fritzcall/src/plugin.py:2582
 msgid "About FritzCall"
 msgstr "Om FritzCall"
 
@@ -879,7 +876,7 @@ msgid "Activate VPS"
 msgstr "Aktiver VPS"
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:893 fritzcall/src/plugin.py:1102
+#: fritzcall/src/plugin.py:892 fritzcall/src/plugin.py:1101
 msgid "Activate WLAN guest access"
 msgstr "Aktiver WLAN gjestetilgang"
 
@@ -933,8 +930,8 @@ msgstr "ActiveTimerPushed"
 #
 #: partnerbox/src/PartnerboxSetup.py:129 pipservicerelation/src/plugin.py:87
 #: merlinepgcenter/src/MerlinEPGCenter.py:1295
-#: ftpbrowser/src/FTPServerManager.py:256 satipclient/src/SatIPTunerSetup.py:39
-#: advhdmi/src/AdvHdmiCecSetup.py:212 teletext/src/plugin.py:1713
+#: ftpbrowser/src/FTPServerManager.py:256 satipclient/src/SatIPTunerSetup.py:31
+#: teletext/src/plugin.py:1713
 #: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:140
 #: weatherplugin/src/setup.py:76 autotimer/src/AutoTimerOverview.py:71
 #: trackautoselect/src/TrackAutoselectSetup.py:157
@@ -1050,18 +1047,14 @@ msgstr "Legg til oppføring"
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a help text
 #. TRANSLATORS: this is a window title.
-#: ncidclient/src/plugin.py:601 fritzcall/src/plugin.py:2138
-#: fritzcall/src/plugin.py:2337
+#: ncidclient/src/plugin.py:601 fritzcall/src/plugin.py:2137
+#: fritzcall/src/plugin.py:2336
 msgid "Add entry to phonebook"
 msgstr "Legg til oppføring i telefonbok"
 
 #: autotimer/src/AutoTimerOverview.py:99
 msgid "Add new AutoTimer"
 msgstr "Legg til ny Auto Timer"
-
-#: youtubeplayer/src/YouTubePlayList.py:55
-msgid "Add new Playlist"
-msgstr "Legg til ny spilleliste"
 
 #: movietagger/src/plugin.py:266
 msgid "Add new Tag"
@@ -1114,7 +1107,7 @@ msgstr "Merk innspillinger"
 #: partnerbox/src/plugin.py:986 partnerbox/src/plugin.py:1045
 #: merlinepgcenter/src/MerlinEPGCenter.py:1318
 #: merlinepgcenter/src/MerlinEPGCenter.py:1326 epgsearch/src/EPGSearch.py:151
-#: easyinfo/src/plugin.py:737
+#: easyinfo/src/plugin.py:739
 msgid "Add timer"
 msgstr "Legg til timer"
 
@@ -1122,15 +1115,9 @@ msgstr "Legg til timer"
 msgid "Add timer as disabled on conflict"
 msgstr "Sett timer som deaktivert ved konflikt"
 
-#: youtubeplayer/src/YouTubeList.py:627 youtubeplayer/src/YouTubeList.py:652
-#: youtubeplayer/src/YouTubeList.py:692 mytube/src/plugin.py:533
+#: mytube/src/plugin.py:533
 msgid "Add to favorites"
 msgstr "Legg til i favoritter"
-
-#: youtubeplayer/src/YouTubeList.py:632 youtubeplayer/src/YouTubeList.py:657
-#: youtubeplayer/src/YouTubeList.py:696
-msgid "Add to playlist"
-msgstr "Legg til i spilleliste"
 
 #: autotimer/src/AutoTimerEditor.py:513
 msgid "Add zap timer instead of record timer?"
@@ -1139,10 +1126,6 @@ msgstr "Legg til zap timer i stedet for inspillings timer?"
 #: easymedia/src/plugin.py:253
 msgid "Add/remove plugin"
 msgstr "Legg til/fjern plugin"
-
-#: youtubeplayer/src/YouTubeList.py:103
-msgid "Added"
-msgstr "Lagt til"
 
 #: mytube/src/plugin.py:1159 mytube/src/plugin.py:1387
 msgid "Added: "
@@ -1183,30 +1166,9 @@ msgstr "Juster kanalnavn kolonnebredde:"
 msgid "Adjustment value"
 msgstr "Justeringsverdi"
 
-#: advhdmi/src/AdvHdmiCecSetup.py:142
-msgid "Advanced HDMI-Cec Control"
-msgstr "Avansert HDMI-Cec kontroll"
-
-#: advhdmi/src/plugin.py:166 advhdmi/src/AdvHdmiCecSetup.py:85
-#: advhdmi/src/AdvHdmiCecSetup.py:368
-msgid "Advanced HDMI-Cec Setup"
-msgstr "Avansert HDMI-Cec oppsett"
-
 #: moviecut/src_py/plugin.py:40
 msgid "Advanced cut specification..."
 msgstr "Avansert kuttspesifikasjon..."
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:90
-msgid "Afan (Oromo)"
-msgstr "Afan (Oromo)"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:92
-msgid "Afar"
-msgstr "Afar"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:93
-msgid "Afrikaans"
-msgstr "Afrikansk"
 
 #: startuptostandby/meta/plugin_startuptostandby.xml./startuptostandby/meta/plugin_startuptostandby.xml
 msgid ""
@@ -1246,10 +1208,6 @@ msgstr "Alder"
 msgid "Ai.HD skin-style control plugin"
 msgstr "Ai.HD skin-style kontroll plugin"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:94
-msgid "Albanian"
-msgstr "Albansk"
-
 #
 #: ecasa/src/EcasaGui.py:476
 msgid "Album"
@@ -1279,11 +1237,9 @@ msgstr "Album fra"
 
 #
 #. TRANSLATORS: keep it short, this is a button
-#: serienfilm/src/MovieSelection.py:252
-#: youtubeplayer/src/YouTubeSearchDialog.py:57
-#: youtubeplayer/src/YouTubeSearchDialog.py:89 mytube/src/plugin.py:67
+#: serienfilm/src/MovieSelection.py:252 mytube/src/plugin.py:67
 #: emission/src/EmissionOverview.py:150 emission/src/EmissionOverview.py:303
-#: emission/src/EmissionOverview.py:310 fritzcall/src/plugin.py:1343
+#: emission/src/EmissionOverview.py:310 fritzcall/src/plugin.py:1342
 #: webinterface/src/WebComponents/Sources/Strings.py:31
 msgid "All"
 msgstr "Alle"
@@ -1308,7 +1264,7 @@ msgstr "Alle bilder"
 msgid "All Songs"
 msgstr "Alle sanger"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:45 mytube/src/plugin.py:54
+#: mytube/src/plugin.py:54
 msgid "All Time"
 msgstr "Alltid"
 
@@ -1316,7 +1272,7 @@ msgstr "Alltid"
 msgid "All Timers"
 msgstr "Alle timere"
 
-#: fritzcall/src/plugin.py:179
+#: fritzcall/src/plugin.py:178
 msgid "All calls"
 msgstr "Alle oppringinger"
 
@@ -1377,10 +1333,6 @@ msgstr "Alltid lagre konfigurasjon"
 #: ofdb/src/plugin.py:202
 msgid "Ambiguous results"
 msgstr "Tvetydige resultater"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:95
-msgid "Amharic"
-msgstr "Etiopisk"
 
 #: autotimer/src/AutoTimerEditor.py:613
 msgid "Amount of recordings left"
@@ -1444,15 +1396,15 @@ msgstr "Legg fil til i avspilt spilleliste"
 msgid "Append file to current songlist"
 msgstr "Legg fil til i denne spilleliste"
 
-#: fritzcall/src/plugin.py:2655
+#: fritzcall/src/plugin.py:2654
 msgid "Append shortcut number"
 msgstr "Legg til hutignummer"
 
-#: fritzcall/src/plugin.py:2654
+#: fritzcall/src/plugin.py:2653
 msgid "Append type of number"
 msgstr "Legg til type nummer"
 
-#: fritzcall/src/plugin.py:2656
+#: fritzcall/src/plugin.py:2655
 msgid "Append vanity name"
 msgstr "Legg til kallenavn"
 
@@ -1461,7 +1413,7 @@ msgid "Apply"
 msgstr "Bruk"
 
 #
-#: teletext/src/plugin.py:69 youtubeplayer/src/YouTubeSearchDialog.py:96
+#: teletext/src/plugin.py:69
 msgid "Arabic"
 msgstr "Arabisk"
 
@@ -1470,13 +1422,9 @@ msgstr "Arabisk"
 msgid "Are you sure you want to delete %s?"
 msgstr "Er du sikker på at du vil slette %s?"
 
-#: ncidclient/src/plugin.py:739 fritzcall/src/plugin.py:2630
+#: ncidclient/src/plugin.py:739 fritzcall/src/plugin.py:2629
 msgid "Areacode to add to calls without one (if necessary)"
 msgstr "Områdekode som skal brukes (om nødvendig)"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:97
-msgid "Armenian"
-msgstr "Armensk"
 
 #: merlinmusicplayer/src/plugin.py:2431
 #, python-format
@@ -1496,10 +1444,6 @@ msgstr "Artister (%d)"
 #: merlinmusicplayer/src/plugin.py:2395
 msgid "Artists List"
 msgstr "Artistliste"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:232
-msgid "Ascanding"
-msgstr "Stigende"
 
 #: epgrefresh/src/plugin.py:55
 msgid "Ask default No"
@@ -1537,10 +1481,6 @@ msgstr ""
 #: aspectratioswitch/src/plugin.py:103 aspectratioswitch/src/plugin.py:133
 msgid "AspectRatioSwitch Setup"
 msgstr "Aspektratiobytte oppsett"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:98
-msgid "Assamese"
-msgstr "Assamisk"
 
 #: movieselectionquickbutton/meta/plugin_movieselectionquickbutton.xml./movieselectionquickbutton/meta/plugin_movieselectionquickbutton.xml
 msgid "Assign color buttons (red/green/yellow/blue) to plugins of MOVIELIST."
@@ -1585,10 +1525,6 @@ msgstr "Legg plugin til GUL tast"
 #: movietagger/src/plugin.py:257
 msgid "Assigned Tags"
 msgstr "Tildel merker"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:317
-msgid "At which time, HDMI-Cec should be disabled?"
-msgstr "Til hvilket klokkeslett skal HDMI-Cec deaktiveres?"
 
 #: valixdcontrol/src/plugin.py:50
 msgid "Atlantis"
@@ -1652,7 +1588,7 @@ msgstr ""
 msgid "Australia"
 msgstr "Australia"
 
-#: ncidclient/src/plugin.py:49 fritzcall/src/plugin.py:167
+#: ncidclient/src/plugin.py:49 fritzcall/src/plugin.py:166
 msgid "Austria"
 msgstr "Østerrike"
 
@@ -1667,10 +1603,6 @@ msgstr "Autentisering avventer"
 #: webinterface/src/WebIfConfig.py:88
 msgid "Authentication for local clients"
 msgstr ""
-
-#: youtubeplayer/src/YouTubeList.py:100
-msgid "Author:"
-msgstr "Bidragsyter:"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:113
 msgid "Authors"
@@ -1737,7 +1669,7 @@ msgstr "AutoTimer tjenester"
 msgid "AutoTimer Settings"
 msgstr "AutoTimer innstillinger"
 
-#: autotimer/src/AutoTimerResource.py:108 epgrefresh/src/EPGRefresh.py:470
+#: autotimer/src/AutoTimerResource.py:108 epgrefresh/src/EPGRefresh.py:478
 #, python-format
 msgid "AutoTimer failed with error %s"
 msgstr "AutoTimer mislyktes med feil %s"
@@ -1822,7 +1754,7 @@ msgstr "Automatisk volumjustering"
 msgid "Automatic volume adjustment for ac3/dts services."
 msgstr "Automatisk volumjustering for AC3/DTS tjenester."
 
-#: ncidclient/src/plugin.py:763 fritzcall/src/plugin.py:2663
+#: ncidclient/src/plugin.py:763 fritzcall/src/plugin.py:2662
 msgid "Automatically add new Caller to PhoneBook"
 msgstr "Automatisk legg ny innringer til i telefonbok"
 
@@ -1896,7 +1828,7 @@ msgstr "Autoresolution innstillinger"
 msgid "Autoresolution videomode setup"
 msgstr "Autoresolution oppsett"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:58 mytube/src/plugin.py:69
+#: mytube/src/plugin.py:69
 msgid "Autos & Vehicles"
 msgstr "Autos & Vehicles"
 
@@ -1904,7 +1836,7 @@ msgstr "Autos & Vehicles"
 msgid "Autotimer"
 msgstr "Autotimer"
 
-#: easyinfo/src/plugin.py:608
+#: easyinfo/src/plugin.py:610
 msgid "Autotimer is not installed!"
 msgstr "Autotimer er ikke installert!"
 
@@ -1928,14 +1860,6 @@ msgstr "Unngå dyp standby under nettverksaktiviteter, som for eks. streaming"
 msgid "Avoid deep standby when HDD is active, e.g. for FTP"
 msgstr "Unngå dyp standy nå HDD er aktiv, som for eks. FTP"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:99
-msgid "Aymara"
-msgstr "Aymara"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:100
-msgid "Azerbaijani"
-msgstr "Aserbajdsjansk"
-
 #: subsdownloader2/src/plugin.py:937
 msgid "BZ2-package:\\n"
 msgstr "BZ2-pakke:\\n"
@@ -1958,13 +1882,9 @@ msgid "Babelzapper readme.txt"
 msgstr "Babelzapper readme.txt"
 
 #
-#: weatherplugin/src/setup.py:75 weatherplugin/src/setup.py:303
+#: weatherplugin/src/setup.py:75 weatherplugin/src/setup.py:295
 msgid "Back"
 msgstr "Tilbake"
-
-#: youtubeplayer/src/YouTubeList.py:437
-msgid "Back in history, be patient ..."
-msgstr "Tilbake i historien, vennligst vent..."
 
 #: pushservice/src/ConfigScreen.py:107 pushservice/src/ConfigScreen.py:116
 msgid "Back to main screen"
@@ -2015,17 +1935,9 @@ msgstr "Hoved"
 msgid "Base background:"
 msgstr "Hovedbakgrunn"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:101
-msgid "Bashkir"
-msgstr "Basjkirsk"
-
 #: ecasa/meta/plugin_ecasa.xml./ecasa/meta/plugin_ecasa.xml
 msgid "Basic Picasa client."
 msgstr "Basic Picasa klient."
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:102
-msgid "Basque"
-msgstr "Baskisk"
 
 #: infobartunerstate/src/plugin.py:63
 msgid "Begin"
@@ -2047,10 +1959,6 @@ msgstr "Starten på tidsrommet"
 msgid "Begins"
 msgstr "Starter"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:103
-msgid "Bengali"
-msgstr "Bengalsk"
-
 #: yttrailer/src/plugin.py:319
 msgid "Best resolution"
 msgstr "Beste oppløsning"
@@ -2066,14 +1974,6 @@ msgstr "Beyond Dreams"
 #: aihdcontroler/src/plugin.py:43
 msgid "BeyondDreams-HD"
 msgstr "BeyondDreams-HD"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:104
-msgid "Bhutani"
-msgstr "Bhutansk"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:105
-msgid "Bihari"
-msgstr "Bihari"
 
 #: birthdayreminder/src/BirthdayReminder.py:219
 msgid "Birthday"
@@ -2100,10 +2000,6 @@ msgstr "Fødselsdag filnavn:"
 msgid "Birthdays"
 msgstr "Fødselsdager"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:106
-msgid "Bislama"
-msgstr "Bislama"
-
 #: bitrateviewer/src/plugin.py:93
 msgid "BitrateViewer"
 msgstr "BitrateViewer"
@@ -2112,6 +2008,10 @@ msgstr "BitrateViewer"
 msgid "Blank"
 msgstr "Tom"
 
+#: weatherplugin/src/MSNWeather.py:34
+msgid "Blowing Snow"
+msgstr ""
+
 #: valixdcontrol/src/plugin.py:52
 msgid "Blues of dream"
 msgstr "Blues of dream"
@@ -2119,6 +2019,10 @@ msgstr "Blues of dream"
 #: aihdcontroler/src/plugin.py:47
 msgid "BluesOfDream-HD"
 msgstr "BluesOfDream-HD"
+
+#: weatherplugin/src/MSNWeather.py:35
+msgid "Blustery"
+msgstr ""
 
 #: emailclient/src/plugin.py:398
 msgid "Bodys"
@@ -2198,10 +2102,6 @@ msgstr "BoxControl"
 msgid "Brazil"
 msgstr "Brasil"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:107
-msgid "Breton"
-msgstr "Breton"
-
 #: teletext/src/plugin.py:1331
 msgid "Brightness"
 msgstr "Lysstyrke"
@@ -2245,14 +2145,6 @@ msgstr "Buffer filhåndtering:"
 msgid "Buffer:"
 msgstr "Buffer:"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:108
-msgid "Bulgarian"
-msgstr "Bulgarsk"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:109
-msgid "Burmese"
-msgstr "Burmesisk"
-
 #: autotimer/src/AutoTimerEditor.py:519
 msgid ""
 "By enabling this events will not be matched if they don't occur on certain "
@@ -2280,10 +2172,6 @@ msgstr ""
 "Ved å aktivering denne, vil du bli varslet når lignende timers legges til "
 "under automatisk tillegging. Det er ingen intelligens involvert, så vær klar "
 "over at det samme vil skje hver gang."
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:110
-msgid "Byelorussian"
-msgstr "Hviterussisk"
 
 #: pushservice/src/Services/SMTP.py:33
 msgid "C 2012 by betonme @ IHAD\n"
@@ -2318,24 +2206,24 @@ msgid "Cache size"
 msgstr "Bufferstørrelse"
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1557
+#: fritzcall/src/plugin.py:1556
 msgid "Call"
 msgstr "Samtale"
 
 #
-#: ncidclient/src/plugin.py:731 fritzcall/src/plugin.py:2614
+#: ncidclient/src/plugin.py:731 fritzcall/src/plugin.py:2613
 msgid "Call monitoring"
 msgstr "Samtalemonitorering"
 
-#: fritzcall/src/plugin.py:628 fritzcall/src/plugin.py:928
+#: fritzcall/src/plugin.py:627 fritzcall/src/plugin.py:927
 msgid "Call redirection"
 msgstr "Viderekobling"
 
-#: fritzcall/src/plugin.py:1078
+#: fritzcall/src/plugin.py:1077
 msgid "Call redirection active"
 msgstr "Viderekobling aktiv"
 
-#: fritzcall/src/plugin.py:1705
+#: fritzcall/src/plugin.py:1704
 #, python-format
 msgid "Calling %s"
 msgstr "Ringer %s"
@@ -2347,10 +2235,6 @@ msgstr "Callmonitor for NCID-basert ringevarsling"
 #: fritzcall/meta/plugin_fritzcall.xml./fritzcall/meta/plugin_fritzcall.xml
 msgid "Callmonitor for the Fritz!Box routers"
 msgstr "Callmonitor for Fritz!Box rutere"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:111
-msgid "Cambodian"
-msgstr "Kambodjansk"
 
 #: ecasa/src/EcasaGui.py:764
 #, python-format
@@ -2441,7 +2325,6 @@ msgstr "Kanada"
 #: subsdownloader2/src/plugin.py:949 pipservicerelation/src/plugin.py:188
 #: audiosync/src/AC3main.py:65 audiosync/src/AC3setup.py:58
 #: ftpbrowser/src/FTPBrowser.py:747 imdb/src/plugin.py:686
-#: advhdmi/src/AdvHdmiCecSetup.py:46 advhdmi/src/AdvHdmiCecSetup.py:301
 #: serienfilm/src/SerienFilm.py:61 dreamexplorer/src/plugin.py:208
 #: dreamexplorer/src/plugin.py:218 dreamexplorer/src/plugin.py:223
 #: dreamexplorer/src/plugin.py:229 dreamexplorer/src/plugin.py:271
@@ -2450,9 +2333,7 @@ msgstr "Kanada"
 #: ncidclient/src/plugin.py:698 pipzap/src/PipzapSetup.py:60
 #: automatictimerlistcleanup/src/plugin.py:49 quickbutton/src/plugin.py:196
 #: teletext/src/plugin.py:1130 teletext/src/plugin.py:1276
-#: movieselectionquickbutton/src/plugin.py:174
-#: youtubeplayer/src/YouTubeAddPlayList.py:51
-#: youtubeplayer/src/YouTubeUserConfig.py:133 elektro/src/plugin.py:265
+#: movieselectionquickbutton/src/plugin.py:174 elektro/src/plugin.py:265
 #: elektro/src/plugin.py:310 elektro/src/plugin.py:388
 #: elektro/src/plugin.py:488 epgsearch/src/EPGSearchSetup.py:56
 #: epgsearch/src/EPGSearch.py:375 movieretitle/src/plugin.py:41
@@ -2491,8 +2372,8 @@ msgstr "Kanada"
 #: epgrefresh/src/EPGRefreshConfiguration.py:40
 #: epgrefresh/src/EPGRefreshConfiguration.py:56
 #: epgrefresh/src/EPGRefreshConfiguration.py:102
-#: videocolorspace/src/VideoColorSpace.py:79 fritzcall/src/plugin.py:2308
-#: fritzcall/src/plugin.py:2544 trackautoselect/src/TrackAutoselectSetup.py:36
+#: videocolorspace/src/VideoColorSpace.py:79 fritzcall/src/plugin.py:2307
+#: fritzcall/src/plugin.py:2543 trackautoselect/src/TrackAutoselectSetup.py:36
 #: birthdayreminder/src/BirthdayReminder.py:559
 #: birthdayreminder/src/BirthdayReminder.py:579
 #: birthdayreminder/src/BirthdayReminder.py:584
@@ -2510,11 +2391,11 @@ msgstr "Avbryt"
 msgid "Cancel and close"
 msgstr "Avbryt og steng"
 
-#: fritzcall/src/plugin.py:2726 fritzcall/src/plugin.py:3417
+#: fritzcall/src/plugin.py:2725 fritzcall/src/plugin.py:3416
 msgid "Cannot get calls from FRITZ!Box"
 msgstr "Kan ikke motta samtale fra FRITZ!box"
 
-#: fritzcall/src/plugin.py:2747 fritzcall/src/plugin.py:3435
+#: fritzcall/src/plugin.py:2746 fritzcall/src/plugin.py:3434
 msgid ""
 "Cannot get infos from FRITZ!Box yet\n"
 "Still initialising or wrong firmware version"
@@ -2533,15 +2414,6 @@ msgstr "Kapasitet"
 #: ofdb/src/plugin.py:418
 msgid "Cast: "
 msgstr "Medvirkende: "
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:112
-msgid "Catalan"
-msgstr "Katalansk"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:278
-#: youtubeplayer/src/YouTubeList.py:106
-msgid "Category"
-msgstr "Kategori"
 
 #: valixdcontrol/src/plugin.py:118
 msgid "Center Mainmenu and Plugins-list:"
@@ -2777,10 +2649,6 @@ msgstr "Sjekk timerliste for serier (SP)"
 msgid "Check timer list from extension menu"
 msgstr "Sjekk timerliste fra utvidet meny"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:113
-msgid "Chinese"
-msgstr "Kinesisk"
-
 #: subsdownloader2/src/plugin.py:1173
 msgid "Choose Napisy24 search method:"
 msgstr "Velg Naipsy24 søkemetode:"
@@ -2862,7 +2730,7 @@ msgstr ""
 msgid "Cleanup timerlist-entries"
 msgstr "Rydd opp i timelisteoppføringer"
 
-#: zaphistorybrowser/src/plugin.py:172
+#: zaphistorybrowser/src/plugin.py:172 weatherplugin/src/MSNWeather.py:36
 msgid "Clear"
 msgstr "Slett"
 
@@ -2914,10 +2782,9 @@ msgstr "Klokke vis pause"
 msgid "Clone selected timer"
 msgstr "Dupliser valg timer"
 
-#: pipservicerelation/src/plugin.py:86 advhdmi/src/AdvHdmiCecSetup.py:213
-#: simplerss/src/RSSScreens.py:457 simplerss/src/RSSScreens.py:462
-#: networkbrowser/src/MountView.py:61 networkbrowser/src/UserDialog.py:82
-#: networkbrowser/src/MountManager.py:51
+#: pipservicerelation/src/plugin.py:86 simplerss/src/RSSScreens.py:457
+#: simplerss/src/RSSScreens.py:462 networkbrowser/src/MountView.py:61
+#: networkbrowser/src/UserDialog.py:82 networkbrowser/src/MountManager.py:51
 #: networkbrowser/src/NetworkBrowser.py:145
 #: networkbrowser/src/UserManager.py:49 ecasa/src/EcasaGui.py:106
 #: ecasa/src/EcasaGui.py:511 ecasa/src/EcasaGui.py:518
@@ -2959,6 +2826,14 @@ msgstr "Avslutt plugin"
 msgid "Close window"
 msgstr "Steng vindu"
 
+#: weatherplugin/src/MSNWeather.py:36
+msgid "Cloudy"
+msgstr ""
+
+#: weatherplugin/src/MSNWeather.py:36
+msgid "Cold"
+msgstr ""
+
 #: valixdcontrol/src/plugin.py:275
 msgid ""
 "Color format: TTRRGGBB (hexadecimal)\n"
@@ -2986,7 +2861,7 @@ msgstr "Farget ikonmønster"
 msgid "Colors setup are only for Base-Style possible."
 msgstr "Fargeoppsett er kun mulig fo Base-Style."
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:65 mytube/src/plugin.py:76
+#: mytube/src/plugin.py:76
 msgid "Comedy"
 msgstr "Komedie"
 
@@ -3073,10 +2948,6 @@ msgstr "Konfigurer Track Autoselect"
 msgid "Configure connection"
 msgstr "Konfigurer tilkobling"
 
-#: advhdmi/meta/plugin_advhdmi.xml./advhdmi/meta/plugin_advhdmi.xml
-msgid "Configure when HDMI-Cec is enabled"
-msgstr "Konfigurer når HDMI-Cec er aktivert"
-
 #: movieepg/src/MovieEpgSetup.py:37
 msgid ""
 "Configures where to show the \"EPG\"-Entry in the Extensions-List. You can "
@@ -3110,11 +2981,11 @@ msgstr "Kobler til"
 msgid "Connect to FTP..."
 msgstr "Kobler til FTP..."
 
-#: fritzcall/src/plugin.py:973
+#: fritzcall/src/plugin.py:972
 msgid "Connected since"
 msgstr "Tilkoblet siden"
 
-#: fritzcall/src/plugin.py:3338
+#: fritzcall/src/plugin.py:3337
 msgid "Connected to FRITZ!Box!"
 msgstr "Tilkoblet til FRITZ!Box!"
 
@@ -3126,7 +2997,7 @@ msgstr "Tilkoblet til IRC server"
 msgid "Connected to NCID Server"
 msgstr "Koblet til NCID server"
 
-#: fritzcall/src/plugin.py:3385
+#: fritzcall/src/plugin.py:3384
 #, python-format
 msgid ""
 "Connecting to FRITZ!Box failed\n"
@@ -3137,7 +3008,7 @@ msgstr ""
 " (%s)\n"
 "prøver på nytt..."
 
-#: fritzcall/src/plugin.py:3332
+#: fritzcall/src/plugin.py:3331
 msgid "Connecting to FRITZ!Box..."
 msgstr "Kobler til FRITZ!Box..."
 
@@ -3160,7 +3031,7 @@ msgstr "Kobler til NCID server..."
 msgid "Connection Error"
 msgstr "Tilkoblingsfeil"
 
-#: fritzcall/src/plugin.py:3378
+#: fritzcall/src/plugin.py:3377
 #, python-format
 msgid ""
 "Connection to FRITZ!Box! lost\n"
@@ -3239,7 +3110,7 @@ msgstr "Konvertert tilkobling"
 msgid "Cool-TV"
 msgstr "Cool-TV"
 
-#: easyinfo/src/plugin.py:656
+#: easyinfo/src/plugin.py:658
 msgid "CoolTVGuide is not installed!"
 msgstr "CoolTVGuide er ikke installert!"
 
@@ -3258,10 +3129,6 @@ msgstr "Kopier, slett, flytt eller endre navn på lokale filer i din Dreambox."
 #: dreamexplorer/meta/plugin_dreamexplorer.xml./dreamexplorer/meta/plugin_dreamexplorer.xml
 msgid "Copy, rename, delete, move, show, play, install files."
 msgstr "Kopier, omdøp, slett, flytt, vis, spill, installer filer."
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:114
-msgid "Corsican"
-msgstr "Korsikansk"
 
 #: permanenttimeshift/src/plugin.py:1424
 msgid ""
@@ -3308,8 +3175,8 @@ msgid "Could not get call list; wrong version?"
 msgstr "Kunne ikke hente ringeliste; feil versjon?"
 
 #: fritzcall/src/FritzCallFBF.py:420 fritzcall/src/FritzCallFBF.py:1394
-#: fritzcall/src/FritzCallFBF.py:2064 fritzcall/src/FritzCallFBF.py:2833
-#: fritzcall/src/plugin.py:1761
+#: fritzcall/src/FritzCallFBF.py:2064 fritzcall/src/FritzCallFBF.py:2834
+#: fritzcall/src/plugin.py:1760
 #, python-format
 msgid "Could not load phonebook: %s"
 msgstr "Kunne ikke laste telefonbok: %s"
@@ -3343,15 +3210,6 @@ msgstr "Kunne ikke lese DVD informasjon!"
 #, python-format
 msgid "Could not rename %s."
 msgstr "Kunne ikke ømdøpe %s"
-
-#: youtubeplayer/src/YouTubeList.py:587
-#, python-format
-msgid ""
-"Could not retrive video url for:\n"
-"%s"
-msgstr ""
-"Kunne ikke hente video url for:\n"
-"%s"
 
 #: pluginhider/src/PluginHiderSetup.py:90
 msgid "Could not start Plugin:"
@@ -3393,7 +3251,7 @@ msgstr "Kunne ikke åpne utgående .cuts fil"
 msgid "Couldn't open output .ts file"
 msgstr "Kunne ikke åpne utgående .ts fil"
 
-#: satipclient/src/SatIPTunerSetup.py:76
+#: satipclient/src/SatIPTunerSetup.py:68
 msgid "Count - Type (host)"
 msgstr "Telle - Type (vert)"
 
@@ -3411,11 +3269,11 @@ msgstr "Nedtelling:"
 msgid "Countries"
 msgstr "Land"
 
-#: ncidclient/src/plugin.py:743 fritzcall/src/plugin.py:2632
+#: ncidclient/src/plugin.py:743 fritzcall/src/plugin.py:2631
 msgid "Country"
 msgstr "Land"
 
-#: fritzcall/src/plugin.py:2636
+#: fritzcall/src/plugin.py:2635
 msgid "Countrycode (e.g. 44 for UK, 34 for Spain, etc.)"
 msgstr "Landskode (eks: 47 for Norge, 44 for UK, etc.)"
 
@@ -3503,11 +3361,6 @@ msgstr "Lager AP og SC filer"
 msgid "Creating Hardlink to Timeshift file failed!"
 msgstr "Å lage hardlink til Timeshift fil feilet!"
 
-#
-#: youtubeplayer/src/YouTubeSearchDialog.py:115
-msgid "Croatian"
-msgstr "Kroatisk"
-
 #: permanenttimeshift/src/plugin.py:495
 msgid "Current Event:"
 msgstr "Nåværende program:"
@@ -3589,10 +3442,6 @@ msgstr "Klipping ble avbrutt for film '%s'"
 msgid "Cyrillic"
 msgstr "Kyrillisk"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:116
-msgid "Czech"
-msgstr "Tjekkisk"
-
 #: mytube/src/plugin.py:90
 msgid "Czech Republic"
 msgstr "Republikk Tjekkoslovakia"
@@ -3613,11 +3462,11 @@ msgstr "DD.MM.YYYY HH:MM"
 msgid "DEB-package:\n"
 msgstr "DEB pakke:\n"
 
-#: fritzcall/src/plugin.py:1063
+#: fritzcall/src/plugin.py:1062
 msgid "DECT inactive"
 msgstr "DECT innaktiv"
 
-#: fritzcall/src/plugin.py:1059
+#: fritzcall/src/plugin.py:1058
 msgid "DECT phones registered"
 msgstr "DECT telefon registrert"
 
@@ -3695,10 +3544,6 @@ msgstr "DVDPlayer plugin er ikke installert!"
 msgid "DVR"
 msgstr "DVR"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:117
-msgid "Danish"
-msgstr "Dansk"
-
 #: partnerbox/src/RemoteTimerEntry.py:157
 #: partnerbox/src/RemoteTimerEntry.py:469 emailclient/src/plugin.py:346
 msgid "Date"
@@ -3726,7 +3571,7 @@ msgid "Deactivate Movielist Preview"
 msgstr "Deaktiver forhåndsvisning av filmliste"
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1099
+#: fritzcall/src/plugin.py:1098
 msgid "Deactivate WLAN guest access"
 msgstr "Deaktiver WLAN gjestetilgang"
 
@@ -3858,9 +3703,8 @@ msgstr "Vent x sekunder etter at tjeneste har startet"
 #: partnerbox/src/plugin.py:242 fancontrol2/src/FC2webSite.py:176
 #: fancontrol2/src/FC2webSite.py:212 subsdownloader2/src/plugin.py:1072
 #: pipservicerelation/src/plugin.py:85 ftpbrowser/src/FTPBrowser.py:185
-#: ftpbrowser/src/FTPServerManager.py:255 advhdmi/src/AdvHdmiCecSetup.py:215
-#: ncidclient/src/plugin.py:441 teletext/src/plugin.py:1715
-#: movieselectionquickbutton/src/plugin.py:36
+#: ftpbrowser/src/FTPServerManager.py:255 ncidclient/src/plugin.py:441
+#: teletext/src/plugin.py:1715 movieselectionquickbutton/src/plugin.py:36
 #: movieselectionquickbutton/src/plugin.py:91
 #: movieselectionquickbutton/src/plugin.py:92
 #: movieselectionquickbutton/src/plugin.py:116
@@ -3871,7 +3715,7 @@ msgstr "Vent x sekunder etter at tjeneste har startet"
 #: zaphistorybrowser/src/plugin.py:173 zapstatistic/src/plugin.py:409
 #: curlytx/src/CurlyTxSettings.py:49 weatherplugin/src/setup.py:78
 #: weatherplugin/src/setup.py:197 autotimer/src/AutoTimerOverview.py:70
-#: fritzcall/src/plugin.py:2114 growlee/src/plugin.py:102
+#: fritzcall/src/plugin.py:2113 growlee/src/plugin.py:102
 #: webinterface/src/WebComponents/Sources/Strings.py:43
 #: remotetimer/src/plugin.py:104
 msgid "Delete"
@@ -3881,10 +3725,6 @@ msgstr "Slett"
 #, python-format
 msgid "Delete %s"
 msgstr "Slett %s"
-
-#: youtubeplayer/src/YouTubePlayList.py:54
-msgid "Delete Playlist"
-msgstr "Slett spilleliste"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:44
 msgid "Delete Timer"
@@ -3911,7 +3751,7 @@ msgid "Delete crashlogs"
 msgstr "Slett crashlogs"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: zapstatistic/src/plugin.py:540 fritzcall/src/plugin.py:2136
+#: zapstatistic/src/plugin.py:540 fritzcall/src/plugin.py:2135
 msgid "Delete entry"
 msgstr "Slett timer"
 
@@ -3975,13 +3815,8 @@ msgstr "Slett timerlisteoppføringer"
 msgid "Delete unused tags"
 msgstr "Slett ubrukte merker"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:233
-msgid "Descending"
-msgstr "Synkende"
-
 #: partnerbox/src/RemoteTimerEntry.py:154
-#: partnerbox/src/RemoteTimerEntry.py:466
-#: youtubeplayer/src/YouTubeAddPlayList.py:35 elektro/src/plugin.py:470
+#: partnerbox/src/RemoteTimerEntry.py:466 elektro/src/plugin.py:470
 #: movieretitle/src/plugin.py:62 showclock/src/plugin.py:123
 #: autotimer/src/AutoTimerEditor.py:548 autotimer/src/AutoTimerWizard.py:115
 #: trackautoselect/src/TrackAutoselectConfig.py:44
@@ -4064,10 +3899,6 @@ msgstr "Slå av"
 msgid "Disable "
 msgstr ""
 
-#: advhdmi/src/AdvHdmiCecSetup.py:234
-msgid "Disable HDMI-CEC chronologically"
-msgstr "Slå av HDMI-CeC kronologisk"
-
 #: kiddytimer/src/KTmain.py:397
 msgid "Disable KiddyTimer"
 msgstr "Slå av KiddyTimer"
@@ -4120,7 +3951,7 @@ msgstr "Ikke tillat endringer"
 msgid "Display 4:3 content as"
 msgstr "Vis 4:3 innhold som"
 
-#: fritzcall/src/plugin.py:3462
+#: fritzcall/src/plugin.py:3461
 msgid "Display FRITZ!box-Fon calls on screen"
 msgstr "Vis FRITZ!Box telefonsamtaler på skjerm"
 
@@ -4129,11 +3960,11 @@ msgid "Display Fon calls on screen"
 msgstr "Vis teklefonsamtaler på skjerm"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1365
+#: fritzcall/src/plugin.py:1364
 msgid "Display all calls"
 msgstr "Vi alle samtaler"
 
-#: fritzcall/src/plugin.py:2675
+#: fritzcall/src/plugin.py:2674
 msgid "Display connection infos"
 msgstr "Vis tilkoblingsinformasjon"
 
@@ -4146,12 +3977,12 @@ msgid "Display first and last row."
 msgstr "Vis første og siste rad"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1369
+#: fritzcall/src/plugin.py:1368
 msgid "Display incoming calls"
 msgstr "Vi innkommende samtaler"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1367
+#: fritzcall/src/plugin.py:1366
 msgid "Display missed calls"
 msgstr "Vis ubesvarte anrop"
 
@@ -4160,7 +3991,7 @@ msgid "Display more Options"
 msgstr "Vi flere valg"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1371
+#: fritzcall/src/plugin.py:1370
 msgid "Display outgoing calls"
 msgstr "Vus utgående samtaler"
 
@@ -4206,7 +4037,7 @@ msgid "Do not wake up at the end of next deep standby interval."
 msgstr "Ikke start opp ved slutt av neste standby intervall."
 
 #. TRANSLATORS: this is a window title.
-#: fritzcall/src/plugin.py:1588
+#: fritzcall/src/plugin.py:1587
 msgid "Do what?"
 msgstr "Gjøre hva?"
 
@@ -4249,7 +4080,7 @@ msgstr ""
 "Vil du virkelig slette alle merker overalt?\n"
 "(Noter at 'Avbryt' ikke vil omgjøre dette!)"
 
-#: ncidclient/src/plugin.py:521 fritzcall/src/plugin.py:2207
+#: ncidclient/src/plugin.py:521 fritzcall/src/plugin.py:2206
 #, python-format
 msgid ""
 "Do you really want to delete entry for\n"
@@ -4576,7 +4407,11 @@ msgstr ""
 msgid "Dreambox: "
 msgstr "Dreambox: "
 
-#: youtubeplayer/src/YouTubeList.py:84 infobartunerstate/src/plugin.py:66
+#: weatherplugin/src/MSNWeather.py:34
+msgid "Drizzle"
+msgstr ""
+
+#: infobartunerstate/src/plugin.py:66
 msgid "Duration"
 msgstr "Varighet"
 
@@ -4603,10 +4438,9 @@ msgstr "Varighet: "
 msgid "Durations"
 msgstr "Varighet"
 
-#
-#: youtubeplayer/src/YouTubeSearchDialog.py:118
-msgid "Dutch"
-msgstr "Nederlandsk"
+#: weatherplugin/src/MSNWeather.py:35
+msgid "Dust"
+msgstr ""
 
 #: dyndns/src/plugin.py:142
 msgid "DynDNS"
@@ -4614,16 +4448,17 @@ msgstr "DynDNS"
 
 #
 #: webbouqueteditor/src/WebComponents/Sources/SatellitesList.py:72
+#: weatherplugin/src/MSNWeather.py:193
 msgid "E"
 msgstr "E"
-
-#: youtubeplayer/src/YouTubeUserConfig.py:140
-msgid "E-Mail Address"
-msgstr "E-post adresse"
 
 #: trackautoselect/src/TrackAutoselectSetup.py:85
 msgid "EIT wait timeout (ms) before auto selection"
 msgstr "EiT ventetid (ms) før autovelging"
+
+#: weatherplugin/src/MSNWeather.py:191
+msgid "ENE"
+msgstr ""
 
 #: epgcopy/src/plugin.py:154
 msgid "EPG Copy - Password"
@@ -4671,11 +4506,11 @@ msgstr "EPG oppfriskning autostart tidligst (hh:mm)"
 msgid "EPG refresh auto-start latest (hh:mm)"
 msgstr "EPG oppfriskning autostart senest (hh:mm)"
 
-#: epgrefresh/src/EPGRefresh.py:493 epgrefresh/src/PipAdapter.py:82
+#: epgrefresh/src/EPGRefresh.py:501 epgrefresh/src/PipAdapter.py:82
 msgid "EPG refresh finished."
 msgstr "EPG oppfriskning ferdig"
 
-#: epgrefresh/src/EPGRefresh.py:433
+#: epgrefresh/src/EPGRefresh.py:441
 msgid ""
 "EPG refresh finished.\n"
 "Should AutoTimer be search for new matches?"
@@ -4683,7 +4518,7 @@ msgstr ""
 "EPG oppfriskning ferdig.\n"
 "Skal AutoTimer søkes for flere treff?"
 
-#: epgrefresh/src/EPGRefresh.py:497
+#: epgrefresh/src/EPGRefresh.py:505
 msgid "EPG refresh save."
 msgstr "EPG oppfriskning lagre"
 
@@ -4732,7 +4567,7 @@ msgstr "EPGRefresh Hjelp"
 msgid "EPGRefresh Services"
 msgstr "EPGRefresh Tjenester"
 
-#: easyinfo/src/plugin.py:650
+#: easyinfo/src/plugin.py:652
 msgid "EPGRefresh is not installed!"
 msgstr "EPGRefresh er ikke installert!"
 
@@ -4755,8 +4590,8 @@ msgid "EPGSearch Setup"
 msgstr "EPGRefresh Oppsett"
 
 #: merlinepg/src/plugin.py:707 merlinepg/src/plugin.py:716
-#: merlinepg/src/plugin.py:1003 merlinepg/src/plugin.py:1012
-#: easyinfo/src/plugin.py:619 easyinfo/src/plugin.py:991
+#: merlinepg/src/plugin.py:1004 merlinepg/src/plugin.py:1013
+#: easyinfo/src/plugin.py:621 easyinfo/src/plugin.py:993
 msgid "EPGsearch is not installed!"
 msgstr "EPGSearch er ikke installert!"
 
@@ -4791,6 +4626,10 @@ msgstr ""
 msgid "ERROR: Obligatory parameter 'time' [0-999] is missing"
 msgstr "FEIL: Obligatorisk parameter 'time' [0-999] mangler"
 
+#: weatherplugin/src/MSNWeather.py:195
+msgid "ESE"
+msgstr ""
+
 #: mediadownloader/src/MediaDownloader.py:216 ftpbrowser/src/FTPBrowser.py:708
 #, python-format
 msgid "ETA %d:%02d min"
@@ -4817,19 +4656,19 @@ msgstr "Øst Europa"
 msgid "Easy-PG"
 msgstr "Easy-PG"
 
-#: easyinfo/src/plugin.py:254
+#: easyinfo/src/plugin.py:256
 msgid "Easy-PG Primetime 1:"
 msgstr "Easy-PG beste sendetid 1:"
 
-#: easyinfo/src/plugin.py:255
+#: easyinfo/src/plugin.py:257
 msgid "Easy-PG Primetime 2 (main):"
 msgstr "Easy-PG beste sendetid 2 (hoved):"
 
-#: easyinfo/src/plugin.py:256
+#: easyinfo/src/plugin.py:258
 msgid "Easy-PG Primetime 3:"
 msgstr "Easy-PG beste sendetid 3:"
 
-#: easyinfo/src/plugin.py:253
+#: easyinfo/src/plugin.py:255
 msgid "Easy-PG picons path:"
 msgstr "Easy-PG piconkatalog:"
 
@@ -4837,7 +4676,7 @@ msgstr "Easy-PG piconkatalog:"
 msgid "Easy-Selection"
 msgstr "Easy-Selection"
 
-#: easyinfo/src/plugin.py:244
+#: easyinfo/src/plugin.py:246
 msgid "EasyInfo settings..."
 msgstr "EasyInfo oppsett"
 
@@ -4847,11 +4686,10 @@ msgstr "EasyMedia oppsett"
 
 #. TRANSLATORS: keep it short, this is a button
 #: partnerbox/src/PartnerboxSetup.py:130 pipservicerelation/src/plugin.py:88
-#: ftpbrowser/src/FTPServerManager.py:257 advhdmi/src/AdvHdmiCecSetup.py:214
-#: serienfilm/src/SerienFilm.py:61 ncidclient/src/plugin.py:445
-#: teletext/src/plugin.py:1717
+#: ftpbrowser/src/FTPServerManager.py:257 serienfilm/src/SerienFilm.py:61
+#: ncidclient/src/plugin.py:445 teletext/src/plugin.py:1717
 #: automaticvolumeadjustment/src/AutomaticVolumeAdjustmentSetup.py:142
-#: weatherplugin/src/setup.py:77 fritzcall/src/plugin.py:2118
+#: weatherplugin/src/setup.py:77 fritzcall/src/plugin.py:2117
 #: trackautoselect/src/TrackAutoselectSetup.py:39
 #: birthdayreminder/src/BirthdayReminder.py:264
 msgid "Edit"
@@ -4868,10 +4706,6 @@ msgstr "Rediger AutoTimer filter"
 #: autotimer/src/AutoTimerEditor.py:1133
 msgid "Edit AutoTimer services"
 msgstr "Rediger AutoTimer tjenester"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:331
-msgid "Edit HDMI-Cec-Timespan"
-msgstr "Rediger HDMI-Cec tidsrom"
 
 #: merlinepgcenter/src/MerlinEPGCenter.py:1659
 msgid "Edit Off"
@@ -4932,7 +4766,7 @@ msgstr "Redigere valgt AutoTimer"
 
 #. TRANSLATORS: keep it short, this is a help text
 #. TRANSLATORS: this is a window title.
-#: fritzcall/src/plugin.py:2140 fritzcall/src/plugin.py:2334
+#: fritzcall/src/plugin.py:2139 fritzcall/src/plugin.py:2333
 msgid "Edit selected entry"
 msgstr "Rediger valgt oppføring"
 
@@ -4973,7 +4807,7 @@ msgstr "Redaktør for fstab"
 msgid "Editor for new AutoTimers"
 msgstr "Redaktør for AutoTimers"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:69 mytube/src/plugin.py:80
+#: mytube/src/plugin.py:80
 msgid "Education"
 msgstr "Utdanning"
 
@@ -5304,7 +5138,7 @@ msgid "Ends"
 msgstr "Avslutter"
 
 #
-#: imdb/src/plugin.py:41 youtubeplayer/src/YouTubeSearchDialog.py:119
+#: imdb/src/plugin.py:41
 msgid "English"
 msgstr "Engelsk"
 
@@ -5352,7 +5186,7 @@ msgstr "Enigma2 oppstart etter standby"
 msgid "Enter IP to scan..."
 msgstr "Skriv inn IP adresse som skal skannes..."
 
-#: ncidclient/src/plugin.py:643 fritzcall/src/plugin.py:2393
+#: ncidclient/src/plugin.py:643 fritzcall/src/plugin.py:2392
 msgid "Enter Search Terms"
 msgstr "Oppgi søkekriterier"
 
@@ -5479,7 +5313,7 @@ msgstr "Skriv inn søkekriterie(r)"
 msgid "Enter your text here:"
 msgstr "Oppgi din tekst her:"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:68 mytube/src/plugin.py:79
+#: mytube/src/plugin.py:79
 msgid "Entertainment"
 msgstr "Underholdning"
 
@@ -5493,7 +5327,7 @@ msgstr "Oppføringer"
 msgid "Entry %s/%s"
 msgstr "Oppgi %s/%s"
 
-#: ncidclient/src/plugin.py:609 fritzcall/src/plugin.py:2345
+#: ncidclient/src/plugin.py:609 fritzcall/src/plugin.py:2344
 msgid "Entry incomplete."
 msgstr "Ufullstendig oppføring"
 
@@ -5516,24 +5350,6 @@ msgstr ""
 #: webinterface/src/WebComponents/Sources/AudioTracks.py:41
 msgid "Error"
 msgstr "Feil"
-
-#: youtubeplayer/src/YouTubeList.py:482
-#, python-format
-msgid ""
-"Error adding video to favorites:\n"
-"%s"
-msgstr ""
-"Feil ved tillegging av video i favoritter:\n"
-"%s"
-
-#: youtubeplayer/src/YouTubeList.py:559
-#, python-format
-msgid ""
-"Error adding video to playlist:\n"
-"%s"
-msgstr ""
-"Feil ved tillegging av video i spilleliste:\n"
-"%s"
 
 #: aihdcontroler/src/plugin.py:174 valixdcontrol/src/plugin.py:249
 msgid "Error by processing the skin file !!!"
@@ -5559,15 +5375,6 @@ msgstr "Feilkommando '%s'"
 #, python-format
 msgid "Error communicating with transmission-daemon: %s."
 msgstr "Feil under kommunisering med overføringsprogrammet: %s"
-
-#: youtubeplayer/src/plugin.py:122
-#, python-format
-msgid ""
-"Error contacting YouTube:\n"
-"%s"
-msgstr ""
-"Feil under YouTube tilkobling:\n"
-"%s"
 
 #: ecasa/src/EcasaGui.py:422 ecasa/src/EcasaGui.py:541
 #: ecasa/src/EcasaGui.py:544 ecasa/src/EcasaGui.py:672
@@ -5618,54 +5425,9 @@ msgstr ""
 "Feil under opplasting av spilleliste til server %(server)s:\n"
 "%(error)s"
 
-#: youtubeplayer/src/YouTubePlayList.py:76
-#, python-format
-msgid ""
-"Error loading playlists:\n"
-"%s"
-msgstr ""
-"Feil under opplasting av spilleliste:\n"
-"%s"
-
 #: seriesplugin/src/SeriesPlugin.py:133
 msgid "Error missing dependency"
 msgstr "Feil, manglende sammenheng"
-
-#: youtubeplayer/src/YouTubeList.py:353
-#, python-format
-msgid ""
-"Error querying favorites feed:\n"
-"%s"
-msgstr ""
-"Feil ved køing av favoritt feed:\n"
-"%s"
-
-#: youtubeplayer/src/YouTubeList.py:374
-#, python-format
-msgid ""
-"Error querying feed %s:\n"
-"%s"
-msgstr ""
-"Feil ved køing av feed %s:\n"
-"%s"
-
-#: youtubeplayer/src/YouTubeList.py:320
-#, python-format
-msgid ""
-"Error querying feed for search term %s:\n"
-"%s"
-msgstr ""
-"Feil ved køing av feed for søkeord %s:\n"
-"%s"
-
-#: youtubeplayer/src/YouTubeList.py:337
-#, python-format
-msgid ""
-"Error querying playlist-feed for playlist %s:\n"
-"%s"
-msgstr ""
-"Feil ved køing av spilleliste feed for spilleliste %s:\n"
-"%s"
 
 #: dreamexplorer/src/plugin.py:249
 msgid "Error reading bookmarks"
@@ -5683,24 +5445,6 @@ msgstr ""
 "Feil ved lesing av fil %s.\n"
 "\n"
 "Feil: %s, %s"
-
-#: youtubeplayer/src/YouTubeList.py:508
-#, python-format
-msgid ""
-"Error removing video from favorites:\n"
-"%s"
-msgstr ""
-"Feil ved fjerning av video fra favoritter:\n"
-"%s"
-
-#: youtubeplayer/src/YouTubeList.py:534
-#, python-format
-msgid ""
-"Error removing video from playlist:\n"
-"%s"
-msgstr ""
-"Feil ved fjerning av video fra spilleliste:\n"
-"%s"
 
 #: vlcplayer/src/VlcMediaList.py:124
 #, python-format
@@ -5806,14 +5550,6 @@ msgstr "Feil: Brukeravbrudd"
 msgid "Error: Zap failed"
 msgstr "Feil: Zap feilet"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:120
-msgid "Esperanto"
-msgstr "Esperanto"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:121
-msgid "Estonian"
-msgstr "Estlandsk"
-
 #: eurotictv/meta/plugin_eurotictv.xml./eurotictv/meta/plugin_eurotictv.xml
 msgid "EuroticTV"
 msgstr "EuroticTV"
@@ -5830,11 +5566,11 @@ msgstr "Programinformasjon"
 msgid "EventId not found"
 msgstr "Program ID ikke funnet"
 
-#: easyinfo/src/plugin.py:251
+#: easyinfo/src/plugin.py:253
 msgid "EventInfo blue button:"
 msgstr "EventInfo blå tast:"
 
-#: easyinfo/src/plugin.py:250
+#: easyinfo/src/plugin.py:252
 msgid "EventInfo yellow button:"
 msgstr "EventInfo gul tast"
 
@@ -5922,11 +5658,11 @@ msgstr "Utvid kanallisten til å oppfriske de som AutoTimer bruker?"
 msgid "Extended Control Range"
 msgstr "Utvidet reguleringsområde"
 
-#: fritzcall/src/plugin.py:2671
+#: fritzcall/src/plugin.py:2670
 msgid "Extended Search for faces"
 msgstr "Utvidet søk for ansikter"
 
-#: fritzcall/src/plugin.py:2670
+#: fritzcall/src/plugin.py:2669
 msgid "Extended Search for names"
 msgstr "Utvidet søk for navn"
 
@@ -5938,7 +5674,7 @@ msgstr "Utvidet konfigureringsmeny:"
 msgid "Extended search filter"
 msgstr "Utvidet søkefilter"
 
-#: fritzcall/src/plugin.py:2644
+#: fritzcall/src/plugin.py:2643
 msgid "Extension number to initiate call on"
 msgstr "Internnummer for å starte telefonsamtale"
 
@@ -5965,12 +5701,12 @@ msgid "FAQ"
 msgstr "FAQ"
 
 #: fritzcall/src/FritzCallFBF.py:420 fritzcall/src/FritzCallFBF.py:1394
-#: fritzcall/src/FritzCallFBF.py:2064 fritzcall/src/FritzCallFBF.py:2833
+#: fritzcall/src/FritzCallFBF.py:2064 fritzcall/src/FritzCallFBF.py:2834
 msgid "FRITZ!Box - "
 msgstr "FRITZ!Box - "
 
 #: fritzcall/src/FritzCallFBF.py:564 fritzcall/src/FritzCallFBF.py:1484
-#: fritzcall/src/FritzCallFBF.py:2168 fritzcall/src/FritzCallFBF.py:2934
+#: fritzcall/src/FritzCallFBF.py:2168 fritzcall/src/FritzCallFBF.py:2935
 #, python-format
 msgid "FRITZ!Box - Could not load calls: %s"
 msgstr "FRITZ!Box - Kunne ikke starte samtaler: %s"
@@ -5982,13 +5718,13 @@ msgid "FRITZ!Box - Dialling failed: %s"
 msgstr "FRITZ!Box - Oppringinger feilet: %s"
 
 #: fritzcall/src/FritzCallFBF.py:1105 fritzcall/src/FritzCallFBF.py:1804
-#: fritzcall/src/FritzCallFBF.py:2609 fritzcall/src/FritzCallFBF.py:3407
+#: fritzcall/src/FritzCallFBF.py:2609 fritzcall/src/FritzCallFBF.py:3408
 #, python-format
 msgid "FRITZ!Box - Error getting blacklist: %s"
 msgstr "FRITZ!Box - Feil ved henting av svarteliste: %s"
 
 #: fritzcall/src/FritzCallFBF.py:1007 fritzcall/src/FritzCallFBF.py:1722
-#: fritzcall/src/FritzCallFBF.py:2520 fritzcall/src/FritzCallFBF.py:3317
+#: fritzcall/src/FritzCallFBF.py:2520 fritzcall/src/FritzCallFBF.py:3318
 #, python-format
 msgid "FRITZ!Box - Error getting status: %s"
 msgstr "FRITZ!Box - Feil ved henting av status: %s"
@@ -6024,12 +5760,12 @@ msgid "FRITZ!Box - Error logging out: %s"
 msgstr "FRITZ!Box - Feil ved utlogging: %s"
 
 #: fritzcall/src/FritzCallFBF.py:1055 fritzcall/src/FritzCallFBF.py:1768
-#: fritzcall/src/FritzCallFBF.py:2559 fritzcall/src/FritzCallFBF.py:3356
+#: fritzcall/src/FritzCallFBF.py:2559 fritzcall/src/FritzCallFBF.py:3357
 #, python-format
 msgid "FRITZ!Box - Error resetting: %s"
 msgstr "FRITZ!Box - Feil ved tilbakestilling: %s"
 
-#: fritzcall/src/FritzCallFBF.py:2326 fritzcall/src/FritzCallFBF.py:3075
+#: fritzcall/src/FritzCallFBF.py:2326 fritzcall/src/FritzCallFBF.py:3076
 #, python-format
 msgid "FRITZ!Box - Failed changing GuestAccess: %s"
 msgstr "FRITZ!Box - Feilet å endre gjestetilgang: %s"
@@ -6040,32 +5776,32 @@ msgid "FRITZ!Box - Failed changing Mailbox: %s"
 msgstr "FRITZ!Box - Feilet å endre Mailbox: %s"
 
 #: fritzcall/src/FritzCallFBF.py:655 fritzcall/src/FritzCallFBF.py:1576
-#: fritzcall/src/FritzCallFBF.py:2262 fritzcall/src/FritzCallFBF.py:3005
+#: fritzcall/src/FritzCallFBF.py:2262 fritzcall/src/FritzCallFBF.py:3006
 #, python-format
 msgid "FRITZ!Box - Failed changing WLAN: %s"
 msgstr "FRITZ!Box - Feil å endre WLAN: %s"
 
-#: fritzcall/src/plugin.py:2616
+#: fritzcall/src/plugin.py:2615
 msgid "FRITZ!Box FON address (Name or IP)"
 msgstr "FRITZ!Box FON adresse (Navn eller IP)"
 
-#: fritzcall/src/plugin.py:2617
+#: fritzcall/src/plugin.py:2616
 msgid "FRITZ!Box FON firmware version"
 msgstr "FRITZ!Box FON maskinvareversjon"
 
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:946 fritzcall/src/plugin.py:2554
-#: fritzcall/src/plugin.py:2581 fritzcall/src/plugin.py:3465
+#: fritzcall/src/plugin.py:945 fritzcall/src/plugin.py:2553
+#: fritzcall/src/plugin.py:2580 fritzcall/src/plugin.py:3464
 msgid "FRITZ!Box Fon Status"
 msgstr "FRITZ!Box FON status"
 
-#: fritzcall/src/plugin.py:2653
+#: fritzcall/src/plugin.py:2652
 msgid "FRITZ!Box PhoneBook to read"
 msgstr "FRITZ!Box Telefonbok å lese"
 
-#: fritzcall/src/plugin.py:3370
+#: fritzcall/src/plugin.py:3369
 msgid ""
 "FRITZ!Box firmware version not configured! Please set it in the "
 "configuration."
@@ -6073,7 +5809,7 @@ msgstr ""
 "FRITZ!Box maskinvareversjon er ikke konfigurert! Vennligst legg til i "
 "konfigurasjonen."
 
-#: fritzcall/src/plugin.py:1709
+#: fritzcall/src/plugin.py:1708
 msgid "FRITZ!Box not available for calling"
 msgstr "FRITZ!Box ikke tilgjengelig for samtale"
 
@@ -6097,10 +5833,6 @@ msgid ""
 msgstr ""
 "FTPBrowser tillater opplasting og nedlasting av filer mellom din Dreambox og "
 "en server ved hjelp av filoverføringsprotokoll (ftp)."
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:122
-msgid "Faeroese"
-msgstr "Færøysk"
 
 #: emission/src/plugin.py:66
 #, python-format
@@ -6154,6 +5886,10 @@ msgstr "Feilet å flytte filmen %s til %s i bakgrunnen"
 msgid "Failed: %s."
 msgstr "Feilet: %s."
 
+#: weatherplugin/src/MSNWeather.py:37
+msgid "Fair"
+msgstr ""
+
 #: epgrefresh/src/plugin.py:62
 msgid "Fake recording"
 msgstr "Simulert opptak"
@@ -6182,11 +5918,6 @@ msgstr "FanControl2 nødsituasjon, slå av Dreambox nå?"
 msgid "Favorite list"
 msgstr "Favorittliste"
 
-#: youtubeplayer/src/YouTubeList.py:94
-msgid "Favorited"
-msgstr "Favorisert"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:269
 #: internetradio/src/InternetRadioScreen.py:244
 msgid "Favorites"
 msgstr "Favoritter"
@@ -6246,10 +5977,6 @@ msgstr "Feltet %d inneholder"
 #, python-format
 msgid "Field %d width"
 msgstr "Feltet %d's bredde"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:123
-msgid "Fiji"
-msgstr "Fiji"
 
 #: fancontrol2/src/FC2webSite.py:183 fancontrol2/src/FC2webSite.py:220
 #, python-format
@@ -6338,7 +6065,7 @@ msgstr "Filter"
 msgid "Filter Services"
 msgstr "Filtrer kanaler"
 
-#: fritzcall/src/plugin.py:2624
+#: fritzcall/src/plugin.py:2623
 msgid "Filter also list of calls"
 msgstr "Bruk filter i listen over samtaler"
 
@@ -6384,10 +6111,6 @@ msgstr "Feilet med feil:\n"
 msgid "FinishedTimerPushed"
 msgstr "FinishedTimerPushed"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:124
-msgid "Finnish"
-msgstr "Finsk"
-
 #: autotimer/src/AutoTimerEditor.py:520
 msgid ""
 "First day to match events. No event that begins before this date will be "
@@ -6408,7 +6131,11 @@ msgstr "Flash"
 msgid "Flickr API Key"
 msgstr "Flickr API nøkkel"
 
-#: epgrefresh/src/EPGRefresh.py:634
+#: weatherplugin/src/MSNWeather.py:35
+msgid "Foggy"
+msgstr ""
+
+#: epgrefresh/src/EPGRefresh.py:642
 msgid "Following Services have to be scanned:"
 msgstr "Følgende kanaler må gjennomsøkes:"
 
@@ -6440,10 +6167,6 @@ msgstr ""
 msgid "Foreground also"
 msgstr "I forgrunnen også"
 
-#: youtubeplayer/src/YouTubeList.py:443
-msgid "Forward in history, be patient ..."
-msgstr "Gjennomgår historie, vær tålmodig..."
-
 #: pushservice/src/Controller/CrashLog.py:32
 msgid "Found CrashLog(s)"
 msgstr "Funnet avbruddslogg(er)"
@@ -6467,7 +6190,7 @@ msgstr ""
 " %(conflicts)d konflikter oppdaget,\n"
 " %(similars)d lignende lagt til."
 
-#: epgrefresh/src/EPGRefresh.py:479
+#: epgrefresh/src/EPGRefresh.py:487
 #, python-format
 msgid ""
 "Found a total of %d matching Events.\n"
@@ -6492,7 +6215,7 @@ msgstr "Fant deaktivert(e) timer(e)"
 msgid "Found no Enclosure we can display."
 msgstr "Fant ingen kabinett å fremstille."
 
-#: fritzcall/src/plugin.py:1596 fritzcall/src/plugin.py:2961
+#: fritzcall/src/plugin.py:1595 fritzcall/src/plugin.py:2960
 #, python-format
 msgid ""
 "Found picture\n"
@@ -6508,7 +6231,7 @@ msgstr ""
 " Men lastet den ikke. Antagelivis ikke PNG, 8-bit"
 
 #: ncidclient/src/plugin.py:46 mytube/src/plugin.py:91
-#: fritzcall/src/plugin.py:164
+#: fritzcall/src/plugin.py:163
 msgid "France"
 msgstr "Frankrike"
 
@@ -6529,8 +6252,16 @@ msgstr "Grense for ledig lagringsplass i GB"
 msgid "Free space warning"
 msgstr "Advarsel angående ledig lagringsplass "
 
+#: weatherplugin/src/MSNWeather.py:33
+msgid "Freezing Drizzle"
+msgstr ""
+
+#: weatherplugin/src/MSNWeather.py:34
+msgid "Freezing Rain"
+msgstr ""
+
 #
-#: imdb/src/plugin.py:41 youtubeplayer/src/YouTubeSearchDialog.py:125
+#: imdb/src/plugin.py:41
 msgid "French"
 msgstr "Fransk"
 
@@ -6555,18 +6286,13 @@ msgstr "Fre"
 #
 #: partnerbox/src/RemoteTimerEntry.py:143
 #: partnerbox/src/RemoteTimerEntry.py:447
-#: merlinepgcenter/src/HelperFunctions.py:42 advhdmi/src/plugin.py:46
-#: elektro/src/plugin.py:130 kiddytimer/src/KTglob.py:12
-#: autotimer/src/AutoTimerEditor.py:45
+#: merlinepgcenter/src/HelperFunctions.py:42 elektro/src/plugin.py:130
+#: kiddytimer/src/KTglob.py:12 autotimer/src/AutoTimerEditor.py:45
 msgid "Friday"
 msgstr "Fredag"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:126
-msgid "Frisian"
-msgstr "Frisisk"
-
 #. TRANSLATORS: this is a window title.
-#: fritzcall/src/plugin.py:2602
+#: fritzcall/src/plugin.py:2601
 msgid "FritzCall Setup"
 msgstr "FritzCall Oppsett"
 
@@ -6575,21 +6301,9 @@ msgid "FritzCall shows incoming calls to your Fritz!Box on your Dreambox."
 msgstr ""
 "FritzCall viser inkommende oppringninger til din Fritz!Box på din Dreambox"
 
-#: advhdmi/src/AdvHdmiCecSetup.py:208 emailclient/src/plugin.py:344
+#: emailclient/src/plugin.py:344
 msgid "From"
 msgstr "Fra"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:279
-msgid "From Region"
-msgstr "Fra region"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:206
-msgid "From WD"
-msgstr "Fra WD"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:315
-msgid "From which day of the week, HDMI-Cec should be disabled?"
-msgstr "Fra hvilken dag i uken, HDMI-Cec skal deaktiveres?"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:121
 msgid "Frontprocessor Version"
@@ -6674,11 +6388,7 @@ msgstr "GUI hvor ftp- og telnet passord kan endres"
 msgid "GZ-package:\\n"
 msgstr "GZ pakke:\\n"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:127
-msgid "Galician"
-msgstr "Galisisk"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:64 mytube/src/plugin.py:75
+#: mytube/src/plugin.py:75
 msgid "Gaming"
 msgstr "Spilling"
 
@@ -6737,11 +6447,7 @@ msgstr "Genuine Dreambox validering feilet!"
 msgid "Genuine Dreambox verification"
 msgstr "Genuine Dreambox verifikasjon"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:128
-msgid "Georgian"
-msgstr "Georgisk"
-
-#: imdb/src/plugin.py:41 youtubeplayer/src/YouTubeSearchDialog.py:129
+#: imdb/src/plugin.py:41
 msgid "German"
 msgstr "Tysk"
 
@@ -6750,7 +6456,7 @@ msgid "German storm information"
 msgstr "Tysk værinfomasjon"
 
 #: ncidclient/src/plugin.py:44 mytube/src/plugin.py:92
-#: fritzcall/src/plugin.py:162
+#: fritzcall/src/plugin.py:161
 msgid "Germany"
 msgstr "Tyskland"
 
@@ -6761,16 +6467,6 @@ msgstr "Hent AudioCD informasjon fra CDDB og CD-Text"
 #: webinterface/src/WebComponents/Sources/Strings.py:154
 msgid "Get a Screenshot"
 msgstr "Ta skjermbilde"
-
-#: youtubeplayer/src/YouTubeList.py:633 youtubeplayer/src/YouTubeList.py:658
-#: youtubeplayer/src/YouTubeList.py:697
-msgid "Get related videos"
-msgstr "Hent relaterte videoer"
-
-#: youtubeplayer/src/YouTubeList.py:634 youtubeplayer/src/YouTubeList.py:659
-#: youtubeplayer/src/YouTubeList.py:698
-msgid "Get video responses"
-msgstr "Hent vidotilbakemeldinger"
 
 #: internetradio/src/InternetRadioScreen.py:755
 #, python-format
@@ -6802,11 +6498,11 @@ msgstr "Henter Partnerbox favoritt informasjon..."
 msgid "Getting Partnerbox Information..."
 msgstr "Henter Partnerbox informasjon..."
 
-#: fritzcall/src/plugin.py:1373 fritzcall/src/plugin.py:1436
+#: fritzcall/src/plugin.py:1372 fritzcall/src/plugin.py:1435
 msgid "Getting calls from FRITZ!Box..."
 msgstr "Henter samtaler fra FRITZ!Box"
 
-#: fritzcall/src/plugin.py:595 fritzcall/src/plugin.py:895
+#: fritzcall/src/plugin.py:594 fritzcall/src/plugin.py:894
 msgid "Getting status from FRITZ!Box Fon..."
 msgstr "Henter status fra FRITZ!Box FON..."
 
@@ -6877,7 +6573,7 @@ msgstr "GoogleMaps søk"
 msgid "Grab Video & OSD"
 msgstr "Grab Video & OSD"
 
-#: easyinfo/src/plugin.py:638
+#: easyinfo/src/plugin.py:640
 msgid "GraphMultiEPG is not installed!"
 msgstr "GraphMultiEPG er ikke installert!"
 
@@ -6889,14 +6585,6 @@ msgstr "GraphMultiEPG"
 #: mytube/src/plugin.py:93
 msgid "Great Britain"
 msgstr "Storbritania"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:130
-msgid "Greek"
-msgstr "Gresk"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:131
-msgid "Greenlandic"
-msgstr "Grønlandsk"
 
 #: pushservice/src/Services/GNTP.py:47
 msgid "Growl Host name"
@@ -6916,30 +6604,22 @@ msgstr ""
 "til en PC som kjører growl, snarl eller syslog kompatible klienter, eller "
 "direkte til iPhone using prowl."
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:132
-msgid "Guarani"
-msgstr "Guaraini"
-
 #. TRANSLATORS: the double-percent is intentional and required, please don't make me hunt you down individually
 #: autotimer/src/AutoTimerSettings.py:47
 msgid "Guess existing timer based on begin/end"
 msgstr "Forsøk å finne timer basert på begynnelse/slutt"
 
-#: fritzcall/src/plugin.py:934 fritzcall/src/plugin.py:1129
+#: fritzcall/src/plugin.py:933 fritzcall/src/plugin.py:1128
 msgid "Guest access"
 msgstr "Gjestetilgang"
 
-#: fritzcall/src/plugin.py:1095
+#: fritzcall/src/plugin.py:1094
 msgid "Guest access not active"
 msgstr "Gjestetilgang ikke aktiv"
 
-#: fritzcall/src/plugin.py:1091
+#: fritzcall/src/plugin.py:1090
 msgid "Guest access on "
 msgstr "Gjjestetilgang til "
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:133
-msgid "Gujarati"
-msgstr "Gujarati"
 
 #: autoresolution/src/plugin.py:24
 msgid "HD Interlace Mode"
@@ -6948,10 +6628,6 @@ msgstr "HD Interlace Mode"
 #: autoresolution/src/plugin.py:24
 msgid "HD Progressive Mode"
 msgstr "HD Progressive Mode"
-
-#: youtubeplayer/src/YouTubeUserConfig.py:49
-msgid "HD Quality (Stereo)"
-msgstr "HD kvalitet (Stereo)"
 
 #: infobartunerstate/src/plugin.py:81
 msgid "HH:MM"
@@ -6997,24 +6673,28 @@ msgstr ""
 msgid "HTTPS Port"
 msgstr "HTTPS Port"
 
+#: weatherplugin/src/MSNWeather.py:35
+msgid "Hail"
+msgstr ""
+
 #
 #: logomanager/src/plugin.py:13
 #: webinterface/src/WebComponents/Sources/Strings.py:124
 msgid "Harddisk"
 msgstr "Harddisk"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:134
-msgid "Hausa"
-msgstr "Hausa"
+#: weatherplugin/src/MSNWeather.py:35
+msgid "Haze"
+msgstr ""
 
 #: quickbutton/src/plugin.py:153 quickbutton/src/plugin.py:228
 #: quickbutton/src/plugin.py:277
 msgid "HbbTV Applications"
 msgstr "HbbTV Programvare"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:135
-msgid "Hebrew"
-msgstr "Hebraisk"
+#: weatherplugin/src/MSNWeather.py:38
+msgid "Heavy Snow"
+msgstr ""
 
 #: teletext/src/plugin.py:69
 msgid "Hebrew / Arabic"
@@ -7052,17 +6732,9 @@ msgstr "Skjul plugins"
 msgid "High (Warning)"
 msgstr "Høy (Advarsel)"
 
-#: youtubeplayer/src/YouTubeUserConfig.py:48
-msgid "High Quality (Stereo)"
-msgstr "Høy kvalitet (Stereo)"
-
 #: growlee/src/plugin.py:31 growlee/src/plugin.py:52
 msgid "Highest (Emergency)"
 msgstr "Høyest (Nødsituasjon)"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:136
-msgid "Hindi"
-msgstr "Hindi"
 
 #: epgsearch/src/EPGSearch.py:136 mytube/src/plugin.py:264
 msgid "History"
@@ -7088,10 +6760,6 @@ msgstr "Hjem"
 msgid "Hong Kong"
 msgstr "Hong Kong"
 
-#: advhdmi/src/AdvHdmiCecSetup.py:138
-msgid "Hook"
-msgstr "Tilknytt"
-
 #: infobartunerstate/src/IBTSConfiguration.py:119
 msgid "Horizontal offset left in pixel"
 msgstr "Horisontal avvik til venstre (pixel)"
@@ -7112,6 +6780,10 @@ msgstr "Vertsnavn"
 msgid "Hostname has been applied!"
 msgstr "Vertsnavn er lagt til!"
 
+#: weatherplugin/src/MSNWeather.py:37
+msgid "Hot"
+msgstr ""
+
 #: epgsearch/src/EPGSearchSetup.py:37
 msgid ""
 "How many entries to keep in the search history at most. 0 disables history "
@@ -7129,7 +6801,7 @@ msgstr "Hvor mange minutter å vente før kanal tilbakebytting?"
 msgid "How would you like to cut \"%s\"?"
 msgstr "Hvordan vil du kutte '%s'?"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:70 mytube/src/plugin.py:81
+#: mytube/src/plugin.py:81
 msgid "Howto & Style"
 msgstr "Howto & Style"
 
@@ -7137,10 +6809,6 @@ msgstr "Howto & Style"
 #, python-format
 msgid "Humidity: %s %%"
 msgstr "Luftfuktighet: %s %%"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:137
-msgid "Hungarian"
-msgstr "Ungarsk"
 
 #: subsdownloader2/src/plugin.py:639
 msgid "I can't convert subtitle for this kind of media!!!"
@@ -7175,7 +6843,7 @@ msgstr "IMDB"
 msgid "IMDB info"
 msgstr "IMDB informasjon"
 
-#: easyinfo/src/plugin.py:632
+#: easyinfo/src/plugin.py:634
 msgid "IMDB is not installed!"
 msgstr "IMDB er ikke installert!"
 
@@ -7244,7 +6912,7 @@ msgstr "IP"
 msgid "IP Address"
 msgstr "IP-Adresse"
 
-#: fritzcall/src/plugin.py:973 fritzcall/src/plugin.py:975
+#: fritzcall/src/plugin.py:972 fritzcall/src/plugin.py:974
 msgid "IP Address:"
 msgstr "IP adresse:"
 
@@ -7263,10 +6931,6 @@ msgstr "IPKG pakke:\\n"
 #: dreamirc/meta/plugin_dreamirc.xml./dreamirc/meta/plugin_dreamirc.xml
 msgid "IRC Client for Enigma2"
 msgstr "IRC klient for Enigma2"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:138
-msgid "Icelandic"
-msgstr "Islandsk"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:66
 msgid "Idle Mode"
@@ -7437,7 +7101,7 @@ msgstr ""
 "passer dine behov her, eks. skjult, simulert opptak eller vanlig Bilde i "
 "Bilde."
 
-#: fritzcall/src/plugin.py:2676
+#: fritzcall/src/plugin.py:2675
 msgid "Ignore callers with no phone number"
 msgstr "Ignorer innringere uten telefonnummer"
 
@@ -7569,11 +7233,11 @@ msgid "Included days:"
 msgstr "Inkluderte dager:"
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1347
+#: fritzcall/src/plugin.py:1346
 msgid "Incoming"
 msgstr "Innkommende"
 
-#: fritzcall/src/plugin.py:3097
+#: fritzcall/src/plugin.py:3096
 #, python-format
 msgid ""
 "Incoming Call on %(date)s at %(time)s from\n"
@@ -7605,7 +7269,7 @@ msgstr ""
 "%s\n"
 "---------------------------------------------"
 
-#: fritzcall/src/plugin.py:180
+#: fritzcall/src/plugin.py:179
 msgid "Incoming calls"
 msgstr "Innkommende samtaler"
 
@@ -7638,10 +7302,6 @@ msgstr "Uavhengig modusunntak"
 #: mytube/src/plugin.py:97
 msgid "India"
 msgstr "India"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:139
-msgid "Indonesian"
-msgstr "Indonesisk"
 
 #: partnerbox/src/plugin.py:523 partnerbox/src/plugin.py:680
 #: partnerbox/src/plugin.py:989 partnerbox/src/plugin.py:1040
@@ -7744,14 +7404,6 @@ msgstr "Installer denne pakken"
 msgid "Instant Record"
 msgstr "Hurtigopptak"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:140
-msgid "Interlingua"
-msgstr "Interlingua"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:141
-msgid "Interlingue"
-msgstr "Interlingue"
-
 #: internetradio/src/InternetRadioOledDisplay.py:148
 msgid "Internet Radio"
 msgstr "InternettRadio"
@@ -7787,14 +7439,6 @@ msgstr "Intervall lysbildefremvisning mellom hvert bilde."
 #: dyndns/src/plugin.py:34
 msgid "Interval to check IP-Adress"
 msgstr "Intervall for sjekk av IP adresse"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:143
-msgid "Inuktitut (Eskimo)"
-msgstr "Inuktitut (Eskimo)"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:142
-msgid "Inupiak"
-msgstr "Inupiak"
 
 #: merlinmusicplayer/src/plugin.py:2844
 #: internetradio/src/InternetRadioSetup.py:156
@@ -7835,13 +7479,17 @@ msgstr "Ugyldig valg"
 msgid "Ireland"
 msgstr "Irland"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:144
-msgid "Irish"
-msgstr "Irsk"
-
 #: multirc/src/plugin.py:96
 msgid "Is the RC still working?"
 msgstr "Virker fjernkontrollen fremdeles?"
+
+#: weatherplugin/src/MSNWeather.py:38
+msgid "Isolated Thundershowers"
+msgstr ""
+
+#: weatherplugin/src/MSNWeather.py:37
+msgid "Isolated Thunderstorms"
+msgstr ""
 
 #: mytube/src/plugin.py:99
 msgid "Israel"
@@ -7861,7 +7509,7 @@ msgstr ""
 "ikke godkjent tjeneste (I en bouquet).\n"
 "Press BLÅ for å legge til en begrensning og GUL for å fjerne den valgte."
 
-#: imdb/src/plugin.py:41 youtubeplayer/src/YouTubeSearchDialog.py:145
+#: imdb/src/plugin.py:41
 msgid "Italian"
 msgstr "Italiensk"
 
@@ -7874,7 +7522,7 @@ msgid "Italian Weather forecast on Dreambox from www.google.it."
 msgstr "Italiensk værmelding for Dreambox fra www.google.it."
 
 #: ncidclient/src/plugin.py:47 mytube/src/plugin.py:100
-#: fritzcall/src/plugin.py:165
+#: fritzcall/src/plugin.py:164
 msgid "Italy"
 msgstr "Italia"
 
@@ -7890,17 +7538,9 @@ msgstr "Itasa serverbruker:"
 msgid "Japan"
 msgstr "Japan"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:146
-msgid "Japanese"
-msgstr "Japansk"
-
 #: webinterface/src/WebComponents/Sources/Strings.py:115
 msgid "JavaScript Libraries"
 msgstr "JavaScrip bibliotek"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:147
-msgid "Javanese"
-msgstr "Javanesisk"
 
 #: serienfilm/src/MovieSelection.py:289
 msgid "Jump to listbegin"
@@ -7925,18 +7565,6 @@ msgstr "Bare skaler"
 #: easyinfo/src/plugin.py:100
 msgid "Just zap"
 msgstr "Bare bytt"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:148
-msgid "Kannada"
-msgstr "Kannada"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:149
-msgid "Kashmiri"
-msgstr "Kashmiri"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:150
-msgid "Kazakh"
-msgstr "Kazakh"
 
 #: simplerss/src/RSSSetup.py:102
 msgid "Keep running in background"
@@ -7985,26 +7613,6 @@ msgstr "KiddyTimer"
 msgid "KiddyTimer allows to control your kids's daily tv usage."
 msgstr "Kiddy Timer tillater kontroll over barns daglige TV bruk."
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:151
-msgid "Kinyarwanda"
-msgstr "Kinyarwanda"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:152
-msgid "Kirghiz"
-msgstr "Kirgisisk"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:153
-msgid "Kirundi"
-msgstr "Kirundi"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:154
-msgid "Korean"
-msgstr "Koreansk"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:155
-msgid "Kurdish"
-msgstr "Kurdisk"
-
 #: webinterface/src/WebComponents/Sources/TPMChallenge.py:29
 msgid "LEVEL2 and LEVEL3 Certifcates (Base64-encoded)"
 msgstr "Nivå 2 og Nivå 3 sertifikater (Base64 encoded)"
@@ -8031,11 +7639,7 @@ msgstr "Navngi serier"
 msgid "Language"
 msgstr "Språk"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:156
-msgid "Laothian"
-msgstr "Laotisk"
-
-#: ncidclient/src/plugin.py:828 fritzcall/src/plugin.py:2778
+#: ncidclient/src/plugin.py:828 fritzcall/src/plugin.py:2777
 msgid "Last 10 calls:\n"
 msgstr "Siste 10 samtaler:\n"
 
@@ -8060,14 +7664,6 @@ msgstr "Siste oppfriskning %s"
 #: webcamviewer/src/WebcamTravel.py:247 webcamviewer/src/WebcamTravel.py:250
 msgid "Last updated: "
 msgstr "Sist oppdatert: "
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:157
-msgid "Latin"
-msgstr "Latinsk"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:158
-msgid "Latvian"
-msgstr "Latvisk"
 
 #: pushservice/src/Controller/FreeSpace.py:35
 #, python-format
@@ -8098,6 +7694,10 @@ msgstr "Lisens"
 msgid "LigaLine"
 msgstr "LigaLine"
 
+#: weatherplugin/src/MSNWeather.py:34
+msgid "Light Snow Showers"
+msgstr ""
+
 #: mytube/src/plugin.py:1159
 msgid "Likes: "
 msgstr "Like: "
@@ -8116,10 +7716,6 @@ msgstr "Begrens søkeresultater til favorittkanaler:"
 #, python-format
 msgid "Limit: %d GB\n"
 msgstr "Grense: %d GB\n"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:159
-msgid "Lingala"
-msgstr "Lingala"
 
 #: infobartunerstate/src/IBTSConfiguration.py:126
 msgid "List goes up"
@@ -8166,10 +7762,6 @@ msgstr "Lytt til fjernkontroll"
 msgid "Lists"
 msgstr "Lister"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:160
-msgid "Lithuanian"
-msgstr "Litauisk"
-
 #: tageditor/src/plugin.py:47
 msgid "Load"
 msgstr "Last"
@@ -8190,10 +7782,6 @@ msgstr "Last WEB kanaler i favoritt"
 msgid "Load feed on startup:"
 msgstr "Last mating ved oppstart:"
 
-#: youtubeplayer/src/YouTubeList.py:254 youtubeplayer/src/YouTubeList.py:265
-msgid "Load further entries of current Feed?"
-msgstr "Last flere oppføringer for nåværende feed?"
-
 #: webinterface/src/WebIfConfig.py:64
 msgid "Load movie-length"
 msgstr "Se filmlengde"
@@ -8206,34 +7794,10 @@ msgstr "Last sider fra feed"
 msgid "Loading ..."
 msgstr "Laster..."
 
-#: youtubeplayer/src/YouTubeList.py:392 youtubeplayer/src/YouTubeList.py:401
-msgid "Loading additional videos, be patient ..."
-msgstr "Laster tillagte videoer, vær tålmodig..."
-
 #: webcamviewer/src/plugin.py:98
 #, python-format
 msgid "Loading config file %s failed: %s"
 msgstr "Lasting av konfigurasjonsfil %s feilet: %s"
-
-#: youtubeplayer/src/YouTubeList.py:360
-msgid "Loading favorits, be patient ..."
-msgstr "Laster favoritter, vær tålmodig..."
-
-#: youtubeplayer/src/YouTubeList.py:344
-msgid "Loading playlist, be patient ..."
-msgstr "Laster spilleliste, vennligst vent..."
-
-#: youtubeplayer/src/YouTubeList.py:406
-msgid "Loading related videos, be patient ..."
-msgstr "Laster tilhørende videoer, vær tålmodig!"
-
-#: youtubeplayer/src/YouTubeList.py:411
-msgid "Loading response videos, be patient ..."
-msgstr "Laster responsvideoer, vær tålmodig..."
-
-#: youtubeplayer/src/YouTubeList.py:366
-msgid "Loading standard feed, be patient ..."
-msgstr "Laster standard feeds, vær tålmodig..."
 
 #: ftpbrowser/src/FTPBrowser.py:176
 msgid "Local"
@@ -8296,7 +7860,7 @@ msgstr "Lokasjonskode"
 msgid "Location:"
 msgstr "Lokasjon:"
 
-#: fritzcall/src/plugin.py:2677
+#: fritzcall/src/plugin.py:2676
 msgid "Log level"
 msgstr "Loggnivå"
 
@@ -8317,14 +7881,8 @@ msgstr "Loggplassering"
 msgid "Logging-Path: %s"
 msgstr "Loggplassering: %s"
 
-#: youtubeplayer/src/YouTubeList.py:490 youtubeplayer/src/YouTubeList.py:516
-#: youtubeplayer/src/YouTubeList.py:542 youtubeplayer/src/YouTubeList.py:572
-#: youtubeplayer/src/plugin.py:82 youtubeplayer/src/plugin.py:102
-msgid "Login not successful"
-msgstr "Innlogging mislyktes"
-
 #. TRANSLATORS: keep it short, this is a button
-#: imdb/src/plugin.py:80 ofdb/src/plugin.py:53 fritzcall/src/plugin.py:1555
+#: imdb/src/plugin.py:80 ofdb/src/plugin.py:53 fritzcall/src/plugin.py:1554
 msgid "Lookup"
 msgstr "Oppslag"
 
@@ -8340,10 +7898,6 @@ msgstr "Oppslag på IMDb.com"
 #: growlee/src/plugin.py:31 growlee/src/plugin.py:52
 msgid "Low (Yes/No)"
 msgstr "Lav (Ja/Nei)"
-
-#: youtubeplayer/src/YouTubeUserConfig.py:46
-msgid "Low Quality (Mono)"
-msgstr "Lav kvalitet (Mono)"
 
 #: autotimer/src/AutoTimerEditor.py:529
 msgid "Lower bound of timespan."
@@ -8361,21 +7915,13 @@ msgstr ""
 msgid "MM/DD HH:MM"
 msgstr "MM/DD HH:MM"
 
-#: weatherplugin/src/setup.py:302
-msgid "MSN location search result"
-msgstr "MSN lokasjon søkeresultat"
-
-#: fritzcall/src/plugin.py:2623
+#: fritzcall/src/plugin.py:2622
 msgid "MSN to show (separated by ,)"
 msgstr "MSN som vises (separert med ,)"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:128
 msgid "Mac Address"
 msgstr "MAC adresse"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:161
-msgid "Macedonian"
-msgstr "Makedonsk"
 
 #: valixdcontrol/src/plugin.py:45
 msgid "Magic Shadow"
@@ -8389,7 +7935,7 @@ msgstr "Post fra"
 msgid "Mail to or leave empty (From will be used)"
 msgstr "Post til eller la være tom (Fra vil bli brukt)"
 
-#: fritzcall/src/plugin.py:570
+#: fritzcall/src/plugin.py:569
 msgid "Mailbox"
 msgstr "Postboks"
 
@@ -8405,25 +7951,9 @@ msgstr "Hovedbilde"
 msgid "Main bouquet for channel editor"
 msgstr "Hovedfavoritt for kanaleditor"
 
-#: fritzcall/src/plugin.py:2678
+#: fritzcall/src/plugin.py:2677
 msgid "Make it more skin friendly"
 msgstr "Lag den mere skin vennlig"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:162
-msgid "Malagasy"
-msgstr "Malagasisk"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:163
-msgid "Malay"
-msgstr "Malaysisk"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:164
-msgid "Malayalam"
-msgstr "Malayalam"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:165
-msgid "Maltese"
-msgstr "Maltesisk"
 
 #. TRANSLATORS: leaving this empty is encouraged to not cause any confusion (this string was taken directly from the standard PluginBrowser)
 #: pluginsort/src/plugin.py:312
@@ -8464,14 +7994,6 @@ msgstr ""
 #: moviecut/src_py/plugin.py:103
 msgid "Manual specification"
 msgstr "Manuell spesifiksjon"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:166
-msgid "Maori"
-msgstr "Maori"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:167
-msgid "Marathi"
-msgstr "Marathi"
 
 #: vps/src_py/Vps_setup.py:35
 msgid "Margin after record (in seconds)"
@@ -8546,7 +8068,7 @@ msgstr ""
 "Maksimum TimeShift lengde pr program nådd!\n"
 "Restarter TimeShift nå..."
 
-#: satipclient/src/SatIPTunerSetup.py:138
+#: satipclient/src/SatIPTunerSetup.py:130
 #, python-brace-format
 msgid "Maximum amount of tuners for {0} configured!"
 msgstr "Maksimum antall tunere for {0} konfigurert!"
@@ -8613,10 +8135,6 @@ msgstr "Mediaspiller ikke installert"
 msgid "Mediaplayer was not active"
 msgstr "Mediaspiller var ikke aktiv"
 
-#: youtubeplayer/src/YouTubeUserConfig.py:47
-msgid "Medium Quality (Mono)"
-msgstr "Medium kvalitet (Mono)"
-
 #: audiosync/src/AC3main.py:204 googlemaps/src/plugin.py:210
 #: netcaster/src/bin/plugin.py:191
 msgid "Menu"
@@ -8656,7 +8174,7 @@ msgstr "Merlin Music Player and iDream"
 msgid "Merlin iDream is not installed!"
 msgstr "Merlin iDream er ikke installert!"
 
-#: easyinfo/src/plugin.py:602
+#: easyinfo/src/plugin.py:604
 msgid "MerlinEPG is not installed!"
 msgstr "MerlinEPG er ikke installert!"
 
@@ -8714,7 +8232,7 @@ msgstr "Min viftehastighet stopp %d rpm ved VLT=%d og PWM=0 (%s)"
 msgid "Minimum Priority"
 msgstr "Minimum prioritet"
 
-#: fritzcall/src/plugin.py:2649
+#: fritzcall/src/plugin.py:2648
 msgid "Minutes of uptime of WLAN guest network"
 msgstr "Minutter oppetid for WLAN gjestenettverk"
 
@@ -8729,11 +8247,11 @@ msgstr ""
 "Vennligst legg til påkrevd binærfil selv."
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1345
+#: fritzcall/src/plugin.py:1344
 msgid "Missed"
 msgstr "Tapte"
 
-#: fritzcall/src/plugin.py:181
+#: fritzcall/src/plugin.py:180
 msgid "Missed calls"
 msgstr "Tapte samtaler"
 
@@ -8804,6 +8322,22 @@ msgstr "Manglende timer"
 msgid "Missing value for parameter dirname"
 msgstr "Manglende verdi for parameter dirname"
 
+#: weatherplugin/src/MSNWeather.py:37
+msgid "Mixed Rain and Hail"
+msgstr ""
+
+#: weatherplugin/src/MSNWeather.py:33
+msgid "Mixed Rain and Sleet"
+msgstr ""
+
+#: weatherplugin/src/MSNWeather.py:33
+msgid "Mixed Rain and Snow"
+msgstr ""
+
+#: weatherplugin/src/MSNWeather.py:33
+msgid "Mixed Snow and Sleet"
+msgstr ""
+
 #: videocolorspace/src/VideoColorSpace.py:70
 msgid "Mode:"
 msgstr "Modus:"
@@ -8845,10 +8379,6 @@ msgstr ""
 msgid "Modus"
 msgstr "Modus"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:168
-msgid "Moldavian"
-msgstr "Moldovisk"
-
 #
 #: partnerbox/src/plugin.py:1284 partnerbox/src/plugin.py:1341
 #: partnerbox/src/plugin.py:1511
@@ -8858,15 +8388,10 @@ msgstr "Man"
 #
 #: partnerbox/src/RemoteTimerEntry.py:143
 #: partnerbox/src/RemoteTimerEntry.py:447
-#: merlinepgcenter/src/HelperFunctions.py:42 advhdmi/src/plugin.py:42
-#: elektro/src/plugin.py:126 kiddytimer/src/KTglob.py:8
-#: autotimer/src/AutoTimerEditor.py:41
+#: merlinepgcenter/src/HelperFunctions.py:42 elektro/src/plugin.py:126
+#: kiddytimer/src/KTglob.py:8 autotimer/src/AutoTimerEditor.py:41
 msgid "Monday"
 msgstr "Mandag"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:169
-msgid "Mongolian"
-msgstr "Mongolsk"
 
 #: werbezapper/src/WerbeZapper.py:50
 #, python-format
@@ -8890,25 +8415,9 @@ msgstr "Mer enn bare en EPG..."
 msgid "Mosaic"
 msgstr "Mosaikk"
 
-#: youtubeplayer/src/YouTubeStdFeedSelection.py:42
-msgid "Most Discussed"
-msgstr "Mest diskutert"
-
-#: youtubeplayer/src/YouTubeStdFeedSelection.py:44
-msgid "Most Linked"
-msgstr "Mest linket"
-
-#: youtubeplayer/src/YouTubeStdFeedSelection.py:46
-msgid "Most Recent"
-msgstr "Nyeste"
-
-#: youtubeplayer/src/YouTubeStdFeedSelection.py:45
-msgid "Most Responded"
-msgstr "Mest respondert"
-
-#: youtubeplayer/src/YouTubeStdFeedSelection.py:38
-msgid "Most Viewed"
-msgstr "Mest sett"
+#: weatherplugin/src/MSNWeather.py:36
+msgid "Mostly Cloudy"
+msgstr ""
 
 #: networkbrowser/src/plugin.py:33 networkbrowser/src/plugin.py:42
 msgid "Mount Manager"
@@ -9074,59 +8583,11 @@ msgstr ""
 "Movielist Preview lager skjermbilder av innspillinger og viser disse i i "
 "filmlisten."
 
-#: serienfilm/src/MovieList.py:595 youtubeplayer/src/YouTubeSearchDialog.py:74
-#: easymedia/src/plugin.py:320 easymedia/src/plugin.py:371
+#: serienfilm/src/MovieList.py:595 easymedia/src/plugin.py:320
+#: easymedia/src/plugin.py:371
 #: webinterface/src/WebComponents/Sources/Strings.py:16
 msgid "Movies"
 msgstr "Filmer"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:77
-msgid "Movies - Action/Adventure"
-msgstr "Filmer - Action/Eventyr"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:73
-msgid "Movies - Anime/Animation"
-msgstr "Filmer - Anime/Animasjon"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:78
-msgid "Movies - Classics"
-msgstr "Filmer - Klassisk"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:76
-msgid "Movies - Documentary"
-msgstr "Filmer - Dokumentar"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:81
-msgid "Movies - Drama"
-msgstr "Filmer - Drama"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:82
-msgid "Movies - Family"
-msgstr "Filmer - Familie"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:79
-msgid "Movies - Foreign"
-msgstr "Filmer - Utenlandsk"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:80
-msgid "Movies - Horror"
-msgstr "Filmer - Skrekkfilm"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:84
-msgid "Movies - Sci-Fi/Fantasy"
-msgstr "Filmer - Sci-Fi/Fantasi"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:83
-msgid "Movies - Shorts"
-msgstr "Filmer - Kortfilm"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:85
-msgid "Movies - Thriller"
-msgstr "Filmer - Spenningsfilm"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:75
-msgid "Moview - Comedy"
-msgstr "Filmer - Kommedie"
 
 #: webinterface/src/WebComponents/Sources/Movie.py:145
 #, python-format
@@ -9147,12 +8608,11 @@ msgstr "Multi EPG"
 msgid "Multi Sat"
 msgstr "Multi Sat"
 
-#: satipclient/src/SatIPTunerSetup.py:134
+#: satipclient/src/SatIPTunerSetup.py:126
 msgid "Multiple Tuner Types available!"
 msgstr "Flere tunertyper tilgjengelig!"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:59 mytube/src/plugin.py:70
-#: easymedia/src/plugin.py:386
+#: mytube/src/plugin.py:70 easymedia/src/plugin.py:386
 msgid "Music"
 msgstr "Musikk"
 
@@ -9168,7 +8628,7 @@ msgstr "Lydløs"
 msgid "Mute button remote control"
 msgstr "Lyddempingstast fjernkontroll"
 
-#: fritzcall/src/plugin.py:2625
+#: fritzcall/src/plugin.py:2624
 msgid "Mute on call"
 msgstr "Demp lyd ved samtale"
 
@@ -9231,6 +8691,10 @@ msgstr "MyVideo spiller er ikke installert!"
 #: easymedia/src/plugin.py:213
 msgid "MyVideo player:"
 msgstr "MyVideo spiller:"
+
+#: weatherplugin/src/MSNWeather.py:217
+msgid "N"
+msgstr ""
 
 #: webinterface/src/WebComponents/Converter/HddInfo.py:32
 msgid "N/A"
@@ -9299,6 +8763,10 @@ msgstr "NCID server (Navn eller IP)"
 msgid "NCID server listening port (1-65535)"
 msgstr "NCID server lytteport (1-65535)"
 
+#: weatherplugin/src/MSNWeather.py:189
+msgid "NE"
+msgstr ""
+
 #: networkbrowser/src/MountEdit.py:85
 msgid "NFS share"
 msgstr "NFS deling"
@@ -9308,13 +8776,25 @@ msgstr "NFS deling"
 msgid "NGRAB"
 msgstr "NGRAB"
 
+#: weatherplugin/src/MSNWeather.py:187
+msgid "NNE"
+msgstr ""
+
+#: weatherplugin/src/MSNWeather.py:215
+msgid "NNW"
+msgstr ""
+
+#: weatherplugin/src/MSNWeather.py:213
+msgid "NW"
+msgstr ""
+
 #
 #: partnerbox/src/PartnerboxSetup.py:125 partnerbox/src/PartnerboxSetup.py:262
 #: partnerbox/src/RemoteTimerEntry.py:153
 #: partnerbox/src/RemoteTimerEntry.py:465 ncidclient/src/plugin.py:593
-#: youtubeplayer/src/YouTubeAddPlayList.py:34 elektro/src/plugin.py:468
-#: showclock/src/plugin.py:121 infobartunerstate/src/plugin.py:59
-#: fritzcall/src/plugin.py:2325 birthdayreminder/src/BirthdayReminder.py:218
+#: elektro/src/plugin.py:468 showclock/src/plugin.py:121
+#: infobartunerstate/src/plugin.py:59 fritzcall/src/plugin.py:2324
+#: birthdayreminder/src/BirthdayReminder.py:218
 #: birthdayreminder/src/plugin.py:43 growlee/src/plugin.py:167
 #: webinterface/src/WebComponents/Sources/Strings.py:59
 msgid "Name"
@@ -9328,7 +8808,7 @@ msgstr "Oppgi navn og beskrivelse"
 msgid "Name of DVD"
 msgstr "Navn på DVD"
 
-#: fritzcall/src/plugin.py:2646
+#: fritzcall/src/plugin.py:2645
 msgid "Name of WLAN guest network"
 msgstr "Navn på WLAN gjestenettverk"
 
@@ -9341,14 +8821,6 @@ msgstr "Navn :"
 #: namezap/src/plugin.py:104
 msgid "NameZAP Setup"
 msgstr "NameZAP oppsett"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:170
-msgid "Nauru"
-msgstr "Nauru"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:171
-msgid "Nepali"
-msgstr "Nepalsk"
 
 #
 #: webinterface/src/WebComponents/Sources/Strings.py:131
@@ -9397,7 +8869,7 @@ msgstr ""
 #: ncidclient/src/plugin.py:443 simplerss/src/RSSSetup.py:72
 #: tageditor/src/plugin.py:46 curlytx/src/CurlyTxSettings.py:48
 #: autotimer/src/AutoTimerEditor.py:911 autotimer/src/AutoTimerEditor.py:1115
-#: epgrefresh/src/EPGRefreshChannelEditor.py:80 fritzcall/src/plugin.py:2116
+#: epgrefresh/src/EPGRefreshChannelEditor.py:80 fritzcall/src/plugin.py:2115
 #: growlee/src/plugin.py:101
 msgid "New"
 msgstr "Ny"
@@ -9418,7 +8890,7 @@ msgstr "Nytt søk"
 msgid "New Shadow"
 msgstr "Ny skygge"
 
-#: satipclient/src/SatIPTunerSetup.py:151
+#: satipclient/src/SatIPTunerSetup.py:143
 msgid "New Tuner added! GUI restart required!"
 msgstr "Ny tuner lagt til! GUI restart er påkrevd!"
 
@@ -9426,15 +8898,11 @@ msgstr "Ny tuner lagt til! GUI restart er påkrevd!"
 msgid "New Vision"
 msgstr "Ny Visjon"
 
-#: youtubeplayer/src/YouTubeList.py:213
-msgid "New YouTube search"
-msgstr "Nytt YouTube søk"
-
 #: mytube/src/plugin.py:103
 msgid "New Zealand"
 msgstr "New Zealand"
 
-#: fritzcall/src/plugin.py:2956
+#: fritzcall/src/plugin.py:2955
 msgid "New call"
 msgstr "Ny samtale"
 
@@ -9471,7 +8939,7 @@ msgstr "Nytt abonnement lagt til"
 msgid "New title:"
 msgstr "Ny tittel:"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:67 mytube/src/plugin.py:78
+#: mytube/src/plugin.py:78
 msgid "News & Politics"
 msgstr "Nyheter & Politikk"
 
@@ -9507,10 +8975,10 @@ msgstr "Kallenavn"
 
 #
 #: dreammediathek/src/plugin.py:102 partnerbox/src/RemoteTimerEntry.py:298
-#: youtubeplayer/src/YouTubeSearchDialog.py:53 vps/src_py/Vps_check.py:249
-#: vps/src_py/Vps_check.py:277 vps/src_py/Modifications.py:140
-#: vps/src_py/plugin.py:17 vps/src_py/plugin.py:18 moviecut/src_py/plugin.py:95
-#: mytube/src/plugin.py:61 mytube/src/plugin.py:627 mytube/src/plugin.py:633
+#: vps/src_py/Vps_check.py:249 vps/src_py/Vps_check.py:277
+#: vps/src_py/Modifications.py:140 vps/src_py/plugin.py:17
+#: vps/src_py/plugin.py:18 moviecut/src_py/plugin.py:95 mytube/src/plugin.py:61
+#: mytube/src/plugin.py:627 mytube/src/plugin.py:633
 #: autotimer/src/AutoTimerEditor.py:317 epgrefresh/src/plugin.py:52
 #: autotimer/src/autotimerwizard.xml
 msgid "No"
@@ -9524,7 +8992,7 @@ msgstr "Ingen buketter å vise"
 msgid "No Connection"
 msgstr ""
 
-#: fritzcall/src/plugin.py:1054
+#: fritzcall/src/plugin.py:1053
 msgid "No DECT phone registered"
 msgstr "Ingen DECT telefon registrert"
 
@@ -9543,10 +9011,6 @@ msgstr "Ingen HD strømning"
 #: permanenttimeshift/src/plugin.py:889
 msgid "No HDD found or HDD not initialized!"
 msgstr "Ingen harddisk funnet eller harddisk ikke initialisert!"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:141
-msgid "No HDMI-Cec-Hooks are registered!"
-msgstr "Ingen HDMI-Cec tilknytninger er registrert"
 
 #: imdb/src/plugin.py:504
 msgid "No IMDb match."
@@ -9576,7 +9040,7 @@ msgstr "Ingen timer tilgjengelig!"
 msgid "No Timeshift found to save as recording!"
 msgstr "Ingen TimeShift filer funnet for lagring som opptak!"
 
-#: fritzcall/src/plugin.py:1086
+#: fritzcall/src/plugin.py:1085
 msgid "No call redirection active"
 msgstr "Ingen viderekobling aktiv"
 
@@ -9603,8 +9067,8 @@ msgid "No details found."
 msgstr "Ingen detaljer funnet"
 
 #: ncidclient/src/plugin.py:525 ncidclient/src/plugin.py:542
-#: ncidclient/src/plugin.py:634 fritzcall/src/plugin.py:2211
-#: fritzcall/src/plugin.py:2228 fritzcall/src/plugin.py:2384
+#: ncidclient/src/plugin.py:634 fritzcall/src/plugin.py:2210
+#: fritzcall/src/plugin.py:2227 fritzcall/src/plugin.py:2383
 msgid "No entry selected"
 msgstr "Ingenting valgt"
 
@@ -9637,7 +9101,7 @@ msgstr "Ingen loggfil funnet"
 msgid "No lyrics found"
 msgstr "Ingen lyrikk funnet"
 
-#: fritzcall/src/plugin.py:1034
+#: fritzcall/src/plugin.py:1033
 msgid "No mailbox active"
 msgstr "Ingen postbokser aktiv"
 
@@ -9653,7 +9117,7 @@ msgstr "Ingen samsvarende kanal funnet"
 msgid "No matching episode found"
 msgstr "Ingen samsvarende episode funnet"
 
-#: vlcplayer/src/VlcPlayer.py:449 youtubeplayer/src/DirectYouTubePlayer.py:216
+#: vlcplayer/src/VlcPlayer.py:449
 msgid "No more files in this directory"
 msgstr "Ingen flere filer i denne katalogen"
 
@@ -9686,8 +9150,8 @@ msgstr "Ingen nettverksenheter funnet!"
 msgid "No page feed URL defined"
 msgstr "Ingen sidefeed URL definert"
 
-#: ncidclient/src/plugin.py:798 fritzcall/src/plugin.py:2737
-#: fritzcall/src/plugin.py:3428
+#: ncidclient/src/plugin.py:798 fritzcall/src/plugin.py:2736
+#: fritzcall/src/plugin.py:3427
 msgid "No phonebook"
 msgstr "Ingen telefonbok"
 
@@ -9699,19 +9163,19 @@ msgstr "Ingen spillbare filmer funnet! Stopp avspilling av denne filmen?"
 msgid "No plugin assigned!"
 msgstr "Ingen plugin tildelt!"
 
-#: vlcplayer/src/VlcPlayer.py:476 youtubeplayer/src/DirectYouTubePlayer.py:229
+#: vlcplayer/src/VlcPlayer.py:476
 msgid "No previous file in this directory"
 msgstr "Ingen tidligere fil i denne katalogen"
 
-#: fritzcall/src/plugin.py:1696
+#: fritzcall/src/plugin.py:1695
 msgid "No result from LDIF"
 msgstr "Ingen resultat fra LDIF"
 
-#: fritzcall/src/plugin.py:1694
+#: fritzcall/src/plugin.py:1693
 msgid "No result from Outlook export"
 msgstr "Ingen resultat fra Outlook eksport"
 
-#: fritzcall/src/plugin.py:1692
+#: fritzcall/src/plugin.py:1691
 msgid "No result from reverse lookup"
 msgstr "Ingen resultat fra omvendt oppslag"
 
@@ -9768,7 +9232,7 @@ msgstr "Nei, fjern dem."
 msgid "None"
 msgstr "Ingen"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:71 mytube/src/plugin.py:82
+#: mytube/src/plugin.py:82
 msgid "Nonprofits & Activism"
 msgstr "Nonprofits & Activism"
 
@@ -9776,9 +9240,9 @@ msgstr "Nonprofits & Activism"
 msgid "Normal (Information)"
 msgstr "Normal (informasjon)"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:172
-msgid "Norwegian"
-msgstr "Norsk"
+#: weatherplugin/src/MSNWeather.py:38
+msgid "Not Available"
+msgstr ""
 
 #: autotimer/src/AutoTimerEditor.py:577
 msgid "Not after"
@@ -9788,7 +9252,7 @@ msgstr "Ikke etter"
 msgid "Not before"
 msgstr "Ikke før"
 
-#: fritzcall/src/plugin.py:158
+#: fritzcall/src/plugin.py:157
 msgid "Not deactivating after time"
 msgstr "Ikke deaktivert etter tid"
 
@@ -9876,7 +9340,7 @@ msgstr "Nå"
 msgid "Nr"
 msgstr "Nr"
 
-#: ncidclient/src/plugin.py:594 fritzcall/src/plugin.py:2326
+#: ncidclient/src/plugin.py:594 fritzcall/src/plugin.py:2325
 msgid "Number"
 msgstr "Nummer"
 
@@ -9946,12 +9410,11 @@ msgstr "OFDb forespørsel feilet!"
 #: partnerbox/src/RemoteTimerEntry.py:67 pipservicerelation/src/plugin.py:189
 #: audiosync/src/AC3main.py:66 merlinepgcenter/src/MerlinEPGCenter.py:1298
 #: ftpbrowser/src/FTPServerManager.py:149 imdb/src/plugin.py:685
-#: advhdmi/src/AdvHdmiCecSetup.py:302 babelzapper/src/plugin.py:76
-#: ncidclient/src/plugin.py:578 ncidclient/src/plugin.py:700
-#: pipzap/src/PipzapSetup.py:59 automatictimerlistcleanup/src/plugin.py:50
-#: quickbutton/src/plugin.py:197 teletext/src/plugin.py:1131
-#: teletext/src/plugin.py:1152 teletext/src/plugin.py:1278
-#: movieselectionquickbutton/src/plugin.py:175
+#: babelzapper/src/plugin.py:76 ncidclient/src/plugin.py:578
+#: ncidclient/src/plugin.py:700 pipzap/src/PipzapSetup.py:59
+#: automatictimerlistcleanup/src/plugin.py:50 quickbutton/src/plugin.py:197
+#: teletext/src/plugin.py:1131 teletext/src/plugin.py:1152
+#: teletext/src/plugin.py:1278 movieselectionquickbutton/src/plugin.py:175
 #: epgsearch/src/EPGSearchSetup.py:55 epgsearch/src/EPGSearch.py:376
 #: movieretitle/src/plugin.py:40 simplerss/src/RSSSetup.py:24
 #: simplerss/src/RSSSetup.py:71 virtualzap/src/plugin.py:725
@@ -9972,7 +9435,7 @@ msgstr "OFDb forespørsel feilet!"
 #: curlytx/src/CurlyTxSettings.py:207
 #: internetradio/src/InternetRadioSetup.py:47
 #: internetradio/src/InternetRadioSetup.py:122 cdinfo/src/plugin.py:57
-#: weatherplugin/src/setup.py:196 weatherplugin/src/setup.py:304
+#: weatherplugin/src/setup.py:196 weatherplugin/src/setup.py:296
 #: automaticcleanup/src/plugin.py:171
 #: infobartunerstate/src/IBTSConfiguration.py:48
 #: autotimer/src/AutoTimerImporter.py:43 autotimer/src/AutoTimerImporter.py:118
@@ -9981,15 +9444,15 @@ msgstr "OFDb forespørsel feilet!"
 #: emission/src/EmissionSetup.py:38
 #: epgrefresh/src/EPGRefreshChannelEditor.py:78
 #: epgrefresh/src/EPGRefreshConfiguration.py:103
-#: videocolorspace/src/VideoColorSpace.py:80 fritzcall/src/plugin.py:2310
-#: fritzcall/src/plugin.py:2546 birthdayreminder/src/BirthdayReminder.py:727
+#: videocolorspace/src/VideoColorSpace.py:80 fritzcall/src/plugin.py:2309
+#: fritzcall/src/plugin.py:2545 birthdayreminder/src/BirthdayReminder.py:727
 #: antiscrollbar/src/plugin.py:126 growlee/src/plugin.py:100
 #: webinterface/src/WebIfConfig.py:31 movielistpreview/src/plugin.py:123
 #: remotetimer/src/plugin.py:233
 msgid "OK"
 msgstr "OK"
 
-#: easyinfo/src/plugin.py:252
+#: easyinfo/src/plugin.py:254
 msgid "OK function in Easy-PG:"
 msgstr "OK funksjon i EasyPG"
 
@@ -10042,19 +9505,10 @@ msgstr ""
 "Obligatorisk parameters mangler [cmd [set,get], time [0-999], action "
 "[standby,shutdown], enabled [True,False]"
 
-#: weatherplugin/src/plugin.py:209
-#, python-format
-msgid "Observation point: %s"
-msgstr "Observasjonpunkt: %s"
-
-#: weatherplugin/src/plugin.py:208
+#: weatherplugin/src/plugin.py:207
 #, python-format
 msgid "Observation time: %s"
 msgstr "Observasjonstid: %s"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:173
-msgid "Occitan"
-msgstr "Oksitansk"
 
 #: internetradio/src/plugin.py:35 internetradio/src/plugin.py:37
 #: internetradio/src/plugin.py:41
@@ -10103,15 +9557,15 @@ msgstr "På alle tjenester"
 msgid "On same service"
 msgstr "På samme tjeneste"
 
-#: fritzcall/src/plugin.py:1057
+#: fritzcall/src/plugin.py:1056
 msgid "One DECT phone registered"
 msgstr "En DECT telefon registrert"
 
-#: fritzcall/src/plugin.py:1080
+#: fritzcall/src/plugin.py:1079
 msgid "One call redirection active"
 msgstr "En viderekobling aktivert"
 
-#: fritzcall/src/plugin.py:1046
+#: fritzcall/src/plugin.py:1045
 msgid "One mailbox active"
 msgstr "En postbox aktiv"
 
@@ -10202,14 +9656,6 @@ msgstr "Åpne ekstramenyen"
 msgid "Options:\n"
 msgstr "Valg:\n"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:274
-msgid "Order by"
-msgstr "Sorter etter"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:174
-msgid "Oriya"
-msgstr "Orlya"
-
 #: subsdownloader2/src/plugin.py:398
 #, python-format
 msgid "Oryginal dir name: %s"
@@ -10220,7 +9666,7 @@ msgstr "Originalt katalognavn: %s"
 msgid "Oryginal file name: %s"
 msgstr "Originalt filnavn: %s"
 
-#: fritzcall/src/plugin.py:168
+#: fritzcall/src/plugin.py:167
 msgid "Others"
 msgstr "Andre"
 
@@ -10237,11 +9683,11 @@ msgid "Outer Bound (+/-)"
 msgstr "Ytre grense (+/-)"
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1349
+#: fritzcall/src/plugin.py:1348
 msgid "Outgoing"
 msgstr "Utgående"
 
-#: fritzcall/src/plugin.py:3099
+#: fritzcall/src/plugin.py:3098
 #, python-format
 msgid ""
 "Outgoing Call on %(date)s at %(time)s to\n"
@@ -10258,7 +9704,7 @@ msgstr ""
 "---------------------------------------------\n"
 "fra: %(phone)s"
 
-#: fritzcall/src/plugin.py:182
+#: fritzcall/src/plugin.py:181
 msgid "Outgoing calls"
 msgstr "Utgående samtaler"
 
@@ -10364,19 +9810,13 @@ msgstr "Overordnet katalog"
 msgid "Parsing failed!"
 msgstr "Analysering feilet!"
 
-#: advhdmi/src/AdvHdmiCecSetup.py:90
-msgid ""
-"Partially disable HDMI-Cec?\n"
-"It can be prevented only the signals that are sent from the Dreambox. "
-"Signals received by the Dreambox will not be prevented."
-msgstr ""
-"Delvis deaktivere HDMI-Cec?\n"
-"Dette gjelder kun for signaler sendt fra Dreambox. Dette gjelder ikke for "
-"signaler mottatt av Dreambox."
-
 #: eparted/meta/plugin_eparted.xml./eparted/meta/plugin_eparted.xml
 msgid "Partition tool"
 msgstr "Partisjonsverktøy"
+
+#: weatherplugin/src/MSNWeather.py:36
+msgid "Partly Cloudy"
+msgstr ""
 
 #: partnerbox/src/RemoteTimerEntry.py:554
 #: partnerbox/src/RemoteTimerEntry.py:564
@@ -10408,10 +9848,6 @@ msgstr "Partnerbox: Rediger oppføring"
 msgid "Partnerbox: List of Entries"
 msgstr "Partnerbox: Liste med oppføringer"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:175
-msgid "Pashto"
-msgstr "Pashto"
-
 #: ftpbrowser/src/FTPServerManager.py:159
 msgid "Passive:"
 msgstr "Passiv:"
@@ -10420,8 +9856,7 @@ msgstr "Passiv:"
 msgid "Passwd"
 msgstr "Passord"
 
-#: partnerbox/src/PartnerboxSetup.py:266
-#: youtubeplayer/src/YouTubeUserConfig.py:141 elektro/src/plugin.py:381
+#: partnerbox/src/PartnerboxSetup.py:266 elektro/src/plugin.py:381
 #: networkbrowser/src/MountEdit.py:134 networkbrowser/src/UserDialog.py:119
 #: pushservice/src/Services/GNTP.py:50 pushservice/src/Services/SMTP.py:55
 #: emission/src/EmissionSetup.py:29 dyndns/src/plugin.py:37
@@ -10429,11 +9864,11 @@ msgstr "Passord"
 msgid "Password"
 msgstr "Passord"
 
-#: fritzcall/src/plugin.py:2643
+#: fritzcall/src/plugin.py:2642
 msgid "Password Accessing FRITZ!Box"
 msgstr "Passord for FRITXBox"
 
-#: fritzcall/src/plugin.py:2648
+#: fritzcall/src/plugin.py:2647
 msgid "Password of WLAN guest network"
 msgstr "Passord for WLAN gjestenettverk"
 
@@ -10480,7 +9915,7 @@ msgstr "Pause vist"
 msgid "Pending Services"
 msgstr "Ventende kanaler"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:66 mytube/src/plugin.py:77
+#: mytube/src/plugin.py:77
 msgid "People & Blogs"
 msgstr "Folk & Blogger"
 
@@ -10526,18 +9961,14 @@ msgstr "Permanent Timeshift starttidsutsettelse"
 msgid "PermanentClock shows the clock permanently on the screen."
 msgstr "PermanentClock viser klokken permanet på skjermen."
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:176
-msgid "Persian"
-msgstr "Persisk"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:60 mytube/src/plugin.py:71
+#: mytube/src/plugin.py:71
 msgid "Pets & Animals"
 msgstr "Kjæledyr & Dyr"
 
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:1388 fritzcall/src/plugin.py:2548
-#: fritzcall/src/plugin.py:3463
+#: fritzcall/src/plugin.py:1387 fritzcall/src/plugin.py:2547
+#: fritzcall/src/plugin.py:3462
 msgid "Phone calls"
 msgstr "Telefonsamtaler"
 
@@ -10545,14 +9976,14 @@ msgstr "Telefonsamtaler"
 msgid "PhoneBook Location"
 msgstr "Telefonbok lokasjon"
 
-#: fritzcall/src/plugin.py:2664 fritzcall/src/plugin.py:2686
+#: fritzcall/src/plugin.py:2663 fritzcall/src/plugin.py:2685
 msgid "PhoneBook and Faces Location"
 msgstr "Telefonbok og ansiktslokasjon"
 
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
-#: ncidclient/src/plugin.py:467 fritzcall/src/plugin.py:2153
-#: fritzcall/src/plugin.py:2550 fritzcall/src/plugin.py:3464
+#: ncidclient/src/plugin.py:467 fritzcall/src/plugin.py:2152
+#: fritzcall/src/plugin.py:2549 fritzcall/src/plugin.py:3463
 msgid "Phonebook"
 msgstr "Telefonbok"
 
@@ -10658,10 +10089,6 @@ msgstr "Spill filmer fra PC på din Dreambox"
 msgid "Playback of '%s' started"
 msgstr "Avspilling av '%s' startet"
 
-#: youtubeplayer/meta/plugin_youtubeplayer.xml./youtubeplayer/meta/plugin_youtubeplayer.xml
-msgid "Playback of Youtube through a PC"
-msgstr "Avspilling av YouTube igjennom PC"
-
 #: netcaster/meta/plugin_netcaster.xml./netcaster/meta/plugin_netcaster.xml
 msgid "Player for Network and Internet Streams"
 msgstr "Spiller for nettverk og internett stream"
@@ -10685,14 +10112,6 @@ msgstr "Spilleliste '%s' finnes ikke"
 msgid "Playlist (%s) -> Song List"
 msgstr "Spilleliste (%s) -> Spileliste"
 
-#: youtubeplayer/src/YouTubeAddPlayList.py:58
-msgid "Playlist Description"
-msgstr "Spilleliste beskrivelse"
-
-#: youtubeplayer/src/YouTubeAddPlayList.py:57
-msgid "Playlist Name"
-msgstr "Spilleliste navn"
-
 #: webinterface/src/WebComponents/Sources/Strings.py:105
 #, python-format
 msgid "Playlist for %s"
@@ -10703,7 +10122,6 @@ msgstr "Spilleliste for %s"
 msgid "Playlist saved to '%s'"
 msgstr "Spilleliste lagret i '%s'"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:268
 #: merlinmusicplayer/src/plugin.py:2095
 msgid "Playlists"
 msgstr "Spillelister"
@@ -10737,11 +10155,11 @@ msgstr "Vennligst ikke bruk BiB i mellomtiden!"
 msgid "Please enter a searchkey:"
 msgstr "Vennligst legg til søkeord:"
 
-#: weatherplugin/src/setup.py:238
+#: weatherplugin/src/setup.py:233
 msgid "Please enter a valid city name."
 msgstr "Vennligst tast inn et gyldig bynavn."
 
-#: weatherplugin/src/setup.py:240
+#: weatherplugin/src/setup.py:235
 msgid "Please enter a valid location code for the city."
 msgstr "Vennligst tast inn en gyldig lokasjonskode for din by."
 
@@ -10857,7 +10275,7 @@ msgstr "Vennligst velg samsvarende oppføring"
 msgid "Please select the movie path..."
 msgstr "Vennligst velg sti for lagring av film..."
 
-#: satipclient/src/SatIPTunerSetup.py:133
+#: satipclient/src/SatIPTunerSetup.py:125
 msgid "Please select the type of tuner you want to add!"
 msgstr "Vennligst velg type tuner du vil legge til!"
 
@@ -10945,9 +10363,9 @@ msgstr "Pluginmeny"
 msgid "Plugin not active"
 msgstr "Plugin er ikke aktiv"
 
-#: fritzcall/src/plugin.py:2728 fritzcall/src/plugin.py:2735
-#: fritzcall/src/plugin.py:2749 fritzcall/src/plugin.py:3419
-#: fritzcall/src/plugin.py:3426 fritzcall/src/plugin.py:3437
+#: fritzcall/src/plugin.py:2727 fritzcall/src/plugin.py:2734
+#: fritzcall/src/plugin.py:2748 fritzcall/src/plugin.py:3418
+#: fritzcall/src/plugin.py:3425 fritzcall/src/plugin.py:3436
 msgid "Plugin not enabled"
 msgstr "Plugin ikke aktivert"
 
@@ -10993,10 +10411,6 @@ msgstr "Podcast strømmer podcast'er til din Dreambox."
 msgid "Poland"
 msgstr "Polen"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:177
-msgid "Polish"
-msgstr "Polsk"
-
 #: seriesplugin/src/SeriesPluginConfiguration.py:249
 #: autotimer/src/AutoTimerSettings.py:41
 msgid "Poll Interval (in h)"
@@ -11021,56 +10435,51 @@ msgstr "Port"
 msgid "Port:"
 msgstr "Port:"
 
-#
-#: youtubeplayer/src/YouTubeSearchDialog.py:178
-msgid "Portuguese"
-msgstr "Portugisisk"
-
 #: googlemaps/src/plugin.py:422 googlemaps/src/plugin.py:423
 msgid "Pos."
 msgstr "Pos."
 
-#: easyinfo/src/plugin.py:257
+#: easyinfo/src/plugin.py:259
 msgid "Position 1 (info button):"
 msgstr "Posisjon 1 (INFO tast):"
 
-#: easyinfo/src/plugin.py:266
+#: easyinfo/src/plugin.py:268
 msgid "Position 10:"
 msgstr "Posisjon 10:"
 
-#: easyinfo/src/plugin.py:267
+#: easyinfo/src/plugin.py:269
 msgid "Position 11:"
 msgstr "Posisjon 11:"
 
-#: easyinfo/src/plugin.py:258
+#: easyinfo/src/plugin.py:260
 msgid "Position 2 (red button):"
 msgstr "Posisjon 2 (GRØNN tast)"
 
-#: easyinfo/src/plugin.py:259
+#: easyinfo/src/plugin.py:261
 msgid "Position 3 (green button):"
 msgstr "Posisjon 3 (GRØNN tast):"
 
-#: easyinfo/src/plugin.py:260
+#: easyinfo/src/plugin.py:262
 msgid "Position 4 (yellow button):"
 msgstr "Posisjon 4 (GUL tast):"
 
-#: easyinfo/src/plugin.py:261
+#: easyinfo/src/plugin.py:263
 msgid "Position 5 (blue button):"
 msgstr "Posisjon 5 (BLÅ tast):"
 
-#: easyinfo/src/plugin.py:262
+#: easyinfo/src/plugin.py:264
 msgid "Position 6:"
 msgstr "Posisjon 6:"
 
-#: easyinfo/src/plugin.py:263
+#: easyinfo/src/plugin.py:265
 msgid "Position 7:"
 msgstr "Posisjon 7:"
 
-#: easyinfo/src/plugin.py:264
+#: easyinfo/src/plugin.py:266
 msgid "Position 8:"
 msgstr "Posisjon 8:"
 
-#: easyinfo/src/plugin.py:265
+#: easyinfo/src/plugin.py:267
 msgid "Position 9:"
 msgstr "Posisjon 9:"
 
@@ -11227,7 +10636,7 @@ msgstr "Beste sendetid"
 msgid "Prime Time Manager"
 msgstr "Prime Time behandler"
 
-#: easyinfo/src/plugin.py:644
+#: easyinfo/src/plugin.py:646
 msgid "Prime Time Manager is not installed!"
 msgstr "Prime Time behandler er ikke installert!"
 
@@ -11296,13 +10705,9 @@ msgstr "Levert av Dreambox plugin {name:s} {version:s} - {plugin:s}\n"
 msgid "Providers"
 msgstr "Tilbydere"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:40 mytube/src/plugin.py:49
+#: mytube/src/plugin.py:49
 msgid "Published"
 msgstr "Utgitt"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:179
-msgid "Punjabi"
-msgstr "punjabi"
 
 #: showclock/src/plugin.py:71
 msgid "Push \"Exit\" long to show/hide clock"
@@ -11428,10 +10833,6 @@ msgstr "PushService startet: "
 msgid "Puts the box in standby mode after boot."
 msgstr "Setter din Dreambox i standby modus etter oppstart."
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:180
-msgid "Quechua"
-msgstr "Quechua"
-
 #: imdb/src/plugin.py:457
 #, python-format
 msgid "Query IMDb: %s"
@@ -11541,9 +10942,9 @@ msgid "Quick switching via remote control"
 msgstr "Hurtig bytte via fjernkontroll"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:585 fritzcall/src/plugin.py:587
-#: fritzcall/src/plugin.py:876 fritzcall/src/plugin.py:878
-#: fritzcall/src/plugin.py:1363 fritzcall/src/plugin.py:2134
+#: fritzcall/src/plugin.py:584 fritzcall/src/plugin.py:586
+#: fritzcall/src/plugin.py:875 fritzcall/src/plugin.py:877
+#: fritzcall/src/plugin.py:1362 fritzcall/src/plugin.py:2133
 msgid "Quit"
 msgstr "Avslutt"
 
@@ -11577,17 +10978,13 @@ msgstr "Radio tast (lang)"
 msgid "Radio-mode"
 msgstr "Radiomodus"
 
-#: youtubeplayer/src/YouTubeList.py:87
-msgid "Rate"
-msgstr "Frekvens"
+#: weatherplugin/src/MSNWeather.py:36
+msgid "Rain"
+msgstr ""
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:41 mytube/src/plugin.py:50
+#: mytube/src/plugin.py:50
 msgid "Rating"
 msgstr "Rangering"
-
-#: youtubeplayer/src/YouTubeList.py:91
-msgid "Ratings"
-msgstr "Plassering"
 
 #: webcamviewer/src/WebcamTravel.py:247 webcamviewer/src/WebcamTravel.py:250
 msgid "Ratings: "
@@ -11609,7 +11006,7 @@ msgstr "Re-Query IMDb: %s..."
 msgid "Re-Query OFDb: %s..."
 msgstr "Re-Query OFDb: %s..."
 
-#: fritzcall/src/plugin.py:2650
+#: fritzcall/src/plugin.py:2649
 msgid "Read PhoneBook from FRITZ!Box"
 msgstr "Les telefonbok fra FRITZ!Box"
 
@@ -11632,24 +11029,10 @@ msgstr "Leser loggfil...\n"
 msgid "Really close without saving settings?"
 msgstr "Vil du virkelig lukke uten å lagre innstillinger?"
 
-#: youtubeplayer/src/YouTubePlayList.py:88
-#, python-format
-msgid "Really delete %(playlist)s?"
-msgstr "Vil du slette %(playlist)s?"
-
-#: youtubeplayer/src/YouTubeUserList.py:120
-#, python-format
-msgid "Really delete %(user)s?"
-msgstr "Vil du slette %(user)s?"
-
 #: emailclient/src/plugin.py:1049
 #, python-format
 msgid "Really delete account %s?"
 msgstr "Vil du slette konto %s?"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:261
-msgid "Really delete this HDMI-Cec-Timespan Entry?"
-msgstr "Vil du slette denne HDMI-Cec tidsromsoppførelsen?"
 
 #: partnerbox/src/PartnerboxSetup.py:170 partnerbox/src/PartnerboxSetup.py:291
 msgid "Really delete this Partnerbox Entry?"
@@ -11659,7 +11042,7 @@ msgstr "Vil du slette denne Partnerbox oppføringen?"
 msgid "Really delete this Server?"
 msgstr "Vil du slette denne server?"
 
-#: weatherplugin/src/setup.py:117 weatherplugin/src/setup.py:251
+#: weatherplugin/src/setup.py:117 weatherplugin/src/setup.py:246
 msgid "Really delete this WeatherPlugin Entry?"
 msgstr "Vil du slette denne WeatherPlugin oppføringen?"
 
@@ -11704,10 +11087,6 @@ msgstr "Motta varslinger?"
 #, python-format
 msgid "Received %d new news item(s)."
 msgstr "Mottok %d nye nyhetspunkt(er)."
-
-#: youtubeplayer/src/YouTubeStdFeedSelection.py:40
-msgid "Recently Featured"
-msgstr "Tidligere utvalg"
 
 #: reconstructapsc/meta/plugin_reconstructapsc.xml./reconstructapsc/meta/plugin_reconstructapsc.xml
 msgid "Reconstruct .ap and .sc files"
@@ -11843,7 +11222,7 @@ msgid "Refresh now"
 msgstr "Oppfrisk nå"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:593 fritzcall/src/plugin.py:886
+#: fritzcall/src/plugin.py:592 fritzcall/src/plugin.py:885
 msgid "Refresh status"
 msgstr "Oppfriskningsstatus"
 
@@ -11852,17 +11231,13 @@ msgstr "Oppfriskningsstatus"
 msgid "Refreshing"
 msgstr "Oppfriskning"
 
-#: fritzcall/src/plugin.py:964
+#: fritzcall/src/plugin.py:963
 msgid "Refreshing..."
 msgstr "Oppfriskning..."
 
 #: teletext/src/plugin.py:1335
 msgid "Region"
 msgstr "Region"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:136
-msgid "Registered HDMI-Cec-Hooks:"
-msgstr "Registrerte HDMI-Cec koblinger:"
 
 #: pipservicerelation/src/plugin.py:84
 msgid "Related PiP Service"
@@ -11881,7 +11256,7 @@ msgstr "Tilhørende BiB kanal"
 msgid "Related videos"
 msgstr "Tilhørende videoer"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:38 mytube/src/plugin.py:47
+#: mytube/src/plugin.py:47
 msgid "Relevance"
 msgstr "Relevans"
 
@@ -11894,7 +11269,7 @@ msgstr "Last på nytt"
 msgid "Reload current page URL"
 msgstr "Last nåværende URL side på nytt"
 
-#: fritzcall/src/plugin.py:2667
+#: fritzcall/src/plugin.py:2666
 msgid "Reload interval for phonebooks (hours)"
 msgstr "Omlastingsintervall for telefonbok (timer)"
 
@@ -11978,7 +11353,7 @@ msgid "Remote-Control for the Transmission BitTorrent client."
 msgstr "Fjernkontroll for Transmission BitTorrent klient."
 
 #: merlinepgcenter/src/MerlinEPGCenter.py:1297
-#: satipclient/src/SatIPTunerSetup.py:38 seriesplugin/src/ChannelEditor.py:147
+#: satipclient/src/SatIPTunerSetup.py:30 seriesplugin/src/ChannelEditor.py:147
 #: trackautoselect/src/TrackAutoselectSetup.py:158
 #: birthdayreminder/src/BirthdayReminder.py:265
 msgid "Remove"
@@ -12031,16 +11406,6 @@ msgstr "Fjern oppføring"
 msgid "Remove finished timer(s)"
 msgstr "Fjern utførte timer(e)"
 
-#: youtubeplayer/src/YouTubeList.py:625 youtubeplayer/src/YouTubeList.py:650
-#: youtubeplayer/src/YouTubeList.py:690
-msgid "Remove from favorites"
-msgstr "Fjern fra favoritter"
-
-#: youtubeplayer/src/YouTubeList.py:630 youtubeplayer/src/YouTubeList.py:655
-#: youtubeplayer/src/YouTubeList.py:694
-msgid "Remove from playlist"
-msgstr "Fjern fra spilleliste"
-
 #: autotimer/src/AutoTimerSettings.py:59
 msgid "Remove not existing events"
 msgstr "Fjern ikkeeksisterende programmer"
@@ -12058,7 +11423,7 @@ msgid "Remove the selected entry"
 msgstr "Fjern valgt oppføring"
 
 #: partnerbox/src/PartnerboxEPGSelection.py:176 partnerbox/src/plugin.py:1049
-#: merlinepgcenter/src/MerlinEPGCenter.py:1315 easyinfo/src/plugin.py:734
+#: merlinepgcenter/src/MerlinEPGCenter.py:1315 easyinfo/src/plugin.py:736
 msgid "Remove timer"
 msgstr "Fjern timer"
 
@@ -12143,7 +11508,7 @@ msgstr "Bytt EventView tast til å starte med merke:"
 msgid "Replace InfoBar single and multi EPG:"
 msgstr "Bytt InfoBar enkel og multi EPG:"
 
-#: easyinfo/src/plugin.py:249
+#: easyinfo/src/plugin.py:251
 msgid "Replace TV-button function:"
 msgstr "Bytt TV tast funksjon:"
 
@@ -12186,8 +11551,8 @@ msgstr "Søk på nytt"
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:537 fritzcall/src/plugin.py:591
-#: fritzcall/src/plugin.py:884 fritzcall/src/plugin.py:889
+#: fritzcall/src/plugin.py:536 fritzcall/src/plugin.py:590
+#: fritzcall/src/plugin.py:883 fritzcall/src/plugin.py:888
 msgid "Reset"
 msgstr "Tilbakestill"
 
@@ -12267,10 +11632,6 @@ msgstr "Begrens \"etter program\" til et spesielt tidsrom?"
 msgid "Restrict to events on certain dates"
 msgstr "Begrens til program på spesifikke datoer"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:277
-msgid "Restricted Content"
-msgstr "Begrenset innhold"
-
 #: mytube/src/plugin.py:1053
 #, python-format
 msgid "Results: %s - Page: %s "
@@ -12307,7 +11668,7 @@ msgstr "Gjenbruk *tube innhold for andre plugin'er."
 msgid "Reusable Help-component for other plugins."
 msgstr "Gjenbrukbare hjelp komponenter for andre plugin."
 
-#: fritzcall/src/plugin.py:2634
+#: fritzcall/src/plugin.py:2633
 msgid "Reverse Lookup Caller ID"
 msgstr "Reverse Lookup Caller ID"
 
@@ -12315,7 +11676,7 @@ msgstr "Reverse Lookup Caller ID"
 msgid "Reverse Lookup Caller ID (select country below)"
 msgstr "Reverse Lookup Caller ID (velg land under)"
 
-#: fritzcall/src/plugin.py:1669
+#: fritzcall/src/plugin.py:1668
 msgid "Reverse searching..."
 msgstr "Omvendt søk..."
 
@@ -12323,17 +11684,9 @@ msgstr "Omvendt søk..."
 msgid "Rezap"
 msgstr "Rezap"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:181
-msgid "Rhaeto-Romance"
-msgstr "Rhaeto-Romanse"
-
 #: internetradio/src/InternetRadioSetup.py:55
 msgid "Rip to single file, name is timestamped"
 msgstr "Rip til enkel fil, navn blir datostemplet"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:182
-msgid "Romanian"
-msgstr "Rumensk"
 
 #: elektro/src/plugin.py:390 pluginhider/src/PluginHiderSetup.py:50
 msgid "Run"
@@ -12371,9 +11724,9 @@ msgstr "Kjører prosesser: "
 msgid "Russia"
 msgstr "Russland"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:183
-msgid "Russian"
-msgstr "Russisk"
+#: weatherplugin/src/MSNWeather.py:201
+msgid "S"
+msgstr ""
 
 #: autoresolution/src/plugin.py:22
 msgid "SD 25/50HZ Interlace Mode"
@@ -12390,6 +11743,10 @@ msgstr "SD 30/60HZ Interlace Mode"
 #: autoresolution/src/plugin.py:23
 msgid "SD 30/60HZ Progressive Mode"
 msgstr "SD 30/60HZ Progressive Mode"
+
+#: weatherplugin/src/MSNWeather.py:197
+msgid "SE"
+msgstr ""
 
 #: easymedia/src/plugin.py:576
 msgid "SHOUTcast Plugin is not installed!"
@@ -12414,6 +11771,14 @@ msgstr "SMTP Server"
 #: pushservice/src/Services/SMTP.py:51
 msgid "SMTP TLS"
 msgstr "SMTP TLS"
+
+#: weatherplugin/src/MSNWeather.py:199
+msgid "SSE"
+msgstr ""
+
+#: weatherplugin/src/MSNWeather.py:203
+msgid "SSW"
+msgstr ""
 
 #: seriesplugin/src/ChannelEditor.py:238
 msgid "STB- / Web-Channel for bouquet:"
@@ -12441,17 +11806,9 @@ msgstr ""
 msgid "SVDRP server for Enigma2"
 msgstr "SVDRP server for Enigma2"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:184
-msgid "Samoan"
-msgstr "Samoansk"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:185
-msgid "Sangro"
-msgstr "Sangro"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:186
-msgid "Sanskrit"
-msgstr "Sanskrit"
+#: weatherplugin/src/MSNWeather.py:205
+msgid "SW"
+msgstr ""
 
 #: partnerbox/src/plugin.py:1284 partnerbox/src/plugin.py:1341
 #: partnerbox/src/plugin.py:1511
@@ -12470,7 +11827,7 @@ msgstr "Sat>IP Tuner"
 msgid "Sat>IP Tuner Overview"
 msgstr "Sat>IP Tuneroversikt"
 
-#: satipclient/src/SatIPTunerSetup.py:36 satipclient/src/plugin.py:14
+#: satipclient/src/SatIPTunerSetup.py:28 satipclient/src/plugin.py:14
 msgid "Sat>IP Tuner Setup"
 msgstr "Sat>IP Tuneroppsett"
 
@@ -12480,23 +11837,20 @@ msgstr "Satellitter"
 
 #: partnerbox/src/RemoteTimerEntry.py:143
 #: partnerbox/src/RemoteTimerEntry.py:447
-#: merlinepgcenter/src/HelperFunctions.py:42 advhdmi/src/plugin.py:47
-#: elektro/src/plugin.py:131 kiddytimer/src/KTglob.py:13
-#: autotimer/src/AutoTimerEditor.py:46
+#: merlinepgcenter/src/HelperFunctions.py:42 elektro/src/plugin.py:131
+#: kiddytimer/src/KTglob.py:13 autotimer/src/AutoTimerEditor.py:46
 msgid "Saturday"
 msgstr "Lørdag"
 
 #. TRANSLATORS: keep it short, this is a button
 #: aspectratioswitch/src/plugin.py:119 fancontrol2/src/plugin.py:670
 #: audiosync/src/AC3setup.py:59 ftpbrowser/src/FTPServerManager.py:258
-#: podcast/src/plugin.py:541 advhdmi/src/AdvHdmiCecSetup.py:47
-#: serienfilm/src/SerienFilm.py:61 yttrailer/src/plugin.py:314
-#: youtubeplayer/src/YouTubeAddPlayList.py:52
-#: youtubeplayer/src/YouTubeUserConfig.py:134 dreamirc/src/dreamIRCSetup.py:72
+#: podcast/src/plugin.py:541 serienfilm/src/SerienFilm.py:61
+#: yttrailer/src/plugin.py:314 dreamirc/src/dreamIRCSetup.py:72
 #: kiddytimer/src/KTsetup.py:78 satloader/src/plugin.py:165
 #: satloader/src/plugin.py:409 audiorestart/src/plugin.py:108
 #: mytube/src/MyTubeSettings.py:40 autotimer/src/AutoTimerEditor.py:909
-#: autotimer/src/AutoTimerOverview.py:69 fritzcall/src/plugin.py:1559
+#: autotimer/src/AutoTimerOverview.py:69 fritzcall/src/plugin.py:1558
 #: trackautoselect/src/TrackAutoselectSetup.py:37
 #: birthdayreminder/src/BirthdayReminder.py:560
 #: birthdayreminder/src/BirthdayReminder.py:620
@@ -12594,17 +11948,21 @@ msgstr "Frekvensområde"
 msgid "Scan subfolders"
 msgstr "Søk underkataloger"
 
-#: advhdmi/src/AdvHdmiCecSetup.py:97
-msgid "Schould debugmessages be printed?"
-msgstr "Skal feilsøkingsmeldinger vises?"
+#: weatherplugin/src/MSNWeather.py:37
+msgid "Scattered Showers"
+msgstr ""
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:72 mytube/src/plugin.py:83
+#: weatherplugin/src/MSNWeather.py:38
+msgid "Scattered Snow Showers"
+msgstr ""
+
+#: weatherplugin/src/MSNWeather.py:37
+msgid "Scattered Thunderstorms"
+msgstr ""
+
+#: mytube/src/plugin.py:83
 msgid "Science & Technology"
 msgstr "Forskning & Teknologi"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:187
-msgid "Scots Gaelic"
-msgstr "Skotsk Gælisk"
 
 #: internetradio/src/plugin.py:37
 msgid "Screen and OLED"
@@ -12644,15 +12002,14 @@ msgstr "Bla sideinnhold opp"
 
 #. TRANSLATORS: keep it short, this is a button
 #: merlinepgcenter/src/MerlinEPGCenter.py:40 googlemaps/src/plugin.py:211
-#: ncidclient/src/plugin.py:447 youtubeplayer/src/YouTubeSearchDialog.py:267
-#: epgsearch/src/EPGSearch.py:70 epgsearch/src/EPGSearch.py:441
-#: ecasa/src/EcasaGui.py:109 internetradio/src/InternetRadioScreen.py:805
-#: fritzcall/src/plugin.py:2120
+#: ncidclient/src/plugin.py:447 epgsearch/src/EPGSearch.py:70
+#: epgsearch/src/EPGSearch.py:441 ecasa/src/EcasaGui.py:109
+#: internetradio/src/InternetRadioScreen.py:805 fritzcall/src/plugin.py:2119
 msgid "Search"
 msgstr "Søk"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:2142
+#: fritzcall/src/plugin.py:2141
 msgid "Search (case insensitive)"
 msgstr "Søk (bokstav sensistiv)"
 
@@ -12670,17 +12027,13 @@ msgstr "Søk EPG"
 msgid "Search History"
 msgstr "Søke historie"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:272 mytube/src/plugin.py:435
+#: mytube/src/plugin.py:435
 msgid "Search Term(s)"
 msgstr "Søkekriterier"
 
 #: imdb/src/plugin.py:370
 msgid "Search Trailer"
 msgstr "Søk trailer"
-
-#: youtubeplayer/src/plugin.py:131
-msgid "Search and play YouTube movies"
-msgstr "Søk og spill YouTube filmer"
 
 #: ecasa/src/EcasaGui.py:349
 #, python-format
@@ -12695,7 +12048,7 @@ msgstr "Søk etter:"
 msgid "Search in iDream database"
 msgstr "Søk i iDreamer database"
 
-#: ncidclient/src/plugin.py:643 fritzcall/src/plugin.py:2393
+#: ncidclient/src/plugin.py:643 fritzcall/src/plugin.py:2392
 msgid "Search phonebook"
 msgstr "Søk i telefonbok"
 
@@ -12748,21 +12101,17 @@ msgstr "Søketype:"
 msgid "Searching InternetRadio for %s..."
 msgstr "Søker i InternetRadio for %s..."
 
-#: fritzcall/src/plugin.py:1680
+#: fritzcall/src/plugin.py:1679
 msgid "Searching in LDIF..."
 msgstr "Søker i LDIF..."
 
-#: fritzcall/src/plugin.py:1673
+#: fritzcall/src/plugin.py:1672
 msgid "Searching in Outlook export..."
 msgstr "Søker i Outlook eksport..."
 
 #: networkbrowser/src/NetworkBrowser.py:236
 msgid "Searching your network. Please wait..."
 msgstr "Søker i nettverket. Vennligst vent..."
-
-#: youtubeplayer/src/YouTubeList.py:327
-msgid "Searching, be patient ..."
-msgstr "Søker, vær tålmodig..."
 
 #: seriesplugin/src/SeriesPluginInfoScreen.py:315
 msgid ""
@@ -12788,7 +12137,7 @@ msgstr "Andre bakgrunn:"
 msgid "Second foreground:"
 msgstr "Andre forgrunn:"
 
-#: fritzcall/src/plugin.py:2647
+#: fritzcall/src/plugin.py:2646
 msgid "Secure WLAN guest network"
 msgstr "Sikkert WLAN gjestenettverk"
 
@@ -12837,10 +12186,6 @@ msgstr ""
 #: merlinepg/src/plugin.py:574
 msgid "Select Info type..."
 msgstr "Velg informasjonstype..."
-
-#: youtubeplayer/src/YouTubeList.py:212
-msgid "Select a VLC-Server"
-msgstr "Velg en VLC server"
 
 #: autotimer/src/AutoTimerImporter.py:57
 msgid "Select a timer to import"
@@ -13035,14 +12380,6 @@ msgstr "Følsomhet:"
 msgid "Sensors"
 msgstr "Sensorer"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:188
-msgid "Serbian"
-msgstr "Serbisk"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:189
-msgid "Serbo-Croatian"
-msgstr "Serbisk Kroatisk"
-
 #: serienfilm/src/MovieList.py:441
 msgid "Series"
 msgstr ""
@@ -13161,10 +12498,6 @@ msgstr "Kanaler"
 msgid "Services:"
 msgstr "Kanaler:"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:190
-msgid "Sesotho"
-msgstr "Sesotho"
-
 #: audiosync/meta/plugin_audiosync.xml./audiosync/meta/plugin_audiosync.xml
 msgid "Set Bitstream/PCM audio delays"
 msgstr "Set Bitstream/PCM audio forsinkelser"
@@ -13240,10 +12573,6 @@ msgstr "Oppgi startkatalog"
 msgid "Set this NO to disable this AutoTimer."
 msgstr "Sett denne til NEI for å deaktivere AutoTimer."
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:191
-msgid "Setswana"
-msgstr "Setswana"
-
 #: emission/src/EmissionBandwidth.py:128
 msgid ""
 "Setting \"Unlimited\" is not supported via RPC.\n"
@@ -13256,7 +12585,7 @@ msgstr ""
 msgid "Setting key canceled"
 msgstr "Sett tast for kanselering"
 
-#: fritzcall/src/plugin.py:1108 fritzcall/src/plugin.py:1129
+#: fritzcall/src/plugin.py:1107 fritzcall/src/plugin.py:1128
 msgid "Setting..."
 msgstr "Ufører..."
 
@@ -13306,9 +12635,9 @@ msgstr "Oppsett for Audio Sync Plugin"
 msgid "Setup for the AudioRestart Plugin"
 msgstr "Oppsett for AudioRestart plugin"
 
-#: advhdmi/meta/plugin_advhdmi.xml./advhdmi/meta/plugin_advhdmi.xml
-msgid "Several setting options when HDMI-Cec is active"
-msgstr "Flere valg når HDMI-Cec er aktivert"
+#: weatherplugin/src/MSNWeather.py:33
+msgid "Severe Thunderstorms"
+msgstr ""
 
 #: aihdcontroler/src/plugin.py:42
 msgid "Shadow"
@@ -13318,41 +12647,19 @@ msgstr "Skygge"
 msgid "Sherlock"
 msgstr "Sherlock"
 
-#: easyinfo/src/plugin.py:662
+#: easyinfo/src/plugin.py:664
 msgid "Sherlock is not installed!"
 msgstr "Sherlock er ikke installert!"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:192
-msgid "Shona"
-msgstr "Shona"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:63 mytube/src/plugin.py:74
+#: mytube/src/plugin.py:74
 msgid "Short Movies"
 msgstr "Korte filmer"
 
 #: fritzcall/src/FritzCallFBF.py:370 fritzcall/src/FritzCallFBF.py:397
 #: fritzcall/src/FritzCallFBF.py:1382 fritzcall/src/FritzCallFBF.py:2050
-#: fritzcall/src/FritzCallFBF.py:2821
+#: fritzcall/src/FritzCallFBF.py:2822
 msgid "Shortcut"
 msgstr "Snarvei"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:92
-msgid "Should HDMI-Cec be disabled when GUI service startup?"
-msgstr "Skal HDMI-Cec aktiveres når GUI starter?"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:94
-msgid ""
-"Should HDMI-Cec be disabled when the commands are sent from the web "
-"interface?"
-msgstr "Skal HDMI-Cec deaktiveres når kommandoer mottas fra WebIf?"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:96
-msgid "Should HDMI-Cec be send on Power Off?"
-msgstr "Skal HDMI-Cec sendes ved mottatt 'power off'?"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:95
-msgid "Should HDMI-Cec be send on Power On?"
-msgstr "Skal HDMI-Cec sendes ved 'power on'?"
 
 #: epgrefresh/src/EPGRefreshConfiguration.py:165
 msgid ""
@@ -13400,7 +12707,7 @@ msgstr "Vis 'Stream nåværende kanal' i utvidet meny"
 msgid "Show Advanced Options"
 msgstr "Vi avanserte valg"
 
-#: fritzcall/src/plugin.py:2627
+#: fritzcall/src/plugin.py:2626
 msgid "Show Blocked Calls"
 msgstr "Vi blokkerte samtaler"
 
@@ -13469,7 +12776,7 @@ msgstr "Vis melding nå innspilling starter"
 msgid "Show Monitor in Extension-Menu"
 msgstr "Vis 'Monitor' i utvidet meny"
 
-#: fritzcall/src/plugin.py:2628
+#: fritzcall/src/plugin.py:2627
 msgid "Show Outgoing Calls"
 msgstr "Vis utgående samtaler"
 
@@ -13518,7 +12825,7 @@ msgstr "Vis TV"
 msgid "Show Weather Forecast"
 msgstr "Vis Weather Forecast"
 
-#: ncidclient/src/plugin.py:736 fritzcall/src/plugin.py:2619
+#: ncidclient/src/plugin.py:736 fritzcall/src/plugin.py:2618
 msgid "Show after Standby"
 msgstr "Vis etter standby"
 
@@ -13567,7 +12874,7 @@ msgid "Show cover arts"
 msgstr "Vis albumgrafikk"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:1361 fritzcall/src/plugin.py:2132
+#: fritzcall/src/plugin.py:1360 fritzcall/src/plugin.py:2131
 msgid "Show details of entry"
 msgstr "Vis oppføringsdetaljer"
 
@@ -13680,7 +12987,7 @@ msgstr "Vis ved programendring"
 msgid "Show on key press"
 msgstr "Vis når tast trykket"
 
-#: fritzcall/src/plugin.py:2621
+#: fritzcall/src/plugin.py:2620
 msgid "Show only calls for specific MSN"
 msgstr "Vis bare samtaler for spesifikk MSN"
 
@@ -13776,11 +13083,6 @@ msgstr "Vis TV/RADIO bryter:"
 msgid "Show undefined service(s)"
 msgstr "Vis udefinerte kanal(er)"
 
-#: youtubeplayer/src/YouTubeList.py:623 youtubeplayer/src/YouTubeList.py:648
-#: youtubeplayer/src/YouTubeList.py:688
-msgid "Show video detail info"
-msgstr "Vis videodetaljeinformasjon"
-
 #: merlinepgcenter/src/ConfigTabs.py:247
 msgid "Show video picture:"
 msgstr "Vis videobilde:"
@@ -13793,13 +13095,13 @@ msgstr "Vis volumbar når volumstyrke er endret"
 msgid "Show webcam pictures on your TV Screen"
 msgstr "Vis webkamerabilder på TV skjermen"
 
+#: weatherplugin/src/MSNWeather.py:34
+msgid "Showers"
+msgstr ""
+
 #: elektro/src/plugin.py:539
 msgid "Showing Elektro readme.txt"
 msgstr "Vis Elektro readme.txt"
-
-#: youtubeplayer/src/YouTubeList.py:221
-msgid "Shown"
-msgstr "Vist"
 
 #: zaphistorybrowser/meta/plugin_zaphistorybrowser.xml./zaphistorybrowser/meta/plugin_zaphistorybrowser.xml
 msgid ""
@@ -13857,8 +13159,8 @@ msgstr "Sett Dreambox i dyp søvn (strømsparemodus)"
 msgid "Side by side"
 msgstr "Side ved side"
 
-#: merlinepgcenter/src/MerlinEPGCenter.py:544 easyinfo/src/plugin.py:679
-#: easyinfo/src/plugin.py:724
+#: merlinepgcenter/src/MerlinEPGCenter.py:544 easyinfo/src/plugin.py:681
+#: easyinfo/src/plugin.py:726
 msgid "Similar"
 msgstr "Lignende"
 
@@ -13896,14 +13198,6 @@ msgstr "Enkel RSS leser: %s"
 msgid "SimpleRSS allows reading RSS newsfeeds on your Dreambox."
 msgstr "SimpleRSS tillater lesing av RSS informasjon på din Dreambox."
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:193
-msgid "Sindhi"
-msgstr "Sindhi"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:194
-msgid "Singhalese"
-msgstr "Singalesisk"
-
 #: merlinepgcenter/src/MerlinEPGCenter.py:40
 msgid "Single"
 msgstr "Enkel"
@@ -13913,10 +13207,6 @@ msgstr "Enkel"
 #: easyinfo/src/plugin.py:97 easyinfo/src/plugin.py:98
 msgid "Single EPG"
 msgstr "Enkel EPG"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:195
-msgid "Siswati"
-msgstr "Siswati"
 
 #: eparted/src/eparted.py:313
 msgid "Size"
@@ -14042,6 +13332,10 @@ msgstr "Hvilemodustimer er aktivert"
 msgid "Sleeptimer set to %s minutes"
 msgstr "Hvilemodustimer satt til %s minutter"
 
+#: weatherplugin/src/MSNWeather.py:35
+msgid "Sleet"
+msgstr ""
+
 #: webcamviewer/src/WebcamViewConfig.py:18
 msgid "Slideshow Mode"
 msgstr "Bildefremvisermodus"
@@ -14054,17 +13348,25 @@ msgstr "Bildefremviser tid"
 msgid "Slideshow interval"
 msgstr "Bildefremviser intervall"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:196
-msgid "Slovak"
-msgstr "Slovakisk"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:197
-msgid "Slovenian"
-msgstr "Slovenisk"
-
 #: kiddytimer/src/plugin.py:15
 msgid "Smiley"
 msgstr "Smilefjes"
+
+#: weatherplugin/src/MSNWeather.py:35
+msgid "Smoky"
+msgstr ""
+
+#: weatherplugin/src/MSNWeather.py:34
+msgid "Snow"
+msgstr ""
+
+#: weatherplugin/src/MSNWeather.py:34
+msgid "Snow Flurries"
+msgstr ""
+
+#: weatherplugin/src/MSNWeather.py:38
+msgid "Snow Showers"
+msgstr ""
 
 #: pluginsort/src/mphelp.xml
 msgid "So that's all you can do?"
@@ -14074,17 +13376,13 @@ msgstr "Så dette er alt du kan gjøre?"
 msgid "Socket timeout"
 msgstr "Sokkel tidsavbrudd"
 
-#: fritzcall/src/plugin.py:1068
+#: fritzcall/src/plugin.py:1067
 msgid "Software fax active"
 msgstr "Programvarefax aktiv"
 
-#: fritzcall/src/plugin.py:1072
+#: fritzcall/src/plugin.py:1071
 msgid "Software fax inactive"
 msgstr "Programvarefax innaktiv"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:198
-msgid "Somali"
-msgstr "Somalisk"
 
 #: easymedia/src/plugin.py:270
 msgid "Some plugins are not available:\n"
@@ -14246,7 +13544,7 @@ msgstr "Plass mellom kolonner:"
 msgid "Spain"
 msgstr "Spania"
 
-#: imdb/src/plugin.py:41 youtubeplayer/src/YouTubeSearchDialog.py:199
+#: imdb/src/plugin.py:41
 msgid "Spanish"
 msgstr "Spansk"
 
@@ -14312,7 +13610,7 @@ msgstr "Hastighet"
 msgid "Splitting mode"
 msgstr "Delemodus"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:61 mytube/src/plugin.py:72
+#: mytube/src/plugin.py:72
 msgid "Sports"
 msgstr "Sport"
 
@@ -14385,7 +13683,7 @@ msgstr "Enkel oppstart av plugins med PVR tast."
 msgid "Start execution"
 msgstr "Start kjøring"
 
-#: easyinfo/src/plugin.py:248
+#: easyinfo/src/plugin.py:250
 msgid "Start first EventInfo:"
 msgstr "Start først EventInfo"
 
@@ -14460,18 +13758,14 @@ msgstr "Statisk temp C"
 msgid "Stations"
 msgstr "Stasjoner"
 
-#: fritzcall/src/plugin.py:969 fritzcall/src/plugin.py:997
-#: fritzcall/src/plugin.py:1025
+#: fritzcall/src/plugin.py:968 fritzcall/src/plugin.py:996
+#: fritzcall/src/plugin.py:1024
 msgid "Status not available"
 msgstr "Status ikke tilgjengelig"
 
 #: mytube/src/plugin.py:263
 msgid "Std. Feeds"
 msgstr "Standard feeds"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:266
-msgid "Std.Feeds"
-msgstr "Std. feeds"
 
 #: audiosync/src/AC3setup.py:38
 msgid "Step in ms for arrow keys"
@@ -14594,7 +13888,7 @@ msgstr "Streamfeil: %s"
 msgid "Strictly"
 msgstr "Strengt"
 
-#: ncidclient/src/plugin.py:765 fritzcall/src/plugin.py:2673
+#: ncidclient/src/plugin.py:765 fritzcall/src/plugin.py:2672
 msgid "Strip Leading 0"
 msgstr "Fjern ledende 0"
 
@@ -14664,10 +13958,6 @@ msgstr "Vellykket omdøping"
 msgid "Sucessfully changed password for root user to: "
 msgstr "Vellykket endring av passord for root bruker: "
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:200
-msgid "Sudanese"
-msgstr "Sudansk"
-
 #: partnerbox/src/plugin.py:1284 partnerbox/src/plugin.py:1341
 #: partnerbox/src/plugin.py:1511
 msgid "Sun"
@@ -14675,11 +13965,14 @@ msgstr "Søn"
 
 #: partnerbox/src/RemoteTimerEntry.py:143
 #: partnerbox/src/RemoteTimerEntry.py:447
-#: merlinepgcenter/src/HelperFunctions.py:42 advhdmi/src/plugin.py:48
-#: elektro/src/plugin.py:132 kiddytimer/src/KTglob.py:7
-#: autotimer/src/AutoTimerEditor.py:47
+#: merlinepgcenter/src/HelperFunctions.py:42 elektro/src/plugin.py:132
+#: kiddytimer/src/KTglob.py:7 autotimer/src/AutoTimerEditor.py:47
 msgid "Sunday"
 msgstr "Søndag"
+
+#: weatherplugin/src/MSNWeather.py:36
+msgid "Sunny"
+msgstr ""
 
 #: valixdcontrol/src/plugin.py:268
 msgid "Suomipoeka-Movielist patch"
@@ -14693,16 +13986,8 @@ msgstr "Støtte for hurtigspoling?"
 msgid "Support {support:s}\n"
 msgstr "Support {support:s}\n"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:201
-msgid "Swahili"
-msgstr "Swahili"
-
 #: mytube/src/plugin.py:108
 msgid "Sweden"
-msgstr "Svensk"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:202
-msgid "Swedish"
 msgstr "Svensk"
 
 #: 3dsettings/src/plugin.py:209
@@ -14721,7 +14006,7 @@ msgstr "Bytt til neste konfigurerte URL side"
 msgid "Switch to previous configured page URL"
 msgstr "Bytt til forrige konfigurerte URL side"
 
-#: ncidclient/src/plugin.py:48 fritzcall/src/plugin.py:166
+#: ncidclient/src/plugin.py:48 fritzcall/src/plugin.py:165
 msgid "Switzerland"
 msgstr "Sveits"
 
@@ -14789,12 +14074,8 @@ msgstr "Kat. 2"
 msgid "Tag Filter"
 msgstr "Merkefilter"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:203
-msgid "Tagalog"
-msgstr "Tagalog"
-
-#: serienfilm/src/MovieSelection.py:408 youtubeplayer/src/YouTubeList.py:108
-#: autotimer/src/AutoTimerImporter.py:208 autotimer/src/AutoTimerEditor.py:626
+#: serienfilm/src/MovieSelection.py:408 autotimer/src/AutoTimerImporter.py:208
+#: autotimer/src/AutoTimerEditor.py:626
 #: webinterface/src/WebComponents/Sources/Strings.py:62
 msgid "Tags"
 msgstr "Kategorier"
@@ -14806,14 +14087,6 @@ msgstr "Kategorinavn timere/innspillinger vil ha."
 #: mytube/src/plugin.py:109
 msgid "Taiwan"
 msgstr "Taiwan"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:204
-msgid "Tajik"
-msgstr "Tajik"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:205
-msgid "Tamil"
-msgstr "Tamil"
 
 #: movieretitle/src/plugin.py:125
 #, python-format
@@ -14829,17 +14102,9 @@ msgstr ""
 msgid "Target rpm  %4d"
 msgstr "Mål rpm  %4d"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:206
-msgid "Tatar"
-msgstr "Tatar"
-
 #: webinterface/src/WebComponents/Sources/Strings.py:144
 msgid "Technical Information"
 msgstr "Teknisk informasjon"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:207
-msgid "Tegulu"
-msgstr "Tagulu"
 
 #: teletext/src/plugin.py:1644 teletext/src/plugin.py:1812
 msgid "TeleText favorites"
@@ -14971,10 +14236,6 @@ msgstr "Tekstutfylling avvik i pixel"
 msgid "Text spacing offset in pixel"
 msgstr "Tekst mellomrom avvik i pixel"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:208
-msgid "Thai"
-msgstr "Thailandsk"
-
 #: autotimer/src/autotimerwizard.xml
 msgid ""
 "Thank you for using the wizard. Your new AutoTimer has been added to the "
@@ -15077,7 +14338,7 @@ msgstr ""
 "Filsystemet på din direkteopptaksenhet støtter ikke hardlinks.\n"
 "Frsikre deg om at den er formatert i EXT2 eller EXT3 format!"
 
-#: ncidclient/src/plugin.py:45 fritzcall/src/plugin.py:163
+#: ncidclient/src/plugin.py:45 fritzcall/src/plugin.py:162
 msgid "The Netherlands"
 msgstr "Nederland"
 
@@ -15370,13 +14631,13 @@ msgstr ""
 "Det er et problem med servertilkoblingen.\n"
 " Vennligst prøv igjen senere."
 
-#: epgrefresh/src/EPGRefresh.py:343
+#: epgrefresh/src/EPGRefresh.py:349
 msgid ""
 "There is still a refresh running. The Operation isn't allowed at this moment."
 msgstr ""
 "Det foregår fremdeles en EPG oppfriskning. Operasjonen er ikke tillatt nå."
 
-#: fritzcall/src/plugin.py:3347 fritzcall/src/plugin.py:3353
+#: fritzcall/src/plugin.py:3346 fritzcall/src/plugin.py:3352
 #, python-format
 msgid ""
 "There might be a problem with your FritzCall %spassword.\n"
@@ -15423,7 +14684,7 @@ msgstr ""
 "og bakover ved å trykke GUL tast. Trykker du RØD eller EXIT vil du avslutte "
 "denne FAQ."
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:46 mytube/src/plugin.py:55
+#: mytube/src/plugin.py:55
 msgid "This Month"
 msgstr "Denne måneden"
 
@@ -15435,7 +14696,7 @@ msgstr ""
 "Denne plugin modifiserer PluginBrowser slik at du kan flytte plugins rundt "
 "omkring."
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:47 mytube/src/plugin.py:56
+#: mytube/src/plugin.py:56
 msgid "This Week"
 msgstr "Denne uke"
 
@@ -15453,7 +14714,7 @@ msgstr ""
 "Du kan gjøre dette fra SoftwareManager, se brukemanual for videre "
 "forklaringer."
 
-#: easyinfo/src/plugin.py:667
+#: easyinfo/src/plugin.py:669
 msgid "This function is yet not available!"
 msgstr "Denne funksjonen er enda ikke tilgjengelig!"
 
@@ -15754,25 +15015,24 @@ msgstr ""
 msgid "Thu"
 msgstr "Tor"
 
+#: weatherplugin/src/MSNWeather.py:38
+msgid "Thundershowers"
+msgstr ""
+
+#: weatherplugin/src/MSNWeather.py:33
+msgid "Thunderstorms"
+msgstr ""
+
 #: partnerbox/src/RemoteTimerEntry.py:143
 #: partnerbox/src/RemoteTimerEntry.py:447
-#: merlinepgcenter/src/HelperFunctions.py:42 advhdmi/src/plugin.py:45
-#: elektro/src/plugin.py:129 kiddytimer/src/KTglob.py:11
-#: autotimer/src/AutoTimerEditor.py:44
+#: merlinepgcenter/src/HelperFunctions.py:42 elektro/src/plugin.py:129
+#: kiddytimer/src/KTglob.py:11 autotimer/src/AutoTimerEditor.py:44
 msgid "Thursday"
 msgstr "Torsdag"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:209
-msgid "Tibetan"
-msgstr "Tibetansk"
 
 #: simplerss/src/plugin.py:14
 msgid "Ticker"
 msgstr "Symbol"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:210
-msgid "Tigrinya"
-msgstr "Tigrinja"
 
 #: infobartunerstate/src/plugin.py:62
 msgid "Time Elapsed"
@@ -15813,7 +15073,7 @@ msgstr "Tidsavbrudd"
 msgid "Timeout (in min)"
 msgstr "Tidsavbrudd (i minutter)"
 
-#: ncidclient/src/plugin.py:740 fritzcall/src/plugin.py:2631
+#: ncidclient/src/plugin.py:740 fritzcall/src/plugin.py:2630
 msgid "Timeout for Call Notifications (seconds)"
 msgstr "Tidsavbrudd for samtalevarslinger (sekunder)"
 
@@ -15951,10 +15211,6 @@ msgstr "Direkteopptak vil bli lagret etter programslutt!"
 msgid "Timeshift-Save Action on zap"
 msgstr "Direkteopptak lagringsvalg ved zap"
 
-#: advhdmi/src/AdvHdmiCecSetup.py:48
-msgid "Timespans"
-msgstr "Tidsspenn"
-
 #: movieretitle/src/plugin.py:61 curlytx/src/CurlyTxSettings.py:219
 #: autotimer/src/AutoTimerEditor.py:327
 msgid "Title"
@@ -15985,14 +15241,6 @@ msgstr "Tittel: %s"
 msgid "Title: n/a"
 msgstr "Tittel: n/a"
 
-#: advhdmi/src/AdvHdmiCecSetup.py:209
-msgid "To"
-msgstr "Til"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:207
-msgid "To WD"
-msgstr "Til WD"
-
 #: epgrefresh/src/plugin.py:207
 msgid ""
 "To apply your Changes the GUI has to be restarted.\n"
@@ -16005,7 +15253,7 @@ msgstr ""
 msgid "To be used as simple downloading application by other Plugins."
 msgstr "Brukes som en enkel nedlastingsprogramvare for andre plugins."
 
-#: fritzcall/src/plugin.py:3358
+#: fritzcall/src/plugin.py:3357
 msgid ""
 "To enjoy more functionalities of your FRITZ!Box, configure the firmware "
 "version!"
@@ -16013,20 +15261,7 @@ msgstr ""
 "For å kunne bruke flere funksjonaliteter i FRITZ!Box, må du konfigurer "
 "fastareversjonen!"
 
-#: youtubeplayer/src/YouTubeUserList.py:77
-msgid ""
-"To use the selected feature you have to login to YouTube. Select a user-"
-"profile to login!"
-msgstr ""
-"For å bruke den valgte funksjonen må du logge inn på YouTube. Velg en "
-"brukeprofil å logge inn med!"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:316
-msgid "To what day of the week, HDMI-Cec should be disabled?"
-msgstr "På hvilke dag i uken skal HDMI-Cec deaktiveres?"
-
-#: merlinepgcenter/src/HelperFunctions.py:183
-#: youtubeplayer/src/YouTubeSearchDialog.py:48 mytube/src/plugin.py:57
+#: merlinepgcenter/src/HelperFunctions.py:183 mytube/src/plugin.py:57
 msgid "Today"
 msgstr "I dag"
 
@@ -16042,27 +15277,27 @@ msgstr ""
 "Hun/han ble født den %s, og er i dag %s år gammel."
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:561
+#: fritzcall/src/plugin.py:560
 msgid "Toggle 1. mailbox"
 msgstr "Veksle 1. postboks"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:563
+#: fritzcall/src/plugin.py:562
 msgid "Toggle 2. mailbox"
 msgstr "Veksle 2. postboks"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:565
+#: fritzcall/src/plugin.py:564
 msgid "Toggle 3. mailbox"
 msgstr "Veksle 3. postboks"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:567
+#: fritzcall/src/plugin.py:566
 msgid "Toggle 4. mailbox"
 msgstr "Veksle 5. postboks"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:569
+#: fritzcall/src/plugin.py:568
 msgid "Toggle 5. mailbox"
 msgstr "Veksle 5. postboks"
 
@@ -16075,25 +15310,25 @@ msgid "Toggle List"
 msgstr "Veksle liste"
 
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:543
+#: fritzcall/src/plugin.py:542
 msgid "Toggle Mailbox"
 msgstr "Veksle postbox"
 
 #. TRANSLATORS: keep it short, this is a button
 #. TRANSLATORS: keep it short, this is a help text
 #. TRANSLATORS: keep it short, this is a button
-#: fritzcall/src/plugin.py:539 fritzcall/src/plugin.py:589
-#: fritzcall/src/plugin.py:880 fritzcall/src/plugin.py:891
+#: fritzcall/src/plugin.py:538 fritzcall/src/plugin.py:588
+#: fritzcall/src/plugin.py:879 fritzcall/src/plugin.py:890
 msgid "Toggle WLAN"
 msgstr "Veksle WLAN"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:882
+#: fritzcall/src/plugin.py:881
 msgid "Toggle WLAN guest access"
 msgstr "Veksle WLAN gjestetilgang"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:559
+#: fritzcall/src/plugin.py:558
 msgid "Toggle all mailboxes"
 msgstr "Veksle alle postbokser"
 
@@ -16121,21 +15356,9 @@ msgstr "Token-basert sikkerhet (kan ødelegge klienter)"
 msgid "Tomorrow"
 msgstr "I morgen"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:211
-msgid "Tonga"
-msgstr "Tonga"
-
 #: webinterface/src/WebComponents/Sources/Strings.py:92
 msgid "Tools"
 msgstr "Verktøy"
-
-#: youtubeplayer/src/YouTubeStdFeedSelection.py:43
-msgid "Top Favorites"
-msgstr "Topp favoritter"
-
-#: youtubeplayer/src/YouTubeStdFeedSelection.py:39
-msgid "Top Rated"
-msgstr "Topp vurdert"
 
 #: mytube/src/plugin.py:118
 msgid "Top rated"
@@ -16145,13 +15368,13 @@ msgstr "Toppplassering"
 msgid "Top/Bottom"
 msgstr "Topp/Bunn"
 
+#: weatherplugin/src/MSNWeather.py:33
+msgid "Tornado"
+msgstr ""
+
 #: emission/src/EmissionOverview.py:202
 msgid "Torrent could not be scheduled not download!"
 msgstr "Torrent kunne ikke bli planlagt nedlastet!"
-
-#: youtubeplayer/src/YouTubeList.py:218
-msgid "Total results"
-msgstr "Totalt antall resultater"
 
 #: trackautoselect/src/plugin.py:20 trackautoselect/src/plugin.py:21
 msgid "Track Autoselect"
@@ -16182,9 +15405,13 @@ msgstr "Transponder"
 msgid "Transponder selection"
 msgstr "Transponder valg"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:62 mytube/src/plugin.py:73
+#: mytube/src/plugin.py:73
 msgid "Travel & Events"
 msgstr "Reise & Hendelser"
+
+#: weatherplugin/src/MSNWeather.py:33
+msgid "Tropical Storm"
+msgstr ""
 
 #: seriesplugin/src/SeriesPluginTimer.py:124
 #, python-format
@@ -16199,10 +15426,6 @@ msgstr "Prøver å laste ned YouTube feed oppføringer. Vennligst vent..."
 msgid "Trying to download the Youtube search results. Please wait..."
 msgstr "Prøver å laste ned YouTube søkeresultat. Vennligst vent..."
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:212
-msgid "Tsonga"
-msgstr "Tsonga"
-
 #: partnerbox/src/plugin.py:1284 partnerbox/src/plugin.py:1341
 #: partnerbox/src/plugin.py:1511
 msgid "Tue"
@@ -16211,9 +15434,8 @@ msgstr "Tir"
 #
 #: partnerbox/src/RemoteTimerEntry.py:143
 #: partnerbox/src/RemoteTimerEntry.py:447
-#: merlinepgcenter/src/HelperFunctions.py:42 advhdmi/src/plugin.py:43
-#: elektro/src/plugin.py:127 kiddytimer/src/KTglob.py:9
-#: autotimer/src/AutoTimerEditor.py:42
+#: merlinepgcenter/src/HelperFunctions.py:42 elektro/src/plugin.py:127
+#: kiddytimer/src/KTglob.py:9 autotimer/src/AutoTimerEditor.py:42
 msgid "Tuesday"
 msgstr "Tirsdag"
 
@@ -16226,12 +15448,12 @@ msgstr "Tuner"
 msgid "Tuner Type"
 msgstr "Tuner type"
 
-#: satipclient/src/SatIPTunerSetup.py:107
+#: satipclient/src/SatIPTunerSetup.py:99
 #, python-brace-format
 msgid "Tuner {0} / {1} NOT REMOVED. Consicentcy Check failed!"
 msgstr "Tuner {0} / {1} IKKE FJERNET. Konsistenssjekk feilet!"
 
-#: satipclient/src/SatIPTunerSetup.py:105
+#: satipclient/src/SatIPTunerSetup.py:97
 #, python-brace-format
 msgid "Tuner {0} / {1} removed"
 msgstr "Tuner {0} / {1} fjernet"
@@ -16240,17 +15462,9 @@ msgstr "Tuner {0} / {1} fjernet"
 msgid "Tuners"
 msgstr "Tunere"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:213
-msgid "Turkish"
-msgstr "Tyrkisk"
-
 #: teletext/src/plugin.py:69
 msgid "Turkish / Greek"
 msgstr "Tyrkisk / Gresk"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:214
-msgid "Turkmen"
-msgstr "Turkmensk"
 
 #: 3dsettings/src/plugin.py:212
 msgid "Turn off display"
@@ -16268,10 +15482,6 @@ msgstr "TuxCom"
 #: easymedia/src/plugin.py:390
 msgid "Tv/Radio"
 msgstr "Tv/Radio"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:215
-msgid "Twi"
-msgstr "Twi"
 
 #: podcast/src/plugin.py:288 growlee/src/plugin.py:168
 #: webinterface/src/WebComponents/Sources/Strings.py:83
@@ -16306,25 +15516,17 @@ msgstr "UL: %d kb/s"
 
 #: ncidclient/src/plugin.py:836 ncidclient/src/plugin.py:839
 #: ncidclient/src/plugin.py:941 ncidclient/src/plugin.py:995
-#: fritzcall/src/FritzCallFBF.py:80 fritzcall/src/plugin.py:1464
-#: fritzcall/src/plugin.py:2799 fritzcall/src/plugin.py:2802
-#: fritzcall/src/plugin.py:2841 fritzcall/src/plugin.py:3185
-#: fritzcall/src/plugin.py:3284 fritzcall/src/plugin.py:3289
-#: fritzcall/src/plugin.py:3313
+#: fritzcall/src/FritzCallFBF.py:80 fritzcall/src/plugin.py:1463
+#: fritzcall/src/plugin.py:2798 fritzcall/src/plugin.py:2801
+#: fritzcall/src/plugin.py:2840 fritzcall/src/plugin.py:3184
+#: fritzcall/src/plugin.py:3283 fritzcall/src/plugin.py:3288
+#: fritzcall/src/plugin.py:3312
 msgid "UNKNOWN"
 msgstr "UKJENT"
 
 #: ncidclient/src/plugin.py:89
 msgid "USB Device"
 msgstr "USB enhet"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:216
-msgid "Uigur"
-msgstr "Uigur"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:217
-msgid "Ukrainian"
-msgstr "Ukrainsk"
 
 #: movieepg/src/plugin.py:93
 msgid ""
@@ -16464,10 +15666,6 @@ msgstr ""
 msgid "Unsupported Messagetype %s"
 msgstr "Ikke support for meldingstype %s"
 
-#: advhdmi/src/AdvHdmiCecSetup.py:318
-msgid "Until the time at which, HDMI-Cec should be disabled?"
-msgstr "Tidspunkt hvor HDMI-Cec skal deaktiveres?"
-
 #: unwetterinfo/meta/plugin_unwetterzentrale.xml./unwetterinfo/meta/plugin_unwetterzentrale.xml
 msgid "UnwetterInfo shows German storm information."
 msgstr "Unwetterinfo viser tysk værinformasjon."
@@ -16488,7 +15686,7 @@ msgstr "Oppdater feed"
 msgid "Update Interval (min)"
 msgstr "Uppdateringsintervall (minutter)"
 
-#: fritzcall/src/FritzCallFBF.py:3138
+#: fritzcall/src/FritzCallFBF.py:3139
 msgid "Update available"
 msgstr ""
 
@@ -16561,10 +15759,6 @@ msgstr ""
 "Øvre grense for tidsrom. Ingen program etter denne tiden vil gi treff. "
 "Eventuelle avvik (offset) vil ikke bli tatt hensyn til!"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:218
-msgid "Urdu"
-msgstr "Urdu"
-
 #
 #: virtualzap/src/plugin.py:727 infobartunerstate/src/IBTSConfiguration.py:74
 msgid "Usage"
@@ -16598,7 +15792,7 @@ msgstr "Bruk Google bilder som albumgrafikk"
 msgid "Use hardware-decoder for MP3"
 msgstr "Bruk maskinvaredekoding for MP3"
 
-#: ncidclient/src/plugin.py:745 fritzcall/src/plugin.py:2660
+#: ncidclient/src/plugin.py:745 fritzcall/src/plugin.py:2659
 msgid "Use internal PhoneBook"
 msgstr "Bruk intern telefonbok"
 
@@ -16652,10 +15846,6 @@ msgstr "Brukt av ukjent tjeneste"
 msgid "User Online"
 msgstr "Bruker online"
 
-#: youtubeplayer/src/YouTubeUserConfig.py:139
-msgid "User Profile Name"
-msgstr "Brukeprofil navn"
-
 #: imdb/src/plugin.py:584
 msgid "User Rating"
 msgstr "Brukervurdering"
@@ -16672,7 +15862,7 @@ msgstr "Brukeradministrasjon"
 msgid "User name"
 msgstr "Brukernavn"
 
-#: fritzcall/src/plugin.py:2642
+#: fritzcall/src/plugin.py:2641
 msgid "User name Accessing FRITZ!Box"
 msgstr "Brukernavn til FRITZ!Box"
 
@@ -16724,10 +15914,6 @@ msgid ""
 "A commen part of the title up to this title:episode separator shared by "
 "several movies creates a series"
 msgstr ""
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:219
-msgid "Uzbek"
-msgstr "Usbekisk"
 
 #: easymedia/src/plugin.py:413
 msgid "VLC Player"
@@ -16866,7 +16052,7 @@ msgstr "Godkjenner"
 
 #: fritzcall/src/FritzCallFBF.py:372 fritzcall/src/FritzCallFBF.py:399
 #: fritzcall/src/FritzCallFBF.py:1384 fritzcall/src/FritzCallFBF.py:2052
-#: fritzcall/src/FritzCallFBF.py:2823
+#: fritzcall/src/FritzCallFBF.py:2824
 msgid "Vanity"
 msgstr "Forfengelighet"
 
@@ -16892,10 +16078,6 @@ msgstr ""
 msgid "Version"
 msgstr "Versjon"
 
-#: advhdmi/src/AdvHdmiCecSetup.py:134
-msgid "Version: "
-msgstr "Versjon: "
-
 #: infobartunerstate/src/IBTSConfiguration.py:121
 msgid "Vertical offset in pixel"
 msgstr "Vertikal avvik (pixel)"
@@ -16920,10 +16102,6 @@ msgstr "Videonorm"
 #: webinterface/src/WebComponents/Sources/Strings.py:136
 msgid "Video PID"
 msgstr "Video PID"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:273
-msgid "Video Quality"
-msgstr "Videokvalitet"
 
 #: webinterface/src/WebComponents/Sources/Strings.py:133
 msgid "Video Size"
@@ -16953,15 +16131,11 @@ msgstr "Oppførsel ved avslutting av videobrowser :"
 msgid "Videoplayer stop/exit behavior:"
 msgstr "Videospiller STOP/EXIT oppførsel:"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:220
-msgid "Vietnamese"
-msgstr "Vietnamesisk"
-
 #: merlinepg/src/plugin.py:605 merlinepg/src/plugin.py:922
 msgid "View AutoTimers"
 msgstr "Se AutoTimers"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:39 mytube/src/plugin.py:48
+#: mytube/src/plugin.py:48
 msgid "View Count"
 msgstr "Vis antall"
 
@@ -16996,10 +16170,6 @@ msgstr "Vis, rediger eller fjern monteringspunkt på din Dreambox."
 #: networkbrowser/src/MountManager.py:70
 msgid "View, edit or delete usernames and passwords for your network."
 msgstr "Vis, rediger eller fjern brukernavn og passordt på din Dreambox."
-
-#: youtubeplayer/src/YouTubeList.py:97
-msgid "Views"
-msgstr "Visninger"
 
 #: mytube/src/plugin.py:1159 mytube/src/plugin.py:1390
 #: webcamviewer/src/WebcamTravel.py:247 webcamviewer/src/WebcamTravel.py:250
@@ -17038,10 +16208,6 @@ msgstr ""
 "Visualiser og kontroller lys, dimmere, persienner, termostater etc. igjennom "
 "EIB/KNX (linknx server påkrevd)"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:221
-msgid "Volapuk"
-msgstr "Volapuk"
-
 #: fancontrol2/src/FC2webSite.py:49
 msgid "Voltage"
 msgstr "Spenning"
@@ -17076,6 +16242,7 @@ msgstr "Volum satt til %i"
 
 #
 #: webbouqueteditor/src/WebComponents/Sources/SatellitesList.py:70
+#: weatherplugin/src/MSNWeather.py:209
 msgid "W"
 msgstr "W"
 
@@ -17111,9 +16278,17 @@ msgstr "WD DD.MM. HH:MM"
 msgid "WD, DD.MM. HH:MM"
 msgstr "WD, DD.MM. HH:MM"
 
-#: fritzcall/src/plugin.py:1131
+#: fritzcall/src/plugin.py:1130
 msgid "WLAN not active"
 msgstr "WLAN ikke aktiv"
+
+#: weatherplugin/src/MSNWeather.py:211
+msgid "WNW"
+msgstr ""
+
+#: weatherplugin/src/MSNWeather.py:207
+msgid "WSW"
+msgstr ""
 
 #: merlinmusicplayer/src/plugin.py:2946
 msgid "Wait for screensaver (in min)"
@@ -17170,10 +16345,6 @@ msgstr "Ekstremvarsel"
 #: eurotictv/meta/plugin_eurotictv.xml./eurotictv/meta/plugin_eurotictv.xml
 msgid "Watch EuroticTV via HTTP Live Streaming."
 msgstr "Se EuroticTV via HTTP Live streaming."
-
-#: youtubeplayer/src/YouTubeStdFeedSelection.py:41
-msgid "Watch On Mobile"
-msgstr "Se på mobil"
 
 #: eurotictv/src/plugin.py:207
 msgid "Watch eUroticTV via HTTP Live Streaming"
@@ -17264,9 +16435,8 @@ msgstr "Ons"
 
 #: partnerbox/src/RemoteTimerEntry.py:143
 #: partnerbox/src/RemoteTimerEntry.py:447
-#: merlinepgcenter/src/HelperFunctions.py:42 advhdmi/src/plugin.py:44
-#: elektro/src/plugin.py:128 kiddytimer/src/KTglob.py:10
-#: autotimer/src/AutoTimerEditor.py:43
+#: merlinepgcenter/src/HelperFunctions.py:42 elektro/src/plugin.py:128
+#: kiddytimer/src/KTglob.py:10 autotimer/src/AutoTimerEditor.py:43
 msgid "Wednesday"
 msgstr "Onsdag"
 
@@ -17285,10 +16455,6 @@ msgstr "Ukentlig (Mandag)"
 #: autotimer/src/AutoTimerEditor.py:310
 msgid "Weekly (Sunday)"
 msgstr "Ukentlig (Søndag)"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:222
-msgid "Welch"
-msgstr "Walisisk"
 
 #: epgrefresh/src/mphelp.xml
 msgid "Welcome to EPGRefresh"
@@ -17508,10 +16674,6 @@ msgstr ""
 "Når ja er valgt, VPS vil bli aktivert ved direkteopptak (stopper etter "
 "nåværende program), hvis kanalen støtter VPS."
 
-#: advhdmi/src/AdvHdmiCecSetup.py:98
-msgid "Where should this setup be displayed?"
-msgstr "Hvor skal oppsettet vises?"
-
 #: pushservice/src/Controller/ListDir.py:46
 msgid "Where to check"
 msgstr "Hvor skal det sjekkes"
@@ -17591,6 +16753,10 @@ msgstr "Mellomrom vil bli byttet med '_'"
 msgid "Widescreen"
 msgstr "Widescreen"
 
+#: weatherplugin/src/MSNWeather.py:35
+msgid "Windy"
+msgstr ""
+
 #: antiscrollbar/meta/plugin_antiscrollbar.xml./antiscrollbar/meta/plugin_antiscrollbar.xml
 msgid ""
 "With AntiScrollbar you can cover up annoying ticker lines (e.g. in news "
@@ -17645,14 +16811,6 @@ msgstr ""
 "(mellom 1 og 9 minutter lange) som vil automatisk skifte kanal til den\n"
 "originale kanal etter kjøring."
 
-#: youtubeplayer/meta/plugin_youtubeplayer.xml./youtubeplayer/meta/plugin_youtubeplayer.xml
-msgid ""
-"With YouTubePlayer you can watch YouTube-Videos on the Dreambox.\n"
-"This plugin requires a PC with the VLC program running."
-msgstr ""
-"Med YouTubePlayer kan du se på YouTube videoer direkte på Dreambox.\n"
-"Denne plugin krever en PC med VLC program kjørende."
-
 #: autotimer/src/AutoTimerEditor.py:515
 msgid ""
 "With this option enabled the channel to record on can be changed to a "
@@ -17676,10 +16834,6 @@ msgstr "Guide"
 #: autotimer/src/mphelp.xml
 msgid "Wizard or Classic Editor?"
 msgstr "Wizard eller klassisk editor?"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:223
-msgid "Wolof"
-msgstr "Wolof"
 
 #: imdb/src/plugin.py:705
 msgid "Words / phrases to ignore (comma separated)"
@@ -17706,22 +16860,22 @@ msgstr "Feil parameterformat 'se=%s'. Bruk set=set15"
 msgid "Wrote CSV file %s."
 msgstr "Skrev CSV fil %s"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:224
-msgid "Xhosa"
-msgstr "Xhosa"
-
 #: infobartunerstate/src/plugin.py:86
 msgid "YYYY/MM/DD HH:MM"
 msgstr "YYYY/MM/DD HH:MM"
+
+#: weatherplugin/src/setup.py:294
+msgid "Yahoo location search result"
+msgstr ""
 
 #: birthdayreminder/src/BirthdayReminder.py:572
 msgid "Year:"
 msgstr "År:"
 
 #: dreammediathek/src/MoviePlayer.py:261 dreammediathek/src/plugin.py:101
-#: youtubeplayer/src/YouTubeSearchDialog.py:52 vps/src_py/Vps_check.py:249
-#: vps/src_py/Vps_check.py:277 vps/src_py/Modifications.py:140
-#: vps/src_py/plugin.py:17 vps/src_py/plugin.py:18 moviecut/src_py/plugin.py:95
+#: vps/src_py/Vps_check.py:249 vps/src_py/Vps_check.py:277
+#: vps/src_py/Modifications.py:140 vps/src_py/plugin.py:17
+#: vps/src_py/plugin.py:18 moviecut/src_py/plugin.py:95
 #: mytube/src/MyTubePlayer.py:282 mytube/src/plugin.py:626
 #: mytube/src/plugin.py:632 epgrefresh/src/plugin.py:51
 #: autotimer/src/autotimerwizard.xml
@@ -17748,14 +16902,6 @@ msgstr "Ja, ikke spør igjen"
 #: autotimer/src/autotimerwizard.xml
 msgid "Yes, keep them."
 msgstr "Ja, behold dem."
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:225
-msgid "Yiddish"
-msgstr "Yiddish"
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:226
-msgid "Yoruba"
-msgstr "Yoruba"
 
 #: ecasa/src/EcasaSetup.py:50
 msgid "You can choose between Flickr and Picasa as site to use."
@@ -17908,15 +17054,15 @@ msgstr ""
 msgid "You must select a valid service!"
 msgstr "Du må velge en gyldig kanal!"
 
-#: easyinfo/src/plugin.py:275
+#: easyinfo/src/plugin.py:277
 msgid "You need GUI-restart to load the new settings!"
 msgstr "GUI trenger omstart for å laste de nye endringene!"
 
-#: fritzcall/src/plugin.py:2539
+#: fritzcall/src/plugin.py:2538
 msgid "You need to enable the monitoring on your FRITZ!Box by dialing #96*5*!"
 msgstr "Du må aktivere overvåking på din FRITZ!Box ved å ringe #96*5*!"
 
-#: weatherplugin/src/setup.py:225
+#: weatherplugin/src/setup.py:220
 msgid ""
 "You need to enter a valid city name before you can search for the location "
 "code."
@@ -18143,10 +17289,6 @@ msgstr "Bytter tilbake om %d:%02d minutter"
 msgid "Zapping is disabled in WebInterface Configuration"
 msgstr "Bytting (Zap) er deaktivert i WebIf konfurasjonen"
 
-#: youtubeplayer/src/YouTubeSearchDialog.py:227
-msgid "Zhuang"
-msgstr "Zhuang"
-
 #: googlemaps/src/plugin.py:424
 msgid "Zoom"
 msgstr "Zoom"
@@ -18158,10 +17300,6 @@ msgstr "Zoom inn ved letterbox / anamorph filmer"
 #: letterbox/meta/plugin_letterbox.xml./letterbox/meta/plugin_letterbox.xml
 msgid "Zoom into letterboxed/anamorph movies."
 msgstr "Zoom inn ved letterbox / anamorph filmer."
-
-#: youtubeplayer/src/YouTubeSearchDialog.py:228
-msgid "Zulu"
-msgstr "Zulu"
 
 #: dreamexplorer/src/plugin.py:261
 msgid "[All files] "
@@ -18324,14 +17462,6 @@ msgstr "legg strømning til i favoritter"
 msgid "add to EPGRefresh"
 msgstr "legg til i EPGRefresh"
 
-#: youtubeplayer/src/YouTubeUserList.py:80
-msgid "add user"
-msgstr "legg til bruker"
-
-#: youtubeplayer/src/YouTubeList.py:392 youtubeplayer/src/YouTubeList.py:401
-msgid "additional videos"
-msgstr "ytterligere videoer"
-
 #: audiorestart/src/plugin.py:15
 msgid "after restart"
 msgstr "etter omstart"
@@ -18449,11 +17579,7 @@ msgstr "automatisk"
 msgid "autotimers need a match attribute"
 msgstr "AutoTimer trenger en passende atributt"
 
-#: youtubeplayer/src/YouTubeList.py:437
-msgid "back in history"
-msgstr "tilbake i historikk"
-
-#: fritzcall/src/plugin.py:109
+#: fritzcall/src/plugin.py:108
 msgid "before 05.27"
 msgstr "før den 27.05"
 
@@ -18473,7 +17599,7 @@ msgstr "blå teletekst link"
 msgid "bob"
 msgstr "bob"
 
-#: fritzcall/src/FritzLDIF.py:71 fritzcall/src/FritzLDIF.py:149
+#: fritzcall/src/FritzLDIF.py:68 fritzcall/src/FritzLDIF.py:146
 msgid "business"
 msgstr "forretning"
 
@@ -18497,11 +17623,11 @@ msgstr "etter fremdrift"
 msgid "by speed"
 msgstr "etter hastighet"
 
-#: fritzcall/src/plugin.py:1082
+#: fritzcall/src/plugin.py:1081
 msgid "call redirections active"
 msgstr "viderekobling aktiv"
 
-#: fritzcall/src/FritzCallFBF.py:3146
+#: fritzcall/src/FritzCallFBF.py:3147
 msgid "calls in mailbox"
 msgstr ""
 
@@ -18669,10 +17795,6 @@ msgstr "slett server"
 msgid "delete stream from favorites"
 msgstr "slett strømning fra favoritter"
 
-#: youtubeplayer/src/YouTubeUserList.py:79
-msgid "delete user"
-msgstr "slett bruker"
-
 #
 #: serienfilm/src/MovieSelection.py:65
 msgid "delete..."
@@ -18690,7 +17812,7 @@ msgstr "beskrivelse match"
 msgid "device name: "
 msgstr "enhetsnavn: "
 
-#: fritzcall/src/plugin.py:1016
+#: fritzcall/src/plugin.py:1015
 msgid "devices active"
 msgstr "enheter aktiv"
 
@@ -18707,14 +17829,6 @@ msgstr "deaktiver"
 #: fancontrol2/src/plugin.py:529
 msgid "disable DMM-FanControl"
 msgstr "deaktiver DMM-Fancontrol"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:92
-msgid "disable at GUI-start"
-msgstr "deaktiver ved GUI omstart"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:94
-msgid "disable from webinterface"
-msgstr "deaktiver fra webgrensesnitt"
 
 #. TRANSLATORS: there is no need to translate this string, as it was reused from e2 core
 #: pluginsort/src/plugin.py:385
@@ -18744,7 +17858,7 @@ msgid "display Info"
 msgstr "display informasjon"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:2573
+#: fritzcall/src/plugin.py:2572
 msgid "display calls"
 msgstr "vis samtaler"
 
@@ -18753,7 +17867,7 @@ msgid "display connection errors"
 msgstr "vis tilkoblingsfeil"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:2575
+#: fritzcall/src/plugin.py:2574
 msgid "display phonebook"
 msgstr "vis telefonbok"
 
@@ -18875,10 +17989,6 @@ msgstr "rediger kanaler"
 msgid "edit tags"
 msgstr "rediger merker"
 
-#: youtubeplayer/src/YouTubeUserList.py:81
-msgid "edit user"
-msgstr "rediger bruker"
-
 #: emailclient/src/EmailConfig.py:145
 msgid "empty values - retry"
 msgstr "tomme verdier - prøv igjen"
@@ -18888,21 +17998,9 @@ msgstr "tomme verdier - prøv igjen"
 msgid "enable"
 msgstr "aktiver"
 
-#: advhdmi/src/AdvHdmiCecSetup.py:96
-msgid "enable Power Off"
-msgstr "aktiver Power Off"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:95
-msgid "enable Power On"
-msgstr "aktiver Power On"
-
 #: googlemaps/src/plugin.py:80
 msgid "enable caching of Images in /tmp/"
 msgstr "aktiver buffring av bilder i /tmp/"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:97
-msgid "enable debug"
-msgstr "aktiver feilsøking"
 
 #
 #. TRANSLATORS: there is no need to translate this string, as it was reused from e2 core
@@ -18915,7 +18013,7 @@ msgstr "aktiver flytte modus"
 msgid "enabled"
 msgstr "aktivert"
 
-#: fritzcall/src/plugin.py:1009
+#: fritzcall/src/plugin.py:1008
 msgid "encrypted"
 msgstr "kryptert"
 
@@ -18992,10 +18090,6 @@ msgstr "avslutt"
 msgid "exit movielist"
 msgstr "avslutt filmliste"
 
-#: advhdmi/src/plugin.py:100
-msgid "extensions"
-msgstr "utvidelser"
-
 #: emailclient/src/plugin.py:810
 msgid "failed to load message"
 msgstr "lasting av melding feilet"
@@ -19041,7 +18135,7 @@ msgid "finish fetching remote data..."
 msgstr "ferdig med å hente eksterne data"
 
 #: fritzcall/src/FritzCallFBF.py:488 fritzcall/src/FritzCallFBF.py:1405
-#: fritzcall/src/FritzCallFBF.py:2090 fritzcall/src/FritzCallFBF.py:2857
+#: fritzcall/src/FritzCallFBF.py:2090 fritzcall/src/FritzCallFBF.py:2858
 msgid "finishing"
 msgstr "avslutter"
 
@@ -19055,21 +18149,9 @@ msgstr "tvunget"
 msgid "format"
 msgstr "format"
 
-#: youtubeplayer/src/YouTubeList.py:443
-msgid "forward in history"
-msgstr "forrover i historikk"
-
 #: eparted/src/eparted.py:337
 msgid "free"
 msgstr "ledig"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:317
-msgid "from (HH:MI)"
-msgstr "fra (HH:MM)"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:315
-msgid "from weekday"
-msgstr "fra ukedag"
 
 #: podcast/src/plugin.py:610 podcast/src/plugin.py:615
 msgid "from xml"
@@ -19115,7 +18197,7 @@ msgstr "grønn teletekst link"
 msgid "group movies of a series to virtual directories"
 msgstr ""
 
-#: fritzcall/src/plugin.py:3353
+#: fritzcall/src/plugin.py:3352
 msgid "guest "
 msgstr "gjest "
 
@@ -19168,9 +18250,9 @@ msgstr "skjul valgt plugin"
 msgid "hide the red real directories"
 msgstr ""
 
-#: fritzcall/src/FritzOutlookCSV.py:127 fritzcall/src/FritzOutlookCSV.py:208
-#: fritzcall/src/FritzCallFBF.py:365 fritzcall/src/FritzLDIF.py:103
-#: fritzcall/src/FritzLDIF.py:176
+#: fritzcall/src/FritzOutlookCSV.py:124 fritzcall/src/FritzOutlookCSV.py:205
+#: fritzcall/src/FritzCallFBF.py:365 fritzcall/src/FritzLDIF.py:100
+#: fritzcall/src/FritzLDIF.py:173
 msgid "home"
 msgstr "hjemme"
 
@@ -19392,7 +18474,7 @@ msgstr "påloggingsverifikasjon"
 msgid "mail check interval (minutes)"
 msgstr "postsjekk intervall (minutter)"
 
-#: fritzcall/src/plugin.py:1048
+#: fritzcall/src/plugin.py:1047
 msgid "mailboxes active"
 msgstr "postbox aktiv"
 
@@ -19404,12 +18486,6 @@ msgstr "lag filsystem '%s' på partisjon %s (%d %s)"
 #: filebrowser/src/plugin.py:18
 msgid "manage local Files"
 msgstr "Håndter lokale filer"
-
-#: advhdmi/src/plugin.py:177 advhdmi/src/plugin.py:184
-#: advhdmi/src/plugin.py:192 advhdmi/src/AdvHdmiCecSetup.py:382
-#: advhdmi/src/AdvHdmiCecSetup.py:389 advhdmi/src/AdvHdmiCecSetup.py:397
-msgid "manage when HDMI Cec is enabled"
-msgstr "håndter når HDMI-Cec er aktivert"
 
 #: epgcopy/src/plugin.py:148
 msgid "manually"
@@ -19479,9 +18555,9 @@ msgstr ""
 msgid "missing parameter \"id\""
 msgstr "manglende parameter \"id\""
 
-#: fritzcall/src/FritzOutlookCSV.py:125 fritzcall/src/FritzOutlookCSV.py:206
-#: fritzcall/src/FritzCallFBF.py:363 fritzcall/src/FritzLDIF.py:101
-#: fritzcall/src/FritzLDIF.py:174
+#: fritzcall/src/FritzOutlookCSV.py:122 fritzcall/src/FritzOutlookCSV.py:203
+#: fritzcall/src/FritzCallFBF.py:363 fritzcall/src/FritzLDIF.py:98
+#: fritzcall/src/FritzLDIF.py:171
 msgid "mobile"
 msgstr "mobil"
 
@@ -19530,18 +18606,18 @@ msgid "moving file ..."
 msgstr "flytter fil..."
 
 #: weathercomponent/src/Components/Sources/MSNWeather.py:45
-#: weathercomponent/src/Components/Sources/MSNWeather.py:55
-#: weathercomponent/src/Components/Sources/MSNWeather.py:57
-#: weathercomponent/src/Components/Sources/MSNWeather.py:68
-#: weathercomponent/src/Components/Sources/MSNWeather.py:80
-#: weathercomponent/src/Components/Sources/MSNWeather.py:93
-#: weathercomponent/src/Components/Sources/MSNWeather.py:106
-#: weathercomponent/src/Components/Sources/MSNWeather.py:113
-#: weathercomponent/src/Components/Sources/MSNWeather.py:120
-#: weathercomponent/src/Components/Sources/MSNWeather.py:127
-#: weathercomponent/src/Components/Sources/MSNWeather.py:134
-#: weathercomponent/src/Components/Sources/MSNWeather.py:147
-#: weathercomponent/src/Components/Sources/MSNWeather.py:158
+#: weathercomponent/src/Components/Sources/MSNWeather.py:54
+#: weathercomponent/src/Components/Sources/MSNWeather.py:56
+#: weathercomponent/src/Components/Sources/MSNWeather.py:67
+#: weathercomponent/src/Components/Sources/MSNWeather.py:79
+#: weathercomponent/src/Components/Sources/MSNWeather.py:92
+#: weathercomponent/src/Components/Sources/MSNWeather.py:105
+#: weathercomponent/src/Components/Sources/MSNWeather.py:112
+#: weathercomponent/src/Components/Sources/MSNWeather.py:119
+#: weathercomponent/src/Components/Sources/MSNWeather.py:126
+#: weathercomponent/src/Components/Sources/MSNWeather.py:133
+#: weathercomponent/src/Components/Sources/MSNWeather.py:146
+#: weathercomponent/src/Components/Sources/MSNWeather.py:157
 msgid "n/a"
 msgstr "ikke tilgjengelig"
 
@@ -19602,7 +18678,7 @@ msgstr "ingen leser installert for denne mimetype!"
 msgid "no account selected"
 msgstr "ingen konto valgt"
 
-#: ncidclient/src/plugin.py:825 fritzcall/src/plugin.py:2775
+#: ncidclient/src/plugin.py:825 fritzcall/src/plugin.py:2774
 msgid "no calls"
 msgstr "ingen samtaler"
 
@@ -19610,7 +18686,7 @@ msgstr "ingen samtaler"
 msgid "no date"
 msgstr "ingen dato"
 
-#: fritzcall/src/plugin.py:1012
+#: fritzcall/src/plugin.py:1011
 msgid "no device active"
 msgstr "ingen enhet aktiv"
 
@@ -19651,12 +18727,12 @@ msgid "not active"
 msgstr "ikke aktiv"
 
 #: fritzcall/src/FritzCallFBF.py:1534 fritzcall/src/FritzCallFBF.py:1583
-#: fritzcall/src/FritzCallFBF.py:2333 fritzcall/src/FritzCallFBF.py:2947
-#: fritzcall/src/FritzCallFBF.py:3088
+#: fritzcall/src/FritzCallFBF.py:2333 fritzcall/src/FritzCallFBF.py:2948
+#: fritzcall/src/FritzCallFBF.py:3089
 msgid "not available with this firmware version"
 msgstr "ikke tilgjengelig med denne maskinvareversjon"
 
-#: fritzcall/src/plugin.py:109
+#: fritzcall/src/plugin.py:108
 msgid "not configured"
 msgstr "ikke konfigurert"
 
@@ -19664,7 +18740,7 @@ msgstr "ikke konfigurert"
 msgid "not configured yet. please do so in the settings."
 msgstr "ikke konfigurert enda, vennligst gjør dette i innstillingene."
 
-#: fritzcall/src/plugin.py:1007
+#: fritzcall/src/plugin.py:1006
 msgid "not encrypted"
 msgstr "ikke kryptert"
 
@@ -19676,14 +18752,14 @@ msgstr "ikke funnet"
 msgid "not successfully please check your config (FTPERROR)"
 msgstr "ikke vellykket, vennligst sjekk din konfigurasjon (FTPERROR)"
 
-#: fritzcall/src/FritzCallFBF.py:3445 fritzcall/src/FritzCallFBF.py:3452
-#: fritzcall/src/FritzCallFBF.py:3462 fritzcall/src/FritzCallFBF.py:3472
-#: fritzcall/src/FritzCallFBF.py:3482 fritzcall/src/FritzCallFBF.py:3492
-#: fritzcall/src/FritzCallFBF.py:3502 fritzcall/src/FritzCallFBF.py:3509
+#: fritzcall/src/FritzCallFBF.py:3446 fritzcall/src/FritzCallFBF.py:3453
+#: fritzcall/src/FritzCallFBF.py:3463 fritzcall/src/FritzCallFBF.py:3473
+#: fritzcall/src/FritzCallFBF.py:3483 fritzcall/src/FritzCallFBF.py:3493
+#: fritzcall/src/FritzCallFBF.py:3503 fritzcall/src/FritzCallFBF.py:3510
 msgid "not yet implemented"
 msgstr "ikke innført enda"
 
-#: fritzcall/src/plugin.py:112
+#: fritzcall/src/plugin.py:111
 msgid "nothing"
 msgstr "ingenting"
 
@@ -19691,7 +18767,7 @@ msgstr "ingenting"
 msgid "nothing playing..."
 msgstr "ingenting spilles..."
 
-#: ncidclient/src/plugin.py:1007 fritzcall/src/plugin.py:3288
+#: ncidclient/src/plugin.py:1007 fritzcall/src/plugin.py:3287
 msgid "number suppressed"
 msgstr "nummer utelatt"
 
@@ -19766,7 +18842,7 @@ msgstr "på, med side ved side"
 msgid "on with top/bottom"
 msgstr "på, med topp/bunn"
 
-#: fritzcall/src/plugin.py:1014
+#: fritzcall/src/plugin.py:1013
 msgid "one device active"
 msgstr "en enhet aktiv"
 
@@ -19814,10 +18890,6 @@ msgstr "analyserer melding..."
 #: autotimer/src/AutoTimerEditor.py:188
 msgid "partial match"
 msgstr "delvis likhet"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:90
-msgid "partially disable HdmiCec"
-msgstr "delvis deaktiver HDMICec"
 
 #: eparted/src/eparted.py:170
 msgid "partition(s)"
@@ -19901,16 +18973,12 @@ msgstr "vennligst vent (inntil 3 minutter)..."
 msgid "please wait..."
 msgstr "vennligst vent..."
 
-#: advhdmi/src/plugin.py:99
-msgid "pluginmenue"
-msgstr "pluginmeny"
-
 #: emission/src/EmissionBandwidth.py:59
 msgid "preferred"
 msgstr "foretrukket"
 
 #: fritzcall/src/FritzCallFBF.py:477 fritzcall/src/FritzCallFBF.py:1415
-#: fritzcall/src/FritzCallFBF.py:2080 fritzcall/src/FritzCallFBF.py:2847
+#: fritzcall/src/FritzCallFBF.py:2080 fritzcall/src/FritzCallFBF.py:2848
 msgid "preparing"
 msgstr "forbereder"
 
@@ -19934,12 +19002,8 @@ msgstr "forrige side / hent side / flytt"
 msgid "prev sub page / move"
 msgstr "forrige undertekstside / flytt"
 
-#: youtubeplayer/src/YouTubeAddPlayList.py:59
-msgid "private"
-msgstr "privat"
-
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:2569 fritzcall/src/plugin.py:2579
+#: fritzcall/src/plugin.py:2568 fritzcall/src/plugin.py:2578
 #: eparted/src/eparted.py:582 eparted/src/eparted.py:588
 msgid "quit"
 msgstr "avslutt"
@@ -19988,10 +19052,6 @@ msgstr "rød teletekst link"
 #: vlcplayer/src/VlcMediaList.py:53
 msgid "refresh"
 msgstr "oppfrisk"
-
-#: youtubeplayer/src/YouTubeList.py:406
-msgid "related videos"
-msgstr "relaterte videoer"
 
 #: webinterface/src/WebComponents/Sources/ServiceListReload.py:25
 msgid "reloaded both"
@@ -20049,10 +19109,6 @@ msgstr "tilbakestill oppstartstjeneste for oppstart..."
 msgid "reset startup service for leaving standby mode..."
 msgstr "tilbakestill oppstartstjeneste for å gå ut av standby"
 
-#: youtubeplayer/src/YouTubeList.py:411
-msgid "response videos"
-msgstr "responsvideoer"
-
 #: merlinepgcenter/src/MerlinEPGCenter.py:1684
 msgid "return"
 msgstr "gå tilbake"
@@ -20078,7 +19134,7 @@ msgid "save Filesystemposition on exit"
 msgstr "lagre filsystemposisjon ved avslutting"
 
 #. TRANSLATORS: keep it short, this is a help text
-#: fritzcall/src/plugin.py:2571 fritzcall/src/plugin.py:2577
+#: fritzcall/src/plugin.py:2570 fritzcall/src/plugin.py:2576
 msgid "save and quit"
 msgstr "lagre og avslutt"
 
@@ -20215,7 +19271,7 @@ msgstr "sett som oppstartskanal etter oppstart..."
 msgid "set as startup service after leaving standby mode..."
 msgstr "sett som oppstartskanal etter vekking fra standby"
 
-#: vlcplayer/src/VlcServerList.py:104 youtubeplayer/src/YouTubeUserList.py:82
+#: vlcplayer/src/VlcServerList.py:104
 msgid "set default"
 msgstr "sett som standard"
 
@@ -20259,7 +19315,7 @@ msgstr "vis album"
 msgid "show all"
 msgstr "vis alle"
 
-#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:123
+#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:122
 msgid "show as list"
 msgstr "vis som liste"
 
@@ -20275,7 +19331,7 @@ msgstr "vis detaljer"
 msgid "show duration"
 msgstr ""
 
-#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:123
+#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:122
 msgid "show each call"
 msgstr "vis alle samtaler"
 
@@ -20286,10 +19342,6 @@ msgstr "vis sendingdetaljer"
 #: serienfilm/src/MovieSelection.py:275
 msgid "show first selected tag"
 msgstr "vis første valgte markør"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:98
-msgid "show in"
-msgstr "vis i"
 
 #: ecasa/src/EcasaGui.py:629
 msgid "show metadata"
@@ -20307,7 +19359,7 @@ msgstr "vis neste liste"
 msgid "show next page"
 msgstr "vis neste side"
 
-#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:123
+#: ncidclient/src/plugin.py:109 fritzcall/src/plugin.py:122
 msgid "show nothing"
 msgstr "vis ingenting"
 
@@ -20422,10 +19474,6 @@ msgstr "vellykket opplastet EPG fra server"
 msgid "switch 4:3 content display"
 msgstr "bytt til 4:3 skjermformat"
 
-#: advhdmi/src/plugin.py:98
-msgid "systemmenue"
-msgstr "systemmeny"
-
 #: valixdcontrol/src/plugin.py:113
 msgid "t"
 msgstr "t"
@@ -20451,14 +19499,6 @@ msgstr "kommandoen var ikke > 0"
 #: webinterface/src/WebComponents/Sources/Movie.py:89
 msgid "this recording"
 msgstr "denne innspillingen"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:318
-msgid "to (HH:MI)"
-msgstr "til (HH:MM)"
-
-#: advhdmi/src/AdvHdmiCecSetup.py:316
-msgid "to weekday"
-msgstr "til ukedag"
 
 #: emission/src/EmissionDetailview.py:83
 msgid "toggle download status"
@@ -20621,7 +19661,7 @@ msgstr "med lang OK tast"
 msgid "with short description"
 msgstr "med kort beskrivelse"
 
-#: fritzcall/src/FritzOutlookCSV.py:97 fritzcall/src/FritzOutlookCSV.py:180
+#: fritzcall/src/FritzOutlookCSV.py:94 fritzcall/src/FritzOutlookCSV.py:177
 #: fritzcall/src/FritzCallFBF.py:367
 msgid "work"
 msgstr "arbeid"
