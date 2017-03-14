@@ -5898,6 +5898,7 @@ msgstr ""
 "%s\n"
 "- Film Bildfrequenz (FPS):\n"
 "%s\n"
+"."
 
 #: simplerss/src/RSSPoller.py:81
 msgid "Failed to get subscriptions from Google Reader."
