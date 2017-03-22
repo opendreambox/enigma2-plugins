@@ -24,10 +24,10 @@ class RemoteControl(Source):
 
 		#Advanced remote or standard?
 
-		if config.misc.rcused.value == 0:
-			self.remotetype = self.TYPE_ADVANCED
-		else:
+		if config.misc.rcused.value == 1:_
 			self.remotetype = self.TYPE_STANDARD
+		else:
+			self.remotetype = self.TYPE_ADVANCED
 
 		print "[RemoteControl.__init__] Configured RCU-Type is '%s'" %(self.remotetype)
 
