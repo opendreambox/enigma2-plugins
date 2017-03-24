@@ -24,7 +24,7 @@ class RemoteControl(Source):
 
 		#Advanced remote or standard?
 
-		if config.misc.rcused.value == 1:_
+		if config.misc.rcused.value == 1:
 			self.remotetype = self.TYPE_STANDARD
 		else:
 			self.remotetype = self.TYPE_ADVANCED
