@@ -100,7 +100,8 @@ config.plugins.merlinmusicplayer.merlinmusicplayermainmenu = ConfigYesNo(default
 from enigma import ePythonMessagePump
 from threading import Thread, Lock
 from timer import TimerEntry
-from simplejson import loads as simplejson_loads
+from twisted.web.client import getPage
+import re
 
 import urlparse
 def url_parse(url, defaultPort=None):
@@ -1270,18 +1271,16 @@ class MerlinMusicPlayerScreen(Screen, InfoBarBase, InfoBarSeek, InfoBarNotificat
 
 	def getGoogleCover(self, artist,album):
 		if artist != "" and album != "":
-			url = "http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=%s+%s" % (quote(album),quote(artist))
-			sendUrlCommand(url, None,10).addCallback(self.googleImageCallback).addErrback(self.coverDownloadFailed)
+			url='https://www.google.de/search?q=%s+%s+-youtube&tbm=isch&source=lnt&tbs=isz:ex,iszw:500,iszh:500' % (quote(album),quote(artist))
+			getPage(url, timeout=10, agent='Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.56 Safari/537.17').addCallback(self.googleImageCallback).addErrback(self.coverDownloadFailed)
 		else:
 			self["coverArt"].showDefaultCover()
 
 	def googleImageCallback(self, result):
-		results = simplejson_loads(result)
-		try:
-			url = results['responseData']['results'][0]['unescapedUrl']
-		except: # fuck that
-			url = ""
-		if url != "":
+		urlsraw=re.findall(',"ou":".+?","ow"',result)
+		imageurls=[urlraw[7:-6].encode() for urlraw in urlsraw]
+		if imageurls:
+			url = imageurls[0]
 			parts = url.split("/")
 			filename = parts[-1]
 			if filename != self.currentGoogleCoverFile:
@@ -1294,7 +1293,7 @@ class MerlinMusicPlayerScreen(Screen, InfoBarBase, InfoBarSeek, InfoBarNotificat
 						self.screenSaverScreen.updateCover(filename = filename, modus = 4)
 				else:
 					print "[MerlinMusicPlayer] downloading cover from %s " % url
-					downloadPage(url , self.googleDownloadDir + parts[-1]).addCallback(boundFunction(self.coverDownloadFinished, filename)).addErrback(self.coverDownloadFailed)
+					downloadPage(url , filename).addCallback(boundFunction(self.coverDownloadFinished, filename)).addErrback(self.coverDownloadFailed)
 
 	def coverDownloadFailed(self,result):
         	print "[MerlinMusicPlayer] cover download failed: %s " % result
