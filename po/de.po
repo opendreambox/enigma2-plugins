@@ -4665,7 +4665,7 @@ msgstr "ETA ??:?? Stunden"
 
 #: epgrefresh/src/plugin.py:241
 msgid "EXTENSIONMENU_PREFIX"
-msgstr "EPGBackup"
+msgstr "EPGRefresh"
 
 #: epgrefresh/src/plugin.py:242
 msgid "EXTENSIONNAME_SETUP"
