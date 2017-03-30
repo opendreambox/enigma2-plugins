@@ -943,8 +943,8 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 
 	def GoogleImageCallback(self, result):
 		self.hideCover()
-		urlsraw=re.findall('imgres\?imgurl.+?&amp;imgrefurl',result)
-		imageurls=[urlraw[14:-14].encode() for urlraw in urlsraw]
+		urlsraw=re.findall(',"ou":".+?","ow"',result)
+		imageurls=[urlraw[7:-6].encode() for urlraw in urlsraw]
 		if imageurls:
 			print "[InternetRadio] downloading cover from %s " % imageurls[0]
 			downloadPage(imageurls[0], "/tmp/.cover").addCallback(self.coverDownloadFinished).addErrback(self.coverDownloadFailed)
