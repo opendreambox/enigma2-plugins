@@ -238,11 +238,6 @@ imdb/Makefile
 imdb/meta/Makefile
 imdb/src/Makefile
 
-infobartunerstate/Makefile
-infobartunerstate/meta/Makefile
-infobartunerstate/src/Makefile
-infobartunerstate/src/Handler/Makefile
-
 internetradio/Makefile
 internetradio/meta/Makefile
 internetradio/src/Makefile

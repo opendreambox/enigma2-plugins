@@ -47,7 +47,6 @@ SUBDIRS = \
 	googlemaps \
 	growlee \
 	imdb \
-	infobartunerstate \
 	internetradio \
 	kiddytimer \
 	letterbox \
