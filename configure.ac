@@ -459,15 +459,6 @@ serienfilm/meta/Makefile
 serienfilm/src/Makefile
 serienfilm/src/icons/Makefile
 
-seriesplugin/Makefile
-seriesplugin/etc/Makefile
-seriesplugin/meta/Makefile
-seriesplugin/src/Makefile
-seriesplugin/src/Images/Makefile
-seriesplugin/src/Logos/Makefile
-seriesplugin/src/Identifiers/Makefile
-seriesplugin/src/Skins/Makefile
-
 setpasswd/Makefile
 setpasswd/meta/Makefile
 setpasswd/src/Makefile
