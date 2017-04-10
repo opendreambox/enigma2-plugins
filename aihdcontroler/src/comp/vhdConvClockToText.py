@@ -49,8 +49,8 @@ class vhdConvClockToText(Converter, object):
 			self.Tage = ["Lu", "Ma", "Me", "Gi", "Ve", "Sa", "Do"]
 			self.Monate = ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"]
 		else:
-			self.Tage = ["Mo", "Tu", "We", "Th", "Fr", "Say", "Su"]
-			self.Monate = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+			self.Tage = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
+			self.Monate = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 	@cached
 	def getText(self):

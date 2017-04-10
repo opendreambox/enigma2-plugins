@@ -341,7 +341,7 @@ function EPGEvent(xml, number){
 		return h+":"+m;
 	};
 	this.getTimeDay = function() {
-		var weekday = ["So", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+		var weekday = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 		var wday = weekday[this.getTimeStart().getDay()];
 		var day = this.getTimeStart().getDate();
 		var month = this.getTimeStart().getMonth()+1;
@@ -623,8 +623,8 @@ function Movie(xml, cssclass){
 	};
 	
 	this.getTimeDay = function() {
-		var Wochentag = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
-		var wday = Wochentag[this.getTimeStart().getDay()];
+		var weekday = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+		var wday = weekday[this.getTimeStart().getDay()];
 		var day = this.getTimeStart().getDate();
 		var month = this.getTimeStart().getMonth()+1;
 		var year = this.getTimeStart().getFullYear();
