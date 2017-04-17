@@ -397,7 +397,16 @@ var WebAdminCore = Class.create(E2WebCore, {
 				var pkgname = element.readAttribute('data-pkgname');
 				var check = confirm("Install "+pkgname+"?");
 				if(check == true) 
-					window.open('pkg?command=install&package='+pkgname);
+				{
+					var form = document.createElement('form');
+					form.method = 'POST';
+					form.action = 'pkg?command=install&package='+pkgname;
+					form.target = 'actionWindow';
+					document.body.appendChild(form);
+					window.open("",'actionWindow');
+					form.submit();				
+				 	//window.open('pkg?command=install&package='+pkgname);
+				 }
 				event.stop();
 			}.bind(this)
 		);
@@ -408,7 +417,16 @@ var WebAdminCore = Class.create(E2WebCore, {
 				var pkgname = element.readAttribute('data-pkgname');
 				var check = confirm("Remove "+pkgname+"?");
 				if(check == true) 
-					window.open('pkg?command=remove&package='+pkgname);
+				{
+					var form = document.createElement('form');
+					form.method = 'POST';
+					form.action = 'pkg?command=remove&package='+pkgname;
+					form.target = 'actionWindow';
+					document.body.appendChild(form);
+					window.open("",'actionWindow');
+					form.submit();
+					//window.open('pkg?command=remove&package='+pkgname);
+				}
 				event.stop();
 			}.bind(this)
 		);
