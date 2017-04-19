@@ -369,12 +369,6 @@ orfteletext/Makefile
 orfteletext/meta/Makefile
 orfteletext/src/Makefile
 
-partnerbox/Makefile
-partnerbox/meta/Makefile
-partnerbox/src/Makefile
-partnerbox/src/icons/Makefile
-partnerbox/src/servicewebts/Makefile
-
 permanentclock/Makefile
 permanentclock/meta/Makefile
 permanentclock/src/Makefile

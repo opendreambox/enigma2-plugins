@@ -73,7 +73,6 @@ SUBDIRS = \
 	networkbrowser \
 	ofdb \
 	orfteletext \
-	partnerbox \
 	permanentclock \
 	permanenttimeshift \
 	pipservicerelation \
