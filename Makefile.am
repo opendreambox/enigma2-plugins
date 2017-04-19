@@ -100,7 +100,6 @@ SUBDIRS = \
 	valixdcontrol \
 	videocolorspace \
 	virtualzap \
-	vps \
 	weatherplugin \
 	weathercomponent \
 	weathercomponenthandler \
