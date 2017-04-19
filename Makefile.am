@@ -73,7 +73,6 @@ SUBDIRS = \
 	ofdb \
 	orfteletext \
 	permanentclock \
-	permanenttimeshift \
 	pipservicerelation \
 	pipzap \
 	pluginhider \
