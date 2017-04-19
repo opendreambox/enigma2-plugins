@@ -13,7 +13,6 @@ SUBDIRS = \
 	autoresolution \
 	autotimer \
 	birthdayreminder \
-	bitrateviewer \
 	bonjour \
 	cdinfo \
 	channelselectionshorttitle \

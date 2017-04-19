@@ -22,7 +22,6 @@ AX_PTHREAD
 
 PKG_CHECK_MODULES(ENIGMA2, enigma2)
 PKG_CHECK_MODULES(GSTREAMER, gstreamer-1.0 gstreamer-pbutils-1.0)
-PKG_CHECK_MODULES(LIBCRYPTO, libcrypto)
 PKG_CHECK_MODULES(LIBTIRPC, libtirpc)
 
 AC_ARG_WITH(debug,
@@ -94,11 +93,6 @@ autotimer/src/web-data/Makefile
 birthdayreminder/Makefile
 birthdayreminder/meta/Makefile
 birthdayreminder/src/Makefile
-
-bitrateviewer/Makefile
-bitrateviewer/meta/Makefile
-bitrateviewer/src/Makefile
-bitrateviewer/src/bitratecalc/Makefile
 
 bonjour/Makefile
 bonjour/meta/Makefile
