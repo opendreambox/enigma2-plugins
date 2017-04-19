@@ -1,2 +1,0 @@
-Description: Merlin Music Player and iDream (music management)
-Depends: enigma2, python-twisted-web, python-mutagen, python-sqlite3, python-simplejson

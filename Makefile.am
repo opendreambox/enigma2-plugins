@@ -53,7 +53,6 @@ SUBDIRS = \
 	menusort \
 	merlinepg \
 	merlinepgcenter \
-	merlinmusicplayer \
 	meteoitalia \
 	mosaic \
 	movielistpreview \

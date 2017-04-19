@@ -21,7 +21,6 @@ AX_PYTHON_DEVEL
 AX_PTHREAD
 
 PKG_CHECK_MODULES(ENIGMA2, enigma2)
-PKG_CHECK_MODULES(GSTREAMER, gstreamer-1.0 gstreamer-pbutils-1.0)
 
 AC_ARG_WITH(debug,
 	AS_HELP_STRING([--without-debug],[disable debugging code]),
@@ -276,12 +275,6 @@ merlinepgcenter/images/SD/Makefile
 merlinepgcenter/images/XD/Makefile
 merlinepgcenter/images/XD_BORDER/Makefile
 merlinepgcenter/images/HD_Elgato/Makefile
-
-merlinmusicplayer/Makefile
-merlinmusicplayer/meta/Makefile
-merlinmusicplayer/src/Makefile
-merlinmusicplayer/src/images/Makefile
-merlinmusicplayer/src/merlinmp3player/Makefile
 
 meteoitalia/Makefile
 meteoitalia/meta/Makefile
