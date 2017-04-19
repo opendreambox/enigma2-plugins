@@ -77,7 +77,6 @@ SUBDIRS = \
 	podcast \
 	pushservice \
 	quickbutton \
-	reconstructapsc \
 	reftopiconname \
 	remotetimer \
 	satipclient \

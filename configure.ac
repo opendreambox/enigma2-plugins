@@ -382,11 +382,6 @@ quickbutton/Makefile
 quickbutton/meta/Makefile
 quickbutton/src/Makefile
 
-reconstructapsc/Makefile
-reconstructapsc/meta/Makefile
-reconstructapsc/src_cc/Makefile
-reconstructapsc/src_py/Makefile
-
 reftopiconname/Makefile
 reftopiconname/src/Makefile
 
