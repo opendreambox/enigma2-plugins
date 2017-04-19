@@ -3,7 +3,7 @@
                     <tag type="Recording" />
 	  </prerequisites>
           <info>
-                    <author>Dream Multimedia</author>
+                    <author>Dream Property GmbH</author>
                     <name>IMDb</name>
                     <packagename>enigma2-plugin-extensions-imdb</packagename>
                     <shortdescription>Displays Movie Information from the InternetMovieDatabase</shortdescription>

@@ -3,7 +3,7 @@
                     <tag type="Network" />
 	  </prerequisites>
           <info>
-                    <author>Dream Multimedia</author>
+                    <author>Dream Property GmbH</author>
                     <name>E.I.B.ox</name>
                     <packagename>enigma2-plugin-extensions-eibox</packagename>
                     <shortdescription>Visualization for the European Installation Bus</shortdescription>

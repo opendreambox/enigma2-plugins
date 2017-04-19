@@ -4,7 +4,7 @@
                     <tag type="Recording" />
 	  </prerequisites>
           <info>
-                    <author>Dream Multimedia</author>
+                    <author>Dream Property GmbH</author>
                     <name>OFDb</name>
                     <packagename>enigma2-plugin-extensions-ofdb</packagename>
                     <shortdescription>Displays Movie Information from the Online Film Datenbank (German)</shortdescription>

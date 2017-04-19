@@ -175,6 +175,6 @@ The plugin is subject to the GPLv3_ or later.
 
 Additional exception:
   This plugin may be distributed and executed on hardware which is licensed by
-  Dream Multimedia GmbH.
+  Dream Property GmbH.
 
 .. _GPLv3: http://www.gnu.org/licenses/agpl.html

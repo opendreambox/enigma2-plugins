@@ -11,7 +11,7 @@
 #  or send a letter to Creative Commons, 559 Nathan Abbott Way, Stanford, California 94305, USA.
 #
 #  Alternatively, this plugin may be distributed and executed on hardware which
-#  is licensed by Dream Multimedia GmbH.
+#  is licensed by Dream Property GmbH.
 #
 #
 #  This plugin is NOT free software. It is open source, you are allowed to
