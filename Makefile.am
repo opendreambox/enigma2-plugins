@@ -12,7 +12,6 @@ SUBDIRS = \
 	automaticvolumeadjustment \
 	autoresolution \
 	autotimer \
-	babelzapper \
 	birthdayreminder \
 	bitrateviewer \
 	bonjour \

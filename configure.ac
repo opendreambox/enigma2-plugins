@@ -91,11 +91,6 @@ autotimer/src/WebScreens/Makefile
 autotimer/src/web/Makefile
 autotimer/src/web-data/Makefile
 
-babelzapper/Makefile
-babelzapper/etc/Makefile
-babelzapper/meta/Makefile
-babelzapper/src/Makefile
-
 birthdayreminder/Makefile
 birthdayreminder/meta/Makefile
 birthdayreminder/src/Makefile
