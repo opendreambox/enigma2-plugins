@@ -22,7 +22,6 @@ AX_PTHREAD
 
 PKG_CHECK_MODULES(ENIGMA2, enigma2)
 PKG_CHECK_MODULES(GSTREAMER, gstreamer-1.0 gstreamer-pbutils-1.0)
-PKG_CHECK_MODULES(LIBTIRPC, libtirpc)
 
 AC_ARG_WITH(debug,
 	AS_HELP_STRING([--without-debug],[disable debugging code]),
@@ -339,12 +338,6 @@ netcaster/src/Makefile
 netcaster/src/bin/Makefile
 netcaster/src/bin/interface/Makefile
 netcaster/src/etc/Makefile
-
-networkbrowser/Makefile
-networkbrowser/meta/Makefile
-networkbrowser/src/Makefile
-networkbrowser/src/icons/Makefile
-networkbrowser/src/lib/Makefile
 
 ncidclient/Makefile
 ncidclient/meta/Makefile

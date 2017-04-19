@@ -68,7 +68,6 @@ SUBDIRS = \
 	namezap \
 	ncidclient \
 	netcaster \
-	networkbrowser \
 	ofdb \
 	orfteletext \
 	permanentclock \
