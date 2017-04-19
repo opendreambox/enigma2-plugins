@@ -527,11 +527,6 @@ virtualzap/Makefile
 virtualzap/meta/Makefile
 virtualzap/src/Makefile
 
-vlcplayer/Makefile
-vlcplayer/meta/Makefile
-vlcplayer/src/Makefile
-vlcplayer/src/servicets/Makefile
-
 vps/Makefile
 vps/meta/Makefile
 vps/src_cc/Makefile
