@@ -292,11 +292,6 @@ mosaic/Makefile
 mosaic/meta/Makefile
 mosaic/src/Makefile
 
-moviecut/Makefile
-moviecut/meta/Makefile
-moviecut/src_cc/Makefile
-moviecut/src_py/Makefile
-
 movielistpreview/Makefile
 movielistpreview/meta/Makefile
 movielistpreview/src/Makefile

@@ -56,7 +56,6 @@ SUBDIRS = \
 	merlinmusicplayer \
 	meteoitalia \
 	mosaic \
-	moviecut \
 	movielistpreview \
 	movieretitle \
 	moviesearch \
