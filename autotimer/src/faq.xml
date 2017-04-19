@@ -7,7 +7,7 @@
 	<page title="FAQ">
 		<text value="Question: I found a problem with the AutoTimer, can you fix it?
 \nAnswer: First try the AutoTimer version in a recent (experimental) Image to see if the problem was fixed. Then read the Help again and the upcoming FAQs to make sure that this is actually a problem and not expected behavior.
-\nIf you still think there is something wrong with the AutoTimer, please visit http://www.dream-multimedia-tv.de/board and post your problem there.
+\nIf you still think there is something wrong with the AutoTimer, please visit https://dreambox.de/board/ and post your problem there.
 \n\nQ: The plugin only adds timers when leaving the configuration, not automatically. What can I do?
 \nA: From the Overview press MENU and enter the &quot;Setup&quot;. In this screen enable &quot;Poll automatically&quot; and you should be good to go."/>
 	</page>

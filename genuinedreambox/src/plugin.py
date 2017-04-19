@@ -79,7 +79,7 @@ class genuineDreambox(Screen):
 		 }, -1)
 		self["kGreen"] = Button(_("Test again"))
 		self["kRed"] = Button(_("Cancel"))
-		self["infotext"] = Label("With this plugin you can verify the authenticity of your Dreambox.\nFor additional information, \nplease visit our website \nhttps://www.dream-multimedia-tv.de.")
+		self["infotext"] = Label("With this plugin you can verify the authenticity of your Dreambox.\nFor additional information, \nplease visit our website \nhttps://dreambox.de/.")
 		self["resulttext"] = Label("... Please wait ...")
 		self["infotext2"] = Label("Please visit our website and follow the instructions.\nAlternatively you can call our customer service hotline.")
 		self.onLayoutFinish.append(self.start)
@@ -102,7 +102,7 @@ class genuineDreambox(Screen):
 		if not udsError:
 			if (self.stepFirst(TPMD_CMD_GET_DATA,[TPMD_DT_PROTOCOL_VERSION,TPMD_DT_TPM_VERSION,TPMD_DT_SERIAL])):
 				try:  
-					url = ("https://www.dream-multimedia-tv.de/verify/challenge?serial=%s&version=%s" % (self.serial,self.tpmdVersion))
+					url = ("https://dreambox.de/verify/challenge?serial=%s&version=%s" % (self.serial,self.tpmdVersion))
 					getPage(url).addCallback(self._gotPageLoadRandom).addErrback(self.errorLoad)
 				except:
 					self["resulttext"].setText(_("Can't connect to server. Please check your network!"))
@@ -114,7 +114,7 @@ class genuineDreambox(Screen):
 		if result:
 			self.isStart = True
 			url = self.buildUrlUpdate()
-			#url = ("https://www.dream-multimedia-tv.de/verify/challenge?serial=%s&version=%s" % (self.serial,self.tpmdVersion))
+			#url = ("https://dreambox.de/verify/challenge?serial=%s&version=%s" % (self.serial,self.tpmdVersion))
 			self["resulttext"].setText(_("Updating, please wait..."))
 			getPage(url).addCallback(self._gotPageLoadUpdate).addErrback(self.errorLoad)
 		else:
@@ -187,7 +187,7 @@ class genuineDreambox(Screen):
 		tmpfa = ("&fab=%s" % base64.b64encode(self.fab_ca_cert).replace('+', '-').replace('/', '_'))
 		tmpda = ("&data=%s" % base64.b64encode(self.datablock_signed).replace('+', '-').replace('/', '_'))
 		tmpr  = ("&r=%s" % base64.b64encode(self.r).replace('+', '-').replace('/', '_'))
-		return("https://www.dream-multimedia-tv.de/verify/challenge?%s%s%s%s%s%s&serial=%s" % (tmpra,tmpl2,tmpl3,tmpfa,tmpda,tmpr,self.serial))
+		return("https://dreambox.de/verify/challenge?%s%s%s%s%s%s&serial=%s" % (tmpra,tmpl2,tmpl3,tmpfa,tmpda,tmpr,self.serial))
 
 	def buildUrlUpdate(self):
 		return self.buildUrl() + "&getupdate=true"

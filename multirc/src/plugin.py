@@ -73,7 +73,7 @@ class MultiRCSetup(ConfigListScreen, Screen):
 		self["warning"] = Label(_("""WARNING!
 After changing this and pressing <Ok>, your Remote Control might stop working!
 
-Information about re-configuring the RC is available at http://www.dream-multimedia-tv.de/board/thread.php?threadid=5613"""))
+Information about re-configuring the RC is available at https://dreambox.de/board/thread.php?threadid=5613"""))
 		self["config"].list = self.list
 		self["config"].setList(self.list)
 		self["setupActions"] = ActionMap(["SetupActions"],
