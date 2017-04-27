@@ -1,2 +1,0 @@
-Description: Fetch and display remote text files via HTTP
-Depends: enigma2, python-twisted-web

@@ -14,7 +14,6 @@ SUBDIRS = \
 	bonjour \
 	cdinfo \
 	channelselectionshorttitle \
-	curlytx \
 	dreamexplorer \
 	dreamirc \
 	dreammediathek \

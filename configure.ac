@@ -77,10 +77,6 @@ cdinfo/src/Makefile
 channelselectionshorttitle/Makefile
 channelselectionshorttitle/src/Makefile
 
-curlytx/Makefile
-curlytx/meta/Makefile
-curlytx/src/Makefile
-
 dreamexplorer/Makefile
 dreamexplorer/meta/Makefile
 dreamexplorer/src/Makefile
