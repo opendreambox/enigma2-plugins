@@ -2,6 +2,7 @@ from enigma import eConsoleAppContainer
 from Components.config import config
 
 from twisted.web import server, resource, http
+from os.path import basename
 
 class IPKGResource(resource.Resource):
 	IPKG_PATH = "/usr/bin/opkg"
@@ -28,7 +29,7 @@ class IPKGResource(resource.Resource):
 			return self.doIndexPage(request)
 
 	def buildCmd(self, parms=[]):
-		cmd = [IPKGResource.IPKG_PATH, "ipkg", self.command] + parms
+		cmd = [IPKGResource.IPKG_PATH, basename(IPKGResource.IPKG_PATH), self.command] + parms
 		print "[IPKG.py] cmd: %s" % cmd
 		return cmd
 
