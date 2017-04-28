@@ -4,6 +4,7 @@ from Plugins.Extensions.NETcaster.plugin import myname
 from ConfigParser import ConfigParser, DuplicateSectionError
 
 from Tools.BoundFunction import boundFunction
+from Tools.Directories import pathExists, resolveFilename, SCOPE_PLUGINS
 
 ####################################################################
 
@@ -46,7 +47,10 @@ class SHOUTcasterFavorites:
     configfile = "/etc/NETcaster.conf"
     def __init__(self):
         self.configparser = ConfigParser()
-        self.configparser.read(self.configfile)
+        if pathExists(self.configfile):
+            self.configparser.read(self.configfile)
+        else:
+            self.configparser.read(resolveFilename(SCOPE_PLUGINS, "Extensions/NETcaster/NETcaster.conf"))
     def getStreams(self):
         streams=[]
         sections = self.configparser.sections()

@@ -297,9 +297,7 @@ namezap/src/Makefile
 netcaster/Makefile
 netcaster/meta/Makefile
 netcaster/src/Makefile
-netcaster/src/bin/Makefile
-netcaster/src/bin/interface/Makefile
-netcaster/src/etc/Makefile
+netcaster/src/interface/Makefile
 
 ncidclient/Makefile
 ncidclient/meta/Makefile
