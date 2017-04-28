@@ -7,9 +7,9 @@ from Screens.InputBox import InputBox
 from Screens.MessageBox import MessageBox
 from Components.ActionMap import ActionMap
 from Components.MultiContent import MultiContentEntryText
-from enigma import eServiceReference, eListboxPythonMultiContent, eListbox, eServiceCenter, gFont, iServiceInformation, eServiceReference
+from enigma import eServiceReference, eListboxPythonMultiContent, eServiceCenter, gFont, iServiceInformation
 
-from Tools.Directories import *
+from Tools.Directories import pathExists, resolveFilename, SCOPE_HDD, SCOPE_PLUGINS
 
 VERSION = "1.3"
 
@@ -200,7 +200,6 @@ class MovieTagger(Screen):
 			self.serviceHandler = eServiceCenter.getInstance()
 			root = eServiceReference("2:0:1:0:0:0:0:0:0:0:" + resolveFilename(SCOPE_HDD))
 			list = self.serviceHandler.list(root)
-			tags = set()
 			if list is None:
 				pass
 			else:
