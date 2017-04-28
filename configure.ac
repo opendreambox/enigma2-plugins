@@ -271,7 +271,6 @@ movieselectionquickbutton/meta/Makefile
 movieselectionquickbutton/src/Makefile
 
 movietagger/Makefile
-movietagger/etc/Makefile
 movietagger/meta/Makefile
 movietagger/src/Makefile
 

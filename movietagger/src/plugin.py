@@ -40,7 +40,6 @@ class MovieTagger(Screen):
 		</screen>"""
 
 	currList = None
-	pretagfile = "/etc/enigma2/movietags"
 
 	def __init__(self, session, service):
 		self.session = session
@@ -74,23 +73,22 @@ class MovieTagger(Screen):
 			"left": 	self.left,
 			"right": 	self.right,
 			}, -1)
-		self.loadPreTags()
+		self.pretags = self.loadPreTags("/etc/enigma2/movietags") or self.loadPreTags(resolveFilename(SCOPE_PLUGINS, "Extensions/MovieTagger/movietags"))
 		self.updateCurrentTagList()
 		self.updateAllTagList()
 		self.currList = self["aTaglist"]
 		self.onLayoutFinish.append(self.keyBlue)
 
-	def loadPreTags(self):
-		if pathExists(self.pretagfile):
-			fp = open(self.pretagfile,"r")
-			t = fp.read()
-			fp.close()
-			self.pretags = t.replace("\n"," ").strip().split(" ")
-			self.pretags.sort()
-			print "pretags loaded ", self.pretags
+	def loadPreTags(self, filename):
+		try:
+			with open(filename, "r") as f:
+				pretags = sorted(f.read().splitlines())
+		except:
+			print "pretags file %s does not exist" % filename
+			return []
 		else:
-			print "pretagsfile",self.pretagfile," does not exists"
-			self.pretags = []
+			print "pretags loaded from %s:" % filename, pretags
+			return pretags
 
 	def updateCurrentTagList(self):
 		print "updating cTagList"
