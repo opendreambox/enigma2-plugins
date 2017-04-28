@@ -74,9 +74,6 @@ cdinfo/Makefile
 cdinfo/meta/Makefile
 cdinfo/src/Makefile
 
-channelselectionshorttitle/Makefile
-channelselectionshorttitle/src/Makefile
-
 dreamexplorer/Makefile
 dreamexplorer/meta/Makefile
 dreamexplorer/src/Makefile
@@ -148,12 +145,6 @@ epgsearch/src/Makefile
 eurotictv/Makefile
 eurotictv/meta/Makefile
 eurotictv/src/Makefile
-
-eventlist/Makefile
-eventlist/src/Makefile
-
-eventposition/Makefile
-eventposition/src/Makefile
 
 fancontrol2/Makefile
 fancontrol2/meta/Makefile
@@ -348,9 +339,6 @@ quickbutton/Makefile
 quickbutton/meta/Makefile
 quickbutton/src/Makefile
 
-reftopiconname/Makefile
-reftopiconname/src/Makefile
-
 remotetimer/Makefile
 remotetimer/meta/Makefile
 remotetimer/src/Makefile
@@ -460,9 +448,6 @@ weatherplugin/Makefile
 weatherplugin/meta/Makefile
 weatherplugin/src/Makefile
 weatherplugin/src/weather_icons/Makefile
-
-weathercomponent/Makefile
-weathercomponent/src/Makefile
 
 weathercomponenthandler/Makefile
 weathercomponenthandler/src/Makefile

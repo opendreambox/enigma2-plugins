@@ -13,7 +13,6 @@ SUBDIRS = \
 	birthdayreminder \
 	bonjour \
 	cdinfo \
-	channelselectionshorttitle \
 	dreamexplorer \
 	dreamirc \
 	dreammediathek \
@@ -31,8 +30,6 @@ SUBDIRS = \
 	epgrefresh \
 	epgsearch \
 	eurotictv \
-	eventlist \
-	eventposition \
 	fancontrol2 \
 	filebrowser \
 	fritzcall \
@@ -74,7 +71,6 @@ SUBDIRS = \
 	podcast \
 	pushservice \
 	quickbutton \
-	reftopiconname \
 	remotetimer \
 	satipclient \
 	satloader \
@@ -98,7 +94,6 @@ SUBDIRS = \
 	videocolorspace \
 	virtualzap \
 	weatherplugin \
-	weathercomponent \
 	weathercomponenthandler \
 	webadmin \
 	webcamviewer \
