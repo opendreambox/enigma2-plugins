@@ -332,7 +332,6 @@ pluginsort/meta/Makefile
 pluginsort/src/Makefile
 
 podcast/Makefile
-podcast/etc/Makefile
 podcast/meta/Makefile
 podcast/src/Makefile
 

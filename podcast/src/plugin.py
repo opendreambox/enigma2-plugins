@@ -368,8 +368,10 @@ class PodcastXML(Screen):
 		# try user defined list, else fall back to default
 		if fileExists(configDir + "podcasts_local.xml"):
 			fileName = configDir + "podcasts_local.xml"
-		else:
+		elif fileExists(configDir + "podcasts.xml"):
 			fileName = configDir + "podcasts.xml"
+		else:
+			fileName = resolveFilename(SCOPE_PLUGINS, "Extensions/Podcast/podcasts.xml")
 				
 		try:
 			file = open(fileName)
