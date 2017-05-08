@@ -18,7 +18,7 @@ function url() {
 	this.getservices = "/web/getservices"; // plus serviceref
 	this.subservices = "/web/subservices"; // subservices for current service
 	this.streamsubservices = "/web/streamsubservices?sRef="; // subservices for streaming service
-	this.stopservice = "/web/stopservice"; // subservices for streaming service
+	this.stopservice = "/web/stopservice"; // stop service
 
 	this.movielist= "/web/movielist"; // plus dirname,tag
 	this.moviedelete= "/web/moviedelete"; // plus serviceref
