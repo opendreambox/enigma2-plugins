@@ -438,3 +438,11 @@ class BackupWebScreen(WebScreen):
 		from WebComponents.Sources.Backup import Backup
 		self["Backup"] = Backup(Backup.BACKUP)
 		self["Restore"] = Backup(Backup.RESTORE)
+		
+class StopServiceWebScreen(WebScreen):
+	def __init__(self, session, request):
+		WebScreen.__init__(self, session, request)
+		
+		from WebComponents.Sources.StopService import StopService
+		self["StopService"] = StopService(session)
+		
