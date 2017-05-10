@@ -3098,6 +3098,13 @@ def notifyCall(event, date, number, caller, phone, connID):
 		if event == "RING":
 			text = _("Incoming Call on %(date)s at %(time)s from\n---------------------------------------------\n%(number)s\n%(caller)s\n---------------------------------------------\nto: %(phone)s") % {'date':date[:8], 'time':date[9:], 'number':number, 'caller':caller, 'phone':phone}
 		else:
+			global mutedOnConnID
+			if config.plugins.FritzCall.muteOnCall.value and not mutedOnConnID:
+				info("[FritzCall] mute on connID: %s", connID)
+				mutedOnConnID = connID
+				# eDVBVolumecontrol.getInstance().volumeMute() # with this, we get no mute icon...
+				if not eDVBVolumecontrol.getInstance().isMuted():
+					globalActionMap.actions["volumeMute"]()			
 			text = _("Outgoing Call on %(date)s at %(time)s to\n---------------------------------------------\n%(number)s\n%(caller)s\n---------------------------------------------\nfrom: %(phone)s") % {'date':date[:8], 'time':date[9:], 'number':number, 'caller':caller, 'phone':phone}
 		info("[FritzCall]\n%s", text)
 		# Notifications.AddNotification(MessageBox, text, type=MessageBox.TYPE_INFO, timeout=config.plugins.FritzCall.timeout.value)
