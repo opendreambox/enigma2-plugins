@@ -73,7 +73,7 @@ def Plugins(**kwargs):
 	return list
 
 def InfoBarPlugins__init__(self):
-	from Screens.InfoBarGenerics import InfoBarEPG
+	from Screens.InfoBarGenerics import InfoBarEPG, InfobarHbbtvPlugin
 	if isinstance(self, InfoBarEPG):
 		x = {	"green_l": (self.greenlong, _("Assign plugin to long green key pressed")),
 			"yellow_l": (self.yellowlong, _("Assign plugin to long yellow key pressed")),
@@ -82,7 +82,7 @@ def InfoBarPlugins__init__(self):
 		if ENABLE_RED_BUTTON:
 			x["red_b"] = (self.red, _("Assign plugin to red key pressed"))
 			hbbtvinstalled = getHBBTVInstalled()
-			if config.plugins.Quickbutton.overwritehbbtvredbutton.value and hbbtvinstalled:
+			if isinstance(self, InfobarHbbtvPlugin) and config.plugins.Quickbutton.overwritehbbtvredbutton.value and hbbtvinstalled:
 				self["HbbtvActions"].setEnabled(False)
 		self["QuickbuttonActions"] = HelpableActionMap(self, "QuickbuttonActions",x)
 
