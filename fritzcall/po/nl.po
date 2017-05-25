@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-09 14:16+0200\n"
+"POT-Creation-Date: 2017-05-22 11:16+0200\n"
 "PO-Revision-Date: 2009-06-04 20:19+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
@@ -68,13 +68,16 @@ msgstr "Nieuw contact automatisch toevoegen aan het telefoonboek"
 msgid "Call"
 msgstr "Gesprek"
 
+msgid "Call diversion"
+msgstr ""
+
+msgid "Call diversion active"
+msgstr ""
+
 msgid "Call monitoring"
 msgstr "Gespreksmonitoring"
 
 msgid "Call redirection"
-msgstr ""
-
-msgid "Call redirection active"
 msgstr ""
 
 #, python-format
@@ -138,7 +141,7 @@ msgstr ""
 msgid "Country"
 msgstr "Land"
 
-msgid "Countrycode (e.g. 44 for UK, 34 for Spain, etc.)"
+msgid "Countrycode (e.g. 0044 for UK, 0034 for Spain, etc.)"
 msgstr ""
 
 msgid "DECT inactive"
@@ -392,8 +395,11 @@ msgstr "Gemist"
 msgid "Missed calls"
 msgstr "Gemiste gesprekken"
 
-msgid "Mute on call"
-msgstr "Muten bij oproep"
+msgid "Mute on incoming call"
+msgstr ""
+
+msgid "Mute on outgoing calls"
+msgstr ""
 
 msgid "Name"
 msgstr "Naam"
@@ -411,9 +417,8 @@ msgstr ""
 msgid "No DECT phone registered"
 msgstr "Geen DECT telefoon geregistreerd"
 
-#, fuzzy
-msgid "No call redirection active"
-msgstr "Geen mailbox actief"
+msgid "No call diversion active"
+msgstr ""
 
 msgid "No entry selected"
 msgstr "Geen regel geselecteerd"
@@ -446,9 +451,8 @@ msgstr "Ok"
 msgid "One DECT phone registered"
 msgstr "Eén DECT telefoon geregistreerd"
 
-#, fuzzy
-msgid "One call redirection active"
-msgstr "Eén mailbox actief"
+msgid "One call diversion active"
+msgstr ""
 
 msgid "One mailbox active"
 msgstr "Eén mailbox actief"
@@ -678,7 +682,7 @@ msgstr ""
 msgid "before 05.27"
 msgstr ""
 
-msgid "call redirections active"
+msgid "call diversions active"
 msgstr ""
 
 msgid "calls in mailbox"
@@ -754,6 +758,12 @@ msgstr ""
 msgid "number suppressed"
 msgstr ""
 
+msgid "off"
+msgstr ""
+
+msgid "on"
+msgstr ""
+
 #, fuzzy
 msgid "one device active"
 msgstr "Eén mailbox actief"
@@ -777,6 +787,9 @@ msgstr "alle gesprekken tonen"
 
 msgid "show nothing"
 msgstr "niets weergeven"
+
+msgid "with"
+msgstr ""
 
 msgid "work"
 msgstr "werk"
@@ -833,6 +846,17 @@ msgstr ""
 #~ "%(caller)s\n"
 #~ "---------------------------------------------\n"
 #~ "to: %(phone)s"
+
+#~ msgid "Mute on call"
+#~ msgstr "Muten bij oproep"
+
+#, fuzzy
+#~ msgid "No call redirection active"
+#~ msgstr "Geen mailbox actief"
+
+#, fuzzy
+#~ msgid "One call redirection active"
+#~ msgstr "Eén mailbox actief"
 
 #~ msgid ""
 #~ "Outgoing Call on %(date)s to\n"

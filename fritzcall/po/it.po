@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2  - FRITZ!Box\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-09 14:16+0200\n"
+"POT-Creation-Date: 2017-05-22 11:16+0200\n"
 "PO-Revision-Date: 2015-04-14 23:22+0200\n"
 "Last-Translator: Spaeleus <spaeleus@croci.org>\n"
 "Language-Team: www.linsat.net <spaeleus@croci.org>\n"
@@ -68,14 +68,17 @@ msgstr "Ins. autom. nuovo chiamante in rubrica"
 msgid "Call"
 msgstr "Chiam."
 
+msgid "Call diversion"
+msgstr ""
+
+msgid "Call diversion active"
+msgstr ""
+
 msgid "Call monitoring"
 msgstr "Monitoraggio chiamate"
 
 msgid "Call redirection"
 msgstr "Deviazione chiamate"
-
-msgid "Call redirection active"
-msgstr "deviazione chiamate attiva"
 
 #, python-format
 msgid "Calling %s"
@@ -140,7 +143,7 @@ msgstr "Impossibile leggere Rubrica della FRITZ!Box: versione errata?"
 msgid "Country"
 msgstr "Nazione"
 
-msgid "Countrycode (e.g. 44 for UK, 34 for Spain, etc.)"
+msgid "Countrycode (e.g. 0044 for UK, 0034 for Spain, etc.)"
 msgstr ""
 
 msgid "DECT inactive"
@@ -410,8 +413,11 @@ msgstr "Ch. perse"
 msgid "Missed calls"
 msgstr "Chiamate perse"
 
-msgid "Mute on call"
-msgstr "Mute su Chiamata"
+msgid "Mute on incoming call"
+msgstr ""
+
+msgid "Mute on outgoing calls"
+msgstr ""
 
 msgid "Name"
 msgstr "Nome"
@@ -429,8 +435,8 @@ msgstr "Nuova chiamata"
 msgid "No DECT phone registered"
 msgstr "Nessun telefono DECT registrato"
 
-msgid "No call redirection active"
-msgstr "Nessuna deviazione chiamate attiva"
+msgid "No call diversion active"
+msgstr ""
 
 msgid "No entry selected"
 msgstr "Nessuna voce selezionata"
@@ -463,8 +469,8 @@ msgstr "Ok"
 msgid "One DECT phone registered"
 msgstr "Un telefono DECT registrato"
 
-msgid "One call redirection active"
-msgstr "Una deviazione chiamate attiva"
+msgid "One call diversion active"
+msgstr ""
 
 msgid "One mailbox active"
 msgstr "Una casella di posta attiva"
@@ -699,8 +705,8 @@ msgstr ""
 msgid "before 05.27"
 msgstr "anteriore a 05.27"
 
-msgid "call redirections active"
-msgstr "deviazione chiamate attiva"
+msgid "call diversions active"
+msgstr ""
 
 msgid "calls in mailbox"
 msgstr ""
@@ -773,6 +779,12 @@ msgstr ""
 msgid "number suppressed"
 msgstr "numero mascherato"
 
+msgid "off"
+msgstr ""
+
+msgid "on"
+msgstr ""
+
 msgid "one device active"
 msgstr "Un dispositivo attivo"
 
@@ -796,11 +808,17 @@ msgstr "Tutte"
 msgid "show nothing"
 msgstr "Nulla"
 
+msgid "with"
+msgstr ""
+
 msgid "work"
 msgstr "Ufficio"
 
 msgid "wrong user or password?"
 msgstr "Utente o password errati?"
+
+#~ msgid "Call redirection active"
+#~ msgstr "deviazione chiamate attiva"
 
 #~ msgid "Debug"
 #~ msgstr "Debug"
@@ -808,5 +826,17 @@ msgstr "Utente o password errati?"
 #~ msgid "FRITZ!Box - Could not load phonebook: %s"
 #~ msgstr "FRITZ!Box - Impossibile caricare la rubrica: %s"
 
+#~ msgid "Mute on call"
+#~ msgstr "Mute su Chiamata"
+
+#~ msgid "No call redirection active"
+#~ msgstr "Nessuna deviazione chiamate attiva"
+
+#~ msgid "One call redirection active"
+#~ msgstr "Una deviazione chiamate attiva"
+
 #~ msgid "Reverse Lookup Caller ID (select country below)"
 #~ msgstr "Identificativo chiamante (selezionare il Paese!)"
+
+#~ msgid "call redirections active"
+#~ msgstr "deviazione chiamate attiva"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-09 14:46+0200\n"
+"POT-Creation-Date: 2017-05-22 11:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,13 +67,16 @@ msgstr ""
 msgid "Call"
 msgstr ""
 
+msgid "Call diversion"
+msgstr ""
+
+msgid "Call diversion active"
+msgstr ""
+
 msgid "Call monitoring"
 msgstr ""
 
 msgid "Call redirection"
-msgstr ""
-
-msgid "Call redirection active"
 msgstr ""
 
 #, python-format
@@ -131,7 +134,7 @@ msgstr ""
 msgid "Country"
 msgstr ""
 
-msgid "Countrycode (e.g. 44 for UK, 34 for Spain, etc.)"
+msgid "Countrycode (e.g. 0044 for UK, 0034 for Spain, etc.)"
 msgstr ""
 
 msgid "DECT inactive"
@@ -380,7 +383,10 @@ msgstr ""
 msgid "Missed calls"
 msgstr ""
 
-msgid "Mute on call"
+msgid "Mute on incoming call"
+msgstr ""
+
+msgid "Mute on outgoing calls"
 msgstr ""
 
 msgid "Name"
@@ -399,7 +405,7 @@ msgstr ""
 msgid "No DECT phone registered"
 msgstr ""
 
-msgid "No call redirection active"
+msgid "No call diversion active"
 msgstr ""
 
 msgid "No entry selected"
@@ -433,7 +439,7 @@ msgstr ""
 msgid "One DECT phone registered"
 msgstr ""
 
-msgid "One call redirection active"
+msgid "One call diversion active"
 msgstr ""
 
 msgid "One mailbox active"
@@ -657,7 +663,7 @@ msgstr ""
 msgid "before 05.27"
 msgstr ""
 
-msgid "call redirections active"
+msgid "call diversions active"
 msgstr ""
 
 msgid "calls in mailbox"
@@ -731,6 +737,12 @@ msgstr ""
 msgid "number suppressed"
 msgstr ""
 
+msgid "off"
+msgstr ""
+
+msgid "on"
+msgstr ""
+
 msgid "one device active"
 msgstr ""
 
@@ -752,6 +764,9 @@ msgid "show each call"
 msgstr ""
 
 msgid "show nothing"
+msgstr ""
+
+msgid "with"
 msgstr ""
 
 msgid "work"

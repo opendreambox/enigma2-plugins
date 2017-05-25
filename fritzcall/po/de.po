@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enigma2 FritzCall Plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-09 14:16+0200\n"
-"PO-Revision-Date: 2016-09-09 14:46+0200\n"
+"POT-Creation-Date: 2017-05-22 11:16+0200\n"
+"PO-Revision-Date: 2017-05-22 11:20+0200\n"
 "Last-Translator: Michael Schmidt <michael@schmidt-schmitten.com>\n"
 "Language-Team: german <de@li.org>\n"
 "Language: de\n"
@@ -66,14 +66,17 @@ msgstr "Anrufer automatisch dem Telefonbuch hinzufügen"
 msgid "Call"
 msgstr "Anrufen"
 
+msgid "Call diversion"
+msgstr "Rufumleitung"
+
+msgid "Call diversion active"
+msgstr "Rufumleitung aktiv"
+
 msgid "Call monitoring"
 msgstr "Anrufanzeige"
 
 msgid "Call redirection"
 msgstr "Rufumleitung"
-
-msgid "Call redirection active"
-msgstr "Rufumleitung aktiv"
 
 #, python-format
 msgid "Calling %s"
@@ -139,8 +142,8 @@ msgstr ""
 msgid "Country"
 msgstr "Land"
 
-msgid "Countrycode (e.g. 44 for UK, 34 for Spain, etc.)"
-msgstr "Ländervorwahl (z.B. 44 für UK, 34 für Spain, etc.)"
+msgid "Countrycode (e.g. 0044 for UK, 0034 for Spain, etc.)"
+msgstr "Ländervorwahl (z.B. 0044 für UK, 0034 für Spain, etc.)"
 
 msgid "DECT inactive"
 msgstr "DECT inaktiv"
@@ -411,8 +414,12 @@ msgstr "Verpasst"
 msgid "Missed calls"
 msgstr "Verpasste Anrufe"
 
-msgid "Mute on call"
-msgstr "Ton aus bei angezeigten Anrufen"
+msgid "Mute on incoming call"
+msgstr "Ton aus bei eingehenden Anrufen"
+
+#, fuzzy
+msgid "Mute on outgoing calls"
+msgstr "Ton aus bei abgehenden Anrufen"
 
 msgid "Name"
 msgstr "Name"
@@ -430,7 +437,7 @@ msgstr "Neuer Anruf"
 msgid "No DECT phone registered"
 msgstr "Kein Schnurlostelefon angemeldet"
 
-msgid "No call redirection active"
+msgid "No call diversion active"
 msgstr "Keine Rufumleitung aktiv"
 
 msgid "No entry selected"
@@ -464,7 +471,7 @@ msgstr "OK"
 msgid "One DECT phone registered"
 msgstr "Ein Schnurlostelefon angemeldet"
 
-msgid "One call redirection active"
+msgid "One call diversion active"
 msgstr "Eine Rufumleitung aktiv"
 
 msgid "One mailbox active"
@@ -705,7 +712,7 @@ msgstr ""
 msgid "before 05.27"
 msgstr "vor 05.27"
 
-msgid "call redirections active"
+msgid "call diversions active"
 msgstr "Rufumleitungen aktiv"
 
 msgid "calls in mailbox"
@@ -779,6 +786,12 @@ msgstr "Nichts"
 msgid "number suppressed"
 msgstr "Nummer unterdrückt"
 
+msgid "off"
+msgstr "aus"
+
+msgid "on"
+msgstr "an"
+
 msgid "one device active"
 msgstr "eine WLAN-Station aktiv"
 
@@ -801,6 +814,9 @@ msgstr "Anzeige der einzelnen Anrufe"
 
 msgid "show nothing"
 msgstr "keine Anzeige"
+
+msgid "with"
+msgstr "mit"
 
 msgid "work"
 msgstr "Büro"

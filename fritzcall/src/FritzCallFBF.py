@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1386 $
-$Date: 2017-01-19 18:16:38 +0100 (Thu, 19 Jan 2017) $
-$Id: FritzCallFBF.py 1386 2017-01-19 17:16:38Z michael $
+$Revision: 1409 $
+$Date: 2017-05-16 17:49:33 +0200 (Tue, 16 May 2017) $
+$Id: FritzCallFBF.py 1409 2017-05-16 15:49:33Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -54,7 +54,7 @@ def resolveNumber(number, default=None, phonebook=None):
 		if config.plugins.FritzCall.internal.value and len(number) > 3 and number[0] == "0":
 			number = number[1:]
 		# strip CbC prefix
-		number = stripCbCPrefix(number, config.plugins.FritzCall.country.value)
+		number = stripCbCPrefix(number, config.plugins.FritzCall.countrycode.value)
 		if config.plugins.FritzCall.prefix.value and number and number[0] != '0':  # should only happen for outgoing
 			number = config.plugins.FritzCall.prefix.value + number
 		name = None
@@ -73,7 +73,7 @@ def resolveNumber(number, default=None, phonebook=None):
 		elif default:
 			number = default
 		else:
-			name = resolveNumberWithAvon(number, config.plugins.FritzCall.country.value)
+			name = resolveNumberWithAvon(number, config.plugins.FritzCall.countrycode.value)
 			if name:
 				number = number + ' ' + name
 	elif number == "":
@@ -93,8 +93,8 @@ def cleanNumber(number):
 		number = '00' + number[1:]
 	elif number[0] != '0':
 		number = config.plugins.FritzCall.prefix.value + number
-	if config.plugins.FritzCall.country.value and number.startswith(config.plugins.FritzCall.country.value):
-		number = '0' + number[len(config.plugins.FritzCall.country.value):]
+	if config.plugins.FritzCall.countrycode.value and number.startswith(config.plugins.FritzCall.countrycode.value):
+		number = '0' + number[len(config.plugins.FritzCall.countrycode.value):]
 	return number
 
 class FritzCallFBF(object):
@@ -549,7 +549,7 @@ class FritzCallFBF(object):
 					continue
 			here = resolveNumber(here, line[4], self.phonebook)
 
-			number = stripCbCPrefix(line[3], config.plugins.FritzCall.country.value)
+			number = stripCbCPrefix(line[3], config.plugins.FritzCall.countrycode.value)
 			if config.plugins.FritzCall.prefix.value and number and number[0] != '0':  # should only happen for outgoing
 				number = config.plugins.FritzCall.prefix.value + number
 			callListL.append((number, date, direct, remote, length, here))
@@ -1467,7 +1467,7 @@ class FritzCallFBF_05_27(object):
 			here = resolveNumber(here, found.group(6), self.phonebook)
 			# self.debug("[FritzCallFBF_05_27] _gotPageCallsNew: here: " + here)
 
-			number = stripCbCPrefix(found.group(3), config.plugins.FritzCall.country.value)
+			number = stripCbCPrefix(found.group(3), config.plugins.FritzCall.countrycode.value)
 			if config.plugins.FritzCall.prefix.value and number and number[0] != '0':  # should only happen for outgoing
 				number = config.plugins.FritzCall.prefix.value + number
 			# self.debug("[FritzCallFBF_05_27] _gotPageCallsNew: number: " + number)
@@ -2141,7 +2141,7 @@ class FritzCallFBF_05_50(object):
 				here = resolveNumber(here, "", self.phonebook)
 			# self.debug("here: " + here)
 
-			number = stripCbCPrefix(call[3], config.plugins.FritzCall.country.value)
+			number = stripCbCPrefix(call[3], config.plugins.FritzCall.countrycode.value)
 			if config.plugins.FritzCall.prefix.value and number and number[0] != '0':  # should only happen for outgoing
 				number = config.plugins.FritzCall.prefix.value + number
 			# self.debug("number: " + number)
@@ -2909,7 +2909,7 @@ class FritzCallFBF_06_35(object):
 				here = resolveNumber(here, "", self.phonebook)
 			# self.debug("here: " + here)
 
-			number = stripCbCPrefix(call[3], config.plugins.FritzCall.country.value)
+			number = stripCbCPrefix(call[3], config.plugins.FritzCall.countrycode.value)
 			if config.plugins.FritzCall.prefix.value and number and number[0] != '0':  # should only happen for outgoing
 				number = config.plugins.FritzCall.prefix.value + number
 			# self.debug("number: " + number)
@@ -3159,12 +3159,24 @@ class FritzCallFBF_06_35(object):
 				found = re.match(r'.*verbunden seit (.*)', item, re.S)
 				if found:
 					upTime = found.group(1)
+				else:
+					found = re.match(r'.*connected since (.*)', item, re.S)
+					if found:
+						upTime = found.group(1)
 				found = re.match(r'\s*Anbieter: (.*)', item, re.S)
 				if found:
 					provider = found.group(1)
+				else:
+					found = re.match(r'\s*Provider: (.*)', item, re.S)
+					if found:
+						provider = found.group(1)
 				found = re.match(r'IP(?:v4)?-Adresse: (.*)', item, re.S)
 				if found:
 					ipAddress = found.group(1)
+				else:
+					found = re.match(r'IP(?:v4)? address: (.*)', item, re.S)
+					if found:
+						ipAddress = found.group(1)
 
 		self.info("upTime: " + repr(upTime))
 		self.info("provider: " + repr(provider))
@@ -3178,12 +3190,24 @@ class FritzCallFBF_06_35(object):
 				found = re.match(r'.*verbunden seit (.*)', item, re.S)
 				if found:
 					upTime6 = found.group(1).encode("utf-8")
+				else:
+					found = re.match(r'.*connected since (.*)', item, re.S)
+					if found:
+						upTime6 = found.group(1).encode("utf-8")
 				found = re.match(r'\s*Anbieter: (.*)', item, re.S)
 				if found:
 					provider6 = found.group(1).encode("utf-8")
+				else:
+					found = re.match(r'\s*Provider:: (.*)', item, re.S)
+					if found:
+						provider6 = found.group(1).encode("utf-8")
 				found = re.match(r'IP(?:v6)?-(?:Adresse|Prefix): (.*)', item, re.S)
 				if found:
 					ipAddress6 = found.group(1).encode("utf-8")
+				else:
+					found = re.match(r'IP(?:v6)? (?:address|prefix): (.*)', item, re.S)
+					if found:
+						ipAddress6 = found.group(1).encode("utf-8")
 
 			self.info("upTime6: " + repr(upTime6))
 			self.info("provider6: " + repr(provider6))
@@ -3209,7 +3233,7 @@ class FritzCallFBF_06_35(object):
 
 		if provider:
 			if upTime:
-				upTime = upTime + ' mit ' + provider
+				upTime = upTime + ' ' + _("with") + ' ' + provider
 
 		self.info("upTime final: " + repr(upTime))
 		self.info("provider final: " + repr(provider))
@@ -3225,7 +3249,7 @@ class FritzCallFBF_06_35(object):
 			if connData["led"] == "led_green":
 				dslState = ['5', None, None]
 				dslState[1] = connData["down"].encode("utf-8") + " / " + connData["up"].encode("utf-8")
-				dslState[1] = dslState[1].replace('\\', '').encode("utf-8")
+				dslState[1] = dslState[1].replace('\\', '').decode("utf-8").encode("utf-8")
 				dslState[2] = connData["title"].encode("utf-8")
 		self.info("dslState: " + repr(dslState))
 
@@ -3234,9 +3258,9 @@ class FritzCallFBF_06_35(object):
 			if wlan24:
 				netName = re.sub(r".*: ", "", wlan24["txt"]).encode("utf-8")
 				if wlan24["led"] == "led_green":
-					wlanState = ['1', '', '', "2,4GHz an: " + netName]
+					wlanState = ['1', '', '', "2,4GHz " + _("on") + ": " + netName]
 				else:
-					wlanState = ['0', '', '', "2,4GHz aus: " + netName]
+					wlanState = ['0', '', '', "2,4GHz " + _("off") + ": " + netName]
 		self.info("wlanState24: " + repr(wlanState))
 
 		if "wlan5" in boxData:
@@ -3245,13 +3269,13 @@ class FritzCallFBF_06_35(object):
 				netName = re.sub(r".*: ", "", wlan5["txt"]).encode("utf-8")
 				if not wlanState:
 					if wlan5["led"] == "led_green":
-						wlanState = ['1', '', '', "5GHz an: " + netName]
+						wlanState = ['1', '', '', "5GHz " + _("on") + ": " + netName]
 					else:
-						wlanState = ['0', '', '', "5GHz aus: " + netName]
+						wlanState = ['0', '', '', "5GHz " + _("off") + ": " + netName]
 				else:
 					if wlan5["led"] == "led_green":
 						wlanState[0] = '1'
-						wlanState[3] = wlanState[3] + ", 5GHz an: " + netName
+						wlanState[3] = wlanState[3] + ", 5GHz " + _("on") + ": " + netName
 		self.info("wlanState5: " + repr(wlanState))
 
 		if "dect" in boxData:
@@ -3260,6 +3284,10 @@ class FritzCallFBF_06_35(object):
 				found = re.match(r'an, ([\d+]+|ein) Schnurlostelefon(?:e)? angemeldet', dect["txt"].encode("utf-8"), re.S)
 				if found:
 					dectActive = found.group(1)
+				else:
+					found = re.match(r'enabled, ([\d+]+|one) cordless telephone(?:s)? registered', dect["txt"].encode("utf-8"), re.S)
+					if found:
+						dectActive = found.group(1)
 		self.info("dectActive: " + repr(dectActive))
 
 		self.debug("comfort")
@@ -3270,9 +3298,18 @@ class FritzCallFBF_06_35(object):
 				if "linktxt" in fun:
 					if fun["linktxt"] == "Faxfunktion" and fun["details"] == "Integriertes Fax aktiv":
 						faxActive = True
+					if fun["linktxt"] == "Fax function" and fun["details"] == "Integrated fax enabled":
+						faxActive = True
 					elif fun["linktxt"] == "Rufumleitung" and fun["details"]:
 						if fun["details"] != "deaktiviert":
 							found = re.match(r'.*(?:(\d+) )?aktiv', fun["details"].encode("utf-8"), re.S)
+							if found and found.group(1):
+								rufumlActive = int(found.group(1))
+							else:
+								rufumlActive = -1  # means no number available
+					elif fun["linktxt"] == "Call diversion" and fun["details"]:
+						if fun["details"] != "disabled":
+							found = re.match(r'.*(?:(\d+) )?active', fun["details"].encode("utf-8"), re.S)
 							if found and found.group(1):
 								rufumlActive = int(found.group(1))
 							else:
@@ -3292,6 +3329,25 @@ class FritzCallFBF_06_35(object):
 									guestAccess = guestAccess + ', ' + found.group(2) + ' Min.'  # n Minuten verbleiben
 								else:
 									guestAccess = guestAccess + ', ' + found.group(2) + ' Std.'  # n Stunden verbleiben
+							if found.group(4):
+								guestAccess = guestAccess + ', ' + found.group(4)  # Geräte
+							if found.group(5):
+								guestAccess = guestAccess + ', ' + found.group(5)  # WLAN Name
+					elif fun["linktxt"] == "Wireless guest access" and fun["details"]:
+						found = re.match(r'.*enabled \([^\)]+\)(?:, (secured|unsecured))?,(?: (\d+) (minutes|hours) left,)? (\d+ devices), (.+)', fun["details"].encode("utf-8"), re.S)
+						if found:
+							if found.group(1):
+								if found.group().find('secured') != -1:
+									guestAccess = "WIFI (sec.)"
+								else:
+									guestAccess = "WIFI (unsec.)"
+							else:
+								guestAccess = "WIFI"
+							if found.group(3):
+								if found.group(3) == 'minutes':
+									guestAccess = guestAccess + ', ' + found.group(2) + ' min.'  # n Minuten verbleiben
+								else:
+									guestAccess = guestAccess + ', ' + found.group(2) + ' hrs.'  # n Minuten verbleiben
 							if found.group(4):
 								guestAccess = guestAccess + ', ' + found.group(4)  # Geräte
 							if found.group(5):

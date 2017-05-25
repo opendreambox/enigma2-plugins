@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enigma2 FritzCall Plugin Turkish Locale\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-09 14:16+0200\n"
+"POT-Creation-Date: 2017-05-22 11:16+0200\n"
 "PO-Revision-Date: 2009-07-29 20:37+0200\n"
 "Last-Translator: Zülfikar VEYİSOĞLU <z.veyisoglu@hobiagaci.com>\n"
 "Language-Team: http://hobiagaci.com <z.veyisoglu@hobiagaci.com>\n"
@@ -65,14 +65,17 @@ msgstr "Kayıtsız arayan kişisini, rehbere otomatik olarak ekle"
 msgid "Call"
 msgstr "Ara"
 
+msgid "Call diversion"
+msgstr ""
+
+msgid "Call diversion active"
+msgstr ""
+
 msgid "Call monitoring"
 msgstr "Çağrı görüntüleme"
 
 msgid "Call redirection"
 msgstr "Çağrı yönlendirme"
-
-msgid "Call redirection active"
-msgstr ""
 
 #, python-format
 msgid "Calling %s"
@@ -135,7 +138,7 @@ msgstr ""
 msgid "Country"
 msgstr "Ülke"
 
-msgid "Countrycode (e.g. 44 for UK, 34 for Spain, etc.)"
+msgid "Countrycode (e.g. 0044 for UK, 0034 for Spain, etc.)"
 msgstr ""
 
 msgid "DECT inactive"
@@ -389,8 +392,11 @@ msgstr "Cevapsız"
 msgid "Missed calls"
 msgstr "Cevapsız aramalar"
 
-msgid "Mute on call"
-msgstr "Çağrı olduğunda sessize al"
+msgid "Mute on incoming call"
+msgstr ""
+
+msgid "Mute on outgoing calls"
+msgstr ""
 
 msgid "Name"
 msgstr "Ad"
@@ -408,8 +414,8 @@ msgstr ""
 msgid "No DECT phone registered"
 msgstr "DECT telefon tanıtılmamış"
 
-msgid "No call redirection active"
-msgstr "Çağrı yönlendirme etkin değil"
+msgid "No call diversion active"
+msgstr ""
 
 msgid "No entry selected"
 msgstr "Seçim yapılmadı"
@@ -442,8 +448,8 @@ msgstr "Tamam"
 msgid "One DECT phone registered"
 msgstr "Bir DECT telefon tanıtılmış"
 
-msgid "One call redirection active"
-msgstr "Bir çağrı yönlendirmesi etkin"
+msgid "One call diversion active"
+msgstr ""
 
 msgid "One mailbox active"
 msgstr "Bir posta kutusu etkin"
@@ -671,8 +677,8 @@ msgstr ""
 msgid "before 05.27"
 msgstr ""
 
-msgid "call redirections active"
-msgstr "çağrı yönlendirmesi etkin"
+msgid "call diversions active"
+msgstr ""
 
 msgid "calls in mailbox"
 msgstr ""
@@ -745,6 +751,12 @@ msgstr ""
 msgid "number suppressed"
 msgstr ""
 
+msgid "off"
+msgstr ""
+
+msgid "on"
+msgstr ""
+
 msgid "one device active"
 msgstr "Bir cihaz etkin"
 
@@ -767,6 +779,9 @@ msgstr "aramaları ayrı göster"
 
 msgid "show nothing"
 msgstr "birşey gösterme"
+
+msgid "with"
+msgstr ""
 
 msgid "work"
 msgstr "iş"
@@ -910,6 +925,15 @@ msgstr ""
 #~ msgid "Minuten"
 #~ msgstr "dakika"
 
+#~ msgid "Mute on call"
+#~ msgstr "Çağrı olduğunda sessize al"
+
+#~ msgid "No call redirection active"
+#~ msgstr "Çağrı yönlendirme etkin değil"
+
+#~ msgid "One call redirection active"
+#~ msgstr "Bir çağrı yönlendirmesi etkin"
+
 #~ msgid ""
 #~ "Outgoing Call on %(date)s to\n"
 #~ "---------------------------------------------\n"
@@ -962,3 +986,6 @@ msgstr ""
 
 #~ msgid "WLAN on"
 #~ msgstr "WLAN aç"
+
+#~ msgid "call redirections active"
+#~ msgstr "çağrı yönlendirmesi etkin"
