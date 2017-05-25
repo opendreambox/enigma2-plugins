@@ -1,10 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 '''
-$Id: nrzuname.py 1394 2017-03-14 09:16:47Z michael $
+$Id: nrzuname.py 1401 2017-05-06 17:37:48Z michael $
 $Author: michael $
-$Revision: 1394 $
-$Date: 2017-03-14 10:16:47 +0100 (Tue, 14 Mar 2017) $
+$Revision: 1401 $
+$Date: 2017-05-06 19:37:48 +0200 (Sat, 06 May 2017) $
 '''
 
 # C0111 (Missing docstring)
@@ -18,7 +18,7 @@ $Date: 2017-03-14 10:16:47 +0100 (Tue, 14 Mar 2017) $
 # W0110 deprecated-lambda
 # C0302 too-many-lines
 # C0410 multiple-imports
-# pylint: disable=C0111,C0103,C0301,W0603,W0141,W0403,C0302
+# pylint: disable=C0111,C0103,C0301,W0603,W0403,C0302
 
 import re, sys, os
 from xml.dom.minidom import parse

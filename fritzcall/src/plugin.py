@@ -2,9 +2,9 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1394 $
-$Date: 2017-03-14 10:16:47 +0100 (Tue, 14 Mar 2017) $
-$Id: plugin.py 1394 2017-03-14 09:16:47Z michael $
+$Revision: 1411 $
+$Date: 2017-05-22 11:22:32 +0200 (Mon, 22 May 2017) $
+$Id: plugin.py 1411 2017-05-22 09:22:32Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -18,7 +18,7 @@ $Id: plugin.py 1394 2017-03-14 09:16:47Z michael $
 # C0302 too-many-lines
 # E401 multiple imports on one line
 # E501 line too long (85 > 79 characters)
-# pylint: disable=C0111,C0103,C0301,W0603,W0403,C0302
+# pylint: disable=C0111,C0103,C0301,W0603,W0403,C0302,W0312
 
 import re, time, os, traceback, json
 from itertools import cycle, izip
@@ -361,8 +361,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1394 $"[1:-2] + "\n" +
-							"$Date: 2017-03-14 10:16:47 +0100 (Tue, 14 Mar 2017) $"[1:23] + "\n"
+							"$Revision: 1411 $"[1:-2] + "\n" +
+							"$Date: 2017-05-22 11:22:32 +0200 (Mon, 22 May 2017) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -625,7 +625,7 @@ class FritzMenu(Screen, HelpableScreen):
 				self["fax_active"].hide()
 
 			if fritzbox.information[FBF_rufumlActive] is not None:
-				self["FBFRufuml"] = Label(_('Call redirection'))
+				self["FBFRufuml"] = Label(_('Call diversion'))
 				self["rufuml_inactive"] = Pixmap()
 				self["rufuml_active"] = Pixmap()
 				self["rufuml_active"].hide()
@@ -1075,15 +1075,15 @@ class FritzMenu(Screen, HelpableScreen):
 				self["rufuml_inactive"].hide()
 				self["rufuml_active"].show()
 				if rufumlActive == -1:  # means no number available
-					self["FBFRufuml"].setText(_('Call redirection active'))
+					self["FBFRufuml"].setText(_('Call diversion active'))
 				elif rufumlActive == 1:
-					self["FBFRufuml"].setText(_('One call redirection active'))
+					self["FBFRufuml"].setText(_('One call diversion active'))
 				else:
-					self["FBFRufuml"].setText(str(rufumlActive) + ' ' + _('call redirections active'))
+					self["FBFRufuml"].setText(str(rufumlActive) + ' ' + _('call diversions active'))
 			else:
 				self["rufuml_active"].hide()
 				self["rufuml_inactive"].show()
-				self["FBFRufuml"].setText(_('No call redirection active'))
+				self["FBFRufuml"].setText(_('No call diversion active'))
 
 			if guestAccess:
 				self["gast_inactive"].hide()
@@ -1452,7 +1452,7 @@ class FritzDisplayCalls(Screen, HelpableScreen):
 					self.session.open(FritzOfferAction, self, number, name)
 				else:
 					# we don't
-					fullname = resolveNumberWithAvon(number, config.plugins.FritzCall.country.value)
+					fullname = resolveNumberWithAvon(number, config.plugins.FritzCall.countrycode.value)
 					if fullname:
 						name = fullname
 						self.session.open(FritzOfferAction, self, number, name)
@@ -1667,7 +1667,7 @@ class FritzOfferAction(Screen):
 		if self._lookupState == 0:
 			self._lookupState = 1
 			self._setTextAndResize(_("Reverse searching..."))
-			ReverseLookupAndNotifier(self._number, self._lookedUp, "UTF-8", config.plugins.FritzCall.country.value)
+			ReverseLookupAndNotifier(self._number, self._lookedUp, "UTF-8", config.plugins.FritzCall.countrycode.value)
 			return
 		if self._lookupState == 1 and os.path.exists(os.path.join(phonebookLocation, "PhoneBook.csv")):
 			self._setTextAndResize(_("Searching in Outlook export..."))
@@ -2599,7 +2599,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1394 $"[1:-1] + "$Date: 2017-03-14 10:16:47 +0100 (Tue, 14 Mar 2017) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1411 $"[1:-1] + "$Date: 2017-05-22 11:22:32 +0200 (Mon, 22 May 2017) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -2622,22 +2622,22 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 			if config.plugins.FritzCall.filter.value:
 				self.list.append(getConfigListEntry(_("MSN to show (separated by ,)"), config.plugins.FritzCall.filtermsn))
 				self.list.append(getConfigListEntry(_("Filter also list of calls"), config.plugins.FritzCall.filterCallList))
-			self.list.append(getConfigListEntry(_("Mute on call"), config.plugins.FritzCall.muteOnCall))
-			if config.plugins.FritzCall.muteOnCall.value:
-				self.list.append(getConfigListEntry(_("Mute also on outgoing calls"), config.plugins.FritzCall.muteOnOutgoingCall))
+
+			self.list.append(getConfigListEntry(_("Mute on incoming call"), config.plugins.FritzCall.muteOnCall))
+			self.list.append(getConfigListEntry(_("Mute on outgoing calls"), config.plugins.FritzCall.muteOnOutgoingCall))
 
 			self.list.append(getConfigListEntry(_("Show Blocked Calls"), config.plugins.FritzCall.showBlacklistedCalls))
 			self.list.append(getConfigListEntry(_("Show Outgoing Calls"), config.plugins.FritzCall.showOutgoingCalls))
 			# not only for outgoing: config.plugins.FritzCall.showOutgoingCalls.value:
 			self.list.append(getConfigListEntry(_("Areacode to add to calls without one (if necessary)"), config.plugins.FritzCall.prefix))
 			self.list.append(getConfigListEntry(_("Timeout for Call Notifications (seconds)"), config.plugins.FritzCall.timeout))
+
 			self.list.append(getConfigListEntry(_("Country"), config.plugins.FritzCall.country))
 			if config.plugins.FritzCall.country.value:
 				self.list.append(getConfigListEntry(_("Reverse Lookup Caller ID"), config.plugins.FritzCall.lookup))
-			if not config.plugins.FritzCall.country.value:
-				self.list.append(getConfigListEntry(_("Countrycode (e.g. 44 for UK, 34 for Spain, etc.)"), config.plugins.FritzCall.countrycode))
-				if config.plugins.FritzCall.countrycode.value:
-					config.plugins.FritzCall.country.value = "00" + config.plugins.FritzCall.countrycode.value
+				config.plugins.FritzCall.countrycode.value = config.plugins.FritzCall.country.value
+			else:
+				self.list.append(getConfigListEntry(_("Countrycode (e.g. 0044 for UK, 0034 for Spain, etc.)"), config.plugins.FritzCall.countrycode))
 
 			if config.plugins.FritzCall.fwVersion.value is not None:
 				if config.plugins.FritzCall.fwVersion.value == "05.50" or config.plugins.FritzCall.fwVersion.value == "06.35":
@@ -3088,13 +3088,6 @@ def registerUserAction(fun):
 mutedOnConnID = None
 def notifyCall(event, date, number, caller, phone, connID):
 	if Standby.inStandby is None or config.plugins.FritzCall.afterStandby.value == "each":
-		global mutedOnConnID
-		if config.plugins.FritzCall.muteOnCall.value and not mutedOnConnID and (event == "RING" or config.plugins.FritzCall.muteOnOutgoingCall.value):
-			info("[FritzCall] mute on connID: %s", connID)
-			mutedOnConnID = connID
-			# eDVBVolumecontrol.getInstance().volumeMute() # with this, we get no mute icon...
-			if not eDVBVolumecontrol.getInstance().isMuted():
-				globalActionMap.actions["volumeMute"]()
 		if event == "RING":
 			text = _("Incoming Call on %(date)s at %(time)s from\n---------------------------------------------\n%(number)s\n%(caller)s\n---------------------------------------------\nto: %(phone)s") % {'date':date[:8], 'time':date[9:], 'number':number, 'caller':caller, 'phone':phone}
 		else:
@@ -3152,7 +3145,7 @@ class FritzReverseLookupAndNotifier(object):
 			self.notifyAndReset(number, caller)
 			return
 
-		ReverseLookupAndNotifier(number, self.notifyAndReset, "UTF-8", config.plugins.FritzCall.country.value)
+		ReverseLookupAndNotifier(number, self.notifyAndReset, "UTF-8", config.plugins.FritzCall.countrycode.value)
 
 	def notifyAndReset(self, number, caller):
 		'''
@@ -3182,7 +3175,7 @@ class FritzReverseLookupAndNotifier(object):
 				info("[FritzReverseLookupAndNotifier] add to phonebook")
 				phonebook.add(self.number, self.caller)
 		else:
-			name = resolveNumberWithAvon(self.number, config.plugins.FritzCall.country.value)
+			name = resolveNumberWithAvon(self.number, config.plugins.FritzCall.countrycode.value)
 			if not name:
 				self.caller = _("UNKNOWN")
 			else:
@@ -3192,7 +3185,7 @@ class FritzReverseLookupAndNotifier(object):
 
 class FritzProtocol(LineReceiver):  # pylint: disable=W0223
 	def __init__(self):
-		info("[FritzProtocol] " + "$Revision: 1394 $"[1:-1] + "$Date: 2017-03-14 10:16:47 +0100 (Tue, 14 Mar 2017) $"[7:23] + " starting")
+		info("[FritzProtocol] " + "$Revision: 1411 $"[1:-1] + "$Date: 2017-05-22 11:22:32 +0200 (Mon, 22 May 2017) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
@@ -3240,7 +3233,16 @@ class FritzProtocol(LineReceiver):  # pylint: disable=W0223
 		# debug("[FritzProtocol] Volcontrol dir: %s" % dir(eDVBVolumecontrol.getInstance()))
 		# debug("[FritzCall] unmute on connID: %s?" %self.connID)
 		global mutedOnConnID
-		if self.event == "DISCONNECT" and config.plugins.FritzCall.muteOnCall.value and mutedOnConnID == self.connID:
+		if Standby.inStandby is None and not mutedOnConnID:
+			info("[FritzCall] check mute")
+			if (self.event == "RING" and config.plugins.FritzCall.muteOnCall.value) or (self.event == "CALL" and config.plugins.FritzCall.muteOnOutgoingCall.value):
+				info("[FritzCall] mute on connID: %s", self.connID)
+				mutedOnConnID = self.connID
+				# eDVBVolumecontrol.getInstance().volumeMute() # with this, we get no mute icon...
+				if not eDVBVolumecontrol.getInstance().isMuted():
+					globalActionMap.actions["volumeMute"]()
+
+		if self.event == "DISCONNECT"and (config.plugins.FritzCall.muteOnCall.value or config.plugins.FritzCall.muteOnOutgoingCall.value) and mutedOnConnID == self.connID:
 			debug("[FritzCall] unmute on connID: %s!", self.connID)
 			mutedOnConnID = None
 			# eDVBVolumecontrol.getInstance().volumeUnMute()
@@ -3301,7 +3303,7 @@ class FritzProtocol(LineReceiver):  # pylint: disable=W0223
 
 					# strip CbC prefixes
 					if self.event == "CALL":
-						number = stripCbCPrefix(self.number, config.plugins.FritzCall.country.value)
+						number = stripCbCPrefix(self.number, config.plugins.FritzCall.countrycode.value)
 
 					info("[FritzProtocol] phonebook.search: %s", self.number)
 					self.caller = phonebook.search(self.number)
