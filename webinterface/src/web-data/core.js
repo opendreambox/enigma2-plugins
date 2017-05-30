@@ -689,10 +689,9 @@ var Screenshots = Class.create(Controller, {
 
 		switch(type){
 			case this.TYPE_OSD:
-				params['o'] = '';
-				params['n'] = '';
 				params['format'] = 'png';
-				break;
+				this.handler.loadDirect(params)
+				return;
 			case this.TYPE_VIDEO:
 				params['v'] = '';
 				break;

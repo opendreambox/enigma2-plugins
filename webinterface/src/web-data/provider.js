@@ -575,13 +575,21 @@ var ScreenshotProvider = Class.create(AbstractContentProvider, {
 		this.src = "";
 	},
 
-	load: function(parms, fnc){
+	doLoad: function(url, parms, fnc){
 		this.parms = parms;
 		if(fnc !== undefined){
 			this.callback = fnc;
 		}
-		var src = this.url + '?' + $H(parms).toQueryString();
+		var src = url + '?' + $H(parms).toQueryString();
 		this.callback(src);
+	},
+
+	load: function(parms, fnc){
+		this.doLoad(this.url, parms, fnc)
+	},
+
+	loadDirect: function(parms, fnc){
+		this.doLoad(URL.screenshot, parms, fnc);
 	},
 
 	callback: function(src){

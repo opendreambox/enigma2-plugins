@@ -539,6 +539,12 @@ var ScreenshotHandler = Class.create(AbstractContentHandler, {
 		$super('tplGrab', target);
 		this.provider = new ScreenshotProvider(this.show.bind(this));
 		this.ajaxload = true;
+	},
+
+	loadDirect: function(parms, fnc){
+		this.requestStarted();
+		this.parms = parms;
+		this.provider.loadDirect(parms, fnc);
 	}
 });
 
