@@ -585,7 +585,7 @@ var ScreenshotProvider = Class.create(AbstractContentProvider, {
 	},
 
 	load: function(parms, fnc){
-		this.doLoad(this.url, parms, fnc)
+		this.doLoad(this.url, parms, fnc);
 	},
 
 	loadDirect: function(parms, fnc){
