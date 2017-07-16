@@ -1,10 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 '''
-$Id: nrzuname.py 1401 2017-05-06 17:37:48Z michael $
+$Id: nrzuname.py 1451 2017-06-08 16:35:18Z michael $
 $Author: michael $
-$Revision: 1401 $
-$Date: 2017-05-06 19:37:48 +0200 (Sat, 06 May 2017) $
+$Revision: 1451 $
+$Date: 2017-06-08 18:35:18 +0200 (Thu, 08 Jun 2017) $
 '''
 
 # C0111 (Missing docstring)
@@ -158,6 +158,9 @@ class ReverseLookupAndNotifier(object):
 
 	def __init__(self, number, outputFunction = out, charset = "cp1252", countrycode = "0049"):
 		debug("reverse Lookup for %s!", number)
+		if not countrycode:
+			out(number, "")
+
 		self.number = number
 		self.outputFunction = outputFunction
 		self.caller = ""
