@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enigma2 FritzCall Plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-22 11:16+0200\n"
+"POT-Creation-Date: 2017-06-29 18:00+0200\n"
 "PO-Revision-Date: 2009-09-10 22:47+0100\n"
 "Last-Translator: maja <jovanovic@gmx.ch>\n"
 "Language-Team: veselin & majevica CRNABERZA <jovanovic@gmx.ch>\n"
@@ -129,6 +129,9 @@ msgstr ""
 msgid "Could not get call list; wrong version?"
 msgstr ""
 
+msgid "Could not load phonebook: "
+msgstr ""
+
 #, python-format
 msgid "Could not load phonebook: %s"
 msgstr ""
@@ -240,6 +243,9 @@ msgstr "FRITZ!Box - Pozivanje nije uspelo: %s"
 
 #, python-format
 msgid "FRITZ!Box - Error getting blacklist: %s"
+msgstr ""
+
+msgid "FRITZ!Box - Error getting status: "
 msgstr ""
 
 #, python-format
@@ -386,9 +392,6 @@ msgstr "Poštansko sanduče"
 msgid "Make it more skin friendly"
 msgstr ""
 
-msgid "Minutes of uptime of WLAN guest network"
-msgstr ""
-
 #. TRANSLATORS: keep it short, this is a button
 msgid "Missed"
 msgstr "Propušten"
@@ -404,9 +407,6 @@ msgstr ""
 
 msgid "Name"
 msgstr "Ime"
-
-msgid "Name of WLAN guest network"
-msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
 msgid "New"
@@ -481,9 +481,6 @@ msgstr "Odlazni pozivi"
 msgid "Password Accessing FRITZ!Box"
 msgstr "Lozinka za pristup FRITZ!Box-u"
 
-msgid "Password of WLAN guest network"
-msgstr ""
-
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
 msgid "Phone calls"
@@ -550,9 +547,6 @@ msgstr "Traži u  LDIF..."
 msgid "Searching in Outlook export..."
 msgstr "Tražim u Outlook-Export..."
 
-msgid "Secure WLAN guest network"
-msgstr ""
-
 msgid "Setting..."
 msgstr ""
 
@@ -567,6 +561,9 @@ msgstr "Prikaži odlazne pozive"
 
 msgid "Show after Standby"
 msgstr "Pokaži posle stend baja"
+
+msgid "Show also internal numbers"
+msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
 msgid "Show details of entry"
@@ -648,6 +645,9 @@ msgstr "Prebaci sve pošt. sand."
 msgid "UNKNOWN"
 msgstr "NEPOZNATO"
 
+msgid "Unknown"
+msgstr ""
+
 msgid "Update available"
 msgstr ""
 
@@ -706,6 +706,12 @@ msgstr "Završeno,koristim zadnju listu"
 msgid "encrypted"
 msgstr "kodirano"
 
+msgid "fax_home"
+msgstr ""
+
+msgid "fax_work"
+msgstr ""
+
 msgid "finishing"
 msgstr "završavam"
 
@@ -762,6 +768,9 @@ msgstr ""
 
 msgid "one device active"
 msgstr "Jedan aktivan uređaj"
+
+msgid "pager"
+msgstr ""
 
 msgid "preparing"
 msgstr "Pripremam"
