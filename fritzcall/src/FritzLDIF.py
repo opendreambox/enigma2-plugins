@@ -11,8 +11,11 @@ $Id: FritzLDIF.py 1290 2016-05-01 16:09:29Z michael $
 
 import ldif, re
 try:
-	from . import normalizePhoneNumber #@UnresolvedImport # pylint: disable-msg=F0401
+	from . import _, normalizePhoneNumber #@UnresolvedImport # pylint: disable-msg=F0401
 except ValueError:
+	def _(string): # pylint: disable-msg=C0103
+		return string
+	
 	def normalizePhoneNumber(intNo):
 		found = re.match('^\+49(.*)', intNo)
 		if found:
