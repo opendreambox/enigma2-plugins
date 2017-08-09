@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1482 $
-$Date: 2017-07-29 12:54:06 +0200 (Sat, 29 Jul 2017) $
-$Id: FritzCallFBF.py 1482 2017-07-29 10:54:06Z michael $
+$Revision: 1488 $
+$Date: 2017-08-09 17:21:09 +0200 (Wed, 09 Aug 2017) $
+$Id: FritzCallFBF.py 1488 2017-08-09 15:21:09Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -3869,6 +3869,9 @@ class FritzCallFBF_upnp():
 				else:
 					remote = resolveNumber(number, "", self.phonebook)
 				here = call.find("./CallerNumber").text
+				if filtermsns and here not in filtermsns:
+					# self.debug("skip %s" % (here))
+					continue
 				if here.isdigit():
 					here = resolveNumber(here, call.find("./Caller").text, self.phonebook)
 			else:
@@ -3881,11 +3884,11 @@ class FritzCallFBF_upnp():
 				else:
 					remote = resolveNumber(call.find("./Caller").text, "", self.phonebook)
 				here = call.find("./CalledNumber").text
+				if filtermsns and here not in filtermsns:
+					# self.debug("skip %s" % (here))
+					continue
 				if here.isdigit():
 					here = resolveNumber(here, call.find("./Called").text, self.phonebook)
-			if filtermsns and here not in filtermsns:
-				# self.debug("skip %s" % (here))
-				continue
 
 			device = call.find("./Device").text
 			if device:
