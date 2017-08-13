@@ -469,6 +469,7 @@ class EPGRefresh:
 			except:
 				from traceback import format_exc
 				print("[EPGRefresh] Could not start AutoTimer:" + str(format_exc()))
+				self._nextTodo()
 		else:
 			self._nextTodo()
 	
