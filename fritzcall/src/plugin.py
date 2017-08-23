@@ -2,9 +2,9 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1487 $
-$Date: 2017-08-01 17:50:50 +0200 (Tue, 01 Aug 2017) $
-$Id: plugin.py 1487 2017-08-01 15:50:50Z michael $
+$Revision: 1490 $
+$Date: 2017-08-17 18:40:48 +0200 (Thu, 17 Aug 2017) $
+$Id: plugin.py 1490 2017-08-17 16:40:48Z michael $
 '''
 
 
@@ -368,8 +368,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1487 $"[1:-2] + "\n" +
-							"$Date: 2017-08-01 17:50:50 +0200 (Tue, 01 Aug 2017) $"[1:23] + "\n"
+							"$Revision: 1490 $"[1:-2] + "\n" +
+							"$Date: 2017-08-17 18:40:48 +0200 (Thu, 17 Aug 2017) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -2618,7 +2618,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1487 $"[1:-1] + "$Date: 2017-08-01 17:50:50 +0200 (Tue, 01 Aug 2017) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1490 $"[1:-1] + "$Date: 2017-08-17 18:40:48 +0200 (Thu, 17 Aug 2017) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -3137,8 +3137,8 @@ def notifyCall(event, date, number, caller, phone, connID): # @UnusedVariable # 
 	elif config.plugins.FritzCall.afterStandby.value == "inList":
 		#
 		# if not yet done, register function to show call list
-		global standbyMode
 		if not standbyMode:
+			global standbyMode
 			standbyMode = True
 			Standby.inStandby.onHide.append(callList.display)  # @UndefinedVariable
 		# add text/timeout to call list
@@ -3224,7 +3224,7 @@ class FritzReverseLookupAndNotifier(object):
 
 class FritzProtocol(LineReceiver):  # pylint: disable=W0223
 	def __init__(self):
-		info("[FritzProtocol] " + "$Revision: 1487 $"[1:-1] + "$Date: 2017-08-01 17:50:50 +0200 (Tue, 01 Aug 2017) $"[7:23] + " starting")
+		info("[FritzProtocol] " + "$Revision: 1490 $"[1:-1] + "$Date: 2017-08-17 18:40:48 +0200 (Thu, 17 Aug 2017) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
