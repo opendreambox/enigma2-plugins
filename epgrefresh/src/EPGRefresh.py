@@ -86,6 +86,9 @@ class EPGRefresh:
 		# timeout timer for eEPGCache-signal based refresh
 		self.epgTimeoutTimer = eTimer()
 		self.epgTimeoutTimer_conn = self.epgTimeoutTimer.timeout.connect(self.epgTimeout)
+		
+		# set state for pending services message box
+		self.showPendingServicesMessageShown = False		
 
 	def epgTimeout(self):
 		if eDVBSatelliteEquipmentControl.getInstance().isRotorMoving():
@@ -99,7 +102,7 @@ class EPGRefresh:
 					self.refresh,
 					nocheck = True)
 			)
-
+			
 	# _onCacheStateChanged is called whenever an eEPGCache-signal is sent by enigma2
 	#  0 = started, 1 = stopped, 2 = aborted, 3 = deferred, 4 = load_finished, 5 = save_finished
 	def _onCacheStateChanged(self, cState):
@@ -573,6 +576,11 @@ class EPGRefresh:
 		# Debug
 		print("[EPGRefresh] Maybe zap to next service")
 
+		# update pending services message box (if shown)
+		if self.showPendingServicesMessageShown:
+			print("[EPGRefresh] - MessageBox is shown. Update pending services")
+			self.showPendingServices(self.session)			
+
 		try:
 			# Get next reference
 			service = self.scanServices.pop(0)
@@ -640,10 +648,22 @@ class EPGRefresh:
 			
 			if servcounter > LISTMAX:
 				servtxt = servtxt + _("%d more services") % (servcounter)
-			session.open(MessageBox, _("Following Services have to be scanned:") \
-				+ "\n" + servtxt, MessageBox.TYPE_INFO)
+			
+			# open message box only if not already shown
+			if self.showPendingServicesMessageShown == False:
+				self.msg = session.open(MessageBox, _("Following Services have to be scanned:") \
+					+ "\n" + servtxt, MessageBox.TYPE_INFO)
+				# update state for pending services message box on close
+				self.msg.onClose.append(self.setMessageBoxState)
+				self.showPendingServicesMessageShown = True
+			else:
+				self.msg["text"].setText(_("Following Services have to be scanned:") + "\n" + servtxt)
+				self.msg["Text"].setText(_("Following Services have to be scanned:") + "\n" + servtxt)
 		except:
 			print("[EPGRefresh] showPendingServices Error!")
 			print_exc(file=stdout)
+			
+	def setMessageBoxState(self):
+		self.showPendingServicesMessageShown = False				
 
 epgrefresh = EPGRefresh()
