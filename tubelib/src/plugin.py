@@ -9,8 +9,8 @@ try:
 	from youtube.YoutubeUriResolver import YoutubeUriResolver
 	YoutubeUriResolver.instance = YoutubeUriResolver()
 	eUriResolver.addResolver(YoutubeUriResolver.instance)
-except ImportError:
-	pass
+except ImportError as e:
+	Log.w(e)
 
 def isBouquetAndOrRoot(csel):
 	if csel.movemode:

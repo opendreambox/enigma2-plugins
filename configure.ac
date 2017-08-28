@@ -525,6 +525,5 @@ zapstatistic/Makefile
 zapstatistic/meta/Makefile
 zapstatistic/src/Makefile
 
-po/Makefile
 ])
 AC_OUTPUT

@@ -102,7 +102,6 @@ SUBDIRS = \
 	werbezapper \
 	yttrailer \
 	zaphistorybrowser \
-	zapstatistic \
-	po
+	zapstatistic
 
 CLEANFILES =
