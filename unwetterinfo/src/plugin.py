@@ -4,7 +4,7 @@
 # www.unwetterzentrale.de und www.uwz.at
 #
 # Author: barabas
-#
+# Fix for Austria by Koepi
 
 import xml.sax.saxutils as util
 
@@ -200,21 +200,20 @@ class UnwetterMain(Screen):
 		else:
 			self.menueintrag.append("Lagebericht")
 			self.link.append(self.weatherreporturl)
-
-			startpos = output.find('<div id="select_dropdownprovinces"')
-			endpos = output.find('</div>', startpos)
+			startpos = output.find('</ul><ul><ul id="level_3">')
+			endpos = output.find('</ul></ul>', startpos)
 			bereich = output[startpos:endpos]
-			a = findall(r'<a href=(?P<text>.*?)</a>',bereich)
-			for x in a[1:13]:
-				x = x.replace('">',"#").replace('"',"")
-				if x != '#&nbsp;':
-						x = x.split('#')
-						if not len(x) > 1:
-							break
-						name = x[1]
-						link = x[0]
-						self.menueintrag.append(name)
-						self.link.append(link)
+			a = findall(r'href=(?P<text>.*?)</a>',bereich)
+			for x in a:
+				x = x.replace('">',"#").replace('"',"").split('#')
+				if not len(x) > 1:
+					break
+				if x[0] == "index.html":
+					continue
+				name = x[1]
+				link = self.baseurl + x[0]
+				self.menueintrag.append(name)
+				self.link.append(link)
 
 		self["statuslabel"].setText("")
 		self["hmenu"].l.setList(self.menueintrag)
@@ -307,8 +306,11 @@ class UnwetterMain(Screen):
 			picurl = search(r'<img src="(?P<text>.*?)" width=',bereich)
 			picurl = self.baseurl + picurl.group(1)
 		else:
-			picurl = search(r'<img class="map mapper" src="(?P<url>.*?)" lang=', output)
-			picurl = self.baseurl + picurl.group(1).replace('&amp;','&')
+			startpos = output.find('style="background-color: rgb(255,0,255)')
+			endpos = output.find('<div id="oben"><img src="../images/map/oesterreich_index_small.png"', startpos)
+			bereich = output[startpos:endpos]
+			picurl = search(r'<img src="(?P<text>.*?)" width=',bereich)
+			picurl = self.baseurl + picurl.group(1)
 		self.downloadPic(picurl)
 
 	def getPic(self,output):
@@ -340,7 +342,7 @@ class UnwetterMain(Screen):
 		f = open(self.reportfile, "w")
 		f.write("%s" % bereich)
 		f.close()
-		self.session.open(Console,_("Warnlagebericht"),["cat %s" % self.reportfile])
+		#self.session.open(Console,_("Warnlagebericht"),["cat %s" % self.reportfile])
 
 	def downloadError(self,output):
 		self.loadinginprogress = False
@@ -383,9 +385,9 @@ class UnwetterMain(Screen):
 
 		if self.land == "de":
 			self.land = "a"
-			self.baseurl = "http://www.uwz.at/"
-			self.menuurl = self.baseurl + "karte/alle_warnungen"
-			self.weatherreporturl = self.baseurl + "at/de/lagebericht/aktuelle-wetterlage"
+			self.baseurl = "http://unwetter.wetteralarm.at/"
+			self.menuurl = self.baseurl + "index.html"
+			self.weatherreporturl = self.baseurl + "lagebericht.html"
 		else:
 			self.land = "de"
 			self.baseurl = "http://www.unwetterzentrale.de/uwz/"
