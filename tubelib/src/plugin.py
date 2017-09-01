@@ -6,9 +6,14 @@ from ChannelListTubeServiceHelper import ChannelListTubeServiceHelper
 
 try:
 	from enigma import eUriResolver
+	#YouTube
 	from youtube.YoutubeUriResolver import YoutubeUriResolver
 	YoutubeUriResolver.instance = YoutubeUriResolver()
 	eUriResolver.addResolver(YoutubeUriResolver.instance)
+	#twitch.tv
+	from twitch.TwitchUriResolver import TwitchUriResolver
+	TwitchUriResolver.instance = TwitchUriResolver()
+	eUriResolver.addResolver(TwitchUriResolver.instance)
 except ImportError as e:
 	Log.w(e)
 

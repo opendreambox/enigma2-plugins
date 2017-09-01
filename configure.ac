@@ -420,6 +420,7 @@ toolkit/src/Makefile
 tubelib/Makefile
 tubelib/meta/Makefile
 tubelib/src/Makefile
+tubelib/src/twitch/Makefile
 tubelib/src/youtube/Makefile
 
 tvcharts/Makefile

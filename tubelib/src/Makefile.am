@@ -1,6 +1,8 @@
 installdir = $(libdir)/enigma2/python/Plugins/SystemPlugins/TubeLib
 
-SUBDIRS = youtube
+SUBDIRS = \
+	twitch \
+	youtube
 
 install_PYTHON = \
 	__init__.py \
