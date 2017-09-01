@@ -185,8 +185,6 @@ class Video(object):
 
 class VideoUrlRequest(object):
 	VIDEO_FMT_PRIORITY_MAP = {
-		1 : '272', #DASH 2160p
-		2 : '313', #DASH 1440p
 		1 : '96', #HLS 1080P
 		2 : '95', #HLS 720p
 		3 : '94', #HLS 480p
@@ -207,7 +205,7 @@ class VideoUrlRequest(object):
 
 	_format_prio = "/".join(VIDEO_FMT_PRIORITY_MAP.itervalues())
 	_ytdl = YoutubeDL(params={
-			"youtube_include_dash_manifest": True,
+			"youtube_include_dash_manifest": False,
 			"format" : _format_prio,
 			"nocheckcertificate" : True,
 			"noplaylist" : False
