@@ -26,10 +26,12 @@ from os import unlink
 
 class PictureView(Screen):
 	skin = """
-		<screen position="center,center" size="720,576" flags="wfNoBorder" title="UWZ" >
-			<eLabel position="0,0" zPosition="1" size="720,576" backgroundColor="black" />
-			<ePixmap position="655,540" zPosition="2" size="36,20" pixmap="skin_default/buttons/key_info.png" alphatest="on" />
-			<widget name="picture" position="80,10" zPosition="2" size="550,550" />
+		<screen position="center,center" size="700,700" flags="wfNoBorder" title="UWZ" >
+			<ePixmap position="50,680" size="36,20" pixmap="skin_default/buttons/key_.png" zPosition="2" alphatest="on" />
+			<eLabel text="Ok" position="44,680" size="50,20" font="Regular; 16" shadowColor="#000000" shadowOffset="-2,-2" halign="center" transparent="1" valign="center" zPosition="4" />
+			<ePixmap position="614,680" size="36,20" pixmap="skin_default/buttons/key_.png" zPosition="2" alphatest="on" />
+			<eLabel text="Info" position="608,680" size="50,20" font="Regular; 14" shadowColor="#000000" shadowOffset="-2,-2" halign="center" transparent="1" valign="center" zPosition="4" />
+			<widget name="picture" position="center,center" zPosition="2" size="600,600" />
 		</screen>"""
 
 	def __init__(self, session):
@@ -130,12 +132,16 @@ class HelpPictureView(Screen):
 
 class UnwetterMain(Screen):
 	skin = """
-		<screen position="center,center" size="530,430" title="Unwetterzentrale" >
-			<widget name="hmenu" position="5,0" zPosition="1" size="530,220" scrollbarMode="showOnDemand" />
-			<widget name="thumbnail" position="185,250" zPosition="2" size="140,150" />
-			<widget name="thumbland" position="435,390" zPosition="2" size="90,40" />
-			<ePixmap position="20,380" zPosition="2" size="36,20" pixmap="skin_default/buttons/key_menu.png" alphatest="on" />
-			<widget name="statuslabel" position="5,410" zPosition="2" size="530,20" font="Regular;16" halign="left"/>
+		<screen position="center,80" size="800,600" title="Unwetterzentrale" >
+			<widget name="hmenu" position="5,0"     size="260,540" scrollbarMode="showOnDemand" zPosition="1" />
+			<widget name="thumbnail" position="270,50" size="500,500" zPosition="2" />
+			<widget name="thumbland" position="700,0"   size="90,40" zPosition="2" />
+			<widget name="statuslabel" position="5,520"   size="530,20" font="Regular;16" halign="left" zPosition="2" />
+			<ePixmap position="750,570" size="36,20" pixmap="skin_default/buttons/key_.png" zPosition="2" alphatest="on" />
+			<eLabel text="Menu" position="744,570" size="50,20" font="Regular; 12" shadowColor="#000000" shadowOffset="-2,-2" halign="center" transparent="1" valign="center" zPosition="4" />
+			<ePixmap position="50,570" size="36,20" pixmap="skin_default/buttons/key_.png" zPosition="2" alphatest="on" />
+			<eLabel text="Ok" position="44,570" size="50,20" font="Regular; 16" shadowColor="#000000" shadowOffset="-2,-2" halign="center" transparent="1" valign="center" zPosition="4" />
+
 		</screen>"""
 
 	def __init__(self, session):
@@ -184,7 +190,7 @@ class UnwetterMain(Screen):
 
 		if self.land == "de":
 			startpos = output.find('<div id="navigation">')
-			endpos = output.find('<a class="section-link" title="FAQ"', startpos)
+			endpos = output.find('<li><a class="section-link" title="Unwetterwarnungen Europa"', startpos)
 			bereich = output[startpos:endpos]
 			a = findall(r'href=(?P<text>.*?)</a>',bereich)
 			for x in a:
@@ -342,7 +348,7 @@ class UnwetterMain(Screen):
 		f = open(self.reportfile, "w")
 		f.write("%s" % bereich)
 		f.close()
-		#self.session.open(Console,_("Warnlagebericht"),["cat %s" % self.reportfile])
+		self.session.open(Console,_("Warnlagebericht"),["cat %s" % self.reportfile])
 
 	def downloadError(self,output):
 		self.loadinginprogress = False
