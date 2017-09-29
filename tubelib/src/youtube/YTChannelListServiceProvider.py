@@ -24,7 +24,7 @@ class YTChannelListServiceProvider(ChannelListServiceProviderBase):
 	def _onLocalChannelName(self, name):
 		Log.w("uri=%s, name=%s" % (self._tubeUri, name))
 		if name and self._tubeUri:
-			ref = eServiceReference(eServiceReference.idURI, 0, self._tubeUri)
+			ref = eServiceReference(eServiceReference.idURI, eServiceReference.isLive, self._tubeUri)
 			ref.setName(name)
 			self._finish(ref)
 		else:
