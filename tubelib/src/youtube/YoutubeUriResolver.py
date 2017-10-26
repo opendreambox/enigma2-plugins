@@ -24,16 +24,16 @@ try:
 					watch_url = "https://youtube.com/watch?v=%s" % (video_id,)
 			except:
 				pass
-			def onUrlReady(uri, format):
-				Log.d("%s (%s)" %(uri, format))
+			def onUrlReady(uri, format, suburi=""):
+				Log.d("%s # %s (%s)" %(uri, suburi, format))
 				try:
 					if not service.ptrValid():
 						Log.w("Service became invalid!")
 						return
 					if uri:
-						if VideoUrlRequest.isHls(format):
-							service.setResolvedUri(uri, eServiceReference.idDVB)
-						else:
+						try:
+							service.setResolvedUri(uri, eServiceReference.idGST, suburi or "")
+						except:
 							service.setResolvedUri(uri, eServiceReference.idGST)
 					else:
 						service.failedToResolveUri()

@@ -3,15 +3,14 @@ from Components.config import config
 #twisted
 from twisted.internet import reactor, threads
 #youtube
-from apiclient.discovery import build
 from youtube_dl import YoutubeDL
 #local
-from ThreadedRequest import ThreadedRequest
 from YoutubeQueryBase import YoutubeQueryBase
 
 from Tools.Log import Log
 
 import datetime, re
+from Tools.HardwareInfo import HardwareInfo
 
 class Videos(YoutubeQueryBase):
 	MOST_POPULAR = "mostPopular"
@@ -49,8 +48,6 @@ class Videos(YoutubeQueryBase):
 					Log.w("Skipped video '%s (%s)'" % (v.title, v.id))
 		if self._callback:
 			self._callback(success, videos, data)
-
-	from twisted.internet import threads, reactor
 
 class Video(object):
 	def __init__(self, entry):
@@ -156,15 +153,11 @@ class Video(object):
 		return str(self._entry["snippet"]["channelId"])
 	channelId = property(getChannelId)
 
-	def getChannelTitle(self):
-		return str(self._entry["snippet"]["channelTitle"])
-	channelTitle = property(getChannelTitle)
-
-	def _onUrlReady(self, url, format, *args):
+	def _onUrlReady(self, url, fmt, suburi=None, *args):
 		Log.d(url)
 		if url:
 			self._url = url
-			self._format = format
+			self._format = fmt
 		else:
 			self._url = "broken..."
 
@@ -183,71 +176,147 @@ class Video(object):
 			return self._url
 	url = property(getUrl)
 
+from sys import _getframe
+from Tools.LogConfig import LOG_TYPE_INFO, LOG_TYPE_WARNING, LOG_TYPE_ERROR
+class YTDLLogger(object):
+	def debug(self, msg):
+		self._log(LOG_TYPE_INFO, msg)
+
+	def warning(self, msg):
+		self._log(LOG_TYPE_WARNING, msg)
+
+	def error(self, msg):
+		self._log(LOG_TYPE_ERROR, msg)
+
+	def _log(self, logType, msg):
+		callframe = None
+		try:
+			callframe = _getframe(3)
+		except:
+			pass
+		Log._log(logType, msg, callframe)
+
 class VideoUrlRequest(object):
-	VIDEO_FMT_PRIORITY_MAP = {
-		1 : '96', #HLS 1080P
-		2 : '95', #HLS 720p
-		3 : '94', #HLS 480p
-		4 : '93', #HLS 360p
-		5 : '92', #HLS 240p
-		6 : '91', #HLS 144p
-		7 : '38', #MP4 Original (HD)
-		8 : '37', #MP4 1080p (HD)
-		9 : '22', #MP4 720p (HD)
-		10 : '18', #MP4 360p
-		11 : '35', #FLV 480p
-		12 : '34', #FLV 360p
-	}
+	VIDEO_FMT_PRIORITY_MAP_UHD = [
+		'315+172', #DASH-webm 2160p60
+		'315+171', #DASH-webm 2160p60
+		'313+172', #DASH-webm 2160p
+		'313+171', #DASH-webm 2160p
+	]
+	VIDEO_FMT_PRIORITY_MAP_WQHD = [
+		'308+172', #DASH-webm 1440p60
+		'308+171', #DASH-webm 1440p60
+		'271+172', #DASH-webm 1440p
+		'271+171', #DASH-webm 1440p
+	]
+	VIDEO_FMT_PRIORITY_MAP_FHD = [
+		'96', #HLS 1080p
+		'37', #MP4 1080p
+		'46', #MP4 1080p
+		'170+172' ,#DASH-webm 1080p
+		'170+171', #DASH-webm 1080p
+		'248+172', #DASH-webm 1080p
+		'248+171', #DASH-webm 1080p
+		'137+171', #DASH-mp4 1080p
+		'137+172', #DASH-mp4 1080p
+	]
+	VIDEO_FMT_PRIORITY_MAP_HD = [
+		'95', #HLS 720p
+		'22', #MP4 720p
+		]
+	VIDEO_FMT_PRIORITY_MAP = [
+		'94', #HLS 480p
+		'59', #MP4 480p
+		'78', #MP4 480p
+		'35', #FLV 480p
+		'93', #HLS 360p
+		'18', #MP4 360p
+		'34', #FLV 360p
+		'92', #HLS 240p
+		'91', #HLS 144p
+	]
 	KEY_FORMAT_ID = u"format_id"
 	KEY_URL = u"url"
 	KEY_ENTRIES = u"entries"
 	KEY_FORMATS = u"formats"
-
-	_format_prio = "/".join(VIDEO_FMT_PRIORITY_MAP.itervalues())
-	_ytdl = YoutubeDL(params={
-			"youtube_include_dash_manifest": False,
-			"format" : _format_prio,
-			"nocheckcertificate" : True,
-			"noplaylist" : False
-		})
+	KEY_REQUESTED_FORMATS = u"requested_formats"
+	KEY_VCODEC = u"vcodec"
+	KEY_ACODEC = u"acodec"
 
 	@staticmethod
-	def isHls(format):
-		return format >= 91 and format <= 96
+	def isHls(fmt):
+		return False
 
 	def __init__(self, baseurl, callbacks=[], async=True):
 		self._canceled = False
 		self._callbacks = callbacks
 		self._baseurl = baseurl
 		self._async = async
+		self._params = {
+			"youtube_include_dash_manifest": False,
+			"nocheckcertificate" : True,
+			"noplaylist" : False,
+			"logger" : YTDLLogger(),
+		}
+		self._setupFormatMap()
 		if self._async:
 			threads.deferToThread(self._request)
 		else:
 			self._request()
 
+
+
+	def _setupFormatMap(self):
+		fmt = self.VIDEO_FMT_PRIORITY_MAP
+		try:
+			maxres = int(config.usage.max_stream_resolution.value)
+		except:
+			maxres = 1080
+		# Low to high, so high is first
+		if maxres >= 720:
+			fmt = self.VIDEO_FMT_PRIORITY_MAP_HD + fmt
+		if maxres >= 1080:
+			fmt = self.VIDEO_FMT_PRIORITY_MAP_FHD + fmt
+		if HardwareInfo().device_name in ["dm900", "dm920"]:
+			if maxres >= 1440:
+				fmt = self.VIDEO_FMT_PRIORITY_MAP_WQHD + fmt
+			if maxres >= 2160:
+				fmt = self.VIDEO_FMT_PRIORITY_MAP_UHD + fmt
+		self._params["format"] = "/".join(fmt)
+
 	def _request(self):
 		ie_key = "YoutubeLive" if "live" in self._baseurl.lower() else "Youtube"
 		try:
-			result = self._ytdl.extract_info(self._baseurl, ie_key=ie_key, download=False, process=True)
-			if self.KEY_ENTRIES in result: # Can be a playlist or a list of videos
-				entry = result[self.KEY_ENTRIES][0] #TODO handle properly
-			else:# Just a video
-				entry = result
-				url = str(entry.get(self.KEY_URL))
-				format = int(entry.get(self.KEY_FORMAT_ID))
-			self._onResult(True, url, format)
+			self._setupFormatMap()
+			with YoutubeDL(self._params) as ytdl:
+				result = ytdl.extract_info(self._baseurl, ie_key=ie_key, download=False, process=True)
+				if self.KEY_ENTRIES in result: # Can be a playlist or a list of videos
+					entry = result[self.KEY_ENTRIES][0] #TODO handle properly
+				else:# Just a video
+					entry = result
+					fmt = entry.get(self.KEY_FORMAT_ID)
+					url = ""
+					suburi = ""
+					for f in entry.get(self.KEY_REQUESTED_FORMATS, []):
+						if not url and f.get(self.KEY_VCODEC, u"none") != u"none":
+							url = str(f.get(self.KEY_URL, ""))
+						elif not suburi and f.get(self.KEY_ACODEC, u"none") != u"none":
+							suburi = str(f.get(self.KEY_URL, ""))
+					if not url:
+						url = str(entry.get(self.KEY_URL, ""))
+					self._onResult(True, url, fmt, suburi)
 		except Exception as e:
 			Log.w(e)
 			self._onResult(False, None, -1)
 
-	def _onResult(self, success, url, format):
+	def _onResult(self, success, url, fmt, suburi=""):
 		if self._canceled:
 			return
 		for callback in self._callbacks:
 			if self._async:
-				reactor.callFromThread(callback, url, format)
+				reactor.callFromThread(callback, url, fmt, suburi)
 			else:
-				callback(url, format)
+				callback(url, fmt, suburi)
 
 	def cancel(self):
 		self._canceled = True
