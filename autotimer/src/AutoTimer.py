@@ -460,7 +460,8 @@ class AutoTimer:
 					doLog(msg)
 					newEntry.log(501, msg)
 
-				modified += 1
+				if rtimer.begin != begin or rtimer.end != end or rtimer.name != name:
+					modified += 1
 
 				if allow_modify:
 					self.modifyTimer(newEntry, name, shortdesc, begin, end, serviceref, eit)
