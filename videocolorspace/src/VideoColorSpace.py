@@ -35,7 +35,7 @@ def getColorSpace():
 
 def setColorSpace(mode):
     print "[VideoColorSpace] set hdmi_colorspace:", mode
-    result = system("echo %s > /proc/stb/video/hdmi_colorspace" % (mode)) >> 8
+    result = system("echo \"%s\" > /proc/stb/video/hdmi_colorspace" % (mode)) >> 8
     if result != 0:
         print "[VideoColorSpace] error setting hdmi_colorspace"
         getColorSpace()
