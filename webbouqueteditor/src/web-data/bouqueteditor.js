@@ -36,11 +36,11 @@ function moveOptions(selectId, pos) {
 		selectList.removeChild(opt);
 		if(pos < selectOptions.length){
 			selectList.insertBefore(opt, selectOptions[pos]);
-			ref = unescape(opt.value);
+			ref = opt.value;
 			index = pos;
 		} else {
 			selectList.appendChild(opt);
-			ref = unescape(opt.value);
+			ref = opt.value;
 			index = selectOptions.length - 1;
 		}
 	}
@@ -210,10 +210,10 @@ function removeAlternative(selectObj) {
 	var selectServicelistOptions = selectList.getElementsByTagName('option');
 	if (selectServicelistOptions.length > 1) {
 		if (idxServicelist != -1) {
-			var current_alternative_service_ref = unescape(selectServicelist.options[idxServicelist].value);
+			var current_alternative_service_ref = selectServicelist.options[idxServicelist].value;
 			var idx = selectList.selectedIndex; 
 			if ( idx != -1) {
-				var ref = unescape(selectList.options[idx].value); 
+				var ref = selectList.options[idx].value;
 					var check = confirm("Do you really want to delete the service\n" + selectList.options[idx].text + " from current alternative list?");
 				if (check == true)
 					doRequest('/bouqueteditor/web/removeservice?sBouquetRef='+ current_alternative_service_ref + '&sRef=' + ref, removeAlternativeServiceCallback, false);
@@ -575,7 +575,7 @@ function moveBouquetOptionsDown(selectId) {
 function removeBouquet(selectObj) {
 	var selectList = $(selectObj);
 	var idx = selectList.selectedIndex; 
-	var bouqueref = unescape(selectList.options[idx].value); 
+	var bouqueref = unescape(selectList.options[idx].value);
 	var check = confirm("Do you really want to delete the bouquet\n" + selectList.options[idx].text + " ?");
 	if (check == true)
 		doRequest('/bouqueteditor/web/removebouquet?sBouquetRef='+ bouqueref +'&mode=' + currentMode, removeBouquetCallback, false);
@@ -725,7 +725,7 @@ function removeAlternativServices(selectObj) {
 	var selectList = $(selectObj);
 	var idx = selectList.selectedIndex; 
 	if ( idx != -1) {
-		var ref = unescape(selectList.options[idx].value); 
+		var ref = selectList.options[idx].value;
 		var check = confirm("Do you really want to delete all allternatives services in service\n" + selectList.options[idx].text + " ?");
 		if (check == true){
 			currentServicelistIndex = idx;
@@ -743,7 +743,7 @@ function removeService(selectObj) {
 	var selectList = $(selectObj);
 	var idx = selectList.selectedIndex; 
 	if ( idx != -1) {
-		var ref = unescape(selectList.options[idx].value); 
+		var ref = selectList.options[idx].value;
 		var check = confirm("Do you really want to delete the service\n" + selectList.options[idx].text + " from current selected Bouquet?");
 		if (check == true)
 			doRequest('/bouqueteditor/web/removeservice?sBouquetRef='+ bouqueref + '&sRef=' + ref +'&mode=' + currentMode, removeServiceCallback, false);
@@ -777,12 +777,12 @@ function addAlternativeService(selectObj) {
 	var selectList = $(selectObj);
 	var idx = selectList.selectedIndex; 
 	if ( idx != -1){
-		var ref = unescape(selectList.options[idx].value); // that service ref will be added to the current selected service from servicelist as alternative
+		var ref = selectList.options[idx].value; // that service ref will be added to the current selected service from servicelist as alternative
 		var selectServicelist = $('servicelist');
 		var idxServicelist = selectServicelist.selectedIndex;
 		if (idxServicelist != -1) {
 			currentServicelistIndex = idxServicelist;
-			var current_ref = unescape(selectServicelist.options[idxServicelist].value); // get current  selected ref --> this service will be the alternative
+			var current_ref = selectServicelist.options[idxServicelist].value; // get current  selected ref --> this service will be the alternative
 			var url = "/bouqueteditor/web/addservicetoalternative?sBouquetRef=" + bouqueref + "&sCurrentRef=" + current_ref + "&sRef=" + ref + "&mode=" + currentMode;
 			doRequest(url, addAlternativeServiceCallback, false);
 		}
@@ -812,7 +812,7 @@ function addServiceToBouquet(selectObj) {
 	var idx = selectList.selectedIndex;
 	var refServicelist = "";
 		if ( idx != -1){
-		var ref = unescape(selectList.options[idx].value);
+		var ref = selectList.options[idx].value;
 		var selectServicelist = $('servicelist');
 		var selectServicelistOptions = selectServicelist.getElementsByTagName('option');
 		if (selectServicelistOptions.length > 0) {
@@ -820,7 +820,7 @@ function addServiceToBouquet(selectObj) {
 			currentServicelistIndex = idxServicelist + 1;
 			if ( idxServicelist != -1 && idxServicelist != selectServicelistOptions.length){
 				if ( idxServicelist + 1 < selectServicelistOptions.length){
-					refServicelist = unescape(selectServicelist.options[idxServicelist+1].value);
+					refServicelist = selectServicelist.options[idxServicelist+1].value;
 				}
 			}
 		}
@@ -964,7 +964,7 @@ function toggleBouquetProtectionCallback(request) {
 function toggleServiceProtection(selectObj) {
 	var selectList = $(selectObj);
 	var idx = selectList.selectedIndex; 
-	var serviceref = unescape(selectList.options[idx].value);
+	var serviceref = selectList.options[idx].value;
 	currentServicelistIndex =  idx;
 	doRequest('/bouqueteditor/web/togglelock?sRef='+ serviceref +'&password=' + chachedPin, toggleServiceProtectionCallback, false);
 }
@@ -1023,7 +1023,7 @@ function renameService(selectObj) {
 	var idx = selectList.selectedIndex;
 	var refServicelist = "";
 	if ( idx != -1) {
-		var ref = unescape(selectList.options[idx].value); 
+		var ref = selectList.options[idx].value;
 	
 		var newServicename=prompt('Please enter new servicename for selected service:', selectList.options[idx].text);
 		if (newServicename){
@@ -1033,7 +1033,7 @@ function renameService(selectObj) {
 				currentServicelistIndex = idxServicelist;
 				if ( idxServicelist != -1 && idxServicelist != selectServicelistOptions.length){
 					if ( idxServicelist + 1 < selectServicelistOptions.length){
-						refServicelist = unescape(selectList.options[idxServicelist+1].value);
+						refServicelist = selectList.options[idxServicelist+1].value;
 					}
 				}
 			}
@@ -1049,7 +1049,7 @@ function renameService(selectObj) {
 function renameBouquet(selectObj) {
 	var selectList = $(selectObj);
 	var idx = selectList.selectedIndex; 
-	var bouqueref = unescape(selectList.options[idx].value); 
+	var bouqueref = selectList.options[idx].value;
 	var newServicename=prompt('Please enter new servicename for selected bouquet:', selectList.options[idx].text);
 	if (newServicename){
 		currentBouquetlistIndex =  idx;
@@ -1070,7 +1070,7 @@ function addMarkerToBouquet(selectObj) {
 			currentServicelistIndex = idxServicelist + 1;
 			if ( idxServicelist != -1 && idxServicelist != selectServicelistOptions.length){
 				if ( idxServicelist + 1 < selectServicelistOptions.length){
-					refServicelist = unescape(selectList.options[idxServicelist+1].value);
+					refServicelist = selectList.options[idxServicelist+1].value;
 				}
 			}
 		}
