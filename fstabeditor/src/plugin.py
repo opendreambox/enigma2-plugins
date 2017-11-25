@@ -74,11 +74,11 @@ def fstabMenuListEntry(devicename, mountpoint,fstype, options, dumpfreq, passnum
 class fstabViewerScreen(Screen,HelpableScreen):
 	skin = """
 		<screen position="center,center" size="820,340" title="fstab-Editor">
-		<ePixmap pixmap="skin_default/buttons/red.png" position="10,0" size="200,50" alphatest="on" />
+		<widget name="ButtonRed" pixmap="skin_default/buttons/red.png" position="10,0" size="200,50" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/green.png" position="210,0" size="200,50" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,0" size="200,50" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/blue.png" position="610,0" size="200,50" alphatest="on" />
-		<eLabel text="Cancel" position="10,0" size="200,50" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<widget name="ButtonRedText" position="10,0" size="200,50" zPosition="1" valign="center" halign="center" backgroundColor="#9f1313" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
 		<eLabel text="Add entry" position="210,0" size="200,50" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
 		<eLabel text="Run mount -a" position="410,0" size="200,50" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
 		<eLabel text="Restore fstab.backup" position="610,0" size="200,50" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
@@ -93,6 +93,10 @@ class fstabViewerScreen(Screen,HelpableScreen):
 		self.session = session
 		Screen.__init__(self, session)
 		HelpableScreen.__init__(self)
+		self.hideDelete = False
+		
+		self["ButtonRed"] = Pixmap()
+		self["ButtonRedText"] = Label(_("Remove entry"))
 
 		self["entryinfo"] = Label()
 		self["menulist"] = fstabMenuList([])
@@ -100,6 +104,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 
 		self["ColorActions"] = HelpableActionMap(self, "ColorActions",
 		{
+			"red": (self.removeEntry, _("Remove entry")),
 			"green": (self.addEntry, _("Add entry")),
 			"yellow": (self.restoreBackUp, _("Restore back up of fstab")),
 			"blue":	(self.mountall, _("Run mount -a")),
@@ -117,7 +122,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 
 	def openEditScreen(self):
 		self.selectedEntry = self["menulist"].getSelectedIndex()
-		self.session.openWithCallback(self.writeFile, fstabEditorScreen, self.selectedEntry)
+		self.session.openWithCallback(self.writeFile, fstabEditorScreen, self.selectedEntry, self.hideDelete)
 	
 	def buildScreen(self):
 		self.fstabEntryList = []
@@ -145,6 +150,10 @@ class fstabViewerScreen(Screen,HelpableScreen):
 			
 		self["menulist"].l.setList(self.fstabEntryList)
 		self["entryinfo"].setText("%d / %d" %(self["menulist"].getSelectedIndex()+1, self.counter))
+		if entryList[0][0] in ("rootfs", "proc", "sysfs", "devpts", "tmpfs"):
+			self["ButtonRed"].hide()
+			self["ButtonRedText"].hide()
+			self.hideDelete = True		
 	
 	def writeFile(self, returnvalue):
 		if returnvalue != 0:
@@ -158,10 +167,26 @@ class fstabViewerScreen(Screen,HelpableScreen):
 			
 	def selectionChanged(self):
 		self["entryinfo"].setText("%d / %d" %(self["menulist"].getSelectedIndex()+1, self.counter))
+		if entryList[self["menulist"].getSelectedIndex()][0] in ("rootfs", "proc", "sysfs", "devpts", "tmpfs"):
+			self["ButtonRed"].hide()
+			self["ButtonRedText"].hide()
+			self.hideDelete = True
+		else:
+			self["ButtonRed"].show()
+			self["ButtonRedText"].show()			
+			self.hideDelete = False
 		
 	def mountall(self):
 		os.system("mount -a")
-		
+
+	def removeEntry(self):
+		global entryList
+		if entryList[self["menulist"].getSelectedIndex()][0] in ("rootfs", "proc", "sysfs", "devpts", "tmpfs"):
+			msg = self.session.open(MessageBox, _("Entry is required for Dreambox to work. Delete is not allowed"), MessageBox.TYPE_ERROR, timeout=5)
+		else:
+			del entryList[self["menulist"].getSelectedIndex()]
+			self.writeFile(1)
+			
 	def addEntry(self):
 		self.session.openWithCallback(self.writeFile, fstabEditorScreen, None, addEntry=True)
 		
@@ -185,16 +210,22 @@ class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
 		<widget name="config" position="10,60" size="800,570" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 		
-	def __init__(self, session, selectedEntry, addEntry=False):
+	def __init__(self, session, selectedEntry, addEntry=False, hideDelete=False):
 		self.skin = fstabEditorScreen.skin
 		self.session = session
 		self.selectedEntry = selectedEntry
 		self.addEntry = addEntry
+		self.hideDelete = hideDelete
 		Screen.__init__(self, session)
 		HelpableScreen.__init__(self)
 
 		self["ButtonRed"] = Pixmap()
 		self["ButtonRedText"] = Label(_("Remove entry"))
+
+		if self.hideDelete:
+			self["ButtonRed"].hide()
+			self["ButtonRedText"].hide()
+
 		self["ButtonBlue"] = Pixmap()
 		self["ButtonBlueText"] = Label(_("Add option"))
 		self["ButtonYellow"] = Pixmap()
@@ -209,8 +240,8 @@ class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
 		
 		self["ColorActions"] = HelpableActionMap(self, "ColorActions",
 		{
+			"red": (self.removeEntry, _("Remove entry")),
 			"green":	(self.checkEntry, _("Return with saving")),
-			"red":		(self.removeEntry, _("Remove entry")),
 			"blue":		(self.addOption, _("Add option")),
 			"yellow":	(self.removeOption, _("Remove option")),
 		}, -1)
@@ -229,8 +260,8 @@ class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
 		self["config"].onSelectionChanged.append(self.selectionChanged)
 		
 	def selectionChanged(self):
-		self.selectedEntry = self["config"].getCurrentIndex()
-		if self.selectedEntry > 3 and self.selectedEntry < len(self.list)-2:
+		self.selectedOptionEntry = self["config"].getCurrentIndex()
+		if self.selectedOptionEntry > 3 and self.selectedOptionEntry < len(self.list)-2:
 			self["ButtonYellow"].show()
 			self["ButtonYellowText"].show()
 		else:
@@ -308,36 +339,42 @@ class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
 			entryList[self.selectedEntry] = [self.devicename.value, self.mountpoint.value, self.fstype.value, optionsString, str(self.dumpfreq.value), self.passnum.value]
 		self.close(1)
 		
-	def removeEntry(self):
-		global entryList
-		del entryList[self.selectedEntry]
-		self.close(1)
-		
 	def cancelEntry(self):
 		self.close(0)
 	
 	def ok(self):
-		self.selectedEntry = self["config"].getCurrentIndex()
-		if self.selectedEntry == 1:
+		self.selectedOptionEntry = self["config"].getCurrentIndex()
+		if self.selectedOptionEntry == 1:
 			self.session.openWithCallback(self.dirSelectDlgClosed, dirSelectDlg, "/media/dummy/", False)  # just add any (not even existing) subdir to start in /media
-		elif self.selectedEntry == 0:
+		elif self.selectedOptionEntry == 0:
 			self.session.openWithCallback(self.dirSelectDlgClosed, dirSelectDlg, "/dev/disk/dummy/", True) # just add any (not even existing) subdir to start in /dev
-		elif self.selectedEntry > 3 and self.selectedEntry < len(self.list)-2:
-			self.session.openWithCallback(self.updateSelectedOption, optionSelector, self.list[self.selectedEntry][1].value)
+		elif self.selectedOptionEntry > 3 and self.selectedOptionEntry < len(self.list)-2:
+			self.session.openWithCallback(self.updateSelectedOption, optionSelector, self.list[self.selectedOptionEntry][1].value)
 			
 	def updateSelectedOption(self, returnValue=""):
 		print returnValue
-		self.list[self.selectedEntry][1].value=returnValue
-		self.optionList[self.selectedEntry-4].value = returnValue
+		self.list[self.selectedOptionEntry][1].value=returnValue
+		self.optionList[self.selectedOptionEntry-4].value = returnValue
 	
 	def dirSelectDlgClosed(self, mountpoint):
 		#use print to see in crashlog what's been selected
 		print "mountpoint: ", mountpoint
 		if mountpoint != False:
-			if self.selectedEntry == 1:
+			if self.selectedOptionEntry == 1:
 				self.mountpoint.value = mountpoint
-			elif self.selectedEntry == 0:
+			elif self.selectedOptionEntry == 0:
 				self.devicename.value = mountpoint
+
+	def removeEntry(self):
+		if not self.hideDelete:
+			global entryList
+			if entryList[self.selectedEntry][0] in ("rootfs", "proc", "sysfs", "devpts", "tmpfs"):
+				msg = self.session.open(MessageBox, _("Entry is required for Dreambox to work. Delete is not allowed"), MessageBox.TYPE_ERROR, timeout=5)
+				returnvalue = 0
+			else:		
+				del entryList[self.selectedEntry]
+				returnvalue = 1
+			self.close(returnvalue)
 				
 	def addOption(self):
 		self.optionList.append(NoSave(ConfigText(default="")))
@@ -345,14 +382,14 @@ class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
 		self["config"].setList(self.list)
 		
 	def removeOption(self):
-		self.selectedEntry = self["config"].getCurrentIndex()
+		self.selectedOptionEntry = self["config"].getCurrentIndex()
 		if len(self.optionList) > 1:
-			if self.selectedEntry > 3 and self.selectedEntry < len(self.list)-2:
-				del self.list[self.selectedEntry]
-				del self.optionList[self.selectedEntry-4]
+			if self.selectedOptionEntry > 3 and self.selectedOptionEntry < len(self.list)-2:
+				del self.list[self.selectedOptionEntry]
+				del self.optionList[self.selectedOptionEntry-4]
 			else:
 				self.session.open(MessageBox, _("Cannot remove option. At least one option is required. Option will be set to defaults"), MessageBox.TYPE_ERROR, timeout=5)
-				self.list[self.selectedEntry][1].value = "defaults"
+				self.list[self.selectedOptionEntry][1].value = "defaults"
 				self.optionList[0].value = "defaults"
 			self["config"].setList(self.list)
 
