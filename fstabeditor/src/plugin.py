@@ -46,6 +46,24 @@ lengthList = [0,0,0,0]
 
 def main(session,**kwargs):
     session.open(fstabViewerScreen)
+    
+def checkForReadOnly(reason, **kwargs):
+	if reason == 0:
+		mountFile = open('/proc/mounts', 'r')
+		for line in mountFile:
+			if line.startswith('rootfs'):
+				entry = line.split()
+				if entry[3] == 'ro':
+					print "[fstabEditor]  - rootfs is mounted ro"
+					from Tools import Notifications
+					Notifications.notificationQueue.registerDomain("fstabEditor", "fstabEditor", deferred_callable = True)
+					Notifications.AddNotificationWithCallback(runRemountCommand, MessageBox, _("rootfs is mounted readonly. This is usually caused by a corrupted fstab. Do you want to remount now to be able to fix this?"), MessageBox.TYPE_YESNO, 5, windowTitle="fstabEditor", domain="fstabEditor")
+					break
+		mountFile.close()
+		
+def runRemountCommand(answer):
+	if answer:
+		os.system("mount -o rw,remount / ")    
 	
 class fstabMenuList(MenuList):
 	def __init__(self, list):
@@ -119,7 +137,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 		self.buildScreen()
 		
 		self["menulist"].onSelectionChanged.append(self.selectionChanged)
-
+		
 	def openEditScreen(self):
 		self.selectedEntry = self["menulist"].getSelectedIndex()
 		self.session.openWithCallback(self.writeFile, fstabEditorScreen, self.selectedEntry, self.hideDelete)
@@ -153,8 +171,8 @@ class fstabViewerScreen(Screen,HelpableScreen):
 		if entryList[0][0] in ("rootfs", "proc", "sysfs", "devpts", "tmpfs"):
 			self["ButtonRed"].hide()
 			self["ButtonRedText"].hide()
-			self.hideDelete = True		
-	
+			self.hideDelete = True	
+			
 	def writeFile(self, returnvalue):
 		if returnvalue != 0:
 			os.system("cp /etc/fstab /etc/fstab.backup")
@@ -545,4 +563,7 @@ class optionSelector(Screen,ConfigListScreen,HelpableScreen):
 			self.close(self.options.value)
 		
 def Plugins(**kwargs):
-	return [PluginDescriptor(name="fstab-Editor", description=_("Plugin to edit fstab"), where = [PluginDescriptor.WHERE_PLUGINMENU], icon="fstabEditor.png", fnc=main)]
+	return [
+		PluginDescriptor(name="fstab-Editor", description=_("Plugin to edit fstab"), where = [PluginDescriptor.WHERE_PLUGINMENU], icon="fstabEditor.png", fnc=main),
+		PluginDescriptor(name="fstab-Editor", where = [PluginDescriptor.WHERE_SESSIONSTART], fnc=checkForReadOnly)
+		]
