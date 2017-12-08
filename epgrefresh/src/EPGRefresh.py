@@ -281,8 +281,8 @@ class EPGRefresh:
 		for scanservice in fromList:
 			service = eServiceReference(scanservice.sref)
 			if not service.valid() \
+				or service.type != eServiceReference.idDVB \
 				or (service.flags & (eServiceReference.isMarker|eServiceReference.isDirectory)):
-
 				continue
 
 			channelID = '%08x%04x%04x' % (
@@ -333,7 +333,7 @@ class EPGRefresh:
 				while 1:
 					s = list.getNext()
 					# TODO: I wonder if its sane to assume we get services here (and not just new lists)
-					if s.valid():
+					if s.valid() and s.type == eServiceReference.idDVB:
 						additionalServices.append(EPGRefreshService(s.toString(), None))
 					else:
 						break
