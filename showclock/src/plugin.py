@@ -114,7 +114,7 @@ class ShowClockSetup(Screen, ConfigListScreen): # config
 		self.list = [
 			getConfigListEntry(_('Clock show timeout'), config.plugins.ShowClock.showTimeout,
 				_('Specify how long (seconds) the clock shall be shown before it disappears. Set to "0" to show clock until hidden manually.')),
-			getConfigListEntry(_('Show clock und system startup?'), config.plugins.ShowClock.showOnBoot,
+			getConfigListEntry(_('Show clock on system startup?'), config.plugins.ShowClock.showOnBoot,
 				_('Specify wheter the clock shall be shown at system start (will be hidden after the timeout defined above)')),
 			getConfigListEntry(_('Show in'), config.plugins.ShowClock.menu,
 				_('Specify whether plugin shall show up in plugin menu or extensions menu (needs GUI restart)')),
