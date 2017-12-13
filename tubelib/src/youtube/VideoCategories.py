@@ -9,7 +9,7 @@ from ThreadedRequest import ThreadedRequest
 class VideoCategories(YoutubeQueryBase):
 	def list(self, callback, lang=None, region=None):
 		if not lang:
-			lang = config.plugins.mytube.search.lr.value
+			lang = config.osd.language.value.split("_")[0]
 		if not region:
 			region = lang
 		self._args = {

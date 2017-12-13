@@ -49,7 +49,7 @@ class Search(Videos):
 			kwargs = {
 				"part" : "id,snippet,statistics,contentDetails",
 				"maxResults" : 50,
-				"hl" : config.plugins.mytube.search.lr.value,
+				"hl" : config.osd.language.value.split("_")[0],
 				"id" : ",".join(items)
 			}
 			request = self._youtube.videos().list(**kwargs)

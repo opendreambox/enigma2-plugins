@@ -22,7 +22,7 @@ class Videos(YoutubeQueryBase):
 		self._args = {
 			"part" : "id,snippet,statistics,contentDetails",
 			"maxResults" : maxResults,
-			"hl" : config.plugins.mytube.search.lr.value
+			"hl" : config.osd.language.value.split("_")[0]
 		}
 		if videoCategoryId:
 			self._args["videoCategoryId"] = videoCategoryId
