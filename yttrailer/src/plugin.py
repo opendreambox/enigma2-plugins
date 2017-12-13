@@ -38,7 +38,6 @@ from skin import TemplatedListFonts, componentSizes
 
 config.plugins.yttrailer = ConfigSubsection()
 config.plugins.yttrailer.show_in_extensionsmenu = ConfigYesNo(default = False)
-config.plugins.yttrailer.best_resolution = ConfigSelection(default="2", choices = [("0", _("1080p")),("1", _("720p")), ("2", _("No HD streaming"))])
 config.plugins.yttrailer.ext_descr = ConfigText(default="german", fixed_size = False)
 config.plugins.yttrailer.max_results =  ConfigInteger(5,limits = (1, 10))
 config.plugins.yttrailer.close_player_with_exit =  ConfigYesNo(default = False)
@@ -157,18 +156,16 @@ class YTTrailer:
 	def getYTFeeds(self, eventname, max_results):
 		if not self._youtube:
 			self._youtube = buildYoutube()
-		if int(config.plugins.yttrailer.best_resolution.value) <= 1:
-			shd = "HD"
-		else:
-			shd = ""
-		q = "%s %s Trailer %s" % (eventname, shd, config.plugins.yttrailer.ext_descr.value)
+		q = "%s Trailer %s" % (eventname, config.plugins.yttrailer.ext_descr.value)
 		search = Search(self._youtube)
 		self._query = search.list(self._gotYTFeeds, searchTerm=q, maxResults=max_results)
 
 	def setServiceReference(self, entry):
-		url = entry.url
+		if not entry.id:
+			return
+		url = "yt://%s" %(entry.id)
 		if url:
-			ref = eServiceReference(4097,0,url)
+			ref = eServiceReference(eServiceReference.idURI, 0, url)
 			ref.setName(entry.title)
 		else:
 			ref = None
@@ -316,7 +313,6 @@ class YTTrailerSetup(ConfigListScreen, Screen):
 		cfglist = [ ]
 		cfglist.append(getConfigListEntry(_("Show Setup in Extensions menu"), config.plugins.yttrailer.show_in_extensionsmenu))
 		cfglist.append(getConfigListEntry(_("Extended search filter"), config.plugins.yttrailer.ext_descr))
-		cfglist.append(getConfigListEntry(_("Best resolution"), config.plugins.yttrailer.best_resolution))
 		cfglist.append(getConfigListEntry(_("Max. results in list-mode"), config.plugins.yttrailer.max_results))
 		cfglist.append(getConfigListEntry(_("Close Player with exit-key"), config.plugins.yttrailer.close_player_with_exit))
 
