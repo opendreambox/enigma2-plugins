@@ -1,10 +1,6 @@
-#enigma2
-from Components.config import config
-#youtube
-from apiclient.discovery import build
-#local
+from Tools.Log import Log
+
 from YoutubeQueryBase import YoutubeQueryBase
-from ThreadedRequest import ThreadedRequest
 
 class Subscriptions(YoutubeQueryBase):
 	def list(self, callback, maxResults=25):
@@ -44,7 +40,7 @@ class Subscription(object):
 
 	@property
 	def channelId(self):
-		return str(elf._entry["snippet"]["channelId"])
+		return str(self._entry["snippet"]["channelId"])
 
 	@property
 	def thumbnailUrl(self, best=False):

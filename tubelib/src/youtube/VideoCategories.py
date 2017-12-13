@@ -1,10 +1,7 @@
 #enigma2
 from Components.config import config
-#youtube
-from apiclient.discovery import build
-#local
+
 from YoutubeQueryBase import YoutubeQueryBase
-from ThreadedRequest import ThreadedRequest
 
 class VideoCategories(YoutubeQueryBase):
 	def list(self, callback, lang=None, region=None):

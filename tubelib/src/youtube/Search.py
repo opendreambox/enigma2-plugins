@@ -1,13 +1,6 @@
 #enigma2
 from Components.config import config
-#youtube
-from apiclient.discovery import build
-#local
-from ThreadedRequest import ThreadedRequest
-from YoutubeQueryBase import YoutubeQueryBase
 from Videos import Videos
-
-from Tools.Log import Log
 
 class Search(Videos):
 	ORDER_DATE = "date"
