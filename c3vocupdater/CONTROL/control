@@ -1,0 +1,2 @@
+Description: c3voc stream bouquet updater
+Depends: enigma2 python-requests

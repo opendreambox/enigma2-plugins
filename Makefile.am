@@ -12,6 +12,7 @@ SUBDIRS = \
 	autotimer \
 	birthdayreminder \
 	bonjour \
+	c3vocupdater \
 	cdinfo \
 	dreamexplorer \
 	dreamirc \

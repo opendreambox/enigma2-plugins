@@ -1,0 +1,16 @@
+<default>
+	<prerequisites>
+		<tag type="Multimedia" />
+	</prerequisites>
+	<info>
+		<author>Benny</author>
+		<name>C3vocUpdater</name>
+		<packagename>enigma2-plugin-extensions-c3vocupdater</packagename>
+		<shortdescription>c3voc stream bouquet updater</shortdescription>
+		<description>Create and update c3voc stream bouquet for current events</description>
+	</info>
+
+	<files type="package"> <!-- without version, without .ipk -->
+		<file type="package" name="enigma2-plugin-extensions-c3vocupdater" />
+	</files>
+</default>

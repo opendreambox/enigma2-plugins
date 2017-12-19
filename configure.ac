@@ -70,6 +70,10 @@ bonjour/Makefile
 bonjour/meta/Makefile
 bonjour/src/Makefile
 
+c3vocupdater/Makefile
+c3vocupdater/meta/Makefile
+c3vocupdater/src/Makefile
+
 cdinfo/Makefile
 cdinfo/meta/Makefile
 cdinfo/src/Makefile
