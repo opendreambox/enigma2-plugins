@@ -4,21 +4,36 @@ from Components.Label import Label
 from Components.ActionMap import ActionMap
 from Plugins.Plugin import PluginDescriptor
 from Screens.MessageBox import MessageBox
-from enigma import eDVBDB
+from enigma import eDVBDB, getDesktop
 import requests
 import json
 import shutil
 
-class C3vocScreen (Screen):
+sz_w = getDesktop(0).size().width()
 
-	skin = """
-		<screen position="130,150" size="460,150" title="c3voc Updater" >
-			<widget name="myText" position="10,50" size="400,40" valign="center" halign="center" zPosition="2"  foregroundColor="white" font="Regular;22"/>
-			<widget name="myGreenBtn" position="10,110" size="110,40" backgroundColor="green" valign="center" halign="center" zPosition="2" foregroundColor="white" font="Regular;20"/>
-			<widget name="myRedBtn" position="130,110" size="110,40" backgroundColor="red" valign="center" halign="center" zPosition="2" foregroundColor="white" font="Regular;20"/>
+class C3vocScreen (Screen):
+	if sz_w == 1920:
+		skin = """
+		<screen position="center,center" size="840,180" title="c3voc Updater" >
+		<widget font="Regular;30" halign="center" name="myText" position="10,10" size="820,70" valign="center" />
+		<eLabel backgroundColor="grey" position="10,90" size="820,1" />
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/red.svg" position="20,100" size="300,70" />
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/green.svg" position="520,100" size="300,70" />
+		<widget backgroundColor="#9f1313" font="Regular;30" halign="center" name="myRedBtn" position="20,100" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" size="300,70" transparent="1" valign="center" zPosition="1" />
+		<widget backgroundColor="#1f771f" font="Regular;30" halign="center" name="myGreenBtn" position="520,100" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" size="300,70" transparent="1" valign="center" zPosition="1" />
+		</screen>"""
+	else:
+		skin = """
+		<screen position="center,center" size="620,130" title="c3voc Updater" >
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40"/>
+		<ePixmap pixmap="skin_default/buttons/green.png" position="410,5" size="200,40"/>
+		<widget name="myRedBtn" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
+		<widget name="myGreenBtn" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
+		<eLabel position="10,50" size="600,1" backgroundColor="grey"/>
+		<widget name="myText" position="10,60" size="600,60" font="Regular;22" halign="center" valign="center"/>
 		</screen>"""
 
-	def  __init__ (self, session, args = 0 ):
+	def __init__ (self, session):
 		self.session = session
 		Screen.__init__(self, session)
 
