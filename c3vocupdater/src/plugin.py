@@ -24,13 +24,13 @@ class C3vocScreen (Screen):
 		</screen>"""
 	else:
 		skin = """
-		<screen position="center,center" size="620,130" title="c3voc Updater" >
-		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40"/>
-		<ePixmap pixmap="skin_default/buttons/green.png" position="410,5" size="200,40"/>
-		<widget name="myRedBtn" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
-		<widget name="myGreenBtn" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
-		<eLabel position="10,50" size="600,1" backgroundColor="grey"/>
-		<widget name="myText" position="10,60" size="600,60" font="Regular;22" halign="center" valign="center"/>
+		<screen position="center,center" size="520,130" title="c3voc Updater" >
+		<widget name="myText" position="10,5" size="500,55" font="Regular;22" halign="center" valign="center"/>
+		<eLabel position="10,65" size="500,1" backgroundColor="grey"/>
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,75" size="200,40"/>
+		<ePixmap pixmap="skin_default/buttons/green.png" position="310,75" size="200,40"/>
+		<widget name="myRedBtn" position="10,75" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
+		<widget name="myGreenBtn" position="310,75" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
 		</screen>"""
 
 	def __init__ (self, session):
