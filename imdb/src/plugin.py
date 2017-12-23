@@ -125,13 +125,13 @@ class IMDB(Screen):
 		<widget font="Regular;38" name="titlelabel" position="20,90" size="1780,45" foregroundColor="yellow"/>
 		<widget enableWrapAround="1" name="menu" position="20,150" scrollbarMode="showOnDemand" size="1760,720" />
 		<widget font="Regular;28" name="extralabel" position="20,180" size="1760,750" />
-		<widget font="Regular;30" halign="left" name="ratinglabel" position="20,150" size="1000,40" />
-		<widget name="starsbg" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_empty.svg" position="30,200" size="300,30" />
-		<widget name="stars" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_filled.svg" position="30,200" size="300,30" transparent="1" />
-		<widget name="poster" position="30,240" size="300,449" />
-		<widget font="Regular;30" name="detailslabel" position="370,240" size="700,400" />
-		<widget font="Regular;30" name="castlabel" position="1100,240" size="680,400" />
-		<widget font="Regular;30" name="storylinelabel" position="20,700" size="1760,180" />
+		<widget font="Regular;30" halign="left" name="ratinglabel" position="370,150" size="1000,40" foregroundColor="yellow"/>
+		<widget name="starsbg" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_empty.svg" position="30,150" size="300,30" />
+		<widget name="stars" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_filled.svg" position="30,150" size="300,30" transparent="1" />
+		<widget name="poster" position="30,200" size="300,449" />
+		<widget font="Regular;30" name="detailslabel" position="370,210" size="750,400" />
+		<widget font="Regular;30" name="castlabel" position="1180,210" size="600,400" />
+		<widget font="Regular;30" name="storylinelabel" position="20,660" size="1760,210" />
 		<widget name="statusbar" halign="right" position="370,885" size="1400,35" font="Regular;30" foregroundColor="#b3b3b9" />
 		</screen>"""
 	else:
