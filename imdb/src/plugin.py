@@ -1,7 +1,7 @@
 ﻿# -*- coding: UTF-8 -*-
 from Plugins.Plugin import PluginDescriptor
 from Tools.Downloader import downloadWithProgress
-from enigma import ePicLoad, eServiceReference
+from enigma import ePicLoad, eServiceReference, getDesktop
 from Screens.Screen import Screen
 from Screens.EpgSelection import EPGSelection
 from Screens.ChannelSelection import SimpleChannelSelection
@@ -30,6 +30,8 @@ from Components.PluginComponent import plugins
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 
 from HTMLParser import HTMLParser
+
+sz_w = getDesktop(0).size().width()
 
 def transHTML(text):
 	h = HTMLParser()
@@ -102,28 +104,65 @@ class IMDBEPGSelection(EPGSelection):
 		pass
 
 class IMDB(Screen):
-	skin = """
-		<screen name="IMDBv2" position="center,120" size="920,520" title="IMDb - Internet Movie Database">
-			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="225,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="235,5" size="225,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/yellow.png" position="460,5" size="225,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/blue.png" position="685,5" size="225,40" alphatest="on" />
-			<widget name="key_red" position="10,5" size="225,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
-			<widget name="key_green" position="235,5" size="225,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
-			<widget name="key_yellow" position="460,5" size="225,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
-			<widget name="key_blue" position="685,5" size="225,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
-			<eLabel position="10,50" size="900,1" backgroundColor="grey" />
-			<widget name="titlelabel" position="10,55" size="900,50" valign="center" font="Regular;24" />
-			<widget name="starsbg" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_empty.png" position="600,55" zPosition="0" size="210,21" transparent="1" alphatest="on" />
-			<widget name="stars" position="600,55" size="210,21" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_filled.png" transparent="1" />
-			<widget name="ratinglabel" position="490,83" size="410,23" font="Regular;19" halign="center" foregroundColor="#f0b400" />
-			<widget name="menu" position="10,110" size="900,360" zPosition="3" scrollbarMode="showOnDemand" enableWrapAround="1" />
-			<widget name="extralabel" position="10,110" size="900,360" font="Regular;24" />
-			<widget name="detailslabel" position="115,110" size="795,140" font="Regular;20" />
-			<widget name="poster" position="10,110" size="96,140" alphatest="on" />
-			<widget name="castlabel" position="10,260" size="445,230" font="Regular;20" />
-			<widget name="storylinelabel" position="465,260" size="445,230" font="Regular;20" />
-			<widget name="statusbar" position="10,497" size="900,22" font="Regular;17" foregroundColor="#b3b3b9" />
+	if sz_w == 1920:
+		skin = """
+		<screen name="IMDBv2" position="center,110" size="1800,930" title="IMDb - Internet Movie Database">
+		<eLabel backgroundColor="grey" position="10,80" size="1780,1" />
+    		<ePixmap pixmap="Default-FHD/skin_default/buttons/red.svg" position="10,5" size="300,70" />
+    		<ePixmap pixmap="Default-FHD/skin_default/buttons/green.svg" position="310,5" size="300,70" />
+    		<ePixmap pixmap="Default-FHD/skin_default/buttons/yellow.svg" position="610,5" size="300,70" />
+    		<ePixmap pixmap="Default-FHD/skin_default/buttons/blue.svg" position="910,5" size="300,70" />
+    		<widget backgroundColor="#9f1313" font="Regular;30" halign="center" name="key_red" position="10,5" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" size="300,70" transparent="1" valign="center" zPosition="1" />
+    		<widget backgroundColor="#1f771f" font="Regular;30" halign="center" name="key_green" position="310,5" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" size="300,70" transparent="1" valign="center" zPosition="1" />
+    		<widget backgroundColor="#a08500" font="Regular;30" halign="center" name="key_yellow" position="610,5" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" size="300,70" transparent="1" valign="center" zPosition="1" />
+    		<widget backgroundColor="#18188b" font="Regular;30" halign="center" name="key_blue" position="910,5" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" size="300,70" transparent="1" valign="center" zPosition="1" />
+    		<widget font="Regular;34" halign="right" position="1650,25" render="Label" size="120,40" source="global.CurrentTime">
+    			<convert type="ClockToText">Default</convert>
+    		</widget>
+    		<widget font="Regular;34" halign="right" position="1240,25" render="Label" size="400,40" source="global.CurrentTime" >
+    			<convert type="ClockToText">Date</convert>
+    		</widget>
+		<widget font="Regular;38" name="titlelabel" position="20,90" size="1780,45" foregroundColor="yellow"/>
+		<widget enableWrapAround="1" name="menu" position="20,150" scrollbarMode="showOnDemand" size="1760,720" />
+		<widget font="Regular;28" name="extralabel" position="20,180" size="1760,750" />
+		<widget font="Regular;30" halign="left" name="ratinglabel" position="20,150" size="1000,40" />
+		<widget name="starsbg" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_empty.svg" position="30,200" size="300,30" />
+		<widget name="stars" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_filled.svg" position="30,200" size="300,30" transparent="1" />
+		<widget name="poster" position="30,240" size="300,449" />
+		<widget font="Regular;30" name="detailslabel" position="370,240" size="700,400" />
+		<widget font="Regular;30" name="castlabel" position="1100,240" size="680,400" />
+		<widget font="Regular;30" name="storylinelabel" position="20,700" size="1760,180" />
+		<widget name="statusbar" halign="right" position="370,885" size="1400,35" font="Regular;30" foregroundColor="#b3b3b9" />
+		</screen>"""
+	else:
+		skin = """
+		<screen name="IMDBv2" position="center,80" size="1200,610" title="IMDb - Internet Movie Database">
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40"/>
+     		<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40"/>
+     		<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40"/>
+     		<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40"/>
+     		<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
+        	<widget name="key_green" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
+    		<widget name="key_yellow" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
+    		<widget name="key_blue" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
+	    	<widget source="global.CurrentTime" render="Label" position="1130,12" size="60,25" font="Regular;22" halign="right">
+	    		<convert type="ClockToText">Default</convert>
+	    	</widget>
+	    	<widget source="global.CurrentTime" render="Label" position="820,12" size="300,25" font="Regular;22" halign="right">
+	    		<convert type="ClockToText">Format:%A %d. %B</convert>
+	    	</widget>
+	    	<eLabel position="10,50" size="1180,1" backgroundColor="grey"/>
+		<widget name="titlelabel" position="10,55" size="1180,30" valign="center" font="Regular;24" foregroundColor="yellow"/>
+		<widget name="menu" position="10,100" size="1180,480" zPosition="3" scrollbarMode="showOnDemand" enableWrapAround="1" />
+		<widget name="extralabel" position="10,100" size="1180,500" font="Regular;22" />
+		<widget name="ratinglabel" position="230,92" size="800,23" font="Regular;19" foregroundColor="yellow"/>
+		<widget name="starsbg" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_empty.svg" position="10,90" size="210,21"/>
+		<widget name="stars" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_filled.svg" position="10,90" size="210,21" transparent="1" />
+		<widget name="poster" position="22,120" size="185,278"/>
+		<widget name="detailslabel" position="240,130" size="450,270" font="Regular;20" />
+		<widget name="castlabel" position="720,130" size="470,270" font="Regular;20" />
+		<widget name="storylinelabel" position="20,410" size="1160,170" font="Regular;20" />
+		<widget name="statusbar" position="10,580" size="1180,25" halign="right" font="Regular;19" foregroundColor="#b3b3b9" />
 		</screen>"""
 	def __init__(self, session, eventName, callbackNeeded=False):
 		Screen.__init__(self, session)
@@ -664,11 +703,21 @@ class IMDB(Screen):
 		return IMDbLCDScreenV2
 
 class IMDbLCDScreenV2(Screen):
-	skin = """
-	<screen position="0,0" size="132,64" title="IMDB Plugin">
-		<widget name="headline" position="4,0" size="128,22" font="Regular;20"/>
-		<widget source="parent.titlelcd" render="Label" position="6,26" size="120,34" font="Regular;14"/>
-	</screen>"""
+	skin = (
+	"""<screen title="IMDB Plugin" position="0,0" size="132,64" id="1">
+		<widget name="headline" font="Display;22" halign="center" position="1,3" size="130,22"/>
+		<widget source="parent.titlelcd" render="Label" font="Display;16" halign="center" valign="center" position="1,28" size="130,34"/>
+	</screen>""",
+	"""<screen title="IMDB Plugin" position="0,0" size="96,64" id="2">
+		<widget name="headline" font="Display;19" halign="center" position="0,2" size="96,20"/>
+		<widget source="parent.titlelcd" render="Label" font="Display;15" halign="center" valign="center" position="0,28" size="96,34"/>
+	</screen>""",
+	"""<screen title="IMDB Plugin" position="0,0" size="400,240" id="3">
+		<ePixmap position="0,0" size="400,240" pixmap="skin_default/display_bg.png" zPosition="-1"/>
+		<widget name="headline" font="Display;60" halign="center" position="0,5" size="400,60" transparent="1"/>
+		<eLabel backgroundColor="yellow" position="0,75" size="400,2" />
+		<widget source="parent.titlelcd" render="Label" font="Display;45" halign="center" valign="center" position="0,85" size="400,135" transparent="1"/>
+	</screen>""")
 
 	def __init__(self, session, parent):
 		Screen.__init__(self, session, parent)
