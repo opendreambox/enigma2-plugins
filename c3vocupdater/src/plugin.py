@@ -51,7 +51,7 @@ class C3vocScreen (Screen):
 	def getinput(self):
 		try:
 			req = requests.session()
-			page = req.get("https://streaming.media.ccc.de/streams/v2.json", headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'})
+			page = req.get("http://streaming.media.ccc.de/streams/v2.json", headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'})
 			data = json.loads(page.content)
 
 			with open("/tmp/c3voc", "a") as myfile:
@@ -60,16 +60,17 @@ class C3vocScreen (Screen):
 
 			for conference in data:
 				conference_name = conference["conference"]
-				rooms = self.get_rooms_for_group(conference["groups"], "Live")
-				if not rooms:
-					continue
+				for group in conference["groups"]:
+					rooms = group["rooms"]
+					if not rooms:
+						continue
 
-				for room in rooms:
-					schedule_name = room["schedulename"]
-					url = self.get_hls_url(room["streams"], "hd-native")
-					with open("/tmp/c3voc", "a") as myfile:
-						myfile.write("#SERVICE 4097:0:1:0:0:0:0:0:0:0:%s\n#DESCRIPTION %s, %s\n" % (url.replace(":", "%3a"), conference_name, schedule_name))
-						myfile.close()
+					for room in rooms:
+						schedule_name = room["schedulename"]
+						url = self.get_hls_url(room["streams"], "hd-native")
+						with open("/tmp/c3voc", "a") as myfile:
+							myfile.write("#SERVICE 4097:0:1:0:0:0:0:0:0:0:%s\n#DESCRIPTION %s, %s\n" % (url.replace(":", "%3a"), conference_name, schedule_name))
+							myfile.close()
 
 			if 'c3voc' not in open('/etc/enigma2/bouquets.tv').read():
 				with open("/etc/enigma2/bouquets.tv", "a") as myfile:
@@ -83,12 +84,6 @@ class C3vocScreen (Screen):
 			pass
 
 		self.close()
-
-        def get_rooms_for_group(self, groups, group_title):
-		for group in groups:
-			if group["group"] != group_title:
-				continue
-			return group["rooms"]
 
         def get_hls_url(self, streams, slug):
 		for stream in streams:
