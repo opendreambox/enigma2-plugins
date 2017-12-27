@@ -8,6 +8,7 @@ from enigma import eDVBDB, getDesktop
 import requests
 import json
 import shutil
+import re
 
 sz_w = getDesktop(0).size().width()
 
@@ -68,8 +69,15 @@ class C3vocScreen (Screen):
 					for room in rooms:
 						schedule_name = room["schedulename"]
 						url = self.get_hls_url(room["streams"], "hd-native")
+						page = req.get(url, headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'})
+						page.content
+						streamurl = re.findall('#EXT-X-STREAM-INF.*?\n(.*?)\n', page.content, re.S)
+						if not streamurl[0].startswith('http'):
+							streamurl = url.rsplit('/',1)[0]+'/'+streamurl[0]
+						else:
+							streamurl = streamurl[0]
 						with open("/tmp/c3voc", "a") as myfile:
-							myfile.write("#SERVICE 4097:0:1:0:0:0:0:0:0:0:%s\n#DESCRIPTION %s, %s\n" % (url.replace(":", "%3a"), conference_name, schedule_name))
+							myfile.write("#SERVICE 4097:0:1:0:0:0:0:0:0:0:%s\n#DESCRIPTION %s, %s\n" % (streamurl.replace(":", "%3a"), conference_name, schedule_name))
 							myfile.close()
 
 			if 'c3voc' not in open('/etc/enigma2/bouquets.tv').read():
@@ -80,8 +88,7 @@ class C3vocScreen (Screen):
 			shutil.move("/tmp/c3voc","/etc/enigma2/userbouquet.c3voc__tv_.tv")
 			eDVBDB.getInstance().reloadBouquets()
 			self.session.open(MessageBox, text = _("c3voc stream bouquet updated"), type = MessageBox.TYPE_INFO, timeout=4)
-		except:
-			pass
+		except:	pass
 
 		self.close()
 
