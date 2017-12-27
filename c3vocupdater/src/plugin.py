@@ -60,7 +60,7 @@ class C3vocScreen (Screen):
 
 			for conference in data:
 				conference_name = conference["conference"]
-				rooms = self.get_rooms_for_group(conference["groups"], "Lecture Rooms")
+				rooms = self.get_rooms_for_group(conference["groups"], "Live")
 				if not rooms:
 					continue
 
