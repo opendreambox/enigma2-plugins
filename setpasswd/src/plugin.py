@@ -114,7 +114,6 @@ class ChangePasswdScreen(Screen):
 		print "Changing password for %s to %s" % (self.user,self.password) 
 		self.container = eConsoleAppContainer()
 		self.appClosed_conn = self.container.appClosed.connect(self.runFinished)
-		self.dataAvail_conn = self.container.dataAvail.connect(self.dataAvail)
 		self.container.execute("echo \"%s:%s\" | chpasswd" % (self.user,self.password))
 
 	def emptyPasswd(self):
