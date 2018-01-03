@@ -16,6 +16,7 @@ from AutoTimerWizard import AutoTimerWizard
 from os import path as os_path, stat as os_stat
 from time import localtime, strftime
 from ShowLogScreen import ShowLogScreen
+import AutoTimerFilterList
 
 # GUI (Components)
 from AutoTimerList import AutoTimerList
@@ -136,6 +137,11 @@ class AutoTimerOverview(Screen, HelpableScreen):
 
 	def showFilterTxt(self):
 		
+		reload(AutoTimerFilterList)
+		from AutoTimerFilterList import AutoTimerFilterListOverview
+		self.session.open(AutoTimerFilterListOverview)
+		return
+
 		path_filter_txt = "/etc/enigma2/autotimer_filter.txt"
 		if os_path.exists(path_filter_txt):
 			(mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os_stat(path_filter_txt)

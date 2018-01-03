@@ -19,7 +19,7 @@ from AutoTimer import AutoTimer
 autotimer = AutoTimer()
 autopoller = None
 
-AUTOTIMER_VERSION = "4.1.7d_OE2.0"
+AUTOTIMER_VERSION = "4.1.7e_OE2.0"
 
 #pragma mark - Help
 try:
