@@ -624,7 +624,9 @@ class AutoTimer:
 			file_search_log.write("(" + str(entryType) + ") " + str(strftime('%d.%m., %H:%M', localtime(timerEntry.begin))) + ' - "' + str(timerEntry.name) + '"\n')
 			file_search_log.close()
 
+
 	def prepareSearchLogfile(self):
+		
 		# prepare searchlog at begin of real search (max. last 5 searches)
 		logpath = config.plugins.autotimer.searchlog_path.value
 		if logpath == "?likeATlog?":
@@ -633,12 +635,13 @@ class AutoTimer:
 		searchlog_txt = ""
 		if os_path.exists(path_search_log):
 			searchlog_txt = open(path_search_log).read()
-			#read last 5 logs in logfile (do not change then "\n########## " in the code !!!!)
+			#read last logs from logfile (do not change then "\n########## " in the code !!!!)
 			if "\n########## " in searchlog_txt:
 				searchlog_txt = searchlog_txt.split("\n########## ")
-				if len(searchlog_txt) > config.plugins.autotimer.searchlog_max.value:
-					#del searchlog_txt[0]
-					searchlog_txt = searchlog_txt[len(searchlog_txt)-config.plugins.autotimer.searchlog_max.value-1:]
+				count_logs = len(searchlog_txt)
+				max_count_logs = int(config.plugins.autotimer.searchlog_max.value)
+				if count_logs > max_count_logs:
+					searchlog_txt = searchlog_txt[count_logs - max_count_logs + 1:]
 					searchlog_txt = "\n########## " + "\n########## ".join(searchlog_txt)
 				else:
 					searchlog_txt = "\n########## ".join(searchlog_txt)

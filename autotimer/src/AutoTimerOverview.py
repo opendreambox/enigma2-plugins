@@ -139,15 +139,6 @@ class AutoTimerOverview(Screen, HelpableScreen):
 		reload(AutoTimerFilterList)
 		from AutoTimerFilterList import AutoTimerFilterListOverview
 		self.session.open(AutoTimerFilterListOverview)
-		#self.session.open(MessageBox,_("Open FilterList"), MessageBox.TYPE_INFO)
-		return
-		
-		path_filter_txt = "/etc/enigma2/autotimer_filter.txt"
-		if os_path.exists(path_filter_txt):
-			(mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os_stat(path_filter_txt)
-			self.session.open(ShowLogScreen, path_filter_txt, _("FilterList"), "", "\n\n" + _("last modified: ") + str(strftime('%A, %d.%m.%Y, %H:%M', localtime(mtime))))
-		else:
-			self.session.open(MessageBox,_("no AutoTimer Filterlist found!"), MessageBox.TYPE_INFO)
 
 
 	def firstExec(self):
