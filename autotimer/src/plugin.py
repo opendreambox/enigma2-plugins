@@ -11,6 +11,7 @@ from Components.PluginComponent import plugins
 from Plugins.Plugin import PluginDescriptor
 
 from Components.config import config
+from os import path as os_path
 
 from Logger import doLog
 
@@ -18,7 +19,7 @@ from AutoTimer import AutoTimer
 autotimer = AutoTimer()
 autopoller = None
 
-AUTOTIMER_VERSION = "4.1.7a"
+AUTOTIMER_VERSION = "4.1.7b"
 
 #pragma mark - Help
 try:
@@ -165,9 +166,16 @@ def editCallback(session):
 #	handleAutoPoller()
 
 def parseEPGCallback(ret):
+	
+	searchlog_txt = ""
+	logpath = os_path.dirname(config.plugins.autotimer.log_file.value)
+	path_search_log = os_path.join(logpath, "autotimer_search.log")
+	if os_path.exists(path_search_log):
+		searchlog_txt = open(path_search_log).read()
+
 	AddPopup(
 		_("Found a total of %(matches)d matching Events.\n%(timer)d Timer were added and\n%(modified)d modified,\n%(conflicts)d conflicts encountered,\n%(similars)d similars added.") % \
-		{"matches":ret[0], "timer":ret[1], "modified":ret[2], "conflicts":len(ret[4]), "similars":len(ret[5])},
+		{"matches":ret[0], "timer":ret[1], "modified":ret[2], "conflicts":len(ret[4]), "similars":len(ret[5])} + "\n\n" + str(searchlog_txt),
 		MessageBox.TYPE_INFO,
 		config.plugins.autotimer.popup_timeout.value,
 		'AT_PopUp_ID_ParseEPGCallback'
