@@ -1,4 +1,5 @@
-from Components.config import config
+from Components.config import config, getConfigListEntry, ConfigClock, ConfigDateTime, ConfigText, NoSave
+
 # GUI (Screens)
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
@@ -10,6 +11,7 @@ from os import path as os_path
 # GUI (Components)
 from Components.ActionMap import ActionMap
 from Components.Sources.StaticText import StaticText
+from Components.ConfigList import ConfigListScreen
 
 from Components.MenuList import MenuList
 from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT
@@ -130,13 +132,10 @@ class AutoTimerFilterListOverview(Screen):
 			self["config"] = AutoTimerFilterList(self.FilterList)
 			self.updateFilterDate()
 			
-			# Summary
-			#self.onChangedEntry = []
-			#self["config"].onSelectionChanged.append(self.selectionChanged)
 			self["config"].onSelectionChanged.append(self.updateFilterDate)
 
 			# Define Actions
-			self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "InfobarActions"],
+			self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "InfobarActions", "MenuActions"],
 				{
 					"ok": 			self.ok, 
 					"cancel": 	self.cancel,
@@ -145,12 +144,11 @@ class AutoTimerFilterListOverview(Screen):
 					"yellow":		self.remove, 
 					"blue": 		self.add,
 					"showTv":		self.sortList,
-					#"info":   self.showSearchLog,
+					"menu": 		self.add_copy,
 				}
 			)
 
 			self.onLayoutFinish.append(self.setCustomTitle)
-			#self.onFirstExecBegin.append(self.firstExec)
 		
 		except Exception:
 			import traceback
@@ -196,10 +194,18 @@ class AutoTimerFilterListOverview(Screen):
 				#pass
 		pass
 
+
 	def add(self):
 		
-		self.session.open(MessageBox,_("add FilterEntry - Aktion noch nicht verfuegbar"), MessageBox.TYPE_INFO)
-		#self.session.openWithCallback(self.addCallback,	AutoTimerEditor,newTimer)
+		self.session.openWithCallback(self.add_edit_Callback, AutoTimerFilterListEditor, None, 'add')
+
+
+	def add_copy(self):
+		# blue long on selected filter
+		current = self["config"].getCurrent()
+		if current is not None:
+			self.session.openWithCallback(self.add_edit_Callback, AutoTimerFilterListEditor, current, 'add')
+
 
 	def addCallback(self, ret):
 		if ret:
@@ -209,33 +215,51 @@ class AutoTimerFilterListOverview(Screen):
 			pass
 
 
-	def refresh(self, res = None):
-		# Re-assign List
-		#cur = self["entries"].getCurrent()
-		#self["entries"].setList(self.autotimer.getSortedTupleTimerList())
-		#self["entries"].moveToEntry(cur)
-		pass
-
 	def ok(self):
 		# ok on selected filter
 		current = self["config"].getCurrent()
 		if current is not None:
-			self.session.open(MessageBox,_("edit") + " FilterEntry '" + str(current[1]) + "'\nAktion noch nicht verfuegbar", MessageBox.TYPE_INFO)
-			#self.session.openWithCallback(self.editCallback, AutoTimerEditor, current)
-		#pass
+			self.session.openWithCallback(self.add_edit_Callback, AutoTimerFilterListEditor, current, 'edit')
 
-	def editCallback(self, ret):
+
+	def add_edit_Callback(self, ret, add_edit):
+		
 		if ret:
-			#self.changed = True
-			#self.refresh()
-			pass
+			
+			date1  = ret[0][1].value
+			time1  = ret[1][1].value
+			filtertext = ret[2][1].value.strip().replace('"', "")
+			
+			for filter in self.FilterList:
+				if filter[0][1] == filtertext:
+					self.session.open(MessageBox,_("The filterEntry '%s' already exist!\nThe change was canceled.") % filtertext, MessageBox.TYPE_INFO)
+					return
+
+			date1 = datetime.datetime.fromtimestamp(date1)
+			datetime1 = datetime.datetime(date1.year, date1.month, date1.day, time1[0], time1[1])
+			filtertime = time.mktime(datetime1.timetuple())
+			
+			Filter = ([len(self.FilterList),filtertext,filtertime],)
+
+			if add_edit == "add":
+				self.FilterList.append(Filter)
+				
+			elif add_edit == "edit":
+				cur_index = self["config"].getCurrentIndex()
+				self.FilterList[cur_index] = Filter
+			
+			self.FilterList.sort(key=lambda x: x[0][self.sorted])
+			self["config"].setList(self.FilterList)
+			
+			self.changed = True
 
 
 	def remove(self):
 		# Remove selected Filter
 		current = self["config"].getCurrent()
-		if current is not None:
+		if ret and cur is not None:
 			self.session.openWithCallback(self.removeCallback, MessageBox, _("Do you really want to delete %s?") % (_("FilterEntry") +" '"+str(current[1])+"'"), )
+
 
 	def removeCallback(self, ret):
 		cur = self["config"].getCurrentIndex()
@@ -279,4 +303,109 @@ class AutoTimerFilterListOverview(Screen):
 				file_search_log.close()
 			
 			self.close()
+
+
+#=============== Editor for FilterEntry ==========================
+
+class AutoTimerFilterListEditor(Screen, ConfigListScreen):
+	"""Edit AutoTimer Filter"""
+
+	skin = """<screen name="AutoTimerFilterEditor" title="Edit AutoTimer Filters" position="center,120" size="820,520">
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on"/>
+		<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on"/>
+		<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on"/>
+		<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on"/>
+		<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+		<widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+		<widget source="key_yellow" render="Label" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+		<widget source="key_blue" render="Label" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+		<eLabel	position="10,50" size="800,1" backgroundColor="grey"/>
+		<widget name="config" position="10,60" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand"/>
+	</screen>"""
+
+	def __init__(self, session, filterEntry, add_edit):
+		Screen.__init__(self, session)
+
+		try:
+			self.skinName = "AutoTimerFilterEditor"
+			self.onChangedEntry = []
+			self.add_edit = add_edit
+			
+			if filterEntry is not None:
+				self.EntryDate  = NoSave(ConfigDateTime(filterEntry[2], _("%d.%B %Y"), increment = 86400))
+				self.EntryTime  = NoSave(ConfigClock(default = filterEntry[2]))
+				self.EntryTitle = NoSave(ConfigText(default = filterEntry[1], fixed_size = False))
+			else:
+				self.EntryDate  = NoSave(ConfigDateTime(time.time(), _("%d.%B %Y"), increment = 86400))
+				self.EntryTime  = NoSave(ConfigClock(default = time.time()))
+				self.EntryTitle = NoSave(ConfigText(default = "", fixed_size = False))
+
+			self.list = [
+				getConfigListEntry(_("Date"), self.EntryDate),
+				getConfigListEntry(_("Time"), self.EntryTime),
+				getConfigListEntry(_("Title"), self.EntryTitle),
+			]
+			ConfigListScreen.__init__(self, self.list, session = session, on_change = self.changed)
+
+			# Initialize Buttons
+			self["key_red"] 		= StaticText(_("Cancel"))
+			self["key_green"] 	= StaticText(_("Save"))
+			self["key_yellow"] 	= StaticText(_(" "))
+			self["key_blue"] 		= StaticText(_(" "))
+
+			# Define Actions
+			self["actions"] = ActionMap(["SetupActions", "ColorActions"],
+				{
+					"cancel": self.cancel,
+					"save": self.save,
+				}
+			)
+
+			# Trigger change
+			self.changed()
+
+			self.onLayoutFinish.append(self.setCustomTitle)
+
+		except Exception:
+			import traceback
+			traceback.print_exc()
+
+
+	def setCustomTitle(self):
+		self.setTitle(_("AutoTimer %s FilterListEntry") % self.add_edit)
+
+
+	def changed(self):
+		pass
+		for x in self.onChangedEntry:
+			try:
+				x()
+			except Exception:
+				pass
+
+
+	def cancel(self):
+		
+		if self["config"].isChanged():
+			self.session.openWithCallback(self.cancelConfirm, MessageBox, _("Really close without saving settings?"), )
+		else:
+			self.close(None, self.add_edit)
+
+
+	def cancelConfirm(self, ret):
+		
+		if ret:
+			self.close(None, self.add_edit)
+
+
+	def save(self):
+		
+		if not self.list[2][1].value.strip():
+			self.session.open( MessageBox, _("The title attribute is mandatory."), type = MessageBox.TYPE_ERROR, timeout = 5 )
+		else:
+			if self["config"].isChanged():
+				self.close(self.list, self.add_edit)
+			else:
+				self.close(None, self.add_edit)
+
 
