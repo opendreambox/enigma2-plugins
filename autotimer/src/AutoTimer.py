@@ -2,7 +2,7 @@ from __future__ import print_function
 
 # Plugins Config
 from xml.etree.cElementTree import parse as cet_parse
-from os import path as os_path
+from os import path as os_path, remove as os_remove
 from AutoTimerConfiguration import parseConfig, buildConfig
 try:
 	from Tools.IO import saveFile
@@ -590,6 +590,7 @@ class AutoTimer:
 
 				if rtimer.begin != begin or rtimer.end != end or rtimer.name != name:
 					modified += 1
+					self.addToSearchLogfile(newEntry,"#", simulateOnly)
 
 				if allow_modify:
 					self.modifyTimer(newEntry, name, shortdesc, begin, end, serviceref, eit)
@@ -684,6 +685,7 @@ class AutoTimer:
 				if conflicts is None:
 					timer.decrementCounter()
 					new += 1
+					self.addToSearchLogfile(newEntry,"+", simulateOnly)
 					newEntry.extdesc = extdesc
 					timerdict[serviceref].append(newEntry)
 
@@ -706,6 +708,18 @@ class AutoTimer:
 		
 		return (new, modified)
 
+
+	def addToSearchLogfile(self, timerEntry, entryType, simulateOnlyValue=False):
+		
+		if not simulateOnlyValue:
+			#write eventname totextfile
+			logpath = os_path.dirname(config.plugins.autotimer.log_file.value)
+			path_search_log = os_path.join(logpath, "autotimer_search.log")
+			file_search_log = open(path_search_log, "a")
+			file_search_log.write("(" + str(entryType) + ") " + str(strftime('%d.%m., %H:%M', localtime(timerEntry.begin))) + ' - "' + str(timerEntry.name) + '"\n')
+			file_search_log.close()
+
+
 	def parseEPG(self, simulateOnly=False, uniqueId=None, callback=None):
 
 		from plugin import AUTOTIMER_VERSION
@@ -721,6 +735,13 @@ class AutoTimer:
 		conflicting = []
 		similars = []
 		skipped = []
+
+		# delete searchlog at begin of real search
+		if not simulateOnly:
+			logpath = os_path.dirname(config.plugins.autotimer.log_file.value)
+			path_search_log = os_path.join(logpath, "autotimer_search.log")
+			if os_path.exists(path_search_log):
+				os_remove(path_search_log)
 
 		if currentThread().getName() == 'MainThread':
 			doBlockingCallFromMainThread = lambda f, *a, **kw: f(*a, **kw)
