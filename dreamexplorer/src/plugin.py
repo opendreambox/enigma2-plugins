@@ -500,9 +500,9 @@ class DreamExplorerII(Screen):
 	def callbackDeleteItem(self, answer):
 		if answer is True:
 			if self.type == "directory":
-				self.cmd = "rm -rf %s" %(self.item)
+				self.cmd = "rm -rf '%s'" %(self.item)
 			elif self.type == "file":
-				self.cmd = "rm -f %s" %(self.item)
+				self.cmd = "rm -f '%s'" %(self.item)
 			
 			self.container.execute(self.cmd)
 
