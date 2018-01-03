@@ -14,13 +14,15 @@ from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS
 
 
 class ShowLogScreen(Screen):
-	def __init__(self, session, logFile, firstLineText):
+	def __init__(self, session, logFile, titleText,firstLineText, lastLineText):
 		Screen.__init__(self, session)
 		self.skinName = ["TestBox", "Console"]
 		title = ""
 		text = ""
-		self.logFile = logFile
+		self.logFile       = logFile
+		self.titleText     = titleText
 		self.firstLineText = firstLineText
+		self.lastLineText  = lastLineText
 		
 		self["text"] = ScrollLabel("")
 		self["actions"] = ActionMap(["WizardActions", "DirectionActions", "ChannelSelectBaseActions"], 
@@ -53,8 +55,8 @@ class ShowLogScreen(Screen):
 	def readLog(self):
 		
 		# Set title and text
-		title = _("Show Log file") + " - AutoTimer " + _("searchLog")
-		text = _("Reading log file...\n") + self.logFile + _("\nCancel?")
+		title = _("Show Log file") + " - AutoTimer " + self.titleText
+		text = _("Reading file...\n") + self.logFile + _("\n\nCancel?")
 		
 		self.setTitle(title)
 		self.setText(text)
@@ -68,7 +70,10 @@ class ShowLogScreen(Screen):
 			file.close()
 			
 			try:
-				text = self.firstLineText + text
+				if self.firstLineText != "":
+					text = self.firstLineText + text
+				if self.lastLineText != "":
+					text = text + self.lastLineText
 				self.setText(text)
 				self["text"].lastPage()
 			except:

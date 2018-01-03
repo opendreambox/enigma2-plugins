@@ -103,6 +103,12 @@ class AutoTimerOverview(Screen, HelpableScreen):
 			}
 		)
 
+		self["InfobarActions"] = HelpableActionMap(self, "InfobarActions",
+			{
+				"showTv":   (self.showFilterTxt, _("Show AutoTimer FilterTxt")),
+			}
+		)
+
 		self["ColorActions"] = HelpableActionMap(self, "ColorActions",
 			{
 				"red": self.cancel,
@@ -122,12 +128,18 @@ class AutoTimerOverview(Screen, HelpableScreen):
 		logpath = os_path.dirname(config.plugins.autotimer.log_file.value)
 		path_search_log = os_path.join(logpath, "autotimer_search.log")
 		if os_path.exists(path_search_log):
-			searchlog_txt = open(path_search_log).read()
-			(mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os_stat(path_search_log)
-			searchlog_txt = _("last searchLog from: ") + str(strftime('%A, %d.%m.%Y, %H:%M', localtime(mtime))) + "\n\n" + searchlog_txt
-			self.session.open(ShowLogScreen, path_search_log, _("last searchLog from: ") + str(strftime('%A, %d.%m.%Y, %H:%M', localtime(mtime))) + "\n\n")
+			self.session.open(ShowLogScreen, path_search_log, _("searchLog"), "","")
 		else:
 			self.session.open(MessageBox,_("no searchLog found!\n\n so you have no new or modified timer at last autotimer-search."), MessageBox.TYPE_INFO)
+
+	def showFilterTxt(self):
+		
+		path_filter_txt = "/etc/enigma2/autotimer_filter.txt"
+		if os_path.exists(path_filter_txt):
+			(mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os_stat(path_filter_txt)
+			self.session.open(ShowLogScreen, path_filter_txt, _("FilterList"), "", "\n\n" + _("last modified: ") + str(strftime('%A, %d.%m.%Y, %H:%M', localtime(mtime))))
+		else:
+			self.session.open(MessageBox,_("no AutoTimer Filterlist found!"), MessageBox.TYPE_INFO)
 
 
 	def firstExec(self):
