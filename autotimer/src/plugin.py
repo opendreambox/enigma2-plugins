@@ -19,7 +19,7 @@ from AutoTimer import AutoTimer
 autotimer = AutoTimer()
 autopoller = None
 
-AUTOTIMER_VERSION = "4.1.7f"
+AUTOTIMER_VERSION = "4.1.7g"
 
 #pragma mark - Help
 try:
@@ -206,21 +206,36 @@ def eventinfo(session, servicelist, **kwargs):
 	session.open(AutoTimerEPGSelection, ref)
 
 # XXX: we need this helper function to identify the descriptor
-# Extensions menu
+# Extensions menu - open Autotimer
 def extensionsmenu(session, **kwargs):
 	main(session, **kwargs)
+
+# Extensions menu - only scan Autotimer
+def extensionsmenu_scan(session, **kwargs):
+	
+	try:
+		autotimer.readXml()
+	except SyntaxError as se:
+		session.open( MessageBox, _("Your config file is not well-formed:\n%s") % (str(se)), type = MessageBox.TYPE_ERROR, timeout = 10 )
+		return
+	
+	editCallback(session)
+	
 
 def housekeepingExtensionsmenu(el):
 	if el.value:
 		plugins.addPlugin(extDescriptor)
+		plugins.addPlugin(extDescriptor_scan)
 	else:
 		try:
 			plugins.removePlugin(extDescriptor)
+			plugins.removePlugin(extDescriptor_scan)
 		except ValueError as ve:
 			doLog("[AutoTimer] housekeepingExtensionsmenu got confused, tried to remove non-existant plugin entry... ignoring.")
 
 config.plugins.autotimer.show_in_extensionsmenu.addNotifier(housekeepingExtensionsmenu, initial_call = False, immediate_feedback = True)
 extDescriptor = PluginDescriptor(name="AutoTimer", description = _("Edit Timers and scan for new Events"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = extensionsmenu, needsRestart = False)
+extDescriptor_scan = PluginDescriptor(name="AutoTimer scan", description = _("scan for new Events"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = extensionsmenu_scan, needsRestart = False)
 
 def Plugins(**kwargs):
 	l = [
@@ -235,5 +250,6 @@ def Plugins(**kwargs):
 	]
 	if config.plugins.autotimer.show_in_extensionsmenu.value:
 		l.append(extDescriptor)
+		l.append(extDescriptor_scan)
 	return l
 

@@ -11,6 +11,8 @@ from Tools.FuzzyDate import FuzzyTime
 from Tools.Notifications import AddPopup
 from Screens.MessageBox import MessageBox
 
+from ServiceReference import ServiceReference
+
 NOTIFICATIONID = 'AutoTimerConflictEncounteredNotification'
 SIMILARNOTIFICATIONID = 'AutoTimerSimilarUsedNotification'
 
@@ -43,7 +45,7 @@ class AutoPollerThread(Thread):
 		if conflicts and config.plugins.autotimer.notifconflict.value:
 			AddPopup(
 				_("%(conflicts)d conflict(s) encountered when trying to add new timers:\n%(timers)s") % \
-				{ "conflicts":len(conflicts), "timers":'\n'.join( [ _("%(tname)s: %(name)s at %(begin)s") % {"tname":x[4], "name":x[0], "begin":FuzzyTime(x[2])} for x in conflicts ] ) },
+				{ "conflicts":len(conflicts), "timers":'\n'.join( [ _("%(sname)s - %(tname)s: %(name)s at %(begin)s") % {"sname":ServiceReference(x[3]).getServiceName(), "tname":x[4], "name":x[0], "begin":FuzzyTime(x[2])} for x in conflicts ] ) },
 				MessageBox.TYPE_INFO,
 				config.plugins.autotimer.popup_timeout.value,
 				NOTIFICATIONID

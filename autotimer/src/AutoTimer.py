@@ -600,6 +600,7 @@ class AutoTimer:
 				# Don't care about similar timers
 				elif not similarTimer:
 					conflicting.append((name, begin, end, serviceref, timer.name))
+					self.addToSearchLogfile(newEntry,"x", simulateOnly)
 
 					if config.plugins.autotimer.disabled_on_conflict.value:
 						msg = "[AutoTimer] Timer disabled because of conflicts with %s." % (conflictString)
@@ -621,7 +622,11 @@ class AutoTimer:
 				logpath = os_path.dirname(config.plugins.autotimer.log_file.value)
 			path_search_log = os_path.join(logpath, "autotimer_search.log")
 			file_search_log = open(path_search_log, "a")
-			file_search_log.write("(" + str(entryType) + ") " + str(strftime('%d.%m., %H:%M', localtime(timerEntry.begin))) + ' - "' + str(timerEntry.name) + '"\n')
+			log_txt  = "(" + str(entryType) + ") "
+			log_txt += str(strftime('%d.%m., %H:%M', localtime(timerEntry.begin)))
+			log_txt += ' - ' + timerEntry.service_ref.getServiceName()
+			log_txt += ' - "' + str(timerEntry.name) + '"\n'
+			file_search_log.write(log_txt)
 			file_search_log.close()
 
 
