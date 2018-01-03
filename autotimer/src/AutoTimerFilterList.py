@@ -13,12 +13,14 @@ from Components.Sources.StaticText import StaticText
 from Components.ConfigList import ConfigListScreen
 
 from Components.MenuList import MenuList
-from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT
+from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT, RT_VALIGN_CENTER, getDesktop
 
 from skin import parseColor, parseFont, TemplatedListFonts
 
 import time
 import datetime
+
+sz_w = getDesktop(0).size().width()
 
 class AutoTimerFilterList(MenuList):
 	"""Defines a simple Component to show Timer name"""
@@ -28,7 +30,7 @@ class AutoTimerFilterList(MenuList):
 
 		self.l.setFont(0, gFont("Regular", 22))
 		self.l.setBuildFunc(self.buildListboxEntry)
-		self.l.setItemHeight(25)
+		self.l.setItemHeight(30)
 		self.colorDisabled = 12368828
 		tlf = TemplatedListFonts()
 		self.l.setFont(0, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
@@ -56,7 +58,7 @@ class AutoTimerFilterList(MenuList):
 
 		return [
 			None,
-			(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, size.width() - 5, size.height(), 0, RT_HALIGN_LEFT, filter_txt[1], color, color)
+			(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, size.width() - 5, size.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, filter_txt[1], color, color)
 		]
 
 	def getCurrent(self):
@@ -81,15 +83,33 @@ class AutoTimerFilterList(MenuList):
 
 class AutoTimerFilterListOverview(Screen):
 
-	skin = """<screen name="AutoTimerEditor" title="Edit AutoTimer" position="center,120" size="820,520">
-		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on"/>
-		<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on"/>
-		<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on"/>
-		<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on"/>
-		<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
-		<widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
-		<widget source="key_yellow" render="Label" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
-		<widget source="key_blue" render="Label" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+	if sz_w == 1920:
+		skin = """
+		<screen name="AutoTimerEditor" position="center,170" size="1200,820" title="Edit AutoTimer">
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/red.svg" position="10,5" size="295,70" />
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/green.svg" position="305,5" size="295,70" />
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/yellow.svg" position="600,5" size="295,70" />
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/blue.svg" position="895,5" size="295,70" />
+		<widget backgroundColor="#9f1313" font="Regular;30" halign="center" position="10,5" render="Label" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" size="295,70" source="key_red" transparent="1" valign="center" zPosition="1" />
+		<widget backgroundColor="#1f771f" font="Regular;30" halign="center" position="305,5" render="Label" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" size="295,70" source="key_green" transparent="1" valign="center" zPosition="1" />
+		<widget backgroundColor="#a08500" font="Regular;30" halign="center" position="600,5" render="Label" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" size="295,70" source="key_yellow" transparent="1" valign="center" zPosition="1" />
+		<widget backgroundColor="#18188b" font="Regular;30" halign="center" position="895,5" render="Label" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" size="295,70" source="key_blue" transparent="1" valign="center" zPosition="1" />
+		<eLabel backgroundColor="grey" position="10,80" size="1180,1" />
+		<widget enableWrapAround="1" name="config" itemHeight="40" position="10,90" scrollbarMode="showOnDemand" size="1180,590" />
+		<eLabel backgroundColor="grey" position="10,700" size="1180,1" />
+		<widget font="Regular;32" halign="center" position="10,690" render="Label" size="1180,145" source="help" valign="center" />
+		</screen>"""
+	else:
+		skin = """
+		<screen name="AutoTimerEditor" title="Edit AutoTimer" position="center,120" size="820,520">
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" />
+		<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" />
+		<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" />
+		<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" />
+		<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
+		<widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
+		<widget source="key_yellow" render="Label" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
+		<widget source="key_blue" render="Label" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
 		<eLabel	position="10,50" size="800,1" backgroundColor="grey"/>
 		<widget name="config" position="10,60" size="800,360" enableWrapAround="1" scrollbarMode="showOnDemand"/>
 		<eLabel	position="10,430" size="800,1" backgroundColor="grey"/>
@@ -303,18 +323,36 @@ class AutoTimerFilterListOverview(Screen):
 class AutoTimerFilterListEditor(Screen, ConfigListScreen):
 	"""Edit AutoTimer Filter"""
 
-	skin = """<screen name="AutoTimerFilterEditor" title="Edit AutoTimer Filters" position="center,120" size="820,520">
-		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on"/>
-		<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on"/>
-		<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on"/>
-		<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" alphatest="on"/>
-		<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
-		<widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
-		<widget source="key_yellow" render="Label" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
-		<widget source="key_blue" render="Label" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2"/>
+	if sz_w == 1920:
+		skin = """
+		<screen name="AutoTimerFilterEditor" position="center,170" size="1200,820" title="Edit AutoTimer Filters">
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/red.svg" position="10,5" size="295,70" />
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/green.svg" position="305,5" size="295,70" />
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/yellow.svg" position="600,5" size="295,70" />
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/blue.svg" position="895,5" size="295,70" />
+		<widget backgroundColor="#9f1313" font="Regular;30" halign="center" position="10,5" render="Label" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" size="295,70" source="key_red" transparent="1" valign="center" zPosition="1" />
+		<widget backgroundColor="#1f771f" font="Regular;30" halign="center" position="305,5" render="Label" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" size="295,70" source="key_green" transparent="1" valign="center" zPosition="1" />
+		<widget backgroundColor="#a08500" font="Regular;30" halign="center" position="600,5" render="Label" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" size="295,70" source="key_yellow" transparent="1" valign="center" zPosition="1" />
+		<widget backgroundColor="#18188b" font="Regular;30" halign="center" position="895,5" render="Label" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" size="295,70" source="key_blue" transparent="1" valign="center" zPosition="1" />
+		<eLabel backgroundColor="grey" position="10,80" size="1180,1" />
+		<widget enableWrapAround="1" name="config" position="10,90" scrollbarMode="showOnDemand" size="1180,720" />
+		</screen>"""
+	else:
+		skin = """
+		<screen name="AutoTimerFilterEditor" title="Edit AutoTimer Filters" position="center,120" size="820,520">
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" />
+		<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" />
+		<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" />
+		<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" />
+		<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
+		<widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
+		<widget source="key_yellow" render="Label" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
+		<widget source="key_blue" render="Label" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
 		<eLabel	position="10,50" size="800,1" backgroundColor="grey"/>
 		<widget name="config" position="10,60" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand"/>
 	</screen>"""
+
+
 
 	def __init__(self, session, filterEntry, add_edit):
 		Screen.__init__(self, session)

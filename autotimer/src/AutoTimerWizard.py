@@ -1,3 +1,5 @@
+# GUI (System)
+from enigma import getDesktop
 # GUI (Screens)
 from Screens.WizardLanguage import WizardLanguage
 from Screens.Rc import Rc
@@ -18,36 +20,70 @@ from Tools import Directories
 
 from Logger import doLog
 
+sz_w = getDesktop(0).size().width()
+
 class AutoTimerWizard(WizardLanguage, AutoTimerEditorBase, Rc):
 	STEP_ID_BASIC = 2
 	STEP_ID_TIMESPAN = 5
 	STEP_ID_SERVICES = 7
 	STEP_ID_FILTER = 8
 
-	skin = """
-		<screen name="AutoTimerWizard" position="center,80" size="1200,610" title="Welcome..." flags="wfNoBorder" >
-			<ePixmap pixmap="skin_default/buttons/red.png" position="270,15" size="200,40" alphatest="on" />
-		    <widget name="languagetext" position="270,15" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
-		    <widget name="wizard" position="0,0" size="240,620" pixmap="skin_default/wizard.png" />
-		    <widget name="rc" position="40,60" size="160,500" zPosition="1" pixmaps="skin_default/rc0.png,skin_default/rc1.png,skin_default/rc2.png" alphatest="on" />
-		    <widget name="arrowdown" position="-100,-100" size="37,70" pixmap="skin_default/arrowdown.png" zPosition="2" alphatest="on" />
-		    <widget name="arrowdown2" position="-100,-100" size="37,70" pixmap="skin_default/arrowdown.png" zPosition="2" alphatest="on" />
-		    <widget name="arrowup" position="-100,-100" size="37,70" pixmap="skin_default/arrowup.png" zPosition="2" alphatest="on" />
-		    <widget name="arrowup2" position="-100,-100" size="37,70" pixmap="skin_default/arrowup.png" zPosition="2" alphatest="on" />
-		    <widget name="text" position="280,70" size="880,350" font="Regular;23" backgroundColor="background" transparent="1" />
-		    <widget source="list" render="Listbox" position="280,350" size="880,240" zPosition="1" enableWrapAround="1" scrollbarMode="showOnDemand" transparent="1">
-			    <convert type="TemplatedMultiContent">
-				{"template": [ MultiContentEntryText(pos = (10, 4), size = (580, 22), flags = RT_HALIGN_LEFT, text = 0) ],
-				"fonts": [gFont("Regular", 20)],
+	if sz_w == 1920:
+		skin = """
+		<screen name="AutoTimerWizard" position="center,110" size="1800,930" title="Wizard...">
+		<eLabel backgroundColor="grey" position="480,80" size="1,840" />
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/red.svg" position="10,5" size="300,70" />
+		<widget backgroundColor="#9f1313" font="Regular;30" halign="center" name="languagetext" position="10,5" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" size="300,70" transparent="1" valign="center" zPosition="1" />
+		<widget font="Regular;34" halign="right" position="1650,25" render="Label" size="120,40" source="global.CurrentTime">
+			<convert type="ClockToText">Default</convert>
+		</widget>
+		<widget font="Regular;34" halign="right" position="1240,25" render="Label" size="400,40" source="global.CurrentTime" >
+			<convert type="ClockToText">Date</convert>
+		</widget>
+		<eLabel backgroundColor="grey" position="10,80" size="1780,1" />
+		<widget name="rc" pixmaps="skin_default/rc0.png,skin_default/rc1.png,skin_default/rc2.png" position="100,100" size="256,800" zPosition="1" />
+		<widget name="arrowdown" pixmap="skin_default/arrowdown.png" position="-100,-100" size="37,70" zPosition="2" />
+		<widget name="arrowdown2" pixmap="skin_default/arrowdown.png" position="-100,-100" size="37,70" zPosition="2" />
+		<widget name="arrowup" pixmap="skin_default/arrowup.png" position="-100,-100" size="37,70" zPosition="2" />
+		<widget name="arrowup2" pixmap="skin_default/arrowup.png" position="-100,-100" size="37,70" zPosition="2" />
+		<widget font="Regular;34" name="text" position="550,160" size="1250,340" />
+		<widget enableWrapAround="1" position="660,520" render="Listbox" scrollbarMode="showOnDemand" size="1000,240" source="list">
+			<convert type="TemplatedMultiContent">
+				{"template":[ MultiContentEntryText(pos=(20,3),size=(960,35),flags=RT_HALIGN_LEFT,text=0) ],
+				"fonts":[gFont("Regular",30) ],"itemHeight":40}
+			</convert>
+		</widget>
+		<widget name="HelpWindow" position="780,840" />
+		<widget enableWrapAround="1" name="config" position="660,520" scrollbarMode="showOnDemand" size="1000,240" />
+		<widget pixmap="Default-FHD/skin_default/icons/text.svg" position="1710,90" render="Pixmap" size="80,40" source="VKeyIcon">
+			<convert type="ConditionalShowHide" />
+		</widget>
+		</screen>"""
+	else:
+		skin = """
+		<screen name="AutoTimerWizard" position="center,80" size="1200,610" title="Welcome...">
+		<ePixmap pixmap="skin_default/buttons/red.png" position="270,15" size="200,40"  />
+		<widget name="languagetext" position="270,15" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+		<widget name="wizard" position="0,3" size="240,605" pixmap="skin_default/wizard.png" />
+		<widget name="rc" position="40,60" size="160,500" zPosition="1" pixmaps="skin_default/rc0.png,skin_default/rc1.png,skin_default/rc2.png" />
+		<widget name="arrowdown" position="-100,-100" size="37,70" pixmap="skin_default/arrowdown.png" zPosition="2"  />
+		<widget name="arrowdown2" position="-100,-100" size="37,70" pixmap="skin_default/arrowdown.png" zPosition="2"  />
+		<widget name="arrowup" position="-100,-100" size="37,70" pixmap="skin_default/arrowup.png" zPosition="2"  />
+		<widget name="arrowup2" position="-100,-100" size="37,70" pixmap="skin_default/arrowup.png" zPosition="2"  />
+		<widget name="text" position="280,70" size="880,350" font="Regular;23"  />
+		<widget source="list" render="Listbox" position="280,330" size="880,270" zPosition="1" enableWrapAround="1" scrollbarMode="showOnDemand" transparent="1">
+			<convert type="TemplatedMultiContent">
+				{"template": [ MultiContentEntryText(pos=(10,4),size=(580,22),flags=RT_HALIGN_LEFT,text=0) ],
+				"fonts": [gFont("Regular",20)],
 				"itemHeight": 30
 				}
-			    </convert>
-		    </widget>
-		    <widget name="config" position="280,350" size="880,240" zPosition="2" enableWrapAround="1" scrollbarMode="showOnDemand" transparent="1"/>
-		    <widget source="VKeyIcon" render="Pixmap" position="1110,20" size="70,30" zPosition="1" pixmap="skin_default/icons/text.png" alphatest="on">
-			    <convert type="ConditionalShowHide" />
-		    </widget>
-		    <widget name="HelpWindow" position="453,250" size="1,1" zPosition="1" transparent="1" />
+			</convert>
+		</widget>
+		<widget name="config" position="280,330" size="880,270" zPosition="2" enableWrapAround="1" scrollbarMode="showOnDemand" transparent="1"/>
+		<widget source="VKeyIcon" render="Pixmap" position="1110,20" size="70,30" zPosition="1" pixmap="skin_default/icons/text.png" >
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget name="HelpWindow" position="453,250" size="1,1" zPosition="1" transparent="1" />
 		</screen>"""
 
 	def __init__(self, session, newTimer):

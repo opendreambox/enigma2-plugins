@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
+
 # GUI (Components)
 from Components.MenuList import MenuList
-from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT
+from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT, RT_VALIGN_CENTER
 
 from skin import parseColor, parseFont, TemplatedListFonts
 
@@ -11,9 +12,9 @@ class AutoTimerList(MenuList):
 	def __init__(self, entries):
 		MenuList.__init__(self, entries, False, content = eListboxPythonMultiContent)
 
-		self.l.setFont(0, gFont("Regular", 22))
+		self.l.setFont(0, gFont("Regular",22))
 		self.l.setBuildFunc(self.buildListboxEntry)
-		self.l.setItemHeight(25)
+		self.l.setItemHeight(30)
 		self.colorDisabled = 12368828
 		tlf = TemplatedListFonts()
 		self.l.setFont(0, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
@@ -45,7 +46,7 @@ class AutoTimerList(MenuList):
 
 		return [
 			None,
-			(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, size.width() - 5, size.height(), 0, RT_HALIGN_LEFT, timer.name, color, color)
+			(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, size.width() - 5, size.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.name, color, color)
 		]
 
 	def getCurrent(self):

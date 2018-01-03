@@ -1,4 +1,8 @@
 from Components.config import config
+
+# GUI (System)
+from enigma import getDesktop
+
 # GUI (Screens)
 from Screens.Screen import Screen
 from Screens.HelpMenu import HelpableScreen
@@ -21,15 +25,25 @@ from AutoTimerList import AutoTimerList
 from Components.ActionMap import HelpableActionMap
 from Components.Sources.StaticText import StaticText
 
+sz_w = getDesktop(0).size().width()
+
 class AutoTimerOverviewSummary(Screen):
-	skin = """
-	<screen position="0,0" size="132,64">
+	skin = (
+	"""<screen position="0,0" size="132,64" id="1">
 		<widget source="parent.Title" render="Label" position="6,4" size="120,21" font="Regular;18" />
 		<widget source="entry" render="Label" position="6,25" size="120,21" font="Regular;16" />
 		<widget source="global.CurrentTime" render="Label" position="56,46" size="82,18" font="Regular;16" >
 			<convert type="ClockToText">WithSeconds</convert>
 		</widget>
-	</screen>"""
+	</screen>""",
+	"""<screen position="0,0" size="400,240" id="3">
+		<ePixmap pixmap="skin_default/display_bg.png" position="0,0" size="400,240" zPosition="-1" />
+		<widget font="Display;48" halign="center" position="0,5" render="Label" size="400,48" source="parent.Title" transparent="1" valign="top" />
+		<widget font="Display;44" halign="center" position="0,60" render="Label" size="400,60" source="entry" transparent="1" valign="center" />
+		<widget font="Display;80" halign="center" position="center,146" render="Label" size="400,84" source="global.CurrentTime" transparent="1" valign="center">
+			<convert type="ClockToText">Format:%H:%M</convert>
+		</widget>
+	</screen>""")
 
 	def __init__(self, session, parent):
 		Screen.__init__(self, session, parent = parent)
@@ -50,16 +64,31 @@ class AutoTimerOverviewSummary(Screen):
 class AutoTimerOverview(Screen, HelpableScreen):
 	"""Overview of AutoTimers"""
 
-	skin = """<screen name="AutoTimerOverview" position="center,120" size="820,520" title="AutoTimer Overview">
-			<ePixmap pixmap="skin_default/buttons/green.png" position="10,5" size="200,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/yellow.png" position="210,5" size="200,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/blue.png" position="410,5" size="200,40" alphatest="on" />
-			<widget source="key_green" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
-			<widget source="key_yellow" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
-			<widget source="key_blue" render="Label" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
-			<eLabel position="10,50" size="800,1" backgroundColor="grey" />
-			<widget name="entries" position="10,60" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand" />
-			<ePixmap pixmap="skin_default/buttons/key_menu.png" position="750,15" size="60,30" alphatest="on" />
+	if sz_w == 1920:
+		skin = """
+		<screen name="AutoTimerOverview" position="center,170" size="1200,820" title="AutoTimer Overview">
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/green.svg" position="10,5" scale="stretch" size="350,70" />
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/yellow.svg" position="360,5" scale="stretch" size="350,70" />
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/blue.svg" position="710,5" scale="stretch" size="350,70" />
+		<widget backgroundColor="#1f771f" font="Regular;30" halign="center" position="10,5" render="Label" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" size="350,70" source="key_green" transparent="1" valign="center" zPosition="1" />
+		<widget backgroundColor="#a08500" font="Regular;30" halign="center" position="360,5" render="Label" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" size="350,70" source="key_yellow" transparent="1" valign="center" zPosition="1" />
+		<widget backgroundColor="#18188b" font="Regular;30" halign="center" position="710,5" render="Label" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" size="350,70" source="key_blue" transparent="1" valign="center" zPosition="1" />
+		<eLabel backgroundColor="grey" position="10,80" size="1180,1" />
+		<widget enableWrapAround="1" itemHeight="45" name="entries" position="10,90" scrollbarMode="showOnDemand" size="1180,720" />
+		<ePixmap pixmap="Default-FHD/skin_default/icons/menu.svg" position="1110,30" size="80,40" />
+		</screen>"""
+	else:
+		skin = """
+		<screen name="AutoTimerOverview" position="center,120" size="820,520" title="AutoTimer Overview">
+		<ePixmap pixmap="skin_default/buttons/green.png" position="10,5" size="200,40" />
+		<ePixmap pixmap="skin_default/buttons/yellow.png" position="210,5" size="200,40" />
+		<ePixmap pixmap="skin_default/buttons/blue.png" position="410,5" size="200,40" />
+		<widget source="key_green" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+		<widget source="key_yellow" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+		<widget source="key_blue" render="Label" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+		<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+		<widget name="entries" position="10,60" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand" />
+		<ePixmap pixmap="skin_default/buttons/key_menu.png" position="750,15" size="60,30" />
 		</screen>"""
 
 	def __init__(self, session, autotimer):
