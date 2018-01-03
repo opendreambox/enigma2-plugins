@@ -4,7 +4,10 @@ from __future__ import print_function
 from xml.etree.cElementTree import parse as cet_parse
 from os import path as os_path
 from AutoTimerConfiguration import parseConfig, buildConfig
-from Tools.IO import saveFile
+try:
+	from Tools.IO import saveFile
+except ImportError as ie:
+	saveFile = None
 
 # Navigation (RecordTimer)
 import NavigationInstance
@@ -35,7 +38,10 @@ from collections import defaultdict
 from difflib import SequenceMatcher
 from operator import itemgetter
 
-from Plugins.SystemPlugins.Toolkit.SimpleThread import SimpleThread
+try:
+	from Plugins.SystemPlugins.Toolkit.SimpleThread import SimpleThread
+except ImportError as ie:
+	from SimpleThread import SimpleThread
 
 try:
 	from Plugins.Extensions.SeriesPlugin.plugin import getSeasonEpisode4 as sp_getSeasonEpisode
@@ -48,11 +54,6 @@ except ImportError as ie:
 	sp_showResult = None
 
 from . import config, xrange, itervalues
-
-try:
-	from Components.ServiceRecordingSettings import ServiceRecordingSettings
-except ImportError as ie:
-	ServiceRecordingSettings = None
 
 XML_CONFIG = "/etc/enigma2/autotimer.xml"
 
@@ -97,8 +98,27 @@ def blockingCallFromMainThread(f, *a, **kw):
 typeMap = {
 	"exact": eEPGCache.EXAKT_TITLE_SEARCH,
 	"partial": eEPGCache.PARTIAL_TITLE_SEARCH,
-	"description": eEPGCache.PARTIAL_DESCRIPTION_SEARCH
+	"description":     3, #-99 #eEPGCache.EXTENDED_DESCRIPTION_SEARCH,
+	"full":            4, #eEPGCache.FULL_DESCRIPTION_SEARCH,
+	"shortdesc":       5, #eEPGCache.SHORT_DESCRIPTION_SEARCH,
+	"title_shortdesc": 6  #eEPGCache.TITLE_SHORT_DESCRIPTION_SEARCH,
 }
+#TEST
+#try:
+#	typeMap = {
+#		"exact": eEPGCache.EXAKT_TITLE_SEARCH,
+#		"partial": eEPGCache.PARTIAL_TITLE_SEARCH,
+#		"description": eEPGCache.EXTENDED_DESCRIPTION_SEARCH,
+#		"full": eEPGCache.FULL_DESCRIPTION_SEARCH,
+#		"shortdesc": eEPGCache.SHORT_DESCRIPTION_SEARCH,
+#		"title_shortdesc": eEPGCache.TITLE_SHORT_DESCRIPTION_SEARCH
+#	}
+#except:
+#	typeMap = {
+#		"exact": eEPGCache.EXAKT_TITLE_SEARCH,
+#		"partial": eEPGCache.PARTIAL_TITLE_SEARCH,
+#		"description": -99
+#	}
 
 caseMap = {
 	"sensitive": eEPGCache.CASE_CHECK,
@@ -158,7 +178,11 @@ class AutoTimer:
 
 	def writeXml(self):
 		# XXX: we probably want to indicate failures in some way :)
-		saveFile(XML_CONFIG, buildConfig(self.defaultTimer, self.timers))
+		try:
+			saveFile(XML_CONFIG, buildConfig(self.defaultTimer, self.timers))
+		except:
+			with open(XML_CONFIG, 'w') as config:
+				config.writelines(buildConfig(self.defaultTimer, self.timers))
 
 # Manage List
 
@@ -212,9 +236,96 @@ class AutoTimer:
 		new = 0
 		modified = 0
 
-		# Search EPG, default to empty list
-		epgmatches = epgcache.search( ('RITBDSE', 1000, typeMap[timer.searchType], timer.match, caseMap[timer.searchCase]) ) or []
+		# Workaround to allow search for umlauts if we know the encoding
+		match = timer.match
+		if timer.encoding != 'UTF-8':
+			try:
+				match = match.decode('UTF-8').encode(timer.encoding)
+			except UnicodeDecodeError:
+				pass
 
+		if timer.searchType == "description":
+			epgmatches = []
+			mask = (eServiceReference.isMarker | eServiceReference.isDirectory)
+
+			casesensitive = timer.searchCase == "sensitive"
+			if not casesensitive:
+				match = match.lower()
+
+			# Service filter defined
+			# Search only using the specified services
+			test = [(service, 0, -1, -1) for service in timer.services]
+
+			for bouquet in timer.bouquets:
+				services = serviceHandler.list(eServiceReference(bouquet))
+				if not services is None:
+					while True:
+						service = services.getNext()
+						if not service.valid(): #check end of list
+							break
+						if not (service.flags & mask):
+							test.append( (service.toString(), 0, -1, -1 ) )
+
+			if not test:
+				# No service filter defined
+				# Search within all services - could be very slow
+
+				# Get all bouquets
+				bouquetlist = []
+				refstr = '1:134:1:0:0:0:0:0:0:0:FROM BOUQUET \"bouquets.tv\" ORDER BY bouquet'
+				bouquetroot = eServiceReference(refstr)
+				mask = eServiceReference.isDirectory
+				if config.usage.multibouquet.value:
+					bouquets = serviceHandler.list(bouquetroot)
+					if bouquets:
+						while True:
+							s = bouquets.getNext()
+							if not s.valid():
+								break
+							if s.flags & mask:
+								info = serviceHandler.info(s)
+								if info:
+									bouquetlist.append((info.getName(s), s))
+				else:
+					info = serviceHandler.info(bouquetroot)
+					if info:
+						bouquetlist.append((info.getName(bouquetroot), bouquetroot))
+
+				# Get all services
+				mask = (eServiceReference.isMarker | eServiceReference.isDirectory)
+				for name, bouquet in bouquetlist:
+					if not bouquet.valid(): #check end of list
+						break
+					if bouquet.flags & eServiceReference.isDirectory:
+						services = serviceHandler.list(bouquet)
+						if not services is None:
+							while True:
+								service = services.getNext()
+								if not service.valid(): #check end of list
+									break
+								if not (service.flags & mask):
+									test.append( (service.toString(), 0, -1, -1 ) )
+
+			if test:
+				# Get all events
+				#  eEPGCache.lookupEvent( [ format of the returned tuples, ( service, 0 = event intersects given start_time, start_time -1 for now_time), ] )
+				test.insert(0, 'RITBDSE')
+				allevents = epgcache.lookupEvent(test) or []
+
+				# Filter events
+				for serviceref, eit, name, begin, duration, shortdesc, extdesc in allevents:
+					if match in (shortdesc if casesensitive else shortdesc.lower()) \
+						or match in (extdesc if casesensitive else extdesc.lower()):
+						epgmatches.append( (serviceref, eit, name, begin, duration, shortdesc, extdesc) )
+
+		else:
+			# Search EPG, default to empty list
+			try:
+				epgmatches = epgcache.search( ('RITBDSE', 1000, typeMap[timer.searchType], match, caseMap[timer.searchCase]) ) or []
+			except Exception as e:
+				doLog("Exception: epgcache.search " + str(e))
+				return
+		
 		# Sort list of tuples by begin time 'B'
 		epgmatches.sort(key=itemgetter(3))
 
@@ -342,12 +453,8 @@ class AutoTimer:
 				begin, end = timer.applyOffset(begin, end)
 			else:
 				# Apply E2 Offset
-				if ServiceRecordingSettings:
-					begin -= ServiceRecordingSettings.instance.getMarginBefore(eserviceref)
-					end += ServiceRecordingSettings.instance.getMarginAfter(eserviceref)
-				else:
-					begin -= config.recording.margin_before.value * 60
-					end += config.recording.margin_after.value * 60
+				begin -= config.recording.margin_before.value * 60
+				end += config.recording.margin_after.value * 60
 
 			# Overwrite endtime if requested
 			if timer.justplay and not timer.setEndtime:
@@ -431,6 +538,27 @@ class AutoTimer:
 					doLog("Not adding new timer because counter is depleted.")
 					skipped.append((name, begin, end, serviceref, timer.name, getLog()))
 					continue
+
+			# if set option for check/save timer in filterlist and only if not found an existing timer
+			if (config.plugins.autotimer.series_save_filter.value or timer.series_save_filter) and oldExists == False:
+				# only if use series_labeling and if sp_getSeasonEpisode was succesful
+				if timer.series_labeling and sp_getSeasonEpisode is not None:
+					if sp and type(sp) in (tuple, list) and len(sp) == 4:
+						path_filter_txt = "/etc/enigma2/autotimer_filter.txt"
+						if os_path.exists(path_filter_txt):
+							search_txt = '"' + sp[0] + '"'
+							if search_txt in open(path_filter_txt).read():
+								doLog("Skipping an event because found Timer in autotimer_filter")
+								skipped.append((name, begin, end, serviceref, timer.name, getLog()))
+								continue
+						if simulateOnly:
+							doLog("new Timer would be saved in autotimer_filter")
+						else:
+							#write eventname totextfile
+							file_filter_txt = open(path_filter_txt, "a")
+							file_filter_txt.write(str(strftime('%d.%m.%Y, %H:%M', localtime(begin))) + ' - "' + str(sp[0]) + '"\n')
+							file_filter_txt.close()
+							doLog("new Timer save in textfilterfile")
 
 			# Append to timerlist and abort if simulating
 			timers.append((name, begin, end, serviceref, timer.name, getLog()))
@@ -717,15 +845,19 @@ class AutoTimer:
 		else:
 			return False
 
+		title_ratio = int(config.plugins.autotimer.title_match_ratio.value) / float(100)
+		shortdesc_ratio = int(config.plugins.autotimer.shortdesc_match_ratio.value) / float(100)
+		extdesc_ratio = int(config.plugins.autotimer.extdesc_match_ratio.value) / float(100)
+
 		ratio = sequenceMatcher.ratio()
 		doDebug("names ratio %f - %s - %d - %s - %d" % (ratio, name1, len(name1), name2, len(name2)))
-		if name1 in name2 or (0.9 < ratio): # this is probably a match
+		if name1 in name2 or (title_ratio < ratio): # this is probably a match
 			foundShort = True
 			if (force or timer.searchForDuplicateDescription > 0) and shortdesc1 and shortdesc2:
 				sequenceMatcher.set_seqs(shortdesc1, shortdesc2)
 				ratio = sequenceMatcher.ratio()
 				doDebug("shortdesc ratio %f - %s - %d - %s - %d" % (ratio, shortdesc1, len(shortdesc1), shortdesc2, len(shortdesc2)))
-				foundShort = shortdesc1 in shortdesc2 or (0.9 < ratio)
+				foundShort = shortdesc1 in shortdesc2 or (shortdesc_ratio < ratio)
 				if foundShort:
 					doLog("shortdesc ratio %f - %s - %d - %s - %d" % (ratio, shortdesc1, len(shortdesc1), shortdesc2, len(shortdesc2)))
 
@@ -736,7 +868,7 @@ class AutoTimer:
 				sequenceMatcher.set_seqs(extdesc1, extdesc2)
 				ratio = sequenceMatcher.ratio()
 				doDebug("extdesc ratio %f - %s - %d - %s - %d" % (ratio, extdesc1, len(extdesc1), extdesc2, len(extdesc2)))
-				foundExt = (0.9 < ratio)
+				foundExt = (extdesc_ratio < ratio)
 				if foundExt:
 					doLog("extdesc ratio %f - %s - %d - %s - %d" % (ratio, extdesc1, len(extdesc1), extdesc2, len(extdesc2)))
 			return foundShort and foundExt

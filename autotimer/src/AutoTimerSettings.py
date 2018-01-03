@@ -62,6 +62,10 @@ class AutoTimerSettings(Screen, ConfigListScreen):
 				getConfigListEntry(_("Send debug messages to shell"), config.plugins.autotimer.log_shell, _("Send debug messages to shell")),
 				getConfigListEntry(_("Write debug messages into file"), config.plugins.autotimer.log_write, _("Write debug messages into file")),
 				getConfigListEntry(_("Location and name of log file"), config.plugins.autotimer.log_file, _("Location and name of log file")),
+				getConfigListEntry(_("save/check labeled series in filterlist (SeriesPlugin)"), config.plugins.autotimer.series_save_filter, _("save the by SeriesPlugin generated timer-name in a filterlist to filter at later timer-searches (only with SeriesPlugin)")),
+				getConfigListEntry(_("match-ratio for title-duplicate-check"), config.plugins.autotimer.title_match_ratio, _("match-ratio is the factor at compare two timer in the title (min.=80, max.=100 = comparison must be 100% identical to skip duplicates, default=97)")),
+				getConfigListEntry(_("match-ratio for extendetDescription-duplicate-check"), config.plugins.autotimer.extdesc_match_ratio, _("match-ratio is the factor at compare two timer in the extDescription (min.=80, max.=100 = comparison must be 100% identical to skip duplicates, default=90)")),
+				getConfigListEntry(_("match-ratio for shortDescription-duplicate-check"), config.plugins.autotimer.shortdesc_match_ratio, _("match-ratio is the factor at compare two timer in the shortDescription (min.=80, max.=100 = comparison must be 100% identical to skip duplicates, default=90)")),	
 			],
 			session = session,
 			on_change = self.changed

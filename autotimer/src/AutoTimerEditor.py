@@ -72,7 +72,7 @@ class ExtendedConfigText(ConfigText):
 
 		# Workaround some characters currently not "typeable" using NumericalTextInput
 		mapping = self.mapping
-		if mapping:
+		if mapping and isinstance(mapping, list):
 			if "&" not in mapping[0]:
 				mapping[0] += "&"
 			if ";" not in mapping[0]:
@@ -186,6 +186,13 @@ class AutoTimerEditorBase:
 
 		# Match
 		self.match = NoSave(ExtendedConfigText(default = timer.match, fixed_size = False))
+
+		# Encoding
+		default = timer.encoding
+		selection = ['UTF-8', 'ISO8859-15']
+		if default not in selection:
+			selection.append(default)
+		self.encoding = NoSave(ConfigSelection(choices = selection, default = default))
 
 		# ...
 		self.searchType = NoSave(ConfigSelection(choices = [("partial", _("partial match")), ("exact", _("exact match")), ("description", _("description match"))], default = timer.searchType))
@@ -359,6 +366,7 @@ class AutoTimerEditorBase:
 
 		# SeriesPlugin
 		self.series_labeling = NoSave(ConfigYesNo(default = timer.series_labeling))
+		self.series_save_filter = NoSave(ConfigYesNo(default = timer.series_save_filter))
 
 	def pathSelected(self, res):
 		if res is not None:
@@ -431,6 +439,7 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 		self.useDestination.addNotifier(self.reloadList, initial_call = False)
 		self.vps_enabled.addNotifier(self.reloadList, initial_call = False)
 		self.series_labeling.addNotifier(self.reloadList, initial_call = False)
+		self.series_save_filter.addNotifier(self.reloadList, initial_call = False)
 
 		self.refresh()
 		self.initHelpTexts()
@@ -510,6 +519,7 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 			self.enabled: _("Set this NO to disable this AutoTimer."),
 			self.name: _("This is a name you can give the AutoTimer. It will be shown in the Overview and the Preview."),
 			self.match: _("This is what will be looked for in event titles. Note that looking for e.g. german umlauts can be tricky as you have to know the encoding the channel uses."),
+			self.encoding: _("Encoding the channel uses for it's EPG data. You only need to change this if you're searching for special characters like the german umlauts."),
 			self.searchType: _("Select \"exact match\" to enforce \"Match title\" to match exactly, \"partial match\" if you only want to search for a part of the event title or \"description match\" if you only want to search for a part of the event description"),
 			self.searchCase: _("Select whether or not you want to enforce case correctness."),
 			self.justplay: _("Add zap timer instead of record timer?"),
@@ -539,6 +549,7 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 			self.destination: _("Select the location to save the recording to."),
 			self.tags: _("Tags the Timer/Recording will have."),
 			self.series_labeling: _("Label Timers with season, episode and title, according to the SeriesPlugin settings."),
+			self.series_save_filter: _("save the by SeriesPlugin generated timer-name in a filterlist to filter at later timer-searches (only with SeriesPlugin)"),
 		}
 
 	def refresh(self):
@@ -552,6 +563,7 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 			))
 
 		list.extend((
+			getConfigListEntry(_("EPG encoding"), self.encoding),
 			getConfigListEntry(_("Search type"), self.searchType),
 			getConfigListEntry(_("Search strictness"), self.searchCase),
 			getConfigListEntry(_("Timer type"), self.justplay),
@@ -634,6 +646,10 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 
 		if hasSeriesPlugin:
 			list.append(getConfigListEntry(_("Label series"), self.series_labeling))
+			if self.series_labeling.value:
+				list.append(getConfigListEntry(_("save/check labeled series in filterlist (SeriesPlugin)"), self.series_save_filter))
+				if not self.series_save_filter.value and config.plugins.autotimer.series_save_filter.value:
+					list.append(getConfigListEntry(_(" == attention: global option 'save/check filterlist is still active!! =="), config.plugins.autotimer.nothing))
 
 		self.list = list
 
@@ -756,6 +772,9 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 		# Name
 		self.timer.name = self.name.value.strip() or self.timer.match
 
+		# Encoding
+		self.timer.encoding = self.encoding.value
+
 		# ...
 		self.timer.searchType = self.searchType.value
 		self.timer.searchCase = self.searchCase.value
@@ -862,6 +881,7 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 		self.timer.vps_overwrite = self.vps_overwrite.value
 
 		self.timer.series_labeling = self.series_labeling.value
+		self.timer.series_save_filter = self.series_save_filter.value
 
 		# Close
 		self.close(self.timer)

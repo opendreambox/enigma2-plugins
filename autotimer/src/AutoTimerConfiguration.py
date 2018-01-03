@@ -4,7 +4,7 @@ from __future__ import print_function
 # for localized messages
 from . import _
 
-from AutoTimerComponent import preferredAutoTimerComponent
+from AutoTimerComponent import preferredAutoTimerComponent, getDefaultEncoding
 from Logger import doLog
 
 from RecordTimer import AFTEREVENT
@@ -107,8 +107,13 @@ def parseEntry(element, baseTimer, defaults = False):
 
 	# SeriesPlugin settings
 	series_labeling = element.get("series_labeling", "no")
+	series_save_filter = element.get("series_save_filter", "no")
 	baseTimer.series_labeling = True if series_labeling == "yes" else False
-	del series_labeling
+	baseTimer.series_save_filter = True if series_save_filter == "yes" else False
+	del series_labeling, series_save_filter
+
+	# Read out encoding (won't change if no value is set)
+	baseTimer.encoding = element.get("encoding")
 
 	# Read out search type/case
 	baseTimer.searchType = element.get("searchType", baseTimer.searchType)
@@ -522,6 +527,7 @@ def buildConfig(defaultTimer, timers, webif = False):
 	list = ['<?xml version="1.0" ?>\n<autotimer version="', CURRENT_CONFIG_VERSION, '">\n\n']
 	append = list.append
 	extend = list.extend
+	defaultEncoding = getDefaultEncoding()
 
 	# This gets deleted afterwards if we do not have set any defaults
 	append(' <defaults')
@@ -567,6 +573,10 @@ def buildConfig(defaultTimer, timers, webif = False):
 		if not defaultTimer.setEndtime:
 			append(' setEndtime="0"')
 
+	# Only display encoding if != utf-8
+	if defaultTimer.encoding != defaultEncoding or webif:
+		extend((' encoding="', str(defaultTimer.encoding), '"'))
+
 	# SearchType
 	if defaultTimer.searchType != "partial":
 		extend((' searchType="', str(defaultTimer.searchType), '"'))
@@ -584,6 +594,8 @@ def buildConfig(defaultTimer, timers, webif = False):
 	# Only add seriesplugin related entry if true
 	if defaultTimer.series_labeling:
 		append(' series_labeling="yes"')
+		if defaultTimer.series_save_filter:
+			append(' series_save_filter="yes"')
 
 	# Close still opened defaults tag
 	append('>\n')
@@ -594,7 +606,7 @@ def buildConfig(defaultTimer, timers, webif = False):
 			ref = ServiceReference(str(serviceref))
 			extend((
 				'  <e2service>\n',
-				'   <e2servicereference>', str(serviceref), '</e2servicereference>\n',
+				'   <e2servicereference>', stringToXML(str(serviceref)), '</e2servicereference>\n',
 				'   <e2servicename>', stringToXML(ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')), '</e2servicename>\n',
 				'  </e2service>\n',
 			))
@@ -609,7 +621,7 @@ def buildConfig(defaultTimer, timers, webif = False):
 		# Bouquets
 		for bouquet in defaultTimer.bouquets:
 			ref = ServiceReference(str(bouquet))
-			extend(('  <bouquet>', str(bouquet), '</bouquet>',
+			extend(('  <bouquet>', stringToXML(str(bouquet)), '</bouquet>',
 						' <!-- ', stringToXML(ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')), ' -->\n',
 			))
 
@@ -711,6 +723,10 @@ def buildConfig(defaultTimer, timers, webif = False):
 			if not timer.setEndtime:
 				append(' setEndtime="0"')
 
+		# Only display encoding if != utf-8
+		if timer.encoding != defaultEncoding or webif:
+			extend((' encoding="', str(timer.encoding), '"'))
+
 		# SearchType
 		if timer.searchType != "partial":
 			extend((' searchType="', str(timer.searchType), '"'))
@@ -732,6 +748,8 @@ def buildConfig(defaultTimer, timers, webif = False):
 		# Only add seriesplugin related entry if true
 		if timer.series_labeling:
 			append(' series_labeling="yes"')
+			if timer.series_save_filter:
+				append(' series_save_filter="yes"')
 
 		# Close still opened timer tag
 		append('>\n')
@@ -742,7 +760,7 @@ def buildConfig(defaultTimer, timers, webif = False):
 				ref = ServiceReference(str(serviceref))
 				extend((
 					'  <e2service>\n',
-					'   <e2servicereference>', str(serviceref), '</e2servicereference>\n',
+					'   <e2servicereference>', stringToXML(str(serviceref)), '</e2servicereference>\n',
 					'   <e2servicename>', stringToXML(ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')), '</e2servicename>\n',
 					'  </e2service>\n',
 				))
@@ -757,7 +775,7 @@ def buildConfig(defaultTimer, timers, webif = False):
 			# Bouquets
 			for bouquet in timer.bouquets:
 				ref = ServiceReference(str(bouquet))
-				extend(('  <bouquet>', str(bouquet), '</bouquet>',
+				extend(('  <bouquet>', stringToXML(str(bouquet)), '</bouquet>',
 							' <!-- ', stringToXML(ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')), ' -->\n',
 				))
 
