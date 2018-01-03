@@ -37,6 +37,7 @@ from itertools import chain
 from collections import defaultdict
 from difflib import SequenceMatcher
 from operator import itemgetter
+from Screens.MessageBox import MessageBox
 
 try:
 	from Plugins.SystemPlugins.Toolkit.SimpleThread import SimpleThread
@@ -545,22 +546,15 @@ class AutoTimer:
 				# only if use series_labeling and if sp_getSeasonEpisode was succesful
 				if timer.series_labeling and sp_getSeasonEpisode is not None:
 					if sp and type(sp) in (tuple, list) and len(sp) == 4:
-						path_filter_txt = "/etc/enigma2/autotimer_filter.txt"
-						if os_path.exists(path_filter_txt):
-							search_txt = '"' + sp[0] + '"'
-							if search_txt in open(path_filter_txt).read():
-								doLog("Skipping an event because found Timer in autotimer_filter")
-								skipped.append((name, begin, end, serviceref, timer.name, getLog()))
-								continue
-						if simulateOnly:
-							doLog("new Timer would be saved in autotimer_filter")
+						ret = self.addToFilterfile(str(sp[0]), begin, simulateOnly)
+						if ret:
+							if simulateOnly:
+								doLog("only simulate - new Timer would be saved in autotimer_filter")
+							else:
+								doLog("new Timer saved in autotimer_filter")
 						else:
-							#write eventname totextfile
-							isnewFilterEntry=True
-							file_filter_txt = open(path_filter_txt, "a")
-							file_filter_txt.write(str(strftime('%d.%m.%Y, %H:%M', localtime(begin))) + ' - "' + str(sp[0]) + '"\n')
-							file_filter_txt.close()
-							doLog("new Timer save in textfilterfile")
+							skipped.append((name, begin, end, serviceref, timer.name, getLog()))
+							continue
 
 			# Append to timerlist and abort if simulating
 			timers.append((name, begin, end, serviceref, timer.name, getLog()))
@@ -758,6 +752,56 @@ class AutoTimer:
 		file_search_log = open(path_search_log, "w")
 		file_search_log.write(searchlog_txt)
 		file_search_log.close()
+
+	def addToFilterfile(self, name, begin, simulateOnlyValue=False):
+		
+		#== add to filterList
+		path_filter_txt = "/etc/enigma2/autotimer_filter.txt"
+		if os_path.exists(path_filter_txt):
+			search_txt = '"' + name + '"'
+			if search_txt in open(path_filter_txt).read():
+				print ("Skipping an event because found event in autotimer_filter")
+				doLog("Skipping an event because found event in autotimer_filter")
+				return False
+		if simulateOnlyValue:
+			return True
+		#write eventname totextfile
+		filter_txt = str(strftime('%d.%m.%Y, %H:%M', localtime(begin))) + ' - "' + name + '"\n'
+		file_filter_txt = open(path_filter_txt, "a")
+		file_filter_txt.write(filter_txt)
+		file_filter_txt.close()
+		doLog("added a new event to autotimer_filter")
+		
+		return True
+		
+
+	def addToFilterList(self, session, services, *args, **kwargs):
+		
+		if services:
+			serviceHandler = eServiceCenter.getInstance()
+			add_counter=0
+			
+			try:
+				for service in services:
+					
+					info = serviceHandler.info(service)
+					name = info and info.getName(service) or ""
+					
+					if info:
+						begin = info.getInfo(service, iServiceInformation.sTimeCreate)
+					else:
+						doLog("No recordinfo available")
+						continue
+					
+					ret = self.addToFilterfile(name, begin)
+					if ret:
+						add_counter +=1
+					
+				session.open( MessageBox, _("finished add to filterList with %s event(s):\n\n %s event(s) added \n %s event(s) skipped") % (len(services), add_counter,len(services)-add_counter), type = MessageBox.TYPE_INFO, timeout = config.plugins.autotimer.popup_timeout.value )
+					
+			except Exception as e:
+				doLog("Error in addToFilterList", e)
+				print ("======== Error in addToFilterList ", e)
 
 
 	def parseEPG(self, simulateOnly=False, uniqueId=None, callback=None):

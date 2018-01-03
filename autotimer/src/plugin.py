@@ -19,7 +19,7 @@ from AutoTimer import AutoTimer
 autotimer = AutoTimer()
 autopoller = None
 
-AUTOTIMER_VERSION = "4.1.7g_OE2.0"
+AUTOTIMER_VERSION = "4.2_OE2.0"
 
 #pragma mark - Help
 try:
@@ -220,6 +220,22 @@ def extensionsmenu_scan(session, **kwargs):
 	
 	editCallback(session)
 
+
+# Movielist menu add to filterList
+def add_to_filterList(session, service, services=None, *args, **kwargs):
+	
+	try:
+		if services:
+			if not isinstance(services, list):
+				services = [services]	
+		else:
+			services = [service]
+		autotimer.addToFilterList(session, services)
+	except Exception as e:
+		print ("[AutoTimer] Unable to add Recordtitle to FilterList:", e)
+		doLog("[AutoTimer] Unable to add Recordtitle to FilterList:", e)
+
+
 def housekeepingExtensionsmenu(el):
 	if el.value:
 		plugins.addPlugin(extDescriptor)
@@ -244,7 +260,8 @@ def Plugins(**kwargs):
 		# TRANSLATORS: AutoTimer title in MovieList (automatically opens importer, I consider this no further interaction)
 		PluginDescriptor(name="AutoTimer", description= _("add AutoTimer"), where = PluginDescriptor.WHERE_MOVIELIST, fnc = movielist, needsRestart = False),
 		# TRANSLATORS: AutoTimer title in EventInfo dialog (requires the user to select an event to base the AutoTimer on)
-		PluginDescriptor(name=_("add AutoTimer..."), where = PluginDescriptor.WHERE_EVENTINFO, fnc = eventinfo, needsRestart = False),
+		PluginDescriptor(name =_("add AutoTimer..."), where = PluginDescriptor.WHERE_EVENTINFO, fnc = eventinfo, needsRestart = False),
+		PluginDescriptor(name = _("add to AutoTimer filterList"), description = _("add to AutoTimer filterList"), where = PluginDescriptor.WHERE_MOVIELIST, fnc = add_to_filterList, needsRestart = False),
 	]
 	if config.plugins.autotimer.show_in_extensionsmenu.value:
 		l.append(extDescriptor)
