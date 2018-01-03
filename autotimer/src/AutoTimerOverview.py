@@ -14,6 +14,7 @@ from AutoTimerWizard import AutoTimerWizard
 from os import path as os_path, stat as os_stat
 from time import localtime, strftime
 from ShowLogScreen import ShowLogScreen
+import AutoTimerFilterList
 
 # GUI (Components)
 from AutoTimerList import AutoTimerList
@@ -77,6 +78,7 @@ class AutoTimerOverview(Screen, HelpableScreen):
 
 		# Create List of Timers
 		self["entries"] = AutoTimerList(autotimer.getSortedTupleTimerList())
+		
 
 		# Summary
 		self.onChangedEntry = []
@@ -133,6 +135,12 @@ class AutoTimerOverview(Screen, HelpableScreen):
 			self.session.open(MessageBox,_("no searchLog found!\n\n so you have no new or modified timer at last autotimer-search."), MessageBox.TYPE_INFO)
 
 	def showFilterTxt(self):
+		
+		reload(AutoTimerFilterList)
+		from AutoTimerFilterList import AutoTimerFilterListOverview
+		self.session.open(AutoTimerFilterListOverview)
+		#self.session.open(MessageBox,_("Open FilterList"), MessageBox.TYPE_INFO)
+		return
 		
 		path_filter_txt = "/etc/enigma2/autotimer_filter.txt"
 		if os_path.exists(path_filter_txt):
