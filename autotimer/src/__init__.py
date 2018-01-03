@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Config
 from Components.config import config, ConfigSubsection, ConfigOnOff, \
-	ConfigNumber, ConfigSelection, ConfigYesNo, ConfigText
+	ConfigNumber, ConfigSelection, ConfigSelectionNumber, ConfigYesNo, ConfigText
 
 config.plugins.autotimer = ConfigSubsection()
 config.plugins.autotimer.autopoll = ConfigOnOff(default=False)
@@ -40,6 +40,11 @@ config.plugins.autotimer.always_write_config = ConfigOnOff(default=False)
 config.plugins.autotimer.log_shell = ConfigYesNo(default = False)
 config.plugins.autotimer.log_write = ConfigYesNo(default = False)
 config.plugins.autotimer.log_file  = ConfigText(default = "/tmp/autotimer.log", fixed_size = False)
+
+config.plugins.autotimer.series_save_filter = ConfigYesNo(default = False)
+config.plugins.autotimer.title_match_ratio = ConfigSelectionNumber(80, 100, 1, default = 97)
+config.plugins.autotimer.shortdesc_match_ratio = ConfigSelectionNumber(80, 100, 1, default = 90)
+config.plugins.autotimer.extdesc_match_ratio = ConfigSelectionNumber(80, 100, 1, default = 90)
 
 try:
 	xrange = xrange

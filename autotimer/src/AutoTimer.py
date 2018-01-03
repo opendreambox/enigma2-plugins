@@ -337,6 +337,7 @@ class AutoTimer:
 				skipped.append((name, begin, end, serviceref, timer.name, getLog()))
 				continue
 			
+			
 			if timer.hasOffset():
 				# Apply custom Offset
 				begin, end = timer.applyOffset(begin, end)
@@ -431,6 +432,28 @@ class AutoTimer:
 					doLog("Not adding new timer because counter is depleted.")
 					skipped.append((name, begin, end, serviceref, timer.name, getLog()))
 					continue
+
+
+			# if set option for check/save timer in filterlist and only if not found an existing timer
+			if (config.plugins.autotimer.series_save_filter.value or timer.series_save_filter) and oldExists == False:
+				# only if use series_labeling and if sp_getSeasonEpisode was succesful
+				if timer.series_labeling and sp_getSeasonEpisode is not None:
+					if sp and type(sp) in (tuple, list) and len(sp) == 4:
+						path_filter_txt = "/etc/enigma2/autotimer_filter.txt"
+						if os_path.exists(path_filter_txt):
+							search_txt = '"' + sp[0] + '"'
+							if search_txt in open(path_filter_txt).read():
+								doLog("Skipping an event because found Timer in autotimer_filter")
+								skipped.append((name, begin, end, serviceref, timer.name, getLog()))
+								continue
+						if simulateOnly:
+							doLog("new Timer would be saved in autotimer_filter")
+						else:
+							#write eventname totextfile
+							file_filter_txt = open(path_filter_txt, "a")
+							file_filter_txt.write(str(strftime('%d.%m.%Y, %H:%M', localtime(begin))) + ' - "' + str(sp[0]) + '"\n')
+							file_filter_txt.close()
+							doLog("new Timer saved in autotimer_filter")
 
 			# Append to timerlist and abort if simulating
 			timers.append((name, begin, end, serviceref, timer.name, getLog()))
@@ -717,15 +740,19 @@ class AutoTimer:
 		else:
 			return False
 
+		title_ratio = int(config.plugins.autotimer.title_match_ratio.value) / float(100)
+		shortdesc_ratio = int(config.plugins.autotimer.shortdesc_match_ratio.value) / float(100)
+		extdesc_ratio = int(config.plugins.autotimer.extdesc_match_ratio.value) / float(100)
+
 		ratio = sequenceMatcher.ratio()
 		doDebug("names ratio %f - %s - %d - %s - %d" % (ratio, name1, len(name1), name2, len(name2)))
-		if name1 in name2 or (0.9 < ratio): # this is probably a match
+		if name1 in name2 or (title_ratio < ratio): # this is probably a match
 			foundShort = True
 			if (force or timer.searchForDuplicateDescription > 0) and shortdesc1 and shortdesc2:
 				sequenceMatcher.set_seqs(shortdesc1, shortdesc2)
 				ratio = sequenceMatcher.ratio()
 				doDebug("shortdesc ratio %f - %s - %d - %s - %d" % (ratio, shortdesc1, len(shortdesc1), shortdesc2, len(shortdesc2)))
-				foundShort = shortdesc1 in shortdesc2 or (0.9 < ratio)
+				foundShort = shortdesc1 in shortdesc2 or (shortdesc_ratio < ratio)
 				if foundShort:
 					doLog("shortdesc ratio %f - %s - %d - %s - %d" % (ratio, shortdesc1, len(shortdesc1), shortdesc2, len(shortdesc2)))
 
@@ -736,7 +763,7 @@ class AutoTimer:
 				sequenceMatcher.set_seqs(extdesc1, extdesc2)
 				ratio = sequenceMatcher.ratio()
 				doDebug("extdesc ratio %f - %s - %d - %s - %d" % (ratio, extdesc1, len(extdesc1), extdesc2, len(extdesc2)))
-				foundExt = (0.9 < ratio)
+				foundExt = (extdesc_ratio < ratio)
 				if foundExt:
 					doLog("extdesc ratio %f - %s - %d - %s - %d" % (ratio, extdesc1, len(extdesc1), extdesc2, len(extdesc2)))
 			return foundShort and foundExt

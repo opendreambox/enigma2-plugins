@@ -356,6 +356,7 @@ class AutoTimerEditorBase:
 
 		# SeriesPlugin
 		self.series_labeling = NoSave(ConfigYesNo(default = timer.series_labeling))
+		self.series_save_filter = NoSave(ConfigYesNo(default = timer.series_save_filter))
 
 	def pathSelected(self, res):
 		if res is not None:
@@ -429,6 +430,7 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 		self.useDestination.addNotifier(self.reloadList, initial_call = False)
 		self.vps_enabled.addNotifier(self.reloadList, initial_call = False)
 		self.series_labeling.addNotifier(self.reloadList, initial_call = False)
+		self.series_save_filter.addNotifier(self.reloadList, initial_call = False)
 
 		self.refresh()
 		self.initHelpTexts()
@@ -537,6 +539,7 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 			self.destination: _("Select the location to save the recording to."),
 			self.tags: _("Tags the Timer/Recording will have."),
 			self.series_labeling: _("Label Timers with season, episode and title, according to the SeriesPlugin settings."),
+			self.series_save_filter: _("save the by SeriesPlugin generated timer-name in a filterlist to filter at later timer-searches (only with SeriesPlugin)"),
 		}
 
 	def refresh(self):
@@ -632,6 +635,10 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 
 		if hasSeriesPlugin:
 			list.append(getConfigListEntry(_("Label series"), self.series_labeling))
+			if self.series_labeling.value:
+				list.append(getConfigListEntry(_("save/check labeled series in filterlist (SeriesPlugin)"), self.series_save_filter))
+				if not self.series_save_filter.value and config.plugins.autotimer.series_save_filter.value:
+					list.append(getConfigListEntry(_(" == attention: global option 'save/check filterlist is still active!! ==")))
 
 		self.list = list
 
@@ -860,7 +867,8 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 		self.timer.vps_overwrite = self.vps_overwrite.value
 
 		self.timer.series_labeling = self.series_labeling.value
-
+		self.timer.series_save_filter = self.series_save_filter.value
+		
 		# Close
 		self.close(self.timer)
 

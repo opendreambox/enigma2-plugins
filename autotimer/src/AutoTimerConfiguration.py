@@ -104,8 +104,10 @@ def parseEntry(element, baseTimer, defaults = False):
 
 	# SeriesPlugin settings
 	series_labeling = element.get("series_labeling", "no")
+	series_save_filter = element.get("series_save_filter", "no")
 	baseTimer.series_labeling = True if series_labeling == "yes" else False
-	del series_labeling
+	baseTimer.series_save_filter = True if series_save_filter == "yes" else False
+	del series_labeling, series_save_filter
 
 	# Read out search type/case
 	baseTimer.searchType = element.get("searchType", baseTimer.searchType)
@@ -581,6 +583,8 @@ def buildConfig(defaultTimer, timers, webif = False):
 	# Only add seriesplugin related entry if true
 	if defaultTimer.series_labeling:
 		append(' series_labeling="yes"')
+		if defaultTimer.series_save_filter:
+			append(' series_save_filter="yes"')
 
 	# Close still opened defaults tag
 	append('>\n')
@@ -729,6 +733,8 @@ def buildConfig(defaultTimer, timers, webif = False):
 		# Only add seriesplugin related entry if true
 		if timer.series_labeling:
 			append(' series_labeling="yes"')
+			if timer.series_save_filter:
+				append(' series_save_filter="yes"')
 
 		# Close still opened timer tag
 		append('>\n')

@@ -668,6 +668,7 @@ var AutoTimerEditController = Class.create(Controller, {
 			}
 		}
 		this.onchangeCheckbox( $('vps_enabled') );
+		this.onchangeCheckbox( $('series_labeling') );
 		
 		AnyTime.noPicker( 'from' );
 		AnyTime.picker( 'from', { format: "%H:%i" } );
@@ -1042,8 +1043,10 @@ var AutoTimerEditController = Class.create(Controller, {
 		
 		if ($('series_labeling').checked){
 			data['series_labeling'] = ($('series_labeling').checked) ? '1' : '0';
+			data['series_save_filter'] = ($('series_save_filter').checked) ? '1' : '0';
 		} else{
 			data['series_labeling'] = '0';
+			data['series_save_filter'] = '0';
 		}
 		
 		this.saveurl = [];
@@ -1230,6 +1233,12 @@ var AutoTimerEditController = Class.create(Controller, {
 			}.bind(this)
 		);
 		$('vps_enabled').on(
+			'change',
+			function(event, element){
+				this.onchangeCheckbox(element);
+			}.bind(this)
+		);
+		$('series_labeling').on(
 			'change',
 			function(event, element){
 				this.onchangeCheckbox(element);
@@ -2133,8 +2142,10 @@ function AutoTimer(xml, defaults){
 	}
 	
 	var hasVps = (autotimereditorcore.hasVps == "True") ? '' : 'invisible';
-	var vps_enabled = (getAttribute(xml, 'vps_enabled', defaults)) ? 'checked' : '';
-	var vps_overwrite = (getAttribute(xml, 'vps_overwrite', defaults)) ? 'checked' : '';
+	//var vps_enabled = (getAttribute(xml, 'vps_enabled', defaults)) ? 'checked' : '';
+	//var vps_overwrite = (getAttribute(xml, 'vps_overwrite', defaults)) ? 'checked' : '';
+	var vps_enabled = (xml.getAttribute('vps_enabled')=='yes') ? 'checked' : '';
+	var vps_overwrite = (xml.getAttribute('vps_overwrite')=='yes') ? 'checked' : '';
 	this.vps = {
 		'hasVPS' : hasVps,
 		'vps_enabled' : vps_enabled,
@@ -2142,10 +2153,14 @@ function AutoTimer(xml, defaults){
 	}
 	
 	var hasSeriesPlugin = (autotimereditorcore.hasSeriesPlugin == "True") ? '' : 'invisible';
-	var series_labeling = (getAttribute(xml, 'series_labeling', defaults)) ? 'checked' : '';
+	//var series_labeling = (getAttribute(xml, 'series_labeling', defaults)) ? 'checked' : '';
+	//var series_save_filter = (getAttribute(xml, 'series_save_filter', defaults)) ? 'checked' : '';
+	var series_labeling = (xml.getAttribute('series_labeling')=='yes') ? 'checked' : '';
+	var series_save_filter = (xml.getAttribute('series_save_filter')=='yes') ? 'checked' : '';
 	this.seriesplugin = {
 		'hasSeriesPlugin' : hasSeriesPlugin,
 		'series_labeling' : series_labeling,
+		'series_save_filter' : series_save_filter,
 	}
 	
 	this.json = { 	

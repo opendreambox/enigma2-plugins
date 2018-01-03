@@ -50,7 +50,7 @@ class AutoTimerComponent(object):
 			avoidDuplicateDescription=0, searchForDuplicateDescription=2, bouquets=None, \
 			tags=None, searchType="partial", searchCase="insensitive", \
 			overrideAlternatives=False, timeframe=None, vps_enabled=False, \
-			vps_overwrite=False, setEndtime=False, series_labeling=False):
+			vps_overwrite=False, setEndtime=False, series_labeling=False, series_save_filter=False):
 		self.name = name
 		self.match = match
 		self.enabled = enabled
@@ -79,6 +79,7 @@ class AutoTimerComponent(object):
 		self.vps_enabled = vps_enabled
 		self.vps_overwrite = vps_overwrite
 		self.series_labeling = series_labeling
+		self.series_save_filter = series_save_filter
 		self.setEndtime = setEndtime
 
 ### Attributes / Properties
@@ -526,6 +527,7 @@ class AutoTimerComponent(object):
 			vps_enabled = self.vps_enabled,
 			vps_overwrite = self.vps_overwrite,
 			series_labeling = self.series_labeling,
+			series_save_filter = self.series_save_filter,
 		)
 
 	def __deepcopy__(self, memo):
@@ -559,6 +561,7 @@ class AutoTimerComponent(object):
 			vps_enabled = self.vps_enabled,
 			vps_overwrite = self.vps_overwrite,
 			series_labeling = self.series_labeling,
+			series_save_filter = self.series_save_filter,
 		)
 
 	def __eq__(self, other):
@@ -615,6 +618,7 @@ class AutoTimerComponent(object):
 					str(self.vps_enabled),
 					str(self.vps_overwrite),
 					str(self.series_labeling),
+					str(self.series_save_filter),
 			 )),
 			 ")>"
 		))
