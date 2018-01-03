@@ -483,12 +483,15 @@ class AutoTimer:
 					doLog(msg)
 					newEntry.log(501, msg)
 
-				if rtimer.begin != begin or rtimer.end != end or rtimer.name != name:
+				if newEntry.begin != begin or newEntry.end != end or newEntry.name != name:
 					modified += 1
-					self.addToSearchLogfile(newEntry,"#", simulateOnly)
+					#self.addToSearchLogfile(newEntry,"#", simulateOnly)
 
 				if allow_modify:
+					modified_for_searchlog = True if newEntry.begin != begin or newEntry.end != end or newEntry.name != name else False
 					self.modifyTimer(newEntry, name, shortdesc, begin, end, serviceref, eit)
+					if modified_for_searchlog:
+						self.addToSearchLogfile(newEntry,"#", simulateOnly)
 					msg = "[AutoTimer] AutoTimer modified timer: %s ." % (newEntry.name)
 					doLog(msg)
 					newEntry.log(501, msg)
@@ -614,6 +617,26 @@ class AutoTimer:
 			file_search_log.write("(" + str(entryType) + ") " + str(strftime('%d.%m., %H:%M', localtime(timerEntry.begin))) + ' - "' + str(timerEntry.name) + '"\n')
 			file_search_log.close()
 
+	def prepareSearchLogfile(self):
+		# prepare searchlog at begin of real search (max. last 5 searches)
+		logpath = os_path.dirname(config.plugins.autotimer.log_file.value)
+		path_search_log = os_path.join(logpath, "autotimer_search.log")
+		searchlog_txt = ""
+		if os_path.exists(path_search_log):
+			searchlog_txt = open(path_search_log).read()
+			#read last 5 logs in logfile (do not change then "\n########## " in the code !!!!)
+			if "\n########## " in searchlog_txt:
+				searchlog_txt = searchlog_txt.split("\n########## ")
+				if len(searchlog_txt) > 5:
+					#del searchlog_txt[0]
+					searchlog_txt = searchlog_txt[len(searchlog_txt)-4:]
+				searchlog_txt = "\n########## " + "\n########## ".join(searchlog_txt)
+		
+		searchlog_txt += "\n########## " + _("begin searchLog from") + " " + str(strftime('%d.%m.%Y, %H:%M', localtime())) + " ########\n\n"
+		file_search_log = open(path_search_log, "w")
+		file_search_log.write(searchlog_txt)
+		file_search_log.close()
+
 
 	def parseEPG(self, simulateOnly=False, uniqueId=None, callback=None):
 
@@ -631,12 +654,9 @@ class AutoTimer:
 		similars = []
 		skipped = []
 
-		# delete searchlog at begin of real search
+		# prepare searchlog at begin of real search
 		if not simulateOnly:
-			logpath = os_path.dirname(config.plugins.autotimer.log_file.value)
-			path_search_log = os_path.join(logpath, "autotimer_search.log")
-			if os_path.exists(path_search_log):
-				os_remove(path_search_log)
+			self.prepareSearchLogfile()
 		
 		if currentThread().getName() == 'MainThread':
 			doBlockingCallFromMainThread = lambda f, *a, **kw: f(*a, **kw)
@@ -717,7 +737,9 @@ class AutoTimer:
 							if not timer.isRunning():
 								global NavigationInstance
 								doLog("Remove timer because of eit check " + timer.name)
+								self.addToSearchLogfile(timer,"-", simulateOnly)
 								NavigationInstance.instance.RecordTimer.removeEntry(timer)
+								
 					except:
 						pass
 		del remove

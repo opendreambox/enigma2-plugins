@@ -19,7 +19,7 @@ from AutoTimer import AutoTimer
 autotimer = AutoTimer()
 autopoller = None
 
-AUTOTIMER_VERSION = "4.1.7b"
+AUTOTIMER_VERSION = "4.1.7c"
 
 #pragma mark - Help
 try:
@@ -172,6 +172,11 @@ def parseEPGCallback(ret):
 	path_search_log = os_path.join(logpath, "autotimer_search.log")
 	if os_path.exists(path_search_log):
 		searchlog_txt = open(path_search_log).read()
+		#find last log in logfile 
+		if "\n########## " in searchlog_txt:
+			searchlog_txt = searchlog_txt.split("\n########## ")
+			searchlog_txt = str(searchlog_txt[-1]).split("\n")[2:]
+			searchlog_txt = "\n".join(searchlog_txt)
 
 	AddPopup(
 		_("Found a total of %(matches)d matching Events.\n%(timer)d Timer were added and\n%(modified)d modified,\n%(conflicts)d conflicts encountered,\n%(similars)d similars added.") % \
