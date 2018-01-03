@@ -257,18 +257,15 @@ class AutoTimerFilterListOverview(Screen):
 	def remove(self):
 		# Remove selected Filter
 		current = self["config"].getCurrent()
-		if ret and cur is not None:
+		if current is not None:
 			self.session.openWithCallback(self.removeCallback, MessageBox, _("Do you really want to delete %s?") % (_("FilterEntry") +" '"+str(current[1])+"'"), )
 
 
 	def removeCallback(self, ret):
 		cur = self["config"].getCurrentIndex()
-		if ret and cur:
-			print ("=== index: ", int(cur))
+		if ret and cur is not None:
 			del self.FilterList[cur]
-			
 			self["config"].setList(self.FilterList)
-			
 			self.changed = True
 
 

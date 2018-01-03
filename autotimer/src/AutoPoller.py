@@ -11,6 +11,8 @@ from Tools.FuzzyDate import FuzzyTime
 from Tools.Notifications import AddPopup
 from Screens.MessageBox import MessageBox
 
+from ServiceReference import ServiceReference
+
 NOTIFICATIONID = 'AutoTimerConflictEncounteredNotification'
 SIMILARNOTIFICATIONID = 'AutoTimerSimilarUsedNotification'
 
@@ -28,9 +30,9 @@ class AutoPollerThread(Thread):
 		self.__semaphore = Semaphore(0)
 		self.__queue = deque(maxlen=1)
 		self.__pump = ePythonMessagePump()
-		self.__pump_recv_msg_conn = self.__pump.recv_msg.connect(self.gotThreadMsg)
+		self.__pump.recv_msg.get().append(self.gotThreadMsg)
 		self.__timer = eTimer()
-		self.__timer_conn = self.__timer.timeout.connect(self.timeout)
+		self.__timer.callback.append(self.timeout)
 		self.running = False
 
 	def timeout(self):
@@ -43,7 +45,7 @@ class AutoPollerThread(Thread):
 		if conflicts and config.plugins.autotimer.notifconflict.value:
 			AddPopup(
 				_("%(conflicts)d conflict(s) encountered when trying to add new timers:\n%(timers)s") % \
-				{ "conflicts":len(conflicts), "timers":'\n'.join( [ _("%(tname)s: %(name)s at %(begin)s") % {"tname":x[4], "name":x[0], "begin":FuzzyTime(x[2])} for x in conflicts ] ) },
+				{ "conflicts":len(conflicts), "timers":'\n'.join( [ _("%(sname)s - %(tname)s: %(name)s at %(begin)s") % {"sname":ServiceReference(x[3]).getServiceName(), "tname":x[4], "name":x[0], "begin":FuzzyTime(x[2])} for x in conflicts ] ) },
 				MessageBox.TYPE_INFO,
 				config.plugins.autotimer.popup_timeout.value,
 				NOTIFICATIONID
@@ -74,8 +76,8 @@ class AutoPollerThread(Thread):
 		self.__timer.stop()
 		self.running = False
 		self.__semaphore.release()
-		self.__pump_recv_msg_conn = None
-		self.__timer_conn = None
+		self.__pump.recv_msg.get().remove(self.gotThreadMsg)
+		self.__timer.callback.remove(self.timeout)
 
 	def run(self):
 		sem = self.__semaphore
