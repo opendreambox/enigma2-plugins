@@ -19,7 +19,7 @@ from AutoTimer import AutoTimer
 autotimer = AutoTimer()
 autopoller = None
 
-AUTOTIMER_VERSION = "4.1.7c_OE2.0"
+AUTOTIMER_VERSION = "4.1.7d_OE2.0"
 
 #pragma mark - Help
 try:
@@ -168,7 +168,9 @@ def editCallback(session):
 def parseEPGCallback(ret):
 	
 	searchlog_txt = ""
-	logpath = os_path.dirname(config.plugins.autotimer.log_file.value)
+	logpath = config.plugins.autotimer.searchlog_path.value
+	if logpath == "?likeATlog?":
+		logpath = os_path.dirname(config.plugins.autotimer.log_file.value)
 	path_search_log = os_path.join(logpath, "autotimer_search.log")
 	if os_path.exists(path_search_log):
 		searchlog_txt = open(path_search_log).read()

@@ -125,7 +125,9 @@ class AutoTimerOverview(Screen, HelpableScreen):
 	def showSearchLog(self):
 		
 		searchlog_txt = ""
-		logpath = os_path.dirname(config.plugins.autotimer.log_file.value)
+		logpath = config.plugins.autotimer.searchlog_path.value
+		if logpath == "?likeATlog?":
+			logpath = os_path.dirname(config.plugins.autotimer.log_file.value)
 		path_search_log = os_path.join(logpath, "autotimer_search.log")
 		if os_path.exists(path_search_log):
 			self.session.open(ShowLogScreen, path_search_log, _("searchLog"), "","")
@@ -235,21 +237,24 @@ class AutoTimerOverview(Screen, HelpableScreen):
 
 	def cancel(self):
 		if self.changed:
-			self.session.openWithCallback(
-				self.cancelConfirm,
-				MessageBox,
-				_("Really close without saving settings?")
-			)
+			self.session.openWithCallback(self.cancelConfirm, ChoiceBox, title=_('Really close without saving settings?\nWhat do you want to do?') , list=[(_('close without saving'), 'close'), (_('close with saving and start searching'), 'close_save_start'), (_('only close and save (without searching)'), 'close_save'),(_('cancel'), 'exit'), ])
 		else:
 			self.close(None)
 
 	def cancelConfirm(self, ret):
-		if ret:
+		ret = ret and ret[1]
+		if ret == 'close':
 			# Invalidate config mtime to force re-read on next run
 			self.autotimer.configMtime = -1
 
 			# Close and indicated that we canceled by returning None
 			self.close(None)
+		elif ret == 'close_save_start':
+			#close and save with start searching
+			self.save()
+		elif ret == 'close_save':
+			#close and save without searching
+			self.save(False)
 
 	def menu(self):
 		list = [
@@ -351,7 +356,13 @@ class AutoTimerOverview(Screen, HelpableScreen):
 					)
 				
 
-	def save(self):
+	def save(self, startSearching=True):
 		# Just close here, saving will be done by cb
-		self.close(self.session)
+		if startSearching:
+			#close and save with start searching
+			self.close(self.session)
+		else:
+			#close and save without start searching
+			self.close(None)
+
 

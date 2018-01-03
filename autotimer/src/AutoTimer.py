@@ -540,6 +540,7 @@ class AutoTimer:
 					continue
 
 			# if set option for check/save timer in filterlist and only if not found an existing timer
+			isnewFilterEntry=False
 			if (config.plugins.autotimer.series_save_filter.value or timer.series_save_filter) and oldExists == False:
 				# only if use series_labeling and if sp_getSeasonEpisode was succesful
 				if timer.series_labeling and sp_getSeasonEpisode is not None:
@@ -555,6 +556,7 @@ class AutoTimer:
 							doLog("new Timer would be saved in autotimer_filter")
 						else:
 							#write eventname totextfile
+							isnewFilterEntry=True
 							file_filter_txt = open(path_filter_txt, "a")
 							file_filter_txt.write(str(strftime('%d.%m.%Y, %H:%M', localtime(begin))) + ' - "' + str(sp[0]) + '"\n')
 							file_filter_txt.close()
@@ -687,7 +689,10 @@ class AutoTimer:
 				if conflicts is None:
 					timer.decrementCounter()
 					new += 1
-					self.addToSearchLogfile(newEntry,"+", simulateOnly)
+					if isnewFilterEntry:
+						self.addToSearchLogfile(newEntry,"++", simulateOnly)
+					else:
+						self.addToSearchLogfile(newEntry,"+", simulateOnly)
 					newEntry.extdesc = extdesc
 					timerdict[serviceref].append(newEntry)
 
@@ -715,7 +720,9 @@ class AutoTimer:
 		
 		if not simulateOnlyValue:
 			#write eventname totextfile
-			logpath = os_path.dirname(config.plugins.autotimer.log_file.value)
+			logpath = config.plugins.autotimer.searchlog_path.value
+			if logpath == "?likeATlog?":
+				logpath = os_path.dirname(config.plugins.autotimer.log_file.value)
 			path_search_log = os_path.join(logpath, "autotimer_search.log")
 			file_search_log = open(path_search_log, "a")
 			file_search_log.write("(" + str(entryType) + ") " + str(strftime('%d.%m., %H:%M', localtime(timerEntry.begin))) + ' - "' + str(timerEntry.name) + '"\n')
@@ -724,7 +731,9 @@ class AutoTimer:
 
 	def prepareSearchLogfile(self):
 		# prepare searchlog at begin of real search (max. last 5 searches)
-		logpath = os_path.dirname(config.plugins.autotimer.log_file.value)
+		logpath = config.plugins.autotimer.searchlog_path.value
+		if logpath == "?likeATlog?":
+			logpath = os_path.dirname(config.plugins.autotimer.log_file.value)
 		path_search_log = os_path.join(logpath, "autotimer_search.log")
 		searchlog_txt = ""
 		if os_path.exists(path_search_log):
@@ -732,10 +741,12 @@ class AutoTimer:
 			#read last 5 logs in logfile (do not change then "\n########## " in the code !!!!)
 			if "\n########## " in searchlog_txt:
 				searchlog_txt = searchlog_txt.split("\n########## ")
-				if len(searchlog_txt) > 5:
+				if len(searchlog_txt) > config.plugins.autotimer.searchlog_max.value:
 					#del searchlog_txt[0]
-					searchlog_txt = searchlog_txt[len(searchlog_txt)-4:]
-				searchlog_txt = "\n########## " + "\n########## ".join(searchlog_txt)
+					searchlog_txt = searchlog_txt[len(searchlog_txt)-config.plugins.autotimer.searchlog_max.value-1:]
+					searchlog_txt = "\n########## " + "\n########## ".join(searchlog_txt)
+				else:
+					searchlog_txt = "\n########## ".join(searchlog_txt)
 		
 		searchlog_txt += "\n########## " + _("begin searchLog from") + " " + str(strftime('%d.%m.%Y, %H:%M', localtime())) + " ########\n\n"
 		file_search_log = open(path_search_log, "w")

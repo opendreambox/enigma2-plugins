@@ -66,6 +66,8 @@ class AutoTimerSettings(Screen, ConfigListScreen):
 				getConfigListEntry(_("match-ratio for title-duplicate-check"), config.plugins.autotimer.title_match_ratio, _("match-ratio is the factor at compare two timer in the title (min.=80, max.=100 = comparison must be 100% identical to skip duplicates, default=97)")),
 				getConfigListEntry(_("match-ratio for extendetDescription-duplicate-check"), config.plugins.autotimer.extdesc_match_ratio, _("match-ratio is the factor at compare two timer in the extDescription (min.=80, max.=100 = comparison must be 100% identical to skip duplicates, default=90)")),
 				getConfigListEntry(_("match-ratio for shortDescription-duplicate-check"), config.plugins.autotimer.shortdesc_match_ratio, _("match-ratio is the factor at compare two timer in the shortDescription (min.=80, max.=100 = comparison must be 100% identical to skip duplicates, default=90)")),	
+				getConfigListEntry(_("select the path for autotimer_search.log"), config.plugins.autotimer.searchlog_path, _("select the path where the autotimer_search.log should be saved")),
+				getConfigListEntry(_("max. count for saved searchlog"), config.plugins.autotimer.searchlog_max, _("select the count of the last saved searchlogs")+" (min=5, max=20)"),
 			],
 			session = session,
 			on_change = self.changed

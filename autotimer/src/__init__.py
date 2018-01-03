@@ -47,6 +47,13 @@ config.plugins.autotimer.series_save_filter = ConfigYesNo(default = False)
 config.plugins.autotimer.title_match_ratio = ConfigSelectionNumber(80, 100, 1, default = 97)
 config.plugins.autotimer.shortdesc_match_ratio = ConfigSelectionNumber(80, 100, 1, default = 90)
 config.plugins.autotimer.extdesc_match_ratio = ConfigSelectionNumber(80, 100, 1, default = 90)
+config.plugins.autotimer.searchlog_path = ConfigSelection(choices=[
+		("?likeATlog?", _("like autotimer.log")),
+		("/tmp", _("/tmp")),
+		("/etc/enigma2", _("/etc/enigma2"))
+	], default="?likeATlog?"
+)
+config.plugins.autotimer.searchlog_max = ConfigSelectionNumber(5, 20, 1, default = 5)
 
 config.plugins.autotimer.log_shell = ConfigYesNo(default = False)
 config.plugins.autotimer.log_write = ConfigYesNo(default = False)
