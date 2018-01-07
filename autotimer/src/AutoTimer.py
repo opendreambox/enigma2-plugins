@@ -552,6 +552,7 @@ class AutoTimer:
 								doLog("only simulate - new Timer would be saved in autotimer_filter")
 							else:
 								doLog("new Timer saved in autotimer_filter")
+								isnewFilterEntry=True
 						else:
 							skipped.append((name, begin, end, serviceref, timer.name, getLog()))
 							continue
