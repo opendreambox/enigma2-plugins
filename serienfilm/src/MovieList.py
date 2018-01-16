@@ -374,7 +374,7 @@ class MovieList(GUIComponent):
 				continue
 			txt = info.getName(serviceref)
 			if serviceref.flags & eServiceReference.mustDescent:
-				files = glob(os.path.join(txt, "*.ts"))
+				files = glob(os.path.join(txt, "*"))
 				# skip empty directories
 				if not files:
 					continue
