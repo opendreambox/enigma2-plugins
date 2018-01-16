@@ -724,8 +724,8 @@ var Services = Class.create(Controller, {
 		this.cachedServiceElements = null;
 	},
 
-	zap: function(sRef, callback){
-		this.handler.zap({'sRef' : sRef}, callback);
+	zap: function(sRef, sRoot, callback){
+		this.handler.zap({'sRef' : sRef, 'root' : sRoot}, callback);
 	},
 
 	load: function(sRef){
@@ -1705,8 +1705,9 @@ var E2WebCore = Class.create(BaseCore, {
 			'click',
 			'a.sListSLink',
 			function(event, element){
+				var root = unescape( element.readAttribute('data-bouquetreference') );
 				var ref = decodeURIComponent( element.id );
-				this.services.zap(ref, this.delayedUpdateItems.bind(this));
+				this.services.zap(ref, root, this.delayedUpdateItems.bind(this));
 				event.stop();
 			}.bind(this)
 		);

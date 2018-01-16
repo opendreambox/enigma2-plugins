@@ -382,6 +382,7 @@ function EPGEvent(xml, number){
 	this.duration = parseNr(getNodeContent(xml, 'e2eventduration', ''));
 	this.currentTime = parseNr(getNodeContent(xml, 'e2eventcurrenttime')),
 	this.title = getNodeContent(xml, 'e2eventtitle', '');
+	this.bouquetRef = getNodeContent(xml, 'e2eventbouquetreference', '');
 	this.serviceRef = getNodeContent(xml, 'e2eventservicereference', '');
 	this.serviceName = getNodeContent(xml, 'e2eventservicename', '');
 	this.fileName = getNodeContent(xml, 'e2filename', '');
@@ -475,6 +476,9 @@ function EPGEvent(xml, number){
 	this.getServiceReference = function() {
 		return encodeURIComponent(this.serviceRef);
 	};
+	this.getBouquetReference = function() {
+		return encodeURIComponent(this.bouquetRef);
+	};
 	this.getServiceName = function() {
 		return this.serviceName;
 	};
@@ -499,6 +503,7 @@ function EPGEvent(xml, number){
 		'date': this.getTimeDay(),
 		'eventid': this.getEventId(),
 		'servicereference': this.getServiceReference(),
+		'bouquetreference': this.getBouquetReference(),
 		'servicename': quotes2html(this.getServiceName()),
 		'ismarker' : this.isMarker(),
 		'title': quotes2html(this.getTitle()),

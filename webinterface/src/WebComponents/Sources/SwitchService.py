@@ -1,8 +1,10 @@
+from enigma import eServiceReference, iPlayableServicePtr
 from Components.Sources.Source import Source
 from Components.Converter import ServiceName
 from Components.config import config
 from Screens.InfoBar import InfoBar, MoviePlayer
-from enigma import eServiceReference, iPlayableServicePtr
+
+from Tools.Log import Log
 
 class SwitchService(Source):
 	def __init__(self, session):
@@ -14,19 +16,52 @@ class SwitchService(Source):
 	def handleCommand(self, cmd):
 		self.res = self.switchService(cmd)
 
+	def playService(self, ref, root=None):
+		from Screens.InfoBar import InfoBar
+		if root and InfoBar.instance:
+			try:
+				InfoBar.instance.servicelist.zap(ref, root)
+				return
+			except:
+				try:
+					from types import MethodType
+					def zap(self, nref=None, root=None):
+						self.revertMode=None
+						ref = self.session.nav.getCurrentlyPlayingServiceReference()
+						if not nref:
+							nref = self.getCurrentSelection()
+						if root:
+							if not self.preEnterPath(root):
+								self.clearPath()
+								self.enterPath(eServiceReference(root))
+						if ref is None or ref != nref:
+							self.new_service_played = True
+							self.session.nav.playService(nref)
+							self.saveRoot()
+							self.saveChannel(nref)
+							config.servicelist.lastmode.save()
+							self.addToHistory(nref)
+					InfoBar.instance.servicelist.zap = MethodType(zap, InfoBar.instance.servicelist)
+					InfoBar.instance.servicelist.zap(ref, root)
+					return
+				except:
+					Log.w("Patch failed! Will fallback primitive zap")
+					pass
+		self.session.nav.playService(ref)
+
 	def switchService(self, cmd):
-		print "[SwitchService] ref=%s" % cmd["sRef"]
+		print "[SwitchService] ref=%s, root=%s" %(cmd["sRef"], cmd["root"])
+		root = cmd["root"]
 		if config.plugins.Webinterface.allowzapping.value:
 			from Screens.Standby import inStandby
 			if inStandby == None:
-				if cmd["sRef"] != None:
+				if cmd["sRef"]:
 					pc = config.ParentalControl.configured.value
 					if pc:
 						config.ParentalControl.configured.value = False
 
 					eref = eServiceReference(cmd["sRef"])
-
-					if cmd["title"] is not None:
+					if cmd["title"]:
 						eref.setName(cmd["title"])
 
 					isRec = eref.getPath()
@@ -36,14 +71,14 @@ class SwitchService(Source):
 						if isinstance(self.session.current_dialog, MoviePlayer):
 							self.session.current_dialog.lastservice = eref
 							self.session.current_dialog.close()
-						self.session.nav.playService(eref)
+						self.playService(eref, root)
 					elif isRec:
 						# if this is a recording and the infobar is shown, open the movie player
 						if isinstance(self.session.current_dialog, InfoBar):
 							self.session.open(MoviePlayer, eref)
 						# otherwise just play it with no regard for the context
 						else:
-							self.session.nav.playService(eref)
+							self.playService(eref, root)
 
 					if pc:
 						config.ParentalControl.configured.value = pc
