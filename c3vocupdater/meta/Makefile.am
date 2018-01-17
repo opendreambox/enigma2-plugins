@@ -1,3 +1,3 @@
 installdir = $(datadir)/meta/
 
-dist_install_DATA = c3voc_updater.xml
+dist_install_DATA = plugin_c3vocupdater.xml
