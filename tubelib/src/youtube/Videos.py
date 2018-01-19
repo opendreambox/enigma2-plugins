@@ -256,6 +256,7 @@ class VideoUrlRequest(object):
 			"youtube_include_dash_manifest": False,
 			"nocheckcertificate" : True,
 			"noplaylist" : False,
+			"playlist_items" : 1,
 			"logger" : YTDLLogger(),
 		}
 		self._setupFormatMap()
@@ -294,20 +295,21 @@ class VideoUrlRequest(object):
 					entry = result[self.KEY_ENTRIES][0] #TODO handle properly
 				else:# Just a video
 					entry = result
-					fmt = entry.get(self.KEY_FORMAT_ID)
-					url = ""
-					suburi = ""
-					for f in entry.get(self.KEY_REQUESTED_FORMATS, []):
-						if not url and f.get(self.KEY_VCODEC, u"none") != u"none":
-							url = str(f.get(self.KEY_URL, ""))
-						elif not suburi and f.get(self.KEY_ACODEC, u"none") != u"none":
-							suburi = str(f.get(self.KEY_URL, ""))
-					if not url:
-						url = str(entry.get(self.KEY_URL, ""))
-					self._onResult(True, url, fmt, suburi)
+				fmt = entry.get(self.KEY_FORMAT_ID)
+				url = ""
+				suburi = ""
+				for f in entry.get(self.KEY_REQUESTED_FORMATS, []):
+					if not url and f.get(self.KEY_VCODEC, u"none") != u"none":
+						url = str(f.get(self.KEY_URL, ""))
+					elif not suburi and f.get(self.KEY_ACODEC, u"none") != u"none":
+						suburi = str(f.get(self.KEY_URL, ""))
+				if not url:
+					url = str(entry.get(self.KEY_URL, ""))
+				self._onResult(True, url, fmt, suburi)
+				return
 		except Exception as e:
 			Log.w(e)
-			self._onResult(False, None, -1)
+		self._onResult(False, None, -1)
 
 	def _onResult(self, success, url, fmt, suburi=""):
 		if self._canceled:
