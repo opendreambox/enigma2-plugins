@@ -75,6 +75,7 @@ SUBDIRS = \
 	remotetimer \
 	satipclient \
 	satloader \
+	screensaver \
 	seekbar \
 	serienfilm \
 	setpasswd \

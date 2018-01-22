@@ -1,0 +1,16 @@
+<default>
+	<prerequisites>
+		<tag type="Display" />
+		<tag type="System" />
+	</prerequisites>
+	<info>
+		<author>Dream Property GmbH</author>
+		<name>Screensaver</name>
+		<packagename>enigma2-plugin-systemplugins-screensaver</packagename>
+		<shortdescription>A simple screensaver showing random photos</shortdescription>
+		<description>A simple screensaver showing random photos</description>
+	</info>
+	<files type="package"> <!-- without version, without .deb  -->
+		<file type="package" name="enigma2-plugin-systemplugins-screensaver" />
+	</files>
+</default>

@@ -355,6 +355,10 @@ satloader/Makefile
 satloader/meta/Makefile
 satloader/src/Makefile
 
+screensaver/Makefile
+screensaver/meta/Makefile
+screensaver/src/Makefile
+
 seekbar/Makefile
 seekbar/meta/Makefile
 seekbar/src/Makefile
