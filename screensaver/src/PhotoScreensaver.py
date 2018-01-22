@@ -28,8 +28,8 @@ class MyPixmap(Pixmap):
 
 
 class PhotoScreensaver(Screen):
-	skin = """<screen name="Screensaver" title="Screensaver" position="center,center" size="100%,100%" backgroundColor="#000000">
-		<widget name="wallpaper" position="0,0" size="1280,720" zPosition="1"/>
+	skin = """<screen name="Screensaver" title="Screensaver" position="center,center" size="fill_parent,fill_parent" backgroundColor="#000000">
+		<widget name="wallpaper" position="0,0" size="fill_parent,fill_parent" zPosition="1"/>
 	</screen>"""
 
 	TEMPFILE = "/tmp/wallpaper"

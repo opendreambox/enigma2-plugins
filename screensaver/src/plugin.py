@@ -45,7 +45,7 @@ class ScreenSaverHandler(object):
 			Log.d(width)
 			self._screenSaver.enabled = width <= 0
 		elif evt == iPlayableService.evStopped:
-			self._screenSaver.enabled = False
+			self._screenSaver.enabled = True
 
 screenSaverHandler = ScreenSaverHandler()
 
