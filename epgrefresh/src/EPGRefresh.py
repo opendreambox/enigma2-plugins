@@ -5,7 +5,7 @@ from __future__ import print_function
 import Screens.Standby
 
 # eServiceReference
-from enigma import eServiceReference, eServiceCenter, eEPGCache, cachestate
+from enigma import quitMainloop, eServiceReference, eServiceCenter, eEPGCache, cachestate
 
 # ...
 from ServiceReference import ServiceReference
@@ -27,6 +27,7 @@ from sys import stdout
 from xml.etree.cElementTree import parse as cet_parse
 from Tools.XMLTools import stringToXML
 from os import path as path
+from os import remove as remove
 
 # We want a list of unique services
 from EPGRefreshService import EPGRefreshService
@@ -40,6 +41,10 @@ from Components.config import config
 from Screens.MessageBox import MessageBox
 from Tools import Notifications
 from Tools.BoundFunction import boundFunction
+
+# epg.db 
+from enigma import cachestate                                                
+from sqlite3 import dbapi2 as sqlite      
 
 # ... II
 from . import ENDNOTIFICATIONID, NOTIFICATIONDOMAIN
@@ -631,6 +636,58 @@ class EPGRefresh:
 					nocheck = True)
 				)
 
+	def resetEPG(self, session):
+		self.reset_session=session
+		# remove database
+		if path.exists(config.misc.epgcache_filename.value):
+			remove(config.misc.epgcache_filename.value)
+		# create empty database
+		connection = sqlite.connect(config.misc.epgcache_filename.value, timeout=10)
+		connection.text_factory = str
+		cursor = connection.cursor()
+		cursor.execute("CREATE TABLE T_Service (id INTEGER PRIMARY KEY, sid INTEGER NOT NULL, tsid INTEGER, onid INTEGER, dvbnamespace INTEGER, changed DATETIME NOT NULL DEFAULT current_timestamp)")
+		cursor.execute("CREATE TABLE T_Source (id INTEGER PRIMARY KEY, source_name TEXT NOT NULL, priority INTEGER NOT NULL, changed DATETIME NOT NULL DEFAULT current_timestamp)")
+		cursor.execute("CREATE TABLE T_Title (id INTEGER PRIMARY KEY, hash INTEGER NOT NULL UNIQUE, title TEXT NOT NULL, changed DATETIME NOT NULL DEFAULT current_timestamp)")
+		cursor.execute("CREATE TABLE T_Short_Description (id INTEGER PRIMARY KEY, hash INTEGER NOT NULL UNIQUE, short_description TEXT NOT NULL, changed DATETIME NOT NULL DEFAULT current_timestamp)")
+		cursor.execute("CREATE TABLE T_Extended_Description (id INTEGER PRIMARY KEY, hash INTEGER NOT NULL UNIQUE, extended_description TEXT NOT NULL, changed DATETIME NOT NULL DEFAULT current_timestamp)")
+		cursor.execute("CREATE TABLE T_Event (id INTEGER PRIMARY KEY, service_id INTEGER NOT NULL, begin_time INTEGER NOT NULL, duration INTEGER NOT NULL, source_id INTEGER NOT NULL, dvb_event_id INTEGER, changed DATETIME NOT NULL DEFAULT current_timestamp)")
+		cursor.execute("CREATE TABLE T_Data (event_id INTEGER NOT NULL, title_id INTEGER, short_description_id INTEGER, extended_description_id INTEGER, iso_639_language_code TEXT NOT NULL, changed DATETIME NOT NULL DEFAULT current_timestamp)")
+		cursor.execute("CREATE INDEX data_title ON T_Data (title_id)")
+		cursor.execute("CREATE INDEX data_shortdescr ON T_Data (short_description_id)")
+		cursor.execute("CREATE INDEX data_extdescr ON T_Data (extended_description_id)")
+		cursor.execute("CREATE INDEX service_sid ON T_Service (sid)")
+		cursor.execute("CREATE INDEX event_service_id_begin_time ON T_Event (service_id, begin_time)")
+		cursor.execute("CREATE INDEX event_dvb_id ON T_Event (dvb_event_id)")
+		cursor.execute("CREATE INDEX data_event_id ON T_Data (event_id)")
+		cursor.execute("CREATE TRIGGER tr_on_delete_cascade_t_event AFTER DELETE ON T_Event FOR EACH ROW BEGIN DELETE FROM T_Data WHERE event_id = OLD.id; END")
+		cursor.execute("CREATE TRIGGER tr_on_delete_cascade_t_service_t_event AFTER DELETE ON T_Service FOR EACH ROW BEGIN DELETE FROM T_Event WHERE service_id = OLD.id; END")
+		cursor.execute("CREATE TRIGGER tr_on_delete_cascade_t_data_t_title AFTER DELETE ON T_Data FOR EACH ROW WHEN ((SELECT event_id FROM T_Data WHERE title_id = OLD.title_id LIMIT 1) ISNULL) BEGIN DELETE FROM T_Title WHERE id = OLD.title_id; END")
+		cursor.execute("CREATE TRIGGER tr_on_delete_cascade_t_data_t_short_description AFTER DELETE ON T_Data FOR EACH ROW WHEN ((SELECT event_id FROM T_Data WHERE short_description_id = OLD.short_description_id LIMIT 1) ISNULL) BEGIN DELETE FROM T_Short_Description WHERE id = OLD.short_description_id; END")
+		cursor.execute("CREATE TRIGGER tr_on_delete_cascade_t_data_t_extended_description AFTER DELETE ON T_Data FOR EACH ROW WHEN ((SELECT event_id FROM T_Data WHERE extended_description_id = OLD.extended_description_id LIMIT 1) ISNULL) BEGIN DELETE FROM T_Extended_Description WHERE id = OLD.extended_description_id; END")
+		cursor.execute("CREATE TRIGGER tr_on_update_cascade_t_data AFTER UPDATE ON T_Data FOR EACH ROW WHEN (OLD.title_id <> NEW.title_id AND ((SELECT event_id FROM T_Data WHERE title_id = OLD.title_id LIMIT 1) ISNULL)) BEGIN DELETE FROM T_Title WHERE id = OLD.title_id; END")
+		cursor.execute("INSERT INTO T_Source (id,source_name,priority) VALUES('0','Sky Private EPG','0')")
+		cursor.execute("INSERT INTO T_Source (id,source_name,priority) VALUES('1','DVB Now/Next Table','0')")
+		cursor.execute("INSERT INTO T_Source (id,source_name,priority) VALUES('2','DVB Schedule (same Transponder)','0')")
+		cursor.execute("INSERT INTO T_Source (id,source_name,priority) VALUES('3','DVB Schedule Other (other Transponder)','0')")
+		cursor.execute("INSERT INTO T_Source (id,source_name,priority) VALUES('4','Viasat','0')")
+                connection.commit()
+		cursor.close()
+		connection.close()
+		self.myEpgCacheInstance = eEPGCache.getInstance()
+		self.EpgCacheStateChanged_conn = self.myEpgCacheInstance.cacheState.connect(self.resetStateChanged)
+		self.myEpgCacheInstance.load()                   
+
+	def resetStateChanged(self, state):
+		if state.state == cachestate.load_finished:
+			self.reset_session.openWithCallback(self.doRestart, MessageBox, \
+				text = _("Reset")+" "+_("EPG.db")+" "+_("successful")+"\n\n"+_("Restart GUI now?"), \
+				type = MessageBox.TYPE_YESNO, default = True, timeout = 10)
+
+	def doRestart(self, answer):
+		if answer is not None:
+			if answer:
+				quitMainloop(3)
+			
 	def showPendingServices(self, session):
 		LISTMAX = 10
 		servcounter = 0

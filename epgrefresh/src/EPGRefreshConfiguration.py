@@ -29,7 +29,7 @@ from traceback import print_exc
 from sys import stdout
 import os
 
-VERSION = "2.3.0"
+VERSION = "2.3.1"
 class EPGHelpContextMenu(FixedMenu):
 	HELP_RETURN_MAINHELP = 0
 	HELP_RETURN_KEYHELP = 1
@@ -46,13 +46,19 @@ class EPGFunctionMenu(FixedMenu):
 	FUNCTION_RETURN_FORCEREFRESH = 0
 	FUNCTION_RETURN_STOPREFRESH = 1
 	FUNCTION_RETURN_SHOWPENDING = 2
+	FUNCTION_RETURN_EPGRESET = 3
+
 
 	def __init__(self, session):
 		if epgrefresh.isRunning():
 			menu = [(_("Stop running refresh"), boundFunction(self.close, self.FUNCTION_RETURN_STOPREFRESH)),
 				(_("Pending Services"), boundFunction(self.close, self.FUNCTION_RETURN_SHOWPENDING))]
 		else:
-			menu = [(_("Refresh now"), boundFunction(self.close, self.FUNCTION_RETURN_FORCEREFRESH))]
+			if config.plugins.epgrefresh.epgreset.value:
+				menu = [(_("Refresh now"), boundFunction(self.close, self.FUNCTION_RETURN_FORCEREFRESH)),
+					(_("Reset")+" "+_("EPG.db"), boundFunction(self.close, self.FUNCTION_RETURN_EPGRESET))]
+			else:
+				menu = [(_("Refresh now"), boundFunction(self.close, self.FUNCTION_RETURN_FORCEREFRESH))]
 		menu.append((_("Cancel"), self.close))
 
 		FixedMenu.__init__(self, session, _("EPGRefresh Functions"), menu)
@@ -170,6 +176,7 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 				self.list.append(getConfigListEntry(_("Force scan even if receiver is in use"), config.plugins.epgrefresh.force, _("This setting controls whether or not the refresh will be initiated even though the receiver is active (either not in standby or currently recording)."), False))
 				self.list.append(getConfigListEntry(_("Shutdown after EPG refresh"), config.plugins.epgrefresh.afterevent, _("This setting controls whether the receiver should be set to standby after refresh is completed."), False))
                                 self.list.append(getConfigListEntry(_("Force save EPG.db"), config.plugins.epgrefresh.epgsave, _("If this is enabled, the Plugin save the epg.db /etc/enigma2/epg.db."), False)) 
+                                self.list.append(getConfigListEntry(_("Reset")+" "+_("EPG.db"), config.plugins.epgrefresh.epgreset, _("If this is enabled, the Plugin shows the Reset EPG.db function."), False)) 
 				try:
 					# try to import autotimer module to check for its existence
 					from Plugins.Extensions.AutoTimer.AutoTimer import AutoTimer
@@ -258,6 +265,8 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 				self.stopRunningRefresh()
 			if result == EPGFunctionMenu.FUNCTION_RETURN_SHOWPENDING:
 				self.showPendingServices()
+			if result == EPGFunctionMenu.FUNCTION_RETURN_EPGRESET:
+				self.resetEPG()
 		except:
 			print("[EPGRefresh] Error in Function - Call")
 			print_exc(file=stdout)
@@ -270,6 +279,9 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 		epgrefresh.services = (set(self.services[0]), set(self.services[1]))
 		epgrefresh.forceRefresh(self.session)
 		self.keySave(False)
+
+	def resetEPG(self):
+		epgrefresh.resetEPG(self.session)
 
 	def showPendingServices(self):
 		epgrefresh.showPendingServices(self.session)
