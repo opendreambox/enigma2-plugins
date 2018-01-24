@@ -16,6 +16,17 @@ class ScreenSaverHandler(object):
 		self.session.screensaver = self
 		self.session.nav.event.append(self._onEvent)
 		self._enabled = True
+		config.misc.standbyCounter.addNotifier(self._onStandby, initial_call=False)
+
+	def _onStandby(self, *args):
+		if not self._enabled:
+			return
+		self.disable()
+		from Screens.Standby import inStandby
+		inStandby.onClose.append(self.enable)
+
+	def _onStandbyLeft(self):
+		self.enable()
 
 	def enable(self):
 		self._enabled = True
@@ -31,11 +42,10 @@ class ScreenSaverHandler(object):
 
 	def _onEvent(self, evt):
 		self._instantiateSaver()
-
+		if not (self._enabled and config.plugins.screensaver.enabled.value):
+			self._screenSaver.enabled = False
+			return
 		if evt == iPlayableService.evPlay:
-			if not (self._enabled and config.plugins.screensaver.enabled.value):
-				self._screenSaver.enabled = False
-				return
 			Log.i("play event, checking for video")
 			service = self.session.nav.getCurrentService()
 			info = service and service.info()
@@ -44,7 +54,7 @@ class ScreenSaverHandler(object):
 			width = info.getInfo(iServiceInformation.sVideoWidth)
 			Log.d(width)
 			self._screenSaver.enabled = width <= 0
-		elif evt == iPlayableService.evStopped:
+		elif evt in (iPlayableService.evStopped, iPlayableService.evPause):
 			self._screenSaver.enabled = True
 
 screenSaverHandler = ScreenSaverHandler()
