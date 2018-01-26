@@ -490,8 +490,8 @@ class AutoTimer:
 				elif config.plugins.autotimer.try_guessing.value:
 					if timer.hasOffset():
 						# Remove custom Offset
-						rbegin = rtimer.begin + timer.offset[0] * 60
-						rend = rtimer.end - timer.offset[1] * 60
+						rbegin = rtimer.begin + timer.offset[0]
+						rend = rtimer.end - timer.offset[1]
 					else:
 						# Remove E2 Offset
 						rbegin = rtimer.begin + config.recording.margin_before.value * 60
