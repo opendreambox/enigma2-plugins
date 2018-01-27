@@ -1,2 +1,2 @@
 Description: Plugin to refresh EPG Data when Receiver is inactive
-Depends: enigma2, python-codecs, python-lang, python-xml, enigma2-plugin-systemplugins-mphelp
+Depends: enigma2, python-codecs, python-lang, python-xml, python-sqlite3, enigma2-plugin-systemplugins-mphelp
