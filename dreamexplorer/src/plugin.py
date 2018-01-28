@@ -575,6 +575,8 @@ class DreamExplorerII(Screen):
 			source = self["filelist"].getCurrentDirectory() + self["filelist"].getFilename()
 		elif (self["filelist"].getSelectionIndex()!=0) and (self["filelist"].canDescent()): #NEW
 			source = self["filelist"].getSelection()[0]
+		else:
+			return
 		self.session.openWithCallback(self.callbackCopyMoveManager, CopyMoveManager, source)
 
 	def callbackCopyMoveManager(self, answer):
