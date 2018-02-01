@@ -256,6 +256,16 @@ class AutoTimerRemoveAutoTimerResource(AutoTimerBaseResource):
 			return self.returnResult(req, True, _("AutoTimer was removed"))
 		else:
 			return self.returnResult(req, False, _("missing parameter \"id\""))
+			
+class AutoTimerAddXMLAutoTimerResource(AutoTimerBaseResource):
+	def render_POST(self, req):
+		req.setResponseCode(http.OK)
+		req.setHeader('Content-type', 'application/xhtml+xml;' )
+		req.setHeader('charset', 'UTF-8')	
+		autotimer.readXmlTimer(req.args['xml'][0])
+		if config.plugins.autotimer.always_write_config.value:
+			autotimer.writeXml()
+		return self.returnResult(req, True, _("AutoTimer was added successfully"))
 
 class AutoTimerAddOrEditAutoTimerResource(AutoTimerBaseResource):
 	# TODO: recheck if we can modify regular config parser to work on this

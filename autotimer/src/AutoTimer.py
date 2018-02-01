@@ -1,7 +1,7 @@
 from __future__ import print_function
 
 # Plugins Config
-from xml.etree.cElementTree import parse as cet_parse
+from xml.etree.cElementTree import parse as cet_parse, fromstring as cet_fromstring
 from os import path as os_path, remove as os_remove
 from AutoTimerConfiguration import parseConfig, buildConfig
 from Tools.IO import saveFile
@@ -160,6 +160,25 @@ class AutoTimer:
 	def writeXml(self):
 		# XXX: we probably want to indicate failures in some way :)
 		saveFile(XML_CONFIG, buildConfig(self.defaultTimer, self.timers))
+		
+	def writeXmlTimer(self, timer):
+		return ''.join(buildConfig(self.defaultTimer, [timer]))
+	
+	def readXmlTimer(self, xml_string):
+		# Parse xml string
+		configuration = cet_fromstring(xml_string)
+		
+		parseConfig(
+			configuration,
+			self.timers,
+			configuration.get("version"),
+			self.uniqueTimerId,
+			self.defaultTimer
+		)
+		self.uniqueTimerId += 1
+		
+		# reset time
+		self.configMtime = -1
 
 # Manage List
 
