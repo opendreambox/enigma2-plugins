@@ -75,7 +75,8 @@ def sessionstart(reason, **kwargs):
 			from AutoTimerResource import AutoTimerDoParseResource, \
 				AutoTimerListAutoTimerResource, AutoTimerAddOrEditAutoTimerResource, \
 				AutoTimerRemoveAutoTimerResource, AutoTimerChangeSettingsResource, \
-				AutoTimerSettingsResource, AutoTimerSimulateResource, AutoTimerTestResource, API_VERSION, AutoTimerAddXMLAutoTimerResource
+				AutoTimerSettingsResource, AutoTimerSimulateResource, AutoTimerTestResource, \
+				AutoTimerUploadXMLConfigurationAutoTimerResource, AutoTimerAddXMLAutoTimerResource, API_VERSION
 		except ImportError as ie:
 			pass
 		else:
@@ -90,6 +91,7 @@ def sessionstart(reason, **kwargs):
 			root = AutoTimerListAutoTimerResource()
 			root.putChild('parse', AutoTimerDoParseResource())
 			root.putChild('remove', AutoTimerRemoveAutoTimerResource())
+			root.putChild('upload_xmlconfiguration', AutoTimerUploadXMLConfigurationAutoTimerResource())
 			root.putChild('add_xmltimer', AutoTimerAddXMLAutoTimerResource())
 			root.putChild('edit', AutoTimerAddOrEditAutoTimerResource())
 			root.putChild('get', AutoTimerSettingsResource())
