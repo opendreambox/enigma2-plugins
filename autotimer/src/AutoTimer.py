@@ -745,7 +745,7 @@ class AutoTimer:
 		# We include processed timers as we might search for duplicate descriptions
 		# NOTE: It is also possible to use RecordTimer isInTimer(), but we won't get the timer itself on a match
 		timerdict = defaultdict(list)
-		doBlockingCallFromMainThread(self.populateTimerdict, epgcache, recordHandler, timerdict)
+		doBlockingCallFromMainThread(self.populateTimerdict, epgcache, recordHandler, timerdict, simulateOnly=simulateOnly)
 
 		# Create dict of all movies in all folders used by an autotimer to compare with recordings
 		# The moviedict will be filled only if one AutoTimer is configured to avoid duplicate description for any recordings
@@ -773,7 +773,7 @@ class AutoTimer:
 
 # Supporting functions
 
-	def populateTimerdict(self, epgcache, recordHandler, timerdict):
+	def populateTimerdict(self, epgcache, recordHandler, timerdict, simulateOnly=False):
 		remove = []
 		for timer in chain(recordHandler.timer_list, recordHandler.processed_timers):
 			if timer and timer.service_ref:

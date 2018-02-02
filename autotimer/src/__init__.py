@@ -42,6 +42,7 @@ config.plugins.autotimer.log_write = ConfigYesNo(default = False)
 config.plugins.autotimer.log_file  = ConfigText(default = "/tmp/autotimer.log", fixed_size = False)
 
 config.plugins.autotimer.series_save_filter = ConfigYesNo(default = False)
+config.plugins.autotimer.show_addto_in_filmmenu = ConfigYesNo(default=False)
 config.plugins.autotimer.title_match_ratio = ConfigSelectionNumber(80, 100, 1, default = 97)
 config.plugins.autotimer.shortdesc_match_ratio = ConfigSelectionNumber(80, 100, 1, default = 90)
 config.plugins.autotimer.extdesc_match_ratio = ConfigSelectionNumber(80, 100, 1, default = 90)
