@@ -1,7 +1,7 @@
 from __future__ import print_function
 
 # Plugins Config
-from xml.etree.cElementTree import parse as cet_parse
+from xml.etree.cElementTree import parse as cet_parse, fromstring as cet_fromstring
 from os import path as os_path, remove as os_remove
 from AutoTimerConfiguration import parseConfig, buildConfig
 from Tools.IO import saveFile
@@ -123,23 +123,30 @@ class AutoTimer:
 
 # Configuration
 
-	def readXml(self):
-		# Abort if no config found
-		if not os_path.exists(XML_CONFIG):
-			doLog("No configuration file present")
-			return
+	def readXml(self, **kwargs):
+		if "xml_string" in kwargs:
+			# reset time
+			self.configMtime = -1
 
-		# Parse if mtime differs from whats saved
-		mtime = os_path.getmtime(XML_CONFIG)
-		if mtime == self.configMtime:
-			doLog("No changes in configuration, won't parse")
-			return
+			# Parse Config
+			configuration = cet_fromstring(kwargs["xml_string"])
+		else:
+			# Abort if no config found
+			if not os_path.exists(XML_CONFIG):
+				doLog("No configuration file present")
+				return
 
-		# Save current mtime
-		self.configMtime = mtime
+			# Parse if mtime differs from whats saved
+			mtime = os_path.getmtime(XML_CONFIG)
+			if mtime == self.configMtime:
+				doLog("No changes in configuration, won't parse")
+				return
 
-		# Parse Config
-		configuration = cet_parse(XML_CONFIG).getroot()
+			# Save current mtime
+			self.configMtime = mtime
+
+			# Parse Config
+			configuration = cet_parse(XML_CONFIG).getroot()
 
 		# Empty out timers and reset Ids
 		del self.timers[:]
@@ -154,12 +161,31 @@ class AutoTimer:
 		)
 		self.uniqueTimerId = len(self.timers)
 
-	def getXml(self):
-		return buildConfig(self.defaultTimer, self.timers, webif = True)
+	def getXml(self, webif = True):
+		return buildConfig(self.defaultTimer, self.timers, webif)
 
 	def writeXml(self):
 		# XXX: we probably want to indicate failures in some way :)
 		saveFile(XML_CONFIG, buildConfig(self.defaultTimer, self.timers))
+		
+	def writeXmlTimer(self, timers):
+		return ''.join(buildConfig(self.defaultTimer, timers))
+	
+	def readXmlTimer(self, xml_string):
+		# Parse xml string
+		configuration = cet_fromstring(xml_string)
+		
+		parseConfig(
+			configuration,
+			self.timers,
+			configuration.get("version"),
+			self.uniqueTimerId,
+			self.defaultTimer
+		)
+		self.uniqueTimerId += 1
+		
+		# reset time
+		self.configMtime = -1
 
 # Manage List
 
