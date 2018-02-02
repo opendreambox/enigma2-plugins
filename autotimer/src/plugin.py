@@ -20,6 +20,7 @@ autotimer = AutoTimer()
 autopoller = None
 
 AUTOTIMER_VERSION = "4.3"
+NOTIFICATIONDOMAIN = "AutoTimer"
 
 #pragma mark - Help
 try:
@@ -32,7 +33,14 @@ except Exception as e:
 	autotimerHelp = None
 #pragma mark -
 
+# Notification-Domain
+from Tools.Notifications import notificationQueue
+try:
+	notificationQueue.registerDomain(NOTIFICATIONDOMAIN, _("AutoTimer"), deferred_callable = True)
+except Exception as e:
+	print("[AutoTimer] Error registering Notification-Domain:", e)
 # Autostart
+
 def autostart(reason, **kwargs):
 	global autopoller
 
@@ -181,15 +189,22 @@ def parseEPGCallback(ret):
 		if "\n########## " in searchlog_txt:
 			searchlog_txt = searchlog_txt.split("\n########## ")
 			searchlog_txt = str(searchlog_txt[-1]).split("\n")[2:]
+			
+			#check count and length of searchlog_entries
+			maxlistcount = 10
+			maxtextlength = 55
+			listcount = len(searchlog_txt)
+			searchlog_txt = searchlog_txt[:maxlistcount]
+			for i, entry in enumerate(searchlog_txt):
+				if len(entry) > maxtextlength:
+					searchlog_txt[i] = entry[:maxtextlength-3] + "..."
 			searchlog_txt = "\n".join(searchlog_txt)
+			if listcount > maxlistcount+1:
+				searchlog_txt += "\n" + "and %d searchlog-entries more ..." % (listcount-maxlistcount)
 
-	AddPopup(
-		_("Found a total of %(matches)d matching Events.\n%(timer)d Timer were added and\n%(modified)d modified,\n%(conflicts)d conflicts encountered,\n%(similars)d similars added.") % \
+	AddPopup(_("Found a total of %(matches)d matching Events.\n%(timer)d Timer were added and\n%(modified)d modified,\n%(conflicts)d conflicts encountered,\n%(similars)d similars added.") % \
 		{"matches":ret[0], "timer":ret[1], "modified":ret[2], "conflicts":len(ret[4]), "similars":len(ret[5])} + "\n\n" + str(searchlog_txt),
-		MessageBox.TYPE_INFO,
-		config.plugins.autotimer.popup_timeout.value,
-		'AT_PopUp_ID_ParseEPGCallback'
-	)
+		MessageBox.TYPE_INFO, config.plugins.autotimer.popup_timeout.value, domain = NOTIFICATIONDOMAIN, id = 'AT_PopUp_ID_ParseEPGCallback')
 
 	# Save xml
 	if config.plugins.autotimer.always_write_config.value:
@@ -250,9 +265,21 @@ def housekeepingExtensionsmenu(el):
 		except ValueError as ve:
 			doLog("[AutoTimer] housekeepingExtensionsmenu got confused, tried to remove non-existant plugin entry... ignoring.")
 
+def housekeepingFilmmenu(el):
+	if el.value:
+		plugins.addPlugin(filmDescriptor_addto)
+	else:
+		try:
+			plugins.removePlugin(filmDescriptor_addto)
+		except ValueError as ve:
+			doLog("[AutoTimer] housekeepingFilmmenu got confused, tried to remove non-existant plugin entry... ignoring.")
+
 config.plugins.autotimer.show_in_extensionsmenu.addNotifier(housekeepingExtensionsmenu, initial_call = False, immediate_feedback = True)
 extDescriptor = PluginDescriptor(name="AutoTimer", description = _("Edit Timers and scan for new Events"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = extensionsmenu, needsRestart = False)
 extDescriptor_scan = PluginDescriptor(name="AutoTimer scan", description = _("scan for new Events"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = extensionsmenu_scan, needsRestart = False)
+
+config.plugins.autotimer.show_addto_in_filmmenu.addNotifier(housekeepingFilmmenu, initial_call = False, immediate_feedback = True)
+filmDescriptor_addto = PluginDescriptor(name = _("add to AutoTimer filterList"), description = _("add to AutoTimer filterList"), where = PluginDescriptor.WHERE_MOVIELIST, fnc = add_to_filterList, needsRestart = False)
 
 def Plugins(**kwargs):
 	l = [
@@ -264,10 +291,13 @@ def Plugins(**kwargs):
 		PluginDescriptor(name="AutoTimer", description= _("add AutoTimer"), where = PluginDescriptor.WHERE_MOVIELIST, fnc = movielist, needsRestart = False),
 		# TRANSLATORS: AutoTimer title in EventInfo dialog (requires the user to select an event to base the AutoTimer on)
 		PluginDescriptor(name = _("add AutoTimer..."), where = PluginDescriptor.WHERE_EVENTINFO, fnc = eventinfo, needsRestart = False),
-		PluginDescriptor(name = _("add to AutoTimer filterList"), description = _("add to AutoTimer filterList"), where = PluginDescriptor.WHERE_MOVIELIST, fnc = add_to_filterList, needsRestart = False),
 	]
 	if config.plugins.autotimer.show_in_extensionsmenu.value:
 		l.append(extDescriptor)
 		l.append(extDescriptor_scan)
+	
+	if config.plugins.autotimer.show_addto_in_filmmenu.value:
+		l.append(filmDescriptor_addto)
+		
 	return l
 
