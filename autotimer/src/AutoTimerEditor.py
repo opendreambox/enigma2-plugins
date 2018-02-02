@@ -446,10 +446,14 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 	</screen>"""
 
 
-	def __init__(self, session, timer, editingDefaults = False):
+	def __init__(self, session, timer, editingDefaults = False, **kwargs):
 		Screen.__init__(self, session)
 
 		AutoTimerEditorBase.__init__(self, timer, editingDefaults)
+
+		self.partnerbox = False
+		if "partnerbox" in kwargs:
+			self.partnerbox = kwargs["partnerbox"]			
 
 		# Summary
 		self.setup_title = _("AutoTimer Editor")
@@ -714,6 +718,16 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 			self.serviceRestriction = ret[0]
 			self.services = ret[1][0]
 			self.bouquets = ret[1][1]
+			if self.partnerbox:
+				idx = 0
+				for service in self.services:
+					serviceref = eServiceReference(service)
+					if serviceref.getPath():
+						serviceref.setPath("")
+						ref_split = serviceref.toString().split(":")
+						ref_split[1] = "0"
+						self.services[idx] = ":".join(ref_split)
+					idx += 1
 			self.renameServiceButton()
 
 	def keyLeft(self):
