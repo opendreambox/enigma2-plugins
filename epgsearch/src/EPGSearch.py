@@ -24,6 +24,7 @@ from Components.Sources.Event import Event
 
 from time import localtime
 from operator import itemgetter
+from Tools.BoundFunction import boundFunction
 
 # Partnerbox installed and icons in epglist enabled?
 try:
@@ -194,7 +195,7 @@ class EPGSearch(EPGSelection):
 		self.setTitle(_("EPG Search"))
 
 		if self.searchargs:
-			self.searchEPG(*self.searchargs)
+			self.doSearchEPG(*self.searchargs)
 		else:
 			l = self["list"]
 			l.recalcEntrySize()
@@ -337,6 +338,18 @@ class EPGSearch(EPGSelection):
 			self.searchEPG(ret[1])
 
 	def searchEPG(self, searchString = None, searchSave = True):
+		if not searchString:
+			return
+		boundCallback = boundFunction(self.onSearchEPGCallback, searchString=searchString, searchSave=searchSave)
+		choices = [ (_("Titles only"), False),
+					(_("Titles and Descriptions"), True) ]
+		self.session.openWithCallback(boundCallback, ChoiceBox, list=choices, title=_("Where to search for '%s'?") %(searchString), windowTitle=_("EPG Search"))
+
+	def onSearchEPGCallback(self, answer, searchString=None, searchSave=True):
+		searchDescription = answer and answer[1]
+		self.doSearchEPG(searchString, searchSave, searchDescription)
+
+	def doSearchEPG(self, searchString = None, searchSave = True, searchDescription=False):
 		if searchString:
 			self.currSearch = searchString
 			if searchSave:
@@ -354,6 +367,13 @@ class EPGSearch(EPGSelection):
 			# Search EPG, default to empty list
 			epgcache = eEPGCache.getInstance() # XXX: the EPGList also keeps an instance of the cache but we better make sure that we get what we want :-)
 			ret = epgcache.search(('RIBDT', 1000, eEPGCache.PARTIAL_TITLE_SEARCH, searchString, eEPGCache.NO_CASE_CHECK)) or []
+			if searchDescription:
+				ret += epgcache.search(('RIBDT', 1000, eEPGCache.PARTIAL_DESCRIPTION_SEARCH, searchString, eEPGCache.NO_CASE_CHECK)) or []
+				#condense by eventids
+				condensed = {}
+				for item in ret:
+					condensed[item[1]] = item
+				ret = condensed.values()
 			ret.sort(key=itemgetter(2)) # sort by time
 
 			# Update List
