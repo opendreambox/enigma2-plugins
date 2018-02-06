@@ -22,6 +22,7 @@ from Components.TimerList import TimerList
 from Components.Sources.ServiceEvent import ServiceEvent
 from Components.Sources.Event import Event
 
+from . import SearchType
 from time import localtime
 from operator import itemgetter
 from Tools.BoundFunction import boundFunction
@@ -340,10 +341,15 @@ class EPGSearch(EPGSelection):
 	def searchEPG(self, searchString = None, searchSave = True):
 		if not searchString:
 			return
-		boundCallback = boundFunction(self.onSearchEPGCallback, searchString=searchString, searchSave=searchSave)
-		choices = [ (_("Titles only"), False),
-					(_("Titles and Descriptions"), True) ]
-		self.session.openWithCallback(boundCallback, ChoiceBox, list=choices, title=_("Where to search for '%s'?") %(searchString), windowTitle=_("EPG Search"))
+		searchType = config.plugins.epgsearch.search_type.value
+		if  searchType == SearchType.ASK:
+			boundCallback = boundFunction(self.onSearchEPGCallback, searchString=searchString, searchSave=searchSave)
+			choices = [ (_("Title only"), False),
+						(_("Title and Description"), True) ]
+			self.session.openWithCallback(boundCallback, ChoiceBox, list=choices, title=_("Where to search for '%s'?") %(searchString), windowTitle=_("EPG Search"))
+		else:
+			searchDescription = config.plugins.epgsearch.search_type.value == SearchType.TITLE_DESCRIPTION
+			self.doSearchEPG(searchString, searchSave, searchDescription)
 
 	def onSearchEPGCallback(self, answer, searchString=None, searchSave=True):
 		searchDescription = answer and answer[1]
