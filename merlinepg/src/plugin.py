@@ -160,7 +160,7 @@ class MerlinEPGList(EPGList):
 		EPGList.__init__(self, type, selChangedCB, timer)
 		tlf = TemplatedListFonts()
 		self.l.setFont(0, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
-		self.PTpicture = LoadPixmap(cached=True, path="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPG/primetime.png")
+		self.PTpicture = LoadPixmap(cached=True, path="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPG/primetime.svg")
 		self.evCnt = 0
 
 		sizes = componentSizes[MerlinEPGList.SKIN_COMPONENT_KEY]
