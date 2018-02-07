@@ -348,7 +348,7 @@ class EPGSearch(EPGSelection):
 						(_("Title and Description"), True) ]
 			self.session.openWithCallback(boundCallback, ChoiceBox, list=choices, title=_("Where to search for '%s'?") %(searchString), windowTitle=_("EPG Search"))
 		else:
-			searchDescription = config.plugins.epgsearch.search_type.value == SearchType.TITLE_DESCRIPTION
+			searchDescription = searchType == SearchType.TITLE_DESCRIPTION
 			self.doSearchEPG(searchString, searchSave, searchDescription)
 
 	def onSearchEPGCallback(self, answer, searchString=None, searchSave=True):
