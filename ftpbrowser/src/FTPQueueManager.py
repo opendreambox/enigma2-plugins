@@ -58,8 +58,8 @@ class FTPQueueManager(Screen):
 		self['list'] = List([])
 
 		self.pixmaps = (
-			LoadPixmap(resolveFilename(SCOPE_PLUGINS, "Extensions/FTPBrowser/images/up.png")),
-			LoadPixmap(resolveFilename(SCOPE_PLUGINS, "Extensions/FTPBrowser/images/down.png"))
+			LoadPixmap(resolveFilename(SCOPE_PLUGINS, "Extensions/FTPBrowser/images/up.svg")),
+			LoadPixmap(resolveFilename(SCOPE_PLUGINS, "Extensions/FTPBrowser/images/down.svg"))
 		)
 
 		self["actions"] = ActionMap(["OkCancelActions", "ColorActions"],
