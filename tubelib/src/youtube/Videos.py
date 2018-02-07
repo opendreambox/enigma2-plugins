@@ -209,14 +209,16 @@ class VideoUrlRequest(object):
 		'271+172', #DASH-webm 1440p
 		'271+171', #DASH-webm 1440p
 	]
-	VIDEO_FMT_PRIORITY_MAP_FHD = [
-		'96', #HLS 1080p
-		'37', #MP4 1080p
-		'46', #MP4 1080p
+	VIDEO_FMT_PRIORITY_MAP_FHD_WEBM =  [
 		'170+172' ,#DASH-webm 1080p
 		'170+171', #DASH-webm 1080p
 		'248+172', #DASH-webm 1080p
 		'248+171', #DASH-webm 1080p
+	]
+	VIDEO_FMT_PRIORITY_MAP_FHD = [
+		'96', #HLS 1080p
+		'37', #MP4 1080p
+		'46', #MP4 1080p
 		'137+171', #DASH-mp4 1080p
 		'137+172', #DASH-mp4 1080p
 	]
@@ -269,6 +271,7 @@ class VideoUrlRequest(object):
 
 	def _setupFormatMap(self):
 		fmt = self.VIDEO_FMT_PRIORITY_MAP
+		modernCodecs = HardwareInfo().device_name in ["dm900", "dm920"]
 		try:
 			maxres = int(config.usage.max_stream_resolution.value)
 		except:
@@ -277,8 +280,10 @@ class VideoUrlRequest(object):
 		if maxres >= 720:
 			fmt = self.VIDEO_FMT_PRIORITY_MAP_HD + fmt
 		if maxres >= 1080:
+			if modernCodecs:
+				fmt = self.VIDEO_FMT_PRIORITY_MAP_FHD_WEBM + fmt
 			fmt = self.VIDEO_FMT_PRIORITY_MAP_FHD + fmt
-		if HardwareInfo().device_name in ["dm900", "dm920"]:
+		if modernCodecs:
 			if maxres >= 1440:
 				fmt = self.VIDEO_FMT_PRIORITY_MAP_WQHD + fmt
 			if maxres >= 2160:
