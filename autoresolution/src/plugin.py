@@ -21,7 +21,8 @@ resolutionlabel = None
 
 resolutions = (('sd_i_50', (_("SD 25/50HZ Interlace Mode"))), ('sd_i_60', (_("SD 30/60HZ Interlace Mode"))), \
 			('sd_p_50', (_("SD 25/50HZ Progressive Mode"))), ('sd_p_60', (_("SD 30/60HZ Progressive Mode"))), \
-			('hd_i', (_("HD Interlace Mode"))), ('hd_p', (_("HD Progressive Mode"))), \
+			('hd_i', (_("HD Interlace Mode"))), \
+			('hd_p', (_("HD Progressive Mode"))), ('fhd_p', (_("FHD Progressive Mode"))), \
 			('p720_24', (_("Enable 720p24 Mode"))), ('p1080_24', (_("Enable 1080p24 Mode"))), \
 			('p1080_25', (_("Enable 1080p25 Mode"))), ('p1080_30', (_("Enable 1080p30 Mode"))), \
 			('uhd_p', (_("UHD Progressive Mode"))), ('p2160_24', (_("Enable 2160p24 Mode"))), \
@@ -201,6 +202,7 @@ class AutoRes(Screen):
 			width = info and info.getInfo(iServiceInformation.sVideoWidth)
 			framerate = info and info.getInfo(iServiceInformation.sFrameRate)
 			if height != -1 and width != -1 and framerate != -1:
+				have_1080p = config.av.videorate.get("1080p", False)
 				frate = str(framerate)[:2] #fallback?
 				if frqdic.has_key(framerate):
 					frate = frqdic[framerate]
@@ -209,7 +211,7 @@ class AutoRes(Screen):
 				prog = progressive == 1 and 'p' or 'i'
 
 				if (height >= 1800 or width >= 3200) and prog == 'p': 	# 2160p content
-					if frate in ('24', '25', '30') and prog == 'p':
+					if frate in ('24', '25', '30'):
 						new_mode = 'p2160_%s' % frate
 					else:
 						new_mode = 'uhd_p'
@@ -221,6 +223,8 @@ class AutoRes(Screen):
 					new_mode = 'sd_%s_50' % prog
 				elif (height <= 480) and (width <= 720) and frate in ('24', '30', '60'):
 					new_mode = 'sd_%s_60' % prog
+				elif have_1080p and (height >= 1800 or width >= 3200) and prog == 'p': # 1080p50/60 content
+					new_mode = 'fhd_p'
 				else:
 					new_mode = 'hd_%s' % prog
 
@@ -353,7 +357,7 @@ class AutoResSetupMenu(Screen, ConfigListScreen):
 				have_1080p = config.av.videorate.get("1080p", False)
 				have_2160p = config.av.videorate.get("2160p", False)
 				for mode, label in resolutions:
-					if not mode.startswith("2160p") or have_2160p:
+					if (not mode.startswith("2160p") or have_2160p) and (mode != 'fhd_p' or have_1080p):
 						self.list.append(getConfigListEntry(label, videoresolution_dictionary[mode]))
 				self.list.extend((
 					getConfigListEntry(_("Refresh Rate")+" 720p", config.av.videorate["720p"]),
