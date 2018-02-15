@@ -1,5 +1,14 @@
 <keymap>
 	<map context="PluginAudioSyncActions">
+		<device name="compatible: pcKeyboard">
+			<key id="KEY_F1" mapto="red" flags="m" />
+			<key id="KEY_F2" mapto="green" flags="m" />
+			<key id="KEY_F3" mapto="yellow" flags="m" />
+			<key id="KEY_F4" mapto="blue" flags="m" />
+			<key id="KEY_F6" mapto="menu" flags="mr" />
+			<key id="KEY_ENTER" mapto="ok" flags="m" />
+			<key id="KEY_ESC" mapto="cancel" flags="m" />
+		</device>
 		<key id="KEY_MENU" mapto="menu" flags="mr" />
 		<key id="KEY_ENTER" mapto="ok" flags="m" />
 		<key id="KEY_OK" mapto="ok" flags="m" />
@@ -25,6 +34,15 @@
 		<key id="KEY_0" mapto="0" flags="m" />
 	</map>
 	<map context="MovableScreenActions">
+		<device name="compatible: pcKeyboard">
+			<key id="KEY_F1" mapto="red" flags="m" />
+			<key id="KEY_F2" mapto="green" flags="m" />
+			<key id="KEY_F3" mapto="yellow" flags="m" />
+			<key id="KEY_F4" mapto="blue" flags="m" />
+			<key id="KEY_F6" mapto="menu" flags="mr" />
+			<key id="KEY_ENTER" mapto="ok" flags="m" />
+			<key id="KEY_ESC" mapto="cancel" flags="m" />
+		</device>
 		<key id="KEY_ENTER" mapto="ok" flags="m" />
 		<key id="KEY_OK" mapto="ok" flags="m" />
 		<key id="KEY_EXIT" mapto="cancel" flags="m" />

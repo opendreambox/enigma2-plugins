@@ -13,6 +13,15 @@
 	
 	<!-- BASIC EPG ACTIONS -->
 	<map context="EpgTabBaseActions">
+		<device name="compatible: pcKeyboard">
+			<key id="KEY_ESC" mapto="exit" flags="m" />
+			<key id="KEY_ENTER" mapto="ok" flags="m" />
+			<key id="KEY_F10" mapto="showRadio" flags="m" />
+			<key id="KEY_F9" mapto="showTv" flags="m" />
+			<key id="KEY_F5" mapto="showEventInfo" flags="m" />
+			<key id="KEY_F8" mapto="video" flags="m" />
+			<key id="KEY_F11" mapto="text" flags="m" />
+		</device>
 		<key id="KEY_EXIT" mapto="exit" flags="m" />
 		<key id="KEY_UP" mapto="moveUp" flags="mr" />
 		<key id="KEY_DOWN" mapto="moveDown" flags="mr" />
@@ -30,6 +39,10 @@
 	
 	<!-- CONFIG LIST ACTIONS (EPGSEARCH_HISTORY / SETTINGS)-->
 	<map context="EpgHistoryActions">
+		<device name="compatible: pcKeyboard">
+			<key id="KEY_ESC" mapto="exit" flags="m" />
+			<key id="KEY_ENTER" mapto="ok" flags="m" />
+		</device>
 		<key id="KEY_EXIT" mapto="exit" flags="m" />
 		<key id="KEY_OK" mapto="ok" flags="m" />
 		<key id="KEY_UP" mapto="moveUp" flags="mr" />
@@ -40,6 +53,10 @@
 	
 	<!-- EPGSEARCH MANUAL ACTIONS-->
 	<map context="EpgManualSearchActions">
+		<device name="compatible: pcKeyboard">
+			<key id="KEY_ESC" mapto="exit" flags="m" />
+			<key id="KEY_ENTER" mapto="ok" flags="m" />
+		</device>
 		<key id="KEY_EXIT" mapto="exit" flags="m" />
 		<key id="KEY_OK" mapto="ok" flags="m" />
 		<key id="KEY_1" mapto="1" flags="m" />
@@ -60,26 +77,42 @@
 	
 	<!-- KEY RED ACTION -->
 	<map context="EpgRedActions">
+		<device name="compatible: pcKeyboard">
+			<key id="KEY_F1" mapto="red" flags="m" />
+		</device>
 		<key id="KEY_RED" mapto="red" flags="m" />
 	</map>
 	
 	<!-- KEY GREEN ACTION -->
 	<map context="EpgGreenActions">
+		<device name="compatible: pcKeyboard">
+			<key id="KEY_F2" mapto="green" flags="m" />
+		</device>
 		<key id="KEY_GREEN" mapto="green" flags="m" />
 	</map>
 	
 	<!-- KEY BLUE ACTION -->
 	<map context="EpgBlueActions">
+		<device name="compatible: pcKeyboard">
+			<key id="KEY_F4" mapto="blue" flags="m" />
+		</device>
 		<key id="KEY_BLUE" mapto="blue" flags="m" />
 	</map>
 	
 	<!-- KEY YELLOW ACTION -->
 	<map context="EpgYellowActions">
+		<device name="compatible: pcKeyboard">
+			<key id="KEY_F3" mapto="yellow" flags="m" />
+		</device>
 		<key id="KEY_YELLOW" mapto="yellow" flags="m" />
 	</map>
 	
 	<!-- SETTINGS ACTIONS -->
 	<map context="SettingsActions">
+		<device name="compatible: pcKeyboard">
+			<key id="KEY_ESC" mapto="exit" flags="m" />
+			<key id="KEY_ENTER" mapto="ok" flags="m" />
+		</device>
 		<key id="KEY_NEXT" mapto="nextTab" flags="m" />
 		<key id="KEY_PREVIOUS" mapto="prevTab" flags="m" />
 		<key id="KEY_1" mapto="1" flags="m" />
@@ -101,11 +134,17 @@
 	
 	<!-- TOGGLE CONFIG ACTIONS -->
 	<map context="ToggleConfigActions">
+		<device name="compatible: pcKeyboard">
+			<key id="KEY_F6" mapto="toggleConfig" flags="m" />
+		</device>
 		<key id="KEY_MENU" mapto="toggleConfig" flags="m" />
 	</map>
 	
 	<!-- YTTRAILER PVR ACTIONS -->
 	<map context="YttrailerActions">
+		<device name="compatible: pcKeyboard">
+			<key id="KEY_F8" mapto="video" flags="m" />
+		</device>
 		<key id="KEY_VIDEO" mapto="video" flags="m" />
 	</map>
 </keymap>

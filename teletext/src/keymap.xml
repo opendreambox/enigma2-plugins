@@ -1,5 +1,17 @@
 <keymap>
 	<map context="TeleTextActions">
+		<device name="compatible: pcKeyboard">
+			<key id="KEY_F1" mapto="red" flags="b" />
+			<key id="KEY_F2" mapto="green" flags="m" />
+			<key id="KEY_F3" mapto="yellow" flags="m" />
+			<key id="KEY_F4" mapto="blue" flags="m" />
+			<key id="KEY_F5" mapto="info" flags="m" />
+			<key id="KEY_F6" mapto="menu" flags="m" />
+			<key id="KEY_F9" mapto="tv" flags="m" />
+			<key id="KEY_F10" mapto="radio" flags="m" />
+			<key id="KEY_F11" mapto="text" flags="m" />
+			<key id="KEY_F1" mapto="help" flags="l" />
+		</device>
 		<key id="KEY_UP"     mapto="up"     flags="mr"/>
 		<key id="KEY_DOWN"   mapto="down"   flags="mr"/>
 		<key id="KEY_LEFT"   mapto="left"   flags="mr"/>
