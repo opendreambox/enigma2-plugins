@@ -725,7 +725,6 @@ class MviExplorer(Screen):
 class MoviePlayer(MP_parent):
 	def __init__(self, session, service):
 		self.session = session
-		self.WithoutStopClose = False
 		MP_parent.__init__(self, self.session, service)
 
 	def leavePlayer(self):
@@ -752,15 +751,7 @@ class MoviePlayer(MP_parent):
 		try: 
 			self.updateMovieData() # Merlin only feature
 		except: pass
-		self.WithoutStopClose = True
 		self.close()
-
-	def movieSelected(self, service):
-		self.leavePlayer(self.de_instance)
-
-	def __onClose(self):
-		if not(self.WithoutStopClose):
-			self.session.nav.playService(self.lastservice)
 
 class MusicExplorer(MoviePlayer):
 	skin = """
@@ -782,7 +773,6 @@ class MusicExplorer(MoviePlayer):
 		self.curFile = theFile
 		self.searchMusic()
 		self.onLayoutFinish.append(self.showMMI)
-		MoviePlayer.WithoutStopClose = False
 
 	def showMMI(self):
 		call(['showiframe', '%s/res/music.mvi' % plugin_path])
