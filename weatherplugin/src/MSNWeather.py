@@ -31,7 +31,7 @@ import json
 
 #this is for translation support only...
 possible_conditions= ( 	_("Tornado"), _("Tropical Storm"), _("Severe Thunderstorms"), _("Thunderstorms"), _("Mixed Rain and Snow"), _("Mixed Rain and Sleet"), _("Mixed Snow and Sleet"), _("Freezing Drizzle"),
-			_("Drizzle"), _("Freezing Rain"), _("Showers"), _("Snow Flurries"), _("Light Snow Showers"), _("Blowing Snow"), _("Snow"),
+			_("Drizzle"), _("Freezing Rain"), _("Showers"), _("Snow Flurries"), _("Light Snow Showers"), _("Blowing Snow"), _("Snow"), _("Rain And Snow"),
 			_("Hail"), _("Sleet"), _("Dust"), _("Foggy"), _("Haze"), _("Smoky"), _("Blustery"), _("Windy"),
 			_("Cold"), _("Cloudy"), _("Mostly Cloudy"), _("Partly Cloudy"), _("Clear"), _("Sunny"), _("Rain"), 
 			_("Fair"), _("Mixed Rain and Hail"), _("Hot"), _("Isolated Thunderstorms"), _("Scattered Thunderstorms"), _("Scattered Showers"),
