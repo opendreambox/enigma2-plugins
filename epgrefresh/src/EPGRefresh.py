@@ -505,6 +505,8 @@ class EPGRefresh:
 		self._nextTodo()
 	
 	def finish(self, *args, **kwargs):
+		if self.showPendingServicesMessageShown:
+			self.msg.close()
 		print("[EPGRefresh] Debug: Refresh finished!")
 		if config.plugins.epgrefresh.enablemessage.value:
 			Notifications.AddPopup(_("EPG refresh finished."), MessageBox.TYPE_INFO, 4, ENDNOTIFICATIONID, domain = NOTIFICATIONDOMAIN)
@@ -689,7 +691,7 @@ class EPGRefresh:
 				quitMainloop(3)
 			
 	def showPendingServices(self, session):
-		LISTMAX = 10
+		LISTMAX = 15
 		servcounter = 0
 		try:
 			servtxt = ""
@@ -697,14 +699,14 @@ class EPGRefresh:
 				if self.isServiceProtected(service):
 					if not self.forcedScan or config.plugins.epgrefresh.skipProtectedServices.value == "always":
 						continue
-				if servcounter <= LISTMAX:
+				if servcounter < LISTMAX:
 					ref = ServiceReference(service.sref)
 					txt = ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
 					servtxt = servtxt + str(txt) + "\n"
 				servcounter = servcounter + 1
 			
 			if servcounter > LISTMAX:
-				servtxt = servtxt + _("%d more services") % (servcounter)
+				servtxt = servtxt + _("%d more services") % (servcounter-LISTMAX)
 			
 			# open message box only if not already shown
 			if self.showPendingServicesMessageShown == False:
@@ -715,7 +717,6 @@ class EPGRefresh:
 				self.showPendingServicesMessageShown = True
 			else:
 				self.msg["text"].setText(_("Following Services have to be scanned:") + "\n" + servtxt)
-				self.msg["Text"].setText(_("Following Services have to be scanned:") + "\n" + servtxt)
 		except:
 			print("[EPGRefresh] showPendingServices Error!")
 			print_exc(file=stdout)
