@@ -493,9 +493,17 @@ class EPGRefresh:
 			if len(args):
 				# Autotimer has been started
 				ret=args[0]
-				Notifications.AddPopup(_("Found a total of %d matching Events.\n%d Timer were added and\n%d modified,\n%d conflicts encountered,\n%d similars added.") \
+				try:
+					#try import new advanced AT-message with searchlog-info 
+					from Plugins.Extensions.AutoTimer.plugin import showFinishPopup
+					showFinishPopup(ret)
+				except:
+					from traceback import format_exc
+					print("[EPGRefresh] Could not start Autotimer showPopup:" + str(format_exc()))
+					Notifications.AddPopup(_("Found a total of %d matching Events.\n%d Timer were added and\n%d modified,\n%d conflicts encountered,\n%d similars added.") \
 					% (ret[0], ret[1], ret[2], len(ret[4]), len(ret[5])),
 					MessageBox.TYPE_INFO, 10, domain = NOTIFICATIONDOMAIN)
+		
 		self._nextTodo()
 	
 	def _callFinishNotifiers(self, *args, **kwargs):

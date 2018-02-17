@@ -176,8 +176,9 @@ def editCallback(session):
 #		autotimer.writeXml()
 #	handleAutoPoller()
 
-def parseEPGCallback(ret):
+def showFinishPopup(ret):
 	
+	#prepare searchlogentries to show in finishPopup
 	searchlog_txt = ""
 	logpath = config.plugins.autotimer.searchlog_path.value
 	if logpath == "?likeATlog?":
@@ -206,6 +207,10 @@ def parseEPGCallback(ret):
 		{"matches":ret[0], "timer":ret[1], "modified":ret[2], "conflicts":len(ret[4]), "similars":len(ret[5])} + "\n\n" + str(searchlog_txt),
 		MessageBox.TYPE_INFO, config.plugins.autotimer.popup_timeout.value, domain = NOTIFICATIONDOMAIN, id = 'AT_PopUp_ID_ParseEPGCallback')
 
+def parseEPGCallback(ret):
+	
+	showFinishPopup(ret)
+	
 	# Save xml
 	if config.plugins.autotimer.always_write_config.value:
 		autotimer.writeXml()
