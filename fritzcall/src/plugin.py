@@ -2,9 +2,9 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1502 $
-$Date: 2018-01-13 14:00:04 +0100 (Sat, 13 Jan 2018) $
-$Id: plugin.py 1502 2018-01-13 13:00:04Z michael $
+$Revision: 1507 $
+$Date: 2018-02-20 09:51:31 +0100 (Tue, 20 Feb 2018) $
+$Id: plugin.py 1507 2018-02-20 08:51:31Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -146,7 +146,7 @@ config.plugins.FritzCall.showShortcut = ConfigYesNo(default = False)
 config.plugins.FritzCall.showVanity = ConfigYesNo(default = False)
 config.plugins.FritzCall.prefix = ConfigText(default = "", fixed_size = False)
 config.plugins.FritzCall.prefix.setUseableChars('0123456789')
-config.plugins.FritzCall.connectionVerbose = ConfigYesNo(default = True)
+config.plugins.FritzCall.connectionVerbose = ConfigSelection(choices = [("on", _("on")), ("failed", _("only failed")), ("off", _("off"))])
 config.plugins.FritzCall.ignoreUnknown = ConfigYesNo(default = False)
 config.plugins.FritzCall.reloadPhonebookTime = ConfigInteger(default = 8, limits = (0, 99))
 config.plugins.FritzCall.FritzExtendedSearchFaces = ConfigYesNo(default = False)
@@ -367,8 +367,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1502 $"[1:-2] + "\n" +
-							"$Date: 2018-01-13 14:00:04 +0100 (Sat, 13 Jan 2018) $"[1:23] + "\n"
+							"$Revision: 1507 $"[1:-2] + "\n" +
+							"$Date: 2018-02-20 09:51:31 +0100 (Tue, 20 Feb 2018) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -802,7 +802,7 @@ class FritzMenu(Screen, HelpableScreen):
 					self.skin = """
 						<!-- Fullhd screen -->
 						<screen name="FritzMenuNew" position="center,center" size="1100,660" title="FRITZ!Box Fon Status">
-							<widget name="FBFInfo" position="60,10" size="980,80" font="Regular;30" />
+							<widget name="FBFInfo" position="60,10" size="980,105" font="Regular;30" />
 							<widget name="FBFInternet" position="60,122" size="980,80" font="Regular;28" />
 							<widget name="internet_inactive" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/FritzCall/images/inaktiv.png" position="20,125" size="10,35" alphatest="blend"/>
 							<widget name="internet_active" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/FritzCall/images/aktiv.png" position="20,125" size="10,35" alphatest="blend"/>
@@ -2617,7 +2617,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1502 $"[1:-1] + "$Date: 2018-01-13 14:00:04 +0100 (Sat, 13 Jan 2018) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1507 $"[1:-1] + "$Date: 2018-02-20 09:51:31 +0100 (Tue, 20 Feb 2018) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -3225,7 +3225,7 @@ class FritzReverseLookupAndNotifier(object):
 
 class FritzProtocol(LineReceiver):  # pylint: disable=W0223
 	def __init__(self):
-		info("[FritzProtocol] " + "$Revision: 1502 $"[1:-1] + "$Date: 2018-01-13 14:00:04 +0100 (Sat, 13 Jan 2018) $"[7:23] + " starting")
+		info("[FritzProtocol] " + "$Revision: 1507 $"[1:-1] + "$Date: 2018-02-20 09:51:31 +0100 (Tue, 20 Feb 2018) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
@@ -3385,13 +3385,13 @@ class FritzClientFactory(ReconnectingClientFactory):
 		# 	Notifications.AddNotification(MessageBox, _("FRITZ!Box firmware version not configured! Please set it in the configuration."), type=MessageBox.TYPE_INFO, timeout=0)
 		#=======================================================================
 
-		if config.plugins.FritzCall.connectionVerbose.value:
+		if config.plugins.FritzCall.connectionVerbose.value == "on":
 			info("[FRITZ!FritzClientFactory]")
 			Notifications.AddNotification(MessageBox, _("Connecting to FRITZ!Box..."), type = MessageBox.TYPE_INFO, timeout = 2)
 
 	def buildProtocol(self, addr):  # @UnusedVariable # pylint: disable=W0613
 		global fritzbox
-		if config.plugins.FritzCall.connectionVerbose.value:
+		if config.plugins.FritzCall.connectionVerbose.value == "on":
 			info("[FRITZ!FritzClientFactory]")
 			Notifications.AddNotification(MessageBox, _("Connected to FRITZ!Box!"), type = MessageBox.TYPE_INFO, timeout = 4)
 		self.resetDelay()
@@ -3434,7 +3434,7 @@ class FritzClientFactory(ReconnectingClientFactory):
 
 	def clientConnectionLost(self, connector, reason):
 		global fritzbox
-		if not self.hangup_ok and config.plugins.FritzCall.connectionVerbose.value:
+		if not self.hangup_ok and config.plugins.FritzCall.connectionVerbose.value != "off":
 			warn("[FRITZ!FritzClientFactory] - clientConnectionLost")
 			Notifications.AddNotification(MessageBox, _("Connection to FRITZ!Box! lost\n (%s)\nretrying...") % reason.getErrorMessage(), type = MessageBox.TYPE_INFO, timeout = config.plugins.FritzCall.timeout.value)
 		ReconnectingClientFactory.clientConnectionLost(self, connector, reason)
@@ -3442,7 +3442,7 @@ class FritzClientFactory(ReconnectingClientFactory):
 
 	def clientConnectionFailed(self, connector, reason):
 		global fritzbox
-		if config.plugins.FritzCall.connectionVerbose.value:
+		if config.plugins.FritzCall.connectionVerbose.value != "off":
 			Notifications.AddNotification(MessageBox, _("Connecting to FRITZ!Box failed\n (%s)\nretrying...") % reason.getErrorMessage(), type = MessageBox.TYPE_INFO, timeout = config.plugins.FritzCall.timeout.value)
 		ReconnectingClientFactory.clientConnectionFailed(self, connector, reason)
 		fritzbox = None
