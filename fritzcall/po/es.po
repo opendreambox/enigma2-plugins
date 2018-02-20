@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma 2-plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-22 11:16+0200\n"
+"POT-Creation-Date: 2017-06-29 18:00+0200\n"
 "PO-Revision-Date: 2009-06-04 20:22+0200\n"
 "Last-Translator: José Juan Zapater <josej@zapater.fdns.net>\n"
 "Language-Team: none\n"
@@ -127,6 +127,9 @@ msgstr ""
 msgid "Could not get call list; wrong version?"
 msgstr ""
 
+msgid "Could not load phonebook: "
+msgstr ""
+
 #, python-format
 msgid "Could not load phonebook: %s"
 msgstr ""
@@ -238,6 +241,9 @@ msgstr ""
 
 #, python-format
 msgid "FRITZ!Box - Error getting blacklist: %s"
+msgstr ""
+
+msgid "FRITZ!Box - Error getting status: "
 msgstr ""
 
 #, python-format
@@ -384,9 +390,6 @@ msgstr "Carpeta de correo"
 msgid "Make it more skin friendly"
 msgstr ""
 
-msgid "Minutes of uptime of WLAN guest network"
-msgstr ""
-
 #. TRANSLATORS: keep it short, this is a button
 msgid "Missed"
 msgstr "Perdidas"
@@ -402,9 +405,6 @@ msgstr ""
 
 msgid "Name"
 msgstr "Nombre"
-
-msgid "Name of WLAN guest network"
-msgstr ""
 
 #. TRANSLATORS: keep it short, this is a button
 msgid "New"
@@ -479,9 +479,6 @@ msgstr "Llamadas salientes"
 msgid "Password Accessing FRITZ!Box"
 msgstr "Contraseña accediendo a FRITZ!Box"
 
-msgid "Password of WLAN guest network"
-msgstr ""
-
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
 msgid "Phone calls"
@@ -548,9 +545,6 @@ msgstr "Buscando en LDIF..."
 msgid "Searching in Outlook export..."
 msgstr "Buscando en la exportación de Outlook..."
 
-msgid "Secure WLAN guest network"
-msgstr ""
-
 msgid "Setting..."
 msgstr ""
 
@@ -565,6 +559,9 @@ msgstr "Mostrar Llamadas Salientes"
 
 msgid "Show after Standby"
 msgstr "Mostrar después del inicio"
+
+msgid "Show also internal numbers"
+msgstr ""
 
 #. TRANSLATORS: keep it short, this is a help text
 msgid "Show details of entry"
@@ -648,6 +645,9 @@ msgstr "Marcar Cuenta de Correo"
 msgid "UNKNOWN"
 msgstr "DESCONOCIDO"
 
+msgid "Unknown"
+msgstr ""
+
 msgid "Update available"
 msgstr ""
 
@@ -707,6 +707,12 @@ msgstr "hecho, usando la última lista"
 msgid "encrypted"
 msgstr "encriptado"
 
+msgid "fax_home"
+msgstr ""
+
+msgid "fax_work"
+msgstr ""
+
 msgid "finishing"
 msgstr "terminando"
 
@@ -765,6 +771,9 @@ msgstr ""
 #, fuzzy
 msgid "one device active"
 msgstr "Una cuenta de correo activa"
+
+msgid "pager"
+msgstr ""
 
 msgid "preparing"
 msgstr "preparando"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enigma2 FritzCall Plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-22 11:16+0200\n"
-"PO-Revision-Date: 2017-05-22 11:20+0200\n"
+"POT-Creation-Date: 2017-06-29 18:00+0200\n"
+"PO-Revision-Date: 2017-06-06 17:43+0200\n"
 "Last-Translator: Michael Schmidt <michael@schmidt-schmitten.com>\n"
 "Language-Team: german <de@li.org>\n"
 "Language: de\n"
@@ -128,6 +128,9 @@ msgstr ""
 msgid "Could not get call list; wrong version?"
 msgstr "Konnte Anrufliste nicht bekommen; falsche Firmware-Version?"
 
+msgid "Could not load phonebook: "
+msgstr ""
+
 #, python-format
 msgid "Could not load phonebook: %s"
 msgstr "\"Telefonbuch konnte nicht geladen werden: %ss"
@@ -241,6 +244,9 @@ msgstr "FRITZ!Box - Wählen fehlgeschlagen: %s"
 #, python-format
 msgid "FRITZ!Box - Error getting blacklist: %s"
 msgstr "FRITZ!Box - Sperrliste konnte nicht geholt werden: %s"
+
+msgid "FRITZ!Box - Error getting status: "
+msgstr ""
 
 #, python-format
 msgid "FRITZ!Box - Error getting status: %s"
@@ -404,9 +410,6 @@ msgstr "Anrufbeantworter"
 msgid "Make it more skin friendly"
 msgstr "Mehr Möglichkeiten für Skins"
 
-msgid "Minutes of uptime of WLAN guest network"
-msgstr "Dauer für den WLAN-Gastzugang in Minuten"
-
 #. TRANSLATORS: keep it short, this is a button
 msgid "Missed"
 msgstr "Verpasst"
@@ -417,15 +420,11 @@ msgstr "Verpasste Anrufe"
 msgid "Mute on incoming call"
 msgstr "Ton aus bei eingehenden Anrufen"
 
-#, fuzzy
 msgid "Mute on outgoing calls"
 msgstr "Ton aus bei abgehenden Anrufen"
 
 msgid "Name"
 msgstr "Name"
-
-msgid "Name of WLAN guest network"
-msgstr "Name des WLAN Gastfunknetzes"
 
 #. TRANSLATORS: keep it short, this is a button
 msgid "New"
@@ -506,9 +505,6 @@ msgstr "Abgehende Anrufe"
 msgid "Password Accessing FRITZ!Box"
 msgstr "Passwort der FRITZ!Box"
 
-msgid "Password of WLAN guest network"
-msgstr "Netzwerkschlüssel des WLAN Gastfunknetzes"
-
 #. TRANSLATORS: this is a window title.
 #. TRANSLATORS: keep it short, this is a button
 msgid "Phone calls"
@@ -575,9 +571,6 @@ msgstr "Suche in LDIF..."
 msgid "Searching in Outlook export..."
 msgstr "Suche in Outlook-Export..."
 
-msgid "Secure WLAN guest network"
-msgstr "WLAN Gastzugang verschlüsseln"
-
 msgid "Setting..."
 msgstr "Setze..."
 
@@ -592,6 +585,9 @@ msgstr "Zeige abgehende Anrufe an"
 
 msgid "Show after Standby"
 msgstr "Anzeige nach Standby"
+
+msgid "Show also internal numbers"
+msgstr "Zeige auch interne Nummern an"
 
 #. TRANSLATORS: keep it short, this is a help text
 msgid "Show details of entry"
@@ -677,6 +673,9 @@ msgstr "Toggle AB"
 msgid "UNKNOWN"
 msgstr "UNBEKANNT"
 
+msgid "Unknown"
+msgstr "Unbekannt"
+
 msgid "Update available"
 msgstr "Update verfügbar"
 
@@ -738,6 +737,12 @@ msgstr "fertig, benutze letzte Liste"
 msgid "encrypted"
 msgstr "verschlüsselt"
 
+msgid "fax_home"
+msgstr "Fax privat"
+
+msgid "fax_work"
+msgstr "Fax Büro"
+
 msgid "finishing"
 msgstr "Fertigstellung"
 
@@ -795,6 +800,9 @@ msgstr "an"
 msgid "one device active"
 msgstr "eine WLAN-Station aktiv"
 
+msgid "pager"
+msgstr "Pager"
+
 msgid "preparing"
 msgstr "Vorbereitung"
 
@@ -823,3 +831,15 @@ msgstr "Büro"
 
 msgid "wrong user or password?"
 msgstr "falscher Benutzer oder falsches Passwort?"
+
+#~ msgid "Minutes of uptime of WLAN guest network"
+#~ msgstr "Dauer für den WLAN-Gastzugang in Minuten"
+
+#~ msgid "Name of WLAN guest network"
+#~ msgstr "Name des WLAN Gastfunknetzes"
+
+#~ msgid "Password of WLAN guest network"
+#~ msgstr "Netzwerkschlüssel des WLAN Gastfunknetzes"
+
+#~ msgid "Secure WLAN guest network"
+#~ msgstr "WLAN Gastzugang verschlüsseln"
