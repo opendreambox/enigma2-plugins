@@ -223,7 +223,7 @@ class AutoRes(Screen):
 					new_mode = 'sd_%s_50' % prog
 				elif (height <= 480) and (width <= 720) and frate in ('24', '30', '60'):
 					new_mode = 'sd_%s_60' % prog
-				elif have_1080p and (height >= 1800 or width >= 3200) and prog == 'p': # 1080p50/60 content
+				elif have_1080p and (height >= 900 or width >= 1600) and prog == 'p': # 1080p50/60 content
 					new_mode = 'fhd_p'
 				else:
 					new_mode = 'hd_%s' % prog
