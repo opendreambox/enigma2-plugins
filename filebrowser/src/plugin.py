@@ -170,7 +170,7 @@ class FilebrowserScreen(Screen):
 
     # copy ###################
     def goYellow(self):
-        if not(self.SOURCELIST.canDescent()):
+        if not(self.SOURCELIST.canDescent()) or (self.SOURCELIST.canDescent() and self.SOURCELIST.getSelectionIndex()!=0):
             filename = self.SOURCELIST.getFilename()
             sourceDir = self.SOURCELIST.getCurrentDirectory()
             targetDir = self.TARGETLIST.getCurrentDirectory()
@@ -191,7 +191,7 @@ class FilebrowserScreen(Screen):
 
     # delete ###################
     def goRed(self):
-        if not(self.SOURCELIST.canDescent()):    
+        if not(self.SOURCELIST.canDescent()) or (self.SOURCELIST.canDescent() and self.SOURCELIST.getSelectionIndex()!=0):
             filename = self.SOURCELIST.getFilename()
             sourceDir = self.SOURCELIST.getCurrentDirectory()
             self.session.openWithCallback(self.doDelete,ChoiceBox, title = _("delete file")+"?\n%s\nfrom dir\n%s"%(filename,sourceDir),list=[(_("yes"), True ),(_("no"), False )])
@@ -203,18 +203,28 @@ class FilebrowserScreen(Screen):
             if result[1]:
                 filename = self.SOURCELIST.getFilename()
                 sourceDir = self.SOURCELIST.getCurrentDirectory()
-                self.session.openWithCallback(self.doDeleteCB,Console, title = _("deleting file ..."), cmdlist = ["rm \""+sourceDir+filename+"\""])
+                if self.SOURCELIST.canDescent():
+                    cmd = ["rm -rf \""+filename+"\""]
+                    titletxt = _("deleting directory ...")
+                else:
+	                cmd = ["rm \""+sourceDir+filename+"\""]
+	                titletxt = _("deleting file ...")
+                self.session.openWithCallback(self.doDeleteCB,Console, title = titletxt, cmdlist = cmd)
 
     def doDeleteCB(self):
         self.doRefresh()
 
     # move ###################
     def goGreen(self):
-        if not(self.SOURCELIST.canDescent()):    
+        if not(self.SOURCELIST.canDescent()) or (self.SOURCELIST.canDescent() and self.SOURCELIST.getSelectionIndex()!=0):    
             filename = self.SOURCELIST.getFilename()
             sourceDir = self.SOURCELIST.getCurrentDirectory()
             targetDir = self.TARGETLIST.getCurrentDirectory()
-            self.session.openWithCallback(self.doMove,ChoiceBox, title = _("move file")+"?\n%s\nfrom dir\n%s\nto dir\n%s"%(filename,sourceDir,targetDir),list=[(_("yes"), True ),(_("no"), False )])
+            if self.SOURCELIST.canDescent():
+                titletxt = _("move directory")
+            else:
+                titletxt = _("move file")
+            self.session.openWithCallback(self.doMove,ChoiceBox, title = titletxt+"?\n%s\nfrom %s to %s"%(filename,sourceDir,targetDir),list=[(_("yes"), True ),(_("no"), False )])
         else:
             return
 
@@ -223,15 +233,21 @@ class FilebrowserScreen(Screen):
             if result[1]:
                 filename = self.SOURCELIST.getFilename()
                 sourceDir = self.SOURCELIST.getCurrentDirectory()
-                targetDir = self.TARGETLIST.getCurrentDirectory()
-                self.session.openWithCallback(self.doMoveCB,Console, title = _("moving file ..."), cmdlist = ["mv \""+sourceDir+filename+"\" \""+targetDir+"\""])
+                targetDir = self.TARGETLIST.getCurrentDirectory()  
+                if self.SOURCELIST.canDescent():
+                	cmd = ["mv \""+filename+"\" \""+targetDir+"\""]
+                	titletxt = _("moving directory ...")
+                else:
+                	cmd = ["mv \""+sourceDir+filename+"\" \""+targetDir+"\""]
+                	titletxt = _("moving file ...")
+                self.session.openWithCallback(self.doMoveCB,Console, title = titletxt, cmdlist = cmd)
 
     def doMoveCB(self):
         self.doRefresh()
 
     # move ###################
     def goBlue(self):
-        if not(self.SOURCELIST.canDescent()):
+        if not(self.SOURCELIST.canDescent()) or (self.SOURCELIST.canDescent() and self.SOURCELIST.getSelectionIndex()!=0):
             filename = self.SOURCELIST.getFilename()
             sourceDir = self.SOURCELIST.getCurrentDirectory()
             self.session.openWithCallback(self.doRename,InputBox,text=filename, title = filename, windowTitle=_("rename file"))
@@ -242,7 +258,13 @@ class FilebrowserScreen(Screen):
         if newname:
             filename = self.SOURCELIST.getFilename()
             sourceDir = self.SOURCELIST.getCurrentDirectory()
-            self.session.openWithCallback(self.doRenameCB,Console, title = _("renaming file ..."), cmdlist = ["mv \""+sourceDir+filename+"\" \""+sourceDir+newname+"\""])
+            if self.SOURCELIST.canDescent():
+            	cmd = ["mv \""+filename+"\" \""+newname+"\""]
+            	titletxt = _("renaming directory ...")
+            else:
+            	cmd = ["mv \""+sourceDir+filename+"\" \""+sourceDir+newname+"\""]
+            	titletxt = _("renaming file ...")
+            self.session.openWithCallback(self.doRenameCB,Console, title = titletxt, cmdlist = cmd)
 
     def doRenameCB(self):
         self.doRefresh()
