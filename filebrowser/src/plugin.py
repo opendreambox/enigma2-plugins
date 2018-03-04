@@ -184,7 +184,13 @@ class FilebrowserScreen(Screen):
                 filename = self.SOURCELIST.getFilename()
                 sourceDir = self.SOURCELIST.getCurrentDirectory()
                 targetDir = self.TARGETLIST.getCurrentDirectory()
-                self.session.openWithCallback(self.doCopyCB,Console, title = _("copying file ..."), cmdlist = ["cp \""+sourceDir+filename+"\" \""+targetDir+"\""])
+                if self.SOURCELIST.canDescent():
+                    cmd = ["cp \""+filename+"\" \""+targetDir+"\""]
+                    titletxt = _("copying directory ...")
+                else:
+	                cmd = ["cp \""+sourceDir+filename+"\" \""+targetDir+"\""]
+	                titletxt = _("copying file ...")                
+                self.session.openWithCallback(self.doCopyCB,Console, title = titletxt, cmdlist = cmd)
 
     def doCopyCB(self):
         self.doRefresh()
