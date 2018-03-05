@@ -105,10 +105,19 @@ class copyEveryDay(Screen):
     def __doCopy(self):
         if config.plugins.epgCopy.copytime.value:
             myPrint("[__doCopy] do reset: %s" % strftime("%c", localtime(time())))
+            ftpOK = False
+            myEpg = None
+            myEpg = eEPGCache.getInstance()
             try:
                 myFtp()
+                ftpOK = True
             except:
-                pass            
+                ftpOK = False
+            if ftpOK:
+                myEpg.load()
+                myPrint("[__doCopy] successfully load EPG form the server")
+            else:
+                myPrint("[__doCopy] not successfully please check your config (FTPERROR)")
         self.configChange()
 
 class epgCopyScreen(Screen, ConfigListScreen):
