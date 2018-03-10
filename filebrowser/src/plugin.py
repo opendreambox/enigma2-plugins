@@ -174,7 +174,11 @@ class FilebrowserScreen(Screen):
             filename = self.SOURCELIST.getFilename()
             sourceDir = self.SOURCELIST.getCurrentDirectory()
             targetDir = self.TARGETLIST.getCurrentDirectory()
-            self.session.openWithCallback(self.doCopy,ChoiceBox, title = _("copy file")+"?\n%s\nfrom\n%s\n%s"%(filename,sourceDir,targetDir),list=[(_("yes"), True ),(_("no"), False )])
+            if self.SOURCELIST.canDescent():
+                titletxt = _("copy directory")
+            else:
+                titletxt = _("copy file")
+            self.session.openWithCallback(self.doCopy,ChoiceBox, title = titletxt + "?\n%s\nfrom %s to %s" %(filename,sourceDir,targetDir),list=[(_("yes"), True ),(_("no"), False )])
         else:
             return
 
@@ -185,7 +189,7 @@ class FilebrowserScreen(Screen):
                 sourceDir = self.SOURCELIST.getCurrentDirectory()
                 targetDir = self.TARGETLIST.getCurrentDirectory()
                 if self.SOURCELIST.canDescent():
-                    cmd = ["cp \""+filename+"\" \""+targetDir+"\""]
+                    cmd = ["cp -R \""+filename+"\" \""+targetDir+"\""]
                     titletxt = _("copying directory ...")
                 else:
 	                cmd = ["cp \""+sourceDir+filename+"\" \""+targetDir+"\""]
@@ -200,7 +204,11 @@ class FilebrowserScreen(Screen):
         if not(self.SOURCELIST.canDescent()) or (self.SOURCELIST.canDescent() and self.SOURCELIST.getSelectionIndex()!=0):
             filename = self.SOURCELIST.getFilename()
             sourceDir = self.SOURCELIST.getCurrentDirectory()
-            self.session.openWithCallback(self.doDelete,ChoiceBox, title = _("delete file")+"?\n%s\nfrom dir\n%s"%(filename,sourceDir),list=[(_("yes"), True ),(_("no"), False )])
+            if self.SOURCELIST.canDescent():
+                titletxt = _("delete directory")
+            else:
+                titletxt = _("delete file")            
+            self.session.openWithCallback(self.doDelete,ChoiceBox, title = titletxt +"?\n%s\nfrom dir\n%s"%(filename,sourceDir),list=[(_("yes"), True ),(_("no"), False )])
         else:
             return
 
@@ -256,7 +264,11 @@ class FilebrowserScreen(Screen):
         if not(self.SOURCELIST.canDescent()) or (self.SOURCELIST.canDescent() and self.SOURCELIST.getSelectionIndex()!=0):
             filename = self.SOURCELIST.getFilename()
             sourceDir = self.SOURCELIST.getCurrentDirectory()
-            self.session.openWithCallback(self.doRename,InputBox,text=filename, title = filename, windowTitle=_("rename file"))
+            if self.SOURCELIST.canDescent():
+            	titletxt = _("rename directory")
+            else:
+            	titletxt = _("rename file")            
+            self.session.openWithCallback(self.doRename,InputBox,text=filename, title = filename, windowTitle=titletxt)
         else:
             return
 
