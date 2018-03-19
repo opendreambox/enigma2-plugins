@@ -282,7 +282,7 @@ class IMDB(Screen):
 
 		self.genreblockmask = re.compile('href="/genre/.*?\?ref_=tt_stry_gnr.*?\n.*?\s(?P<genre>.*?)</a>', re.S)
 		self.ratingmask = re.compile('<span itemprop="ratingValue">(?P<rating>.*?)</.*?itemprop="ratingCount">(?P<ratingcount>.*?)</', re.S)
-		self.castmask = re.compile('itemprop="actor".*?class="itemprop"\sitemprop="name">(?P<actor>.*?)</span>.*?class="character">(?P<character>.*?)(?:</a>|</div>|\()', re.S)
+		self.castmask = re.compile('itemprop="actor".*?class="itemprop"\sitemprop="name">(?P<actor>.*?)</span>.*?class="character">(?P<character>.*?)(?:</a>|</div>|\(|<a href="#")', re.S)
 		self.postermask = re.compile('<div class="poster">.*?<img .*?src=\"(http.*?)\"', re.S)
 		self.storylinemask = re.compile('(?:.*?<h2>(?P<g_storyline>Storyline)</h2>.*?(?P<storyline>.*?)(?:see-more inline|</p>|Written))*', re.S)
 
@@ -653,7 +653,7 @@ class IMDB(Screen):
 
 			posterurl = self.postermask.search(self.inhtml)
 			if posterurl and posterurl.group(1).find("jpg") > 0:
-				posterurl = posterurl.group(1)
+				posterurl = posterurl.group(1).replace('https','http')
 				self["statusbar"].setText(_("Downloading Movie Poster: %s...") % (posterurl))
 				localfile = "/tmp/poster.jpg"
 				print("[IMDB] downloading poster " + posterurl + " to " + localfile)
