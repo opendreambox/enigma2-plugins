@@ -94,6 +94,7 @@ class copyEveryDay(Screen):
     def configChange(self, configElement = None):   
         if self.timer.isActive(): # stop timer if running
             self.timer.stop()
+        now = localtime()
         begin = int(mktime(
             (now.tm_year, now.tm_mon, now.tm_mday,
             config.plugins.epgCopy.copytime.value[0],
