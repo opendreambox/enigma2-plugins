@@ -71,14 +71,16 @@ class C3vocScreen (Screen):
 						url = self.get_hls_url(room["streams"], "hd-native")
 						page = req.get(url, headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'})
 						page.content
+						streamurl = None
 						streamurl = re.findall('#EXT-X-STREAM-INF.*?\n(.*?)\n', page.content, re.S)
-						if not streamurl[0].startswith('http'):
-							streamurl = url.rsplit('/',1)[0]+'/'+streamurl[0]
-						else:
-							streamurl = streamurl[0]
-						with open("/tmp/c3voc", "a") as myfile:
-							myfile.write("#SERVICE 4097:0:1:0:0:0:0:0:0:0:%s\n#DESCRIPTION %s, %s\n" % (streamurl.replace(":", "%3a"), conference_name, schedule_name))
-							myfile.close()
+						if streamurl:
+							if not streamurl[0].startswith('http'):
+								streamurl = url.rsplit('/',1)[0]+'/'+streamurl[0]
+							else:
+								streamurl = streamurl[0]
+							with open("/tmp/c3voc", "a") as myfile:
+								myfile.write("#SERVICE 4097:0:1:0:0:0:0:0:0:0:%s\n#DESCRIPTION %s, %s\n" % (streamurl.replace(":", "%3a"), conference_name, schedule_name))
+								myfile.close()
 
 			if 'c3voc' not in open('/etc/enigma2/bouquets.tv').read():
 				with open("/etc/enigma2/bouquets.tv", "a") as myfile:
