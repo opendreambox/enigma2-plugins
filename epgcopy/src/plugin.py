@@ -81,9 +81,12 @@ def myFtp():
     myPrint("epg.db was successfully transferred")
 
 class copyEveryDay(Screen):
+    instance = None
+
     def __init__(self, session):
         self.session = session
         Screen.__init__(self, session)
+        copyEveryDay.instance = self
         self.timer = eTimer()
         self.timer_conn = self.timer.timeout.connect(self.__doCopy)
         self.configChange()
@@ -91,6 +94,7 @@ class copyEveryDay(Screen):
     def configChange(self, configElement = None):   
         if self.timer.isActive(): # stop timer if running
             self.timer.stop()
+        now = localtime()
         begin = int(mktime(
             (now.tm_year, now.tm_mon, now.tm_mday,
             config.plugins.epgCopy.copytime.value[0],
@@ -167,6 +171,7 @@ class epgCopyScreen(Screen, ConfigListScreen):
       
     def saveSettings(self):
           config.plugins.epgCopy.save()
+          copyEveryDay.instance.configChange()
           self.close()
     
     def startManually(self):
