@@ -124,6 +124,8 @@ class SkinFinder(object):
 			fileName = resolveFilename(SCOPE_CURRENT_PLUGIN, ''.join([SkinFinder.skinDir, SkinFinder.skinList[1][1]]))
 		elif desktopSize.width() == 720:
 			fileName = resolveFilename(SCOPE_CURRENT_PLUGIN, ''.join([SkinFinder.skinDir, SkinFinder.skinList[2][1]]))
+		elif desktopSize.width() == 1920:
+			fileName = resolveFilename(SCOPE_CURRENT_PLUGIN, ''.join([SkinFinder.skinDir, SkinFinder.skinList[5][1]]))
 		else:
 			fileName = None
 			
