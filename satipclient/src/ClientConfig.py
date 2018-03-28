@@ -14,7 +14,6 @@ class TunerEntry():
 	KEY_IPADDR = "ipaddr"
 	KEY_TUNER_TYPE = "tuner_type"
 	KEY_VTUNER_TYPE = "vtuner_type"
-	KEY_FORCE_PLTS = "force_plts"
 
 	MAP_FROM_DLNA = {
 		SatIPTuner.TUNER_TYPE_S : TUNER_TYPE_S,
@@ -31,7 +30,6 @@ class TunerEntry():
 			TunerEntry.KEY_VTUNER_TYPE : entryType,
 			TunerEntry.KEY_TUNER_TYPE : tunerType,
 			TunerEntry.KEY_IPADDR : ip,
-			TunerEntry.KEY_FORCE_PLTS: "1",
 		}
 		return TunerEntry(data)
 
