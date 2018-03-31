@@ -159,6 +159,11 @@ class MerlinEPGActions():
 			"toggleConfig":		self.keyMenu,
 		}, -1)
 		
+		self["instandRecordActions"] = ActionMap(["InfobarInstantRecord"],
+		{
+			"instantRecord":        self.instantRecord,
+		}, -1)
+
 		# disable several action maps on start
 		self["actions"].setEnabled(False)
 		self["epgHistoryActions"].setEnabled(False)
@@ -169,6 +174,9 @@ class MerlinEPGActions():
 		self["settingsActions"].setEnabled(False)
 		self["toggleConfigActions"].setEnabled(True)
 		
+	def instantRecord(self):
+		pass # for overwriting
+
 	def setActions(self):
 		from MerlinEPGCenter import IMDB_INSTALLED
 		

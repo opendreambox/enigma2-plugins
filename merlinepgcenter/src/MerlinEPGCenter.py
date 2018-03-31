@@ -195,7 +195,8 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 		self["upcoming"].mode = UPCOMING
 		self["upcomingSeparator"] = Pixmap()
 		self["list"] = EpgCenterList(self.blinkTimer, LIST_TYPE_EPG, self.videoMode, self.piconLoader, bouquetList, currentIndex, self.piconSize, self.listStyle, self.epgList)
-		self["timerlist"] = EpgCenterTimerlist(list, self.videoMode, self.piconLoader, self.piconSize, self.listStyle)
+		self._timerlist = EpgCenterTimerlist(list, self.videoMode, self.piconLoader, self.piconSize, self.listStyle)
+		self["timerlist"] = self._timerlist
 		self["eventInfoSeparator"] = Pixmap()
 		self["picon"] = Pixmap()
 		self["serviceName"] = Label("")
