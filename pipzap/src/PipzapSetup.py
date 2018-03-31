@@ -14,10 +14,10 @@ from Components.config import config, getConfigListEntry
 
 class PipzapSetup(Screen, ConfigListScreen):
 	skin = """<screen name="PipzapSetup" position="center,center" size="565,370">
-		<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/blue.png" position="420,0" size="140,40" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" scale="stretch" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" scale="stretch" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" scale="stretch" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/blue.png" position="420,0" size="140,40" scale="stretch" alphatest="on" />
 		<widget source="key_red" render="Label" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
 		<widget source="key_green" render="Label" position="140,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
 		<widget source="key_yellow" render="Label" position="280,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
@@ -31,30 +31,10 @@ class PipzapSetup(Screen, ConfigListScreen):
 		Screen.__init__(self, session)
 
 		# Summary
-		self.setup_title = _("pipzap Setup")
+		from plugin import VERSION
+		self.setup_title = _("pipzap Setup ") + str(VERSION)
 		self.onChangedEntry = []
-
-		ConfigListScreen.__init__(
-			self,
-			[
-				getConfigListEntry(_("Enable Hotkey"), config.plugins.pipzap.enable_hotkey, _("Use the STOP-Key to quickly enable/disable pipzap in TV-Mode? Changing this setting requires a restart.")),
-				getConfigListEntry(_("Show in Plugin menu"), config.plugins.pipzap.show_in_plugins, _("Adds an entry to the Plugin menu to toggle pipzap")),
-				getConfigListEntry(_("Show indicator label if zapping PiP"), config.plugins.pipzap.show_label, _("Displays a label in the opposite corner of PiP if pipzap is enabled.")),
-			],
-			session = session,
-			on_change = self.changed
-		)
-		def selectionChanged():
-			if self["config"].current:
-				self["config"].current[1].onDeselect(self.session)
-			self["config"].current = self["config"].getCurrent()
-			if self["config"].current:
-				self["config"].current[1].onSelect(self.session)
-			for x in self["config"].onSelectionChanged:
-				x()
-		self["config"].selectionChanged = selectionChanged
-		self["config"].onSelectionChanged.append(self.updateHelp)
-
+		
 		# Initialize widgets
 		self["key_green"] = StaticText(_("OK"))
 		self["key_red"] = StaticText(_("Cancel"))
@@ -65,32 +45,69 @@ class PipzapSetup(Screen, ConfigListScreen):
 		else:
 			self["key_blue"] = StaticText("")
 		self["help"] = StaticText()
-
+		
 		# Define Actions
 		self["actions"] = ActionMap(["SetupActions", "ColorActions"],
-			{
-				"cancel": self.keyCancel,
-				"save": self.keySave,
-				"blue": self.keyBlue,
-			}
-		)
+					{
+						"cancel": self.keyCancel,
+						"save": self.keySave,
+						"blue": self.keyBlue,
+					}
+				)
+
+		self.list = []
+		self.buildConfig()
+		ConfigListScreen.__init__(self, self.list, session = session, on_change = self.changed)
+		
+		def selectionChanged():
+			if self["config"].current:
+				self["config"].current[1].onDeselect(self.session)
+			self["config"].current = self["config"].getCurrent()
+			if self["config"].current:
+				self["config"].current[1].onSelect(self.session)
+			for x in self["config"].onSelectionChanged:
+				x()
+
+		self["config"].selectionChanged = selectionChanged
+		self["config"].onSelectionChanged.append(self.updateHelp)
 
 		# Trigger change
 		self.changed()
-
+		
 		self.onLayoutFinish.append(self.setCustomTitle)
 
+
+	def buildConfig(self):
+			
+			self.list.append( getConfigListEntry(_("Enable Hotkey"), config.plugins.pipzap.enable_hotkey, _("Use the STOP-Key to quickly enable/disable pipzap in TV-Mode? Changing this setting requires a restart.") ) )
+			if config.plugins.pipzap.enable_hotkey.value:
+				self.list.append( getConfigListEntry(_("  Open/Close PiP with Exit-Key"), config.plugins.pipzap.enable_exitkey, _("Use the Exit-Key to open/close the PiP.") ) )
+			self.list.append( getConfigListEntry(_("Show in Plugin menu"), config.plugins.pipzap.show_in_plugins, _("Adds an entry to the Plugin menu to toggle pipzap") ) )
+			self.list.append( getConfigListEntry(_("Show indicator label if zapping PiP"), config.plugins.pipzap.show_label, _("Displays a label in the opposite corner of PiP if pipzap is enabled.") ) )
+			if config.plugins.pipzap.show_label.value:
+				self.list.append( getConfigListEntry(_("  Show label with channelname under PiP"), config.plugins.pipzap.show_channelname, _("Displays the channelname in a label directly under the PiP - instead of indicator label.") ) )
+
+
 	def setCustomTitle(self):
-		self.setTitle(_("pipzap Setup"))
+		self.setTitle(self.setup_title)
 
 	def updateHelp(self):
 		cur = self["config"].getCurrent()
 		if cur:
 			self["help"].text = cur[2]
 
+	def changeConfig(self):
+		self.list = []
+		self.buildConfig()
+		self["config"].setList(self.list)
+		
 	def changed(self):
 		for x in self.onChangedEntry:
 			x()
+		current = self["config"].getCurrent()[1]
+		if (current == config.plugins.pipzap.show_label or current == config.plugins.pipzap.enable_hotkey):
+			self.changeConfig()
+			return
 
 	def getCurrentEntry(self):
 		return self["config"].getCurrent()[0]
