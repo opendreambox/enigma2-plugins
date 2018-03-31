@@ -609,7 +609,7 @@ class IMDB(Screen):
 
 			for category in ("director", "creator", "writer"):
 				if self.generalinfos.group(category):
-					striplink1 = re.compile('<a href="/name/nm\d+\?ref_=tt_ov_.."itemprop=\'url\'>', re.S)
+					striplink1 = re.compile('(<a href="/name/nm\d+.{0,1}\?ref_=tt_ov_..".{0,1}itemprop=\'url\'>)', re.S)
 					striplink2 = re.compile('(<a href="fullcredits\?ref_=tt_ov_..#.*?">)', re.S)
 					Detailstext += self.generalinfos.group('g_'+category) + ": " + striplink2.sub('', striplink1.sub('', stripmask.sub(' ', self.htmltags.sub('', self.generalinfos.group(category)).replace('\n','').replace('|','')))) + "\n"
 
