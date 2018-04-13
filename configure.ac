@@ -241,6 +241,10 @@ merlinepgcenter/images/XD/Makefile
 merlinepgcenter/images/XD_BORDER/Makefile
 merlinepgcenter/images/HD_Elgato/Makefile
 
+merlinskinthemes/Makefile
+merlinskinthemes/meta/Makefile
+merlinskinthemes/src/Makefile
+
 meteoitalia/Makefile
 meteoitalia/meta/Makefile
 meteoitalia/src/Makefile
