@@ -67,6 +67,8 @@ def StreamServerControl__startEncoderService(service):
 
 streamServerControl._startEncoderService = StreamServerControl__startEncoderService
 
+streamServerControl._seekToMin = 0
+
 File = static.File
 
 def autostart(reason,**kwargs):
