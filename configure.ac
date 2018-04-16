@@ -392,6 +392,14 @@ startuptostandby/Makefile
 startuptostandby/meta/Makefile
 startuptostandby/src/Makefile
 
+streamserverseek/Makefile
+streamserverseek/src/Makefile
+streamserverseek/meta/Makefile
+streamserverseek/src/web/Makefile
+streamserverseek/src/web-data/Makefile
+streamserverseek/src/WebComponents/Makefile
+streamserverseek/src/WebComponents/Sources/Makefile
+
 subsdownloader2/Makefile
 subsdownloader2/meta/Makefile
 subsdownloader2/src/Makefile
