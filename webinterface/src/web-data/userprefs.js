@@ -11,11 +11,11 @@ var userprefs = {
 		var the_cookie = document.cookie.split(';');
 
 		var idx = 0;
-		if(the_cookie[idx].startsWith("TWISTED_SESSION")){
-			idx = 1;
+		while(the_cookie[idx].trim().startsWith("TWISTED_SESSION") || the_cookie[idx].trim().startsWith("sid")) {
+			idx += 1;
 		}
 		if (the_cookie[idx]) {
-			this.data = unescape(the_cookie[idx]).evalJSON();
+			this.data = JSON.parse(unescape(the_cookie[idx]));
 		}
 		return this.data;
 	},
@@ -23,7 +23,7 @@ var userprefs = {
 	save : function(expires, path) {
 		var d = expires || new Date(2222, 01, 01);
 		var p = path || '/';
-		document.cookie = escape( Object.toJSON(this.data) ) + ';path=' + p
+		document.cookie = escape( JSON.stringify(this.data) ) + ';path=' + p
 				+ ';expires=' + d.toUTCString();
 	}
 };

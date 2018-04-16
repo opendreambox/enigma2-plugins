@@ -1,0 +1,100 @@
+<!doctype html>
+<html class="no-js" lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<title>Dreambox TV - BETA</title>
+		<meta name="description" content="Dreambox TV Streaming">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="manifest" href="site.webmanifest">
+		<link rel="apple-touch-icon" href="icon.png">
+		<link rel="shortcut icon" href="favicon.ico">
+
+		<link rel="stylesheet" href="css/vendor/normalize.css">
+		<link rel="stylesheet" href="css/vendor/dialog-polyfill.css">
+		<link rel="stylesheet" href="css/vendor/material.min.css">
+		<link rel="stylesheet" href="css/vendor/plyr.css">
+		<link rel="stylesheet" href="fonts/material_icons.css">
+		<link rel="stylesheet" href="css/main.css">
+	</head>
+	<body>
+		<script src="js/vendor/dialog-polyfill.js"></script>
+		<script src="js/vendor/modernizr-3.5.0.min.js"></script>
+		<script src="js/vendor/jquery-3.2.1.min.js"></script>
+		<script src="js/vendor/hls.js"></script>
+		<script src="js/vendor/material.min.js"></script>
+		<script src="js/plugins.js"></script>
+		<script src="/web-data/userprefs.js"></script>
+		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+			<header class="mdl-layout__header">
+				<div class="mdl-layout__header-row">
+					<span class="mdl-layout-title mdl-cell--hide-phone">Dreambox TV - BETA</span>
+					<div class="mdl-layout-spacer"></div>
+					<nav id="bouquets" class="mdl-navigation"></nav>
+					<button id="settings-menu" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+						<i class="material-icons">more_vert</i>
+					</button>
+					<form action="#">
+						<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="settings-menu">
+							<li id="button-bitrates" class="mdl-menu__item">Bitrates</li>
+						</ul>
+					</form>
+				</div>
+			</header>
+			<div class="mdl-layout__drawer">
+				<span id="menu-bouquet" class="mdl-layout-title"></span>
+				<nav id="services" class="mdl-navigation"></nav>
+			</div>
+			<main class="mdl-layout__content center">
+				<video playsinline autoplay controls id="video"></video>
+			</main>
+			<div id="snackbar" class="mdl-js-snackbar mdl-snackbar">
+				<div class="mdl-snackbar__text"></div>
+				<button class="mdl-snackbar__action" type="button"></button>
+			</div>
+		</div>
+<!-- Login Dialog -->
+		<dialog id="login_dialog" class="mdl-dialog">
+			<form id="login_form" action="#">
+				<h4 class="mdl-dialog__title">Login</h4>
+				<div class="mdl-dialog__content">
+					<div class="mdl-textfield mdl-js-textfield">
+						<input required class="mdl-textfield__input" type="text" id="login_user" name="login_user" value="root">
+						<label class="mdl-textfield__label" for="user">User...</label>
+					</div>
+					<div id="login_container" class="mdl-textfield mdl-js-textfield">
+						<input class="mdl-textfield__input" type="password" id="login_pass" name="login_pass" autofocus>
+						<label class="mdl-textfield__label" for="pass">Password...</label>
+						<span class="mdl-textfield__error">Login failed! Wrong credentials?</span>
+					</div>
+				</div>
+				<div class="mdl-dialog__actions">
+					<button onclick="return false;" type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored send">Login</button>
+				</div>
+			</form>
+		</dialog>
+<!-- Stream Settings Dialog -->
+		<dialog id="bitrate_dialog" class="mdl-dialog">
+			<h4 class="mdl-dialog__title">Bitrates</h4>
+			<div class="mdl-dialog__content">
+				<div class="mdl-textfield mdl-js-textfield">
+					<input class="mdl-textfield__input" type="number" min="500" max="10000" id="videoBitrate">
+					<label class="mdl-textfield__label" for="videoBitrate">Video...</label>
+					<span class="mdl-textfield__error">Video bitrate has to be between 500 an 10000!</span>
+				</div>
+				<div class="mdl-textfield mdl-js-textfield">
+					<input class="mdl-textfield__input" type="number" min="32" max="512" id="audioBitrate">
+					<label class="mdl-textfield__label" for="audioBitrate">Audio...</label>
+					<span class="mdl-textfield__error">Audio bitrate has to be between 32 an 512!</span>
+				</div>
+			</div>
+			<div class="mdl-dialog__actions">
+				<button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored ok">OK</button>
+				<button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised close">Cancel</button>
+			</div>
+		</dialog>
+		<script src="js/vendor/plyr.min.js"></script>
+		<script src="js/main.js"></script>
+	</body>
+</html>

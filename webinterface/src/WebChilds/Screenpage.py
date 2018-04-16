@@ -27,6 +27,68 @@ NoExplicitHeaderFiles = frozenset(('getpid.xml', 'tvbrowser.xml', ))
 """
 TextJavascriptHeaderFiles = frozenset(('strings.js.xml', ))
 
+resource.ErrorPage.template = """<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>%(code)s - %(brief)s</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+
+        * {
+            line-height: 1.2;
+            margin: 0;
+        }
+
+        html {
+            color: #888;
+            display: table;
+            font-family: sans-serif;
+            height: 100%%;
+            text-align: center;
+            width: 100%%;
+        }
+
+        body {
+            display: table-cell;
+            vertical-align: middle;
+            margin: 2em auto;
+        }
+
+        h1 {
+            color: #555;
+            font-size: 2em;
+            font-weight: 400;
+        }
+
+        p {
+            margin: 0 auto;
+            width: 280px;
+        }
+
+        @media only screen and (max-width: 280px) {
+
+            body, p {
+                width: 95%%;
+            }
+
+            h1 {
+                font-size: 1.5em;
+                margin: 0 0 0.3em;
+            }
+
+        }
+
+    </style>
+</head>
+<body>
+    <h1>%(code)s - %(brief)s</h1>
+    <p>%(detail)s</p>
+</body>
+</html>
+<!-- IE needs 512+ bytes: https://blogs.msdn.microsoft.com/ieinternals/2010/08/18/friendly-http-error-pages/ -->
+"""
+
 class ScreenPage(resource.Resource):
 	def __init__(self, session, path, addSlash = False):
 		resource.Resource.__init__(self)
@@ -60,7 +122,8 @@ class ScreenPage(resource.Resource):
 			return "";
 
 		else:
-			return resource.ErrorPage(http.NOT_FOUND, "Error 404 - Page not found", "The requested resource is not available").render(request);
+
+			return resource.ErrorPage(http.NOT_FOUND, "Page Not Found", "Sorry, but the page you were trying to view does not exist.").render(request);
 
 		return server.NOT_DONE_YET
 

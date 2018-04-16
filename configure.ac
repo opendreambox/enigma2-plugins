@@ -510,6 +510,12 @@ webinterface/meta/Makefile
 webinterface/src/Makefile
 webinterface/src/m/Makefile
 webinterface/src/mobile/Makefile
+webinterface/src/stream/Makefile
+webinterface/src/stream/css/Makefile
+webinterface/src/stream/css/vendor/Makefile
+webinterface/src/stream/fonts/Makefile
+webinterface/src/stream/js/Makefile
+webinterface/src/stream/js/vendor/Makefile
 webinterface/src/web/Makefile
 webinterface/src/web-data/Makefile
 webinterface/src/web-data/css/Makefile
@@ -533,6 +539,7 @@ webinterface/src/WebChilds/External/Makefile
 webinterface/src/WebComponents/Makefile
 webinterface/src/WebComponents/Converter/Makefile
 webinterface/src/WebComponents/Sources/Makefile
+webinterface/src/WebSocket/Makefile
 
 werbezapper/Makefile
 werbezapper/meta/Makefile

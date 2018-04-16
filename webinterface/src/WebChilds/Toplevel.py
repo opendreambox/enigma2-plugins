@@ -13,6 +13,7 @@ from PlayService import ServiceplayerResource
 from Uploader import UploadResource
 from ServiceListSave import ServiceList
 from RedirecToCurrentStream import RedirecToCurrentStreamResource
+from Plugins.Extensions.WebInterface.WebSocket.DreamboxWebSocketServer import webSocketServer
 from Tools.Directories import resolveFilename, SCOPE_MEDIA
 
 from External.__init__ import importExternalModules
@@ -55,6 +56,9 @@ def getToplevel(session):
 	root.putChild("servicelist", ServiceList(session))
 	root.putChild("streamcurrent", RedirecToCurrentStreamResource(session))
 	root.putChild("screenshot", ScreenshotResource())
+	root.putChild("ws", webSocketServer.root)
+	root.putChild("stream", File(util.sibpath(__file__, "stream")))
+	webSocketServer.start(session)
 
 	if config.plugins.Webinterface.includemedia.value is True:
 		root.putChild("media", File(resolveFilename(SCOPE_MEDIA)))
