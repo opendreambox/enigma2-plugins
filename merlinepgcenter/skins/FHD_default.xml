@@ -45,7 +45,7 @@
 			<convert type="MiniTVDisplay"/>
 		</widget>
 		<widget name="bouquet" position="1313,1035" size="600,36" zPosition="4" font="Regular;30" transparent="1" halign="center" valign="center" />
-		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/FHD/button_background.png" position="0,1022" size="1920,59" transparent="1" alphatest="on" />
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/FHD/button_background.png" position="0,1022" size="1920,59" transparent="1" alphatest="on" zPosition="3" />
 		<widget name="volume" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/FHD/volume.png" position="1301,1023" size="620,56" zPosition="3" transparent="1" />
 		<widget name="mute" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPGCenter/images/FHD/mute.png" position="1307,1026" size="48,48" zPosition="3" transparent="1" alphatest="on" />
 		<widget font="Regular;27" halign="left" valign="center" name="key_red" position="60,1028" size="210,45" transparent="1" zPosition="2"/>
