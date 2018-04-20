@@ -344,7 +344,7 @@ class EpgCenterList(GUIComponent):
 				
 			width = self.piconSize.width()
 			if picon:
-				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetLeft, (self.itemHeight - self.baseHeight) / 2, width, self.itemHeight, picon))
+				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, offsetLeft, 0, width, self.itemHeight, picon))
 			offsetLeft = offsetLeft + width + columnSpace
 			
 		if config.plugins.merlinEpgCenter.showServiceName.value:
