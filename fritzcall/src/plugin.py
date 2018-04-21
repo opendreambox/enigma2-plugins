@@ -2,10 +2,11 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1507 $
-$Date: 2018-02-20 09:51:31 +0100 (Tue, 20 Feb 2018) $
-$Id: plugin.py 1507 2018-02-20 08:51:31Z michael $
+$Revision: 1519 $
+$Date: 2018-04-05 10:33:27 +0200 (Thu, 05 Apr 2018) $
+$Id: plugin.py 1519 2018-04-05 08:33:27Z michael $
 '''
+
 
 # C0111 (Missing docstring)
 # C0103 (Invalid name)
@@ -367,8 +368,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1507 $"[1:-2] + "\n" +
-							"$Date: 2018-02-20 09:51:31 +0100 (Tue, 20 Feb 2018) $"[1:23] + "\n"
+							"$Revision: 1519 $"[1:-2] + "\n" +
+							"$Date: 2018-04-05 10:33:27 +0200 (Thu, 05 Apr 2018) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -1429,7 +1430,7 @@ class FritzDisplayCalls(Screen, HelpableScreen):
 				direct = directrejected
 			return direct
 
-		# debug("[FritzDisplayCalls] %s" %repr(listOfCalls))
+		debug("[FritzDisplayCalls] %s" %repr(listOfCalls))
 		self.list = [(number, date[:6] + ' ' + date[9:14], pixDir(direct), remote, length, here) for (number, date, direct, remote, length, here) in listOfCalls]
 		self["entries"].setList(self.list)
 		#=======================================================================
@@ -2617,7 +2618,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1507 $"[1:-1] + "$Date: 2018-02-20 09:51:31 +0100 (Tue, 20 Feb 2018) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1519 $"[1:-1] + "$Date: 2018-04-05 10:33:27 +0200 (Thu, 05 Apr 2018) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -3225,7 +3226,7 @@ class FritzReverseLookupAndNotifier(object):
 
 class FritzProtocol(LineReceiver):  # pylint: disable=W0223
 	def __init__(self):
-		info("[FritzProtocol] " + "$Revision: 1507 $"[1:-1] + "$Date: 2018-02-20 09:51:31 +0100 (Tue, 20 Feb 2018) $"[7:23] + " starting")
+		info("[FritzProtocol] " + "$Revision: 1519 $"[1:-1] + "$Date: 2018-04-05 10:33:27 +0200 (Thu, 05 Apr 2018) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
@@ -3373,11 +3374,12 @@ class FritzProtocol(LineReceiver):  # pylint: disable=W0223
 				self.notifyAndReset()
 
 class FritzClientFactory(ReconnectingClientFactory):
-	initialDelay = 20
-	maxDelay = 30
 
 	def __init__(self):
 		self.hangup_ok = False
+		# self.initialDelay = 20
+		# self.maxDelay = 30
+		self.maxRetries = 5
 
 	def startedConnecting(self, connector):  # @UnusedVariable # pylint: disable=W0613
 		#=======================================================================
