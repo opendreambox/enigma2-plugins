@@ -99,8 +99,7 @@ class StreamResource(resource.Resource):
 			except Exception:
 				pass
 
-		request.setHeader("Content-type", "application/x-mpegurl")
-		request.setHeader("Content-Disposition", 'attachment; filename="stream.m3u"')
+		request.setHeader("Content-type", "")
 
 		if ext == "ts":
 			wait = False
@@ -118,7 +117,8 @@ class StreamResource(resource.Resource):
 				if not os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/GstRtspServer/StreamServerControl.py"):
 					self.streamServerSeek.doSeek()
 
-			request.write("#EXTM3U\n#EXTVLCOPT--http-reconnect=true\n%s" % streamUrl)
+			request.setHeader("Location", streamUrl)
+			request.setResponseCode(http.FOUND)
 
 			if wait:
 				reactor.callLater(1, self.finishRequest)
@@ -131,9 +131,9 @@ class StreamResource(resource.Resource):
 		if inStandby is None:
 			if self.streamServerSeek._isTemporaryLiveMode:
 				print "[StreamserverSeek] Box already in temporary Live-Mode"
-				return "#EXTM3U\n#EXTVLCOPT--http-reconnect=true\n%s" % streamUrl
-#				request.finish()
-#				return server.NOT_DONE_YET
+				request.setHeader("Location", streamUrl)
+				request.setResponseCode(http.FOUND)
+				return ""
 			else:
 				print "[StreamserverSeek] Requiring Live-Mode, but Box not in idle mode - do nothing"
 				request.setResponseCode(http.INTERNAL_SERVER_ERROR)
@@ -151,7 +151,9 @@ class StreamResource(resource.Resource):
 			if streamServerControl.getInputMode() != eStreamServer.INPUT_MODE_LIVE:
 				print "[StreamserverSeek] Set input mode to LIVE"
 				StreamServerSeek().forceInputMode(eStreamServer.INPUT_MODE_LIVE)
-			
-			request.write("#EXTM3U\n#EXTVLCOPT--http-reconnect=true\n%s" % streamUrl)
+
+			request.setHeader("Location", streamUrl)
+			request.setResponseCode(http.FOUND)
+
 			return server.NOT_DONE_YET
 
