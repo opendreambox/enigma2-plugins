@@ -2,6 +2,8 @@ from twisted.web import resource, http, server
 
 from enigma import eStreamServer, eServiceReference
 
+from Components.config import config
+
 import os.path
 
 if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/GstRtspServer/StreamServerControl.py"):
@@ -32,8 +34,6 @@ class StreamResource(resource.Resource):
 			service = eServiceReference(self.streamServerSeek._temporaryLiveModeService)
 			self.session.nav.playService(service)
 			print "[StreamserverSeek] service %s" % service
-			print "[StreamserverSeek] session.nav.getCurrentService() %s" % self.session.nav.getCurrentService()
-			seek = self.session.nav.getCurrentService().seek()
 			self.streamServerSeek._isTemporaryLiveModeActive = True
 
 #		self._request.finish()
@@ -57,7 +57,10 @@ class StreamResource(resource.Resource):
 			if request.postpath[0] == 'rtsp':
 				streamUrl = "rtsp://%s/stream" % request.getRequestHostname()
 			elif request.postpath[0] == 'hls':
-				streamUrl = "http://%s:8080/stream.m3u8" % request.getRequestHostname()
+				if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/GstRtspServer/StreamServerControl.py"):
+					streamUrl = "http://%s:%s/dream.m3u8" % (request.getRequestHostname(), config.streamserver.hls.port.value)
+				else:
+					streamUrl = "http://%s:8080/stream.m3u8" % request.getRequestHostname()
 		
 		if not streamUrl:
 			request.setResponseCode(http.NOT_FOUND)
@@ -71,14 +74,6 @@ class StreamResource(resource.Resource):
 			movieNameWExt = request.postpath[i]
 			i += 1
 		
-		if not os.path.isfile(moviePath):
-			moviePath = moviePath.replace("+", " ")
-			if i -1 < length:
-				movieNameWExt = request.postpath[i-1].replace("+", " ")
-			if not os.path.isfile(moviePath):
-				request.setResponseCode(http.NOT_FOUND)
-				return ""
-
 		movieSplit = movieNameWExt.split(".")
 		movieName = ""
 		movieExt = ""
@@ -87,21 +82,34 @@ class StreamResource(resource.Resource):
 			movieName += movieSplit[i]
 			i += 1
 		
-		ext = movieSplit[-1]
+		movieExt = movieSplit[-1]
 		
-		if (len(movieSplit) < 2) or (ext not in self.validExt):
+		print "[StreamserverSeek] moviePath %s" % moviePath
+		print "[StreamserverSeek] movieName %s" % movieName
+		print "[StreamserverSeek] movieExt %s" % movieExt
+		
+		if not os.path.isfile(moviePath):
+			moviePath = moviePath.replace("+", " ")
+			if i -1 < length:
+				movieNameWExt = request.postpath[i-1].replace("+", " ")
+			if not os.path.isfile(moviePath):
+				request.setResponseCode(http.NOT_FOUND)
+				return ""
+
+		if (len(movieSplit) < 2) or (movieExt not in self.validExt):
 			request.setResponseCode(http.FORBIDDEN)
 			return ""
 
 		if "min" in request.args:
 			try:
 				self.streamServerSeek._seekToMin = int(request.args["min"][0])
+				print "[StreamserverSeek] Will seek to %s" % self.streamServerSeek._seekToMin
 			except Exception:
 				pass
 
 		request.setHeader("Content-type", "")
 
-		if ext == "ts":
+		if movieExt == "ts":
 			wait = False
 			if self.streamServerSeek._isTemporaryLiveMode:
 				print "[StreamserverSeek] Requested service does not require Live-Mode, but Live-Mode is still active. End it!"
@@ -131,6 +139,15 @@ class StreamResource(resource.Resource):
 		if inStandby is None:
 			if self.streamServerSeek._isTemporaryLiveMode:
 				print "[StreamserverSeek] Box already in temporary Live-Mode"
+				self.streamServerSeek._temporaryLiveModeService = "4097:0:0:0:0:0:0:0:0:0:" + urllib.quote(moviePath)
+				service = eServiceReference(self.streamServerSeek._temporaryLiveModeService)
+				if service.toCompareString() != self.session.nav.getCurrentServiceReference().toCompareString():
+					self.session.nav.playService(service)
+					print "[StreamserverSeek] service %s" % service
+				
+				print "[StreamserverSeek] Seek is now %s" % self.streamServerSeek._seekToMin
+				self.streamServerSeek.doSeek()
+
 				request.setHeader("Location", streamUrl)
 				request.setResponseCode(http.FOUND)
 				return ""
@@ -141,6 +158,7 @@ class StreamResource(resource.Resource):
 		else:
 			streamServerControl.stopEncoderService()
 			print "[StreamserverSeek] Switching on Box"
+			self.streamServerSeek._tvLastService = config.tv.lastservice.value
 			self.streamServerSeek._temporaryLiveModeService = "4097:0:0:0:0:0:0:0:0:0:" + urllib.quote(moviePath)
 			inStandby.onClose.append(self._onTemporaryLiveMode)
 			print "%s" % StreamServerSeek
@@ -156,4 +174,3 @@ class StreamResource(resource.Resource):
 			request.setResponseCode(http.FOUND)
 
 			return server.NOT_DONE_YET
-

@@ -24,6 +24,7 @@ class StreamServerSeek(PerServiceBase):
 	_isTemporaryLiveMode = False
 	_isTemporaryLiveModeActive = False
 	_temporaryLiveModeService = False
+	_tvLastService = False
 	_origCec = False
 
 	def __new__(cls, *p, **k):
@@ -84,8 +85,8 @@ class StreamServerSeek(PerServiceBase):
 	
 	def _onSourceStateChanged(self, state):
 		if self._isTemporaryLiveMode and (state == False or state == 2):
-			print "[StreamserverSeek] Temporary Live-Mode active, but all clients disconnected. End it in 30 seconds"
-			self._timer.start(30000, True)
+			print "[StreamserverSeek] Temporary Live-Mode active, but all clients disconnected. End it in 15 seconds"
+			self._timer.start(15000, True)
 		elif self._isTemporaryLiveMode and self._timer.isActive():
 			print "[StreamserverSeek] Reset end-timer"
 			self._timer.stop()
@@ -175,6 +176,11 @@ class StreamServerSeek(PerServiceBase):
 		self._isTemporaryLiveMode = False
 		self._isTemporaryLiveModeActive = False
 		self._temporaryLiveModeService = False
+		
+		if self._tvLastService:
+			service = eServiceReference(self._tvLastService)
+			if service and service.valid():
+				self._session.nav.playService(service)
 	
 		print "[StreamserverSeek] Set input mode to BACKGROUND"
 		self.forceInputMode(eStreamServer.INPUT_MODE_BACKGROUND)

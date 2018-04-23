@@ -9,7 +9,7 @@ if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/GstRtspServer/S
 else:
 	from Components.StreamServerControl import streamServerControl
 
-class StreamServerSeek(Source):
+class StreamServerSeekSource(Source):
 	SEEK_TO = 0
 	SEEK_RELATIVE = 1
 	SEEK_CHAPTER = 2
