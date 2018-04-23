@@ -2,6 +2,8 @@ from Components.Sources.Source import Source
 
 import os.path
 
+from Plugins.Extensions.StreamServerSeek.StreamServerSeek import StreamServerSeek
+
 if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/GstRtspServer/StreamServerControl.py"):
 	from Plugins.SystemPlugins.GstRtspServer.StreamServerControl import streamServerControl
 else:
@@ -85,19 +87,22 @@ class StreamServerSeek(Source):
 		return -1
 
 	def initVars(self):
-		if not streamServerControl._encoderService:
+		encoderService = streamServerControl._encoderService
+		if StreamServerSeek()._isTemporaryLiveMode:
+			encoderService = self.session.nav.getCurrentService()
+		elif not encoderService:
 			self.res = ( False, _("encoder service not running") )
 			return False
 
 		if self.func in self.REQUIRE_PAUSABLE:
-			pause = streamServerControl._encoderService.pause()
+			pause = encoderService.pause()
 			if not pause:
 				self.res = ( False, _("encoder service not pausable") )
 				return False
 			self._pause = pause
 		
 		if self.func in self.REQUIRE_SEEKABLE:
-			seek = streamServerControl._encoderService.seek()
+			seek = encoderService.seek()
 			if not seek:
 				self.res = ( False, _("encoder service not seekable") )
 				return False
