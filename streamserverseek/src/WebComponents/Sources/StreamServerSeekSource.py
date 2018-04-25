@@ -21,6 +21,7 @@ class StreamServerSeekSource(Source):
 	FAST_BACKWARD = 8
 	SLOW_MOTION = 9
 	PLAY = 10
+	INFO = 11
 
 	REQUIRE_PAUSABLE = {PAUSE, UNPAUSE, FAST_FORWARD, FAST_BACKWARD, SLOW_MOTION, PLAY}
 	REQUIRE_SEEKABLE = {SEEK_TO, SEEK_RELATIVE, SEEK_CHAPTER, GET_LENGTH, GET_PLAY_POSITION}
@@ -181,6 +182,8 @@ class StreamServerSeekSource(Source):
 			result = self.fastBackward(speed)
 		elif self.func is self.SLOW_MOTION:
 			result = self.slowMotion(speed)
+		elif self.func is self.INFO:
+			result = self.info()
 
 		self.res = ( True, result )
 	
@@ -196,6 +199,8 @@ class StreamServerSeekSource(Source):
 				return ( True, self.pause() )
 			elif self.func is self.UNPAUSE or self.func is self.PLAY:
 				return ( True, self.unpause() )
+			elif self.func is self.INFO:
+				return self.info()
 			else:
 				return ( False, _("required parameter(s) missing") )
 

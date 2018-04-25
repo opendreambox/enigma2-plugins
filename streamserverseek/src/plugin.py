@@ -2,7 +2,7 @@ from Plugins.Plugin import PluginDescriptor
 
 from enigma import eEnv
 from Plugins.Extensions.WebInterface.WebChilds.Toplevel import addExternalChild
-from Plugins.Extensions.WebInterface.WebChilds.Screenpage import ScreenPage
+from WebChilds.ScreenPageCORS import ScreenPageCORS
 
 from twisted.web import static
 from twisted.python import util
@@ -23,7 +23,7 @@ def autostart(reason,**kwargs):
 		print "session %s" % sss
 
 		root = File(eEnv.resolve("${libdir}/enigma2/python/Plugins/Extensions/StreamServerSeek/web-data"))
-		root.putChild("web", ScreenPage(kwargs["session"], util.sibpath(__file__, "web"), True) )
+		root.putChild("web", ScreenPageCORS(kwargs["session"], util.sibpath(__file__, "web"), True) )
 		root.putChild("stream", StreamResource(kwargs["session"]))
 		addExternalChild( ("streamserverseek", root) )
 

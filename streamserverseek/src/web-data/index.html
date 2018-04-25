@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha256-NuCn4IvuZXdBaFKJOAcsU2Q3ZpwbdFisd5dux4jkQ5w=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.min.css" integrity="sha256-WfuSLYdzGvlsFU6ImYYSE277WsjfyU30QeGuNIjeJEI=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="streamserverseek.css" />
+        <title>StreamServerSeek - Controls</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12"><h1>StreamServerSeek - Controls</div>
+            </div>
+
+            <div class="controls">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3 class="servicename"></h3>
+                    </div>
+                </div>
+                <div class="row sliderrow">
+                    <div class="col-xs-9 col-sm-11">
+                        <input class="slider" data-slider-id='slider1' type="text" data-slider-min="0" />
+                    </div>
+                    <div class="col-xs-3 col-sm-1">
+                        <span class="length">--:--</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row inactive">
+                <div class="col-xs-12">
+                    The streamserver is currently inactive
+                </div>
+            </div>
+            <div class="row error">
+                <div class="col-xs-12">
+                    An error occurred while retrieving streamserver info
+                </div>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js" integrity="sha256-ssw743RfM8cbNhwou26tmmPhiNhq3buUbRG/RevtfG4=" crossorigin="anonymous"></script>
+        <script src="streamserverseek.js"></script>
+    </body>
+</html>
