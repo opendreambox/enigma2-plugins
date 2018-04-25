@@ -1,3 +1,4 @@
 installdir = $(libdir)/enigma2/python/Plugins/Extensions/AiHDcontroler/comp
 
-install_DATA = *.gz *.py
+install_PYTHON = *.py
+install_DATA = *.gz

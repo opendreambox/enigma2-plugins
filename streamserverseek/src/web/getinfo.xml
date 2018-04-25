@@ -1,0 +1,21 @@
+<e2:screen external_module="Plugins.Extensions.StreamServerSeek.WebScreens" name="StreamServerSeekInfoWebScreen">&lt;?xml version="1.0" encoding="UTF-8"?>
+<e2:element source="Length" id="unit">
+	<e2:convert type="web:Null" />
+</e2:element>
+<e2:element source="PlayPosition" id="unit">
+	<e2:convert type="web:Null" />
+</e2:element>
+<e2streamserverseekinfos>
+	<e2streamserverseekinfo>
+		<e2state><e2:element source="State"><e2:convert type="web:TextToHTML" /></e2:element></e2state>
+		<e2statetext><e2:element source="StateText"><e2:convert type="web:TextToHTML" /></e2:element></e2statetext>
+		<e2servicename><e2:element source="CurrentService"><e2:convert type="ServiceName">Name</e2:convert><e2:convert type="web:TextToXML" /></e2:element></e2servicename>
+		<e2servicereference><e2:element source="CurrentService"><e2:convert type="ServiceName">Reference</e2:convert><e2:convert type="web:TextToXML" /></e2:element></e2servicereference>
+		<e2moviepath><e2:element source="MoviePath"><e2:convert type="web:TextToHTML" /></e2:element></e2moviepath>
+		<e2pausable><e2:element source="Pausable"><e2:convert type="web:TextToXML" /></e2:element></e2pausable>
+		<e2seekable><e2:element source="Seekable"><e2:convert type="web:TextToXML" /></e2:element></e2seekable>
+		<e2length><e2:element source="Length"><e2:convert type="SimpleResult">ResultText</e2:convert><e2:convert type="web:TextToXML" /></e2:element></e2length>
+		<e2playposition><e2:element source="PlayPosition"><e2:convert type="SimpleResult">ResultText</e2:convert><e2:convert type="web:TextToXML" /></e2:element></e2playposition>
+	</e2streamserverseekinfo>
+</e2streamserverseekinfos>
+</e2:screen>

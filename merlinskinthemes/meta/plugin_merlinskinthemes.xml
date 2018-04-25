@@ -1,0 +1,17 @@
+<default>
+	  <prerequisites>
+                    <tag type="System" />
+	  </prerequisites>
+          <info>
+                    <author>marthom</author>
+                    <name>Merlin Skin Themes</name>
+                    <packagename>enigma2-plugin-extensions-merlinskinthemes</packagename>
+                    <shortdescription>Select your skin theme</shortdescription>
+                    <description>Select your skin theme.</description>
+                    <screenshot src="http://www.dreamboxupdate.com/preview/plugin_merlinskinthemes.jpg" />		    
+          </info>
+
+	  <files type="package"> <!-- without version, without .ipk -->
+		<file type="package" name="enigma2-plugin-extensions-merlinskinthemes" />
+	  </files>
+</default>

@@ -241,6 +241,10 @@ merlinepgcenter/images/XD/Makefile
 merlinepgcenter/images/XD_BORDER/Makefile
 merlinepgcenter/images/HD_Elgato/Makefile
 
+merlinskinthemes/Makefile
+merlinskinthemes/meta/Makefile
+merlinskinthemes/src/Makefile
+
 meteoitalia/Makefile
 meteoitalia/meta/Makefile
 meteoitalia/src/Makefile
@@ -387,6 +391,15 @@ startupservice/src/Makefile
 startuptostandby/Makefile
 startuptostandby/meta/Makefile
 startuptostandby/src/Makefile
+
+streamserverseek/Makefile
+streamserverseek/src/Makefile
+streamserverseek/meta/Makefile
+streamserverseek/src/web/Makefile
+streamserverseek/src/web-data/Makefile
+streamserverseek/src/WebChilds/Makefile
+streamserverseek/src/WebComponents/Makefile
+streamserverseek/src/WebComponents/Sources/Makefile
 
 subsdownloader2/Makefile
 subsdownloader2/meta/Makefile

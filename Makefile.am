@@ -83,6 +83,7 @@ SUBDIRS = \
 	simplerss \
 	startupservice \
 	startuptostandby \
+	streamserverseek \
 	subsdownloader2 \
 	svdrp \
 	tageditor \

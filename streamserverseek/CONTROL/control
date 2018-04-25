@@ -1,0 +1,2 @@
+Description: Provides api based remote control functionality for the streamserver
+Depends: enigma2-plugin-extensions-webinterface

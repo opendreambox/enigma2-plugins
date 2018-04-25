@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1496 $
-$Date: 2017-10-05 11:17:25 +0200 (Thu, 05 Oct 2017) $
-$Id: FritzCallFBF.py 1496 2017-10-05 09:17:25Z michael $
+$Revision: 1520 $
+$Date: 2018-04-21 14:17:43 +0200 (Sat, 21 Apr 2018) $
+$Id: FritzCallFBF.py 1520 2018-04-21 12:17:43Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -3737,7 +3737,15 @@ class FritzCallFBF_upnp():
 							wlanState[3] = "2,4GHz/5GHz " + _("on") + ": " + netName
 						else:
 							wlanState[3] = wlanState[3] + ", 5GHz " + _("on") + ": " + netName
-		self.info("wlanState5: " + repr(wlanState))
+				self.info("wlanState5: " + repr(wlanState))
+
+		wlan = boxData["wlan"]
+		if not wlanState and wlan:
+			netName = re.sub(r".*: ", "", wlan["txt"]).encode("utf-8")
+			if wlan["led"] == "led_green":
+				wlanState = ['1', '', '', "2,4Ghz/5GHz " + _("on") + ": " + netName]
+			self.info("wlanState2,4/5: " + repr(wlanState))
+		self.info("wlanState: " + repr(wlanState))
 
 		if "dect" in boxData:
 			dect = boxData["dect"]
@@ -3878,7 +3886,7 @@ class FritzCallFBF_upnp():
 		for call in calls:
 			direct = call.find("./Type").text
 			if self._callType != '.' and self._callType != direct:
-				# self.debug("skip: %s", call.find("./Id").text)
+				# self.debug("skip: id %s of type %s", call.find("./Id").text, direct)
 				continue
 			if direct == FBF_OUT_CALLS:
 				number = call.find("./Called").text
@@ -4139,19 +4147,14 @@ class FritzCallFBF_upnp():
 			linkP.write(result["NewDeflectionList"])
 			linkP.close()
 
-		root = ET.fromstring(result["NewDeflectionList"])
-		deflections =  root.iterfind(".//Item")
-		for deflection in deflections:
+		for deflection in ET.fromstring(result["NewDeflectionList"]).iterfind(".//Item"):
 			# self.debug("enable: " + deflection.find("./Enable").text)
-			enabled = deflection.find("./Enable").text == '1'
-			if enabled:
-				outgoing = deflection.find("./Outgoing")
-				if outgoing is not None:
-					# self.debug("Outgoing")
-					self.blacklist[1].append(deflection.find("./Number").text)
-				else:
-					# self.debug("Incoming")
+			if deflection.find("./Enable").text == '1':
+				if deflection.find("./Type").text == "fromNumber":
 					self.blacklist[0].append(deflection.find("./Number").text)
+				if deflection.find("./Type").text == "fromAnonymous":
+					self.blacklist[0].append("")
+
 		self.debug(repr(self.blacklist))
 
 	def dial(self, number):  # @UnusedVariable # pylint: disable=W0613
