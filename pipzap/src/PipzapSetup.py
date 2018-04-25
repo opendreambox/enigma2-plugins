@@ -31,8 +31,7 @@ class PipzapSetup(Screen, ConfigListScreen):
 		Screen.__init__(self, session)
 
 		# Summary
-		from plugin import VERSION
-		self.setup_title = _("pipzap Setup ") + str(VERSION)
+		self.setup_title = _("pipzap Setup ")
 		self.onChangedEntry = []
 		
 		# Initialize widgets
