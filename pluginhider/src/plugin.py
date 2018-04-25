@@ -11,9 +11,10 @@ from PluginHiderSetup import PluginHiderSetup
 from operator import attrgetter
 
 config.plugins.pluginhider = ConfigSubsection()
-config.plugins.pluginhider.hideextensions = ConfigSet(choices=[])
-config.plugins.pluginhider.hideplugins = ConfigSet(choices=[])
-config.plugins.pluginhider.hideeventinfo = ConfigSet(choices=[])
+config.plugins.pluginhider.hideextensions 	= ConfigSet(choices=[])
+config.plugins.pluginhider.hideplugins 			= ConfigSet(choices=[])
+config.plugins.pluginhider.hideeventinfo 		= ConfigSet(choices=[])
+config.plugins.pluginhider.hidemovielist 		= ConfigSet(choices=[])
 
 hasPluginWeight = True
 
@@ -22,7 +23,7 @@ def hidePlugin(plugin):
 	hide = config.plugins.pluginhider.hideplugins.value
 	if not plugin.name in hide:
 		hide.append(plugin.name)
-		config.plugins.pluginhider.hideplugins.save()	
+		config.plugins.pluginhider.hideplugins.save()
 
 def PluginComponent_getPlugins(self, where):
 	if not isinstance(where, list):
@@ -44,6 +45,11 @@ def PluginComponent_getPlugins(self, where):
 		res.extend((x for x in self.plugins.get(PluginDescriptor.WHERE_EVENTINFO , []) if x.name not in hide))
 		where.remove(PluginDescriptor.WHERE_EVENTINFO)
 
+	if PluginDescriptor.WHERE_MOVIELIST in where:
+		hide = config.plugins.pluginhider.hidemovielist.value
+		res.extend((x for x in self.plugins.get(PluginDescriptor.WHERE_MOVIELIST , []) if x.name not in hide))
+		where.remove(PluginDescriptor.WHERE_MOVIELIST)
+	
 	if where:
 		res.extend(PluginComponent.pluginHider_baseGetPlugins(self, where))
 	if hasPluginWeight:
@@ -78,6 +84,8 @@ def menu(menuid):
 
 def Plugins(**kwargs):
 	pd =  PluginDescriptor(
+		name=_("Hide Plugins"),
+		description=_("Hide Plugins"),
 		where=PluginDescriptor.WHERE_AUTOSTART,
 		fnc=autostart,
 		needsRestart=False,
@@ -90,6 +98,8 @@ def Plugins(**kwargs):
 	return [
 		pd,
 		PluginDescriptor(
+			name=_("Hide Plugins"),
+			description=_("Hide Plugins"),
 			where=PluginDescriptor.WHERE_MENU,
 			fnc=menu,
 			needsRestart=False,

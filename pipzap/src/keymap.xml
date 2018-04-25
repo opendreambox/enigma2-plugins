@@ -1,5 +1,6 @@
 <keymap>
 	<map context="pipzapActions">
-		<key id="KEY_STOP" mapto="switchPiP" flags="b" />
+		<key id="KEY_STOP" mapto="switchPiP" flags="m" />
+		<key id="KEY_EXIT" mapto="hidePiP" flags="b" />
 	</map>
 </keymap>

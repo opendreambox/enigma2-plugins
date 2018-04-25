@@ -5,10 +5,11 @@ from Plugins.Plugin import PluginDescriptor
 
 from Components.ActionMap import HelpableActionMap
 from Components.ChoiceList import ChoiceEntryComponent
-from Components.config import config, ConfigSubsection, ConfigOnOff
+from Components.config import config, ConfigSubsection, ConfigOnOff, ConfigSelection
 from Components.SystemInfo import SystemInfo
 from Components.ParentalControl import parentalControl
-from enigma import ePoint, eServiceReference, getDesktop
+from ServiceReference import ServiceReference
+from enigma import ePoint, eServiceReference, getDesktop, eSize
 from Screens.ChannelSelection import ChannelContextMenu, ChannelSelection, ChannelSelectionBase
 from Screens.InfoBar import InfoBar, MoviePlayer
 from Screens.InfoBarGenerics import InfoBarNumberZap, InfoBarEPG, InfoBarChannelSelection, InfoBarPiP, InfoBarShowMovies, InfoBarTimeshift, InfoBarSeek, InfoBarPlugins
@@ -17,6 +18,7 @@ from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from PipzapSetup import PipzapSetup
 from Components.PluginComponent import plugins
+from Components.Label import Label
 
 class baseMethods:
 	pass
@@ -115,6 +117,13 @@ def ChannelSelection_togglePipzap(self):
 
 		# Move to service playing in pip (will not work with subservices)
 		self.setCurrentSelection(self.session.pip.getCurrentService())
+		
+		# Channelname in Screen schreiben
+		if config.plugins.pipzap.show_channelname.value:
+			servicereference = ServiceReference(self.session.pip.getCurrentService())
+			if servicereference:
+				channel_name=servicereference.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
+				self.session.pip.pipActive["channel_txt"].setText(" " + channel_name)
 
 		title += " (PiP)"
 	self.setTitle(title)
@@ -134,6 +143,13 @@ def ChannelSelection_zap(self, *args, **kwargs):
 				if not self.session.pip.playService(nref):
 					# XXX: Make sure we set an invalid ref
 					self.session.pip.playService(None)
+		
+		#Channelname in Screen schreiben
+		if config.plugins.pipzap.show_channelname.value:
+			servicereference = ServiceReference(self.session.pip.getCurrentService())
+			if servicereference:
+				channel_name=servicereference.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
+				self.session.pip.pipActive["channel_txt"].setText(" " + channel_name)
 	else:
 		baseMethods.ChannelSelection_zap(self, *args, **kwargs)
 
@@ -281,7 +297,25 @@ def InfoBarPiP__init__(self):
 			self["pipzapActions"] = HelpableActionMap(self, "pipzapActions",
 				{
 					"switchPiP": (self.togglePipzap, _("zap in pip window...")),
+					"hidePiP": (self.closePiP, _("close pip window...")),
 				})
+
+
+def InfoBarPiP_closePiP(self):
+  try:
+		if config.plugins.pipzap.enable_exitkey.value == "True":
+			self.showPiP()
+		elif config.plugins.pipzap.enable_exitkey.value == "Close":
+		  if self.session.pipshown:
+				self.showPiP()
+		elif config.plugins.pipzap.enable_exitkey.value == "Open":
+		  if not self.session.pipshown:
+				self.showPiP()
+		elif config.plugins.pipzap.enable_exitkey.value == "False":
+			pass
+  
+  except:
+    pass
 
 def InfoBarPiP_pipzapAvailable(self):
 	try:
@@ -297,8 +331,7 @@ def InfoBarPiP_getTogglePipzapName(self):
 
 def InfoBarPiP_togglePipzap(self):
 	# supposed to fix some problems with permanent timeshift patch
-	if isinstance(self, InfoBarTimeshift) and isinstance(self, InfoBarSeek) and \
-		self.timeshift_enabled and self.isSeekable():
+	if isinstance(self, InfoBarTimeshift) and isinstance(self, InfoBarSeek) and self.timeshift_enabled and self.isSeekable():
 			return 0
 
 	if not self.session.pipshown:
@@ -358,13 +391,20 @@ def InfoBarPiP_swapPiP(self):
 			self.session.nav.stopService() # stop portal
 			self.session.nav.playService(pipref) # start subservice
 
+			#Channelname in Screen schreiben
+			if config.plugins.pipzap.show_channelname.value:
+				servicereference = ServiceReference(self.session.pip.getCurrentService())
+				if servicereference:
+					channel_name=servicereference.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
+					self.session.pip.pipActive["channel_txt"].setText(" " + channel_name)
+
 #pragma mark -
 #pragma mark Picture in Picture
 #pragma mark -
 
 class PictureInPictureZapping(Screen):
 	skin = """<screen name="PictureInPictureZapping" flags="wfNoBorder" position="50,50" size="90,26" title="PiPZap" zPosition="-1">
-		<eLabel text="PiP-Zap" position="0,0" size="90,26" foregroundColor="#00ff66" font="Regular;26" />
+		<eLabel text="PiP-Zap" position="0,0" size="115,26" foregroundColor="#00ff66" font="Regular;26" />
 	</screen>"""
 	def refreshPosition(self):
 		x = config.av.pip.value[0]
@@ -381,9 +421,110 @@ class PictureInPictureZapping(Screen):
 			y = height - 55
 		self.instance.move(ePoint(x, y))
 
+
+class PictureInPictureZappingWithChannelName(Screen):
+	skin = """<screen name="PictureInPictureZappingWithChannelName" backgroundColor="transparent" flags="wfNoBorder" position="50,50" size="266,199" title="PiPZap" zPosition="-1">
+		<widget name="border_top" zPosition="-5" position="0,0" size="266,4" backgroundColor="#33ededed" />
+		<widget name="border_left" zPosition="-5" position="0,0" size="4,199" backgroundColor="#33ededed" />
+		<widget name="border_right" zPosition="-5" position="264,0" size="4,199" backgroundColor="#33ededed" />
+		<widget name="border_txt" zPosition="-5" position="0,160" size="266,34" backgroundColor="#33ededed" />
+		<widget name="channel_txt" position="2,162" size="262,29" halign="center" valign="top" foregroundColor="#00ff66" noWrap="1" font="Regular;26" />
+	</screen>"""
+
+	def __init__(self, session, *args, **kwargs):
+		Screen.__init__(self, session)
+		self["channel_txt"] = Label(" ")
+		self["border_txt"] = Label(" ")
+		self["border_top"] = Label(" ")
+		self["border_left"] = Label(" ")
+		self["border_right"] = Label(" ")
+		
+	def refreshPosition(self):
+
+		#== position des PiP abfragen (kommt mit SD-Werten)
+		x1 = config.av.pip.value[0]
+		y1 = config.av.pip.value[1]
+		x2 = config.av.pip.value[2]
+		y2 = config.av.pip.value[3]
+		
+		#== Abmessungen des Screens ermitteln
+		width = getDesktop(0).size().width()
+		height = getDesktop(0).size().height()
+
+		#position des PiP in Skin-Werte umrechnen
+		xt = x1 * width  / 720
+		yt = y1 * height / 576
+		ht = y2 * height / 576
+		wt = x2 * width  / 720
+		
+		# Korrektur wenn das PiP ueber den unteren bzw. rechten Rand gehen wuerde
+		tmp = xt - (wt * 4) / 100
+		if tmp < 0:
+			xt = 0
+		else:
+			xt = tmp
+		
+		tmp = yt - (ht * 4) / 100
+		if tmp < 0:
+			yt = 0
+		else:
+			yt = tmp
+		
+		tmp = (wt * 108) / 100
+		if xt + tmp > width:
+			wt = width - xt
+		else:
+			wt = tmp
+		
+		tmp = (ht * 108) / 100
+		if yt + tmp > height:
+			ht = height - yt
+		else:
+			ht = tmp
+		
+		border_width = self["border_top"].instance.size().height()
+		
+		x = xt - (border_width/2) -1
+		y = yt - border_width + 1
+		h = ht + (border_width/2)
+		w = wt + (2 * border_width) -1
+		
+		border_txt_height = self["border_txt"].instance.size().height()
+
+		h_border_txt = border_txt_height + 5 # Versatz/Hoehe des Text-Rahmens
+		h = h + h_border_txt #Hoehe
+		show_txt_ontop_of_pip=False
+		if (y + h) > height: # wenn PiP am unteren Rand
+			y = y - border_txt_height + border_width
+			h_border_txt = h
+			show_txt_ontop_of_pip=True
+		h_border = h - 6
+		
+		#== Groessen und Positionen der Screen-Elemente anpassen ====
+		self.instance.resize(eSize(*(w,h)))
+		self.instance.move(ePoint(int(x), int(y)))
+
+		self["border_top"].instance.resize(eSize(*(w,border_width)))
+		if show_txt_ontop_of_pip:
+			self["border_top"].instance.move(ePoint(int(0),int(h_border-border_width)))
+		else:
+			self["border_top"].instance.move(ePoint(int(0),int(0)))
+		self["border_left"].instance.resize(eSize(*(border_width,h_border)))
+		self["border_right"].instance.resize(eSize(*(border_width,h_border)))
+		self["border_right"].instance.move(ePoint(int(w-border_width),int(0)))
+
+		self["border_txt"].instance.resize(eSize(*(w,border_txt_height)))
+		self["border_txt"].instance.move(ePoint(int(0),int(h-h_border_txt)))
+		self["channel_txt"].instance.resize(eSize(*(w-(2*border_width),29)))
+		self["channel_txt"].instance.move(ePoint(int(border_width),int(h-h_border_txt+2)))
+
+
 def PictureInPicture__init__(self, session, *args, **kwargs):
 	baseMethods.PictureInPicture__init__(self, session, *args, **kwargs)
-	self.pipActive = session.instantiateDialog(PictureInPictureZapping)
+	if config.plugins.pipzap.show_channelname.value:
+		self.pipActive = session.instantiateDialog(PictureInPictureZappingWithChannelName)
+	else:
+		self.pipActive = session.instantiateDialog(PictureInPictureZapping)
 
 def PictureInPicture_active(self):
 	if config.plugins.pipzap.show_label.value:
@@ -392,10 +533,14 @@ def PictureInPicture_active(self):
 def PictureInPicture_inactive(self):
 	self.pipActive.hide()
 
-def PictureInPicture_move(self, *args, **kwargs):
-	baseMethods.PictureInPicture_move(self, *args, **kwargs)
-	self.pipActive.refreshPosition()
+#def PictureInPicture_move(self, *args, **kwargs):
+#	baseMethods.PictureInPicture_move(self, *args, **kwargs)
+#	#self.pipActive.refreshPosition()
 
+def PictureInPicture_resize(self, *args, **kwargs):
+	baseMethods.PictureInPicture_resize(self, *args, **kwargs)
+	self.pipActive.refreshPosition()
+	
 #pragma mark -
 #pragma mark - Help
 #pragma mark -
@@ -492,6 +637,7 @@ def overwriteFunctions():
 	InfoBarPiP.pipzapAvailable = InfoBarPiP_pipzapAvailable
 	InfoBarPiP.getTogglePipzapName = InfoBarPiP_getTogglePipzapName
 	InfoBarPiP.swapPiP = InfoBarPiP_swapPiP
+	InfoBarPiP.closePiP = InfoBarPiP_closePiP
 
 	if config.plugins.pipzap.show_help.value and pipzapHelp:
 		InfoBarPiP.togglePipzap = InfoBarPiP_togglePipzapHelpable
@@ -506,14 +652,19 @@ def overwriteFunctions():
 
 	PictureInPicture.active = PictureInPicture_active
 	PictureInPicture.inactive = PictureInPicture_inactive
-
-	baseMethods.PictureInPicture_move = PictureInPicture.move
-	PictureInPicture.move = PictureInPicture_move
+	
+	#baseMethods.PictureInPicture_move = PictureInPicture.move
+	#PictureInPicture.move = PictureInPicture_move
+	
+	baseMethods.PictureInPicture_resize = PictureInPicture.resize
+	PictureInPicture.resize = PictureInPicture_resize
 
 config.plugins.pipzap = ConfigSubsection()
 config.plugins.pipzap.enable_hotkey = ConfigOnOff(default = True)
+config.plugins.pipzap.enable_exitkey = ConfigSelection(choices=[("False",_("no")), ("True",_("yes")), ("Close",_("only Close")), ("Open",_("only Open"))], default = "False")
 config.plugins.pipzap.show_in_plugins = ConfigOnOff(default = False)
 config.plugins.pipzap.show_label = ConfigOnOff(default = True)
+config.plugins.pipzap.show_channelname = ConfigOnOff(default = False)
 config.plugins.pipzap.show_help = ConfigOnOff(default = True)
 
 def autostart(reason, **kwargs):
@@ -535,7 +686,7 @@ def main(session, *args, **kwargs):
 def menu(menuid):
 	if menuid != "services_recordings":
 		return []
-	return [(_("pipzap"), main, "pipzap_setup", None)]
+	return [(_("PiPzap"), main, "pipzap_setup", None)]
 
 def housekeepingPluginmenu(el):
 	if el.value:
@@ -573,6 +724,7 @@ def Plugins(**kwargs):
 			needsRestart=True, # XXX: force restart for now as I don't think the plugin will work properly without one
 		),
 		PluginDescriptor(
+			name=_("PiPzap Settings"), description=_("PiPzap Settings"),
 			where=PluginDescriptor.WHERE_MENU,
 			fnc=menu,
 			needsRestart=False,
