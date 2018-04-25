@@ -20,8 +20,6 @@ from PipzapSetup import PipzapSetup
 from Components.PluginComponent import plugins
 from Components.Label import Label
 
-VERSION = "1.1.0"
-
 class baseMethods:
 	pass
 
