@@ -60,7 +60,9 @@ class StreamResource(resource.Resource):
 				if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/GstRtspServer/StreamServerControl.py"):
 					streamUrl = "http://%s:%s/dream.m3u8" % (request.getRequestHostname(), config.streamserver.hls.port.value)
 				else:
-					streamUrl = "http://%s:8080/stream.m3u8" % request.getRequestHostname()
+					streamUrl = "/streamserverseek/proxy/stream.m3u8"
+			elif request.postpath[0] == 'player':
+				streamUrl = "/streamserverseek/player.html"
 		
 		if not streamUrl:
 			request.setResponseCode(http.NOT_FOUND)

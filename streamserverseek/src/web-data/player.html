@@ -7,18 +7,27 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha256-NuCn4IvuZXdBaFKJOAcsU2Q3ZpwbdFisd5dux4jkQ5w=" crossorigin="anonymous" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.min.css" integrity="sha256-WfuSLYdzGvlsFU6ImYYSE277WsjfyU30QeGuNIjeJEI=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/video.js/6.9.0/video-js.min.css" integrity="sha256-eXoB2lxpqIgd9VUhTEJfMF3F9X7W7SNNeo1eZzZ5dkc=" crossorigin="anonymous" />
+
         <link rel="stylesheet" href="streamserverseek.css" />
-        <title>StreamServerSeek - Controls</title>
+        <title>StreamServerSeek - Player</title>
     </head>
     <body>
         <div class="container">
             <div class="row">
-                <div class="col-xs-12"><h2>StreamServerSeek - Controls</h2></div>
+                <div class="col-xs-12"><h2>StreamServerSeek - Player</h2></div>
             </div>
             <div class="controls">
                 <div class="row">
                     <div class="col-xs-12">
                         <h3 class="servicename"></h3>
+                    </div>
+                </div>
+                <div class="row playerrow">
+                    <div class="col-xs-12">
+                        <video id=sss-player width=290 height=163 class="video-js vjs-default-skin" controls>
+                            <source src="/streamserverseek/proxy/stream.m3u8" type="application/x-mpegURL">
+                        </video>
                     </div>
                 </div>
                 <div class="row sliderrow">
@@ -44,6 +53,16 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js" integrity="sha256-ssw743RfM8cbNhwou26tmmPhiNhq3buUbRG/RevtfG4=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/6.9.0/video.min.js" integrity="sha256-+bMQKLpua60yw7fY434+gmPiCFk1cVbKXBG9TUuCgpA=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/6.9.0/lang/de.js" integrity="sha256-P+JMZ2DTEoWOsvId+mhKZKpOc7AXcoYSKKqRqVZprPo=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.14.1/videojs-contrib-hls.min.js" integrity="sha256-ngHSRzCW6euvtJPYDc6HnWd9UvS7VxXfOcRt5Kt0ZrA=" crossorigin="anonymous"></script>
+
         <script src="streamserverseek.js"></script>
+
+        <script>
+            var player = videojs('sss-player');
+            player.play();
+        </script>
+
     </body>
 </html>

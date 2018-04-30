@@ -92,3 +92,24 @@ $("input.slider").slider("on", "slideStop", function() {
     updateInfo(infoCallbackFunc);
 });
 
+// $.resize is overwritten by video-js, so use vanilla js
+onResize = function() {
+    elem = "video#sss-player";
+    if ($("div.playerrow > div > div.video-js").length > 0) {
+        $("div.playerrow > div > div.video-js > video.vjs-tech").height("100%");
+        elem = "div.playerrow > div > div.video-js";
+    }
+    else if ($(elem).length == 0)
+    {
+        return;
+    }
+    $(elem).width("100%");
+    $(elem).height(Math.round($(elem).width()/1280*720));
+}
+onResize();
+if (window.addEventListener) {
+    window.addEventListener("resize", onResize, false);
+} else if (object.attachEvent) {
+    object.attachEvent("on" + "resize", onResize);
+}
+

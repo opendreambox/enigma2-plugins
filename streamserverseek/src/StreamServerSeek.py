@@ -100,6 +100,7 @@ class StreamServerSeek(PerServiceBase):
 
 		print "[StreamserverSeek] doSeek()"
 
+		seek = False
 		if self._isTemporaryLiveModeActive:
 			seek = self._session.nav.getCurrentService().seek()
 		elif streamServerControl._encoderService:
