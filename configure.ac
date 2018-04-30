@@ -397,6 +397,9 @@ streamserverseek/src/Makefile
 streamserverseek/meta/Makefile
 streamserverseek/src/web/Makefile
 streamserverseek/src/web-data/Makefile
+streamserverseek/src/webinterface-data/Makefile
+streamserverseek/src/webinterface-data/tpl/Makefile
+streamserverseek/src/webinterface-data/tpl/default/Makefile
 streamserverseek/src/WebChilds/Makefile
 streamserverseek/src/WebComponents/Makefile
 streamserverseek/src/WebComponents/Sources/Makefile

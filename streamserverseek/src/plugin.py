@@ -11,12 +11,32 @@ from Plugins.Extensions.StreamServerSeek.StreamServerSeek import StreamServerSee
 from WebChilds.Stream import StreamResource
 from WebChilds.Proxy import ProxyResource
 
+import Plugins.Extensions.WebInterface.WebChilds.Toplevel
+
 if hasattr(static.File, 'render_GET'):
 	class File(static.File):
 		def render_POST(self, request):
 			return self.render_GET(request)
 else:
 	File = static.File
+
+class MyFile(File):
+	def getChild(self, path, request):
+		if (request.path == '/web-data/tpl/default/tplMovieList.htm'):
+			print "[StreamserverSeek] Serve own version of /web-data/tpl/default/tplMovieList.htm"
+			return self.createSimilarFile(util.sibpath(__file__, "webinterface-data/tpl/default/tplMovieList.htm"))
+
+		return File.getChild(self, path, request)
+
+Orig_Toplevel_getToplevel = Plugins.Extensions.WebInterface.WebChilds.Toplevel.getToplevel
+
+def Toplevel_getToplevel(session):
+	result = Orig_Toplevel_getToplevel(session)
+	result.putChild("web-data", MyFile(util.sibpath(__file__, "../WebInterface/web-data")))
+	print "[StreamserverSeek] hooked WebInterface.WebChilds.Toplevel.getToplevel"
+	return result
+
+Plugins.Extensions.WebInterface.WebChilds.Toplevel.getToplevel = Toplevel_getToplevel
 
 def autostart(reason,**kwargs):
 	if "session" in kwargs:
