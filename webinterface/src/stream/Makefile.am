@@ -4,7 +4,7 @@ install_DATA = \
 	favicon.ico \
 	icon.png \
 	index.html \
-	LICENSE.txt \
+	LICENSE.h5bp.txt \
 	plyr.svg \
 	site.webmanifest \
 	tile-wide.png \
