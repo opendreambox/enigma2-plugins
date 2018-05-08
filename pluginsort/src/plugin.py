@@ -176,6 +176,7 @@ def PluginComponent_addPlugin(self, plugin, *args, **kwargs):
 		print("[PluginSort] Splitting %s up in individual entries (%s)" % (plugin.name, repr(plugin.where)))
 		for x in plugin.where:
 			pd = PluginDescriptor(name=plugin.name, where=[x], description=plugin.description, icon=plugin.icon, fnc=plugin.__call__, wakeupfnc=plugin.wakeupfnc, needsRestart=plugin.needsRestart, internal=plugin.internal, weight=plugin.weight)
+			pd.path = plugin.path
 
 			newWeight = pluginWeights.get(pd)
 			if DEBUG: print("[PluginSort] Setting weight of %s from %d to %d" % (pd.name, pd.weight, newWeight))
