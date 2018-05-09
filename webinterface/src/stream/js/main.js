@@ -19,7 +19,7 @@ var dreamboxWebSocket = (function() {
 	}
 
 	function reconnectInternal() {
-		var protocol = window.location.protocol == "https" ? "wss" : "ws";
+		var protocol = window.location.protocol.startsWith("https") ? "wss" : "ws";
 		var port = window.location.port;
 		if (Number.parseInt(port) == Number.NaN) //no port value set for locations using the default port
 			port = protocol ==  "ws" ? 80 : 443;
