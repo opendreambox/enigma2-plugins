@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1520 $
-$Date: 2018-04-21 14:17:43 +0200 (Sat, 21 Apr 2018) $
-$Id: FritzCallFBF.py 1520 2018-04-21 12:17:43Z michael $
+$Revision: 1524 $
+$Date: 2018-05-03 16:40:33 +0200 (Thu, 03 May 2018) $
+$Id: FritzCallFBF.py 1524 2018-05-03 14:40:33Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -3724,7 +3724,9 @@ class FritzCallFBF_upnp():
 		if "wlan5" in boxData:
 			wlan5 = boxData["wlan5"]
 			if wlan5:
+				# self.info("wlanState5/1: " + repr(wlanState))
 				netName = re.sub(r".*: ", "", wlan5["txt"]).encode("utf-8")
+				# self.info("wlanState5/2: " + repr(netName))
 				if not wlanState:
 					if wlan5["led"] == "led_green":
 						wlanState = ['1', '', '', "5GHz " + _("on") + ": " + netName]
@@ -3737,14 +3739,19 @@ class FritzCallFBF_upnp():
 							wlanState[3] = "2,4GHz/5GHz " + _("on") + ": " + netName
 						else:
 							wlanState[3] = wlanState[3] + ", 5GHz " + _("on") + ": " + netName
-				self.info("wlanState5: " + repr(wlanState))
+		self.info("wlanState5: " + repr(wlanState))
+		# self.info("wlanState5/3: " + repr(wlanState))
 
-		wlan = boxData["wlan"]
-		if not wlanState and wlan:
+		if not wlanState and "wlan" in boxData:
+			wlan = boxData["wlan"]
+			# self.debug("wlan: " + repr(wlan))
 			netName = re.sub(r".*: ", "", wlan["txt"]).encode("utf-8")
+			# self.debug("netName: %s; led: %s", repr(netName), repr(wlan["led"]))
 			if wlan["led"] == "led_green":
 				wlanState = ['1', '', '', "2,4Ghz/5GHz " + _("on") + ": " + netName]
-			self.info("wlanState2,4/5: " + repr(wlanState))
+			else:
+				wlanState = ['0', '', '', "2,4Ghz/5GHz " + _("off") + ": " + netName]
+			# self.info("wlanState2,4/5: " + repr(wlanState))
 		self.info("wlanState: " + repr(wlanState))
 
 		if "dect" in boxData:
@@ -3767,7 +3774,7 @@ class FritzCallFBF_upnp():
 				if "linktxt" in fun:
 					if fun["linktxt"] == "Faxfunktion" and fun["details"] == "Integriertes Fax aktiv":
 						faxActive = True
-					if fun["linktxt"] == "Fax function" and fun["details"] == "Integrated fax enabled":
+					elif fun["linktxt"] == "Fax function" and fun["details"] == "Integrated fax enabled":
 						faxActive = True
 					elif fun["linktxt"] == "Rufumleitung" and fun["details"]:
 						if fun["details"] != "deaktiviert":
