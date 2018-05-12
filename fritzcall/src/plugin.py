@@ -2,9 +2,9 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1519 $
-$Date: 2018-04-05 10:33:27 +0200 (Thu, 05 Apr 2018) $
-$Id: plugin.py 1519 2018-04-05 08:33:27Z michael $
+$Revision: 1523 $
+$Date: 2018-05-03 16:39:13 +0200 (Thu, 03 May 2018) $
+$Id: plugin.py 1523 2018-05-03 14:39:13Z michael $
 '''
 
 
@@ -129,7 +129,7 @@ config.plugins.FritzCall.filtermsn.setUseableChars('0123456789,')
 config.plugins.FritzCall.filterCallList = ConfigYesNo(default = True)
 config.plugins.FritzCall.showBlacklistedCalls = ConfigYesNo(default = False)
 config.plugins.FritzCall.showOutgoingCalls = ConfigYesNo(default = False)
-config.plugins.FritzCall.timeout = ConfigInteger(default = 15, limits = (0, 60))
+config.plugins.FritzCall.timeout = ConfigInteger(default = 15, limits = (0, 65535))
 config.plugins.FritzCall.lookup = ConfigYesNo(default = False)
 config.plugins.FritzCall.internal = ConfigYesNo(default = False)
 config.plugins.FritzCall.fritzphonebook = ConfigYesNo(default = False)
@@ -368,8 +368,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1519 $"[1:-2] + "\n" +
-							"$Date: 2018-04-05 10:33:27 +0200 (Thu, 05 Apr 2018) $"[1:23] + "\n"
+							"$Revision: 1523 $"[1:-2] + "\n" +
+							"$Date: 2018-05-03 16:39:13 +0200 (Thu, 03 May 2018) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -1430,8 +1430,9 @@ class FritzDisplayCalls(Screen, HelpableScreen):
 				direct = directrejected
 			return direct
 
-		debug("[FritzDisplayCalls] %s" %repr(listOfCalls))
+		# debug("[FritzDisplayCalls] %s" %repr(listOfCalls))
 		self.list = [(number, date[:6] + ' ' + date[9:14], pixDir(direct), remote, length, here) for (number, date, direct, remote, length, here) in listOfCalls]
+		# debug("[FritzDisplayCalls] %s" %repr(self.list))
 		self["entries"].setList(self.list)
 		#=======================================================================
 		# if len(self.list) > 1:
@@ -2618,7 +2619,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1519 $"[1:-1] + "$Date: 2018-04-05 10:33:27 +0200 (Thu, 05 Apr 2018) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1523 $"[1:-1] + "$Date: 2018-05-03 16:39:13 +0200 (Thu, 03 May 2018) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -3226,7 +3227,7 @@ class FritzReverseLookupAndNotifier(object):
 
 class FritzProtocol(LineReceiver):  # pylint: disable=W0223
 	def __init__(self):
-		info("[FritzProtocol] " + "$Revision: 1519 $"[1:-1] + "$Date: 2018-04-05 10:33:27 +0200 (Thu, 05 Apr 2018) $"[7:23] + " starting")
+		info("[FritzProtocol] " + "$Revision: 1523 $"[1:-1] + "$Date: 2018-05-03 16:39:13 +0200 (Thu, 03 May 2018) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
