@@ -376,7 +376,16 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 				epgrefresh.stop()
 				if doSaveConfiguration:
 					self._saveConfiguration()
-		
-		self.close(self.session, self.needsEnigmaRestart)
+
+		if len(self.services[0]) == 0 and len(self.services[1]) == 0 and config.plugins.epgrefresh.enabled.value:
+			self.session.openWithCallback(self.checkAnswer, MessageBox, _("EPGRefresh requires services/bouquets to be configured. Configure now?"), MessageBox.TYPE_YESNO, timeout=0)
+		else:					
+			self.close(self.session, self.needsEnigmaRestart)
+
+	def checkAnswer(self, answer):
+		if answer:
+			self.editServices()
+		else:		
+			self.close(self.session, self.needsEnigmaRestart)
 
 
