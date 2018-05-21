@@ -12,6 +12,8 @@ from io import BytesIO as StringIO
 
 from ctypes import *
 
+### todo: rewrite segment in same conn
+
 class M3u8Client(http.HTTPClient):
 	_finished = False
 
@@ -64,6 +66,8 @@ class M3u8ClientFactory(ClientFactory):
 
 
 class MyProxyClient(proxy.ProxyClient):
+	_preventWrite = False
+
 	def __init__(self, command, rest, version, headers, data, father, responseEndCallback, statusCallback):
 		proxy.ProxyClient.__init__(self, command, rest, version, headers, data, father)
 		self.version = version
@@ -74,18 +78,30 @@ class MyProxyClient(proxy.ProxyClient):
 	def sendCommand(self, command, path):
 		self.transport.writeSequence([command, b' ', path, b' ' + self.version + b'\r\n'])
 
+	def preventWrite(self):
+		self._preventWrite = True
+
+	def handleResponsePart(self, data):
+		if not self._preventWrite:
+			proxy.ProxyClient.handleResponsePart(self, data)
+
 	def handleResponseEnd(self):
-		if not self._finished and not self.father.finished and not self.father._disconnected:
+		if not self._preventWrite and not self._finished and not self.father.finished and not self.father._disconnected:
 			if self.responseEndCallback:
 				self.responseEndCallback(self.father)
 			proxy.ProxyClient.handleResponseEnd(self)
 
 	def handleHeader(self, key, value):
-		if not self.responseEndCallback or key.lower() != 'content-length':
+		if not self._preventWrite and not self.responseEndCallback or key.lower() != 'content-length':
 			proxy.ProxyClient.handleHeader(self, key, value)
+	
+	def handleEndHeaders(self):
+		if not self._preventWrite:
+			proxy.ProxyClient.handleEndHeaders(self)
 
 	def handleStatus(self, version, code, message):
 		if int(code) == 404:
+			print "[StreamServerSeek] %s returned status 404 -> fake 503" % self.rest
 			self.father.setResponseCode(503, "Service Unavailable")
 		else:
 			self.father.setResponseCode(int(code), message)
@@ -207,6 +223,7 @@ class VodRequestHandler(object):
 				self.streamServerSeek._m3u8CallId.cancel()
 
 	def segmentStatusCallback(self, status, path):
+		"[StreamServerSeek] segmentStatusCallback %s %s" % (status, path)
 		self._status = status
 		segment = getSegmentNoFromFilename(path[1:])
 		if status == 200:
@@ -219,6 +236,10 @@ class VodRequestHandler(object):
 				if segment == 0:
 					# most probably restart/reload of player, force jump to begin
 					self.streamServerSeek._expectedSegment = -1
+			else:
+				print "[StreamServerSeek] segment doesn't exist yet.. retry in 0.25 sec"
+				self._client.preventWrite()
+				reactor.callLater(0.5, self.reConnectClientFactory)
 
 	def segmentWrite(self, buffer):
 		if self._request._disconnected:
@@ -254,6 +275,36 @@ class VodRequestHandler(object):
 			"GET", "/stream.m3u8", "HTTP/1.1",
 			self._resource._requestHeaders, None, self.m3u8EndCallback)
 		reactor.connectTCP(self._resource._requestHostname, 8080, clientFactory)
+	
+	def connectClientFactory(self,
+		command, rest, version, headers, data, father, responseEndCallback, statusCallback, setClientCallback,
+		hostname, port):
+		self.command = command
+		self.rest = rest
+		self.version = version
+		self.headers = headers
+		self.data = data
+		self.father = father
+		self.responseEndCallback = responseEndCallback
+		self.statusCallback = statusCallback
+		self.setClientCallback = setClientCallback
+		self.hostname = hostname
+		self.port = port
+		self.reConnectClientFactory()
+	
+	def reConnectClientFactory(self):
+		print "[StreamServerSeek] reConnectClientFactory"
+		clientFactory = VodResource.proxyClientFactoryClass(
+			self.command,
+			self.rest,
+			self.version,
+			self.headers,
+			self.data,
+			self.father,
+			self.responseEndCallback,
+			self.statusCallback,
+			self.setClientCallback)
+		reactor.connectTCP(self.hostname, self.port, clientFactory)
 
 class VodResource(resource.Resource):
 	isLeaf = True
@@ -320,9 +371,14 @@ class VodResource(resource.Resource):
 				oldpath = path
 				path = "/segment%d.ts" % (self.streamServerSeek._lastSuccessfullSegment + 1)
 				print "[StreamServerSeek] Vod-Proxy %s -> %s" % (oldpath, path)
+				handler.connectClientFactory(
+					request.method, path, "HTTP/1.1",
+					request.getAllHeaders(), request.content.read(), request, responseEndCallback, statusCallback, setClientCallback,
+					request.getRequestHostname(), 8080)
+				return server.NOT_DONE_YET
 
 		clientFactory = self.proxyClientFactoryClass(
-			request.method, path, request.clientproto,
+			request.method, path, "HTTP/1.1",
 			request.getAllHeaders(), request.content.read(), request, responseEndCallback, statusCallback, setClientCallback)
 		reactor.connectTCP(request.getRequestHostname(), 8080, clientFactory)
 
