@@ -32,7 +32,7 @@ class StreamServerSeek(PerServiceBase):
 	_origCec = False
 	_isVodActive = False
 	_libsssSegment = None
-	_m3u8CallId = None
+	_m3u8Timer = None
 
 	def __new__(cls, *p, **k):
 		if StreamServerSeek.__instance is None:

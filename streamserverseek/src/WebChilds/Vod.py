@@ -1,3 +1,5 @@
+from enigma import eTimer
+
 from twisted.web import resource, server, proxy, http
 from twisted.internet import reactor
 from twisted.internet.protocol import ClientFactory
@@ -28,6 +30,14 @@ class M3u8Client(http.HTTPClient):
 		self.data = data
 		self.version = version
 		self.responseEndCallback = responseEndCallback
+
+#	def connectionLost(self, reason):
+#		print "[StreamServerSeek] m3u8 %s: connectionLost (%s)" % (hex(id(self)), reason)
+#		http.HTTPClient.connectionLost(self, reason)
+	
+	def clientConnectionFailed(self, connector, reason):
+		print "[StreamServerSeek] m3u8 %s: clientConnectionFailed (%s)" % (hex(id(self)), reason)
+		http.HTTPClient.clientConnectionFailed(self, connector, reason)
 
 	def sendCommand(self, command, path):
 		self.transport.writeSequence([command, b' ', path, b' ' + self.version + b'\r\n'])
@@ -69,11 +79,24 @@ class MyProxyClient(proxy.ProxyClient):
 	_preventWrite = False
 
 	def __init__(self, command, rest, version, headers, data, father, responseEndCallback, statusCallback):
+		print "[StreamServerSeek] client %s: init" % hex(id(self))
 		proxy.ProxyClient.__init__(self, command, rest, version, headers, data, father)
 		self.version = version
 		self.responseEndCallback = responseEndCallback
 		self.statusCallback = statusCallback
 		father.notifyFinish().addBoth(self.disconnectChildConn)
+	
+	def connectionMade(self):
+		print "[StreamServerSeek] client %s: connectionMade" % hex(id(self))
+		proxy.ProxyClient.connectionMade(self)
+
+	def connectionLost(self, reason):
+		print "[StreamServerSeek] client %s: connectionLost (%s)" % (hex(id(self)), reason)
+		proxy.ProxyClient.connectionLost(self, reason)
+	
+	def clientConnectionFailed(self, connector, reason):
+		print "[StreamServerSeek] client %s: clientConnectionFailed (%s)" % (hex(id(self)), reason)
+		proxy.ProxyClient.clientConnectionFailed(self, connector, reason)
 
 	def sendCommand(self, command, path):
 		self.transport.writeSequence([command, b' ', path, b' ' + self.version + b'\r\n'])
@@ -90,6 +113,17 @@ class MyProxyClient(proxy.ProxyClient):
 			if self.responseEndCallback:
 				self.responseEndCallback(self.father)
 			proxy.ProxyClient.handleResponseEnd(self)
+		elif self._preventWrite and not self._finished:
+			self._finished = True
+			self.quietLoss = True
+			self.transport.loseConnection()
+		elif self._finished and self.father.finished and not self.father._disconnected:
+			print "[StreamServerSeek] Losing father connection..."
+			self.father.quietLoss = True
+			self.father.transport.loseConnection()
+		else:
+			print "[StreamServerSeek] What the fuck...."
+			print "[StreamServerSeek] preventWrite %s, finished %s, father.finished %s, father.disconnected %s" % (self._preventWrite, self._finished, self.father.finished, self.father._disconnected)
 
 	def handleHeader(self, key, value):
 		if not self._preventWrite and not self.responseEndCallback or key.lower() != 'content-length':
@@ -100,6 +134,7 @@ class MyProxyClient(proxy.ProxyClient):
 			proxy.ProxyClient.handleEndHeaders(self)
 
 	def handleStatus(self, version, code, message):
+		print "[StreamServerSeek] client %s: status %s" % (hex(id(self)), code)
 		if int(code) == 404:
 			print "[StreamServerSeek] %s returned status 404 -> fake 503" % self.rest
 			self.father.setResponseCode(503, "Service Unavailable")
@@ -115,11 +150,14 @@ class MyProxyClient(proxy.ProxyClient):
 #			self.quietLoss = True
 #			self.transport.loseConnection()
 
+	def __del__(self):
+		print "[StreamServerSeek] proxyclient %s died" % hex(id(self))
 
 class MyProxyClientFactory(proxy.ProxyClientFactory):
 	protocol = MyProxyClient
 
 	def __init__(self, command, rest, version, headers, data, father, responseEndCallback, statusCallback, setClientCallback):
+		print "[StreamServerSeek] new proxyclientfactory %s" % hex(id(self))
 		proxy.ProxyClientFactory.__init__(self, command, rest, version, headers, data, father)
 		self.responseEndCallback = responseEndCallback
 		self.statusCallback = statusCallback
@@ -130,7 +168,13 @@ class MyProxyClientFactory(proxy.ProxyClientFactory):
 			self.headers, self.data, self.father, self.responseEndCallback, self.statusCallback)
 		if self.setClientCallback:
 			self.setClientCallback(client)
+		self.responseEndCallback = None
+		self.statusCallback = None
+		self.setClientCallback = None
 		return client
+
+	def __del__(self):
+		print "[StreamServerSeek] proxyclientfactory %s died" % hex(id(self))
 
 def getSegmentNoFromFilename(filename):
 	try:
@@ -145,12 +189,16 @@ class VodRequestHandler(object):
 	_m3u8 = StringIO()
 	_segmentBuffer = None
 	_client = None
+	_timer = None
 
 	def __init__(self, resource, request):
 		self._resource = resource
 		self._request = request
 		self._origWrite = request.write
 		self.streamServerSeek = StreamServerSeek()
+		self._timer = eTimer()
+		self._timer_conn = self._timer.timeout.connect(self.reConnectClientFactory)
+		print "[StreamServerSeek] handler %s" % hex(id(self))
 	
 	def setClient(self, client):
 		self._client = client
@@ -214,16 +262,29 @@ class VodRequestHandler(object):
 		self._resource.segmentLength = segmentLength
 		
 		if self.streamServerSeek._lastSegmentRequest + 30 > time.time():
-			if self.streamServerSeek._m3u8CallId is None or not self.streamServerSeek._m3u8CallId.active():
+			if self.streamServerSeek._m3u8Timer is None or not self.streamServerSeek._m3u8Timer.isActive():
 				print "[StreamServerSeek] ReRequestM3u8"
-				self.streamServerSeek._m3u8CallId = reactor.callLater(1, self.doReRequestM3u8)
+				self.streamServerSeek._m3u8Timer = eTimer()
+				self.streamServerSeek._m3u8Timer_conn = self.streamServerSeek._m3u8Timer.timeout.connect(self.doReRequestM3u8)
+				self.streamServerSeek._m3u8Timer.start(500)
+# no clue why, but callLater sometimes doesn't work...
+#				self.streamServerSeek._m3u8CallId = reactor.callLater(1, self.doReRequestM3u8)
 		else:
 			print "[StreamServerSeek] Stop requesting m3u8 repeatedly"
-			if not self.streamServerSeek._m3u8CallId is None and self.streamServerSeek._m3u8CallId.active():
-				self.streamServerSeek._m3u8CallId.cancel()
+			if not self.streamServerSeek._m3u8Timer is None and self.streamServerSeek._m3u8Timer.isActive():
+				self.streamServerSeek._m3u8Timer.stop()
 
+#	def reConnectClientFactoryDone(self, ignored):
+#		print "[StreamServerSeek] reConnectClientFactoryDONE %s" % ignored
+
+#	def reConnectClientFactoryError(self, ignored):
+#		print "[StreamServerSeek] reConnectClientFactoryError %s" % ignored
+	
+	def __del__(self):
+		print "[StreamServerSeek] handler %s died" % hex(id(self))
+	
 	def segmentStatusCallback(self, status, path):
-		"[StreamServerSeek] segmentStatusCallback %s %s" % (status, path)
+		print "[StreamServerSeek] segmentStatusCallback %s %s" % (status, path)
 		self._status = status
 		segment = getSegmentNoFromFilename(path[1:])
 		if status == 200:
@@ -239,7 +300,16 @@ class VodRequestHandler(object):
 			else:
 				print "[StreamServerSeek] segment doesn't exist yet.. retry in 0.25 sec"
 				self._client.preventWrite()
-				reactor.callLater(0.5, self.reConnectClientFactory)
+				self._client.quietLoss = True
+				self._client.transport.loseConnection()
+
+				self._timer.start(250, True)
+#				from twisted.internet.task import deferLater
+#				d = deferLater(reactor, 0.25, self.reConnectClientFactory)
+#				print "[StreamServerSeek] deferLater %s in %s" % (d, hex(id(self)))
+#				d.addCallback(self.reConnectClientFactoryDone)
+#				d.addErrback(self.reConnectClientFactoryError)
+#				reactor.callLater(0.25, self.reConnectClientFactory)
 
 	def segmentWrite(self, buffer):
 		if self._request._disconnected:
@@ -267,6 +337,7 @@ class VodRequestHandler(object):
 				request.responseHeaders.setRawHeaders(b'content-length', [("%d" % length).encode("ascii")])
 		if not self._segmentBuffer is None:
 			self._origWrite(self._segmentBuffer.raw)
+			self._segmentBuffer = None
 		else:
 			self._origWrite("")
 
