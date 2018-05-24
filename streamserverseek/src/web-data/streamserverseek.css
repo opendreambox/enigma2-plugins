@@ -4,7 +4,6 @@
 .slider.slider-horizontal {
     width: 100%;
 }
-.row.controls,
 .row.inactive,
 .row.error {
     display: none;

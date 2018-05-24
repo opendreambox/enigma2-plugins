@@ -8,8 +8,9 @@
                     <author>maluhi</author>
                     <name>StreamServerSeek</name>
                     <packagename>enigma2-plugin-extensions-streamserverseek</packagename>
-                    <shortdescription>remote control functionality for the streamserver</shortdescription>
-                    <description>Provides api based remote control functionality for the streamserver</description>
+                    <shortdescription>Video on Demand functionality for the streamserver</shortdescription>
+                    <description>Provides Video on Demand functionality with seeking ability for the streamserver</description>
+                    <screenshot src="http://www.dreamboxupdate.com/preview/plugin_streamserverseek.jpg" />
           </info>
 
 	  <files type="package"> <!-- without version, without .ipk -->

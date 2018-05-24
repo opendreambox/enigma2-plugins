@@ -1,6 +1,10 @@
+from ctypes import *
+
 from enigma import eStreamServer, eServiceReference, iPlayableService, eTimer
 from Components.config import config
 from Components.PerServiceDisplay import PerServiceBase
+
+from twisted.python import util
 
 import os.path
 
@@ -26,6 +30,9 @@ class StreamServerSeek(PerServiceBase):
 	_temporaryLiveModeService = False
 	_tvLastService = False
 	_origCec = False
+	_isVodActive = False
+	_libsssSegment = None
+	_m3u8Timer = None
 
 	def __new__(cls, *p, **k):
 		if StreamServerSeek.__instance is None:
@@ -61,22 +68,22 @@ class StreamServerSeek(PerServiceBase):
 		
 	def _onStandby(self, element):
 		if self._isTemporaryLiveMode:
-			print "[StreamserverSeek] onStandBy: Ending temporary Live-Mode"
+			print "[StreamServerSeek] onStandBy: Ending temporary Live-Mode"
 			self.endTemporaryLiveMode(False)
 
 		if self._origCec:
-			print "[StreamserverSeek] Re-enable CEC"
+			print "[StreamServerSeek] Re-enable CEC"
 			config.cec.enabled.value = True
 			config.cec.enabled.save()
 
 	def _onServiceChanged(self):
 		if self._isTemporaryLiveModeActive and self._temporaryLiveModeService and eServiceReference(self._temporaryLiveModeService).toCompareString() != self.navcore.getCurrentServiceReference().toCompareString():
-			print "[StreamserverSeek] onServiceChanged: Ending temporary Live-Mode"
+			print "[StreamServerSeek] onServiceChanged: Ending temporary Live-Mode"
 			self.endTemporaryLiveMode(False)
 
 	def _onEOF(self):
 		if self._isTemporaryLiveModeActive:
-			print "[StreamserverSeek] onEOF: Ending temporary Live-Mode"
+			print "[StreamServerSeek] onEOF: Ending temporary Live-Mode"
 			self.endTemporaryLiveMode()
 
 	def _onPlaying(self):
@@ -85,29 +92,35 @@ class StreamServerSeek(PerServiceBase):
 	
 	def _onSourceStateChanged(self, state):
 		if self._isTemporaryLiveMode and (state == False or state == 2):
-			print "[StreamserverSeek] Temporary Live-Mode active, but all clients disconnected. End it in 15 seconds"
+			print "[StreamServerSeek] Temporary Live-Mode active, but all clients disconnected. End it in 15 seconds"
 			self._timer.start(15000, True)
 		elif self._isTemporaryLiveMode and self._timer.isActive():
-			print "[StreamserverSeek] Reset end-timer"
+			print "[StreamServerSeek] Reset end-timer"
 			self._timer.stop()
 		
 		if state == True or state == 4:
 			self.doSeek()
+		elif state == False or state == 2:
+			self._isVodActive = False
 
-	def doSeek(self):
-		if not self._seekToMin:
-			return
-
-		print "[StreamserverSeek] doSeek()"
-
+	def getSeek(self):
 		seek = False
 		if self._isTemporaryLiveModeActive:
 			seek = self._session.nav.getCurrentService().seek()
 		elif streamServerControl._encoderService:
 			seek = streamServerControl._encoderService.seek()
+		return seek
+
+	def doSeek(self):
+		if not self._seekToMin:
+			return
+
+		print "[StreamServerSeek] doSeek()"
+
+		seek = self.getSeek()
 
 		if seek:
-			print "[StreamserverSeek] Seeking to %d minutes" % self._seekToMin
+			print "[StreamServerSeek] Seeking to %d minutes" % self._seekToMin
 			seek.seekTo(self._seekToMin * 60 * 90000)
 
 		self._seekToMin = 0
@@ -120,7 +133,7 @@ class StreamServerSeek(PerServiceBase):
 		if not idle:
 			self._origCec = config.cec.enabled.value
 			if self._origCec:
-				print "[StreamserverSeek] Disable CEC"
+				print "[StreamServerSeek] Disable CEC"
 				config.cec.enabled.value = False
 				config.cec.enabled.save()
 			inStandby.Power()
@@ -177,17 +190,29 @@ class StreamServerSeek(PerServiceBase):
 		self._isTemporaryLiveMode = False
 		self._isTemporaryLiveModeActive = False
 		self._temporaryLiveModeService = False
+		self._isVodActive = False
 		
 		if self._tvLastService:
 			service = eServiceReference(self._tvLastService)
 			if service and service.valid():
 				self._session.nav.playService(service)
 	
-		print "[StreamserverSeek] Set input mode to BACKGROUND"
+		print "[StreamServerSeek] Set input mode to BACKGROUND"
 		self.forceInputMode(eStreamServer.INPUT_MODE_BACKGROUND)
 
 		if idle:
 			self.changeIdleMode(True)
+
+	def getSegmentOffsetFunc(self):
+		if self._libsssSegment is None:
+			libPath = "/usr/lib/libsss-segment.so.0"
+			if os.path.exists(libPath):
+				cdll.LoadLibrary(libPath)
+				self._libsssSegment = CDLL(libPath)
+			else:
+				return None
+
+		return self._libsssSegment.segmentOffset
 
 	def destroy(self):
 		PerServiceBase.destroy(self)

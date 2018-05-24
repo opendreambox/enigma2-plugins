@@ -20,6 +20,10 @@ class MyProxyClient(proxy.ProxyClient):
 				self.responseEndCallback(self.father)
 			proxy.ProxyClient.handleResponseEnd(self)
 
+	def handleHeader(self, key, value):
+		if not self.responseEndCallback or key.lower() != 'content-length':
+			proxy.ProxyClient.handleHeader(self, key, value)
+
 class MyProxyClientFactory(proxy.ProxyClientFactory):
 	protocol = MyProxyClient
 
@@ -52,7 +56,7 @@ class ProxyResource(resource.Resource):
 		if qs:
 			path = path + '?' + qs
 		
-		print "[StreamserverSeek] Reverse-Proxy %s" % path
+		print "[StreamServerSeek] Reverse-Proxy %s" % path
 
 		clientFactory = self.proxyClientFactoryClass(
 			request.method, path, request.clientproto,
@@ -62,4 +66,5 @@ class ProxyResource(resource.Resource):
 		return server.NOT_DONE_YET
 
 	def responseEndCallback(self, request):
-		print "[StreamserverSeek] ResponseEndCallback"
+		#not in use anymore
+		return
