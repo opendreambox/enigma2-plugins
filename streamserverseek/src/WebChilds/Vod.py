@@ -262,13 +262,15 @@ class VodRequestHandler(object):
 		self._resource.segmentLength = segmentLength
 		
 		if self.streamServerSeek._lastSegmentRequest + 30 > time.time():
-			if self.streamServerSeek._m3u8Timer is None or not self.streamServerSeek._m3u8Timer.isActive():
+			if self.streamServerSeek._m3u8Timer is None:
 				print "[StreamServerSeek] ReRequestM3u8"
 				self.streamServerSeek._m3u8Timer = eTimer()
 				self.streamServerSeek._m3u8Timer_conn = self.streamServerSeek._m3u8Timer.timeout.connect(self.doReRequestM3u8)
 				self.streamServerSeek._m3u8Timer.start(500)
 # no clue why, but callLater sometimes doesn't work...
 #				self.streamServerSeek._m3u8CallId = reactor.callLater(1, self.doReRequestM3u8)
+			else:
+				print "[StreamServerSeek] ReRequestM3u8 timer already running"
 		else:
 			print "[StreamServerSeek] Stop requesting m3u8 repeatedly"
 			if not self.streamServerSeek._m3u8Timer is None and self.streamServerSeek._m3u8Timer.isActive():
@@ -340,8 +342,16 @@ class VodRequestHandler(object):
 			self._segmentBuffer = None
 		else:
 			self._origWrite("")
+		self._timer.stop()
+		self._timer = None
+		self._timer_conn = None
+		self._request.write = None
 
 	def doReRequestM3u8(self):
+		if not self.streamServerSeek._m3u8Timer is None and self.streamServerSeek._m3u8Timer.isActive():
+			self.streamServerSeek._m3u8Timer.stop()
+		self.streamServerSeek._m3u8Timer = None
+		self.streamServerSeek._m3u8Timer_conn = None
 		clientFactory = M3u8ClientFactory(
 			"GET", "/stream.m3u8", "HTTP/1.1",
 			self._resource._requestHeaders, None, self.m3u8EndCallback)
