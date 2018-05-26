@@ -725,6 +725,7 @@ class EPGRefresh:
 				self.showPendingServicesMessageShown = True
 			else:
 				self.msg["text"].setText(_("Following Services have to be scanned:") + "\n" + servtxt)
+			self.msg["Text"].setText(_("Remaining services: %d") %(servcounter))	
 		except:
 			print("[EPGRefresh] showPendingServices Error!")
 			print_exc(file=stdout)
