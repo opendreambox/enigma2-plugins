@@ -19,7 +19,7 @@ from AutoTimer import AutoTimer
 autotimer = AutoTimer()
 autopoller = None
 
-AUTOTIMER_VERSION = "4.3"
+AUTOTIMER_VERSION = "4.3.1"
 NOTIFICATIONDOMAIN = "AutoTimer"
 
 #pragma mark - Help

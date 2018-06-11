@@ -970,7 +970,7 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 			("desc", _("in Description")),
 			("day", _("on Weekday"))]
 		))
-		self.typeSelection.addNotifier(self.refresh, initial_call = False)
+		#self.typeSelection.addNotifier(self.refresh, initial_call = False)
 
 		self.enabled = NoSave(ConfigOnOff(default = filterset))
 
@@ -1023,21 +1023,37 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 		return SetupSummary
 
 	def saveCurrent(self):
-		del self.excludes[self.idx][:]
-		del self.includes[self.idx][:]
-
+		
 		# Warning, accessing a ConfigListEntry directly might be considered evil!
-
+		
 		idx = -1
 		for item in self["config"].getList()[:]:
 			idx += 1
+			#print "=== item: ", idx, item
+			if idx > 1 and len(item) < 2: # set filtertype
+				idx_type = 0
+				for type in self.typeSelection.getChoices():
+					#print "=== type:", type, type[0], type[1]
+					if _(type[1]) == item[0]:
+						self.idx = idx_type
+						del self.excludes[self.idx][:]
+						del self.includes[self.idx][:]
+						break
+					idx_type +=1
+				#print "=== self.idx: ", self.idx
+			elif idx > 1: # set include/exclude
+				#print "=== item: ", idx, item[0]
+				pass
+
 			# Skip empty entries (and those which are no filters)
-			if item[1].value == "" or idx < 2:
+			if idx < 2 or len(item) < 2 or item[1].value == "":
 				continue
-			elif idx < self.lenExcludes:
+			elif item[0] == _("Exclude"):
 				self.excludes[self.idx].append(item[1].value.encode("UTF-8"))
-			else:
+				#pass
+			elif item[0] == _("Include"):
 				self.includes[self.idx].append(item[1].value.encode("UTF-8"))
+				#pass
 
 	def refresh(self, *args, **kwargs):
 		self.saveCurrent()
@@ -1050,37 +1066,55 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 			getConfigListEntry(_("Enable Filtering"), self.enabled),
 			getConfigListEntry(_("Filter"), self.typeSelection)
 		]
-
-		if self.typeSelection.value == "day":
-			self.idx = 3
-
-			# Weekdays are presented as ConfigSelection
-			self.list.extend([
-				getConfigListEntry(_("Exclude"), NoSave(ConfigSelection(choices = weekdays, default = x)))
-					for x in self.excludes[3]
-			])
-			self.lenExcludes = len(self.list)
-			self.list.extend([
-				getConfigListEntry(_("Include"), NoSave(ConfigSelection(choices = weekdays, default = x)))
-					for x in self.includes[3]
-			])
-			return
-		elif self.typeSelection.value == "title":
-			self.idx = 0
-		elif self.typeSelection.value == "short":
-			self.idx = 1
-		else: # self.typeSelection.value == "desc":
-			self.idx = 2
-
-		self.list.extend([
-			getConfigListEntry(_("Exclude"), NoSave(ExtendedConfigText(default = x, fixed_size = False)))
-				for x in self.excludes[self.idx]
-		])
-		self.lenExcludes = len(self.list)
-		self.list.extend([
-			getConfigListEntry(_("Include"), NoSave(ExtendedConfigText(default = x, fixed_size = False)))
-				for x in self.includes[self.idx]
-		])
+		
+		for type in self.typeSelection.getChoices():
+			
+			print "=== type ", type
+			if type[0] == "day": 
+				self.idx = 3
+				cfgList = []
+				
+				# Weekdays are presented as ConfigSelection
+				cfgList.extend([
+					getConfigListEntry(_("Exclude"), NoSave(ConfigSelection(choices = weekdays, default = x)))
+						for x in self.excludes[3]
+				])
+				self.lenExcludes = len(cfgList)
+				cfgList.extend([
+					getConfigListEntry(_("Include"), NoSave(ConfigSelection(choices = weekdays, default = x)))
+						for x in self.includes[3]
+				])
+				if len(cfgList):
+					print "=== cfgList day:", cfgList
+					for item in cfgList:
+						print "=== cfgList day item:", item, item[0], item[1], item[1].value
+					self.list.append( getConfigListEntry(type[1]) )
+					cfgList = sorted(cfgList, key=lambda x: [x[0],x[1].value], reverse=False)
+					self.list.extend(cfgList)
+		
+			else:
+				if type[0] == "title":
+					self.idx = 0
+				elif type[0] == "short":
+					self.idx = 1
+				else: # self.typeSelection.value == "desc":
+					self.idx = 2
+				
+				cfgList = []
+				
+				cfgList.extend([
+					getConfigListEntry(_("Exclude"), NoSave(ExtendedConfigText(default = x, fixed_size = False)))
+						for x in self.excludes[self.idx]
+				])
+				self.lenExcludes = len(cfgList)
+				cfgList.extend([
+					getConfigListEntry(_("Include"), NoSave(ExtendedConfigText(default = x, fixed_size = False)))
+						for x in self.includes[self.idx]
+				])
+				if len(cfgList):
+					self.list.append( getConfigListEntry(type[1]) )
+					cfgList = sorted(cfgList, key=lambda x: [x[0],x[1].value], reverse=False)
+					self.list.extend(cfgList)
 
 	def remove(self):
 		idx = self["config"].getCurrentIndex()
@@ -1091,6 +1125,16 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 			list = self["config"].getList()
 			list.remove(self["config"].getCurrent())
 			self["config"].setList(list)
+			#remove empty config-section
+			print "==== getcurrent:", self["config"].getCurrent()
+			print "==== len getcurrent:", len(self["config"].getCurrent())
+
+			#self.refresh()
+			
+			if len(self["config"].getCurrent())<2:
+				self.remove()
+			#	list.remove(self["config"].getCurrent())
+			#	self["config"].setList(list)
 
 	def new(self):
 		self.session.openWithCallback(
@@ -1106,22 +1150,29 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 	def typeSelected(self, ret):
 		if ret is not None:
 			list = self["config"].getList()
-
-			if ret[1] == 0:
-				pos = self.lenExcludes
-				self.lenExcludes += 1
-				text = ret[0]
-			else:
-				pos = len(self.list)
-				text = ret[0]
+			# get the filtertype-text
+			type_text = list[1][1].getText()
+			#print "=== type_text", type_text, list
 
 			if self.typeSelection.value == "day":
-				entry = getConfigListEntry(text, NoSave(ConfigSelection(choices = weekdays)))
+				entry = getConfigListEntry(ret[0], NoSave(ConfigSelection(choices = weekdays)))
 			else:
-				entry = getConfigListEntry(text, NoSave(ExtendedConfigText(fixed_size = False)))
-
+				entry = getConfigListEntry(ret[0], NoSave(ExtendedConfigText(fixed_size = False)))
+			
+			#get the position of the new filterentry
+			pos=0
+			filter_exist = False
+			for item in list:
+				pos +=1
+				if item[0] == _(type_text):
+					filter_exist = True
+					break
+			if filter_exist == False:
+				list.insert(pos, getConfigListEntry(_(type_text)) )
+				pos +=1
 			list.insert(pos, entry)
 			self["config"].setList(list)
+			self["config"].setCurrentIndex(pos) #select the new entry in the list
 
 	def cancel(self):
 		if self["config"].isChanged():
@@ -1196,7 +1247,7 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 			("channels", _("Channels")),
 			("bouquets", _("Bouquets"))]
 		))
-		self.typeSelection.addNotifier(self.refresh, initial_call = False)
+		#self.typeSelection.addNotifier(self.refresh, initial_call = False)
 
 		self.reloadList()
 
@@ -1227,14 +1278,25 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 		self.setTitle(_("Edit AutoTimer services"))
 
 	def saveCurrent(self):
-		del self.services[self.idx][:]
-
+		
 		# Warning, accessing a ConfigListEntry directly might be considered evil!
-
-		myl = self["config"].getList()[:]
-		myl.pop(0) # Enabled
-		myl.pop(0) # Type
-		for item in myl:
+		
+		idx = -1
+		for item in self["config"].getList()[:]:
+			idx += 1
+			#print "=== item: ", idx, item
+			if idx > 1 and len(item) < 2: # set filtertype
+				idx_type = 0
+				for type in self.typeSelection.getChoices():
+					#print "=== type:", type, type[0], type[1]
+					if _(type[1]) == item[0]:
+						self.idx = idx_type
+						del self.services[self.idx][:]
+						break
+					idx_type +=1
+			# Skip empty entries (and those which are no filters)
+			if idx < 2 or len(item) < 2 or item[1].value == "":
+				continue
 			self.services[self.idx].append(item[1].value)
 
 	def refresh(self, *args, **kwargs):
@@ -1244,20 +1306,28 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 		self["config"].setList(self.list)
 
 	def reloadList(self):
+		
 		self.list = [
 			getConfigListEntry(_("Enable Service Restriction"), self.enabled),
 			getConfigListEntry(_("Editing"), self.typeSelection)
 		]
 
-		if self.typeSelection.value == "channels":
-			self.idx = 0
-		else: # self.typeSelection.value == "bouquets":
-			self.idx = 1
+		for type in self.typeSelection.getChoices():
+			if type[0] == "channels":
+				self.idx = 0
+			else: # self.typeSelection.value == "bouquets":
+				self.idx = 1
 
-		self.list.extend([
-			getConfigListEntry(_("Record on"), NoSave(ConfigSelection(choices = [(str(x), ServiceReference(str(x)).getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', ''))])))
-				for x in self.services[self.idx]
-		])
+			cfgList = []
+			cfgList.extend([
+					getConfigListEntry(_("Record on"), NoSave(ConfigSelection(choices = [(str(x), ServiceReference(str(x)).getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', ''))])))
+						for x in self.services[self.idx]
+			])
+			
+			if len(cfgList):
+				self.list.append( getConfigListEntry(type[1]) )
+				cfgList = sorted(cfgList, key=lambda x: [x[1].getText()], reverse=False)
+				self.list.extend(cfgList)
 
 	def changed(self):
 		for x in self.onChangedEntry:
@@ -1276,11 +1346,15 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 		return SetupSummary
 
 	def remove(self):
+		
 		idx = self["config"].getCurrentIndex()
 		if idx and idx > 1:
 			list = self["config"].getList()
 			list.remove(self["config"].getCurrent())
 			self["config"].setList(list)
+			#remove empty config-section
+			if len(self["config"].getCurrent())<2:
+				self.remove()
 
 	def new(self):
 		if self.typeSelection.value == "channels":
@@ -1308,9 +1382,26 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 					if sname[pos-1] == ':':
 						pos -= 1
 					sname = sname[:pos+1]
+			
+			# get the filtertype-text
+			type_text = list[1][1].getText()
 
-			list.append(getConfigListEntry(_("Record on"), NoSave(ConfigSelection(choices = [(sname, ServiceReference(args[0]).getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', ''))]))))
+			entry = getConfigListEntry(_("Record on"), NoSave(ConfigSelection(choices = [(sname, ServiceReference(args[0]).getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', ''))])))
+			
+			#get the position of the new filterentry
+			pos=0
+			filter_exist = False
+			for item in list:
+				pos +=1
+				if item[0] == _(type_text):
+					filter_exist = True
+					break
+			if filter_exist == False:
+				list.insert(pos, getConfigListEntry(_(type_text)) )
+				pos +=1
+			list.insert(pos, entry)
 			self["config"].setList(list)
+			self["config"].setCurrentIndex(pos) #select the new entry in the list
 
 	def cancel(self):
 		if self["config"].isChanged():
