@@ -1,7 +1,7 @@
 from enigma import eServiceCenter
 
 # Plugin
-from EPGSearch import EPGSearch, EPGSearchEPGSelection, EPGSelectionInit
+from EPGSearch import EPGSearch, EPGSearchEPGSelection, EPGSelectionInit, ChannelSelectionBaseInit, EventViewBaseInit, pzyP4TInit
 
 # Plugin definition
 from Plugins.Plugin import PluginDescriptor
@@ -10,10 +10,14 @@ from Plugins.Plugin import PluginDescriptor
 def autostart(reason, **kwargs):
 	if reason == 0:
 		try:
-			# for blue key activating in EPGSelection
+			# for blue and audio key activating in EPG-Screens
 			EPGSelectionInit()
+			ChannelSelectionBaseInit()
+			EventViewBaseInit()
+			pzyP4TInit()
 		except Exception:
-			pass
+			import traceback
+			traceback.print_exc()
 
 # Mainfunction
 def main(session, *args, **kwargs):
@@ -22,7 +26,7 @@ def main(session, *args, **kwargs):
 		info = s.info()
 		event = info.getEvent(0) # 0 = now, 1 = next
 		name = event and event.getEventName() or ''
-		session.open(EPGSearch, name, False)
+		session.open(EPGSearch, name)
 	else:
 		session.open(EPGSearch)
 
@@ -52,6 +56,7 @@ def Plugins(**kwargs):
 			description = _("Search EPG"),
 			where = PluginDescriptor.WHERE_PLUGINMENU,
 			fnc = main,
+			icon = "plugin.png",
 			needsRestart = False,
 		),
 		PluginDescriptor(
