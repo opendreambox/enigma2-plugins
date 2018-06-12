@@ -56,7 +56,7 @@ def Plugins(**kwargs):
 			description = _("Search EPG"),
 			where = PluginDescriptor.WHERE_PLUGINMENU,
 			fnc = main,
-			icon = "plugin.png",
+			icon = "EPGSearch.png",
 			needsRestart = False,
 		),
 		PluginDescriptor(
