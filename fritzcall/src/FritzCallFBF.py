@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1524 $
-$Date: 2018-05-03 16:40:33 +0200 (Thu, 03 May 2018) $
-$Id: FritzCallFBF.py 1524 2018-05-03 14:40:33Z michael $
+$Revision: 1528 $
+$Date: 2018-05-30 10:18:47 +0200 (Wed, 30 May 2018) $
+$Id: FritzCallFBF.py 1528 2018-05-30 08:18:47Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -3610,6 +3610,35 @@ class FritzCallFBF_upnp():
 		self.info("Boxinfo: " + repr(boxInfo))
 
 		provider = None
+		if "internet" in boxData and "txt" in boxData["internet"]:
+			for item in boxData["internet"]["txt"]:
+				item = item.encode("utf-8")
+				found = re.match(r'.*verbunden seit (.*)', item, re.S)
+				if found:
+					upTime = found.group(1)
+				else:
+					found = re.match(r'.*connected since (.*)', item, re.S)
+					if found:
+						upTime = found.group(1)
+				found = re.match(r'\s*Anbieter: (.*)', item, re.S)
+				if found:
+					provider = found.group(1)
+				else:
+					found = re.match(r'\s*Provider: (.*)', item, re.S)
+					if found:
+						provider = found.group(1)
+				found = re.match(r'IP(?:v4)?-Adresse: (.*)', item, re.S)
+				if found:
+					ipAddress = found.group(1)
+				else:
+					found = re.match(r'IP(?:v4)? address: (.*)', item, re.S)
+					if found:
+						ipAddress = found.group(1)
+
+		self.info("upTime: " + repr(upTime))
+		self.info("provider: " + repr(provider))
+		self.info("ipAddress: " + repr(ipAddress))
+		
 		if "ipv4" in boxData and "txt" in boxData["ipv4"]:
 			for item in boxData["ipv4"]["txt"]:
 				item = item.encode("utf-8")
@@ -4039,6 +4068,7 @@ class FritzCallFBF_upnp():
 				thisname = name.encode("utf-8")
 				thisnumber = cleanNumber(number.text)
 				if thisnumber in self.phonebook.phonebook:
+					self.info("Number already exists, skipping '''%s'''", (__(thisnumber)))
 					continue
 
 				if not thisnumber:
@@ -4058,7 +4088,7 @@ class FritzCallFBF_upnp():
 					if config.plugins.FritzCall.showVanity.value and number.attrib["vanity"]:
 						thisname = thisname + ", " + _("Vanity") + ": " + number.attrib["vanity"]
 
-					# self.debug("Adding '''%s''' with '''%s'''" % (__(thisname.strip()), __(thisnumber, False)))
+					# self.debug("Adding '''%s''' with '''%s'''", __(thisname.strip()), __(thisnumber, False))
 					# Beware: strings in phonebook.phonebook have to be in utf-8!
 					self.phonebook.phonebook[thisnumber] = thisname
 
