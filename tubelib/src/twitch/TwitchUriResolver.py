@@ -16,9 +16,14 @@ try:
 			watch_url = None
 			try:
 				uri = uri.split("://")[1]
+				uri = uri.split("/")
+				if len(uri) > 1 and uri[0] == "video":
+					uri = "videos/%s" %(uri[1])
+				else:
+					uri = uri[0]
 				watch_url = "http://twitch.tv/%s" %(uri,)
-			except:
-				pass
+			except Exception as e:
+				Log.w(e)
 			def onUrlReady(uri, fmt):
 				Log.w("%s (%s)" %(uri, fmt))
 				try:

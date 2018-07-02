@@ -46,7 +46,7 @@ class TwitchVideoUrlResolver(object):
 		return url, fmt
 
 	def _request(self):
-		ie_key = "TwitchStream"
+		ie_key = "TwitchVod" if self._baseurl.find("/videos", 7) > 0 else "TwitchStream"
 		try:
 			result = self._ytdl.extract_info(self._baseurl, ie_key=ie_key, download=False, process=True)
 			url, fmt = self._selectFormat(result)
