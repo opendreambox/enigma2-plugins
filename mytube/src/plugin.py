@@ -1047,7 +1047,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		myTubeService.feed = data
 		self.buildEntryList()
 		text = _("Results: %s - Page: %s " % (str(myTubeService.getTotalResults()), str(myTubeService.getCurrentPage())))
-		text = "TODO" #TODO text
+		#text = "TODO" #TODO text
 		#auth_username = myTubeService.getAuthedUsername()
 		#if auth_username:
 		#			text = auth_username + ' - ' + text

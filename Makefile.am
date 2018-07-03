@@ -92,6 +92,7 @@ SUBDIRS = \
 	trackautoselect \
 	tubelib \
 	tvcharts \
+	twitchtv \
 	unwetterinfo \
 	valixdcontrol \
 	videocolorspace \

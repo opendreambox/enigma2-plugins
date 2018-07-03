@@ -448,6 +448,10 @@ tvcharts/Makefile
 tvcharts/meta/Makefile
 tvcharts/src/Makefile
 
+twitchtv/Makefile
+twitchtv/meta/Makefile
+twitchtv/src/Makefile
+
 unwetterinfo/Makefile
 unwetterinfo/meta/Makefile
 unwetterinfo/src/Makefile

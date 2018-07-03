@@ -1,0 +1,16 @@
+<default>
+	<prerequisites>
+		<tag type="Multimedia" />
+	</prerequisites>
+	<info>
+		<author>reichi / nighty</author>
+		<name>TwitchTV</name>
+		<packagename>enigma2-plugin-extensions-twitchtv</packagename>
+		<shortdescription>Watch twitch.tv</shortdescription>
+		<description>Watch livestreams and vods from twitch.tv</description>
+	</info>
+
+	<files type="package">
+		<file type="package" name="enigma2-plugin-extensions-twitchtv" />
+	</files>
+</default>

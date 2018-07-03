@@ -1,0 +1,2 @@
+Description: Watch streams and VoDs on twitch.tv
+Depends: enigma2, python-twisted-web, enigma2-plugin-systemplugins-tubelib
