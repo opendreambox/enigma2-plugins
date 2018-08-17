@@ -522,10 +522,11 @@ class FritzConnection(object):
 		# self.debug("Service: " + service.name)
 		actions = parser.get_actions(self.action_parameters)
 		# not in Python 2.6
-		try:
-			service.actions = {action.name: action for action in actions}
-		except:
-			dict((action.name, action) for action in actions)
+# 		try:
+# 			service.actions = {action.name: action for action in actions}
+# 		except:
+# 			dict((action.name, action) for action in actions)
+		dict((action.name, action) for action in actions)
 		self.services[service.name] = service
 
 	# @property
