@@ -247,7 +247,7 @@ class IMDB(Screen):
 
 	def dictionary_init(self):
 		self.generalinfomask = re.compile(
-		'<h1 class="">(?P<title>.*?)<.*?/h1>*'
+		'<h1 class="(?:long|)">(?P<title>.*?)<.*?/h1>*'
 		'(?:.*?<div class="originalTitle">(?P<originaltitle>.*?)\s*\((?P<g_originaltitle>original title))*'
 		'(?:.*?<h4 class="inline">\s*(?P<g_director>Directors?):\s*</h4>.*?<a.*?>(?P<director>.*?)(?:\d+ more|</div>))*'
 		'(?:.*?<h4 class="inline">\s*(?P<g_creator>Creators?):\s*</h4>.*?<a.*?>(?P<creator>.*?)(?:\d+ more|</div>))*'
@@ -279,7 +279,7 @@ class IMDB(Screen):
 
 		self.genreblockmask = re.compile('href="/genre/.*?\?ref_=tt_stry_gnr.*?\n.*?\s(?P<genre>.*?)</a>', re.S)
 		self.ratingmask = re.compile('aggregateRating.*?ratingCount":\s(?P<ratingcount>\d+),.*?ratingValue":\s"(?P<rating>.*?)"', re.S)
-		self.castmask = re.compile('class="primary_photo">.*?<td>(?:<a href="/name/nm0820574/?ref_=tt_cl_t15"\s{0,1}>|)(?P<actor>.*?)(?:</a>|</td).*?class="character">\s+(?:<a href="/title/tt\d+/characters/nm\d+?ref_=tt_cl_t1"{0,1}\s>|)(?P<character>.*?)(?:</a>|</td)', re.S)
+		self.castmask = re.compile('class="primary_photo">.*?<td>(?:<a href="/name/nm0820574/?ref_=tt_cl_t15"\s{0,1}>|)(?P<actor>.*?)(?:</a>|</td).*?class="character">\s+(?:<a href="/title/tt\d+/characters/nm\d+?ref_=tt_cl_t1"{0,1}\s>|)(?P<character>.*?)(?:<a href="#"|</a>|</td)', re.S)
 		self.postermask = re.compile('<div class="poster">.*?<img .*?src=\"(http.*?)\"', re.S)
 		self.storylinemask = re.compile('<h2>(?P<g_storyline>Storyline)</h2>.*?(?P<storyline>.*?)(?:see-more inline|</p>|Written)', re.S)
 
