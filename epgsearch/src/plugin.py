@@ -1,4 +1,5 @@
 from enigma import eServiceCenter
+from Components.config import config
 
 # Plugin
 from EPGSearch import EPGSearch, EPGSearchEPGSelection, EPGSelectionInit, ChannelSelectionBaseInit, EventViewBaseInit, pzyP4TInit
@@ -26,7 +27,7 @@ def main(session, *args, **kwargs):
 		info = s.info()
 		event = info.getEvent(0) # 0 = now, 1 = next
 		name = event and event.getEventName() or ''
-		session.open(EPGSearch, name)
+		session.open(EPGSearch, name, config.plugins.epgsearch.add_history_onOpen.value)
 	else:
 		session.open(EPGSearch)
 
@@ -41,7 +42,7 @@ def movielist(session, service, **kwargs):
 	info = serviceHandler.info(service)
 	name = info and info.getName(service) or ''
 
-	session.open(EPGSearch, name)
+	session.open(EPGSearch, name, config.plugins.epgsearch.add_history_onOpen.value)
 
 def Plugins(**kwargs):
 	return [
