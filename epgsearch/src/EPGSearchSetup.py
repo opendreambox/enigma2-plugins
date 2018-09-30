@@ -74,6 +74,7 @@ class EPGSearchSetup(Screen, ConfigListScreen):
 
 	def buildConfig(self):
 		self.list.append( getConfigListEntry(_("Length of History"), config.plugins.epgsearch.history_length, _("How many entries to keep in the search history at most. 0 disables history entirely!")) )
+		self.list.append( getConfigListEntry(_("Add search-text to history at open plugin"), config.plugins.epgsearch.add_history_onOpen , _("Add the search-text also directly to the history if open the plugin.")) )
 		self.list.append( getConfigListEntry(_("Add \"Search\" Button to EPG"), config.plugins.epgsearch.add_search_to_epg , _("If this setting is enabled, the plugin adds a \"Search\" Button to the regular EPG.")) )
 		self.list.append( getConfigListEntry(_("Search type"), config.plugins.epgsearch.search_type, _("Select \"exact\" match to enforce \"Match title\" to match exactly, \"partial\" if you only want to search for a part of the event title or description or \"Ask user\"")) )
 		self.list.append( getConfigListEntry(_("Search scope"), self.config_search_scope, _("Search will return only matches from services in the selected bouquet")) )
