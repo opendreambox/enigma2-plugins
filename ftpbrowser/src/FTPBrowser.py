@@ -1,10 +1,10 @@
 from __future__ import print_function
 
 # Core
-from enigma import RT_HALIGN_LEFT, eListboxPythonMultiContent
+from enigma import RT_HALIGN_LEFT, RT_VALIGN_CENTER, getDesktop, eListboxPythonMultiContent
 
 # Tools
-from Tools.Directories import SCOPE_SKIN_IMAGE, resolveFilename
+from Tools.Directories import SCOPE_SKIN_IMAGE, SCOPE_CURRENT_SKIN, resolveFilename
 from Tools.LoadPixmap import LoadPixmap
 from Tools.Notifications import AddPopup, AddNotificationWithCallback
 
@@ -23,6 +23,7 @@ from Components.ActionMap import ActionMap, HelpableActionMap
 from Components.FileList import FileList, FileEntryComponent, EXTENSIONS
 from Components.Sources.StaticText import StaticText
 from VariableProgressSource import VariableProgressSource
+from skin import componentSizes
 
 # FTP Client
 from twisted.internet import reactor, defer
@@ -37,6 +38,14 @@ from time import time
 import re
 
 def FTPFileEntryComponent(file, directory):
+	sizes = componentSizes[componentSizes.FILE_LIST]
+	tx = sizes.get("textX", 35)
+	ty = sizes.get("textY", 0)
+	tw = sizes.get("textWidth", 1000)
+	th = sizes.get("textHeight", 25)
+	pxw = sizes.get("pixmapWidth", 20)
+	pxh = sizes.get("pixmapHeight", 20)
+
 	isDir = True if file['filetype'] == 'd' else False
 	name = file['filename']
 	absolute = directory + name
@@ -45,10 +54,10 @@ def FTPFileEntryComponent(file, directory):
 
 	res = [
 		(absolute, isDir, file['size']),
-		(eListboxPythonMultiContent.TYPE_TEXT, 35, 1, 470, 20, 0, RT_HALIGN_LEFT, name)
+		(eListboxPythonMultiContent.TYPE_TEXT, tx, ty, tw, th, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, name)
 	]
 	if isDir:
-		png = LoadPixmap(resolveFilename(SCOPE_SKIN_IMAGE, "extensions/directory.png"))
+		png = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, "extensions/directory.png"))
 	else:
 		extension = name.split('.')
 		extension = extension[-1].lower()
@@ -57,7 +66,7 @@ def FTPFileEntryComponent(file, directory):
 		else:
 			png = None
 	if png is not None:
-		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 10, 2, 20, 20, png))
+		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 10, (th-pxh)/2, pxw, pxh, png))
 
 	return res
 
@@ -132,23 +141,32 @@ class FTPFileList(FileList):
 
 class FTPBrowser(Screen, Protocol, InfoBarNotifications, HelpableScreen):
 	skin = """
-		<screen name="FTPBrowser" position="center,center" size="600,440" title="FTP Browser">
-			<ePixmap position="0,0" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-			<ePixmap position="140,0" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-			<ePixmap position="280,0" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
-			<ePixmap position="420,0" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
-			<ePixmap position="565,10" size="35,25" pixmap="skin_default/buttons/key_menu.png" alphatest="on" />
-			<widget source="key_red" render="Label" position="0,0" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget source="key_green" render="Label" position="140,0" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget source="key_yellow" render="Label" position="280,0" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget source="key_blue" render="Label" position="420,0" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-			<widget source="localText" render="Label" position="10,50" size="200,20" font="Regular;18" />
-			<widget name="local" position="10,80" size="290,320" scrollbarMode="showOnDemand" />
-			<widget source="remoteText" render="Label" position="300,50" size="200,20" font="Regular;18" />
-			<widget name="remote" position="300,80" size="290,320" scrollbarMode="showOnDemand" />
-			<widget source="eta" render="Label" position="20,410" size="200,30" font="Regular;23" />
-			<widget source="speed" render="Label" position="380,410" size="200,30" halign="right" font="Regular;23" />
-			<widget source="progress" render="Progress" position="20,440" size="560,10" />
+		<screen name="FTPBrowser" position="center,80" size="1200,610" title="FTP Browser">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" />
+			<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" />
+			<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" />
+			<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+			<widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+			<widget source="key_yellow" render="Label" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1"  foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+			<widget source="key_blue" render="Label" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+			<widget source="global.CurrentTime" render="Label" position="1130,12" size="60,25" font="Regular;22" halign="right">
+				<convert type="ClockToText">Default</convert>
+			</widget>
+			<widget source="global.CurrentTime" render="Label" position="820,12" size="300,25" font="Regular;22" halign="right">
+				<convert type="ClockToText">Format:%A %d. %B</convert>
+			</widget>
+			<eLabel position="10,50" size="1180,1" backgroundColor="grey" />
+			<widget source="localText" foregroundColor="yellow" render="Label" position="20,55" size="500,30" font="Regular;24" />
+			<widget name="local" position="20,90" size="580,450" enableWrapAround="1" scrollbarMode="showOnDemand" />
+			<widget source="remoteText" foregroundColor="yellow" render="Label" position="610,55" size="500,30" font="Regular;24" />
+			<widget name="remote" position="610,90" size="580,450" enableWrapAround="1" scrollbarMode="showOnDemand" />
+			<eLabel backgroundColor="grey" position="604,60" size="2,480" />
+			<eLabel position="10,550" size="1180,1" backgroundColor="grey" />
+			<widget source="eta" render="Label" position="20,560" size="300,30" font="Regular;22" />
+			<widget source="speed" render="Label" position="350,560" size="300,30" font="Regular;22" />
+			<widget source="progress" render="Progress" position="20,590" size="650,10" />
+			<ePixmap pixmap="skin_default/icons/menu.png" position="1130,575" size="60,30" />
 		</screen>"""
 
 	def __init__(self, session):
