@@ -543,7 +543,8 @@ class TwitchChannelList(Screen):
 	def removeFromFav(self):
 		if self._channels:
 			return
-		channel = self["list"].l.getCurrentSelection()[1]
+		channel = self["list"].l.getCurrentSelection()
+		channel = channel and channel[1]
 		if not channel:
 			return
 		boundCallback = boundFunction(self.callbackRemoveFromFav, channel)
