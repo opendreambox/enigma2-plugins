@@ -169,10 +169,6 @@ class downloadTask(Task):
 			print "[http_failed] " + error_message
 			Task.processFinished(self, 1)
 
-
-
-
-
 class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 	Details = {}
 	#(entry, Title, Description, TubeID, thumbnail, PublishedDate,Views,duration,ratings )
@@ -753,7 +749,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 				self.runSearch(searchTerm)
 
 	def onPlayerClosed(self):
-		if config.plugins.mytube.general.resetPlayService.value is True:
+		if config.plugins.mytube.general.resetPlayService.value:
 			self.session.nav.playService(self.lastservice)
 
 	def toggleScreenVisibility(self):
@@ -772,7 +768,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		elif self.currList == "feedlist":
 			self[self.currList].selectPrevious()
 		elif self.currList == "historylist":
-			if self.HistoryWindow is not None and self.HistoryWindow.shown:
+			if self.HistoryWindow and self.HistoryWindow.shown:
 				self.HistoryWindow.up()
 
 	def keyDown(self):
