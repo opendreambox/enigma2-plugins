@@ -329,7 +329,6 @@ def Plugins(**kwargs):
 			name="MenuSort",
 			description=_("Sort main menu"),
 			fnc=main,
-			icon = "menusort.svg",
 			needsRestart=False,
 		),
 	]

@@ -59,7 +59,9 @@ class ConfigTextWithGoogleSuggestions(ConfigText):
 		self.suggestionsListActivated = False
 
 	def prepareSuggestionsThread(self):
-		self.suggestions.hl = config.plugins.mytube.search.lr.value or "en"
+		self.suggestions.hl = "en"
+		if config.plugins.mytube.search.lr.value is not None:
+			self.suggestions.hl=config.plugins.mytube.search.lr.value
 
 	def suggestionsThreadStarted(self):
 		if self.suggestionsThreadRunning:

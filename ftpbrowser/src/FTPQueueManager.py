@@ -11,8 +11,8 @@ from Tools.LoadPixmap import LoadPixmap
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 
 class FTPQueueManagerSummary(Screen):
-	skin = (
-	"""<screen id="1" position="0,0" size="132,64">
+	skin = """
+	<screen position="0,0" size="132,64">
 		<widget source="parent.Title" render="Label" position="6,4" size="120,21" font="Regular;18" />
 		<widget source="parent.list" render="Label" position="6,25" size="120,21" font="Regular;16">
 			<convert type="StringListSelection" />
@@ -20,39 +20,28 @@ class FTPQueueManagerSummary(Screen):
 		<widget source="global.CurrentTime" render="Label" position="56,46" size="82,18" font="Regular;16" >
 			<convert type="ClockToText">WithSeconds</convert>
 		</widget>
-	</screen>""",
-	"""<screen id="3" position="0,0" size="400,240">
-		<ePixmap position="0,0" size="400,240" pixmap="skin_default/display_bg.png" zPosition="-1"/>
-		<widget font="Display;40" position="10,5" render="Label" size="380,42" source="parent.Title" transparent="1"/>
-		<widget font="Display;60" halign="center" position="10,50" render="Label" size="380,120" source="parent.list" valign="center" transparent="1">
-			<convert type="StringListSelection" />
-		</widget>
-		<widget source="global.CurrentTime" halign="right" render="Label" position="90,180" size="300,50" font="Regular;50" transparent="1">
-			<convert type="ClockToText">WithSeconds</convert>
-		</widget>
-	</screen>""")
+	</screen>"""
 
 class FTPQueueManager(Screen):
 	skin = """
-		<screen position="center,120" size="820,520" title="FTP Queue Manager" >
-			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" />
-			<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" />
-			<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" />
-			<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
-			<widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
-			<widget source="key_yellow" render="Label" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
-			<widget source="key_blue" render="Label" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
-			<eLabel position="10,50" size="800,1" backgroundColor="grey" />
-			<widget source="list" render="Listbox" position="10,60" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand">
+		<screen position="center,center" size="560,420" title="FTP Queue Manager" >
+			<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" transparent="1" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" transparent="1" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" transparent="1" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/blue.png" position="420,0" size="140,40" transparent="1" alphatest="on" />
+			<widget source="key_red" render="Label" position="0,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
+			<widget source="key_green" render="Label" position="140,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
+			<widget source="key_yellow" render="Label" position="280,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
+			<widget source="key_blue" render="Label"  position="420,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
+			<widget source="list" render="Listbox" position="0,50" size="560,360" scrollbarMode="showAlways">
 				<convert type="TemplatedMultiContent">
 					{"template": [
-							MultiContentEntryText(pos=(55,2), size=(740,24), text = 0, font = 0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER),
-							MultiContentEntryText(pos=(55,26), size=(740,24), text = 1, font = 0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER),
-							MultiContentEntryPixmapAlphaTest(pos=(5,5), size=(40,40), png = 2),
+							MultiContentEntryText(pos=(35,1), size=(510,19), text = 0, font = 0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER),
+							MultiContentEntryText(pos=(35,20), size=(510,18), text = 1, font = 0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER),
+							MultiContentEntryPixmapAlphaTest(pos=(2,2), size=(32,32), png = 2),
 						],
 					  "fonts": [gFont("Regular", 18)],
-					  "itemHeight": 50
+					  "itemHeight": 37
 					 }
 				</convert>
 			</widget>
@@ -109,3 +98,4 @@ class FTPQueueManager(Screen):
 
 	def ok(self):
 		pass
+
