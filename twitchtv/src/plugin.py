@@ -498,6 +498,12 @@ class TwitchChannelList(Screen):
 		self._channels = channels
 		self.reload()
 
+	def _getCurrentChannel(self):
+		channel = self["list"].getCurrent()
+		return channel and channel[1]
+
+	currentChannel = property(_getCurrentChannel)
+
 	def reload(self):
 		l = []
 		channels = self._channels
@@ -511,17 +517,14 @@ class TwitchChannelList(Screen):
 		self["list"].setList(l)
 
 	def go(self):
-		channel = self["list"].l.getCurrentSelection()[1]
-		if not channel:
+		if not self.currentChannel:
 			return
-		self.twitchMiddleware.watchLivestream(self.session, channel, CLIENT_ID)
+		self.twitchMiddleware.watchLivestream(self.session, self.currentChannel, CLIENT_ID)
 
 	def goDetails(self):
-		channel = self["list"].l.getCurrentSelection()[1]
-		if channel is None:
+		if not self.currentChannel:
 			return
-
-		self.session.open(TwitchChannelDetails, channel=channel)
+		self.session.open(TwitchChannelDetails, channel=self.currentChannel)
 
 	def addToFav(self):
 		if self._channels:
@@ -543,12 +546,10 @@ class TwitchChannelList(Screen):
 	def removeFromFav(self):
 		if self._channels:
 			return
-		channel = self["list"].l.getCurrentSelection()
-		channel = channel and channel[1]
-		if not channel:
+		if not self.currentChannel:
 			return
-		boundCallback = boundFunction(self.callbackRemoveFromFav, channel)
-		self.session.openWithCallback(boundCallback, MessageBox, _("Are you sure to remove %s from your favorites?") % channel.display_name)
+		boundCallback = boundFunction(self.callbackRemoveFromFav, self.currentChannel)
+		self.session.openWithCallback(boundCallback, MessageBox, _("Are you sure to remove %s from your favorites?") % self.currentChannel.display_name)
 
 	def callbackRemoveFromFav(self, channel, answer):
 		if not answer:
@@ -669,8 +670,9 @@ class TwitchMain(Screen):
 		self._list.setList(items)
 
 	def go(self):
-		selection = self["list"].l.getCurrentSelection()[1]
-		if selection is None:
+		selection = self["list"].getCurrent()
+		selection = selection and selection[1]
+		if not selection:
 			return
 
 		if selection == self.ITEM_LIVESTREAMS:
