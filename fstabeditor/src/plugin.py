@@ -153,7 +153,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 				if line[0] != "\n" and line[0] != "#":
 					entry = line.split()
 					entryList.append(entry)
-					global lenghtList
+					global lengthList
 					if len(entry[0]) > lengthList[0]:
 						lengthList[0] = len(entry[0])
 					if len(entry[1]) > lengthList[1]:
