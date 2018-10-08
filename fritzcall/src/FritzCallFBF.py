@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1534 $
-$Date: 2018-08-17 14:16:52 +0200 (Fri, 17 Aug 2018) $
-$Id: FritzCallFBF.py 1534 2018-08-17 12:16:52Z michael $
+$Revision: 1537 $
+$Date: 2018-10-07 11:06:53 +0200 (Sun, 07 Oct 2018) $
+$Id: FritzCallFBF.py 1537 2018-10-07 09:06:53Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -51,17 +51,22 @@ FBF_rufumlActive = 8
 USERAGENT = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
 
 
-def resolveNumber(number, default=None, phonebook=None):
+def resolveNumber(number, default=None, phonebook=None, debug=logging.debug):
+	debug("resolveNumber: %s, %s", number, default)
 	if number.isdigit():
+		debug("resolveNumber: %s, %s", number, default)
 		if config.plugins.FritzCall.internal.value and len(number) > 3 and number[0] == "0":
 			number = number[1:]
 		# strip CbC prefix
+		debug("resolveNumber number: %s", number)
 		number = stripCbCPrefix(number, config.plugins.FritzCall.countrycode.value)
 		if config.plugins.FritzCall.prefix.value and number and number[0] != '0':  # should only happen for outgoing
 			number = config.plugins.FritzCall.prefix.value + number
 		name = None
 		if phonebook:
+			debug("resolveNumber search: %s, %s", number, default)
 			name = phonebook.search(number, default)
+		debug("resolveNumber name: %s", name)
 		if name:
 			#
 			# found = re.match(r'(.*?)\n.*', name)
@@ -3834,7 +3839,7 @@ class FritzCallFBF_upnp():
 							else:
 								rufumlActive = -1  # means no number available
 					elif fun["linktxt"] == "WLAN-Gastzugang" and fun["details"]:
-						found = re.match(r'.*aktiv \([^\)]+\)(?:, (ungesichert|gesichert))?,(?: (\d+) (Minuten|Stunden) verbleiben,)? (\d+ Geräte), (.+)', fun["details"].encode("utf-8"), re.S)
+						found = re.match(r'.*aktiv \([^\)]+\)(?:, (ungesichert|gesichert))?,(?: (\d+) (Minuten|Stunden) verbleiben,)? (\d+ Gerät(?:e)?), (.+)', fun["details"].encode("utf-8"), re.S)
 						if found:
 							if found.group(1):
 								if found.group().find('ungesichert') != -1:
@@ -3935,6 +3940,7 @@ class FritzCallFBF_upnp():
 		calls = root.iterfind("./Call")
 		for call in calls:
 			direct = call.find("./Type").text
+			# self.debug("direct: %s", direct)
 			if self._callType != '.' and self._callType != direct:
 				# self.debug("skip: id %s of type %s", call.find("./Id").text, direct)
 				continue
@@ -3945,14 +3951,14 @@ class FritzCallFBF_upnp():
 					remote = remote.encode("utf-8")
 				else:
 					remote = resolveNumber(number, "", self.phonebook)
-				here = call.find("./CallerNumber").text
+				here = call.find("./Caller").text
+				if here.startswith("SIP: "):
+					here = here[5:]
 				if filtermsns and here not in filtermsns:
-					# self.debug("skip %s" % (here))
+					# self.debug("skip filter %s" % (here))
 					continue
 				if here.isdigit():
-					here = resolveNumber(here, call.find("./Caller").text, self.phonebook)
-				elif here.startswith("SIP: "):
-					here = here[5:]
+					here = resolveNumber(here, call.find("./CallerNumber").text, self.phonebook)
 			else:
 				number = call.find("./Caller").text
 				if not number:
@@ -3962,14 +3968,17 @@ class FritzCallFBF_upnp():
 					remote = remote.encode("utf-8")
 				else:
 					remote = resolveNumber(call.find("./Caller").text, "", self.phonebook)
-				here = call.find("./CalledNumber").text
+				here = call.find("./Called").text
+				if here.startswith("SIP: "):
+					here = here[5:]
 				if filtermsns and here not in filtermsns:
 					# self.debug("skip %s" % (here))
 					continue
+				# self.debug("here: %s", here)
 				if here.isdigit():
-					here = resolveNumber(here, call.find("./Called").text, self.phonebook)
-				elif here.startswith("SIP: "):
-					here = here[5:]
+					# self.debug("resolveNumber(%s, %s)", here, call.find("./CalledNumber").text)
+					here = resolveNumber(here, call.find("./CalledNumber").text, self.phonebook, self.debug)
+					# self.debug("resolveNumber result: %s", here)
 
 			device = call.find("./Device").text
 			if device:
