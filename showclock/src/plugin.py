@@ -346,14 +346,14 @@ def clockSkin():
 				</screen>"""
 	else: # HD
 		currentSkin = """
-				<screen name="ShowClock" size="280,100" zPosition="10" backgroundColor="#50202020" flags="wfNoBorder">
-					<widget source="global.CurrentTime" render="Label" position="85,15" size="80,35" font="Regular;30" halign="left" valign="center" transparent="1">
+				<screen name="ShowClock" size="280,80" zPosition="10" backgroundColor="#50202020" flags="wfNoBorder">
+					<widget source="global.CurrentTime" render="Label" position="65,10" size="110,35" font="Regular;30" halign="right" valign="center" transparent="1">
 						<convert type="ClockToText">Default</convert>
 					</widget>
-					<widget source="global.CurrentTime" render="Label" position="165,20" size="40,35" font="Regular;24" halign="left" valign="center" transparent="1">
+					<widget source="global.CurrentTime" render="Label" position="175,15" size="40,30" font="Regular;24" halign="left" valign="center" transparent="1">
 						<convert type="ClockToText">Format::%S</convert>
 					</widget>
-					<widget source="global.CurrentTime" render="Label" position="0,60" size="280,30" font="Regular;23" halign="center" valign="center" foregroundColor="#999999" transparent="1">
+					<widget source="global.CurrentTime" render="Label" position="0,45" size="280,30" font="Regular;23" halign="center" valign="center" foregroundColor="#999999" transparent="1">
 						<convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
 					</widget>
 				</screen>"""
