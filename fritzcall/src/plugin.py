@@ -2,9 +2,9 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1539 $
-$Date: 2018-10-22 16:32:39 +0200 (Mon, 22 Oct 2018) $
-$Id: plugin.py 1539 2018-10-22 14:32:39Z michael $
+$Revision: 1540 $
+$Date: 2018-10-23 17:29:41 +0200 (Tue, 23 Oct 2018) $
+$Id: plugin.py 1540 2018-10-23 15:29:41Z michael $
 '''
 
 
@@ -33,7 +33,8 @@ from enigma import getDesktop
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Screens.NumericalTextInputHelpDialog import NumericalTextInputHelpDialog
-from Screens.InputBox import InputBox
+# from Screens.InputBox import InputBox
+from Screens.VirtualKeyBoard import VirtualKeyBoard
 from Screens import Standby
 from Screens.HelpMenu import HelpableScreen
 from Screens.LocationBox import LocationBox
@@ -368,8 +369,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1539 $"[1:-2] + "\n" +
-							"$Date: 2018-10-22 16:32:39 +0200 (Mon, 22 Oct 2018) $"[1:23] + "\n"
+							"$Revision: 1540 $"[1:-2] + "\n" +
+							"$Date: 2018-10-23 17:29:41 +0200 (Tue, 23 Oct 2018) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -2411,10 +2412,10 @@ class FritzCallPhonebook(object):
 
 		def mySearch(self):
 			debug("[FritzDisplayPhonebook]")
-			self.help_window = self.session.instantiateDialog(NumericalTextInputHelpDialog, self)
-			self.help_window.show()
+			# self.help_window = self.session.instantiateDialog(NumericalTextInputHelpDialog, self)
+			# self.help_window.show()
 			# VirtualKeyboard instead of InputBox?
-			self.session.openWithCallback(self.doSearch, InputBox, _("Enter Search Terms"), _("Search phonebook"))
+			self.session.openWithCallback(self.doSearch, VirtualKeyBoard, title = _("Search phonebook"))
 
 		def doSearch(self, searchTerms):
 			if not searchTerms:
@@ -2623,7 +2624,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1539 $"[1:-1] + "$Date: 2018-10-22 16:32:39 +0200 (Mon, 22 Oct 2018) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1540 $"[1:-1] + "$Date: 2018-10-23 17:29:41 +0200 (Tue, 23 Oct 2018) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -3231,7 +3232,7 @@ class FritzReverseLookupAndNotifier(object):
 
 class FritzProtocol(LineReceiver):  # pylint: disable=W0223
 	def __init__(self):
-		info("[FritzProtocol] " + "$Revision: 1539 $"[1:-1] + "$Date: 2018-10-22 16:32:39 +0200 (Mon, 22 Oct 2018) $"[7:23] + " starting")
+		info("[FritzProtocol] " + "$Revision: 1540 $"[1:-1] + "$Date: 2018-10-23 17:29:41 +0200 (Tue, 23 Oct 2018) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
