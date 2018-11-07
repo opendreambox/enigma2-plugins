@@ -1,6 +1,6 @@
 import hashlib
 
-__version__ = "1.8.0"
+__version__ = "1.9.0"
 
 def bin2long(s):
 	return reduce( lambda x,y:(x<<8L)+y, map(ord, s))
