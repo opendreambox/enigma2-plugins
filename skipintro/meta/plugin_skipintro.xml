@@ -1,0 +1,16 @@
+<default>
+	<prerequisites>
+		<tag type="Recording" />
+	</prerequisites>
+	<info>
+		<author>MacDisein, Sven H</author>
+		<name>SkipIntro</name>
+		<packagename>enigma2-plugin-extensions-skipintro</packagename>
+		<shortdescription>Skip intro</shortdescription>
+		<description>Skip intro by predefined skip time</description>
+	</info>
+
+	<files type="package">
+		<file type="package" name="enigma2-plugin-extensions-skipintro" />
+	</files>
+</default>

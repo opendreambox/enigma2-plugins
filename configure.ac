@@ -384,6 +384,10 @@ simplerss/Makefile
 simplerss/meta/Makefile
 simplerss/src/Makefile
 
+skipintro/Makefile
+skipintro/meta/Makefile
+skipintro/src/Makefile
+
 startupservice/Makefile
 startupservice/meta/Makefile
 startupservice/src/Makefile

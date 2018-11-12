@@ -1,0 +1,3 @@
+Description: Skip intro by predefined skip time
+Maintainer: MacDisein, Sven H
+Depends: enigma2, python-sqlite3, python-re

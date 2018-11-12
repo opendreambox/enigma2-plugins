@@ -81,6 +81,7 @@ SUBDIRS = \
 	setpasswd \
 	showclock \
 	simplerss \
+	skipintro \
 	startupservice \
 	startuptostandby \
 	streamserverseek \
