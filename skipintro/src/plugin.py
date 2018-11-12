@@ -193,5 +193,5 @@ def Plugins(**kwargs):
 	from SkipIntroSetup import version
 	return [
 		PluginDescriptor(where=[PluginDescriptor.WHERE_SESSIONSTART, PluginDescriptor.WHERE_AUTOSTART], fnc=autostart),
-		PluginDescriptor(where=[PluginDescriptor.WHERE_PLUGINMENU], fnc=setup, name="SkipIntro", description="Skip intro by predefined skip time", icon="plugin.png"),
+		PluginDescriptor(where=[PluginDescriptor.WHERE_PLUGINMENU], fnc=setup, name="SkipIntro", description=_("Skip intro by predefined skip time"), icon="plugin.png"),
 	]
