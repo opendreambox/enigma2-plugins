@@ -74,16 +74,16 @@ class EPGSearchSetup(Screen, ConfigListScreen):
 
 	def buildConfig(self):
 		self.list.append( getConfigListEntry(_("Length of History"), config.plugins.epgsearch.history_length, _("How many entries to keep in the search history at most. 0 disables history entirely!")) )
-		self.list.append( getConfigListEntry(_("Add search-text to history at open plugin"), config.plugins.epgsearch.add_history_onOpen , _("Add the search-text also directly to the history if open the plugin.")) )
+		self.list.append( getConfigListEntry(_("Add search text to history when opening the plugin"), config.plugins.epgsearch.add_history_onOpen , _("Add the search text to the history when opening the plugin.")) )
 		self.list.append( getConfigListEntry(_("Add \"Search\" Button to EPG"), config.plugins.epgsearch.add_search_to_epg , _("If this setting is enabled, the plugin adds a \"Search\" Button to the regular EPG.")) )
 		self.list.append( getConfigListEntry(_("Search type"), config.plugins.epgsearch.search_type, _("Select \"exact\" match to enforce \"Match title\" to match exactly, \"partial\" if you only want to search for a part of the event title or description or \"Ask user\"")) )
 		self.list.append( getConfigListEntry(_("Search scope"), self.config_search_scope, _("Search will return only matches from services in the selected bouquet")) )
 		if self.config_search_scope.value != "all":
-			self.list.append( getConfigListEntry(_("show events"), config.plugins.epgsearch.show_events, _("Show 'all', 'current', 'future' or 'current & future' events. So you can filter the matches by the event-time.")) )
-		self.list.append( getConfigListEntry(_("Show Picons"), config.plugins.epgsearch.show_picon, _("Show the the picon of the channel instead of channelname. Use the picon-path from the channelselection-settings.")) )
+			self.list.append( getConfigListEntry(_("show events"), config.plugins.epgsearch.show_events, _("Show 'all', 'current', 'future' or 'current & future' events. So you can filter the matches by the event time.")) )
+		self.list.append( getConfigListEntry(_("Show Picons"), config.plugins.epgsearch.show_picon, _("Show the the picon of the channel instead of channelname. Use the picon-path from channelselection settings.")) )
 		if not config.plugins.epgsearch.show_picon.value:
-			self.list.append( getConfigListEntry(_("show most matched channelname in screen-title"), config.plugins.epgsearch.show_sname_in_title, _("Show the most matched channelname in the screen-title. So you have more place to show eventname and short description.")) )
-		self.list.append( getConfigListEntry(_("show short description"), config.plugins.epgsearch.show_shortdesc, _("Add the short description of the event to the search-result")) )
+			self.list.append( getConfigListEntry(_("show best matching channelname in screen title"), config.plugins.epgsearch.show_sname_in_title, _("Show the best matching channelname in the screen title. So you have more space to show event name and short description.")) )
+		self.list.append( getConfigListEntry(_("show short description"), config.plugins.epgsearch.show_shortdesc, _("Add the short description of the event to the search result")) )
 
 	def getScopeChoicesDefault(self):
 		scopeChoices_default = "all"

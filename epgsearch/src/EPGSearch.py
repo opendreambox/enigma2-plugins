@@ -138,7 +138,7 @@ def EventViewBase__init__(self, Event, Ref, callback=None, similarEPGCB=None):
 
 	self["epgsearch_eventview"] = HelpableActionMap(self, "InfobarAudioSelectionActions",
 			{
-				"audioSelection":  (searchEPG, _("Search EPG with Message")),
+				"audioSelection":  (searchEPG, _("Search EPG with event name")),
 		})
 
 # Overwrite pzyP4T.__init__ with our modified one
