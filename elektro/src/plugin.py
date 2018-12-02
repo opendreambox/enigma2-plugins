@@ -64,7 +64,7 @@ pluginPrintname = "[Elektro]"
 debug = False # If set True, plugin will print some additional status info to track logic flow
 session = None
 ElektroWakeUpTime = -1
-elektro_pluginversion = "3.4.5b"
+elektro_pluginversion = "3.4.5c"
 elektrostarttime = 60 
 elektrosleeptime = 5
 elektroShutdownThreshold = 60 * 20
@@ -111,6 +111,7 @@ config.plugins.elektro.dontwakeup = ConfigYesNo(default = False)
 config.plugins.elektro.holiday =  ConfigYesNo(default = False)
 config.plugins.elektro.hddsleep =  ConfigYesNo(default = False)
 config.plugins.elektro.netsleep =  ConfigYesNo(default = False)
+config.plugins.elektro.nfssleep =  ConfigYesNo(default = False)
 config.plugins.elektro.IPenable =  ConfigYesNo(default = False)
 config.plugins.elektro.deepstandby_wakeup_time = ConfigInteger(default = 0)
 
@@ -455,6 +456,8 @@ class Elektro(ConfigListScreen,Screen):
 				_("Wait for the HDD to enter sleep mode. Depending on the configuration this can prevent the box entirely from entering deep standby mode.")),
 			getConfigListEntry(_("Avoid deep standby on network activity, e.g. for Streaming"), config.plugins.elektro.netsleep,
 				_("Wait for the network to enter sleep mode.")),
+			getConfigListEntry(_("Avoid deep standby on nfs-read activity, e.g. for Streaming"), config.plugins.elektro.nfssleep,
+				_("Wait for no nfs-read-activity to enter sleep mode.")),
 			getConfigListEntry(_("Check IPs (press OK to edit)"), config.plugins.elektro.IPenable,
 				_("This list of IP addresses is checked. Elektro waits until addresses no longer responds to ping.")),
 			getConfigListEntry(_("NAS Poweroff (press OK to edit)"), config.plugins.elektro.NASenable,
@@ -591,6 +594,9 @@ class DoElektro(Screen):
 		if debug:
 			print pluginPrintname, "Translation test:", _("Standby on boot")
 		
+		#set the last_nfsread-value
+		self.last_nfsread = "0"
+		
 	def clkToTime(self, clock):
 		return ( (clock.value[0]) * 60 + (int)(clock.value[1]) )  * 60
 		
@@ -722,31 +728,37 @@ class DoElektro(Screen):
 			print pluginPrintname, "Wakeup!", str(time_s), " <", str(wakeuptime)
 		if sleeptime < time_s : #Sleep is in the past -> sleep!
 			trysleep = True
-			print pluginPrintname, "Sleep:", str(sleeptime), " <", str(time_s)
+			print pluginPrintname, "try Sleep:", str(sleeptime), " <", str(time_s)
 		
 		#We are not tying to go to sleep anymore -> maybe go to sleep again the next time
 		if trysleep == False:
+			print pluginPrintname, "don't try sleep -> maybe go to sleep again the next time"
 			self.dontsleep = False
 		
 		#The User aborted to got to sleep -> Don't go to sleep.
 		if self.dontsleep:
+			print pluginPrintname, "don't sleep - User aborted to got to sleep"
 			trysleep = False
 			
 		# If we are in holydaymode we should try to got to sleep anyway
 		# This should be set after self.dontsleep has been handled
 		if config.plugins.elektro.holiday.value:
+			print pluginPrintname, "sleep - we are in holiday mode"
 			trysleep = True
 		
 		# We are not enabled -> Dont go to sleep (This could have been catched earlier!)
 		if config.plugins.elektro.enable.value == False:
+			print pluginPrintname, "don't sleep - Elektro not activated"
 			trysleep = False
 		
 		# Only go to sleep if we are in standby or sleep is forced by settings
-		if  not ((Standby.inStandby) or (config.plugins.elektro.force.value == True) ):
+		if trysleep == True and not ((Standby.inStandby) or (config.plugins.elektro.force.value == True)):
+			print pluginPrintname, "don't sleep - not in stanby or sleep not forced by settings"
 			trysleep = False
 		
 		# No Sleep while recording
-		if self.session.nav.RecordTimer.isRecording():
+		if trysleep == True and self.session.nav.RecordTimer.isRecording():
+			print pluginPrintname, "don't sleep - current recording"
 			trysleep = False
 		
 		# No Sleep on Online IPs - joergm6
@@ -755,16 +767,24 @@ class DoElektro(Screen):
 				ip = "%d.%d.%d.%d" % tuple(config.plugins.elektro.ip[i].value)
 				if ip != "0.0.0.0":
 					if ping.doOne(ip,0.1) != None:
-						print pluginPrintname, ip, "online"
+						print pluginPrintname, ip, "don't sleep - ip online"
 						trysleep = False
 						break
 
-		# No Sleep on HDD running - joergm6
+		# No Sleep on HDD running
 		if trysleep == True and (config.plugins.elektro.hddsleep.value == True) and (harddiskmanager.HDDCount() > 0):
 			hddlist = harddiskmanager.HDDList()
-			if hddlist[0][1].model().startswith("ATA"):
-				if not hddlist[0][1].isSleeping():
+			#new code by Sven H
+			for hdd in hddlist:
+				#print "[Elektro] ", hdd[0], hdd[1].bus_description(), hdd[1].isSleeping()
+				if hdd[1].bus_description() == "SATA" and not hdd[1].isSleeping():
+					print pluginPrintname, "don't sleep - HDD is active:", hdd[0]
 					trysleep = False
+			#old code by joergm6
+			#if hddlist[0][1].model().startswith("ATA"):
+			#	if not hddlist[0][1].isSleeping():
+			#		print pluginPrintname, "HDD is active"
+			#		trysleep = False
 		
 		# No Sleep on network activity - betonme
 		if trysleep == True and (config.plugins.elektro.netsleep.value == True) and (harddiskmanager.HDDCount() > 0):
@@ -775,6 +795,7 @@ class DoElektro(Screen):
 					content = line.split()
 					if content[3] == "01":
 						# Connection established
+						print pluginPrintname, "don't sleep - tcp-Connection established"
 						trysleep = False
 						break
 			with open("/proc/net/udp", 'r') as f:
@@ -784,12 +805,29 @@ class DoElektro(Screen):
 					content = line.split()
 					if content[3] == "01":
 						# Connection established
+						print pluginPrintname, "don't sleep - udp-Connection established"
 						trysleep = False
 						break
-		
+
+		# No Sleep on nfs-read activity - Sven H
+		if trysleep == True and (config.plugins.elektro.nfssleep.value == True):
+			with open("/proc/net/rpc/nfsd", 'r') as f:
+				lines = f.readlines()
+				for line in lines:
+					content = line.split()
+					if content[0] == "io":
+						current_nfsread = content[1]
+						#print pluginPrintname, "nfs-read activity - last, current", self.last_nfsread, current_nfsread
+						if (current_nfsread != self.last_nfsread):
+							print pluginPrintname, "don't sleep because current nfs-read activity"
+							trysleep = False
+						self.last_nfsread = current_nfsread
+						break
+
 		# Will there be a recording in a short while?
 		nextRecTime = self.session.nav.RecordTimer.getNextRecordingTime()
-		if  (nextRecTime > 0) and (nextRecTime - (int)(time()) <  elektroShutdownThreshold):
+		if trysleep == True and (nextRecTime > 0) and (nextRecTime - (int)(time()) <  elektroShutdownThreshold):
+			print pluginPrintname, "don't sleep - there be a recording in a short while"
 			trysleep = False
 			
 		# Looks like there really is a reason to go to sleep -> Lets try it!
