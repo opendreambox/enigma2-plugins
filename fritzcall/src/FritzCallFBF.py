@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1537 $
-$Date: 2018-10-07 11:06:53 +0200 (Sun, 07 Oct 2018) $
-$Id: FritzCallFBF.py 1537 2018-10-07 09:06:53Z michael $
+$Revision: 1546 $
+$Date: 2018-12-12 17:23:56 +0100 (Wed, 12 Dec 2018) $
+$Id: FritzCallFBF.py 1546 2018-12-12 16:23:56Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -3895,7 +3895,7 @@ class FritzCallFBF_upnp():
 			self._infoCallback = None
 
 	def getCalls(self, callScreen, callback, callType):
-		self.debug("")
+		self.debug("callType: %s", callType)
 		if self._loginFailure:
 			self.debug("skip because of login failure")
 		self._callScreen = callScreen
@@ -3940,26 +3940,28 @@ class FritzCallFBF_upnp():
 		calls = root.iterfind("./Call")
 		for call in calls:
 			direct = call.find("./Type").text
-			# self.debug("direct: %s", direct)
+			self.debug("direct: %s", direct)
 			if self._callType != '.' and self._callType != direct:
-				# self.debug("skip: id %s of type %s", call.find("./Id").text, direct)
+				self.debug("skip: id %s of type %s", call.find("./Id").text, direct)
 				continue
 			if direct == FBF_OUT_CALLS:
+				# self.debug("FBF_OUT_CALLS: %s", direct)
 				number = call.find("./Called").text
 				remote = call.find("./Name").text
-				if remote:
-					remote = remote.encode("utf-8")
-				else:
+				if not remote:
 					remote = resolveNumber(number, "", self.phonebook)
-				here = call.find("./Caller").text
+				else:
+					remote = remote.encode("utf-8")
+				here = call.find("./Caller").text.encode("utf-8")
 				if here.startswith("SIP: "):
 					here = here[5:]
-				if filtermsns and here not in filtermsns:
-					# self.debug("skip filter %s" % (here))
+				if filtermsns and here not in filtermsns and call.find("./CallerNumber").text not in filtermsns:
+					self.debug("skip filter %s" % (here))
 					continue
 				if here.isdigit():
-					here = resolveNumber(here, call.find("./CallerNumber").text, self.phonebook)
+					here = resolveNumber(here, call.find("./CallerNumber").text.encode("utf-8"), self.phonebook)
 			else:
+				# self.debug("FBF_OUT_CALLS not: %s", direct)
 				number = call.find("./Caller").text
 				if not number:
 					number = _("Unknown")
@@ -3967,24 +3969,27 @@ class FritzCallFBF_upnp():
 				if remote:
 					remote = remote.encode("utf-8")
 				else:
-					remote = resolveNumber(call.find("./Caller").text, "", self.phonebook)
-				here = call.find("./Called").text
+					remote = resolveNumber(number, "", self.phonebook)
+				here = call.find("./Called").text.encode("utf-8")
 				if here.startswith("SIP: "):
 					here = here[5:]
-				if filtermsns and here not in filtermsns:
-					# self.debug("skip %s" % (here))
+				if filtermsns and here not in filtermsns and call.find("./CalledNumber").text.encode("utf-8") not in filtermsns:
+					self.debug("skip %s" % (here))
 					continue
 				# self.debug("here: %s", here)
 				if here.isdigit():
 					# self.debug("resolveNumber(%s, %s)", here, call.find("./CalledNumber").text)
-					here = resolveNumber(here, call.find("./CalledNumber").text, self.phonebook, self.debug)
+					here = resolveNumber(here, call.find("./CalledNumber").text.encode("utf-8"), self.phonebook, self.debug)
 					# self.debug("resolveNumber result: %s", here)
 
+			self.debug("7")
 			device = call.find("./Device").text
+			self.debug("7")
 			if device:
-				device = device.encode("utf-8")
-				here = here + " (" + device + ")"
-			# self.debug("here: " + here)
+				self.debug("8")
+				here = here + " (" + device.encode("utf-8") + ")"
+				self.debug("9")
+			self.debug("here: " + here)
 
 			number = stripCbCPrefix(number, config.plugins.FritzCall.countrycode.value)
 			if config.plugins.FritzCall.prefix.value and number and number[0] != '0':  # should only happen for outgoing
@@ -4199,6 +4204,51 @@ class FritzCallFBF_upnp():
 		self.fc.call_action(self._readBlacklist_cb, "X_AVM-DE_OnTel", "GetDeflections")
 		
 	def _readBlacklist_cb(self, result):
+		def _readPhonebookForBlacklist(result):
+			self.debug(repr(result))
+			if isinstance(result, Failure):
+				text = _("FRITZ!Box - ") + _("Could not load phonebook: ") + _("wrong user or password?")
+				self._notify(text)
+				self._loginFailure = True
+				return
+	
+			if 'NewPhonebookName' not in result or 'NewPhonebookURL' not in result:
+				text = _("FRITZ!Box - ") + _("Could not load phonebook: %s") % 'NewPhonebookName'
+				self._notify(text)
+				return
+	
+			getPage(result["NewPhonebookURL"]).addCallback(_readPhonebookForBlacklist_cb)
+	
+		def _readPhonebookForBlacklist_cb(result):
+			root = ET.fromstring(result)
+			thisName = root.find(".//phonebook").attrib["name"]
+			self.debug("Phonebook: %s", thisName)
+			if self.logger.getEffectiveLevel() == logging.DEBUG:
+				self.debug("dumping phonebook to /tmp/FritzCall_readPhonebookForBlacklist_cb_%s.xml", thisName)
+				linkP = open("/tmp/FritzCall_readPhonebookForBlacklist_cb_%s.xml" % thisName, "w")
+				linkP.write(result)
+				linkP.close()
+	
+			contacts = root.iterfind(".//contact")
+			for contact in contacts:
+				numbers = contact.iterfind("./telephony/number")
+				for number in numbers:
+					# self.debug("Number: " + number.text + " " + number.attrib["type"])
+					thisType = number.attrib["type"].encode("utf-8")
+					if thisType.startswith('label:'):
+						thisType = thisType[6:]
+					if (thisType == "intern" or thisType == "memo" or thisType == ""):
+						# self.info("Skipping internal number %s", (__(number)))
+						continue
+					thisnumber = cleanNumber(number.text)
+					if thisnumber in self.blacklist[0]:
+						# self.info("Number already exists, skipping '''%s'''", (__(thisnumber)))
+						continue
+					else:
+						# self.debug("Number: " + thisnumber + " added to blacklist.")
+						self.blacklist[0].append(thisnumber)
+			self.debug("After phonebook imput: %s", repr(self.blacklist))
+
 		self.debug("")
 		if isinstance(result, Failure):
 			text = _("FRITZ!Box - Error getting blacklist: %s")  % _("wrong user or password?")
@@ -4219,6 +4269,17 @@ class FritzCallFBF_upnp():
 					self.blacklist[0].append(deflection.find("./Number").text)
 				if deflection.find("./Type").text == "fromAnonymous":
 					self.blacklist[0].append("")
+				if deflection.find("./Type").text == "fromPB":
+					self.debug("get phonebook for blacklist")
+					if "X_AVM-DE_OnTel:1" in self.fc.services.keys():
+						pbId = deflection.find("./PhonebookID").text
+						if pbId:
+							self.fc.call_action(_readPhonebookForBlacklist, "X_AVM-DE_OnTel", "GetPhonebook", NewPhonebookId=pbId)
+						else:
+							self.error("no phonebookId for blacklist? Strange")
+					else:
+						Notifications.AddNotification(MessageBox, _("Cannot get infos from FRITZ!Box yet\nStill initialising or wrong firmware version"), type = MessageBox.TYPE_ERROR, timeout = config.plugins.FritzCall.timeout.value)
+
 
 		self.debug(repr(self.blacklist))
 
