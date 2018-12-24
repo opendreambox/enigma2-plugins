@@ -129,13 +129,13 @@ class AutoTimerOverview(Screen, HelpableScreen):
 
 		self["EPGSelectActions"] = HelpableActionMap(self, "EPGSelectActions",
 			{
-				"info":   (self.showSearchLog, _("Show last SearchLog")),
+				"info":   (self.showSearchLog, _("Show last search log")),
 			}
 		)
 
 		self["InfobarActions"] = HelpableActionMap(self, "InfobarActions",
 			{
-				"showTv":   (self.showFilterTxt, _("Show AutoTimer FilterTxt")),
+				"showTv":   (self.showFilterTxt, _("Show AutoTimer filters")),
 			}
 		)
 
@@ -159,9 +159,9 @@ class AutoTimerOverview(Screen, HelpableScreen):
 			logpath = os_path.dirname(config.plugins.autotimer.log_file.value)
 		path_search_log = os_path.join(logpath, "autotimer_search.log")
 		if os_path.exists(path_search_log):
-			self.session.open(ShowLogScreen, path_search_log, _("searchLog"), "","")
+			self.session.open(ShowLogScreen, path_search_log, _("Search Log"), "","")
 		else:
-			self.session.open(MessageBox,_("no searchLog found!\n\n so you have no new or modified timer at last autotimer-search."), MessageBox.TYPE_INFO)
+			self.session.open(MessageBox,_("No search log found!\n\nNo timer added or modified during last autotimer search."), MessageBox.TYPE_INFO)
 
 	def showFilterTxt(self):
 		

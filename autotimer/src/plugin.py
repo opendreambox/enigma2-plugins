@@ -284,7 +284,7 @@ extDescriptor = PluginDescriptor(name="AutoTimer", description = _("Edit Timers 
 extDescriptor_scan = PluginDescriptor(name="AutoTimer scan", description = _("scan for new Events"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = extensionsmenu_scan, needsRestart = False)
 
 config.plugins.autotimer.show_addto_in_filmmenu.addNotifier(housekeepingFilmmenu, initial_call = False, immediate_feedback = True)
-filmDescriptor_addto = PluginDescriptor(name = _("add to AutoTimer filterList"), description = _("add to AutoTimer filterList"), where = PluginDescriptor.WHERE_MOVIELIST, fnc = add_to_filterList, needsRestart = False)
+filmDescriptor_addto = PluginDescriptor(name = _("add to AutoTimer filter list"), description = _("add to AutoTimer filter list"), where = PluginDescriptor.WHERE_MOVIELIST, fnc = add_to_filterList, needsRestart = False)
 
 def Plugins(**kwargs):
 	l = [

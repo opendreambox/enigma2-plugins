@@ -674,7 +674,7 @@ class AutoTimer:
 				else:
 					searchlog_txt = "\n########## ".join(searchlog_txt)
 		
-		searchlog_txt += "\n########## " + _("begin searchLog from") + " " + str(strftime('%d.%m.%Y, %H:%M', localtime())) + " ########\n\n"
+		searchlog_txt += "\n########## " + _("begin of search log on") + " " + str(strftime('%d.%m.%Y, %H:%M', localtime())) + " ########\n\n"
 		file_search_log = open(path_search_log, "w")
 		file_search_log.write(searchlog_txt)
 		file_search_log.close()
@@ -725,7 +725,7 @@ class AutoTimer:
 					if ret:
 						add_counter +=1
 					
-				session.open( MessageBox, _("finished add to filterList with %s event(s):\n\n %s event(s) added \n %s event(s) skipped") % (len(services), add_counter,len(services)-add_counter), type = MessageBox.TYPE_INFO, timeout = config.plugins.autotimer.popup_timeout.value )
+				session.open( MessageBox, _("finished adding to filter list with %s event(s):\n\n %s event(s) added \n %s event(s) skipped") % (len(services), add_counter,len(services)-add_counter), type = MessageBox.TYPE_INFO, timeout = config.plugins.autotimer.popup_timeout.value )
 					
 			except Exception as e:
 				doLog("Error in addToFilterList", e)

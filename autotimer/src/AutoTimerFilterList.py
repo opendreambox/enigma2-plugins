@@ -177,7 +177,7 @@ class AutoTimerFilterListOverview(Screen):
 			traceback.print_exc()
 
 	def setCustomTitle(self):
-		self.setTitle("AutoTimer " + _("Filterlist"))
+		self.setTitle("AutoTimer " + _("Filter List"))
 
 
 	def updateFilterDate(self):
@@ -246,7 +246,7 @@ class AutoTimerFilterListOverview(Screen):
 			
 			for filter in self.FilterList:
 				if filter[0][1] == filtertext:
-					self.session.open(MessageBox,_("The filterEntry '%s' already exist!\nThe change was canceled.") % filtertext, MessageBox.TYPE_INFO)
+					self.session.open(MessageBox,_("'%s' already exists in filter list!\nThe change was cancelled.") % filtertext, MessageBox.TYPE_INFO)
 					return
 
 			date1 = datetime.datetime.fromtimestamp(date1)
@@ -272,7 +272,7 @@ class AutoTimerFilterListOverview(Screen):
 		# Remove selected Filter
 		current = self["config"].getCurrent()
 		if current is not None:
-			self.session.openWithCallback(self.removeCallback, MessageBox, _("Do you really want to delete %s?") % (_("FilterEntry") +" '"+str(current[1])+"'"), )
+			self.session.openWithCallback(self.removeCallback, MessageBox, _("Do you really want to delete %s?") % (_("Filter List Entry") +" '"+str(current[1])+"'"), )
 
 	def removeCallback(self, ret):
 		cur = self["config"].getCurrentIndex()
@@ -403,7 +403,7 @@ class AutoTimerFilterListEditor(Screen, ConfigListScreen):
 
 
 	def setCustomTitle(self):
-		self.setTitle(_("AutoTimer %s FilterListEntry") % self.add_edit)
+		self.setTitle(_("AutoTimer %s Filter List Entry") % self.add_edit)
 
 
 	def changed(self):
