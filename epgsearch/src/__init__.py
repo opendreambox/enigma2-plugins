@@ -4,15 +4,15 @@ from collections import OrderedDict
 
 class SearchType:
 	ASK = "ask"
-	EXAKT_TITLE = "exakt_title"
+	EXACT_TITLE = "exact_title"
 	TITLE = "title"
 	TITLE_DESCRIPTION = "title_description"
 
 	CHOICES = OrderedDict()
 	CHOICES[ASK] = _("Ask user")
-	CHOICES[EXAKT_TITLE] = _("exact Title-match")
-	CHOICES[TITLE] = _("partial Title-match")
-	CHOICES[TITLE_DESCRIPTION] = _("partial Title or Description")
+	CHOICES[EXACT_TITLE] = _("Exact match of title")
+	CHOICES[TITLE] = _("Partial match of title")
+	CHOICES[TITLE_DESCRIPTION] = _("Partial match of title or description")
 
 config.plugins.epgsearch = ConfigSubsection()
 config.plugins.epgsearch.history = ConfigSet(choices = [])

@@ -118,7 +118,7 @@ def ChannelSelectionBase__init__(self, session):
 
 	self["epgsearch_channelbase"] = HelpableActionMap(self, "InfobarAudioSelectionActions",
 			{
-				"audioSelection":  (searchEPG, _("Search EPG with Message")),
+				"audioSelection":  (searchEPG, _("Search EPG with event name")),
 		})
 
 # Overwrite EventViewBase.__init__ with our modified one
@@ -586,8 +586,8 @@ class EPGSearch(EPGSelection):
 
 			# Search EPG, default to empty list
 			searchType = eEPGCache.PARTIAL_TITLE_SEARCH
-			if config.plugins.epgsearch.search_type.value == "exakt_title":
-				searchType = eEPGCache.EXAKT_TITLE_SEARCH
+			if config.plugins.epgsearch.search_type.value == "exact_title":
+				searchType = eEPGCache.EXACT_TITLE_SEARCH
 			epgcache = eEPGCache.getInstance() # XXX: the EPGList also keeps an instance of the cache but we better make sure that we get what we want :-)
 			ret = epgcache.search(('RIBDT', 1000, searchType, searchString, eEPGCache.NO_CASE_CHECK)) or []
 			if searchDescription:
