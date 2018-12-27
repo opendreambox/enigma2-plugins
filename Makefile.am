@@ -48,6 +48,7 @@ SUBDIRS = \
 	menusort \
 	merlinepg \
 	merlinepgcenter \
+	merlinskinthemes \
 	meteoitalia \
 	mosaic \
 	movielistpreview \
