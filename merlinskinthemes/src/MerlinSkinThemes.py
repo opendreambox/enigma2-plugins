@@ -56,7 +56,7 @@ import shutil
 import os
 
 # =========================================
-PluginVersion = "v2.6.2"
+PluginVersion = "v2.6.3"
 Title = "MerlinSkinThemes "
 Author = "by marthom"
 # =========================================
@@ -69,11 +69,12 @@ skin_user_xml = "/etc/enigma2/skin_user.xml"
 enigmacontrol = "/var/lib/opkg/info/enigma2.control"
 merlinChk = "/usr/share/enigma2/merlin_setup.xml"
 GP3Chk = "/usr/lib/enigma2/python/Plugins/Bp/geminimain/gVersion.py"
+GP4Chk = "/usr/lib/enigma2/python/Plugins/GP4/geminilocale/gVersion.py"
 ImageCreater = "/usr/lib/enigma2/python/Components/ImageCreater.py"
 PIL = "/usr/lib/python2.7/site-packages/PIL/Image.py"
 
 # Liste der Vorschaubilder
-myList = ["InfoBar", "ChannelSelection", "MovieSelection", "MoviePlayer", "SecondInfoBar", "MessageBox", "InputBox", "ChoiceBox", "Mute", "Volume", "MerlinMusicPlayer2", "ExtLCDInfoBar", "ExtLCDEventView", "ExtLCDStandby", "ExtLCDMoviePlayer", "ExtLCDMMP2", "OLEDInfoBar", "OLEDEventView", "OLEDStandby", "OLEDMoviePlayer", "OLEDMMP2", "LCDInfoBar", "LCDEventView", "LCDStandby", "LCDMoviePlayer", "LCDMMP2"]
+myList = ["InfoBar", "Menu", "PluginBrowser", "ChannelSelection", "MovieSelection", "MoviePlayer", "SecondInfoBar", "GraphMultiEPG", "MessageBox", "InputBox", "ChoiceBox", "Mute", "Volume", "MerlinMusicPlayer2", "ExtLCDInfoBar", "ExtLCDEventView", "ExtLCDStandby", "ExtLCDMoviePlayer", "ExtLCDMMP2", "OLEDInfoBar", "OLEDEventView", "OLEDStandby", "OLEDMoviePlayer", "OLEDMMP2", "LCDInfoBar", "LCDEventView", "LCDStandby", "LCDMoviePlayer", "LCDMMP2"]
 
 # Enigma2Version
 E2ver = "not available"
@@ -110,6 +111,22 @@ if fileExists(GP3Chk):
 	data = data.split("'")
 	GP3ver = data[1]
 
+# GP4
+GP4 = False
+GP4ver = ""
+if fileExists(GP4Chk):
+	GP4 = True
+	file = open(GP4Chk, 'r')
+	data = ""
+	while 1:
+		line = file.readline()
+		if not line:break
+		data += line
+	file.close()
+	
+	data = data.split("'")
+	GP4ver = data[1]
+
 # ImageCreate
 ImgCreate = False
 if fileExists(ImageCreater) and fileExists(PIL):
@@ -124,7 +141,7 @@ if HardwareInfo().get_device_name() in ('dm900', 'dm920'):
 else:
 	ArchArm = False
 	ArchMipsel = True
-	
+
 # skin_user.xml
 SkinUser = False
 if fileExists(skin_user_xml):
@@ -140,10 +157,13 @@ config.plugins.MerlinSkinThemes.FontTheme = ConfigText(default="")
 config.plugins.MerlinSkinThemes.BorderSetTheme = ConfigText(default="")
 config.plugins.MerlinSkinThemes.WindowStyleScrollbarTheme = ConfigText(default="")
 config.plugins.MerlinSkinThemes.InfoBar = ConfigText(default="")
+config.plugins.MerlinSkinThemes.Menu = ConfigText(default="")
+config.plugins.MerlinSkinThemes.PluginBrowser = ConfigText(default="")
 config.plugins.MerlinSkinThemes.ChannelSelection = ConfigText(default="")
 config.plugins.MerlinSkinThemes.MovieSelection = ConfigText(default="")
 config.plugins.MerlinSkinThemes.MoviePlayer = ConfigText(default="")
 config.plugins.MerlinSkinThemes.SecondInfoBar = ConfigText(default="")
+config.plugins.MerlinSkinThemes.GraphMultiEPG = ConfigText(default="")
 config.plugins.MerlinSkinThemes.MessageBox = ConfigText(default="")
 config.plugins.MerlinSkinThemes.InputBox = ConfigText(default="")
 config.plugins.MerlinSkinThemes.ChoiceBox = ConfigText(default="")
@@ -152,6 +172,9 @@ config.plugins.MerlinSkinThemes.Volume = ConfigText(default="")
 config.plugins.MerlinSkinThemes.MerlinMusicPlayer2Screen = ConfigText(default="")
 config.plugins.MerlinSkinThemes.MerlinMusicPlayer2Screen_MIPSEL = ConfigText(default="")
 config.plugins.MerlinSkinThemes.MerlinMusicPlayer2Screen_ARM = ConfigText(default="")
+config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver = ConfigText(default="")
+config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_MIPSEL = ConfigText(default="")
+config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_ARM = ConfigText(default="")
 config.plugins.MerlinSkinThemes.ExtLCDInfoBar = ConfigText(default="")
 config.plugins.MerlinSkinThemes.ExtLCDEventView = ConfigText(default="")
 config.plugins.MerlinSkinThemes.ExtLCDStandby = ConfigText(default="")
@@ -311,10 +334,13 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		defaultbordersettheme = None
 		defaultwindowstylescrollbartheme = None
 		defaultinfobar = None
+		defaultmenu = None
+		defaultpluginbrowser = None
 		defaultchannelselection = None
 		defaultmovieselection = None
 		defaultmovieplayer = None
 		defaultsecondinfobar = None
+		defaultgraphmultiepg = None
 		defaulteventview = None
 		defaultepgselection = None
 		defaultmessagebox = None
@@ -325,6 +351,9 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		defaultmmp2 = None
 		defaultmmp2mipsel = None
 		defaultmmp2arm = None
+		defaultmmp2saver = None
+		defaultmmp2savermipsel = None
+		defaultmmp2saverarm = None
 		defaultextlcdinfobar = None
 		defaultextlcdeventview = None
 		defaultextlcdstandby = None
@@ -492,6 +521,38 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					config.plugins.MerlinSkinThemes.InfoBar = self.SInfobar
 					self.clist.append(getConfigListEntry("InfoBar", self.SInfobar))
 
+                               	#-----------
+				# Menue
+				MenuList = []
+				st = xml.find("screenthemes")
+				for screens in st.findall("screens"):
+					if screens.get("name") == "Menu":
+						for themes in screens.findall("screentheme"):
+							MenuList.append(themes.get("name"))
+							if themes.get("value") == "active":
+								defaultmenu = themes.get("name")
+
+				if len(MenuList) > 0:
+					self.SMenu = MyConfigSelection(default=defaultmenu, choices = MenuList)
+					config.plugins.MerlinSkinThemes.Menu = self.SMenu
+					self.clist.append(getConfigListEntry("Menu", self.SMenu))
+
+                               	#-----------
+				# PluginBrowser
+				PluginBrowserList = []
+				st = xml.find("screenthemes")
+				for screens in st.findall("screens"):
+					if screens.get("name") == "PluginBrowser":
+						for themes in screens.findall("screentheme"):
+							PluginBrowserList.append(themes.get("name"))
+							if themes.get("value") == "active":
+								defaultpluginbrowser = themes.get("name")
+
+				if len(PluginBrowserList) > 0:
+					self.SPluginBrowser = MyConfigSelection(default=defaultpluginbrowser, choices = PluginBrowserList)
+					config.plugins.MerlinSkinThemes.PluginBrowser = self.SPluginBrowser
+					self.clist.append(getConfigListEntry("PluginBrowser", self.SPluginBrowser))
+
 				#-----------
 				# CHANNELSELECTION
 				ChannelSelectionList = []
@@ -555,6 +616,23 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					self.S2IB = MyConfigSelection(default=defaultsecondinfobar, choices = SecondInfoBarList)
 					config.plugins.MerlinSkinThemes.SecondInfoBar = self.S2IB
 					self.clist.append(getConfigListEntry("SecondInfoBar", self.S2IB))
+
+				#-----------
+				# GraphMultiEPG
+				
+				GraphMultiEPGList = []
+				st = xml.find("screenthemes")
+				for screens in st.findall("screens"):
+					if screens.get("name") == "GraphMultiEPG":
+						for themes in screens.findall("screentheme"):
+							GraphMultiEPGList.append(themes.get("name"))
+							if themes.get("value") == "active":
+								defaultgraphmultiepg = themes.get("name")
+
+				if len(GraphMultiEPGList) > 0:
+					self.graphmultiepg = MyConfigSelection(default=defaultgraphmultiepg, choices = GraphMultiEPGList)
+					config.plugins.MerlinSkinThemes.GraphMultiEPG = self.graphmultiepg
+					self.clist.append(getConfigListEntry("GraphMultiEPG", self.graphmultiepg))
 
 				#-----------
 				# EventView
@@ -717,6 +795,56 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						self.SMMP2Arm = MyConfigSelection(default=defaultmmp2arm, choices = MMP2ArmList)
 						config.plugins.MerlinSkinThemes.MerlinMusicPlayer2Screen_ARM = self.SMMP2Arm
 						self.clist.append(getConfigListEntry("MerlinMusicPlayer2Screen_ARM", self.SMMP2Arm))
+
+				#-----------
+				# MerlinMusicPlayer2ScreenSaver
+				MMP2SaverList = []
+				st = xml.find("screenthemes")
+				for screens in st.findall("screens"):
+					if screens.get("name") == "MerlinMusicPlayer2ScreenSaver":
+						for themes in screens.findall("screentheme"):
+							MMP2SaverList.append(themes.get("name"))
+							if themes.get("value") == "active":
+								defaultmmp2saver = themes.get("name")
+
+				if len(MMP2SaverList) > 0:
+					self.SMMP2Saver = MyConfigSelection(default=defaultmmp2saver, choices = MMP2SaverList)
+					config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver = self.SMMP2Saver
+					self.clist.append(getConfigListEntry("MerlinMusicPlayer2ScreenSaver", self.SMMP2Saver))
+
+				if ArchMipsel:
+					#-----------
+					# MerlinMusicPlayer2ScreenSaver_MIPSEL
+					MMP2SaverMipselList = []
+					st = xml.find("screenthemes")
+					for screens in st.findall("screens"):
+						if screens.get("name") == "MerlinMusicPlayer2ScreenSaver_MIPSEL":
+							for themes in screens.findall("screentheme"):
+								MMP2SaverMipselList.append(themes.get("name"))
+								if themes.get("value") == "active":
+									defaultmmp2savermipsel = themes.get("name")
+
+					if len(MMP2SaverMipselList) > 0:
+						self.SMMP2SaverMipsel = MyConfigSelection(default=defaultmmp2savermipsel, choices = MMP2SaverMipselList)
+						config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_MIPSEL = self.SMMP2SaverMipsel
+						self.clist.append(getConfigListEntry("MerlinMusicPlayer2ScreenSaver_MIPSEL", self.SMMP2SaverMipsel))
+
+				if ArchArm:
+					#-----------
+					# MerlinMusicPlayer2ScreenSaver_ARM
+					MMP2SaverArmList = []
+					st = xml.find("screenthemes")
+					for screens in st.findall("screens"):
+						if screens.get("name") == "MerlinMusicPlayer2ScreenSaver_ARM":
+							for themes in screens.findall("screentheme"):
+								MMP2SaverArmList.append(themes.get("name"))
+								if themes.get("value") == "active":
+									defaultmmp2saverarm = themes.get("name")
+
+					if len(MMP2SaverArmList) > 0:
+						self.SMMP2SaverArm = MyConfigSelection(default=defaultmmp2saverarm, choices = MMP2SaverArmList)
+						config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_ARM = self.SMMP2SaverArm
+						self.clist.append(getConfigListEntry("MerlinMusicPlayer2ScreenSaver_ARM", self.SMMP2SaverArm))
 					
 			# LCD Screens
 			#-----------
@@ -882,7 +1010,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						self.clist.append(getConfigListEntry("OLEDMoviePlayer", self.OSMoviePlayer))
 						
 				#-----------
-				# MerlinMusicPlayer2LCDScreen
+				# MerlinMusicPlayer2OLCDScreen
 				OLEDMMP2List = []
 				if st.find("screens[@name='MerlinMusicPlayer2LCDScreen']") is not None:
 					ost = st.find("screens[@name='MerlinMusicPlayer2LCDScreen']")
@@ -972,7 +1100,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						self.clist.append(getConfigListEntry("ExtLCDMoviePlayer", self.ExtLSMoviePlayer))
 						
 				#-----------
-				# MerlinMusicPlayer2LCDScreen
+				# MerlinMusicPlayer2EXTLCDScreen
 				ExtLCDMMP2List = []
 				if st.find("screens[@name='MerlinMusicPlayer2LCDScreen']") is not None:
 					elst = st.find("screens[@name='MerlinMusicPlayer2LCDScreen']")
@@ -1168,7 +1296,17 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					ts = t.find("screens[@name='InfoBar']")
 					if ts.find("screentheme[@name='" + config.plugins.MerlinSkinThemes.InfoBar.value + "']") is not None:
 						Tree.SubElement(xmldesign, "InfoBar", {"name": config.plugins.MerlinSkinThemes.InfoBar.value})
-			
+
+				if t.find("screens[@name='Menu']") is not None:
+					ts = t.find("screens[@name='Menu']")
+					if ts.find("screentheme[@name='" + config.plugins.MerlinSkinThemes.Menu.value + "']") is not None:
+						Tree.SubElement(xmldesign, "Menu", {"name": config.plugins.MerlinSkinThemes.Menu.value})
+
+				if t.find("screens[@name='PluginBrowser']") is not None:
+					ts = t.find("screens[@name='PluginBrowser']")
+					if ts.find("screentheme[@name='" + config.plugins.MerlinSkinThemes.PluginBrowser.value + "']") is not None:
+						Tree.SubElement(xmldesign, "PluginBrowser", {"name": config.plugins.MerlinSkinThemes.PluginBrowser.value})
+	
 				if t.find("screens[@name='ChannelSelection']") is not None:
 					ts = t.find("screens[@name='ChannelSelection']")
 					if ts.find("screentheme[@name='" + config.plugins.MerlinSkinThemes.ChannelSelection.value + "']") is not None:
@@ -1188,6 +1326,11 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					ts = t.find("screens[@name='SecondInfoBar']")
 					if ts.find("screentheme[@name='" + config.plugins.MerlinSkinThemes.SecondInfoBar.value + "']") is not None:
 						Tree.SubElement(xmldesign, "SecondInfoBar", {"name": config.plugins.MerlinSkinThemes.SecondInfoBar.value})
+
+				if t.find("screens[@name='GraphMultiEPG']") is not None:
+					ts = t.find("screens[@name='GraphMultiEPG']")
+					if ts.find("screentheme[@name='" + config.plugins.MerlinSkinThemes.GraphMultiEPG.value + "']") is not None:
+						Tree.SubElement(xmldesign, "GraphMultiEPG", {"name": config.plugins.MerlinSkinThemes.GraphMultiEPG.value})
 						
 				if t.find("screens[@name='EventView']") is not None:
 					ts = t.find("screens[@name='EventView']")
@@ -1238,6 +1381,21 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					ts = t.find("screens[@name='MerlinMusicPlayer2Screen_ARM']")
 					if ts.find("screentheme[@name='" + config.plugins.MerlinSkinThemes.MerlinMusicPlayer2Screen_ARM.value + "']") is not None:
 						Tree.SubElement(xmldesign, "MerlinMusicPlayer2Screen_ARM", {"name": config.plugins.MerlinSkinThemes.MerlinMusicPlayer2Screen_ARM.value})
+
+				if t.find("screens[@name='MerlinMusicPlayer2ScreenSaver']") is not None:
+					ts = t.find("screens[@name='MerlinMusicPlayer2ScreenSaver']")
+					if ts.find("screentheme[@name='" + config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver.value + "']") is not None:
+						Tree.SubElement(xmldesign, "MerlinMusicPlayer2ScreenSaver", {"name": config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver.value})
+
+				if t.find("screens[@name='MerlinMusicPlayer2ScreenSaver_MIPSEL']") is not None:
+					ts = t.find("screens[@name='MerlinMusicPlayer2ScreenSaver_MIPSEL']")
+					if ts.find("screentheme[@name='" + config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_MIPSEL.value + "']") is not None:
+						Tree.SubElement(xmldesign, "MerlinMusicPlayer2ScreenSaver_MIPSEL", {"name": config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_MIPSEL.value})
+
+				if t.find("screens[@name='MerlinMusicPlayer2ScreenSaver_ARM']") is not None:
+					ts = t.find("screens[@name='MerlinMusicPlayer2ScreenSaver_ARM']")
+					if ts.find("screentheme[@name='" + config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_ARM.value + "']") is not None:
+						Tree.SubElement(xmldesign, "MerlinMusicPlayer2ScreenSaver_ARM", {"name": config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_ARM.value})
 
 			# LCD Screens
 			if xmlroot.find("lcdscreenthemes") is not None:
@@ -1430,6 +1588,20 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						self.SInfobar.setValue(tmp.get("name"))
 					except:
 						print "[MST] SInfobar not found"
+
+				if design.find("Menu") is not None:
+					tmp = design.find("Menu")
+					try:
+						self.SMenu.setValue(tmp.get("name"))
+					except:
+						print "[MST] SMenu not found"
+
+				if design.find("PluginBrowser") is not None:
+					tmp = design.find("PluginBrowser")
+					try:
+						self.SPluginBrowser.setValue(tmp.get("name"))
+					except:
+						print "[MST] SPluginBrowser not found"
 					
 				if design.find("ChannelSelection") is not None:
 					tmp = design.find("ChannelSelection")
@@ -1450,7 +1622,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					try:
 						self.SMoviePlay.setValue(tmp.get("name"))
 					except:
-						print "[MST] SMoviePlay not found"
+						print "[MST] SMoviePlayer not found"
 					
 				if design.find("SecondInfoBar") is not None:
 					tmp = design.find("SecondInfoBar")
@@ -1458,6 +1630,13 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						self.S2IB.setValue(tmp.get("name"))
 					except:
 						print "[MST] S2IB not found"
+					
+				if design.find("GraphMultiEPG") is not None:
+					tmp = design.find("GraphMultiEPG")
+					try:
+						self.graphmultiepg.setValue(tmp.get("name"))
+					except:
+						print "[MST] GMEPG not found"
 					
 				if design.find("EventView") is not None:
 					tmp = design.find("EventView")
@@ -1528,6 +1707,27 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						self.SMMP2Arm.setValue(tmp.get("name"))
 					except:
 						print "[MST] SMMP2Arm not found"
+
+				if design.find("MerlinMusicPlayer2ScreenSaver") is not None:
+					tmp = design.find("MerlinMusicPlayer2ScreenSaver")
+					try:
+						self.SMMP2Saver.setValue(tmp.get("name"))
+					except:
+						print "[MST] SMMP2Saver not found"
+
+				if design.find("MerlinMusicPlayer2ScreenSaver_MIPSEL") is not None:
+					tmp = design.find("MerlinMusicPlayer2ScreenSaver_MIPSEL")
+					try:
+						self.SMMP2SaverMipsel.setValue(tmp.get("name"))
+					except:
+						print "[MST] SMMP2SaverMipsel not found"
+
+				if design.find("MerlinMusicPlayer2ScreenSaver_ARM") is not None:
+					tmp = design.find("MerlinMusicPlayer2ScreenSaver_ARM")
+					try:
+						self.SMMP2SaverArm.setValue(tmp.get("name"))
+					except:
+						print "[MST] SMMP2SaverArm not found"
 
 				# LCD
 				if design.find("LCDInfoBar") is not None:
@@ -2019,6 +2219,40 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 								
 						else:
 							infobar.set("value", "inactive")
+
+				if screens.get("name") == "Menu":
+					for menu in screens.findall("screentheme"):
+						if menu.get("name") == config.plugins.MerlinSkinThemes.Menu.value:
+							menu.set("value", "active")
+							mu = menu.find("screen")
+
+							# delete old Menu screen
+							for SkinScreen in rootSkin.findall("screen"):
+								if SkinScreen.get("name") == "Menu":
+									rootSkin.remove(SkinScreen)
+							
+							# Set new Menu screen
+							rootSkin.append(Tree.fromstring(Tree.tostring(mu)))
+								
+						else:
+							menu.set("value", "inactive")
+
+				if screens.get("name") == "PluginBrowser":
+					for pluginbrowser in screens.findall("screentheme"):
+						if pluginbrowser.get("name") == config.plugins.MerlinSkinThemes.PluginBrowser.value:
+							pluginbrowser.set("value", "active")
+							pb = pluginbrowser.find("screen")
+
+							# delete old Pluginbrowser screen
+							for SkinScreen in rootSkin.findall("screen"):
+								if SkinScreen.get("name") == "PluginBrowser":
+									rootSkin.remove(SkinScreen)
+							
+							# Set new Pluginbrowser screen
+							rootSkin.append(Tree.fromstring(Tree.tostring(pb)))
+								
+						else:
+							pluginbrowser.set("value", "inactive")
 				
 				if screens.get("name") == "ChannelSelection":
 					for channelselection in screens.findall("screentheme"):
@@ -2087,6 +2321,23 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 								
 						else:
 							secondinfobar.set("value", "inactive")
+				
+				if screens.get("name") == "GraphMultiEPG":
+					for graphmultiepg in screens.findall("screentheme"):
+						if graphmultiepg.get("name") == config.plugins.MerlinSkinThemes.GraphMultiEPG.value:
+							graphmultiepg.set("value", "active")
+							gmepg = graphmultiepg.find("screen")
+
+							# delete old GraphMultiEPG screen
+							for SkinScreen in rootSkin.findall("screen"):
+								if SkinScreen.get("name") == "GraphMultiEPG":
+									rootSkin.remove(SkinScreen)
+							
+							# Set new GraphMultiEPG screen
+							rootSkin.append(Tree.fromstring(Tree.tostring(gmepg)))
+								
+						else:
+							graphmultiepg.set("value", "inactive")
 				
 				if screens.get("name") == "EventView":
 					for eventview in screens.findall("screentheme"):
@@ -2257,6 +2508,57 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 								
 						else:
 							mmp2arm.set("value", "inactive")
+
+				if screens.get("name") == "MerlinMusicPlayer2ScreenSaver":
+					for mmp2saver in screens.findall("screentheme"):
+						if mmp2saver.get("name") == config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver.value:
+							mmp2saver.set("value", "active")
+							ib = mmp2saver.find("screen")
+
+							# delete old MerlinMusicPlayer2ScreenSaver screen
+							for SkinScreen in rootSkin.findall("screen"):
+								if SkinScreen.get("name") == "MerlinMusicPlayer2ScreenSaver":
+									rootSkin.remove(SkinScreen)
+							
+							# Set new MerlinMusicPlayer2ScreenSaver screen
+							rootSkin.append(Tree.fromstring(Tree.tostring(ib)))
+								
+						else:
+							mmp2saver.set("value", "inactive")
+
+				if screens.get("name") == "MerlinMusicPlayer2ScreenSaver_MIPSEL":
+					for mmp2savermipsel in screens.findall("screentheme"):
+						if mmp2savermipsel.get("name") == config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_MIPSEL.value:
+							mmp2savermipsel.set("value", "active")
+							ib = mmp2savermipsel.find("screen")
+
+							# delete old MerlinMusicPlayer2ScreenSaver_MIPSEL screen
+							for SkinScreen in rootSkin.findall("screen"):
+								if SkinScreen.get("name") == "MerlinMusicPlayer2ScreenSaver_MIPSEL":
+									rootSkin.remove(SkinScreen)
+							
+							# Set new MerlinMusicPlayer2ScreenSaver_MIPSEL screen
+							rootSkin.append(Tree.fromstring(Tree.tostring(ib)))
+								
+						else:
+							mmp2savermipsel.set("value", "inactive")
+
+				if screens.get("name") == "MerlinMusicPlayer2ScreenSaver_ARM":
+					for mmp2saverarm in screens.findall("screentheme"):
+						if mmp2saverarm.get("name") == config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_ARM.value:
+							mmp2saverarm.set("value", "active")
+							ib = mmp2saverarm.find("screen")
+
+							# delete old MerlinMusicPlayer2ScreenSaver_ARM screen
+							for SkinScreen in rootSkin.findall("screen"):
+								if SkinScreen.get("name") == "MerlinMusicPlayer2ScreenSaver_ARM":
+									rootSkin.remove(SkinScreen)
+							
+							# Set new MerlinMusicPlayer2ScreenSaver_ARM screen
+							rootSkin.append(Tree.fromstring(Tree.tostring(ib)))
+								
+						else:
+							mmp2saverarm.set("value", "inactive")
 
 		# LCD
 		if rootTheme.find("lcdscreenthemes") is not None:
@@ -2654,10 +2956,13 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			# screenthemes
 			screenthemes = Tree.SubElement(themes, "screenthemes")
 			infobar = Tree.SubElement(screenthemes, "screens", {"name": "InfoBar"})
+			menu = Tree.SubElement(screenthemes, "screens", {"name": "Menu"})
+			pluginbrowser = Tree.SubElement(screenthemes, "screens", {"name": "PluginBrowser"})
 			channelselection = Tree.SubElement(screenthemes, "screens", {"name": "ChannelSelection"})
 			movieselection = Tree.SubElement(screenthemes, "screens", {"name": "MovieSelection"})
 			movieplayer = Tree.SubElement(screenthemes, "screens", {"name": "MoviePlayer"})
 			secondinfobar = Tree.SubElement(screenthemes, "screens", {"name": "SecondInfoBar"})
+			graphmultiepg = Tree.SubElement(screenthemes, "screens", {"name": "GraphMultiEPG"})
 			eventview = Tree.SubElement(screenthemes, "screens", {"name": "EventView"})
 			epgselection = Tree.SubElement(screenthemes, "screens", {"name": "EPGSelection"})
 			messagebox = Tree.SubElement(screenthemes, "screens", {"name": "MessageBox"})
@@ -2668,13 +2973,16 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			mmp2screen = Tree.SubElement(screenthemes, "screens", {"name": "MerlinMusicPlayer2Screen"})
 			mmp2screenmipsel = Tree.SubElement(screenthemes, "screens", {"name": "MerlinMusicPlayer2Screen_MIPSEL"})
 			mmp2screenarm = Tree.SubElement(screenthemes, "screens", {"name": "MerlinMusicPlayer2Screen_ARM"})
+			mmp2saverscreen = Tree.SubElement(screenthemes, "screens", {"name": "MerlinMusicPlayer2ScreenSaver"})
+			mmp2saverscreenmipsel = Tree.SubElement(screenthemes, "screens", {"name": "MerlinMusicPlayer2ScreenSaver_MIPSEL"})
+			mmp2saverscreenarm = Tree.SubElement(screenthemes, "screens", {"name": "MerlinMusicPlayer2ScreenSaver_ARM"})
 
 			extlcdscreenthemes = Tree.SubElement(themes, "extlcdscreenthemes")
 			extlinfobar = Tree.SubElement(extlcdscreenthemes, "screens", {"name": "InfoBarSummary", "id": "3"})
 			extleventview = Tree.SubElement(extlcdscreenthemes, "screens", {"name": "EventView_summary", "id": "3"})
 			extlstandby = Tree.SubElement(extlcdscreenthemes, "screens", {"name": "StandbySummary", "id": "3"})
 			extlmovieplayer = Tree.SubElement(extlcdscreenthemes, "screens", {"name": "InfoBarMoviePlayerSummary", "id": "3"})
-			extlmmp2screen = Tree.SubElement(screenthemes, "screens", {"name": "MerlinMusicPlayer2Screen", "id": "3"})
+			extlmmp2 = Tree.SubElement(extlcdscreenthemes, "screens", {"name": "MerlinMusicPlayer2Screen", "id": "3"})
 
 			oledscreenthemes = Tree.SubElement(themes, "oledscreenthemes")
 			oinfobar = Tree.SubElement(oledscreenthemes, "screens", {"name": "InfoBarSummary", "id": "2"})
@@ -2693,6 +3001,12 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			infobar1 = Tree.SubElement(infobar, "screentheme", {"name": "orginal", "value": "active"})
 			infobar2 = Tree.SubElement(infobar, "screentheme", {"name": "orginal - work", "value": "inactive"})
 
+			menu1 = Tree.SubElement(menu, "screentheme", {"name": "orginal", "value": "active"})
+			menu2 = Tree.SubElement(menu, "screentheme", {"name": "orginal - work", "value": "inactive"})
+
+			pluginbrowser1 = Tree.SubElement(pluginbrowser, "screentheme", {"name": "orginal", "value": "active"})
+			pluginbrowser2 = Tree.SubElement(pluginbrowser, "screentheme", {"name": "orginal - work", "value": "inactive"})
+
 			channelselection1 = Tree.SubElement(channelselection, "screentheme", {"name": "orginal", "value": "active"})
 			channelselection2 = Tree.SubElement(channelselection, "screentheme", {"name": "orginal - work", "value": "inactive"})
 
@@ -2704,6 +3018,9 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 
 			secondinfobar1 = Tree.SubElement(secondinfobar, "screentheme", {"name": "orginal", "value": "active"})
 			secondinfobar2 = Tree.SubElement(secondinfobar, "screentheme", {"name": "orginal - work", "value": "inactive"})
+
+			graphmultiepg1 = Tree.SubElement(graphmultiepg, "screentheme", {"name": "orginal", "value": "active"})
+			graphmultiepg2 = Tree.SubElement(graphmultiepg, "screentheme", {"name": "orginal - work", "value": "inactive"})
 
 			eventview1 = Tree.SubElement(eventview, "screentheme", {"name": "orginal", "value": "active"})
 			eventview2 = Tree.SubElement(eventview, "screentheme", {"name": "orginal - work", "value": "inactive"})
@@ -2734,6 +3051,15 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 
 			mmp2screenarm1 = Tree.SubElement(mmp2screenarm, "screentheme", {"name": "orginal", "value": "active"})
 			mmp2screenarm2 = Tree.SubElement(mmp2screenarm, "screentheme", {"name": "orginal - work", "value": "inactive"})
+
+			mmp2saverscreen1 = Tree.SubElement(mmp2saverscreen, "screentheme", {"name": "orginal", "value": "active"})
+			mmp2saverscreen2 = Tree.SubElement(mmp2saverscreen, "screentheme", {"name": "orginal - work", "value": "inactive"})
+
+			mmp2saverscreenmipsel1 = Tree.SubElement(mmp2saverscreenmipsel, "screentheme", {"name": "orginal", "value": "active"})
+			mmp2saverscreenmipsel2 = Tree.SubElement(mmp2saverscreenmipsel, "screentheme", {"name": "orginal - work", "value": "inactive"})
+
+			mmp2saverscreenarm1 = Tree.SubElement(mmp2saverscreenarm, "screentheme", {"name": "orginal", "value": "active"})
+			mmp2saverscreenarm2 = Tree.SubElement(mmp2saverscreenarm, "screentheme", {"name": "orginal - work", "value": "inactive"})
 
 			# extlcd
 			extlinfobar1 = Tree.SubElement(extlinfobar, "extlcdscreentheme", {"name": "orginal", "value": "active"})
@@ -2789,6 +3115,14 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				if SkinScreen.get("name") == "InfoBar":
 					infobar1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
 					infobar2.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+
+				if SkinScreen.get("name") == "Menu":
+					menu1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+					menu2.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+
+				if SkinScreen.get("name") == "PluginBrowser":
+					pluginbrowser1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+					pluginbrowser2.append(Tree.fromstring(Tree.tostring(SkinScreen)))
 			
 				if SkinScreen.get("name") == "ChannelSelection":
 					channelselection1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
@@ -2805,6 +3139,10 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				if SkinScreen.get("name") == "SecondInfoBar":
 					secondinfobar1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
 					secondinfobar2.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+
+				if SkinScreen.get("name") == "GraphMultiEPG":
+					graphmultiepg1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+					graphmultiepg2.append(Tree.fromstring(Tree.tostring(SkinScreen)))
 			
 				if SkinScreen.get("name") == "EventView":
 					eventview1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
@@ -2835,16 +3173,28 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					volume2.append(Tree.fromstring(Tree.tostring(SkinScreen)))
 			
 				if SkinScreen.get("name") == "MerlinMusicPlayer2Screen":
-					mmp21.append(Tree.fromstring(Tree.tostring(SkinScreen)))
-					mmp22.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+					mmp2screen1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+					mmp2screen2.append(Tree.fromstring(Tree.tostring(SkinScreen)))
 			
 				if SkinScreen.get("name") == "MerlinMusicPlayer2Screen_MIPSEL":
-					mmp2mipsel1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
-					mmp2mipsel2.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+					mmp2screenmipsel1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+					mmp2screenmipsel2.append(Tree.fromstring(Tree.tostring(SkinScreen)))
 			
 				if SkinScreen.get("name") == "MerlinMusicPlayer2Screen_ARM":
-					mmp2arm1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
-					mmp2arm2.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+					mmp2screenarm1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+					mmp2screenarm2.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+
+				if SkinScreen.get("name") == "MerlinMusicPlayer2ScreenSaver":
+					mmp2saverscreen1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+					mmp2saverscreen2.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+			
+				if SkinScreen.get("name") == "MerlinMusicPlayer2ScreenSaver_MIPSEL":
+					mmp2saverscreenmipsel1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+					mmp2saverscreenmipsel2.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+			
+				if SkinScreen.get("name") == "MerlinMusicPlayer2ScreenSaver_ARM":
+					mmp2saverscreenarm1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+					mmp2saverscreenarm2.append(Tree.fromstring(Tree.tostring(SkinScreen)))
 			
 				# extlcd
 				if SkinScreen.get("name") == "InfoBarSummary" and SkinScreen.get("id") == "3":
@@ -2958,22 +3308,27 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 
 	def ImageInfo(self):
 		InfoText = "Enigma: " + E2ver + " - "
-		
+
 		if ArchArm:
 			InfoText += "ARM: " + _("Yes") + " - "
 
 		if ArchMipsel:
-			InfoText += "MIPSEL: " + _("Yes") + " - "		
-
+			InfoText += "MIPSEL: " + _("Yes") + " - "	
+		
 		if Merlin:
 			InfoText += "Merlin: " + _("Yes") + " - "
 		else:
 			InfoText += "Merlin: " + _("No") + " - "
 
 		if GP3:
-			InfoText += "GP3: " + GP3ver
+			InfoText += "GP3: " + GP3ver + " - "
 		else:
-			InfoText += "GP3: " + _("No")
+			InfoText += "GP3: " + _("No") + " - "
+
+		if GP4:
+			InfoText += "GP4: " + GP4ver
+		else:
+			InfoText += "GP4: " + _("No")
 		
 		self["ImageInfo"].setText(InfoText)
 		
@@ -3200,3 +3555,4 @@ class MyConfigSelection(ConfigSelection):
 		if descr:
 			return ("text", descr)
 		return ("text", descr)
+
