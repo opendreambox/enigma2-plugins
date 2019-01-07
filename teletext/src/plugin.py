@@ -1,6 +1,6 @@
 from __init__ import _debug , _log
 
-from enigma import iServiceInformation, iPlayableService, eSocketNotifier, getDesktop, ePoint, eSize, eServiceReference
+from enigma import iServiceInformation, iPlayableService, eSocketNotifier, getDesktop, ePoint, eSize, eServiceReference, eVideoWidget, getDesktop, gRGB
 
 from Screens.ChannelSelection import service_types_tv
 from Screens.HelpMenu import HelpMenu
@@ -152,7 +152,7 @@ class TeleText(Screen):
   onChangedEntry = [ ]
 
   def __init__(self, session):
-    TeleText.skin = """<screen position="0,0" size="%d,%d" title="TeleText" flags="wfNoBorder"/>""" % (dsk_width, dsk_height)
+    TeleText.skin = """<screen position="0,0" size="%d,%d" title="TeleText" backgroundColor="#FF000000" flags="wfNoBorder"/>""" % (dsk_width, dsk_height)
     Screen.__init__(self, session)
 
     self.__event_tracker = ServiceEventTracker(screen = self, eventmap={
@@ -340,6 +340,7 @@ class TeleText(Screen):
 
   def __closed(self):
     log("__closed")
+    self.pig.hide()
     renderOffset = self.ttx.getRenderBufferOffset()
     stride = self.ttx.getRenderBufferStride()
     x = array.array('B', (CMD_RQ_UPDATE, 0, (renderOffset&0xFF000000)>>24, (renderOffset&0xFF0000)>>16, (renderOffset&0xFF00)>>8, renderOffset&0xFF, (stride&0xFF00) >> 8, stride&0xFF))
@@ -350,6 +351,12 @@ class TeleText(Screen):
 
   def __layoutFinished(self):
     log("__layoutFinished")
+    desk = getDesktop(0)
+    self.pig = eVideoWidget(self.instance)
+    self.pig.setBackgroundColor(gRGB(0xFF000000))
+    self.pig.setDecoder(0)
+    self.pig.setFBSize(desk.size())
+    self.pig.hide()
     self.ttx.show(self.instance)
 
   def keyNumberGlobal(self, number):
@@ -683,24 +690,20 @@ class TeleText(Screen):
       top    = pos[1]
       height = bottom - top
       log("splitting video")
-      l=open("/proc/stb/vmpeg/0/dst_left","w")
-      l.write("%x" % 0)
-      l.close()
-      w=open("/proc/stb/vmpeg/0/dst_width","w")
-      w.write("%x" % 360)
-      w.close()
+      self.pig.move(ePoint(0,0))
+      size = self.instance.size()
+      self.pig.resize(eSize(size.width()/2, size.height()))
+      self.pig.show()
     elif mode == SPLIT_MODE_TAP:
       left   = pos[0]
       width  = (dsk_width>>1) - left
       top    = pos[1]
       height = bottom - top
       log("splitting video")
-      l=open("/proc/stb/vmpeg/0/dst_left","w")
-      l.write("%x" % 360)
-      l.close()
-      w=open("/proc/stb/vmpeg/0/dst_width","w")
-      w.write("%x" % 360)
-      w.close()
+      size = self.instance.size()
+      self.pig.move(ePoint(size.width()/2,0))
+      self.pig.resize(eSize(size.width()/2, size.height()))
+      self.pig.show()
     elif mode == SPLIT_MODE_TIP:
       if self.nav_mode == NAV_MODE_TEXT:
         pos = config.plugins.TeleText.tip_pos.value
@@ -711,21 +714,14 @@ class TeleText(Screen):
       self.resetVideo()
 
     log("screen rect %s %s %s %s" % (left, top, width, height))
-    self.instance.move(ePoint(left,top))
-    self.instance.resize(eSize(*(width, height)))
 
     self.ttx.hide()
-    self.ttx.show(self.instance)
+    self.ttx.show(self.instance, ePoint(left, top), eSize(width, height))
     self.ttx.update(0,0,492,250,self.zoom,self.filter_mode)
 
   def resetVideo(self):
     log("reset video")
-    l=open("/proc/stb/vmpeg/0/dst_left","w")
-    l.write("%x" % 0)
-    l.close()
-    w=open("/proc/stb/vmpeg/0/dst_width","w")
-    w.write("%x" % 720)
-    w.close()
+    self.pig.hide()
 
   def sendSettings(self, result = True):
     if result:
