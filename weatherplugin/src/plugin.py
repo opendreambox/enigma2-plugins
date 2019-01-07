@@ -204,16 +204,14 @@ class MSNWeatherPlugin(Screen):
 					self["condition"].text = item.skytext
 					self["humidity"].text = _("Humidity: %s %%") % item.humidity
 					self["wind_condition"].text = item.winddisplay
-					self["observationtime"].text = _("Observation time: %s") %  item.observationtime
-					self["observationpoint"].text = "" #_("Observation point: %s") % item.observationpoint
-					if item.feelslike != "":
-						self["feelsliketemp"].text = _("Feels like %s") % item.feelslike + "°" +  self.weatherData.degreetype
-					else:
-						self["feelsliketemp"].text = ""
+					c =  time.strptime(item.observationtime, "%H:%M:%S")
+					self["observationtime"].text = _("Observation time: %s") %  time.strftime("%H:%M",c)
+					self["observationpoint"].text = _("Observation point: %s") % item.observationpoint
+					self["feelsliketemp"].text = _("Feels like %s") % item.feelslike + "°" +  self.weatherData.degreetype
 				else:
 					index = weatherData[0]
-					c = time.strptime(item.date,"%d %m %Y")
-					self["weekday%s" % index].text = "%s\n%s" % (item.day, time.strftime("%d.%m",c))
+					c = time.strptime(item.date,"%Y-%m-%d")
+					self["weekday%s" % index].text = "%s\n%s" % (item.day, time.strftime("%d. %b",c))
 					lowTemp = item.low
 					highTemp = item.high
 					self["weekday%s_temp" % index].text = "%s°%s|%s°%s\n%s" % (highTemp, self.weatherData.degreetype, lowTemp, self.weatherData.degreetype, item.skytextday)
