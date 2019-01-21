@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1546 $
-$Date: 2018-12-12 17:23:56 +0100 (Wed, 12 Dec 2018) $
-$Id: FritzCallFBF.py 1546 2018-12-12 16:23:56Z michael $
+$Revision: 1548 $
+$Date: 2019-01-19 16:20:14 +0100 (Sat, 19 Jan 2019) $
+$Id: FritzCallFBF.py 1548 2019-01-19 15:20:14Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -3500,6 +3500,7 @@ class FritzCallFBF_upnp():
 		self.version = None
 		self.fc = FritzConnection(address=config.plugins.FritzCall.hostname.value,
 								user=config.plugins.FritzCall.username.value,
+								port=(49443 if config.plugins.FritzCall.useHttps.value else 49000),
 								password=self.password,
 								servicesToGet=["DeviceConfig:1", "X_AVM-DE_OnTel:1", "WLANConfiguration:1", "WLANConfiguration:2", "WLANConfiguration:3"])
 		self.getInfo(None)
