@@ -1026,6 +1026,13 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 		
 		# Warning, accessing a ConfigListEntry directly might be considered evil!
 		
+		#reset all filter in self and refill new from configList
+		idx = -1
+		for type in self.typeSelection.getChoices():
+			idx += 1
+			del self.includes[idx][:]
+			del self.excludes[idx][:]
+
 		idx = -1
 		for item in self["config"].getList()[:]:
 			idx += 1
@@ -1036,8 +1043,6 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 					#print "=== type:", type, type[0], type[1]
 					if _(type[1]) == item[0]:
 						self.idx = idx_type
-						del self.excludes[self.idx][:]
-						del self.includes[self.idx][:]
 						break
 					idx_type +=1
 				#print "=== self.idx: ", self.idx
@@ -1281,6 +1286,12 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 		
 		# Warning, accessing a ConfigListEntry directly might be considered evil!
 		
+		#reset all Servicefilter in self and refill new from configList
+		idx = -1
+		for type in self.typeSelection.getChoices():
+			idx += 1
+			del self.services[idx][:]
+
 		idx = -1
 		for item in self["config"].getList()[:]:
 			idx += 1
@@ -1291,7 +1302,6 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 					#print "=== type:", type, type[0], type[1]
 					if _(type[1]) == item[0]:
 						self.idx = idx_type
-						del self.services[self.idx][:]
 						break
 					idx_type +=1
 			# Skip empty entries (and those which are no filters)
