@@ -893,19 +893,25 @@ class TeleText(Screen):
       self.updateLayout()
 
   def serviceStarted(self):
-    log("service started")
+    ref = self.session.nav.getCurrentServiceReference()
+    if ref.valid() and ref.type == ref.idDVB:
+        log("service started")
 
   def serviceStopped(self):
-    log("service stopped")
-    self.stopCaching()
+    ref = self.session.nav.getCurrentServiceReference()
+    if ref.valid() and ref.type == ref.idDVB:
+        log("service stopped")
+        self.stopCaching()
 
   def stopCaching(self):
     x = array.array('B', (CMD_CTL_CACHE, 0, 0, 0))
     self.socketSend(x)
 
   def serviceInfoChanged(self):
-    log("serviceInfoChanged")
-    self.checkServiceInfo(config.plugins.TeleText.background_caching.value or self.inMenu or self.execing)
+    ref = self.session.nav.getCurrentServiceReference()
+    if ref.valid() and ref.type == ref.idDVB:
+        log("serviceInfoChanged")
+        self.checkServiceInfo(config.plugins.TeleText.background_caching.value or self.inMenu or self.execing)
 
   def checkServiceInfo(self, do_send = True):
     service = self.session.nav.getCurrentService()
