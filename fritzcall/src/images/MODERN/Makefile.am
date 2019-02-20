@@ -1,3 +1,3 @@
-installdir = /usr/lib/enigma2/python/Plugins/Extensions/FritzCall/images/MODERN
+installdir = $(libdir)/enigma2/python/Plugins/Extensions/FritzCall/images/MODERN
 
 install_DATA = *.png
