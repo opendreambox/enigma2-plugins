@@ -50,96 +50,10 @@ try:
 except ImportError:
 	autoTimerAvailable = False
 
-# Overwrite EPGSelection.__init__ with our modified one
-baseEPGSelection__init__ = None
-def EPGSelectionInit():
-	global baseEPGSelection__init__
-	if baseEPGSelection__init__ is None:
-		baseEPGSelection__init__ = EPGSelection.__init__
-	EPGSelection.__init__ = EPGSelection__init__
-
-# Modified EPGSelection __init__
-def EPGSelection__init__(self, session, service, zapFunc=None, eventid=None, bouquetChangeCB=None, serviceChangeCB=None):
-	baseEPGSelection__init__(self, session, service, zapFunc, eventid, bouquetChangeCB, serviceChangeCB)
-
-	def bluePressed():
-		cur = self["list"].getCurrent()
-		if cur[0] is not None:
-			name = cur[0].getEventName()
-		else:
-			name = ''
-		self.session.open(EPGSearch, name)
-
-	self["epgsearch_epgselection"] = ActionMap(["InfobarAudioSelectionActions"],
-			{
-				"audioSelection": bluePressed,
-			})
-
-	if self.type != EPG_TYPE_MULTI and config.plugins.epgsearch.add_search_to_epg.value:
-		self["epgsearch_actions"] = ActionMap(["EPGSelectActions"],
-				{
-					"blue": bluePressed,
-				})
-		self["key_blue"].text = _("Search")
-
-
-# Overwrite ChannelSelectionBase.__init__ with our modified one
-baseChannelSelectionBase__init__ = None
-def ChannelSelectionBaseInit():
-	global baseChannelSelectionBase__init__
-	if baseChannelSelectionBase__init__ is None:
-		baseChannelSelectionBase__init__ = ChannelSelectionBase.__init__
-	ChannelSelectionBase.__init__ = ChannelSelectionBase__init__
-
-def ChannelSelectionBase__init__(self, session):
-	baseChannelSelectionBase__init__(self, session)
-
-	def getEventName(cur):
-		serviceref = cur
-		refstr = serviceref.toString()
-		event = None
-		try:
-			epg = eEPGCache.getInstance()
-			event = epg.lookupEventTime(serviceref, -1, 0)
-			if event is None:
-				info = eServiceCenter.getInstance().info(serviceref)
-				event = info.getEvent(0)
-		except:
-			pass
-		if event is not None:
-			return event.getEventName()
-		else:
-			return ""
-
-	def searchEPG():
-		eventName = getEventName(cur = self.servicelist.getCurrent())
-		from Plugins.Extensions.EPGSearch.EPGSearch import EPGSearch
-		self.session.open(EPGSearch, eventName)
-
-	self["epgsearch_channelbase"] = HelpableActionMap(self, "InfobarAudioSelectionActions",
-			{
-				"audioSelection":  (searchEPG, _("Search EPG with event name")),
-		})
-
-# Overwrite EventViewBase.__init__ with our modified one
-baseEventViewBase__init__ = None
-def EventViewBaseInit():
-	global baseEventViewBase__init__
-	if baseEventViewBase__init__ is None:
-		baseEventViewBase__init__ = EventViewBase.__init__
-	EventViewBase.__init__ = EventViewBase__init__
-
-def EventViewBase__init__(self, Event, Ref, callback=None, similarEPGCB=None):
-	baseEventViewBase__init__(self, Event, Ref, callback, similarEPGCB)
-
-	def searchEPG():
-		eventName = self.event.getEventName()
-		self.session.open(EPGSearch, eventName)
-
-	self["epgsearch_eventview"] = HelpableActionMap(self, "InfobarAudioSelectionActions",
-			{
-				"audioSelection":  (searchEPG, _("Search EPG with event name")),
-		})
+def searchEvent(session, event, service):
+	if not event:
+		return
+	session.open(EPGSearch, event.getEventName())
 
 # Overwrite pzyP4T.__init__ with our modified one
 basePzyP4T__init__ = None

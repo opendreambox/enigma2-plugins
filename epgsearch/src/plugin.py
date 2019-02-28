@@ -2,7 +2,7 @@ from enigma import eServiceCenter
 from Components.config import config
 
 # Plugin
-from EPGSearch import EPGSearch, EPGSearchEPGSelection, EPGSelectionInit, ChannelSelectionBaseInit, EventViewBaseInit, pzyP4TInit
+from EPGSearch import EPGSearch, EPGSearchEPGSelection, searchEvent, pzyP4TInit
 
 # Plugin definition
 from Plugins.Plugin import PluginDescriptor
@@ -12,9 +12,6 @@ def autostart(reason, **kwargs):
 	if reason == 0:
 		try:
 			# for blue and audio key activating in EPG-Screens
-			EPGSelectionInit()
-			ChannelSelectionBaseInit()
-			EventViewBaseInit()
 			pzyP4TInit()
 		except Exception:
 			import traceback
@@ -46,6 +43,11 @@ def movielist(session, service, **kwargs):
 
 def Plugins(**kwargs):
 	return [
+		PluginDescriptor(
+			name=_("Search EPG"),
+			where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED, PluginDescriptor.WHERE_EVENTVIEW],
+			fnc = searchEvent
+		),
 		PluginDescriptor(
 			where = PluginDescriptor.WHERE_AUTOSTART,
 			fnc = autostart,
