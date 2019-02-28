@@ -42,98 +42,36 @@ config.plugins.yttrailer.ext_descr = ConfigText(default="german", fixed_size = F
 config.plugins.yttrailer.max_results =  ConfigInteger(5,limits = (1, 10))
 config.plugins.yttrailer.close_player_with_exit =  ConfigYesNo(default = False)
 
-from Screens.EventView import EventViewBase
-baseEventViewBase__init__ = None
-
-from Screens.EpgSelection import EPGSelection
-baseEPGSelection__init__ = None
 etpm = eTPM()
 
 from Plugins.SystemPlugins.TubeLib.youtube.Base import buildYoutube
 from Plugins.SystemPlugins.TubeLib.youtube.Search import Search
 from Plugins.SystemPlugins.TubeLib.youtube.Videos import Videos
 
-def autostart(reason, **kwargs):
-	global l2key
-	l2cert = etpm.getData(eTPM.DT_LEVEL2_CERT)
-	if l2cert:
-		l2key = validate_cert(l2cert, rootkey)
-		if l2key:
-			global baseEventViewBase__init__, baseEPGSelection__init__
-			if baseEventViewBase__init__ is None:
-				baseEventViewBase__init__ = EventViewBase.__init__
-			EventViewBase.__init__ = EventViewBase__init__
-			EventViewBase.showTrailer = showTrailer
-			EventViewBase.showTrailerList = showTrailerList
-			EventViewBase.showConfig = showConfig
-
-			if baseEPGSelection__init__ is None:
-				baseEPGSelection__init__ = EPGSelection.__init__
-			EPGSelection.__init__ = EPGSelection__init__
-			EPGSelection.showTrailer = showTrailer
-			EPGSelection.showConfig = showConfig
-			EPGSelection.showTrailerList = showTrailerList
-
-
 def setup(session,**kwargs):
 	session.open(YTTrailerSetup)
 
 def Plugins(**kwargs):
-
-	list = [PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, fnc = autostart)]
-	list.append(PluginDescriptor(name="YTTrailer Setup", description=_("YouTube-Trailer Setup"), where = PluginDescriptor.WHERE_PLUGINMENU, fnc=setup, icon="YTtrailer.png"))
+	list = [PluginDescriptor(name="YTTrailer Setup", description=_("YouTube-Trailer Setup"), where = PluginDescriptor.WHERE_PLUGINMENU, fnc=setup, icon="YTtrailer.png"),
+			PluginDescriptor(name=_("Watch Trailer"), where = [PluginDescriptor.WHERE_EVENTVIEW, PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_RED], fnc = showTrailer),
+			PluginDescriptor(name=_("Show Trailers"), where = [PluginDescriptor.WHERE_EVENTVIEW, PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_RED], fnc = showTrailerList),
+	]
 	if config.plugins.yttrailer.show_in_extensionsmenu.value:
 		list.append(PluginDescriptor(name="YTTrailer Setup", description=_("YouTube-Trailer Setup"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=setup, icon="YTtrailer.png"))
 	return list
 
-def EventViewBase__init__(self, Event, Ref, callback=None, similarEPGCB=None):
-	baseEventViewBase__init__(self, Event, Ref, callback, similarEPGCB)
-	self["trailerActions"] = ActionMap(["InfobarActions", "InfobarTeletextActions"],
-	{
-		"showTv": self.showTrailer,
-		"showRadio": self.showTrailerList,
-		"startTeletext": self.showConfig
-	})
-
-
-def EPGSelection__init__(self, session, service, zapFunc=None, eventid=None, bouquetChangeCB=None, serviceChangeCB=None):
-	baseEPGSelection__init__(self, session, service, zapFunc, eventid, bouquetChangeCB, serviceChangeCB)
-	self["trailerActions"] = ActionMap(["InfobarActions", "InfobarTeletextActions"],
-	{
-		"showTv": self.showTrailer,
-		"showRadio": self.showTrailerList,
-		"startTeletext": self.showConfig
-	})
-
 def showConfig(self):
 	self.session.open(YTTrailerSetup)
 
-def showTrailer(self):
-	eventname = ""
-	if isinstance(self, EventViewBase):
-		if self.event:
-			eventname = self.event.getEventName()
-	else:
-		cur = self["list"].getCurrent()
-		if cur and cur[0]:
-			event = cur[0]
-			eventname = event.getEventName()
-
-	ytTrailer = YTTrailer(self.session)
+def showTrailer(session, event, ref):
+	if not event:
+		return
+	eventname = event.getEventName()
+	ytTrailer = YTTrailer(session)
 	ytTrailer.showTrailer(eventname)
 
-def showTrailerList(self):
-	eventname = ""
-	if isinstance(self, EventViewBase):
-		if self.event:
-			eventname = self.event.getEventName()
-	else:
-		cur = self["list"].getCurrent()
-		if cur and cur[0]:
-			event = cur[0]
-			eventname = event.getEventName()
-
-	self.session.open(YTTrailerList, eventname)
+def showTrailerList(session, event, ref):
+	session.open(YTTrailerList, event.getEventName())
 
 class YTTrailer:
 	def __init__(self, session):
