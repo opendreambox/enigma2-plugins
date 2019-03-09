@@ -898,10 +898,8 @@ class TeleText(Screen):
         log("service started")
 
   def serviceStopped(self):
-    ref = self.session.nav.getCurrentServiceReference()
-    if ref.valid() and ref.type == ref.idDVB:
-        log("service stopped")
-        self.stopCaching()
+    log("service stopped")
+    self.stopCaching()
 
   def stopCaching(self):
     x = array.array('B', (CMD_CTL_CACHE, 0, 0, 0))
