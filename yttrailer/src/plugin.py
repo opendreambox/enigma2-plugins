@@ -53,8 +53,8 @@ def setup(session,**kwargs):
 
 def Plugins(**kwargs):
 	list = [PluginDescriptor(name="YTTrailer Setup", description=_("YouTube-Trailer Setup"), where = PluginDescriptor.WHERE_PLUGINMENU, fnc=setup, icon="YTtrailer.png"),
-			PluginDescriptor(name=_("Watch Trailer"), where = [PluginDescriptor.WHERE_EVENTVIEW, PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_RED], fnc = showTrailer),
-			PluginDescriptor(name=_("Show Trailers"), where = [PluginDescriptor.WHERE_EVENTVIEW, PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_RED], fnc = showTrailerList),
+			PluginDescriptor(name=_("Watch Trailer"), where = [PluginDescriptor.WHERE_EVENTVIEW, PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE], fnc = showTrailer),
+			PluginDescriptor(name=_("Show Trailers"), where = [PluginDescriptor.WHERE_EVENTVIEW, PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE], fnc = showTrailerList),
 	]
 	if config.plugins.yttrailer.show_in_extensionsmenu.value:
 		list.append(PluginDescriptor(name="YTTrailer Setup", description=_("YouTube-Trailer Setup"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=setup, icon="YTtrailer.png"))
