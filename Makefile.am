@@ -96,7 +96,6 @@ SUBDIRS = \
 	tvcharts \
 	twitchtv \
 	unwetterinfo \
-	valixdcontrol \
 	videocolorspace \
 	virtualzap \
 	weatherplugin \

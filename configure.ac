@@ -460,12 +460,6 @@ unwetterinfo/Makefile
 unwetterinfo/meta/Makefile
 unwetterinfo/src/Makefile
 
-valixdcontrol/Makefile
-valixdcontrol/meta/Makefile
-valixdcontrol/src/Makefile
-valixdcontrol/src/comp/Makefile
-valixdcontrol/src/data/Makefile
-
 videocolorspace/Makefile
 videocolorspace/meta/Makefile
 videocolorspace/src/Makefile
