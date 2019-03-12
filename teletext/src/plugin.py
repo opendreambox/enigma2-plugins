@@ -9,13 +9,13 @@ from Screens.Screen import Screen
 from Components.ActionMap import ActionMap, NumberActionMap
 from Components.ConfigList import ConfigListScreen
 from Components.Label import Label
-from Components.MenuList import MenuList 
+from Components.MenuList import MenuList
 from Components.Pixmap import Pixmap
 from Components.ServiceEventTracker import ServiceEventTracker
 from Components.config import config, configfile, getConfigListEntry, ConfigSubsection, ConfigOnOff, ConfigSlider, ConfigSelection, ConfigSequence
 from GlobalActions import globalActionMap
 from Plugins.Plugin import PluginDescriptor
-from Plugins.SystemPlugins.Toolkit.NTIVirtualKeyBoard import NTIVirtualKeyBoard 
+from Plugins.SystemPlugins.Toolkit.NTIVirtualKeyBoard import NTIVirtualKeyBoard
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 
 import array
@@ -934,7 +934,7 @@ class TeleText(Screen):
     log("reading data(%s)" % self.read_data)
     if self.read_data == False:
       return
-      
+
     # read all txtpids and channels from transponder
     cur_ref = NavigationInstance.instance.getCurrentlyPlayingServiceReference()
     self.pid_index = 0
@@ -960,7 +960,7 @@ class TeleText(Screen):
         self.pid_index = i
       i = i + 1
     self.pid_count = available
-      
+
     self.read_data = False
 
     # read favorites
@@ -985,7 +985,7 @@ class TeleText(Screen):
     if hasStart == False:
       self.fav_list.append(100)
     log("favorites: %s" % self.fav_list)
-  
+
   # ---- for summary (lcd) ----
 
   def createSummary(self):
@@ -1013,29 +1013,36 @@ class TeleTextSummary(Screen):
 
     TeleTextSummary.skin = ("""<screen name="TeleTextSummary" position="0,0" size="132,64" id="1">
       <widget name="page"     position="0,0"   size="132,20" font="Regular;20" valign="center" halign="center" zPosition="1"/>
-
       <widget name="navi_off" position="12,28"  size="20,20" pixmap="%s" zPosition="1"/>
       <widget name="info_off" position="100,28" size="20,20" pixmap="%s" zPosition="1"/>
       <widget name="navi_on"  position="12,28"  size="20,20" pixmap="%s" zPosition="2"/>
       <widget name="info_on"  position="100,28" size="20,20" pixmap="%s" zPosition="2"/>
       <widget name="tp_count" position="44,28"  size="44,20" font="Regular;16" valign="center" halign="center" zPosition="1"/>
-
       <widget name="navi_txt" position="0,50"  size="44,12" font="Regular;12" valign="center" halign="center" zPosition="1"/>
       <widget name="tp_txt"   position="44,50" size="44,12" font="Regular;12" valign="center" halign="center" zPosition="1"/>
       <widget name="info_txt" position="88,50" size="44,12" font="Regular;12" valign="center" halign="center" zPosition="1"/>
     </screen>""" % (offPic, offPic, onPic, onPic),
     """<screen name="TeleTextSummary" position="0,0" size="96,64" id="2">
       <widget name="page"     position="0,0"   size="96,20" font="Regular;20" valign="center" halign="center" zPosition="1"/>
-
       <widget name="navi_off" position="6,28"  size="20,20" pixmap="%s" zPosition="1"/>
       <widget name="info_off" position="70,28" size="20,20" pixmap="%s" zPosition="1"/>
       <widget name="navi_on"  position="6,28"  size="20,20" pixmap="%s" zPosition="2"/>
       <widget name="info_on"  position="70,28" size="20,20" pixmap="%s" zPosition="2"/>
       <widget name="tp_count" position="32,28" size="32,20" font="Regular;16" valign="center" halign="center" zPosition="1"/>
-
       <widget name="navi_txt" position="0,50"  size="32,12" font="Regular;12" valign="center" halign="center" zPosition="1"/>
       <widget name="tp_txt"   position="36,50" size="32,12" font="Regular;12" valign="center" halign="center" zPosition="1"/>
       <widget name="info_txt" position="64,50" size="32,12" font="Regular;12" valign="center" halign="center" zPosition="1"/>
+    </screen>""" % (offPic, offPic, onPic, onPic),
+    """<screen name="TeleTextSummary" position="0,0" size="400,240" id="3">
+      <widget name="page" font="Display;60" foregroundColor="#faff00" halign="center" position="10,5" size="380,65" valign="center" zPosition="1" />
+      <widget name="navi_off" pixmap="%s" position="50,95"  size="40,40" zPosition="1" />
+      <widget name="info_off" pixmap="%s" position="310,95" size="40,40" zPosition="1" />
+      <widget name="navi_on"  pixmap="%s" position="50,95"  size="40,40" zPosition="2" />
+      <widget name="info_on"  pixmap="%s" position="310,95" size="40,40" zPosition="2" />
+      <widget name="tp_count" font="Display;50" halign="center" position="120,90" size="170,52" />
+      <widget name="navi_txt" font="Display;40" halign="center" position="10,180" size="120,42" />
+      <widget name="tp_txt"   font="Display;40" halign="center" position="145,180" size="120,42" />
+      <widget name="info_txt" font="Display;40" halign="center" position="270,180" size="120,42" />
     </screen>""" % (offPic, offPic, onPic, onPic))
 
     Screen.__init__(self, session, parent = parent)
@@ -1577,7 +1584,7 @@ class TeleTextFavorites():
     log("[favorites] writing")
     fp = open(self.configFile,"w")
     self.parser.write(fp)
-    fp.close()   
+    fp.close()
 
   def getFavorite(self, service, index):
     index = str(index)
@@ -1743,7 +1750,7 @@ class TeleTextFavoritesMenu(Screen):
       NTIVirtualKeyBoard,
       title = _("Enter text for page %s")%page,
       text = value
-    )     
+    )
 
   def addFavorite(self, text):
     if text:
@@ -1772,7 +1779,7 @@ class TeleTextFavoritesMenu(Screen):
     self.session.openWithCallback(self.cleanupService, MessageBox, _("Delete all favorites?"))
 
   def cleanupService(self, result):
-    if result:    
+    if result:
       self.favorites.removeService(self.service)
       self.favorites.write()
       self.updateList()
