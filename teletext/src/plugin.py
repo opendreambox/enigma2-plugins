@@ -686,19 +686,19 @@ class TeleText(Screen):
       self.resetVideo()
     elif mode == SPLIT_MODE_PAT:
       left   = dsk_width>>1
-      width  = right - (dsk_width>>1)
-      top    = pos[1]
-      height = bottom - top
+      width  = dsk_width>>1
+      top    = 0
+      height = dsk_height
       log("splitting video")
       self.pig.move(ePoint(0,0))
       size = self.instance.size()
       self.pig.resize(eSize(size.width()/2, size.height()))
       self.pig.show()
     elif mode == SPLIT_MODE_TAP:
-      left   = pos[0]
+      left   = 0
       width  = (dsk_width>>1) - left
-      top    = pos[1]
-      height = bottom - top
+      top    = 0
+      height = dsk_height
       log("splitting video")
       size = self.instance.size()
       self.pig.move(ePoint(size.width()/2,0))
