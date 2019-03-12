@@ -33,7 +33,7 @@ from enigma import DISABLED, BILINEAR, ANISOTROPIC, SHARP, SHARPER
 
 from ConfigParser import ConfigParser
 
-PLUGIN_VERSION="20120807"
+PLUGIN_VERSION="20190312"
 
 CMD_CTL_CACHE=1
 CMD_SHOW_PAGE=2
@@ -1499,16 +1499,16 @@ class TeleTextAboutScreen(Screen):
   def __init__(self, session, dVersion):
     self.daemonVersion = dVersion
 
-    width = 360
-    height = 240
+    width = 720
+    height = 480
     left = (dsk_width - width)>>1
     top = (dsk_height - height)>>1
     log("[about] screen rect %s %s %s %s" % (left, top, width, height))
     TeleTextAboutScreen.skin = """<screen position="%d,%d" size="%d,%d" flags="wfNoBorder">
-        <widget name="pic"    position="0,0"    size="360,240" zPosition="1" pixmap="%s" alphatest="on"/>
-        <widget name="text"   position="12,16"  size="336,36"  zPosition="2" font="Console;36" halign="center" backgroundColor="blue"  foregroundColor="white" />
-        <widget name="daemon" position="12,64"  size="336,24"  zPosition="2" font="Console;20" halign="left"   backgroundColor="white" foregroundColor="black" />
-        <widget name="plugin" position="12,200" size="336,24"  zPosition="2" font="Console;20" halign="right"  backgroundColor="white" foregroundColor="black" />
+        <widget name="pic"    position="0,0"    size="720,480" zPosition="1" pixmap="%s" alphatest="on"/>
+        <widget name="text"   position="24,32"  size="672,72"  zPosition="2" font="Console;72" halign="center" backgroundColor="#0000ff"  foregroundColor="white" />
+        <widget name="daemon" position="24,128" size="672,48"  zPosition="2" font="Console;40" halign="left"   backgroundColor="white" foregroundColor="black" />
+        <widget name="plugin" position="24,400" size="672,48"  zPosition="2" font="Console;40" halign="right"  backgroundColor="white" foregroundColor="black" />
       </screen>""" % (left, top, width, height, resolveFilename(SCOPE_PLUGINS, "Extensions/TeleText/teletext.png"))
 
     Screen.__init__(self, session)
