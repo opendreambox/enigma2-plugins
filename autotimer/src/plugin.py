@@ -19,7 +19,7 @@ from AutoTimer import AutoTimer
 autotimer = AutoTimer()
 autopoller = None
 
-AUTOTIMER_VERSION = "4.3.1"
+AUTOTIMER_VERSION = "4.3.2"
 NOTIFICATIONDOMAIN = "AutoTimer"
 
 #pragma mark - Help
@@ -227,6 +227,11 @@ def eventinfo(session, servicelist, **kwargs):
 	ref = session.nav.getCurrentlyPlayingServiceReference()
 	session.open(AutoTimerEPGSelection, ref)
 
+# EventView or EPGSelection
+def eventview(session, event, ref):
+	from AutoTimerEditor import addAutotimerFromEvent, importerCallback
+	addAutotimerFromEvent(session, evt = event, service = ref, importer_Callback = importerCallback)
+
 # XXX: we need this helper function to identify the descriptor
 # Extensions menu - open Autotimer
 def extensionsmenu(session, **kwargs):
@@ -296,6 +301,7 @@ def Plugins(**kwargs):
 		PluginDescriptor(name="AutoTimer", description= _("add AutoTimer"), where = PluginDescriptor.WHERE_MOVIELIST, fnc = movielist, needsRestart = False),
 		# TRANSLATORS: AutoTimer title in EventInfo dialog (requires the user to select an event to base the AutoTimer on)
 		PluginDescriptor(name = _("add AutoTimer..."), where = PluginDescriptor.WHERE_EVENTINFO, fnc = eventinfo, needsRestart = False),
+		PluginDescriptor(name = _("add AutoTimer..."), where = [PluginDescriptor.WHERE_EVENTVIEW, PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE], fnc = eventview, needsRestart = False, weight = 100),
 	]
 	if config.plugins.autotimer.show_in_extensionsmenu.value:
 		l.append(extDescriptor)
