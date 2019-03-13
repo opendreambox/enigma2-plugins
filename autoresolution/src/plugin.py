@@ -9,8 +9,8 @@ from Components.ActionMap import ActionMap
 from Components.Label import Label
 from Components.Sources.StaticText import StaticText
 from enigma import iPlayableService, iServiceInformation, eTimer, getDesktop
+from Components.DisplayHardware import DisplayHardware
 from Plugins.Plugin import PluginDescriptor
-from Plugins.SystemPlugins.Videomode.VideoHardware import video_hw # depends on Videomode Plugin
 
 usable = False
 preferedmodes = None
@@ -43,10 +43,10 @@ config.plugins.autoresolution.delay_switch_mode = ConfigSelection(default = "100
 		("8000", "8 " + _("seconds")), ("9000", "9 " + _("seconds")), ("10000", "10 " + _("seconds")),("60000", "60 " + _("seconds"))])
 
 def setDeinterlacer(mode):
-	print "[AutoRes] switch deinterlacer mode to %s" % mode
-	f = open('/proc/stb/vmpeg/deinterlace' , "w")
-	f.write("%s\n" % mode)
-	f.close()
+	print "[AutoRes] switch deinterlacer mode to %s (currently not working)" % mode
+	#f = open('/proc/stb/vmpeg/deinterlace' , "w")
+	#f.write("%s\n" % mode)
+	#f.close()
 
 frqdic = { 23976: '24', \
 		24000: '24', \
@@ -134,7 +134,7 @@ class AutoRes(Screen):
 			global videoresolution_dictionary
 			print "mode changed to", configEntry.value
 			default = (configEntry.value, _("default"))
-			preferedmodes = [mode[0] for mode in video_hw.getModeList(port) if mode[0] != default[0]]
+			preferedmodes = [mode for mode in DisplayHardware.instance.getGroupedModeList(port) if mode != default[0]]
 			preferedmodes.append(default)
 			print "default", default
 			print "preferedmodes", preferedmodes
@@ -286,7 +286,7 @@ class AutoRes(Screen):
 			print "[AutoRes] switching to %s %s %s" % (port_txt, mode, rate)
 			if config.plugins.autoresolution.showinfo.value:
 				resolutionlabel.show()
-			video_hw.setMode(port, mode, rate)
+			DisplayHardware.instance.setMode(port, mode, rate)
 		self.lastmode = mode
 
 class ResolutionLabel(Screen):
