@@ -2,6 +2,7 @@
 #
 #    EasyInfo for Dreambox-Enigma2
 #    Coded by Vali (c)2011
+#    Re-worked by dre (c) 2019
 #
 #  This plugin is licensed under the Creative Commons 
 #  Attribution-NonCommercial-ShareAlike 3.0 Unported License.
@@ -23,7 +24,6 @@ from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Screens.InfoBarGenerics import InfoBarPlugins
-from Screens.ChoiceBox import ChoiceBox
 from Screens.TimerEdit import TimerEditList
 from Screens.EpgSelection import EPGSelection
 from Screens.EventView import EventViewSimple, EventViewBase
@@ -35,39 +35,28 @@ from Components.MenuList import MenuList
 from Components.Label import Label
 from Components.EpgList import EPGList, EPG_TYPE_MULTI
 from Components.ConfigList import ConfigListScreen
-from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigSelection, ConfigClock
+from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigSelection, ConfigClock, ConfigYesNo
 from Components.Sources.StaticText import StaticText
 from Tools.Directories import fileExists, pathExists
 from Tools.LoadPixmap import LoadPixmap
-from Tools.HardwareInfo import HardwareInfo
+from Tools.PiconResolver import PiconResolver
 from ServiceReference import ServiceReference
-from enigma import eListboxPythonMultiContent, gFont, getDesktop, eTimer, eServiceReference, RT_HALIGN_LEFT, RT_HALIGN_CENTER, RT_VALIGN_CENTER, RT_WRAP, RT_HALIGN_RIGHT, RT_VALIGN_TOP
+from enigma import eListboxPythonMultiContent, gFont, eTimer, eServiceReference, RT_HALIGN_LEFT, RT_HALIGN_CENTER, RT_VALIGN_CENTER, RT_WRAP, RT_HALIGN_RIGHT, RT_VALIGN_TOP
 from time import localtime, time, mktime
+from skin import TemplatedListFonts, componentSizes
 
-
-
-EINbaseInfoBarPlugins__init__ = None
-EINStartOnlyOneTime = False
-EINsession = None
+EasyInfoBaseInfoBarPlugins__init__ = None
+EasyInfoStartOnlyOnce = False
+EasyInfoSession = None
 EINposition = 0
 InfoBar_instance = None
-mepg_config_initialized = False
-sz_w = getDesktop(0).size().width()
-if sz_w == 1280:
-	SKINTYPE = 3
-elif sz_w == 1024:
-	SKINTYPE = 2
-else:
-	SKINTYPE = 1
-
-
 
 CHOICELIST=[("no", _("Disabled")),
 			("eventinfo", _("Event info")),
 			("singleepg", _("Single EPG")),
 			("multiepg", _("Multi EPG")),
-			("easypg", _("Easy-PG")),
-			("easysel", _("Easy-Selection")),
+			("easypg", _("EasyPG")),
+			("easysel", _("EasySelection")),
 			("graphepg", _("Graphik multi-EPG")),
 			("merlinepg", _("Merlin EPG")),
 			("cooltv", _("Cool-TV")),
@@ -76,11 +65,11 @@ CHOICELIST=[("no", _("Disabled")),
 			("autotimer", _("Autotimer")),
 			("channelinfo", _("Channel info")),
 			("imdbinfo", _("IMDB info")),
-			("primetime", _("Prime Time Manager")),
 			("epgrefresh", _("EPG refresh")),
 			("sleep", _("Sleep timer")),
-			("sysinfo", _("Sherlock"))
 			]
+
+COLORCHOICELIST = [("singleepg", _("Single EPG")),("multiepg", _("Multi EPG")),("easypg", _("Easy-PG")),("graphepg", _("Graphik multi-EPG")),("merlinepg", _("Merlin EPG")),("cooltv", _("Cool-TV")),("imdbinfo", _("IMDB info"))]
 config.plugins.EasyInfo  = ConfigSubsection()
 config.plugins.EasyInfo.pos1 = ConfigSelection(default="eventinfo", choices = CHOICELIST)
 config.plugins.EasyInfo.pos2 = ConfigSelection(default="singleepg", choices = CHOICELIST)
@@ -93,62 +82,55 @@ config.plugins.EasyInfo.pos8 = ConfigSelection(default="no", choices = CHOICELIS
 config.plugins.EasyInfo.pos9 = ConfigSelection(default="no", choices = CHOICELIST)
 config.plugins.EasyInfo.pos10 = ConfigSelection(default="no", choices = CHOICELIST)
 config.plugins.EasyInfo.pos11 = ConfigSelection(default="no", choices = CHOICELIST)
-config.plugins.EasyInfo.EvInStart = ConfigSelection(default="yes", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
-config.plugins.EasyInfo.bEvInYellow = ConfigSelection(default="singleepg", choices=[("singleepg", _("Single EPG")),("multiepg", _("Multi EPG")),("easypg", _("Easy-PG")),("graphepg", _("Graphik multi-EPG")),("merlinepg", _("Merlin EPG")),("cooltv", _("Cool-TV")),("imdbinfo", _("IMDB info"))])
-config.plugins.EasyInfo.bEvInBlue = ConfigSelection(default="multiepg", choices=[("singleepg", _("Single EPG")),("multiepg", _("Multi EPG")),("easypg", _("Easy-PG")),("graphepg", _("Graphik multi-EPG")),("merlinepg", _("Merlin EPG")),("cooltv", _("Cool-TV")),("imdbinfo", _("IMDB info"))])
-config.plugins.EasyInfo.myPicons = ConfigSelection(default="/usr/share/enigma2/epgpicon/", choices = [("/media/hdd/epgpicon/", "/media/hdd/epgpicon/"), ("/usr/share/enigma2/epgpicon/", "/usr/share/enigma2/epgpicon/")])
-config.plugins.EasyInfo.epgOKFunc = ConfigSelection(default="info", choices = [("info", _("Event info")), ("zap", _("Just zap")),("exitzap", _("Zap and Exit"))])
-config.plugins.EasyInfo.Primetime1 = ConfigClock(default = 63000)
-config.plugins.EasyInfo.Primetime2 = ConfigClock(default = 69300)
-config.plugins.EasyInfo.Primetime3 = ConfigClock(default = 75600)
-config.plugins.EasyInfo.buttTV = ConfigSelection(default="easysel", choices = [("no", _("Disabled")), ("easysel", _("Easy-Selection")), ("easypg", _("Easy-PG"))])
+config.plugins.EasyInfo.showEventInfoFirst = ConfigYesNo(default=False)
+config.plugins.EasyInfo.eventViewYellow = ConfigSelection(default="singleepg", choices= COLORCHOICELIST)
+config.plugins.EasyInfo.eventViewBlue = ConfigSelection(default="multiepg", choices= COLORCHOICELIST)
+config.plugins.EasyInfo.piconPath = ConfigSelection(default="/data/picon_50x30/", choices = [("/data/picon_50x30/", "/data/picon_50x30/"), ("/usr/share/enigma2/picon_50x30/", "/usr/share/enigma2/picon_50x30/"),("/data/picon/", "/data/picon/"), ("/usr/share/enigma2/picon/", "/usr/share/enigma2/picon/")])
+config.plugins.EasyInfo.easyPGOK = ConfigSelection(default="info", choices = [("info", _("Event info")), ("zap", _("Just zap")),("exitzap", _("Zap and Exit"))])
+config.plugins.EasyInfo.primeTime1 = ConfigClock(default = 63000)
+config.plugins.EasyInfo.primeTime2 = ConfigClock(default = 69300)
+config.plugins.EasyInfo.primeTime3 = ConfigClock(default = 75600)
+config.plugins.EasyInfo.buttonTV = ConfigSelection(default="easysel", choices = [("no", _("Disabled")), ("easysel", _("Easy-Selection")), ("easypg", _("Easy-PG"))])
 
 
 
 def Plugins(**kwargs):
 	return [PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, fnc = EasyInfoAutostart)]
 
-
-
 def EasyInfoAutostart(reason, **kwargs):
-	global EINbaseInfoBarPlugins__init__
+	global EasyInfoBaseInfoBarPlugins__init__
 	if "session" in kwargs:
-		global EINsession
-		EINsession = kwargs["session"]
-		if EINbaseInfoBarPlugins__init__ is None:
-			EINbaseInfoBarPlugins__init__ = InfoBarPlugins.__init__
+		global EasyInfoSession
+		EasyInfoSession = kwargs["session"]
+		if EasyInfoBaseInfoBarPlugins__init__ is None:
+			EasyInfoBaseInfoBarPlugins__init__ = InfoBarPlugins.__init__
 		InfoBarPlugins.__init__ = InfoBarPlugins__init__
-		InfoBarPlugins.info = info
-		if config.plugins.EasyInfo.buttTV.value != "no":
-			InfoBarPlugins.tvbut = tvbut
-
-
+		InfoBarPlugins.showInfo = showInfo
+		if config.plugins.EasyInfo.buttonTV.value != "no":
+			InfoBarPlugins.buttonTV = buttonTV
 
 def InfoBarPlugins__init__(self):
-	global EINStartOnlyOneTime
-	if not EINStartOnlyOneTime: 
-		EINStartOnlyOneTime = True
+	global EasyInfoStartOnlyOnce
+	if not EasyInfoStartOnlyOnce: 
+		EasyInfoStartOnlyOnce = True
 		global InfoBar_instance
 		InfoBar_instance = self
-		if config.plugins.EasyInfo.buttTV.value != "no":
+		if config.plugins.EasyInfo.buttonTV.value != "no":
 			self["EasyInfoActions"] = ActionMap(["EasyInfoActions"],
-				{"info_but": self.info, "tv_but": self.tvbut}, -1)
+				{"info_but": self.showInfo, "tv_but": self.buttonTV}, -1)
 		else:
 			self["EasyInfoActions"] = ActionMap(["EasyInfoActionsALT"],
-				{"info_but": self.info}, -1)
+				{"info_but": self.showInfo}, -1)
 	else:
 		InfoBarPlugins.__init__ = InfoBarPlugins.__init__
 		InfoBarPlugins.info = None
-		if config.plugins.EasyInfo.buttTV.value != "no":
-			InfoBarPlugins.tvbut = None
-	EINbaseInfoBarPlugins__init__(self)
+		if config.plugins.EasyInfo.buttonTV.value != "no":
+			InfoBarPlugins.buttonTV = None
+	EasyInfoBaseInfoBarPlugins__init__(self)
 
-
-
-def info(self):
-	if config.plugins.EasyInfo.EvInStart.value == "yes":
+def showInfo(self):
+	if not config.plugins.EasyInfo.showEventInfoFirst.value:
 		epglist = [ ]
-		self.epglist = epglist
 		service = self.session.nav.getCurrentService()
 		ref = self.session.nav.getCurrentlyPlayingServiceReference()
 		info = service.info()
@@ -159,24 +141,22 @@ def info(self):
 		if ptr:
 			epglist.append(ptr)
 		if epglist:
-			self.session.open(EasyEvent, epglist[0], ServiceReference(ref))
+			self.session.open(EasyInfoEventView, epglist[0], ServiceReference(ref))
 		else:
 			self.session.open(EasyInfo)
 	else:
 		self.session.open(EasyInfo)
 
-
-
-def tvbut(self):
-	myService = self.session.nav.getCurrentService()
-	myTS = myService and myService.timeshift()
-	if myTS is not None:
-		if myTS.isTimeshiftActive():
+def buttonTV(self):
+	currentService = self.session.nav.getCurrentService()
+	currentServiceTimeShift = currentService and currentService.timeshift()
+	if currentServiceTimeShift is not None:
+		if currentServiceTimeShift.isTimeshiftActive():
 			InfoBar_instance.stopTimeshift()
 			return
 	if InfoBar_instance.servicelist.mode == 1:
-		del myService
-		del myTS
+		del currentService
+		del currentServiceTimeShift
 		InfoBar_instance.showTv()
 		return
 	bouquets = InfoBar_instance.servicelist.getBouquetList()
@@ -184,19 +164,17 @@ def tvbut(self):
 		cnt = 0
 	else:
 		cnt = len(bouquets)
-		IBservices = InfoBar_instance.getBouquetServices(InfoBar_instance.servicelist.getRoot())
+		InfoBarServices = InfoBar_instance.getBouquetServices(InfoBar_instance.servicelist.getRoot())
 	if cnt > 1:
-		if config.plugins.EasyInfo.buttTV.value == "easysel":
-			InfoBar_instance.dlg_stack.append(InfoBar_instance.session.open(EasySelection, IBservices, EINzapTo, None, EINchangeBouquetCB))
-		elif config.plugins.EasyInfo.buttTV.value == "easypg":
-			InfoBar_instance.dlg_stack.append(InfoBar_instance.session.open(EasyPG, IBservices, EINzapTo, None, EINchangeBouquetCB))
+		if config.plugins.EasyInfo.buttonTV.value == "easysel":
+			InfoBar_instance.dlg_stack.append(InfoBar_instance.session.open(EasySelection, InfoBarServices, EasyInfoZapTo, None, EasyInfoChangeBouquetCB))
+		elif config.plugins.EasyInfo.buttonTV.value == "easypg":
+			InfoBar_instance.dlg_stack.append(InfoBar_instance.session.open(EasyPG, InfoBarServices, EasyInfoZapTo, None, EasyInfoChangeBouquetCB))
 	elif cnt == 1:
-		if config.plugins.EasyInfo.buttTV.value == "easysel":
-			InfoBar_instance.dlg_stack.append(InfoBar_instance.session.open(EasySelection, IBservices, EINzapTo, None, None))
-		if config.plugins.EasyInfo.buttTV.value == "easypg":
-			InfoBar_instance.dlg_stack.append(InfoBar_instance.session.open(EasyPG, IBservices, EINzapTo, None, EINchangeBouquetCB))
-
-
+		if config.plugins.EasyInfo.buttonTV.value == "easysel":
+			InfoBar_instance.dlg_stack.append(InfoBar_instance.session.open(EasySelection, InfoBarServices, EasyInfoZapTo, None, None))
+		if config.plugins.EasyInfo.buttonTV.value == "easypg":
+			InfoBar_instance.dlg_stack.append(InfoBar_instance.session.open(EasyPG, InfoBarServices, EasyInfoZapTo, None, EasyInfoChangeBouquetCB))
 
 def getPluginByName(sstr):
 	sret = " "
@@ -206,23 +184,23 @@ def getPluginByName(sstr):
 			break
 	return sret
 
-
-
-def EINPanelEntryComponent(key, text):
+def EasyInfoPanelEntryComponent(key, text):
 	res = [ text ]
-	bpng = LoadPixmap(EasyInfo.EINiconspath + "key-" + text[0] + ".png")
+	if pathExists('/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/icons/'):
+		EasyInfoIconsPath = '/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/icons/'
+	else:
+		EasyInfoIconsPath = '/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/'
+	bpng = LoadPixmap(EasyInfoIconsPath + "key-" + text[0] + ".png")
 	if bpng is not None:
 		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 0, 5, 5, 50, bpng))
-	png = LoadPixmap(EasyInfo.EINiconspath + key + ".png")
+	png = LoadPixmap(EasyInfoIconsPath + key + ".png")
 	if png is not None:
 		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 5, 5, 100, 50, png))
-	if config.plugins.EasyInfo.EvInStart.value == "yes" or SKINTYPE == 1:
+	if not config.plugins.EasyInfo.showEventInfoFirst.value:
 		res.append((eListboxPythonMultiContent.TYPE_TEXT, 115, 17, 300, 35, 0, RT_HALIGN_LEFT, getPluginByName(text[1])))
 	return res
 
-
-
-class EINPanelList(MenuList):
+class EasyInfoPanelList(MenuList):
 	def __init__(self, list, selection = 0, enableWrapAround=True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 		self.l.setFont(0, gFont("Regular", 20))
@@ -232,30 +210,28 @@ class EINPanelList(MenuList):
 		MenuList.postWidgetCreate(self, instance)
 		self.moveToIndex(self.selection)
 
-
-
-class ConfigEasyInfo(ConfigListScreen, Screen):
+class EasyInfoConfig(ConfigListScreen, Screen):
 	skin = """
-		<screen name="ConfigEasyInfo" position="center,center" size="600,410" title="EasyInfo settings...">
-			<widget name="config" position="5,5" scrollbarMode="showOnDemand" size="590,375"/>
-			<eLabel font="Regular;20" foregroundColor="#00ff4A3C" halign="center" position="20,385" size="140,26" text="Cancel"/>
-			<eLabel font="Regular;20" foregroundColor="#0056C856" halign="center" position="165,385" size="140,26" text="Save"/>
+		<screen name="EasyInfoConfig" position="center,center" size="700,530" title="EasyInfo settings...">
+			<widget name="config" position="5,5" scrollbarMode="showOnDemand" size="690,475"/>
+			<eLabel font="Regular;20" foregroundColor="#00ff4A3C" halign="center" position="20,490" size="140,26" text="Cancel"/>
+			<eLabel font="Regular;20" foregroundColor="#0056C856" halign="center" position="165,490" size="140,26" text="Save"/>
 		</screen>"""
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.setTitle(_("EasyInfo settings..."))
 		self.session = session
-		self.oldsetting = [config.plugins.EasyInfo.EvInStart.value, config.plugins.EasyInfo.buttTV.value]
+		self.oldsetting = [config.plugins.EasyInfo.showEventInfoFirst.value, config.plugins.EasyInfo.buttonTV.value]
 		list = []
-		list.append(getConfigListEntry(_("Start first EventInfo:"), config.plugins.EasyInfo.EvInStart ))
-		list.append(getConfigListEntry(_("Replace TV-button function:"), config.plugins.EasyInfo.buttTV ))
-		list.append(getConfigListEntry(_("EventInfo yellow button:"), config.plugins.EasyInfo.bEvInYellow ))
-		list.append(getConfigListEntry(_("EventInfo blue button:"), config.plugins.EasyInfo.bEvInBlue ))
-		list.append(getConfigListEntry(_("OK function in Easy-PG:"), config.plugins.EasyInfo.epgOKFunc))
-		list.append(getConfigListEntry(_("Easy-PG picons path:"), config.plugins.EasyInfo.myPicons))
-		list.append(getConfigListEntry(_("Easy-PG Primetime 1:"), config.plugins.EasyInfo.Primetime1))
-		list.append(getConfigListEntry(_("Easy-PG Primetime 2 (main):"), config.plugins.EasyInfo.Primetime2))
-		list.append(getConfigListEntry(_("Easy-PG Primetime 3:"), config.plugins.EasyInfo.Primetime3))
+		list.append(getConfigListEntry(_("Replace event info with EasyInfo:"), config.plugins.EasyInfo.showEventInfoFirst ))
+		list.append(getConfigListEntry(_("Replace TV-button function:"), config.plugins.EasyInfo.buttonTV ))
+		list.append(getConfigListEntry(_("EventInfo yellow button:"), config.plugins.EasyInfo.eventViewYellow ))
+		list.append(getConfigListEntry(_("EventInfo blue button:"), config.plugins.EasyInfo.eventViewBlue ))
+		list.append(getConfigListEntry(_("OK function in Easy-PG:"), config.plugins.EasyInfo.easyPGOK))
+		list.append(getConfigListEntry(_("Easy-PG picons path:"), config.plugins.EasyInfo.piconPath))
+		list.append(getConfigListEntry(_("Easy-PG Primetime 1:"), config.plugins.EasyInfo.primeTime1))
+		list.append(getConfigListEntry(_("Easy-PG Primetime 2 (main):"), config.plugins.EasyInfo.primeTime2))
+		list.append(getConfigListEntry(_("Easy-PG Primetime 3:"), config.plugins.EasyInfo.primeTime3))
 		list.append(getConfigListEntry(_("Position 1 (info button):"), config.plugins.EasyInfo.pos1))
 		list.append(getConfigListEntry(_("Position 2 (red button):"), config.plugins.EasyInfo.pos2))
 		list.append(getConfigListEntry(_("Position 3 (green button):"), config.plugins.EasyInfo.pos3))
@@ -273,7 +249,7 @@ class ConfigEasyInfo(ConfigListScreen, Screen):
 	def save(self):
 		for x in self["config"].list:
 			x[1].save()
-		if self.oldsetting != [config.plugins.EasyInfo.EvInStart.value, config.plugins.EasyInfo.buttTV.value]:
+		if self.oldsetting != [config.plugins.EasyInfo.showEventInfoFirst.value, config.plugins.EasyInfo.buttonTV.value]:
 			self.session.open(MessageBox, text = _('You need GUI-restart to load the new settings!'), type = MessageBox.TYPE_INFO)
 		self.close()
 
@@ -282,231 +258,162 @@ class ConfigEasyInfo(ConfigListScreen, Screen):
 			x[1].cancel()
 		self.close()
 
-
-
 class EasyInfo(Screen):
-	if SKINTYPE == 3:
-		if config.plugins.EasyInfo.EvInStart.value == "yes":
-			skin = """
-			<screen flags="wfNoBorder" position="0,0" size="450,720" title="Easy Info">
-				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/bg.png" position="0,0" size="450,576"/>
-				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/bg.png" position="0,576" size="450,145"/>
-				<widget name="list" position="60,30" size="350,660" scrollbarMode="showNever" transparent="1" zPosition="2"/>
-			</screen>"""
-		else:
-			skin = """
-			<screen backgroundColor="background" flags="wfNoBorder" position="0,0" size="1280,720" title="Easy Info">
-				<widget name="list" position="55,30" size="110,660" scrollbarMode="showNever" transparent="1" zPosition="2"/>
-				<eLabel backgroundColor="#666666" position="250,359" size="1280,2"/>
-				<widget font="Regular;24" foregroundColor="#fcc000" position="630,50" render="Label" size="600,30" source="session.CurrentService" transparent="1" zPosition="1">
-					<convert type="ServiceName">Name</convert>
-				</widget>
-				<widget font="Regular;24" position="250,50" render="Label" size="100,30" source="session.Event_Now" transparent="1" zPosition="1">
-					<convert type="EventTime">StartTime</convert>
-					<convert type="ClockToText">Default</convert>
-				</widget>
-				<widget font="Regular;24" noWrap="1" position="250,90" render="Label" size="900,30" source="session.Event_Now" transparent="1" zPosition="1">
-					<convert type="EventName">Name</convert>
-				</widget>
-				<widget font="Regular;22" foregroundColor="#fcc000" position="350,50" halign="right" render="Label" size="130,30" source="session.Event_Now" transparent="1" zPosition="1">
-					<convert type="EventTime">Remaining</convert>
-					<convert type="RemainingToText">InMinutes</convert>
-				</widget>
-				<widget font="Regular;24" position="250,400" render="Label" size="100,30" source="session.Event_Next" transparent="1" zPosition="1">
-					<convert type="EventTime">StartTime</convert>
-					<convert type="ClockToText">Default</convert>
-				</widget>
-				<widget font="Regular;24" foregroundColor="#aaaaaa" noWrap="1" position="250,370" render="Label" size="900,30" source="session.Event_Next" transparent="1" zPosition="1">
-					<convert type="EventName">Name</convert>
-				</widget>
-				<widget font="Regular;24" foregroundColor="#aaaaaa" position="350,400" render="Label" size="130,30" source="session.Event_Next" transparent="1" zPosition="1">
-					<convert type="EventTime">Duration</convert>
-					<convert type="ClockToText">InMinutes</convert>
-				</widget>
-				<widget backgroundColor="#555555" borderColor="#555555" borderWidth="4" position="490,57" render="Progress" size="120,14" source="session.Event_Now" zPosition="2">
-					<convert type="EventTime">Progress</convert>
-				</widget>
-				<widget font="Regular;22" position="250,127" render="Label" size="950,225" source="session.Event_Now" transparent="1" valign="top" zPosition="5">
-					<convert type="EventName">ExtendedDescription</convert>
-				</widget>
-				<widget font="Regular;22" foregroundColor="#aaaaaa" position="250,437" render="Label" size="950,225" source="session.Event_Next" transparent="1" valign="top" zPosition="5">
-					<convert type="EventName">ExtendedDescription</convert>
-				</widget>
-			</screen>"""
-	elif SKINTYPE == 2:
-		if config.plugins.EasyInfo.EvInStart.value == "yes":
-			skin = """
-			<screen flags="wfNoBorder" position="-20,0" size="450,576" title="Easy Info">
-				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/bg.png" position="0,0" size="450,576"/>
-				<widget name="list" position="70,48" size="320,480" scrollbarMode="showNever" transparent="1" zPosition="2"/>
-			</screen>"""
-		else:
-			skin = """
-			<screen backgroundColor="background" flags="wfNoBorder" position="0,0" size="1024,720" title="Easy Info">
-				<widget name="list" position="40,48" scrollbarMode="showNever" size="110,480" transparent="1" zPosition="2"/>
-				<eLabel backgroundColor="#666666" position="210,289" size="1000,2"/>
-				<widget font="Regular;20" foregroundColor="#fcc000" position="570,50" render="Label" size="377,30" source="session.CurrentService" transparent="1" zPosition="1">
-					<convert type="ServiceName">Name</convert>
-				</widget>
-				<widget font="Regular;20" position="210,50" render="Label" size="70,30" source="session.Event_Now" transparent="1" zPosition="1">
-					<convert type="EventTime">StartTime</convert>
-					<convert type="ClockToText">Default</convert>
-				</widget>
-				<widget font="Regular;20" noWrap="1" position="210,85" render="Label" size="736,30" source="session.Event_Now" transparent="1" zPosition="1">
-					<convert type="EventName">Name</convert>
-				</widget>
-				<widget font="Regular;20" foregroundColor="#fcc000" halign="right" position="290,50" render="Label" size="130,30" source="session.Event_Now" transparent="1" zPosition="1">
-					<convert type="EventTime">Remaining</convert>
-					<convert type="RemainingToText">InMinutes</convert>
-				</widget>
-				<widget font="Regular;20" position="210,333" render="Label" size="82,30" source="session.Event_Next" transparent="1" zPosition="1">
-					<convert type="EventTime">StartTime</convert>
-					<convert type="ClockToText">Default</convert>
-				</widget>
-				<widget font="Regular;20" foregroundColor="#aaaaaa" noWrap="1" position="210,300" render="Label" size="900,30" source="session.Event_Next" transparent="1" zPosition="1">
-					<convert type="EventName">Name</convert>
-				</widget>
-				<widget font="Regular;20" foregroundColor="#aaaaaa" position="295,333" render="Label" size="130,30" source="session.Event_Next" transparent="1" zPosition="1">
-					<convert type="EventTime">Duration</convert>
-					<convert type="ClockToText">InMinutes</convert>
-				</widget>
-				<widget backgroundColor="#555555" borderColor="#555555" borderWidth="4" position="425,55" render="Progress" size="120,14" source="session.Event_Now" zPosition="2">
-					<convert type="EventTime">Progress</convert>
-				</widget>
-				<widget font="Regular;18" position="210,115" render="Label" size="736,170" source="session.Event_Now" transparent="1" valign="top" zPosition="5">
-					<convert type="EventName">ExtendedDescription</convert>
-				</widget>
-				<widget font="Regular;18" foregroundColor="#aaaaaa" position="210,362" render="Label" size="736,170" source="session.Event_Next" transparent="1" valign="top" zPosition="5">
-					<convert type="EventName">ExtendedDescription</convert>
-				</widget>
-			</screen>"""
+	if not config.plugins.EasyInfo.showEventInfoFirst.value:
+		skin = """
+		<screen flags="wfNoBorder" position="center,center" size="500,740" title="Easy Info">
+			<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/bg.png" position="0,0" size="500,740"/>
+			<widget name="list" position="70,40" size="360,660" scrollbarMode="showNever" transparent="1" zPosition="2"/>
+		</screen>"""
 	else:
 		skin = """
-		<screen position="center,center" size="320,440" title="Easy Info">
-			<widget name="list" position="10,10" size="300,420" scrollbarMode="showOnDemand" />
+		<screen backgroundColor="background" flags="wfNoBorder" position="center,0" size="1280,720" title="Easy Info">
+			<widget name="list" position="55,30" size="110,660" scrollbarMode="showNever" transparent="1" zPosition="2"/>
+			<eLabel backgroundColor="#666666" position="250,359" size="1280,2"/>
+			<widget font="Regular;24" foregroundColor="#fcc000" position="630,50" render="Label" size="600,30" source="session.CurrentService" transparent="1" zPosition="1">
+				<convert type="ServiceName">Name</convert>
+			</widget>
+			<widget font="Regular;24" position="250,50" render="Label" size="100,30" source="session.Event_Now" transparent="1" zPosition="1">
+				<convert type="EventTime">StartTime</convert>
+				<convert type="ClockToText">Default</convert>
+			</widget>
+			<widget font="Regular;24" noWrap="1" position="250,90" render="Label" size="900,30" source="session.Event_Now" transparent="1" zPosition="1">
+				<convert type="EventName">Name</convert>
+			</widget>
+			<widget font="Regular;22" foregroundColor="#fcc000" position="350,50" halign="right" render="Label" size="130,30" source="session.Event_Now" transparent="1" zPosition="1">
+				<convert type="EventTime">Remaining</convert>
+				<convert type="RemainingToText">InMinutes</convert>
+			</widget>
+			<widget font="Regular;24" position="250,400" render="Label" size="100,30" source="session.Event_Next" transparent="1" zPosition="1">
+				<convert type="EventTime">StartTime</convert>
+				<convert type="ClockToText">Default</convert>
+			</widget>
+			<widget font="Regular;24" foregroundColor="#aaaaaa" noWrap="1" position="250,370" render="Label" size="900,30" source="session.Event_Next" transparent="1" zPosition="1">
+				<convert type="EventName">Name</convert>
+			</widget>
+			<widget font="Regular;24" foregroundColor="#aaaaaa" position="350,400" render="Label" size="130,30" source="session.Event_Next" transparent="1" zPosition="1">
+				<convert type="EventTime">Duration</convert>
+				<convert type="ClockToText">InMinutes</convert>
+			</widget>
+			<widget backgroundColor="#555555" borderColor="#555555" borderWidth="4" position="490,57" render="Progress" size="120,14" source="session.Event_Now" zPosition="2">
+				<convert type="EventTime">Progress</convert>
+			</widget>
+			<widget font="Regular;22" position="250,127" render="Label" size="950,225" source="session.Event_Now" transparent="1" valign="top" zPosition="5">
+				<convert type="EventName">ExtendedDescription</convert>
+			</widget>
+			<widget font="Regular;22" foregroundColor="#aaaaaa" position="250,437" render="Label" size="950,225" source="session.Event_Next" transparent="1" valign="top" zPosition="5">
+				<convert type="EventName">ExtendedDescription</convert>
+			</widget>
 		</screen>"""
-	if pathExists('/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/icons/'):
-		EINiconspath = '/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/icons/'
-	else:
-		EINiconspath = '/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/'
+
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.session = session
 		self.list = []
 		self.__keys = []
-		MPaskList = []
-		fertig = False
+		EasyInfoPluginsList = []
+
 		self["key_info"] = StaticText(" ")
 		self["key_yellow"] = StaticText(" ")
 		self["key_green"] = StaticText(" ")
 		self["key_red"] = StaticText(" ")
 		self["key_blue"] = StaticText(" ")
-		if True:
-			if config.plugins.EasyInfo.pos1.value != "no":
-				self.__keys.append(config.plugins.EasyInfo.pos1.value)
-				MPaskList.append(("info", config.plugins.EasyInfo.pos1.value))
-				self["key_info"].setText(_(getPluginByName(config.plugins.EasyInfo.pos1.value)))
-			else: fertig = True
-			if config.plugins.EasyInfo.pos2.value != "no" and not fertig:
-				self.__keys.append(config.plugins.EasyInfo.pos2.value)
-				MPaskList.append(("red", config.plugins.EasyInfo.pos2.value))
-				self["key_red"].setText(_(getPluginByName(config.plugins.EasyInfo.pos2.value)))
-			else: fertig = True
-			if config.plugins.EasyInfo.pos3.value != "no" and not fertig:
-				self.__keys.append(config.plugins.EasyInfo.pos3.value)
-				MPaskList.append(("green", config.plugins.EasyInfo.pos3.value))
-				self["key_green"].setText(_(getPluginByName(config.plugins.EasyInfo.pos3.value)))
-			else: fertig = True
-			if config.plugins.EasyInfo.pos4.value != "no" and not fertig:
-				self.__keys.append(config.plugins.EasyInfo.pos4.value)
-				MPaskList.append(("yellow", config.plugins.EasyInfo.pos4.value))
-				self["key_yellow"].setText(_(getPluginByName(config.plugins.EasyInfo.pos4.value)))
-			else: fertig = True
-			if config.plugins.EasyInfo.pos5.value != "no" and not fertig:
-				self.__keys.append(config.plugins.EasyInfo.pos5.value)
-				MPaskList.append(("blue", config.plugins.EasyInfo.pos5.value))
-				self["key_blue"].setText(_(getPluginByName(config.plugins.EasyInfo.pos5.value)))
-			else: fertig = True
-			if config.plugins.EasyInfo.pos6.value != "no" and not fertig:
-				self.__keys.append(config.plugins.EasyInfo.pos6.value)
-				MPaskList.append(("x", config.plugins.EasyInfo.pos6.value))
-			else: fertig = True
-			if config.plugins.EasyInfo.pos7.value != "no" and not fertig:
-				self.__keys.append(config.plugins.EasyInfo.pos7.value)
-				MPaskList.append(("x", config.plugins.EasyInfo.pos7.value))
-			else: fertig = True
-			if config.plugins.EasyInfo.pos8.value != "no" and not fertig:
-				self.__keys.append(config.plugins.EasyInfo.pos8.value)
-				MPaskList.append(("x", config.plugins.EasyInfo.pos8.value))
-			else: fertig = True
-			if config.plugins.EasyInfo.pos9.value != "no" and not fertig:
-				self.__keys.append(config.plugins.EasyInfo.pos9.value)
-				MPaskList.append(("x", config.plugins.EasyInfo.pos9.value))
-			else: fertig = True
-			if config.plugins.EasyInfo.pos10.value != "no" and not fertig:
-				self.__keys.append(config.plugins.EasyInfo.pos10.value)
-				MPaskList.append(("x", config.plugins.EasyInfo.pos10.value))
-			else: fertig = True
-			if config.plugins.EasyInfo.pos11.value != "no" and not fertig:
-				self.__keys.append(config.plugins.EasyInfo.pos11.value)
-				MPaskList.append(("x", config.plugins.EasyInfo.pos11.value))
+
+		if config.plugins.EasyInfo.pos1.value != "no":
+			self.__keys.append(config.plugins.EasyInfo.pos1.value)
+			EasyInfoPluginsList.append(("info", config.plugins.EasyInfo.pos1.value))
+			self["key_info"].setText(_(getPluginByName(config.plugins.EasyInfo.pos1.value)))
+		if config.plugins.EasyInfo.pos2.value != "no":
+			self.__keys.append(config.plugins.EasyInfo.pos2.value)
+			EasyInfoPluginsList.append(("red", config.plugins.EasyInfo.pos2.value))
+			self["key_red"].setText(_(getPluginByName(config.plugins.EasyInfo.pos2.value)))
+		if config.plugins.EasyInfo.pos3.value != "no":
+			self.__keys.append(config.plugins.EasyInfo.pos3.value)
+			EasyInfoPluginsList.append(("green", config.plugins.EasyInfo.pos3.value))
+			self["key_green"].setText(_(getPluginByName(config.plugins.EasyInfo.pos3.value)))
+		if config.plugins.EasyInfo.pos4.value != "no":
+			self.__keys.append(config.plugins.EasyInfo.pos4.value)
+			EasyInfoPluginsList.append(("yellow", config.plugins.EasyInfo.pos4.value))
+			self["key_yellow"].setText(_(getPluginByName(config.plugins.EasyInfo.pos4.value)))
+		if config.plugins.EasyInfo.pos5.value != "no":
+			self.__keys.append(config.plugins.EasyInfo.pos5.value)
+			EasyInfoPluginsList.append(("blue", config.plugins.EasyInfo.pos5.value))
+			self["key_blue"].setText(_(getPluginByName(config.plugins.EasyInfo.pos5.value)))
+		if config.plugins.EasyInfo.pos6.value != "no":
+			self.__keys.append(config.plugins.EasyInfo.pos6.value)
+			EasyInfoPluginsList.append(("x", config.plugins.EasyInfo.pos6.value))
+		if config.plugins.EasyInfo.pos7.value != "no":
+			self.__keys.append(config.plugins.EasyInfo.pos7.value)
+			EasyInfoPluginsList.append(("x", config.plugins.EasyInfo.pos7.value))
+		if config.plugins.EasyInfo.pos8.value != "no":
+			self.__keys.append(config.plugins.EasyInfo.pos8.value)
+			EasyInfoPluginsList.append(("x", config.plugins.EasyInfo.pos8.value))
+		if config.plugins.EasyInfo.pos9.value != "no":
+			self.__keys.append(config.plugins.EasyInfo.pos9.value)
+			EasyInfoPluginsList.append(("x", config.plugins.EasyInfo.pos9.value))
+		if config.plugins.EasyInfo.pos10.value != "no":
+			self.__keys.append(config.plugins.EasyInfo.pos10.value)
+			EasyInfoPluginsList.append(("x", config.plugins.EasyInfo.pos10.value))
+		if config.plugins.EasyInfo.pos11.value != "no":
+			self.__keys.append(config.plugins.EasyInfo.pos11.value)
+			EasyInfoPluginsList.append(("x", config.plugins.EasyInfo.pos11.value))
+
 		self.keymap = {}
 		pos = 0
-		for x in MPaskList:
+		for x in EasyInfoPluginsList:
 			strpos = str(self.__keys[pos])
-			self.list.append(EINPanelEntryComponent(key = strpos, text = x))
+			self.list.append(EasyInfoPanelEntryComponent(key = strpos, text = x))
 			if self.__keys[pos] != "":
-				self.keymap[self.__keys[pos]] = MPaskList[pos]
+				self.keymap[self.__keys[pos]] = EasyInfoPluginsList[pos]
 			pos += 1
-		self["list"] = EINPanelList(list = self.list, selection = 0)
+			
+		self["list"] = EasyInfoPanelList(list = self.list, selection = 0)
 		self["actions"] = ActionMap(["WizardActions", "MenuActions", "ColorActions", "EPGSelectActions"],
 		{
-			"ok": self.go,
+			"ok": self.okPressed,
 			"back": self.cancel,
-			"menu": self.emContextMenu,
-			"green": self.shotgreen,
-			"red": self.shotred,
-			"blue": self.shotblue,
-			"yellow": self.shotyellow,
-			"info": self.shotinfo
+			"menu": self.openConfig,
+			"green": self.greenPressed,
+			"red": self.redPressed,
+			"blue": self.bluePressed,
+			"yellow": self.yellowPressed,
+			"info": self.infoPressed
 		}, -1)
 
 	def cancel(self):
 		self.close(None)
 
-	def go(self):
-		cursel = self["list"].l.getCurrentSelection()
-		if cursel:
-			antw = cursel[0]
-			antw = antw and antw[1]
-			EINcallbackFunc(antw)
+	def okPressed(self):
+		currentSelection = self["list"].l.getCurrentSelection()
+		if currentSelection:
+			answer = currentSelection[0]
+			answer = answer and answer[1]
+			EasyInfoCallbackFunc(answer)
 
-	def emContextMenu(self):
-		self.session.open(ConfigEasyInfo)
+	def openConfig(self):
+		self.session.open(EasyInfoConfig)
 
-	def shotinfo(self):
+	def infoPressed(self):
 		self["list"].moveToIndex(0)
-		self.go()
+		self.okPressed()
 
-	def shotred(self):
+	def redPressed(self):
 		self["list"].moveToIndex(1)
-		self.go()
+		self.okPressed()
 
-	def shotgreen(self):
+	def greenPressed(self):
 		self["list"].moveToIndex(2)
-		self.go()
+		self.okPressed()
 
-	def shotyellow(self):
+	def yellowPressed(self):
 		self["list"].moveToIndex(3)
-		self.go()
+		self.okPressed()
 
-	def shotblue(self):
+	def bluePressed(self):
 		self["list"].moveToIndex(4)
-		self.go()
+		self.okPressed()
 
-
-
-def EINchangeBouquetCB(direction, epg):
+def EasyInfoChangeBouquetCB(direction, epg):
 	global EINposition
 	IBbouquets = InfoBar_instance.servicelist.getBouquetList()
 	if EINposition>0 and direction<0:
@@ -517,13 +424,11 @@ def EINchangeBouquetCB(direction, epg):
 		EINposition = EINposition + 1
 	elif EINposition==(len(IBbouquets)-1) and direction>0:
 		EINposition = 0
-	IBservices = InfoBar_instance.getBouquetServices(IBbouquets[EINposition][1])
-	if IBservices:
-		epg.setServices(IBservices)
+	InfoBarServices = InfoBar_instance.getBouquetServices(IBbouquets[EINposition][1])
+	if InfoBarServices:
+		epg.setServices(InfoBarServices)
 
-
-
-def EINzapTo(NewService):
+def EasyInfoZapTo(NewService):
 	IBbouquets = InfoBar_instance.servicelist.getBouquetList()
 	NewBbouquet = IBbouquets[EINposition][1]
 	InfoBar_instance.servicelist.clearPath()
@@ -533,41 +438,42 @@ def EINzapTo(NewService):
 	InfoBar_instance.servicelist.setCurrentSelection(NewService)
 	InfoBar_instance.servicelist.zap()
 
-
-
-def EINcallbackFunc(answer):
+def EasyInfoCallbackFunc(answer):
 	if answer is None: return
-	if EINsession is None: return
+	
+	if EasyInfoSession is None: return
+	
 	if not InfoBar_instance: return
+	
 	if answer == "singleepg":
 		ref=InfoBar_instance.servicelist.getCurrentSelection()
 		if ref:
 			InfoBar_instance.servicelist.savedService = ref
-			EINsession.openWithCallback(InfoBar_instance.servicelist.SingleServiceEPGClosed, EPGSelection, ref, serviceChangeCB = InfoBar_instance.servicelist.changeServiceCB)
+			EasyInfoSession.openWithCallback(InfoBar_instance.servicelist.SingleServiceEPGClosed, EPGSelection, ref, serviceChangeCB = InfoBar_instance.servicelist.changeServiceCB)
 	elif answer == "easypg":
 		bouquets = InfoBar_instance.servicelist.getBouquetList()
 		if bouquets is None:
 			cnt = 0
 		else:
 			cnt = len(bouquets)
-			IBservices = InfoBar_instance.getBouquetServices(InfoBar_instance.servicelist.getRoot())
+			InfoBarServices = InfoBar_instance.getBouquetServices(InfoBar_instance.servicelist.getRoot())
 		if cnt > 1:
-			InfoBar_instance.dlg_stack.append(InfoBar_instance.session.open(EasyPG, IBservices, EINzapTo, None, EINchangeBouquetCB))
+			InfoBar_instance.dlg_stack.append(InfoBar_instance.session.open(EasyPG, InfoBarServices, EasyInfoZapTo, None, EasyInfoChangeBouquetCB))
 		elif cnt == 1:
-			InfoBar_instance.dlg_stack.append(InfoBar_instance.session.open(EasyPG, IBservices, EINzapTo, None, None))
+			InfoBar_instance.dlg_stack.append(InfoBar_instance.session.open(EasyPG, InfoBarServices, EasyInfoZapTo, None, None))
 	elif answer == "easysel":
 		bouquets = InfoBar_instance.servicelist.getBouquetList()
 		if bouquets is None:
 			cnt = 0
 		else:
 			cnt = len(bouquets)
-			IBservices = InfoBar_instance.getBouquetServices(InfoBar_instance.servicelist.getRoot())
+			InfoBarServices = InfoBar_instance.getBouquetServices(InfoBar_instance.servicelist.getRoot())
 		if cnt > 1:
-			InfoBar_instance.dlg_stack.append(InfoBar_instance.session.open(EasySelection, IBservices, EINzapTo, None, EINchangeBouquetCB))
+			InfoBar_instance.dlg_stack.append(InfoBar_instance.session.open(EasySelection, InfoBarServices, EasyInfoZapTo, None, EasyInfoChangeBouquetCB))
 		elif cnt == 1:
-			InfoBar_instance.dlg_stack.append(InfoBar_instance.session.open(EasySelection, IBservices, EINzapTo, None, None))
+			InfoBar_instance.dlg_stack.append(InfoBar_instance.session.open(EasySelection, InfoBarServices, EasyInfoZapTo, None, None))
 	elif answer == "timers":
-		EINsession.open(TimerEditList)
+		EasyInfoSession.open(TimerEditList)
 	elif answer == "multiepg":
 		bouquets = InfoBar_instance.servicelist.getBouquetList()
 		if bouquets is None:
@@ -575,15 +481,15 @@ def EINcallbackFunc(answer):
 		else:
 			cnt = len(bouquets)
 		if cnt > 1:
-			InfoBar_instance.bouquetSel = EINsession.openWithCallback(InfoBar_instance.closed, BouquetSelector, bouquets, InfoBar_instance.openBouquetEPG, enableWrapAround=True)
+			InfoBar_instance.bouquetSel = EasyInfoSession.openWithCallback(InfoBar_instance.closed, BouquetSelector, bouquets, InfoBar_instance.openBouquetEPG, enableWrapAround=True)
 			InfoBar_instance.dlg_stack.append(InfoBar_instance.bouquetSel)
 		elif cnt == 1:
 			InfoBar_instance.openBouquetEPG(bouquets[0][1], True)
 	elif answer == "eventinfo":
 		epglist = [ ]
 		InfoBar_instance.epglist = epglist
-		service = EINsession.nav.getCurrentService()
-		ref = EINsession.nav.getCurrentlyPlayingServiceReference()
+		service = EasyInfoSession.nav.getCurrentService()
+		ref = EasyInfoSession.nav.getCurrentlyPlayingServiceReference()
 		info = service.info()
 		ptr=info.getEvent(0)
 		if ptr:
@@ -592,99 +498,88 @@ def EINcallbackFunc(answer):
 		if ptr:
 			epglist.append(ptr)
 		if epglist:
-			EINsession.open(EventViewSimple, epglist[0], ServiceReference(ref), InfoBar_instance.eventViewCallback)
+			EasyInfoSession.open(EventViewSimple, epglist[0], ServiceReference(ref), InfoBar_instance.eventViewCallback)
 	elif answer == "merlinepg":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPG/plugin.pyo"):
 			from Plugins.Extensions.MerlinEPG.plugin import Merlin_PGII, Merlin_PGd
 			if config.plugins.MerlinEPG.Columns.value:
-				EINsession.open(Merlin_PGII, InfoBar_instance.servicelist)
+				EasyInfoSession.open(Merlin_PGII, InfoBar_instance.servicelist)
 			else:
-				EINsession.open(Merlin_PGd, InfoBar_instance.servicelist)
+				EasyInfoSession.open(Merlin_PGd, InfoBar_instance.servicelist)
 		else:
-			EINsession.open(MessageBox, text = _('MerlinEPG is not installed!'), type = MessageBox.TYPE_INFO)
+			EasyInfoSession.open(MessageBox, text = _('MerlinEPG is not installed!'), type = MessageBox.TYPE_INFO)
 	elif answer == "autotimer":
 		try:
 			from Plugins.Extensions.AutoTimer.plugin import main as AutoTimerView
-			AutoTimerView(EINsession)
+			AutoTimerView(EasyInfoSession)
 		except ImportError as ie:
-			EINsession.open(MessageBox, text = _('Autotimer is not installed!'), type = MessageBox.TYPE_INFO)
+			EasyInfoSession.open(MessageBox, text = _('Autotimer is not installed!'), type = MessageBox.TYPE_INFO)
 	elif answer == "epgsearch":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/EPGSearch/plugin.pyo"):
 			from Plugins.Extensions.EPGSearch.EPGSearch import EPGSearch
-			service = EINsession.nav.getCurrentService()
+			service = EasyInfoSession.nav.getCurrentService()
 			info = service.info()
 			epg_event=info.getEvent(0)
 			if epg_event:
 				epg_name = epg_event and epg_event.getEventName() or ''
-				EINsession.open(EPGSearch, epg_name, False)
+				EasyInfoSession.open(EPGSearch, epg_name, False)
 		else:
-			EINsession.open(MessageBox, text = _('EPGsearch is not installed!'), type = MessageBox.TYPE_INFO)
+			EasyInfoSession.open(MessageBox, text = _('EPGsearch is not installed!'), type = MessageBox.TYPE_INFO)
 	elif answer == "channelinfo":
-		EINsession.open(ServiceInfo, InfoBar_instance.servicelist.getCurrentSelection())
+		EasyInfoSession.open(ServiceInfo, InfoBar_instance.servicelist.getCurrentSelection())
 	elif answer == "imdbinfo":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/IMDb/plugin.pyo"):
 			from Plugins.Extensions.IMDb.plugin import IMDB
-			service = EINsession.nav.getCurrentService()
+			service = EasyInfoSession.nav.getCurrentService()
 			info = service.info()
 			epg_event=info.getEvent(0)
 			if epg_event:
 				IeventName = epg_event.getEventName()
-				EINsession.open(IMDB, IeventName)
+				EasyInfoSession.open(IMDB, IeventName)
 		else:
-			EINsession.open(MessageBox, text = _('IMDB is not installed!'), type = MessageBox.TYPE_INFO)
+			EasyInfoSession.open(MessageBox, text = _('IMDB is not installed!'), type = MessageBox.TYPE_INFO)
 	elif answer == "graphepg":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/GraphMultiEPG/plugin.pyo"):
 			from Plugins.Extensions.GraphMultiEPG.plugin import main as gmepgmain
-			gmepgmain(EINsession, InfoBar_instance.servicelist)
+			gmepgmain(EasyInfoSession, InfoBar_instance.servicelist)
 		else:
-			EINsession.open(MessageBox, text = _('GraphMultiEPG is not installed!'), type = MessageBox.TYPE_INFO)
-	elif answer == "primetime":
-		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/PrimeTimeManager/plugin.pyo"):
-			from Plugins.Extensions.PrimeTimeManager.plugin import main as ptmanmain
-			ptmanmain(EINsession)
-		else:
-			EINsession.open(MessageBox, text = _('Prime Time Manager is not installed!'), type = MessageBox.TYPE_INFO)
+			EasyInfoSession.open(MessageBox, text = _('GraphMultiEPG is not installed!'), type = MessageBox.TYPE_INFO)
 	elif answer == "epgrefresh":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/EPGRefresh/plugin.pyo"):
 			from Plugins.Extensions.EPGRefresh.plugin import main as epgrefmain
-			epgrefmain(EINsession)
+			epgrefmain(EasyInfoSession)
 		else:
-			EINsession.open(MessageBox, text = _('EPGRefresh is not installed!'), type = MessageBox.TYPE_INFO)
+			EasyInfoSession.open(MessageBox, text = _('EPGRefresh is not installed!'), type = MessageBox.TYPE_INFO)
 	elif answer == "cooltv":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/CoolTVGuide/plugin.pyo"):
 			from Plugins.Extensions.CoolTVGuide.plugin import main as ctvmain
-			ctvmain(EINsession, InfoBar_instance.servicelist)
+			ctvmain(EasyInfoSession, InfoBar_instance.servicelist)
 		else:
-			EINsession.open(MessageBox, text = _('CoolTVGuide is not installed!'), type = MessageBox.TYPE_INFO)
-	elif answer == "sysinfo":
-		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Sherlock/plugin.pyo"):
-			from Plugins.Extensions.Sherlock.plugin import SherlockII
-			EINsession.open(SherlockII)
-		else:
-			EINsession.open(MessageBox, text = _('Sherlock is not installed!'), type = MessageBox.TYPE_INFO)
+			EasyInfoSession.open(MessageBox, text = _('CoolTVGuide is not installed!'), type = MessageBox.TYPE_INFO)
 	elif answer == "sleep":
 		from Screens.SleepTimerEdit import SleepTimerEdit
-		EINsession.open(SleepTimerEdit)
+		EasyInfoSession.open(SleepTimerEdit)
 	else:
-		EINsession.open(MessageBox, text = _('This function is yet not available!'), type = MessageBox.TYPE_INFO)
+		EasyInfoSession.open(MessageBox, text = _('This function is yet not available!'), type = MessageBox.TYPE_INFO)
 
-
-
-class EasyEvent(Screen, EventViewBase):
+class EasyInfoEventView(Screen, EventViewBase):
 	def __init__(self, session, Event, Ref, callback=None, singleEPGCB=None, multiEPGCB=None):
 		Screen.__init__(self, session)
 		self.session = session
 		self.skinName = "EventView"
+		
 		EventViewBase.__init__(self, Event, Ref, callback=InfoBar_instance.eventViewCallback)
-		self["key_yellow"].setText(_(getPluginByName(config.plugins.EasyInfo.bEvInYellow.value)))
-		self["key_blue"].setText(_(getPluginByName(config.plugins.EasyInfo.bEvInBlue.value)))
+		
+		self["key_yellow"].setText(_(getPluginByName(config.plugins.EasyInfo.eventViewYellow.value)))
+		self["key_blue"].setText(_(getPluginByName(config.plugins.EasyInfo.eventViewBlue.value)))
 		self["key_red"].setText(_("Similar"))
+		
 		self["epgactions"] = ActionMap(["EventViewEPGActions", "EPGSelectActions",  "EventViewActions"],
 			{
 				"openSingleServiceEPG": self.singleEPGCB,
 				"openMultiServiceEPG": self.multiEPGCB,
 				"openSimilarList": self.openSimilarList,
-				"info": self.newExit,
+				"info": self.exit,
 				"pageUp": self.pageUp,
 				"pageDown": self.pageDown,
 				"prevEvent": self.prevEvent,
@@ -693,17 +588,17 @@ class EasyEvent(Screen, EventViewBase):
 
 	def openSimilarList(self):
 		self.hide()
-		EINcallbackFunc("epgsearch")
+		EasyInfoCallbackFunc("epgsearch")
 		self.close()
 
 	def singleEPGCB(self):
 		self.hide()
-		EINcallbackFunc(config.plugins.EasyInfo.bEvInYellow.value)
+		EasyInfoCallbackFunc(config.plugins.EasyInfo.eventViewYellow.value)
 		self.close()
 
 	def multiEPGCB(self):
 		self.hide()
-		EINcallbackFunc(config.plugins.EasyInfo.bEvInBlue.value)
+		EasyInfoCallbackFunc(config.plugins.EasyInfo.eventViewBlue.value)
 		self.close()
 
 	def setEvent(self, event):
@@ -739,71 +634,118 @@ class EasyEvent(Screen, EventViewBase):
 			self["key_green"].setText(_("Add timer"))
 			self.key_green_choice = self.ADD_TIMER
 
-	def newExit(self):
+	def exit(self):
 		self.hide()
 		self.session.open(EasyInfo)
 		self.close()
 
+class EasyInfoEventList(EPGList):
+	SKIN_COMPONENT_KEY = "EasyInfoEventList"
+	SKIN_COMPONENT_CHANNEL_WIDTH = "ChannelWidth" # width for the first column with channelname or picon
+	SKIN_COMPONENT_TIME_WIDTH = "TimeWidth" # width for the time information
+	SKIN_COMPONENT_TIME_FUTURE_INDICATOR_WIDTH = "TimeFutureIndicatorWidth" # width for the ">"
+	SKIN_COMPONENT_TIME_OFFSET = "TimeOffset" # y position of time information including indicator
+	SKIN_COMPONENT_REMAINING_TIME_WIDTH = "RemainingTimeWidth" # width of remaining time information (below progress bar)
+	SKIN_COMPONENT_EVENTNAME_WIDTH = "EventNameWidth" # width of eventname
+	SKIN_COMPONENT_EVENTNAME_OFFSET = "EventNameOffset" # y position of eventname
+	SKIN_COMPONENT_ITEM_HEIGHT = "ItemHeight" # height of row
+	SKIN_COMPONENT_PROGRESSBAR_WIDTH = "ProgressBarWidth" # width of progress bar
+	SKIN_COMPONENT_PROGRESSBAR_HEIGHT = "ProgressBarHeight" # height of progress bar
+	SKIN_COMPONENT_CHANNEL_OFFSET = "ChannelOffset" # offset applied to the first event column
+	SKIN_COMPONENT_REC_OFFSET = "RecOffset" # offset applied when a timer exists for the event
+	SKIN_COMPONENT_REC_ICON_SIZE = "RecIconSize" # size of record icon
 
-
-class EvNewList(EPGList):
-	def __init__(self, type=EPG_TYPE_MULTI, selChangedCB=None, timer = None):
+	def __init__(self, type=EPG_TYPE_MULTI, selChangedCB=None, timer = None, hasChannelInfo=True):
 		EPGList.__init__(self, type, selChangedCB, timer)
-		self.l.setFont(0, gFont("Regular", 20))
-		self.l.setFont(1, gFont("Regular", 18))
-		self.l.setItemHeight(50)
-		self.l.setBuildFunc(self.buildMultiEntry)
-		self.breite = 200
-		MyPiconPath = "/"
+		
+		sizes = componentSizes[EasyInfoEventList.SKIN_COMPONENT_KEY]
+		self.channelWidth = sizes.get(EasyInfoEventList.SKIN_COMPONENT_CHANNEL_WIDTH, 120)
+		self.timeWidth = sizes.get(EasyInfoEventList.SKIN_COMPONENT_TIME_WIDTH, 70)
+		self.timeIndicatorWidth = sizes.get(EasyInfoEventList.SKIN_COMPONENT_TIME_FUTURE_INDICATOR_WIDTH, 10)
+		self.eventNameWidth = sizes.get(EasyInfoEventList.SKIN_COMPONENT_EVENTNAME_WIDTH, 460)
+		self.eventNameYOffset = sizes.get(EasyInfoEventList.SKIN_COMPONENT_EVENTNAME_OFFSET, 1)
+		self.timeYOffset = sizes.get(EasyInfoEventList.SKIN_COMPONENT_TIME_OFFSET, 3)
+		self.itemHeight = sizes.get(EasyInfoEventList.SKIN_COMPONENT_ITEM_HEIGHT, 50)
+		self.recOffset = sizes.get(EasyInfoEventList.SKIN_COMPONENT_REC_OFFSET, 25)
+		self.channelOffset = sizes.get(EasyInfoEventList.SKIN_COMPONENT_CHANNEL_OFFSET, 120)
+		self.progressBarWidth = sizes.get(EasyInfoEventList.SKIN_COMPONENT_PROGRESSBAR_WIDTH, 40)
+		self.progressBarHeight = sizes.get(EasyInfoEventList.SKIN_COMPONENT_PROGRESSBAR_HEIGHT, 8)
+		self.remainingTimeWidth = sizes.get(EasyInfoEventList.SKIN_COMPONENT_REMAINING_TIME_WIDTH, 70)
+		self.recIconSize = sizes.get(EasyInfoEventList.SKIN_COMPONENT_REC_ICON_SIZE, 16)
+		self.piconWidth = 0
+		self.piconHeight = 0
 
-	def recalcEntrySize(self):
-		esize = self.l.getItemSize()
-		self.breite = esize.width() - 200
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
+		self.l.setFont(1, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
+		self.l.setFont(2, gFont(tlf.face(tlf.SMALLER), tlf.size(tlf.SMALLER)))
+		
+		self.l.setItemHeight(self.itemHeight)
+		self.l.setBuildFunc(self.buildMultiEntry)
+		
+		self.hasChannelInfo = hasChannelInfo
+		self.nameCache = { }
+
+	def getPicon(self, sRef):
+		pngname = PiconResolver.getPngName(sRef, self.nameCache, self.findPicon)
+		if fileExists(pngname):
+			return LoadPixmap(cached = True, path = pngname)
+		else:
+			return None
+			
+	def findPicon(self, sRef):
+		pngname = "%s%s.png" % (config.plugins.EasyInfo.piconPath.value, sRef)
+		if not fileExists(pngname):
+			pngname = ""
+		return pngname
 
 	def buildMultiEntry(self, changecount, service, eventId, beginTime, duration, EventName, nowTime, service_name):
 		(clock_pic, rec) = self.getPixmapForEntry(service, eventId, beginTime, duration)
 		res = [ None ]
-		sref = str(service)[:-1].replace(':','_')
-		Spixmap = LoadPixmap(path=(config.plugins.EasyInfo.myPicons.value + sref + '.png'))
-		if Spixmap is not None:
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, 5, 4, 70, 42, Spixmap))
-		else:
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, 77, 50, 1, RT_HALIGN_CENTER|RT_VALIGN_CENTER|RT_WRAP, service_name))
+		
+		channelOffset = 0
+		recOffset = 0
+		
+		flagValue = RT_HALIGN_LEFT|RT_VALIGN_CENTER|RT_WRAP
+		if self.hasChannelInfo:
+			channelOffset = self.channelOffset
+			
+		if EventName is not None and len(EventName) > 60:
+			flagValue = RT_HALIGN_LEFT|RT_VALIGN_TOP|RT_WRAP
+		
+		if self.hasChannelInfo:
+			picon = self.getPicon(service)
+			if picon is not None:
+				if self.piconWidth == 0:
+					self.piconWidth = picon.size().width()
+				if self.piconHeight == 0:
+					self.piconHeight = picon.size().height()
+				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, (self.channelWidth-self.piconWidth)/2, (self.itemHeight-self.piconHeight)/2, self.piconWidth, self.piconHeight, picon))
+			else:
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, self.channelWidth, self.itemHeight, 1, RT_HALIGN_CENTER|RT_VALIGN_CENTER|RT_WRAP, service_name))
+		
 		if rec:
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 80, 16, 21, 21, clock_pic))
-		if beginTime is not None and len(EventName) > 60:
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.timeIndicatorWidth+self.timeWidth+channelOffset, (self.itemHeight-self.recIconSize)/2, self.recIconSize, self.recIconSize, clock_pic)) 
+			recOffset = self.recOffset
+				
+		if beginTime is not None:
 			if nowTime < beginTime:
 				begin = localtime(beginTime)
 				end = localtime(beginTime+duration)
+				
 				res.extend((
-					(eListboxPythonMultiContent.TYPE_TEXT, 100, 4, 10, 20, 1, RT_HALIGN_RIGHT, '>'),
-					(eListboxPythonMultiContent.TYPE_TEXT, 110, 4, 70, 44, 1, RT_HALIGN_LEFT, "%02d.%02d\n%02d.%02d"%(begin[3],begin[4],end[3],end[4])),
-					(eListboxPythonMultiContent.TYPE_TEXT, 180, 1, self.breite, 48, 0, RT_HALIGN_LEFT|RT_VALIGN_TOP|RT_WRAP, EventName)
+					(eListboxPythonMultiContent.TYPE_TEXT, channelOffset, self.timeYOffset, self.timeIndicatorWidth, self.itemHeight-2*self.timeYOffset, 1, RT_HALIGN_RIGHT, '>'),
+					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+channelOffset, self.timeYOffset, self.timeWidth, self.itemHeight-2*self.timeYOffset, 1, RT_HALIGN_LEFT, "%02d.%02d\n%02d.%02d"%(begin[3],begin[4],end[3],end[4])),
+					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+self.timeWidth+channelOffset+recOffset, self.eventNameYOffset, self.eventNameWidth-recOffset, self.itemHeight-2*self.eventNameYOffset, 0, flagValue, EventName)
 				))
 			else:
 				percent = (nowTime - beginTime)*100/duration
-				restzeit = ((beginTime+duration)-nowTime)
+				remaining = ((beginTime+duration)-nowTime)
+				
 				res.extend((
-					(eListboxPythonMultiContent.TYPE_PROGRESS, 110, 11, 40, 8, percent),
-					(eListboxPythonMultiContent.TYPE_TEXT, 110, 25, 60, 22, 1, RT_HALIGN_LEFT, "+%d:%02d" % (restzeit/3600, (restzeit/60)-((restzeit /3600)*60))),
-					(eListboxPythonMultiContent.TYPE_TEXT, 180, 1, self.breite, 48, 0, RT_HALIGN_LEFT|RT_VALIGN_TOP|RT_WRAP, EventName)
-				))
-		elif beginTime is not None:
-			if nowTime < beginTime:
-				begin = localtime(beginTime)
-				end = localtime(beginTime+duration)
-				res.extend((
-					(eListboxPythonMultiContent.TYPE_TEXT, 100, 4, 10, 20, 1, RT_HALIGN_RIGHT, '>'),
-					(eListboxPythonMultiContent.TYPE_TEXT, 110, 4, 70, 44, 1, RT_HALIGN_LEFT, "%02d.%02d\n%02d.%02d"%(begin[3],begin[4],end[3],end[4])),
-					(eListboxPythonMultiContent.TYPE_TEXT, 180, 1, self.breite, 48, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER|RT_WRAP, EventName)
-				))
-			else:
-				percent = (nowTime - beginTime)*100/duration
-				restzeit = ((beginTime+duration)-nowTime)
-				res.extend((
-					(eListboxPythonMultiContent.TYPE_PROGRESS, 110, 11, 40, 8, percent),
-					(eListboxPythonMultiContent.TYPE_TEXT, 110, 25, 60, 22, 1, RT_HALIGN_LEFT, "+%d:%02d" % (restzeit/3600, (restzeit/60)-((restzeit /3600)*60))),
-					(eListboxPythonMultiContent.TYPE_TEXT, 180, 1, self.breite, 48, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER|RT_WRAP, EventName)
+					(eListboxPythonMultiContent.TYPE_PROGRESS, (self.remainingTimeWidth-self.progressBarWidth)/2+channelOffset, (self.itemHeight/2-self.progressBarHeight)/2, self.progressBarWidth, self.progressBarHeight, percent),
+					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+channelOffset, self.itemHeight/2, self.remainingTimeWidth, self.itemHeight/2, 1, RT_HALIGN_LEFT, "+%d:%02d" % (remaining/3600, (remaining/60)-((remaining /3600)*60))),
+					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+self.timeWidth+channelOffset+recOffset, self.eventNameYOffset, self.eventNameWidth-recOffset, self.itemHeight-2*self.eventNameYOffset, 0, flagValue, EventName)
 				))
 		return res
 
@@ -819,13 +761,10 @@ class EvNewList(EPGList):
 			index += 1
 		if x[1] != refstr:
 			self.instance.moveSelectionTo(0)
-
-
-
+			
 class EasyPG(EPGSelection, Screen):
-	if SKINTYPE == 3:
-		skin = """
-		<screen name="EasyPG" backgroundColor="#101220" flags="wfNoBorder" position="0,0" size="1280,720" title="Easy PG">
+	skin = """
+		<screen name="NewEasyPG" backgroundColor="#101220" flags="wfNoBorder" position="center,0" size="1280,720" title="Easy PG">
 			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/lines.png" position="60,35" size="660,650" zPosition="-1"/>
 			<widget font="Regular;20" position="785,30" render="Label" size="202,25" source="global.CurrentTime" transparent="1" zPosition="1">
 				<convert type="ClockToText">Format:%a %d. %b   %H:%M</convert>
@@ -861,64 +800,13 @@ class EasyPG(EPGSelection, Screen):
 				<convert type="EventName">ExtendedDescription</convert>
 			</widget>
 		</screen>"""
-	elif SKINTYPE == 2:
-		skin = """
-		<screen name="EasyPG" backgroundColor="#0e1018" flags="wfNoBorder" position="0,0" size="1024,576" title="Easy PG">
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/lines.png" position="50,50" size="520,450" zPosition="-1"/>
-			<eLabel backgroundColor="#666666" position="0,518" size="1024,1"/>
-			<widget font="Regular;20" position="50,525" render="Label" size="186,25" source="global.CurrentTime" transparent="1" zPosition="1">
-				<convert type="ClockToText">Format:%a %d. %b   %H:%M</convert>
-			</widget>
-			<widget backgroundColor="#ff000000" position="590,30" render="Pig" size="384,216" source="session.VideoPicture" zPosition="-1"/>
-			<widget foregroundColor="#fcc000" font="Regular;20" name="date" position="590,255" size="100,25" transparent="1"/>
-			<widget name="list" position="50,48" scrollbarMode="showNever" size="520,450" transparent="1"/>
-			<ePixmap alphatest="blend" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/key-red.png" position="275,525" size="5,20"/>
-			<ePixmap alphatest="blend" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/key-green.png" position="450,525" size="5,20"/>
-			<ePixmap alphatest="blend" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/key-yellow.png" position="625,525" size="5,20"/>
-			<ePixmap alphatest="blend" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/key-blue.png" position="800,525" size="5,20"/>
-			<eLabel font="Regular;18" position="290,526" size="150,25" text="Similar" transparent="1"/>
-			<eLabel font="Regular;18" position="465,526" size="150,25" text="Timer" transparent="1"/>
-			<eLabel font="Regular;18" position="640,526" size="150,25" text="Back" transparent="1"/>
-			<eLabel font="Regular;18" position="815,526" size="150,25" text="Next" transparent="1"/>
-			<widget font="Regular;20" halign="right" position="695,255" render="Label" size="70,25" source="Event" transparent="1" zPosition="1">
-				<convert type="EventTime">StartTime</convert>
-				<convert type="ClockToText">Default</convert>
-			</widget>
-			<eLabel font="Regular;18" position="770,255" size="10,25" text="-" transparent="1"/>
-			<widget font="Regular;20" position="780,255" render="Label" size="70,25" source="Event" transparent="1" zPosition="1">
-				<convert type="EventTime">EndTime</convert>
-				<convert type="ClockToText">Default</convert>
-			</widget>
-			<widget font="Regular;20" position="855,255" render="Label" size="130,25" source="Event" transparent="1" zPosition="1">
-			<convert type="EventTime">Duration</convert>
-				<convert type="ClockToText">InMinutes</convert>
-			</widget>
-			<widget font="Regular;20" noWrap="1" position="590,285" render="Label" size="390,25" source="Event" transparent="1" zPosition="2">
-				<convert type="EventName">ShortDescription</convert>
-			</widget>
-			<widget font="Regular;18" position="590,315" render="Label" size="390,190" source="Event" transparent="1" zPosition="3">
-				<convert type="EventName">ExtendedDescription</convert>
-			</widget>
-		</screen>
-		"""
-	else:
-		skin = """
-		<screen name="EasyPG" backgroundColor="background" flags="wfNoBorder" position="0,0" size="720,576" title="Easy PG">
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/lines.png" position="50,48" size="620,450" zPosition="-1"/>
-			<eLabel backgroundColor="#666666" position="0,522" size="756,1"/>
-			<widget foregroundColor="#fcc000" font="Regular;20" name="date" position="50,525" size="100,25" transparent="1"/>
-			<widget name="list" position="50,48" scrollbarMode="showOnDemand" size="620,450" transparent="1"/>
-			<ePixmap alphatest="blend" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/key-red.png" position="175,525" size="5,20"/>
-			<ePixmap alphatest="blend" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/key-yellow.png" position="350,525" size="5,20"/>
-			<ePixmap alphatest="blend" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/key-blue.png" position="525,525" size="5,20"/>
-			<eLabel font="Regular;18" position="190,526" size="150,25" text="Similar" transparent="1"/>
-			<eLabel font="Regular;18" position="365,526" size="150,25" text="Back" transparent="1"/>
-			<eLabel font="Regular;18" position="540,526" size="150,25" text="Next" transparent="1"/>
-		</screen>
-		"""
+
 	def __init__(self, session, service, zapFunc=None, eventid=None, bouquetChangeCB=None, serviceChangeCB=None):
 		Screen.__init__(self, session)
 		EPGSelection.__init__(self, session, service, zapFunc, eventid, bouquetChangeCB, serviceChangeCB)
+		EPGSelection.skinName = "NewEasyPG"
+		self.skinName = "NewEasyPG"
+		
 		global EINposition
 		EINposition = 0
 		allbouq = InfoBar_instance.servicelist.getBouquetList()
@@ -926,63 +814,66 @@ class EasyPG(EPGSelection, Screen):
 			if InfoBar_instance.servicelist.getRoot() == allbouq[newpos][1]:
 				EINposition = newpos
 				break
-		self.PTinit = False
+		
+		self.initPrimeTime = False
 		self.session = session
-		EPGSelection.skinName = "EasyPG"
-		self.PThour = config.plugins.EasyInfo.Primetime2.value[0]
-		self.PTmin = config.plugins.EasyInfo.Primetime2.value[1]
-		self["list"] = EvNewList(type = EPG_TYPE_MULTI, selChangedCB = self.onSelectionChanged, timer = session.nav.RecordTimer)
-		self.skinName = "EasyPG"
-		self.RefrTimer = eTimer()
-		self.RefTimer_conn = self.RefrTimer.timeout.connect(self.RefreshEPG)
+
+		self.primeTimeHour = config.plugins.EasyInfo.primeTime2.value[0]
+		self.primeTimeMinute = config.plugins.EasyInfo.primeTime2.value[1]
+		
+		self["list"] = EasyInfoEventList(type = EPG_TYPE_MULTI, selChangedCB = self.onSelectionChanged, timer = session.nav.RecordTimer)
+
+		self.refreshTimer = eTimer()
+		self.refreshTimer_conn = self.refreshTimer.timeout.connect(self.refreshEPG)
+		
 		self["actions"] = ActionMap(["EPGSelectActions", "OkCancelActions", "NumberActions", "InfobarActions"],
 			{
 				"cancel": self.closeScreen,
-				"ok": self.newOKFunc,
+				"ok": self.okPressed,
 				"timerAdd": self.timerAdd,
 				"yellow": self.yellowButtonPressed,
 				"blue": self.blueButtonPressed,
 				"info": self.infoKeyPressed,
-				"red": self.newRedFunc,
-				"input_date_time": self.einContextMenu,
+				"red": self.redButtonPressed,
+				"input_date_time": self.openContextMenu,
 				"nextBouquet": self.nextBouquet,
 				"prevBouquet": self.prevBouquet,
-				"nextService": self.PTfor,
-				"prevService": self.PTback,
+				"nextService": self.goToPrimeTimeNextDay,
+				"prevService": self.goToPrimeTimePreviousDay,
 				"showMovies": self.enterDateTime,
 				"showTv": self.zapTo,
-				"showRadio": self.zapForRefr,
-				"0": self.GoFirst,
-				"1": self.SetPT1,
-				"2": self.SetPT2,
-				"3": self.SetPT3
+				"showRadio": self.zapAndRefresh,
+				"0": self.goToCurrentTime,
+				"1": self.setPrimeTime1,
+				"2": self.setPrimeTime2,
+				"3": self.setPrimeTime3
 			},-1)
 
 	def closeScreen(self):
 		self.close(True)
 
-	def GoFirst(self):
+	def goToCurrentTime(self):
 		self["list"].fillMultiEPG(self.services, -1)
-		self.PTinit = False
+		self.initPrimeTime = False
 
-	def GoPrimetime(self):
-		heute = localtime()
-		pt = (heute[0],heute[1],heute[2],self.PThour,self.PTmin,0,heute[6],heute[7],0)
-		self.ask_time = int(mktime(pt))
-		self.PTinit = True
-		if self.ask_time > int(mktime(heute)):
+	def setNewPrimeTime(self):
+		today = localtime()
+		primetime = (today[0],today[1],today[2],self.primeTimeHour,self.primeTimeMinute,0,today[6],today[7],0)
+		self.ask_time = int(mktime(primetime))
+		self.initPrimeTime = True
+		if self.ask_time > int(mktime(today)):
 			self["list"].fillMultiEPG(self.services, self.ask_time)
 
-	def newOKFunc(self):
-		if  config.plugins.EasyInfo.epgOKFunc.value == "exitzap":
+	def okPressed(self):
+		if  config.plugins.EasyInfo.easyPGOK.value == "exitzap":
 			self.zapTo()
 			self.close(True)
-		elif config.plugins.EasyInfo.epgOKFunc.value == "zap":
+		elif config.plugins.EasyInfo.easyPGOK.value == "zap":
 			self.zapTo()
 		else:
 			self.infoKeyPressed()
 
-	def newRedFunc(self):
+	def redButtonPressed(self):
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/EPGSearch/plugin.pyo"):
 			from Plugins.Extensions.EPGSearch.EPGSearch import EPGSearch
 			epg_event = self["list"].getCurrent()[0]
@@ -992,245 +883,161 @@ class EasyPG(EPGSelection, Screen):
 		else:
 			self.session.open(MessageBox, text = _('EPGsearch is not installed!'), type = MessageBox.TYPE_INFO)
 
-	def PTfor(self):
+	def goToPrimeTimeNextDay(self):
 		if not self["list"].getCurrent()[0]:
 			return
-		heute = localtime()
-		if not self.PTinit:
-			pt = (heute[0],heute[1],heute[2],self.PThour,self.PTmin,0,heute[6],heute[7],0)
-			self.ask_time = int(mktime(pt))
-			self.PTinit = True
-			if self.ask_time < int(mktime(heute)):
+		today = localtime()
+		if not self.initPrimeTime:
+			primetime = (today[0],today[1],today[2],self.primeTimeHour,self.primeTimeMinute,0,today[6],today[7],0)
+			self.ask_time = int(mktime(primetime))
+			self.initPrimeTime = True
+			if self.ask_time < int(mktime(today)):
 				self.ask_time = self.ask_time + 86400
 		else:
 			self.ask_time = self.ask_time + 86400
 		self["list"].fillMultiEPG(self.services, self.ask_time)
 
-	def PTback(self):
-		heute = localtime()
-		if not self.PTinit:
-			pt = (heute[0],heute[1],heute[2],self.PThour,self.PTmin,0,heute[6],heute[7],0)
-			self.ask_time = int(mktime(pt))
-			self.PTinit = True
+	def goToPrimeTimePreviousDay(self):
+		today = localtime()
+		if not self.initPrimeTime:
+			primetime = (today[0],today[1],today[2],self.primeTimeHour,self.primeTimeMinute,0,today[6],today[7],0)
+			self.ask_time = int(mktime(primetime))
+			self.initPrimeTime = True
 		else:
 			self.ask_time = self.ask_time - 86400
-		if self.ask_time > int(mktime(heute)):
+		if self.ask_time > int(mktime(today)):
 			self["list"].fillMultiEPG(self.services, self.ask_time)
 		else:
 			self["list"].fillMultiEPG(self.services, -1)
-			self.PTinit = False
+			self.initPrimeTime = False
 
-	def SetPT1(self):
-		self.PThour = config.plugins.EasyInfo.Primetime1.value[0]
-		self.PTmin = config.plugins.EasyInfo.Primetime1.value[1]
-		self.GoPrimetime()
+	def setPrimeTime1(self):
+		self.primeTimeHour = config.plugins.EasyInfo.primeTime1.value[0]
+		self.primeTimeMinute = config.plugins.EasyInfo.primeTime1.value[1]
+		self.setNewPrimeTime()
 
-	def SetPT2(self):
-		self.PThour = config.plugins.EasyInfo.Primetime2.value[0]
-		self.PTmin = config.plugins.EasyInfo.Primetime2.value[1]
-		self.GoPrimetime()
+	def setPrimeTime2(self):
+		self.primeTimeHour = config.plugins.EasyInfo.primeTime2.value[0]
+		self.primeTimeMinute = config.plugins.EasyInfo.primeTime2.value[1]
+		self.setNewPrimeTime()
 
-	def SetPT3(self):
-		self.PThour = config.plugins.EasyInfo.Primetime3.value[0]
-		self.PTmin = config.plugins.EasyInfo.Primetime3.value[1]
-		self.GoPrimetime()
+	def setPrimeTime3(self):
+		self.primeTimeHour = config.plugins.EasyInfo.primeTime3.value[0]
+		self.primeTimeMinute = config.plugins.EasyInfo.primeTime3.value[1]
+		self.setNewPrimeTime()
 
-	def einContextMenu(self):
-		self.session.open(ConfigEasyInfo)
+	def openContextMenu(self):
+		self.session.open(EasyInfoConfig)
 
-	def zapForRefr(self):
+	def zapAndRefresh(self):
 		self.zapTo()
-		self.RefrTimer.start(4000, True)
+		self.refreshTimer.start(4000, True)
 
-	def RefreshEPG(self):
-		self.RefrTimer.stop()
+	def refreshEPG(self):
+		self.refreshTimer.stop()
 		self.GoFirst()
 
-
-
-class ESListNext(EPGList):
-	def __init__(self, type=EPG_TYPE_MULTI, selChangedCB=None, timer = None):
-		EPGList.__init__(self, type, selChangedCB, timer)
-		self.l.setFont(0, gFont("Regular", 20))
-		self.l.setFont(1, gFont("Regular", 18))
-		self.l.setItemHeight(50)
-		self.l.setBuildFunc(self.buildMultiEntry)
-		self.breite = 200
-		MyPiconPath = "/"
-
-	def recalcEntrySize(self):
-		esize = self.l.getItemSize()
-		self.breite = esize.width() - 100
-
-	def buildMultiEntry(self, changecount, service, eventId, beginTime, duration, EventName, nowTime, service_name):
-		(clock_pic, rec) = self.getPixmapForEntry(service, eventId, beginTime, duration)
-		res = [ None ]
-		if rec:
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 58, 16, 21, 21, clock_pic))
-		if beginTime is not None and len(EventName) > 60:
-			if nowTime < beginTime:
-				begin = localtime(beginTime)
-				end = localtime(beginTime+duration)
-				res.extend((
-					(eListboxPythonMultiContent.TYPE_TEXT, 0, 4, 10, 20, 1, RT_HALIGN_RIGHT, '>'),
-					(eListboxPythonMultiContent.TYPE_TEXT, 10, 4, 70, 44, 1, RT_HALIGN_LEFT, "%02d.%02d\n%02d.%02d"%(begin[3],begin[4],end[3],end[4])),
-					(eListboxPythonMultiContent.TYPE_TEXT, 80, 1, self.breite, 48, 0, RT_HALIGN_LEFT|RT_VALIGN_TOP|RT_WRAP, EventName)
-				))
-			else:
-				percent = (nowTime - beginTime)*100/duration
-				restzeit = ((beginTime+duration)-nowTime)
-				res.extend((
-					(eListboxPythonMultiContent.TYPE_PROGRESS, 10, 11, 40, 8, percent),
-					(eListboxPythonMultiContent.TYPE_TEXT, 10, 25, 60, 22, 1, RT_HALIGN_LEFT, "+%d:%02d" % (restzeit/3600, (restzeit/60)-((restzeit /3600)*60))),
-					(eListboxPythonMultiContent.TYPE_TEXT, 80, 1, self.breite, 48, 0, RT_HALIGN_LEFT|RT_VALIGN_TOP|RT_WRAP, EventName)
-				))
-		elif beginTime is not None:
-			if nowTime < beginTime:
-				begin = localtime(beginTime)
-				end = localtime(beginTime+duration)
-				res.extend((
-					(eListboxPythonMultiContent.TYPE_TEXT, 0, 4, 10, 20, 1, RT_HALIGN_RIGHT, '>'),
-					(eListboxPythonMultiContent.TYPE_TEXT, 10, 4, 70, 44, 1, RT_HALIGN_LEFT, "%02d.%02d\n%02d.%02d"%(begin[3],begin[4],end[3],end[4])),
-					(eListboxPythonMultiContent.TYPE_TEXT, 80, 1, self.breite, 48, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER|RT_WRAP, EventName)
-				))
-			else:
-				percent = (nowTime - beginTime)*100/duration
-				restzeit = ((beginTime+duration)-nowTime)
-				res.extend((
-					(eListboxPythonMultiContent.TYPE_PROGRESS, 10, 11, 40, 8, percent),
-					(eListboxPythonMultiContent.TYPE_TEXT, 10, 25, 60, 22, 1, RT_HALIGN_LEFT, "+%d:%02d" % (restzeit/3600, (restzeit/60)-((restzeit /3600)*60))),
-					(eListboxPythonMultiContent.TYPE_TEXT, 80, 1, self.breite, 48, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER|RT_WRAP, EventName)
-				))
-		return res
-
-	def moveToService(self,serviceref):
-		if not serviceref:
-			return
-		index = 0
-		refstr = serviceref.toString()
-		for x in self.list:
-			if x[1] == refstr:
-				self.instance.moveSelectionTo(index)
-				break
-			index += 1
-		if x[1] != refstr:
-			self.instance.moveSelectionTo(0)
-
-
-
 class EasySelection(EPGSelection, Screen):
-	if SKINTYPE == 3:
-		skin = """
-		<screen name="EasySelection" backgroundColor="background" flags="wfNoBorder" position="0,0" size="1280,720" title="Easy Selection">
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/lines.png" position="60,35" size="660,650" zPosition="-1"/>
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/lines.png" position="720,35" size="500,650" zPosition="-1"/>
-			<widget name="list" position="60,35" scrollbarMode="showNever" size="660,650" transparent="1"/>
-			<widget name="listN" position="720,35" scrollbarMode="showNever" size="500,650" transparent="1"/>
+	skin = """
+		<screen name="NewEasySelection" backgroundColor="background" flags="wfNoBorder" position="center,0" size="1240,720" title="Easy Selection">
+			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/lines.png" position="20,35" size="660,650" zPosition="-1" scale="stretch" />
+			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/lines.png" position="680,35" size="540,650" zPosition="-1" scale="stretch" />
+			<widget name="list" position="20,35" scrollbarMode="showNever" size="660,650" transparent="1"/>
+			<widget name="listNext" position="680,35" scrollbarMode="showNever" size="540,650" transparent="1"/>
 		</screen>"""
-	elif SKINTYPE == 2:
-		skin = """
-		<screen name="EasySelection" backgroundColor="background" flags="wfNoBorder" position="0,0" size="1024,576" title="Easy Selection">
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/lines.png" position="40,38" size="660,500" zPosition="-1"/>
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/lines.png" position="700,38" size="284,500" zPosition="-1"/>
-			<widget name="list" position="40,38" scrollbarMode="showNever" size="520,500" transparent="1"/>
-			<widget name="listN" position="560,38" scrollbarMode="showNever" size="444,500" transparent="1"/>
-		</screen>
-		"""
-	else:
-		skin = """
-		<screen name="EasySelection" backgroundColor="background" flags="wfNoBorder" position="0,0" size="720,576" title="Easy Selection">
-			<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/lines.png" position="50,38" size="620,500" zPosition="-1"/>
-			<widget name="list" position="50,38" scrollbarMode="showOnDemand" size="620,500" transparent="1"/>
-		</screen>
-		"""
+
 	def __init__(self, session, service, zapFunc=None, eventid=None, bouquetChangeCB=None, serviceChangeCB=None):
 		Screen.__init__(self, session)
 		EPGSelection.__init__(self, session, service, zapFunc, eventid, bouquetChangeCB, serviceChangeCB)
+		EPGSelection.skinName = "NewEasySelection"
+		self.skinName = "NewEasySelection"
+		
 		global EINposition
 		EINposition = 0
-		allbouq = InfoBar_instance.servicelist.getBouquetList()
-		for newpos in range(0, len(allbouq)):
-			if InfoBar_instance.servicelist.getRoot() == allbouq[newpos][1]:
-				EINposition = newpos
+		bouquets = InfoBar_instance.servicelist.getBouquetList()
+		for pos in range(0, len(bouquets)):
+			if InfoBar_instance.servicelist.getRoot() == bouquets[pos][1]:
+				EINposition = pos
 				break
+		
 		self.session = session
-		EPGSelection.skinName = "EasySelection"
-		self["list"] = EvNewList(type = EPG_TYPE_MULTI, selChangedCB = self.onSelectionChanged, timer = session.nav.RecordTimer)
-		self["listN"] = ESListNext(type = EPG_TYPE_MULTI, selChangedCB = self.onSelectionChanged, timer = session.nav.RecordTimer)
-		self.skinName = "EasySelection"
+
+		self["list"] = EasyInfoEventList(type = EPG_TYPE_MULTI, selChangedCB = self.onSelectionChanged, timer = session.nav.RecordTimer)
+		self["listNext"] = EasyInfoEventList(type = EPG_TYPE_MULTI, selChangedCB = self.onSelectionChanged, timer = session.nav.RecordTimer, hasChannelInfo=False)
+
 		self["actions"] = ActionMap(["EPGSelectActions", "OkCancelActions", "DirectionActions"],
 			{
 				"cancel": self.closeScreen,
-				"ok": self.newOKFunc,
+				"ok": self.okPressed,
 				"info": self.infoKeyPressed,
 				"nextBouquet": self.nextBouquet,
 				"prevBouquet": self.prevBouquet,
-				"right": self.right,
-				"rightRepeated": self.right,
-				"left": self.left,
-				"leftRepeated": self.left,
-				"up": self.up,
-				"upRepeated": self.up,
-				"down": self.down,
-				"downRepeated": self.down,
-				"nextService": self.PrimeTimeLook,
-				"prevService": self.NowNextLook
+				"right": self.rightPressed,
+				"rightRepeated": self.rightPressed,
+				"left": self.leftPressed,
+				"leftRepeated": self.leftPressed,
+				"up": self.upPressed,
+				"upRepeated": self.upPressed,
+				"down": self.downPressed,
+				"downRepeated": self.downPressed,
+				"nextService": self.setModePrimeTime,
+				"prevService": self.setModeNowNext,
 			},-1)
-		self.onLayoutFinish.append(self.byLayoutEnd)
+		
+		self.onLayoutFinish.append(self.layoutFinished)
 
-	def byLayoutEnd(self):
-		self["listN"].recalcEntrySize()
-		self["listN"].fillMultiEPG(self.services, -1)
-		self["listN"].moveToService(self.session.nav.getCurrentlyPlayingServiceReference())
-		self["listN"].updateMultiEPG(1)
+	def layoutFinished(self):
+		self["listNext"].fillMultiEPG(self.services, -1)
+		self["listNext"].moveToService(self.session.nav.getCurrentlyPlayingServiceReference())
+		self["listNext"].updateMultiEPG(1)
 
 	def closeScreen(self):
 		self.close(True)
 
-	def newOKFunc(self):
+	def okPressed(self):
 		self.zapTo()
 		self.close(True)
 
-	def left(self):
+	def leftPressed(self):
 		self["list"].instance.moveSelection(self["list"].instance.pageUp)
-		self["listN"].instance.moveSelection(self["list"].instance.pageUp)
+		self["listNext"].instance.moveSelection(self["list"].instance.pageUp)
 
-	def right(self):
+	def rightPressed(self):
 		self["list"].instance.moveSelection(self["list"].instance.pageDown)
-		self["listN"].instance.moveSelection(self["list"].instance.pageDown)
+		self["listNext"].instance.moveSelection(self["list"].instance.pageDown)
 
-	def up(self):
+	def upPressed(self):
 		self["list"].moveUp()
-		self["listN"].moveUp()
+		self["listNext"].moveUp()
 
-	def down(self):
+	def downPressed(self):
 		self["list"].moveDown()
-		self["listN"].moveDown()
+		self["listNext"].moveDown()
 
 	def nextBouquet(self):
 		if self.bouquetChangeCB:
 			self.bouquetChangeCB(1, self)
-			self.byLayoutEnd()
+			self.layoutFinished()
 
 	def prevBouquet(self):
 		if self.bouquetChangeCB:
 			self.bouquetChangeCB(-1, self)
-			self.byLayoutEnd()
+			self.layoutFinished()
 
-	def PrimeTimeLook(self):
-		heute = localtime()
-		pt = (heute[0],heute[1],heute[2],config.plugins.EasyInfo.Primetime2.value[0],config.plugins.EasyInfo.Primetime2.value[1],0,heute[6],heute[7],0)
+	def setModePrimeTime(self):
+		today = localtime()
+		pt = (today[0],today[1],today[2],config.plugins.EasyInfo.primeTime2.value[0],config.plugins.EasyInfo.primeTime2.value[1],0,today[6],today[7],0)
 		ask_time = int(mktime(pt))
-		if ask_time > int(mktime(heute)):
+		if ask_time > int(mktime(today)):
 			self["list"].fillMultiEPG(self.services, ask_time)
-			pt = (heute[0],heute[1],heute[2],config.plugins.EasyInfo.Primetime3.value[0],config.plugins.EasyInfo.Primetime3.value[1],0,heute[6],heute[7],0)
+			pt = (today[0],today[1],today[2],config.plugins.EasyInfo.primeTime3.value[0],config.plugins.EasyInfo.primeTime3.value[1],0,today[6],today[7],0)
 			ask_time = int(mktime(pt))
-			self["listN"].fillMultiEPG(self.services, ask_time)
+			self["listNext"].fillMultiEPG(self.services, ask_time)
 
-	def NowNextLook(self):
+	def setModeNowNext(self):
 		self["list"].fillMultiEPG(self.services, -1)
-		self["listN"].fillMultiEPG(self.services, -1)
-		self["listN"].updateMultiEPG(1)
+		self["listNext"].fillMultiEPG(self.services, -1)
+		self["listNext"].updateMultiEPG(1)
 
 	def infoKeyPressed(self):
 		cur = self["list"].getCurrent()
@@ -1239,15 +1046,3 @@ class EasySelection(EPGSelection, Screen):
 		if ref:
 			InfoBar_instance.servicelist.savedService = ref
 			self.session.openWithCallback(InfoBar_instance.servicelist.SingleServiceEPGClosed, EPGSelection, ref, serviceChangeCB = InfoBar_instance.servicelist.changeServiceCB)
-
-
-
-
-
-
-
-	
-
-
-
-
