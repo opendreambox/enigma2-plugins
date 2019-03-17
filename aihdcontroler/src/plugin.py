@@ -38,13 +38,13 @@ from enigma import eEnv
 
 config.plugins.vhd  = ConfigSubsection()
 config.plugins.vhd.Style = ConfigSelection(default="dmm", choices = [
-				("dmm", _("DMM-Board")),
-				("shadow", _("Shadow")),
-				("beyonddreams", _("BeyondDreams-HD")),
-				("whiteline", _("WhiteLine")),
-				("liga", _("LigaLine")),
-				("dc", _("Concinnity")),
-				("bluesofdream", _("BluesOfDream-HD"))
+				("dmm", "DMM-Board"),
+				("shadow", "Shadow"),
+				("beyonddreams", "BeyondDreams-HD"),
+				("whiteline", "WhiteLine"),
+				("liga", "LigaLine"),
+				("dc", "Concinnity"),
+				("bluesofdream", "BluesOfDream-HD")
 				])
 config.plugins.vhd.ChannSelector = ConfigSelection(default="full", choices = [
 				("full", _("Full")),
@@ -171,7 +171,7 @@ class AIHDsetup(ConfigListScreen, Screen):
 				xFile.writelines(xx)
 			xFile.close()
 		except:
-			self.session.open(MessageBox, _("Error by processing the skin file !!!"), MessageBox.TYPE_ERROR)
+			self.session.open(MessageBox, _("Error processing the skin file!"), MessageBox.TYPE_ERROR)
 		restartbox = self.session.openWithCallback(self.restartGUI,MessageBox,_("GUI needs a restart to apply a new skin.\nDo you want to Restart the GUI now?"), MessageBox.TYPE_YESNO)
 		restartbox.setTitle(_("Restart GUI now?"))
 
