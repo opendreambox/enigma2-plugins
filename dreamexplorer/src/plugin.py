@@ -833,7 +833,7 @@ class CopyMoveManager(Screen):
 		self.skin_path = plugin_path
 		self.sesion = session
 		self.source = source
-		self["Warning"] = Label(_("WARNING! You're about to move or copy\n" + source + "\nto:"))
+		self["Warning"] = Label(_("WARNING! You're about to move or copy\n%s\nto:") %(source))
 		self["TargetDir"] = myFileList(config.plugins.DreamExplorer.CopyDest.value, showDirectories = True, showFiles = False, matchingPattern = "^.*\.*", useServiceRef = False)
 		
 		self["actions"] = ActionMap(["WizardActions", "ColorActions"],
