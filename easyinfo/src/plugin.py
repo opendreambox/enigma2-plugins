@@ -184,31 +184,64 @@ def getPluginByName(sstr):
 			break
 	return sret
 
-def EasyInfoPanelEntryComponent(key, text):
-	res = [ text ]
-	if pathExists('/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/icons/'):
-		EasyInfoIconsPath = '/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/icons/'
-	else:
-		EasyInfoIconsPath = '/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/'
-	bpng = LoadPixmap(EasyInfoIconsPath + "key-" + text[0] + ".png")
-	if bpng is not None:
-		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 0, 5, 5, 50, bpng))
-	png = LoadPixmap(EasyInfoIconsPath + key + ".png")
-	if png is not None:
-		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 5, 5, 100, 50, png))
-	if not config.plugins.EasyInfo.showEventInfoFirst.value:
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 115, 17, 300, 35, 0, RT_HALIGN_LEFT, getPluginByName(text[1])))
-	return res
-
 class EasyInfoPanelList(MenuList):
-	def __init__(self, list, selection = 0, enableWrapAround=True):
+	SKIN_COMPONENT_KEY = "EasyInfoPanelList"
+	SKIN_COMPONENT_ITEM_HEIGHT = "itemHeight"
+	SKIN_COMPONENT_TEXT_WIDTH = "textWidth"
+	SKIN_COMPONENT_TEXT_HEIGHT = "textHeight"
+	SKIN_COMPONENT_TEXT_XOFFSET = "textXOffset"
+	SKIN_COMPONENT_TEXT_YOFFSET = "textYOffset"
+	SKIN_COMPONENT_ICON_WIDTH = "iconWidth"
+	SKIN_COMPONENT_ICON_HEIGHT = "iconHeight"
+	SKIN_COMPONENT_ICON_XOFFSET = "iconXOffset"
+	SKIN_COMPONENT_ICON_YOFFSET = "iconYOffset"
+	SKIN_COMPONENT_KEYICON_WIDTH = "keyIconWidth"
+	SKIN_COMPONENT_KEYICON_HEIGHT = "keyIconHeight"
+	SKIN_COMPONENT_KEYICON_XOFFSET = "keyIconXOffset"
+	SKIN_COMPONENT_KEYICON_YOFFSET = "keyIconYOffset"
+			
+	def __init__(self, list, enableWrapAround=True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-		self.l.setFont(0, gFont("Regular", 20))
-		self.l.setItemHeight(60)
-		self.selection = selection
-	def postWidgetCreate(self, instance):
-		MenuList.postWidgetCreate(self, instance)
-		self.moveToIndex(self.selection)
+
+		if pathExists('/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/icons/'):
+			self.easyInfoIconsPath = '/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/icons/'
+		else:
+			self.easyInfoIconsPath = '/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/'
+		
+		sizes = componentSizes[EasyInfoPanelList.SKIN_COMPONENT_KEY]
+		self.itemHeight = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_ITEM_HEIGHT, 60)
+		self.textWidth = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_TEXT_WIDTH, 300)
+		self.textHeight = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_TEXT_HEIGHT, 60)
+		self.textXOffset = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_TEXT_XOFFSET, 115)
+		self.textYOffset = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_TEXT_YOFFSET, 0)		
+		self.iconWidth = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_ICON_WIDTH, 100)
+		self.iconHeight = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_ICON_HEIGHT, 50)
+		self.iconXOffset = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_ICON_XOFFSET, 5)
+		self.iconYOffset = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_ICON_YOFFSET, 5)
+		self.keyIconWidth = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_KEYICON_WIDTH, 5)
+		self.keyIconHeight = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_KEYICON_HEIGHT, 50)
+		self.keyIconXOffset = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_KEYICON_XOFFSET, 0)
+		self.keyIconYOffset = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_KEYICON_YOFFSET, 5)
+		
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
+		self.l.setItemHeight(self.itemHeight)
+		self.l.setBuildFunc(self.buildEntry)
+		
+	def buildEntry(self, func, key):
+		res = [ None ]
+		
+		text = getPluginByName(func)
+		
+		bpng = LoadPixmap(self.easyInfoIconsPath + "key-" + key + ".png")
+		if bpng is not None:
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.keyIconXOffset, self.keyIconYOffset, self.keyIconWidth, self.keyIconHeight, bpng))
+		png = LoadPixmap(self.easyInfoIconsPath + func + ".png")
+		if png is not None:
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.iconXOffset, self.iconYOffset, self.iconWidth, self.iconHeight, png))		
+		if not config.plugins.EasyInfo.showEventInfoFirst.value:
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, self.textXOffset, self.textYOffset, self.textWidth, self.textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, getPluginByName(text)))
+		return res	
 
 class EasyInfoConfig(ConfigListScreen, Screen):
 	skin = """
@@ -261,13 +294,13 @@ class EasyInfoConfig(ConfigListScreen, Screen):
 class EasyInfo(Screen):
 	if not config.plugins.EasyInfo.showEventInfoFirst.value:
 		skin = """
-		<screen flags="wfNoBorder" position="center,center" size="500,740" title="Easy Info">
+		<screen name="EasyInfo" flags="wfNoBorder" position="center,center" size="500,740" title="Easy Info">
 			<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/bg.png" position="0,0" size="500,740"/>
 			<widget name="list" position="70,40" size="360,660" scrollbarMode="showNever" transparent="1" zPosition="2"/>
 		</screen>"""
 	else:
 		skin = """
-		<screen backgroundColor="background" flags="wfNoBorder" position="center,0" size="1280,720" title="Easy Info">
+		<screen name="EventViewWithEasyInfo" backgroundColor="background" flags="wfNoBorder" position="center,0" size="1280,720" title="Easy Info">
 			<widget name="list" position="55,30" size="110,660" scrollbarMode="showNever" transparent="1" zPosition="2"/>
 			<eLabel backgroundColor="#666666" position="250,359" size="1280,2"/>
 			<widget font="Regular;24" foregroundColor="#fcc000" position="630,50" render="Label" size="600,30" source="session.CurrentService" transparent="1" zPosition="1">
@@ -312,62 +345,20 @@ class EasyInfo(Screen):
 		self.list = []
 		self.__keys = []
 		EasyInfoPluginsList = []
+		
+		if not config.plugins.EasyInfo.showEventInfoFirst.value:
+			self.skinName = "EasyInfo"
+		else:
+			self.skinName = "EventViewWithEasyInfo"
+		
 
 		self["key_info"] = StaticText(" ")
 		self["key_yellow"] = StaticText(" ")
 		self["key_green"] = StaticText(" ")
 		self["key_red"] = StaticText(" ")
 		self["key_blue"] = StaticText(" ")
-
-		if config.plugins.EasyInfo.pos1.value != "no":
-			self.__keys.append(config.plugins.EasyInfo.pos1.value)
-			EasyInfoPluginsList.append(("info", config.plugins.EasyInfo.pos1.value))
-			self["key_info"].setText(_(getPluginByName(config.plugins.EasyInfo.pos1.value)))
-		if config.plugins.EasyInfo.pos2.value != "no":
-			self.__keys.append(config.plugins.EasyInfo.pos2.value)
-			EasyInfoPluginsList.append(("red", config.plugins.EasyInfo.pos2.value))
-			self["key_red"].setText(_(getPluginByName(config.plugins.EasyInfo.pos2.value)))
-		if config.plugins.EasyInfo.pos3.value != "no":
-			self.__keys.append(config.plugins.EasyInfo.pos3.value)
-			EasyInfoPluginsList.append(("green", config.plugins.EasyInfo.pos3.value))
-			self["key_green"].setText(_(getPluginByName(config.plugins.EasyInfo.pos3.value)))
-		if config.plugins.EasyInfo.pos4.value != "no":
-			self.__keys.append(config.plugins.EasyInfo.pos4.value)
-			EasyInfoPluginsList.append(("yellow", config.plugins.EasyInfo.pos4.value))
-			self["key_yellow"].setText(_(getPluginByName(config.plugins.EasyInfo.pos4.value)))
-		if config.plugins.EasyInfo.pos5.value != "no":
-			self.__keys.append(config.plugins.EasyInfo.pos5.value)
-			EasyInfoPluginsList.append(("blue", config.plugins.EasyInfo.pos5.value))
-			self["key_blue"].setText(_(getPluginByName(config.plugins.EasyInfo.pos5.value)))
-		if config.plugins.EasyInfo.pos6.value != "no":
-			self.__keys.append(config.plugins.EasyInfo.pos6.value)
-			EasyInfoPluginsList.append(("x", config.plugins.EasyInfo.pos6.value))
-		if config.plugins.EasyInfo.pos7.value != "no":
-			self.__keys.append(config.plugins.EasyInfo.pos7.value)
-			EasyInfoPluginsList.append(("x", config.plugins.EasyInfo.pos7.value))
-		if config.plugins.EasyInfo.pos8.value != "no":
-			self.__keys.append(config.plugins.EasyInfo.pos8.value)
-			EasyInfoPluginsList.append(("x", config.plugins.EasyInfo.pos8.value))
-		if config.plugins.EasyInfo.pos9.value != "no":
-			self.__keys.append(config.plugins.EasyInfo.pos9.value)
-			EasyInfoPluginsList.append(("x", config.plugins.EasyInfo.pos9.value))
-		if config.plugins.EasyInfo.pos10.value != "no":
-			self.__keys.append(config.plugins.EasyInfo.pos10.value)
-			EasyInfoPluginsList.append(("x", config.plugins.EasyInfo.pos10.value))
-		if config.plugins.EasyInfo.pos11.value != "no":
-			self.__keys.append(config.plugins.EasyInfo.pos11.value)
-			EasyInfoPluginsList.append(("x", config.plugins.EasyInfo.pos11.value))
-
-		self.keymap = {}
-		pos = 0
-		for x in EasyInfoPluginsList:
-			strpos = str(self.__keys[pos])
-			self.list.append(EasyInfoPanelEntryComponent(key = strpos, text = x))
-			if self.__keys[pos] != "":
-				self.keymap[self.__keys[pos]] = EasyInfoPluginsList[pos]
-			pos += 1
-			
-		self["list"] = EasyInfoPanelList(list = self.list, selection = 0)
+		
+		self["list"] = EasyInfoPanelList(self.getMenuItems())
 		self["actions"] = ActionMap(["WizardActions", "MenuActions", "ColorActions", "EPGSelectActions"],
 		{
 			"ok": self.okPressed,
@@ -380,18 +371,52 @@ class EasyInfo(Screen):
 			"info": self.infoPressed
 		}, -1)
 
+	def getMenuItems(self):
+		list = []
+		if config.plugins.EasyInfo.pos1.value != "no":
+			self["key_info"].setText(_(getPluginByName(config.plugins.EasyInfo.pos1.value)))
+			list.append((config.plugins.EasyInfo.pos1.value,"info"))
+		if config.plugins.EasyInfo.pos2.value != "no":
+			self["key_red"].setText(_(getPluginByName(config.plugins.EasyInfo.pos2.value)))
+			list.append((config.plugins.EasyInfo.pos2.value,"red"))
+		if config.plugins.EasyInfo.pos3.value != "no":
+			self["key_green"].setText(_(getPluginByName(config.plugins.EasyInfo.pos3.value)))
+			list.append((config.plugins.EasyInfo.pos3.value,"green"))
+		if config.plugins.EasyInfo.pos4.value != "no":
+			self["key_yellow"].setText(_(getPluginByName(config.plugins.EasyInfo.pos4.value)))
+			list.append((config.plugins.EasyInfo.pos4.value,"yellow"))			
+		if config.plugins.EasyInfo.pos5.value != "no":
+			self["key_blue"].setText(_(getPluginByName(config.plugins.EasyInfo.pos5.value)))
+			list.append((config.plugins.EasyInfo.pos5.value,"blue"))
+		if config.plugins.EasyInfo.pos6.value != "no":
+			list.append((config.plugins.EasyInfo.pos6.value,"x"))
+		if config.plugins.EasyInfo.pos7.value != "no":
+			list.append((config.plugins.EasyInfo.pos7.value,"x"))
+		if config.plugins.EasyInfo.pos8.value != "no":
+			list.append((config.plugins.EasyInfo.pos8.value,"x"))
+		if config.plugins.EasyInfo.pos9.value != "no":
+			list.append((config.plugins.EasyInfo.pos9.value,"x"))
+		if config.plugins.EasyInfo.pos10.value != "no":
+			list.append((config.plugins.EasyInfo.pos10.value,"x"))
+		if config.plugins.EasyInfo.pos11.value != "no":
+			list.append((config.plugins.EasyInfo.pos11.value,"x"))	
+			
+		return list
+
 	def cancel(self):
 		self.close(None)
 
 	def okPressed(self):
 		currentSelection = self["list"].l.getCurrentSelection()
+		print "answer", currentSelection
 		if currentSelection:
-			answer = currentSelection[0]
-			answer = answer and answer[1]
-			EasyInfoCallbackFunc(answer)
+			EasyInfoCallbackFunc(currentSelection[0])
 
 	def openConfig(self):
-		self.session.open(EasyInfoConfig)
+		self.session.openWithCallback(self.configCallback, EasyInfoConfig)
+
+	def configCallback(self):
+		self["list"].setList(self.getMenuItems())
 
 	def infoPressed(self):
 		self["list"].moveToIndex(0)
