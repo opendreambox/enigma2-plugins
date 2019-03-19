@@ -47,9 +47,9 @@ def InfoBarSeek__serviceStarted(self):
 		self.skipSeekTime, self.seriesName = self.database.getSkipTime(title[0], title[1])
 
 		if self.skipSeekTime == 0:
-			msgtxt = _("No skip time saved for:\n'%s'") % title[0]
+			msgtxt = _("No skip time saved for\n%s") % title[0]
 		else:
-			msgtxt = _("Found saved skip time for:\n'%s'\n%s Sek") % (self.seriesName, str(self.skipSeekTime / 90000))
+			msgtxt = _("Saved skip time found for\n%s:\n%s seconds") %(self.seriesName, str(self.skipSeekTime / 90000))
 		Notifications.AddNotification(MessageBox, msgtxt, MessageBox.TYPE_INFO, timeout=3)
 
 def InfoBarSeek__seekableStatusChanged(self):
@@ -92,7 +92,7 @@ def InfoBarSeek__init__(self, actionmap = "InfobarSeekActions"):
 			setIntroTime()
 		else:
 			if config.plugins.skipintro.show_skipmsg.value:
-				self.session.open(MessageBox, "SkipIntro with found seektime for:\n'" + self.seriesName + "'\n" + str(self.skipSeekTime / 90000) + " Sek", MessageBox.TYPE_INFO, timeout=3)
+				self.session.open(MessageBox, _("SkipIntro found seek time for\n%s:\n%s seconds") %(self.seriesName,str(self.skipSeekTime / 90000)), MessageBox.TYPE_INFO, timeout=3)
 			self.doSeekRelative(self.skipSeekTime)
 
 	def skipIntro_long():
@@ -124,10 +124,10 @@ def InfoBarSeek__init__(self, actionmap = "InfobarSeekActions"):
 			if self.setSeasonIntroTime:
 				db_title = title[0] + title[1]
 
-			msgtxt = "Stop SetIntroTime for:\n'" + db_title + "'\n" + str(self.skipSeekTime / 90000) + " Sek"
-			msgtxt += " (-%s Sek)" % config.plugins.skipintro.skiptime_decrease.value
+			msgtxt = _("Stopping time measurment for intro duration for\n%s.\nIntro duration: %s seconds") %(db_title, str(self.skipSeekTime / 90000))
+			msgtxt += _(" (-%s seconds).") %(config.plugins.skipintro.skiptime_decrease.value)
 			if self.setSeasonIntroTime:
-				msgtxt += "\nsave with season (long key pressed)"
+				msgtxt += _("\nIntro duration will be saved with season.")
 			self.session.open(MessageBox, msgtxt, MessageBox.TYPE_INFO, timeout=3)
 
 			#reduce the calculated skiptime
@@ -151,7 +151,7 @@ def InfoBarSeek__init__(self, actionmap = "InfobarSeekActions"):
 				else:
 					self.skipTimeStartPos = self.skipTimeStartPos[1]
 			title = getServiceName(self)
-			self.session.open(MessageBox, "Start SetIntroTime for:\n'" + title[0] + "'", MessageBox.TYPE_INFO, timeout=3)
+			self.session.open(MessageBox, _("Starting time measurement for intro duration for:\n%s") %(title[0]), MessageBox.TYPE_INFO, timeout=3)
 			self.setSkipTimeStart = True
 
 	self["SkipIntroSeekActions"] = HelpableActionMap(self, "SkipIntroSeekActions",

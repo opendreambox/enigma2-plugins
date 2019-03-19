@@ -7,6 +7,7 @@ from Components.ActionMap import ActionMap
 from Components.config import config, ConfigInteger, ConfigSelection, getConfigListEntry, NoSave
 from Components.Button import Button
 from Components.Label import Label
+from Components.ScrollLabel import ScrollLabel
 from Components.Sources.StaticText import StaticText
 from enigma import getDesktop
 from SkipIntroDatabase import SIDatabase
@@ -157,7 +158,7 @@ class SISetupScreen(ConfigListScreen, Screen):
 		self.session.openWithCallback(
 			self.menuCallback,
 			ChoiceBox,
-			title = _('Menü SkipIntro'),
+			title = _('Menu SkipIntro'),
 			list = list,
 		)
 
@@ -247,10 +248,10 @@ class SISettingsScreen(ConfigListScreen, Screen):
 
 	def populateList(self):
 		self.list = [
-			getConfigListEntry(_("Show skip message"), config.plugins.skipintro.show_skipmsg, _("Displays a message if you press the button '2' to skip with saved skip time.")),
-			getConfigListEntry(_("Show video start message"), config.plugins.skipintro.show_videostartmsg, _("Displays a message when the video starts if a skip time has already been saved for this series.")),
-			getConfigListEntry(_("Auto reduce calculated skip time (sec)"), config.plugins.skipintro.skiptime_decrease, _("Automatically reduces the skip time by the selected time in seconds when saving the skip time.")),
-			getConfigListEntry(_("Pattern for series name (title)"), config.plugins.skipintro.title_pattern, _("Select your title pattern to identify the series from the record title. If disabled the complete record title is used.")),
+			getConfigListEntry(_("Show message when skipping intro"), config.plugins.skipintro.show_skipmsg, _("Displays a message when button '2' is pressed to skip the intro.")),
+			getConfigListEntry(_("Show message when playback of recording starts"), config.plugins.skipintro.show_videostartmsg, _("Displays a message when the playback of the recording starts and a skip time has already been saved for this series.")),
+			getConfigListEntry(_("Auto-reduce calculated skip time (in seconds)"), config.plugins.skipintro.skiptime_decrease, _("Automatically reduces the skip time by the defined number of seconds when saving the skip time.")),
+			getConfigListEntry(_("Pattern for series name (title)"), config.plugins.skipintro.title_pattern, _("Select the title pattern to identify the series from the recording title. If disabled the complete recording title is used.")),
 		#self.list.append( getConfigListEntry(_("Identify series with season"), config.plugins.skipintro.save_season, _("Identify the series from the record title with the season. So you can use different skip times with different seasons.")) )
 		]
 		self["config"].list = self.list
@@ -279,19 +280,19 @@ class SIHelpScreen(Screen):
 		Screen.__init__(self, session)
 		self.session = session
 
-		help_txt  = "\nTastenbelegung beim Abspielen einer Aufnahme\n\n"
-		help_txt += "=== Funktionen der normalen Taste 2 =====\n"
-		help_txt += " - Springen wenn bereits eine Zeit gespeichert ist, oder\n"
-		help_txt += " - Starten der Zeit-Messung wenn noch keine Zeit gespeichert ist, oder\n"
-		help_txt += " - normales Stoppen der Zeit-Messung (Speichern ohne Staffelnummer)\n\n"
-		help_txt += "=== Funktionen des langen Tastendrucks der Taste 2 =====\n"
-		help_txt += " - Starten einer neuen Zeit-Messung wenn bereits eine Zeit gespeichert ist, oder\n"
-		help_txt += " - besonderes Stoppen der Zeit-Messung (Speichern mit Staffelnummer)\n\n"
-		help_txt += "Die Taste 8 dient als Alternative für die Funktion '2 lang', falls man Probleme mit dem langen Tastendruck hat."
-		help_txt += "\n\nKonfiguration des Titel Pattern\n\n"
-		help_txt += "In der Datei '/etc/enigma2/SkipIntro.pattern.json' sind die Pattern hinterlegt die in den Einstellungen ausgewählt werden können."
+		help_txt = _("==== Remote control button definitions when playing a recording ====\n\n")
+		help_txt += _("=== Remote control button 2 ===\n")
+		help_txt += _("- skip by a stored skip time or\n")
+		help_txt += _("- start timekeeping when no skip time is stored or\n")
+		help_txt += _("- stop timekeeping (save without season number)\n\n")
+		help_txt += _("=== Remote control button 2 (long press) ===\n")
+		help_txt += _("- start timekeeping when skip time is already stored or \n")
+		help_txt += _("- stop timekeeping (save with season number)\n\n")
+		help_txt += _("Remote control button 8 can be used as an alternative to 2 (long press).\n\n")
+		help_txt += _("==== Configuration of title pattern ====\n\n")
+		help_txt += _("Pattern stored in '/etc/enigma2/SkipIntro.pattern.json' can be selected in settings")
 
-		self["help"] = Label(help_txt)
+		self["help"] = ScrollLabel(help_txt)
 
 		self["setupActions"] = ActionMap(["SetupActions", "ColorActions"],
 										 {
@@ -303,4 +304,4 @@ class SIHelpScreen(Screen):
 		self.onLayoutFinish.append(self.layoutFinished)
 
 	def layoutFinished(self):
-		self.setTitle(_("SkipIntro Version %s - HelpScreen") % version)
+		self.setTitle(_("SkipIntro Version %s - Help") % version)
