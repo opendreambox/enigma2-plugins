@@ -240,7 +240,7 @@ class EasyInfoPanelList(MenuList):
 		if png is not None:
 			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.iconXOffset, self.iconYOffset, self.iconWidth, self.iconHeight, png))		
 		if not config.plugins.EasyInfo.showEventInfoFirst.value:
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, self.textXOffset, self.textYOffset, self.textWidth, self.textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, getPluginByName(text)))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, self.textXOffset, self.textYOffset, self.textWidth, self.textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, text))
 		return res	
 
 class EasyInfoConfig(ConfigListScreen, Screen):
