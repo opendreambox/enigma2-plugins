@@ -79,7 +79,7 @@ class MPHelp(Screen):
 			title = "Invalid Help Page"
 			text = "You managed to jump to an invalid page. Stop it :-)"
 			newPage = self.curPage
-		self["title"].text = title.encode('utf-8', 'ignore')
+		self["Title"].text = title.encode('utf-8', 'ignore')
 		self["detailtext"].setText(text.encode('utf-8', 'ignore'))
 		self.curPage = newPage
 	
