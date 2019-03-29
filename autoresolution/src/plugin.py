@@ -11,6 +11,7 @@ from Components.Sources.StaticText import StaticText
 from enigma import iPlayableService, iServiceInformation, eTimer, getDesktop
 from Components.DisplayHardware import DisplayHardware
 from Plugins.Plugin import PluginDescriptor
+import re
 
 usable = False
 preferedmodes = None
@@ -249,16 +250,7 @@ class AutoRes(Screen):
 	def changeVideomode(self):
 		if usable:
 			mode = self.lastmode
-			if mode.find("0p30") != -1 or mode.find("0p24") != -1 or mode.find("0p25") != -1:
-				print "[AutoRes] switching to", mode
-				v = open('/proc/stb/video/videomode' , "w")
-				v.write("%s\n" % mode)
-				v.close()
-				resolutionlabel["restxt"].setText("Videomode: %s" % mode)
-				if config.plugins.autoresolution.showinfo.value:
-					resolutionlabel.show()
-			else:
-				self.setMode(mode)
+			self.setMode(mode)
 			if config.plugins.autoresolution.testmode.value and default[0] != mode:
 				resolutionlabeltxt = "Videomode: %s" % mode
 				self.session.openWithCallback(
@@ -279,8 +271,15 @@ class AutoRes(Screen):
 			self.setMode(default[0])
 
 	def setMode(self, mode, set=True):
-		rate = config.av.videorate[mode].value
 		port_txt = "HDMI" if port == "DVI" else port
+
+		if mode.find("0p30") != -1 or mode.find("0p24") != -1 or mode.find("0p25") != -1:
+			match = re.search(r"(\d*?[ip])(\d*?)$", mode)
+			mode = match.group(1)
+			rate = match.group(2) + "Hz"
+		else:
+			rate = config.av.videorate[mode].value
+
 		resolutionlabel["restxt"].setText("Videomode: %s %s %s" % (port_txt, mode, rate))
 		if set:
 			print "[AutoRes] switching to %s %s %s" % (port_txt, mode, rate)
