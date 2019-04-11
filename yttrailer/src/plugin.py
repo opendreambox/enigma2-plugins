@@ -19,7 +19,6 @@
 #  This applies to the source code as a whole as well as to parts of it, unless
 #  explicitely stated otherwise.
 
-from __init__ import decrypt_block, validate_cert, read_random, rootkey, l2key
 from Screens.Screen import Screen
 from Plugins.Plugin import PluginDescriptor
 from Components.ActionMap import ActionMap, HelpableActionMap
@@ -27,7 +26,7 @@ from Components.PluginComponent import plugins
 from Plugins.Plugin import PluginDescriptor
 from Components.Sources.StaticText import StaticText
 from Components.GUIComponent import GUIComponent
-from enigma import eServiceReference,  RT_WRAP, RT_VALIGN_CENTER, RT_HALIGN_LEFT, gFont, eListbox, eListboxPythonMultiContent, eTPM
+from enigma import eServiceReference,  RT_WRAP, RT_VALIGN_CENTER, RT_HALIGN_LEFT, gFont, eListbox, eListboxPythonMultiContent
 
 from Components.config import config, ConfigSubsection, ConfigSelection, getConfigListEntry, configfile, ConfigText, ConfigInteger, ConfigYesNo
 from Components.ConfigList import ConfigListScreen
@@ -41,8 +40,6 @@ config.plugins.yttrailer.show_in_extensionsmenu = ConfigYesNo(default = False)
 config.plugins.yttrailer.ext_descr = ConfigText(default="german", fixed_size = False)
 config.plugins.yttrailer.max_results =  ConfigInteger(5,limits = (1, 10))
 config.plugins.yttrailer.close_player_with_exit =  ConfigYesNo(default = False)
-
-etpm = eTPM()
 
 from Plugins.SystemPlugins.TubeLib.youtube.Base import buildYoutube
 from Plugins.SystemPlugins.TubeLib.youtube.Search import Search
@@ -78,7 +75,6 @@ class YTTrailer:
 		self.session = session
 		self._youtube = None
 		self._query = None
-		self.l3cert = etpm.getData(eTPM.DT_LEVEL3_CERT)
 
 	def showTrailer(self, eventname):
 		if eventname:
