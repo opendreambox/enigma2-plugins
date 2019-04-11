@@ -1,7 +1,6 @@
 # -*- coding: iso-8859-1 -*-
 from Tools.Log import Log
 
-from __init__ import decrypt_block
 from socket import gaierror, error
 import os, httplib
 from urllib import quote
@@ -16,19 +15,6 @@ from Plugins.SystemPlugins.TubeLib.youtube.VideoCategories import VideoCategorie
 from Plugins.SystemPlugins.TubeLib.youtube.YoutubeAuth import YoutubeAuth
 
 from Tools.Directories import resolveFilename, SCOPE_CONFIG
-
-def validate_cert(cert, key):
-	buf = decrypt_block(cert[8:], key)
-	if buf is None:
-		return None
-	return buf[36:107] + cert[139:196]
-
-def get_rnd():
-	try:
-		rnd = os.urandom(8)
-		return rnd
-	except:
-		return None
 
 class GoogleSuggestions():
 	def __init__(self):
