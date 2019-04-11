@@ -25,7 +25,6 @@ from time import time
 from WebScreens import *
 #DO NOT REMOVE THIS IMPORT
 
-from __init__ import decrypt_block
 from os import urandom
 
 # The classes and Function in File handle all ScreenPage-based requests
@@ -601,20 +600,3 @@ def requestFinish(handler, request, requestAlreadyFinished = False):
 			pass
 
 	del handler
-
-def validate_certificate(cert, key):
-	buf = decrypt_block(cert[8:], key)
-	if buf is None:
-		return None
-	return buf[36:107] + cert[139:196]
-
-def get_random():
-	try:
-		xor = lambda a,b: ''.join(chr(ord(c)^ord(d)) for c,d in zip(a,b*100))
-		random = urandom(8)
-		x = str(time())[-8:]
-		result = xor(random, x)
-
-		return result
-	except:
-		return None
