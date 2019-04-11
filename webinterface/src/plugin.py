@@ -1,6 +1,6 @@
 Version = '$Header$';
 
-from enigma import eConsoleAppContainer, eTPM
+from enigma import eConsoleAppContainer
 from Plugins.Plugin import PluginDescriptor
 
 from Components.config import config, ConfigBoolean, ConfigSubsection, ConfigInteger, ConfigYesNo, ConfigText, ConfigOnOff
@@ -24,15 +24,12 @@ from OpenSSL import SSL, crypto
 from time import gmtime
 from os.path import isfile as os_isfile, exists as os_exists
 
-from __init__ import __version__, decrypt_block
-from webif import get_random, validate_certificate
+from __init__ import __version__
 
 import random, uuid, time, hashlib
 
 from netaddr import IPNetwork
 
-tpm = eTPM()
-rootkey = ['\x9f', '|', '\xe4', 'G', '\xc9', '\xb4', '\xf4', '#', '&', '\xce', '\xb3', '\xfe', '\xda', '\xc9', 'U', '`', '\xd8', '\x8c', 's', 'o', '\x90', '\x9b', '\\', 'b', '\xc0', '\x89', '\xd1', '\x8c', '\x9e', 'J', 'T', '\xc5', 'X', '\xa1', '\xb8', '\x13', '5', 'E', '\x02', '\xc9', '\xb2', '\xe6', 't', '\x89', '\xde', '\xcd', '\x9d', '\x11', '\xdd', '\xc7', '\xf4', '\xe4', '\xe4', '\xbc', '\xdb', '\x9c', '\xea', '}', '\xad', '\xda', 't', 'r', '\x9b', '\xdc', '\xbc', '\x18', '3', '\xe7', '\xaf', '|', '\xae', '\x0c', '\xe3', '\xb5', '\x84', '\x8d', '\r', '\x8d', '\x9d', '2', '\xd0', '\xce', '\xd5', 'q', '\t', '\x84', 'c', '\xa8', ')', '\x99', '\xdc', '<', '"', 'x', '\xe8', '\x87', '\x8f', '\x02', ';', 'S', 'm', '\xd5', '\xf0', '\xa3', '_', '\xb7', 'T', '\t', '\xde', '\xa7', '\xf1', '\xc9', '\xae', '\x8a', '\xd7', '\xd2', '\xcf', '\xb2', '.', '\x13', '\xfb', '\xac', 'j', '\xdf', '\xb1', '\x1d', ':', '?']
 hw = HardwareInfo()
 #CONFIG INIT
 
@@ -77,10 +74,9 @@ CERT_FILE = resolveFilename(SCOPE_CONFIG, "cert.pem")
 #===============================================================================
 class Closer:
 	counter = 0
-	def __init__(self, session, callback=None, l2k=None):
+	def __init__(self, session, callback=None):
 		self.callback = callback
 		self.session = session
-		self.l2k = l2k
 #===============================================================================
 # Closes all running Instances of the Webinterface
 #===============================================================================
@@ -98,7 +94,7 @@ class Closer:
 		running_defered = []
 		if self.counter < 1:
 			if self.callback is not None:
-				self.callback(self.session, self.l2k)
+				self.callback(self.session)
 
 #===============================================================================
 # #Is it already down?
@@ -107,7 +103,7 @@ class Closer:
 		self.counter -= 1
 		if self.counter < 1:
 			if self.callback is not None:
-				self.callback(self.session, self.l2k)
+				self.callback(self.session)
 
 def installCertificates(session):
 	if not os_exists(CERT_FILE) \
@@ -148,7 +144,7 @@ def installCertificates(session):
 #===============================================================================
 # restart the Webinterface for all configured Interfaces
 #===============================================================================
-def restartWebserver(session, l2k):
+def restartWebserver(session):
 	try:
 		del session.mediaplayer
 		del session.messageboxanswer
@@ -159,14 +155,14 @@ def restartWebserver(session, l2k):
 
 	global running_defered
 	if len(running_defered) > 0:
-		Closer(session, startWebserver, l2k).stop()
+		Closer(session, startWebserver).stop()
 	else:
-		startWebserver(session, l2k)
+		startWebserver(session)
 
 #===============================================================================
 # start the Webinterface for all configured Interfaces
 #===============================================================================
-def startWebserver(session, l2k):
+def startWebserver(session):
 	global running_defered
 	global toplevel
 
@@ -193,7 +189,7 @@ def startWebserver(session, l2k):
 		port = config.plugins.Webinterface.http.port.value
 		auth = config.plugins.Webinterface.http.auth.value
 		if config.plugins.Webinterface.http.enabled.value is True:
-			ret = startServerInstance(session, port, useauth=auth, l2k=l2k)
+			ret = startServerInstance(session, port, useauth=auth)
 			if not ret:
 				errors = "%s port %i\n" %(errors, port)
 			else:
@@ -206,10 +202,10 @@ def startWebserver(session, l2k):
 			local4mapped = "::ffff:127.0.0.1"
 			local6 = "::1"
 
-			ret = startServerInstance(session, 80, useauth=auth, l2k=l2k, ipaddress=local4)
+			ret = startServerInstance(session, 80, useauth=auth, ipaddress=local4)
 			if not ret:
 				errors = "%s%s:%i\n" %(errors, local4, 80)
-			ret = startServerInstance(session, 80, useauth=auth, l2k=l2k, ipaddress=local4mapped, ipaddress2=local6)
+			ret = startServerInstance(session, 80, useauth=auth, ipaddress=local4mapped, ipaddress2=local6)
 			#ip6 is optional
 #			if not ret:
 #				errors = "%s%s/%s:%i\n" %(errors, local4mapped, local6, 80)
@@ -219,7 +215,7 @@ def startWebserver(session, l2k):
 			sport = config.plugins.Webinterface.https.port.value
 			sauth = config.plugins.Webinterface.https.auth.value
 
-			ret = startServerInstance(session, sport, useauth=sauth, l2k=l2k, usessl=True)
+			ret = startServerInstance(session, sport, useauth=sauth, usessl=True)
 			if not ret:
 				errors = "%s%s:%i\n" %(errors, "0.0.0.0 / ::", sport)
 			else:
@@ -249,30 +245,7 @@ def stopWebserver(session):
 # Starts an Instance of the Webinterface
 # on given ipaddress, port, w/o auth, w/o ssl
 #===============================================================================
-def startServerInstance(session, port, useauth=False, l2k=None, usessl=False, ipaddress="::", ipaddress2=None):
-	l3k = None
-	l3c = tpm.getData(eTPM.DT_LEVEL3_CERT)
-
-	if l3c is None:
-		return False
-
-	l3k = validate_certificate(l3c, l2k)
-	if l3k is None:
-		return False
-
-	random = get_random()
-	if random is None:
-		return False
-
-	value = tpm.computeSignature(random)
-	result = decrypt_block(value, l3k)
-
-	if result is None:
-		return False
-	else:
-		if result [80:88] != random:
-			return False
-
+def startServerInstance(session, port, useauth=False, usessl=False, ipaddress="::", ipaddress2=None):
 	if useauth:
 # HTTPAuthResource handles the authentication for every Resource you want it to
 		root = HTTPAuthResource(toplevel, "Enigma2 WebInterface")
@@ -593,19 +566,8 @@ def checkBonjour():
 #===============================================================================
 #def networkstart(reason, **kwargs):
 def networkstart(reason, session):
-	l2r = False
-	l2k = None
-	l2c = tpm.getData(eTPM.DT_LEVEL2_CERT)
-
-	if l2c is None:
-		return
-
-	l2k = validate_certificate(l2c, rootkey)
-	if l2k is None:
-		return
-
 	if reason is True:
-		startWebserver(session, l2k)
+		startWebserver(session)
 		checkBonjour()
 
 	elif reason is False:
@@ -622,20 +584,9 @@ def menu_config(menuid, **kwargs):
 		return []
 
 def configCB(result, session):
-	l2r = False
-	l2k = None
-	l2c = tpm.getData(eTPM.DT_LEVEL2_CERT)
-
-	if l2c is None:
-		return
-
-	l2k = validate_certificate(l2c, rootkey)
-	if l2k is None:
-		return
-
 	if result:
 		print "[WebIf] config changed"
-		restartWebserver(session, l2k)
+		restartWebserver(session)
 		checkBonjour()
 	else:
 		print "[WebIf] config not changed"
