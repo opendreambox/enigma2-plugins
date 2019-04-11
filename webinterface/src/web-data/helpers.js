@@ -1150,7 +1150,12 @@ function DeviceInfo(xml){
 			var hdd = hddnodes.item(i);
 
 			var model 	= hdd.getElementsByTagName('e2model').item(0).firstChild.data;
-			var capacity = hdd.getElementsByTagName('e2capacity').item(0).firstChild.data;
+			var capacity;
+			try {
+				capacity = hdd.getElementsByTagName('e2capacity').item(0).firstChild.data;
+			} catch (e) {
+				capacity = 0;
+			}
 			var free		= hdd.getElementsByTagName('e2free').item(0).firstChild.data;
 
 			this.hdds[i] = {
