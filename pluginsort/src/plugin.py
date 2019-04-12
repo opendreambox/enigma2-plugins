@@ -14,6 +14,7 @@ from Components.config import config, ConfigSubsection, ConfigYesNo
 from Components.PluginList import PluginList
 from Components.Converter.TemplatedMultiContent import TemplatedMultiContent
 from Components.Renderer.Listbox import Listbox as ListboxRenderer
+from skin import TemplatedColors
 
 from Components.ActionMap import ActionMap, NumberActionMap
 from operator import attrgetter # python 2.5+
@@ -45,12 +46,17 @@ def MyPluginEntryComponent(plugin, backcolor_sel=None):
 		png = plugin.icon
 
 	return [
-		plugin, plugin.name, plugin.description, png,
-		#plugin, backcolor_sel, plugin.name, plugin.description, png,
+		plugin, plugin.name, plugin.description, png, backcolor_sel,
 	]
 
-# TODO: make selected color themable
-SelectedPluginEntryComponent = lambda plugin: MyPluginEntryComponent(plugin, backcolor_sel=8388608)
+#load markedselectedforegroundcolor from skin
+colors = TemplatedColors().colors
+if "ListboxMarkedAndSelectedForeground" in colors:
+	markedForegroundSelected = colors["ListboxMarkedAndSelectedForeground"]
+else:
+	markedForegroundSelected = 8388608
+
+SelectedPluginEntryComponent = lambda plugin: MyPluginEntryComponent(plugin, backcolor_sel = markedForegroundSelected)
 
 class MyPluginList(PluginList):
 	def __init__(self, *args, **kwargs):
@@ -471,7 +477,11 @@ def autostart(reason, *args, **kwargs):
 			# "fix" weight of plugins already added to list, future ones will be fixed automatically
 			fixed = []
 			for plugin in pluginlist:
-				if plugin in fixed: continue # skip double entries
+				alreadyfixed=False
+				for pl in fixed:
+					if pl.name == plugin.name and (pl.where in plugin.where or pl.where == plugin.where):
+						alreadyfixed = True
+				if alreadyfixed == True: continue # skip double entries
 
 				# create individual entries for multiple wheres, this is potentially harmful!
 				if len(plugin.where) > 1:
