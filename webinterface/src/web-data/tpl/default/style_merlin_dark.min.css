@@ -53,6 +53,7 @@
 #contentTable{scrollbar:auto;width:785px;margin:0 auto;}
 #current{
 	background-color:#3f3f3f;
+	color: white;
 	border:1px solid #DDD;
 	margin-bottom:8px;
 	padding-bottom:1px;
