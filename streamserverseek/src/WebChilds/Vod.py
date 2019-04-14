@@ -27,13 +27,14 @@ class M3u8Client(http.HTTPClient):
 		headers["connection"] = "close"
 		headers.pop('keep-alive', None)
 		self.headers = headers
+		self.headers["connection"] = "keep-alive"
 		self.data = data
 		self.version = version
 		self.responseEndCallback = responseEndCallback
 
-#	def connectionLost(self, reason):
-#		print "[StreamServerSeek] m3u8 %s: connectionLost (%s)" % (hex(id(self)), reason)
-#		http.HTTPClient.connectionLost(self, reason)
+	def connectionLost(self, reason):
+		print "[StreamServerSeek] m3u8 %s: connectionLost (%s)" % (hex(id(self)), reason)
+		http.HTTPClient.connectionLost(self, reason)
 	
 	def clientConnectionFailed(self, connector, reason):
 		print "[StreamServerSeek] m3u8 %s: clientConnectionFailed (%s)" % (hex(id(self)), reason)
@@ -50,6 +51,8 @@ class M3u8Client(http.HTTPClient):
 		self.transport.write(self.data)
 
 	def handleResponseEnd(self):
+		self.transport.abortConnection()
+		print "[StreamServerSeek] m3u8: aborted connection"
 		if not self._finished:
 			self._finished = True
 			self.transport.loseConnection()
@@ -81,6 +84,7 @@ class MyProxyClient(proxy.ProxyClient):
 	def __init__(self, command, rest, version, headers, data, father, responseEndCallback, statusCallback):
 		print "[StreamServerSeek] client %s: init" % hex(id(self))
 		proxy.ProxyClient.__init__(self, command, rest, version, headers, data, father)
+		self.headers["connection"] = "keep-alive"
 		self.version = version
 		self.responseEndCallback = responseEndCallback
 		self.statusCallback = statusCallback
@@ -109,6 +113,7 @@ class MyProxyClient(proxy.ProxyClient):
 			proxy.ProxyClient.handleResponsePart(self, data)
 
 	def handleResponseEnd(self):
+		self.transport.abortConnection()
 		if not self._preventWrite and not self._finished and not self.father.finished and not self.father._disconnected:
 			if self.responseEndCallback:
 				self.responseEndCallback(self.father)
@@ -190,6 +195,7 @@ class VodRequestHandler(object):
 	_segmentBuffer = None
 	_client = None
 	_timer = None
+	_firstTry = None
 
 	def __init__(self, resource, request):
 		self._resource = resource
@@ -300,12 +306,16 @@ class VodRequestHandler(object):
 					# most probably restart/reload of player, force jump to begin
 					self.streamServerSeek._expectedSegment = -1
 			else:
-				print "[StreamServerSeek] segment doesn't exist yet.. retry in 0.25 sec"
+				print "[StreamServerSeek] segment doesn't exist yet (%d > %d).. retry in 0.25 sec" % (self._realSegment, self.streamServerSeek._vodSegments[0])
 				self._client.preventWrite()
-				self._client.quietLoss = True
-				self._client.transport.loseConnection()
+				self._client.transport.abortConnection()
+#				self._client.quietLoss = True
+#				self._client.transport.loseConnection()
 
-				self._timer.start(250, True)
+				if self._firstTry is None:
+					self._firstTry = time.time()
+				if self._firstTry + 10 > time.time():
+					self._timer.start(250, True)
 #				from twisted.internet.task import deferLater
 #				d = deferLater(reactor, 0.25, self.reConnectClientFactory)
 #				print "[StreamServerSeek] deferLater %s in %s" % (d, hex(id(self)))

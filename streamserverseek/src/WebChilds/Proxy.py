@@ -8,6 +8,7 @@ import urlparse
 class MyProxyClient(proxy.ProxyClient):
 	def __init__(self, command, rest, version, headers, data, father, responseEndCallback):
 		proxy.ProxyClient.__init__(self, command, rest, version, headers, data, father)
+		self.headers["connection"] = "keep-alive"
 		self.version = version
 		self.responseEndCallback = responseEndCallback
 
@@ -15,6 +16,7 @@ class MyProxyClient(proxy.ProxyClient):
 		self.transport.writeSequence([command, b' ', path, b' ' + self.version + b'\r\n'])
 
 	def handleResponseEnd(self):
+		self.transport.abortConnection()
 		if not self._finished:
 			if self.responseEndCallback:
 				self.responseEndCallback(self.father)
