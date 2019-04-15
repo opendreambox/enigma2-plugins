@@ -785,6 +785,7 @@ function Movie(xml, cssclass){
 	this.filesize = getNodeContent(xml, 'e2filesize', 0);
 	this.startTime = getNodeContent(xml, 'e2time', 0);
 	this.length = getNodeContent(xml, 'e2length', 0);
+	this.streamserverseek = getNodeContent(xml, 'e2streamserverseek');
 
 	this.getLength = function() {
 		return this.length;
@@ -847,7 +848,11 @@ function Movie(xml, cssclass){
 
 	if( typeof( cssclass) == 'undefined'){
 		cssclass = 'odd';
-	}
+	};
+	
+	this.getStreamServerSeek = function(){
+		return this.streamserverseek;
+	};
 
 	this.getStreamUrl = function() {
 		var encoder = {
@@ -876,7 +881,8 @@ function Movie(xml, cssclass){
 			'length': this.getLength() ,
 			'time': this.getTimeDay()+"&nbsp;"+ this.getTimeStartString(),
 			'streamurl' : this.getStreamUrl(),
-			'cssclass' : cssclass
+			'cssclass' : cssclass,
+			'streamserverseek' : this.getStreamServerSeek()
 	};
 
 	this.toJSON = function(){

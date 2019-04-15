@@ -20,6 +20,11 @@
 												</div>
 											</td>
 											<td style="text-align: right;">
+												{if movie.streamserverseek == "True"}
+												<a target="_blank" href='/streamserverseek/stream/player${decodeURIComponent(movie.filename).replace(/"/g,"\\\"")}' title="${strings.stream_channel.format(movie.title)} (StreamServerSeek)" > <!-- re-add replace after movie.filename ) ${decodeURIComponent(movie.filename).replace(/\"/g, '\\\"')-->
+													<i class="fa fa-border fa-fw fa-play" alt="${strings.do_stream} (StreamServerSeek)"></i>
+												</a>
+												{/if}
 												<a target="_blank" href="${movie.streamurl}" title="${strings.stream_channel.format(movie.title)}" >
 													<i class="fa fa-border fa-fw fa-tv" alt="${strings.do_stream}"></i>
 												</a>

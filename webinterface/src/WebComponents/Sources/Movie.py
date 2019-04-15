@@ -2,7 +2,7 @@ from enigma import eServiceReference, iServiceInformation, eServiceCenter
 from Components.Sources.Source import Source
 from Components.config import config
 from ServiceReference import ServiceReference
-from Tools.Directories import resolveFilename, SCOPE_HDD, pathExists
+from Tools.Directories import resolveFilename, SCOPE_HDD, pathExists, fileExists
 from Tools.FuzzyDate import FuzzyTime
 import os
 
@@ -201,6 +201,7 @@ class Movie(Source):
 				ext,
 				filename,
 				info.getInfoObject(serviceref, iServiceInformation.sFileSize),
+				self.checkStreamServerSeek(),
 			))
 		return lst
 
@@ -213,6 +214,13 @@ class Movie(Source):
 				sep = "" if self.dirname.endswith("/") else "/"
 				locations.append("%s%s%s/" %(self.dirname, sep, child))
 		return locations
+
+	def checkStreamServerSeek(self):
+		streamServerSeekInstalled = "False"
+		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/StreamServerSeek/plugin.pyo"):
+			streamServerSeekInstalled = "True"
+		print "streamServerSeekInstalled", streamServerSeekInstalled
+		return streamServerSeekInstalled
 
 	def getResult(self):
 		if self.func is self.DEL:
@@ -237,4 +245,5 @@ class Movie(Source):
 			, "DescriptionExtended": 8
 			, "Filename": 9
 			, "Filesize": 10
+			, "StreamServerSeek": 11
 		}

@@ -82,29 +82,12 @@ class MyFile(File):
 				reactor.callLater(1, self.removeTmpFile)
 				return self.createSimilarFile(self.tempFile.name)
 
-		if (request.path == '/web-data/tpl/default/tplMovieList.htm'):
-			with open(os.path.abspath(util.sibpath(__file__, "../WebInterface/web-data/tpl/default/tplMovieList.htm"))) as origFile:
-				print "[StreamServerSeek] Manipulating tplMovieList.htm"
-				self.tempFile = tempfile.NamedTemporaryFile()
-				for line in origFile:
-					if line.strip("\t").startswith("<a target=\"_blank\" href=\"${movie.streamurl}\""):
-						self.tempFile.write("												<a target=\"_blank\" href=\"/streamserverseek/stream/player${decodeURIComponent(movie.filename).replace(/\"/g, '\\\"')}\" title=\"${strings.stream_channel.format(movie.title)} (StreamServerSeek)\" >\n")
-						self.tempFile.write("													<i class=\"fa fa-border fa-fw fa-play\" alt=\"${strings.do_stream} (StreamServerSeek)\"></i>\n")
-						self.tempFile.write("												</a>\n")
-						self.tempFile.write(line)
-					else:
-						self.tempFile.write(line)
-				self.tempFile.flush()
-				reactor.callLater(1, self.removeTmpFile)
-				return self.createSimilarFile(self.tempFile.name)
-
 		return File.getChild(self, path, request)
 
 Orig_Toplevel_getToplevel = Plugins.Extensions.WebInterface.WebChilds.Toplevel.getToplevel
 
 def Toplevel_getToplevel(session):
 	result = Orig_Toplevel_getToplevel(session)
-	result.putChild("web-data", MyFile(util.sibpath(__file__, "../WebInterface/web-data")))
 	result.putChild("stream", MyFile(util.sibpath(__file__, "../WebInterface/stream")))
 	print "[StreamServerSeek] hooked WebInterface.WebChilds.Toplevel.getToplevel"
 	return result
