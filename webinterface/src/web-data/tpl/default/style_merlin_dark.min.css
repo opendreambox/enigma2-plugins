@@ -73,6 +73,7 @@
 #mainMenu li{background:#FFF;float:left;list-style:none;margin-bottom:0;margin-top:6px;position:relative;z-index:2;padding:0;}
 #mainMenu li.navselected{background:#efefef;position:relative;z-index:3;}
 #mainMenu span{display:block;padding-top:2px;}
+#mpListSLink{color:white; display:block;}
 #nav{
 	background-color:#3f3f3f;
 	border:1px solid #DDD;
@@ -222,7 +223,7 @@
 	position: relative;
 	color: white;
 	}
-.sListSName a{color:#444;display:block;font-size:15px;padding:5px 3px;}
+.sListSName a{color:white;display:block;font-size:15px;padding:5px 3px;}
 .sListProgress {width: 60px; float: left }
 a.sListSLink {
 	color:white;
@@ -252,10 +253,10 @@ a.sListSLink {
 	color:white;
 	}
 .timerState{display:block;height:100%;left:0;position:absolute;top:0;width:10px;padding:0;}
-.timerState0{background:#333;color:#FFF;}
-.timerState1{background:#BD282D;color:#000;}
-.timerState2{background:#2DBD28;color:#000;}
-.timerState3{background:#282DBD;color:#FFF;}
+.timerState0{background:#333;color:#FFF;text-align:center;}
+.timerState1{background:#BD282D;color:#FFF;text-align:center;}
+.timerState2{background:#33cc33;color:#000;text-align:center;}
+.timerState3{background:#3366ff;color:#FFF;text-align:center;}
 .tools td{font-size:12px;vertical-align:top;padding:5px;}
 .tools,.about{border-radius:2px;border:1px solid #DDD;width:100%;margin:0;padding:0;}
 .toolsElementCenter,.textLeft,.tListSName{text-align:left;}
@@ -296,7 +297,7 @@ a.tListEdit{display:block;margin:0;padding:1px;}
 a.tListEdit:hover,#nav a:hover{background:#ededed;box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);}
 a.underline,.tools a,.tools a:hover,.tools a:visited,#about a,#about a:hover,#about a:visited{text-decoration:underline;}
 body.fd-drag-active{-webkit-user-select:none;}
-button{background:#FFF;border-radius:2px;border:1px solid #DDD;padding:5px;}
+button{background:#3f3f3f;border-radius:2px;border:1px solid #DDD;padding:5px;color:white;}
 button:hover,a.tEditTag:hover{border: 1px solid #66AFE9;box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);}
 div.datePicker{-khtml-user-select:none;-moz-user-select:none;color:#444;font-size:11px;position:absolute;text-align:center;z-index:9999;background:#FFF;padding:0;}
 div.datePicker table{-moz-box-shadow:0 0 5px #ededed;border-collapse:separate;border-spacing:1px;border:1px solid #ededed;empty-cells:show;height:auto;text-align:center;width:auto;margin:0;padding:0;}

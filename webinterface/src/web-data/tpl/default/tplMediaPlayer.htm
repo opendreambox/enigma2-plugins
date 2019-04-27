@@ -43,7 +43,7 @@
 										<tr class="mpListItem" data-servicereference="${mp.servicereference.e()}">
 											<td>
 												<div class="sListSName">
-													<a href="#!/extras/mediaplayer/${mp.servicereference}" style="color: #000; display:block;" class="mpListSLink" title="${strings.change_to_item.format(mp.name)}">
+													<a href="#!/extras/mediaplayer/${mp.servicereference}" class="mpListSLink" title="${strings.change_to_item.format(mp.name)}">
 														<i class="fa fa-fw fa-folder-o" style="vertical-align: bottom;" alt="|"></i> ${mp.name}</a>
 												</div>
 											</td>
@@ -56,7 +56,7 @@
 											<td>
 												<div class="sListSName">
 													{if item.isdir}
-													<a href="#!/extras/mediaplayer/${item.servicereference}" style="color: #000; display:block;" class="mpListSLink" title="${strings.change_to_item.format(item.name)}">
+													<a href="#!/extras/mediaplayer/${item.servicereference}" class="mpListSLink" title="${strings.change_to_item.format(item.name)}">
 														<i class="fa fa-fw fa-folder-o" alt="|"></i> ${item.name}</a>
 													{else}
 													<a href="#" class="mpListFile mpListSLink" title="${strings.play_item.format(item.name)}">

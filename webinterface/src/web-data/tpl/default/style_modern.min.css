@@ -30,6 +30,7 @@
 #mainMenu li{background:#FFF;float:left;list-style:none;margin-bottom:0;margin-top:6px;position:relative;z-index:2;padding:0;}
 #mainMenu li.navselected{background:#efefef;position:relative;z-index:3;}
 #mainMenu span{display:block;padding-top:2px;}
+#mpListSLink{color: #000; display:block;}
 #nav{background-color:#FFF;border:1px solid #DDD;min-height:350px;padding-left:0;padding-right:0;position:relative;width:100%;}
 #nav a{display:block;}
 #nav li div{display:table-cell;vertical-align:middle;padding:10px;}

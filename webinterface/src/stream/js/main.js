@@ -99,6 +99,12 @@ var dreamboxPlayer = (function() {
 	var _currentService = null;
 	var _pendingService = null;
 	var _streamHost = 'http://' + window.document.location.host + ':8080';
+	// StreamServerSeek start
+	if (window.location.href.match(/sss-vod$/)) {
+		var _streamHost = 'http://' + window.document.location.host + '/streamserverseek/proxy';
+	}
+	// StreamServerSeek end
+
 	var _videoElement = document.getElementById('video');
 
 	var _dialogLogin = null;
@@ -199,6 +205,16 @@ var dreamboxPlayer = (function() {
 			_dialogLogin.close();
 		loadStreamSettings();
 		loadServicesInternal(); // List of TV Bouquets
+		// StreamServerSeek start
+		if (window.location.href.match(/sss-vod$/)) {
+			_streamHost = 'http://' + window.document.location.host + '/streamserverseek/vod';
+			playInternal();
+			$('.plyr__progress').css('visibility', 'visible');
+			if (window.history.pushState)
+				window.history.replaceState({}, document.title, '/stream/');
+			$('.mdl-snackbar__text').html('StreamServerSeek - Loading...');
+		}
+		// StreamServerSeek end
 	}
 
 	function onDisconnect(event) {
@@ -234,11 +250,20 @@ var dreamboxPlayer = (function() {
 			maxFragLookUpTolerance : 0.2,
 			*/
 		};
+		// StreamServerSeek start
+		config.maxMaxBufferLength = 15;
+		// StreamServerSeek end
 		_hls = new Hls(config);
 
 		var url = _streamHost + '/stream.m3u8';
 		_hls.loadSource(url);
 		_hls.attachMedia(_videoElement);
+		// StreamServerSeek start
+		$('.plyr__progress input').change(function(){
+			_hls.currentLevel = -1; // clear buffer, so segments will be redownloaded - otherwise streamserverseek doesn't know where to seek to
+			notify('StreamServerSeek - Seeking...');
+		});
+		// StreamServerSeek end
 		_hls.on(Hls.Events.MANIFEST_PARSED, function() {
 			_videoElement.play();
 		});
@@ -331,6 +356,16 @@ var dreamboxPlayer = (function() {
 	}
 
 	function onServiceClick(event) {
+		// StreamServerSeek start
+		if (_streamHost.match(/vod$/)) {
+			_streamHost = 'http://' + window.document.location.host + '/streamserverseek/proxy';
+			if (_hls != null) {
+				_hls.loadSource(_streamHost + '/stream.m3u8');
+				_hls.attachMedia(_videoElement);
+			}
+			$('.plyr__progress').css('visibility', 'hidden');
+		}
+		// StreamServerSeek end
 		var ref = event.target.getAttribute("data-reference");
 		if (ref == null)
 			ref = event.target.parentElement.getAttribute("data-reference");
