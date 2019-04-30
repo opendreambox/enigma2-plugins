@@ -16,6 +16,7 @@ from Screens.MessageBox import MessageBox
 from Screens.InfoBar import InfoBar
 from Screens.Screen import Screen
 from Plugins.SystemPlugins.Toolkit.NTIVirtualKeyBoard import NTIVirtualKeyBoard
+from Plugins.Plugin import PluginDescriptor
 
 from Components.ActionMap import ActionMap, HelpableActionMap
 from Components.Button import Button
@@ -25,6 +26,7 @@ from Components.TimerList import TimerList
 from Components.Sources.ServiceEvent import ServiceEvent
 from Components.Sources.Event import Event
 from Components.ServiceList import ServiceList, PiconLoader
+from Components.PluginComponent import plugins
 
 from . import SearchType
 from time import localtime, time
@@ -229,19 +231,7 @@ class EPGSearch(EPGSelection):
 		if PartnerBoxIconsEnabled:
 			EPGSelection.PartnerboxInit(self, False)
 
-		# Hook up actions for yttrailer if installed
-		try:
-			from Plugins.Extensions.YTTrailer.plugin import baseEPGSelection__init__
-		except ImportError as ie:
-			pass
-		else:
-			if baseEPGSelection__init__ is not None:
-				self["trailerActions"] = ActionMap(["InfobarActions", "InfobarTeletextActions"],
-				{
-					"showTv": self.showTrailer,
-					"showRadio": self.showTrailerList,
-					"startTeletext": self.showConfig
-				})
+		self.pluginList = [(p.name, p) for p in plugins.getPlugins(where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED])]
 
 	def onCreate(self):
 		self.setTitle(_("EPG Search"))
@@ -319,6 +309,10 @@ class EPGSearch(EPGSelection):
 		options.append((_("Setup"), self.setup))
 		keys.append("0")
 
+		for p in self.pluginList:
+			if not p in options and p[0] != _("Search EPG"):
+				options.append(p)
+
 		self.session.openWithCallback(
 			self.menuCallback,
 			ChoiceBox,
@@ -328,7 +322,14 @@ class EPGSearch(EPGSelection):
 		)
 
 	def menuCallback(self, ret):
-		ret and ret[1]()
+		if ret in self.pluginList:
+			cur = self['list'].getCurrent()
+			event = cur and cur[0]
+			service = cur and cur[1]
+			if event:
+				ret[1](self.session, event, service)
+		else:
+			ret and ret[1]()
 
 	def importFromTimer(self):
 		self.session.openWithCallback(
@@ -693,3 +694,4 @@ class EPGSearchEPGSelection(EPGSelection):
 			self.session.open(EPGSearch,evt.getEventName())
 		else:
 			self.close(evt.getEventName())
+
