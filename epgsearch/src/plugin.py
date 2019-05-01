@@ -2,7 +2,7 @@ from enigma import eServiceCenter
 from Components.config import config
 
 # Plugin
-from EPGSearch import EPGSearch, EPGSearchEPGSelection, searchEvent, pzyP4TInit
+from EPGSearch import EPGSearch, EPGSearchEPGSelection, searchEvent, pzyP4TInit, searchEventWithFilter, createdSearchFilter
 
 # Plugin definition
 from Plugins.Plugin import PluginDescriptor
@@ -75,5 +75,15 @@ def Plugins(**kwargs):
 			where = PluginDescriptor.WHERE_MOVIELIST,
 			fnc = movielist,
 			needsRestart = False,
+		),
+		PluginDescriptor(
+			name=_("Filter search EPG"),
+			where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED, PluginDescriptor.WHERE_EVENTVIEW],
+			fnc = searchEventWithFilter
+		),
+		PluginDescriptor(
+			name=_("created filter for search EPG"),
+			where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED, PluginDescriptor.WHERE_EVENTVIEW],
+			fnc = createdSearchFilter
 		),
 	]
