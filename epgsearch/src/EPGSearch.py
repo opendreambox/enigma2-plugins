@@ -7,6 +7,8 @@ from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS
 from ServiceReference import ServiceReference
 
 from EPGSearchSetup import EPGSearchSetup
+from EPGSearchFilter import openSearchFilterList as EPGSearchFilter_openSearchFilterList
+
 from Screens.ChannelSelection import SimpleChannelSelection
 from Screens.ChoiceBox import ChoiceBox
 from Screens.EpgSelection import EPGSelection
@@ -28,6 +30,11 @@ from Components.Sources.Event import Event
 from Components.ServiceList import ServiceList, PiconLoader
 from Components.PluginComponent import plugins
 
+#add Timer
+from RecordTimer import RecordTimerEntry, parseEvent, AFTEREVENT
+from Screens.TimerEntry import TimerEntry
+from Components.UsageConfig import preferredTimerPath
+
 from . import SearchType
 from time import localtime, time
 from operator import itemgetter
@@ -47,10 +54,7 @@ except ImportError:
 # AutoTimer installed?
 try:
 	from Plugins.Extensions.AutoTimer.AutoTimerEditor import \
-			addAutotimerFromEvent, addAutotimerFromSearchString, AutoTimerEditor
-	from Plugins.Extensions.AutoTimer.AutoTimer import AutoTimer
-	from Plugins.Extensions.AutoTimer.AutoTimerConfiguration import buildConfig
-	from Plugins.Extensions.AutoTimer.AutoTimerOverview import AutoTimerOverview
+			addAutotimerFromEvent, addAutotimerFromSearchString
 
 	autoTimerAvailable = True
 except ImportError:
@@ -60,160 +64,6 @@ def searchEvent(session, event, service):
 	if not event:
 		return
 	session.open(EPGSearch, event.getEventName())
-
-class EPGSearchAT(AutoTimer):
-	FILENAME = "/etc/enigma2/epgsearchAT.xml"
-	def readXml(self, **kwargs):
-		if "xml_string" in kwargs:
-			AutoTimer.readXml(self, **kwargs)
-
-	def load(self):
-		result = False
-		from os import path as os_path
-		if os_path.exists(EPGSearchAT.FILENAME):
-			with open(EPGSearchAT.FILENAME, 'r') as file:
-				data = file.read()
-				kwargs = {"xml_string": data}
-				self.readXml(**kwargs)
-				result = True
-		return result
-
-	def save(self, timer=None):
-		if timer:
-			self.timers.append(timer)
-		from Tools.IO import saveFile
-		saveFile(EPGSearchAT.FILENAME, buildConfig(self.defaultTimer, self.timers))
-
-def ATeditorCallback(session, save, timer):
-	if timer:
-		epgsearchAT = EPGSearchAT()
-		epgsearchAT.add(timer)
-		total, new, modified, timers, conflicts, similars = epgsearchAT.parseEPG(simulateOnly = True)
-		results = []
-		if timers:
-			epgcache = eEPGCache.getInstance()
-			for t in timers:
-				if timer.hasOffset():
-					rbegin = t[1] + timer.offset[0]
-					rend = t[2] - timer.offset[1]
-				else:
-					rbegin = t[1] + config.recording.margin_before.value * 60
-					rend = t[2] - config.recording.margin_after.value * 60
-				evt = epgcache.lookupEventTime(eServiceReference(t[3]), rbegin)
-				if evt:
-					results.append((t[3], evt.getEventId(), rbegin, rend - rbegin, t[0]))
-		kwargs = {"AT": results}
-		session.open(EPGSearch, **kwargs)
-		if save:
-			if epgsearchAT.load():
-				epgsearchAT.save(timer)
-			else:
-				epgsearchAT.save()
-		epgsearchAT = None
-
-def ATimporterCallback(ret):
-	if ret:
-		ret, session = ret
-		session.openWithCallback(boundFunction(ATeditorCallback, session, True), AutoTimerEditor, ret)
-
-def ATeditCallback(epgsearchAT):
-	if epgsearchAT is not None:
-		epgsearchAT.save()
-
-class EPGSearchATOverview(AutoTimerOverview):
-	def __init__(self, session, autotimer):
-		AutoTimerOverview.__init__(self, session, autotimer)
-		self["MenuActions"].setEnabled(False)
-		self["EPGSelectActions"].setEnabled(False)
-		self["InfobarActions"].setEnabled(False)
-		from Components.Sources.StaticText import StaticText
-		self["key_blue"] = StaticText(_("Search"))
-		self.skinName = ["EPGSearchATOverview","AutoTimerOverview"]
-
-	def cancel(self):
-		if self.changed:
-			self.session.openWithCallback(self.cancelConfirm, ChoiceBox, title=_('Really close without saving settings?\nWhat do you want to do?') , list=[(_('close without saving'), 'close'), (_('close and save'), 'close_save'),(_('cancel'), 'exit'), ])
-		else:
-			self.close(None)
-
-	def cancelConfirm(self, ret):
-		ret = ret and ret[1]
-		if ret == 'close':
-			self.close(None)
-		elif ret == 'close_save':
-			self.close(self.autotimer)
-
-	def save(self):
-		self.close(self.autotimer)
-
-	def add(self):
-		current = self["entries"].getCurrent()
-		if current:
-			self.autotimer.save()
-			self.changed = False
-			ATeditorCallback(self.session, False, current)
-
-	def setCustomTitle(self):
-		self.setTitle(_("EPGSearch search filter overview"))
-
-def addEPGSearchATFromEvent(session, evt, service, importer_Callback):
-	from Plugins.Extensions.AutoTimer.AutoTimerImporter import AutoTimerImporter
-	epgsearchAT = EPGSearchAT()
-	epgsearchAT.load()
-	match = evt and evt.getEventName() or ""
-	name = match or "New AutoTimer"
-	sref = None
-	if service is not None:
-		service = str(service)
-		myref = eServiceReference(service)
-		if not (myref.flags & eServiceReference.isGroup):
-			# strip all after last :
-			pos = service.rfind(':')
-			if pos != -1:
-				if service[pos-1] == ':':
-					pos -= 1
-				service = service[:pos+1]
-
-		sref = ServiceReference(myref)
-	if evt:
-		# timespan defaults to +- 1h
-		begin = evt.getBeginTime()-3600
-		end = begin + evt.getDuration()+7200
-	else:
-		begin = end = 0
-
-	# XXX: we might want to make sure that we actually collected any data because the importer does not do so :-)
-
-	newTimer = epgsearchAT.defaultTimer.clone()
-	newTimer.id = epgsearchAT.getUniqueId()
-	newTimer.name = name
-	newTimer.match = ''
-	newTimer.enabled = True
-
-	session.openWithCallback(
-		importer_Callback,
-		AutoTimerImporter,
-		newTimer,
-		match,		# Proposed Match
-		begin,		# Proposed Begin
-		end,		# Proposed End
-		None,		# Proposed Disabled
-		sref,		# Proposed ServiceReference
-		None,		# Proposed afterEvent
-		None,		# Proposed justplay
-		None,		# Proposed dirname, can we get anything useful here?
-		[]			# Proposed tags
-	)
-
-def searchEventWithFilter(session, event, service):
-	if not event:
-		return
-	addEPGSearchATFromEvent(session, event, service, ATimporterCallback)
-
-def createdSearchFilter(session, event, service):
-	epgsearchAT = EPGSearchAT()
-	epgsearchAT.load()
-	session.openWithCallback(ATeditCallback, EPGSearchATOverview, epgsearchAT)
 
 # Overwrite pzyP4T.__init__ with our modified one
 basePzyP4T__init__ = None
@@ -332,12 +182,15 @@ class EPGSearch(EPGSelection):
 		self.searchargs = args
 		self.searchkwargs = kwargs
 		self.currSearch = ""
-
+		
+		self.currSearchSave = False
+		self.currSearchDescription = False
+		
 		# XXX: we lose sort begin/end here
 		self["key_yellow"] = Button(_("New Search"))
 		self["key_blue"] = Button(_("History"))
 
-# begin stripped copy of EPGSelection.__init__
+		# begin stripped copy of EPGSelection.__init__
 		self.bouquetChangeCB = None
 		self.serviceChangeCB = None
 		self.ask_time = -1 #now
@@ -380,26 +233,39 @@ class EPGSearch(EPGSelection):
 				"0": self.setup,
 				"audioSelection": self.searchNoNumber,
 			})
-
+		
+		if autoTimerAvailable:
+			self["EPGSeachFilterActions"] = ActionMap(["WizardActions"],
+			{
+				"video": self.openSearchFilterList, 
+			})
+		
 		self["actions"].csel = self
 		self["list"].mostSearchService = ""
 		self.onLayoutFinish.append(self.onCreate)
-# end stripped copy of EPGSelection.__init__
-
+		# end stripped copy of EPGSelection.__init__
+		
 		# Partnerbox
 		if PartnerBoxIconsEnabled:
 			EPGSelection.PartnerboxInit(self, False)
-
+		
 		self.pluginList = [(p.name, p) for p in plugins.getPlugins(where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED])]
 
 	def onCreate(self):
 		self.setTitle(_("EPG Search"))
-
+		self.searchtimerlist = None
+		
 		if self.searchkwargs and self.searchkwargs.has_key("AT"):
+			#show matches from SearchFilter
 			l = self["list"]
 			l.recalcEntrySize()
-			l.list = self.searchkwargs["AT"]
-			l.l.setList(self.searchkwargs["AT"])
+			timerlist = self.searchkwargs["AT"]
+			self.searchtimerlist = timerlist
+			if config.plugins.epgsearch.show_shortdesc.value and len(timerlist):
+				epgcache = eEPGCache.getInstance()
+				timerlist = self.addShortDescription(epgcache, timerlist)
+			l.list = timerlist
+			l.l.setList(timerlist)
 		elif self.searchargs:
 			self.doSearchEPG(*self.searchargs)
 		else:
@@ -409,10 +275,43 @@ class EPGSearch(EPGSelection):
 			l.l.setList(l.list)
 		del self.searchargs
 		del self.searchkwargs
-
+		
 		# Partnerbox
 		if PartnerBoxIconsEnabled:
 			EPGSelection.GetPartnerboxTimerlist(self)
+
+	def timerAdd(self):
+		cur = self["list"].getCurrent()
+		event = cur[0]
+		serviceref = cur[1]
+		if event is None:
+			return
+		eventid = event.getEventId()
+		refstr = serviceref.ref.toString()
+		for timer in self.session.nav.RecordTimer.timer_list:
+			if timer.eit == eventid and timer.service_ref.ref.toString() == refstr:
+				cb_func = lambda ret : not ret or self.removeTimer(timer)
+				self.session.openWithCallback(cb_func, MessageBox, _("Do you really want to delete %s?") % event.getEventName())
+				break
+		else:
+			event = parseEvent(event)
+			if self.searchtimerlist:
+				#add org searchTitle from search filter to timer (perhaps if changed from SeriesPlugin)
+				idx = 0
+				for timer in self["list"].list:
+					if timer[1] == eventid:
+						break
+					idx += 1
+				try:
+					event_lst = list(event)
+					event_lst[2] = self.searchtimerlist[idx][4]
+					event = tuple(event_lst)
+				except:
+					import traceback
+					traceback.print_exc()
+
+			newEntry = RecordTimerEntry(serviceref, checkOldTimers = True, dirname = preferredTimerPath(), *event)
+			self.session.openWithCallback(self.finishedAdd, TimerEntry, newEntry)
 
 	def closeScreen(self):
 		# Save our history
@@ -433,6 +332,12 @@ class EPGSearch(EPGSelection):
 		service = cur[1]
 		if event is not None:
 			self.session.open(EventViewEPGSelect, event, service, self.eventViewCallback, self.openSingleServiceEPG, InfoBar.instance.openMultiServiceEPG, self.openSimilarList)
+
+	def openSearchFilterList(self):
+		import EPGSearchFilter as EPGSearchFilterFile
+		reload (EPGSearchFilterFile)
+		from EPGSearchFilter import openSearchFilterList as EPGSearchFilter_openSearchFilterList
+		EPGSearchFilter_openSearchFilterList(self.session, None, None)
 
 	def openSimilarList(self, eventid, refstr):
 		self.session.open(EPGSelection, refstr, None, eventid)
@@ -601,12 +506,16 @@ class EPGSearch(EPGSelection):
 		self.session.openWithCallback(self.closeSetupCallback, EPGSearchSetup)
 
 	def closeSetupCallback(self):
-		self.doSearchEPG(self.currSearch, self.currSearchSave, self.currSearchDescription)
+		if self.searchtimerlist:
+			self.searchargs = None
+			self.searchkwargs = {"AT": self.searchtimerlist}
+			self.onCreate()
+		else:
+			self.doSearchEPG(self.currSearch, self.currSearchSave, self.currSearchDescription)
 
 	def searchNoNumber(self):
 		search_txt = self.currSearch
 		search_txt = search_txt.translate(None, "1234567890(/)").strip()
-
 		self.doSearchEPG(search_txt, self.currSearchSave, self.currSearchDescription)
 
 	def blueButtonPressed(self):

@@ -2,7 +2,8 @@ from enigma import eServiceCenter
 from Components.config import config
 
 # Plugin
-from EPGSearch import EPGSearch, EPGSearchEPGSelection, searchEvent, pzyP4TInit, searchEventWithFilter, createdSearchFilter
+from EPGSearch import EPGSearch, EPGSearchEPGSelection, searchEvent, pzyP4TInit, autoTimerAvailable
+from EPGSearchFilter import searchEventWithFilter, openSearchFilterList
 
 # Plugin definition
 from Plugins.Plugin import PluginDescriptor
@@ -42,7 +43,7 @@ def movielist(session, service, **kwargs):
 	session.open(EPGSearch, name, config.plugins.epgsearch.add_history_onOpen.value)
 
 def Plugins(**kwargs):
-	return [
+	l = [
 		PluginDescriptor(
 			name=_("Search EPG"),
 			where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED, PluginDescriptor.WHERE_EVENTVIEW],
@@ -76,14 +77,20 @@ def Plugins(**kwargs):
 			fnc = movielist,
 			needsRestart = False,
 		),
-		PluginDescriptor(
-			name=_("Filter search EPG"),
+	]
+	
+	#add only if AutoTimer-Plugin is found
+	if autoTimerAvailable:
+		l.append(PluginDescriptor(
+			name=_("add search filter to EPGSearch"),
 			where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED, PluginDescriptor.WHERE_EVENTVIEW],
 			fnc = searchEventWithFilter
-		),
-		PluginDescriptor(
-			name=_("created filter for search EPG"),
+			))
+		l.append(PluginDescriptor(
+			name=_("open EPGSearch filterlist"),
 			where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED, PluginDescriptor.WHERE_EVENTVIEW],
-			fnc = createdSearchFilter
-		),
-	]
+			fnc = openSearchFilterList
+			))
+	
+	return l
+
