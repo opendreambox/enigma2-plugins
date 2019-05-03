@@ -3,7 +3,7 @@ from Components.config import config
 
 # Plugin
 from EPGSearch import EPGSearch, EPGSearchEPGSelection, searchEvent, pzyP4TInit, autoTimerAvailable
-from EPGSearchFilter import searchEventWithFilter, openSearchFilterList
+from EPGSearchFilter import searchEventWithFilter, openSearchFilterList, addSearchFilterFromEventinfo
 
 # Plugin definition
 from Plugins.Plugin import PluginDescriptor
@@ -81,6 +81,11 @@ def Plugins(**kwargs):
 	
 	#add only if AutoTimer-Plugin is found
 	if autoTimerAvailable:
+		l.append(PluginDescriptor(
+			name=_("add search filter to EPGSearch"),
+			where = [PluginDescriptor.WHERE_EVENTINFO],
+			fnc = addSearchFilterFromEventinfo
+			))
 		l.append(PluginDescriptor(
 			name=_("add search filter to EPGSearch"),
 			where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED, PluginDescriptor.WHERE_EVENTVIEW],

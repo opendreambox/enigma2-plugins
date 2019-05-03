@@ -315,3 +315,13 @@ def openSearchFilterList(session, event, service):
 	epgsearchAT.load()
 	session.openWithCallback(ATeditCallback, EPGSearchATOverview, epgsearchAT)
 
+# from pluginlist (WHERE_EVENTINFO)
+def addSearchFilterFromEventinfo(session, service=None, event=None, *args, **kwargs):
+	if not event:
+		sref = session.nav.getCurrentlyPlayingServiceReference()
+		service = ServiceReference(sref)
+		epg = eEPGCache.getInstance()
+		event = epg.lookupEventTime(service.ref, int(time())+1)
+	if not event:
+		return
+	addEPGSearchATFromEvent(session, event, service, ATimporterCallback)
