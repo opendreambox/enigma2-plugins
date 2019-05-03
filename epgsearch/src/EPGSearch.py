@@ -7,7 +7,7 @@ from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS
 from ServiceReference import ServiceReference
 
 from EPGSearchSetup import EPGSearchSetup
-from EPGSearchFilter import openSearchFilterList as EPGSearchFilter_openSearchFilterList
+from EPGSearchFilter import openSearchFilterList as EPGSearchFilter_openSearchFilterList, EPGSearchAT
 
 from Screens.ChannelSelection import SimpleChannelSelection
 from Screens.ChoiceBox import ChoiceBox
@@ -511,6 +511,11 @@ class EPGSearch(EPGSelection):
 
 	def blueButtonPressed(self):
 		options = [(x, x) for x in config.plugins.epgsearch.history.value]
+		if autoTimerAvailable:
+			epgsearchAT = EPGSearchAT()
+			epgsearchAT.load()
+			for timer in epgsearchAT.getTimerList():
+				options.append((timer.name + _(" with search filter"),timer))
 
 		if options:
 			self.session.openWithCallback(
@@ -528,7 +533,37 @@ class EPGSearch(EPGSelection):
 
 	def searchEPGWrapper(self, ret):
 		if ret:
-			self.searchEPG(ret[1])
+			if autoTimerAvailable:
+				from Plugins.Extensions.AutoTimer.AutoTimerComponent import AutoTimerComponent
+				searchWithAT = isinstance(ret[1],AutoTimerComponent)
+			else:
+				searchWithAT = False
+			if searchWithAT:
+				timer = ret[1]
+				epgsearchAT = EPGSearchAT()
+				epgsearchAT.add(timer)
+				total, new, modified, timers, conflicts, similars = epgsearchAT.parseEPG(simulateOnly = True)
+				results = []
+				if timers:
+					epgcache = eEPGCache.getInstance()
+					for t in timers:
+						if timer.hasOffset():
+							rbegin = t[1] + timer.offset[0]
+							rend = t[2] - timer.offset[1]
+						else:
+							rbegin = t[1] + config.recording.margin_before.value * 60
+							rend = t[2] - config.recording.margin_after.value * 60
+						evt = epgcache.lookupEventTime(eServiceReference(t[3]), rbegin)
+						if evt:
+							results.append((t[3], evt.getEventId(), rbegin, rend - rbegin, t[0]))
+
+				self.searchargs = None
+				self.searchkwargs = {"AT": results}
+				epgsearchAT = None
+				self.onCreate()
+				
+			else:
+				self.searchEPG(ret[1])
 
 	def searchEPG(self, searchString = None, searchSave = True):
 		if not searchString:
