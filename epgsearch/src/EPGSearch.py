@@ -253,19 +253,19 @@ class EPGSearch(EPGSelection):
 
 	def onCreate(self):
 		self.setTitle(_("EPG Search"))
-		self.searchtimerlist = None
+		self.currSearchATList = None
 		
 		if self.searchkwargs and self.searchkwargs.has_key("AT"):
 			#show matches from SearchFilter
 			l = self["list"]
 			l.recalcEntrySize()
-			timerlist = self.searchkwargs["AT"]
-			self.searchtimerlist = timerlist
-			if config.plugins.epgsearch.show_shortdesc.value and len(timerlist):
+			resultlist = self.searchkwargs["AT"]
+			self.currSearchATList = resultlist[:]
+			if config.plugins.epgsearch.show_shortdesc.value and len(resultlist):
 				epgcache = eEPGCache.getInstance()
-				timerlist = self.addShortDescription(epgcache, timerlist)
-			l.list = timerlist
-			l.l.setList(timerlist)
+				resultlist = self.addShortDescription(epgcache, resultlist)
+			l.list = resultlist
+			l.l.setList(resultlist)
 		elif self.searchargs:
 			self.doSearchEPG(*self.searchargs)
 		else:
@@ -281,37 +281,28 @@ class EPGSearch(EPGSelection):
 			EPGSelection.GetPartnerboxTimerlist(self)
 
 	def timerAdd(self):
-		cur = self["list"].getCurrent()
-		event = cur[0]
-		serviceref = cur[1]
-		if event is None:
-			return
-		eventid = event.getEventId()
-		refstr = serviceref.ref.toString()
-		for timer in self.session.nav.RecordTimer.timer_list:
-			if timer.eit == eventid and timer.service_ref.ref.toString() == refstr:
-				cb_func = lambda ret : not ret or self.removeTimer(timer)
-				self.session.openWithCallback(cb_func, MessageBox, _("Do you really want to delete %s?") % event.getEventName())
-				break
+		proceed = False
+		if self.key_green_choice == self.REMOVE_TIMER or self.currSearchATList is None:
+			EPGSelection.timerAdd(self)
 		else:
-			event = parseEvent(event)
-			if self.searchtimerlist:
-				#add org searchTitle from search filter to timer (perhaps if changed from SeriesPlugin)
-				idx = 0
-				for timer in self["list"].list:
-					if timer[1] == eventid:
-						break
-					idx += 1
-				try:
-					event_lst = list(event)
-					event_lst[2] = self.searchtimerlist[idx][4]
-					event = tuple(event_lst)
-				except:
-					import traceback
-					traceback.print_exc()
-
-			newEntry = RecordTimerEntry(serviceref, checkOldTimers = True, dirname = preferredTimerPath(), *event)
-			self.session.openWithCallback(self.finishedAdd, TimerEntry, newEntry)
+			cur = self["list"].getCurrent()
+			evt = cur[0]
+			serviceref = cur[1]
+			event = parseEvent(evt)
+			for item in self.currSearchATList:
+				if item[1] == evt.getEventId():
+					if item[4] != evt.getEventName():
+						#add org searchTitle from search filter to event (perhaps changed by SeriesPlugin)
+						event_lst = list(event)
+						event_lst[2] = item[4]
+						event = tuple(event_lst)
+						proceed = True
+					break
+			if proceed:
+				newEntry = RecordTimerEntry(serviceref, checkOldTimers = True, dirname = preferredTimerPath(), *event)
+				self.session.openWithCallback(self.finishedAdd, TimerEntry, newEntry)
+			else:
+				EPGSelection.timerAdd(self)
 
 	def closeScreen(self):
 		# Save our history
@@ -506,9 +497,9 @@ class EPGSearch(EPGSelection):
 		self.session.openWithCallback(self.closeSetupCallback, EPGSearchSetup)
 
 	def closeSetupCallback(self):
-		if self.searchtimerlist:
+		if self.currSearchATList:
 			self.searchargs = None
-			self.searchkwargs = {"AT": self.searchtimerlist}
+			self.searchkwargs = {"AT": self.currSearchATList}
 			self.onCreate()
 		else:
 			self.doSearchEPG(self.currSearch, self.currSearchSave, self.currSearchDescription)
