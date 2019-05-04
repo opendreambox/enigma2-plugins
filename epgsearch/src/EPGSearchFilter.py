@@ -326,14 +326,6 @@ def addEPGSearchATFromService(session, service, event, importer_Callback):
 	else:
 		begin = end = 0
 
-	from os.path import dirname
-	path = dirname(service.getPath())
-	if not path == '/':
-		path += '/'
-
-	tags = info and info.getInfoString(service, iServiceInformation.sTags)
-	tags = tags and tags.split(' ') or []
-
 	newTimer = epgsearchAT.defaultTimer.clone()
 	newTimer.id = epgsearchAT.getUniqueId()
 	newTimer.name = name
@@ -353,8 +345,8 @@ def addEPGSearchATFromService(session, service, event, importer_Callback):
 		sref,		# Proposed ServiceReference
 		None,		# Proposed afterEvent
 		None,		# Proposed justplay
-		path,		# Proposed dirname
-		tags		# Proposed tags
+		None,		# Proposed dirname
+		None		# Proposed tags
 	)
 
 # from pluginlist (WHERE_EPG_SELECTION_SINGLE_BLUE, WHERE_CHANNEL_SELECTION_RED)
