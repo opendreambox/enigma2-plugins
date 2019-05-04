@@ -229,8 +229,12 @@ def eventinfo(session, servicelist, **kwargs):
 
 # EventView or EPGSelection
 def eventview(session, event, ref):
-	from AutoTimerEditor import addAutotimerFromEvent, importerCallback
-	addAutotimerFromEvent(session, evt = event, service = ref, importer_Callback = importerCallback)
+	from AutoTimerEditor import addAutotimerFromEvent, addAutotimerFromService, importerCallback
+	if ref.getPath() and ref.getPath()[0] == "/":
+		from enigma import eServiceReference
+		addAutotimerFromService(session, eServiceReference(str(ref)))
+	else:
+		addAutotimerFromEvent(session, evt = event, service = ref, importer_Callback = importerCallback)
 
 # XXX: we need this helper function to identify the descriptor
 # Extensions menu - open Autotimer
