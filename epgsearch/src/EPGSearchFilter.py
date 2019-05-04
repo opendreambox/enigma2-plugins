@@ -1,5 +1,5 @@
 ﻿# for localized messages
-from enigma import eEPGCache, eServiceReference
+from enigma import eEPGCache, eServiceReference, iServiceInformation, eServiceCenter
 from ServiceReference import ServiceReference
 from Screens.ChoiceBox import ChoiceBox
 from Screens.Screen import Screen
@@ -303,11 +303,70 @@ def addEPGSearchATFromEvent(session, evt, service, importer_Callback):
 		[]			# Proposed tags
 	)
 
+def addEPGSearchATFromService(session, service, importer_Callback):
+	epgsearchAT = EPGSearchAT()
+	epgsearchAT.load()
+	serviceHandler = eServiceCenter.getInstance()
+	service = eServiceReference(str(service))
+
+	info = serviceHandler.info(service)
+
+	match = info and info.getName(service) or ""
+	name = match or "New Searchfilter"
+	sref = info and info.getInfoString(service, iServiceInformation.sServiceref)
+	if sref:
+		# strip all after last :
+		pos = sref.rfind(':')
+		if pos != -1:
+			if sref[pos-1] == ':':
+				pos -= 1
+			sref = sref[:pos+1]
+
+		sref = ServiceReference(sref)
+	if info:
+		begin = info.getInfo(service, iServiceInformation.sTimeCreate)
+		end = begin + info.getLength(service)
+	else:
+		begin = end = 0
+
+	from os.path import dirname
+	path = dirname(service.getPath())
+	if not path == '/':
+		path += '/'
+
+	tags = info.getInfoString(service, iServiceInformation.sTags)
+	tags = tags and tags.split(' ') or []
+
+	newTimer = epgsearchAT.defaultTimer.clone()
+	newTimer.id = epgsearchAT.getUniqueId()
+	newTimer.name = name
+	newTimer.match = ''
+	newTimer.enabled = True
+
+	# XXX: we might want to make sure that we actually collected any data because the importer does not do so :-)
+
+	session.openWithCallback(
+		importer_Callback,
+		EPGSearchATImporter,
+		newTimer,
+		match,		# Proposed Match
+		begin,		# Proposed Begin
+		end,		# Proposed End
+		None,		# Proposed Disabled
+		sref,		# Proposed ServiceReference
+		None,		# Proposed afterEvent
+		None,		# Proposed justplay
+		path,		# Proposed dirname
+		tags		# Proposed tags
+	)
+
 # from pluginlist (WHERE_EPG_SELECTION_SINGLE_BLUE, WHERE_CHANNEL_SELECTION_RED)
 def searchEventWithFilter(session, event, service):
-	if not event:
-		return
-	addEPGSearchATFromEvent(session, event, service, ATimporterCallback)
+	if service.getPath() and service.getPath()[0] == "/":
+		addEPGSearchATFromService(session, service, ATimporterCallback)
+	else:
+		if event:
+			addEPGSearchATFromEvent(session, event, service, ATimporterCallback)
 
 # from pluginlist (WHERE_EPG_SELECTION_SINGLE_BLUE, WHERE_CHANNEL_SELECTION_RED)
 def openSearchFilterList(session, event, service):
