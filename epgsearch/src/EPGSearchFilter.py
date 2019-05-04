@@ -303,15 +303,12 @@ def addEPGSearchATFromEvent(session, evt, service, importer_Callback):
 		[]			# Proposed tags
 	)
 
-def addEPGSearchATFromService(session, service, importer_Callback):
+def addEPGSearchATFromService(session, service, event, importer_Callback):
 	epgsearchAT = EPGSearchAT()
 	epgsearchAT.load()
 	serviceHandler = eServiceCenter.getInstance()
-	service = eServiceReference(str(service))
-
 	info = serviceHandler.info(service)
-
-	match = info and info.getName(service) or ""
+	match = (event and event.getEventName()) or (info and info.getName(service)) or ""
 	name = match or "New Searchfilter"
 	sref = info and info.getInfoString(service, iServiceInformation.sServiceref)
 	if sref:
@@ -334,7 +331,7 @@ def addEPGSearchATFromService(session, service, importer_Callback):
 	if not path == '/':
 		path += '/'
 
-	tags = info.getInfoString(service, iServiceInformation.sTags)
+	tags = info and info.getInfoString(service, iServiceInformation.sTags)
 	tags = tags and tags.split(' ') or []
 
 	newTimer = epgsearchAT.defaultTimer.clone()
@@ -363,7 +360,7 @@ def addEPGSearchATFromService(session, service, importer_Callback):
 # from pluginlist (WHERE_EPG_SELECTION_SINGLE_BLUE, WHERE_CHANNEL_SELECTION_RED)
 def searchEventWithFilter(session, event, service):
 	if service.getPath() and service.getPath()[0] == "/":
-		addEPGSearchATFromService(session, service, ATimporterCallback)
+		addEPGSearchATFromService(session, eServiceReference(str(service)), event, ATimporterCallback)
 	else:
 		if event:
 			addEPGSearchATFromEvent(session, event, service, ATimporterCallback)
@@ -374,13 +371,8 @@ def openSearchFilterList(session, event, service):
 	epgsearchAT.load()
 	session.openWithCallback(ATeditCallback, EPGSearchATOverview, epgsearchAT)
 
-# from pluginlist (WHERE_EVENTINFO)
-def addSearchFilterFromEventinfo(session, service=None, event=None, *args, **kwargs):
-	if not event:
-		sref = session.nav.getCurrentlyPlayingServiceReference()
-		service = ServiceReference(sref)
-		epg = eEPGCache.getInstance()
-		event = epg.lookupEventTime(service.ref, int(time())+1)
-	if not event:
-		return
-	addEPGSearchATFromEvent(session, event, service, ATimporterCallback)
+# from pluginlist (WHERE_MOVIELIST)
+def addSearchFilterFromMovieList(session, service):
+	info = eServiceCenter.getInstance().info(service)
+	event = info and info.getEvent(service) or None
+	addEPGSearchATFromService(session, service, event, ATimporterCallback)
