@@ -508,6 +508,9 @@ class EPGSearch(EPGSelection):
 		self.doSearchEPG(search_txt, self.currSearchSave, self.currSearchDescription)
 
 	def getBlueButtonText(self):
+		if not autoTimerAvailable:
+			config.plugins.epgsearch.blue_function.value = "history"
+		
 		if config.plugins.epgsearch.blue_function.value == "searchlist":
 			return _("Searchfilter")
 		elif config.plugins.epgsearch.blue_function.value == "history":

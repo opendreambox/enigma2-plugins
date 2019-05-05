@@ -84,7 +84,9 @@ class EPGSearchSetup(Screen, ConfigListScreen):
 		if not config.plugins.epgsearch.show_picon.value:
 			self.list.append( getConfigListEntry(_("show best matching channelname in screen title"), config.plugins.epgsearch.show_sname_in_title, _("Shows the best matching channelname in the screen title to have more space to display event name and short description.")) )
 		self.list.append( getConfigListEntry(_("show short description"), config.plugins.epgsearch.show_shortdesc, _("Add the short description of the event to the search result")) )
-		self.list.append( getConfigListEntry(_("Blue button function"), config.plugins.epgsearch.blue_function, _("select the blue button function (default = combi)")) )
+		from EPGSearch import autoTimerAvailable
+		if autoTimerAvailable:
+			self.list.append( getConfigListEntry(_("Blue button function"), config.plugins.epgsearch.blue_function, _("select the blue button function (default = combi)")) )
 
 	def getScopeChoicesDefault(self):
 		scopeChoices_default = "all"
