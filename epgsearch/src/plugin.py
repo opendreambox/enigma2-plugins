@@ -46,7 +46,7 @@ def Plugins(**kwargs):
 	l = [
 		PluginDescriptor(
 			name=_("Search EPG"),
-			where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED, PluginDescriptor.WHERE_EVENTVIEW],
+			where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_EVENTVIEW],
 			fnc = searchEvent
 		),
 		PluginDescriptor(
