@@ -7,7 +7,7 @@ from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS
 from ServiceReference import ServiceReference
 
 from EPGSearchSetup import EPGSearchSetup
-from EPGSearchFilter import openSearchFilterList as EPGSearchFilter_openSearchFilterList, EPGSearchAT
+from EPGSearchFilter import openSearchFilterList as EPGSearchFilter_openSearchFilterList, searchEventWithFilter, EPGSearchAT
 
 from Screens.ChannelSelection import SimpleChannelSelection
 from Screens.ChoiceBox import ChoiceBox
@@ -287,7 +287,6 @@ class EPGSearch(EPGSelection):
 		self.onShown.remove(self.__onShownStartHistory)
 		self.blueButtonPressed()
 
-
 	def timerAdd(self):
 		proceed = False
 		if self.key_green_choice == self.REMOVE_TIMER or self.currSearchATList is None:
@@ -335,6 +334,13 @@ class EPGSearch(EPGSelection):
 	def openSearchFilterList(self):
 		EPGSearchFilter_openSearchFilterList(self.session, None, None)
 
+	def addSearchFilter(self):
+		cur = self["list"].getCurrent()
+		event = cur[0]
+		service = cur[1]
+		if event is not None:
+			searchEventWithFilter(self.session, event, service)
+		
 	def openSimilarList(self, eventid, refstr):
 		self.session.open(EPGSelection, refstr, None, eventid)
 
@@ -374,9 +380,13 @@ class EPGSearch(EPGSelection):
 
 		options.append((_("Setup"), self.setup))
 		keys.append("0")
+		
+		if autoTimerAvailable:
+			options.append((_("open EPGSearch search filter list"), self.openSearchFilterList))
+			options.append((_("add search filter to EPGSearch"), self.addSearchFilter))
 
 		for p in self.pluginList:
-			if not p in options and p[0] != _("Search EPG"):
+			if not p in options and ("/EPGSearch" not in p[1].path):
 				options.append(p)
 
 		self.session.openWithCallback(
@@ -520,11 +530,11 @@ class EPGSearch(EPGSelection):
 			config.plugins.epgsearch.blue_function.value = "history"
 		
 		if config.plugins.epgsearch.blue_function.value == "searchlist":
-			return _("Searchfilter")
+			return _("Search filter")
 		elif config.plugins.epgsearch.blue_function.value == "history":
 			return _("History")
 		else:
-			return _("Searchlist")
+			return _("Search list")
 
 	def blueButtonPressed(self, ret = False):
 		if ret is None:
@@ -541,7 +551,7 @@ class EPGSearch(EPGSelection):
 						]
 			self.session.openWithCallback(self.blueButtonPressed, ChoiceBox, list=choices, title=_("Select the action to search"))
 			return
-
+		
 		if blue_function == "searchlist":
 			self.openSearchFilterList()
 			return
@@ -550,10 +560,10 @@ class EPGSearch(EPGSelection):
 		options = [(x, x) for x in config.plugins.epgsearch.history.value]
 		
 		if blue_function == "combi" and autoTimerAvailable:
-			epgsearchAT = EPGSearchAT()
-			epgsearchAT.load()
-			for timer in epgsearchAT.getSortedTupleTimerList():
-				options.append((timer[0].name + _(" (search filter)"),timer[0]))
+				epgsearchAT = EPGSearchAT()
+				epgsearchAT.load()
+				for timer in epgsearchAT.getSortedTupleTimerList():
+					options.append((timer[0].name + _(" (search filter)"),timer[0]))
 
 		if options:
 			self.session.openWithCallback(
