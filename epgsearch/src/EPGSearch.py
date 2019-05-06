@@ -249,7 +249,10 @@ class EPGSearch(EPGSelection):
 		if PartnerBoxIconsEnabled:
 			EPGSelection.PartnerboxInit(self, False)
 		
-		self.pluginList = [(p.name, p) for p in plugins.getPlugins(where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE])]
+		self.pluginList = [(p.name, p) for p in plugins.getPlugins(where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED])]
+
+		if self.searchkwargs and self.searchkwargs.has_key("startWithHistory") and self.searchkwargs["startWithHistory"]:
+			self.onShown.append(self.__onShownStartHistory)
 
 	def onCreate(self):
 		self.setTitle(_("EPG Search"))
@@ -279,6 +282,11 @@ class EPGSearch(EPGSelection):
 		# Partnerbox
 		if PartnerBoxIconsEnabled:
 			EPGSelection.GetPartnerboxTimerlist(self)
+
+	def __onShownStartHistory(self):
+		self.onShown.remove(self.__onShownStartHistory)
+		self.blueButtonPressed()
+
 
 	def timerAdd(self):
 		proceed = False
@@ -527,26 +535,25 @@ class EPGSearch(EPGSelection):
 			blue_function = config.plugins.epgsearch.blue_function.value
 
 		if blue_function == "ask":
-			choices = [ (_("show combi search list"), "combi"),
-						(_("open search filter list"), "searchlist"),
-						(_("show only history"), "history")
+			choices = [ (_("Open text search history with search filters"), "combi"),
+						(_("Open search filter list"), "searchlist"),
+						(_("Open text search history list"), "history")
 						]
 			self.session.openWithCallback(self.blueButtonPressed, ChoiceBox, list=choices, title=_("Select the action to search"))
 			return
+
 		if blue_function == "searchlist":
 			self.openSearchFilterList()
 			return
 		
-		# blue_function == "history"
+		# blue_function == "history" or "combi"
 		options = [(x, x) for x in config.plugins.epgsearch.history.value]
 		
-		if blue_function == "combi":
-			options = [(x, x) for x in config.plugins.epgsearch.history.value]
-			if autoTimerAvailable:
-				epgsearchAT = EPGSearchAT()
-				epgsearchAT.load()
-				for timer in epgsearchAT.getSortedTupleTimerList():
-					options.append((timer[0].name + _(" (search filter)"),timer[0]))
+		if blue_function == "combi" and autoTimerAvailable:
+			epgsearchAT = EPGSearchAT()
+			epgsearchAT.load()
+			for timer in epgsearchAT.getSortedTupleTimerList():
+				options.append((timer[0].name + _(" (search filter)"),timer[0]))
 
 		if options:
 			self.session.openWithCallback(

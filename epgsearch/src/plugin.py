@@ -3,7 +3,7 @@ from Components.config import config
 
 # Plugin
 from EPGSearch import EPGSearch, EPGSearchEPGSelection, searchEvent, pzyP4TInit, autoTimerAvailable
-from EPGSearchFilter import searchEventWithFilter, openSearchFilterList, addSearchFilterFromMovieList
+from EPGSearchFilter import searchEventWithFilter, addSearchFilterFromMovieList
 
 # Plugin definition
 from Plugins.Plugin import PluginDescriptor
@@ -42,11 +42,18 @@ def movielist(session, service, **kwargs):
 
 	session.open(EPGSearch, name, config.plugins.epgsearch.add_history_onOpen.value)
 
+def openHistory(session, event, service):
+	kwargs = {"startWithHistory": True}
+	session.open(EPGSearch, **kwargs)
+
 def Plugins(**kwargs):
+	descr = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_EVENTVIEW]
+	if config.plugins.epgsearch.channellist_redbutton.value:
+		descr.append(PluginDescriptor.WHERE_CHANNEL_SELECTION_RED)
 	l = [
 		PluginDescriptor(
 			name=_("Search EPG"),
-			where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_EVENTVIEW],
+			where = descr,
 			fnc = searchEvent
 		),
 		PluginDescriptor(
@@ -89,13 +96,13 @@ def Plugins(**kwargs):
 			))
 		l.append(PluginDescriptor(
 			name=_("add search filter to EPGSearch"),
-			where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED, PluginDescriptor.WHERE_EVENTVIEW],
+			where = descr,
 			fnc = searchEventWithFilter
 			))
 		l.append(PluginDescriptor(
-			name=_("open EPGSearch filterlist"),
-			where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED, PluginDescriptor.WHERE_EVENTVIEW],
-			fnc = openSearchFilterList
+			name=_("open EPGSearch history"),
+			where = descr,
+			fnc = openHistory
 			))
 	
 	return l
