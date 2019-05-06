@@ -42,10 +42,14 @@ def movielist(session, service, **kwargs):
 	session.open(EPGSearch, name, config.plugins.epgsearch.add_history_onOpen.value)
 
 def Plugins(**kwargs):
+	if config.plugins.epgsearch.channellist_redbutton.value:
+		descr = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED, PluginDescriptor.WHERE_EVENTVIEW]
+	else:
+		descr = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_EVENTVIEW]
 	return [
 		PluginDescriptor(
 			name=_("Search EPG"),
-			where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_EVENTVIEW],
+			where = descr,
 			fnc = searchEvent
 		),
 		PluginDescriptor(
