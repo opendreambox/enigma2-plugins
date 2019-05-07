@@ -71,28 +71,26 @@ def Plugins(**kwargs):
 		where = PluginDescriptor.WHERE_MOVIELIST,
 		fnc = movielist, needsRestart = False))
 	
+	searchEventDescriptors = []
 	if config.plugins.epgsearch.searchEPG_menu.value in ("all", "blue"):
-		l.append(PluginDescriptor(
-			name=_("Search EPG"),
-			where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_EVENTVIEW],
-			fnc = searchEvent))
-		
+		searchEventDescriptors = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_EVENTVIEW]
 	if config.plugins.epgsearch.searchEPG_menu.value in ("all", "red"):
+		searchEventDescriptors.append(PluginDescriptor.WHERE_CHANNEL_SELECTION_RED)
+	if searchEventDescriptors:
 		l.append(PluginDescriptor(
 			name=_("Search EPG"), 
-			where = [PluginDescriptor.WHERE_CHANNEL_SELECTION_RED], 
+			where = searchEventDescriptors, 
 			fnc = searchEvent))
 
+	openHistoryDescriptors = []
 	if config.plugins.epgsearch.openSearchFilter_menu.value in ("all", "blue"):
-		l.append(PluginDescriptor(
-			name=_("open EPGSearch search list"),
-			where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_EVENTVIEW],
-			fnc = openHistory))
-	
+		openHistoryDescriptors = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_EVENTVIEW]
 	if config.plugins.epgsearch.openSearchFilter_menu.value in ("all", "red"):
+		openHistoryDescriptors.append(PluginDescriptor.WHERE_CHANNEL_SELECTION_RED)
+	if openHistoryDescriptors:
 		l.append(PluginDescriptor(
 			name=_("open EPGSearch search list"),
-			where = [PluginDescriptor.WHERE_CHANNEL_SELECTION_RED],
+			where = openHistoryDescriptors,
 			fnc = openHistory))
 	
 	#add only if AutoTimer-Plugin is found
@@ -103,17 +101,16 @@ def Plugins(**kwargs):
 			where = [PluginDescriptor.WHERE_MOVIELIST],
 			fnc = addSearchFilterFromMovieList))
 	
-	if autoTimerAvailable and config.plugins.epgsearch.addSearchFilter_menu.value in ("all", "blue"):
-		l.append(PluginDescriptor(
-			name=_("add search filter to EPGSearch"),
-			where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_EVENTVIEW],
-			fnc = searchEventWithFilter))
-	
-	if autoTimerAvailable and config.plugins.epgsearch.addSearchFilter_menu.value in ("all", "red"):
-		l.append(PluginDescriptor(
-			name=_("add search filter to EPGSearch"),
-			where = [PluginDescriptor.WHERE_CHANNEL_SELECTION_RED],
-			fnc = searchEventWithFilter))
+		searchEventWithFilterDescriptors = []
+		if config.plugins.epgsearch.addSearchFilter_menu.value in ("all", "blue"):
+			searchEventWithFilterDescriptors = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_EVENTVIEW]
+		if config.plugins.epgsearch.addSearchFilter_menu.value in ("all", "red"):
+				searchEventWithFilterDescriptors.append(PluginDescriptor.WHERE_CHANNEL_SELECTION_RED)
+		if searchEventWithFilterDescriptors:
+			l.append(PluginDescriptor(
+				name=_("add search filter to EPGSearch"),
+				where = searchEventWithFilterDescriptors,
+				fnc = searchEventWithFilter))
 	
 	return l
 

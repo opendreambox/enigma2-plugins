@@ -250,7 +250,7 @@ class EPGSearch(EPGSelection):
 			EPGSelection.PartnerboxInit(self, False)
 		
 		self.pluginList = [(p.name, p) for p in plugins.getPlugins(where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED])]
-
+		self.was_history_start = False
 		if self.searchkwargs and self.searchkwargs.has_key("startWithHistory") and self.searchkwargs["startWithHistory"]:
 			self.onShown.append(self.__onShownStartHistory)
 
@@ -285,6 +285,7 @@ class EPGSearch(EPGSelection):
 
 	def __onShownStartHistory(self):
 		self.onShown.remove(self.__onShownStartHistory)
+		self.was_history_start = True
 		self.blueButtonPressed()
 
 	def timerAdd(self):
@@ -333,6 +334,12 @@ class EPGSearch(EPGSelection):
 
 	def openSearchFilterList(self):
 		EPGSearchFilter_openSearchFilterList(self.session, None, None)
+		self.onShow.append(self.__backFromSearchFilterList)
+
+	def __backFromSearchFilterList(self):
+		self.onShow.remove(self.__backFromSearchFilterList)
+		if self.was_history_start:
+			self.closeScreen()
 
 	def addSearchFilter(self):
 		cur = self["list"].getCurrent()
@@ -538,6 +545,8 @@ class EPGSearch(EPGSelection):
 
 	def blueButtonPressed(self, ret = False):
 		if ret is None:
+			if self.was_history_start:
+				self.closeScreen()
 			return #to avoid ask loop if cancel from last ask choicebox
 		elif ret and ret[1]:
 			blue_function = ret[1]
@@ -581,6 +590,7 @@ class EPGSearch(EPGSelection):
 
 	def searchEPGWrapper(self, ret):
 		if ret:
+			self.was_history_start = False
 			if autoTimerAvailable:
 				from Plugins.Extensions.AutoTimer.AutoTimerComponent import AutoTimerComponent
 				searchWithAT = isinstance(ret[1],AutoTimerComponent)
@@ -612,6 +622,8 @@ class EPGSearch(EPGSelection):
 				
 			else:
 				self.searchEPG(ret[1])
+		elif self.was_history_start:
+			self.closeScreen()
 
 	def searchEPG(self, searchString = None, searchSave = True):
 		if not searchString:
