@@ -333,8 +333,11 @@ class EPGSearch(EPGSelection):
 			self.session.open(EventViewEPGSelect, event, service, self.eventViewCallback, self.openSingleServiceEPG, InfoBar.instance.openMultiServiceEPG, self.openSimilarList)
 
 	def openSearchFilterList(self):
-		EPGSearchFilter_openSearchFilterList(self.session, None, None)
-		self.onShow.append(self.__backFromSearchFilterList)
+		if autoTimerAvailable:
+			EPGSearchFilter_openSearchFilterList(self.session, None, None)
+			self.onShow.append(self.__backFromSearchFilterList)
+		else:
+			self.session.open(MessageBox,_("To use the search filter function in EPGSearch, the AutoTimer-plugin must first be installed!"),type = MessageBox.TYPE_INFO)
 
 	def __backFromSearchFilterList(self):
 		self.onShow.remove(self.__backFromSearchFilterList)
@@ -342,11 +345,14 @@ class EPGSearch(EPGSelection):
 			self.closeScreen()
 
 	def addSearchFilter(self):
-		cur = self["list"].getCurrent()
-		event = cur[0]
-		service = cur[1]
-		if event is not None:
-			searchEventWithFilter(self.session, event, service)
+		if autoTimerAvailable:
+			cur = self["list"].getCurrent()
+			event = cur[0]
+			service = cur[1]
+			if event is not None:
+				searchEventWithFilter(self.session, event, service)
+		else:
+			self.session.open(MessageBox,_("To use the search filter function in EPGSearch, the AutoTimer-plugin must first be installed!"),type = MessageBox.TYPE_INFO)
 		
 	def openSimilarList(self, eventid, refstr):
 		self.session.open(EPGSelection, refstr, None, eventid)
@@ -388,9 +394,8 @@ class EPGSearch(EPGSelection):
 		options.append((_("Setup"), self.setup))
 		keys.append("0")
 		
-		if autoTimerAvailable:
-			options.append((_("open EPGSearch search filter list"), self.openSearchFilterList))
-			options.append((_("add search filter to EPGSearch"), self.addSearchFilter))
+		options.append((_("open EPGSearch search filter list"), self.openSearchFilterList))
+		options.append((_("add search filter to EPGSearch"), self.addSearchFilter))
 
 		for p in self.pluginList:
 			if not p in options and ("/EPGSearch" not in p[1].path):
