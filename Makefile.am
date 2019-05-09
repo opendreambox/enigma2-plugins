@@ -47,7 +47,6 @@ SUBDIRS = \
 	merlinepg \
 	merlinepgcenter \
 	merlinskinthemes \
-	meteoitalia \
 	mosaic \
 	movielistpreview \
 	movieretitle \
@@ -62,7 +61,6 @@ SUBDIRS = \
 	ncidclient \
 	netcaster \
 	ofdb \
-	orfteletext \
 	permanentclock \
 	pipservicerelation \
 	pipzap \

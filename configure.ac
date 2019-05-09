@@ -238,10 +238,6 @@ merlinskinthemes/Makefile
 merlinskinthemes/meta/Makefile
 merlinskinthemes/src/Makefile
 
-meteoitalia/Makefile
-meteoitalia/meta/Makefile
-meteoitalia/src/Makefile
-
 mosaic/Makefile
 mosaic/meta/Makefile
 mosaic/src/Makefile
@@ -298,10 +294,6 @@ ncidclient/src/Makefile
 ofdb/Makefile
 ofdb/meta/Makefile
 ofdb/src/Makefile
-
-orfteletext/Makefile
-orfteletext/meta/Makefile
-orfteletext/src/Makefile
 
 permanentclock/Makefile
 permanentclock/meta/Makefile
