@@ -16,7 +16,6 @@ SUBDIRS = \
 	cdinfo \
 	dreamexplorer \
 	dreamirc \
-	dreammediathek \
 	dvdbackup \
 	dyndns \
 	easyinfo \
@@ -30,7 +29,6 @@ SUBDIRS = \
 	epgcopy \
 	epgrefresh \
 	epgsearch \
-	eurotictv \
 	fancontrol2 \
 	filebrowser \
 	fritzcall \

@@ -1,2 +1,0 @@
-Description: Play rtp Stream on your Dreambox 
-Depends: enigma2, python-twisted-web

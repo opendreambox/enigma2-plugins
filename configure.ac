@@ -88,9 +88,6 @@ dreamirc/meta/Makefile
 dreamirc/src/Makefile
 dreamirc/src/protocols/Makefile
 
-dreammediathek/Makefile
-dreammediathek/src/Makefile
-
 dvdbackup/Makefile
 dvdbackup/meta/Makefile
 dvdbackup/src/Makefile
@@ -145,10 +142,6 @@ epgrefresh/src/webinterface/Makefile
 epgsearch/Makefile
 epgsearch/meta/Makefile
 epgsearch/src/Makefile
-
-eurotictv/Makefile
-eurotictv/meta/Makefile
-eurotictv/src/Makefile
 
 fancontrol2/Makefile
 fancontrol2/meta/Makefile
