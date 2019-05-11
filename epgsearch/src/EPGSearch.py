@@ -337,7 +337,7 @@ class EPGSearch(EPGSelection):
 			EPGSearchFilter_openSearchFilterList(self.session, None, None)
 			self.onShow.append(self.__backFromSearchFilterList)
 		else:
-			self.session.open(MessageBox,_("To use the search filter function in EPGSearch, the AutoTimer-plugin must first be installed!"),type = MessageBox.TYPE_INFO)
+			self.session.open(MessageBox,_("AutoTimer-plugin must be installed to use the search filter function!"),type = MessageBox.TYPE_INFO)
 
 	def __backFromSearchFilterList(self):
 		self.onShow.remove(self.__backFromSearchFilterList)
@@ -352,7 +352,7 @@ class EPGSearch(EPGSelection):
 			if event is not None:
 				searchEventWithFilter(self.session, event, service)
 		else:
-			self.session.open(MessageBox,_("To use the search filter function in EPGSearch, the AutoTimer-plugin must first be installed!"),type = MessageBox.TYPE_INFO)
+			self.session.open(MessageBox,_("AutoTimer-plugin must be installed to use the search filter function!"),type = MessageBox.TYPE_INFO)
 		
 	def openSimilarList(self, eventid, refstr):
 		self.session.open(EPGSelection, refstr, None, eventid)
