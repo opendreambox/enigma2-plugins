@@ -90,7 +90,7 @@ class EPGSearchSetup(Screen, ConfigListScreen):
 		
 		from EPGSearch import autoTimerAvailable
 		if autoTimerAvailable:
-			self.list.append( getConfigListEntry(_("Buttons for 'add EPGSearch search list'"), config.plugins.epgsearch.addSearchFilter_menu, _("Select the buttons, which show this menu item (on change GUI-restart is necessary).")) )
+			self.list.append( getConfigListEntry(_("Buttons for 'add search filter to EPGSearch'"), config.plugins.epgsearch.addSearchFilter_menu, _("Select the buttons, which show this menu item (on change GUI-restart is necessary).")) )
 			self.list.append( getConfigListEntry(_("Blue button function (search list)"), config.plugins.epgsearch.blue_function, _("Select the search list to show on blue button in the EPGSearch match list (default = text search history and search filter list).")) )
 			
 
