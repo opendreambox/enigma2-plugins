@@ -131,6 +131,7 @@ def InfoBarPlugins__init__(self):
 def showInfo(self):
 	if not config.plugins.EasyInfo.showEventInfoFirst.value:
 		epglist = [ ]
+		self.epglist = epglist
 		service = self.session.nav.getCurrentService()
 		ref = self.session.nav.getCurrentlyPlayingServiceReference()
 		info = service.info()
@@ -141,11 +142,19 @@ def showInfo(self):
 		if ptr:
 			epglist.append(ptr)
 		if epglist:
-			self.session.open(EasyInfoEventView, epglist[0], ServiceReference(ref))
+			self.session.open(EasyInfoEventView, epglist[0], ServiceReference(ref), self.eventViewCallback)
 		else:
 			self.session.open(EasyInfo)
 	else:
 		self.session.open(EasyInfo)
+		
+def eventViewCallback(self, setEvent, setService, val): #used for now/next displaying
+	epglist = self.epglist
+	if len(epglist) > 1:
+		tmp = epglist[0]
+		epglist[0] = epglist[1]
+		epglist[1] = tmp
+		setEvent(epglist[0])	
 
 def buttonTV(self):
 	currentService = self.session.nav.getCurrentService()
