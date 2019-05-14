@@ -60,7 +60,7 @@ class ConfigScreen(Screen, ConfigListScreen, HelpableScreen, PushServiceBase):
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		HelpableScreen.__init__(self)
-		self.skinName = ["ConfigScreen", "ConfigListScreen"]
+		self.skinName = ["PushServiceConfigScreen", "ConfigListScreen"]
 		
 		from plugin import NAME, VERSION, gPushService
 		self.setup_title = NAME + " " + _("Configuration") + " " + VERSION
@@ -196,7 +196,7 @@ class ConfigScreen(Screen, ConfigListScreen, HelpableScreen, PushServiceBase):
 				self.list.append( getConfigListEntry( _("Push errors"), config.pushservice.push_errors, 0 ) )
 			
 		elif self.state == SERVICES:
-			self["key_red"].setText(_("Main"))
+			self["key_red"].setText(_("Mainmenu"))
 			self["key_green"].setText(_("Test"))
 			self["key_yellow"].setText(_("Add service"))
 			self["key_blue"].setText(_("Remove service"))
