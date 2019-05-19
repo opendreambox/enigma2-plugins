@@ -125,10 +125,10 @@ class Video(object):
 	def getDuration(self):
 		try:
 			return self._parse_duration(str(self._entry["contentDetails"]["duration"])).total_seconds()
-		except KeyError, e:
+		except KeyError as e:
 			Log.w(e)
 			return 0
-		except ValueError, e:
+		except ValueError as e:
 			Log.w(e)
 			return 0
 	duration = property(getDuration)
