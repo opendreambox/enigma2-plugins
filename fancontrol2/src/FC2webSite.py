@@ -8,6 +8,7 @@ from Components.config import configfile, config
 
 import os
 import datetime
+from six.moves import range
 
 ########################################################
 class FC2web(resource.Resource):

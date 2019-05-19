@@ -42,6 +42,7 @@ from Components.Harddisk import harddiskmanager
 
 from threading import Thread
 import Queue
+from six.moves import range
 Briefkasten = Queue.Queue()
 
 global RPMread
