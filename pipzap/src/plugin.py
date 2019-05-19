@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 # Plugin definition
+from __future__ import division
 from Plugins.Plugin import PluginDescriptor
 
 from Components.ActionMap import HelpableActionMap
@@ -411,11 +412,11 @@ class PictureInPictureZapping(Screen):
 		y = config.av.pip.value[1]
 		width = getDesktop(0).size().width()
 		height = getDesktop(0).size().height()
-		if x > width / 2:
+		if x > width // 2:
 			x = 40
 		else:
 			x = width - 120
-		if y > height / 2:
+		if y > height // 2:
 			y = 40
 		else:
 			y = height - 55
@@ -452,31 +453,31 @@ class PictureInPictureZappingWithChannelName(Screen):
 		height = getDesktop(0).size().height()
 
 		#position des PiP in Skin-Werte umrechnen
-		xt = x1 * width  / 720
-		yt = y1 * height / 576
-		ht = y2 * height / 576
-		wt = x2 * width  / 720
+		xt = x1 * width  // 720
+		yt = y1 * height // 576
+		ht = y2 * height // 576
+		wt = x2 * width  // 720
 		
 		# Korrektur wenn das PiP ueber den unteren bzw. rechten Rand gehen wuerde
-		tmp = xt - (wt * 4) / 100
+		tmp = xt - (wt * 4) // 100
 		if tmp < 0:
 			xt = 0
 		else:
 			xt = tmp
 		
-		tmp = yt - (ht * 4) / 100
+		tmp = yt - (ht * 4) // 100
 		if tmp < 0:
 			yt = 0
 		else:
 			yt = tmp
 		
-		tmp = (wt * 108) / 100
+		tmp = (wt * 108) // 100
 		if xt + tmp > width:
 			wt = width - xt
 		else:
 			wt = tmp
 		
-		tmp = (ht * 108) / 100
+		tmp = (ht * 108) // 100
 		if yt + tmp > height:
 			ht = height - yt
 		else:
@@ -484,9 +485,9 @@ class PictureInPictureZappingWithChannelName(Screen):
 		
 		border_width = self["border_top"].instance.size().height()
 		
-		x = xt - (border_width/2) -1
+		x = xt - (border_width//2) -1
 		y = yt - border_width + 1
-		h = ht + (border_width/2)
+		h = ht + (border_width//2)
 		w = wt + (2 * border_width) -1
 		
 		border_txt_height = self["border_txt"].instance.size().height()
