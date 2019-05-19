@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 from Plugins.Plugin import PluginDescriptor
 from SerienFilm import SerienFilmVersion, SerienFilmCfg
 from traceback import print_exc
@@ -8,11 +9,11 @@ from MovieSelection import MovieSelection
 
 
 def pluginConfig(session, **kwargs):
-	print "[SF-Plugin] Config\n"
+	print("[SF-Plugin] Config\n")
 	try:
 		session.open(SerienFilmCfg)
 	except Exception as e:
-		print "[SF-Plugin] pluginConfig Config exception:\n" + str(e)
+		print("[SF-Plugin] pluginConfig Config exception:\n" + str(e))
 
 
 gLeavePlayerConfirmed = None
@@ -22,7 +23,7 @@ def showMoviesSF(self):
 #		print "[SF-Plugin] showMoviesSF.InfoBar"
 		self.session.openWithCallback(self.movieSelected, MovieSelection)
 	except Exception as e:
-		print "[SF-Plugin] showMoviesSF exception:\n" + str(e)
+		print("[SF-Plugin] showMoviesSF exception:\n" + str(e))
 
 def showMoviesMP(self):
 	ref = self.session.nav.getCurrentlyPlayingServiceReference()
@@ -49,7 +50,7 @@ def autostart(reason, **kwargs):
 		if "session" in kwargs:
 			global gLeavePlayerConfirmed
 			Session = kwargs["session"]
-			print "[SF-Plugin] autostart, Session = " +  str(Session) + "\n"
+			print("[SF-Plugin] autostart, Session = " +  str(Session) + "\n")
 			try:
 				from Screens.InfoBar import InfoBar
 				InfoBar.showMovies = showMoviesSF
@@ -59,10 +60,10 @@ def autostart(reason, **kwargs):
 				MoviePlayer.leavePlayerConfirmed = leavePlayerConfirmedMP
 
 			except Exception as e:
-				print "[SF-Plugin] autostart MovieList launch override exception:\n" + str(e)
+				print("[SF-Plugin] autostart MovieList launch override exception:\n" + str(e))
 
 		else:
-			print "[SF-Plugin] autostart without session\n"
+			print("[SF-Plugin] autostart without session\n")
 
 
 def Plugins(**kwargs):
@@ -73,5 +74,5 @@ def Plugins(**kwargs):
 		icon = "SerienFilm.png",
 		where = PluginDescriptor.WHERE_PLUGINMENU,
 		fnc = pluginConfig) )
-	print "[SF-Plugin] autostart descriptors = " + str(descriptors)
+	print("[SF-Plugin] autostart descriptors = " + str(descriptors))
 	return descriptors
