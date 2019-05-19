@@ -28,6 +28,7 @@ from TagStrip import strip_readable
 from protocol import createFactory
 
 from . import initLog, debug, scaleH, scaleV, DESKTOP_WIDTH, DESKTOP_HEIGHT #@UnresolvedImport # pylint: disable-msg=F0401
+from six.moves import map
 mailAccounts = [] # contains all EmailAccount objects
 from EmailConfig import EmailConfigOptions, EmailConfigAccount
 
@@ -921,7 +922,7 @@ class EmailAccount():
 		# debug("[EmailAccount] %s: onMailboxList:\n%s" %(self._name, str(mylist)))
 		mylist.sort()
 		try:
-			self.inboxPos = map(lambda x: x.lower(), mylist).index('inbox')+1
+			self.inboxPos = [x.lower() for x in mylist].index('inbox')+1
 		except ValueError:
 			debug("[EmailAccount] onMailboxList: no inbox?!?!")
 			mylist = ['INBOX']
