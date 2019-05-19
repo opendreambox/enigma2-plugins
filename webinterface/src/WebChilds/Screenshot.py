@@ -43,7 +43,7 @@ class ScreenshotResource(resource.Resource):
 				video = True
 			elif key == "res":
 				try:
-					x, y  = map(lambda val: int(val), value[0].split("x"))
+					x, y  = [int(val) for val in value[0].split("x")]
 				except Exception as e:
 					print e
 					Log.w("%s is not a valid value for video size. Please use something in the style of '1280x720'" %value)
