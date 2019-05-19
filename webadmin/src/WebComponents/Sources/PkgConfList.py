@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from Components.Sources.Source import Source
 from glob import glob
 from os import statvfs
@@ -48,7 +49,7 @@ class PkgConfList(Source):
 			stat = statvfs(self.sources_list_d)
 		except OSError:
 			return (False, "statvfs() failed")
-		freespace = stat.f_bfree / 1000 * stat.f_bsize / 1000
+		freespace = stat.f_bfree // 1000 * stat.f_bsize // 1000
 		return (True, '%d' %freespace)
 			
 	def getList(self):

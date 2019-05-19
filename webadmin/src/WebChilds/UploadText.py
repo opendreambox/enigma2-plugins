@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from os import chmod, close, rename, statvfs, unlink, write
 from os.path import basename, isdir, isfile, join, realpath
 from tempfile import mkstemp
@@ -99,7 +100,7 @@ class UploadTextResource(resource.Resource):
 			req.setResponseCode(http.INTERNAL_SERVER_ERROR)
 			return str(e)
 
-		freespace = stat.f_bfree / 1000 * stat.f_bsize / 1000
+		freespace = stat.f_bfree // 1000 * stat.f_bsize // 1000
 
 		req.setResponseCode(http.OK)
 		req.setHeader('Content-type', 'text/html')
