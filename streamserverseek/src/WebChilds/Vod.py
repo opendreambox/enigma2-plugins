@@ -186,7 +186,7 @@ def getSegmentNoFromFilename(filename):
 		if not filename.startswith("segment") or not filename.endswith(".ts"):
 			return None
 		return int(filename[7:-3])
-	except Exception, e:
+	except Exception as e:
 		return None
 
 
