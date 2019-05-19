@@ -86,7 +86,7 @@ class AutoPollerThread(Thread):
 		timer = self.__timer
 
 		self.running = True
-		while 1:
+		while True:
 			sem.acquire()
 			# NOTE: we have to check this here and not using the while to prevent the parser to be started on shutdown
 			if not self.running: break
