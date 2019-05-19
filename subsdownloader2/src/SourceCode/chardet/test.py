@@ -7,7 +7,7 @@ u = UniversalDetector()
 for f in glob.glob(sys.argv[1]):
     print f.ljust(60),
     u.reset()
-    for line in file(f, 'rb'):
+    for line in open(f, 'rb'):
         u.feed(line)
         if u.done: break
     u.close()
