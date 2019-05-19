@@ -1,3 +1,4 @@
+from __future__ import division
 from Components.Sources.Source import Source
 from Screens.ChannelSelection import service_types_tv, service_types_radio, FLAG_SERVICE_NEW_FOUND,MODE_TV, MODE_RADIO
 from enigma import eServiceReference, eServiceCenter
@@ -73,7 +74,7 @@ class SatellitesList(Source):
 								h = _("W")
 							else:
 								h = _("E")
-							service_name = ("%d.%d %s") % (orbpos / 10, orbpos % 10, h)
+							service_name = ("%d.%d %s") % (orbpos // 10, orbpos % 10, h)
 					if i:
 						service_type = "HD %s" % service_type
 					print "service name"
