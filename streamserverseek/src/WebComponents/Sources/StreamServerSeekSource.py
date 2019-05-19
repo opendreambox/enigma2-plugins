@@ -1,3 +1,4 @@
+from __future__ import division
 from Components.Sources.Source import Source
 
 import os.path
@@ -76,7 +77,7 @@ class StreamServerSeekSource(Source):
 		if not result[0]:
 			if result[1] == 0:
 				return 0
-			return result[1] / self._unitMultiplier
+			return result[1] // self._unitMultiplier
 		return -1
 
 	def getPlayPosition(self):
@@ -84,7 +85,7 @@ class StreamServerSeekSource(Source):
 		if not result[0]:
 			if result[1] == 0:
 				return 0
-			return result[1] / self._unitMultiplier
+			return result[1] // self._unitMultiplier
 		return -1
 
 	def initVars(self):

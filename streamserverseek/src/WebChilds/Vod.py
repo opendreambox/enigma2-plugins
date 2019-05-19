@@ -1,3 +1,4 @@
+from __future__ import division
 from enigma import eTimer
 
 from twisted.web import resource, server, proxy, http
@@ -236,7 +237,7 @@ class VodRequestHandler(object):
 		movieSegments = 0
 		movieLength = seek.getLength()
 		if not movieLength[0] and movieLength[1]:
-			movieSegments = int(math.ceil(movieLength[1] / 90000 / 2))
+			movieSegments = int(math.ceil(movieLength[1] // 90000 // 2))
 
 		for i in range(0, movieSegments):
 			response.write("#EXTINF:%s,\n" % self._resource.segmentLength)
