@@ -6,7 +6,7 @@ from twisted.web import resource, http, server
 from enigma import eDVBDB
 from Tools.Directories import resolveFilename, SCOPE_CONFIG
 from xml.dom.minidom import parseString as xml_dom_minidom_parseString
-from urllib import unquote as urllib_unquote
+from six.moves.urllib.parse import unquote as urllib_unquote
 import Components.ParentalControl
 
 ##########################

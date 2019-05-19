@@ -1,6 +1,6 @@
 from __future__ import print_function
 from twisted.web import resource, http, server, static
-from urllib import unquote
+from six.moves.urllib.parse import unquote
 from os import path as os_path
 from Tools.Directories import resolveFilename, SCOPE_HDD
 
