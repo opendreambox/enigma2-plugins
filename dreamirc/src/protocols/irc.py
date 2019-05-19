@@ -1932,8 +1932,8 @@ def ctcpExtract(message):
             normal_messages.append(messages.pop(0))
         odd = not odd
 
-    extended_messages[:] = filter(None, extended_messages)
-    normal_messages[:] = filter(None, normal_messages)
+    extended_messages[:] = [_f for _f in extended_messages if _f]
+    normal_messages[:] = [_f for _f in normal_messages if _f]
 
     extended_messages[:] = map(ctcpDequote, extended_messages)
     for i in xrange(len(extended_messages)):
