@@ -30,6 +30,7 @@ encode(in_file, out_file [,name, mode])
 decode(in_file [, out_file, mode])
 """
 
+from __future__ import print_function
 import binascii
 import os
 import sys
@@ -171,7 +172,7 @@ def test():
             if isinstance(output, six.string_types):
                 output = open(output, 'w')
             else:
-                print sys.argv[0], ': cannot do -t to stdout'
+                print(sys.argv[0], ': cannot do -t to stdout')
                 sys.exit(1)
         decode(input, output)
     else:
@@ -179,7 +180,7 @@ def test():
             if isinstance(input, six.string_types):
                 input = open(input, 'r')
             else:
-                print sys.argv[0], ': cannot do -t from stdin'
+                print(sys.argv[0], ': cannot do -t from stdin')
                 sys.exit(1)
         encode(input, output)
 

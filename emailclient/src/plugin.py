@@ -6,6 +6,7 @@ $Date$
 $Id$
 '''
 from __future__ import division
+from __future__ import print_function
 from Components.ActionMap import ActionMap
 from Components.Label import Label
 from Screens.MessageBox import MessageBox
@@ -891,7 +892,7 @@ class EmailAccount():
 			self._doLoginInsecure()
 		except Exception as e:
 			debug("[EmailAccount] %s: _onAuthenticationFailed: %s" %(self._name, e.message))
-			print e, e.message
+			print(e, e.message)
 
 	def _doLoginInsecure(self):
 		debug("[EmailAccount] %s: _doLoginInsecure" %(self._name))
