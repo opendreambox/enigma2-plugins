@@ -1,3 +1,4 @@
+from __future__ import division
 from enigma import eTimer, ePythonMessagePump
 from MyTubeService import GoogleSuggestions
 from Screens.Screen import Screen
@@ -334,7 +335,7 @@ class MyTubeTasksScreen(Screen):
 	def rebuildTaskList(self):
 		self.tasklist = []
 		for job in job_manager.getPendingJobs():
-			self.tasklist.append((job,job.name,job.getStatustext(),int(100*job.progress/float(job.end)) ,str(100*job.progress/float(job.end)) + "%" ))
+			self.tasklist.append((job,job.name,job.getStatustext(),int(100*job.progress//float(job.end)) ,str(100*job.progress//float(job.end)) + "%" ))
 		self['tasklist'].setList(self.tasklist)
 		self['tasklist'].updateList(self.tasklist)
 		self._searchTimer.startLongTimer(2)

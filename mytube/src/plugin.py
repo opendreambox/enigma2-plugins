@@ -1,3 +1,4 @@
+from __future__ import division
 from Components.AVSwitch import AVSwitch
 from Components.ActionMap import ActionMap
 from Components.Button import Button
@@ -152,7 +153,7 @@ class downloadTask(Task):
 
 	def http_progress(self, recvbytes, totalbytes):
 		#print "[http_progress] recvbytes=%d, totalbytes=%d" % (recvbytes, totalbytes)
-		self.progress = int(self.end*recvbytes/float(totalbytes))
+		self.progress = int(self.end*recvbytes//float(totalbytes))
 
 	def http_finished(self, string=""):
 		print "[http_finished]" + str(string)
@@ -521,7 +522,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		elif answer == "downview":
 			self.tasklist = []
 			for job in job_manager.getPendingJobs():
-				self.tasklist.append((job,job.name,job.getStatustext(),int(100*job.progress/float(job.end)) ,str(100*job.progress/float(job.end)) + "%" ))
+				self.tasklist.append((job,job.name,job.getStatustext(),int(100*job.progress//float(job.end)) ,str(100*job.progress//float(job.end)) + "%" ))
 			self.session.open(MyTubeTasksScreen, self.skin_path , self.tasklist)
 		elif answer == None:
 			self.ScreenClosed()
@@ -1086,7 +1087,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		duration = entry.duration
 		if duration is not 0:
 			durationInSecs = int(duration)
-			mins = int(durationInSecs / 60)
+			mins = int(durationInSecs // 60)
 			secs = durationInSecs - mins * 60
 			duration = "%d:%02d" % (mins, secs)
 		else:
@@ -1318,7 +1319,7 @@ class MyTubeVideoInfoScreen(Screen):
 
 		if self.video.duration is not 0:
 			durationInSecs = int(self.video.duration)
-			mins = int(durationInSecs / 60)
+			mins = int(durationInSecs // 60)
 			secs = durationInSecs - mins * 60
 			duration = "%d:%02d" % (mins, secs)
 			self["duration"].setText(_("Duration: ") + str(duration))
