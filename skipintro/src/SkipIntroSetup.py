@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Screens.ChoiceBox import ChoiceBox
@@ -98,7 +99,7 @@ class SISetupScreen(ConfigListScreen, Screen):
 
 		skipTimes = self.database.getAllSkipTimes()
 		for name, skipTime in skipTimes:
-			skipTimeConfig = NoSave(ConfigInteger(default=skipTime / 90000, limits=(0, 3600)))
+			skipTimeConfig = NoSave(ConfigInteger(default=skipTime // 90000, limits=(0, 3600)))
 			self.list.append(getConfigListEntry(name, skipTimeConfig, _("Skip time saved for '%s'") % name))
 		self["config"].list = self.list
 		self["config"].l.setList(self.list)

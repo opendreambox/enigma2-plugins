@@ -1,4 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
+from __future__ import division
 from Plugins.Plugin import PluginDescriptor
 from Components.ActionMap import HelpableActionMap
 from Components.config import config
@@ -49,7 +50,7 @@ def InfoBarSeek__serviceStarted(self):
 		if self.skipSeekTime == 0:
 			msgtxt = _("No skip time saved for\n%s") % title[0]
 		else:
-			msgtxt = _("Saved skip time found for\n%s:\n%s seconds") %(self.seriesName, str(self.skipSeekTime / 90000))
+			msgtxt = _("Saved skip time found for\n%s:\n%s seconds") %(self.seriesName, str(self.skipSeekTime // 90000))
 		Notifications.AddNotification(MessageBox, msgtxt, MessageBox.TYPE_INFO, timeout=3)
 
 def InfoBarSeek__seekableStatusChanged(self):
@@ -92,7 +93,7 @@ def InfoBarSeek__init__(self, actionmap = "InfobarSeekActions"):
 			setIntroTime()
 		else:
 			if config.plugins.skipintro.show_skipmsg.value:
-				self.session.open(MessageBox, _("SkipIntro found seek time for\n%s:\n%s seconds") %(self.seriesName,str(self.skipSeekTime / 90000)), MessageBox.TYPE_INFO, timeout=3)
+				self.session.open(MessageBox, _("SkipIntro found seek time for\n%s:\n%s seconds") %(self.seriesName,str(self.skipSeekTime // 90000)), MessageBox.TYPE_INFO, timeout=3)
 			self.doSeekRelative(self.skipSeekTime)
 
 	def skipIntro_long():
@@ -124,7 +125,7 @@ def InfoBarSeek__init__(self, actionmap = "InfobarSeekActions"):
 			if self.setSeasonIntroTime:
 				db_title = title[0] + title[1]
 
-			msgtxt = _("Stopping time measurment for intro duration for\n%s.\nIntro duration: %s seconds") %(db_title, str(self.skipSeekTime / 90000))
+			msgtxt = _("Stopping time measurment for intro duration for\n%s.\nIntro duration: %s seconds") %(db_title, str(self.skipSeekTime // 90000))
 			msgtxt += _(" (-%s seconds).") %(config.plugins.skipintro.skiptime_decrease.value)
 			if self.setSeasonIntroTime:
 				msgtxt += _("\nIntro duration will be saved with season.")
