@@ -20,6 +20,7 @@
 
 
 
+from __future__ import division
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
@@ -651,7 +652,7 @@ class EasyInfoEventView(Screen, EventViewBase):
 		self.setTitle(event.getEventName())
 		self["epg_description"].setText(text)
 		self["datetime"].setText(event.getBeginTimeString())
-		self["duration"].setText(_("%d min")%(event.getDuration()/60))
+		self["duration"].setText(_("%d min")%(event.getDuration()//60))
 		self["key_red"].setText(_("Similar"))
 		serviceref = self.currentService
 		eventid = self.event.getEventId()
@@ -754,12 +755,12 @@ class EasyInfoEventList(EPGList):
 					self.piconWidth = picon.size().width()
 				if self.piconHeight == 0:
 					self.piconHeight = picon.size().height()
-				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, (self.channelWidth-self.piconWidth)/2, (self.itemHeight-self.piconHeight)/2, self.piconWidth, self.piconHeight, picon))
+				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, (self.channelWidth-self.piconWidth)//2, (self.itemHeight-self.piconHeight)//2, self.piconWidth, self.piconHeight, picon))
 			else:
 				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, self.channelWidth, self.itemHeight, 1, RT_HALIGN_CENTER|RT_VALIGN_CENTER|RT_WRAP, service_name))
 		
 		if rec:
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.timeIndicatorWidth+self.timeWidth+channelOffset, (self.itemHeight-self.recIconSize)/2, self.recIconSize, self.recIconSize, clock_pic)) 
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.timeIndicatorWidth+self.timeWidth+channelOffset, (self.itemHeight-self.recIconSize)//2, self.recIconSize, self.recIconSize, clock_pic)) 
 			recOffset = self.recOffset
 				
 		if beginTime is not None:
@@ -773,12 +774,12 @@ class EasyInfoEventList(EPGList):
 					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+self.timeWidth+channelOffset+recOffset, self.eventNameYOffset, self.eventNameWidth-recOffset, self.itemHeight-2*self.eventNameYOffset, 0, flagValue, EventName)
 				))
 			else:
-				percent = (nowTime - beginTime)*100/duration
+				percent = (nowTime - beginTime)*100//duration
 				remaining = ((beginTime+duration)-nowTime)
 				
 				res.extend((
-					(eListboxPythonMultiContent.TYPE_PROGRESS, (self.remainingTimeWidth-self.progressBarWidth)/2+channelOffset, (self.itemHeight/2-self.progressBarHeight)/2, self.progressBarWidth, self.progressBarHeight, percent),
-					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+channelOffset, self.itemHeight/2, self.remainingTimeWidth, self.itemHeight/2, 1, RT_HALIGN_LEFT, "+%d:%02d" % (remaining/3600, (remaining/60)-((remaining /3600)*60))),
+					(eListboxPythonMultiContent.TYPE_PROGRESS, (self.remainingTimeWidth-self.progressBarWidth)//2+channelOffset, (self.itemHeight//2-self.progressBarHeight)//2, self.progressBarWidth, self.progressBarHeight, percent),
+					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+channelOffset, self.itemHeight//2, self.remainingTimeWidth, self.itemHeight//2, 1, RT_HALIGN_LEFT, "+%d:%02d" % (remaining//3600, (remaining//60)-((remaining //3600)*60))),
 					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+self.timeWidth+channelOffset+recOffset, self.eventNameYOffset, self.eventNameWidth-recOffset, self.itemHeight-2*self.eventNameYOffset, 0, flagValue, EventName)
 				))
 		return res
