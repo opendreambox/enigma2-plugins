@@ -58,6 +58,7 @@ from Components.ConfigList import ConfigListScreen
 
 # GUI (Summary)
 from Screens.Setup import SetupSummary
+from six.moves import range
 
 
 ###############################################################################        
