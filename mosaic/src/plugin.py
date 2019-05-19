@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 # Mosaic by AliAbdul
+from __future__ import division
 from Components.ActionMap import NumberActionMap
 from Components.config import config, ConfigSubsection, ConfigInteger
 from Components.Console import Console
@@ -36,8 +37,8 @@ class Mosaic(Screen):
 	size = desktop.size()
 	width = size.width()
 	height = size.height()
-	windowWidth = width / 4
-	windowHeight = height / 4
+	windowWidth = width // 4
+	windowHeight = height // 4
 	
 	positions = []
 	x = 80
@@ -45,7 +46,7 @@ class Mosaic(Screen):
 	for i in range(1, 10):
 		positions.append([x, y])
 		x += windowWidth
-		x += ((width - 160) - (windowWidth * 3)) / 2
+		x += ((width - 160) - (windowWidth * 3)) // 2
 		if (i == 3) or (i == 6):
 			y = y + windowHeight + 20
 			x = 80
