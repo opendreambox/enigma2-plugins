@@ -40,6 +40,7 @@ from . import debug
 from reverselookup import ReverseLookupAndNotify
 import six
 from six.moves import map
+from six.moves import range
 
 my_global_session = None
 
@@ -159,7 +160,7 @@ def resolveNumberWithAvon(number, countrycode):
 		return ""
 
 	# debug('normNumer: ' + normNumber)
-	for i in reversed(range(min(10, len(number)))):
+	for i in reversed(list(range(min(10, len(number))))):
 		if normNumber[:i] in avon:
 			return '[' + avon[normNumber[:i]].strip() + ']'
 	return ""
