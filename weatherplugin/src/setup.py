@@ -19,6 +19,7 @@
 # If you want to use or modify the code or parts of it,
 # you have to keep MY license and inform me about the modifications by mail.
 #
+from __future__ import print_function
 from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT, \
 	RT_VALIGN_CENTER
 from Screens.Screen import Screen
@@ -277,7 +278,7 @@ class MSNWeatherPluginEntryConfigScreen(ConfigListScreen, Screen):
 			
 	def error(self, error = None):
 		if error is not None:
-			print error
+			print(error)
 		
 	def searchCallback(self, result):
 		if result:
