@@ -181,7 +181,7 @@ class KiddyTimer():
         self.dialog = None
                 
     def resetTimer(self,**kwargs):
-        if "setTime" in kwargs.keys():
+        if "setTime" in list(kwargs.keys()):
             self.setCurrentDayTime(kwargs["setTime"])
         else:            
             self.setCurrentDayTime()
