@@ -5,6 +5,7 @@ from Screens.InfoBar import InfoBar
 from Screens.InfoBarGenerics import InfoBarSubtitleSupport, InfoBarAudioSelection
 from Screens.Screen import Screen
 from enigma import eTimer, eServiceReference, iPlayableService, iSubtitleFilterType_ENUMS, iSubtitleType_ENUMS
+from six.moves import range
 
 class Stream(object):
 	def __init__(self, idx, codec, languages, saved=False, default=False, forced=False, description=""):
@@ -20,7 +21,7 @@ class Stream(object):
 
 class TrackAutoselector(object):
 	instance = None
-	(MATCHED_PRIMARY, MATCHED_ANY, MATCHED_NONE) = range(3)
+	(MATCHED_PRIMARY, MATCHED_ANY, MATCHED_NONE) = list(range(3))
 
 	def __init__(self, session, track_autoselect_config):
 		assert TrackAutoselector.instance is None, "TrackAutoselector is a singleton class and may only be initialized once!"

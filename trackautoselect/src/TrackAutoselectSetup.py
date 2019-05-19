@@ -9,6 +9,7 @@ from Components.SortableList import SortableListScreen
 from Screens.Screen import Screen
 from Screens.ChoiceBox import ChoiceBox
 from Tools.BoundFunction import boundFunction
+from six.moves import range
 
 class TrackAutoselectSetup(Screen, ConfigListScreen):
 	skin = """
