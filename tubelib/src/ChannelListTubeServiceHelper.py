@@ -1,5 +1,6 @@
 from Screens.ChoiceBox import ChoiceBox
 from Tools.Log import Log
+import six
 
 class ChannelListServiceProviderBase(object):
 	def __init__(self, session, csel, callback):
@@ -42,13 +43,13 @@ class ChannelListTubeServiceHelper(object):
 		if not self.PROVIDER:
 			return False
 		if len(self.PROVIDER) == 1 and False:
-			provider = self.PROVIDER[self.PROVIDER.keys()[0]]
+			provider = self.PROVIDER[list(self.PROVIDER.keys())[0]]
 			return self._run(provider)
 		self._pickTube()
 
 	def _pickTube(self):
 		choices = []
-		for key, cls in self.PROVIDER.iteritems():
+		for key, cls in six.iteritems(self.PROVIDER):
 			choices.append((cls.DESCRIPTION, key))
 		self._session.openWithCallback(self._onTubePicked, ChoiceBox, list=choices, windowTitle=_("Pick a Source"), title="Available Sources")
 
