@@ -45,12 +45,12 @@ class ContactsList:
 
         @type person: L{Person<interfaces.IPerson>}
         """
-        if not self.contacts.has_key(person.name):
+        if person.name not in self.contacts:
             self.contacts[person.name] = person
-        if not self.onlineContacts.has_key(person.name) and \
+        if person.name not in self.onlineContacts and \
             (person.status == ONLINE or person.status == AWAY):
             self.onlineContacts[person.name] = person
-        if self.onlineContacts.has_key(person.name) and \
+        if person.name in self.onlineContacts and \
            person.status == OFFLINE:
             del self.onlineContacts[person.name]
 
@@ -73,11 +73,11 @@ class ContactsList:
 
     def contactChangedNick(self, person, newnick):
         oldname = person.name
-        if self.contacts.has_key(oldname):
+        if oldname in self.contacts:
             del self.contacts[oldname]
             person.name = newnick
             self.contacts[newnick] = person
-            if self.onlineContacts.has_key(oldname):
+            if oldname in self.onlineContacts:
                 del self.onlineContacts[oldname]
                 self.onlineContacts[newnick] = person
 
@@ -409,7 +409,7 @@ class ChatUI:
         @type oldnick: string
         @type newnick: string
         """
-        if self.persons.has_key((person.name, person.account)):
+        if (person.name, person.account) in self.persons:
             conv = self.conversations.get(person)
             if conv:
                 conv.contactChangedNick(person, newnick)
