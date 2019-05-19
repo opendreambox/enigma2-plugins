@@ -19,6 +19,7 @@
 
 
 
+from __future__ import division
 from enigma import iServiceInformation, iDVBFrontend
 from Components.Converter.Converter import Converter
 from Components.Element import cached
@@ -67,8 +68,8 @@ class vhdConvSmartInfo(Poll, Converter, object):
 				frontendData = (feinfo and feinfo.getAll(True))
 				if (frontendData is not None):
 					if ((frontendData.get("tuner_type") == feSatellite) or (frontendData.get("tuner_type") == feCable)):
-						frequency = (str((frontendData.get("frequency") / 1000)) + " MHz")
-						symbolrate = (str((float(frontendData.get("symbol_rate")) / float(1000000))) + " MS/s")
+						frequency = (str((frontendData.get("frequency") // 1000)) + " MHz")
+						symbolrate = (str((float(frontendData.get("symbol_rate")) // float(1000000))) + " MS/s")
 						try:
 							if (frontendData.get("tuner_type") == feSatellite):
 								polarisation_i = frontendData.get("polarization")
@@ -82,12 +83,12 @@ class vhdConvSmartInfo(Poll, Converter, object):
 						if (frontendData.get("tuner_type") == feSatellite):
 							orbital_pos = int(frontendData["orbital_position"])
 							if orbital_pos > 1800:
-								orb_pos = str((float(3600 - orbital_pos))/10.0) + "W"
+								orb_pos = str((float(3600 - orbital_pos))//10.0) + "W"
 							elif orbital_pos > 0:
-								orb_pos = str((float(orbital_pos))/10.0) + "E"
+								orb_pos = str((float(orbital_pos))//10.0) + "E"
 						Ret_Text = Ret_Text + "Pos: " + orb_pos + "   "
 					elif (frontendData.get("tuner_type") == feTerrestrial):
-						frequency = (str((frontendData.get("frequency") / 1000)) + " MHz")
+						frequency = (str((frontendData.get("frequency") // 1000)) + " MHz")
 						Ret_Text = Ret_Text + "Frequency: " + frequency
 				prvd = info.getInfoString(iServiceInformation.sProvider)
 				Ret_Text = self.kurz(prvd) + "     " + Ret_Text

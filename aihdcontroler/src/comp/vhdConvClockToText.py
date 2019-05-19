@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from Converter import Converter
 from time import localtime, strftime
 from Components.Element import cached
@@ -58,13 +59,13 @@ class vhdConvClockToText(Converter, object):
 		if time is None:
 			return ""
 		if self.type == self.IN_MINUTES:
-			return "%d min" % (time / 60)
+			return "%d min" % (time // 60)
 		elif self.type == self.AS_LENGTH:
-			return "%d:%02d" % (time / 60, time % 60)
+			return "%d:%02d" % (time // 60, time % 60)
 		elif self.type == self.TIMESTAMP:
 			return str(time)
 		elif self.type == self.STUNDEN:
-			return "%d:%02d" % (time / 3600, (time / 60) - ((time / 3600) * 60))
+			return "%d:%02d" % (time // 3600, (time // 60) - ((time // 3600) * 60))
 		t = localtime(time)
 		if self.type == self.WITH_SECONDS:
 			return "%2d:%02d:%02d" % (t.tm_hour, t.tm_min, t.tm_sec)
