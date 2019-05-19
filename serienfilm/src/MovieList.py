@@ -357,7 +357,7 @@ class MovieList(GUIComponent):
 		rootinfo = self.serviceHandler.info(root)
 		pwd = rootinfo and rootinfo.getName(root)
 
-		while 1:
+		while True:
 			serviceref = list.getNext()
 			if not serviceref.valid():
 				break
