@@ -32,7 +32,7 @@ class UploadTextResource(resource.Resource):
 			return 'Invalid filename specified.'
 
 		path = realpath(path)
-		if path not in self.modelist.keys():
+		if path not in list(self.modelist.keys()):
 			req.setResponseCode(http.FORBIDDEN)
 			req.setHeader('Content-type', 'text/plain')
 			return 'Invalid path specified.'
