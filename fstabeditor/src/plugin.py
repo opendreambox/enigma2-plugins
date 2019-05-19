@@ -23,6 +23,7 @@
 #  distributed other than under the conditions noted above.
 #
 
+from __future__ import print_function
 from Components.config import config, ConfigText, ConfigNumber, ConfigSelection, NoSave, getConfigListEntry
 from Components.ActionMap import *
 from Components.ConfigList import ConfigListScreen
@@ -54,7 +55,7 @@ def checkForReadOnly(reason, **kwargs):
 			if line.startswith('rootfs'):
 				entry = line.split()
 				if entry[3] == 'ro':
-					print "[fstabEditor]  - rootfs is mounted ro"
+					print("[fstabEditor]  - rootfs is mounted ro")
 					from Tools import Notifications
 					Notifications.notificationQueue.registerDomain("fstabEditor", "fstabEditor", deferred_callable = True)
 					Notifications.AddNotificationWithCallback(runRemountCommand, MessageBox, _("rootfs is mounted readonly. This is usually caused by a corrupted fstab. Do you want to remount now to be able to fix this?"), MessageBox.TYPE_YESNO, 5, windowTitle="fstabEditor", domain="fstabEditor")
@@ -340,7 +341,7 @@ class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
 				optionsString += ",%s" %(entry.value)
 
 		# keep the print for debug purpose in case problems occur				
-		print "optionsString", optionsString
+		print("optionsString", optionsString)
 		
 		#check if new entry is longer than the currently longest
 		if len(self.devicename.value) > lengthList[0]:
@@ -370,13 +371,13 @@ class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
 			self.session.openWithCallback(self.updateSelectedOption, optionSelector, self.list[self.selectedOptionEntry][1].value)
 			
 	def updateSelectedOption(self, returnValue=""):
-		print returnValue
+		print(returnValue)
 		self.list[self.selectedOptionEntry][1].value=returnValue
 		self.optionList[self.selectedOptionEntry-4].value = returnValue
 	
 	def dirSelectDlgClosed(self, mountpoint):
 		#use print to see in crashlog what's been selected
-		print "mountpoint: ", mountpoint
+		print("mountpoint: ", mountpoint)
 		if mountpoint != False:
 			if self.selectedOptionEntry == 1:
 				self.mountpoint.value = mountpoint
@@ -431,7 +432,7 @@ class optionSelector(Screen,ConfigListScreen,HelpableScreen):
 		self.currentOption = currentValueSplit[0]
 		if len(currentValueSplit) > 1:
 			self.currentValue = currentValueSplit[1]
-		print currentValueSplit
+		print(currentValueSplit)
 		Screen.__init__(self, session)
 		HelpableScreen.__init__(self)
 		
