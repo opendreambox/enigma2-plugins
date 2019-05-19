@@ -65,7 +65,8 @@ class BirthdayStore:
 				f = open(fileName, "r")
 				data = f.read()
 				f.close()
-			except IOError, (error_no, error_str):
+			except IOError as xxx_todo_changeme:
+				(error_no, error_str) = xxx_todo_changeme.args
 				print "[Birthday Reminder] ERROR reading from file %s. Error: %s, %s" % (fileName, error_no, error_str)
 				text = _("Error reading file %s.\n\nError: %s, %s") % (fileName, error_no, error_str)
 				Notifications.AddNotification(MessageBox, text, type = MessageBox.TYPE_ERROR)
@@ -78,7 +79,8 @@ class BirthdayStore:
 			f = open(fileName, "wb")
 			f.write(data)
 			f.close()
-		except IOError, (error_no, error_str):
+		except IOError as xxx_todo_changeme2:
+			(error_no, error_str) = xxx_todo_changeme2.args
 			print "[Birthday Reminder] ERROR writing to file %s. Error: %s, %s" % (fileName, error_no, error_str)
 			text = _("Error writing file %s.\n\nError: %s, %s") % (fileName, error_no, error_str)
 			Notifications.AddNotification(MessageBox, text, type = MessageBox.TYPE_ERROR)
@@ -94,7 +96,8 @@ class BirthdayStore:
 				f = open(fileName, "r")
 				tmpList = pickle_load(f)
 				f.close()
-			except IOError, (error_no, error_str):
+			except IOError as xxx_todo_changeme1:
+				(error_no, error_str) = xxx_todo_changeme1.args
 				print "[Birthday Reminder] ERROR reading from file %s. Error: %s, %s" % (fileName, error_no, error_str)
 				text = _("Error reading file %s.\n\nError: %s, %s") % (fileName, error_no, error_str)
 				Notifications.AddNotification(MessageBox, text, type = MessageBox.TYPE_ERROR)
@@ -118,7 +121,8 @@ class BirthdayStore:
 				pickle_dump(self.getBirthdayList(), f)
 			f.close()
 			print "[Birthday Reminder] wrote %s birthdays to %s" % (self.getSize(), fileName)
-		except IOError, (error_no, error_str):
+		except IOError as xxx_todo_changeme3:
+			(error_no, error_str) = xxx_todo_changeme3.args
 			print "[Birthday Reminder] ERROR writing to file %s. Error: %s, %s" % (fileName, error_no, error_str)
 			text = _("Error writing file %s.\n\nError: %s, %s") % (fileName, error_no, error_str)
 			Notifications.AddNotification(MessageBox, text, type = MessageBox.TYPE_ERROR)
@@ -445,7 +449,8 @@ class BirthdayReminder(Screen, HelpableScreen):
 			
 		try:
 			csvFile = open(CSVFILE, "r")
-		except IOError, (error_no, error_str):
+		except IOError as xxx_todo_changeme4:
+			(error_no, error_str) = xxx_todo_changeme4.args
 			text = _("Error reading file %s.\n\nError: %s, %s") % (CSVFILE, error_no, error_str)
 			self.session.open(MessageBox, text, MessageBox.TYPE_ERROR)
 			return
