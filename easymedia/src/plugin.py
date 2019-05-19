@@ -17,6 +17,7 @@
 #
 #######################################################################
 
+from __future__ import print_function
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Screens.InfoBarGenerics import InfoBarPlugins
@@ -272,7 +273,7 @@ class AddPlug(Screen):
 
 	def save(self):
 		plugin = self["pluginlist"].getCurrent()[0]
-		print plugin
+		print(plugin)
 		plugin.icon = None
 		if not fileExists("/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/" + plugin.name + ".plug"):
 			try:
