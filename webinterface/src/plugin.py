@@ -29,6 +29,7 @@ from __init__ import __version__
 import random, uuid, time, hashlib
 
 from ipaddress import ip_address, ip_interface
+import six
 
 hw = HardwareInfo()
 #CONFIG INIT
@@ -425,7 +426,7 @@ class HTTPAuthResource(HTTPRootResource):
 			return
 		self._interfaces = []
 		#LAN
-		for key, iface in ifaces.iteritems():
+		for key, iface in six.iteritems(ifaces):
 			if iface.ipv4.address != "0.0.0.0":
 				self._addInterface(iface.ipv4.address, iface.ipv4.netmask)
 			if iface.ipv6.address != "::":

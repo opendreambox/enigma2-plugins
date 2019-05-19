@@ -1,6 +1,7 @@
 from Components.Sources.Source import Source
 from Components.Network import iNetworkInfo
 from Tools.Log import Log
+import six
 class Interface:
 	def __init__(self, name):
 		self.name = name
@@ -52,7 +53,7 @@ class Network(Source):
 	def getInterface(self):
 		ifaces = iNetworkInfo.getConfiguredInterfaces()
 		Log.i(ifaces)
-		for key in ifaces.iterkeys():
+		for key in six.iterkeys(ifaces):
 			iface = ifaces[key]
 			if iface.ethernet.interface == self.iface:
 				return self.__getInterfaceAttribs(iface)
@@ -64,7 +65,7 @@ class Network(Source):
 		lst = []
 		ifaces = iNetworkInfo.getConfiguredInterfaces()
 		Log.i(ifaces)
-		for key in ifaces.iterkeys():
+		for key in six.iterkeys(ifaces):
 			iface = ifaces[key]
 			lst.append(self.__getInterfaceAttribs(iface))
 

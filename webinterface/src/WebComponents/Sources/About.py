@@ -1,6 +1,7 @@
 # Parts of Code and idea by Homey
 from Components.Sources.Source import Source
 from Components.Network import iNetworkInfo
+import six
 
 class About(Source):
 	def __init__(self, session):
@@ -13,7 +14,7 @@ class About(Source):
 	def command(self):
 		ConvertIP = lambda l: "%s.%s.%s.%s" % tuple(l) if len(l) == 4 else "0.0.0.0"
 		ifaces = iNetworkInfo.getConfiguredInterfaces()
-		for key in ifaces.iterkeys():
+		for key in six.iterkeys(ifaces):
 			iface = ifaces[key]
 			print "[WebComponents.About] iface: %s" % iface
 			l = (
