@@ -25,6 +25,7 @@ from enigma import eListboxPythonMultiContent, gFont
 from Tools.LoadPixmap import LoadPixmap
 
 from xml.etree.cElementTree import parse as cet_parse
+import six
 try:
 	from xml.etree.cElementTree import ParseError
 except ImportError as ie:
@@ -102,9 +103,9 @@ del pdict
 
 try:
 	dict.iteritems
-	iteritems = lambda d: d.iteritems()
+	iteritems = lambda d: six.iteritems(d)
 except AttributeError:
-	iteritems = lambda d: d.items()
+	iteritems = lambda d: list(d.items())
 reverse = lambda map: dict((v,k) for k,v in iteritems(map))
 
 class PluginWeights:
