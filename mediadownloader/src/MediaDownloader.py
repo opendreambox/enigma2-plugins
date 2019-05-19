@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 # GUI (Screens)
+from __future__ import division
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 
@@ -210,10 +211,10 @@ class MediaDownloader(Screen):
 		elif int(newTime - lastTime) >= 2:
 			newLength = pos
 
-			lastApprox = round(((newLength - self.lastLength) / (newTime - lastTime) / 1024), 2)
+			lastApprox = round(((newLength - self.lastLength) // (newTime - lastTime) // 1024), 2)
 
-			secLen = int(round(((max-pos) / 1024) / lastApprox))
-			self["eta"].text = _("ETA %d:%02d min") % (secLen / 60, secLen % 60)
+			secLen = int(round(((max-pos) // 1024) // lastApprox))
+			self["eta"].text = _("ETA %d:%02d min") % (secLen // 60, secLen % 60)
 			self["speed"].text = _("%d kb/s") % (lastApprox)
 
 			self.lastApprox = lastApprox
