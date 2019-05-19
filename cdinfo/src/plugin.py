@@ -8,6 +8,7 @@ from Components.Sources.StaticText import StaticText
 from Screens.Screen import Screen
 from Components.config import config, ConfigSubsection, ConfigInteger, ConfigYesNo, ConfigText, getConfigListEntry
 from Components.ConfigList import ConfigListScreen
+from six.moves import range
 
 config.plugins.CDInfo = ConfigSubsection()
 config.plugins.CDInfo.useCDTEXT = ConfigYesNo(default = True)
