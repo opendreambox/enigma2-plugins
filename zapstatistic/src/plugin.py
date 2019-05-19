@@ -17,10 +17,11 @@ from time import gmtime, localtime, strftime, time
 from Tools.Directories import fileExists
 from xml.etree.cElementTree import parse
 from skin import TemplatedListFonts, componentSizes
+import six
 
 def decode_charset(str, charset):
 	try:
-		uni = unicode(str, charset, 'strict')
+		uni = six.text_type(str, charset, 'strict')
 	except:
 		uni = str
 	return uni
