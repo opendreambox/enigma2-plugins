@@ -216,16 +216,16 @@ class _GNTPBase(object):
 			if not match:
 				continue
 
-			key = unicode(match.group(1).strip(), 'utf8', 'replace')
-			val = unicode(match.group(2).strip(), 'utf8', 'replace')
+			key = six.text_type(match.group(1).strip(), 'utf8', 'replace')
+			val = six.text_type(match.group(2).strip(), 'utf8', 'replace')
 			dict[key] = val
 		return dict
 
 	def add_header(self, key, value):
-		if isinstance(value, unicode):
+		if isinstance(value, six.text_type):
 			self.headers[key] = value
 		else:
-			self.headers[key] = unicode('%s' % value, 'utf8', 'replace')
+			self.headers[key] = six.text_type('%s' % value, 'utf8', 'replace')
 
 	def add_resource(self, data):
 		"""Add binary resource
