@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import division
 from Components.GUIComponent import GUIComponent
 from Tools.FuzzyDate import FuzzyTime
 from ServiceReference import ServiceReference
@@ -142,7 +143,7 @@ class MovieList(GUIComponent):
 			self.list[cur_idx][3][5] = len	#update entry in list... so next time we don't need to recalc
 
 		if len > 0:
-			len = "%d:%02d" % (len / 60, len % 60)
+			len = "%d:%02d" % (len // 60, len % 60)
 		else:
 			len = ""
 

@@ -1,3 +1,4 @@
+from __future__ import division
 from Components.Converter.Converter import Converter
 from Components.Element import cached, ElementError
 from enigma import iServiceInformation, eServiceReference
@@ -48,7 +49,7 @@ class MovieInfo(Converter, object):
 			elif self.type == self.MOVIE_REC_FILESIZE:
 				filesize = info.getInfoObject(service, iServiceInformation.sFileSize)
 				if filesize is not None:
-					return "%d MB" % (filesize / (1024*1024))
+					return "%d MB" % (filesize // (1024*1024))
 		return ""
 
 	text = property(getText)
