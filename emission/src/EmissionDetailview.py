@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # GUI (Screens)
+from __future__ import division
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Screens.ChoiceBox import ChoiceBox
@@ -228,8 +229,8 @@ class EmissionDetailview(Screen, HelpableScreen):
 			self["private"].text = ""
 			self["files"].setList([])
 		else:
-			self["upspeed"].text = _("%d kb/s") % (torrent.rateUpload / 1024)
-			self["downspeed"].text = _("%d kb/s") % (torrent.rateDownload / 1024)
+			self["upspeed"].text = _("%d kb/s") % (torrent.rateUpload // 1024)
+			self["downspeed"].text = _("%d kb/s") % (torrent.rateDownload // 1024)
 			self["progress"].setValue(int(torrent.progress))
 
 			status = torrent.status
@@ -241,13 +242,13 @@ class EmissionDetailview(Screen, HelpableScreen):
 				progressText = str(torrent.recheckProgress) # XXX: what is this? :D
 			elif status == 'downloading':
 				peerText = _("Downloading from %d of %d peers") % (torrent.peersSendingToUs, torrent.peersConnected)
-				progressText = _("Downloaded %d of %d MB (%d%%)") % (torrent.downloadedEver/1048576, torrent.sizeWhenDone/1048576, torrent.progress)
+				progressText = _("Downloaded %d of %d MB (%d%%)") % (torrent.downloadedEver//1048576, torrent.sizeWhenDone//1048576, torrent.progress)
 			elif status == 'seeding':
 				peerText = _("Seeding to %d of %d peers") % (torrent.peersGettingFromUs, torrent.peersConnected)
-				progressText = _("Downloaded %d and uploaded %d MB") % (torrent.downloadedEver/1048576, torrent.uploadedEver/1048576)
+				progressText = _("Downloaded %d and uploaded %d MB") % (torrent.downloadedEver//1048576, torrent.uploadedEver//1048576)
 			elif status == 'stopped':
 				peerText = _("stopped")
-				progressText = _("Downloaded %d and uploaded %d MB") % (torrent.downloadedEver/1048576, torrent.uploadedEver/1048576)
+				progressText = _("Downloaded %d and uploaded %d MB") % (torrent.downloadedEver//1048576, torrent.uploadedEver//1048576)
 			self["peers"].text = peerText
 			self["progress_text"].text = progressText
 			self["ratio"].text = _("Ratio: %.2f") % (torrent.ratio)
@@ -264,10 +265,10 @@ class EmissionDetailview(Screen, HelpableScreen):
 			for id, x in files.items():
 				completed = x['completed']
 				size = x['size'] or 1 # to avoid division by zero ;-)
-				l.append((id, x['priority'], str(completed/1048576) + " MB", \
-					x['selected'], str(x['name']), str(size/1048576) + " MB", \
+				l.append((id, x['priority'], str(completed//1048576) + " MB", \
+					x['selected'], str(x['name']), str(size//1048576) + " MB", \
 					x['selected'] and _("downloading") or _("skipping"), \
-					int(100*(completed / float(size)))
+					int(100*(completed // float(size)))
 				))
 
 			index = min(self["files"].index, len(l)-1)
