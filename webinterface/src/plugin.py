@@ -133,7 +133,7 @@ def installCertificates(session):
 			print "[Webinterface].installCertificates ::  Installing newly generated certificate and key pair"
 			saveFile(CERT_FILE, crypto.dump_certificate(crypto.FILETYPE_PEM, cert))
 			saveFile(KEY_FILE, crypto.dump_privatekey(crypto.FILETYPE_PEM, k))
-		except IOError, e:
+		except IOError as e:
 			#Disable https
 			config.plugins.Webinterface.https.enabled.value = False
 			config.plugins.Webinterface.https.enabled.save()
@@ -528,7 +528,7 @@ def registerBonjourService(protocol, port):
 		print "[WebInterface.registerBonjourService] Service for protocol '%s' with port '%i' registered!" %(protocol, port)
 		return True
 
-	except ImportError, e:
+	except ImportError as e:
 		print "[WebInterface.registerBonjourService] %s" %e
 		return False
 
@@ -540,7 +540,7 @@ def unregisterBonjourService(protocol):
 		print "[WebInterface.unregisterBonjourService] Service for protocol '%s' unregistered!" %(protocol)
 		return True
 
-	except ImportError, e:
+	except ImportError as e:
 		print "[WebInterface.unregisterBonjourService] %s" %e
 		return False
 

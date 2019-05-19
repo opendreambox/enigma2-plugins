@@ -47,7 +47,7 @@ class UploadResource(resource.Resource):
 		try:
 			matches = search('.*?filename="(.*?)"\r\n.*?', req.content.getvalue())
 			fn = os_path.join(uploaddir, matches.group(1))
-		except Exception, e:
+		except Exception as e:
 			fn = None
 
 		# NOTE: we only accept the given filename if no such file exists yet or the user requested it AND we think its safe
@@ -62,7 +62,7 @@ class UploadResource(resource.Resource):
 		if cnt <= 0: # well, actually we should check against len(data) but lets assume we fail big time or not at all
 			try:
 				os_unlink(fn)
-			except OSError, oe:
+			except OSError as oe:
 				pass
 			return self.out_POST(req, False, "error writing to disk, not uploaded", isXml)
 		else:

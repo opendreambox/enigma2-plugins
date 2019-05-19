@@ -35,7 +35,7 @@ class ServiceListReload(Source):
 			elif self.cmd is self.PARENTAL:
 				Components.ParentalControl.parentalControl.open()
 				self.res = ( True, 'reloaded parentalcontrol white-/blacklist' )
-		except Exception, e:
+		except Exception as e:
 			pass
 
 	def reloadLameDB(self):

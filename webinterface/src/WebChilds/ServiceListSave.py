@@ -153,7 +153,7 @@ class ServiceListSave(resource.Resource):
 			request.setResponseCode(http.OK)
 			request.write(result)
 
-		except Exception, e:
+		except Exception as e:
 			print e
 			result = """<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n
 						<e2simplexmlresult>\n

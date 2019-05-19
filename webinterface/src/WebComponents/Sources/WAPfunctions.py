@@ -291,7 +291,7 @@ class WAPfunctions(Source):
 			while "" in taglist:
 				taglist.remove("")
 			file.close()
-		except IOError, ioe:
+		except IOError as ioe:
 			taglist = []
 		if not tag in taglist:
 			taglist = [tag] + taglist
