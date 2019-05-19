@@ -16,6 +16,7 @@ from Screens.ParentalControlSetup import ProtectedScreen
 from Screens.Screen import Screen
 from enigma import eServiceReference
 from skin import TemplatedListFonts, componentSizes
+from six.moves import range
 
 config.plugins.ZapHistoryConfigurator = ConfigSubsection()
 config.plugins.ZapHistoryConfigurator.enable_zap_history = ConfigSelection(choices = {"off": _("disabled"), "on": _("enabled"), "parental_lock": _("disabled at parental lock")}, default="on")
