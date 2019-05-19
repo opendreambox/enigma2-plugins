@@ -13,6 +13,7 @@ from twisted.internet.defer import succeed
 import e2support, interfaces,dreamIRCTools
 from zope.interface import implements
 from six.moves import map
+from six.moves import range
 
 class IRCPerson(e2support.AbstractPerson):
 

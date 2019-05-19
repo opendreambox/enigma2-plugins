@@ -53,6 +53,7 @@ import socket
 from os import path
 from six.moves import map
 import six
+from six.moves import range
 
 NUL = chr(0)
 CR = chr(0o15)
@@ -939,7 +940,7 @@ class IRCClient(basic.LineReceiver):
             # Remove some of the oldest entries.
             byValue = sorted([(v, k) for (k, v) in self._pings.items()])
             excess = self._MAX_PINGRING - len(self._pings)
-            for i in xrange(excess):
+            for i in range(excess):
                 del self._pings[byValue[i][1]]
 
     def dccSend(self, user, file):
@@ -1936,7 +1937,7 @@ def ctcpExtract(message):
     normal_messages[:] = [_f for _f in normal_messages if _f]
 
     extended_messages[:] = list(map(ctcpDequote, extended_messages))
-    for i in xrange(len(extended_messages)):
+    for i in range(len(extended_messages)):
         m = string.split(extended_messages[i], SPC, 1)
         tag = m[0]
         if len(m) > 1:
