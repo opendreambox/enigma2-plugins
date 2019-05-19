@@ -59,7 +59,7 @@ class Video(object):
 
 	def isValid(self):
 		#two checks for videos that have e.g. gone private
-		return self._entry.has_key("contentDetails") and self._entry["snippet"].has_key("thumbnails")
+		return "contentDetails" in self._entry and "thumbnails" in self._entry["snippet"]
 
 	def isPlaylistEntry(self):
 		return False
@@ -81,7 +81,7 @@ class Video(object):
 		if not best:
 			prios.reverse()
 		for prio in prios:
-			if self._entry["snippet"]["thumbnails"].has_key(prio):
+			if prio in self._entry["snippet"]["thumbnails"]:
 				return str(self._entry["snippet"]["thumbnails"][prio]["url"])
 			else:
 				Log.w(self.id)

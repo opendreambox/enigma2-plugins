@@ -24,7 +24,7 @@ class ChannelListTubeServiceHelper(object):
 		assert(isinstance(cls, ChannelListServiceProviderBase))
 		mykey = key
 		i = 1
-		while ChannelListTubeServiceHelper.PROVIDER.has_key(mykey):
+		while mykey in ChannelListTubeServiceHelper.PROVIDER:
 			mykey = "%s_%s" % (key, i)
 			i += 1
 		ChannelListTubeServiceHelper.PROVIDER[mykey] = cls

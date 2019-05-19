@@ -51,7 +51,7 @@ class Activity(object):
 		if not best:
 			prios.reverse()
 		for prio in prios:
-			if self._entry["snippet"]["thumbnails"].has_key(prio):
+			if prio in self._entry["snippet"]["thumbnails"]:
 				return str(self._entry["snippet"]["thumbnails"][prio]["url"])
 			else:
 				Log.w(self.id)

@@ -25,7 +25,7 @@ class YoutubeQueryBase(object):
 	data = property(getData)
 
 	def hasNextPage(self):
-		return self._data.has_key("nextPageToken")
+		return "nextPageToken" in self._data
 
 	def nextPage(self):
 		if self.hasNextPage():
@@ -35,7 +35,7 @@ class YoutubeQueryBase(object):
 		return False
 
 	def hasPrevPage(self):
-		return self._data.has_key("prevPageToken")
+		return "prevPageToken" in self._data
 
 	def prevPage(self):
 		if self.hasPrevPage():
@@ -45,7 +45,7 @@ class YoutubeQueryBase(object):
 		return False
 
 	def getTotalResults(self):
-		if not self._data.has_key("pageInfo"):
+		if "pageInfo" not in self._data:
 			return 0
 		return self._data["pageInfo"]["totalResults"] or 0
 
