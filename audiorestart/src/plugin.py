@@ -140,7 +140,7 @@ def Plugins(path,**kwargs):
     global plugin_path
     plugin_path = path
     pluginList = [ PluginDescriptor(name=_("Audio restart Setup"), description=_("Setup for the AudioRestart Plugin"), icon = "AudioRestart.png", where = PluginDescriptor.WHERE_PLUGINMENU, fnc=setup)]
-    if config.plugins.AudioRestart.restartSelection.value <> "disabled":
+    if config.plugins.AudioRestart.restartSelection.value != "disabled":
         pluginAutoStart = PluginDescriptor(name="Audio restart", description = _("Restart audio"), where=PluginDescriptor.WHERE_SESSIONSTART, fnc = sessionstart)
         pluginList.append(pluginAutoStart)
     return pluginList
