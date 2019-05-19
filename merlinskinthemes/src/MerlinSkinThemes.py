@@ -76,7 +76,7 @@ E2ver = _("not available")
 if open("/proc/stb/info/model","rb").read() == "dm7080":
 	if fileExists(enigmacontrol):
 		file = open(enigmacontrol, 'r')
-		while 1:
+		while True:
 			line = file.readline()
 			if not line:break
 			if line[:9] == "Version: ":
@@ -97,7 +97,7 @@ if fileExists(GP3Chk):
 	GP3 = True
 	file = open(GP3Chk, 'r')
 	data = ""
-	while 1:
+	while True:
 		line = file.readline()
 		if not line:break
 		data += line
@@ -113,7 +113,7 @@ if fileExists(GP4Chk):
 	GP4 = True
 	file = open(GP4Chk, 'r')
 	data = ""
-	while 1:
+	while True:
 		line = file.readline()
 		if not line:break
 		data += line
