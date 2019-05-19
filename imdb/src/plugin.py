@@ -1,4 +1,5 @@
 ﻿# -*- coding: UTF-8 -*-
+from __future__ import print_function
 from Plugins.Plugin import PluginDescriptor
 from Tools.Downloader import downloadWithProgress
 from twisted.web.client import getPage
@@ -362,7 +363,7 @@ class IMDB(Screen):
 			title = self["menu"].getCurrent()[0]
 			self["statusbar"].setText(_("Re-Query IMDb: %s...") % (title))
 			fetchurl = "https://www.imdb.com/title/" + link
-			print("[IMDB] showDetails() downloading query " + fetchurl)
+			print(("[IMDB] showDetails() downloading query " + fetchurl))
 			getPage(fetchurl, agent=agent, headers=imdb_headers).addCallback(self.IMDBquery2).addErrback(self.http_failed)
 			self["menu"].hide()
 			self.resetLabels()
@@ -489,7 +490,7 @@ class IMDB(Screen):
 		if self.eventName:
 			self["statusbar"].setText(_("Query IMDb: %s") % (self.eventName))
 			fetchurl = "https://www.imdb.com/find?ref_=nv_sr_fn&q=" + quoteEventName(self.eventName) + "&s=all"
-			print("[IMDB] getIMDB() Downloading Query " + fetchurl)
+			print(("[IMDB] getIMDB() Downloading Query " + fetchurl))
 			getPage(fetchurl, agent=agent, headers=imdb_headers).addCallback(self.IMDBquery).addErrback(self.http_failed)
 		else:
 			self["statusbar"].setText(_("Couldn't get Eventname"))
@@ -544,7 +545,7 @@ class IMDB(Screen):
 	def http_failed(self, error):
 		text = _("IMDb Download failed")
 		text += ": " + str(error)
-		print("[IMDB] ",text)
+		print(("[IMDB] ",text))
 		self["statusbar"].setText(text)
 
 	def IMDBquery2(self, data):
@@ -632,7 +633,7 @@ class IMDB(Screen):
 				posterurl = posterurl.group(1)
 				self["statusbar"].setText(_("Downloading Movie Poster: %s...") % (posterurl))
 				localfile = "/tmp/poster.jpg"
-				print("[IMDB] downloading poster " + posterurl + " to " + localfile)
+				print(("[IMDB] downloading poster " + posterurl + " to " + localfile))
 				download = downloadWithProgress(posterurl,localfile,headers=imdb_headers)
 				download.start().addCallback(self.IMDBPoster).addErrback(self.http_failed)
 			else:
