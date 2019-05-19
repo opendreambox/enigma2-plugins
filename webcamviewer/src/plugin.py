@@ -1,3 +1,4 @@
+from __future__ import division
 from enigma import eListbox
 from enigma import eListboxPythonMultiContent
 from enigma import ePicLoad
@@ -459,8 +460,8 @@ class WebcamViewer(Screen, InfoBarNotifications):
 		screen_y = 576
 		size_x = 350
 		size_y = 250
-		pos_x = (screen_x/2)-(size_x/2)
-		pos_y = (screen_y/2)-(size_y/2)
+		pos_x = (screen_x//2)-(size_x//2)
+		pos_y = (screen_y//2)-(size_y//2)
 		skin = """
 		<screen position="%i,%i" size="%i,%i" title="%s">
 			<widget name="menu" position="1,1" size="%i,%i"  scrollbarMode="showOnDemand"/>

@@ -1,3 +1,4 @@
+from __future__ import division
 from Screens.Screen import Screen
 from Components.Sources.List import List
 from Components.Button import Button
@@ -238,7 +239,7 @@ class TravelWebcamviewer(Screen):
 		else:
 			self["key_red"].hide()
 		self["count"].setText(_("Cams: ")+str(self.count))
-		self["page"].setText(_("Page: ")+str(self.page)+"/"+str(self.count/self.per_page))
+		self["page"].setText(_("Page: ")+str(self.page)+"/"+str(self.count//self.per_page))
 		self["currentnumbers"].setText(_("current: ")+str(((self.page-1)*self.per_page)+1)+"-"+str(((self.page-1)*self.per_page)+len(self.list)))
 
 		self.finish_loading = True
