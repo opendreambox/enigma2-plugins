@@ -1,6 +1,7 @@
 '''
 Configuration screens for EmailClient
 '''
+from __future__ import division
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Components.config import config, getConfigListEntry, ConfigText, ConfigPassword, ConfigSelection, ConfigOnOff
@@ -14,7 +15,7 @@ class EmailConfigOptions(ConfigListScreen, Screen):
 	noButtons = 2
 	width = max(noButtons*140+100, 550)
 	height = 5*30+50
-	buttonsGap = (width-noButtons*140)/(noButtons+1)
+	buttonsGap = (width-noButtons*140)//(noButtons+1)
 	skin = """
 		<screen position="%d,%d" size="%d,%d" title="Email Setup" >
 		<widget name="config" position="0,0" size="%d,%d" scrollbarMode="showOnDemand" />
@@ -23,7 +24,7 @@ class EmailConfigOptions(ConfigListScreen, Screen):
 		<widget name="buttonred" position="%d,%d" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;%d" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 		<widget name="buttongreen" position="%d,%d" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;%d" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 		</screen>""" % (
-					(DESKTOP_WIDTH-width)/2, (DESKTOP_HEIGHT-height)/2, width, height,
+					(DESKTOP_WIDTH-width)//2, (DESKTOP_HEIGHT-height)//2, width, height,
 					width, height-50,  # config
 					buttonsGap, height-45,
 					2*buttonsGap+140, height-45,
@@ -76,7 +77,7 @@ class EmailConfigOptions(ConfigListScreen, Screen):
 class EmailConfigAccount(ConfigListScreen, Screen):
 	width = max(2*140+100, 550)
 	height = 5*30+50
-	buttonsGap = (width-2*140)/3
+	buttonsGap = (width-2*140)//3
 	skin = """
 		<screen position="%d,%d" size="%d,%d" title="Account Setup" >
 		<widget name="config" position="0,0" size="%d,%d" scrollbarMode="showOnDemand" />
@@ -85,7 +86,7 @@ class EmailConfigAccount(ConfigListScreen, Screen):
 		<widget name="buttonred" position="%d,%d" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;%d" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 		<widget name="buttongreen" position="%d,%d" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;%d" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 		</screen>""" % (
-					(DESKTOP_WIDTH-width)/2, (DESKTOP_HEIGHT-height)/2, width, height,
+					(DESKTOP_WIDTH-width)//2, (DESKTOP_HEIGHT-height)//2, width, height,
 					width, height-50,  # config
 					buttonsGap, height-45,
 					2*buttonsGap+140, height-45,

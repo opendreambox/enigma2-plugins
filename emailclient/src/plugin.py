@@ -5,6 +5,7 @@ $Revision$
 $Date$
 $Id$
 '''
+from __future__ import division
 from Components.ActionMap import ActionMap
 from Components.Label import Label
 from Screens.MessageBox import MessageBox
@@ -78,7 +79,7 @@ class EmailScreen(Screen):
 			<widget name="messagelist" position="%d,%d" size="%d,%d" scrollbarMode="showOnDemand" />
 			<widget name="infolabel" position="%d,%d" size="%d,%d"   foregroundColor=\"white\" font=\"Regular;%d\" />
 		</screen>""" % (
-					   (DESKTOP_WIDTH-width)/2, (DESKTOP_HEIGHT-height)/2, width, height,
+					   (DESKTOP_WIDTH-width)//2, (DESKTOP_HEIGHT-height)//2, width, height,
 					   boxlistWidth, height-infolabelHeight,
 					   boxlistWidth, 0, messagelistWidth, height-infolabelHeight,
 					   0, height-infolabelHeight, width, infolabelHeight, scaleV(20,18)
@@ -308,7 +309,7 @@ class ScreenMailView(Screen):
 		height = scaleV(-1, 476)
 		fontSize = scaleV(24, 20)
 		lineHeight = fontSize+5
-		buttonsGap = (width-4*140)/5
+		buttonsGap = (width-4*140)//5
 		self.skin = """
 		<screen position="%d,%d" size="%d,%d" title="view Email" >
 			<widget name="from" position="%d,%d" size="%d,%d"  font="Regular;%d" />
@@ -325,7 +326,7 @@ class ScreenMailView(Screen):
 			<widget name="buttonyellow" position="%d,%d" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;%d" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 			<widget name="buttonblue" position="%d,%d" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;%d" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 		</screen>""" % (
-					   (DESKTOP_WIDTH-width)/2, (DESKTOP_HEIGHT-height)/2, width, height,
+					   (DESKTOP_WIDTH-width)//2, (DESKTOP_HEIGHT-height)//2, width, height,
 					   0, 0, width, lineHeight, fontSize-1, # from
 					   0, lineHeight, width, lineHeight, fontSize-1, # date
 					   0, 2*lineHeight, width, lineHeight, fontSize-1, # subject 
@@ -520,7 +521,7 @@ class CheckMail:
 		self._interval = int(self._account._interval)*60*1000
 		self._interval = int(random.normalvariate(self._interval, self._interval * 0.11962656472))
 		debug("[CheckMail] %(name)s: __init__: checking all %(interval)s seconds"
-			%{'name':self._name, 'interval':self._interval/1000})
+			%{'name':self._name, 'interval':self._interval//1000})
 		self._timer.start(self._interval) # it is minutes
 		self._unseenList = None
 		self._checkMail()
@@ -936,10 +937,10 @@ class EmailAccountList(Screen):
 		'''
 		debug("[EmailAccountList] __init__")
 		noButtons = 3
-		width = max(noButtons*140+35+100, DESKTOP_WIDTH/3)
+		width = max(noButtons*140+35+100, DESKTOP_WIDTH//3)
 		self.width = width
-		height = max(5*30+50, DESKTOP_HEIGHT/3)
-		buttonsGap = (width-(noButtons)*140-35)/(noButtons+2)
+		height = max(5*30+50, DESKTOP_HEIGHT//3)
+		buttonsGap = (width-(noButtons)*140-35)//(noButtons+2)
 		self.skin = """
 			<screen position="%d,%d" size="%d,%d" title="Accounts list" >
 			<widget name="accounts" position="0,0" size="%d,%d" scrollbarMode="showOnDemand" />
@@ -951,7 +952,7 @@ class EmailAccountList(Screen):
 			<widget name="buttongreen" position="%d,%d" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;%d" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 			<widget name="buttonyellow" position="%d,%d" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;%d" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 			</screen>""" % (
-						(DESKTOP_WIDTH-width)/2, (DESKTOP_HEIGHT-height)/2, width, height,
+						(DESKTOP_WIDTH-width)//2, (DESKTOP_HEIGHT-height)//2, width, height,
 						width, height,  # config
 						buttonsGap, height-45,
 						2*buttonsGap+140, height-45,
