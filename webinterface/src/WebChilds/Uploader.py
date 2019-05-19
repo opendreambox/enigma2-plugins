@@ -1,3 +1,4 @@
+from __future__ import division
 from os import statvfs, path as os_path, chmod as os_chmod, write as os_write, \
 		close as os_close, unlink as os_unlink, open as os_open, O_WRONLY, \
 		O_CREAT
@@ -75,7 +76,7 @@ class UploadResource(resource.Resource):
 		except OSError:
 			return - 1
 
-		freespace = stat.f_bfree / 1000 * stat.f_bsize / 1000
+		freespace = stat.f_bfree // 1000 * stat.f_bsize // 1000
 
 		req.setResponseCode(http.OK)
 		req.setHeader('Content-type', 'text/html')

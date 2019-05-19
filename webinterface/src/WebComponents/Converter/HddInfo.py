@@ -1,3 +1,4 @@
+from __future__ import division
 from Components.Converter.Converter import Converter
 
 class HddInfo(Converter):
@@ -24,7 +25,7 @@ class HddInfo(Converter):
 				return "%s" % hdd.capacity()
 			elif self.type == self.FREE:
 				if hdd.free() > 1024:
-					free = float(hdd.free()) / float(1024)
+					free = float(hdd.free()) // float(1024)
 					return "%.3f GB" % free
 				else:
 					return "%i MB" % hdd.free()

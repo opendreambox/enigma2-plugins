@@ -1,3 +1,4 @@
+from __future__ import division
 from enigma import eServiceReference, iServiceInformation, eServiceCenter
 from Components.Sources.Source import Source
 from Components.config import config
@@ -174,7 +175,7 @@ class Movie(Source):
 			if loadLength:
 				Len = info.getLength(serviceref)
 				if Len > 0:
-					Len = "%d:%02d" % (Len / 60, Len % 60)
+					Len = "%d:%02d" % (Len // 60, Len % 60)
 				else:
 					Len = "?:??"
 			else:

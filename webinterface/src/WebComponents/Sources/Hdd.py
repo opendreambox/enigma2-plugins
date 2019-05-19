@@ -1,3 +1,4 @@
+from __future__ import division
 from Components.Sources.Source import Source
 from Components.Harddisk import harddiskmanager
 
@@ -23,7 +24,7 @@ class Hdd(Source):
 			if hdd.free() <= 1024:
 				free = "%i MB" % (hdd.free())
 			else:
-				free = hdd.free() / float(1024)
+				free = hdd.free() // float(1024)
 				free = "%.3f GB" % free
 			disks.append((model, capacity, free))
 

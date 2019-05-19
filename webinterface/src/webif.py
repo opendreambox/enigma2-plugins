@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+from __future__ import division
 Version = '$Header$';
 
 # things to improve:
@@ -303,7 +304,7 @@ def appendListItem(item, filternum, append):
 		time = 0
 		try:
 			time = int(item)
-			append("%d min" % (time / 60))
+			append("%d min" % (time // 60))
 		except:
 			append("-- min")
 	elif filternum == webifHandler.FILTER_URI_ATTRIB:
