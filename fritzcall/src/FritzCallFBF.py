@@ -37,6 +37,7 @@ from plugin import config, stripCbCPrefix, resolveNumberWithAvon, FBF_IN_CALLS, 
 from nrzuname import html2unicode
 from FritzConnection import FritzConnection
 from twisted.python.failure import Failure
+from six.moves import map
 
 FBF_boxInfo = 0
 FBF_upTime = 1
@@ -525,7 +526,7 @@ class FritzCallFBF(object):
 		callListL = []
 		if config.plugins.FritzCall.filter.value and config.plugins.FritzCall.filterCallList.value:
 			filtermsns = [x.strip() for x in config.plugins.FritzCall.filtermsn.value.split(",")]
-			self.debug("filtermsns %s", repr(map(__, filtermsns)))
+			self.debug("filtermsns %s", repr(list(map(__, filtermsns))))
 
 		# Typ;Datum;Name;Rufnummer;Nebenstelle;Eigene Rufnummer;Dauer
 		# 0  ;1	   ;2   ;3		  ;4		  ;5			   ;6
@@ -1424,7 +1425,7 @@ class FritzCallFBF_05_27(object):
 		callListL = []
 		if config.plugins.FritzCall.filter.value and config.plugins.FritzCall.filterCallList.value:
 			filtermsns = [x.strip() for x in config.plugins.FritzCall.filtermsn.value.split(",")]
-			self.debug("[FritzCallFBF_05_27] _gotPageCalls: filtermsns %s", repr(map(__, filtermsns)))
+			self.debug("[FritzCallFBF_05_27] _gotPageCalls: filtermsns %s", repr(list(map(__, filtermsns))))
 
 		#=======================================================================
 		# linkP = open("/tmp/FritzCall_Calllist.htm", "w")
@@ -2099,7 +2100,7 @@ class FritzCallFBF_05_50(object):
 		callListL = []
 		if config.plugins.FritzCall.filter.value and config.plugins.FritzCall.filterCallList.value:
 			filtermsns = [x.strip() for x in config.plugins.FritzCall.filtermsn.value.split(",")]
-			self.info("filtermsns %s", repr(map(__, filtermsns)))
+			self.info("filtermsns %s", repr(list(map(__, filtermsns))))
 		else:
 			filtermsns = None
 
@@ -2867,7 +2868,7 @@ class FritzCallFBF_06_35(object):
 		callListL = []
 		if config.plugins.FritzCall.filter.value and config.plugins.FritzCall.filterCallList.value:
 			filtermsns = [x.strip() for x in config.plugins.FritzCall.filtermsn.value.split(",")]
-			self.info("filtermsns %s", repr(map(__, filtermsns)))
+			self.info("filtermsns %s", repr(list(map(__, filtermsns))))
 		else:
 			filtermsns = None
 
