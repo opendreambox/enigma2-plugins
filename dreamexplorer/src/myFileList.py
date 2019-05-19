@@ -20,6 +20,7 @@
 #
 #######################################################################
 
+from __future__ import division
 from enigma import RT_HALIGN_LEFT, RT_VALIGN_CENTER, eListboxPythonMultiContent, eServiceReference, eServiceCenter, gFont, iServiceInformation
 from skin import componentSizes, TemplatedListFonts
 from Components.Harddisk import harddiskmanager
@@ -92,7 +93,7 @@ def FileEntryComponent(name, absolute = None, isDir = False, isMovie=False):
 		else:
 			png = None
 	if png is not None:
-		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, 10, (th-pxh)/2, pxw, pxh, png))
+		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, 10, (th-pxh)//2, pxw, pxh, png))
 		
 	return res
 
@@ -345,7 +346,7 @@ class FileList(MenuList):
 			info = serviceHandler.info(serviceref)
 			tslen = info.getLength(serviceref)
 			if tslen > 0:
-				tslen = "%d:%02d" % (tslen / 60, tslen % 60)
+				tslen = "%d:%02d" % (tslen // 60, tslen % 60)
 			else:
 				tslen = ""
 		return tslen

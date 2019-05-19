@@ -17,6 +17,7 @@
 #
 #######################################################################
 
+from __future__ import division
 from os import chmod, listdir, mkdir, rename, stat, symlink, walk
 from os.path import basename, join
 from subprocess import call, check_output
@@ -398,9 +399,9 @@ class DreamExplorerII(Screen):
 		if (size < 1024):
 			formattedSize = str(size)+_(" B")
 		elif (size < 1048576):
-			formattedSize = str(size/1024)+_(" KB")
+			formattedSize = str(size//1024)+_(" KB")
 		else:
-			formattedSize = str(size/1048576)+_(" MB")
+			formattedSize = str(size//1048576)+_(" MB")
 		return formattedSize
 
 	def showInfo(self):
