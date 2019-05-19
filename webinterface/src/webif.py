@@ -26,6 +26,7 @@ from WebScreens import *
 #DO NOT REMOVE THIS IMPORT
 
 from os import urandom
+import six
 
 # The classes and Function in File handle all ScreenPage-based requests
 # ScreenPages use enigma2 standard functionality to bring contents to a webfrontend
@@ -199,7 +200,7 @@ class SimpleListFiller(Converter):
 		list = [ ]
 		append = list.append
 		for element in conv_args:
-			if isinstance(element, basestring):
+			if isinstance(element, six.string_types):
 				append((element, None))
 			elif isinstance(element, ListItem):
 				append((element, element.filternum))
@@ -242,7 +243,7 @@ class ListFiller(Converter):
 		lutlist = [ ]
 		append = lutlist.append
 		for element in conv_args:
-			if isinstance(element, basestring):
+			if isinstance(element, six.string_types):
 				append((element, None))
 			elif isinstance(element, ListItem):
 				append((lut[element.name], element.filternum))
