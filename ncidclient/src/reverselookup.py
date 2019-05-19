@@ -15,6 +15,7 @@ from xml.dom.minidom import parse
 from twisted.web.client import getPage #@UnresolvedImport
 from twisted.internet import reactor #@UnresolvedImport
 from . import debug
+from six import unichr
 
 def html2unicode(in_html, charset):
 	# first convert some WML codes from hex: e.g. &#xE4 -> &#228
