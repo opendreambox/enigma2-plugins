@@ -668,7 +668,7 @@ class SubsDownloaderApplication(Screen):
 			self.movie_filename = self["fileList"].getCurrentDirectory() + self["fileList"].getFilename()
 			if self.return_media_kind(self.return_extention(self.movie_filename))=="movie":
 				if config.plugins.subsdownloader.subtitleserver.value in PERISCOPE_PLUGINS: #== "OpenSubtitle":
-					exec('from Plugins.Extensions.SubsDownloader2.SourceCode.periscope.services.%s.services import %s as SERVICE') % (config.plugins.subsdownloader.subtitleserver.value,config.plugins.subsdownloader.subtitleserver.value)
+					exec(('from Plugins.Extensions.SubsDownloader2.SourceCode.periscope.services.%s.services import %s as SERVICE') % (config.plugins.subsdownloader.subtitleserver.value,config.plugins.subsdownloader.subtitleserver.value))
 					self.subtitles = SERVICE(None,Subtitle_Downloader_temp_dir)
 					#try:
 					self.subtitle_database=self.subtitles.process(self.movie_filename,[config.plugins.subsdownloader.SubsDownloader1stLang.value,config.plugins.subsdownloader.SubsDownloader2ndLang.value,config.plugins.subsdownloader.SubsDownloader3rdLang.value])
