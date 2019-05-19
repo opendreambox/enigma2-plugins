@@ -20,6 +20,7 @@
 #  modify it (if you keep the license), but it may not be commercially 
 #  distributed other than under the conditions noted above.
 #
+from __future__ import print_function
 from Components.config import ConfigSubsection, ConfigText, \
 	config, ConfigInteger, Config, ConfigSubList, ConfigDirectory, NoSave, ConfigYesNo, ConfigSelectionNumber, ConfigSelection
 from os import path as os_path, open as os_open, close as os_close, O_RDWR as os_O_RDWR, O_CREAT  as os_O_CREAT 
@@ -51,18 +52,18 @@ class AutomaticVolumeAdjustmentConfig():
 
 	# load config file and initialize 
 	def loadConfigFile(self):
-		print "[AutomaticVolumeAdjustmentConfig] Loading config file..."
+		print("[AutomaticVolumeAdjustmentConfig] Loading config file...")
 		self.config = Config()
 		if not os_path.exists(self.CONFIG_FILE):
 			try:
 				fd = os_open( self.CONFIG_FILE, os_O_RDWR|os_O_CREAT)
 				os_close( fd )
 			except Exception as e:
-				print "Error: ", e
+				print("Error: ", e)
 		try:
 			self.config.loadFromFile(self.CONFIG_FILE)
 		except Exception as e:
-			print "Error: ", e
+			print("Error: ", e)
 		self.config.entriescount =  ConfigInteger(0)
 		self.config.Entries = ConfigSubList()
 		self.config.enable = ConfigYesNo(default = False)
@@ -79,7 +80,7 @@ class AutomaticVolumeAdjustmentConfig():
 			while i < count:
 				self.initEntryConfig()
 				i += 1
-		print "[AutomaticVolumeAdjustmentConfig] Loaded %s entries from config file..." % count
+		print("[AutomaticVolumeAdjustmentConfig] Loaded %s entries from config file..." % count)
 
 	def initEntryConfig(self):
 		self.config.Entries.append(ConfigSubsection())
@@ -97,5 +98,5 @@ class AutomaticVolumeAdjustmentConfig():
 		self.save()
 	
 	def save(self):
-		print "[AutomaticVolumeAdjustmentConfig] saving config file..."
+		print("[AutomaticVolumeAdjustmentConfig] saving config file...")
 		self.config.saveToFile(self.CONFIG_FILE)
