@@ -1,5 +1,6 @@
+from __future__ import print_function
 def _log(message):
-  print "[TeleText]", message
+  print("[TeleText]", message)
   
 def _debug(message):
   d=open("/tmp/dbttcp.log","a")
