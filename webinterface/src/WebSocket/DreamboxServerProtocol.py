@@ -13,6 +13,7 @@ import json
 from base64 import b64decode
 from binascii import hexlify
 from os import urandom
+import six
 
 class DreamboxServerProtocol(WebSocketServerProtocol):
 	API_VERSION = 1
@@ -34,7 +35,7 @@ class DreamboxServerProtocol(WebSocketServerProtocol):
 
 	REQUEST_BASE_SCHEMA =  vol.Schema({
 		vol.Required('id'): int,
-		vol.Optional('cookie'): unicode,
+		vol.Optional('cookie'): six.text_type,
 	})
 
 	BASE_MESSAGE_SCHEMA = REQUEST_BASE_SCHEMA.extend({
@@ -49,18 +50,18 @@ class DreamboxServerProtocol(WebSocketServerProtocol):
 
 	AUTH_MESSAGE_SCHEMA = REQUEST_BASE_SCHEMA.extend({
 		vol.Required('type') : TYPE_AUTH,
-		vol.Exclusive('token', 'auth') : unicode,
-		vol.Exclusive('session', 'auth') : unicode,
+		vol.Exclusive('token', 'auth') : six.text_type,
+		vol.Exclusive('session', 'auth') : six.text_type,
 	})
 
 	GET_SERVICES_MESSAGE_SCHEMA = REQUEST_BASE_SCHEMA.extend({
 		vol.Required('type') : TYPE_GET_SERVICES,
-		vol.Required('reference') : unicode,
+		vol.Required('reference') : six.text_type,
 	})
 
 	GET_EPG_NOWNEXT_MESSAGE_SCHEMA = REQUEST_BASE_SCHEMA.extend({
 		vol.Required('type') : TYPE_GET_EPG_NOWNEXT,
-		vol.Required('reference') : unicode,
+		vol.Required('reference') : six.text_type,
 		vol.Required('which'): vol.Any(
 				KEY_EPG_NOWNEXT,
 				KEY_EPG_NOW,
