@@ -95,7 +95,7 @@ class UploadTextResource(resource.Resource):
 	def render_GET(self, req):
 		try:
 			stat = statvfs(self.default_uploaddir)
-		except OSError, e:
+		except OSError as e:
 			req.setResponseCode(http.INTERNAL_SERVER_ERROR)
 			return str(e)
 

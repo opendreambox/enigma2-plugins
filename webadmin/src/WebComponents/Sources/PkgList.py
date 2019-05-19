@@ -31,7 +31,7 @@ class PkgList(Source):
 				pkglist[package] = (package, "%s -> %s" % (oldver, newver), pkglist[package][PKG_DESCRIPTION], "1", "1")
 
 			return sorted(pkglist.values())
-		except Exception, e:
+		except Exception as e:
 			print "[PkgList] except: ",str(e)
 			return []
 
