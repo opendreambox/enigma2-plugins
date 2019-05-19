@@ -51,6 +51,7 @@ import traceback
 import socket
 
 from os import path
+from six.moves import map
 
 NUL = chr(0)
 CR = chr(0o15)
@@ -884,8 +885,8 @@ class IRCClient(basic.LineReceiver):
                 raise ValueError("Maximum length must exceed %d for message "
                                  "to %s" % (minimumLength, user))
             lines = split(message, length - minimumLength)
-            map(lambda line, self=self, fmt=fmt: self.sendLine(fmt % line),
-                lines)
+            list(map(lambda line, self=self, fmt=fmt: self.sendLine(fmt % line),
+                lines))
 
     def notice(self, user, message):
         self.sendLine("NOTICE %s :%s" % (user, message))
@@ -1749,7 +1750,7 @@ def dccDescribe(data):
                 )
             # The mapping to 'int' is to get rid of those accursed
             # "L"s which python 1.5.2 puts on the end of longs.
-            address = string.join(map(str,map(int,address)), ".")
+            address = string.join(list(map(str,list(map(int,address)))), ".")
 
     if dcctype == 'SEND':
         filename = arg
@@ -1935,7 +1936,7 @@ def ctcpExtract(message):
     extended_messages[:] = [_f for _f in extended_messages if _f]
     normal_messages[:] = [_f for _f in normal_messages if _f]
 
-    extended_messages[:] = map(ctcpDequote, extended_messages)
+    extended_messages[:] = list(map(ctcpDequote, extended_messages))
     for i in xrange(len(extended_messages)):
         m = string.split(extended_messages[i], SPC, 1)
         tag = m[0]

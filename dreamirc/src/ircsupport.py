@@ -11,6 +11,7 @@ from twisted.internet import defer, reactor, protocol
 from twisted.internet.defer import succeed
 import e2support, interfaces,dreamIRCTools
 from zope.interface import implements
+from six.moves import map
 
 class IRCPerson(e2support.AbstractPerson):
 
@@ -271,7 +272,7 @@ class IRCAccount(e2support.AbstractAccount):
 
     def __init__(self, accountName, autoLogin, username, password, host, port, channels=''):
         e2support.AbstractAccount.__init__(self, accountName, autoLogin, username, password, host, port)
-        self.channels = map(string.strip,string.split(channels,','))
+        self.channels = list(map(string.strip,string.split(channels,',')))
         if self.channels == ['']:
             self.channels = []
 
