@@ -139,13 +139,13 @@ class IRC(protocol.Protocol):
         """
 
         if not command:
-            raise ValueError, "IRC message requires a command."
+            raise ValueError("IRC message requires a command.")
 
         if ' ' in command or command[0] == ':':
             # Not the ONLY way to screw up, but provides a little
             # sanity checking to catch likely dumb mistakes.
-            raise ValueError, "Somebody screwed up, 'cuz this doesn't" \
-                  " look like a command to me: %s" % command
+            raise ValueError("Somebody screwed up, 'cuz this doesn't" \
+                  " look like a command to me: %s" % command)
 
         line = string.join([command] + list(parameter_list))
         if 'prefix' in prefix:
@@ -952,7 +952,7 @@ class IRCClient(basic.LineReceiver):
         factory = DccSendFactory(file)
         port = reactor.listenTCP(0, factory, 1)
 
-        raise NotImplementedError,(
+        raise NotImplementedError(
             "XXX!!! Help!  I need to bind a socket, have it listen, and tell me its address.  "
             "(and stop accepting once we've made a single connection.)")
 
@@ -1291,7 +1291,7 @@ class IRCClient(basic.LineReceiver):
         # Use splitQuoted for those who send files with spaces in the names.
         data = text.splitQuoted(data)
         if len(data) < 3:
-            raise IRCBadMessage, "malformed DCC SEND request: %r" % (data,)
+            raise IRCBadMessage("malformed DCC SEND request: %r" % (data,))
 
         (filename, address, port) = data[:3]
 
@@ -1299,7 +1299,7 @@ class IRCClient(basic.LineReceiver):
         try:
             port = int(port)
         except ValueError:
-            raise IRCBadMessage, "Indecipherable port %r" % (port,)
+            raise IRCBadMessage("Indecipherable port %r" % (port,))
 
         size = -1
         if len(data) >= 4:
@@ -1314,7 +1314,7 @@ class IRCClient(basic.LineReceiver):
     def dcc_ACCEPT(self, user, channel, data):
         data = text.splitQuoted(data)
         if len(data) < 3:
-            raise IRCBadMessage, "malformed DCC SEND ACCEPT request: %r" % (data,)
+            raise IRCBadMessage("malformed DCC SEND ACCEPT request: %r" % (data,))
         (filename, port, resumePos) = data[:3]
         try:
             port = int(port)
@@ -1327,7 +1327,7 @@ class IRCClient(basic.LineReceiver):
     def dcc_RESUME(self, user, channel, data):
         data = text.splitQuoted(data)
         if len(data) < 3:
-            raise IRCBadMessage, "malformed DCC SEND RESUME request: %r" % (data,)
+            raise IRCBadMessage("malformed DCC SEND RESUME request: %r" % (data,))
         (filename, port, resumePos) = data[:3]
         try:
             port = int(port)
@@ -1339,7 +1339,7 @@ class IRCClient(basic.LineReceiver):
     def dcc_CHAT(self, user, channel, data):
         data = text.splitQuoted(data)
         if len(data) < 3:
-            raise IRCBadMessage, "malformed DCC CHAT request: %r" % (data,)
+            raise IRCBadMessage("malformed DCC CHAT request: %r" % (data,))
 
         (filename, address, port) = data[:3]
 
@@ -1347,7 +1347,7 @@ class IRCClient(basic.LineReceiver):
         try:
             port = int(port)
         except ValueError:
-            raise IRCBadMessage, "Indecipherable port %r" % (port,)
+            raise IRCBadMessage("Indecipherable port %r" % (port,))
 
         self.dccDoChat(user, channel, address, port, data)
 
@@ -1432,8 +1432,7 @@ class IRCClient(basic.LineReceiver):
     def ctcpReply_PING(self, user, channel, data):
         nick = user.split('!', 1)[0]
         if (not self._pings) or ((nick, data) not in self._pings):
-            raise IRCBadMessage,\
-                  "Bogus PING response from %s: %s" % (user, data)
+            raise IRCBadMessage("Bogus PING response from %s: %s" % (user, data))
 
         t0 = self._pings[(nick, data)]
         self.pong(user, time.time() - t0)
@@ -1514,8 +1513,7 @@ def dccParseAddress(address):
         try:
             address = int(address)
         except ValueError:
-            raise IRCBadMessage,\
-                  "Indecipherable address %r" % (address,)
+            raise IRCBadMessage("Indecipherable address %r" % (address,))
         else:
             address = (
                 (address >> 24) & 0xFF,
