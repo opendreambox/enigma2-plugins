@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 # GUI (System)
+from __future__ import division
 from enigma import getDesktop
 
 # GUI (Screens)
@@ -80,7 +81,7 @@ class AutoTimerPreview(Screen):
 		self.timers = [
 			(x[0], x[1], x[4],
 			ServiceReference(x[3]).getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '').encode('utf-8', 'ignore'),
-			(("%s, %s ... %s (%d " + _("mins") + ")") % (FuzzyTime(x[1]) + FuzzyTime(x[2])[1:] + ((x[2] - x[1]) / 60,))))
+			(("%s, %s ... %s (%d " + _("mins") + ")") % (FuzzyTime(x[1]) + FuzzyTime(x[2])[1:] + ((x[2] - x[1]) // 60,))))
 			for x in timers
 		]
 

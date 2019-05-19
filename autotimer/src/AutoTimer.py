@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 # Plugins Config
+from __future__ import division
 from xml.etree.cElementTree import parse as cet_parse, fromstring as cet_fromstring
 from os import path as os_path, remove as os_remove
 from AutoTimerConfiguration import parseConfig, buildConfig
@@ -420,7 +421,7 @@ class AutoTimer:
 					#rbegin = revent.getBeginTime() or 0
 					#rduration = revent.getDuration() or 0
 					#rend = rbegin + rduration or 0
-					if getTimeDiff(rbegin, rend, evtBegin, evtEnd) > ((duration/10)*8):
+					if getTimeDiff(rbegin, rend, evtBegin, evtEnd) > ((duration//10)*8):
 						oldExists = True
 						doLog("We found a timer based on time guessing")
 						newEntry = rtimer
@@ -876,9 +877,9 @@ class AutoTimer:
 		else:
 			return False
 
-		title_ratio = int(config.plugins.autotimer.title_match_ratio.value) / float(100)
-		shortdesc_ratio = int(config.plugins.autotimer.shortdesc_match_ratio.value) / float(100)
-		extdesc_ratio = int(config.plugins.autotimer.extdesc_match_ratio.value) / float(100)
+		title_ratio = int(config.plugins.autotimer.title_match_ratio.value) // float(100)
+		shortdesc_ratio = int(config.plugins.autotimer.shortdesc_match_ratio.value) // float(100)
+		extdesc_ratio = int(config.plugins.autotimer.extdesc_match_ratio.value) // float(100)
 
 		ratio = sequenceMatcher.ratio()
 		doDebug("names ratio %f - %s - %d - %s - %d" % (ratio, name1, len(name1), name2, len(name2)))
