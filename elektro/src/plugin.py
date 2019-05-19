@@ -58,6 +58,7 @@ from time import localtime, asctime, time, gmtime, sleep
 from enigma import eTimer
 
 import NavigationInstance
+from six.moves import range
 
 ###############################################################################
 
