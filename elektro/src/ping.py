@@ -35,6 +35,7 @@
 #
 
 from __future__ import division
+from __future__ import print_function
 import os
 from socket import *
 import struct
@@ -121,12 +122,12 @@ def doOne(destAddr,timeout=10):
 
 def main():
   if len(sys.argv)<2:
-    print "Usage: %s hostname" % os.path.basename(sys.argv[0])
+    print("Usage: %s hostname" % os.path.basename(sys.argv[0]))
     sys.exit(1)
 
   dest=gethostbyname(sys.argv[1])
   delay=doOne(dest)
-  print delay
+  print(delay)
   return None
 
 if __name__=='__main__':
