@@ -10,7 +10,7 @@ from ServiceReference import ServiceReference
 from Tools.XMLTools import stringToXML
 import six
 try:
-	from urllib import unquote
+	from six.moves.urllib.parse import unquote
 	iteritems = lambda d: six.iteritems(d)
 except ImportError as ie:
 	from urllib.parse import unquote
