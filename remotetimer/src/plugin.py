@@ -41,7 +41,7 @@ from twisted.web.client import getPage
 from xml.etree.cElementTree import fromstring as cElementTree_fromstring
 from base64 import encodestring
 
-from urllib import quote_plus
+from six.moves.urllib.parse import quote_plus
 #------------------------------------------------------------------------------------------
 
 config.plugins.remoteTimer = ConfigSubsection()
