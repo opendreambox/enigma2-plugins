@@ -1,6 +1,6 @@
 from __future__ import print_function
 try:
-	from urllib import urlencode
+	from six.moves.urllib.parse import urlencode
 except ImportError as ie:
 	from urllib.parse import urlencode
 
