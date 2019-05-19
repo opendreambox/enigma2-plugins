@@ -1,4 +1,5 @@
 ﻿# encoding: utf-8
+from __future__ import print_function
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
@@ -113,7 +114,7 @@ Information about re-configuring the RC is available at https://dreambox.de/boar
 		self.close()
 
 def write_mask(fname, value):
-	print "MultiRC:", fname, value
+	print("MultiRC:", fname, value)
 	f = open(fname, "w")
 	f.write(value)
 	f.close()
@@ -140,7 +141,7 @@ def set_mask(mask=None):
 			write_mask(MASK2, mask2)
 
 	except Exception as e:
-		print "MultiRC failed:", e
+		print("MultiRC failed:", e)
 		return False
 	return True
 
