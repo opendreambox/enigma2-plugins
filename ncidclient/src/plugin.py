@@ -95,7 +95,7 @@ def getMountedDevices():
 		if os.path.join(mediaDir, p) not in [path[0] for path in mountedDevs]:
 			mountedDevs.append((os.path.join(mediaDir, p), _("Media directory")))
 	debug("[NcidClient] getMountedDevices1: %s" % repr(mountedDevs))
-	mountedDevs = filter(lambda path: os.path.isdir(path[0]) and os.access(path[0], os.W_OK | os.X_OK), mountedDevs)
+	mountedDevs = [path for path in mountedDevs if os.path.isdir(path[0]) and os.access(path[0], os.W_OK | os.X_OK)]
 	# put this after the write/executable check, that is far too slow...
 	netDir = resolveFilename(SCOPE_MEDIA, "net")
 	if os.path.isdir(netDir):
