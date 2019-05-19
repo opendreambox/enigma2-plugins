@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+from __future__ import division
 from twisted.internet.defer import Deferred
 from twisted.internet.protocol import ClientFactory, ServerFactory
 from twisted.internet import reactor
@@ -116,7 +117,7 @@ class SimpleVDRProtocol(LineReceiver):
 					feinfo = None #sref.ref.frontendInfo()
 					fedata = feinfo.getAll(True) if feinfo else {}
 					prov = getServiceInfoValue(info, sref, iServiceInformation.sProvider)
-					frequency = fedata.get("frequency", 0)/1000
+					frequency = fedata.get("frequency", 0)//1000
 					param = -1
 					source = '-1'
 					srate = -1
@@ -330,7 +331,7 @@ class SimpleVDRProtocol(LineReceiver):
 			VolumeControl.instance.volDown()
 		elif args:
 			try:
-				num = int(args) / 2.55
+				num = int(args) // 2.55
 			except ValueError:
 				payload = "%d %s" % (CODE_SYNTAX, str(e).replace('\n', ' ').replace('\r', ''))
 				return self.sendLine(payload)
