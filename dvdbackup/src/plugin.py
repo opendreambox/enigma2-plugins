@@ -2,6 +2,7 @@
 ## DVD Backup plugin for enigma2 by AliAbdul
 ## using the great open source dvdbackup by Olaf Beck
 ##
+from __future__ import division
 from Components.ActionMap import ActionMap
 from Components.config import config, ConfigSubsection, ConfigText, ConfigYesNo, getConfigListEntry
 from Components.ConfigList import ConfigListScreen
@@ -67,7 +68,7 @@ class DVDBackupFile:
 			if fileExists(self.name):
 				if self.progress < 100:
 					file_stats = os.stat(self.name)
-					self.progress = 100.0 * file_stats[stat.ST_SIZE] / self.size
+					self.progress = 100.0 * file_stats[stat.ST_SIZE] // self.size
 			else:
 				self.progress = 0
 
@@ -198,7 +199,7 @@ class DVDBackupList(MenuList):
 def DVDBackupListEntry(file):
 	res = [(file)]
 	res.append(MultiContentEntryText(pos=(0, 0), size=(180, 25), font=0, text=file.name.split("/")[-1]))
-	res.append(MultiContentEntryText(pos=(200, 0), size=(120, 25), font=0, text="%d %s"%((file.size / 1024) / 1024, "MB"), flags=RT_HALIGN_CENTER))
+	res.append(MultiContentEntryText(pos=(200, 0), size=(120, 25), font=0, text="%d %s"%((file.size // 1024) // 1024, "MB"), flags=RT_HALIGN_CENTER))
 	res.append(MultiContentEntryProgress(pos=(340, 9), size=(100, 7), percent=file.progress, borderWidth=1))
 	res.append(MultiContentEntryText(pos=(460, 0), size=(60, 25), font=0, text="%d%s"%(file.progress, "%"), flags=RT_HALIGN_CENTER))
 	return res
