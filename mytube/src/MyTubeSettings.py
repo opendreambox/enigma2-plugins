@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Components.config import config, getConfigListEntry
 from Components.ActionMap import ActionMap
 from Components.Button import Button
@@ -85,7 +86,7 @@ class MyTubeSettingsScreen(Screen, ConfigListScreen):
 		self["config"].list = self._configListEntries
 
 	def newConfig(self):
-		print "newConfig", self["config"].getCurrent()
+		print("newConfig", self["config"].getCurrent())
 		if self["config"].getCurrent() == self._cfgLoadFeedEntry:
 			self.createSetup()
 
@@ -123,13 +124,13 @@ class MyTubeSettingsScreen(Screen, ConfigListScreen):
 		self.newConfig()
 
 	def keyCancel(self):
-		print "cancel"
+		print("cancel")
 		for x in self["config"].list:
 			x[1].cancel()
 		self.close()
 
 	def keySave(self):
-		print "saving"
+		print("saving")
 		for x in self["config"].list:
 			x[1].save()
 		config.plugins.mytube.save()

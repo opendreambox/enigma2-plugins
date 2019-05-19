@@ -1,4 +1,5 @@
 # -*- coding: iso-8859-1 -*-
+from __future__ import print_function
 from Tools.Log import Log
 
 from socket import gaierror, error
@@ -26,7 +27,7 @@ class GoogleSuggestions():
 		if self.hl is not None:
 			self.prepQuerry = self.prepQuerry + "hl=" + self.hl + "&"
 		self.prepQuerry = self.prepQuerry + "jsonp=self.gotSuggestions&q="
-		print "[MyTube - GoogleSuggestions] prepareQuery:",self.prepQuerry
+		print("[MyTube - GoogleSuggestions] prepareQuery:",self.prepQuerry)
 
 	def getSuggestions(self, queryString):
 		self.prepareQuery()
@@ -38,14 +39,14 @@ class GoogleSuggestions():
 				self.conn.request("GET", query, "", {"Accept-Encoding": "UTF-8"})
 			except (CannotSendRequest, gaierror, error):
 				self.conn.close()
-				print "[MyTube - GoogleSuggestions] Can not send request for suggestions"
+				print("[MyTube - GoogleSuggestions] Can not send request for suggestions")
 				return None
 			else:
 				try:
 					response = self.conn.getresponse()
 				except BadStatusLine:
 					self.conn.close()
-					print "[MyTube - GoogleSuggestions] Can not get a response from google"
+					print("[MyTube - GoogleSuggestions] Can not get a response from google")
 					return None
 				else:
 					if response.status == 200:
@@ -54,9 +55,9 @@ class GoogleSuggestions():
 						charset = "ISO-8859-1"
 						try:
 							charset = header.split(";")[1].split("=")[1]
-							print "[MyTube - GoogleSuggestions] Got charset %s" %charset
+							print("[MyTube - GoogleSuggestions] Got charset %s" %charset)
 						except:
-							print "[MyTube - GoogleSuggestions] No charset in Header, falling back to %s" %charset
+							print("[MyTube - GoogleSuggestions] No charset in Header, falling back to %s" %charset)
 						data = data.decode(charset).encode("utf-8")
 						self.conn.close()
 						return data
@@ -74,7 +75,7 @@ class MyTubePlayerService():
 	yt_service = None
 
 	def __init__(self):
-		print "[MyTube] MyTubePlayerService - init"
+		print("[MyTube] MyTubePlayerService - init")
 		self.feedentries = []
 		self.feed = None
 		self.onReady = []
@@ -107,7 +108,7 @@ class MyTubePlayerService():
 	ready = property(isReady, setReady)
 
 	def startService(self):
-		print "[MyTube] MyTubePlayerService - startService"
+		print("[MyTube] MyTubePlayerService - startService")
 		self._youtube = buildYoutube()
 		self._authenticated = False
 		self.loadCategories()
@@ -142,7 +143,7 @@ class MyTubePlayerService():
 	def stopService(self):
 		self.onReady = []
 		self.cancelAuthFlow()
-		print "[MyTube] MyTubePlayerService - stopService"
+		print("[MyTube] MyTubePlayerService - stopService")
 
 	def supportsSSL(self):
 		return 'HTTPSConnection' in dir(httplib)
@@ -183,7 +184,7 @@ class MyTubePlayerService():
 			new_subscription = self.yt_service.AddSubscriptionToChannel(username_to_subscribe_to=username)
 	
 			if isinstance(new_subscription, gdata.youtube.YouTubeSubscriptionEntry):
-				print '[MyTube] MyTubePlayerService: New subscription added'
+				print('[MyTube] MyTubePlayerService: New subscription added')
 				return _('New subscription added')
 			
 			return _('Unknown error')
@@ -199,7 +200,7 @@ class MyTubePlayerService():
 			
 			# The response, if succesfully posted is a YouTubeVideoEntry
 			if isinstance(response, gdata.youtube.YouTubeVideoEntry):
-				print '[MyTube] MyTubePlayerService: Video successfully added to favorites'
+				print('[MyTube] MyTubePlayerService: Video successfully added to favorites')
 				return _('Video successfully added to favorites')	
 	
 			return _('Unknown error')

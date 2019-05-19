@@ -1,4 +1,5 @@
 from __future__ import division
+from __future__ import print_function
 from enigma import eTimer, ePythonMessagePump
 from MyTubeService import GoogleSuggestions
 from Screens.Screen import Screen
@@ -79,12 +80,12 @@ class ConfigTextWithGoogleSuggestions(ConfigText):
 
 	def propagateSuggestions(self, suggestionsList):
 		self.cancelSuggestionsThread()
-		print "[MyTube - ConfigTextWithGoogleSuggestions] propagateSuggestions:",suggestionsList
+		print("[MyTube - ConfigTextWithGoogleSuggestions] propagateSuggestions:",suggestionsList)
 		if self.suggestionsWindow:
 			self.suggestionsWindow.update(suggestionsList)
 
 	def gotSuggestionsError(self, val):
-		print "[MyTube - ConfigTextWithGoogleSuggestions] gotSuggestionsError:",val
+		print("[MyTube - ConfigTextWithGoogleSuggestions] gotSuggestionsError:",val)
 
 	def getSuggestions(self):
 		self.prepareSuggestionsThread()
@@ -234,43 +235,43 @@ class MyTubeSuggestionsListScreen(Screen):
 		return len(self.list)
 
 	def up(self):
-		print "up"
+		print("up")
 		if self.list and len(self.list) > 0:
 			self["suggestionslist"].selectPrevious()
 			return self.getSelection()
 
 	def down(self):
-		print "down"
+		print("down")
 		if self.list and len(self.list) > 0:
 			self["suggestionslist"].selectNext()
 			return self.getSelection()
 
 	def pageUp(self):
-		print "up"
+		print("up")
 		if self.list and len(self.list) > 0:
 			self["suggestionslist"].selectPrevious()
 			return self.getSelection()
 
 	def pageDown(self):
-		print "down"
+		print("down")
 		if self.list and len(self.list) > 0:
 			self["suggestionslist"].selectNext()
 			return self.getSelection()
 
 	def activate(self):
-		print "activate"
+		print("activate")
 		self.activeState = True
 		return self.getSelection()
 
 	def deactivate(self):
-		print "deactivate"
+		print("deactivate")
 		self.activeState = False
 		return self.getSelection()
 
 	def getSelection(self):
 		if self["suggestionslist"].getCurrent() is None:
 			return None
-		print self["suggestionslist"].getCurrent()[0]
+		print(self["suggestionslist"].getCurrent()[0])
 		return self["suggestionslist"].getCurrent()[0]
 
 	def enableSelection(self,value):
@@ -345,14 +346,14 @@ class MyTubeTasksScreen(Screen):
 
 	def keyOK(self):
 		current = self["tasklist"].getCurrent()
-		print current
+		print(current)
 		if current:
 			job = current[0]
 			from Screens.TaskView import JobView
 			self.session.openWithCallback(self.JobViewCB, JobView, job)
 
 	def JobViewCB(self, why):
-		print "WHY---",why
+		print("WHY---",why)
 
 	def keyCancel(self):
 		self.close()
@@ -380,17 +381,17 @@ class MyTubeHistoryScreen(Screen):
 		Screen.__init__(self, session)
 		self.session = session
 		self.historylist = []
-		print "self.historylist",self.historylist
+		print("self.historylist",self.historylist)
 		self["historylist"] = List(self.historylist)
 		self.activeState = False
 
 	def activate(self):
-		print "activate"
+		print("activate")
 		self.activeState = True
 		self.history = config.plugins.mytube.general.history.value.split(',')
 		if self.history[0] == '':
 			del self.history[0]
-		print "self.history",self.history
+		print("self.history",self.history)
 		self.historylist = []
 		for entry in self.history:
 			self.historylist.append(( str(entry),))
@@ -398,36 +399,36 @@ class MyTubeHistoryScreen(Screen):
 		self["historylist"].updateList(self.historylist)
 
 	def deactivate(self):
-		print "deactivate"
+		print("deactivate")
 		self.activeState = False
 
 	def status(self):
-		print self.activeState
+		print(self.activeState)
 		return self.activeState
 
 	def getSelection(self):
 		if self["historylist"].getCurrent() is None:
 			return None
-		print self["historylist"].getCurrent()[0]
+		print(self["historylist"].getCurrent()[0])
 		return self["historylist"].getCurrent()[0]
 
 	def up(self):
-		print "up"
+		print("up")
 		self["historylist"].selectPrevious()
 		return self.getSelection()
 
 	def down(self):
-		print "down"
+		print("down")
 		self["historylist"].selectNext()
 		return self.getSelection()
 
 	def pageUp(self):
-		print "up"
+		print("up")
 		self["historylist"].selectPrevious()
 		return self.getSelection()
 
 	def pageDown(self):
-		print "down"
+		print("down")
 		self["historylist"].selectNext()
 		return self.getSelection()
 
