@@ -154,7 +154,7 @@ class TagEditor(Screen):
 				list = serviceHandler.list(root)
 				if list is None:
 					continue
-				while 1:
+				while True:
 					serviceref = list.getNext()
 					if not serviceref.valid():
 						break
