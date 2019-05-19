@@ -116,7 +116,7 @@ class Bonjour:
 		self.files = {}
 		if path.exists(self.AVAHI_SERVICES_DIR):
 			print "[Bonjour.reloadConfig] reloading config"
-			service_files = filter( lambda x: x.endswith('.service'), listdir(self.AVAHI_SERVICES_DIR) )
+			service_files = [x for x in listdir(self.AVAHI_SERVICES_DIR) if x.endswith('.service')]
 			for file in service_files:
 				self.__parse(file)
 
