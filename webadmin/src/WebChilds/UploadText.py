@@ -7,9 +7,9 @@ from twisted.web import resource, http
 class UploadTextResource(resource.Resource):
 	default_uploaddir = '/tmp'
 	modelist = {
-		'/etc/apt/sources.list.d': 0644,
-		'/usr/script': 0755,
-		'/tmp': 0644,
+		'/etc/apt/sources.list.d': 0o644,
+		'/usr/script': 0o755,
+		'/tmp': 0o644,
 	}
 
 	def getArg(self, req, key, default=None):
