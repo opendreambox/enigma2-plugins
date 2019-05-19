@@ -534,7 +534,7 @@ class DBUpdateStatus(Screen):
 		if len(ifaces) > 0:
 			iface = ifaces.get(
 					"eth0",
-					ifaces.get(ifaces.keys()[0])
+					ifaces.get(list(ifaces.keys())[0])
 				)
 		if not iface:
 			return
