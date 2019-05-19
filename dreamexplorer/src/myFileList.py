@@ -85,7 +85,7 @@ def FileEntryComponent(name, absolute = None, isDir = False, isMovie=False):
 	else:
 		extension = name.split('.')
 		extension = extension[-1].lower()
-		if EXTENSIONS.has_key(extension):
+		if extension in EXTENSIONS:
 			png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/" + EXTENSIONS[extension] + ".png")
 		elif isMovie:
 			png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/movie.png")
