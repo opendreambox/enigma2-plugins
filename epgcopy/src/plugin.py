@@ -40,7 +40,7 @@ from Components.config import getConfigListEntry, config, \
 from time import time, strftime, mktime, localtime
 now = localtime()
 autoCopy = mktime((
-        now.tm_year, now.tm_mon, now.tm_mday, 06, 00, \
+        now.tm_year, now.tm_mon, now.tm_mday, 0o6, 00, \
         0, now.tm_wday, now.tm_yday, now.tm_isdst)
 )
 
