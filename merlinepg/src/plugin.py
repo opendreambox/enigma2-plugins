@@ -40,6 +40,7 @@ from ServiceReference import ServiceReference
 from ShowMe import ShowMe
 from skin import TemplatedListFonts, componentSizes
 from time import localtime
+from six.moves import range
 if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/AutoTimer/AutoTimerEditor.pyo"):
 	from Plugins.Extensions.AutoTimer.AutoTimerEditor import addAutotimerFromEvent
 	from Plugins.Extensions.AutoTimer.plugin import main as AutoTimerView
