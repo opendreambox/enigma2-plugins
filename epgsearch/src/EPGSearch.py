@@ -676,7 +676,7 @@ class EPGSearch(EPGSelection):
 				condensed = {}
 				for item in ret:
 					condensed[item[1]] = item
-				ret = condensed.values()
+				ret = list(condensed.values())
 			ret.sort(key=itemgetter(2)) # sort by time
 
 			#filter epg-matches for selected bouquet from settings
