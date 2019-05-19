@@ -8,7 +8,7 @@ def importExternalModules():
 
 		if ext == '.py' and module_name != "__init__":				
 			try:
-				exec "import " + module_name
+				exec("import " + module_name)
 				print '[Toplevel.importExternalModules] Imported external module: %s' % (module_name)
 		
 			except ImportError as e:				
