@@ -1,3 +1,4 @@
+from __future__ import division
 from __init__ import _debug , _log
 
 from enigma import iServiceInformation, iPlayableService, eSocketNotifier, getDesktop, ePoint, eSize, eServiceReference, eVideoWidget, getDesktop, gRGB
@@ -95,8 +96,8 @@ NAV_MODE_SIZE_TIP_TEXT = 2
 
 # i.d.R. bezeichnet man 90% der vollen Aufloesung als "Title-Safe-Area" --> Default
 
-DEF_TOP    = dsk_height / 20
-DEF_LEFT   = dsk_width / 20
+DEF_TOP    = dsk_height // 20
+DEF_LEFT   = dsk_width // 20
 DEF_RIGHT  = dsk_width - DEF_LEFT
 DEF_BOTTOM = dsk_height - DEF_TOP
 
@@ -375,7 +376,7 @@ class TeleText(Screen):
           self.fav_index = 0
         else:
           self.fav_index = self.fav_index + 1
-        x.fromlist([CMD_SHOW_PAGE, page/100, (((page%100)/10)<<4) + (page%10), 0])
+        x.fromlist([CMD_SHOW_PAGE, page//100, (((page%100)//10)<<4) + (page%10), 0])
       else:
         x.fromlist([CMD_PAGEINPUT, number])
         self.pageInput = (self.pageInput + 1) % 3
@@ -666,7 +667,7 @@ class TeleText(Screen):
 
     # open favorite page
     x = array.array('B')
-    x.fromlist([CMD_SHOW_PAGE, result/100, (((result%100)/10)<<4) + (result%10), 0])
+    x.fromlist([CMD_SHOW_PAGE, result//100, (((result%100)//10)<<4) + (result%10), 0])
     self.socketSend(x)
 
   def updateLayout(self):
@@ -692,7 +693,7 @@ class TeleText(Screen):
       log("splitting video")
       self.pig.move(ePoint(0,0))
       size = self.instance.size()
-      self.pig.resize(eSize(size.width()/2*100/108, size.height()*100/108))
+      self.pig.resize(eSize(size.width()//2*100//108, size.height()*100//108))
       self.pig.show()
     elif mode == SPLIT_MODE_TAP:
       left   = 0
@@ -701,8 +702,8 @@ class TeleText(Screen):
       height = dsk_height
       log("splitting video")
       size = self.instance.size()
-      self.pig.move(ePoint(size.width()/2*104/100,0))
-      self.pig.resize(eSize(size.width()/2*100/108, size.height()*100/108))
+      self.pig.move(ePoint(size.width()//2*104//100,0))
+      self.pig.resize(eSize(size.width()//2*100//108, size.height()*100//108))
       self.pig.show()
     elif mode == SPLIT_MODE_TIP:
       if self.nav_mode == NAV_MODE_TEXT:
