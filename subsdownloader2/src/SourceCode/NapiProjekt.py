@@ -77,7 +77,7 @@ class NapiProjekt():
                     http_code = self.sub.getcode() 
                     self.sub = self.sub.read()
                     self.error_ = 0
-            except (IOError, OSError), e:
+            except (IOError, OSError) as e:
                 print >> sys.stderr, "%s: %d/%d: Fetching subtitle failed: %s" % (prog, i, i_total, e)
                 time.sleep(0.5)
                 self.error_ = 1
