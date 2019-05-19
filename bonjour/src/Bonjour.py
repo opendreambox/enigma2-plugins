@@ -42,7 +42,7 @@ class Bonjour:
 		if not dict:
 			return '\0'
 		parts = []
-		for name, value in dict.iteritems():
+		for name, value in six.iteritems(dict):
 			if value is None:
 				item = name
 			else:
