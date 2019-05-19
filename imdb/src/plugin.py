@@ -22,7 +22,7 @@ from Components.Sources.Boolean import Boolean
 from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN_IMAGE
 import os, re
 try:
-	from urllib import quote_plus
+	from six.moves.urllib.parse import quote_plus
 except ImportError as ie:
 	from urllib.parse import quote_plus
 
