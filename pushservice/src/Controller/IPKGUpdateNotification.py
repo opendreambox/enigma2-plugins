@@ -17,6 +17,7 @@
 #######################################################################
 
 # Config
+from __future__ import print_function
 from Components.config import ConfigYesNo, ConfigText, ConfigNumber, NoSave
 
 # Plugin internal
@@ -53,7 +54,7 @@ class IPKGUpdateNotification(ControllerBase):
 			# Last refresh was within one day
 			return self.buildList(callback, errback)
 		else:
-			print "IPKGUpdateNotification run else"
+			print("IPKGUpdateNotification run else")
 			if self.getValue('selfcheck'):
 				# Refresh package list
 				iSoftwareTools.startSoftwareTools( boundFunction(self.getUpdateInfosCB, callback, errback) )
@@ -65,24 +66,24 @@ class IPKGUpdateNotification(ControllerBase):
 			if retval is True:
 				if iSoftwareTools.available_updates is not 0:
 					# _("There are at least ") + str(iSoftwareTools.available_updates) + _(" updates available.")
-					print "Updates available."
+					print("Updates available.")
 					return self.buildList(callback, errback)
 				else:
 					# _("There are no updates available.")
-					print "There are no updates available."
+					print("There are no updates available.")
 					return callback()
 			elif retval is False:
 				if iSoftwareTools.lastDownloadDate is None:
 					if iSoftwareTools.NetworkConnectionAvailable:
 						# _("Updatefeed not available.")
-						print "Updatefeed not available."
+						print("Updatefeed not available.")
 						return errback(_("Updatefeed not available."))
 					else:
 						# _("No network connection available.")
-						print "No network connection available."
+						print("No network connection available.")
 						return errback(_("No network connection available."))
 				else:
-					print "IPKGUpdateNotification getUpdates"
+					print("IPKGUpdateNotification getUpdates")
 					# Call update
 					iSoftwareTools.lastDownloadDate = time()
 					iSoftwareTools.list_updating = True
@@ -102,7 +103,7 @@ class IPKGUpdateNotification(ControllerBase):
 				if p == packagename:
 					updversion = v
 					break
-			print "PushService: " + packagename + " :\t" + instversion + " :\t" + updversion
+			print("PushService: " + packagename + " :\t" + instversion + " :\t" + updversion)
 			if instversion != updversion:
 				updates += packagename + " :\t" + instversion + " :\t" + updversion + "\n"
 		if updates:

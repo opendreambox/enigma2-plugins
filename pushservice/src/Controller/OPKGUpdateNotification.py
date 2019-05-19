@@ -17,6 +17,7 @@
 #######################################################################
 
 # Config
+from __future__ import print_function
 from Components.config import ConfigYesNo, ConfigText, ConfigNumber, NoSave
 
 # Plugin internal
@@ -75,11 +76,11 @@ class OPKGUpdateNotification(ControllerBase):
 	def opkgupgradableFinished(self, retval=None):
 		
 		try:
-			print "PushService retval: ",str(retval)
+			print("PushService retval: ",str(retval))
 		except:
 			pass
 		try:
-			print "PushService self.data: ",str(self.data)
+			print("PushService self.data: ",str(self.data))
 		except:
 			pass
 		
@@ -88,7 +89,7 @@ class OPKGUpdateNotification(ControllerBase):
 		if self.data:
 			try:
 				for line in self.data.split("\n"):
-					print "PushService opkg upgradable data: ",line
+					print("PushService opkg upgradable data: ",line)
 					if line.startswith("Inflating"):
 						continue
 					if line.startswith("Updated"):
@@ -118,7 +119,7 @@ class OPKGUpdateNotification(ControllerBase):
 					updates += line + "\r\n"
 			except Exception as e:
 				updates += "\r\n\r\nException:\r\n" + str(e)
-				print "PushService except: ",str(e)
+				print("PushService except: ",str(e))
 
 		if updates:
 			#callback( SUBJECT, BODY % (updates) )

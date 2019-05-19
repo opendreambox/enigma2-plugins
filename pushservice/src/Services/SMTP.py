@@ -17,6 +17,7 @@
 #######################################################################
 
 # Config
+from __future__ import print_function
 from Components.config import config, NoSave, ConfigText, ConfigNumber, ConfigYesNo, ConfigPassword
 
 # Plugin internal
@@ -84,7 +85,7 @@ class SMTP(ServiceBase):
 				message.attach(attachment) #TODO change mime=None, charset=None, content=None):
 		
 		# Send message
-		print _("PushService PushMail: Sending message: %s") % subject
+		print(_("PushService PushMail: Sending message: %s") % subject)
 		deferred, connector = sendmail(mailconf, message)
 		
 		# Add callbacks

@@ -18,6 +18,7 @@
 
 # Config
 from __future__ import division
+from __future__ import print_function
 from Components.config import ConfigYesNo, ConfigText, ConfigNumber, NoSave
 
 # Plugin internal
@@ -92,7 +93,7 @@ class FreeSpace(ControllerBase):
 				if hdd is not None:
 					if hdd.isSleeping():
 						# Don't wake up HDD
-						print _("[FreeSpace] HDD is idle: ") + str(path)
+						print(_("[FreeSpace] HDD is idle: ") + str(path))
 						callback()
 		
 		# Check free space on path

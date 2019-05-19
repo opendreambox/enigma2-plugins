@@ -16,6 +16,7 @@
 #
 #######################################################################
 
+from __future__ import print_function
 import os, sys, traceback
 from time import localtime, strftime
 
@@ -262,7 +263,7 @@ class PushServiceBase(Modules, ConfigFile):
 				controller.end()
 
 	def run(self):
-		print _("PushService started: ") + strftime( _("%d.%m.%Y %H:%M"), localtime() )
+		print(_("PushService started: ") + strftime( _("%d.%m.%Y %H:%M"), localtime() ))
 		
 		controllers = self.controllers
 		self.pushcallbacks = {}
@@ -272,7 +273,7 @@ class PushServiceBase(Modules, ConfigFile):
 		if controllers:
 			for controller in controllers:
 				if controller.getEnable():
-					print _("PushService running: ") + str( controller.getName() )
+					print(_("PushService running: ") + str( controller.getName() ))
 					
 					try:
 						# Run controller
@@ -280,7 +281,7 @@ class PushServiceBase(Modules, ConfigFile):
 								boundFunction(self.runcallback, controller),
 								boundFunction(self.runerrback, controller) )
 					except Exception as e:
-						print _("PushService controller run() exception")
+						print(_("PushService controller run() exception"))
 						exc_type, exc_value, exc_traceback = sys.exc_info()
 						traceback.print_exception(exc_type, exc_value, exc_traceback, file=sys.stdout)
 						self.runerrback(controller, exc_type, exc_value, exc_traceback)
@@ -305,7 +306,7 @@ class PushServiceBase(Modules, ConfigFile):
 				self.push(controller, subject, body, attachments)
 
 	def runerrback(self, controller, *args):
-		print _("controller %s returned error(s)") % controller.getName()
+		print(_("controller %s returned error(s)") % controller.getName())
 		text = ""
 		for arg in args:
 			if isinstance(arg, Exception):
@@ -315,12 +316,12 @@ class PushServiceBase(Modules, ConfigFile):
 					text += str(arg) + "\n"
 			elif arg:
 				text += str(arg) + "\n"
-		print text
+		print(text)
 		if config.pushservice.push_errors.value:
 			self.push(controller, _("PushService controller run() exception"), text, [])
 
 	def push(self, controller, subject, text="", attachments=[]):
-		print "[PS] push"
+		print("[PS] push")
 		services = self.services
 		if not services:
 			# Fallback to PopUp
@@ -338,13 +339,13 @@ class PushServiceBase(Modules, ConfigFile):
 								controller.getName(),
 								subject, text, attachments )
 					except Exception as e:
-						print _("PushService Service push() exception")
+						print(_("PushService Service push() exception"))
 						exc_type, exc_value, exc_traceback = sys.exc_info()
 						traceback.print_exception(exc_type, exc_value, exc_traceback, file=sys.stdout)
 						self.pusherrback(service, controller, exc_type, exc_value, exc_traceback)
 
 	def pushcallback(self, service, controller, *args):
-		print "[PS] pushcallback"
+		print("[PS] pushcallback")
 		key = (service, controller)
 		if key not in self.pushcallbacks:
 			self.pushcallbacks[key] = list(args)
@@ -353,13 +354,13 @@ class PushServiceBase(Modules, ConfigFile):
 		self.pushcheckbacks(key)
 
 	def pusherrback(self, service, controller, *args):
-		print "[PS] pusherrback"
-		print _("Service %s returned error(s)") % service.getName()
+		print("[PS] pusherrback")
+		print(_("Service %s returned error(s)") % service.getName())
 		for arg in args:
 			if isinstance(arg, Exception):
-				print str(arg.type), str(arg.value)
+				print(str(arg.type), str(arg.value))
 			elif arg:
-				print str(arg)
+				print(str(arg))
 		key = (service, controller)
 		if key not in self.pusherrbacks:
 			self.pusherrbacks[key] = list(args)
@@ -368,7 +369,7 @@ class PushServiceBase(Modules, ConfigFile):
 		self.pushcheckbacks(key)
 
 	def pushcheckbacks(self, key):
-		print "[PS] pushcheckbacks"
+		print("[PS] pushcheckbacks")
 		callparam = self.pushcallbacks.get(key, [])
 		cntcall = len(callparam)
 		errparam = self.pusherrbacks.get(key, [])
@@ -381,8 +382,8 @@ class PushServiceBase(Modules, ConfigFile):
 			if controller:
 				# Check if no error is logged
 				if ( cnterr == 0 ):
-					print "[PS] controller.callback()"
+					print("[PS] controller.callback()")
 					controller.callback()
 				else:
 					controller.errback()
-					print "[PS] controller.errback()"
+					print("[PS] controller.errback()")

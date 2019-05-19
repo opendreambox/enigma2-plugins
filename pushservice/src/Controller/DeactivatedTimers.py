@@ -17,6 +17,7 @@
 #######################################################################
 
 # Config
+from __future__ import print_function
 from Components.config import ConfigYesNo, NoSave
 
 # Plugin internal
@@ -103,7 +104,7 @@ class DeactivatedTimers(ControllerBase):
 		# Set tag to avoid resending it
 		for timer in self.timers:
 			if TAG not in timer.tags:
-				print "[PS] timer append tag"
+				print("[PS] timer append tag")
 				timer.tags.append(TAG)
 		NavigationInstance.instance.RecordTimer.saveTimer()
 		self.timers = []

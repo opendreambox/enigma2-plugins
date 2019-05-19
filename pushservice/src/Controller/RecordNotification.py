@@ -17,6 +17,7 @@
 #######################################################################
 
 # Config
+from __future__ import print_function
 from Components.config import ConfigYesNo, NoSave
 
 # Plugin internal
@@ -58,7 +59,7 @@ class RecordNotification(ControllerBase):
 		if self.getValue('send_on_start') or self.getValue('send_on_end'):
 			if NavigationInstance.instance:
 				if self.onRecordEvent not in NavigationInstance.instance.RecordTimer.on_state_change:
-					print "append"
+					print("append")
 					# Append callback function
 					NavigationInstance.instance.RecordTimer.on_state_change.append(self.onRecordEvent)
 			else:

@@ -16,6 +16,7 @@
 #
 #######################################################################
 
+from __future__ import print_function
 from Components.config import ConfigYesNo, NoSave
 
 try:
@@ -90,8 +91,8 @@ class ModuleBase(object):
 				elif isinstance(default, int):
 					self.setValue(key, int(value))
 			except:
-				print _("PushService Module %s:\n") % ( self.getName() )
-				print _("Skipping config option:") + str(key) + " " + str(value)
+				print(_("PushService Module %s:\n") % ( self.getName() ))
+				print(_("Skipping config option:") + str(key) + " " + str(value))
 				continue
 
 	def getUniqueID(self):
