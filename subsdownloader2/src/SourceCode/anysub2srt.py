@@ -1,3 +1,4 @@
+from __future__ import division
 import os
 import re
 import sys
@@ -65,11 +66,11 @@ class SubConv():
 	    try:
 		m = re1.match(list.pop(0), 0)
 		if m:
-		    subt = [int(m.group(1)) / float(fps)]
+		    subt = [int(m.group(1)) // float(fps)]
 		    if m.group(2):
-			subt.append(int(m.group(2)) / float(fps))
+			subt.append(int(m.group(2)) // float(fps))
 		    else:
-			subt.append(int(m.group(1)) / float(fps) + 3)
+			subt.append(int(m.group(1)) // float(fps) + 3)
 		    subt.extend(m.group(3).strip().split("|"))
 		    subtitles.append(subt)
 	    except:
@@ -90,8 +91,8 @@ returns: list of subtitles in form: [[time_dep, time_end, line1, ...],[time_dep,
 	    try:
                 m = re1.match(list.pop(0), 0)
                 if m:
-                    subt = [int(m.group(1))*3600 + int(m.group(2))*60 + int(m.group(3)) + int(m.group(4))/100.0]
-                    subt.append(int(m.group(5))*3600 + int(m.group(6))*60 + int(m.group(7)) + int(m.group(8))/100.0)
+                    subt = [int(m.group(1))*3600 + int(m.group(2))*60 + int(m.group(3)) + int(m.group(4))//100.0]
+                    subt.append(int(m.group(5))*3600 + int(m.group(6))*60 + int(m.group(7)) + int(m.group(8))//100.0)
                     l = list.pop(0).strip()
                     lines = l.split("[br]")
                     for i in range(0,len(lines)):
@@ -132,8 +133,8 @@ returns: list of subtitles in form: [[time_dep, time_end, line1, ...],[time_dep,
                 if re1.match(list.pop(0), 0):
                     m = re2.match(list.pop(0), 0)
                     if m:
-                        subt = [int(m.group(1))*3600 + int(m.group(2))*60 + int(m.group(3)) + int(m.group(4))/1000.0]
-                        subt.append(int(m.group(5))*3600 + int(m.group(6))*60 + int(m.group(7)) + int(m.group(8))/1000.0)
+                        subt = [int(m.group(1))*3600 + int(m.group(2))*60 + int(m.group(3)) + int(m.group(4))//1000.0]
+                        subt.append(int(m.group(5))*3600 + int(m.group(6))*60 + int(m.group(7)) + int(m.group(8))//1000.0)
                         l = list.pop(0)
                         while not re3.match(l, 0):
                             subt.append(l.strip())
@@ -184,8 +185,8 @@ returns: list of subtitles in form: [[time_dep, time_end, line1, ...],[time_dep,
 	    #for line in list:	
 		try:
 		    group = MPL2LINE.match(list.pop(0)).groupdict()
-		    start = float(float(group["start"])/10) #*0.1*FRAMERATE) or 1
-		    stop = float(float(group["stop"])/10)#*0.1*FRAMERATE)
+		    start = float(float(group["start"])//10) #*0.1*FRAMERATE) or 1
+		    stop = float(float(group["stop"])//10)#*0.1*FRAMERATE)
 		    rest = group["line"]
 		    temp=[float(start), float(stop), str(rest).replace('|','\n')]
 		    subtitles.append(temp)
@@ -205,7 +206,7 @@ returns: list of subtitles in form: [[time_dep, time_end, line1, ...],[time_dep,
                 subtitles_standard_list[x][1] = subtitles_standard_list[x][1]+ 6* fps
             if subtitles_standard_list[x][1] >= subtitles_standard_list[x+1][0]:
                 if (subtitles_standard_list[x][1] - 0.1) <= subtitles_standard_list[x][0]:
-                    subtitles_standard_list[x][1] = (subtitles_standard_list[x][0] + subtitles_standard_list[x+1][0])/2
+                    subtitles_standard_list[x][1] = (subtitles_standard_list[x][0] + subtitles_standard_list[x+1][0])//2
                 else:
                     subtitles_standard_list[x][1] = subtitles_standard_list[x][1] - 0.1
                 print "Subtitle end time error detected. Line no. %d was corrected" % x
@@ -220,13 +221,13 @@ returns: list of subtitles in form: [[time_dep, time_end, line1, ...],[time_dep,
         count = 1
         for l in list:
             secs1 = l[0]
-            h1 = int(secs1/3600)
-            m1 = int(int(secs1%3600)/60)
+            h1 = int(secs1//3600)
+            m1 = int(int(secs1%3600)//60)
             s1 = int(secs1%60)
             f1 = (secs1 - int(secs1))*1000
             secs2 = l[1]
-            h2 = int(secs2/3600)
-            m2 = int(int(secs2%3600)/60)
+            h2 = int(secs2//3600)
+            m2 = int(int(secs2%3600)//60)
             s2 = int(secs2%60)
             f2 = (secs2 - int(secs2))*1000
             outl.append("%d\n%.2d:%.2d:%.2d,%.3d --> %.2d:%.2d:%.2d,%.3d\n%s\n\n" % (count,h1,m1,s1,f1,h2,m2,s2,f2,"\n".join(l[2:])))

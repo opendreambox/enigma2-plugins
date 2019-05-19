@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*- 
 
+from __future__ import division
 import sys
 import os
 #---
@@ -38,7 +39,7 @@ def hashFile(filename):
       if filesize < 65536 * 2:
         return "Error"
       b = f.read(65536)
-      for x in range(65536/bytesize):
+      for x in range(65536//bytesize):
         buffer = b[x*bytesize:x*bytesize+bytesize]
         (l2, l1)= struct.unpack(longlongformat, buffer) 
         l_value = (int(l1) << 32) | int(l2) 
@@ -47,7 +48,7 @@ def hashFile(filename):
       
       f.seek(max(0,filesize-65536),0)
       b = f.read(65536)
-      for x in range(65536/bytesize):
+      for x in range(65536//bytesize):
         buffer = b[x*bytesize:x*bytesize+bytesize]
         (l2, l1) = struct.unpack(longlongformat, buffer)
         l_value = (int(l1) << 32) | int(l2)

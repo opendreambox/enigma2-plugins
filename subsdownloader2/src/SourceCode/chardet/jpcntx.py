@@ -25,6 +25,7 @@
 # 02110-1301  USA
 ######################### END LICENSE BLOCK #########################
 
+from __future__ import division
 import constants
 
 NUM_OF_CATEGORY = 6
@@ -162,7 +163,7 @@ class JapaneseContextAnalysis:
     def get_confidence(self):
         # This is just one way to calculate confidence. It works well for me.
         if self._mTotalRel > MINIMUM_DATA_THRESHOLD:
-            return (self._mTotalRel - self._mRelSample[0]) / self._mTotalRel
+            return (self._mTotalRel - self._mRelSample[0]) // self._mTotalRel
         else:
             return DONT_KNOW
 

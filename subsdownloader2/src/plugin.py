@@ -1,3 +1,4 @@
+from __future__ import division
 import os
 try:
 	is_libmediainfo = True
@@ -366,9 +367,9 @@ class SubsDownloaderApplication(Screen):
 			if (size < 1024):
 				humansize = str(size)+" B"
 			elif (size < 1048576):
-				humansize = str(size/1024)+" KB"
+				humansize = str(size//1024)+" KB"
 			else:
-				humansize = str(size/1048576)+" MB"
+				humansize = str(size//1048576)+" MB"
 			return humansize
 		
 		def VirtualKeyboart_dir_rename_Callback(callback):

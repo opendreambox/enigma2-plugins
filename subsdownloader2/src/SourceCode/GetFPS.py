@@ -1,4 +1,5 @@
-﻿import sys
+﻿from __future__ import division
+import sys
 import struct
 
 # GetFPS function by areq propably
@@ -21,7 +22,7 @@ class GetFPS(object):
             return self.get_mkv_fps()
         elif s == "RIFF":
             self.file.seek(32)
-            return 1000000.0 / float(struct.unpack('<I', self.file.read(4))[0])
+            return 1000000.0 // float(struct.unpack('<I', self.file.read(4))[0])
         else:
             raise Exception('Error: Unknown file format not AVI/MKV')
 
@@ -58,4 +59,4 @@ class GetFPS(object):
 #Segment,Tracks,TrackEntry,TrackType
                         self.file.seek(length,1)
 
-        return ( 1000000000/ float( struct.unpack('>I', self.file.read(4))[0] ))
+        return ( 1000000000// float( struct.unpack('>I', self.file.read(4))[0] ))

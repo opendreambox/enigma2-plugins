@@ -26,6 +26,7 @@
 # 02110-1301  USA
 ######################### END LICENSE BLOCK #########################
 
+from __future__ import division
 import constants, sys
 from charsetprober import CharSetProber
 
@@ -98,9 +99,9 @@ class SingleByteCharSetProber(CharSetProber):
         r = 0.01
         if self._mTotalSeqs > 0:
 #            print self._mSeqCounters[POSITIVE_CAT], self._mTotalSeqs, self._mModel['mTypicalPositiveRatio']
-            r = (1.0 * self._mSeqCounters[POSITIVE_CAT]) / self._mTotalSeqs / self._mModel['mTypicalPositiveRatio']
+            r = (1.0 * self._mSeqCounters[POSITIVE_CAT]) // self._mTotalSeqs // self._mModel['mTypicalPositiveRatio']
 #            print r, self._mFreqChar, self._mTotalChar
-            r = r * self._mFreqChar / self._mTotalChar
+            r = r * self._mFreqChar // self._mTotalChar
             if r >= 1.0:
                 r = 0.99
         return r

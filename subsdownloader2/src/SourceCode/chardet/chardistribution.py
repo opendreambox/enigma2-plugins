@@ -25,6 +25,7 @@
 # 02110-1301  USA
 ######################### END LICENSE BLOCK #########################
 
+from __future__ import division
 import constants
 from euctwfreq import EUCTWCharToFreqOrder, EUCTW_TABLE_SIZE, EUCTW_TYPICAL_DISTRIBUTION_RATIO
 from euckrfreq import EUCKRCharToFreqOrder, EUCKR_TABLE_SIZE, EUCKR_TYPICAL_DISTRIBUTION_RATIO
@@ -70,7 +71,7 @@ class CharDistributionAnalysis:
             return SURE_NO
 
         if self._mTotalChars != self._mFreqChars:
-            r = self._mFreqChars / ((self._mTotalChars - self._mFreqChars) * self._mTypicalDistributionRatio)
+            r = self._mFreqChars // ((self._mTotalChars - self._mFreqChars) * self._mTypicalDistributionRatio)
             if r < SURE_YES:
                 return r
 

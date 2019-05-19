@@ -17,6 +17,7 @@
 #    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
+from __future__ import division
 import socket # For timeout purposes
 from Plugins.Extensions.SubsDownloader2.SourceCode import xmlrpclib
 import os, struct, commands, traceback, logging
@@ -168,7 +169,7 @@ class OpenSubtitle(SubtitleDatabase.SubtitleDB):
             logging.error("File %s is too small (SizeError < 2**16)"%name)
             return []
          
-        for x in range(65536/bytesize): 
+        for x in range(65536//bytesize): 
             buffer = f.read(bytesize) 
             (l_value,)= struct.unpack(longlongformat, buffer)  
             hash += l_value 
@@ -176,7 +177,7 @@ class OpenSubtitle(SubtitleDatabase.SubtitleDB):
                  
 
         f.seek(max(0,filesize-65536),0) 
-        for x in range(65536/bytesize): 
+        for x in range(65536//bytesize): 
             buffer = f.read(bytesize) 
             (l_value,)= struct.unpack(longlongformat, buffer)  
             hash += l_value 

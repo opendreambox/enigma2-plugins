@@ -21,6 +21,7 @@
 
 
 
+from __future__ import division
 from re import compile as re_compile
 from os import path as os_path, listdir, stat as os_stat
 from Components.MenuList import MenuList
@@ -323,7 +324,7 @@ class FileList(MenuList):
 			info = serviceHandler.info(serviceref)
 			tslen = info.getLength(serviceref)
 			if tslen > 0:
-				tslen = "%d:%02d" % (tslen / 60, tslen % 60)
+				tslen = "%d:%02d" % (tslen // 60, tslen % 60)
 			else:
 				tslen = ""
 		return tslen
