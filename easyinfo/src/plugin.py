@@ -46,6 +46,7 @@ from ServiceReference import ServiceReference
 from enigma import eListboxPythonMultiContent, gFont, eTimer, eServiceReference, RT_HALIGN_LEFT, RT_HALIGN_CENTER, RT_VALIGN_CENTER, RT_WRAP, RT_HALIGN_RIGHT, RT_VALIGN_TOP
 from time import localtime, time, mktime
 from skin import TemplatedListFonts, componentSizes
+from six.moves import range
 
 EasyInfoBaseInfoBarPlugins__init__ = None
 EasyInfoStartOnlyOnce = False
