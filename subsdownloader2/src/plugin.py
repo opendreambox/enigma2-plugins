@@ -808,7 +808,7 @@ class SubsDownloaderApplication(Screen):
 		"""Creare media patern to file browser based on self.textEXTENSIONS from this module
 		and EXTENSIONS fron FileList module"""
 		self.textEXTENSIONS.update(EXTENSIONS)
-		return "^.*\.(" + str.join('|',self.textEXTENSIONS.keys()) + ")"
+		return "^.*\.(" + str.join('|',list(self.textEXTENSIONS.keys())) + ")"
 	
 	def return_extention(self, file_path):
 		"""get filename and return file extention"""

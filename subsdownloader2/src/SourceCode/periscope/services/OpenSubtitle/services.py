@@ -102,7 +102,7 @@ class OpenSubtitle(SubtitleDatabase.SubtitleDB):
     def __init__(self, config, cache_folder_path):
         super(OpenSubtitle, self).__init__(OS_LANGS)
         self.server_url = 'http://api.opensubtitles.org/xml-rpc'
-        self.revertlangs = dict(map(lambda item: (item[1],item[0]), self.langs.items()))
+        self.revertlangs = dict(map(lambda item: (item[1],item[0]), list(self.langs.items())))
 
     def process(self, filepath, langs):
         ''' main method to call on the plugin, pass the filename and the wished 

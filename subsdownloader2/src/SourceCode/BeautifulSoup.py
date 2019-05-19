@@ -533,7 +533,7 @@ class Tag(PageElement):
         if attrs is None:
             attrs = []
         elif isinstance(attrs, dict):
-            attrs = attrs.items()
+            attrs = list(attrs.items())
         self.attrs = attrs
         self.contents = []
         self.setup(parent, previous)

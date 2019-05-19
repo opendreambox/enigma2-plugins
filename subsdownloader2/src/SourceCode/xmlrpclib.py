@@ -693,7 +693,7 @@ class Marshaller:
             # because we don't know how to marshal these types
             # (e.g. a string sub-class)
             for type_ in type(value).__mro__:
-                if type_ in self.dispatch.keys():
+                if type_ in list(self.dispatch.keys()):
                     raise TypeError, "cannot marshal %s objects" % type(value)
             f = self.dispatch[InstanceType]
         f(self, value, write)
@@ -1325,7 +1325,7 @@ class Transport:
         connection.putheader("Host", host)
         if extra_headers:
             if isinstance(extra_headers, DictType):
-                extra_headers = extra_headers.items()
+                extra_headers = list(extra_headers.items())
             for key, value in extra_headers:
                 connection.putheader(key, value)
 
