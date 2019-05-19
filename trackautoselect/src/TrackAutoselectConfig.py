@@ -2,6 +2,7 @@ from Components.config import config, ConfigSubsection, ConfigYesNo, ConfigInteg
 from Components.Language import language
 from Tools.ISO639 import ISO639Language
 from enigma import eServiceReference
+import six
 
 class Autoselect639Language(ISO639Language):
 		def __init__(self):
@@ -12,7 +13,7 @@ class Autoselect639Language(ISO639Language):
 			choices_dict = {}
 			choices_list = []
 			defaults = []
-			for lang, id_list in self.idlist_by_name.iteritems():
+			for lang, id_list in six.iteritems(self.idlist_by_name):
 				if syslang not in id_list and 'en' not in id_list:
 					name = _(lang)
 					short_id = sorted(id_list, key=len)[0]
@@ -66,18 +67,18 @@ class TrackAutoselectConfig():
 		self.sub_format_choices = []
 
 		self.audio_format_dict = {}
-		for idx, (short, text, rank) in sorted(AUDIO_FORMATS.items(), key=lambda x: x[1][2]):
+		for idx, (short, text, rank) in sorted(list(AUDIO_FORMATS.items()), key=lambda x: x[1][2]):
 			if rank > 0:
 				self.audio_format_choices.append((short, text))
 				self.audio_format_dict[idx] = short
 
 		self.sub_format_dict = {}
 		self.gstsub_format_dict= {}
-		for idx, (short, text, rank) in sorted(SUB_FORMATS.items(), key=lambda x: x[1][2]):
+		for idx, (short, text, rank) in sorted(list(SUB_FORMATS.items()), key=lambda x: x[1][2]):
 			if rank > 0:
 				self.sub_format_choices.append((short, text))
 				self.sub_format_dict[idx] = short
-		for idx, (short, text, rank) in sorted(GST_SUB_FORMATS.items(), key=lambda x: x[1][2]):
+		for idx, (short, text, rank) in sorted(list(GST_SUB_FORMATS.items()), key=lambda x: x[1][2]):
 			if rank > 0:
 				self.sub_format_choices.append((short, short))
 				self.gstsub_format_dict[idx] = short
