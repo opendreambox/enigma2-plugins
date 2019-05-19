@@ -205,7 +205,7 @@ class AutoRes(Screen):
 			if height != -1 and width != -1 and framerate != -1:
 				have_1080p = config.av.videorate.get("1080p", False)
 				frate = str(framerate)[:2] #fallback?
-				if frqdic.has_key(framerate):
+				if framerate in frqdic:
 					frate = frqdic[framerate]
 				progressive = info and info.getInfo(iServiceInformation.sProgressive)
 
@@ -236,7 +236,7 @@ class AutoRes(Screen):
 
 				print "[AutoRes] new content is %sx%s%s%s" %(width, height, prog, frate)
 
-				if videoresolution_dictionary.has_key(new_mode):
+				if new_mode in videoresolution_dictionary:
 					new_mode = videoresolution_dictionary[new_mode].value
 					print '[AutoRes] determined videomode', new_mode
 					old = resolutionlabel["content"].getText()
