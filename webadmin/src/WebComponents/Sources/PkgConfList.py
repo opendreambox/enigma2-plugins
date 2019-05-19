@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+from __future__ import print_function
 from Components.Sources.Source import Source
 from glob import glob
 from os import statvfs
@@ -56,10 +57,10 @@ class PkgConfList(Source):
 		sources = []
 		for filename in sorted(glob('%s/*.list*' % self.sources_list_d)):
 			if filename.endswith(".list") or filename.endswith(".list.off"):
-				print "[PkgConfList] file ", filename
+				print("[PkgConfList] file ", filename)
 				with open(filename) as f:
 					text = f.read()
-					print "[PkgConfList] text ", text
+					print("[PkgConfList] text ", text)
 					sources.append((basename(filename), text))
 		return sources
 

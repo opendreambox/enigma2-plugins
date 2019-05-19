@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+from __future__ import print_function
 from os import chmod, close, rename, statvfs, unlink, write
 from os.path import basename, isdir, isfile, join, realpath
 from tempfile import mkstemp
@@ -17,7 +18,7 @@ class UploadTextResource(resource.Resource):
 		return req.args.get(key, [default])[0]
 
 	def render_POST(self, req):
-		print "[UploadTextResource] req.args ",req.args
+		print("[UploadTextResource] req.args ",req.args)
 		path = self.getArg(req, 'path', self.default_uploaddir)
 		filename = self.getArg(req, 'filename')
 		text = self.getArg(req, 'text')
@@ -53,7 +54,7 @@ class UploadTextResource(resource.Resource):
 			return 'Deleted %s' % filename
 
 		text = text.replace('\r\n','\n')
-		print "[UploadTextResource] text:", text
+		print("[UploadTextResource] text:", text)
 
 		fd, fn = mkstemp(dir=path)
 		cnt = write(fd, text)

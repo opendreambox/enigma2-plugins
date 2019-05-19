@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 from Components.Sources.Source import Source
 from subprocess import check_output
 
@@ -32,7 +33,7 @@ class PkgList(Source):
 
 			return sorted(pkglist.values())
 		except Exception as e:
-			print "[PkgList] except: ",str(e)
+			print("[PkgList] except: ",str(e))
 			return []
 
 	list = property(getOpkgfeed)

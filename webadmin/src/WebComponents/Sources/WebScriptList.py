@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 from Components.Sources.Source import Source
 from glob import glob
 from os.path import basename
@@ -19,10 +20,10 @@ class WebScriptList(Source):
 	def getList(self):
 		scripts = []
 		for filename in sorted(glob('/usr/script/*.sh')):
-			print "[WebScriptList] filename ", filename
+			print("[WebScriptList] filename ", filename)
 			with open(filename) as f:
 				text = f.read()
-				print "[WebScriptList] text ",text
+				print("[WebScriptList] text ",text)
 				scripts.append((basename(filename), text))
 		return scripts
 
