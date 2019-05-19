@@ -5,6 +5,7 @@
 # Version: 1.5
 # Support: www.i-have-a-dreambox.com
 #####################################################
+from __future__ import division
 from Components.About import about
 from Components.ActionMap import ActionMap
 from Components.Button import Button
@@ -90,7 +91,7 @@ def ChannelListEntryComponent(type, channelname, serviceref, eventid, eventname,
 		res.append(MultiContentEntryPixmapAlphaTest(pos=(10, 10), size=(100, 60), png=loadPNG(pixmap)))
 		res.append(MultiContentEntryText(pos=(130, 5), size=(480, 28), font=0, text="%s (User: %s)" % (channelname, usercount)))
 		res.append(MultiContentEntryText(pos=(130, 33), size=(480, 25), font=1, text=eventname))
-		res.append(MultiContentEntryText(pos=(130, 57), size=(480, 20), font=2, text="%s Uhr - %s Uhr (%smin)" % (strftime("%d.%m.%Y %H:%M", gmtime(starttime)), strftime("%H:%M", gmtime(endtime)), int((endtime-starttime)/60))))
+		res.append(MultiContentEntryText(pos=(130, 57), size=(480, 20), font=2, text="%s Uhr - %s Uhr (%smin)" % (strftime("%d.%m.%Y %H:%M", gmtime(starttime)), strftime("%H:%M", gmtime(endtime)), int((endtime-starttime)//60))))
 	elif type == "moviecharts":
 		res.append(MultiContentEntryPixmapAlphaTest(pos=(8, 8), size=(100, 60), png=loadPNG(pixmap)))
 		res.append(MultiContentEntryText(pos=(130, 5), size=(480, 30), font=0, text=eventname))
