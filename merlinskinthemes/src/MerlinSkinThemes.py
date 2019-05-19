@@ -48,6 +48,7 @@ import xml.etree.cElementTree as Tree
 
 import shutil
 import os
+from six.moves import range
 
 # =========================================
 PluginVersion = "v2.8.1"
