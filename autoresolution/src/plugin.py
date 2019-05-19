@@ -1,4 +1,5 @@
 ﻿# encoding: utf-8
+from __future__ import print_function
 from Screens.Screen import Screen
 from Screens.Setup import SetupSummary
 from Screens.MessageBox import MessageBox
@@ -44,7 +45,7 @@ config.plugins.autoresolution.delay_switch_mode = ConfigSelection(default = "100
 		("8000", "8 " + _("seconds")), ("9000", "9 " + _("seconds")), ("10000", "10 " + _("seconds")),("60000", "60 " + _("seconds"))])
 
 def setDeinterlacer(mode):
-	print "[AutoRes] switch deinterlacer mode to %s (currently not working)" % mode
+	print("[AutoRes] switch deinterlacer mode to %s (currently not working)" % mode)
 	#f = open('/proc/stb/vmpeg/deinterlace' , "w")
 	#f.write("%s\n" % mode)
 	#f.close()
@@ -112,7 +113,7 @@ class AutoRes(Screen):
 
 	def __evUpdatedInfo(self):
 		if self.newService:
-			print "[AutoRes] service changed"
+			print("[AutoRes] service changed")
 			self.after_switch_delay = False
 			self.timer.start(int(config.plugins.autoresolution.delay_switch_mode.value))
 			self.newService = False
@@ -124,7 +125,7 @@ class AutoRes(Screen):
 		global usable
 		port_changed = configEntry == config.av.videoport
 		if port_changed:
-			print "port changed to", configEntry.value
+			print("port changed to", configEntry.value)
 			if port:
 				config.av.videomode[port].removeNotifier(self.defaultModeChanged)
 			port = config.av.videoport.value
@@ -133,12 +134,12 @@ class AutoRes(Screen):
 			usable = config.plugins.autoresolution.enable.value and not port in ('DVI-PC', 'Scart')
 		else: # videomode changed in normal av setup
 			global videoresolution_dictionary
-			print "mode changed to", configEntry.value
+			print("mode changed to", configEntry.value)
 			default = (configEntry.value, _("default"))
 			preferedmodes = [mode for mode in DisplayHardware.instance.getGroupedModeList(port) if mode != default[0]]
 			preferedmodes.append(default)
-			print "default", default
-			print "preferedmodes", preferedmodes
+			print("default", default)
+			print("preferedmodes", preferedmodes)
 			videoresolution_dictionary = {}
 			config.plugins.autoresolution.videoresolution = ConfigSubDict()
 			have_2160p = config.av.videorate.get("2160p", False)
@@ -178,22 +179,22 @@ class AutoRes(Screen):
 			self.changeVideomode()
 
 	def __evVideoFramerateChanged(self):
-		print "[AutoRes] got event evFramerateChanged"
+		print("[AutoRes] got event evFramerateChanged")
 		if not self.timer.isActive() or self.after_switch_delay:
 			self.timer.start(100) # give other pending events a chance..
 
 	def __evVideoSizeChanged(self):
-		print "[AutoRes] got event evVideoSizeChanged"
+		print("[AutoRes] got event evVideoSizeChanged")
 		if not self.timer.isActive() or self.after_switch_delay:
 			self.timer.start(100) # give other pending events a chance..
 
 	def __evVideoProgressiveChanged(self):
-		print "[AutoRes] got event evVideoProgressiveChanged"
+		print("[AutoRes] got event evVideoProgressiveChanged")
 		if not self.timer.isActive() or self.after_switch_delay:
 			self.timer.start(100) # give other pending events a chance..
 
 	def determineContent(self):
-		print "[AutoRes] determineContent"
+		print("[AutoRes] determineContent")
 		self.timer.stop()
 		self.after_switch_delay = True
 		if usable:
@@ -234,11 +235,11 @@ class AutoRes(Screen):
 				else:
 					setDeinterlacer(config.plugins.autoresolution.deinterlacer.value)
 
-				print "[AutoRes] new content is %sx%s%s%s" %(width, height, prog, frate)
+				print("[AutoRes] new content is %sx%s%s%s" %(width, height, prog, frate))
 
 				if new_mode in videoresolution_dictionary:
 					new_mode = videoresolution_dictionary[new_mode].value
-					print '[AutoRes] determined videomode', new_mode
+					print('[AutoRes] determined videomode', new_mode)
 					old = resolutionlabel["content"].getText()
 					resolutionlabel["content"].setText("Videocontent: %sx%s%s %sHZ" % (width, height, prog, frate))
 					if self.lastmode != new_mode:
@@ -284,7 +285,7 @@ class AutoRes(Screen):
 
 		resolutionlabel["restxt"].setText("Videomode: %s %s %s" % (port_txt, mode, rate))
 		if set:
-			print "[AutoRes] switching to %s %s %s" % (port_txt, mode, rate)
+			print("[AutoRes] switching to %s %s %s" % (port_txt, mode, rate))
 			if config.plugins.autoresolution.showinfo.value:
 				resolutionlabel.show()
 			DisplayHardware.instance.setMode(port, mode, rate)
