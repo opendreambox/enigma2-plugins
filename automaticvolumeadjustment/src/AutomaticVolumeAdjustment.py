@@ -197,7 +197,7 @@ def VolumeControlInit(enabled, maxVolume):
 	global baseVolumeControl_setVolume
 	if baseVolumeControl_setVolume is None:
 		baseVolumeControl_setVolume = VolumeControl.setVolume
-	if enabled and maxVolume <> 100:
+	if enabled and maxVolume != 100:
 		VolumeControl.setVolume = AVA_setVolume
 		VolumeControl.maxVolume = maxVolume
 	else:
