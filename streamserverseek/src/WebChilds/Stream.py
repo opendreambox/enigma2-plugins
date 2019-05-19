@@ -14,7 +14,7 @@ else:
 
 from twisted.internet import reactor
 
-import urllib
+import six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error
 
 from Plugins.Extensions.StreamServerSeek.StreamServerSeek import StreamServerSeek
 
@@ -118,7 +118,7 @@ class StreamResource(resource.Resource):
 				StreamServerSeek().forceInputMode(eStreamServer.INPUT_MODE_BACKGROUND)
 				wait = True
 				
-			result = streamServerControl.setEncoderService(eServiceReference("1:0:0:0:0:0:0:0:0:0:" + urllib.quote(moviePath)))
+			result = streamServerControl.setEncoderService(eServiceReference("1:0:0:0:0:0:0:0:0:0:" + six.moves.urllib.parse.quote(moviePath)))
 			if result == streamServerControl.ENCODER_SERVICE_SET or result == streamServerControl.ENCODER_SERVICE_ALREADY_ACTIVE:
 				if not os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/GstRtspServer/StreamServerControl.py"):
 					self.streamServerSeek.doSeek()
@@ -137,7 +137,7 @@ class StreamResource(resource.Resource):
 		if inStandby is None:
 			if self.streamServerSeek._isTemporaryLiveMode:
 				print("[StreamServerSeek] Box already in temporary Live-Mode")
-				self.streamServerSeek._temporaryLiveModeService = "4097:0:0:0:0:0:0:0:0:0:" + urllib.quote(moviePath)
+				self.streamServerSeek._temporaryLiveModeService = "4097:0:0:0:0:0:0:0:0:0:" + six.moves.urllib.parse.quote(moviePath)
 				service = eServiceReference(self.streamServerSeek._temporaryLiveModeService)
 				if service.toCompareString() != self.session.nav.getCurrentServiceReference().toCompareString():
 					self.session.nav.playService(service)
@@ -157,7 +157,7 @@ class StreamResource(resource.Resource):
 			streamServerControl.stopEncoderService()
 			print("[StreamServerSeek] Switching on Box")
 			self.streamServerSeek._tvLastService = config.tv.lastservice.value
-			self.streamServerSeek._temporaryLiveModeService = "4097:0:0:0:0:0:0:0:0:0:" + urllib.quote(moviePath)
+			self.streamServerSeek._temporaryLiveModeService = "4097:0:0:0:0:0:0:0:0:0:" + six.moves.urllib.parse.quote(moviePath)
 			inStandby.onClose.append(self._onTemporaryLiveMode)
 			print("%s" % StreamServerSeek)
 			print("%s" % StreamServerSeek())
