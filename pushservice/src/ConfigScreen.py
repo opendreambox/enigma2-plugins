@@ -42,10 +42,11 @@ from PushServiceBase import PushServiceBase
 from ModuleBase import ModuleBase
 from ServiceBase import ServiceBase
 from ControllerBase import ControllerBase
+from six.moves import range
 
 
 # States
-(MAIN, SERVICES, CONTROLLERS) = range(3)
+(MAIN, SERVICES, CONTROLLERS) = list(range(3))
 #IDEA combine into one screen
 #(MAIN, SERVICES, ADDSERVICE, REMOVESERVICE, CONTROLLERS, ADDCONTROLLER, REMOVECONTROLLER) = range(7)
 

@@ -3,6 +3,7 @@ import hashlib
 import time
 import StringIO
 import six
+from six.moves import range
 
 __version__ = '0.7'
 
