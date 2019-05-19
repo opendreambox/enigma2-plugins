@@ -25,6 +25,7 @@ from Components.Converter.Converter import Converter
 from Components.Element import cached
 from Components.Sensors import sensors
 from Poll import Poll
+from six.moves import range
 
 feCable = iDVBFrontend.feCable
 feSatellite = iDVBFrontend.feSatellite

@@ -22,6 +22,7 @@ from Components.Sensors import sensors
 from Tools.HardwareInfo import HardwareInfo
 from enigma import eLabel
 from Renderer import Renderer
+from six.moves import range
 
 class vhdRendMaxTemp(Renderer, VariableText):
 	def __init__(self):
