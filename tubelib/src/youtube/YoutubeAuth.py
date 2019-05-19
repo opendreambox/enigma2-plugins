@@ -1,3 +1,4 @@
+from __future__ import print_function
 from enigma import HBBTV_USER_AGENT
 from Tools.Log import Log
 
@@ -40,7 +41,7 @@ class GoogleUserCode(object):
 		self._expires_at = time() + int(self._data['expires_in'])
 
 	def expired(self):
-		print "Expires in %s" % (self._expires_at - time())
+		print("Expires in %s" % (self._expires_at - time()))
 		return time() >= self._expires_at
 
 	def __str__(self):
@@ -108,7 +109,7 @@ class YoutubeAuth(object):
 		self._canceled = True
 
 	def _onError(self, type, errorText=""):
-		print "ERROR! %s, %s" % (type, errorText)
+		print("ERROR! %s, %s" % (type, errorText))
 		self._requestDeferred = None
 		for fnc in self.onError:
 			fnc(type, errorText)
@@ -190,15 +191,15 @@ class YoutubeAuth(object):
 		error = result.get("error", None)
 		if error:
 			if error == "authorization_pending":
-				print "not ready, yet"
+				print("not ready, yet")
 				reactor.callLater(self._user_code.interval, self._pollForResult)
 			elif error == "slow_down":
-				print "too fast, slowing down"
+				print("too fast, slowing down")
 				self._device_code.interval = self._device_code.interval * 2
 			elif error == "expired_token":
 				self._onError(self.ERROR_CREDENTIALS_REQUEST_EXPIRED)
 			else:
-				print result
+				print(result)
 				self._onError(self.ERROR_CREDENTIALS_REQUEST_PARSE, error)
 		elif "access_token" in result:
 			access_token = result.get("access_token")
@@ -221,10 +222,10 @@ class YoutubeAuth(object):
 
 if __name__ == "__main__":
 	def userCodeReady(userCode):
-		print "%s => %s" % (userCode.verification_url, userCode.user_code)
+		print("%s => %s" % (userCode.verification_url, userCode.user_code))
 
 	def credentialsReady(credentials):
-		print "CREDENTIALS READY: %s" % (credentials.to_json(),)
+		print("CREDENTIALS READY: %s" % (credentials.to_json(),))
 
 	yta = YoutubeAuth()
 	yta.onUserCodeReady.append(userCodeReady)
