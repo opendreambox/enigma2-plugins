@@ -11,7 +11,7 @@ def pluginConfig(session, **kwargs):
 	print "[SF-Plugin] Config\n"
 	try:
 		session.open(SerienFilmCfg)
-	except Exception, e:
+	except Exception as e:
 		print "[SF-Plugin] pluginConfig Config exception:\n" + str(e)
 
 
@@ -21,7 +21,7 @@ def showMoviesSF(self):
 	try:
 #		print "[SF-Plugin] showMoviesSF.InfoBar"
 		self.session.openWithCallback(self.movieSelected, MovieSelection)
-	except Exception, e:
+	except Exception as e:
 		print "[SF-Plugin] showMoviesSF exception:\n" + str(e)
 
 def showMoviesMP(self):
@@ -58,7 +58,7 @@ def autostart(reason, **kwargs):
 					gLeavePlayerConfirmed = MoviePlayer.leavePlayerConfirmed
 				MoviePlayer.leavePlayerConfirmed = leavePlayerConfirmedMP
 
-			except Exception, e:
+			except Exception as e:
 				print "[SF-Plugin] autostart MovieList launch override exception:\n" + str(e)
 
 		else:
