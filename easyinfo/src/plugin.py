@@ -21,6 +21,7 @@
 
 
 from __future__ import division
+from __future__ import print_function
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
@@ -418,7 +419,7 @@ class EasyInfo(Screen):
 
 	def okPressed(self):
 		currentSelection = self["list"].l.getCurrentSelection()
-		print "answer", currentSelection
+		print("answer", currentSelection)
 		if currentSelection:
 			EasyInfoCallbackFunc(currentSelection[0])
 
