@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 # Core
+from __future__ import division
 from enigma import RT_HALIGN_LEFT, RT_VALIGN_CENTER, getDesktop, eListboxPythonMultiContent
 
 # Tools
@@ -66,7 +67,7 @@ def FTPFileEntryComponent(file, directory):
 		else:
 			png = None
 	if png is not None:
-		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 10, (th-pxh)/2, pxw, pxh, png))
+		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 10, (th-pxh)//2, pxw, pxh, png))
 
 	return res
 
@@ -720,10 +721,10 @@ class FTPBrowser(Screen, Protocol, InfoBarNotifications, HelpableScreen):
 
 		# We dont want to update more often than every two sec (could be done by a timer, but this should give a more accurate result though it might lag)
 		elif int(newTime - lastTime) >= 2:
-			lastApprox = round(((pos - self.lastLength) / (newTime - lastTime) / 1024), 2)
+			lastApprox = round(((pos - self.lastLength) // (newTime - lastTime) // 1024), 2)
 
-			secLen = int(round(((max-pos) / 1024) / lastApprox))
-			self["eta"].text = _("ETA %d:%02d min") % (secLen / 60, secLen % 60)
+			secLen = int(round(((max-pos) // 1024) // lastApprox))
+			self["eta"].text = _("ETA %d:%02d min") % (secLen // 60, secLen % 60)
 			self["speed"].text = _("%d kb/s") % (lastApprox)
 
 			self.lastApprox = lastApprox
