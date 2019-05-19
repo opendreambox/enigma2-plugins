@@ -7,6 +7,7 @@ from Plugins.Plugin import PluginDescriptor
 from Screens.MessageBox import MessageBox
 import KTglob
 import time
+from six.moves import range
 
 config.plugins.KiddyTimer = ConfigSubsection()
 config.plugins.KiddyTimer.enabled = ConfigYesNo(default=False)

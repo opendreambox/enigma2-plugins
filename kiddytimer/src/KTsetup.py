@@ -15,6 +15,7 @@ from Screens.Screen import Screen
 from Tools import Notifications
 import KTglob
 import time
+from six.moves import range
 
 class KiddyTimerSetup(ConfigListScreen, Screen, ProtectedScreen):
     skin = ("""
