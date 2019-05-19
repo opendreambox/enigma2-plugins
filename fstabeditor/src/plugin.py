@@ -40,6 +40,7 @@ from dirSelect import dirSelectDlg
 from enigma import RT_HALIGN_LEFT, RT_HALIGN_RIGHT, eListboxPythonMultiContent, gFont
 import os
 from skin import TemplatedListFonts, componentSizes
+from six.moves import range
 
 #global vars
 entryList = []
