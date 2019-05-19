@@ -1,3 +1,4 @@
+from __future__ import division
 from Plugins.SystemPlugins.Toolkit.TagStrip import strip, strip_readable
 from Components.Scanner import ScanFile
 
@@ -23,7 +24,7 @@ class RSSEntryWrapper(ElementWrapper):
 			for elem in self._element.findall(self._ns + 'enclosure'):
 				length = elem.get("length")
 				if length:
-					length = int(length) / 1048576
+					length = int(length) // 1048576
 				myl.append(ScanFile(
 					elem.get("url"),
 					mimetype = elem.get("type"),
@@ -52,7 +53,7 @@ class PEAEntryWrapper(ElementWrapper):
 				if elem.get("rel") == "enclosure":
 					length = elem.get("length")
 					if length:
-						length = int(length) / 1048576
+						length = int(length) // 1048576
 					myl.append(ScanFile(
 						elem.get("href"),
 						mimetype = elem.get("type"),
