@@ -5,6 +5,7 @@ from Tools.ISO639 import LanguageCodes
 from Tools.HardwareInfo import HardwareInfo
 import os
 import NavigationInstance
+from six.moves import range
 
 class AC3delay:
     def __init__(self):
