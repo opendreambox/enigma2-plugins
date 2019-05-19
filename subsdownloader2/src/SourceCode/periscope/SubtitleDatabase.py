@@ -20,6 +20,7 @@ import os, shutil, urllib2, sys, logging, traceback, zipfile
 import struct
 import socket # For timeout purposes
 import re
+from six.moves import map
 
 global tvshowRegex
 global tvshowRegex2 
@@ -38,10 +39,10 @@ class SubtitleDB(object):
     def __init__(self, langs, revertlangs = None):
         if langs:
             self.langs = langs
-            self.revertlangs = dict(map(lambda item: (item[1],item[0]), list(self.langs.items())))
+            self.revertlangs = dict([(item[1],item[0]) for item in list(self.langs.items())])
         if revertlangs:
             self.revertlangs = revertlangs
-            self.langs = dict(map(lambda item: (item[1],item[0]), list(self.revertlangs.items())))
+            self.langs = dict([(item[1],item[0]) for item in list(self.revertlangs.items())])
         #self.tvshowRegex = re.compile('(?P<show>.*)S(?P<season>[0-9]{2})E(?P<episode>[0-9]{2}).(?P<teams>.*)', re.IGNORECASE)
         #self.tvshowRegex2 = re.compile('(?P<show>.*).(?P<season>[0-9]{1,2})x(?P<episode>[0-9]{1,2}).(?P<teams>.*)', re.IGNORECASE)
         #self.movieRegex = re.compile('(?P<movie>.*)[\.|\[|\(| ]{1}(?P<year>(?:(?:19|20)[0-9]{2}))(?P<teams>.*)', re.IGNORECASE)
@@ -53,8 +54,8 @@ class SubtitleDB(object):
         ''' search subtitles with the given filename for the given languages'''
         try:
             subs = self.process(filename, langs)
-            map(lambda item: item.setdefault("plugin", self), subs)
-            map(lambda item: item.setdefault("filename", filename), subs)
+            list(map(lambda item: item.setdefault("plugin", self), subs))
+            list(map(lambda item: item.setdefault("filename", filename), subs))
             log.info("%s writing %s items to queue" % (self.__class__.__name__, len(subs)))
         except:
             log.exception("Error occured")

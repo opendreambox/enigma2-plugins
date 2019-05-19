@@ -78,6 +78,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE, DAMMIT.
 """
 from __future__ import generators
 import six
+from six.moves import map
 
 __author__ = "Leonard Richardson (leonardr@segfault.org)"
 __version__ = "3.2.0"
@@ -548,7 +549,7 @@ class Tag(PageElement):
                                    re.sub("&(#\d+|#x[0-9a-fA-F]+|\w+);",
                                           self._convertEntities,
                                           k_val[1]))
-        self.attrs = map(convert, self.attrs)
+        self.attrs = list(map(convert, self.attrs))
 
     def getString(self):
         if (len(self.contents) == 1
