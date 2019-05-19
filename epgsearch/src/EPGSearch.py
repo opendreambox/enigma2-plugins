@@ -251,14 +251,14 @@ class EPGSearch(EPGSelection):
 		
 		self.pluginList = [(p.name, p) for p in plugins.getPlugins(where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED])]
 		self.was_history_start = False
-		if self.searchkwargs and self.searchkwargs.has_key("startWithHistory") and self.searchkwargs["startWithHistory"]:
+		if self.searchkwargs and "startWithHistory" in self.searchkwargs and self.searchkwargs["startWithHistory"]:
 			self.onShown.append(self.__onShownStartHistory)
 
 	def onCreate(self):
 		self.setTitle(_("EPG Search"))
 		self.currSearchATList = None
 		
-		if self.searchkwargs and self.searchkwargs.has_key("AT"):
+		if self.searchkwargs and "AT" in self.searchkwargs:
 			#show matches from SearchFilter
 			l = self["list"]
 			l.recalcEntrySize()
