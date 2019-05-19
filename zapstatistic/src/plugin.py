@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 # Zap Statistic by AliAbdul
+from __future__ import print_function
 from Components.ActionMap import ActionMap
 from Components.config import config
 from Components.Label import Label
@@ -104,7 +105,7 @@ class ZapStatistic:
 					if ref and begin and end:
 						self.zapEntries.append(ZapEntry(ref, float(begin), float(end)))
 			except:
-				print "[ZapStatistic] Error while reading xml file"
+				print("[ZapStatistic] Error while reading xml file")
 
 	def saveZapEntries(self):
 		xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<zapstatistic>\n'
@@ -118,7 +119,7 @@ class ZapStatistic:
 			f.write(xml.encode("UTF-8"))
 			f.close()
 		except:
-			print "[ZapStatistic] Error while writing xml file"
+			print("[ZapStatistic] Error while writing xml file")
 
 	def handlePlayServiceCommand(self, ref):
 		self.handleStopServiceCommand()
