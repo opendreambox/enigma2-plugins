@@ -68,6 +68,7 @@ from twisted.protocols.basic import LineReceiver  # @UnresolvedImport
 import FritzOutlookCSV, FritzLDIF
 from nrzuname import ReverseLookupAndNotifier
 from . import _, __  # @UnresolvedImport # pylint: disable=W0611,F0401
+import six
 
 # import codecs
 # encode = lambda x : codecs.encode(x, "rot13")
@@ -1812,7 +1813,7 @@ class FritzCallPhonebook(object):
 						os.rename(phonebookFilenameOld, phonebookFilenameOld + ".bck")
 						fNew = open(phonebookFilenameOld, 'w')
 						# Beware: strings in phonebook.phonebook are utf-8!
-						for (number, name) in self.phonebook.iteritems():
+						for (number, name) in six.iteritems(self.phonebook):
 							# Beware: strings in PhoneBook.txt have to be in utf-8!
 							fNew.write(number + "#" + name.encode("utf-8"))
 						fNew.close()
@@ -2182,7 +2183,7 @@ class FritzCallPhonebook(object):
 			debug("[FritzDisplayPhonebook]")
 			self.sortlist = []
 			# Beware: strings in phonebook.phonebook are utf-8!
-			sortlistHelp = sorted((name.lower(), name, number) for (number, name) in phonebook.phonebook.iteritems())
+			sortlistHelp = sorted((name.lower(), name, number) for (number, name) in six.iteritems(phonebook.phonebook))
 			for (low, name, number) in sortlistHelp:
 				if number == "01234567890":
 					continue
