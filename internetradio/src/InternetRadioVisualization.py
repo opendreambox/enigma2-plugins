@@ -19,6 +19,7 @@
 # you have to keep MY license and inform me about the modifications by mail.
 #
 
+from __future__ import division
 from Components.ProgressBar import ProgressBar
 from Components.Pixmap import Pixmap
 from enigma import ePoint
@@ -72,7 +73,7 @@ class InternetRadioVisualization(object):
 			barvalues = self.bars.get(i,(0,0,0))
 			progressbarHeight = barvalues[0]
 			value = int(1.25 * (v[i] + 80))
-			currentvalue = int(value*progressbarHeight/100)
+			currentvalue = int(value*progressbarHeight//100)
 			oldvalue = self.pegelvalues.get(i,None)
 			if currentvalue <= 0:
 				hide = 1
