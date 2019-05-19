@@ -2,6 +2,7 @@ import re
 import hashlib
 import time
 import StringIO
+import six
 
 __version__ = '0.7'
 
@@ -108,7 +109,7 @@ class _GNTPBase(object):
 			self.info['encryptionAlgorithmID'] = None
 			self.info['keyHashAlgorithm'] = None
 			return
-		if not self.encryptAlgo in hash.keys():
+		if not self.encryptAlgo in list(hash.keys()):
 			raise UnsupportedError('INVALID HASH "%s"' % self.encryptAlgo)
 
 		hashfunction = hash.get(self.encryptAlgo)
@@ -257,12 +258,12 @@ class _GNTPBase(object):
 		buffer.writefmt(self._format_info())
 
 		#Headers
-		for k, v in self.headers.iteritems():
+		for k, v in six.iteritems(self.headers):
 			buffer.writefmt('%s: %s', k, v)
 		buffer.writefmt()
 
 		#Resources
-		for resource, data in self.resources.iteritems():
+		for resource, data in six.iteritems(self.resources):
 			buffer.writefmt('Identifier: %s', resource)
 			buffer.writefmt('Length: %d', len(data))
 			buffer.writefmt()
@@ -353,19 +354,19 @@ class GNTPRegister(_GNTPBase):
 		buffer.writefmt(self._format_info())
 
 		#Headers
-		for k, v in self.headers.iteritems():
+		for k, v in six.iteritems(self.headers):
 			buffer.writefmt('%s: %s', k, v)
 		buffer.writefmt()
 
 		#Notifications
 		if len(self.notifications) > 0:
 			for notice in self.notifications:
-				for k, v in notice.iteritems():
+				for k, v in six.iteritems(notice):
 					buffer.writefmt('%s: %s', k, v)
 				buffer.writefmt()
 
 		#Resources
-		for resource, data in self.resources.iteritems():
+		for resource, data in six.iteritems(self.resources):
 			buffer.writefmt('Identifier: %s', resource)
 			buffer.writefmt('Length: %d', len(data))
 			buffer.writefmt()
