@@ -8,6 +8,7 @@ $Date$
 $Modified: sreichholf
 '''
 
+from __future__ import print_function
 import re, sys, os
 import htmlentitydefs
 from xml.dom.minidom import parse
@@ -91,7 +92,7 @@ def out(number, caller):
 	print(name)
 
 def simpleout(number, caller): #@UnusedVariable # pylint: disable-msg=W0613
-	print caller
+	print(caller)
 
 try:
 	from Tools.Directories import resolveFilename, SCOPE_PLUGINS
