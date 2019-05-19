@@ -41,7 +41,7 @@ def hashFile(filename):
       for x in range(65536/bytesize):
         buffer = b[x*bytesize:x*bytesize+bytesize]
         (l2, l1)= struct.unpack(longlongformat, buffer) 
-        l_value = (long(l1) << 32) | long(l2) 
+        l_value = (int(l1) << 32) | int(l2) 
         hash += l_value 
         hash = hash & 0xFFFFFFFFFFFFFFFF #to remain as 64bit number
       
@@ -50,7 +50,7 @@ def hashFile(filename):
       for x in range(65536/bytesize):
         buffer = b[x*bytesize:x*bytesize+bytesize]
         (l2, l1) = struct.unpack(longlongformat, buffer)
-        l_value = (long(l1) << 32) | long(l2)
+        l_value = (int(l1) << 32) | int(l2)
         hash += l_value
         hash = hash & 0xFFFFFFFFFFFFFFFF
       
