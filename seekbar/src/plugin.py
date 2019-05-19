@@ -16,6 +16,7 @@ from Screens.Screen import Screen
 from Tools.Directories import fileExists, resolveFilename, SCOPE_LANGUAGE, SCOPE_PLUGINS
 from Tools.KeyBindings import addKeyBinding
 import  keymapparser
+from six.moves import map
 
 ##############################################
 
