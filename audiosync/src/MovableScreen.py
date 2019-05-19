@@ -1,3 +1,4 @@
+from __future__ import division
 from HelpableNumberActionMap import HelpableNumberActionMap
 from Components.config import config
 from enigma import ePoint, eTimer, getDesktop
@@ -49,7 +50,7 @@ class MovableScreen():
 
     def movePositionTimer(self):
         if self.configRoot.position_x.value == 0 and self.configRoot.position_y.value == 0:
-            self.configRoot.position_x.value = (self.desktopWidth - self.screenSize_x)/2
+            self.configRoot.position_x.value = (self.desktopWidth - self.screenSize_x)//2
             self.configRoot.position_y.value = self.moveMinMargin
         self.instance.move(ePoint(self.configRoot.position_x.value, self.configRoot.position_y.value))
             
@@ -92,7 +93,7 @@ class MovableScreen():
         if number in (1,4,7):
             iPosX = self.moveMinMargin
         elif number in (2,5,8,0):
-            iPosX = (self.desktopWidth - self.screenSize_x)/2
+            iPosX = (self.desktopWidth - self.screenSize_x)//2
         else:
             iPosX = self.desktopWidth - self.moveMinMargin - self.screenSize_x
         
@@ -102,7 +103,7 @@ class MovableScreen():
         if number in (0,1,2,3):
             iPosY = self.moveMinMargin
         elif number in (4,5,6):
-            iPosY = (self.desktopHeight - self.screenSize_y)/2
+            iPosY = (self.desktopHeight - self.screenSize_y)//2
         elif number in (7,8,9):    
             iPosY = self.desktopHeight - self.moveMinMargin - self.screenSize_y
             
