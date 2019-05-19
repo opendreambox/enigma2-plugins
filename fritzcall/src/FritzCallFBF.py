@@ -2112,8 +2112,8 @@ class FritzCallFBF_05_50(object):
 
 		# 0: direct; 1: date; 2: Name; 3: Nummer; 4: Nebenstelle; 5: Eigene Rufnumme; 6: Dauer
 		calls = csv.reader(StringIO.StringIO(csvString), delimiter = ';')
-		calls.next()  # skip sep
-		calls.next()  # skip header line
+		next(calls)  # skip sep
+		next(calls)  # skip header line
 		for call in calls:
 			if len(call) != 7:
 				self.warn("skip %s len: %s", repr(call), str(len(call)))
@@ -2880,8 +2880,8 @@ class FritzCallFBF_06_35(object):
 
 		# 0: direct; 1: date; 2: Name; 3: Nummer; 4: Nebenstelle; 5: Eigene Rufnumme; 6: Dauer
 		calls = csv.reader(StringIO.StringIO(csvString), delimiter = ';')
-		calls.next()  # skip sep
-		calls.next()  # skip header line
+		next(calls)  # skip sep
+		next(calls)  # skip header line
 
 		for call in calls:
 			if len(call) != 7:
