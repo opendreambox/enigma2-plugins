@@ -561,7 +561,7 @@ class CheckMail:
 			debug('[CheckMail] %s: _filterNewUnseen: init' %(self._name))
 			# Notifications.AddNotification(MessageBox, str(len(newUnseenList)) + ' ' + _("unread messages in mailbox %s") %self._name, type=MessageBox.TYPE_INFO, timeout=config.plugins.emailimap.timeout.value)
 		else:
-			newMessages = filter(lambda x: x not in self._unseenList, newUnseenList)
+			newMessages = [x for x in newUnseenList if x not in self._unseenList]
 			if newMessages:
 				debug("[CheckMail] %s: _filterNewUnseen: new message(s): %s" %(self._name, repr(newMessages)))
 				# construct MessageSet from list of message numbers
