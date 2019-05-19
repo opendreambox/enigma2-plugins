@@ -22,7 +22,7 @@ $Id: plugin.py 1553 2019-04-25 07:36:05Z michael $
 
 from __future__ import division
 import re, time, os, traceback, json
-from itertools import cycle, izip
+from itertools import cycle
 import base64
 from logging import NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL
 import logging
@@ -69,6 +69,7 @@ import FritzOutlookCSV, FritzLDIF
 from nrzuname import ReverseLookupAndNotifier
 from . import _, __  # @UnresolvedImport # pylint: disable=W0611,F0401
 import six
+from six.moves import zip
 
 # import codecs
 # encode = lambda x : codecs.encode(x, "rot13")
