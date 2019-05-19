@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from re import sub, finditer
+import six
 
 try:
 	import htmlentitydefs
-	iteritems = lambda d: d.iteritems()
+	iteritems = lambda d: six.iteritems(d)
 except ImportError as ie:
 	from html import entities as htmlentitydefs
-	iteritems = lambda d: d.items()
+	iteritems = lambda d: list(d.items())
 	unichr = chr
 
 def strip_readable(html):
