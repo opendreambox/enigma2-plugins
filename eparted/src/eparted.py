@@ -18,6 +18,7 @@ from Tools.BoundFunction import boundFunction
 from Tools.LoadPixmap import LoadPixmap
 
 from Tools.Directories import resolveFilename, SCOPE_SKIN
+from six.moves import range
 SkinDefaultPath = resolveFilename(SCOPE_SKIN, "skin_default/icons/")
 
 from Components.ConfigList import ConfigListScreen
