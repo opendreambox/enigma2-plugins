@@ -11,6 +11,7 @@ from Screens.ChoiceBox import ChoiceBox
 from Screens.HelpMenu import HelpableScreen
 from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
+import six
 
 class AC3LipSync(Screen, HelpableScreen, MovableScreen):
 
@@ -241,7 +242,7 @@ class AC3SetCustomValue:
 
     def getKeyList(self):
         keyList = []
-        for i,iValue in self.keyStep.iteritems():
+        for i,iValue in six.iteritems(self.keyStep):
             if i != "0":
                 keyList.append((_("Key %(key)s (current value: %(value)i ms)") %dict(key=i, value=iValue),i))
         return keyList
