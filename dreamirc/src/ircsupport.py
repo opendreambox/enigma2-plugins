@@ -4,6 +4,7 @@
 
 """IRC support for Instance Messenger."""
 
+from __future__ import print_function
 import string
 
 from protocols import irc
@@ -44,7 +45,7 @@ class IRCPerson(e2support.AbstractPerson):
 
     def bye(self):
         if self.account.client is None:
-            print "not connected"
+            print("not connected")
         else:
         	  self.account.client.quit("user logged off")    	  
 
@@ -54,7 +55,7 @@ class IRCGroup(e2support.AbstractGroup):
     implements(interfaces.IGroup)
 
     def imgroup_testAction(self):
-        print 'action test!'
+        print('action test!')
 
     def imtarget_kick(self, target):
         if self.account.client is None:
@@ -89,7 +90,7 @@ class IRCGroup(e2support.AbstractGroup):
         
     def bye(self):
         if self.account.client is None:
-            print "not connected"
+            print("not connected")
         else:
         	self.account.client.quit("user logged off")    	  
 
@@ -115,7 +116,7 @@ class IRCProto(e2support.AbstractClientMixin, irc.IRCClient):
     def connectionMade(self):
         # XXX: Why do I duplicate code in IRCClient.register?
         try:
-            print 'connection made on irc service!?', self
+            print('connection made on irc service!?', self)
             self.pipe.debug("connection made on irc service!?")
             if self.account.password:
                 self.sendLine("PASS :%s" % self.account.password)
