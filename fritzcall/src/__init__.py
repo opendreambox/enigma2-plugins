@@ -12,6 +12,7 @@ from __future__ import division
 from Components.config import config #@UnresolvedImport
 from enigma import eBackgroundFileEraser
 from logging import NOTSET
+from six.moves import range
 
 # scramble text
 def __(text, front=True):

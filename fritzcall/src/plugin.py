@@ -70,6 +70,7 @@ from nrzuname import ReverseLookupAndNotifier
 from . import __  # @UnresolvedImport # pylint: disable=W0611,F0401
 import six
 from six.moves import zip
+from six.moves import range
 
 # import codecs
 # encode = lambda x : codecs.encode(x, "rot13")
@@ -236,7 +237,7 @@ def resolveNumberWithAvon(number, countrycode):
 		return ""
 
 	# debug('normNumer: ' + normNumber)
-	for i in reversed(range(min(10, len(number)))):
+	for i in reversed(list(range(min(10, len(number))))):
 		if normNumber[:i] in avon:
 			return '[' + avon[normNumber[:i]].strip() + ']'
 	return ""
