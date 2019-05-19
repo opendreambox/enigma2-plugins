@@ -49,7 +49,7 @@ def eject(dev):
 		ioctl_flag = int(0x5309)
 		ioctl(cd.fileno(), ioctl_flag)
 		cd.close()
-	except IOError, err:
+	except IOError as err:
 		print err
 
 #################################################
