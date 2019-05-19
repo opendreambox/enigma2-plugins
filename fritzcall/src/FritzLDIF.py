@@ -9,6 +9,7 @@ $Id: FritzLDIF.py 1290 2016-05-01 16:09:29Z michael $
 # needs python-ldap for ldif
 #
 
+from __future__ import print_function
 import ldif, re
 try:
 	from . import _, normalizePhoneNumber #@UnresolvedImport # pylint: disable-msg=F0401
@@ -38,7 +39,7 @@ logger = logging.getLogger("[FritzCall] LDIF")
 debug = logger.debug
 
 def out(number, name):
-	print number + '#' + name
+	print(number + '#' + name)
 
 class FindNumber(ldif.LDIFParser):
 	def __init__(self, number, inp, outFun):
@@ -188,7 +189,7 @@ class ReadNumbers(ldif.LDIFParser):
 					self.outFun(no, nameHM)
 
 def lookedUp(number, name):
-	print number + ' ' + name
+	print(number + ' ' + name)
 
 if __name__ == '__main__':
 	import os, sys
