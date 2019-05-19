@@ -38,6 +38,7 @@ from nrzuname import html2unicode
 from FritzConnection import FritzConnection
 from twisted.python.failure import Failure
 from six.moves import map
+from six.moves import range
 
 FBF_boxInfo = 0
 FBF_upTime = 1

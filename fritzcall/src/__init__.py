@@ -15,6 +15,7 @@ from Tools.Directories import resolveFilename, SCOPE_LANGUAGE, SCOPE_PLUGINS, SC
 import gettext, os
 from enigma import eBackgroundFileEraser
 from logging import NOTSET
+from six.moves import range
 
 lang = language.getLanguage()
 os.environ["LANGUAGE"] = lang[:2]
