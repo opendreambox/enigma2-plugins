@@ -32,6 +32,7 @@ from Screens.Screen import Screen
 from enigma import iPlayableService, iServiceInformation, eServiceCenter, eServiceReference, eDBoxLCD, getDesktop
 from ServiceReference import ServiceReference
 from os.path import basename as os_basename, exists
+import six
 
 proc_stb_fb_3d_support = exists("/proc/stb/fb/primary/3d")
 
@@ -42,7 +43,7 @@ THREE_D_TOP_BOTTOM = 2
 modes = {	THREE_D_OFF: "off",
 			THREE_D_SIDE_BY_SIDE: "sbs",
 			THREE_D_TOP_BOTTOM: "tab" }
-reversemodes = dict((value, key) for key, value in modes.iteritems())
+reversemodes = dict((value, key) for key, value in six.iteritems(modes))
 
 def setZOffset(configElement):
 	if proc_stb_fb_3d_support:
@@ -84,7 +85,7 @@ config.plugins.threed.zoffset.addNotifier(setZOffset)
 config.plugins.threed.autothreed = ConfigSelection(default="0", choices = [("0", _("off")),("1", _("on with side by side")),("2", _("on with top/bottom"))])
 
 def switchmode(mode):
-	if mode in modes.keys():
+	if mode in list(modes.keys()):
 		print "[3D Settings] switching to mode ", mode
 		if proc_stb_fb_3d_support:
 			open("/proc/stb/fb/primary/3d", "w").write(modes[mode])
