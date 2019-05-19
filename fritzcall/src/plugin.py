@@ -77,9 +77,9 @@ from six.moves import zip
 
 # decode = encode = lambda x : ''.join(chr(ord(c)^ord(k)) for c,k in izip(x, cycle('secret key')))
 def encode(x):
-	return base64.encodestring(''.join(chr(ord(c) ^ ord(k)) for c, k in izip(x, cycle('secret key')))).strip()
+	return base64.encodestring(''.join(chr(ord(c) ^ ord(k)) for c, k in zip(x, cycle('secret key')))).strip()
 def decode(x):
-	return ''.join(chr(ord(c) ^ ord(k)) for c, k in izip(base64.decodestring(x), cycle('secret key')))
+	return ''.join(chr(ord(c) ^ ord(k)) for c, k in zip(base64.decodestring(x), cycle('secret key')))
 
 DESKTOP_WIDTH = getDesktop(0).size().width()
 DESKTOP_HEIGHT = getDesktop(0).size().height()
