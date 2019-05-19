@@ -1,3 +1,4 @@
+from __future__ import print_function
 from enigma import ePixmap, getDesktop, eSize
 from twisted.web import resource, http, http_headers, server
 
@@ -45,7 +46,7 @@ class ScreenshotResource(resource.Resource):
 				try:
 					x, y  = [int(val) for val in value[0].split("x")]
 				except Exception as e:
-					print e
+					print(e)
 					Log.w("%s is not a valid value for video size. Please use something in the style of '1280x720'" %value)
 			elif key == 'display':
 				display = True

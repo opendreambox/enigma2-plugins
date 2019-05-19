@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Components.Sources.Source import Source
 from Screens.MessageBox import MessageBox
 from os import unlink
@@ -27,7 +28,7 @@ class Message(Source):
 			self.res = self.getYesNoAnswer(cmd)
 
 	def printMessage(self, param):
-		print "printMessage"
+		print("printMessage")
 
 		if self.cmd['text'] == "" or self.cmd['text'] is None:
 			return ( False, _("No Messagetext given") )
@@ -68,19 +69,19 @@ class Message(Source):
 		return ( True, _("Message sent successfully!") )
 
 	def yesNoAnswer(self, confirmed):
-		print "yesNoAnswer", confirmed
+		print("yesNoAnswer", confirmed)
 		#self.session.messageboxanswer = confirmed
 
 		with open(self.yesnoFile, 'w') as f:
 			f.write(['no', 'yes'][confirmed])
 
 	def getYesNoAnswer(self, param):
-		print "getYesNoAnswer"#,self.session.messageboxanswer
+		print("getYesNoAnswer")#,self.session.messageboxanswer
 		if isfile(self.yesnoFile) == True:
 			with open(self.yesnoFile, 'r') as f:
 				data = f.read()
 			unlink(self.yesnoFile)
-			print "Answer: (%s)" % data
+			print("Answer: (%s)" % data)
 			if data == "yes":
 				return ( True, "Answer is YES!" )
 			else:

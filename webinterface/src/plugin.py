@@ -1,3 +1,4 @@
+from __future__ import print_function
 Version = '$Header$';
 
 from enigma import eConsoleAppContainer
@@ -84,7 +85,7 @@ class Closer:
 	def stop(self):
 		global running_defered
 		for d in running_defered:
-			print "[Webinterface] stopping interface on ", d.interface, " with port", d.port
+			print("[Webinterface] stopping interface on ", d.interface, " with port", d.port)
 			x = d.stopListening()
 
 			try:
@@ -109,7 +110,7 @@ class Closer:
 def installCertificates(session):
 	if not os_exists(CERT_FILE) \
 			or not os_exists(KEY_FILE):
-		print "[Webinterface].installCertificates :: Generating SSL key pair and CACert"
+		print("[Webinterface].installCertificates :: Generating SSL key pair and CACert")
 		# create a key pair
 		k = crypto.PKey()
 		k.generate_key(crypto.TYPE_RSA, 2048)
@@ -127,11 +128,11 @@ def installCertificates(session):
 		cert.set_notAfter("20301231235900Z")
 		cert.set_issuer(cert.get_subject())
 		cert.set_pubkey(k)
-		print "[Webinterface].installCertificates :: Signing SSL key pair with new CACert"
+		print("[Webinterface].installCertificates :: Signing SSL key pair with new CACert")
 		cert.sign(k, 'sha256')
 
 		try:
-			print "[Webinterface].installCertificates ::  Installing newly generated certificate and key pair"
+			print("[Webinterface].installCertificates ::  Installing newly generated certificate and key pair")
 			saveFile(CERT_FILE, crypto.dump_certificate(crypto.FILETYPE_PEM, cert))
 			saveFile(KEY_FILE, crypto.dump_privatekey(crypto.FILETYPE_PEM, k))
 		except IOError as e:
@@ -175,7 +176,7 @@ def startWebserver(session):
 	errors = ""
 
 	if config.plugins.Webinterface.enabled.value is not True:
-		print "[Webinterface] is disabled!"
+		print("[Webinterface] is disabled!")
 
 	else:
 		# IF SSL is enabled we need to check for the certs first
@@ -258,9 +259,9 @@ def startServerInstance(session, port, useauth=False, usessl=False, ipaddress=":
 	result = False
 
 	def logFail(addr, exception=None):
-		print "[Webinterface] FAILED to listen on %s:%i auth=%s ssl=%s" % (addr, port, useauth, usessl)
+		print("[Webinterface] FAILED to listen on %s:%i auth=%s ssl=%s" % (addr, port, useauth, usessl))
 		if exception:
-			print exception
+			print(exception)
 
 	if usessl:
 		ctx = ChainedOpenSSLContextFactory(KEY_FILE, CERT_FILE)
@@ -292,7 +293,7 @@ def startServerInstance(session, port, useauth=False, usessl=False, ipaddress=":
 			except CannotListenError as e:
 				logFail(ipaddress2, e)
 	
-	print "[Webinterface] started on %s:%i auth=%s ssl=%s" % (ipaddress, port, useauth, usessl)
+	print("[Webinterface] started on %s:%i auth=%s ssl=%s" % (ipaddress, port, useauth, usessl))
 	return result
 
 	#except Exception, e:
@@ -349,7 +350,7 @@ class HTTPRootResource(resource.Resource):
 		'/web/stream.m3u', '/web/stream', '/web/streamcurrent.m3u', '/web/strings.js', '/web/ts.m3u']
 
 	def __init__(self, res):
-		print "[HTTPRootResource}.__init__"
+		print("[HTTPRootResource}.__init__")
 		resource.Resource.__init__(self)
 		self.resource = res
 		self.sessionInvalidResource = resource.ErrorPage(http.PRECONDITION_FAILED, "Precondition failed!", "sessionid is missing, invalid or expired!")
@@ -365,7 +366,7 @@ class HTTPRootResource(resource.Resource):
 		if session is None or session.expired():
 			session = SimpleSession()
 			key = self.getClientToken(request)
-			print "[HTTPRootResource].isSessionValid :: created session with id '%s' for client with token '%s'" %(session.id, key)
+			print("[HTTPRootResource].isSessionValid :: created session with id '%s' for client with token '%s'" %(session.id, key))
 			self._sessions[ key ] = session
 
 		request.enigma2_session = session
@@ -402,7 +403,7 @@ class HTTPRootResource(resource.Resource):
 		if self.isSessionValid(request):
 			return self.resource.getChildWithDefault(path, request)
 		else:
-			print "[Webinterface.HTTPRootResource.render] !!! session invalid !!!"
+			print("[Webinterface.HTTPRootResource.render] !!! session invalid !!!")
 			return self.sessionInvalidResource
 
 #===============================================================================
@@ -493,7 +494,7 @@ class HTTPAuthResource(HTTPRootResource):
 		if self.isAuthenticated(request) is True:
 			return HTTPRootResource.render(self, request)
 		else:
-			print "[Webinterface.HTTPAuthResource.render] !!! unauthorized !!!"
+			print("[Webinterface.HTTPAuthResource.render] !!! unauthorized !!!")
 			return self.unauthorized(request).render(request)
 
 #===============================================================================
@@ -503,7 +504,7 @@ class HTTPAuthResource(HTTPRootResource):
 		if self.isAuthenticated(request) is True:
 			return HTTPRootResource.getChildWithDefault(self, path, request)
 		else:
-			print "[Webinterface.HTTPAuthResource.getChildWithDefault] !!! unauthorized !!!"
+			print("[Webinterface.HTTPAuthResource.getChildWithDefault] !!! unauthorized !!!")
 			return self.unauthorized(request)
 
 from auth import check_passwd
@@ -526,11 +527,11 @@ def registerBonjourService(protocol, port):
 
 		service = bonjour.buildService(protocol, port)
 		bonjour.registerService(service, True)
-		print "[WebInterface.registerBonjourService] Service for protocol '%s' with port '%i' registered!" %(protocol, port)
+		print("[WebInterface.registerBonjourService] Service for protocol '%s' with port '%i' registered!" %(protocol, port))
 		return True
 
 	except ImportError as e:
-		print "[WebInterface.registerBonjourService] %s" %e
+		print("[WebInterface.registerBonjourService] %s" %e)
 		return False
 
 def unregisterBonjourService(protocol):
@@ -538,11 +539,11 @@ def unregisterBonjourService(protocol):
 		from Plugins.Extensions.Bonjour.Bonjour import bonjour
 
 		bonjour.unregisterService(protocol)
-		print "[WebInterface.unregisterBonjourService] Service for protocol '%s' unregistered!" %(protocol)
+		print("[WebInterface.unregisterBonjourService] Service for protocol '%s' unregistered!" %(protocol))
 		return True
 
 	except ImportError as e:
-		print "[WebInterface.unregisterBonjourService] %s" %e
+		print("[WebInterface.unregisterBonjourService] %s" %e)
 		return False
 
 def checkBonjour():
@@ -576,11 +577,11 @@ def menu_config(menuid, **kwargs):
 
 def configCB(result, session):
 	if result:
-		print "[WebIf] config changed"
+		print("[WebIf] config changed")
 		restartWebserver(session)
 		checkBonjour()
 	else:
-		print "[WebIf] config not changed"
+		print("[WebIf] config not changed")
 
 def Plugins(**kwargs):
 	p = PluginDescriptor(where=[PluginDescriptor.WHERE_SESSIONSTART], fnc=sessionstart)

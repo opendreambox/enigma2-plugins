@@ -1,3 +1,4 @@
+from __future__ import print_function
 from enigma import eServiceReference, eServiceCenter, eEPGCache
 from Components.StreamServerControl import streamServerControl
 from Plugins.Extensions.WebInterface.auth import check_passwd
@@ -157,7 +158,7 @@ class DreamboxServerProtocol(WebSocketServerProtocol):
 		self.sendMessage(msg)
 
 	def onClose(self, wasClean, code, reason):
-		print "WebSocket connection closed: {0}".format(code)
+		print("WebSocket connection closed: {0}".format(code))
 
 	def validate(self, msg, validator):
 		try:

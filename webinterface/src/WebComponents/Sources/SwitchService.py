@@ -1,3 +1,4 @@
+from __future__ import print_function
 from enigma import eServiceReference, iPlayableServicePtr
 from Components.Sources.Source import Source
 from Components.Converter import ServiceName
@@ -50,7 +51,7 @@ class SwitchService(Source):
 		self.session.nav.playService(ref)
 
 	def switchService(self, cmd):
-		print "[SwitchService] ref=%s, root=%s" %(cmd["sRef"], cmd["root"])
+		print("[SwitchService] ref=%s, root=%s" %(cmd["sRef"], cmd["root"]))
 		root = cmd["root"]
 		if config.plugins.Webinterface.allowzapping.value:
 			from Screens.Standby import inStandby

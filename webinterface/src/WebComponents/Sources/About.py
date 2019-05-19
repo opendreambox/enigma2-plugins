@@ -1,4 +1,5 @@
 # Parts of Code and idea by Homey
+from __future__ import print_function
 from Components.Sources.Source import Source
 from Components.Network import iNetworkInfo
 import six
@@ -16,7 +17,7 @@ class About(Source):
 		ifaces = iNetworkInfo.getConfiguredInterfaces()
 		for key in six.iterkeys(ifaces):
 			iface = ifaces[key]
-			print "[WebComponents.About] iface: %s" % iface
+			print("[WebComponents.About] iface: %s" % iface)
 			l = (
 				iface.ethernet.mac,
 				iface.ipv4.method,
@@ -26,7 +27,7 @@ class About(Source):
 			)
 			break
 		else:
-			print "[WebComponents.About] no network iface configured!"
+			print("[WebComponents.About] no network iface configured!")
 			l = (
 				"N/A",
 				"N/A",

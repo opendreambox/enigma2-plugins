@@ -1,4 +1,5 @@
 from __future__ import division
+from __future__ import print_function
 from enigma import eServiceReference, iServiceInformation, eServiceCenter
 from Components.Sources.Source import Source
 from Components.config import config
@@ -220,7 +221,7 @@ class Movie(Source):
 		streamServerSeekInstalled = "False"
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/StreamServerSeek/plugin.pyo"):
 			streamServerSeekInstalled = "True"
-		print "streamServerSeekInstalled", streamServerSeekInstalled
+		print("streamServerSeekInstalled", streamServerSeekInstalled)
 		return streamServerSeekInstalled
 
 	def getResult(self):
