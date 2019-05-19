@@ -16,7 +16,7 @@ from threading import Thread
 from ThreadQueue import ThreadQueue
 
 #import urllib
-from urllib import FancyURLopener
+from six.moves.urllib.request import FancyURLopener
 import json
 
 class MyOpener(FancyURLopener):

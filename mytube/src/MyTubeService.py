@@ -4,7 +4,7 @@ from Tools.Log import Log
 
 from socket import gaierror, error
 import os, httplib
-from urllib import quote
+from six.moves.urllib.parse import quote
 from httplib import HTTPConnection, CannotSendRequest, BadStatusLine
 
 HTTPConnection.debuglevel = 1
