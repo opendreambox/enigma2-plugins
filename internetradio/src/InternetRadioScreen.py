@@ -28,7 +28,7 @@ from Components.config import config
 from enigma import getDesktop, eTimer, eConsoleAppContainer, eActionMap, eMusicPlayer
 from Screens.MessageBox import MessageBox
 from Components.Sources.StaticText import StaticText
-from urllib import quote
+from six.moves.urllib.parse import quote
 from twisted.web.client import downloadPage
 from Screens.ChoiceBox import ChoiceBox
 from Screens.VirtualKeyBoard import VirtualKeyBoard
