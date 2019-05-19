@@ -116,7 +116,7 @@ class OPKGUpdateNotification(ControllerBase):
 					if line == '':
 						continue
 					updates += line + "\r\n"
-			except Exception, e:
+			except Exception as e:
 				updates += "\r\n\r\nException:\r\n" + str(e)
 				print "PushService except: ",str(e)
 

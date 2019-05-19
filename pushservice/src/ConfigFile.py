@@ -63,7 +63,7 @@ class ConfigFile(object):
 		# Parse XML
 		try:
 			etree = parse(path).getroot()
-		except Exception, e:
+		except Exception as e:
 			print _("PushService Exception in readXML: ") + str(e)
 			etree = None
 			mtime = -1
@@ -84,7 +84,7 @@ class ConfigFile(object):
 			f = open(path, 'w')
 			if data:
 				f.writelines(data)
-		except Exception, e:
+		except Exception as e:
 			print _("PushService Exception in writeXML: ") + str(e)
 		finally:
 			if f is not None:

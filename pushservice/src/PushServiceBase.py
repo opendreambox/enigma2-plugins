@@ -278,7 +278,7 @@ class PushServiceBase(Modules, ConfigFile):
 						ret = controller.run(
 								boundFunction(self.runcallback, controller),
 								boundFunction(self.runerrback, controller) )
-					except Exception, e:
+					except Exception as e:
 						print _("PushService controller run() exception")
 						exc_type, exc_value, exc_traceback = sys.exc_info()
 						traceback.print_exception(exc_type, exc_value, exc_traceback, file=sys.stdout)
@@ -336,7 +336,7 @@ class PushServiceBase(Modules, ConfigFile):
 								boundFunction(self.pusherrback, service, controller),
 								controller.getName(),
 								subject, text, attachments )
-					except Exception, e:
+					except Exception as e:
 						print _("PushService Service push() exception")
 						exc_type, exc_value, exc_traceback = sys.exc_info()
 						traceback.print_exception(exc_type, exc_value, exc_traceback, file=sys.stdout)
