@@ -20,6 +20,7 @@
 #  distributed other than under the conditions noted above.
 #
 #PYTHON IMPORTS
+from __future__ import division
 from datetime import timedelta as dt_timedelta, date as dt_date
 from time import localtime, time
 
@@ -114,11 +115,11 @@ class ResizeScrollLabel(ScrollLabel):
 		lineheight=fontRenderClass.getInstance().getLineHeight( self.long_text.getFont() )
 		if not lineheight:
 			lineheight = 30 # assume a random lineheight if nothing is visible
-		lines = (int)(s.height() / lineheight)
+		lines = (int)(s.height() // lineheight)
 		self.pageHeight = (int)(lines * lineheight)
-		self.instance.resize(eSize(s.width(), self.pageHeight+(int)(lineheight/6)))
+		self.instance.resize(eSize(s.width(), self.pageHeight+(int)(lineheight//6)))
 		self.scrollbar.move(ePoint(s.width()-20,0))
-		self.scrollbar.resize(eSize(20,self.pageHeight+(int)(lineheight/6)))
+		self.scrollbar.resize(eSize(20,self.pageHeight+(int)(lineheight//6)))
 		self.long_text.resize(eSize(s.width()-30, self.pageHeight*16))
 		self.setText(self.message)
 
