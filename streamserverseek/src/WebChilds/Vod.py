@@ -15,6 +15,7 @@ import time
 from io import BytesIO as StringIO
 
 from ctypes import *
+from six.moves import range
 
 ### todo: rewrite segment in same conn
 
