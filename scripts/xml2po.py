@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 import sys
 import os
 import string
@@ -75,20 +76,20 @@ for arg in sys.argv[1:]:
 	for (k,c,f) in attrlist:
 		if c:
 			for l in c.split("\n"):
-				print "#. ", l
+				print("#. ", l)
 		if arg == f:
-			print "#: %s" % (arg)
+			print("#: %s" % (arg))
 		else:
-			print "#: %s" % (arg + f)
+			print("#: %s" % (arg + f))
 		msgid = saxutils.escape(k, {'"': '&quot;'}).encode("utf-8")
 		#print type(msgid), repr(msgid)
 		string.replace(msgid, "\\n", "\"\n\"")
 		msgstr = ""
 		if msgid.strip() != "":
 			if msgid.find("\&quot;") != -1:
-				print "msgid \"%s\"" % (msgid.replace('\&quot;', '\\"'))
+				print("msgid \"%s\"" % (msgid.replace('\&quot;', '\\"')))
 			else:
-				print "msgid \"%s\"" % (msgid)
-			print "msgstr \"%s\"\n" % (msgstr)
+				print("msgid \"%s\"" % (msgid))
+			print("msgstr \"%s\"\n" % (msgstr))
 
 	attrlist = set()
