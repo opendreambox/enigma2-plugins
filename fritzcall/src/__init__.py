@@ -8,6 +8,7 @@ $Revision: 1454 $
 $Date: 2017-06-11 15:24:13 +0200 (Sun, 11 Jun 2017) $
 '''
 
+from __future__ import division
 from Components.config import config #@UnresolvedImport
 from enigma import eBackgroundFileEraser
 from logging import NOTSET
@@ -24,7 +25,7 @@ def __(text, front=True):
 	#	return '.....' 
 	#===========================================================================
 	out =""
-	for i in range(len(text)/2):
+	for i in range(len(text)//2):
 		out = out + text[i*2] + '.'
 	return out
 
