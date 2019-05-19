@@ -374,9 +374,9 @@ class DreamExplorerII(Screen):
 				linkname = self["filelist"].getFilename().split("/")[-2]
 				self.session.openWithCallback(self.callbackCopyMoveManager, SymlinkScreen, target, linkname)				
 		elif answer == "CHMOD644":
-			chmod(self["filelist"].getCurrentDirectory() + self["filelist"].getFilename(), 0644)
+			chmod(self["filelist"].getCurrentDirectory() + self["filelist"].getFilename(), 0o644)
 		elif answer == "CHMOD755":
-			chmod(self["filelist"].getCurrentDirectory() + self["filelist"].getFilename(), 0755)
+			chmod(self["filelist"].getCurrentDirectory() + self["filelist"].getFilename(), 0o755)
 
 	def up(self):
 		self["filelist"].up()
