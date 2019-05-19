@@ -80,6 +80,7 @@ from __future__ import generators
 from __future__ import print_function
 import six
 from six.moves import map
+from six import unichr
 
 __author__ = "Leonard Richardson (leonardr@segfault.org)"
 __version__ = "3.2.0"
