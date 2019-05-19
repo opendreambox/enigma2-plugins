@@ -18,6 +18,7 @@
 #  distributed other than under the conditions noted above.
 #
 
+from __future__ import print_function
 from Components.ActionMap import ActionMap
 from Components.config import config, ConfigSubsection, ConfigYesNo, getConfigListEntry,\
 	ConfigSlider, ConfigSelection
@@ -61,10 +62,10 @@ def getmode():
 def toggleDisplay(configElement):
 	from Components.Lcd import LCD
 	if configElement.value == False: # turn display on
-		print "[3D Settings] turning display on"
+		print("[3D Settings] turning display on")
 		LCD().setBright(config.lcd.bright.value)
 	elif (config.plugins.threed.disableDisplay.value == True) and (getmode() != THREE_D_OFF): # turn display off
-		print "[3D Settings] turning display off"
+		print("[3D Settings] turning display off")
 		LCD().setBright(0)
 	disp = eDBoxLCD.getInstance()
 	if disp: # display found
@@ -86,7 +87,7 @@ config.plugins.threed.autothreed = ConfigSelection(default="0", choices = [("0",
 
 def switchmode(mode):
 	if mode in list(modes.keys()):
-		print "[3D Settings] switching to mode ", mode
+		print("[3D Settings] switching to mode ", mode)
 		if proc_stb_fb_3d_support:
 			open("/proc/stb/fb/primary/3d", "w").write(modes[mode])
 		else:
