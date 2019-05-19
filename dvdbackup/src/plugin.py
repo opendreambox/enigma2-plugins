@@ -3,6 +3,7 @@
 ## using the great open source dvdbackup by Olaf Beck
 ##
 from __future__ import division
+from __future__ import print_function
 from Components.ActionMap import ActionMap
 from Components.config import config, ConfigSubsection, ConfigText, ConfigYesNo, getConfigListEntry
 from Components.ConfigList import ConfigListScreen
@@ -51,7 +52,7 @@ def eject(dev):
 		ioctl(cd.fileno(), ioctl_flag)
 		cd.close()
 	except IOError as err:
-		print err
+		print(err)
 
 #################################################
 
@@ -123,13 +124,13 @@ class DVDBackup:
 				self.working = False
 		else:
 			message(_("Could not read the DVD informations!"))
-			print "[DVD Backup]",result
+			print("[DVD Backup]",result)
 			self.working = False
 
 	def dvdbackupFinished(self, result, retval, extra_args):
 		if retval != 0:
 			message(_("Error while backup of DVD!"))
-			print "[DVD Backup]", retval, result
+			print("[DVD Backup]", retval, result)
 			self.working = False
 		else:
 			if config.plugins.DVDBackup.create_iso.value:
@@ -158,7 +159,7 @@ class DVDBackup:
 	def genisoimageCallback(self, result, retval, extra_args):
 		if retval != 0:
 			message(_("Error while backup of DVD!"))
-			print "[DVD Backup]", result
+			print("[DVD Backup]", result)
 			self.working = False
 		else:
 			self.genisoimage.progress = 100
