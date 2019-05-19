@@ -140,14 +140,15 @@ from __future__ import print_function
 import re, string, time, operator
 
 from types import *
+import six
 
 # --------------------------------------------------------------------
 # Internal stuff
 
 try:
-    unicode
+    six.text_type
 except NameError:
-    unicode = None # unicode support not available
+    six.text_type = None # unicode support not available
 
 try:
     import datetime
@@ -161,8 +162,8 @@ except NameError:
 
 def _decode(data, encoding, is8bit=re.compile("[\x80-\xff]").search):
     # decode non-ascii string (if possible)
-    if unicode and encoding and is8bit(data):
-        data = unicode(data, encoding)
+    if six.text_type and encoding and is8bit(data):
+        data = six.text_type(data, encoding)
     return data
 
 def escape(s, replace=string.replace):
@@ -170,7 +171,7 @@ def escape(s, replace=string.replace):
     s = replace(s, "<", "&lt;")
     return replace(s, ">", "&gt;",)
 
-if unicode:
+if six.text_type:
     def _stringify(string):
         # convert to 7-bit ascii if possible
         try:
@@ -386,7 +387,7 @@ class DateTime:
         elif datetime and isinstance(other, datetime.datetime):
             s = self.value
             o = other.strftime("%Y%m%dT%H:%M:%S")
-        elif isinstance(other, (str, unicode)):
+        elif isinstance(other, (str, six.text_type)):
             s = self.value
             o = other
         elif hasattr(other, "timetuple"):
@@ -741,7 +742,7 @@ class Marshaller:
         write("</string></value>\n")
     dispatch[StringType] = dump_string
 
-    if unicode:
+    if six.text_type:
         def dump_unicode(self, value, write, escape=escape):
             value = value.encode(self.encoding)
             write("<value><string>")
@@ -773,7 +774,7 @@ class Marshaller:
         for k, v in value.items():
             write("<member>\n")
             if not isinstance(k, StringType):
-                if unicode and isinstance(k, UnicodeType):
+                if six.text_type and isinstance(k, UnicodeType):
                     k = k.encode(self.encoding)
                 else:
                     raise TypeError("dictionary key must be string")
