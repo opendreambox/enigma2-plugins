@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Components.ActionMap import ActionMap
 from Components.config import config, getConfigListEntry, ConfigSet, ConfigElement
 from Components.ConfigList import ConfigListScreen
@@ -100,7 +101,7 @@ class TrackAutoselectSetup(Screen, ConfigListScreen):
 		ConfigListScreen.keyCancel(self)
 
 	def keyYellow(self):
-		print "[TrackAutoselectSetup] keyYellow"
+		print("[TrackAutoselectSetup] keyYellow")
 
 	def modifyEntry(self):
 		cur = self["config"].getCurrent()

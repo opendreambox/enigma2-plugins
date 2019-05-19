@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Components.config import config, ConfigSubsection, ConfigYesNo, ConfigInteger, ConfigSet
 from Components.Language import language
 from Tools.ISO639 import ISO639Language
@@ -142,7 +143,7 @@ class TrackAutoselectConfig():
 				preference_tuplelist.append((key, value))
 				choicelist.remove((value, key))
 			except KeyError as e:
-				print "[TrackAutoselectConfig] getAvailableChoicesAndPreferenceTuplelist Error in settings! couldn't find key '%s'" % e
+				print("[TrackAutoselectConfig] getAvailableChoicesAndPreferenceTuplelist Error in settings! couldn't find key '%s'" % e)
 
 		return (choicelist, preference_tuplelist)
 

@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Components.config import config
 from Components.ServiceEventTracker import ServiceEventTracker
 from Screens.InfoBar import InfoBar
@@ -91,7 +92,7 @@ class TrackAutoselector(object):
 			#print "[TrackAutoselector]:findsType =", stype
 
 	def doSelect(self, audio=False, subtitles=False):
-		print "[TrackAutoselector]:doSelect self._stype", self._stype, "in handle_services", config.plugins.TrackAutoselect.handle_services.getValue(), self._stype in config.plugins.TrackAutoselect.handle_services.getValue(), "event", audio and "audio" or "", subtitles and "subtitles" or ""
+		print("[TrackAutoselector]:doSelect self._stype", self._stype, "in handle_services", config.plugins.TrackAutoselect.handle_services.getValue(), self._stype in config.plugins.TrackAutoselect.handle_services.getValue(), "event", audio and "audio" or "", subtitles and "subtitles" or "")
 		if self._stype in config.plugins.TrackAutoselect.handle_services.getValue():
 			if audio and config.plugins.TrackAutoselect.audio_autoselect_enable.getValue():
 				self.selectAudio()
@@ -131,11 +132,11 @@ class TrackAutoselector(object):
 					language = self.track_autoselect_config.language_comparison_dict[language]
 					if language in language_preferences:
 						if stream == self.audiostreams[0] and language == language_preferences[0]:
-							print "[TrackAutoselector]:matchAudiostreamPreference primary audio language selected", stream
+							print("[TrackAutoselector]:matchAudiostreamPreference primary audio language selected", stream)
 							self.primary_audio_matched = True
 							return self.MATCHED_PRIMARY
 						matched = self.MATCHED_ANY
-						print "[TrackAutoselector]:matchAudiostreamPreference stream %i language '%s' matches one of preferred languages" % (stream.idx, language), language_preferences
+						print("[TrackAutoselector]:matchAudiostreamPreference stream %i language '%s' matches one of preferred languages" % (stream.idx, language), language_preferences)
 		return matched
 
 	def selectAudio(self):
@@ -156,7 +157,7 @@ class TrackAutoselector(object):
 			languages = info.getLanguage().split('/')
 			description = info.getDescription() or ""
 			self.audiostreams.append(Stream(idx, codec, languages, info.isSaved(), info.isDefault(), description=description))
-		print "[TrackAutoselector]:selectAudio list of audio streams", self.audiostreams
+		print("[TrackAutoselector]:selectAudio list of audio streams", self.audiostreams)
 
 		language_preferences = config.plugins.TrackAutoselect.audio_language_preference.getValue()
 
@@ -164,17 +165,17 @@ class TrackAutoselector(object):
 			for parameter in config.plugins.TrackAutoselect.audio_parameter_order.value[::-1]:
 				if parameter == C.AUDIO_ORDER_SAVED:
 					self.audiostreams.sort(key=lambda stream: not stream.saved)
-					print "[TrackAutoselector]:selectAudio now sorted by saved flag", self.audiostreams
+					print("[TrackAutoselector]:selectAudio now sorted by saved flag", self.audiostreams)
 				elif parameter == C.AUDIO_ORDER_DEFAULT and not self.isDVB:
 					self.audiostreams.sort(key=lambda stream: not stream.default)
-					print "[TrackAutoselector]:selectAudio now sorted by default flag", self.audiostreams
+					print("[TrackAutoselector]:selectAudio now sorted by default flag", self.audiostreams)
 				elif parameter == C.AUDIO_ORDER_FORMAT:
 					self.audiostreams.sort(key=lambda stream: self.orderFormatByPreference(stream, config.plugins.TrackAutoselect.audio_format_preference.getValue()))
-					print "[TrackAutoselector]:selectAudio now sorted by codec format", self.audiostreams
+					print("[TrackAutoselector]:selectAudio now sorted by codec format", self.audiostreams)
 				elif parameter == C.AUDIO_ORDER_LANGUAGE:
 					self.audiostreams.sort(key=lambda stream: self.orderLanguageByPreference(stream, language_preferences))
-					print "[TrackAutoselector]:selectAudio now sorted by language", self.audiostreams
-			print "[TrackAutoselector]:selectAudio final resorted list of audio streams:", self.audiostreams, "selectedAudio:", selectedAudio
+					print("[TrackAutoselector]:selectAudio now sorted by language", self.audiostreams)
+			print("[TrackAutoselector]:selectAudio final resorted list of audio streams:", self.audiostreams, "selectedAudio:", selectedAudio)
 
 		top_idx = self.audiostreams[0].idx
 		if top_idx != selectedAudio:
@@ -204,46 +205,46 @@ class TrackAutoselector(object):
 			else:
 				codec = iType in C.sub_format_dict and C.sub_format_dict[iType] or "?"
 			streams.append(Stream(idx, codec, languages, info.isSaved(), info.isDefault(), info.isForced()))
-		print "[TrackAutoselector]:selectSubtitles list of subtitle streams", streams
+		print("[TrackAutoselector]:selectSubtitles list of subtitle streams", streams)
 
 		for parameter in config.plugins.TrackAutoselect.subtitle_parameter_order.value[::-1]:
 			if parameter == C.SUBTITLE_ORDER_SAVED:
 				streams.sort(key=lambda stream: not stream.saved)
-				print "[TrackAutoselector]:selectSubtitles now sorted by saved flag", streams
+				print("[TrackAutoselector]:selectSubtitles now sorted by saved flag", streams)
 			elif parameter == C.SUBTITLE_ORDER_DEFAULT and not self.isDVB:
 				streams.sort(key=lambda stream: not stream.default)
-				print "[TrackAutoselector]:selectSubtitles now sorted by default flag", streams
+				print("[TrackAutoselector]:selectSubtitles now sorted by default flag", streams)
 			elif parameter == C.SUBTITLE_ORDER_FORCED:
 				streams.sort(key=lambda stream: not stream.forced)
-				print "[TrackAutoselector]:selectSubtitles now sorted by forced flag", streams
+				print("[TrackAutoselector]:selectSubtitles now sorted by forced flag", streams)
 			elif parameter == C.SUBTITLE_ORDER_LANGUAGE:
 				streams.sort(key=lambda stream: self.orderLanguageByPreference(stream, config.plugins.TrackAutoselect.subtitle_language_preference.getValue()))
-				print "[TrackAutoselector]:selectSubtitles now sorted by language", streams
+				print("[TrackAutoselector]:selectSubtitles now sorted by language", streams)
 			elif parameter == C.SUBTITLE_ORDER_FORMAT:
 				streams.sort(key=lambda stream: self.orderFormatByPreference(stream, config.plugins.TrackAutoselect.subtitle_format_preference.getValue()))
-				print "[TrackAutoselector]:selectSubtitles now sorted by codec format", streams
-		print "[TrackAutoselector]:selectSubtitles resorted list of subtitle streams:", streams, "playing_idx:", playing_idx
+				print("[TrackAutoselector]:selectSubtitles now sorted by codec format", streams)
+		print("[TrackAutoselector]:selectSubtitles resorted list of subtitle streams:", streams, "playing_idx:", playing_idx)
 
 		enable = False
 		for parameter in config.plugins.TrackAutoselect.subtitle_enable_conditions.getValue():
 			if parameter == C.SUBTITLE_ENABLE_ALWAYS:
-				print "[TrackAutoselector]:selectSubtitles always ENABLE!"
+				print("[TrackAutoselector]:selectSubtitles always ENABLE!")
 				enable = True
 			elif parameter == C.SUBTITLE_ENABLE_SAVED:
 				enable = enable or streams[0].saved
-				print "[TrackAutoselector]:selectSubtitles enable if saved (by dvb service / media database)", streams[0].saved
+				print("[TrackAutoselector]:selectSubtitles enable if saved (by dvb service / media database)", streams[0].saved)
 			elif parameter == C.SUBTITLE_ENABLE_DEFAULT and not self.isDVB:
 				enable = enable or streams[0].default
-				print "[TrackAutoselector]:selectSubtitles enable if default flag set (non-dvb service)", streams[0].default
+				print("[TrackAutoselector]:selectSubtitles enable if default flag set (non-dvb service)", streams[0].default)
 			elif parameter == C.SUBTITLE_ENABLE_FORCED:
 				enable = enable or streams[0].forced
-				print "[TrackAutoselector]:selectSubtitles enable if forced flag set", streams[0].forced
+				print("[TrackAutoselector]:selectSubtitles enable if forced flag set", streams[0].forced)
 			elif parameter == C.SUBTITLE_ENABLE_NOTFIRSTLANG:
 				enable = enable or audio_matched != self.MATCHED_PRIMARY
-				print "[TrackAutoselector]:selectSubtitles enable if not first audio language", not self.primary_audio_matched, enable and "ENABLE!" or ""
+				print("[TrackAutoselector]:selectSubtitles enable if not first audio language", not self.primary_audio_matched, enable and "ENABLE!" or "")
 			elif parameter == C.SUBTITLE_ENABLE_NOTANYLANG:
 				enable = enable or audio_matched == self.MATCHED_NONE
-				print "[TrackAutoselector]:selectSubtitles enable if no specified audio language", enable and "ENABLE!" or ""
+				print("[TrackAutoselector]:selectSubtitles enable if no specified audio language", enable and "ENABLE!" or "")
 			if enable:
 				break
 
@@ -251,15 +252,15 @@ class TrackAutoselector(object):
 		if enable and len(self.audiostreams) and not config.plugins.TrackAutoselect.same_languages.getValue():
 			for idx, stream in enumerate(streams):
 				if not any(lang in stream.languages for lang in self.audiostreams[0].languages) or "und" in stream.languages:
-					print "[TrackAutoselector]:selectSubtitles idx", idx, "stream", stream, "is different to autoselected audio language, enable!"
+					print("[TrackAutoselector]:selectSubtitles idx", idx, "stream", stream, "is different to autoselected audio language, enable!")
 					enable = True
 					enable_idx = idx
 					break
 				else:
-					print "[TrackAutoselector]:selectSubtitles idx", idx, "stream", stream, "is the same as autoselected audio language, skip!!"
+					print("[TrackAutoselector]:selectSubtitles idx", idx, "stream", stream, "is the same as autoselected audio language, skip!!")
 					enable = False
 
 		if enable:
-			print "[TrackAutoselector]:selectSubtitles enable stream", streams[enable_idx]
+			print("[TrackAutoselector]:selectSubtitles enable stream", streams[enable_idx])
 			self.infobar.setSelectedSubtitle(streams[enable_idx].idx)
 			self.infobar.setSubtitlesEnable(True)

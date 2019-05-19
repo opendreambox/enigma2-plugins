@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Plugins.Plugin import PluginDescriptor
 
 track_autoselect_config = None # global TrackautoselectConfig object
@@ -20,7 +21,7 @@ def Plugins(path, **kwargs):
 		return [PluginDescriptor(name=_("Track Autoselect"), description=_("Configure Track Autoselect"), where = PluginDescriptor.WHERE_AUDIOMENU, fnc=config_fnc),
 			PluginDescriptor(name=_("Track Autoselect"), where = PluginDescriptor.WHERE_INFOBAR, fnc=start_fnc)]
 	except ImportError:
-		print "[TrackAutoselect] can't load plugin, needs new Enigma2 audio/subtitle API from April 2016!"
+		print("[TrackAutoselect] can't load plugin, needs new Enigma2 audio/subtitle API from April 2016!")
 		return PluginDescriptor()
 
 def localeAndConfigInit():
