@@ -52,6 +52,7 @@ import socket
 
 from os import path
 from six.moves import map
+import six
 
 NUL = chr(0)
 CR = chr(0o15)
@@ -125,7 +126,7 @@ class IRC(protocol.Protocol):
 
     def sendLine(self, line):
         if self.encoding is not None:
-            if isinstance(line, unicode):
+            if isinstance(line, six.text_type):
                 line = line.encode(self.encoding)
         self.transport.write("%s%s%s" % (line, CR, LF))
 
