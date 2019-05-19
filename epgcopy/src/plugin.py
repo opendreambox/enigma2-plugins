@@ -20,6 +20,7 @@
 # License: GPL
 #
 #=========================================================================================
+from __future__ import print_function
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Components.Button import Button
@@ -51,7 +52,7 @@ config.plugins.epgCopy.ip = ConfigIP(default = [0, 0, 0, 0])
 config.plugins.epgCopy.copytime = ConfigClock(default = int(autoCopy))
 
 def myPrint(txt, prefix = None):
-    print ("\033[91m[EPGCopy] %s\033[m " % txt)
+    print(("\033[91m[EPGCopy] %s\033[m " % txt))
     
 def myFtp(): 
     directory_local='/tmp/' 
