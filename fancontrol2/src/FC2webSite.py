@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from twisted.web import resource, http
 from globals import *
 from plugin import *
@@ -161,12 +162,12 @@ class FC2webLog(resource.Resource):
 				html += "</form>"
 			if os.path.exists(config.plugins.FanControl.LogPath.value + "FC2data.csv"):
 				s = os.stat(config.plugins.FanControl.LogPath.value + "FC2data.csv")
-				if int(s.st_size/1024) == 0:
+				if int(s.st_size//1024) == 0:
 					html += "<BR>" + _("Filesize : %d %sByte") % (int(s.st_size), "")
 				else:
-					html += "<BR>" + _("Filesize : %d %sByte") % (int(s.st_size/1024), "k")
+					html += "<BR>" + _("Filesize : %d %sByte") % (int(s.st_size//1024), "k")
 				s = os.statvfs(config.plugins.FanControl.LogPath.value)
-				html += "<BR>" + _("Disk free : %d MByte") % (int(s.f_bsize * s.f_bavail / 1024 / 1024))
+				html += "<BR>" + _("Disk free : %d MByte") % (int(s.f_bsize * s.f_bavail // 1024 // 1024))
 				html += "<form method=\"GET\">"
 				html += "<input type=\"hidden\" name=\"cmd\" value=\"data\">"
 				html += "<input type=\"submit\" value=\"%s\">" % _("Download")
@@ -197,12 +198,12 @@ class FC2webLog(resource.Resource):
 				html += "</form>"
 			if os.path.exists(config.plugins.FanControl.LogPath.value + "FC2events.txt"):
 				s = os.stat(config.plugins.FanControl.LogPath.value + "FC2events.txt")
-				if int(s.st_size/1024) == 0:
+				if int(s.st_size//1024) == 0:
 					html += "<BR>" + _("Filesize : %d %sByte") % (int(s.st_size), "")
 				else:
-					html += "<BR>" + _("Filesize : %d %sByte") % (int(s.st_size/1024), "k")
+					html += "<BR>" + _("Filesize : %d %sByte") % (int(s.st_size//1024), "k")
 				s = os.statvfs(config.plugins.FanControl.LogPath.value)
-				html += "<BR>" + _("Disk free : %d MByte") % (int(s.f_bsize * s.f_bavail / 1024 / 1024))
+				html += "<BR>" + _("Disk free : %d MByte") % (int(s.f_bsize * s.f_bavail // 1024 // 1024))
 				html += "<form method=\"GET\">"
 				html += "<input type=\"hidden\" name=\"cmd\" value=\"events\">"
 				html += "<input type=\"submit\" value=\"%s\">" % _("Download")
@@ -465,7 +466,7 @@ class FC2webChart(resource.Resource):
 			html += "dT = document.DiaTemp\n"
 			html += "dR = document.DiaRPM\n"
 			t = 0
-			Xtime = int((Anzahl/20))
+			Xtime = int((Anzahl//20))
 			if Anzahl < 1000:
 				Xtime += 1
 			for line in f.readlines():

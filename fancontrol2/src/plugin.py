@@ -2,6 +2,7 @@
 # joergm6 IHAD
 # PID-controller by Lukasz S.
 
+from __future__ import division
 import time
 import os
 from subprocess import call, Popen, PIPE
@@ -77,7 +78,7 @@ def Test0(wert):
 def skal(x, x1, x2, y1, y2):
 	if x > x2: return y2
 	if x < x1: return y1
-	m = (y2 - y1) / Test0(x2 - x1)
+	m = (y2 - y1) // Test0(x2 - x1)
 	y = m * x + y1
 	return y
 
@@ -127,7 +128,7 @@ def Free(dir):
 	if not os.path.exists(dir):
 		return False
 	s = os.statvfs(dir)
-	return (s.f_bsize * s.f_bavail / 1024 / 1024) > 10
+	return (s.f_bsize * s.f_bavail // 1024 // 1024) > 10
 
 def getVoltage(fanid):
 	f = open("/proc/stb/fp/fan_vlt", "r")
@@ -187,7 +188,7 @@ def GetFanRPM():
 	f = open("/proc/stb/fp/fan_speed", "r")
 	value = int(f.readline().strip()[:-4] or "0")
 	f.close()
-	value = int(value / int(config.plugins.FanControl.Multi.value))
+	value = int(value // int(config.plugins.FanControl.Multi.value))
 	if value > 0 and value < 6000:
 		RPMread = 0
 	else:
@@ -263,7 +264,7 @@ class ControllerPI:
 	def ScaleCtlError(self,errval,inputMax):
 		if errval == 0:
 			return 0
-		return skal(abs(errval), 0, inputMax , 0, 100) * (errval/abs(errval))
+		return skal(abs(errval), 0, inputMax , 0, 100) * (errval//abs(errval))
 
 	def DeadBand(self,errval):
 		if abs(errval) < self.inputDeadband:
@@ -496,19 +497,19 @@ class FanControl2Monitor(Screen):
 		tempcount = len(templist)
 		for count in range(tempcount):
 			tt = sensors.getSensorValue(count)
-			self["ProTemp%d" % count].value = int((tt-30)*100/(55-30)) 
+			self["ProTemp%d" % count].value = int((tt-30)*100//(55-30)) 
 			if sensors.getSensorName(count) == "undefined":
 				self["TxtTemp%d" % count].setText(_("%s   %02d C") % (TempName[count], tt))
 			else:
 				self["TxtTemp%d" % count].setText(_("%s   %02d C") % (sensors.getSensorName(count), tt))
 		if harddiskmanager.HDDCount() > 0 and len(AktHDD) > 0:
 			if max(AktHDD) > 0:
-				self["ProHDD"].value = int((max(AktHDD)-30)*100/(55-30)) 
+				self["ProHDD"].value = int((max(AktHDD)-30)*100//(55-30)) 
 				self["TxtHDD"].setText(_("%s   %02d C") % ("HDD", max(AktHDD)))
 			elif config.plugins.FanControl.CheckHDDTemp.value !="never":
 				self["TxtHDD"].setText(_("press Info for HDD-Temp"))
 		self["TxtFan"].setText(_("Current rpm  %4d") % (AktRPM))
-		self["ProFan"].value = int((AktRPM-config.plugins.FanControl.minRPM.value)*100/Test0(config.plugins.FanControl.maxRPM.value-config.plugins.FanControl.minRPM.value))
+		self["ProFan"].value = int((AktRPM-config.plugins.FanControl.minRPM.value)*100//Test0(config.plugins.FanControl.maxRPM.value-config.plugins.FanControl.minRPM.value))
 		if tempcount>1:
 			self["TxtFC2Temp"].setText("%4.1f" % AktTemp)
 		self.temp_timer.start(2000, True)
@@ -764,11 +765,11 @@ class FanControl2Plugin(ConfigListScreen,Screen):
 		self["TxtRPM"].setText(_("Current rpm  %4d") % (AktRPM))
 		self["TxtVLT"].setText(_("Voltage  %03d") % (AktVLT))
 		self["TxtPWM"].setText(_("PWM  %03d") % (AktPWM))
-		self["PixTemp"].value = int((AktTemp-config.plugins.FanControl.temp.value)*100/Test0(config.plugins.FanControl.tempmax.value-config.plugins.FanControl.temp.value))
-		self["PixZielRPM"].value = int((ZielRPM-config.plugins.FanControl.minRPM.value)*100/Test0(config.plugins.FanControl.maxRPM.value-config.plugins.FanControl.minRPM.value))
-		self["PixRPM"].value = int((AktRPM-config.plugins.FanControl.minRPM.value)*100/Test0(config.plugins.FanControl.maxRPM.value-config.plugins.FanControl.minRPM.value))
-		self["PixVLT"].value = int(AktVLT/2.55)
-		self["PixPWM"].value = int(AktPWM/2.55)
+		self["PixTemp"].value = int((AktTemp-config.plugins.FanControl.temp.value)*100//Test0(config.plugins.FanControl.tempmax.value-config.plugins.FanControl.temp.value))
+		self["PixZielRPM"].value = int((ZielRPM-config.plugins.FanControl.minRPM.value)*100//Test0(config.plugins.FanControl.maxRPM.value-config.plugins.FanControl.minRPM.value))
+		self["PixRPM"].value = int((AktRPM-config.plugins.FanControl.minRPM.value)*100//Test0(config.plugins.FanControl.maxRPM.value-config.plugins.FanControl.minRPM.value))
+		self["PixVLT"].value = int(AktVLT//2.55)
+		self["PixPWM"].value = int(AktPWM//2.55)
 		if config.plugins.FanControl.Fan.value == "4pinREG":
 			if int(abs(ErrRPM)) <= 10 and ErrRPM != 0:
 				self["PixERR"].value = int(abs(ErrRPM)*10)
@@ -1017,7 +1018,7 @@ class FanControl2(Screen):
 				m2 = ti[count]
 		if m2 == 0.1:
 			m2 = m1
-		return (m1 + m2) / 2.0
+		return (m1 + m2) // 2.0
                 
 	def cycle(self):
 		self.Range = self.maxTemp - self.targetTemp
