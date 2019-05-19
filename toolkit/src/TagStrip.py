@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from re import sub, finditer
 import six
+from six import unichr
 
 try:
 	import htmlentitydefs
