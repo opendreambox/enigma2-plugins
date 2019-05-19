@@ -19,6 +19,7 @@
 # you have to keep MY license and inform me about the modifications by mail.
 #
 
+from __future__ import print_function
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
 from Components.Label import Label
@@ -946,13 +947,13 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		urlsraw=re.findall(',"ou":".+?","ow"',result)
 		imageurls=[urlraw[7:-6].encode() for urlraw in urlsraw]
 		if imageurls:
-			print "[InternetRadio] downloading cover from %s " % imageurls[0]
+			print("[InternetRadio] downloading cover from %s " % imageurls[0])
 			downloadPage(imageurls[0], "/tmp/.cover").addCallback(self.coverDownloadFinished).addErrback(self.coverDownloadFailed)
 		else:
-			print 'Google no images found...'
+			print('Google no images found...')
 			
 	def coverDownloadFailed(self,result):
-		print "[InternetRadio] cover download failed: %s " % result
+		print("[InternetRadio] cover download failed: %s " % result)
 		self.hideCover()
 		
 	def hideCover(self):
@@ -962,7 +963,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			self.fullScreen.setVisibilityCover(False)
 
 	def coverDownloadFinished(self,result):
-		print "[InternetRadio] cover download finished"
+		print("[InternetRadio] cover download finished")
 		self["cover"].updateIcon("/tmp/.cover")
 
 	def coverLoaded(self):

@@ -19,6 +19,7 @@
 # you have to keep MY license and inform me about the modifications by mail.
 #
 
+from __future__ import print_function
 from Components.Sources.Source import Source
 from Screens.InfoBar import InfoBar
 from Plugins.Extensions.InternetRadio.InternetRadioFavoriteConfig import InternetRadioFavoriteConfig
@@ -50,7 +51,7 @@ class InternetRadioWeb(Source):
 			self.result = ( False, "one two three four unknown command" )
 
 	def handleCommand(self, cmd):
-		print "[WebComponents.InternetRadioWeb] handleCommand with cmd = ", cmd
+		print("[WebComponents.InternetRadioWeb] handleCommand with cmd = ", cmd)
 		if self.func is self.ADD_FAVORITE:
 			self.result = self.addFavorite(cmd)
 		elif self.func is self.REMOVE_FAVORITE:
@@ -63,7 +64,7 @@ class InternetRadioWeb(Source):
 			self.result = ( False, "one two three four unknown command" )
 
 	def addFavorite(self, param):
-		print "[WebComponents.InternetRadioWeb] addFavorite with param = ", param
+		print("[WebComponents.InternetRadioWeb] addFavorite with param = ", param)
 		name = param["name"]
 		if name is None:
 			return (False, "No favorite name given!")
@@ -92,7 +93,7 @@ class InternetRadioWeb(Source):
 		return (True, "favorite %s added." % name)
 
 	def removeFavorite(self, param):
-		print "[WebComponents.InternetRadioWeb] removeFavorite with param = ", param
+		print("[WebComponents.InternetRadioWeb] removeFavorite with param = ", param)
 		name = param["name"]
 		if name is None:
 			return (False, "No favorite name given!")
@@ -115,7 +116,7 @@ class InternetRadioWeb(Source):
 			return (False, "Could not find favorite %s!" % name)
 
 	def renameFavorite(self, param):
-		print "[WebComponents.InternetRadioWeb] renameFavorite with param = ", param
+		print("[WebComponents.InternetRadioWeb] renameFavorite with param = ", param)
 		name = param["name"]
 		if name is None:
 			return (False, "No favorite name given!")
@@ -143,7 +144,7 @@ class InternetRadioWeb(Source):
 
 
 	def playStation(self, param):
-		print "[WebComponents.InternetRadioWeb] playStation with param = ", param
+		print("[WebComponents.InternetRadioWeb] playStation with param = ", param)
 		name = param["name"]
 		if name is None:
 			name = ""
