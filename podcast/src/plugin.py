@@ -3,6 +3,7 @@
 ## by AliAbdul
 ##
 from __future__ import division
+from __future__ import print_function
 from Components.ActionMap import ActionMap
 from Components.config import config, ConfigSelection, ConfigSubsection, ConfigText, ConfigYesNo, getConfigListEntry
 from Components.ConfigList import ConfigListScreen
@@ -277,7 +278,7 @@ class PodcastMovies(Screen):
 		self.working = False
 
 	def error(self, error=""):
-		print "[Podcast] Error:", error
+		print("[Podcast] Error:", error)
 		self.instance.setTitle(_("Error getting movies"))
 		self.working = False
 
@@ -382,9 +383,9 @@ class PodcastXML(Screen):
 		if file:
 			# check if file is just a proxy to an external XML
 			head = file.readline()
-			print head
+			print(head)
 			if head.startswith("http"):
-				print "open url"
+				print("open url")
 				file.close
 				try:
 					source = urllib2.urlopen(head)
