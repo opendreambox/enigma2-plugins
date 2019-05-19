@@ -1522,7 +1522,7 @@ class BeautifulSoup(BeautifulStoneSoup):
                                     ('br' , 'hr', 'input', 'img', 'meta',
                                     'spacer', 'link', 'frame', 'base', 'col'))
 
-    PRESERVE_WHITESPACE_TAGS = set(['pre', 'textarea'])
+    PRESERVE_WHITESPACE_TAGS = {'pre', 'textarea'}
 
     QUOTE_TAGS = {'script' : None, 'textarea' : None}
 
