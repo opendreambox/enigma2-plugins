@@ -1,3 +1,4 @@
+from __future__ import division
 from Components.Label import Label
 from Components.ProgressBar import ProgressBar
 from KTMultiPixmap import KTmultiPixmap
@@ -302,7 +303,7 @@ class KiddyTimer():
             iRemaining = 0
         self.remainingTime = iRemaining
         if self.currentDayTime > 0:
-            self.remainingPercentage = iRemaining / self.currentDayTime
+            self.remainingPercentage = iRemaining // self.currentDayTime
         else:
             self.remainingPercentage = 0
 
@@ -349,7 +350,7 @@ class KiddyTimer():
                 iRemaining = 0
             self.remainingTime = iRemaining
             if self.currentDayTime > 0:
-                self.remainingPercentage = iRemaining / self.currentDayTime
+                self.remainingPercentage = iRemaining // self.currentDayTime
             else:
                 self.remainingPercentage = 0
 
