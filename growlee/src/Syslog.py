@@ -11,6 +11,7 @@ from Tools import Notifications
 
 from GrowleeConnection import emergencyDisable
 from . import NOTIFICATIONID
+import six
 
 SYSLOG_UDP_PORT = 514
 
@@ -29,7 +30,7 @@ SEVERITY = {
 
 try:
 	dict.iteritems
-	reverse = lambda map: dict((v,k) for k,v in map.iteritems())
+	reverse = lambda map: dict((v,k) for k,v in six.iteritems(map))
 except AttributeError:
 	reverse = lambda map: dict((v,k) for k,v in map.items())
 

@@ -8,6 +8,7 @@ import uuid
 import re
 import threading
 import collections
+import six
 
 our_print = lambda *args, **kwargs: print("[growlee.GNTP]", *args, **kwargs)
 
@@ -26,9 +27,9 @@ GNTP_TCP_PORT = 23053
 
 try:
 	dict.iteritems
-	iteritems = lambda d: d.iteritems()
+	iteritems = lambda d: six.iteritems(d)
 except AttributeError:
-	iteritems = lambda d: d.items()
+	iteritems = lambda d: list(d.items())
 
 class GNTPPacket:
 	version = '1.0'
