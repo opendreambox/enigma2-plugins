@@ -2,6 +2,7 @@
 '''
 $Author: sreichholf $
 '''
+from __future__ import division
 from enigma import eTimer, eSize, ePoint, getDesktop, eDVBVolumecontrol, eBackgroundFileEraser
 
 from Screens.Screen import Screen
@@ -61,18 +62,18 @@ DESKTOP_HEIGHT = getDesktop(0).size().height()
 #
 def scaleH(y2, y1):
 	if y2 == -1:
-		y2 = y1 * 1280 / 720
+		y2 = y1 * 1280 // 720
 	elif y1 == -1:
-		y1 = y2 * 720 / 1280
+		y1 = y2 * 720 // 1280
 	return scale(y2, y1, 1280, 720, DESKTOP_WIDTH)
 def scaleV(y2, y1):
 	if y2 == -1:
-		y2 = y1 * 720 / 576
+		y2 = y1 * 720 // 576
 	elif y1 == -1:
-		y1 = y2 * 576 / 720
+		y1 = y2 * 576 // 720
 	return scale(y2, y1, 720, 576, DESKTOP_HEIGHT)
 def scale(y2, y1, x2, x1, x):
-	return (y2 - y1) * (x - x1) / (x2 - x1) + y1
+	return (y2 - y1) * (x - x1) // (x2 - x1) + y1
 
 def getMountedDevices():
 	def handleMountpoint(loc):
@@ -379,13 +380,13 @@ class NcidClientPhonebook:
 	class NcidDisplayPhonebook(Screen, NumericalTextInput):
 
 		def __init__(self, session):
-			self.entriesWidth = DESKTOP_WIDTH * scaleH(75, 85) / 100
+			self.entriesWidth = DESKTOP_WIDTH * scaleH(75, 85) // 100
 			self.height = DESKTOP_HEIGHT * 0.75
 			numberFieldWidth = scaleH(220, 160)
 			fieldWidth = self.entriesWidth - 5 - numberFieldWidth - 10
 			fontSize = scaleV(22, 18)
 			fontHeight = scaleV(24, 20)
-			buttonGap = (self.entriesWidth - 4 * 140) / 5
+			buttonGap = (self.entriesWidth - 4 * 140) // 5
 			debug("[NcidDisplayPhonebook] width: " + str(self.entriesWidth))
 			self.skin = """
 				<screen name="NcidDisplayPhonebook" position="center,center" size="%d,%d" title="Phonebook" >
@@ -552,7 +553,7 @@ class NcidClientPhonebook:
 					noButtons = 2
 					width = max(scaleH(-1, 570), noButtons * 140)
 					height = scaleV(-1, 100) # = 5 + 126 + 40 + 5; 6 lines of text possible
-					buttonsGap = (width - noButtons * 140) / (noButtons + 1)
+					buttonsGap = (width - noButtons * 140) // (noButtons + 1)
 					buttonsVPos = height - 40 - 5
 					self.skin = """
 						<screen position="center,center" size="%d,%d" title="Add entry to phonebook" >
