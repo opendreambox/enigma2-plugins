@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from Components.Label import Label
@@ -84,14 +85,14 @@ class MovieTagger(Screen):
 			with open(filename, "r") as f:
 				pretags = sorted(f.read().splitlines())
 		except:
-			print "pretags file %s does not exist" % filename
+			print("pretags file %s does not exist" % filename)
 			return []
 		else:
-			print "pretags loaded from %s:" % filename, pretags
+			print("pretags loaded from %s:" % filename, pretags)
 			return pretags
 
 	def updateCurrentTagList(self):
-		print "updating cTagList"
+		print("updating cTagList")
 		self.serviceHandler = eServiceCenter.getInstance()
 		self.info = self.serviceHandler.info(self.service)
 		self.tags = self.info.getInfoString(self.service, iServiceInformation.sTags).split(' ')
@@ -238,7 +239,7 @@ class MovieTagger(Screen):
 			self.removeTag(self["cTaglist"].getCurrent())
 
 		elif self.currList is self["aTaglist"]:
-			print "adding Tag",self["aTaglist"].getCurrent()[0]
+			print("adding Tag",self["aTaglist"].getCurrent()[0])
 			self.addTag(self["aTaglist"].getCurrent()[0])
 
 	def keyGreen(self):
