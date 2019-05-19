@@ -16,6 +16,7 @@
 #    GNU General Public License for more details.
 #
 #######################################################################
+from __future__ import print_function
 import logging
 
 import os, sys, traceback
@@ -76,7 +77,7 @@ def doDebug(*args):
 		logger.debug(strargs)
 	
 	elif config.plugins.autotimer.log_shell.value:
-		print strargs
+		print(strargs)
 
 def doLog(*args):
 	strargs = " ".join( [ str(arg) for arg in args ] )
@@ -90,6 +91,6 @@ def doLog(*args):
 		logger.info(strargs)
 	
 	elif config.plugins.autotimer.log_shell.value:
-		print strargs
+		print(strargs)
 
 initLog()

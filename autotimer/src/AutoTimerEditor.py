@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 # GUI (Screens)
+from __future__ import print_function
 from Screens.Screen import Screen
 from Components.ConfigList import ConfigListScreen
 from Screens.ChannelSelection import SimpleChannelSelection
@@ -1074,7 +1075,7 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 		
 		for type in self.typeSelection.getChoices():
 			
-			print "=== type ", type
+			print("=== type ", type)
 			if type[0] == "day": 
 				self.idx = 3
 				cfgList = []
@@ -1090,9 +1091,9 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 						for x in self.includes[3]
 				])
 				if len(cfgList):
-					print "=== cfgList day:", cfgList
+					print("=== cfgList day:", cfgList)
 					for item in cfgList:
-						print "=== cfgList day item:", item, item[0], item[1], item[1].value
+						print("=== cfgList day item:", item, item[0], item[1], item[1].value)
 					self.list.append( getConfigListEntry(type[1]) )
 					cfgList = sorted(cfgList, key=lambda x: [x[0],x[1].value], reverse=False)
 					self.list.extend(cfgList)
@@ -1131,8 +1132,8 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 			list.remove(self["config"].getCurrent())
 			self["config"].setList(list)
 			#remove empty config-section
-			print "==== getcurrent:", self["config"].getCurrent()
-			print "==== len getcurrent:", len(self["config"].getCurrent())
+			print("==== getcurrent:", self["config"].getCurrent())
+			print("==== len getcurrent:", len(self["config"].getCurrent()))
 
 			#self.refresh()
 			

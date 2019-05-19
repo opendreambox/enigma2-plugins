@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Components.config import config, getConfigListEntry, ConfigClock, ConfigDateTime, ConfigText, NoSave
 # GUI (Screens)
 from Screens.Screen import Screen
@@ -277,7 +278,7 @@ class AutoTimerFilterListOverview(Screen):
 	def removeCallback(self, ret):
 		cur = self["config"].getCurrentIndex()
 		if ret and cur is not None:
-			print ("=== index: ", int(cur))
+			print(("=== index: ", int(cur)))
 			del self.FilterList[cur]
 			
 			self["config"].setList(self.FilterList)
