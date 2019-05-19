@@ -421,8 +421,7 @@ class EasyMedia(Screen):
 			self.__keys.append("zdf")
 			self.menuItemList.append((_("ZDFmediathek"), "ZDF"))
 		plist = os_listdir("/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia")
-		plist = [x[:-5] for x in plist if x.endswith('.plug')]
-		plist.sort()
+		plist = sorted([x[:-5] for x in plist if x.endswith('.plug')])
 		for plugin in plist:
 			try:
 				inputfile = open(("/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/" + plugin + ".plug"), 'rb')
