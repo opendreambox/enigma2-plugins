@@ -1,4 +1,5 @@
 from __future__ import print_function
+from six.moves import range
 Version = '$Header$';
 
 from Components.Sources.Source import Source
