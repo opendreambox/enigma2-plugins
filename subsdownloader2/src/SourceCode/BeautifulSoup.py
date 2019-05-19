@@ -77,6 +77,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE, DAMMIT.
 
 """
 from __future__ import generators
+from __future__ import print_function
 import six
 from six.moves import map
 
@@ -2013,4 +2014,4 @@ class UnicodeDammit:
 if __name__ == '__main__':
     import sys
     soup = BeautifulSoup(sys.stdin)
-    print soup.prettify()
+    print(soup.prettify())

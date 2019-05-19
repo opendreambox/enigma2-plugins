@@ -1,4 +1,5 @@
 from __future__ import division
+from __future__ import print_function
 import os
 import re
 import sys
@@ -48,7 +49,7 @@ class SubConv():
                 return "mpl2" 
 	        break	    
 	    #becouse file is saved as mdvd returns mdvd value
-        print "Unsupported subtitle format appears. Please send this subtitle to developer."
+        print("Unsupported subtitle format appears. Please send this subtitle to developer.")
         ####################################################
         #"""KOMUNIKAT message box"""
         ####################################################
@@ -209,7 +210,7 @@ returns: list of subtitles in form: [[time_dep, time_end, line1, ...],[time_dep,
                     subtitles_standard_list[x][1] = (subtitles_standard_list[x][0] + subtitles_standard_list[x+1][0])//2
                 else:
                     subtitles_standard_list[x][1] = subtitles_standard_list[x][1] - 0.1
-                print "Subtitle end time error detected. Line no. %d was corrected" % x
+                print("Subtitle end time error detected. Line no. %d was corrected" % x)
             x = x+1
         return subtitles_standard_list
 
@@ -294,6 +295,6 @@ returns: list of subtitles in form: [[time_dep, time_end, line1, ...],[time_dep,
 	    dst.close()
 	    #self.___utf8_to_utf_8_BOM()
 	except :
-	    print "Can't save subtitles in file: %s" % file
+	    print("Can't save subtitles in file: %s" % file)
 
 

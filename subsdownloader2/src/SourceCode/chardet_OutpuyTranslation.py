@@ -1,3 +1,4 @@
+from __future__ import print_function
 def chardetOutputTranslation(recognizedCoding):
 	"""Function translates recognizet codepage oputputed by getSubtitleCodepade to
 	ISO nanes supported by Python.
@@ -35,7 +36,7 @@ def chardetOutputTranslation(recognizedCoding):
 		UTF-32 BE, LE, 3412-ordered, or 2143-ordered (with a BOM)"""
 		#NOT SUPPORTED TET
 		#self.session.open(MessageBox,_("I can't manage encodeing: %s (probability %s). So I can't convert properly subtitles to UTF-8.\nTo chcange it in future please send to developer information about unsupported CodePage (or this screenshot)." % (recognizedCoding['encoding'], recognizedCoding['confidence'])), MessageBox.TYPE_INFO, timeout = 5)
-		print ("I can't manage encodeing: %s (probability %s). So I can't convert properly subtitles to UTF-8.\nTo chcange it in future please send to developer information about unsupported CodePage (or this screenshot)." % (recognizedCoding['encoding'], recognizedCoding['confidence']))
+		print(("I can't manage encodeing: %s (probability %s). So I can't convert properly subtitles to UTF-8.\nTo chcange it in future please send to developer information about unsupported CodePage (or this screenshot)." % (recognizedCoding['encoding'], recognizedCoding['confidence'])))
 		#TODO Email notyfication about error
 		#self.subtitle_codepade = "None"
 		return "None"

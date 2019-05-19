@@ -1,4 +1,5 @@
 from __future__ import division
+from __future__ import print_function
 import os
 try:
 	is_libmediainfo = True
@@ -981,7 +982,7 @@ class SubsDownloaderApplication(Screen):
 						try:
 							os.remove(self.subtitles.ZipFilePath) #remove downloaded zip file
 						except:
-							print "Can't delete file: %s" % self.subtitles.ZipFilePath
+							print("Can't delete file: %s" % self.subtitles.ZipFilePath)
 				
 				if isinstance(subtitle_filename, type("string")):
 					self.convert_subtitle_to_movie(self.movie_filename, subtitle_filename)	
@@ -1017,7 +1018,7 @@ class SubsDownloaderApplication(Screen):
 				
 	def closeApplication(self):
 		os.system('rm -r %s' % Subtitle_Downloader_temp_dir)
-		print "\n[SubsDownloaderApplication] cancel\n"
+		print("\n[SubsDownloaderApplication] cancel\n")
 		self.session.nav.playService(self.altservice)
 		if config.plugins.subsdownloader.pathSave.value == True:
 			config.plugins.subsdownloader.path.value = self["fileList"].getCurrentDirectory()
@@ -1405,7 +1406,7 @@ class MoviePlayer(MP_parent):
 		self.downloadCuesheet()
 		
 	def addLastPosition(self):
-		print("", self, "I")
+		print(("", self, "I"))
 		service = self.session.nav.getCurrentService()
 		seek = service and service.seek()
 		if seek != None:
@@ -1422,12 +1423,12 @@ class MoviePlayer(MP_parent):
 				self.cut_list.append((pts, self.CUT_TYPE_LAST, ))
 
 	def uploadCuesheet(self):
-		print("", self, "I")
+		print(("", self, "I"))
 		try:
 			import struct
 			packed = ''
 			for cue in self.cut_list:
-				print cue
+				print(cue)
 				packed += struct.pack('>QI', cue[0], cue[1])
 			
 			if len(packed) > 0:
@@ -1437,10 +1438,10 @@ class MoviePlayer(MP_parent):
 			else:
 				os.remove(self.moviename + ".cuts")
 		except Exception as ex:
-			print("Exception (ef): " + str(ex), self, "E")
+			print(("Exception (ef): " + str(ex), self, "E"))
 			
 	def downloadCuesheet(self):
-		print("", self, "I")
+		print(("", self, "I"))
 		self.cut_list = []
 		try:
 			import struct
@@ -1454,7 +1455,7 @@ class MoviePlayer(MP_parent):
 				cue = struct.unpack('>QI', packedCue)
 				self.cut_list.append(cue)
 		except Exception as ex:
-			print("Exception (ef): " + str(ex), self, "E")
+			print(("Exception (ef): " + str(ex), self, "E"))
 		
 	def leavePlayer(self):
 		self.addLastPosition()
@@ -1566,7 +1567,7 @@ class MusicExplorer(MoviePlayer_4_MusicExploret):
 ###########################################################################
 
 def main(session, **kwargs):
-	print "\n[SubsDownloaderApplication] start\n"	
+	print("\n[SubsDownloaderApplication] start\n")	
 	if config.plugins.subsdownloader.AutoUpdate.value == True:
 		session.open(SubsDownloaderApplication)
 		autoupdate = IsNewVersionCheck(session)
