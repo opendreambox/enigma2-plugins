@@ -34,6 +34,7 @@ from Plugins.Extensions.SubsDownloader2.SourceCode.periscope import SubtitleData
 
 #from Plugins.Extensions.SubsDownloader2.SourceCode.xbmc_subtitles.utilities import toOpenSubtitles_two
 from Plugins.Extensions.SubsDownloader2.SourceCode.xbmc_subtitles.utilities import LANGUAGES, languageTranslate
+from six.moves import range
 
 """OS_LANGS ={ "en": "eng", 
             "fr" : "fre", 

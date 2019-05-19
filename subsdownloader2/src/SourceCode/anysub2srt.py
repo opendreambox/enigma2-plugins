@@ -7,6 +7,7 @@ import hashlib
 #import shutil
 import six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error
 import codecs
+from six.moves import range
 #from Screens.MessageBox import MessageBox
 
 """ Convert subtitles to SRT format based on napi2srt.py by 2009-11-02 Pawel Sternal <sternik@gmail.com>

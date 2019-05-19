@@ -1,6 +1,7 @@
 from __future__ import division
 from __future__ import print_function
 import os
+from six.moves import range
 try:
 	is_libmediainfo = True
 	from Plugins.Extensions.SubsDownloader2.SourceCode.GetFPS_MI import GetFPS

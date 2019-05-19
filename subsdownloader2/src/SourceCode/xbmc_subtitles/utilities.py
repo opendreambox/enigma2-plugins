@@ -9,6 +9,7 @@ import os
 #---
 import re
 import struct
+from six.moves import range
 
 #+++
 #from Plugins.Extensions.ProjectValerie.__common__ import printl2 as printl

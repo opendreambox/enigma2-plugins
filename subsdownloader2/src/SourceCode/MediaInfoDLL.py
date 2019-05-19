@@ -32,6 +32,7 @@ import os
 import sys
 from ctypes import *
 import six
+from six.moves import range
 
 if os.name == "nt" or os.name == "dos" or os.name == "os2" or os.name == "ce":
 	MediaInfoDLL_Handler = windll.MediaInfo
@@ -55,16 +56,16 @@ else:
 
 
 class Stream:
-	General, Video, Audio, Text, Chapters, Image, Menu, Max = range(8)
+	General, Video, Audio, Text, Chapters, Image, Menu, Max = list(range(8))
 
 class Info:
-	Name, Text, Measure, Options, Name_Text, Measure_Text, Info, HowTo, Max = range(9)
+	Name, Text, Measure, Options, Name_Text, Measure_Text, Info, HowTo, Max = list(range(9))
 
 class InfoOption:
-	ShowInInform, Reserved, ShowInSupported, TypeOfValue, Max = range(5)
+	ShowInInform, Reserved, ShowInSupported, TypeOfValue, Max = list(range(5))
 
 class FileOptions:
-	Nothing, Recursive, CloseAll, xxNonexx_3, Max = range(5)
+	Nothing, Recursive, CloseAll, xxNonexx_3, Max = list(range(5))
 
 
 

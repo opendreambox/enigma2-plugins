@@ -32,6 +32,7 @@ from jpcntx import SJISContextAnalysis
 from mbcssm import SJISSMModel
 import constants, sys
 from constants import eStart, eError, eItsMe
+from six.moves import range
 
 class SJISProber(MultiByteCharSetProber):
     def __init__(self):

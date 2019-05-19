@@ -141,6 +141,7 @@ import re, string, time, operator
 
 from types import *
 import six
+from six.moves import range
 
 # --------------------------------------------------------------------
 # Internal stuff
