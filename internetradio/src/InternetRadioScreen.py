@@ -623,7 +623,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		for items in self.stationList:
 			for genre in items.tags.split(","):
 				genre = genre.strip().lower()
-				if not genres.has_key(genre):
+				if genre not in genres:
 					genres[genre] = 0 # FIXME 
 					genreList.append(((InternetRadioFilter(name = genre)),))
 		genreList =  sorted(genreList, key=lambda genrelist: genrelist[0].name)
@@ -635,7 +635,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		countries = {} # stupid helper... FIXME!
 		for items in self.stationList:
 			country = items.country.lower()
-			if not countries.has_key(country):
+			if country not in countries:
 				countries[country] = 0 # FIXME 
 				countryList.append(((InternetRadioFilter(name = items.country)),))
 		countryList = sorted(countryList, key=lambda countrylist: countrylist[0].name)
