@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-import os, sys, re, string, time, urllib, urllib2, cookielib
+import os, sys, re, string, time, six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error, six.moves.urllib.request, six.moves.urllib.error, six.moves.urllib.parse, cookielib
 from Screens.MessageBox import MessageBox
 from Components.config import config
 #import xbmc, xbmcgui
@@ -38,7 +38,7 @@ subtitle_download_pattern = '<a href=\'http://www\.italiansubs\.net/(index\.php\
 def geturl(url):
     log( __name__ , " Getting url: %s" % (url))
     try:
-        response = urllib2.urlopen(url)
+        response = six.moves.urllib.request.urlopen(url)
         content = response.read()
     except:
         log( __name__ , " Failed to get url:%s" % (url))
@@ -59,13 +59,13 @@ def login(username, password):
                 return_value = match.group(1)
                 unique_name = match.group(2)
                 unique_value = match.group(3)
-                login_postdata = urllib.urlencode({'username': username, 'passwd': password, 'remember': 'yes', 'Submit': 'Login', 'remember': 'yes', 'option': 'com_user', 'task': 'login', 'silent': 'true', 'return': return_value, unique_name: unique_value} )
+                login_postdata = six.moves.urllib.parse.urlencode({'username': username, 'passwd': password, 'remember': 'yes', 'Submit': 'Login', 'remember': 'yes', 'option': 'com_user', 'task': 'login', 'silent': 'true', 'return': return_value, unique_name: unique_value} )
                 cj = cookielib.CookieJar()
-                my_opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+                my_opener = six.moves.urllib.request.build_opener(six.moves.urllib.request.HTTPCookieProcessor(cj))
                 my_opener.addheaders = [('Referer', main_url)]
-                urllib2.install_opener(my_opener)
-                request = urllib2.Request(main_url + 'index.php',login_postdata)
-                response = urllib2.urlopen(request).read()
+                six.moves.urllib.request.install_opener(my_opener)
+                request = six.moves.urllib.request.Request(main_url + 'index.php',login_postdata)
+                response = six.moves.urllib.request.urlopen(request).read()
                 match = re.search('logouticon.png', response, re.IGNORECASE | re.DOTALL)
                 if match:
                     return 1

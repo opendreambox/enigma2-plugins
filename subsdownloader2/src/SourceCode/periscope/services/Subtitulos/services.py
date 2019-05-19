@@ -16,7 +16,7 @@
 #    along with periscope; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-import zipfile, os, urllib2, urllib, logging, traceback, httplib, re
+import zipfile, os, six.moves.urllib.request, six.moves.urllib.error, six.moves.urllib.parse, six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error, logging, traceback, httplib, re
 from Plugins.Extensions.SubsDownloader2.SourceCode.BeautifulSoup import BeautifulSoup
 from Plugins.Extensions.SubsDownloader2.SourceCode.periscope import SubtitleDatabase
 from Plugins.Extensions.SubsDownloader2.SourceCode.xbmc_subtitles.utilities import languageTranslate #toOpenSubtitles_two
@@ -152,9 +152,9 @@ class Subtitulos(SubtitleDatabase.SubtitleDB):
 
     def downloadFile(self, url, filename):
         ''' Downloads the given url to the given filename '''
-        req = urllib2.Request(url, headers={'Referer' : url, 'User-Agent' : 'Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3)'})
+        req = six.moves.urllib.request.Request(url, headers={'Referer' : url, 'User-Agent' : 'Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3)'})
         
-        f = urllib2.urlopen(req)
+        f = six.moves.urllib.request.urlopen(req)
         dump = open(filename, "wb")
         dump.write(f.read())
         dump.close()

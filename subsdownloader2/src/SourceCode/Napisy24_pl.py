@@ -4,7 +4,7 @@ import xml.dom.minidom
 import time
 import re
 import os
-from urllib import quote
+from six.moves.urllib.parse import quote
 from operator import itemgetter#, attrgetter
 from Plugins.Extensions.SubsDownloader2.SourceCode.archives_extractor import zip_extractor
 from Plugins.Extensions.SubsDownloader2.SourceCode.periscope import SubtitleDatabase

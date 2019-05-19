@@ -1,6 +1,6 @@
 from __future__ import print_function
 import threading
-import urllib
+import six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error
 import os
 from Screens.Console import Console
 from Screens.Screen import Screen
@@ -37,7 +37,7 @@ class IsNewVersionCheck(threading.Thread):
         except:
             error_detected = 1        
         try:
-            latest_vestion_data = urllib.urlopen(self.__latest_version_info_url)
+            latest_vestion_data = six.moves.urllib.request.urlopen(self.__latest_version_info_url)
             latest_verion = latest_vestion_data.readlines()
             latest_vestion_data.close()
             print("Latest version: %s" % str(latest_verion[0]))
@@ -131,7 +131,7 @@ class CommertialBannerDownload(threading.Thread):
     def __download_picture_urls(self):
 	picture_links = []
 	try:
-	    URL_file = urllib.urlopen(URL_text_file)
+	    URL_file = six.moves.urllib.request.urlopen(URL_text_file)
 	    picture_links = URL_file.readlines()
 	    URL_file.close()
 	except:
@@ -150,7 +150,7 @@ class CommertialBannerDownload(threading.Thread):
 	picture_counter = 0
 	for x in pictures_URLS:
 	    try:
-		flag = urllib.urlopen(x,)
+		flag = six.moves.urllib.request.urlopen(x,)
 		picture_file = open((Subtitle_Downloader_temp_dir+"%s.png" % picture_counter), "wb")
 		picture_file.write(flag.read())
 		flag.close()

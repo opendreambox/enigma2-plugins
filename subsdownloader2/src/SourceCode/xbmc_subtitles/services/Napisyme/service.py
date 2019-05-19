@@ -6,7 +6,7 @@
 # Credits to amet, Guilherme Jardim, and many more.
 # mrto
 
-import urllib2, re, string, sys, os
+import six.moves.urllib.request, six.moves.urllib.error, six.moves.urllib.parse, re, string, sys, os
 #, xbmc
 from Plugins.Extensions.SubsDownloader2.SourceCode.xbmc_subtitles.utilities import log, twotofull
 from Plugins.Extensions.SubsDownloader2.SourceCode.archives_extractor import zip_extractor
@@ -73,15 +73,15 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
       movie_title_plus = original_title.replace(" ","+")
       url = '%s%s' % (main_url, movie_title_plus)
     log( __name__ , "Pobieram z [ %s ]" % (url))     
-    response = urllib2.urlopen(url)
+    response = six.moves.urllib.request.urlopen(url)
     content = response.read()
     getallsubs(content, title, subtitles_list, file_original_path)
     return subtitles_list, "", "" #standard output
 
 #def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id, screen_session):  #standard input
-    import urllib
-    f = urllib.urlopen(subtitles_list[pos][ "link" ])
+    import six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error
+    f = six.moves.urllib.request.urlopen(subtitles_list[pos][ "link" ])
     language = subtitles_list[pos][ "language_name" ]
    
     local_tmp_file = os.path.join(tmp_sub_dir, "zipsubs.zip")

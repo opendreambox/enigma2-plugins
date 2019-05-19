@@ -5,7 +5,7 @@ import re
 import sys
 import hashlib
 #import shutil
-import urllib
+import six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error
 import codecs
 #from Screens.MessageBox import MessageBox
 
