@@ -16,6 +16,7 @@ import os.path
 
 from enigma import eListboxPythonMultiContent, eListbox, gFont, iServiceInformation, \
 	RT_HALIGN_LEFT, RT_HALIGN_RIGHT, eServiceReference, eServiceCenter
+from six.moves import range
 
 class MovieList(GUIComponent):
 	SORT_ALPHANUMERIC = 1
