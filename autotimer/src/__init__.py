@@ -2,6 +2,7 @@
 # Config
 from Components.config import config, ConfigSubsection, ConfigOnOff, \
 	ConfigNumber, ConfigSelection, ConfigSelectionNumber, ConfigYesNo, ConfigText
+import six
 
 config.plugins.autotimer = ConfigSubsection()
 config.plugins.autotimer.autopoll = ConfigOnOff(default=False)
@@ -56,11 +57,11 @@ config.plugins.autotimer.searchlog_max = ConfigSelectionNumber(5, 20, 1, default
 
 try:
 	xrange = xrange
-	iteritems = lambda d: d.iteritems()
-	itervalues = lambda d: d.itervalues()
+	iteritems = lambda d: six.iteritems(d)
+	itervalues = lambda d: six.itervalues(d)
 except NameError:
 	xrange = range
-	iteritems = lambda d: d.items()
-	itervalues = lambda d: d.values()
+	iteritems = lambda d: list(d.items())
+	itervalues = lambda d: list(d.values())
 
 __all__ = ['config', 'iteritems', 'itervalues', 'xrange']
