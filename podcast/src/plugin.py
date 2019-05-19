@@ -2,6 +2,7 @@
 ## Podcast
 ## by AliAbdul
 ##
+from __future__ import division
 from Components.ActionMap import ActionMap
 from Components.config import config, ConfigSelection, ConfigSubsection, ConfigText, ConfigYesNo, getConfigListEntry
 from Components.ConfigList import ConfigListScreen
@@ -108,7 +109,7 @@ class BufferThread():
 		self.download.start().addCallback(self.httpFinished).addErrback(self.httpFailed)
 
 	def httpProgress(self, recvbytes, totalbytes):
-		self.progress = int(100 * recvbytes / float(totalbytes))
+		self.progress = int(100 * recvbytes // float(totalbytes))
 
 	def httpFinished(self, string=""):
 		self.downloading = False
