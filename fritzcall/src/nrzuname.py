@@ -23,6 +23,7 @@ $Date: 2017-06-08 18:35:18 +0200 (Thu, 08 Jun 2017) $
 from __future__ import print_function
 import re, sys, os
 from xml.dom.minidom import parse
+from six import unichr
 
 try:
 	import logging
