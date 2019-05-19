@@ -1,4 +1,5 @@
 from __future__ import division
+from __future__ import print_function
 from enigma import eTimer
 
 from twisted.web import resource, server, proxy, http
@@ -34,11 +35,11 @@ class M3u8Client(http.HTTPClient):
 		self.responseEndCallback = responseEndCallback
 
 	def connectionLost(self, reason):
-		print "[StreamServerSeek] m3u8 %s: connectionLost (%s)" % (hex(id(self)), reason)
+		print("[StreamServerSeek] m3u8 %s: connectionLost (%s)" % (hex(id(self)), reason))
 		http.HTTPClient.connectionLost(self, reason)
 	
 	def clientConnectionFailed(self, connector, reason):
-		print "[StreamServerSeek] m3u8 %s: clientConnectionFailed (%s)" % (hex(id(self)), reason)
+		print("[StreamServerSeek] m3u8 %s: clientConnectionFailed (%s)" % (hex(id(self)), reason))
 		http.HTTPClient.clientConnectionFailed(self, connector, reason)
 
 	def sendCommand(self, command, path):
@@ -53,7 +54,7 @@ class M3u8Client(http.HTTPClient):
 
 	def handleResponseEnd(self):
 		self.transport.abortConnection()
-		print "[StreamServerSeek] m3u8: aborted connection"
+		print("[StreamServerSeek] m3u8: aborted connection")
 		if not self._finished:
 			self._finished = True
 			self.transport.loseConnection()
@@ -83,7 +84,7 @@ class MyProxyClient(proxy.ProxyClient):
 	_preventWrite = False
 
 	def __init__(self, command, rest, version, headers, data, father, responseEndCallback, statusCallback):
-		print "[StreamServerSeek] client %s: init" % hex(id(self))
+		print("[StreamServerSeek] client %s: init" % hex(id(self)))
 		proxy.ProxyClient.__init__(self, command, rest, version, headers, data, father)
 		self.headers["connection"] = "keep-alive"
 		self.version = version
@@ -92,15 +93,15 @@ class MyProxyClient(proxy.ProxyClient):
 		father.notifyFinish().addBoth(self.disconnectChildConn)
 	
 	def connectionMade(self):
-		print "[StreamServerSeek] client %s: connectionMade" % hex(id(self))
+		print("[StreamServerSeek] client %s: connectionMade" % hex(id(self)))
 		proxy.ProxyClient.connectionMade(self)
 
 	def connectionLost(self, reason):
-		print "[StreamServerSeek] client %s: connectionLost (%s)" % (hex(id(self)), reason)
+		print("[StreamServerSeek] client %s: connectionLost (%s)" % (hex(id(self)), reason))
 		proxy.ProxyClient.connectionLost(self, reason)
 	
 	def clientConnectionFailed(self, connector, reason):
-		print "[StreamServerSeek] client %s: clientConnectionFailed (%s)" % (hex(id(self)), reason)
+		print("[StreamServerSeek] client %s: clientConnectionFailed (%s)" % (hex(id(self)), reason))
 		proxy.ProxyClient.clientConnectionFailed(self, connector, reason)
 
 	def sendCommand(self, command, path):
@@ -124,12 +125,12 @@ class MyProxyClient(proxy.ProxyClient):
 			self.quietLoss = True
 			self.transport.loseConnection()
 		elif self._finished and self.father.finished and not self.father._disconnected:
-			print "[StreamServerSeek] Losing father connection..."
+			print("[StreamServerSeek] Losing father connection...")
 			self.father.quietLoss = True
 			self.father.transport.loseConnection()
 		else:
-			print "[StreamServerSeek] What the fuck...."
-			print "[StreamServerSeek] preventWrite %s, finished %s, father.finished %s, father.disconnected %s" % (self._preventWrite, self._finished, self.father.finished, self.father._disconnected)
+			print("[StreamServerSeek] What the fuck....")
+			print("[StreamServerSeek] preventWrite %s, finished %s, father.finished %s, father.disconnected %s" % (self._preventWrite, self._finished, self.father.finished, self.father._disconnected))
 
 	def handleHeader(self, key, value):
 		if not self._preventWrite and not self.responseEndCallback or key.lower() != 'content-length':
@@ -140,9 +141,9 @@ class MyProxyClient(proxy.ProxyClient):
 			proxy.ProxyClient.handleEndHeaders(self)
 
 	def handleStatus(self, version, code, message):
-		print "[StreamServerSeek] client %s: status %s" % (hex(id(self)), code)
+		print("[StreamServerSeek] client %s: status %s" % (hex(id(self)), code))
 		if int(code) == 404:
-			print "[StreamServerSeek] %s returned status 404 -> fake 503" % self.rest
+			print("[StreamServerSeek] %s returned status 404 -> fake 503" % self.rest)
 			self.father.setResponseCode(503, "Service Unavailable")
 		else:
 			self.father.setResponseCode(int(code), message)
@@ -151,19 +152,19 @@ class MyProxyClient(proxy.ProxyClient):
 	
 	def disconnectChildConn(self, ignored):
 		if self.father._disconnected:
-			print "[StreamServerSeek] notifiyFinish close client conn"
+			print("[StreamServerSeek] notifiyFinish close client conn")
 # This seems to crash dreamliveserver:
 #			self.quietLoss = True
 #			self.transport.loseConnection()
 
 	def __del__(self):
-		print "[StreamServerSeek] proxyclient %s died" % hex(id(self))
+		print("[StreamServerSeek] proxyclient %s died" % hex(id(self)))
 
 class MyProxyClientFactory(proxy.ProxyClientFactory):
 	protocol = MyProxyClient
 
 	def __init__(self, command, rest, version, headers, data, father, responseEndCallback, statusCallback, setClientCallback):
-		print "[StreamServerSeek] new proxyclientfactory %s" % hex(id(self))
+		print("[StreamServerSeek] new proxyclientfactory %s" % hex(id(self)))
 		proxy.ProxyClientFactory.__init__(self, command, rest, version, headers, data, father)
 		self.responseEndCallback = responseEndCallback
 		self.statusCallback = statusCallback
@@ -180,7 +181,7 @@ class MyProxyClientFactory(proxy.ProxyClientFactory):
 		return client
 
 	def __del__(self):
-		print "[StreamServerSeek] proxyclientfactory %s died" % hex(id(self))
+		print("[StreamServerSeek] proxyclientfactory %s died" % hex(id(self)))
 
 def getSegmentNoFromFilename(filename):
 	try:
@@ -205,7 +206,7 @@ class VodRequestHandler(object):
 		self.streamServerSeek = StreamServerSeek()
 		self._timer = eTimer()
 		self._timer_conn = self._timer.timeout.connect(self.reConnectClientFactory)
-		print "[StreamServerSeek] handler %s" % hex(id(self))
+		print("[StreamServerSeek] handler %s" % hex(id(self)))
 	
 	def setClient(self, client):
 		self._client = client
@@ -270,16 +271,16 @@ class VodRequestHandler(object):
 		
 		if self.streamServerSeek._lastSegmentRequest + 30 > time.time():
 			if self.streamServerSeek._m3u8Timer is None:
-				print "[StreamServerSeek] ReRequestM3u8"
+				print("[StreamServerSeek] ReRequestM3u8")
 				self.streamServerSeek._m3u8Timer = eTimer()
 				self.streamServerSeek._m3u8Timer_conn = self.streamServerSeek._m3u8Timer.timeout.connect(self.doReRequestM3u8)
 				self.streamServerSeek._m3u8Timer.start(500)
 # no clue why, but callLater sometimes doesn't work...
 #				self.streamServerSeek._m3u8CallId = reactor.callLater(1, self.doReRequestM3u8)
 			else:
-				print "[StreamServerSeek] ReRequestM3u8 timer already running"
+				print("[StreamServerSeek] ReRequestM3u8 timer already running")
 		else:
-			print "[StreamServerSeek] Stop requesting m3u8 repeatedly"
+			print("[StreamServerSeek] Stop requesting m3u8 repeatedly")
 			if not self.streamServerSeek._m3u8Timer is None and self.streamServerSeek._m3u8Timer.isActive():
 				self.streamServerSeek._m3u8Timer.stop()
 
@@ -290,10 +291,10 @@ class VodRequestHandler(object):
 #		print "[StreamServerSeek] reConnectClientFactoryError %s" % ignored
 	
 	def __del__(self):
-		print "[StreamServerSeek] handler %s died" % hex(id(self))
+		print("[StreamServerSeek] handler %s died" % hex(id(self)))
 	
 	def segmentStatusCallback(self, status, path):
-		print "[StreamServerSeek] segmentStatusCallback %s %s" % (status, path)
+		print("[StreamServerSeek] segmentStatusCallback %s %s" % (status, path))
 		self._status = status
 		segment = getSegmentNoFromFilename(path[1:])
 		if status == 200:
@@ -301,13 +302,13 @@ class VodRequestHandler(object):
 			self.streamServerSeek._lastSuccessfullSegment = segment
 		if status == 404:
 			if self._realSegment <= self.streamServerSeek._vodSegments[0]:
-				print "[StreamServerSeek] Requested Segment %d doesn't exist anymore -> rewrite next request to %d. Client connection is probably too slow - consider lowering bitrate." % (segment, self.streamServerSeek._vodSegments[0] + 1)
+				print("[StreamServerSeek] Requested Segment %d doesn't exist anymore -> rewrite next request to %d. Client connection is probably too slow - consider lowering bitrate." % (segment, self.streamServerSeek._vodSegments[0] + 1))
 				self.streamServerSeek._lastSuccessfullSegment = self.streamServerSeek._vodSegments[0]
 				if segment == 0:
 					# most probably restart/reload of player, force jump to begin
 					self.streamServerSeek._expectedSegment = -1
 			else:
-				print "[StreamServerSeek] segment doesn't exist yet (%d > %d).. retry in 0.25 sec" % (self._realSegment, self.streamServerSeek._vodSegments[0])
+				print("[StreamServerSeek] segment doesn't exist yet (%d > %d).. retry in 0.25 sec" % (self._realSegment, self.streamServerSeek._vodSegments[0]))
 				self._client.preventWrite()
 				self._client.transport.abortConnection()
 #				self._client.quietLoss = True
@@ -345,7 +346,7 @@ class VodRequestHandler(object):
 			if not segmentOffsetFunc is None:
 				start_time = time.time()
 				segmentOffsetFunc(self._segmentBuffer, length, self._requestedSegment - self._realSegment)
-				print("[StreamServerSeek] segmentOffsetFunc took %s seconds" % (time.time() - start_time))
+				print(("[StreamServerSeek] segmentOffsetFunc took %s seconds" % (time.time() - start_time)))
 			if request.responseHeaders.getRawHeaders(b'content-length') is None:
 				request.responseHeaders.setRawHeaders(b'content-length', [("%d" % length).encode("ascii")])
 		if not self._segmentBuffer is None:
@@ -385,7 +386,7 @@ class VodRequestHandler(object):
 		self.reConnectClientFactory()
 	
 	def reConnectClientFactory(self):
-		print "[StreamServerSeek] reConnectClientFactory"
+		print("[StreamServerSeek] reConnectClientFactory")
 		clientFactory = VodResource.proxyClientFactoryClass(
 			self.command,
 			self.rest,
@@ -443,7 +444,7 @@ class VodResource(resource.Resource):
 				if segment == self.streamServerSeek._expectedSegment:
 					self._nextExpectedSegment = self.streamServerSeek._expectedSegment + 1
 				else:
-					print "[StreamServerSeek] expected segment %d, but got %d -> jump to sec %d" % (self.streamServerSeek._expectedSegment, segment, segment * 2)
+					print("[StreamServerSeek] expected segment %d, but got %d -> jump to sec %d" % (self.streamServerSeek._expectedSegment, segment, segment * 2))
 					seek = self.streamServerSeek.getSeek()
 					if seek:
 						seek.seekTo(segment * 2 * 90000)
@@ -462,7 +463,7 @@ class VodResource(resource.Resource):
 				
 				oldpath = path
 				path = "/segment%d.ts" % (self.streamServerSeek._lastSuccessfullSegment + 1)
-				print "[StreamServerSeek] Vod-Proxy %s -> %s" % (oldpath, path)
+				print("[StreamServerSeek] Vod-Proxy %s -> %s" % (oldpath, path))
 				handler.connectClientFactory(
 					request.method, path, "HTTP/1.1",
 					request.getAllHeaders(), request.content.read(), request, responseEndCallback, statusCallback, setClientCallback,

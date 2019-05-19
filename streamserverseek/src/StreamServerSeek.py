@@ -1,3 +1,4 @@
+from __future__ import print_function
 from ctypes import *
 
 from enigma import eStreamServer, eServiceReference, iPlayableService, eTimer
@@ -49,7 +50,7 @@ class StreamServerSeek(PerServiceBase):
 		if not 'session' in k:
 			return
 
-		print "[StreamServerSeek] init"
+		print("[StreamServerSeek] init")
 		
 		config.misc.standbyCounter.addNotifier(self._onStandby, initial_call = False)
 
@@ -68,22 +69,22 @@ class StreamServerSeek(PerServiceBase):
 		
 	def _onStandby(self, element):
 		if self._isTemporaryLiveMode:
-			print "[StreamServerSeek] onStandBy: Ending temporary Live-Mode"
+			print("[StreamServerSeek] onStandBy: Ending temporary Live-Mode")
 			self.endTemporaryLiveMode(False)
 
 		if self._origCec:
-			print "[StreamServerSeek] Re-enable CEC"
+			print("[StreamServerSeek] Re-enable CEC")
 			config.cec.enabled.value = True
 			config.cec.enabled.save()
 
 	def _onServiceChanged(self):
 		if self._isTemporaryLiveModeActive and self._temporaryLiveModeService and eServiceReference(self._temporaryLiveModeService).toCompareString() != self.navcore.getCurrentServiceReference().toCompareString():
-			print "[StreamServerSeek] onServiceChanged: Ending temporary Live-Mode"
+			print("[StreamServerSeek] onServiceChanged: Ending temporary Live-Mode")
 			self.endTemporaryLiveMode(False)
 
 	def _onEOF(self):
 		if self._isTemporaryLiveModeActive:
-			print "[StreamServerSeek] onEOF: Ending temporary Live-Mode"
+			print("[StreamServerSeek] onEOF: Ending temporary Live-Mode")
 			self.endTemporaryLiveMode()
 
 	def _onPlaying(self):
@@ -92,10 +93,10 @@ class StreamServerSeek(PerServiceBase):
 	
 	def _onSourceStateChanged(self, state):
 		if self._isTemporaryLiveMode and (state == False or state == 2):
-			print "[StreamServerSeek] Temporary Live-Mode active, but all clients disconnected. End it in 15 seconds"
+			print("[StreamServerSeek] Temporary Live-Mode active, but all clients disconnected. End it in 15 seconds")
 			self._timer.start(15000, True)
 		elif self._isTemporaryLiveMode and self._timer.isActive():
-			print "[StreamServerSeek] Reset end-timer"
+			print("[StreamServerSeek] Reset end-timer")
 			self._timer.stop()
 		
 		if state == True or state == 4:
@@ -115,12 +116,12 @@ class StreamServerSeek(PerServiceBase):
 		if not self._seekToMin:
 			return
 
-		print "[StreamServerSeek] doSeek()"
+		print("[StreamServerSeek] doSeek()")
 
 		seek = self.getSeek()
 
 		if seek:
-			print "[StreamServerSeek] Seeking to %d minutes" % self._seekToMin
+			print("[StreamServerSeek] Seeking to %d minutes" % self._seekToMin)
 			seek.seekTo(self._seekToMin * 60 * 90000)
 
 		self._seekToMin = 0
@@ -133,7 +134,7 @@ class StreamServerSeek(PerServiceBase):
 		if not idle:
 			self._origCec = config.cec.enabled.value
 			if self._origCec:
-				print "[StreamServerSeek] Disable CEC"
+				print("[StreamServerSeek] Disable CEC")
 				config.cec.enabled.value = False
 				config.cec.enabled.save()
 			inStandby.Power()
@@ -197,7 +198,7 @@ class StreamServerSeek(PerServiceBase):
 			if service and service.valid():
 				self._session.nav.playService(service)
 	
-		print "[StreamServerSeek] Set input mode to BACKGROUND"
+		print("[StreamServerSeek] Set input mode to BACKGROUND")
 		self.forceInputMode(eStreamServer.INPUT_MODE_BACKGROUND)
 
 		if idle:

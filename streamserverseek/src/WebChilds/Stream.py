@@ -1,3 +1,4 @@
+from __future__ import print_function
 from twisted.web import resource, http, server
 
 from enigma import eStreamServer, eServiceReference
@@ -30,10 +31,10 @@ class StreamResource(resource.Resource):
 
 	def _onTemporaryLiveMode(self):
 		if self.streamServerSeek._isTemporaryLiveMode and self.streamServerSeek._temporaryLiveModeService:
-			print "[StreamServerSeek] Entered temporary Live-Mode - playing service"
+			print("[StreamServerSeek] Entered temporary Live-Mode - playing service")
 			service = eServiceReference(self.streamServerSeek._temporaryLiveModeService)
 			self.session.nav.playService(service)
-			print "[StreamServerSeek] service %s" % service
+			print("[StreamServerSeek] service %s" % service)
 			self.streamServerSeek._isTemporaryLiveModeActive = True
 
 		reactor.callLater(1, self.finishRequest)
@@ -100,7 +101,7 @@ class StreamResource(resource.Resource):
 		if "min" in request.args:
 			try:
 				self.streamServerSeek._seekToMin = int(request.args["min"][0])
-				print "[StreamServerSeek] Will seek to %s" % self.streamServerSeek._seekToMin
+				print("[StreamServerSeek] Will seek to %s" % self.streamServerSeek._seekToMin)
 			except Exception:
 				pass
 
@@ -109,11 +110,11 @@ class StreamResource(resource.Resource):
 		if movieExt == "ts":
 			wait = False
 			if self.streamServerSeek._isTemporaryLiveMode:
-				print "[StreamServerSeek] Requested service does not require Live-Mode, but Live-Mode is still active. End it!"
+				print("[StreamServerSeek] Requested service does not require Live-Mode, but Live-Mode is still active. End it!")
 				StreamServerSeek().endTemporaryLiveMode()
 				wait = True
 			elif streamServerControl.getInputMode() != eStreamServer.INPUT_MODE_BACKGROUND:
-				print "[StreamServerSeek] Set input mode to BACKGROUND"
+				print("[StreamServerSeek] Set input mode to BACKGROUND")
 				StreamServerSeek().forceInputMode(eStreamServer.INPUT_MODE_BACKGROUND)
 				wait = True
 				
@@ -135,36 +136,36 @@ class StreamResource(resource.Resource):
 		from Screens.Standby import inStandby
 		if inStandby is None:
 			if self.streamServerSeek._isTemporaryLiveMode:
-				print "[StreamServerSeek] Box already in temporary Live-Mode"
+				print("[StreamServerSeek] Box already in temporary Live-Mode")
 				self.streamServerSeek._temporaryLiveModeService = "4097:0:0:0:0:0:0:0:0:0:" + urllib.quote(moviePath)
 				service = eServiceReference(self.streamServerSeek._temporaryLiveModeService)
 				if service.toCompareString() != self.session.nav.getCurrentServiceReference().toCompareString():
 					self.session.nav.playService(service)
-					print "[StreamServerSeek] service %s" % service
+					print("[StreamServerSeek] service %s" % service)
 				
-				print "[StreamServerSeek] Seek is now %s" % self.streamServerSeek._seekToMin
+				print("[StreamServerSeek] Seek is now %s" % self.streamServerSeek._seekToMin)
 				self.streamServerSeek.doSeek()
 
 				request.setHeader("Location", streamUrl)
 				request.setResponseCode(http.FOUND)
 				return ""
 			else:
-				print "[StreamServerSeek] Requiring Live-Mode, but Box not in idle mode - do nothing"
+				print("[StreamServerSeek] Requiring Live-Mode, but Box not in idle mode - do nothing")
 				request.setResponseCode(http.INTERNAL_SERVER_ERROR)
 				return ""
 		else:
 			streamServerControl.stopEncoderService()
-			print "[StreamServerSeek] Switching on Box"
+			print("[StreamServerSeek] Switching on Box")
 			self.streamServerSeek._tvLastService = config.tv.lastservice.value
 			self.streamServerSeek._temporaryLiveModeService = "4097:0:0:0:0:0:0:0:0:0:" + urllib.quote(moviePath)
 			inStandby.onClose.append(self._onTemporaryLiveMode)
-			print "%s" % StreamServerSeek
-			print "%s" % StreamServerSeek()
+			print("%s" % StreamServerSeek)
+			print("%s" % StreamServerSeek())
 			StreamServerSeek().changeIdleMode(False)
 			self.streamServerSeek._isTemporaryLiveMode = True
 			
 			if streamServerControl.getInputMode() != eStreamServer.INPUT_MODE_LIVE:
-				print "[StreamServerSeek] Set input mode to LIVE"
+				print("[StreamServerSeek] Set input mode to LIVE")
 				StreamServerSeek().forceInputMode(eStreamServer.INPUT_MODE_LIVE)
 
 			request.setHeader("Location", streamUrl)

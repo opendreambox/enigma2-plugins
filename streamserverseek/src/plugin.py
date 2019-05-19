@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Plugins.Plugin import PluginDescriptor
 
 from enigma import eEnv
@@ -29,7 +30,7 @@ class M3u8GzipEncoderFactory(GzipEncoderFactory):
 def autostart(reason,**kwargs):
 	if "session" in kwargs:
 		sss = StreamServerSeek(session = kwargs["session"])
-		print "session %s" % sss
+		print("session %s" % sss)
 
 		root = File(eEnv.resolve("${libdir}/enigma2/python/Plugins/Extensions/StreamServerSeek/web-data"))
 		root.putChild("web", ScreenPageCORS(kwargs["session"], util.sibpath(__file__, "web"), True) )

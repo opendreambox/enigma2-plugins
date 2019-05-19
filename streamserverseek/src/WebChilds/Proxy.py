@@ -1,3 +1,4 @@
+from __future__ import print_function
 from twisted.web import resource, server, proxy
 from twisted.internet import reactor
 
@@ -58,7 +59,7 @@ class ProxyResource(resource.Resource):
 		if qs:
 			path = path + '?' + qs
 		
-		print "[StreamServerSeek] Reverse-Proxy %s" % path
+		print("[StreamServerSeek] Reverse-Proxy %s" % path)
 
 		clientFactory = self.proxyClientFactoryClass(
 			request.method, path, request.clientproto,
