@@ -34,6 +34,7 @@
 # unsigned. My thanks to Jerome Poincheval for the fix.
 #
 
+from __future__ import division
 import os
 from socket import *
 import struct
@@ -48,7 +49,7 @@ ICMP_ECHO_REQUEST=8 # Seems to be the same on Solaris.
 # to suggest that it gives the same answers as in_cksum in ping.c
 def checksum(str):
   sum=0
-  countTo=(len(str)/2)*2
+  countTo=(len(str)//2)*2
   count=0
   while count<countTo:
     thisVal=ord(str[count+1])*256+ord(str[count])
