@@ -3,6 +3,7 @@ from Components.MenuList import MenuList
 from Components.ResourceManager import resourcemanager
 from Screens.Screen import Screen
 from Tools.Log import Log
+import six
 
 class SatIPTuner(object):
 	TUNER_TYPE_S = "DVBS"
@@ -46,7 +47,7 @@ class SatIPTuner(object):
 
 	def getReadableCaps(self):
 		caps = []
-		for ttype, tcount in self.caps.iteritems():
+		for ttype, tcount in six.iteritems(self.caps):
 			caps.append(_("{0}x {1}").format(tcount, ttype))
 		return ", ".join(caps)
 	readableCaps = property(getReadableCaps)

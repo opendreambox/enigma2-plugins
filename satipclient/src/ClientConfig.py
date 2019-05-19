@@ -2,6 +2,7 @@ from enigma import eEnv
 from Tools.Log import Log
 from Tools.Directories import fileExists
 from SatIPTuner import SatIPTuner
+import six
 
 class TunerEntry():
 	VTUNER_TYPE_SATIP_CLIENT = "satip_client"
@@ -85,7 +86,7 @@ class ClientConfig(object):
 
 	def addTuner(self, ip, tunerType, entryType=TunerEntry.VTUNER_TYPE_SATIP_CLIENT):
 		entry = TunerEntry.create(ip, tunerType, entryType=entryType)
-		self._config[len(self._config.keys())] = entry
+		self._config[len(list(self._config.keys()))] = entry
 
 	def removeTuner(self, index, tunerEntry):
 		if index in self._config:
@@ -129,9 +130,9 @@ class ClientConfig(object):
 		with open(self.CONFIG_FILE, 'w') as f:
 			f.write("#This file is managed by your dreambox! All comments will be lost on next save using the UI!\n")
 			index = 0
-			for tunerEntry in self._config.itervalues():
+			for tunerEntry in six.itervalues(self._config):
 				tmp = []
-				for key, value in tunerEntry.data().iteritems():
+				for key, value in six.iteritems(tunerEntry.data()):
 					tmp.append("%s:%s" % (key, value))
 				tuner_data = ",".join(tmp)
 				cfgline = "%s=%s\n" % (index, tuner_data)

@@ -8,6 +8,7 @@ from Tools.Log import Log
 
 from SatIPTuner import SatIPTunerOverview, SatIPTuner
 from ClientConfig import vtunerClientConfig, TunerEntry
+import six
 
 
 class SatIPTunerSetup(Screen):
@@ -67,7 +68,7 @@ class SatIPTunerSetup(Screen):
 		self._check_count_lut = {}
 		content = [(_("Count - Type (host)"),)]
 		entries = vtunerClientConfig.getConfig()
-		for index, tunerEntry in entries.iteritems():
+		for index, tunerEntry in six.iteritems(entries):
 			if not tunerEntry.isValidSatIPEntry():
 				#Log.w("filtering %s, it's not a satip tuner!" % (tunerEntry,))
 				text = "%s - %s (%s)" % (index, tunerEntry.tunerType, tunerEntry.entryType)
@@ -107,7 +108,7 @@ class SatIPTunerSetup(Screen):
 
 	def _selectModulationType(self, tuner):
 		choices = []
-		caps_keys = tuner.caps.keys()
+		caps_keys = list(tuner.caps.keys())
 		type = mapped_type = count = None
 		for caps_key in caps_keys:
 			type = caps_key
