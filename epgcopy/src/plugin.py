@@ -200,7 +200,7 @@ class epgCopyScreen(Screen, ConfigListScreen):
         
 
 def autoCpy(reason, **kwargs):
-    if kwargs.has_key("session"):
+    if "session" in kwargs:
         global Session
         Session = kwargs["session"]
         Session.open(copyEveryDay)
