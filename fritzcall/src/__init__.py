@@ -8,6 +8,7 @@ $Revision: 1296 $
 $Date: 2016-05-02 15:52:11 +0200 (Mon, 02 May 2016) $
 '''
 
+from __future__ import division
 from Components.config import config #@UnresolvedImport
 from Components.Language import language
 from Tools.Directories import resolveFilename, SCOPE_LANGUAGE, SCOPE_PLUGINS, SCOPE_SKIN_IMAGE #@UnresolvedImport
@@ -39,7 +40,7 @@ def __(text, front=True):
 	#	return '.....' 
 	#===========================================================================
 	out =""
-	for i in range(len(text)/2):
+	for i in range(len(text)//2):
 		out = out + text[i*2] + '.'
 	return out
 
