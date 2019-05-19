@@ -149,7 +149,7 @@ class DreamboxServerProtocol(WebSocketServerProtocol):
 		self.sendJSON(data)
 
 	def sendJSON(self, msg):
-		if not msg.has_key("id"):
+		if "id" not in msg:
 			self._requestID += 1
 			msg['id'] = self._requestID
 		msg = json.dumps(msg).encode('utf8')
