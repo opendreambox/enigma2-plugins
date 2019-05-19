@@ -1,5 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 from __future__ import division
+from __future__ import print_function
 from Plugins.Plugin import PluginDescriptor
 from Components.ActionMap import HelpableActionMap
 from Components.config import config
@@ -32,7 +33,7 @@ def getServiceName(self):
 			return (serviceName, season)
 
 def InfoBarSeek__serviceStarted(self):
-	print "=== InfoBarSeek__serviceStarted SkipIntro"
+	print("=== InfoBarSeek__serviceStarted SkipIntro")
 	baseInfoBarSeek__serviceStarted(self)
 
 	seek = self.getSeek()
@@ -54,7 +55,7 @@ def InfoBarSeek__serviceStarted(self):
 		Notifications.AddNotification(MessageBox, msgtxt, MessageBox.TYPE_INFO, timeout=3)
 
 def InfoBarSeek__seekableStatusChanged(self):
-		print "=== InfoBarSeek__seekableStatusChanged SkipIntro"
+		print("=== InfoBarSeek__seekableStatusChanged SkipIntro")
 		baseInfoBarSeek__seekableStatusChanged(self)
 		if self["SkipIntroSeekActions"] is not None:
 			#do not use this actionmap in tv-mode or on active timeshift
@@ -64,7 +65,7 @@ def InfoBarSeek__seekableStatusChanged(self):
 				self["SkipIntroSeekActions"].setEnabled(True)
 
 def InfoBarSeek__init__(self, actionmap = "InfobarSeekActions"):
-	print "== InfoBarSeek__init__ SkipIntro"
+	print("== InfoBarSeek__init__ SkipIntro")
 	self["SkipIntroSeekActions"] = None
 	baseInfoBarSeek__init__(self, actionmap)
 
@@ -78,7 +79,7 @@ def InfoBarSeek__init__(self, actionmap = "InfobarSeekActions"):
 	self.database.initialize()
 
 	def skipIntro():
-		print "== skip intro"
+		print("== skip intro")
 		title = getServiceName(self)
 
 		if self.setSkipTimeStart:

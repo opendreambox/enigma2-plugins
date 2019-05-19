@@ -1,3 +1,4 @@
+from __future__ import print_function
 import sqlite3
 
 SI_DATABASE_PATH = '/etc/enigma2/SkipIntro.db'
@@ -77,7 +78,7 @@ class SIDatabase:
 		cur.close()
 
 	def getSkipTime(self, name, season):
-		print "=== getSkipTime", name, season
+		print("=== getSkipTime", name, season)
 		skipTime = 0
 		dbname = ""
 		cur = self._srDBConn.cursor()
