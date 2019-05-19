@@ -26,7 +26,7 @@ from Tools.Downloader import downloadWithProgress
 from twisted.web.client import getPage
 from xml.etree.cElementTree import parse
 from xml.dom.minidom import parseString as xmlparseString, parse as xmlparse
-import re, urllib2
+import re, six.moves.urllib.request, six.moves.urllib.error, six.moves.urllib.parse
 
 ###################################################
 
@@ -388,7 +388,7 @@ class PodcastXML(Screen):
 				print("open url")
 				file.close
 				try:
-					source = urllib2.urlopen(head)
+					source = six.moves.urllib.request.urlopen(head)
 				except:
 					pass
 			else:
@@ -451,7 +451,7 @@ class PodcastFeedly(Screen):
 			try:
 				if head.startswith("http"):
 					file.close
-					source = urllib2.urlopen(head)
+					source = six.moves.urllib.request.urlopen(head)
 				else:
 					file.close
 					source = open(fileName)
