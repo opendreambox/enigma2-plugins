@@ -32,6 +32,7 @@ function url() {
 	this.set               = '/autotimer/set';
 	this.edit              = '/autotimer/edit';
 	this.add               = '/autotimer/edit';
+	this.clone             = '/autotimer/clone';
 	this.remove            = '/autotimer/remove';
 	this.parse             = '/autotimer/parse';
 	this.preview           = '/autotimer/simulate';
@@ -269,13 +270,7 @@ var AutoTimerEditorCore = Class.create({
 	loadFinal: function(){
 		if (this.locations != undefined && this.tags != undefined && this.bouquets != undefined && this.hasVps != undefined && this.hasSeriesPlugin != undefined ){
 			// Load and display autotimer list
-			if (this.newautotimer.name!=''){
-				// Load autotimer list and show a new autotimer
-				this.list.loadNew();
-			}else{
-				// Load autotimer list and select the first autotimer
-				this.list.load();
-			}
+			this.list.load();
 		}
 	},
 });
@@ -487,24 +482,74 @@ var AutoTimerMenuController  = Class.create(Controller, {
 });
 
 var AutoTimerListController = Class.create(Controller, {
-	//TODO What about a clone AutoTimer function
 	initialize: function($super, target){
 		$super(new AutoTimerListHandler(target));
-		this.select = null;
-		this.idx = null;
+		this.idx = 0;
 	},
 	
 	load: function(){
 		this.handler.load({});
 	},
 
-	loadNew: function(){
-		this.select = -1;
-		this.handler.load({});
-	},
-
 	onFinished: function(){
-		this.onChange();
+		var selectList = $('list');
+		var selectOptions = selectList.getElementsByTagName('option');
+		var idx = -1;
+		
+		// Set new row size of list
+		selectList.size = selectOptions.length + 2;
+		
+		if (selectOptions.length == 0){
+			// Show empty editor for new AutoTimer
+			autotimereditorcore.edit.load( -1 );
+			
+		}else{
+			if (this.idx == undefined || this.idx == null ){
+				
+				// Select the highest element, it should be the added one
+				value = -1;
+				for (sidx in selectOptions){
+					next = parseInt(unescape(selectOptions[sidx].value));
+					if ( next > value ){
+						value = next;
+						idx = parseInt(sidx);
+					}
+				}
+				
+			}else if ( this.idx >= 0 && selectOptions.length > this.idx ){
+				// Select the given index / row
+				idx = this.idx;
+				
+			}else {
+				// get the id from the cloned autotimer
+				value = -1;
+				for (sidx in selectOptions){
+					next = parseInt(unescape(selectOptions[sidx].value));
+					if ( next > value ){
+						value = next;
+						idx = parseInt(sidx);
+					}
+				}
+				var id = unescape(selectList.options[idx].value); 
+				autotimereditorcore.edit.save( id );
+				
+			}
+			
+			selectOptions[idx].selected = true;
+			
+			// Update editor
+			if (idx >= 0){
+				// Load autotimer
+				var id = unescape(selectOptions[idx].value);
+				autotimereditorcore.edit.load( id );
+			}else{
+				// Show empty editor for new AutoTimer
+				autotimereditorcore.edit.load( -1 );
+			}
+		
+		}
+		
+		this.idx = null;
 	},
 	
 	onChange: function(){
@@ -512,51 +557,14 @@ var AutoTimerListController = Class.create(Controller, {
 		var selectOptions = selectList.getElementsByTagName('option');
 		var idx = selectList.selectedIndex;
 		
-		// Set new row size of list
-		selectList.size = selectOptions.length + 2;
-		
-		if ( selectOptions.length > 0){
-			if (this.select != undefined && this.select != null && this.select != ""){
-				// Select the given AutoTimer because of add/remove action
-				for (idx in selectOptions){
-					if ( this.select == unescape(selectOptions[idx].value) ){
-						selectOptions[idx].selected = true;
-						break;
-					}
-				}
-				this.select = null;
-			}else if (this.idx != undefined && this.idx != null && this.idx != ""){
-				// Select the given index / row
-				if ( selectOptions.length > this.idx){
-					selectOptions[this.idx].selected = true;
-					this.idx = null;
-				}
-			}else{
-				if (idx < 0){
-					// Select at least the first element
-					idx = 0;
-					selectOptions[idx].selected = true;
-				}
-			}
-			
-			// Update editor
-			if (idx >= 0){
-				// Load autotimer
-				var id = unescape(selectList.options[idx].value); 
-				autotimereditorcore.edit.load( id );
-			}else{
-				// Show empty editor for new AutoTimer
-				autotimereditorcore.edit.load( -1 );
-			}
-		
-		} else if (selectOptions.length == 0){
-			// Show empty editor for new AutoTimer
-			autotimereditorcore.edit.load( -1 );
-		}
+		// Update editor
+		// Load autotimer
+		var id = unescape(selectList.options[idx].value); 
+		autotimereditorcore.edit.load( id );
 	},
 	
 	reload: function(){
-		this.select = $('list').value;
+		this.idx = $('list').selectedIndex;
 		$('contentAutoTimerContent').update('<div></div>');
 		this.load();
 	},
@@ -565,7 +573,7 @@ var AutoTimerListController = Class.create(Controller, {
 		this.match = prompt("Name for the new AutoTimer:");
 		if (this.match!=null && this.match!=""){
 			// Retrieve next selected entry
-			this.select = $('list').length+1;
+			this.idx = null;
 			// Add new AutoTimer: Use edit without an id
 			this.handler.add( 
 				{'match' : this.match},
@@ -574,7 +582,28 @@ var AutoTimerListController = Class.create(Controller, {
 				}.bind(this));
 		}
 	},
+	
+	clone: function(){
+		var selectList = $('list');
+		var idx = selectList.selectedIndex; 
+		var selectOptions = selectList.getElementsByTagName('option');
 		
+		match = prompt("Name for the cloned AutoTimer:");
+		if (match!=null && match!=""){
+			
+			this.idx = -1;
+			$('name').value = match;
+			
+			// Add new AutoTimer: Use edit without an id
+			this.handler.add( 
+				{'match' : match},
+				function(request){
+					this.load();
+				}.bind(this));
+			
+		}
+	},
+
 	remove: function(){
 		var selectList = $('list');
 		var idx = selectList.selectedIndex; 
@@ -617,6 +646,12 @@ var AutoTimerListController = Class.create(Controller, {
 			'click',
 			function(event, element){
 				this.add();
+			}.bind(this)
+		);
+		$('clone').on(
+			'click',
+			function(event, element){
+				this.clone();
 			}.bind(this)
 		);
 		$('delete').on(
@@ -820,16 +855,13 @@ var AutoTimerEditController = Class.create(Controller, {
 		}
 	},
 	
-	save: function() {
+	save: function(id) {
 		//TODO Move to a separate class similar AutoTimerListEntry
 		//TODO handle defaults
 		var data = {}
-		var selectList = $('list');
-		var idx = selectList.selectedIndex;
-		if (idx>=0){
-			data['id'] = unescape(selectList.options[idx].value);
-			selectList.options[idx].className = ($('enabled').checked) ? 'enabled' : 'disabled';
-		}
+		
+		data['id'] = id;
+		
 		data['enabled'] = ($('enabled').checked) ? '1' : '0';
 		
 		options = ['match','name','searchType','searchCase','justplay'];
@@ -1247,7 +1279,14 @@ var AutoTimerEditController = Class.create(Controller, {
 		$('save').on(
 			'click',
 			function(event, element){
-				this.save();
+				var selectList = $('list');
+				var idx = selectList.selectedIndex;
+				if (idx>=0){
+					id = unescape(selectList.options[idx].value);
+					selectList.options[idx].className = ($('enabled').checked) ? 'enabled' : 'disabled';
+					this.save(id);
+				}
+				
 			}.bind(this)
 		);
 		$('cancel').on(
