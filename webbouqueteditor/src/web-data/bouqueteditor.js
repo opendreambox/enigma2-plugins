@@ -1,5 +1,5 @@
 var MODE = { tv : 0, radio : 1};
-var NAV_SERVICE = { provider : 0, sat : 1, all : 2 };
+var NAV_SERVICE = { provider : 0, sat : 1, all : 2, iptv : 3 };
 var currentMode = null;
 var currentNav = null;
 var protectionPasswordValid = false;
@@ -48,9 +48,38 @@ function moveOptions(selectId, pos) {
 }
 
 function setProviderName(provider){
-	if( currentNav != NAV_SERVICE.all){
+	if( currentNav == NAV_SERVICE.iptv){
+		$("providerServiceHeader").hide();
+		$("serviceSearch").show();
+		$("contentSelectionSubList").show();
+		$("addIptvButtonSection").show();
+		$("iptvNameSection").show();
+		$("iptvURLSection").show();
+		$("dvbCompliantSection").show();
+		$("activateReconnectSection").show();
+		$("mapIptvService").show();
+	}
+	else if( currentNav != NAV_SERVICE.all){
+		$("providerServiceHeader").show();
+		$("serviceSearch").show();
+		$("contentSelectionSubList").show();
+		$("addIptvButtonSection").hide();
+		$("iptvNameSection").hide();
+		$("iptvURLSection").hide();
+		$("dvbCompliantSection").hide();
+		$("activateReconnectSection").hide();
+		$("mapIptvService").hide();
 		$("providerServiceHeader").update("All Services of '" + provider + "'");
 	} else {
+		$("providerServiceHeader").show();
+		$("serviceSearch").show();
+		$("contentSelectionSubList").show();
+		$("addIptvButtonSection").hide();
+		$("iptvNameSection").hide();
+		$("iptvURLSection").hide();
+		$("dvbCompliantSection").hide();
+		$("activateReconnectSection").hide();
+		$("mapIptvService").hide();
 		$("providerServiceHeader").update("All Services");
 	}
 }
@@ -93,7 +122,7 @@ function setServiceNav(type){
 	if (protectionPasswordValid) {
 		currentNav = type;
 		setServiceNavButtons(type);
-		if(type == NAV_SERVICE.all){
+		if(type == NAV_SERVICE.all || type == NAV_SERVICE.iptv){
 			$("contentSelectionList").hide();
 			setProviderName("");
 		} else {
@@ -112,20 +141,28 @@ function setServiceNavButtons(type){
 			setNavBackground($("navProv"), true);
 			setNavBackground($("navSat"), false);
 			setNavBackground($("navAll"), false);
+			setNavBackground($("navIPTV"), false);
 			
 		break;
 		case NAV_SERVICE.sat:
 			setNavBackground($("navProv"), false);
 			setNavBackground($("navSat"), true);
 			setNavBackground($("navAll"), false);
-			
+			setNavBackground($("navIPTV"), false);
+						
 		break;
 		case NAV_SERVICE.all:
 			setNavBackground($("navProv"), false);
 			setNavBackground($("navSat"), false);
 			setNavBackground($("navAll"), true);
+			setNavBackground($("navIPTV"), false);
 			
 		break;
+		case NAV_SERVICE.iptv:
+			setNavBackground($("navProv"), false);
+			setNavBackground($("navSat"), false);
+			setNavBackground($("navAll"), false);		
+			setNavBackground($("navIPTV"), true);
 	}
 }
 
@@ -177,7 +214,7 @@ function serviceSearch(event){
 
 function fillProviderServiceList(servicelist){
 	var data = { services : servicelist };
-	processTplBouquetEditor('providerservicelist', data, 'contentSelectionSubList');
+	processTplBouquetEditor('providerservicelist', data, 'contentSelectionSubList', setProviderServiceListButtons);
 }
 
 function getCurrentSelectedBouquetlistRef() {
@@ -250,6 +287,12 @@ function servicelistChange(element){
 	var idx = element.selectedIndex; 
 	var current = element.options[idx];
 	var hasAlternatives = $(current).readAttribute("data-hasalt");
+	var isStream = $(current).readAttribute("data-isstream");
+	if (isStream == "1") {
+		$("editIptv").show();
+	} else {
+		$("editIptv").hide();
+	}
 	
 	if(hasAlternatives == "1"){
 
@@ -306,6 +349,7 @@ function BouquetEditorService(xml, cssclass){
 	this.serviceisgroup = getNodeContent(xml, 'e2serviceisgroup');
 	this.serviceismarker = getNodeContent(xml, 'e2serviceismarker');
 	this.serviceisprotected = getNodeContent(xml, 'e2serviceisprotected');
+	this.serviceisstream = getNodeContent(xml, 'e2serviceisstream');
 	
 	this.getServiceReference = function(){
 		return encodeURIComponent(this.servicereference);
@@ -378,7 +422,8 @@ function BouquetEditorService(xml, cssclass){
 			'serviceisgroup' : this.serviceisgroup,
 			'prefix' : this.getPrefix(),
 			'suffix' : this.getSuffix(),
-			'serviceisprotected' : this.serviceisprotected
+			'serviceisprotected' : this.serviceisprotected,
+			'serviceisstream' : this.serviceisstream
 
 	};
 	
@@ -418,6 +463,7 @@ function getProviderList(type) {
 			url = '/bouqueteditor/web/satelliteslist?mode=' + currentMode;
 		break;
 		case NAV_SERVICE.all:
+		case NAV_SERVICE.iptv:
 			if (currentMode == MODE.tv) 
 				url = '/bouqueteditor/web/getservices?sRef=' + allTv;
 			else
@@ -456,7 +502,6 @@ function processTplIncommingProviderListCallback() {
 
 
 function providerlistChange(selectObj) {
-	
 	var idx = selectObj.selectedIndex; 
 	var current = selectObj.options[idx];
 	var ref =  unescape(encodeURIComponent(current.value));
@@ -471,7 +516,17 @@ function incomingProviderServiceList(request) {
 		var data = {
 			services : servicelist
 		};
-		processTplBouquetEditor('providerservicelist', data, 'contentSelectionSubList');
+		processTplBouquetEditor('providerservicelist', data, 'contentSelectionSubList', setProviderServiceListButtons);
+	}
+}
+
+function setProviderServiceListButtons(){
+	if(currentNav == NAV_SERVICE.iptv) {
+		$("providerservicelistbuttons").hide();
+		document.getElementById("providerservicelist").selectedIndex = -1;
+	}
+	else {
+		$("providerservicelistbuttons").show();
 	}
 }
 
@@ -827,12 +882,97 @@ function addServiceToBouquet(selectObj) {
 		else
 			currentServicelistIndex = null;
 		doRequest('/bouqueteditor/web/addservicetobouquet?sBouquetRef='+ bouqueref + '&sRef=' + ref +'&sRefBefore=' + refServicelist, serviceListUpdated, false);
+
 	}
 	else
 		alert ("No service selected!");
 
 }
 
+function addIPTVServiceToBouquet(selectObj) {
+	var bouquetref = currentBouquetRef;
+	var selectList = $(selectObj);
+	var idx = selectList.selectedIndex;
+	var iptvName = document.getElementById("iptvName").value;
+	if (iptvName == "") {
+		alert("Please provide a service name");
+		return;
+	}
+	var iptvUrl = document.getElementById("iptvUrl").value;
+	if (iptvUrl == "") {
+		alert("Please provide a service URL");
+		return;
+	}
+	// in case an already encoded URI was pasted decode it
+	if (iptvUrl.includes("%3A") || iptvUrl.includes("%3a")) {
+		iptvUrl = decodeURIComponent(iptvUrl);
+	}
+	var dvbCompliant = (document.getElementById("dvbCompliant").checked) ? true : false;
+	var sref = "4097:";
+	if (dvbCompliant) {
+		sref = "1:";
+	}
+	var activateReconnect = (document.getElementById("activateReconnect").checked) ? true : false;
+	if (activateReconnect) {
+		sref += "256:"; //1:0:0:0:0:0:0:0:";
+	}
+	else {
+		sref += "0:"; //1:0:0:0:0:0:0:0:";
+	}
+	var mapToRef = "None"
+	if ( idx != -1) {
+		mapToRef = decodeURIComponent(selectList.options[idx].value);
+		var sRefElements = mapToRef.split(":");
+		sref += sRefElements[2] + ":" + sRefElements[3] + ":" + sRefElements[4] + ":" + sRefElements[5] + ":" +  sRefElements[6] + ":0:0:0:";
+	}
+	else {
+		sref += "1:0:0:0:0:0:0:0:";
+	}
+	var refServicelist = "";
+	var selectServicelist = $('servicelist');
+	var selectServicelistOptions = selectServicelist.getElementsByTagName('option');
+	if (selectServicelistOptions.length > 0) {
+		var idxServicelist = selectServicelist.selectedIndex;
+		currentServicelistIndex = idxServicelist + 1;
+		if ( idxServicelist != -1 && idxServicelist != selectServicelistOptions.length){
+			if ( idxServicelist + 1 < selectServicelistOptions.length){
+				refServicelist = selectServicelist.options[idxServicelist+1].value;
+			}
+		}
+	}
+	else
+		currentServicelistIndex = null;
+	doRequest('/bouqueteditor/web/addservicetobouquet?sBouquetRef='+ bouquetref + '&sRef=' + sref +'&sRefBefore=' + refServicelist + '&Name=' + iptvName + '&Url=' + encodeURIComponent(iptvUrl), serviceListUpdated, false);
+}
+
+function editIptvService(selectObj) {
+	var bouqueref = currentBouquetRef;
+	var selectList = $(selectObj);
+	var idx = selectList.selectedIndex;
+	var refServicelist = "";
+	if ( idx != -1) {
+		var oldSref = selectList.options[idx].value;
+	
+		var newSref=prompt('Please enter new url for selected service:', decodeURIComponent(selectList.options[idx].value));
+		if (newSref){
+			var selectServicelistOptions = selectList.getElementsByTagName('option');
+			if (selectServicelistOptions.length > 0) {
+				var idxServicelist = selectList.selectedIndex;
+				currentServicelistIndex = idxServicelist;
+				if ( idxServicelist != -1 && idxServicelist != selectServicelistOptions.length){
+					if ( idxServicelist + 1 < selectServicelistOptions.length){
+						refServicelist = selectList.options[idxServicelist+1].value;
+					}
+				}
+			}
+			else
+				currentServicelistIndex = null;
+			doRequest('/bouqueteditor/web/renameservice?sBouquetRef='+ bouqueref + '&sRef=' + encodeURIComponent(newSref) +'&sRefBefore=' + refServicelist + '&newName=' + encodeURIComponent(selectList.options[idx].text) + '&oldsRef=' + oldSref, serviceListUpdated, false);
+		}
+	}
+	else
+		alert ("No service selected!");
+}
 
 function serviceListUpdated(request) {
 	if (request.readyState == 4) {

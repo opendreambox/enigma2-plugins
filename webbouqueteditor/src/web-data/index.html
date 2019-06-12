@@ -65,11 +65,12 @@
 				<td class="half">
 					<table class="contentTabInner roundBorder" border="0" cellpadding="0" cellspacing="0">
 						<tr>
-							<th class="tabheader">
+							<th class="tabheader" colspan="2">
 								<ul class="BEmenu">
 									<li id="navSat"><a href="#" onClick="setServiceNav(1);">Satellites</a></li>
 									<li id="navProv"><a href="#" onClick="setServiceNav(0);">Provider</a></li>
 									<li id="navAll"><a href="#" onClick="setServiceNav(2);">All Services</a></li>
+									<li id="navIPTV"><a href="#" onClick="setServiceNav(3);">IPTV</a></li>
 								</ul>
 							</th>	
 						</tr>
@@ -81,13 +82,57 @@
 						<tr class="grey">
 							<th class="serviceheader" id="providerServiceHeader">Services for Provider</th>
 						</tr>
-						<tr>
-							<td class="center"><input id="serviceSearch" value="Service to search for..."/></td>
+						<tr id="iptvNameSection">
+							<td width="25%">
+								<label>Name:</label>
+							</td>
+							<td width="75%">
+								<input id="iptvName"/>
+							</td>
+						</tr>
+						<tr id="iptvURLSection">
+							<td width="25%">
+								<label>URL:</label>	
+							</td>
+							<td width="75%">
+								<input id="iptvUrl"/>
+							</td>
+						</tr>
+						<tr id="dvbCompliantSection">
+							<td colspan="2">
+								<label class="container">DVB-compliant stream
+									<input type="checkbox" id="dvbCompliant">
+									<span class="checkmark"></span>
+								</label>
+							</td>
+						</tr>
+						<tr id="activateReconnectSection">
+							<td colspan="2">
+								<label class="container">Activate reconnect feature (sets flag 256)
+									<input type="checkbox" id="activateReconnect" >
+									<span class="checkmark"></span>
+								</label>
+							</td>
+						</tr>
+						<tr id="mapIptvService">
+							<td colspan="2">
+								<label>Map to DVB-service (for EPG, Picon):</label>	
+							</td>
 						</tr>
 						<tr>
-							<td style="vertical-align: top;">
+							<td class="center" colspan="2"><input id="serviceSearch" value="Service to search for..."/></td>
+						</tr>
+						<tr>
+							<td style="vertical-align: top;" colspan="2">
 								<div id="contentSelectionSubList"></div>
 							</td>		
+						</tr>
+						<tr id="addIptvButtonSection">
+							<td colspan="2">
+								<button class="full" id="addiptv" onclick="addIPTVServiceToBouquet('providerservicelist');">
+									Add IPTV service to selected bouquet
+								</button>
+							</td>
 						</tr>
 					</table>
 				</td>

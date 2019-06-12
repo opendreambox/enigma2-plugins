@@ -8,6 +8,7 @@
 		&lt;e2serviceisgroup><e2:item name="isGroup" filter="xml" />&lt;/e2serviceisgroup>
 		&lt;e2serviceismarker><e2:item name="isMarker" filter="xml" />&lt;/e2serviceismarker>
 		&lt;e2serviceisprotected><e2:item name="isProtected" filter="xml" />&lt;/e2serviceisprotected>
+		&lt;e2serviceisstream><e2:item name="isStream" filter="xml" />&lt;/e2serviceisstream>
 	&lt;/e2service>
 	</e2:convert>
 	<e2:convert type="web:TextToHTML" />			

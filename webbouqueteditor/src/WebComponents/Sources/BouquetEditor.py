@@ -10,6 +10,7 @@ from Screens.InfoBar import InfoBar
 from ServiceReference import ServiceReference
 from Components.ParentalControl import parentalControl, IMG_WHITESERVICE, IMG_WHITEBOUQUET, IMG_BLACKSERVICE, IMG_BLACKBOUQUET, LIST_BLACKLIST
 from Components.NimManager import nimmanager
+from urllib import quote as urllib_quote
 
 
 class BouquetEditor(Source):
@@ -268,12 +269,19 @@ class BouquetEditor(Source):
 		sBouquetRef = param["sBouquetRef"]
 		if sBouquetRef is None:
 			return (False, "No bouquet given!")
+		url = None
+		if "Url" in param:
+			url = urllib_quote(param["Url"])
 		sRef = None
 		if "sRef" in param:
 			if param["sRef"] is not None:
 				sRef =param["sRef"]
 		if sRef is None:
 			return (False, "No service given!")
+		else:
+			if url is not None:
+				sRef += url
+		print "sref is now", sRef
 		sName = None
 		if "Name" in param:
 			if param["Name"] is not None:
@@ -371,12 +379,22 @@ class BouquetEditor(Source):
 			new_param = {}
 			new_param["sBouquetRef"] = sBouquetRef
 			new_param["sRef"] = sRef
+			# hack to have a simple way to update url of iptv services
+			editUrl = False
+			if "oldsRef" in param:
+				if param["oldsRef"] is not None:
+					new_param["sRef"] = param["oldsRef"]
+					editUrl = True
 			new_param["Name"] = sName
 			new_param["sRefBefore"] = sRefBefore
 			returnValue = self.removeService(new_param)
 			if returnValue[0]:
+				# set back to sRef
+				new_param["sRef"] = sRef
 				returnValue = self.addServiceToBouquet(new_param)
 				if returnValue[0]:
+					if editUrl:
+						return(True, "Service URL updated successfully.")
 					return (True, "Service renamed successfully.")
 		return (False, "Service can not be renamed.")
 		

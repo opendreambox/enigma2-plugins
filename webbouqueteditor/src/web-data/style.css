@@ -84,6 +84,16 @@ img {
 	width: 460px;
 }
 
+label {
+	font-size:14px;
+	font-weight:normal;
+	padding-left: 5px;
+}
+
+#iptvName, #iptvUrl {
+	width: 94%;
+}
+
 #servicelist {
 	height: 284px;
 }
@@ -151,6 +161,12 @@ th.contentTabMain {
 	border-style: solid;
 	border-width: 0 1px 2px;
 	margin: 2px;
+}
+
+.full {
+	width: 98%;
+	vertical-align: top;
+	margin-left:3px;
 }
 
 .half {
@@ -237,4 +253,70 @@ th.contentTabMain {
 .center {
 	text-align: center;
 }
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  height:19px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight:normal;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.checkmark {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
 }

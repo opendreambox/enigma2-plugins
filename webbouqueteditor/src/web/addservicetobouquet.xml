@@ -1,5 +1,5 @@
 <e2:screen external_module="Plugins.Extensions.WebBouquetEditor.WebScreens.BouquetEditorWebScreens" name="BouquetEditorWebScreen">&lt;?xml version="1.0" encoding="UTF-8"?>
-<e2:element source="AddServiceToBouquet" id="sBouquetRef,sRef,sRefBefore">
+<e2:element source="AddServiceToBouquet" id="sBouquetRef,sRef,sRefBefore,Name,Url">
 	<e2:convert type="web:Null" />
 </e2:element>
 <e2simplexmlresult>

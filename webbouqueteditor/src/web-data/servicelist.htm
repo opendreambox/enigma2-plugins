@@ -4,7 +4,7 @@
 			<select id="servicelist" size="10" class="select" onchange="servicelistChange(this);">
 
 			{for service in services}
-				<option data-hasalt="${service.serviceisgroup}" data-hasprotection="${service.serviceisprotected}" value="${service.servicereference}">${service.prefix}${service.servicename}${service.suffix}</option>
+				<option data-hasalt="${service.serviceisgroup}" data-hasprotection="${service.serviceisprotected}" value="${service.servicereference}" data-isstream="${service.serviceisstream}">${service.prefix}${service.servicename}${service.suffix}</option>
 			{/for}		
 			</select>
 		</td>
@@ -43,6 +43,9 @@
 			</button>
 			<button id="toggleserviceprotection" onclick="toggleServiceProtection('servicelist');">
 				toggle protection
+			</button>
+			<button id="editIptv" onclick="editIptvService('servicelist');">
+				Edit URL
 			</button>
 		</td>
 	</tr>
