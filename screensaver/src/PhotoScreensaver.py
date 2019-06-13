@@ -9,14 +9,7 @@ from Tools.Log import Log
 
 from twisted.web.client import downloadPage
 
-
 class MyPixmap(Pixmap):
-	def __init__(self):
-		Pixmap.__init__(self)
-
-	def execBegin(self):
-		GUIComponent.execBegin(self)
-
 	def postWidgetCreate(self, instance):
 		Pixmap.postWidgetCreate(self, instance)
 		self.setupAnimation()
@@ -140,6 +133,9 @@ class PhotoScreensaver(Screen):
 
 	def _onPixmapReady(self, picInfo=None):
 		Log.d(picInfo)
+		if not self._isEnabled:
+			self._reset()
+			return
 		self._picInfo = picInfo
 		self._nextPixmap = self._picload.getData()
 		if self._immediateShow:
@@ -150,6 +146,9 @@ class PhotoScreensaver(Screen):
 		self._timer.startLongTimer(int(config.plugins.screensaver.photo.retention.value))
 
 	def _showNext(self):
+		if not self._isEnabled:
+			self._reset()
+			return
 		if self._nextPixmap:
 			self._isInitial = False
 			self._pixmap.setPixmap(self._nextPixmap)

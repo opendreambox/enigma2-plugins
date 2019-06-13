@@ -45,8 +45,8 @@ class ScreenSaverHandler(object):
 		if not (self._enabled and config.plugins.screensaver.enabled.value):
 			self._screenSaver.enabled = False
 			return
-		if evt == iPlayableService.evPlay:
-			Log.i("play event, checking for video")
+		if evt == iPlayableService.evPlay or evt == iPlayableService.evVideoSizeChanged:
+			Log.i("play/videoSize event, checking for video")
 			service = self.session.nav.getCurrentService()
 			info = service and service.info()
 			if not info:
