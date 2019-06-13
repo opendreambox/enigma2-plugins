@@ -912,6 +912,10 @@ function addIPTVServiceToBouquet(selectObj) {
 	if (dvbCompliant) {
 		sref = "1:";
 	}
+	else if (iptvUrl.includes("yt://") || iptvUrl.includes("youtube://")) {
+		sref = "8193:";
+	}
+	
 	var activateReconnect = (document.getElementById("activateReconnect").checked) ? true : false;
 	if (activateReconnect) {
 		sref += "256:"; //1:0:0:0:0:0:0:0:";
