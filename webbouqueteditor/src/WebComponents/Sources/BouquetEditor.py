@@ -271,7 +271,8 @@ class BouquetEditor(Source):
 			return (False, "No bouquet given!")
 		url = None
 		if "Url" in param:
-			url = urllib_quote(param["Url"])
+			if param['Url'] is not None:
+				url = urllib_quote(param["Url"])
 		sRef = None
 		if "sRef" in param:
 			if param["sRef"] is not None:
@@ -281,7 +282,6 @@ class BouquetEditor(Source):
 		else:
 			if url is not None:
 				sRef += url
-		print "sref is now", sRef
 		sName = None
 		if "Name" in param:
 			if param["Name"] is not None:
