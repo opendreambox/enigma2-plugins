@@ -571,7 +571,7 @@ var MovieListProvider = Class.create(AbstractContentProvider, {
 /* this one is a little special! */
 var ScreenshotProvider = Class.create(AbstractContentProvider, {
 	initialize: function($super, showFnc){
-		$super(URL.grab, showFnc);
+		$super(URL.screenshot, showFnc);
 		this.src = "";
 	},
 
@@ -588,8 +588,10 @@ var ScreenshotProvider = Class.create(AbstractContentProvider, {
 		this.doLoad(this.url, parms, fnc);
 	},
 
-	loadDirect: function(parms, fnc){
-		this.doLoad(URL.screenshot, parms, fnc);
+	loadCompat: function(parms, fnc){
+		var filename = '/tmp/' + new Date().getTime();
+		parms['filename'] = filename;
+		this.doLoad(URL.grab, parms, fnc);
 	},
 
 	callback: function(src){
