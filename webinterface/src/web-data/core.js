@@ -684,7 +684,7 @@ var Screenshots = Class.create(Controller, {
 	},
 
 	load: function(type){
-		var params = {};
+		var params = {'date' : new Date().getTime()};
 		switch (type)
 		{
 			case this.TYPE_OSD:
