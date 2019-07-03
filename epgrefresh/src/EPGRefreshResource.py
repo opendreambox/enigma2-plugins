@@ -275,7 +275,7 @@ class EPGRefreshSettingsResource(resource.Resource):
 			0, now.tm_wday, now.tm_yday, now.tm_isdst)
 		)
 
-		canDoBackgroundRefresh = SystemInfo.get("NumVideoDecoders", 1) > 1
+		canDoBackgroundRefresh = True
 		hasAutoTimer = False
 		try:
 			from Plugins.Extensions.AutoTimer.AutoTimer import AutoTimer

@@ -14,10 +14,6 @@ from . import STARTNOTIFICATIONID, NOTIFICATIONDOMAIN
 class RecordAdapter:
 	backgroundCapable = True
 	def __init__(self, session):
-		if SystemInfo.get("NumVideoDecoders", 1) < 2:
-			self.backgroundRefreshAvailable = False
-			return
-
 		self.backgroundRefreshAvailable = True
 		self.__service = None
 		self.navcore = session.nav
