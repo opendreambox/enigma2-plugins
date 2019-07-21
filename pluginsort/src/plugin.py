@@ -86,6 +86,12 @@ class MyPluginList(PluginList):
 	def pageDown(self):
 		instance = self.__instance()
 		if instance: instance.moveSelection(instance.pageDown)
+	def left(self):
+		instance = self.__instance()
+		if instance: instance.moveSelection(instance.moveLeft)
+	def right(self):
+		instance = self.__instance()
+		if instance: instance.moveSelection(instance.moveRight)
 
 WHEREMAP = {}
 pdict = PluginDescriptor.__dict__
@@ -244,10 +250,16 @@ class SortingPluginBrowser(OriginalPluginBrowser):
 
 		self["WizardActions"] = ActionMap(["WizardActions"],
 			{
-				"left": boundFunction(self.doMove, self["pluginlist"].pageUp),
-				"right": boundFunction(self.doMove, self["pluginlist"].pageDown),
+				"left": boundFunction(self.doMove, self["pluginlist"].left),
+				"right": boundFunction(self.doMove, self["pluginlist"].right),
 				"up": boundFunction(self.doMove, self["pluginlist"].up),
 				"down": boundFunction(self.doMove, self["pluginlist"].down),
+			}, -2
+		)
+		self["PluginSortActions"] = ActionMap(["SetupActions"],
+			{
+				"previousSection": boundFunction(self.doMove, self["pluginlist"].pageUp),
+				"nextSection": boundFunction(self.doMove, self["pluginlist"].pageDown),
 			}, -2
 		)
 
@@ -327,8 +339,8 @@ class SortingPluginBrowser(OriginalPluginBrowser):
 		if self.selected != -1:
 			oldpos = self["pluginlist"].index
 			func()
-			entry = self.list.pop(oldpos)
 			newpos = self["pluginlist"].index
+			entry = self.list.pop(oldpos)
 			self.list.insert(newpos, entry)
 			# XXX: modifyEntry is broken - I'd say a job well done :P
 			#self["pluginlist"].modifyEntry(oldpos, self.list[oldpos])
