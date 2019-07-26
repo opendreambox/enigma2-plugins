@@ -34,6 +34,7 @@ class TwitchGameData(TwitchDataObject):
 class TwitchChannel(TwitchDataObject):
 	def __init__(self, channel):
 		TwitchDataObject.__init__(self, channel)
+		self.id = channel["_id"]
 		self.name = channel["name"].encode('utf-8')
 		self.display_name = channel.get("display_name", channel["name"]).encode('utf-8')
 		self.game = channel["game"].encode('utf-8') if channel.get("game", None) else ""
@@ -79,31 +80,57 @@ class Twitch(object):
 	USERAGENT = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
 	TEMPFILE = "/tmp/twitch_channellogo"
 
-	def __init__(self):
-		pass
+	def __init__(self, client_id="1kke40cmxc5s65xuw82vgphjhos0ds"):
+		self._client_id = client_id
 
-	def livestreams(self, client_id, callback, game=None):
-		url = "https://api.twitch.tv/kraken/streams?limit=100&client_id=%s" %(client_id,)
+	def _get(self, url, args=[], method="GET",):
+		headers = {
+			"Client-ID" : self._client_id,
+			"Accept" : "application/vnd.twitchtv.v5+json",
+		}
+		if args:
+			url = "%s%s" %(url, urllib.urlencode(args))
+		Log.w(url)
+		return getPage(url, method=method, agent=Twitch.USERAGENT, headers=headers)
+
+	def livestreams(self, callback, game=None):
+		url = "https://api.twitch.tv/kraken/streams/featured?"
+		args = [("limit", 100)]
 		if game:
-			url = "%s&game=%s" %(url, urllib.quote(game))
-		getPage(url, method="GET", agent=Twitch.USERAGENT).addCallbacks(self._onLivestreams, self._onErrorLivestreams, callbackArgs=[callback], errbackArgs=[callback])
+			url = "https://api.twitch.tv/kraken/streams?"
+			args.append(("game", game))
+		self._get(url, args).addCallbacks(self._onLivestreams, self._onErrorLivestreams, callbackArgs=[callback], errbackArgs=[callback])
 
 	def _onLivestreams(self, html, callback):
 		Log.i("Got all livestreams!")
-		livestreams_json = json.loads(html)
+		livestreams = json.loads(html)
 		items = []
-		for stream in livestreams_json["streams"]:
+		streams = livestreams.get("streams", livestreams.get("featured", []))
+		for stream in streams:
+			if stream.has_key("stream"):
+				stream = stream["stream"]
 			stream = TwitchStream(stream)
 			items.append(stream)
-		#items.append((_("Load next 100 livestreams"), 0))
 		callback(items)
 
 	def _onErrorLivestreams(self, error, callback):
 		Log.w("Couldnt get all livestreams! Error: %s" %(error,))
 		callback([])
 
-	def followedChannels(self, username, client_id, callback):
-		getPage("https://api.twitch.tv/kraken/users/%s/follows/channels?client_id=%s" %(urllib.quote(username),client_id)).addCallbacks(self._onFollowedChannels, self._onErrorFollowedChannels, callbackArgs=[callback], errbackArgs=[callback] )
+	def followedChannels(self, username, callback):
+		Log.w(username)
+		self._get("https://api.twitch.tv/kraken/users?", args=[("login", str(username))]).addCallbacks(self._onFollowedChannelsUserID, self._onErrorFollowedChannels, callbackArgs=[callback], errbackArgs=[callback] )
+
+	def _onFollowedChannelsUserID(self, html, callback):
+		try:
+			data = json.loads(html)
+			userid = urllib.quote(str(data["users"] and data["users"][0]["_id"]))
+			if userid:
+				self._get("https://api.twitch.tv/kraken/users/%s/follows/channels" %(userid)).addCallbacks(self._onFollowedChannels, self._onErrorFollowedChannels, callbackArgs=[callback], errbackArgs=[callback] )
+				return
+		except:
+			pass
+		self._onErrorFollowedChannels("ERROR GETTING USERID!", callback)
 
 	def _onFollowedChannels(self, html, callback):
 		data = json.loads(html)
@@ -116,8 +143,8 @@ class Twitch(object):
 		Log.w(error)
 		callback(None)
 
-	def searchChannel(self, needle, client_id, callback):
-		getPage("https://api.twitch.tv/kraken/search/channels?client_id=%s&query=%s" %(client_id, urllib.quote(needle))).addCallbacks(self._onSearchChannel, self._onErrorSearchChannel, callbackArgs=[callback], errbackArgs=[callback])
+	def searchChannel(self, needle, callback):
+		self._get("https://api.twitch.tv/kraken/search/channels?", args=[("query", needle)]).addCallbacks(self._onSearchChannel, self._onErrorSearchChannel, callbackArgs=[callback], errbackArgs=[callback])
 
 	def _onSearchChannel(self, html, callback):
 		data = json.loads(html)
@@ -130,8 +157,8 @@ class Twitch(object):
 		Log.w(error)
 		callback(None)
 
-	def channelDetails(self, channel_id, client_id, callback):
-		getPage("https://api.twitch.tv/kraken/channels/" + channel_id + "?client_id=" + client_id, method="GET", agent=Twitch.USERAGENT).addCallbacks(self._onChannelDetails, self._onErrorChannelDetails, callbackArgs=[callback], errbackArgs=[callback])
+	def channelDetails(self, channel_id, callback):
+		self._get("https://api.twitch.tv/kraken/channels/%s" %(channel_id,)).addCallbacks(self._onChannelDetails, self._onErrorChannelDetails, callbackArgs=[callback], errbackArgs=[callback])
 
 	def _onChannelDetails(self, html, callback):
 		Log.i("Received Channel Details!")
@@ -147,11 +174,13 @@ class Twitch(object):
 		Log.w("Error while getting channel details: %s" %(error,))
 		callback(None)
 
-	def liveStreamDetails(self, channel_id, client_id, callback):
-		getPage("https://api.twitch.tv/kraken/streams/%s?client_id=%s" %(channel_id, client_id), method="GET", agent=Twitch.USERAGENT).addCallbacks(self._onLiveStreamDetails, self._onErrorLiveStreamDetails, callbackArgs=[callback], errbackArgs=[callback])
+	def liveStreamDetails(self, channel_id, callback):
+		self._get("https://api.twitch.tv/kraken/streams/%s" %(str(channel_id),)).addCallbacks(self._onLiveStreamDetails, self._onErrorLiveStreamDetails, callbackArgs=[callback], errbackArgs=[callback])
+		#self._get("https://api.twitch.tv/kraken/streams/?", args=[("channel", channel_id)]).addCallbacks(self._onLiveStreamDetails, self._onErrorLiveStreamDetails, callbackArgs=[callback], errbackArgs=[callback])
 
 	def _onLiveStreamDetails(self, html, callback):
 		details_json = json.loads(html)
+		Log.w(details_json)
 		stream = None
 		if details_json["stream"]:
 			stream = TwitchStream(details_json["stream"])
@@ -161,9 +190,9 @@ class Twitch(object):
 		Log.w("Error while getting live stream details: %s" %(error))
 		callback(None)
 
-	def videosForChannel(self, channel_id, client_id, broadcast_type, callback):
-		url = "https://api.twitch.tv/kraken/channels/%s/videos?limit=100&broadcast_type=%s&client_id=%s" %(channel_id, broadcast_type, client_id)
-		getPage(url, method="GET", agent=Twitch.USERAGENT).addCallbacks(self._onVideosForChannel, self._onErrorVideosForChannel, callbackArgs=[callback], errbackArgs=[callback])
+	def videosForChannel(self, channel_id, broadcast_type, callback):
+		url = "https://api.twitch.tv/kraken/channels/%s/videos?" %(channel_id,)
+		self._get(url, args=[("limit", 100), ("broadcast_type", broadcast_type)]).addCallbacks(self._onVideosForChannel, self._onErrorVideosForChannel, callbackArgs=[callback], errbackArgs=[callback])
 
 	def _onVideosForChannel(self, html, callback):
 		vod_json = json.loads(html)
@@ -180,9 +209,9 @@ class Twitch(object):
 		Log.w("Error while getting videos from channel: %s" %(error,))
 		callback(-1, [])
 
-	def topGames(self, client_id, callback, limit=100, offset=0):
-		url = "https://api.twitch.tv/kraken/games/top?client_id=%s&limit=%s&offset=%s" %(client_id,limit,offset)
-		getPage(url, method="GET", agent=Twitch.USERAGENT).addCallbacks(self._onTopGames, self._onErrorTopGames, callbackArgs=[callback], errbackArgs=[callback])
+	def topGames(self, callback, limit=100, offset=0):
+		url = "https://api.twitch.tv/kraken/games/top?"
+		self._get(url, args=[("limit", limit), ("offset", offset)]).addCallbacks(self._onTopGames, self._onErrorTopGames, callbackArgs=[callback], errbackArgs=[callback])
 
 	def _onTopGames(self, html, callback):
 		data = json.loads(html)
