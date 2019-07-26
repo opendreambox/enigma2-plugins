@@ -5,7 +5,7 @@
 	</screen>
 	<screen name="TwitchMain" position="center,center" size="1280,720" title="TwitchTV" flags="wfNoBorder" backgroundColor="#306441a5">
 		<ePixmap pixmap="~/twitch_white.svg" position="center,100" size="350,215" alphatest="on" scale="aspect" zPosition="-1" />
-		<widget name="list" position="center,350" size="350,350" scrollbarMode="showOnDemand" backgroundColor="#306441a5" backgroundColorSelected="#FFFFFF" foregroundColorSelected="#6441a5"/>
+		<widget name="list" position="center,350" size="350,350" scrollbarMode="showNever" backgroundColor="#306441a5" backgroundColorSelected="#33FFFFFF" foregroundColorSelected="#6441a5" selectionZoom="1.1"/>
 	</screen>
 	<screen name="TwitchStreamGrid" position="center,center" size="1280,720" title="TwitchTV" flags="wfNoBorder" backgroundColor="#306441a5">
 		<ePixmap pixmap="skin_default/buttons/red.png" position="80,80" size="200,40" alphatest="on" />
@@ -18,12 +18,12 @@
 		<widget source="key_yellow" render="Label" position="480,80" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
 		<widget source="key_blue" render="Label" position="680,80" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
 		<widget source="Title" render="Label" position="85,120" size="1130,20" zPosition="2" font="Regular;20" halign="left" valign="center" backgroundColor="#306441a5" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
-		<widget name="list" position="80,145" size="1130,486" zPosition="1" scrollbarMode="showOnDemand" backgroundColor="#306441a5" backgroundColorSelected="#FFFFFF" />
+		<widget name="list" position="66,145" size="1158,504" zPosition="1" scrollbarMode="showNever" backgroundColor="#306441a5" backgroundColorSelected="#FFFFFF" selectionZoom="1.1" margin="14,9"/>
 	</screen>
 	<screen name="TwitchGameGrid" position="center,center" size="1280,720" title="TwitchTV" flags="wfNoBorder" backgroundColor="#306441a5">
 		<ePixmap pixmap="~/twitch_white.svg" position="1070,30" size="130,80" alphatest="on" scale="aspect" zPosition="-1" />
 		<widget source="Title" render="Label" position="85,80" size="1130,20" zPosition="2" font="Regular;20" halign="left" valign="center" backgroundColor="#306441a5" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
-		<widget name="list" position="85,110" size="1120,516" zPosition="1" scrollbarMode="showOnDemand" backgroundColor="#306441a5" backgroundColorSelected="#FFFFFF" />
+		<widget name="list" position="75,110" size="1140,542" zPosition="1" scrollbarMode="showNever" backgroundColor="#306441a5" backgroundColorSelected="#FFFFFF" selectionZoom="1.1" margin="10,13"/>
 	</screen>
 	<screen name="TwitchChannelDetails" position="center,center" size="1280,720" title="TwitchTV - Details" flags="wfNoBorder" backgroundColor="#306441a5">
 		<ePixmap pixmap="skin_default/buttons/red.png" position="80,80" size="200,40" alphatest="on" />
@@ -44,8 +44,8 @@
 	</screen>
 	<screen name="TwitchChannelList" position="center,center" size="1280,720" title="Favorites" flags="wfNoBorder" backgroundColor="#306441a5">
 		<ePixmap pixmap="~/twitch_white.svg" position="center,100" size="350,215" alphatest="on" scale="aspect" zPosition="-1" />
-		<widget source="Title" render="Label" position="center,320" size="1130,20" zPosition="2" font="Regular;20" halign="center" valign="center" backgroundColor="#306441a5" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
-		<widget name="list" position="center,350" size="350,240" scrollbarMode="showOnDemand" backgroundColor="#306441a5" backgroundColorSelected="#FFFFFF" foregroundColorSelected="#6441a5" transparent="1"/>
+		<widget source="Title" render="Label" position="center,320" size="1130,24" zPosition="2" font="Regular;20" halign="center" valign="center" backgroundColor="#306441a5" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+		<widget name="list" position="center,350" size="350,240" scrollbarMode="showOnDemand" backgroundColor="#306441a5" backgroundColorSelected="#FFFFFF" foregroundColorSelected="#6441a5" transparent="1" selectionZoom="1.1" />
 		<ePixmap pixmap="skin_default/buttons/red.png" position="340,600" size="200,40" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/green.png" position="540,600" size="200,40" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/yellow.png" position="740,600" size="200,40" alphatest="on" />

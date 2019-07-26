@@ -21,8 +21,6 @@ from twisted.web.client import downloadPage, readBody, Agent, BrowserLikeRedirec
 from twisted.internet import reactor, ssl
 from twisted.internet._sslverify import ClientTLSOptions
 
-CLIENT_ID = "1kke40cmxc5s65xuw82vgphjhos0ds"
-
 PLUGIN_PATH = resolveFilename(SCOPE_PLUGINS, "Extensions/TwitchTV")
 loadSkin("%s/skin.xml" %(PLUGIN_PATH))
 
@@ -246,7 +244,7 @@ class TwitchLiveStreams(TwitchStreamGrid):
 		self["key_blue"].text = _("Refresh")
 
 	def _loadContent(self):
-		self.twitch.livestreams(CLIENT_ID, self._onAllStreams, (self.game and self.game.name) or None)
+		self.twitch.livestreams(self._onAllStreams, (self.game and self.game.name) or None)
 
 	def _buildFunc(self, stream, selected):
 		if stream == "loading":
@@ -270,7 +268,7 @@ class TwitchLiveStreams(TwitchStreamGrid):
 		stream = self.current
 		if stream is None or not isinstance(stream, TwitchVideoBase):
 			return
-		self.twitchMiddleware.watchLivestream(self.session, stream.channel, CLIENT_ID)
+		self.twitchMiddleware.watchLivestream(self.session, stream.channel)
 
 class TwitchChannelVideos(TwitchStreamGrid):
 	TYPE_ARCHIVE = "archive"
@@ -313,7 +311,7 @@ class TwitchChannelVideos(TwitchStreamGrid):
 		self.reload()
 
 	def _loadContent(self):
-		self.twitch.videosForChannel(self._channel.name, CLIENT_ID, self._vodType, self._onVODs)
+		self.twitch.videosForChannel(self._channel.name, self._vodType, self._onVODs)
 
 	def _onVODs(self, total, streams):
 		self._onAllStreams(streams)
@@ -343,7 +341,7 @@ class TwitchChannelVideos(TwitchStreamGrid):
 		vod = self.current
 		if vod is None or not isinstance(vod, TwitchVideoBase):
 			return
-		self.twitchMiddleware.watchVOD(self.session, vod, CLIENT_ID)
+		self.twitchMiddleware.watchVOD(self.session, vod)
 
 class TwitchChannelDetails(Screen):
 	TMP_BANNER_FILE_PATH = "/tmp/twitch_channel_banner.jpg"
@@ -407,7 +405,7 @@ class TwitchChannelDetails(Screen):
 		self.twitchMiddleware.addToFavorites(self.channel)
 
 	def startLive(self):
-		self.twitchMiddleware.watchLivestream(self.session, self.channel, CLIENT_ID)
+		self.twitchMiddleware.watchLivestream(self.session, self.channel)
 
 	def showChannelDetails(self, isvod=False):
 		if self.is_live:
@@ -449,7 +447,7 @@ class TwitchChannelDetails(Screen):
 		self["channel_status"].setText("")
 		self["channel_game"].setText("")
 		self["channel_viewers"].setText("")
-		self.twitch.channelDetails(self.channel.name, CLIENT_ID, self._onChannelDetails)
+		self.twitch.channelDetails(self.channel.id, self._onChannelDetails)
 
 	def _onChannelDetails(self, channel):
 		if not channel:
@@ -459,7 +457,7 @@ class TwitchChannelDetails(Screen):
 		self.checkLiveStream()
 
 	def checkLiveStream(self):
-		self.twitch.liveStreamDetails(self.channel.name, CLIENT_ID, self._onLiveStreamDetails)
+		self.twitch.liveStreamDetails(self.channel.id, self._onLiveStreamDetails)
 
 	def _onLiveStreamDetails(self, stream):
 		isvod = False
@@ -519,7 +517,7 @@ class TwitchChannelList(Screen):
 	def go(self):
 		if not self.currentChannel:
 			return
-		self.twitchMiddleware.watchLivestream(self.session, self.currentChannel, CLIENT_ID)
+		self.twitchMiddleware.watchLivestream(self.session, self.currentChannel)
 
 	def goDetails(self):
 		if not self.currentChannel:
@@ -534,7 +532,7 @@ class TwitchChannelList(Screen):
 	def callbackAddToFav(self, answer):
 		if answer is None:
 			return
-		self.twitch.channelDetails(answer, CLIENT_ID, self.addToFavGetDetails)
+		self.twitch.channelDetails(answer, self.addToFavGetDetails)
 
 	def addToFavGetDetails(self, channel):
 		if not channel:
@@ -591,7 +589,7 @@ class TwitchGamesGrid(TwitchStreamGrid):
 		self._picload.setPara((self._itemWidth, self._itemHeight, self._itemWidth, self._itemHeight, False, 0, '#000000'))
 
 	def _loadContent(self):
-		self.twitch.topGames(CLIENT_ID, self._onAllGames)
+		self.twitch.topGames(self._onAllGames)
 
 	def _onAllGames(self, games):
 		self._items = []
@@ -685,7 +683,7 @@ class TwitchMain(Screen):
 			self.session.openWithCallback(self.callbackSearchChannel, TwitchInputBox, title=_("Enter the name of the channel you're searching for"), text="")
 		elif selection == self.ITEM_FOLLOWED_CHANNELS:
 			self.session.toastManager.showToast(_("Loading followed channels for %s") %(config.plugins.twitchtv.user.value,), duration=3)
-			self.twitch.followedChannels(config.plugins.twitchtv.user.value, CLIENT_ID, self._onFollowedChannelsResult)
+			self.twitch.followedChannels(config.plugins.twitchtv.user.value, self._onFollowedChannelsResult)
 		elif selection == self.ITEM_SETUP:
 			self.session.openWithCallback(self.callbackSetupUser, TwitchInputBox, title=_("Enter your twitch user"), text=config.plugins.twitchtv.user.value)
 
@@ -701,7 +699,7 @@ class TwitchMain(Screen):
 			return
 		boundCallback = boundFunction(self._onSearchChannelResult, needle)
 		self.session.toastManager.showToast(_("Searching for channels containing '%s'") %(needle,))
-		self.twitch.searchChannel(needle, CLIENT_ID, boundCallback)
+		self.twitch.searchChannel(needle, boundCallback)
 
 	def _onSearchChannelResult(self, needle, channels):
 		if channels:

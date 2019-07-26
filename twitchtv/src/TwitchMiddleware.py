@@ -58,10 +58,10 @@ class TwitchMiddleware(object):
 				break
 		return self.saveFavorites()
 
-	def watchLivestream(self, session, channel, client_id, infoCallback=None):
+	def watchLivestream(self, session, channel, infoCallback=None):
 		Log.i(channel)
 		boundCallback = boundFunction(self._onLiveStreamDetails, session, channel, infoCallback)
-		self.twitch.liveStreamDetails(channel.name, client_id, boundCallback)
+		self.twitch.liveStreamDetails(channel.id, boundCallback)
 
 	def _onLiveStreamDetails(self, session, channel, infoCallback, stream):
 		if not stream:
@@ -72,7 +72,7 @@ class TwitchMiddleware(object):
 			session.toastManager.showToast(_("%s is live, please wait...") %(stream.channel.display_name,), 3)
 			session.open(MoviePlayer, ref, infoCallback=infoCallback, streamMode=True)
 
-	def watchVOD(self, session, vod, client_id, infoCallback=None):
+	def watchVOD(self, session, vod, infoCallback=None):
 		ref = eServiceReference(eServiceReference.idURI, 0, "twitch://video/%s" % (vod.id,))
 		ref.setName("%s - %s" % (vod.channel.display_name, vod.title))
 		session.open(MoviePlayer, ref, infoCallback=infoCallback, streamMode=True)
