@@ -161,6 +161,7 @@ config.plugins.MerlinSkinThemes = ConfigSubsection()
 config.plugins.MerlinSkinThemes.Skin = ConfigText(default=SkinName)
 config.plugins.MerlinSkinThemes.selSkin = ConfigText(default=SkinName)
 config.plugins.MerlinSkinThemes.ComponentTheme = ConfigText(default="")
+config.plugins.MerlinSkinThemes.LayoutTheme = ConfigText(default="")
 config.plugins.MerlinSkinThemes.ColorTheme = ConfigText(default="")
 config.plugins.MerlinSkinThemes.SkinPathTheme = ConfigText(default="")
 config.plugins.MerlinSkinThemes.FontTheme = ConfigText(default="")
@@ -340,6 +341,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 	def readThemes(self):
 		defaultdesign = None
 		defaultcomponenttheme = None
+		defaultlayouttheme = None
 		defaultcolortheme = None
 		defaultskinpaththeme = None
 		defaultfonttheme = None
@@ -512,6 +514,19 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				self.TComponent = MyConfigSelection(default=defaultcomponenttheme, choices = ComponentsThemeList)
 				config.plugins.MerlinSkinThemes.ComponentTheme = self.TComponent
 				self.clist.append(getConfigListEntry("ComponentTheme", self.TComponent))
+			
+			# LAYOUTS
+			LayoutsThemeList = []
+			if xml.find("layouttheme") is not None:
+				for theme in xml.findall("layouttheme"):
+					LayoutsThemeList.append(theme.get("name"))
+					if theme.get("value") == "active":
+						defaultlayouttheme = theme.get("name")
+
+			if len(LayoutsThemeList) > 0:
+				self.TLayout = MyConfigSelection(default=defaultlayouttheme, choices = LayoutsThemeList)
+				config.plugins.MerlinSkinThemes.LayoutTheme = self.TLayout
+				self.clist.append(getConfigListEntry("LayoutTheme", self.TLayout))
 			
 			# SCREENS
 			self.clist.append(getConfigListEntry(_(" "), ))
@@ -1317,6 +1332,13 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				else:
 					Tree.SubElement(xmldesign, "ComponentTheme", {"name": config.plugins.MerlinSkinThemes.ComponentTheme.value})
 			
+			if xmlroot.find("layouttheme") is not None:
+				if xmldesign.find("LayoutTheme") is not None:
+					td = d.find("LayoutTheme")
+					td.set("name", config.plugins.MerlinSkinThemes.LayoutTheme.value)
+				else:
+					Tree.SubElement(xmldesign, "LayoutTheme", {"name": config.plugins.MerlinSkinThemes.LayoutTheme.value})
+			
 			if xmlroot.find("pngtheme[@name='" + config.plugins.MerlinSkinThemes.PNGTheme.value + "']") is not None:
 				if xmldesign.find("PNGTheme") is not None:
 					td = xmldesign.find("PNGTheme")
@@ -1631,6 +1653,13 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					except:
 						print "[MST] TComponent not found"
 					
+				if design.find("LayoutTheme") is not None:
+					tmp = design.find("LayoutTheme")
+					try:
+						self.TLayout.setValue(tmp.get("name"))
+					except:
+						print "[MST] TLayout not found"
+				
 				if design.find("PNGTheme") is not None:
 					tmp = design.find("PNGTheme")
 					try:
@@ -2247,6 +2276,24 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 
 					# Set new components
 					rootSkin.append(Tree.fromstring(Tree.tostring(components)))
+					
+				else:
+					theme.set("value", "inactive")
+
+		if rootTheme.find("layouttheme") is not None:
+			for theme in rootTheme.findall("layouttheme"):
+				if theme.get("name") == config.plugins.MerlinSkinThemes.LayoutTheme.value:
+					theme.set("value", "active")
+					layouts = theme.find("layouts")
+					
+					# layouts
+					SkinLayouts = rootSkin.find("layouts")
+
+					# delete old layouts
+					rootSkin.remove(SkinLayouts)
+
+					# Set new layouts
+					rootSkin.append(Tree.fromstring(Tree.tostring(layouts)))
 					
 				else:
 					theme.set("value", "inactive")
