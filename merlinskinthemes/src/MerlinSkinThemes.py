@@ -133,14 +133,24 @@ if fileExists(ImageCreater) and fileExists(PIL):
 	from Components.ImageCreater import imageCreater
 	ImgCreate = True
 
-# Arm/mipsel
-#if SystemInfo.dreamboxModel() in ('dm900', 'dm920')
+# Arm/mipsel/aarch64
 if HardwareInfo().get_device_name() in ('dm900', 'dm920'):
 	ArchArm = True
 	ArchMipsel = False
+	Arch64 = False
 else:
-	ArchArm = False
-	ArchMipsel = True
+	if HardwareInfo().get_device_name() in ('one', 'two'):
+		Arch64 = True
+		ArchMipsel = False
+		ArchArm = False
+	else:
+		ArchArm = False
+		ArchMipsel = True
+		Arch64 = False
+
+print "------------------------------------------------"
+print HardwareInfo().get_device_name()
+print "------------------------------------------------"
 
 # skin_user.xml
 SkinUser = False
@@ -151,6 +161,7 @@ config.plugins.MerlinSkinThemes = ConfigSubsection()
 config.plugins.MerlinSkinThemes.Skin = ConfigText(default=SkinName)
 config.plugins.MerlinSkinThemes.selSkin = ConfigText(default=SkinName)
 config.plugins.MerlinSkinThemes.ComponentTheme = ConfigText(default="")
+config.plugins.MerlinSkinThemes.LayoutTheme = ConfigText(default="")
 config.plugins.MerlinSkinThemes.ColorTheme = ConfigText(default="")
 config.plugins.MerlinSkinThemes.SkinPathTheme = ConfigText(default="")
 config.plugins.MerlinSkinThemes.FontTheme = ConfigText(default="")
@@ -172,9 +183,11 @@ config.plugins.MerlinSkinThemes.Volume = ConfigText(default="")
 config.plugins.MerlinSkinThemes.MerlinMusicPlayer2Screen = ConfigText(default="")
 config.plugins.MerlinSkinThemes.MerlinMusicPlayer2Screen_MIPSEL = ConfigText(default="")
 config.plugins.MerlinSkinThemes.MerlinMusicPlayer2Screen_ARM = ConfigText(default="")
+config.plugins.MerlinSkinThemes.MerlinMusicPlayer2Screen_AARCH64 = ConfigText(default="")
 config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver = ConfigText(default="")
 config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_MIPSEL = ConfigText(default="")
 config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_ARM = ConfigText(default="")
+config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_ARCH64 = ConfigText(default="")
 config.plugins.MerlinSkinThemes.ExtLCDInfoBar = ConfigText(default="")
 config.plugins.MerlinSkinThemes.ExtLCDEventView = ConfigText(default="")
 config.plugins.MerlinSkinThemes.ExtLCDStandby = ConfigText(default="")
@@ -328,6 +341,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 	def readThemes(self):
 		defaultdesign = None
 		defaultcomponenttheme = None
+		defaultlayouttheme = None
 		defaultcolortheme = None
 		defaultskinpaththeme = None
 		defaultfonttheme = None
@@ -354,6 +368,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		defaultmmp2saver = None
 		defaultmmp2savermipsel = None
 		defaultmmp2saverarm = None
+		defaultmmp2saverarch64 = None
 		defaultextlcdinfobar = None
 		defaultextlcdeventview = None
 		defaultextlcdstandby = None
@@ -499,6 +514,19 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				self.TComponent = MyConfigSelection(default=defaultcomponenttheme, choices = ComponentsThemeList)
 				config.plugins.MerlinSkinThemes.ComponentTheme = self.TComponent
 				self.clist.append(getConfigListEntry("ComponentTheme", self.TComponent))
+			
+			# LAYOUTS
+			LayoutsThemeList = []
+			if xml.find("layouttheme") is not None:
+				for theme in xml.findall("layouttheme"):
+					LayoutsThemeList.append(theme.get("name"))
+					if theme.get("value") == "active":
+						defaultlayouttheme = theme.get("name")
+
+			if len(LayoutsThemeList) > 0:
+				self.TLayout = MyConfigSelection(default=defaultlayouttheme, choices = LayoutsThemeList)
+				config.plugins.MerlinSkinThemes.LayoutTheme = self.TLayout
+				self.clist.append(getConfigListEntry("LayoutTheme", self.TLayout))
 			
 			# SCREENS
 			self.clist.append(getConfigListEntry(_(" "), ))
@@ -796,6 +824,23 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						config.plugins.MerlinSkinThemes.MerlinMusicPlayer2Screen_ARM = self.SMMP2Arm
 						self.clist.append(getConfigListEntry("MerlinMusicPlayer2Screen_ARM", self.SMMP2Arm))
 
+				if Arch64:
+					#-----------
+					# MerlinMusicPlayer2Screen_AARCH64
+					MMP2Arch64List = []
+					st = xml.find("screenthemes")
+					for screens in st.findall("screens"):
+						if screens.get("name") == "MerlinMusicPlayer2Screen_AARCH64":
+							for themes in screens.findall("screentheme"):
+								MMP2Arch64List.append(themes.get("name"))
+								if themes.get("value") == "active":
+									defaultmmp2arch64 = themes.get("name")
+
+					if len(MMP2Arch64List) > 0:
+						self.SMMP2Arch64 = MyConfigSelection(default=defaultmmp2arch64, choices = MMP2Arch64List)
+						config.plugins.MerlinSkinThemes.MerlinMusicPlayer2Screen_AARCH64 = self.SMMP2Arch64
+						self.clist.append(getConfigListEntry("MerlinMusicPlayer2Screen_AARCH64", self.SMMP2Arch64))
+
 				#-----------
 				# MerlinMusicPlayer2ScreenSaver
 				MMP2SaverList = []
@@ -845,7 +890,24 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						self.SMMP2SaverArm = MyConfigSelection(default=defaultmmp2saverarm, choices = MMP2SaverArmList)
 						config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_ARM = self.SMMP2SaverArm
 						self.clist.append(getConfigListEntry("MerlinMusicPlayer2ScreenSaver_ARM", self.SMMP2SaverArm))
-					
+
+				if Arch64:
+					#-----------
+					# MerlinMusicPlayer2ScreenSaver_AARCH64
+					MMP2SaverArch64List = []
+					st = xml.find("screenthemes")
+					for screens in st.findall("screens"):
+						if screens.get("name") == "MerlinMusicPlayer2ScreenSaver_AARCH64":
+							for themes in screens.findall("screentheme"):
+								MMP2SaverArch64List.append(themes.get("name"))
+								if themes.get("value") == "active":
+									defaultmmp2saverarch64 = themes.get("name")
+
+					if len(MMP2SaverArch64List) > 0:
+						self.SMMP2SaverArch64 = MyConfigSelection(default=defaultmmp2saverarch64, choices = MMP2SaverArch64List)
+						config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_AARCH64 = self.SMMP2SaverArch64
+						self.clist.append(getConfigListEntry("MerlinMusicPlayer2ScreenSaver_AARCH64", self.SMMP2SaverArch64))
+
 			# LCD Screens
 			#-----------
 			if xml.find("lcdscreenthemes") is not None:
@@ -1270,6 +1332,13 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				else:
 					Tree.SubElement(xmldesign, "ComponentTheme", {"name": config.plugins.MerlinSkinThemes.ComponentTheme.value})
 			
+			if xmlroot.find("layouttheme") is not None:
+				if xmldesign.find("LayoutTheme") is not None:
+					td = d.find("LayoutTheme")
+					td.set("name", config.plugins.MerlinSkinThemes.LayoutTheme.value)
+				else:
+					Tree.SubElement(xmldesign, "LayoutTheme", {"name": config.plugins.MerlinSkinThemes.LayoutTheme.value})
+			
 			if xmlroot.find("pngtheme[@name='" + config.plugins.MerlinSkinThemes.PNGTheme.value + "']") is not None:
 				if xmldesign.find("PNGTheme") is not None:
 					td = xmldesign.find("PNGTheme")
@@ -1382,6 +1451,11 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					if ts.find("screentheme[@name='" + config.plugins.MerlinSkinThemes.MerlinMusicPlayer2Screen_ARM.value + "']") is not None:
 						Tree.SubElement(xmldesign, "MerlinMusicPlayer2Screen_ARM", {"name": config.plugins.MerlinSkinThemes.MerlinMusicPlayer2Screen_ARM.value})
 
+				if t.find("screens[@name='MerlinMusicPlayer2Screen_AARCH64']") is not None:
+					ts = t.find("screens[@name='MerlinMusicPlayer2Screen_AARCH64']")
+					if ts.find("screentheme[@name='" + config.plugins.MerlinSkinThemes.MerlinMusicPlayer2Screen_AARCH64.value + "']") is not None:
+						Tree.SubElement(xmldesign, "MerlinMusicPlayer2Screen_AARCH64", {"name": config.plugins.MerlinSkinThemes.MerlinMusicPlayer2Screen_AARCH64.value})
+
 				if t.find("screens[@name='MerlinMusicPlayer2ScreenSaver']") is not None:
 					ts = t.find("screens[@name='MerlinMusicPlayer2ScreenSaver']")
 					if ts.find("screentheme[@name='" + config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver.value + "']") is not None:
@@ -1396,6 +1470,11 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					ts = t.find("screens[@name='MerlinMusicPlayer2ScreenSaver_ARM']")
 					if ts.find("screentheme[@name='" + config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_ARM.value + "']") is not None:
 						Tree.SubElement(xmldesign, "MerlinMusicPlayer2ScreenSaver_ARM", {"name": config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_ARM.value})
+
+				if t.find("screens[@name='MerlinMusicPlayer2ScreenSaver_AARCH64']") is not None:
+					ts = t.find("screens[@name='MerlinMusicPlayer2ScreenSaver_AARCH64']")
+					if ts.find("screentheme[@name='" + config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_AARCH64.value + "']") is not None:
+						Tree.SubElement(xmldesign, "MerlinMusicPlayer2ScreenSaver_AARCH64", {"name": config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_AARCH64.value})
 
 			# LCD Screens
 			if xmlroot.find("lcdscreenthemes") is not None:
@@ -1574,6 +1653,13 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					except:
 						print "[MST] TComponent not found"
 					
+				if design.find("LayoutTheme") is not None:
+					tmp = design.find("LayoutTheme")
+					try:
+						self.TLayout.setValue(tmp.get("name"))
+					except:
+						print "[MST] TLayout not found"
+				
 				if design.find("PNGTheme") is not None:
 					tmp = design.find("PNGTheme")
 					try:
@@ -1708,6 +1794,13 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					except:
 						print "[MST] SMMP2Arm not found"
 
+				if design.find("MerlinMusicPlayer2Screen_AARCH64") is not None:
+					tmp = design.find("MerlinMusicPlayer2Screen_AARCH64")
+					try:
+						self.SMMP2Arch64.setValue(tmp.get("name"))
+					except:
+						print "[MST] SMMP2Arch64 not found"
+
 				if design.find("MerlinMusicPlayer2ScreenSaver") is not None:
 					tmp = design.find("MerlinMusicPlayer2ScreenSaver")
 					try:
@@ -1728,6 +1821,13 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						self.SMMP2SaverArm.setValue(tmp.get("name"))
 					except:
 						print "[MST] SMMP2SaverArm not found"
+
+				if design.find("MerlinMusicPlayer2ScreenSaver_AARCH64") is not None:
+					tmp = design.find("MerlinMusicPlayer2ScreenSaver_AARCH64")
+					try:
+						self.SMMP2SaverArch64.setValue(tmp.get("name"))
+					except:
+						print "[MST] SMMP2SaverArch64 not found"
 
 				# LCD
 				if design.find("LCDInfoBar") is not None:
@@ -2180,6 +2280,24 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				else:
 					theme.set("value", "inactive")
 
+		if rootTheme.find("layouttheme") is not None:
+			for theme in rootTheme.findall("layouttheme"):
+				if theme.get("name") == config.plugins.MerlinSkinThemes.LayoutTheme.value:
+					theme.set("value", "active")
+					layouts = theme.find("layouts")
+					
+					# layouts
+					SkinLayouts = rootSkin.find("layouts")
+
+					# delete old layouts
+					rootSkin.remove(SkinLayouts)
+
+					# Set new layouts
+					rootSkin.append(Tree.fromstring(Tree.tostring(layouts)))
+					
+				else:
+					theme.set("value", "inactive")
+
 		if rootTheme.find("pngtheme") is not None and ImgCreate:
 			for theme in rootTheme.findall("pngtheme"):
 				if theme.get("name") == config.plugins.MerlinSkinThemes.PNGTheme.value:
@@ -2509,6 +2627,23 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						else:
 							mmp2arm.set("value", "inactive")
 
+				if screens.get("name") == "MerlinMusicPlayer2Screen_AARCH64":
+					for mmp2arch64 in screens.findall("screentheme"):
+						if mmp2arch64.get("name") == config.plugins.MerlinSkinThemes.MerlinMusicPlayer2Screen_AARCH64.value:
+							mmp2arch64.set("value", "active")
+							ib = mmp2arch64.find("screen")
+
+							# delete old MerlinMusicPlayer2Screen_AARCH64 screen
+							for SkinScreen in rootSkin.findall("screen"):
+								if SkinScreen.get("name") == "MerlinMusicPlayer2Screen_AARCH64":
+									rootSkin.remove(SkinScreen)
+							
+							# Set new MerlinMusicPlayer2Screen_AARCH64 screen
+							rootSkin.append(Tree.fromstring(Tree.tostring(ib)))
+								
+						else:
+							mmp2arch64.set("value", "inactive")
+
 				if screens.get("name") == "MerlinMusicPlayer2ScreenSaver":
 					for mmp2saver in screens.findall("screentheme"):
 						if mmp2saver.get("name") == config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver.value:
@@ -2559,6 +2694,23 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 								
 						else:
 							mmp2saverarm.set("value", "inactive")
+
+				if screens.get("name") == "MerlinMusicPlayer2ScreenSaver_AARCH64":
+					for mmp2saverarch64 in screens.findall("screentheme"):
+						if mmp2saverarch64.get("name") == config.plugins.MerlinSkinThemes.MerlinMusicPlayer2ScreenSaver_AARCH64.value:
+							mmp2saverarch64.set("value", "active")
+							ib = mmp2saverarch64.find("screen")
+
+							# delete old MerlinMusicPlayer2ScreenSaver_AARCH64 screen
+							for SkinScreen in rootSkin.findall("screen"):
+								if SkinScreen.get("name") == "MerlinMusicPlayer2ScreenSaver_AARCH64":
+									rootSkin.remove(SkinScreen)
+							
+							# Set new MerlinMusicPlayer2ScreenSaver_AARCH64 screen
+							rootSkin.append(Tree.fromstring(Tree.tostring(ib)))
+								
+						else:
+							mmp2saverarch64.set("value", "inactive")
 
 		# LCD
 		if rootTheme.find("lcdscreenthemes") is not None:
@@ -2973,9 +3125,11 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			mmp2screen = Tree.SubElement(screenthemes, "screens", {"name": "MerlinMusicPlayer2Screen"})
 			mmp2screenmipsel = Tree.SubElement(screenthemes, "screens", {"name": "MerlinMusicPlayer2Screen_MIPSEL"})
 			mmp2screenarm = Tree.SubElement(screenthemes, "screens", {"name": "MerlinMusicPlayer2Screen_ARM"})
+			mmp2screenarch64 = Tree.SubElement(screenthemes, "screens", {"name": "MerlinMusicPlayer2Screen_AARCH64"})
 			mmp2saverscreen = Tree.SubElement(screenthemes, "screens", {"name": "MerlinMusicPlayer2ScreenSaver"})
 			mmp2saverscreenmipsel = Tree.SubElement(screenthemes, "screens", {"name": "MerlinMusicPlayer2ScreenSaver_MIPSEL"})
 			mmp2saverscreenarm = Tree.SubElement(screenthemes, "screens", {"name": "MerlinMusicPlayer2ScreenSaver_ARM"})
+			mmp2saverscreenarch64 = Tree.SubElement(screenthemes, "screens", {"name": "MerlinMusicPlayer2ScreenSaver_AARCH64"})
 
 			extlcdscreenthemes = Tree.SubElement(themes, "extlcdscreenthemes")
 			extlinfobar = Tree.SubElement(extlcdscreenthemes, "screens", {"name": "InfoBarSummary", "id": "3"})
@@ -3183,7 +3337,11 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				if SkinScreen.get("name") == "MerlinMusicPlayer2Screen_ARM":
 					mmp2screenarm1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
 					mmp2screenarm2.append(Tree.fromstring(Tree.tostring(SkinScreen)))
-
+			
+				if SkinScreen.get("name") == "MerlinMusicPlayer2Screen_AARCH64":
+					mmp2screenarm1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+					mmp2screenarm2.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+			
 				if SkinScreen.get("name") == "MerlinMusicPlayer2ScreenSaver":
 					mmp2saverscreen1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
 					mmp2saverscreen2.append(Tree.fromstring(Tree.tostring(SkinScreen)))
@@ -3195,6 +3353,10 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				if SkinScreen.get("name") == "MerlinMusicPlayer2ScreenSaver_ARM":
 					mmp2saverscreenarm1.append(Tree.fromstring(Tree.tostring(SkinScreen)))
 					mmp2saverscreenarm2.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+
+				if SkinScreen.get("name") == "MerlinMusicPlayer2ScreenSaver_AARCH64":
+					mmp2saverscreenarch641.append(Tree.fromstring(Tree.tostring(SkinScreen)))
+					mmp2saverscreenarch642.append(Tree.fromstring(Tree.tostring(SkinScreen)))
 			
 				# extlcd
 				if SkinScreen.get("name") == "InfoBarSummary" and SkinScreen.get("id") == "3":
@@ -3308,6 +3470,9 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 
 	def ImageInfo(self):
 		InfoText = "Enigma: " + E2ver + " - "
+
+		if Arch64:
+			InfoText += "ARM64: " + _("Yes") + " - "
 
 		if ArchArm:
 			InfoText += "ARM: " + _("Yes") + " - "
