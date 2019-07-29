@@ -162,6 +162,7 @@ config.plugins.MerlinSkinThemes.Skin = ConfigText(default=SkinName)
 config.plugins.MerlinSkinThemes.selSkin = ConfigText(default=SkinName)
 config.plugins.MerlinSkinThemes.ComponentTheme = ConfigText(default="")
 config.plugins.MerlinSkinThemes.LayoutTheme = ConfigText(default="")
+config.plugins.MerlinSkinThemes.GlobalsTheme = ConfigText(default="")
 config.plugins.MerlinSkinThemes.ColorTheme = ConfigText(default="")
 config.plugins.MerlinSkinThemes.SkinPathTheme = ConfigText(default="")
 config.plugins.MerlinSkinThemes.FontTheme = ConfigText(default="")
@@ -342,6 +343,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		defaultdesign = None
 		defaultcomponenttheme = None
 		defaultlayouttheme = None
+		defaultglobalstheme = None
 		defaultcolortheme = None
 		defaultskinpaththeme = None
 		defaultfonttheme = None
@@ -527,6 +529,19 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				self.TLayout = MyConfigSelection(default=defaultlayouttheme, choices = LayoutsThemeList)
 				config.plugins.MerlinSkinThemes.LayoutTheme = self.TLayout
 				self.clist.append(getConfigListEntry("LayoutTheme", self.TLayout))
+
+			# GLOBALS
+			GlobalsThemeList = []
+			if xml.find("globalstheme") is not None:
+				for theme in xml.findall("globalstheme"):
+					GlobalsThemeList.append(theme.get("name"))
+					if theme.get("value") == "active":
+						defaultglobalstheme = theme.get("name")
+
+			if len(GlobalsThemeList) > 0:
+				self.TGlobals = MyConfigSelection(default=defaultglobalstheme, choices = GlobalsThemeList)
+				config.plugins.MerlinSkinThemes.GlobalsTheme = self.TGlobals
+				self.clist.append(getConfigListEntry("GlobalsTheme", self.TGlobals))
 			
 			# SCREENS
 			self.clist.append(getConfigListEntry(_(" "), ))
@@ -1339,6 +1354,13 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				else:
 					Tree.SubElement(xmldesign, "LayoutTheme", {"name": config.plugins.MerlinSkinThemes.LayoutTheme.value})
 			
+			if xmlroot.find("globalstheme") is not None:
+				if xmldesign.find("GlobalsTheme") is not None:
+					td = d.find("GlobalsTheme")
+					td.set("name", config.plugins.MerlinSkinThemes.GlobalsTheme.value)
+				else:
+					Tree.SubElement(xmldesign, "GlobalsTheme", {"name": config.plugins.MerlinSkinThemes.GlobalsTheme.value})
+			
 			if xmlroot.find("pngtheme[@name='" + config.plugins.MerlinSkinThemes.PNGTheme.value + "']") is not None:
 				if xmldesign.find("PNGTheme") is not None:
 					td = xmldesign.find("PNGTheme")
@@ -1659,6 +1681,13 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						self.TLayout.setValue(tmp.get("name"))
 					except:
 						print "[MST] TLayout not found"
+				
+				if design.find("GlobalsTheme") is not None:
+					tmp = design.find("GlobalsTheme")
+					try:
+						self.TGlobals.setValue(tmp.get("name"))
+					except:
+						print "[MST] TGlobals not found"
 				
 				if design.find("PNGTheme") is not None:
 					tmp = design.find("PNGTheme")
@@ -2294,6 +2323,24 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 
 					# Set new layouts
 					rootSkin.append(Tree.fromstring(Tree.tostring(layouts)))
+					
+				else:
+					theme.set("value", "inactive")
+
+		if rootTheme.find("globalstheme") is not None:
+			for theme in rootTheme.findall("globalstheme"):
+				if theme.get("name") == config.plugins.MerlinSkinThemes.GlobalsTheme.value:
+					theme.set("value", "active")
+					globals = theme.find("globals")
+					
+					# globals
+					SkinGlobals = rootSkin.find("globals")
+
+					# delete old globals
+					rootSkin.remove(SkinGlobals)
+
+					# Set new globals
+					rootSkin.append(Tree.fromstring(Tree.tostring(globals)))
 					
 				else:
 					theme.set("value", "inactive")
@@ -3024,8 +3071,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 	def createThemes(self):
 		if fileExists(MerlinSkinThemes.selThemeFile) == False:
 			themes = Tree.Element("themes")
-
-
+			
 			# colors
 			colortheme1 = Tree.SubElement(themes, "colortheme", {"name": "orginal", "value": "active"})
 			colorsnode1 = Tree.SubElement(colortheme1, "colors")
@@ -3062,6 +3108,23 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				Tree.SubElement(fontsnode1, "font", {"filename": filename, "name": name, "scale": scale, "replacement": replacement})
 				Tree.SubElement(fontsnode2, "font", {"filename": filename, "name": name, "scale": scale, "replacement": replacement})
 
+			# layouts
+			layouttheme1 = Tree.SubElement(themes, "layouttheme", {"name": "original", "value": "active"})
+			layoutsnode1 = Tree.SubElement(layouttheme1, "layouts")
+			layoutnode1 = Tree.SubElement(layoutsnode1, "layout", {"name": "sample"})
+			layoutcomment1 = Tree.Comment('Sample: <widget source="Title" render="Label" position="200,77" size="400,40" halign="left" valign="center" font="Regular; 30" foregroundColor="title" backgroundColor="bg2" transparent="1" zPosition="1" />')
+			layoutnode1.append(layoutcomment1)
+			
+			layouttheme2 = Tree.SubElement(themes, "layouttheme", {"name" : "original - work", "value": "inactive"})
+			layoutsnode2 = Tree.SubElement(layouttheme2, "layouts")
+			layoutnode2 = Tree.SubElement(layoutsnode2, "layout", {"name": "sample"})	
+
+			# globals
+			globaltheme1 = Tree.SubElement(themes, "globalstheme", {"name": "original", "value": "active"})
+			globalsnode1 = Tree.SubElement(globaltheme1, "globals", {"name": "sample", "value": "120,50"})
+			
+			globaltheme2 = Tree.SubElement(themes, "globalstheme", {"name": "original - work", "value": "inactive"})
+			globalsnode2 = Tree.SubElement(globaltheme2, "globals", {"name": "sample", "value": "500,50"})	
 
 			# bordersets
 			bordersettheme1 = Tree.SubElement(themes, "bordersettheme", {"name": "orginal", "value": "active"})
