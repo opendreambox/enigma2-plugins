@@ -320,19 +320,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		
 		self["config"].hide()
 		
-		try:
-			self["SkinsList"].up()
-			listend = self["SkinsList"].getSelectionIndex()
-			self["SkinsList"].moveToIndex(0)
-			activeItem = 0
-			for index in range(listend):
-				self["SkinsList"].moveToIndex(index)
-				if self["SkinsList"].getCurrent()[1][7] == SkinName:
-					activeItem = index
-				
-			self["SkinsList"].moveToIndex(activeItem)
-		except:
-			self["SkinsList"].moveToIndex(0)
+		self["SkinsList"].moveToIndex(self["SkinsList"].selectedIndex)
 
 		self.ImageInfo()
 		if fileExists(MerlinSkinThemes.selSkinFile):
@@ -3717,9 +3705,11 @@ class GetSkinsList(MenuList, MerlinSkinThemes):
 		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
 		self.l.setFont(1, gFont(tlf.face(tlf.SMALLER), tlf.size(tlf.SMALLER)))
 		self.l.setItemHeight(componentSizes.itemHeight(self.SKIN_COMPONENT_KEY, 30))
+		self.selectedIndex = 0
 		
 	def buildList(self):
 		list = []
+		self.selectedIndex = 0
 
 		sizes = componentSizes[GetSkinsList.SKIN_COMPONENT_KEY]
 		configEntryHeight = sizes.get(componentSizes.ITEM_HEIGHT, 30)
@@ -3762,8 +3752,12 @@ class GetSkinsList(MenuList, MerlinSkinThemes):
 						(eListboxPythonMultiContent.TYPE_TEXT, 5 + dirWidth + statusWidth, 0, infoWidth, configEntryHeight, 1, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, info),
 					]
 					list.append(res)
-				
+
+					
 		self.list = list.sort()
+		for x in range(len(list)):
+			if list[x][2][7] == "active skin":
+				self.selectedIndex = x			
 		self.l.setList(list)
 		
 # =================================================================================================
