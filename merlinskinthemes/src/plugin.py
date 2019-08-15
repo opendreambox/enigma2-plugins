@@ -2,7 +2,7 @@
 #
 #  MerlinSkinThemes for Dreambox/Enigma-2
 #  Modul PluginStart
-#  Coded by marthom (c)2012 - 2016
+#  Coded by marthom (c)2012 - 2019
 #
 #  Support: www.dreambox-tools.info
 #  E-Mail: marthom@dreambox-tools.info
@@ -23,29 +23,55 @@
 #######################################################################
 
 from Plugins.Plugin import PluginDescriptor
-from Components.config import config
+from Components.config import config, configfile, ConfigYesNo, ConfigSubsection, getConfigListEntry, ConfigSelection, ConfigNumber, ConfigText, ConfigInteger, ConfigSubDict, ConfigBoolean
+from Screens.MessageBox import MessageBox
+from Tools import Notifications
+from Tools.Directories import resolveFilename, SCOPE_SKIN, fileExists
+from Tools.HardwareInfo import HardwareInfo
+from enigma import quitMainloop
+import xml.etree.cElementTree as Tree
 
 import MerlinSkinThemes
 
+try:
+        Notifications.notificationQueue.registerDomain("MerlinSkinThemes", _("MerlinSkinThemes"), deferred_callable = True)
+except Exception as e:
+        print "[MST] - Error registering Notification-Domain: ", e
+
 def merlinskinthemes_start(session, **kwargs):
-
-	# old versions clear
-	config.plugins.MerlinSkinThemes.Skin.cancel()
-	config.plugins.MerlinSkinThemes.ColorTheme.cancel()
-	config.plugins.MerlinSkinThemes.FontTheme.cancel()
-	config.plugins.MerlinSkinThemes.BorderSetTheme.cancel()
-	config.plugins.MerlinSkinThemes.InfoBar.cancel()
-	config.plugins.MerlinSkinThemes.ChannelSelection.cancel()
-	config.plugins.MerlinSkinThemes.MovieSelection.cancel()
-	config.plugins.MerlinSkinThemes.SecondInfoBar.cancel()
-	config.plugins.MerlinSkinThemes.MessageBox.cancel()
-	config.plugins.MerlinSkinThemes.InputBox.cancel()
-
 	reload(MerlinSkinThemes)
 	session.open(MerlinSkinThemes.MerlinSkinThemes)
+
+def checkSkin(session, **kwargs):
+	if config.plugins.MerlinSkinThemes.Skin.value == config.skin.primary_skin.value[:-9]:
+		skinFile = resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value
+		if fileExists(skinFile):
+			xmlFile = Tree.ElementTree(file=skinFile)
+			root = xmlFile.getroot()
+
+			if root.find("merlinskinthemes") is not None:
+				print "[MST] - skin was edited with MST and tag is present - assume rebuild is not required"
+			else:
+				if config.plugins.MerlinSkinThemes.applied.value:
+					print "[MST] - skin was edited with MST but tag is not present - assume rebuild required"
+					Notifications.AddNotificationWithCallback(messageBoxCallback, MessageBox, _("Skin was rebuilt and a restart of enigma2 is required. Do you want to restart now?"), MessageBox.TYPE_YESNO, 10, windowTitle="MerlinSkinThemes", domain = "MerlinSkinThemes")
+					# take the configfile and build a dict with all MerlinSkinThemes entries to work around not available ConfigSubDict values		
+					configDict = {}	
+					for line in config.pickle().split("\n"):
+						if line.startswith("config.plugins.MerlinSkinThemes"):
+							configEntry = line.split("=")
+							configDict[configEntry[0]]=configEntry[1]
+					MerlinSkinThemes.setThemes(resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value[:-9] + "/themes.xml", resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value, configDict)											
+				else:
+					print "[MST] - skin was not edited with MST"
+
+def messageBoxCallback(answer=False):
+	if answer == True:
+		quitMainloop(3)
 
 def Plugins(**kwargs):
 	return [
 		PluginDescriptor(name="MerlinSkinThemes", description="MerlinSkinThemes",where = [PluginDescriptor.WHERE_PLUGINMENU], icon = "plugin.png", fnc=merlinskinthemes_start),
-		PluginDescriptor(name="MerlinSkinThemes", description="MerlinSkinThemes", where = [PluginDescriptor.WHERE_EXTENSIONSMENU], fnc=merlinskinthemes_start)
+		PluginDescriptor(name="MerlinSkinThemes", description="MerlinSkinThemes", where = [PluginDescriptor.WHERE_EXTENSIONSMENU], fnc=merlinskinthemes_start),
+		PluginDescriptor(where = [PluginDescriptor.WHERE_INFOBAR], fnc=checkSkin)
 	]
