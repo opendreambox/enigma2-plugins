@@ -182,11 +182,11 @@
 	}
 .dropdown-menu li{float:none !important;}
 .dropdown-toggle.active{background:#ededed;);}
-.epgLength{color:#444;text-align:right;width:100px;}
-.epgListItem{font-weight:400;padding:3px;border:1px soid #DDD;border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;margin-bottom:10px;}
-.epgListItem td{padding: 3px;}
-.epgStart{color:#444;width:50px;}
-.epgTitle{color:#444;width:420px;padding:3px;}
+.epgLength{background-color:#444;color:white;text-align:right;width:100px;}
+.epgListItem{font-weight:400;padding:3px;border:1px solid #DDD;border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;margin-bottom:10px;}
+.epgListItem td{padding: 3px;background-color:#444;color:white;}
+.epgStart{background-color:#444;color:white;width:50px;}
+.epgTitle{background-color:#444;color:white;width:420px;padding:3px;}
 .externals{
 	border-bottom:1px solid red;
 	border-top:1px solid red;
@@ -265,7 +265,13 @@ a.sListSLink {
 .toolsHeader{color:#333;font-weight:bold;}
 .w200h50{height:50px;width:200px;}
 .volume .fa{padding: 0;}
-.wap a,.wap a:visited,.wap a:active,.sListMarker{color:#333;}
+.wap a, .wap a:visited, .wap a:active, .sListMarker {
+    color: white;
+    font-weight: bold;
+    border-bottom: 1px solid red;
+    font-size: 11pt;
+    padding-left: 10px;
+}
 /*black is white*/
 .black{
 	color:white;
