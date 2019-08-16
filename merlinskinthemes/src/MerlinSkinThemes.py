@@ -133,7 +133,7 @@ if HardwareInfo().get_device_name() in ('dm900', 'dm920'):
 elif HardwareInfo().get_device_name() in ('one', 'two'):
 	Arch64 = True
 	ArchString = "AARCH64"
-	Idstring = "0" #no display
+	IdString = "0" #no display
 	DisplayXY = "0x0"
 else:
 	if HardwareInfo().get_device_name() == 'dm820':
