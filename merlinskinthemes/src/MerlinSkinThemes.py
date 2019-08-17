@@ -146,7 +146,7 @@ else:
 	ArchString = "MIPSEL"
 ModelString = HardwareInfo().get_device_name().upper()
 displayDict = {"1": "lcdscreenthemes", "2": "oldescreenthemes", "3": "extlcdscreenthemes"}
-displayTag = displayDict[IdString]
+displayTag = displayDict.get(IdString, None)
 
 print "------------------------------------------------"
 print HardwareInfo().get_device_name()
@@ -357,30 +357,31 @@ def setThemes(themeFile=None, skinFile=None, configDict=None):
 							screen.set("value", "inactive")
 
 	# LCD / OLED / External LCD
-	if rootTheme.find(displayTag) is not None:
-		themes = rootTheme.find(displayTag)
-		for screens in themes.findall("screens"):
-			for displayscreenname in displayScreenList:
-				if screens.get("name") == displayscreenname:
-					for screen in screens.findall(displayTag[:-1]):
-						if configDict is None:
-							currentValue = config.plugins.MerlinSkinThemes.DisplayScreens[displayscreenname].value
-						else:
-							currentValue = configDict.get("config.plugins.MerlinSkinThemes.DisplayScreens.%s" %(displayscreenname), None)
-						if screen.get("name") == currentValue:
-							screen.set("value", "active")
-							newscreen = screen.find("screen")
+	if displayTag is not None:
+		if rootTheme.find(displayTag) is not None:
+			themes = rootTheme.find(displayTag)
+			for screens in themes.findall("screens"):
+				for displayscreenname in displayScreenList:
+					if screens.get("name") == displayscreenname:
+						for screen in screens.findall(displayTag[:-1]):
+							if configDict is None:
+								currentValue = config.plugins.MerlinSkinThemes.DisplayScreens[displayscreenname].value
+							else:
+								currentValue = configDict.get("config.plugins.MerlinSkinThemes.DisplayScreens.%s" %(displayscreenname), None)
+							if screen.get("name") == currentValue:
+								screen.set("value", "active")
+								newscreen = screen.find("screen")
 
-							# delete old screen
-							for SkinScreen in rootSkin.findall("screen"):
-								if SkinScreen.get("name") == displayscreenname and SkinScreen.get("id") == IdString:
-									rootSkin.remove(SkinScreen)
+								# delete old screen
+								for SkinScreen in rootSkin.findall("screen"):
+									if SkinScreen.get("name") == displayscreenname and SkinScreen.get("id") == IdString:
+										rootSkin.remove(SkinScreen)
 							
-							# Set new screen
-							rootSkin.append(Tree.fromstring(Tree.tostring(newscreen)))
-								
-						else:
-							screen.set("value", "inactive")
+								# Set new screen
+								rootSkin.append(Tree.fromstring(Tree.tostring(newscreen)))
+									
+							else:
+								screen.set("value", "inactive")
 
 	# corner Radius in skin.xml in allen eLabel ersetzen
 	if config.plugins.MerlinSkinThemes.CornerRadius.value <> "":
@@ -662,31 +663,32 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			#			</lcdscreentheme> / </oledscreentheme> / </extlcdscreentheme>
 			#		</screens>
 			#	</lcdscreenthemes> / <oledscreenthemes> / </extlcdscreenthemes>
-						
-			if xml.find(displayTag) is not None:
-				self.clist.append(getConfigListEntry(" ", ))
-				self.clist.append(getConfigListEntry(" " + u'\u00b7' + " DISPLAY SCREENS ID=%s (%s) %s" %(IdString, ModelString, DisplayXY ), ))		
+			
+			if displayTag is not None:			
+				if xml.find(displayTag) is not None:
+					self.clist.append(getConfigListEntry(" ", ))
+					self.clist.append(getConfigListEntry(" " + u'\u00b7' + " DISPLAY SCREENS ID=%s (%s) %s" %(IdString, ModelString, DisplayXY ), ))		
 		
-				initDisplayScreenDone = False
-				for element in displayScreenList:
-					elementList = []
-					defaultValue = None
-					st = xml.find(displayTag)
-					if st.find("screens[@name='%s']" %(element)) is not None:
-						lst = st.find("screens[@name='%s']" %(element))
-						for th in lst.findall(displayTag[:-1]):
-							for screen in th.findall("screen"):
-								if screen.get("name") == element and screen.get("id") == IdString:
-									elementList.append(th.get("name"))
-									if th.get("value") == "active":
-										defaultValue = th.get("name")
+					initDisplayScreenDone = False
+					for element in displayScreenList:
+						elementList = []
+						defaultValue = None
+						st = xml.find(displayTag)
+						if st.find("screens[@name='%s']" %(element)) is not None:
+							lst = st.find("screens[@name='%s']" %(element))
+							for th in lst.findall(displayTag[:-1]):
+								for screen in th.findall("screen"):
+									if screen.get("name") == element and screen.get("id") == IdString:
+										elementList.append(th.get("name"))
+										if th.get("value") == "active":
+											defaultValue = th.get("name")
 										
-						if len(elementList) > 0:
-							if not initDisplayScreenDone:
-								initConfigSubDict("DisplayScreens")
-								initDisplayScreenDone = True
-							config.plugins.MerlinSkinThemes.DisplayScreens[element] = MyConfigSelection(default=defaultValue, choices = elementList)
-							self.clist.append(getConfigListEntry(element, config.plugins.MerlinSkinThemes.DisplayScreens[element]))
+							if len(elementList) > 0:
+								if not initDisplayScreenDone:
+									initConfigSubDict("DisplayScreens")
+									initDisplayScreenDone = True
+								config.plugins.MerlinSkinThemes.DisplayScreens[element] = MyConfigSelection(default=defaultValue, choices = elementList)
+								self.clist.append(getConfigListEntry(element, config.plugins.MerlinSkinThemes.DisplayScreens[element]))
 			
 			######################	
 			# -- cornerRadius -- #
@@ -853,15 +855,16 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 							Tree.SubElement(xmldesign, element, {"name": config.plugins.MerlinSkinThemes.Screens[element].value})
 				
 			# LCD Screens
-			if xmlroot.find(displayTag) is not None:
-				t = xmlroot.find(displayTag) 
+			if displayTag is not None:
+				if xmlroot.find(displayTag) is not None:
+					t = xmlroot.find(displayTag) 
 				
-				for element in displayScreenList:
-					if t.find("screens[@name='%s']" %(element)) is not None:
-						ts = t.find("screens[@name='%s']" %(element))
-						if ts.find("%s[@name='" %(displayTag[:-1]) + config.plugins.MerlinSkinThemes.DisplayScreens[element].value + "']") is not None:
-						# todo: LCDInfoBar vs. InfoBarSummary!!!! wie geht das?
-							Tree.SubElement(xmldesign, element, {"name": config.plugins.MerlinSkinThemes.DisplayScreens[element].value})
+					for element in displayScreenList:
+						if t.find("screens[@name='%s']" %(element)) is not None:
+							ts = t.find("screens[@name='%s']" %(element))
+							if ts.find("%s[@name='" %(displayTag[:-1]) + config.plugins.MerlinSkinThemes.DisplayScreens[element].value + "']") is not None:
+							# todo: LCDInfoBar vs. InfoBarSummary!!!! wie geht das?
+								Tree.SubElement(xmldesign, element, {"name": config.plugins.MerlinSkinThemes.DisplayScreens[element].value})
 			
 			# cornerRadius
 			if xmlroot.find("cornerradius") is not None:
@@ -1242,15 +1245,16 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					childnode2.append(Tree.fromstring(Tree.tostring(skinScreen)))
 			
 			# displayscreenthemes
-			displayscreenthemes = Tree.SubElement(themes, displayTag)
-			for displayscreenname in displayScreenList: 
-				displayscreennode = Tree.SubElement(displayscreenthemes, "screens", {"name": displayscreenname, "id": IdString})
-				childnode1 = Tree.SubElement(displayscreennode, displayTag[:-1], {"name": "orginal", "value": "active"})
-				childnode2 = Tree.SubElement(displayscreennode, displayTag[:-1], {"name": "orginal - work", "value": "inactive"})
-				skinScreen = curTree.find("screen[@name='%s'][@id='%s']" %(displayscreenname, IdString))
-				if skinScreen is not None:
-					childnode1.append(Tree.fromstring(Tree.tostring(skinScreen)))
-					childnode2.append(Tree.fromstring(Tree.tostring(skinScreen)))				
+			if displayTag is not None:
+				displayscreenthemes = Tree.SubElement(themes, displayTag)
+				for displayscreenname in displayScreenList: 
+					displayscreennode = Tree.SubElement(displayscreenthemes, "screens", {"name": displayscreenname, "id": IdString})
+					childnode1 = Tree.SubElement(displayscreennode, displayTag[:-1], {"name": "orginal", "value": "active"})
+					childnode2 = Tree.SubElement(displayscreennode, displayTag[:-1], {"name": "orginal - work", "value": "inactive"})
+					skinScreen = curTree.find("screen[@name='%s'][@id='%s']" %(displayscreenname, IdString))
+					if skinScreen is not None:
+						childnode1.append(Tree.fromstring(Tree.tostring(skinScreen)))
+						childnode2.append(Tree.fromstring(Tree.tostring(skinScreen)))				
 
 			# Sort
 			XMLindent(themes, 0)
