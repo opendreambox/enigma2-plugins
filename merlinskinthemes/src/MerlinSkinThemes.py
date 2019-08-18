@@ -160,6 +160,7 @@ if fileExists(skin_user_xml):
 	
 # Config
 config.plugins.MerlinSkinThemes = ConfigSubsection()
+config.plugins.MerlinSkinThemes.rebuildSkinOnBoot = ConfigBoolean(default=True)
 config.plugins.MerlinSkinThemes.Skin = ConfigText(default=SkinName)
 config.plugins.MerlinSkinThemes.selSkin = ConfigText(default=SkinName)
 config.plugins.MerlinSkinThemes.ShowPrevPNG = ConfigText(default="1")
@@ -486,7 +487,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		self["key_red"] = Button(_("exit"))
 		self["key_green"] = Button(_("switch to skin"))
 		self["key_yellow"] = Button(_("save as design"))
-		self["key_blue"] = Button(" ")
+		self["key_blue"] = Button(_("open config"))
 		
 		self.skinsList = []
 		self["SkinsList"] = GetSkinsList([])
@@ -498,6 +499,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			"red":     self.buttonRed,
 			"green":   self.buttonGreen,
 			"yellow":  self.buttonYellow,
+			"blue":	   self.openConfig,
 		}, -1)
 		
 		self["DirectionActions"] = HelpableActionMap(self, "DirectionActions",
@@ -532,6 +534,9 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		MerlinSkinThemes.selThemeFile = resolveFilename(SCOPE_SKIN) + MerlinSkinThemes.selSkinName + "/themes.xml"
 		
 		self.onLayoutFinish.append(self.startRun)
+
+	def openConfig(self):
+		self.session.open(MerlinSkinThemesConfig)
 
 	def startRun(self):
 		self["SkinsList"].onSelectionChanged.append(self.changedSkinsList)
@@ -1470,6 +1475,52 @@ def main(session, **kwargs):
 def Plugins(path,**kwargs):
 	list = [PluginDescriptor(name = "MerlinSkinThemes", description = "MerlinSkinThemes", where = PluginDescriptor.WHERE_PLUGINMENU, icon = "plugin.png", fnc = main)]
 	return list		
+
+class MerlinSkinThemesConfig(Screen, HelpableScreen, ConfigListScreen):
+	skin = """
+		<screen position="center,center" size="600,200" title="Merlin Skin Themes - Config" backgroundColor="#00808080" >
+			<widget name="config" position="10,10" size="580,100" scrollbarMode="showOnDemand" zPosition="1" /> 
+			<widget name="key_red" position="10,150" size="200,40" valign="center" halign="center" zPosition="3" transparent="1" font="Regular;24" />
+			<widget name="key_green" position="390,150" size="200,40" valign="center" halign="center" zPosition="3" transparent="1" font="Regular;24" />
+			<ePixmap name="red" position="10,150" zPosition="1" size="200,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="blend" />
+			<ePixmap name="green" position="390,150" zPosition="1" size="200,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="blend" />
+		</screen>"""
+		
+	def __init__(self, session):
+		Screen.__init__(self, session)
+		HelpableScreen.__init__(self)
+		
+		self["key_red"] = Button(_("Exit"))
+		self["key_green"] = Button(_("Save"))
+
+		self["ColorActions"] = HelpableActionMap(self, "ColorActions",
+		{
+			"red":     (self.closePlugin, _("Close plugin")),
+			"green":   (self.saveSettings,_("Save settings")),
+		}, -1)
+		
+		self["OkCancelActions"] = HelpableActionMap(self, "OkCancelActions",
+		{
+			"ok":		(self.saveSettings, _("Save settings")),
+			"cancel":	(self.closePlugin, _("Close plugin")),
+		}, -1)
+
+		self.list = []
+		self.list.append(getConfigListEntry(_("Rebuild skin on boot"), config.plugins.MerlinSkinThemes.rebuildSkinOnBoot))
+		
+		ConfigListScreen.__init__(self, self.list)
+		
+		self["config"].setList(self.list)
+	
+	def saveSettings(self):
+		config.plugins.MerlinSkinThemes.rebuildSkinOnBoot.save()
+		configfile.save()
+		self.close()
+		
+	def closePlugin(self):
+		config.plugins.MerlinSkinThemes.rebuildSkinOnBoot.cancel()
+		configfile.save()
+		self.close()
 
 # =================================================================================================
 
