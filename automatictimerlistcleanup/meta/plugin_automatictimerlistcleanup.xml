@@ -1,6 +1,7 @@
 <default>
 	  <prerequisites>
-                    <tag type="EPG" />
+                    <tag type="Recording" />
+                    <tag type="System" />
 	  </prerequisites>
           <info>
                     <author>Dr.Best</author>
