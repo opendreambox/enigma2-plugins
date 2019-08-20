@@ -20,7 +20,6 @@ SUBDIRS = \
 	dyndns \
 	easyinfo \
 	easymedia \
-	ecasa \
 	eibox \
 	elektro \
 	emailclient \
@@ -35,7 +34,6 @@ SUBDIRS = \
 	fstabeditor \
 	ftpbrowser \
 	genuinedreambox \
-	googlemaps \
 	growlee \
 	imdb \
 	internetradio \
@@ -60,7 +58,6 @@ SUBDIRS = \
 	namezap \
 	ncidclient \
 	netcaster \
-	ofdb \
 	permanentclock \
 	pipservicerelation \
 	pipzap \

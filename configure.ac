@@ -104,10 +104,6 @@ easymedia/Makefile
 easymedia/meta/Makefile
 easymedia/src/Makefile
 
-ecasa/Makefile
-ecasa/meta/Makefile
-ecasa/src/Makefile
-
 eibox/Makefile
 eibox/meta/Makefile
 eibox/src/Makefile
@@ -170,10 +166,6 @@ ftpbrowser/src/images/Makefile
 genuinedreambox/Makefile
 genuinedreambox/meta/Makefile
 genuinedreambox/src/Makefile
-
-googlemaps/Makefile
-googlemaps/meta/Makefile
-googlemaps/src/Makefile
 
 growlee/Makefile
 growlee/meta/Makefile
@@ -290,10 +282,6 @@ netcaster/src/interface/Makefile
 ncidclient/Makefile
 ncidclient/meta/Makefile
 ncidclient/src/Makefile
-
-ofdb/Makefile
-ofdb/meta/Makefile
-ofdb/src/Makefile
 
 permanentclock/Makefile
 permanentclock/meta/Makefile

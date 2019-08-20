@@ -1,2 +1,0 @@
-Description: query movie details from the Online Film Datenbank
-Depends: enigma2, python-html, python-twisted-web

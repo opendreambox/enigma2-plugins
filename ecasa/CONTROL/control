@@ -1,2 +1,0 @@
-Description: simple picasa client
-Depends: enigma2, python-gdata, python-shell, python-netclient, python-io, python-twisted-web, python-flickrapi, enigma2-plugin-systemplugins-toolkit
