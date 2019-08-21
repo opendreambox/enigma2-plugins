@@ -5,7 +5,7 @@ from Components.config import config
 from Components.Label import Label
 from Components.MenuList import MenuList
 from Components.MultiContent import MultiContentEntryText
-from enigma import eListboxPythonMultiContent, eServiceReference, gFont
+from enigma import eListboxPythonMultiContent, eServiceReference, gFont, RT_VALIGN_CENTER
 from os import environ
 from Plugins.Plugin import PluginDescriptor
 from Screens.ChoiceBox import ChoiceBox
@@ -15,6 +15,7 @@ from ServiceReference import ServiceReference
 from time import gmtime, localtime, strftime, time
 from Tools.Directories import fileExists
 from xml.etree.cElementTree import parse
+from skin import TemplatedListFonts, componentSizes
 
 def decode_charset(str, charset):
 	try:
@@ -152,29 +153,51 @@ def stopService():
 ###########################################################
 
 class ZapStatisticBrowserList(MenuList):
+	SKIN_COMPONENT_KEY = "ZapStatisticBrowserList"
+	SKIN_COMPONENT_TEXT1_WIDTH = "text1Width"
+	SKIN_COMPONENT_TEXT2_WIDTH = "text2Width"
+	SKIN_COMPONENT_TEXT3_WIDTH = "text3Width"
+	SKIN_COMPONENT_TEXT_HEIGHT = "textHeight"
+
 	def __init__(self, list, enableWrapAround=False):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-		self.l.setItemHeight(25)
-		self.l.setFont(0, gFont("Regular", 20))
+		self.l.setItemHeight(componentSizes.itemHeight(self.SKIN_COMPONENT_KEY, 30))
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
 
 def ZapStatisticBrowserListEntry(entry):
+	sizes = componentSizes[ZapStatisticBrowserList.SKIN_COMPONENT_KEY]
+	text1Width = sizes.get(ZapStatisticBrowserList.SKIN_COMPONENT_TEXT1_WIDTH, 300)
+	text2Width = sizes.get(ZapStatisticBrowserList.SKIN_COMPONENT_TEXT2_WIDTH, 500)
+	textHeight = sizes.get(ZapStatisticBrowserList.SKIN_COMPONENT_TEXT_HEIGHT, 30)
+
 	res = [entry]
 	t_begin = localtime(entry.begin)
 	t_end = localtime(entry.end)
-	res.append(MultiContentEntryText(pos=(0, 0), size=(240, 25), font=0, text="%02d.%02d. %02d:%02d:%02d - %02d:%02d:%02d" % (t_begin[2], t_begin[1], t_begin[3], t_begin[4], t_begin[5], t_end[3], t_end[4], t_end[5])))
-	res.append(MultiContentEntryText(pos=(250, 0), size=(310, 25), font=0, text=entry.name))
+	res.append(MultiContentEntryText(pos=(5, 0), size=(text1Width, textHeight), font=0, flags=RT_VALIGN_CENTER, text="%02d.%02d. %02d:%02d:%02d - %02d:%02d:%02d" % (t_begin[2], t_begin[1], t_begin[3], t_begin[4], t_begin[5], t_end[3], t_end[4], t_end[5])))
+	res.append(MultiContentEntryText(pos=(text1Width, 0), size=(text2Width, textHeight), font=0, flags=RT_VALIGN_CENTER, text=entry.name))
 	return res
 
 def ZapStatisticBrowserDurationListEntry(entry):
+	sizes = componentSizes[ZapStatisticBrowserList.SKIN_COMPONENT_KEY]
+	text1Width = sizes.get(ZapStatisticBrowserList.SKIN_COMPONENT_TEXT1_WIDTH, 300)
+	text2Width = sizes.get(ZapStatisticBrowserList.SKIN_COMPONENT_TEXT2_WIDTH, 500)
+	textHeight = sizes.get(ZapStatisticBrowserList.SKIN_COMPONENT_TEXT_HEIGHT, 30)
+
 	res = [entry]
-	res.append(MultiContentEntryText(pos=(0, 0), size=(240, 25), font=0, text="%s (%s)" % (entry.duration, entry.begin)))
-	res.append(MultiContentEntryText(pos=(250, 0), size=(310, 25), font=0, text=entry.name))
+	res.append(MultiContentEntryText(pos=(5, 0), size=(text1Width, textHeight), font=0, flags=RT_VALIGN_CENTER, text="%s (%s)" % (entry.duration, entry.begin)))
+	res.append(MultiContentEntryText(pos=(text1Width, 0), size=(text2Width, textHeight), font=0, flags=RT_VALIGN_CENTER, text=entry.name))
 	return res
 
 def ZapStatisticBrowserCombinedListEntry(entry):
+	sizes = componentSizes[ZapStatisticBrowserList.SKIN_COMPONENT_KEY]
+	text3Width = sizes.get(ZapStatisticBrowserList.SKIN_COMPONENT_TEXT3_WIDTH, 120)
+	text2Width = sizes.get(ZapStatisticBrowserList.SKIN_COMPONENT_TEXT2_WIDTH, 500)
+	textHeight = sizes.get(ZapStatisticBrowserList.SKIN_COMPONENT_TEXT_HEIGHT, 30)
+
 	res = [entry]
-	res.append(MultiContentEntryText(pos=(0, 0), size=(150, 25), font=0, text="%s" % (entry.getDurationText())))
-	res.append(MultiContentEntryText(pos=(160, 0), size=(400, 25), font=0, text=entry.name))
+	res.append(MultiContentEntryText(pos=(5, 0), size=(text3Width, textHeight), font=0, flags=RT_VALIGN_CENTER, text="%s" % (entry.getDurationText())))
+	res.append(MultiContentEntryText(pos=(text3Width, 0), size=(text2Width, textHeight), font=0, flags=RT_VALIGN_CENTER, text=entry.name))
 	return res
 
 ###########################################################
@@ -185,16 +208,17 @@ class ZapStatisticDurationScreen(Screen):
 	SORT_DURATION_ASCENDING = 2
 	SORT_DURATION_DESCENDING = 3
 	skin = """
-		<screen position="center,center" size="560,450" title="%s" >
-			<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/blue.png" position="420,0" size="140,40" transparent="1" alphatest="on" />
-			<widget name="key_red" position="0,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget name="key_green" position="140,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget name="key_yellow" position="280,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget name="key_blue" position="420,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget name="list" position="0,40" size="560,400" scrollbarMode="showOnDemand" />
+		<screen position="center,120" size="820,520" title="%s" >
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" />
+	    	<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" />
+	    	<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" />
+	    	<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" />
+	    	<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+	    	<widget name="key_green" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+	    	<widget name="key_yellow" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+	    	<widget name="key_blue" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+	    	<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+	    	<widget name="list" position="10,60" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>""" % _("Zap Statistic")
 
 	def __init__(self, session):
@@ -282,16 +306,17 @@ class ZapStatisticCombinedScreen(Screen):
 	SORT_DURATION_ASCENDING = 2
 	SORT_DURATION_DESCENDING = 3
 	skin = """
-		<screen position="center,center" size="560,450" title="%s" >
-			<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/blue.png" position="420,0" size="140,40" transparent="1" alphatest="on" />
-			<widget name="key_red" position="0,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget name="key_green" position="140,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget name="key_yellow" position="280,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget name="key_blue" position="420,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget name="list" position="0,40" size="560,400" scrollbarMode="showOnDemand" />
+		<screen position="center,120" size="820,520" title="%s" >
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" />
+	    	<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" />
+	    	<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" />
+	    	<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" />
+	    	<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+	    	<widget name="key_green" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+	    	<widget name="key_yellow" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+	    	<widget name="key_blue" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+	    	<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+	    	<widget name="list" position="10,60" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>""" % _("Zap Statistic")
 
 	def __init__(self, session):
@@ -387,16 +412,17 @@ class ZapStatisticScreen(Screen, ProtectedScreen):
 	SORT_DATE_ASCENDING = 2
 	SORT_DATE_DESCENDING = 3
 	skin = """
-		<screen position="center,center" size="560,450" title="%s" >
-			<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/blue.png" position="420,0" size="140,40" transparent="1" alphatest="on" />
-			<widget name="key_red" position="0,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget name="key_green" position="140,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget name="key_yellow" position="280,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget name="key_blue" position="420,0" zPosition="1" size="140,40" font="Regular;20" valign="center" halign="center" backgroundColor="#1f771f" transparent="1" />
-			<widget name="list" position="0,40" size="560,400" scrollbarMode="showOnDemand" />
+		<screen position="center,120" size="820,520" title="%s" >
+			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" />
+	    	<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" />
+	    	<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" />
+	    	<ePixmap pixmap="skin_default/buttons/blue.png" position="610,5" size="200,40" />
+	    	<widget name="key_red" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+	    	<widget name="key_green" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+	    	<widget name="key_yellow" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+	    	<widget name="key_blue" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2" />
+	    	<eLabel position="10,50" size="800,1" backgroundColor="grey" />
+	    	<widget name="list" position="10,60" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>""" % _("Zap Statistic")
 
 	def __init__(self, session):
