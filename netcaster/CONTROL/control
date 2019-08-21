@@ -1,2 +1,0 @@
-Description: Player for Network and Internet Streams
-Depends: enigma2, gstreamer1.0-plugins-good-icydemux

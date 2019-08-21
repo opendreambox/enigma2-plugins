@@ -57,7 +57,6 @@ SUBDIRS = \
 	mytube \
 	namezap \
 	ncidclient \
-	netcaster \
 	permanentclock \
 	pipservicerelation \
 	pipzap \

@@ -274,11 +274,6 @@ namezap/Makefile
 namezap/meta/Makefile
 namezap/src/Makefile
 
-netcaster/Makefile
-netcaster/meta/Makefile
-netcaster/src/Makefile
-netcaster/src/interface/Makefile
-
 ncidclient/Makefile
 ncidclient/meta/Makefile
 ncidclient/src/Makefile
