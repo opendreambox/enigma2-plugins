@@ -142,6 +142,9 @@ else:
 	elif HardwareInfo().get_device_name() == 'dm7080':
 		IdString = "1"
 		DisplayXY = "132x64"
+	elif HardwareInfo().get_device_name() in ('dm520', 'dm525'):
+		IdString = "0"
+		DisplayXY = "0x0"
 	ArchMipsel = True
 	ArchString = "MIPSEL"
 ModelString = HardwareInfo().get_device_name().upper()
