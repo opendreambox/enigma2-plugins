@@ -33,6 +33,8 @@ import xml.etree.cElementTree as Tree
 
 import MerlinSkinThemes
 
+CONFDIR = "/etc/enigma2/merlinskinthemes/"
+
 try:
         Notifications.notificationQueue.registerDomain("MerlinSkinThemes", _("MerlinSkinThemes"), deferred_callable = True)
 except Exception as e:
@@ -44,7 +46,10 @@ def merlinskinthemes_start(session, **kwargs):
 
 def checkSkin(session, **kwargs):
 	if config.plugins.MerlinSkinThemes.rebuildSkinOnBoot.value:
-		if config.plugins.MerlinSkinThemes.Skin.value == config.skin.primary_skin.value[:-9]:
+
+		# a config exists for the currently active skin
+		if fileExists(CONFDIR + config.skin.primary_skin.value[:-9] + ".cfg"):
+			print "[MST] - config found for active skin"
 			skinFile = resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value
 			if fileExists(skinFile):
 				xmlFile = Tree.ElementTree(file=skinFile)
@@ -53,18 +58,20 @@ def checkSkin(session, **kwargs):
 				if root.find("merlinskinthemes") is not None:
 					print "[MST] - skin was edited with MST and tag is present - assume rebuild is not required"
 				else:
-					if config.plugins.MerlinSkinThemes.applied.value:
-						print "[MST] - skin was edited with MST but tag is not present - assume rebuild required"
-						Notifications.AddNotificationWithCallback(messageBoxCallback, MessageBox, _("Skin was rebuilt and a restart of enigma2 is required. Do you want to restart now?"), MessageBox.TYPE_YESNO, 10, windowTitle="MerlinSkinThemes", domain = "MerlinSkinThemes")
-						# take the configfile and build a dict with all MerlinSkinThemes entries to work around not available ConfigSubDict values		
-						configDict = {}	
-						for line in config.pickle().split("\n"):
-							if line.startswith("config.plugins.MerlinSkinThemes"):
-								configEntry = line.split("=")
-								configDict[configEntry[0]]=configEntry[1]
-						MerlinSkinThemes.setThemes(resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value[:-9] + "/themes.xml", resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value, configDict)											
-					else:
-						print "[MST] - skin was not edited with MST"
+					print "[MST] - skin was edited with MST but tag is not present - assume rebuild required"
+					configDict = {}
+					# read config data
+					f = open(CONFDIR + config.skin.primary_skin.value[:-9] + ".cfg", 'r')
+					
+					for line in f:
+						configData = line.split(":::")
+						if len(configData)==2:
+							configDict[configData[0]] = configData[1].strip("\n")
+					f.close()
+					
+					# update skin with data from config				
+					MerlinSkinThemes.setThemes(resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value[:-9] + "/themes.xml", resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value, configDict, "update")
+					Notifications.AddNotificationWithCallback(messageBoxCallback, MessageBox, _("Skin was rebuilt and a restart of enigma2 is required. Do you want to restart now?"), MessageBox.TYPE_YESNO, 10, windowTitle="MerlinSkinThemes", domain = "MerlinSkinThemes")
 
 def messageBoxCallback(answer=False):
 	if answer == True:
