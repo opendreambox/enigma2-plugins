@@ -50,7 +50,7 @@ import shutil
 import os
 
 # =========================================
-PluginVersion = "v2.8.0"
+PluginVersion = "v2.8.1"
 Title = "MerlinSkinThemes "
 Author = "by marthom"
 # =========================================
@@ -189,16 +189,84 @@ themeList = ["ColorTheme", "SkinPathTheme", "FontTheme",  "BorderSetTheme", "Win
 
 # shared functions
 # ImageCreator
-import Image
+import Image,ImageDraw
+import math
 
 class ImageCreator:
 	def __init__(self):
 		pass
 
-	def createRectangle(self, width, height, color, filename):
-		image = Image.new(mode='RGBA',size=(width,height),color=color)
-		image.save(filename)
+	def createRectangle(self, width=200, height=50, fromColor=None, toColor=None, filename=None, mode="no",):
+		
+		if mode == "no":
+			image = Image.new(mode='RGBA', size=(width, height), color=fromColor)
+			image.save(filename)
+		else:
+			gradient = Image.new(mode='RGBA',size=(width,height),color=0)
+			draw = ImageDraw.Draw(gradient)
+			
+			if mode == "horizontal":
+				steps=width
+			elif mode == "vertical":
+				steps=height
+			elif mode == "diametral":
+				steps=width*2
+			elif mode == "rectangular":
+				fromColorList = list(fromColor)
+				toColorList = list(toColor)
+				for y in range(height):
+  					for x in range(width):
+						#Find the distance to the closest edge
+						distanceToEdge = min(abs(x - width), x, abs(y - height), y)
 
+						#Make it on a scale from 0 to 1
+						distanceToEdge = float(distanceToEdge) / (width/2)
+
+						#Calculate a, r, g, and b values
+						a = fromColorList[3] * distanceToEdge + toColorList[3] * (1 - distanceToEdge)
+						r = fromColorList[0] * distanceToEdge + toColorList[0] * (1 - distanceToEdge)
+						g = fromColorList[1] * distanceToEdge + toColorList[1] * (1 - distanceToEdge)
+						b = fromColorList[2] * distanceToEdge + toColorList[2] * (1 - distanceToEdge)
+						
+						gradient.putpixel((x, y), (int(r), int(g), int(b)))
+			elif mode == "round":
+				fromColorList = list(fromColor)
+				toColorList = list(toColor)
+				for y in range(height):
+  					for x in range(width):
+						#Find the distance to the center
+						distanceToCenter = math.sqrt((x - width/2) ** 2 +(y - height/2) ** 2)
+
+						#Make it on a scale from 0 to 1
+						distanceToCenter = float(distanceToCenter) / (math.sqrt(2) * width/2)
+
+						#Calculate a, r, g, and b values
+						a = fromColorList[3] * distanceToCenter + toColorList[3] * (1 - distanceToCenter)
+						r = fromColorList[0] * distanceToCenter + toColorList[0] * (1 - distanceToCenter)
+						g = fromColorList[1] * distanceToCenter + toColorList[1] * (1 - distanceToCenter)
+						b = fromColorList[2] * distanceToCenter + toColorList[2] * (1 - distanceToCenter)
+						
+						gradient.putpixel((x, y), (int(r), int(g), int(b), int(a)))			
+						
+			if mode != "rectangular" and mode != "round":
+						
+				for i, color in enumerate(self.interpolate(fromColor, toColor, steps)):
+					if mode == "horizontal":
+						draw.line([(i, 0), (i, height)], tuple(color), width=1)
+					elif mode == "vertical":
+						draw.line([(0, i), (width, i)], tuple(color), width=1)
+					elif mode == "diametral":
+						draw.line([(i, 0), (0, i)], tuple(color), width=1)
+
+			gradient.save(filename)
+		
+	def interpolate(self, fromColor, toColor, interval):
+		# (r/g/b/a(to) - r/g/b/a(from)) / (imagewidth * 2) -> build list. result will be int() [x, y, z, a]
+		delta_co =[(t - f) / interval for f , t in zip(fromColor, toColor)]
+		for i in range(interval):
+			# for each pixel from 0 to imagewidth * 2: r/g/b/a(from) + r/g/b/a(delta) * i
+			yield [int(round(f + delta * i)) for f, delta in zip(fromColor, delta_co)]
+		
 imageCreator = ImageCreator()
 
 def hex2argb(value):
@@ -334,9 +402,18 @@ def setThemes(themeFile=None, skinFile=None, configDict=None, mode="apply"):
 							png_height = int(tp.get("height"))
 							png_argb = tp.get("argb")
 							acolor = hex2argb(png_argb)
-						
-							if png_name is not None and png_width is not None and png_height is not None and png_argb is not None:
-								imageCreator.createRectangle(png_width, png_height, (acolor[1], acolor[2], acolor[3], acolor[0]), resolveFilename(SCOPE_SKIN) + SkinName + "/" + png_name) 
+							png_argb2 = tp.get("argb2", None)
+							if png_argb2 is not None:
+								acolor2 = hex2argb(png_argb2)
+							else:
+								acolor2 = None
+							gradienttype = tp.get("gtype", None)
+
+							if png_name is not None and png_width is not None and png_height is not None and png_argb is not None:						
+								if acolor2 is not None and gradienttype is not None:
+									imageCreator.createRectangle(png_width, png_height, (acolor[1], acolor[2], acolor[3], acolor2[0]),(acolor2[1], acolor2[2], acolor2[3], acolor2[0]), resolveFilename(SCOPE_SKIN) + SkinName + "/" + png_name, gradienttype) 
+								else:
+									imageCreator.createRectangle(png_width, png_height, (acolor[1], acolor[2], acolor[3], acolor[0]), None, resolveFilename(SCOPE_SKIN) + SkinName + "/" + png_name) 
 													
 				# if name does not match set it to inactive	
 				else:
@@ -1273,7 +1350,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				elif theme[0] == "pngtheme":
 					parentnode1.append(Tree.Comment('Sample: name=path+png_name (root=skindir), argb=a:alpha r:red g:green b:blue'))
 					parentnode1.append(Tree.Comment('<png name="design/progress.png" width="814" height="5" argb="#ff55a0ff" />'))
-					parentnode2.append(Tree.Comment('<png name="design/progress.png" width="814" height="5" argb="#ffffa055" />'))
+					parentnode2.append(Tree.Comment('<png name="design/progress.png" width="814" height="5" argb="#ffffa055" argb2="#ff000000" gtype="vertical"/>'))
 			
 			# screenthemes
 			screenthemes = Tree.SubElement(themes, "screenthemes")
