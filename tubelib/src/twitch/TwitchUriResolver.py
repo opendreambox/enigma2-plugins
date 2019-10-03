@@ -31,7 +31,7 @@ try:
 						Log.w("Service became invalid!")
 						return
 					if uri:
-						service.setResolvedUri(uri, eServiceReference.idDVB)
+						service.setResolvedUri(uri, eServiceReference.idStream)
 					else:
 						service.failedToResolveUri()
 				except:
