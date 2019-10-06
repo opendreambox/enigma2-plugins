@@ -146,7 +146,7 @@ class MPanelList(MenuList):
 	def __init__(self, list, selection = 0, enableWrapAround=True):
 		sz_w = getDesktop(0).size().width()
 		if sz_w > 1400:
-			fs=30
+			fs=32
 			ih=90
 		else:
 			fs=20
