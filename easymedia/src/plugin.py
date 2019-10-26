@@ -34,19 +34,15 @@ from Components.config import config, getConfigListEntry, ConfigSubsection, Conf
 from Tools.Directories import fileExists, pathExists, resolveFilename, SCOPE_PLUGINS
 from Tools.LoadPixmap import LoadPixmap
 from Tools.HardwareInfo import HardwareInfo
-from enigma import RT_HALIGN_LEFT, eListboxPythonMultiContent, gFont, getDesktop
+from enigma import RT_HALIGN_LEFT, RT_WRAP, RT_VALIGN_CENTER, eListboxPythonMultiContent, gFont, getDesktop
 import pickle
 from os import system as os_system
 from os import listdir as os_listdir
-
-
 
 EMbaseInfoBarPlugins__init__ = None
 EMStartOnlyOneTime = False
 EMsession = None
 InfoBar_instance = None
-
-
 
 config.plugins.easyMedia  = ConfigSubsection()
 config.plugins.easyMedia.music = ConfigSelection(default="mediaplayer", choices = [("no", _("Disabled")), ("mediaplayer", _("MediaPlayer")), ("merlinmp", _("MerlinMusicPlayer"))])
@@ -65,13 +61,9 @@ config.plugins.easyMedia.radio = ConfigSelection(default="yes", choices = [("no"
 config.plugins.easyMedia.myvideo = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
 config.plugins.easyMedia.timers = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
 
-
-
 def Plugins(**kwargs):
 	return [PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, fnc = EasyMediaAutostart),
-			PluginDescriptor(name="EasyMedia", description=_("Not easy way to start EasyMedia"), where = PluginDescriptor.WHERE_PLUGINMENU, fnc=notEasy),]
-
-
+			PluginDescriptor(name="EasyMedia", description=_("Not easy way to start EasyMedia"), where = PluginDescriptor.WHERE_PLUGINMENU, fnc=startFromPluginMenu),]
 
 def EasyMediaAutostart(reason, **kwargs):
 	global EMbaseInfoBarPlugins__init__
@@ -81,9 +73,7 @@ def EasyMediaAutostart(reason, **kwargs):
 		if EMbaseInfoBarPlugins__init__ is None:
 			EMbaseInfoBarPlugins__init__ = InfoBarPlugins.__init__
 		InfoBarPlugins.__init__ = InfoBarPlugins__init__
-		InfoBarPlugins.pvr = pvr
-
-
+		InfoBarPlugins.startWithPvrButton = startWithPvrButton
 
 def InfoBarPlugins__init__(self):
 	global EMStartOnlyOneTime
@@ -92,75 +82,67 @@ def InfoBarPlugins__init__(self):
 		global InfoBar_instance
 		InfoBar_instance = self
 		self["EasyMediaActions"] = ActionMap(["EasyMediaActions"],
-			{"video_but": self.pvr}, -1)
+			{"video_but": self.startWithPvrButton}, -1)
 	else:
 		InfoBarPlugins.__init__ = InfoBarPlugins.__init__
-		InfoBarPlugins.pvr = None
+		InfoBarPlugins.startWithPvrButton = None
 	EMbaseInfoBarPlugins__init__(self)
 
-
-
-def pvr(self):
+def startWithPvrButton(self):
 	self.session.openWithCallback(MPcallbackFunc, EasyMedia)
 
-
-
-def notEasy(session, **kwargs):
+def startFromPluginMenu(session, **kwargs):
 	session.openWithCallback(MPcallbackFunc, EasyMedia)
-
-
 
 def MPanelEntryComponent(key, text, cell):
 	sz_w = getDesktop(0).size().width()
-	if sz_w > 1400:
-		ih=90
-		wx=200
-		wy=20
-		psx=135
-		psy=85
+	# FHD
+	if sz_w >= 1920:
+		itemheight=150
+		xpos=300
+		itemwidth=400
+		imagewidth=200
+		imageheight=140
+	# HD
 	else:
-		ih=60
-		wx=150
-		wy=17
-		psx=100
-		psy=50
+		itemheight=100
+		xpos=200
+		itemwidth=300
+		imagewidth=135
+		imageheight=90
 
 	res = [ text ]
-	res.append((eListboxPythonMultiContent.TYPE_TEXT, wx, wy, 300, ih, 0, RT_HALIGN_LEFT, text[0]))
+	res.append((eListboxPythonMultiContent.TYPE_TEXT, xpos, 0, itemwidth, itemheight, 0, RT_HALIGN_LEFT|RT_WRAP|RT_VALIGN_CENTER, text[0]))
 	if cell<5:
 		bpng = LoadPixmap('/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/key-' + str(cell) + ".png")
 		if bpng is not None:
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 0, 5, 5, psy, bpng))
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 0, 5, 5, imageheight, bpng))
 	png = LoadPixmap(EasyMedia.EMiconspath + key + '.png')
 	if png is not None:
-		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 25, 5, psx, psy, png))
+		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 25, 5, imagewidth, imageheight, png))
 	else:
 		png = LoadPixmap(EasyMedia.EMiconspath + 'default.png')
 		if png is not None:
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 25, 5, psx, psy, png))
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 25, 5, imagewidth, imageheight, png))
 	return res
-
-
 
 class MPanelList(MenuList):
 	def __init__(self, list, selection = 0, enableWrapAround=True):
 		sz_w = getDesktop(0).size().width()
-		if sz_w > 1400:
-			fs=30
-			ih=90
+		if sz_w >= 1920:
+			fontsize=45
+			itemheight=150
 		else:
-			fs=20
-			ih=60 
+			fontsize=30
+			itemheight=100 
 
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-		self.l.setFont(0, gFont("Regular", fs))
-		self.l.setItemHeight(ih)
+		self.l.setFont(0, gFont("Regular", fontsize))
+		self.l.setItemHeight(itemheight)
 		self.selection = selection
 	def postWidgetCreate(self, instance):
 		MenuList.postWidgetCreate(self, instance)
 		self.moveToIndex(self.selection)
-
-
 
 def BookmarksCallback(choice):
 	choice = choice and choice[1]
@@ -170,8 +152,6 @@ def BookmarksCallback(choice):
 		if InfoBar_instance:
 			InfoBar_instance.showMovies()
 
-
-
 def TvRadioCallback(choice):
 	choice = choice and choice[1]
 	if choice == "TM":
@@ -180,8 +160,6 @@ def TvRadioCallback(choice):
 	elif choice == "RM":
 		if InfoBar_instance:
 			InfoBar_instance.showRadio()
-
-
 
 class ConfigEasyMedia(ConfigListScreen, Screen):
 	skin = """
@@ -212,7 +190,7 @@ class ConfigEasyMedia(ConfigListScreen, Screen):
 		list.append(getConfigListEntry(_("ZDFmediathek player:"), config.plugins.easyMedia.zdfmedia))
 		list.append(getConfigListEntry(_("MyVideo player:"), config.plugins.easyMedia.myvideo))
 		ConfigListScreen.__init__(self, list)
-		self["actions"] = ActionMap(["OkCancelActions", "ColorActions"], {"green": self.save, "red": self.exit, "cancel": self.exit, "yellow": self.plug}, -1)
+		self["actions"] = ActionMap(["OkCancelActions", "ColorActions"], {"green": self.save, "red": self.exit, "cancel": self.exit, "yellow": self.addPlugin}, -1)
 
 	def save(self):
 		for x in self["config"].list:
@@ -224,10 +202,8 @@ class ConfigEasyMedia(ConfigListScreen, Screen):
 			x[1].cancel()
 		self.close()
 
-	def plug(self):
+	def addPlugin(self):
 		self.session.open(AddPlug)
-
-
 
 class AddPlug(Screen):
 	skin = """
@@ -296,21 +272,32 @@ class AddPlug(Screen):
 				self.session.open(MessageBox, text = (plugin.name + _(" removed from EasyMedia")), type = MessageBox.TYPE_INFO)
 			except: self.session.open(MessageBox, text = "Write Error!", type = MessageBox.TYPE_WARNING)
 
-
-
 class EasyMediaSummary(Screen):
-	if "800se" in HardwareInfo().get_device_name():
+	if HardwareInfo().get_device_name() == "dm820":
 		skin = """
 			<screen position="0,0" size="96,64" id="2">
 				<eLabel text="EasyMedia:" foregroundColor="#fcc000" position="0,0" size="96,24" font="Regular;16"/>
 				<widget name="text1" position="0,24" size="96,40" font="Regular;18"/>
 			</screen>"""
-	else:
+	elif HardwareInfo().get_device_name() == "dm7080":
 		skin = """
-			<screen position="0,0" size="132,64">
+			<screen position="0,0" size="132,64" id="1">
 				<eLabel text="EasyMedia:" position="0,0" size="132,24" font="Regular;14"/>
 				<widget name="text1" position="0,24" size="132,40" font="Regular;16"/>
 			</screen>"""
+	elif HardwareInfo().get_device_name() in ('dm900', 'dm920'):
+		skin = """
+			<screen position="0,0" size="400,240" id="3">
+				<eLabel text="EasyMedia:" position="0,0" size="400,50" font="Regular;40"/>
+				<widget name="text1" position="0,50" size="400,190" font="Regular;45"/>
+			</screen>"""	
+	else:
+		skin = """
+			<screen position="0,0" size="132,64" id="1">
+				<eLabel text="EasyMedia:" position="0,0" size="132,24" font="Regular;14"/>
+				<widget name="text1" position="0,24" size="132,40" font="Regular;16"/>
+			</screen>"""		
+	
 	def __init__(self, session, parent):
 		Screen.__init__(self, session)
 		self["text1"] = Label()
@@ -322,34 +309,19 @@ class EasyMediaSummary(Screen):
 	def setText(self, text, line):
 		self["text1"].setText(text)
 
-
-
 class EasyMedia(Screen):
 	sz_w = getDesktop(0).size().width()
-	if sz_w > 1800:
+	if sz_w >= 1920:
 		skin = """
-		<screen flags="wfNoBorder" position="0,0" size="550,1080" title="Easy Media">
-			<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/bg2.png" position="0,0" size="750,576"/>
-			<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/bg2.png" position="0,576" size="750,503"/>
-			<widget name="list" position="60,30" size="450,1080" scrollbarMode="showNever" transparent="1" zPosition="2"/>
-		</screen>"""
-	elif sz_w > 1100:
-		skin = """
-		<screen flags="wfNoBorder" position="0,0" size="450,720" title="Easy Media">
-			<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/bg.png" position="0,0" size="450,576"/>
-			<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/bg.png" position="0,576" size="450,145"/>
-			<widget name="list" position="60,30" size="350,660" scrollbarMode="showNever" transparent="1" zPosition="2"/>
-		</screen>"""
-	elif sz_w > 1000:
-		skin = """
-		<screen flags="wfNoBorder" position="-20,0" size="450,576" title="Easy Media">
-			#<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/bg.png" position="0,0" size="450,576"/>
-			<widget name="list" position="70,48" size="320,480" scrollbarMode="showNever" transparent="1" zPosition="2"/>
+		<screen flags="wfNoBorder" position="0,0" size="810,1080" title="Easy Media">
+			<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/bg.png" position="0,0" size="750,1080"/>
+			<widget name="list" position="60,30" size="750,1050" scrollbarMode="showNever" transparent="1" zPosition="2"/>
 		</screen>"""
 	else:
 		skin = """
-		<screen position="center,center" size="320,440" title="Easy Media">
-			<widget name="list" position="10,10" size="300,420" scrollbarMode="showOnDemand" />
+		<screen flags="wfNoBorder" position="0,0" size="540,720" title="Easy Media">
+			<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/bg.png" position="0,0" size="480,720" scale="stretch" />
+			<widget name="list" position="60,20" size="480,700" scrollbarMode="showNever" transparent="1" zPosition="2"/>
 		</screen>"""
 	if pathExists('/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/icons/'):
 		EMiconspath = '/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/icons/'
@@ -358,135 +330,129 @@ class EasyMedia(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.session = session
+
+		self["actions"] = ActionMap(["WizardActions", "MenuActions", "InfobarActions", "ColorActions"],
+		{
+			"ok": self.go,
+			"back": self.cancel,
+			"menu": self.openConfig,
+			"showMovies": lambda: self.go(self.menuItemList[0]),
+			"green": lambda: self.go(self.menuItemList[2]),
+			"red": lambda: self.go(self.menuItemList[1]),
+			"blue": lambda: self.go(self.menuItemList[4]),
+			"yellow": lambda: self.go(self.menuItemList[3])
+		}, -1)
+
 		self.list = []
-		self.__keys = []
-		MPaskList = []
+		self.__keys = []		
+		self["list"] = MPanelList(list = self.list, selection = 0)
+		self["list"].onSelectionChanged.append(self.updateOLED)
+		
 		self["key_pvr"] = StaticText(" ")
 		self["key_yellow"] = StaticText(" ")
 		self["key_green"] = StaticText(" ")
 		self["key_red"] = StaticText(" ")
 		self["key_blue"] = StaticText(" ")
-		if True:
-			self.__keys.append("movies")
-			MPaskList.append((_("Movies"), "PLAYMOVIES"))
+	
+		self.onLayoutFinish.append(self.buildEasyMediaList)
+
+	def buildEasyMediaList(self):
+		self.list = []
+		self.__keys = []
+		self.menuItemList = []
+		self.__keys.append("movies")
+		self.menuItemList.append((_("Movies"), "PLAYMOVIES"))
 		if config.plugins.easyMedia.bookmarks.value != "no":
 			self.__keys.append("bookmarks")
-			MPaskList.append((_("Bookmarks"), "BOOKMARKS"))
+			self.menuItemList.append((_("Bookmarks"), "BOOKMARKS"))
 		if config.plugins.easyMedia.timers.value != "no":
 			self.__keys.append("timers")
-			MPaskList.append((_("Timer"), "TIMERS"))
+			self.menuItemList.append((_("Timer"), "TIMERS"))
 		if config.plugins.easyMedia.videodb.value != "no":
 			self.__keys.append("videodb")
-			MPaskList.append((_("VideoDB"), "VIDEODB"))
+			self.menuItemList.append((_("VideoDB"), "VIDEODB"))
 		if config.plugins.easyMedia.pictures.value != "no":
 			self.__keys.append("pictures")
-			MPaskList.append((_("Pictures"), "PICTURES"))
+			self.menuItemList.append((_("Pictures"), "PICTURES"))
 		if config.plugins.easyMedia.music.value != "no":
 			self.__keys.append("music")
-			MPaskList.append((_("Music"), "MUSIC"))
+			self.menuItemList.append((_("Music"), "MUSIC"))
 		if config.plugins.easyMedia.radio.value != "no":
 			self.__keys.append("radio")
 			if config.usage.e1like_radio_mode.value:
-				MPaskList.append((_("Tv/Radio"), "RADIO"))
+				self.menuItemList.append((_("Tv/Radio"), "RADIO"))
 			else:
-				MPaskList.append((_("Radio"), "RADIO"))
+				self.menuItemList.append((_("Radio"), "RADIO"))
 		if config.plugins.easyMedia.dvd.value != "no":
 			self.__keys.append("dvd")
-			MPaskList.append((_("DVD Player"), "DVD"))
+			self.menuItemList.append((_("DVD Player"), "DVD"))
 		if config.plugins.easyMedia.weather.value != "no":
 			self.__keys.append("weather")
-			MPaskList.append((_("Weather"), "WEATHER"))
+			self.menuItemList.append((_("Weather"), "WEATHER"))
 		if config.plugins.easyMedia.files.value != "no":
 			self.__keys.append("files")
-			MPaskList.append((_("Files"), "FILES"))
+			self.menuItemList.append((_("Files"), "FILES"))
 		if config.plugins.easyMedia.iradio.value != "no":
 			self.__keys.append("internetradio")
-			MPaskList.append((_("InternetRadio"), "INTERNETRADIO"))
+			self.menuItemList.append((_("InternetRadio"), "INTERNETRADIO"))
 		if config.plugins.easyMedia.idream.value != "no":
 			self.__keys.append("idream")
-			MPaskList.append((_("iDream"), "IDREAM"))
+			self.menuItemList.append((_("iDream"), "IDREAM"))
 		if config.plugins.easyMedia.mytube.value != "no":
 			self.__keys.append("mytube")
-			MPaskList.append((_("MyTube Player"), "MYTUBE"))
+			self.menuItemList.append((_("MyTube Player"), "MYTUBE"))
 		if config.plugins.easyMedia.vlc.value != "no":
 			self.__keys.append("vlc")
-			MPaskList.append((_("VLC Player"), "VLC"))
+			self.menuItemList.append((_("VLC Player"), "VLC"))
 		if config.plugins.easyMedia.zdfmedia.value != "no":
 			self.__keys.append("zdf")
-			MPaskList.append((_("ZDFmediathek"), "ZDF"))
+			self.menuItemList.append((_("ZDFmediathek"), "ZDF"))
 		if config.plugins.easyMedia.myvideo.value != "no":
 			self.__keys.append("myvideo")
-			MPaskList.append((_("MyVideo"), "MYVIDEO"))
+			self.menuItemList.append((_("MyVideo"), "MYVIDEO"))
 		plist = os_listdir("/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia")
 		plist = [x[:-5] for x in plist if x.endswith('.plug')]
 		plist.sort()
-		for onePlug in plist:
+		for plugin in plist:
 			try:
-				inpf = open(("/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/" + onePlug + ".plug"), 'rb')
-				binPlug = pickle.load(inpf)
-				inpf.close()	
+				inputfile = open(("/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/" + plugin + ".plug"), 'rb')
+				binPlug = pickle.load(inputfile)
+				inputfile.close()	
 				self.__keys.append(binPlug.name)
-				MPaskList.append((binPlug.name, ("++++" + binPlug.name)))
+				self.menuItemList.append((binPlug.name, ("++++" + binPlug.name)))
 			except: pass
 		pos = 0
-		for x in MPaskList:
+		for x in self.menuItemList:
 			strpos = str(self.__keys[pos])
 			self.list.append(MPanelEntryComponent(key = strpos, text = x, cell = pos))
-			if pos==0: self["key_pvr"].setText(MPaskList[0][0])
-			elif pos==1: self["key_red"].setText(MPaskList[1][0])
-			elif pos==2: self["key_green"].setText(MPaskList[2][0])
-			elif pos==3: self["key_yellow"].setText(MPaskList[3][0])
-			elif pos==4: self["key_blue"].setText(MPaskList[4][0])
+			if pos==0: self["key_pvr"].setText(self.menuItemList[0][0])
+			elif pos==1: self["key_red"].setText(self.menuItemList[1][0])
+			elif pos==2: self["key_green"].setText(self.menuItemList[2][0])
+			elif pos==3: self["key_yellow"].setText(self.menuItemList[3][0])
+			elif pos==4: self["key_blue"].setText(self.menuItemList[4][0])
 			pos += 1
-		self["list"] = MPanelList(list = self.list, selection = 0)
-		self["list"].onSelectionChanged.append(self.updateOLED)
-		self["actions"] = ActionMap(["WizardActions", "MenuActions", "InfobarActions", "ColorActions"],
-		{
-			"ok": self.go,
-			"back": self.cancel,
-			"menu": self.emContextMenu,
-			"showMovies": lambda: self.go2(MPaskList,0),
-			"green": lambda: self.go2(MPaskList,2),
-			"red": lambda: self.go2(MPaskList,1),
-			"blue": lambda: self.go2(MPaskList,4),
-			"yellow": lambda: self.go2(MPaskList,3)
-		}, -1)
+					
+		self["list"].setList(self.list)
 
 	def cancel(self):
 		self.close(None)
 
-	def go(self):
+	def go(self, item=None):
+		if item is not None:
+			self.close(item)
 		cursel = self["list"].l.getCurrentSelection()
 		if cursel:
-			self.goEntry(cursel[0])
+			entry = cursel[0]
+			if len(entry) > 2 and isinstance(entry[1], str) and entry[1] == "CALLFUNC":
+				arg = self["list"].l.getCurrentSelection()[0]
+				entry[2](arg)
+			else:
+				self.close(entry)
 		else:
 			self.cancel()
 
-	def go2(self, was, wohin):
-		if wohin == 0:
-			self.close(was[wohin])
-		elif wohin == 1:
-			if len(was)>1: 
-				self.close(was[wohin])
-		elif wohin == 2:
-			if len(was)>2: 
-				self.close(was[wohin])
-		elif wohin == 3:
-			if len(was)>3: 
-				self.close(was[wohin])
-		elif wohin == 4:
-			if len(was)>4: 
-				self.close(was[wohin])
-
-	def goEntry(self, entry):
-		if len(entry) > 2 and isinstance(entry[1], str) and entry[1] == "CALLFUNC":
-			arg = self["list"].l.getCurrentSelection()[0]
-			entry[2](arg)
-		else:
-			self.close(entry)
-
-	def emContextMenu(self):
-		self.session.open(ConfigEasyMedia)
+	def openConfig(self):
+		self.session.openWithCallback(self.buildEasyMediaList, ConfigEasyMedia)
 
 	def createSummary(self):
 		return EasyMediaSummary
@@ -494,8 +460,6 @@ class EasyMedia(Screen):
 	def updateOLED(self):
 		text = str(self["list"].l.getCurrentSelection()[0][0])
 		self.summaries.setText(text, 1)
-
-
 
 def MPcallbackFunc(answer):
 	if EMsession is None:
@@ -609,13 +573,10 @@ def MPcallbackFunc(answer):
 		from Screens.TimerEdit import TimerEditList
 		EMsession.open(TimerEditList)
 	elif answer is not None and "++++" in answer:
-		plugToRun = answer[4:]
+		pluginToRun = answer[4:]
 		try:
-			inpf = open(("/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/" + plugToRun + ".plug"), 'rb')
-			runPlug = pickle.load(inpf)
-			inpf.close()	
-			runPlug(session = EMsession)
-		except: EMsession.open(MessageBox, text = (plugToRun + " not found!"), type = MessageBox.TYPE_WARNING)
-
-
-
+			inputfile = open(("/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/" + pluginToRun + ".plug"), 'rb')
+			runPlugin = pickle.load(inputfile)
+			inputfile.close()	
+			runPlugin(session = EMsession)
+		except: EMsession.open(MessageBox, text = (pluginToRun + " not found!"), type = MessageBox.TYPE_WARNING)
