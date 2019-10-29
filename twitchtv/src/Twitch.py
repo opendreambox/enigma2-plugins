@@ -51,6 +51,10 @@ class TwitchVideoBase(TwitchDataObject):
 		self.type = data[type_key].encode('utf-8')
 		self.created = data["created_at"].encode('utf-8')
 		self.channel = TwitchChannel(data["channel"])
+		self.preview_small = data["preview"]["small"].encode('utf-8')
+		self.preview_medium = data["preview"]["medium"].encode('utf-8')
+		self.preview_large = data["preview"]["large"].encode('utf-8')
+		self.preview = self.preview_medium
 
 class TwitchStream(TwitchVideoBase):
 	TYPE_LIVE = "live"
@@ -58,10 +62,6 @@ class TwitchStream(TwitchVideoBase):
 	def __init__(self, stream):
 		TwitchVideoBase.__init__(self, stream, "stream_type")
 		self.viewers = stream["viewers"]
-		self.preview_small = stream["preview"]["small"].encode('utf-8')
-		self.preview_medium = stream["preview"]["medium"].encode('utf-8')
-		self.preview_large = stream["preview"]["large"].encode('utf-8')
-		self.preview = self.preview_medium
 
 	def __str__(self):
 		return "~TwitchStream-%s-%s-%s-(%s | %s | %s)" %(self.type, self.viewers, self.channel, self.preview_small, self.preview_medium, self.preview_large)
@@ -73,7 +73,6 @@ class TwitchVOD(TwitchVideoBase):
 		self.title = vod["title"].encode("utf-8")
 		self.views = vod["views"]
 		self.game = vod["game"].encode("utf-8") if vod.get("game", None) else ""
-		self.preview = vod["preview"].encode("utf-8")
 		self.title = vod["title"].encode('utf-8')
 
 class Twitch(object):

@@ -311,7 +311,7 @@ class TwitchChannelVideos(TwitchStreamGrid):
 		self.reload()
 
 	def _loadContent(self):
-		self.twitch.videosForChannel(self._channel.name, self._vodType, self._onVODs)
+		self.twitch.videosForChannel(self._channel.id, self._vodType, self._onVODs)
 
 	def _onVODs(self, total, streams):
 		self._onAllStreams(streams)
