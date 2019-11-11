@@ -28,7 +28,7 @@ from __init__ import __version__
 
 import random, uuid, time, hashlib
 
-from netaddr import IPNetwork
+from ipaddress import ip_address, ip_interface
 
 hw = HardwareInfo()
 #CONFIG INIT
@@ -409,72 +409,62 @@ class HTTPRootResource(resource.Resource):
 # Handles HTTP Authorization for a given Resource
 #===============================================================================
 class HTTPAuthResource(HTTPRootResource):
-	LOCALHOSTS = (IPNetwork("127.0.0.1"), IPNetwork("::1"))
-
 	def __init__(self, res, realm):
 		HTTPRootResource.__init__(self, res)
 		self.realm = realm
 		self.authorized = False
 		self.unauthorizedResource = resource.ErrorPage(http.UNAUTHORIZED, "Access denied", "Authentication credentials invalid!")
-		self._localNetworks = []
+		self._interfaces = []
+
+	def _addInterface(self, address, netmask):
+		iface = ip_interface(u"%s/%s" % (address, netmask))
+		self._interfaces.append(iface)
 
 	def _assignLocalNetworks(self, ifaces):
-			if self._localNetworks:
-				return
-			self._localNetworks = []
-			#LAN
-			for key, iface in ifaces.iteritems():
-				if iface.ipv4.address != "0.0.0.0":
-					v4net = IPNetwork("%s/%s" %(iface.ipv4.address, iface.ipv4.netmask))
-					self._localNetworks.append(v4net)
-				if iface.ipv6.address != "::":
-					v6net = IPNetwork("%s/%s" %(iface.ipv6.address, iface.ipv6.netmask))
-					self._localNetworks.append(v6net)
-			Log.w(self._localNetworks)
+		if self._interfaces:
+			return
+		self._interfaces = []
+		#LAN
+		for key, iface in ifaces.iteritems():
+			if iface.ipv4.address != "0.0.0.0":
+				self._addInterface(iface.ipv4.address, iface.ipv4.netmask)
+			if iface.ipv6.address != "::":
+				self._addInterface(iface.ipv6.address, iface.ipv6.netmask)
+		Log.w(self._interfaces)
 
 	def unauthorized(self, request):
 		request.setHeader('WWW-authenticate', 'Basic realm="%s"' % self.realm)
 		request.setResponseCode(http.UNAUTHORIZED)
 		return self.unauthorizedResource
 
-	def _isLocalClient(self, clientip):
-		if self._isLocalHost(clientip):
+	def _isLocalClient(self, ip):
+		if ip.is_loopback:
 			return True
-		for lnw in self._localNetworks:
-			if self._networkContains(lnw, clientip):
-				return True
-		return False
 
-	def _isLocalHost(self, clientip):
-		for host in self.LOCALHOSTS:
-			if self._networkContains(host, clientip):
+		for iface in self._interfaces:
+			if ip in iface.network:
 				return True
-		return False
-
-	def _networkContains(self, network, ip):
-		if network.__contains__(ip):
-			return True
-		try:
-			# You may get an ipv6 noted ipv4 address like "::ffff:192.168.0.2"
-			# In that case it won't match the ipv4 local network so we have to try converting it to plain ipv4
-			if network.__contains__(ip.ipv4()):
-				return True
-		except:
-			pass
 		return False
 
 	def isAuthenticated(self, request):
 		self._assignLocalNetworks(iNetworkInfo.getConfiguredInterfaces())
 		if request.transport:
-			host = IPNetwork(request.transport.getPeer().host)
 			#If streamauth is disabled allow all acces from localhost
-			if not config.plugins.Webinterface.streamauth.value:
-				if self._isLocalHost(host.ip):
-					Log.i("Streaming auth is disabled - Bypassing Authcheck because host '%s' is local!" %host)
+			try:
+				ip = ip_address(request.transport.getPeer().host.decode('utf-8'))
+			except ValueError:
+				pass
+			else:
+				# You may get an ipv6 noted ipv4 address like "::ffff:192.168.0.2"
+				# In that case it won't match the ipv4 local network so we have to try converting it to plain ipv4
+				if ip.version == 6 and ip.ipv4_mapped:
+					ip = ip.ipv4_mapped
+
+				if not config.plugins.Webinterface.streamauth.value and ip.is_loopback:
+					Log.i("Streaming auth is disabled - Bypassing Authcheck because host '%s' is local!" % str(ip))
 					return True
-			if not config.plugins.Webinterface.localauth.value:
-				if self._isLocalClient(host.ip):
-					Log.i("Local auth is disabled - Bypassing Authcheck because host '%s' is local!" %host)
+				if not config.plugins.Webinterface.localauth.value and self._isLocalClient(ip):
+					Log.i("Local auth is disabled - Bypassing Authcheck because host '%s' is local!" % str(ip))
 					return True
 
 		# get the Session from the Request
