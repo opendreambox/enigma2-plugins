@@ -142,7 +142,7 @@ class PluginWeights:
 				except ValueError as ve:
 					print("[PluginSort] Invalid weight of %s received for plugin %s, ignoring" % (repr(plugin.get('weight')), repr(name)))
 				else:
-					self.plugins.setdefault(whereid, {})[name] = weight
+					self.plugins.setdefault(whereid, {})[name.encode('utf-8')] = weight
 
 	def save(self):
 		lst = ['<?xml version="1.0" ?>\n<pluginsort>\n\n']
