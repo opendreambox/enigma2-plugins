@@ -131,11 +131,16 @@ if HardwareInfo().get_device_name() in ('dm900', 'dm920'):
 	ArchString = "ARM"
 	IdString = "3"
 	DisplayXY = "400x240"
-elif HardwareInfo().get_device_name() in ('one', 'two'):
+elif HardwareInfo().get_device_name() == 'one':
 	Arch64 = True
 	ArchString = "AARCH64"
 	IdString = "0" #no display
 	DisplayXY = "0x0"
+elif HardwareInfo().get_device_name() == 'two':
+	Arch64 = True
+	ArchString = "AARCH64"
+	IdString = "100"
+	DisplayXY = "240x86"
 else:
 	if HardwareInfo().get_device_name() == 'dm820':
 		IdString = "2"
@@ -149,7 +154,7 @@ else:
 	ArchMipsel = True
 	ArchString = "MIPSEL"
 ModelString = HardwareInfo().get_device_name().upper()
-displayDict = {"1": "lcdscreenthemes", "2": "oldescreenthemes", "3": "extlcdscreenthemes"}
+displayDict = {"1": "lcdscreenthemes", "2": "oldescreenthemes", "3": "extlcdscreenthemes", "100": "lcdscreenthemes" }
 displayTag = displayDict.get(IdString, None)
 
 print "------------------------------------------------"
