@@ -38,6 +38,7 @@ from enigma import RT_HALIGN_LEFT, RT_WRAP, RT_VALIGN_CENTER, eListboxPythonMult
 import pickle
 from os import system as os_system
 from os import listdir as os_listdir
+from skin import TemplatedListFonts, componentSizes
 
 EMbaseInfoBarPlugins__init__ = None
 EMStartOnlyOneTime = False
@@ -94,55 +95,75 @@ def startWithPvrButton(self):
 def startFromPluginMenu(session, **kwargs):
 	session.openWithCallback(MPcallbackFunc, EasyMedia)
 
-def MPanelEntryComponent(key, text, cell):
-	sz_w = getDesktop(0).size().width()
-	# FHD
-	if sz_w >= 1920:
-		itemheight=150
-		xpos=300
-		itemwidth=400
-		imagewidth=200
-		imageheight=140
-	# HD
-	else:
-		itemheight=100
-		xpos=200
-		itemwidth=300
-		imagewidth=135
-		imageheight=90
-
-	res = [ text ]
-	res.append((eListboxPythonMultiContent.TYPE_TEXT, xpos, 0, itemwidth, itemheight, 0, RT_HALIGN_LEFT|RT_WRAP|RT_VALIGN_CENTER, text[0]))
-	if cell<5:
-		bpng = LoadPixmap('/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/key-' + str(cell) + ".png")
-		if bpng is not None:
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 0, 5, 5, imageheight, bpng))
-	png = LoadPixmap(EasyMedia.EMiconspath + key + '.png')
-	if png is not None:
-		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 25, 5, imagewidth, imageheight, png))
-	else:
-		png = LoadPixmap(EasyMedia.EMiconspath + 'default.png')
-		if png is not None:
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 25, 5, imagewidth, imageheight, png))
-	return res
-
 class MPanelList(MenuList):
+	SKIN_COMPONENT_KEY = "EasyMediaPanelList"
+	SKIN_COMPONENT_ITEM_HEIGHT = "itemHeight"
+	SKIN_COMPONENT_ITEM_WIDTH = "itemWidth"
+	SKIN_COMPONENT_IMAGE_WIDTH = "imageWidth"
+	SKIN_COMPONENT_IMAGE_HEIGHT = "imageHeight"
+	SKIN_COMPONENT_IMAGE_XOFFSET = "imageXOffset"
+	SKIN_COMPONENT_IMAGE_YOFFSET = "imageYOffset"
+	SKIN_COMPONENT_ICON_WIDTH = "iconWidth"
+	SKIN_COMPONENT_ICON_HEIGHT = "iconHeight"
+	SKIN_COMPONENT_ICON_XOFFSET = "iconXOffset"
+	SKIN_COMPONENT_ICON_YOFFSET = "iconYOffset"
+	SKIN_COMPONENT_TEXT_WIDTH = "textWidth"
+	SKIN_COMPONENT_TEXT_HEIGHT = "textHeight"
+	SKIN_COMPONENT_TEXT_XOFFSET = "textXOffset"
+	SKIN_COMPONENT_TEXT_YOFFSET = "textYOffset"
+
 	def __init__(self, list, selection = 0, enableWrapAround=True):
+		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
+
+		isFHD = False
 		sz_w = getDesktop(0).size().width()
 		if sz_w >= 1920:
-			fontsize=45
-			itemheight=150
-		else:
-			fontsize=30
-			itemheight=100 
-
-		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-		self.l.setFont(0, gFont("Regular", fontsize))
-		self.l.setItemHeight(itemheight)
+			isFHD = True
+		
+		sizes = componentSizes[MPanelList.SKIN_COMPONENT_KEY]
+		self.itemheight = sizes.get(MPanelList.SKIN_COMPONENT_ITEM_HEIGHT, 150 if isFHD else 100)
+		self.itemwidth = sizes.get(MPanelList.SKIN_COMPONENT_ITEM_WIDTH, 400 if isFHD else 300)
+		self.imagewidth = sizes.get(MPanelList.SKIN_COMPONENT_IMAGE_WIDTH, 200 if isFHD else 135)
+		self.imageheight = sizes.get(MPanelList.SKIN_COMPONENT_IMAGE_HEIGHT, 140 if isFHD else 90)
+		self.imagexoffset = sizes.get(MPanelList.SKIN_COMPONENT_IMAGE_XOFFSET, 25)
+		self.imageyoffset = sizes.get(MPanelList.SKIN_COMPONENT_IMAGE_YOFFSET, 5)
+		self.iconwidth = sizes.get(MPanelList.SKIN_COMPONENT_ICON_WIDTH, 5)
+		self.iconheight = sizes.get(MPanelList.SKIN_COMPONENT_ICON_HEIGHT, 140 if isFHD else 90)
+		self.iconxoffset = sizes.get(MPanelList.SKIN_COMPONENT_ICON_XOFFSET, 0)
+		self.iconyoffset = sizes.get(MPanelList.SKIN_COMPONENT_ICON_YOFFSET, 5)
+		self.textwidth = sizes.get(MPanelList.SKIN_COMPONENT_TEXT_WIDTH, 400 if isFHD else 300)
+		self.textheight = sizes.get(MPanelList.SKIN_COMPONENT_TEXT_HEIGHT, 150 if isFHD else 100)
+		self.textxoffset = sizes.get(MPanelList.SKIN_COMPONENT_TEXT_XOFFSET, 300 if isFHD else 200)
+		self.textyoffset = sizes.get(MPanelList.SKIN_COMPONENT_TEXT_YOFFSET, 5)
+		
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
+		self.l.setItemHeight(self.itemheight)
+		self.l.setItemWidth(self.itemwidth)
+		self.l.setBuildFunc(self.buildEntry)
 		self.selection = selection
+		
 	def postWidgetCreate(self, instance):
 		MenuList.postWidgetCreate(self, instance)
 		self.moveToIndex(self.selection)
+
+	def buildEntry(self, key, text, cell):
+		res = [ text ]
+		
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, self.textxoffset, self.textyoffset, self.textwidth, self.textheight, 0, RT_HALIGN_LEFT|RT_WRAP|RT_VALIGN_CENTER, text[0]))
+		if cell<5:
+			bpng = LoadPixmap('/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/key-' + str(cell) + ".png")
+			if bpng is not None:
+				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.iconxoffset, self.iconyoffset, self.iconwidth, self.iconheight, bpng))
+		png = LoadPixmap(EasyMedia.EMiconspath + key + '.png')
+		if png is not None:
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.imagexoffset, self.imageyoffset, self.imagewidth, self.imageheight, png))
+		else:
+			png = LoadPixmap(EasyMedia.EMiconspath + 'default.png')
+			if png is not None:
+				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.imagexoffset, self.imageyoffset, self.imagewidth, self.imageheight, png))
+		return res
+		
 
 def BookmarksCallback(choice):
 	choice = choice and choice[1]
@@ -424,7 +445,7 @@ class EasyMedia(Screen):
 		pos = 0
 		for x in self.menuItemList:
 			strpos = str(self.__keys[pos])
-			self.list.append(MPanelEntryComponent(key = strpos, text = x, cell = pos))
+			self.list.append((strpos, x, pos))
 			if pos==0: self["key_pvr"].setText(self.menuItemList[0][0])
 			elif pos==1: self["key_red"].setText(self.menuItemList[1][0])
 			elif pos==2: self["key_green"].setText(self.menuItemList[2][0])
