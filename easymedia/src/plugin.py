@@ -164,7 +164,6 @@ class MPanelList(MenuList):
 				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.imagexoffset, self.imageyoffset, self.imagewidth, self.imageheight, png))
 		return res
 		
-
 def BookmarksCallback(choice):
 	choice = choice and choice[1]
 	if choice:
@@ -463,7 +462,7 @@ class EasyMedia(Screen):
 			self.close(item)
 		cursel = self["list"].l.getCurrentSelection()
 		if cursel:
-			entry = cursel[0]
+			entry = cursel[1]
 			if len(entry) > 2 and isinstance(entry[1], str) and entry[1] == "CALLFUNC":
 				arg = self["list"].l.getCurrentSelection()[0]
 				entry[2](arg)
