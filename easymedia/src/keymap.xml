@@ -1,5 +1,8 @@
 <keymap>
 	<map context="EasyMediaActions">
+		<device name="compatible: pcKeyboard">
+			<key id="KEY_F8" mapto="video_but" flags="m" />
+		</device>
 		<key id="KEY_VIDEO" mapto="video_but" flags="m" />
 	</map>
 </keymap>

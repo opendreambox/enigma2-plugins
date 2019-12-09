@@ -1,7 +1,7 @@
 #######################################################################
 #
 #    EasyMedia for Dreambox-Enigma2
-#    Coded by Vali (c)2010-2011
+#    Coded by Vali (c)2010-2011 / Updates by dre (c) 2019
 #
 #  This plugin is licensed under the Creative Commons 
 #  Attribution-NonCommercial-ShareAlike 3.0 Unported License.
@@ -46,20 +46,18 @@ EMsession = None
 InfoBar_instance = None
 
 config.plugins.easyMedia  = ConfigSubsection()
-config.plugins.easyMedia.music = ConfigSelection(default="mediaplayer", choices = [("no", _("Disabled")), ("mediaplayer", _("MediaPlayer")), ("merlinmp", _("MerlinMusicPlayer"))])
-config.plugins.easyMedia.files = ConfigSelection(default="dreamexplorer", choices = [("no", _("Disabled")), ("filebrowser", _("Filebrowser")), ("dreamexplorer", _("DreamExplorer")), ("tuxcom", _("TuxCom"))])
+config.plugins.easyMedia.music = ConfigSelection(default="mediaplayer", choices = [("no", _("Disabled")), ("mediaplayer", _("MediaPlayer")), ("merlinmp", _("MerlinMusicPlayer2"))])
+config.plugins.easyMedia.files = ConfigSelection(default="dreamexplorer", choices = [("no", _("Disabled")), ("filebrowser", _("Filebrowser")), ("dreamexplorer", _("DreamExplorer"))])
 config.plugins.easyMedia.videodb = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
 config.plugins.easyMedia.bookmarks = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
 config.plugins.easyMedia.pictures = ConfigSelection(default="yes", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
 config.plugins.easyMedia.mytube = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
-config.plugins.easyMedia.vlc = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
 config.plugins.easyMedia.dvd = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
 config.plugins.easyMedia.weather = ConfigSelection(default="yes", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
 config.plugins.easyMedia.iradio = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
 config.plugins.easyMedia.idream = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
 config.plugins.easyMedia.zdfmedia = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
 config.plugins.easyMedia.radio = ConfigSelection(default="yes", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
-config.plugins.easyMedia.myvideo = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
 config.plugins.easyMedia.timers = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
 
 def Plugins(**kwargs):
@@ -119,7 +117,7 @@ class MPanelList(MenuList):
 		sz_w = getDesktop(0).size().width()
 		if sz_w >= 1920:
 			isFHD = True
-		
+			
 		sizes = componentSizes[MPanelList.SKIN_COMPONENT_KEY]
 		self.itemheight = sizes.get(MPanelList.SKIN_COMPONENT_ITEM_HEIGHT, 150 if isFHD else 100)
 		self.itemwidth = sizes.get(MPanelList.SKIN_COMPONENT_ITEM_WIDTH, 400 if isFHD else 300)
@@ -135,7 +133,7 @@ class MPanelList(MenuList):
 		self.textheight = sizes.get(MPanelList.SKIN_COMPONENT_TEXT_HEIGHT, 150 if isFHD else 100)
 		self.textxoffset = sizes.get(MPanelList.SKIN_COMPONENT_TEXT_XOFFSET, 300 if isFHD else 200)
 		self.textyoffset = sizes.get(MPanelList.SKIN_COMPONENT_TEXT_YOFFSET, 5)
-		
+
 		tlf = TemplatedListFonts()
 		self.l.setFont(0, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
 		self.l.setItemHeight(self.itemheight)
@@ -149,7 +147,7 @@ class MPanelList(MenuList):
 
 	def buildEntry(self, key, text, cell):
 		res = [ text ]
-		
+
 		res.append((eListboxPythonMultiContent.TYPE_TEXT, self.textxoffset, self.textyoffset, self.textwidth, self.textheight, 0, RT_HALIGN_LEFT|RT_WRAP|RT_VALIGN_CENTER, text[0]))
 		if cell<5:
 			bpng = LoadPixmap('/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/key-' + str(cell) + ".png")
@@ -202,13 +200,11 @@ class ConfigEasyMedia(ConfigListScreen, Screen):
 		list.append(getConfigListEntry(_("PicturePlayer:"), config.plugins.easyMedia.pictures))
 		list.append(getConfigListEntry(_("Show tv/radio switch:"), config.plugins.easyMedia.radio))
 		list.append(getConfigListEntry(_("YouTube player:"), config.plugins.easyMedia.mytube))
-		list.append(getConfigListEntry(_("VLC player:"), config.plugins.easyMedia.vlc))
 		list.append(getConfigListEntry(_("DVD player:"), config.plugins.easyMedia.dvd))
 		list.append(getConfigListEntry(_("Weather plugin:"), config.plugins.easyMedia.weather))
 		list.append(getConfigListEntry(_("InternetRadio player:"), config.plugins.easyMedia.iradio))
-		list.append(getConfigListEntry(_("Show Merlin-iDream:"), config.plugins.easyMedia.idream))
+		list.append(getConfigListEntry(_("Show Merlin-iDream2:"), config.plugins.easyMedia.idream))
 		list.append(getConfigListEntry(_("ZDFmediathek player:"), config.plugins.easyMedia.zdfmedia))
-		list.append(getConfigListEntry(_("MyVideo player:"), config.plugins.easyMedia.myvideo))
 		ConfigListScreen.__init__(self, list)
 		self["actions"] = ActionMap(["OkCancelActions", "ColorActions"], {"green": self.save, "red": self.exit, "cancel": self.exit, "yellow": self.addPlugin}, -1)
 
@@ -421,15 +417,9 @@ class EasyMedia(Screen):
 		if config.plugins.easyMedia.mytube.value != "no":
 			self.__keys.append("mytube")
 			self.menuItemList.append((_("MyTube Player"), "MYTUBE"))
-		if config.plugins.easyMedia.vlc.value != "no":
-			self.__keys.append("vlc")
-			self.menuItemList.append((_("VLC Player"), "VLC"))
 		if config.plugins.easyMedia.zdfmedia.value != "no":
 			self.__keys.append("zdf")
 			self.menuItemList.append((_("ZDFmediathek"), "ZDF"))
-		if config.plugins.easyMedia.myvideo.value != "no":
-			self.__keys.append("myvideo")
-			self.menuItemList.append((_("MyVideo"), "MYVIDEO"))
 		plist = os_listdir("/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia")
 		plist = [x[:-5] for x in plist if x.endswith('.plug')]
 		plist.sort()
@@ -513,20 +503,17 @@ def MPcallbackFunc(answer):
 		else:
 			EMsession.open(MessageBox, text = _('Picture-player is not installed!'), type = MessageBox.TYPE_ERROR)
 	elif answer == "MUSIC":
-		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/MerlinMusicPlayer/plugin.pyo") and (config.plugins.easyMedia.music.value == "merlinmp"):
-			from Plugins.Extensions.MerlinMusicPlayer.plugin import MerlinMusicPlayerFileList
+		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/MerlinMusicPlayer2/plugin.pyo") and (config.plugins.easyMedia.music.value == "merlinmp"):
+			from Plugins.Extensions.MerlinMusicPlayer2.plugin import MerlinMusicPlayer2FileList
 			servicelist = None
-			EMsession.open(MerlinMusicPlayerFileList, servicelist)
+			EMsession.open(MerlinMusicPlayer2FileList, servicelist)
 		elif fileExists("/usr/lib/enigma2/python/Plugins/Extensions/MediaPlayer/plugin.pyo") and (config.plugins.easyMedia.music.value == "mediaplayer"):
 			from Plugins.Extensions.MediaPlayer.plugin import MediaPlayer
 			EMsession.open(MediaPlayer)
 		else:
 			EMsession.open(MessageBox, text = _('No Music-Player installed!'), type = MessageBox.TYPE_ERROR)
 	elif answer == "FILES":
-		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Tuxcom/plugin.pyo") and (config.plugins.easyMedia.files.value == "tuxcom"):
-			from Plugins.Extensions.Tuxcom.plugin import TuxComStarter
-			EMsession.open(TuxComStarter)
-		elif fileExists("/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/plugin.pyo") and (config.plugins.easyMedia.files.value == "dreamexplorer"):
+		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/plugin.pyo") and (config.plugins.easyMedia.files.value == "dreamexplorer"):
 			from Plugins.Extensions.DreamExplorer.plugin import DreamExplorerII
 			EMsession.open(DreamExplorerII)
 		elif fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Filebrowser/plugin.pyo") and (config.plugins.easyMedia.files.value == "filebrowser"):
@@ -564,25 +551,13 @@ def MPcallbackFunc(answer):
 			EMsession.open(ZDFMediathek)
 		else:
 			EMsession.open(MessageBox, text = _('ZDFmediathek Plugin is not installed!'), type = MessageBox.TYPE_ERROR)
-	elif answer == "VLC":
-		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/VlcPlayer/plugin.pyo"):
-			from Plugins.Extensions.VlcPlayer.plugin import *
-			main(EMsession)
-		else:
-			EMsession.open(MessageBox, text = _('VLC Player is not installed!'), type = MessageBox.TYPE_ERROR)
 	elif answer == "IDREAM":
-		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/MerlinMusicPlayer/plugin.pyo"):
-			from Plugins.Extensions.MerlinMusicPlayer.plugin import iDreamMerlin
+		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/MerlinMusicPlayer2/plugin.pyo"):
+			from Plugins.Extensions.MerlinMusicPlayer2.plugin import iDream
 			servicelist = None
-			EMsession.open(iDreamMerlin, servicelist)
+			EMsession.open(iDream, servicelist)
 		else:
-			EMsession.open(MessageBox, text = _('Merlin iDream is not installed!'), type = MessageBox.TYPE_ERROR)
-	elif answer == "MYVIDEO":
-		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/MyVideoPlayer/plugin.pyo"):
-			from Plugins.Extensions.MyVideoPlayer.plugin import Vidtype
-			EMsession.open(Vidtype)
-		else:
-			EMsession.open(MessageBox, text = _('MyVideo Player is not installed!'), type = MessageBox.TYPE_ERROR)
+			EMsession.open(MessageBox, text = _('Merlin iDream2 is not installed!'), type = MessageBox.TYPE_ERROR)
 	elif answer == "VIDEODB":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/VideoDB/plugin.pyo"):
 			from Plugins.Extensions.VideoDB.plugin import main as vdbmain
