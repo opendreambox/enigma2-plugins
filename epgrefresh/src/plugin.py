@@ -40,6 +40,7 @@ config.plugins.epgrefresh.afterevent = ConfigYesNo(default = False)
 config.plugins.epgrefresh.epgsave = ConfigYesNo(default = False)
 config.plugins.epgrefresh.epgreset = ConfigYesNo(default = False)
 config.plugins.epgrefresh.force = ConfigYesNo(default = False)
+config.plugins.epgrefresh.dontshutdownonabort = ConfigYesNo(default = False)
 config.plugins.epgrefresh.skipProtectedServices = ConfigSelection(choices = [
 		("bg_only", _("Background only")),
 		("always", _("Foreground also")),

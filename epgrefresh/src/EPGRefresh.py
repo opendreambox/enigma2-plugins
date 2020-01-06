@@ -527,8 +527,10 @@ class EPGRefresh:
                         myEpg = eEPGCache.getInstance()
                         myEpg.save()
 		
-		# shutdown if we're supposed to go to deepstandby and not recording
-		if not self.forcedScan and config.plugins.epgrefresh.afterevent.value \
+		# shutdown if we're supposed to go to standby and not recording
+		# forced scan --> manually started scan / non-forced scan --> automated scan
+		# dontshutdownonabort overrides the shutdown
+		if not config.plugins.epgrefresh.dontshutdownonabort.value and not self.forcedScan and config.plugins.epgrefresh.afterevent.value \
 			and not Screens.Standby.inTryQuitMainloop:
 			self.forcedScan = False
 			if Screens.Standby.inStandby:
