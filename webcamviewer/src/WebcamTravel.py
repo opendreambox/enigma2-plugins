@@ -87,7 +87,7 @@ class TravelWebcamviewer(Screen):
 		self["key_green"] = Button(_("next"))
 		self["key_green"].hide()
 		self["key_yellow"] = Button(_("search"))
-		self["key_blue"] = Button(_("hdkfjhg"))
+		self["key_blue"] = Button()
 
 		self["key_blue"].hide() #not used at the moment
 
