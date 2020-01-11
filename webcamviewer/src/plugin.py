@@ -140,7 +140,7 @@ class ViewerSelectScreen(Screen):
 		self.skin = skin
 		Screen.__init__(self, session)
 		self.slideshowfiles = []
-		self.slideshowfiles.append((_("WebcamViewer"),STARTWEBCAMVIEWER))
+		self.slideshowfiles.append(("WebcamViewer",STARTWEBCAMVIEWER))
 		self.slideshowfiles.append((_("online webcam.travel"),STARTWEBCAMTRAVEL))
 		self["list"] = MenuList(self.slideshowfiles)
 		self["actions"] = ActionMap(["WizardActions", "MenuActions", "DirectionActions", "ShortcutActions"],
@@ -503,7 +503,7 @@ class WebcamViewer(Screen, InfoBarNotifications):
 		self.menutitle = xloader.getScreenXMLTitle(self.xmlnode)
 		data =[]
 		if self.menutitle =="Mainmenu":
-			data.append((_("webcam.travel"), "webcam.travel"))
+			data.append(("webcam.travel", "webcam.travel"))
 		for node in self.xmlnode.childNodes:
 			if node.nodeType != xml.dom.minidom.Element.nodeType or node.tagName != 'menu':
 				continue

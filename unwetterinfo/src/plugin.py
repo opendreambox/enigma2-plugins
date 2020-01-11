@@ -348,7 +348,7 @@ class UnwetterMain(Screen):
 		f = open(self.reportfile, "w")
 		f.write("%s" % bereich)
 		f.close()
-		self.session.open(Console,_("Warnlagebericht"),["cat %s" % self.reportfile])
+		self.session.open(Console,"Warnlagebericht",["cat %s" % self.reportfile])
 
 	def downloadError(self,output):
 		self.loadinginprogress = False
