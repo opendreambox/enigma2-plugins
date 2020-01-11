@@ -415,7 +415,6 @@ class EPGRefresh:
 		print("[EPGRefresh] Debug: Cleanup")
 		config.plugins.epgrefresh.lastscan.value = int(time())
 		config.plugins.epgrefresh.lastscan.save()
-		self.doStopRunningRefresh = False
 		# stop the epgTimeoutTimer - just in case one is running
 		self.epgTimeoutTimer.stop()
 		
@@ -530,13 +529,16 @@ class EPGRefresh:
 		# shutdown if we're supposed to go to standby and not recording
 		# forced scan --> manually started scan / non-forced scan --> automated scan
 		# dontshutdownonabort overrides the shutdown
-		if not config.plugins.epgrefresh.dontshutdownonabort.value and not self.forcedScan and config.plugins.epgrefresh.afterevent.value \
+		if not self.forcedScan and config.plugins.epgrefresh.afterevent.value \
 			and not Screens.Standby.inTryQuitMainloop:
-			self.forcedScan = False
-			if Screens.Standby.inStandby:
-				RecordTimerEntry.TryQuitMainloop()
-			else:
-				Notifications.AddNotificationWithID("Shutdown", Screens.Standby.TryQuitMainloop, 1, domain = NOTIFICATIONDOMAIN)
+			if (not config.plugins.epgrefresh.dontshutdownonabort.value and self.doStopRunningRefresh) or not self.doStopRunningRefresh:
+				self.forcedScan = False
+				if Screens.Standby.inStandby:
+					RecordTimerEntry.TryQuitMainloop()
+				else:
+					Notifications.AddNotificationWithID("Shutdown", Screens.Standby.TryQuitMainloop, 1, domain = NOTIFICATIONDOMAIN)
+		# reset doStopRunningRefresh here instead of cleanUp as it is needed to avoid shutdown
+		self.doStopRunningRefresh = False
 		self.forcedScan = False
 		self.isrunning = False
 		self._nextTodo()
