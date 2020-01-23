@@ -1,2 +1,2 @@
 Description: Provides Video on Demand functionality with seeking ability for the streamserver
-Depends: enigma2-plugin-extensions-webinterface libsss-segment
+Depends: enigma2-plugin-extensions-webinterface, libsss-segment
