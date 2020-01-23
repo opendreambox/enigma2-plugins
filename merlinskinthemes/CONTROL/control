@@ -1,2 +1,2 @@
 Description: Merlin Skin Themes
-Depends: enigma2 python-imaging
+Depends: enigma2, python-imaging
