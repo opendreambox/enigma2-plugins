@@ -349,7 +349,7 @@ class AutoTimerEditorBase:
 				("1", _("Title and short description")),
 				("2", _("Title and all descriptions")),
 			],
-		    default = str(timer.searchForDuplicateDescription)
+			default = str(timer.searchForDuplicateDescription)
 		))
 
 		# Custom Location
@@ -487,7 +487,7 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 		self["key_red"] = StaticText(_("Cancel"))
 		self["key_green"] = StaticText(_("OK"))
 		self["key_yellow"] = StaticText()
- 		self["key_blue"] = StaticText()
+		self["key_blue"] = StaticText()
 
 		self["help"] = StaticText()
 
