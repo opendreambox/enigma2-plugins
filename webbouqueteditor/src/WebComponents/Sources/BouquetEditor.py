@@ -1,4 +1,5 @@
 from __future__ import print_function
+from __future__ import absolute_import
 from os import remove
 from os.path import exists, join
 from re import compile as re_compile
@@ -11,7 +12,7 @@ from Screens.InfoBar import InfoBar
 from ServiceReference import ServiceReference
 from Components.ParentalControl import parentalControl, IMG_WHITESERVICE, IMG_WHITEBOUQUET, IMG_BLACKSERVICE, IMG_BLACKBOUQUET, LIST_BLACKLIST
 from Components.NimManager import nimmanager
-from urllib import quote as urllib_quote
+from six.moves.urllib.parse import quote as urllib_quote
 
 
 class BouquetEditor(Source):

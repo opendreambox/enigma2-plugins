@@ -1,4 +1,5 @@
 # Plugin
+from __future__ import absolute_import
 from Components.PluginComponent import plugins
 from Plugins.Plugin import PluginDescriptor
 # Webinterface
@@ -8,7 +9,7 @@ from Plugins.Extensions.WebInterface.WebChilds.Screenpage import ScreenPage
 from twisted.web import static
 from twisted.python import util
 #
-from WebChilds.WebUploadResource import WebUploadResource
+from .WebChilds.WebUploadResource import WebUploadResource
 from enigma import eEnv
 
 if hasattr(static.File, 'render_GET'):
