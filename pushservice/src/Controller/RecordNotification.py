@@ -44,7 +44,7 @@ class RecordNotification(ControllerBase):
 		self.forceBindRecordTimer = eTimer()
 		try:
 			self.forceBindRecordTimer_conn = self.forceBindRecordTimer.timeout.connect(self.begin)
- 		except:
+		except:
 			self.forceBindRecordTimer.callback.append(self.begin)
 		
 		# Default configuration

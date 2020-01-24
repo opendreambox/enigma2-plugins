@@ -59,7 +59,7 @@ class RecordSummary(ControllerBase):
 							+ strftime(_("%H:%M"), localtime(timer.end)) + "\t" \
 							+ str(timer.service_ref and timer.service_ref.getServiceName() or "") \
 							+ "\n"
-                                if self.getValue('include_description'):
+				if self.getValue('include_description'):
 					text += str(timer.description) + "\n\n"
 				self.timers.append( timer )
 		if self.timers and text:
