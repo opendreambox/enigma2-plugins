@@ -24,6 +24,7 @@
 #
 
 from __future__ import print_function
+from __future__ import absolute_import
 from Components.config import config, ConfigText, ConfigNumber, ConfigSelection, NoSave, getConfigListEntry
 from Components.ActionMap import *
 from Components.ConfigList import ConfigListScreen
@@ -36,7 +37,7 @@ from Screens.HelpMenu import HelpableScreen
 from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
 from Tools.Directories import fileExists
-from dirSelect import dirSelectDlg
+from .dirSelect import dirSelectDlg
 from enigma import RT_HALIGN_LEFT, RT_HALIGN_RIGHT, eListboxPythonMultiContent, gFont
 import os
 from skin import TemplatedListFonts, componentSizes
