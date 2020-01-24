@@ -2,6 +2,7 @@ from __future__ import print_function
 
 # Plugin definition
 from __future__ import division
+from __future__ import absolute_import
 from Plugins.Plugin import PluginDescriptor
 
 from Components.ActionMap import HelpableActionMap
@@ -17,7 +18,7 @@ from Screens.InfoBarGenerics import InfoBarNumberZap, InfoBarEPG, InfoBarChannel
 from Screens.PictureInPicture import PictureInPicture
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
-from PipzapSetup import PipzapSetup
+from .PipzapSetup import PipzapSetup
 from Components.PluginComponent import plugins
 from Components.Label import Label
 
