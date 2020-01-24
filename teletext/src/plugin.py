@@ -1,5 +1,6 @@
 from __future__ import division
-from __init__ import _debug , _log
+from __future__ import absolute_import
+from .__init__ import _debug , _log
 
 from enigma import iServiceInformation, iPlayableService, eSocketNotifier, getDesktop, ePoint, eSize, eServiceReference, eVideoWidget, getDesktop, gRGB
 
