@@ -89,7 +89,7 @@ config.plugins.MerlinEPG.PageUDonBouquets  = ConfigYesNo(default=True)
 
 
 def Plugins(**kwargs):
- 	list = [(PluginDescriptor(name="Merlin Programm Guide", description="Merlin Programm Guide", where = PluginDescriptor.WHERE_EVENTINFO, fnc=startMerlinPG))]
+	list = [(PluginDescriptor(name="Merlin Programm Guide", description="Merlin Programm Guide", where = PluginDescriptor.WHERE_EVENTINFO, fnc=startMerlinPG))]
 	list.append(PluginDescriptor(name="Merlin Programm Guide", where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=startMerlinPGnew))
 	return list
 
@@ -457,7 +457,7 @@ class Merlin_PGII(Screen):
 				self["currCh5"].setText(str(" "))
 				self["epg_list5"].hide()
 		if config.plugins.MerlinEPG.AutoPT.value:
-			 self.AutoPrime.start(500)
+			self.AutoPrime.start(500)
 
 	def onSelectionChanged(self):
 		curEV = self["epg_list"+str(self.ActiveEPG)].getCurrent()
