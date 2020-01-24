@@ -1,4 +1,5 @@
 # Plugin definition
+from __future__ import absolute_import
 from Plugins.Plugin import PluginDescriptor
 
 from enigma import eServiceCenter, eServiceReference
@@ -7,7 +8,7 @@ from Screens import InfoBarGenerics
 from Screens.InfoBar import InfoBar
 from Components.config import config, ConfigSubsection, ConfigSelection
 
-from NamezapSetup import NamezapSetup
+from .NamezapSetup import NamezapSetup
 
 config.plugins.namezap = ConfigSubsection()
 config.plugins.namezap.style = ConfigSelection(choices = [
