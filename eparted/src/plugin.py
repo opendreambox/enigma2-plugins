@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
 from Plugins.Plugin import PluginDescriptor
 
 def main(session, **kwargs):
-	from eparted import Ceparted
+	from .eparted import Ceparted
 	session.open(Ceparted)
 
 def Plugins(**kwargs):
