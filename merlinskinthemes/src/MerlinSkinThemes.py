@@ -21,6 +21,7 @@
 #
 #######################################################################
 
+from __future__ import print_function
 from Plugins.Plugin import PluginDescriptor
 
 from Screens.Screen import Screen
@@ -158,10 +159,10 @@ ModelString = HardwareInfo().get_device_name().upper()
 displayDict = {"1": "lcdscreenthemes", "2": "oldescreenthemes", "3": "extlcdscreenthemes", "100": "lcdscreenthemes" }
 displayTag = displayDict.get(IdString, None)
 
-print "------------------------------------------------"
-print HardwareInfo().get_device_name()
-print PluginVersion
-print "------------------------------------------------"
+print("------------------------------------------------")
+print(HardwareInfo().get_device_name())
+print(PluginVersion)
+print("------------------------------------------------")
 
 # skin_user.xml
 SkinUser = False
@@ -570,7 +571,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 	selThemeFile = ""
 	
 	def __init__(self, session):
-		print "[MST] " + PluginVersion + " running..."
+		print("[MST] " + PluginVersion + " running...")
 		
 		self.session = session
 		Screen.__init__(self, session)
@@ -841,8 +842,8 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					self.clist.append(getConfigListEntry("CornerRadius", config.plugins.MerlinSkinThemes.CornerRadius))
 						
 		except Exception as error:
-			print "Error", error
-			print "[MST] themes.xml in " + MerlinSkinThemes.selSkinName + " corrupt!"
+			print("Error", error)
+			print("[MST] themes.xml in " + MerlinSkinThemes.selSkinName + " corrupt!")
 			self.clist.append(getConfigListEntry(" ", ))
 			self.clist.append(getConfigListEntry(_(">>> ERROR - themes.xml in " + MerlinSkinThemes.selSkinName + " corrupt! <<<"), ))
 			
@@ -1039,7 +1040,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 							if tmp.get("name", None) is not None:
 								config.plugins.MerlinSkinThemes.Themes[element.lower()].value = tmp.get("name")
 						except:
-							print "[MST] %s not found" %(element)
+							print("[MST] %s not found" %(element))
 
 				# for each screen in the design set the value to the selected design
 				for screenname in screenList:
@@ -1051,7 +1052,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 							if tmp.get("name", None) is not None:
 								config.plugins.MerlinSkinThemes.Screens[screenname].value = tmp.get("name")
 						except:
-							print "[MST] %s not found" %(screenname)
+							print("[MST] %s not found" %(screenname))
 
 				#todo: maybe merge all displays into one config
 				# for each LCD screen in the design set the value to the selected design
@@ -1063,7 +1064,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 								if tmp.get("name", None) is not None:
 									config.plugins.MerlinSkinThemes.DisplayScreens[lcdscreen].value = tmp.get("name")
 							except:
-								print "[MST] %s not found"
+								print("[MST] %s not found")
 			
 				# for each corner radius in the design set the value to the selected design
 				if design.find("CornerRadius") is not None:
@@ -1073,7 +1074,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 							if tmp.get("name", None) is not None:
 								config.plugins.MerlinSkinThemes.CornerRadius.value = tmp.get("name")
 						except:
-							print "[MST] CornerRadius not found"					
+							print("[MST] CornerRadius not found")					
 		
 				# refresh Screen
 				self["config"].setList(self.clist)
@@ -1551,7 +1552,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			self["Preview"].show()
 	
 	def delSkinDir(self):
-		print "[MST] Delete: %s" % resolveFilename(SCOPE_SKIN) + MerlinSkinThemes.selSkinName + "/"
+		print("[MST] Delete: %s" % resolveFilename(SCOPE_SKIN) + MerlinSkinThemes.selSkinName + "/")
 		shutil.rmtree(resolveFilename(SCOPE_SKIN) + MerlinSkinThemes.selSkinName + "/")
 		self.updateSkinList()
 		
@@ -1567,7 +1568,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		restartbox.setTitle(_("Restart GUI now?"))
 
 	def exit(self, cancel=True):
-		print '[MST] closing'
+		print('[MST] closing')
 		self["SkinsList"].onSelectionChanged.remove(self.changedSkinsList)
 		if cancel:
 			# exit means settings must not be stored

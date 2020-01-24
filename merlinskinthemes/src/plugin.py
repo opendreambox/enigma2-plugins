@@ -22,6 +22,7 @@
 #
 #######################################################################
 
+from __future__ import print_function
 from Plugins.Plugin import PluginDescriptor
 from Components.config import config, configfile, ConfigYesNo, ConfigSubsection, getConfigListEntry, ConfigSelection, ConfigNumber, ConfigText, ConfigInteger, ConfigSubDict, ConfigBoolean
 from Screens.MessageBox import MessageBox
@@ -38,7 +39,7 @@ CONFDIR = "/etc/enigma2/merlinskinthemes/"
 try:
         Notifications.notificationQueue.registerDomain("MerlinSkinThemes", _("MerlinSkinThemes"), deferred_callable = True)
 except Exception as e:
-        print "[MST] - Error registering Notification-Domain: ", e
+        print("[MST] - Error registering Notification-Domain: ", e)
 
 def merlinskinthemes_start(session, **kwargs):
 	reload(MerlinSkinThemes)
@@ -49,16 +50,16 @@ def checkSkin(session, **kwargs):
 
 		# a config exists for the currently active skin
 		if fileExists(CONFDIR + config.skin.primary_skin.value[:-9] + ".cfg"):
-			print "[MST] - config found for active skin"
+			print("[MST] - config found for active skin")
 			skinFile = resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value
 			if fileExists(skinFile):
 				xmlFile = Tree.ElementTree(file=skinFile)
 				root = xmlFile.getroot()
 
 				if root.find("merlinskinthemes") is not None:
-					print "[MST] - skin was edited with MST and tag is present - assume rebuild is not required"
+					print("[MST] - skin was edited with MST and tag is present - assume rebuild is not required")
 				else:
-					print "[MST] - skin was edited with MST but tag is not present - assume rebuild required"
+					print("[MST] - skin was edited with MST but tag is not present - assume rebuild required")
 					configDict = {}
 					# read config data
 					f = open(CONFDIR + config.skin.primary_skin.value[:-9] + ".cfg", 'r')
