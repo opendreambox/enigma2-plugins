@@ -19,6 +19,7 @@
 # If you want to use or modify the code or parts of it,
 # you have to keep MY license and inform me about the modifications by mail.
 #
+from __future__ import absolute_import
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
@@ -27,8 +28,8 @@ from Components.Pixmap import Pixmap
 from enigma import ePicLoad, eRect, eSize, gPixmapPtr
 from Components.AVSwitch import AVSwitch
 from Components.config import ConfigSubsection, ConfigSubList, ConfigInteger, config
-from setup import initConfig, MSNWeatherPluginEntriesListConfigScreen
-from MSNWeather import MSNWeather
+from .setup import initConfig, MSNWeatherPluginEntriesListConfigScreen
+from .MSNWeather import MSNWeather
 import time
 
 try:
