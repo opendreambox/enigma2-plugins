@@ -9,7 +9,7 @@ from the gntp.notifier class since I do not know of an easy way to reuse the
 code yet fire using the copy of GrowlNotifier in this module
 """
 import os
-import ConfigParser
+import six.moves.configparser
 import gntp.notifier
 import logging
 
@@ -72,7 +72,7 @@ class GrowlNotifier(gntp.notifier.GrowlNotifier):
 	def __init__(self, applicationName='Python GNTP', notifications=[],
 			defaultNotifications=None, applicationIcon=None, hostname='localhost',
 			password=None, port=23053):
-		config = ConfigParser.RawConfigParser({
+		config = six.moves.configparser.RawConfigParser({
 			'hostname': hostname,
 			'password': password,
 			'port': port,
