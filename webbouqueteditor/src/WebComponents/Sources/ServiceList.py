@@ -49,7 +49,7 @@ class ServiceList(Source):
 				isStream = "1"
 					
 			list.append((item[0].toString(),item[1],isGroup,isMarker,isProtected, isStream))
-		print "list", list
+		print("list", list)
 		return list
 
 	def getServiceList(self):

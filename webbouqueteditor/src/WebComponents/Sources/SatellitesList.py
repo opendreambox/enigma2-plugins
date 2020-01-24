@@ -78,8 +78,8 @@ class SatellitesList(Source):
 							service_name = ("%d.%d %s") % (orbpos // 10, orbpos % 10, h)
 					if i:
 						service_type = "HD %s" % service_type
-					print "service name"
-					print service.getName()
+					print("service name")
+					print(service.getName())
 					service.setName("%s - %s" % (service_name, service_type))
 					self.xml += "\t\t<e2service>\n"
 					self.xml += "\t\t<e2servicereference>%s</e2servicereference>\n\t\t<e2servicename>%s</e2servicename>\n" % (self.filterXML(service.toString()), self.filterXML(service.getName()))
