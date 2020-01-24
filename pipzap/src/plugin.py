@@ -304,20 +304,19 @@ def InfoBarPiP__init__(self):
 
 
 def InfoBarPiP_closePiP(self):
-  try:
+	try:
 		if config.plugins.pipzap.enable_exitkey.value == "True":
 			self.showPiP()
 		elif config.plugins.pipzap.enable_exitkey.value == "Close":
-		  if self.session.pipshown:
+			if self.session.pipshown:
 				self.showPiP()
 		elif config.plugins.pipzap.enable_exitkey.value == "Open":
-		  if not self.session.pipshown:
+			if not self.session.pipshown:
 				self.showPiP()
 		elif config.plugins.pipzap.enable_exitkey.value == "False":
 			pass
-  
-  except:
-    pass
+	except:
+		pass
 
 def InfoBarPiP_pipzapAvailable(self):
 	try:
