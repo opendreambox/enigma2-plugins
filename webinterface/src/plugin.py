@@ -20,7 +20,6 @@ from twisted.internet import reactor, ssl
 from twisted.internet.error import CannotListenError
 from twisted.web import server, http, util, static, resource
 
-from zope.interface import Interface, implements
 from socket import gethostname as socket_gethostname
 from OpenSSL import SSL, crypto
 from time import gmtime
