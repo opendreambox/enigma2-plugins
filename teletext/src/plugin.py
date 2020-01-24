@@ -33,7 +33,7 @@ from select import POLLIN
 from enigma import Teletext as TeletextInterface
 from enigma import DISABLED, BILINEAR, ANISOTROPIC, SHARP, SHARPER
 
-from ConfigParser import ConfigParser
+from six.moves.configparser import ConfigParser
 from six.moves import range
 
 PLUGIN_VERSION="20190312"
