@@ -1,9 +1,10 @@
 from __future__ import print_function
+from __future__ import absolute_import
 from Plugins.Plugin import PluginDescriptor
 
 from enigma import eEnv
 from Plugins.Extensions.WebInterface.WebChilds.Toplevel import addExternalChild
-from WebChilds.ScreenPageCORS import ScreenPageCORS
+from .WebChilds.ScreenPageCORS import ScreenPageCORS
 
 from twisted.web import static
 from twisted.python import util
@@ -11,9 +12,9 @@ from twisted.web.server import GzipEncoderFactory
 from twisted.web.resource import EncodingResourceWrapper
 
 from Plugins.Extensions.StreamServerSeek.StreamServerSeek import StreamServerSeek
-from WebChilds.Stream import StreamResource
-from WebChilds.Proxy import ProxyResource
-from WebChilds.Vod import VodResource
+from .WebChilds.Stream import StreamResource
+from .WebChilds.Proxy import ProxyResource
+from .WebChilds.Vod import VodResource
 
 if hasattr(static.File, 'render_GET'):
 	class File(static.File):

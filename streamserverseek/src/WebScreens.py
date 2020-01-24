@@ -1,10 +1,11 @@
+from __future__ import absolute_import
 from Plugins.Extensions.WebInterface.WebScreens import WebScreen
 
 class StreamServerSeekWebScreen(WebScreen):
 	def __init__(self, session, request):
 		WebScreen.__init__(self, session, request)
 		
-		from WebComponents.Sources.StreamServerSeekSource import StreamServerSeekSource
+		from .WebComponents.Sources.StreamServerSeekSource import StreamServerSeekSource
 		self["SeekTo"] = StreamServerSeekSource(session, StreamServerSeekSource.SEEK_TO)
 		self["SeekRelative"] = StreamServerSeekSource(session, StreamServerSeekSource.SEEK_RELATIVE)
 		self["SeekChapter"] = StreamServerSeekSource(session, StreamServerSeekSource.SEEK_CHAPTER)
@@ -21,9 +22,9 @@ class StreamServerSeekInfoWebScreen(WebScreen):
 	def __init__(self, session, request):
 		WebScreen.__init__(self, session, request)
 		from Components.Sources.StaticText import StaticText
-		from WebComponents.Sources.CurrentService import CurrentService
-		from WebComponents.Sources.StreamServerSeekSource import StreamServerSeekSource
-		from WebComponents.Sources.NaSource import NaSource
+		from .WebComponents.Sources.CurrentService import CurrentService
+		from .WebComponents.Sources.StreamServerSeekSource import StreamServerSeekSource
+		from .WebComponents.Sources.NaSource import NaSource
 		from Plugins.Extensions.StreamServerSeek.StreamServerSeek import StreamServerSeek
 		import os.path
 		if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/GstRtspServer/StreamServerControl.py"):
