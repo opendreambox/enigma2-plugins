@@ -132,7 +132,7 @@ def filescan(**kwargs):
 
 def Plugins(**kwargs):
 	from Plugins.Plugin import PluginDescriptor
- 	return [
+	return [
 		PluginDescriptor(
 			name = "RSS Reader",
 			description = _("A simple to use RSS reader"),
@@ -140,19 +140,19 @@ def Plugins(**kwargs):
 			fnc=main,
 			needsRestart=False,
 		),
- 		PluginDescriptor(
+		PluginDescriptor(
 			where = [PluginDescriptor.WHERE_SESSIONSTART, PluginDescriptor.WHERE_AUTOSTART],
 			fnc = autostart,
 			needsRestart=False,
 		),
- 		PluginDescriptor(
+		PluginDescriptor(
 			name = _("View RSS..."),
 			description = "Let's you view current RSS entries",
 			where = PluginDescriptor.WHERE_EXTENSIONSMENU,
 			fnc=main,
 			needsRestart=False,
 		),
- 		PluginDescriptor(
+		PluginDescriptor(
 			where = PluginDescriptor.WHERE_FILESCAN,
 			fnc = filescan,
 			needsRestart=False,
