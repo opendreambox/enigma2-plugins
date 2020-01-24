@@ -359,7 +359,7 @@ class EPGRefresh:
 			try:
 				if self.session != None:
 					self.session.open(MessageBox, message, \
-						 MessageBox.TYPE_INFO, timeout=10)
+						MessageBox.TYPE_INFO, timeout=10)
 			except:
 				print("[EPGRefresh] Error while opening Messagebox!")
 				print_exc(file=stdout)
@@ -520,13 +520,13 @@ class EPGRefresh:
 			Notifications.AddPopup(_("EPG refresh finished."), MessageBox.TYPE_INFO, 4, ENDNOTIFICATIONID, domain = NOTIFICATIONDOMAIN)
 		epgrefreshtimer.cleanup()
 		self.maybeStopAdapter()
-                if config.plugins.epgrefresh.epgsave.value:
-                        Notifications.AddPopup(_("EPG refresh save."), MessageBox.TYPE_INFO, 4, ENDNOTIFICATIONID, domain = NOTIFICATIONDOMAIN)
-                        from enigma import eEPGCache
-                        myEpg = None
-                        myEpg = eEPGCache.getInstance()
-                        myEpg.save()
-		
+		if config.plugins.epgrefresh.epgsave.value:
+			Notifications.AddPopup(_("EPG refresh save."), MessageBox.TYPE_INFO, 4, ENDNOTIFICATIONID, domain = NOTIFICATIONDOMAIN)
+			from enigma import eEPGCache
+			myEpg = None
+			myEpg = eEPGCache.getInstance()
+			myEpg.save()
+
 		# shutdown if we're supposed to go to standby and not recording
 		# forced scan --> manually started scan / non-forced scan --> automated scan
 		# dontshutdownonabort overrides the shutdown
@@ -685,7 +685,7 @@ class EPGRefresh:
 		cursor.execute("INSERT INTO T_Source (id,source_name,priority) VALUES('2','DVB Schedule (same Transponder)','0')")
 		cursor.execute("INSERT INTO T_Source (id,source_name,priority) VALUES('3','DVB Schedule Other (other Transponder)','0')")
 		cursor.execute("INSERT INTO T_Source (id,source_name,priority) VALUES('4','Viasat','0')")
-                connection.commit()
+		connection.commit()
 		cursor.close()
 		connection.close()
 		self.myEpgCacheInstance = eEPGCache.getInstance()
