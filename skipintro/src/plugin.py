@@ -1,13 +1,14 @@
 ﻿# -*- coding: utf-8 -*-
 from __future__ import division
 from __future__ import print_function
+from __future__ import absolute_import
 from Plugins.Plugin import PluginDescriptor
 from Components.ActionMap import HelpableActionMap
 from Components.config import config
 from Screens.MessageBox import MessageBox
 from Screens.InfoBarGenerics import InfoBarSeek
-from SkipIntroDatabase import SIDatabase
-from SkipIntroSetup import SISetupScreen
+from .SkipIntroDatabase import SIDatabase
+from .SkipIntroSetup import SISetupScreen
 import re
 
 baseInfoBarSeek__init__ = None
@@ -192,7 +193,7 @@ def setup(session, **kwargs):
 ##############################################
 
 def Plugins(**kwargs):
-	from SkipIntroSetup import version
+	from .SkipIntroSetup import version
 	return [
 		PluginDescriptor(where=[PluginDescriptor.WHERE_SESSIONSTART, PluginDescriptor.WHERE_AUTOSTART], fnc=autostart),
 		PluginDescriptor(where=[PluginDescriptor.WHERE_PLUGINMENU], fnc=setup, name="SkipIntro", description=_("Skip intro by predefined skip time"), icon="plugin.png"),
