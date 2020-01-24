@@ -135,7 +135,7 @@ def newHide(self):
 		self.showVZ()
 
 def Plugins(**kwargs):
- 	plist =  [PluginDescriptor(name="Virtual Zap Setup", description=_("Virtual Zap Setup"), where = [PluginDescriptor.WHERE_PLUGINMENU], icon = "plugin.png", fnc = setup)]
+	plist =  [PluginDescriptor(name="Virtual Zap Setup", description=_("Virtual Zap Setup"), where = [PluginDescriptor.WHERE_PLUGINMENU], icon = "plugin.png", fnc = setup)]
 	if config.plugins.virtualzap.mode.value == "0":
 		plist.append(PluginDescriptor(name="Virtual Zap", description=_("Virtual (PiP) Zap"), where = [PluginDescriptor.WHERE_EXTENSIONSMENU],icon = "plugin.png", fnc = main))
 	elif config.plugins.virtualzap.mode.value == "1" or config.plugins.virtualzap.mode.value == "2":
@@ -713,11 +713,11 @@ class VirtualZapConfig(Screen, ConfigListScreen):
 	skin = """
 		<screen position="center,center" size="620,260" title="Virtual Zap Config" >
 			<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
-		    <ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
-		    <widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
-		    <widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
-		    <eLabel position="10,50" size="600,1" backgroundColor="grey" />
-		    <widget name="config" position="10,60" size="600,180" enableWrapAround="1" scrollbarMode="showOnDemand" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
+			<widget source="key_red" render="Label" position="10,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
+			<eLabel position="10,50" size="600,1" backgroundColor="grey" />
+			<widget name="config" position="10,60" size="600,180" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 
 	def __init__(self, session):
