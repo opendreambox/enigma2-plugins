@@ -2,6 +2,7 @@
 from __future__ import print_function
 
 # To check if in Standby
+from __future__ import absolute_import
 import Screens.Standby
 
 # eServiceReference
@@ -14,7 +15,7 @@ from RecordTimer import RecordTimerEntry
 from Components.ParentalControl import parentalControl
 
 # Timer
-from EPGRefreshTimer import epgrefreshtimer, EPGRefreshTimerEntry, checkTimespan
+from .EPGRefreshTimer import epgrefreshtimer, EPGRefreshTimerEntry, checkTimespan
 
 # To calculate next timer execution
 from time import time
@@ -30,9 +31,9 @@ from os import path as path
 from os import remove as remove
 
 # We want a list of unique services
-from EPGRefreshService import EPGRefreshService
+from .EPGRefreshService import EPGRefreshService
 
-from OrderedSet import OrderedSet
+from .OrderedSet import OrderedSet
 
 # Configuration
 from Components.config import config
@@ -48,9 +49,9 @@ from sqlite3 import dbapi2 as sqlite
 
 # ... II
 from . import ENDNOTIFICATIONID, NOTIFICATIONDOMAIN
-from MainPictureAdapter import MainPictureAdapter
-from PipAdapter import PipAdapter
-from RecordAdapter import RecordAdapter
+from .MainPictureAdapter import MainPictureAdapter
+from .PipAdapter import PipAdapter
+from .RecordAdapter import RecordAdapter
 
 # timeout timer for eEPGCache-signal based refresh
 from enigma import eTimer
@@ -401,7 +402,7 @@ class EPGRefresh:
 		self.refreshAdapter = refreshAdapter
 
 		try:
-			from plugin import AdjustExtensionsmenu, extStopDescriptor, extPendingServDescriptor, extRunDescriptor
+			from .plugin import AdjustExtensionsmenu, extStopDescriptor, extPendingServDescriptor, extRunDescriptor
 			AdjustExtensionsmenu(True, extPendingServDescriptor)
 			AdjustExtensionsmenu(True, extStopDescriptor)
 			AdjustExtensionsmenu(False, extRunDescriptor)
@@ -419,7 +420,7 @@ class EPGRefresh:
 		self.epgTimeoutTimer.stop()
 		
 		try:
-			from plugin import AdjustExtensionsmenu, housekeepingExtensionsmenu, extStopDescriptor, extPendingServDescriptor
+			from .plugin import AdjustExtensionsmenu, housekeepingExtensionsmenu, extStopDescriptor, extPendingServDescriptor
 			AdjustExtensionsmenu(False, extPendingServDescriptor)
 			AdjustExtensionsmenu(False, extStopDescriptor)
 			housekeepingExtensionsmenu(config.plugins.epgrefresh.show_run_in_extensionsmenu, force=True)

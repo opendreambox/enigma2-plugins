@@ -1,11 +1,12 @@
+from __future__ import absolute_import
 from twisted.web import http, resource
-from EPGRefresh import epgrefresh
-from EPGRefreshService import EPGRefreshService
+from .EPGRefresh import epgrefresh
+from .EPGRefreshService import EPGRefreshService
 from enigma import eServiceReference
 from Components.config import config
 from Components.SystemInfo import SystemInfo
 from time import localtime
-from OrderedSet import OrderedSet
+from .OrderedSet import OrderedSet
 from ServiceReference import ServiceReference
 from Tools.XMLTools import stringToXML
 import six

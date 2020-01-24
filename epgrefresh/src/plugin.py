@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 # for localized messages
+from __future__ import absolute_import
 from . import NOTIFICATIONDOMAIN
 
 # Config
@@ -110,8 +111,8 @@ except Exception as e:
 	print("[EPGRefresh] Error registering Notification-Domain:", e)
 	
 # Plugin
-from EPGRefresh import epgrefresh
-from EPGRefreshService import EPGRefreshService
+from .EPGRefresh import epgrefresh
+from .EPGRefreshService import EPGRefreshService
 
 # Plugins
 from Components.PluginComponent import plugins
@@ -185,7 +186,7 @@ def setConfigWakeupTime(value):
 # Mainfunction
 def main(session, **kwargs):
 	try:
-		from EPGRefreshConfiguration import EPGRefreshConfiguration
+		from .EPGRefreshConfiguration import EPGRefreshConfiguration
 		session.openWithCallback(
 			doneConfiguring,
 			EPGRefreshConfiguration

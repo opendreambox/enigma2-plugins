@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 # GUI (Screens)
+from __future__ import absolute_import
 from Screens.Screen import Screen
 from Components.ConfigList import ConfigListScreen
 from Screens.ChannelSelection import SimpleChannelSelection
@@ -15,7 +16,7 @@ from Components.Sources.StaticText import StaticText
 from Components.config import getConfigListEntry, ConfigSelection, \
 	NoSave
 
-from EPGRefreshService import EPGRefreshService
+from .EPGRefreshService import EPGRefreshService
 
 # Show ServiceName instead of ServiceReference
 from ServiceReference import ServiceReference
