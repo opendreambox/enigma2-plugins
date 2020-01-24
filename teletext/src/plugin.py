@@ -23,7 +23,7 @@ from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 import array
 import socket
 from struct import pack
-from twisted.python.sendmsg import SCM_RIGHTS, send1msg
+from twisted.python.sendmsg import SCM_RIGHTS, sendmsg
 
 import NavigationInstance
 
@@ -280,7 +280,7 @@ class TeleText(Screen):
         if config.plugins.TeleText.debug.value:
           log("... sending")
         if fd is not None and totalsent == 0:
-          sent = send1msg(s.fileno(), buf.tostring(), 0, [(socket.SOL_SOCKET, SCM_RIGHTS, pack("i", fd))])
+          sent = sendmsg(s, buf.tostring(), [(socket.SOL_SOCKET, SCM_RIGHTS, pack("i", fd))])
         else:
           sent = s.send(buf[totalsent:])
         if sent == 0:
