@@ -1,6 +1,7 @@
+from __future__ import absolute_import
 from Plugins.Plugin import PluginDescriptor
 
-from SatIPTunerSetup import SatIPTunerSetup
+from .SatIPTunerSetup import SatIPTunerSetup
 
 def satip_setup(session, **kwargs):
 	session.open(SatIPTunerSetup)

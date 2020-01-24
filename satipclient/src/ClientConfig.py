@@ -1,7 +1,8 @@
+from __future__ import absolute_import
 from enigma import eEnv
 from Tools.Log import Log
 from Tools.Directories import fileExists
-from SatIPTuner import SatIPTuner
+from .SatIPTuner import SatIPTuner
 import six
 
 class TunerEntry():

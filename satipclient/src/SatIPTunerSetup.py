@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from Components.ActionMap import ActionMap
 from Components.Console import Console
 from Components.MenuList import MenuList
@@ -6,8 +7,8 @@ from Screens.ChoiceBox import ChoiceBox
 from Screens.Screen import Screen
 from Tools.Log import Log
 
-from SatIPTuner import SatIPTunerOverview, SatIPTuner
-from ClientConfig import vtunerClientConfig, TunerEntry
+from .SatIPTuner import SatIPTunerOverview, SatIPTuner
+from .ClientConfig import vtunerClientConfig, TunerEntry
 import six
 
 
