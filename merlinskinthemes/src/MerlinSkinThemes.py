@@ -221,7 +221,7 @@ class ImageCreator:
 				fromColorList = list(fromColor)
 				toColorList = list(toColor)
 				for y in range(height):
-  					for x in range(width):
+					for x in range(width):
 						#Find the distance to the closest edge
 						distanceToEdge = min(abs(x - width), x, abs(y - height), y)
 
@@ -239,7 +239,7 @@ class ImageCreator:
 				fromColorList = list(fromColor)
 				toColorList = list(toColor)
 				for y in range(height):
-  					for x in range(width):
+					for x in range(width):
 						#Find the distance to the center
 						distanceToCenter = math.sqrt((x - width/2) ** 2 +(y - height/2) ** 2)
 
@@ -608,7 +608,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			"red":     self.buttonRed,
 			"green":   self.buttonGreen,
 			"yellow":  self.buttonYellow,
-			"blue":	   self.openConfig,
+			"blue":    self.openConfig,
 		}, -1)
 		
 		self["DirectionActions"] = HelpableActionMap(self, "DirectionActions",
@@ -1122,7 +1122,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				self["ListLabel"].setText(_("Skinlist") )
 			else:
 				self["ListLabel"].setText(_("Skinlist") + " - ATTENTION: skin_user.xml found!!!")
- 			
+
 			self["SkinCopyright"].setText("")
 			
 			self["key_green"].setText(_("switch to skin"))
