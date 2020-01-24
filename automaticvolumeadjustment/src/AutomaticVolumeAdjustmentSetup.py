@@ -20,6 +20,7 @@
 #  modify it (if you keep the license), but it may not be commercially 
 #  distributed other than under the conditions noted above.
 #
+from __future__ import absolute_import
 from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT, RT_HALIGN_RIGHT, RT_VALIGN_CENTER, eServiceReference
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
@@ -30,8 +31,8 @@ from Components.ActionMap import ActionMap
 from Components.ConfigList import ConfigListScreen
 from Components.config import getConfigListEntry, config
 from ServiceReference import ServiceReference
-from AutomaticVolumeAdjustment import AutomaticVolumeAdjustment
-from AutomaticVolumeAdjustmentConfig import AutomaticVolumeAdjustmentConfig
+from .AutomaticVolumeAdjustment import AutomaticVolumeAdjustment
+from .AutomaticVolumeAdjustmentConfig import AutomaticVolumeAdjustmentConfig
 from skin import TemplatedListFonts, componentSizes
 
 		
