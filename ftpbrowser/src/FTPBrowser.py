@@ -2,6 +2,7 @@ from __future__ import print_function
 
 # Core
 from __future__ import division
+from __future__ import absolute_import
 from enigma import RT_HALIGN_LEFT, RT_VALIGN_CENTER, getDesktop, eListboxPythonMultiContent
 
 # Tools
@@ -15,15 +16,15 @@ from Screens.HelpMenu import HelpableScreen
 from Screens.MessageBox import MessageBox
 from Screens.ChoiceBox import ChoiceBox
 from Screens.InfoBarGenerics import InfoBarNotifications
-from FTPServerManager import FTPServerManager
-from FTPQueueManager import FTPQueueManager
+from .FTPServerManager import FTPServerManager
+from .FTPQueueManager import FTPQueueManager
 from Plugins.SystemPlugins.Toolkit.NTIVirtualKeyBoard import NTIVirtualKeyBoard
 
 # GUI (Components)
 from Components.ActionMap import ActionMap, HelpableActionMap
 from Components.FileList import FileList, FileEntryComponent, EXTENSIONS
 from Components.Sources.StaticText import StaticText
-from VariableProgressSource import VariableProgressSource
+from .VariableProgressSource import VariableProgressSource
 from skin import componentSizes
 
 # FTP Client
