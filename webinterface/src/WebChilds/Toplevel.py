@@ -1,22 +1,23 @@
+from __future__ import absolute_import
 from twisted.web import resource, static
 from twisted.python import util
 
 from Components.config import config
 
 from Plugins.Extensions.WebInterface import __file__
-from Screenpage import ScreenPage
-from FileStreamer import FileStreamer
-from Screengrab import GrabResource
-from Screenshot import ScreenshotResource
-from IPKG import IPKGResource
-from PlayService import ServiceplayerResource
-from Uploader import UploadResource
-from ServiceListSave import ServiceList
-from RedirecToCurrentStream import RedirecToCurrentStreamResource
+from .Screenpage import ScreenPage
+from .FileStreamer import FileStreamer
+from .Screengrab import GrabResource
+from .Screenshot import ScreenshotResource
+from .IPKG import IPKGResource
+from .PlayService import ServiceplayerResource
+from .Uploader import UploadResource
+from .ServiceListSave import ServiceList
+from .RedirecToCurrentStream import RedirecToCurrentStreamResource
 from Plugins.Extensions.WebInterface.WebSocket.DreamboxWebSocketServer import webSocketServer
 from Tools.Directories import resolveFilename, SCOPE_MEDIA
 
-from External.__init__ import importExternalModules
+from .External.__init__ import importExternalModules
 externalChildren = []
 
 """

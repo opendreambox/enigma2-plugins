@@ -1,4 +1,5 @@
 from __future__ import print_function
+from __future__ import absolute_import
 Version = '$Header$';
 
 from enigma import eConsoleAppContainer
@@ -7,8 +8,8 @@ from Plugins.Plugin import PluginDescriptor
 from Components.config import config, ConfigBoolean, ConfigSubsection, ConfigInteger, ConfigYesNo, ConfigText, ConfigOnOff
 from Components.Network import iNetworkInfo
 from Screens.MessageBox import MessageBox
-from WebIfConfig import WebIfConfigScreen
-from WebChilds.Toplevel import getToplevel
+from .WebIfConfig import WebIfConfigScreen
+from .WebChilds.Toplevel import getToplevel
 from Tools.HardwareInfo import HardwareInfo
 
 from Tools.Directories import copyfile, resolveFilename, SCOPE_PLUGINS, SCOPE_CONFIG
@@ -25,7 +26,7 @@ from OpenSSL import SSL, crypto
 from time import gmtime
 from os.path import isfile as os_isfile, exists as os_exists
 
-from __init__ import __version__
+from .__init__ import __version__
 
 import random, uuid, time, hashlib
 
@@ -507,7 +508,7 @@ class HTTPAuthResource(HTTPRootResource):
 			print("[Webinterface.HTTPAuthResource.getChildWithDefault] !!! unauthorized !!!")
 			return self.unauthorized(request)
 
-from auth import check_passwd
+from .auth import check_passwd
 
 global_session = None
 

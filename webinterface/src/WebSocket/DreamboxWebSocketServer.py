@@ -1,4 +1,5 @@
-from DreamboxServerProtocol import DreamboxServerProtocol
+from __future__ import absolute_import
+from .DreamboxServerProtocol import DreamboxServerProtocol
 
 from autobahn.twisted.websocket import WebSocketServerFactory
 from autobahn.twisted.resource import WebSocketResource

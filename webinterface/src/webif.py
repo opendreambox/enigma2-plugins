@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 from __future__ import division
 from __future__ import print_function
+from __future__ import absolute_import
 Version = '$Header$';
 
 # things to improve:
@@ -24,7 +25,7 @@ from time import time
 
 #DO NOT REMOVE THIS IMPORT
 #It IS used (dynamically)
-from WebScreens import *
+from .WebScreens import *
 #DO NOT REMOVE THIS IMPORT
 
 from os import urandom
