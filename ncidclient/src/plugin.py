@@ -89,8 +89,8 @@ def getMountedDevices():
 		return (mp, desc + " (" + mp + ")")
 
 	mountedDevs = [(resolveFilename(SCOPE_CONFIG), _("Flash")),
-				   (resolveFilename(SCOPE_MEDIA, "cf"), _("Compact Flash")),
-				   (resolveFilename(SCOPE_MEDIA, "usb"), _("USB Device"))]
+			(resolveFilename(SCOPE_MEDIA, "cf"), _("Compact Flash")),
+			(resolveFilename(SCOPE_MEDIA, "usb"), _("USB Device"))]
 	mountedDevs += [(p.mountpoint, (_(p.description) if p.description else "")) for p in harddiskmanager.getMountedPartitions(True)]
 	mediaDir = resolveFilename(SCOPE_MEDIA)
 	for p in os.listdir(mediaDir):
@@ -372,7 +372,7 @@ class NcidClientPhonebook:
 					fNew.close()
 					# os.remove(phonebookFilename)
 					eBackgroundFileEraser.getInstance().erase(phonebookFilename)
-					os.rename(phonebookFilename + str(os.getpid()), 	phonebookFilename)
+					os.rename(phonebookFilename + str(os.getpid()), phonebookFilename)
 					debug("[NcidClientPhonebook] removed %s from Phonebook.txt" % number)
 					return True
 
@@ -992,17 +992,17 @@ class NcidLineReceiver(LineReceiver):
 				self.line = items[i + 1]
 			elif item == 'NMBR':
 				self.number = items[i + 1]
-                        elif item == 'NAME':
-                                self.myName = items[i + 1]
+			elif item == 'NAME':
+				self.myName = items[i + 1]
 
-                if not self.myName:
-                        self.myName = _("UNKNOWN")
+		if not self.myName:
+			self.myName = _("UNKNOWN")
 
-                date = None
-                try:
-                        date = datetime.strptime("%s - %s" % (self.date, self.time), "%d%m%Y - %H%M")
-                except:
-                        date = datetime.strptime("%s - %s" % (self.date, self.time), "%m%d%Y - %H%M")
+		date = None
+		try:
+			date = datetime.strptime("%s - %s" % (self.date, self.time), "%d%m%Y - %H%M")
+		except:
+			date = datetime.strptime("%s - %s" % (self.date, self.time), "%m%d%Y - %H%M")
 
 		self.date = date.strftime("%d.%m.%Y - %H:%M")
 
