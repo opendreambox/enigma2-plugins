@@ -1,4 +1,5 @@
 from __future__ import print_function
+from __future__ import absolute_import
 from enigma import *
 from Screens.Screen import Screen
 from Screens.VirtualKeyBoard import VirtualKeyBoard
@@ -24,13 +25,13 @@ from twisted.internet import protocol
 from twisted.python import log
 from twisted.internet.defer import *
 
-from e2chat import *
-from e2account import *
-from e2support import *
-from dreamIRCTools import *
-from dreamIRCSetup import *
-from protocols import irc
-import ircsupport
+from .e2chat import *
+from .e2account import *
+from .e2support import *
+from .dreamIRCTools import *
+from .dreamIRCSetup import *
+from .protocols import irc
+from . import ircsupport
 
 import os 
 import string
