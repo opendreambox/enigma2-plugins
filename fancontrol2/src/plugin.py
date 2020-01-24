@@ -46,21 +46,13 @@ import Queue
 from six.moves import range
 Briefkasten = Queue.Queue()
 
-global RPMread
 RPMread=0
-global FanFehler
 FanFehler=0
-global AktTemp
 AktTemp=0
-global AktVLT
 AktVLT=0
-global AktPWM
 AktPWM=0
-global AktRPM
 AktRPM=0
-global AktTemp
 AktTemp=0
-global ZielRPM
 ZielRPM=0
 
 def main(session,**kwargs):
