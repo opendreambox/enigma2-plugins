@@ -1,5 +1,6 @@
 from __future__ import division
 from __future__ import print_function
+from __future__ import absolute_import
 from Components.AVSwitch import AVSwitch
 from Components.ActionMap import ActionMap
 from Components.Button import Button
@@ -23,10 +24,10 @@ from Tools.Log import Log
 
 from Plugins.Plugin import PluginDescriptor
 
-from MyTubePlayer import MyTubePlayer
-from MyTubeSearch import ConfigTextWithGoogleSuggestions, MyTubeTasksScreen, MyTubeHistoryScreen
-from MyTubeService import myTubeService
-from MyTubeSettings import MyTubeSettingsScreen
+from .MyTubePlayer import MyTubePlayer
+from .MyTubeSearch import ConfigTextWithGoogleSuggestions, MyTubeTasksScreen, MyTubeHistoryScreen
+from .MyTubeService import myTubeService
+from .MyTubeSettings import MyTubeSettingsScreen
 
 from Plugins.SystemPlugins.TubeLib.youtube.Search import Search
 

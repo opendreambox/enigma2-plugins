@@ -1,7 +1,8 @@
 from __future__ import division
 from __future__ import print_function
+from __future__ import absolute_import
 from enigma import eTimer, ePythonMessagePump
-from MyTubeService import GoogleSuggestions
+from .MyTubeService import GoogleSuggestions
 from Screens.Screen import Screen
 from Components.config import config, ConfigText
 from Components.config import KEY_DELETE, KEY_BACKSPACE, KEY_ASCII, KEY_TIMEOUT
@@ -13,7 +14,7 @@ from Components.Task import job_manager
 from Tools.Directories import resolveFilename, SCOPE_HDD
 
 from threading import Thread
-from ThreadQueue import ThreadQueue
+from .ThreadQueue import ThreadQueue
 
 #import urllib
 from six.moves.urllib.request import FancyURLopener
