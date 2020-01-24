@@ -1,10 +1,11 @@
+from __future__ import absolute_import
 from enigma import iPlayableService, iServiceInformation
 from Components.config import config
 from Plugins.Plugin import PluginDescriptor
 from Tools.Log import Log
 
-from PhotoScreensaver import PhotoScreensaver
-from ScreensaverSetup import ScreensaverSetup
+from .PhotoScreensaver import PhotoScreensaver
+from .ScreensaverSetup import ScreensaverSetup
 
 class ScreenSaverHandler(object):
 	def __init__(self):
