@@ -17,13 +17,14 @@
 #######################################################################
 
 from __future__ import print_function
+from __future__ import absolute_import
 from Components.config import ConfigYesNo, NoSave
 
 try:
 	#Python >= 2.7
 	from collections import OrderedDict
 except:
-	from OrderedDict import OrderedDict
+	from .OrderedDict import OrderedDict
 
 
 # Module base class

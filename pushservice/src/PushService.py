@@ -17,6 +17,7 @@
 #######################################################################
 
 from __future__ import print_function
+from __future__ import absolute_import
 import os
 import sys, traceback
 from time import localtime
@@ -27,7 +28,7 @@ from Tools.BoundFunction import boundFunction
 
 
 # Plugin internal
-from PushServiceBase import PushServiceBase
+from .PushServiceBase import PushServiceBase
 from six.moves import range
 
 

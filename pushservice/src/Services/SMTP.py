@@ -18,13 +18,14 @@
 
 # Config
 from __future__ import print_function
+from __future__ import absolute_import
 from Components.config import config, NoSave, ConfigText, ConfigNumber, ConfigYesNo, ConfigPassword
 
 # Plugin internal
 from Plugins.Extensions.PushService.ServiceBase import ServiceBase
 
 # Plugin specific
-from mail.mail import Message, sendmail
+from .mail.mail import Message, sendmail
 
 
 # Constants

@@ -17,6 +17,7 @@
 #######################################################################
 
 from __future__ import print_function
+from __future__ import absolute_import
 import os, sys, traceback
 
 # Plugin
@@ -26,7 +27,7 @@ from Plugins.Plugin import PluginDescriptor
 from Components.config import config, ConfigSubsection, ConfigNothing, ConfigOnOff, ConfigText, ConfigClock, ConfigSelectionNumber
 
 # Plugin internal
-from PushService import PushService
+from .PushService import PushService
 #from ConfigScreen import ConfigScreen
 
 
@@ -71,7 +72,7 @@ config.pushservice.push_errors               = ConfigOnOff(default = False)
 def setup(session, **kwargs):
 	try:
 		### For testing only
-		import ConfigScreen
+		from . import ConfigScreen
 		reload(ConfigScreen)
 		###
 		session.open(ConfigScreen.ConfigScreen)

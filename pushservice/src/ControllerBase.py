@@ -17,7 +17,8 @@
 #######################################################################
 
 
-from ModuleBase import ModuleBase
+from __future__ import absolute_import
+from .ModuleBase import ModuleBase
 
 
 # Plugin base class

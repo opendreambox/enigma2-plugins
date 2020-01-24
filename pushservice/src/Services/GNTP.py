@@ -17,6 +17,7 @@
 #######################################################################
 
 # Config
+from __future__ import absolute_import
 from Components.config import config, NoSave, ConfigText, ConfigNumber, ConfigYesNo, ConfigPassword
 
 # Plugin internal
@@ -24,7 +25,7 @@ from Plugins.Extensions.PushService.ServiceBase import ServiceBase
 
 # Plugin specific
 import sys
-import gntp.notifier
+from .gntp import notifier
 
 # Constants
 APP_NAME = _("{box:s} {name:s}")
@@ -64,7 +65,7 @@ class GNTP(ServiceBase):
 		body = GROWL_BODY_TEMPLATE.format( **{'body': str(body), 'name': NAME, 'version': VERSION, 'plugin': pluginname, 'support': SUPPORT, 'donate': DONATE} )
 		
 		# Registrate
-		growl = gntp.notifier.GrowlNotifier(
+		growl = notifier.GrowlNotifier(
 			applicationName = app,
 			notifications = [nottype],
 			defaultNotifications = [nottype],
