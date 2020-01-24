@@ -26,7 +26,7 @@ from enigma import eEPGCache, eServiceReference, eServiceCenter, iServiceInforma
 from twisted.internet import reactor, defer
 from twisted.python import failure
 from threading import currentThread
-import Queue
+import six.moves.queue
 
 # AutoTimer Component
 from .AutoTimerComponent import preferredAutoTimerComponent
@@ -78,7 +78,7 @@ def blockingCallFromMainThread(f, *a, **kw):
 	  to reliably detect from the outside if twisted is currently shutting
 	  down.
 	"""
-	queue = Queue.Queue()
+	queue = six.moves.queue.Queue()
 	def _callFromThread():
 		result = defer.maybeDeferred(f, *a, **kw)
 		result.addBoth(queue.put)
@@ -88,7 +88,7 @@ def blockingCallFromMainThread(f, *a, **kw):
 	while True:
 		try:
 			result = queue.get(True, config.plugins.autotimer.timeout.value*60)
-		except Queue.Empty as qe:
+		except six.moves.queue.Empty as qe:
 			if True: #not reactor.running: # reactor.running is only False AFTER shutdown, we are during.
 				doLog("Reactor no longer active, aborting.")
 		else:
