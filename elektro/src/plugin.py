@@ -10,6 +10,7 @@
 #
 #
 from __future__ import print_function
+from __future__ import absolute_import
 from Screens.InfoBarGenerics import *
 
 from RecordTimer import RecordTimerEntry
@@ -44,7 +45,7 @@ from Components.config import configfile, getConfigListEntry, ConfigOnOff, \
 # Startup/shutdown notification
 from Tools import Notifications
 
-import ping
+from . import ping
 import os
 # Timer, etc
 
