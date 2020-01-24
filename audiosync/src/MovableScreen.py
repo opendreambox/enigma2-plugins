@@ -1,5 +1,6 @@
 from __future__ import division
-from HelpableNumberActionMap import HelpableNumberActionMap
+from __future__ import absolute_import
+from .HelpableNumberActionMap import HelpableNumberActionMap
 from Components.config import config
 from enigma import ePoint, eTimer, getDesktop
 

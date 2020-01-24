@@ -1,4 +1,5 @@
-from AC3utils import AC3, PCM, AC3GLOB, PCMGLOB, AC3PCM
+from __future__ import absolute_import
+from .AC3utils import AC3, PCM, AC3GLOB, PCMGLOB, AC3PCM
 from Components.config import config
 from enigma import eTimer
 from Tools.ISO639 import LanguageCodes

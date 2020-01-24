@@ -1,4 +1,5 @@
-from AC3utils import PLUGIN_BASE, PLUGIN_VERSION
+from __future__ import absolute_import
+from .AC3utils import PLUGIN_BASE, PLUGIN_VERSION
 from Components.ActionMap import NumberActionMap
 from Components.Button import Button
 from Components.ConfigList import ConfigListScreen
