@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
+from __future__ import absolute_import
 from Screens.Screen import Screen
 from Components.Button import Button
 from Components.ActionMap import HelpableActionMap, ActionMap
 from Components.MenuList import MenuList
-from MovieList import MovieList
+from .MovieList import MovieList
 from Components.DiskInfo import DiskInfo
 from Components.Pixmap import Pixmap
 from Components.Label import Label
@@ -24,7 +25,7 @@ from Tools.Directories import *
 from Tools.BoundFunction import boundFunction
 
 from enigma import eServiceReference, eServiceCenter, eTimer, eSize, iServiceInformation
-from SerienFilm import EpiSepCfg
+from .SerienFilm import EpiSepCfg
 
 config.movielist.sfmoviesort = ConfigInteger(default=MovieList.SORT_RECORDED)
 config.movielist.sflisttype = ConfigInteger(default=MovieList.LISTTYPE_MINIMAL)

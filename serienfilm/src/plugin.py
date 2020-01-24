@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
+from __future__ import absolute_import
 from Plugins.Plugin import PluginDescriptor
-from SerienFilm import SerienFilmVersion, SerienFilmCfg
+from .SerienFilm import SerienFilmVersion, SerienFilmCfg
 from traceback import print_exc
 from sys import stdout, exc_info
 from Screens.InfoBar import MoviePlayer
-from MovieSelection import MovieSelection
+from .MovieSelection import MovieSelection
 
 
 def pluginConfig(session, **kwargs):
