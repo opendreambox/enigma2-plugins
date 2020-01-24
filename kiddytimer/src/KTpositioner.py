@@ -1,11 +1,12 @@
+from __future__ import absolute_import
 from Components.ActionMap import ActionMap
 from Components.config import config
 from Components.Label import Label
 from Components.ProgressBar import ProgressBar
-from KTMultiPixmap import KTmultiPixmap
-from MovableScreen import MovableScreen
+from .KTMultiPixmap import KTmultiPixmap
+from .MovableScreen import MovableScreen
 from Screens.Screen import Screen
-import KTglob
+from . import KTglob
 
 class KiddyTimerPositioner(Screen, MovableScreen):
     def __init__(self, session):
