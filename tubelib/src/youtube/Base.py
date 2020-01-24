@@ -1,9 +1,10 @@
+from __future__ import absolute_import
 from apiclient.discovery import build
 from oauth2client.file import Storage
 from oauth2client.client import OAuth2Credentials
 import httplib2
 
-from YoutubeAuth import YoutubeAuth
+from .YoutubeAuth import YoutubeAuth
 
 DEVELOPER_KEY = "AIzaSyDUp-wKizINw0m6n_7_DInK6A4qKnMaKFU"
 YOUTUBE_API_SERVICE_NAME = "youtube"

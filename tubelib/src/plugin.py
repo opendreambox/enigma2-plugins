@@ -1,17 +1,18 @@
+from __future__ import absolute_import
 from enigma import eServiceReference
 from Plugins.Plugin import PluginDescriptor
 from Tools.Log import Log
 
-from ChannelListTubeServiceHelper import ChannelListTubeServiceHelper
+from .ChannelListTubeServiceHelper import ChannelListTubeServiceHelper
 
 try:
 	from enigma import eUriResolver
 	#YouTube
-	from youtube.YoutubeUriResolver import YoutubeUriResolver
+	from .youtube.YoutubeUriResolver import YoutubeUriResolver
 	YoutubeUriResolver.instance = YoutubeUriResolver()
 	eUriResolver.addResolver(YoutubeUriResolver.instance)
 	#twitch.tv
-	from twitch.TwitchUriResolver import TwitchUriResolver
+	from .twitch.TwitchUriResolver import TwitchUriResolver
 	TwitchUriResolver.instance = TwitchUriResolver()
 	eUriResolver.addResolver(TwitchUriResolver.instance)
 except ImportError as e:

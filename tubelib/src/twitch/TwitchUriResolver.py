@@ -1,6 +1,7 @@
+from __future__ import absolute_import
 try:
 	from enigma import eServiceReference, eUriResolver, StringList
-	from Videos import TwitchVideoUrlResolver
+	from .Videos import TwitchVideoUrlResolver
 
 	from Tools.Log import Log
 

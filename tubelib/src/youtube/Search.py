@@ -1,6 +1,7 @@
 #enigma2
+from __future__ import absolute_import
 from Components.config import config
-from Videos import Videos
+from .Videos import Videos
 
 class Search(Videos):
 	ORDER_DATE = "date"

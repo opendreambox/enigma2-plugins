@@ -1,7 +1,8 @@
 #enigma2
+from __future__ import absolute_import
 from Components.config import config
 
-from YoutubeQueryBase import YoutubeQueryBase
+from .YoutubeQueryBase import YoutubeQueryBase
 
 class VideoCategories(YoutubeQueryBase):
 	def list(self, callback, lang=None, region=None):

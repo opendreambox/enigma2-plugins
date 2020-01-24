@@ -1,6 +1,7 @@
+from __future__ import absolute_import
 from Tools.Log import Log
 
-from YoutubeQueryBase import YoutubeQueryBase
+from .YoutubeQueryBase import YoutubeQueryBase
 
 class Subscriptions(YoutubeQueryBase):
 	def list(self, callback, maxResults=25):

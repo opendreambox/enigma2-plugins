@@ -1,4 +1,5 @@
-from ThreadedRequest import ThreadedRequest
+from __future__ import absolute_import
+from .ThreadedRequest import ThreadedRequest
 
 class YoutubeQueryBase(object):
 	def __init__(self, youtube):

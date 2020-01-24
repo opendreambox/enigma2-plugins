@@ -1,11 +1,12 @@
 #enigma2
+from __future__ import absolute_import
 from Components.config import config
 #twisted
 from twisted.internet import reactor, threads
 #youtube
 from youtube_dl import YoutubeDL
 #local
-from YoutubeQueryBase import YoutubeQueryBase
+from .YoutubeQueryBase import YoutubeQueryBase
 
 from Tools.Log import Log
 
