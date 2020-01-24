@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from enigma import eListbox, eListboxPythonMultiContent, gFont, ePicLoad, RT_VALIGN_CENTER, RT_HALIGN_CENTER, RT_WRAP, SCALE_ASPECT
 from skin import TemplatedListFonts, loadSkin, componentSizes, ComponentSizes
 from Screens.Screen import Screen
@@ -14,8 +15,8 @@ from Tools.BoundFunction import boundFunction
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 from Tools.Log import Log
 
-from Twitch import Twitch, TwitchStream, TwitchVideoBase
-from TwitchMiddleware import TwitchMiddleware
+from .Twitch import Twitch, TwitchStream, TwitchVideoBase
+from .TwitchMiddleware import TwitchMiddleware
 
 from twisted.web.client import downloadPage, readBody, Agent, BrowserLikeRedirectAgent, HTTPConnectionPool
 from twisted.internet import reactor, ssl

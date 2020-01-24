@@ -1,7 +1,8 @@
+from __future__ import absolute_import
 from enigma import eServiceReference
 from Screens.MoviePlayer import MoviePlayer
 
-from Twitch import Twitch, TwitchChannel
+from .Twitch import Twitch, TwitchChannel
 
 import os.path
 import json
