@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
 from os import close, unlink, write
 from os.path import basename
 from tempfile import mkstemp
 from twisted.web import http, resource, server
 
-from PKG import PKGConsoleStream
+from .PKG import PKGConsoleStream
 
 class UploadPkgResource(resource.Resource):
 	res="""
