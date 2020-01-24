@@ -1,17 +1,18 @@
 from __future__ import print_function
 
+from __future__ import absolute_import
 from Components.config import config
 from enigma import eTimer
 
 from Tools.Notifications import AddPopup
 from Screens.MessageBox import MessageBox
 
-from RSSFeed import BaseFeed, UniversalFeed
+from .RSSFeed import BaseFeed, UniversalFeed
 
 from twisted.web.client import getPage
 from xml.etree.cElementTree import fromstring as cElementTree_fromstring
 
-from GoogleReader import GoogleReader
+from .GoogleReader import GoogleReader
 
 NOTIFICATIONID = 'SimpleRSSUpdateNotification'
 
@@ -173,7 +174,7 @@ class RSSPoller:
 				# Inform User
 				update_notification_value = config.plugins.simpleRSS.update_notification.value
 				if update_notification_value == "preview":
-					from RSSScreens import RSSFeedView
+					from .RSSScreens import RSSFeedView
 
 					from Tools.Notifications import AddNotificationWithID, RemovePopup
 
@@ -193,7 +194,7 @@ class RSSPoller:
 						NOTIFICATIONID
 					)
 				elif update_notification_value == "ticker":
-					from RSSTickerView import tickerView
+					from .RSSTickerView import tickerView
 					if not tickerView:
 						print("[SimpleRSS] missing ticker instance, something with my code is wrong :-/")
 					else:

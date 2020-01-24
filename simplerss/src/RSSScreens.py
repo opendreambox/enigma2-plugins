@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+from __future__ import absolute_import
 from enigma import eTimer
 
 from Screens.Screen import Screen
@@ -10,7 +11,7 @@ from Components.ScrollLabel import ScrollLabel
 from Components.Sources.List import List
 from Components.Sources.StaticText import StaticText
 
-from RSSList import RSSFeedList
+from .RSSList import RSSFeedList
 
 class RSSSummary(Screen):
 	skin = """
@@ -476,7 +477,7 @@ class RSSOverview(RSSBaseView):
 				if cur_idx > 0:
 					self.singleUpdate(cur_idx-1)
 			elif result[1] == "setup":
-				from RSSSetup import RSSSetup
+				from .RSSSetup import RSSSetup
 
 				self.session.openWithCallback(
 					self.refresh,
