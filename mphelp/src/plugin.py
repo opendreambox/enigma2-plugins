@@ -1,5 +1,6 @@
 #from Plugins.Plugin import PluginDescriptor
-from MPHelp import MPHelp
+from __future__ import absolute_import
+from .MPHelp import MPHelp
 
 from collections import Callable
 

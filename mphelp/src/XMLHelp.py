@@ -1,4 +1,5 @@
-from MPHelp import HelpPage
+from __future__ import absolute_import
+from .MPHelp import HelpPage
 from xml.etree.cElementTree import parse as cet_parse
 
 class XMLHelpPage(HelpPage):
