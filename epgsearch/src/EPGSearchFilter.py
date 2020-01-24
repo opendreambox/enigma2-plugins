@@ -1,4 +1,5 @@
 ﻿# for localized messages
+from __future__ import absolute_import
 from enigma import eEPGCache, eServiceReference, iServiceInformation, eServiceCenter
 from ServiceReference import ServiceReference
 from Screens.ChoiceBox import ChoiceBox
@@ -143,7 +144,7 @@ def ATeditorCallback(session, save, timer):
 				if evt:
 					results.append((t[3], evt.getEventId(), rbegin, rend - rbegin, t[0]))
 		
-		from EPGSearch import EPGSearch
+		from .EPGSearch import EPGSearch
 		if results:
 			kwargs = {"AT": results}
 			session.open(EPGSearch, **kwargs)

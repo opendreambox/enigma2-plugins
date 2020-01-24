@@ -1,9 +1,10 @@
+from __future__ import absolute_import
 from enigma import eServiceCenter
 from Components.config import config
 
 # Plugin
-from EPGSearch import EPGSearch, EPGSearchEPGSelection, searchEvent, pzyP4TInit, autoTimerAvailable
-from EPGSearchFilter import searchEventWithFilter, addSearchFilterFromMovieList
+from .EPGSearch import EPGSearch, EPGSearchEPGSelection, searchEvent, pzyP4TInit, autoTimerAvailable
+from .EPGSearchFilter import searchEventWithFilter, addSearchFilterFromMovieList
 
 # Plugin definition
 from Plugins.Plugin import PluginDescriptor

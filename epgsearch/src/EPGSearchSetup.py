@@ -1,5 +1,6 @@
 ﻿# for localized messages
 # GUI (Screens)
+from __future__ import absolute_import
 from Screens.Screen import Screen
 from Components.ConfigList import ConfigListScreen
 from Components.config import ConfigSelection, NoSave
@@ -88,7 +89,7 @@ class EPGSearchSetup(Screen, ConfigListScreen):
 		self.list.append( getConfigListEntry(_("Buttons for 'Search EPG'"), config.plugins.epgsearch.searchEPG_menu, _("Select the buttons, which show this menu item (on change GUI-restart is necessary).")) )
 		self.list.append( getConfigListEntry(_("Buttons for 'open EPGSearch search list'"), config.plugins.epgsearch.openSearchFilter_menu, _("Select the buttons, which show this menu item (on change GUI-restart is necessary).")) )
 		
-		from EPGSearch import autoTimerAvailable
+		from .EPGSearch import autoTimerAvailable
 		if autoTimerAvailable:
 			self.list.append( getConfigListEntry(_("Buttons for 'add search filter to EPGSearch'"), config.plugins.epgsearch.addSearchFilter_menu, _("Select the buttons, which show this menu item (on change GUI-restart is necessary).")) )
 			self.list.append( getConfigListEntry(_("Blue button function (search list)"), config.plugins.epgsearch.blue_function, _("Select the search list to show on blue button in the EPGSearch match list (default = text search history and search filter list).")) )

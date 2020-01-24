@@ -1,4 +1,5 @@
 ﻿# for localized messages
+from __future__ import absolute_import
 from enigma import eEPGCache, eServiceCenter, eServiceReference, RT_HALIGN_LEFT, \
 		RT_HALIGN_RIGHT, RT_VALIGN_CENTER, eListboxPythonMultiContent
 
@@ -6,8 +7,8 @@ from Tools.LoadPixmap import LoadPixmap
 from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS
 from ServiceReference import ServiceReference
 
-from EPGSearchSetup import EPGSearchSetup
-from EPGSearchFilter import openSearchFilterList as EPGSearchFilter_openSearchFilterList, searchEventWithFilter, EPGSearchAT
+from .EPGSearchSetup import EPGSearchSetup
+from .EPGSearchFilter import openSearchFilterList as EPGSearchFilter_openSearchFilterList, searchEventWithFilter, EPGSearchAT
 
 from Screens.ChannelSelection import SimpleChannelSelection
 from Screens.ChoiceBox import ChoiceBox
