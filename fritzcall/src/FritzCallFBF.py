@@ -21,6 +21,7 @@ $Id: FritzCallFBF.py 1552 2019-04-23 07:40:35Z michael $
 # E0611 No name %r in module %r
 # pylint: disable=C0111,C0103,C0301,W0603,W0403,C0302,W0611,F0401,E0611
 
+from __future__ import absolute_import
 import re, time, hashlib, logging, StringIO, csv, json
 from six.moves.urllib.parse import urlencode
 import xml.etree.ElementTree as ET
@@ -32,10 +33,10 @@ from twisted.web.client import getPage
 from enigma import eTimer #@UnresolvedImport
 
 from . import __ #@UnresolvedImport
-from plugin import config, stripCbCPrefix, resolveNumberWithAvon, FBF_IN_CALLS, FBF_OUT_CALLS, FBF_MISSED_CALLS, FBF_BLOCKED_CALLS, \
+from .plugin import config, stripCbCPrefix, resolveNumberWithAvon, FBF_IN_CALLS, FBF_OUT_CALLS, FBF_MISSED_CALLS, FBF_BLOCKED_CALLS, \
 	decode
-from nrzuname import html2unicode
-from FritzConnection import FritzConnection
+from .nrzuname import html2unicode
+from .FritzConnection import FritzConnection
 from twisted.python.failure import Failure
 from six.moves import map
 from six.moves import range

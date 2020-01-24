@@ -21,6 +21,7 @@ $Id: plugin.py 1553 2019-04-25 07:36:05Z michael $
 # pylint: disable=C0111,C0103,C0301,W0603,W0403,C0302,W0312
 
 from __future__ import division
+from __future__ import absolute_import
 import re, time, os, traceback, json
 from itertools import cycle
 import base64
@@ -65,8 +66,8 @@ from twisted.internet import reactor  # @UnresolvedImport
 from twisted.internet.protocol import ReconnectingClientFactory  # @UnresolvedImport
 from twisted.protocols.basic import LineReceiver  # @UnresolvedImport
 
-import FritzOutlookCSV, FritzLDIF
-from nrzuname import ReverseLookupAndNotifier
+from . import FritzOutlookCSV, FritzLDIF
+from .nrzuname import ReverseLookupAndNotifier
 from . import __  # @UnresolvedImport # pylint: disable=W0611,F0401
 import six
 from six.moves import zip
@@ -298,7 +299,7 @@ def stripCbCPrefix(number, countrycode):
 				return number[length:]
 	return number
 
-import FritzCallFBF  # wrong-import-position # pylint: disable=
+from . import FritzCallFBF  # wrong-import-position # pylint: disable=
 
 class FritzAbout(Screen):
 
@@ -386,7 +387,7 @@ class FritzAbout(Screen):
 	def exit(self):
 		self.close()
 
-from FritzCallFBF import FBF_dectActive, FBF_faxActive, FBF_rufumlActive, FBF_tamActive, FBF_wlanState  # wrong-import-position # pylint: disable=
+from .FritzCallFBF import FBF_dectActive, FBF_faxActive, FBF_rufumlActive, FBF_tamActive, FBF_wlanState  # wrong-import-position # pylint: disable=
 class FritzMenu(Screen, HelpableScreen):
 	def __init__(self, session):
 		if not fritzbox or not fritzbox.information:
