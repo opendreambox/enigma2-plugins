@@ -108,12 +108,12 @@ class DynDNSService:
 
 	def getURL(self,url):
 		request =  Request(url)
-   		base64string = encodestring('%s:%s' % (config.plugins.DynDNS.user.value,config.plugins.DynDNS.password.value))[:-1]
-   		request.add_header("Authorization", "Basic %s" % base64string)
-   		htmlFile = urlopen(request)
-   		htmlData = htmlFile.read()
-   		htmlFile.close()
-   		return htmlData
+		base64string = encodestring('%s:%s' % (config.plugins.DynDNS.user.value,config.plugins.DynDNS.password.value))[:-1]
+		request.add_header("Authorization", "Basic %s" % base64string)
+		htmlFile = urlopen(request)
+		htmlData = htmlFile.read()
+		htmlFile.close()
+		return htmlData
 
 def onPluginStart(session, **kwargs):
 	session.openWithCallback(onPluginStartCB,DynDNSScreenMain)
@@ -140,5 +140,5 @@ def onSessionStart(reason, **kwargs):
 
 def Plugins(path,**kwargs):
 	return [PluginDescriptor(where = [PluginDescriptor.WHERE_SESSIONSTART, PluginDescriptor.WHERE_AUTOSTART], fnc = onSessionStart),
-		    PluginDescriptor(name=_("DynDNS"), description=_("use www.DynDNS.org on your Box"),where = [PluginDescriptor.WHERE_PLUGINMENU], fnc = onPluginStart, icon="icon.png")]
+		PluginDescriptor(name=_("DynDNS"), description=_("use www.DynDNS.org on your Box"),where = [PluginDescriptor.WHERE_PLUGINMENU], fnc = onPluginStart, icon="icon.png")]
 
