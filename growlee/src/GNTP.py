@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+from __future__ import absolute_import
 from twisted.internet.protocol import Protocol, ReconnectingClientFactory, ServerFactory
 from twisted.internet.defer import Deferred
 from twisted.internet import reactor
@@ -16,7 +17,7 @@ try:
 	from Screens.MessageBox import MessageBox
 	from Tools import Notifications
 
-	from GrowleeConnection import emergencyDisable
+	from .GrowleeConnection import emergencyDisable
 	from . import NOTIFICATIONID
 except ImportError:
 	def emergencyDisable():

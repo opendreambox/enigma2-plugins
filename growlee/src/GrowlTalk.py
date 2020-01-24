@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+from __future__ import absolute_import
 from twisted.internet.protocol import DatagramProtocol
 from twisted.internet import reactor
 from struct import pack, unpack
@@ -8,7 +9,7 @@ from hashlib import md5
 from Screens.MessageBox import MessageBox
 from Tools import Notifications
 
-from GrowleeConnection import emergencyDisable
+from .GrowleeConnection import emergencyDisable
 from . import NOTIFICATIONID
 
 GROWL_UDP_PORT = 9887
