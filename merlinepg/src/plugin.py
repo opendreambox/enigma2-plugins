@@ -19,6 +19,7 @@
 
 
 
+from __future__ import absolute_import
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from Screens.EventView import EventViewSimple
@@ -37,7 +38,7 @@ from Tools.LoadPixmap import LoadPixmap
 from enigma import eServiceReference, eServiceCenter, getDesktop, eTimer, gFont, eListboxPythonMultiContent, RT_HALIGN_LEFT, RT_VALIGN_TOP, RT_WRAP, eEPGCache
 from RecordTimer import RecordTimerEntry, parseEvent, AFTEREVENT
 from ServiceReference import ServiceReference
-from ShowMe import ShowMe
+from .ShowMe import ShowMe
 from skin import TemplatedListFonts, componentSizes
 from time import localtime
 from six.moves import range
