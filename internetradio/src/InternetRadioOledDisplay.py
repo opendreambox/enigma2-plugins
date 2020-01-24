@@ -19,12 +19,13 @@
 # you have to keep MY license and inform me about the modifications by mail.
 #
 
+from __future__ import absolute_import
 from Screens.Screen import Screen
 from Components.ProgressBar import ProgressBar
 from Components.Pixmap import Pixmap
 from Components.Label import Label
 from Components.Sources.StaticText import StaticText
-from InternetRadioVisualization import InternetRadioVisualization
+from .InternetRadioVisualization import InternetRadioVisualization
 
 class InternetRadioOledDisplay(Screen, InternetRadioVisualization):
 

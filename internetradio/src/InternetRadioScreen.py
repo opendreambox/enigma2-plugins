@@ -20,6 +20,7 @@
 #
 
 from __future__ import print_function
+from __future__ import absolute_import
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
 from Components.Label import Label
@@ -44,16 +45,16 @@ import string
 import xml.etree.cElementTree
 from Tools.BoundFunction import boundFunction
 
-from InternetRadioFavoriteConfig import InternetRadioFavoriteConfig
-from InternetRadioInformationScreen import InternetRadioInformationScreen
-from InternetRadioOledDisplay import InternetRadioOledDisplay
-from InternetRadioSetup import InternetRadioSetup
-from InternetRadioCover import InternetRadioCover
-from InternetRadioList import InternetRadioList
-from InternetRadioWebFunctions import sendUrlCommand
-from InternetRadioClasses import InternetRadioFilter, InternetRadioStation
-from InternetRadioVisualization import InternetRadioVisualization
-from InternetRadioPiPTVPlayer import InternetRadioPiPTVPlayer
+from .InternetRadioFavoriteConfig import InternetRadioFavoriteConfig
+from .InternetRadioInformationScreen import InternetRadioInformationScreen
+from .InternetRadioOledDisplay import InternetRadioOledDisplay
+from .InternetRadioSetup import InternetRadioSetup
+from .InternetRadioCover import InternetRadioCover
+from .InternetRadioList import InternetRadioList
+from .InternetRadioWebFunctions import sendUrlCommand
+from .InternetRadioClasses import InternetRadioFilter, InternetRadioStation
+from .InternetRadioVisualization import InternetRadioVisualization
+from .InternetRadioPiPTVPlayer import InternetRadioPiPTVPlayer
 
 containerStreamripper = None
 

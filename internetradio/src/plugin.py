@@ -19,10 +19,11 @@
 # you have to keep MY license and inform me about the modifications by mail.
 #
 
+from __future__ import absolute_import
 from Plugins.Plugin import PluginDescriptor
 from Tools.HardwareInfo import HardwareInfo
 from Components.config import config, ConfigSubsection, ConfigSelection, ConfigDirectory, ConfigYesNo, Config, ConfigText
-from InternetRadioScreen import InternetRadioScreen
+from .InternetRadioScreen import InternetRadioScreen
 
 config.plugins.internetradio = ConfigSubsection()
 config.plugins.internetradio.showinextensions = ConfigYesNo(default = True)
