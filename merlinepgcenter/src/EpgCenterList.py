@@ -21,6 +21,7 @@
 #
 # PYTHON IMPORTS
 from __future__ import division
+from __future__ import absolute_import
 from datetime import datetime
 from time import localtime, strftime, time
 
@@ -39,9 +40,9 @@ from Tools.Directories import resolveFilename, SCOPE_CURRENT_PLUGIN
 from Tools.LoadPixmap import LoadPixmap
 
 # OWN IMPORTS
-from ConfigTabs import KEEP_OUTDATED_TIME, STYLE_SIMPLE_BAR, STYLE_PIXMAP_BAR, STYLE_MULTI_PIXMAP, STYLE_PERCENT_TEXT, STYLE_SIMPLE_BAR_LIST_OFF, STYLE_PIXMAP_BAR_LIST_OFF, STYLE_MULTI_PIXMAP_LIST_OFF, STYLE_PERCENT_TEXT_LIST_OFF
-from HelperFunctions import getFuzzyDay, LIST_TYPE_EPG, LIST_TYPE_UPCOMING, TimerListObject
-from MerlinEPGCenter import STYLE_SINGLE_LINE, STYLE_SHORT_DESCRIPTION
+from .ConfigTabs import KEEP_OUTDATED_TIME, STYLE_SIMPLE_BAR, STYLE_PIXMAP_BAR, STYLE_MULTI_PIXMAP, STYLE_PERCENT_TEXT, STYLE_SIMPLE_BAR_LIST_OFF, STYLE_PIXMAP_BAR_LIST_OFF, STYLE_MULTI_PIXMAP_LIST_OFF, STYLE_PERCENT_TEXT_LIST_OFF
+from .HelperFunctions import getFuzzyDay, LIST_TYPE_EPG, LIST_TYPE_UPCOMING, TimerListObject
+from .MerlinEPGCenter import STYLE_SINGLE_LINE, STYLE_SHORT_DESCRIPTION
 
 
 MODE_FHD = 0

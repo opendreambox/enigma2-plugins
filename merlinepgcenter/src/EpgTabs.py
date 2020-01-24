@@ -21,14 +21,15 @@
 #
 
 # ENIGMA IMPORTS
+from __future__ import absolute_import
 from Components.config import config
 from enigma import eServiceReference, eServiceCenter
 import NavigationInstance
 from ServiceReference import ServiceReference
 
 # OWN IMPORTS
-from EpgCenterList import EpgCenterList, TIMERLIST
-from MerlinEPGCenter import LIST_MODE_AUTOTIMER
+from .EpgCenterList import EpgCenterList, TIMERLIST
+from .MerlinEPGCenter import LIST_MODE_AUTOTIMER
 
 
 ############################################################################################

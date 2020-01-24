@@ -21,6 +21,7 @@
 #
 
 # ENIGMA IMPORTS
+from __future__ import absolute_import
 from Components.config import config, ConfigSubsection, getConfigListEntry, ConfigSet, ConfigClock, ConfigYesNo, ConfigInteger, ConfigSelection, ConfigText, NoSave, ConfigSelectionNumber
 from enigma import eEnv
 from Tools.Directories import SCOPE_CURRENT_PLUGIN, resolveFilename
@@ -53,9 +54,9 @@ except KeyError:
 	
 
 # OWN IMPORTS
-from EpgCenterList import MULTI_EPG_NOW, MULTI_EPG_NEXT, SINGLE_EPG, MULTI_EPG_PRIMETIME, TIMERLIST, EPGSEARCH_HISTORY
-from MerlinEPGCenter import STYLE_SINGLE_LINE, STYLE_SHORT_DESCRIPTION, TAB_TEXT_EPGLIST
-from SkinFinder import SkinFinder
+from .EpgCenterList import MULTI_EPG_NOW, MULTI_EPG_NEXT, SINGLE_EPG, MULTI_EPG_PRIMETIME, TIMERLIST, EPGSEARCH_HISTORY
+from .MerlinEPGCenter import STYLE_SINGLE_LINE, STYLE_SHORT_DESCRIPTION, TAB_TEXT_EPGLIST
+from .SkinFinder import SkinFinder
 
 TAB_CHOICES = [ ("-1", _("disabled")),
 		(str(MULTI_EPG_NOW), TAB_TEXT_EPGLIST[MULTI_EPG_NOW]),

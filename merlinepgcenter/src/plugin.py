@@ -20,13 +20,14 @@
 #  distributed other than under the conditions noted above.
 #
 # ENIGMA IMPORTS
+from __future__ import absolute_import
 from Components.config import config
 from Plugins.Plugin import PluginDescriptor
 from Screens.InfoBar import InfoBar
 
 # OWN IMPORTS
-from MerlinEPGCenter import MerlinEPGCenter
-from EpgCenterList import MULTI_EPG_NOW, SINGLE_EPG
+from .MerlinEPGCenter import MerlinEPGCenter
+from .EpgCenterList import MULTI_EPG_NOW, SINGLE_EPG
 
 
 infoBarFunctionSaver = None
