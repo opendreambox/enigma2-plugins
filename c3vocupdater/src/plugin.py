@@ -94,7 +94,7 @@ class C3vocScreen (Screen):
 
 		self.close()
 
-        def get_hls_url(self, streams, slug):
+	def get_hls_url(self, streams, slug):
 		for stream in streams:
 			if stream["slug"] != slug:
 				continue
