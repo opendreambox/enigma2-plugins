@@ -25,13 +25,14 @@
 # 02110-1301  USA
 ######################### END LICENSE BLOCK #########################
 
-from mbcharsetprober import MultiByteCharSetProber
-from codingstatemachine import CodingStateMachine
-from chardistribution import SJISDistributionAnalysis
-from jpcntx import SJISContextAnalysis
-from mbcssm import SJISSMModel
+from __future__ import absolute_import
+from .mbcharsetprober import MultiByteCharSetProber
+from .codingstatemachine import CodingStateMachine
+from .chardistribution import SJISDistributionAnalysis
+from .jpcntx import SJISContextAnalysis
+from .mbcssm import SJISSMModel
 import constants, sys
-from constants import eStart, eError, eItsMe
+from .constants import eStart, eError, eItsMe
 from six.moves import range
 
 class SJISProber(MultiByteCharSetProber):

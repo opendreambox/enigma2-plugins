@@ -27,9 +27,10 @@
 # 02110-1301  USA
 ######################### END LICENSE BLOCK #########################
 
+from __future__ import absolute_import
 import constants, sys
-from constants import eStart, eError, eItsMe
-from charsetprober import CharSetProber
+from .constants import eStart, eError, eItsMe
+from .charsetprober import CharSetProber
 from six.moves import range
 
 class MultiByteCharSetProber(CharSetProber):

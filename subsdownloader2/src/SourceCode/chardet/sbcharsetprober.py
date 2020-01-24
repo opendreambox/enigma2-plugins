@@ -27,8 +27,9 @@
 ######################### END LICENSE BLOCK #########################
 
 from __future__ import division
+from __future__ import absolute_import
 import constants, sys
-from charsetprober import CharSetProber
+from .charsetprober import CharSetProber
 
 SAMPLE_SIZE = 64
 SB_ENOUGH_REL_THRESHOLD = 1024

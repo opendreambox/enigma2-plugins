@@ -25,7 +25,8 @@
 # 02110-1301  USA
 ######################### END LICENSE BLOCK #########################
 
-from constants import eStart, eError, eItsMe
+from __future__ import absolute_import
+from .constants import eStart, eError, eItsMe
 
 # BIG5 
 

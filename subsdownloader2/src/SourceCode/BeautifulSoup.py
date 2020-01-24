@@ -78,6 +78,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE, DAMMIT.
 """
 from __future__ import generators
 from __future__ import print_function
+from __future__ import absolute_import
 import six
 from six.moves import map
 from six import unichr
@@ -1737,7 +1738,7 @@ class SimplifyingSOAPParser(BeautifulSOAP):
 # Autodetects character encodings.
 # Download from http://chardet.feedparser.org/
 try:
-    import chardet
+    from . import chardet
 #    import chardet.constants
 #    chardet.constants._debug = 1
 except ImportError:

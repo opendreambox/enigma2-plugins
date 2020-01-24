@@ -27,8 +27,9 @@
 ######################### END LICENSE BLOCK #########################
 
 from __future__ import division
-from charsetprober import CharSetProber
-import constants
+from __future__ import absolute_import
+from .charsetprober import CharSetProber
+from . import constants
 import operator
 from functools import reduce
 

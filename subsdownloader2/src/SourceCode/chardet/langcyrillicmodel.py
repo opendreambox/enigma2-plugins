@@ -25,7 +25,8 @@
 # 02110-1301  USA
 ######################### END LICENSE BLOCK #########################
 
-import constants
+from __future__ import absolute_import
+from . import constants
 
 # KOI8-R language model
 # Character Mapping Table:

@@ -26,7 +26,8 @@
 ######################### END LICENSE BLOCK #########################
 
 from __future__ import division
-import constants
+from __future__ import absolute_import
+from . import constants
 
 NUM_OF_CATEGORY = 6
 DONT_KNOW = -1

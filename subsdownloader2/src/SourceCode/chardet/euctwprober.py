@@ -25,10 +25,11 @@
 # 02110-1301  USA
 ######################### END LICENSE BLOCK #########################
 
-from mbcharsetprober import MultiByteCharSetProber
-from codingstatemachine import CodingStateMachine
-from chardistribution import EUCTWDistributionAnalysis
-from mbcssm import EUCTWSMModel
+from __future__ import absolute_import
+from .mbcharsetprober import MultiByteCharSetProber
+from .codingstatemachine import CodingStateMachine
+from .chardistribution import EUCTWDistributionAnalysis
+from .mbcssm import EUCTWSMModel
 
 class EUCTWProber(MultiByteCharSetProber):
     def __init__(self):

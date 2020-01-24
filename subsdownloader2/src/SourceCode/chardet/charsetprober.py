@@ -26,7 +26,9 @@
 # 02110-1301  USA
 ######################### END LICENSE BLOCK #########################
 
-import constants, re
+from __future__ import absolute_import
+import re
+from . import constants
 
 class CharSetProber:
     def __init__(self):

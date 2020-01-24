@@ -25,13 +25,14 @@
 # 02110-1301  USA
 ######################### END LICENSE BLOCK #########################
 
+from __future__ import absolute_import
 import constants, sys
-from constants import eStart, eError, eItsMe
-from mbcharsetprober import MultiByteCharSetProber
-from codingstatemachine import CodingStateMachine
-from chardistribution import EUCJPDistributionAnalysis
-from jpcntx import EUCJPContextAnalysis
-from mbcssm import EUCJPSMModel
+from .constants import eStart, eError, eItsMe
+from .mbcharsetprober import MultiByteCharSetProber
+from .codingstatemachine import CodingStateMachine
+from .chardistribution import EUCJPDistributionAnalysis
+from .jpcntx import EUCJPContextAnalysis
+from .mbcssm import EUCJPSMModel
 from six.moves import range
 
 class EUCJPProber(MultiByteCharSetProber):
