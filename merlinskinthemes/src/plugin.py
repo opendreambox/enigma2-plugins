@@ -22,6 +22,7 @@
 #
 #######################################################################
 
+from __future__ import absolute_import
 from __future__ import print_function
 from Plugins.Plugin import PluginDescriptor
 from Components.config import config, configfile, ConfigYesNo, ConfigSubsection, getConfigListEntry, ConfigSelection, ConfigNumber, ConfigText, ConfigInteger, ConfigSubDict, ConfigBoolean
@@ -32,7 +33,7 @@ from Tools.HardwareInfo import HardwareInfo
 from enigma import quitMainloop
 import xml.etree.cElementTree as Tree
 
-import MerlinSkinThemes
+from . import MerlinSkinThemes
 
 CONFDIR = "/etc/enigma2/merlinskinthemes/"
 
