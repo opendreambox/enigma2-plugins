@@ -412,8 +412,8 @@ class AutoResSetupMenu(Screen, ConfigListScreen):
 		return SetupSummary
 
 def autostart(reason, **kwargs):
+	global resolutionlabel
 	if "session" in kwargs and resolutionlabel is None:
-		global resolutionlabel
 		session = kwargs["session"]
 		resolutionlabel = session.instantiateDialog(ResolutionLabel)
 		AutoRes(session)
