@@ -1,12 +1,13 @@
 from __future__ import print_function
 
 # Plugin definition
+from __future__ import absolute_import
 from Plugins.Plugin import PluginDescriptor
 
 from Components.PluginComponent import PluginComponent
 from Components.config import config, ConfigSubsection, ConfigSet
 
-from PluginHiderSetup import PluginHiderSetup
+from .PluginHiderSetup import PluginHiderSetup
 
 from operator import attrgetter
 
