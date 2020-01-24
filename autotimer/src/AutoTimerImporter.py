@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 # GUI (System)
+from __future__ import absolute_import
 from enigma import eServiceReference, getDesktop
 
 # GUI (Screens)
@@ -20,7 +21,7 @@ from RecordTimer import AFTEREVENT
 
 # Needed to convert our timestamp back and forth
 from time import localtime
-from AutoTimerEditor import weekdays
+from .AutoTimerEditor import weekdays
 
 sz_w = getDesktop(0).size().width()
 

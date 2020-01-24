@@ -1,6 +1,7 @@
 # for localized messages
 
 # GUI (System)
+from __future__ import absolute_import
 from enigma import getDesktop
 
 # GUI (Screens)
@@ -132,7 +133,7 @@ class AutoTimerSettings(Screen, ConfigListScreen):
 		self.onLayoutFinish.append(self.setCustomTitle)
 
 	def setCustomTitle(self):
-		from plugin import AUTOTIMER_VERSION
+		from .plugin import AUTOTIMER_VERSION
 		self.setTitle(_("Configure AutoTimer behavior") + " - Version: " + AUTOTIMER_VERSION)
 
 	def updateHelp(self):

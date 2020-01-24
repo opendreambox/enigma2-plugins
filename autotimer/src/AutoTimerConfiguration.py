@@ -1,8 +1,9 @@
 # -*- coding: UTF-8 -*-
 from __future__ import print_function
 
-from AutoTimerComponent import preferredAutoTimerComponent
-from Logger import doLog
+from __future__ import absolute_import
+from .AutoTimerComponent import preferredAutoTimerComponent
+from .Logger import doLog
 
 from RecordTimer import AFTEREVENT
 from Tools.XMLTools import stringToXML

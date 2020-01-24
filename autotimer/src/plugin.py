@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+from __future__ import absolute_import
 from twisted.internet import reactor
 
 # GUI (Screens)
@@ -13,9 +14,9 @@ from Plugins.Plugin import PluginDescriptor
 from Components.config import config
 from os import path as os_path
 
-from Logger import doLog
+from .Logger import doLog
 
-from AutoTimer import AutoTimer
+from .AutoTimer import AutoTimer
 autotimer = AutoTimer()
 autopoller = None
 
@@ -47,7 +48,7 @@ def autostart(reason, **kwargs):
 	# Startup
 	if reason == 0 and config.plugins.autotimer.autopoll.value:
 		# Start Poller
-		from AutoPoller import AutoPoller
+		from .AutoPoller import AutoPoller
 		autopoller = AutoPoller()
 		autopoller.start()
 
@@ -78,9 +79,9 @@ def sessionstart(reason, **kwargs):
 			from Plugins.Extensions.WebInterface.WebChilds.Screenpage import ScreenPage
 			from twisted.web import static
 			from twisted.python import util
-			from WebChilds.UploadResource import UploadResource
+			from .WebChilds.UploadResource import UploadResource
 
-			from AutoTimerResource import AutoTimerDoParseResource, \
+			from .AutoTimerResource import AutoTimerDoParseResource, \
 				AutoTimerListAutoTimerResource, AutoTimerAddOrEditAutoTimerResource, \
 				AutoTimerRemoveAutoTimerResource, AutoTimerChangeSettingsResource, \
 				AutoTimerSettingsResource, AutoTimerSimulateResource, AutoTimerTestResource, \
@@ -135,7 +136,7 @@ def main(session, **kwargs):
 	if autopoller is not None:
 		autopoller.pause()
 
-	from AutoTimerOverview import AutoTimerOverview
+	from .AutoTimerOverview import AutoTimerOverview
 	session.openWithCallback(
 		editCallback,
 		AutoTimerOverview,
@@ -148,7 +149,7 @@ def handleAutoPoller():
 	# Start autopoller again if wanted
 	if config.plugins.autotimer.autopoll.value:
 		if autopoller is None:
-			from AutoPoller import AutoPoller
+			from .AutoPoller import AutoPoller
 			autopoller = AutoPoller()
 		autopoller.start(initial = False)
 	# Remove instance if not running in background
@@ -218,18 +219,18 @@ def parseEPGCallback(ret):
 
 # Movielist
 def movielist(session, service, **kwargs):
-	from AutoTimerEditor import addAutotimerFromService
+	from .AutoTimerEditor import addAutotimerFromService
 	addAutotimerFromService(session, service)
 
 # Event Info
 def eventinfo(session, servicelist, **kwargs):
-	from AutoTimerEditor import AutoTimerEPGSelection
+	from .AutoTimerEditor import AutoTimerEPGSelection
 	ref = session.nav.getCurrentlyPlayingServiceReference()
 	session.open(AutoTimerEPGSelection, ref)
 
 # EventView or EPGSelection
 def eventview(session, event, ref):
-	from AutoTimerEditor import addAutotimerFromEvent, addAutotimerFromService, importerCallback
+	from .AutoTimerEditor import addAutotimerFromEvent, addAutotimerFromService, importerCallback
 	if ref.getPath() and ref.getPath()[0] == "/":
 		from enigma import eServiceReference
 		addAutotimerFromService(session, eServiceReference(str(ref)))

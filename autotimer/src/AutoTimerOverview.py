@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from Components.config import config
 
 # GUI (System)
@@ -8,20 +9,20 @@ from Screens.Screen import Screen
 from Screens.HelpMenu import HelpableScreen
 from Screens.MessageBox import MessageBox
 from Screens.ChoiceBox import ChoiceBox
-from AutoTimerEditor import AutoTimerEditor, AutoTimerChannelSelection
-from AutoTimerImporter import AutoTimerImportSelector
-from AutoTimerPreview import AutoTimerPreview
-from AutoTimerSettings import AutoTimerSettings
-from AutoTimerWizard import AutoTimerWizard
+from .AutoTimerEditor import AutoTimerEditor, AutoTimerChannelSelection
+from .AutoTimerImporter import AutoTimerImportSelector
+from .AutoTimerPreview import AutoTimerPreview
+from .AutoTimerSettings import AutoTimerSettings
+from .AutoTimerWizard import AutoTimerWizard
 
 # for showSearchLog
 from os import path as os_path, stat as os_stat
 from time import localtime, strftime
-from ShowLogScreen import ShowLogScreen
-import AutoTimerFilterList
+from .ShowLogScreen import ShowLogScreen
+from . import AutoTimerFilterList
 
 # GUI (Components)
-from AutoTimerList import AutoTimerList
+from .AutoTimerList import AutoTimerList
 from Components.ActionMap import HelpableActionMap
 from Components.Sources.StaticText import StaticText
 
@@ -166,19 +167,19 @@ class AutoTimerOverview(Screen, HelpableScreen):
 	def showFilterTxt(self):
 		
 		reload(AutoTimerFilterList)
-		from AutoTimerFilterList import AutoTimerFilterListOverview
+		from .AutoTimerFilterList import AutoTimerFilterListOverview
 		self.session.open(AutoTimerFilterListOverview)
 
 
 	def firstExec(self):
-		from plugin import autotimerHelp
+		from .plugin import autotimerHelp
 		if config.plugins.autotimer.show_help.value and autotimerHelp:
 			config.plugins.autotimer.show_help.value = False
 			config.plugins.autotimer.show_help.save()
 			autotimerHelp.open(self.session)
 
 	def setCustomTitle(self):
-		from plugin import AUTOTIMER_VERSION
+		from .plugin import AUTOTIMER_VERSION
 		self.setTitle(_("AutoTimer overview") + " - Version: " + AUTOTIMER_VERSION)
 
 	def createSummary(self):
@@ -292,7 +293,7 @@ class AutoTimerOverview(Screen, HelpableScreen):
 			(_("Clone selected timer"), "clone")
 		]
 
-		from plugin import autotimerHelp
+		from .plugin import autotimerHelp
 		if autotimerHelp:
 			list.insert(0, (_("Help"), "help"))
 			list.insert(1, (_("Frequently asked questions") , "faq"))
@@ -312,7 +313,7 @@ class AutoTimerOverview(Screen, HelpableScreen):
 		ret = ret and ret[1]
 		if ret:
 			if ret == "help":
-				from plugin import autotimerHelp
+				from .plugin import autotimerHelp
 				autotimerHelp.open(self.session)
 			elif ret == "faq":
 				from Plugins.SystemPlugins.MPHelp import PluginHelp, XMLHelpReader

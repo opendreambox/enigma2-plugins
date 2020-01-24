@@ -1,9 +1,10 @@
 # GUI (System)
+from __future__ import absolute_import
 from enigma import getDesktop
 # GUI (Screens)
 from Screens.WizardLanguage import WizardLanguage
 from Screens.Rc import Rc
-from AutoTimerEditor import AutoTimerEditorBase, AutoTimerServiceEditor, \
+from .AutoTimerEditor import AutoTimerEditorBase, AutoTimerServiceEditor, \
 		AutoTimerFilterEditor
 
 # GUI (Components)
@@ -18,7 +19,7 @@ from Components.config import getConfigListEntry, KEY_0, KEY_DELETE, \
 # Wizard XML Path
 from Tools import Directories
 
-from Logger import doLog
+from .Logger import doLog
 
 sz_w = getDesktop(0).size().width()
 

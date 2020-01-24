@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 # Core functionality
+from __future__ import absolute_import
 from enigma import eTimer, ePythonMessagePump
 
 # Config
@@ -21,7 +22,7 @@ from collections import deque
 
 from twisted.internet import reactor
 
-from Logger import doLog
+from .Logger import doLog
 
 class AutoPollerThread(Thread):
 	"""Background thread where the EPG is parsed (unless initiated by the user)."""
@@ -111,7 +112,7 @@ class AutoPollerThread(Thread):
 				except:
 					pass
 
-			from plugin import autotimer
+			from .plugin import autotimer
 			# Ignore any program errors
 			try:
 				queue.append(autotimer.parseEPG())

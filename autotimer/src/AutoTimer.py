@@ -2,9 +2,10 @@ from __future__ import print_function
 
 # Plugins Config
 from __future__ import division
+from __future__ import absolute_import
 from xml.etree.cElementTree import parse as cet_parse, fromstring as cet_fromstring
 from os import path as os_path, remove as os_remove
-from AutoTimerConfiguration import parseConfig, buildConfig
+from .AutoTimerConfiguration import parseConfig, buildConfig
 from Tools.IO import saveFile
 
 # Navigation (RecordTimer)
@@ -28,8 +29,8 @@ from threading import currentThread
 import Queue
 
 # AutoTimer Component
-from AutoTimerComponent import preferredAutoTimerComponent
-from Logger import doLog, startLog, getLog, doDebug
+from .AutoTimerComponent import preferredAutoTimerComponent
+from .Logger import doLog, startLog, getLog, doDebug
 
 from itertools import chain
 from collections import defaultdict
@@ -735,7 +736,7 @@ class AutoTimer:
 
 	def parseEPG(self, simulateOnly=False, uniqueId=None, callback=None):
 
-		from plugin import AUTOTIMER_VERSION
+		from .plugin import AUTOTIMER_VERSION
 		doLog("AutoTimer Version: " + AUTOTIMER_VERSION)
 
 		if NavigationInstance.instance is None:
