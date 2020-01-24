@@ -42,9 +42,9 @@ from Components.ActionMap import ActionMap
 from Components.Harddisk import harddiskmanager
 
 from threading import Thread
-import Queue
+import six.moves.queue
 from six.moves import range
-Briefkasten = Queue.Queue()
+Briefkasten = six.moves.queue.Queue()
 
 RPMread=0
 FanFehler=0
