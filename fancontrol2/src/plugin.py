@@ -4,11 +4,12 @@
 
 from __future__ import division
 from __future__ import print_function
+from __future__ import absolute_import
 import time
 import os
 from subprocess import call, Popen, PIPE
 
-from globals import FC2Log, FC2werte, Box, TempName, HeadLine, Version, FC2HDDignore, FC2stunde
+from .globals import FC2Log, FC2werte, Box, TempName, HeadLine, Version, FC2HDDignore, FC2stunde
 
 from enigma import eTimer
 
@@ -21,7 +22,7 @@ from Components.Sources.Progress import Progress
 
 # Startup/shutdown notification
 from Tools import Notifications
-from Sensors import sensors
+from .Sensors import sensors
 from time import strftime
 import datetime
 
@@ -1254,7 +1255,7 @@ def autostart(reason, **kwargs):
 	if reason == 0 and "session" in kwargs:
 		if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/WebInterface/__init__.pyc") or os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/WebInterface/__init__.pyo"):
 			from Plugins.Extensions.WebInterface.WebChilds.Toplevel import addExternalChild
-			from FC2webSite import FC2web, FC2webLog, FC2webChart
+			from .FC2webSite import FC2web, FC2webLog, FC2webChart
 			from twisted.web import static
 			root = static.File("/usr/lib/enigma2/python/Plugins/Extensions/FanControl2/data")
 #			root = FC2web()
