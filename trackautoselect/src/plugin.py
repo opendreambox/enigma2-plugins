@@ -1,15 +1,16 @@
 from __future__ import print_function
+from __future__ import absolute_import
 from Plugins.Plugin import PluginDescriptor
 
 track_autoselect_config = None # global TrackautoselectConfig object
 
 def config_fnc(session, **kwargs):
-	from TrackAutoselectSetup import TrackAutoselectSetup
+	from .TrackAutoselectSetup import TrackAutoselectSetup
 	if track_autoselect_config:
 		session.open(TrackAutoselectSetup, track_autoselect_config)
 
 def start_fnc(session, **kwargs):
-	from TrackAutoselector import TrackAutoselector
+	from .TrackAutoselector import TrackAutoselector
 	if track_autoselect_config and TrackAutoselector.instance is None:
 		TrackAutoselector(session, track_autoselect_config)
 
@@ -25,7 +26,7 @@ def Plugins(path, **kwargs):
 		return PluginDescriptor()
 
 def localeAndConfigInit():
-	from TrackAutoselectConfig import TrackAutoselectConfig
+	from .TrackAutoselectConfig import TrackAutoselectConfig
 	global track_autoselect_config
 	track_autoselect_config = TrackAutoselectConfig()
 
