@@ -10,12 +10,12 @@ from twisted.internet.ssl import ClientContextFactory
 from twisted.web.client import Agent, readBody, PartialDownloadError
 from twisted.web.http_headers import Headers
 from twisted.web.iweb import IBodyProducer
-from zope.interface import implements
+from zope.interface import implementer
 
 import json
 
+@implementer(IBodyProducer)
 class StringProducer(object):
-	implements(IBodyProducer)
 
 	def __init__(self, body):
 		self.body = body
