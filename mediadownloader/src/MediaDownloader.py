@@ -2,6 +2,7 @@ from __future__ import print_function
 
 # GUI (Screens)
 from __future__ import division
+from __future__ import absolute_import
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 
@@ -10,7 +11,7 @@ from Components.ActionMap import ActionMap
 from Components.Sources.StaticText import StaticText
 
 # Download
-from VariableProgressSource import VariableProgressSource
+from .VariableProgressSource import VariableProgressSource
 
 from Components.config import config
 try:
@@ -70,7 +71,7 @@ def download(url, file, writeProgress = None, contextFactory = None, \
 	scheme, host, port, path, username, password = _parse(url)
 
 	if scheme == 'ftp':
-		from FTPProgressDownloader import FTPProgressDownloader
+		from .FTPProgressDownloader import FTPProgressDownloader
 
 		if not (username and password):
 			username = 'anonymous'
@@ -105,7 +106,7 @@ def download(url, file, writeProgress = None, contextFactory = None, \
 		else:
 			kwargs["headers"] = AuthHeaders
 
-	from HTTPProgressDownloader import HTTPProgressDownloader
+	from .HTTPProgressDownloader import HTTPProgressDownloader
 	from twisted.internet import reactor
 
 	factory = HTTPProgressDownloader(url, file, writeProgress, *args, **kwargs)
