@@ -18,6 +18,7 @@
 #######################################################################
 
 from __future__ import division
+from __future__ import absolute_import
 from os import chmod, listdir, mkdir, rename, stat, symlink, walk
 from os.path import basename, join
 from subprocess import call, check_output
@@ -38,7 +39,7 @@ from Components.config import config, ConfigSubsection, ConfigText, ConfigOnOff
 from Tools.Directories import fileExists, pathExists
 from Tools.HardwareInfo import HardwareInfo
 from ServiceReference import ServiceReference
-from myFileList import FileList as myFileList
+from .myFileList import FileList as myFileList
 from Screens.InputBox import InputBox
 from enigma import eConsoleAppContainer, eServiceReference, eServiceCenter
 
