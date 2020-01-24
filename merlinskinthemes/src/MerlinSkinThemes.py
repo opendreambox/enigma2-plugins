@@ -482,7 +482,7 @@ def setThemes(themeFile=None, skinFile=None, configDict=None, mode="apply"):
 								screen.set("value", "inactive")
 
 	# corner Radius in skin.xml in allen eLabel ersetzen
-	if config.plugins.MerlinSkinThemes.CornerRadius.value <> "":
+	if config.plugins.MerlinSkinThemes.CornerRadius.value != "":
 		for elabel in rootSkin.findall('.//eLabel[@cornerRadius]'):
 			if 'cornerRadius' in elabel.attrib:
 				if rootTheme.find("cornerradius") is not None:
@@ -493,7 +493,7 @@ def setThemes(themeFile=None, skinFile=None, configDict=None, mode="apply"):
 					else:
 						radiusValue = configDict.get("cornerradius", None)
 					
-					if elabel.get("cornerRadius") <> crtheme.get("exclude"):
+					if elabel.get("cornerRadius") != crtheme.get("exclude"):
 						if radiusValue is not None:
 							elabel.set("cornerRadius", config.plugins.MerlinSkinThemes.CornerRadius.value)
 								
