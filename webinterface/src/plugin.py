@@ -453,7 +453,7 @@ class HTTPAuthResource(HTTPRootResource):
 		if request.transport:
 			#If streamauth is disabled allow all acces from localhost
 			try:
-				ip = ip_address(request.transport.getPeer().host.decode('utf-8'))
+				ip = ip_address(six.ensure_str(request.transport.getPeer().host))
 			except ValueError:
 				pass
 			else:
