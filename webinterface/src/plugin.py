@@ -344,10 +344,10 @@ class SimpleSession(object):
 #Every request made will pass this Resource (as it is the root resource)
 #Any "global" checks should be done here
 class HTTPRootResource(resource.Resource):
-	SESSION_PROTECTED_PATHS = ['/web/', '/opkg', '/ipkg']
+	SESSION_PROTECTED_PATHS = [b'/web/', b'/opkg', b'/ipkg']
 	SESSION_EXCEPTIONS = [
-		'/web/epgsearch.rss', '/web/movielist.m3u', '/web/movielist.rss', '/web/services.m3u', '/web/session',
-		'/web/stream.m3u', '/web/stream', '/web/streamcurrent.m3u', '/web/strings.js', '/web/ts.m3u']
+		b'/web/epgsearch.rss', b'/web/movielist.m3u', b'/web/movielist.rss', b'/web/services.m3u', b'/web/session',
+		b'/web/stream.m3u', b'/web/stream', b'/web/streamcurrent.m3u', b'/web/strings.js', b'/web/ts.m3u']
 
 	def __init__(self, res):
 		print("[HTTPRootResource}.__init__")
