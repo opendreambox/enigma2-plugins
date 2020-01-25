@@ -359,7 +359,7 @@ class HTTPRootResource(resource.Resource):
 	def getClientToken(self, request):
 		ip = request.getClientIP()
 		ua = request.getHeader("User-Agent") or "Default UA"
-		return hashlib.sha1("%s/%s" %(ip, ua)).hexdigest()
+		return hashlib.sha1(six.ensure_binary("%s/%s" %(ip, ua))).hexdigest()
 
 	def isSessionValid(self, request):
 		session = self._sessions.get( self.getClientToken(request), None )
