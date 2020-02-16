@@ -1926,7 +1926,9 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 			if cur != None:
 				# update the infobar servicelist...
 				self.infoBarInstance.epg_bouquet = self.bouquetList[self.currentBouquetIndex][1]
-				self.infoBarInstance.zapToService(eServiceReference(cur[2]))
+				# this is ugly but it ensures that zapping to service works as well when alternatives are used
+				sref = EpgCenterList.alternativesDict.get(cur[2], cur[2])
+				self.infoBarInstance.zapToService(eServiceReference(sref))
 				# ...and exit
 				self.keyExit()
 				
