@@ -77,6 +77,7 @@ class EpgCenterList(GUIComponent):
 	eServiceCenterInstance = None
 	bouquetList = []
 	bouquetServices = []
+	alternativesDict = {}
 	currentBouquetIndex = 0
 	bouquetIndexRanges = []
 	allServicesNameDict = {}
@@ -754,6 +755,18 @@ class EpgCenterList(GUIComponent):
 						break
 					if service.flags & (eServiceReference.isDirectory | eServiceReference.isMarker): # ignore non playable services
 						continue
+					if service.flags & eServiceReference.isGroup:
+						altRoot = eServiceReference(service.toCompareString())
+						altList = EpgCenterList.eServiceCenterInstance.list(altRoot)
+						if altList:
+							while True:
+								nextService = altList.getNext()
+								if not nextService.valid():
+									break
+								service = nextService
+								# this is ugly
+								EpgCenterList.alternativesDict[service.toString()] = altRoot.toString()
+								break	
 					info = EpgCenterList.eServiceCenterInstance.info(service)
 					serviceName = info.getName(service) or ServiceReference(service).getServiceName() or ""
 					allServices[service.toCompareString()] = serviceName
