@@ -38,6 +38,14 @@ def transHTML(text):
 	h = HTMLParser()
 	return h.unescape(text)
 
+def decodeHtml(text):
+	h = HTMLParser()
+	try:
+		text = h.unescape(text).encode('utf-8')
+	except:
+		text = text.decode('latin1').encode('utf-8')
+	return text
+
 config.plugins.imdb = ConfigSubsection()
 config.plugins.imdb.showinplugins = ConfigYesNo(default = True)
 config.plugins.imdb.ignore_tags = ConfigText(visible_width = 50, fixed_size = False)
@@ -648,7 +656,7 @@ class IMDB(Screen):
 					stripmask = re.compile('\s{2,}', re.S)
 					Extratext += extrainfos.group("g_comments") + " [" + stripmask.sub(' ', self.htmltags.sub('', extrainfos.group("commenter"))) + "]:\n" + transHTML(self.htmltags.sub('',extrainfos.group("comment").replace("\n",' '))).strip()
 
-				self["extralabel"].setText(str(Extratext))
+				self["extralabel"].setText(decodeHtml(str(Extratext)))
 				self["extralabel"].hide()
 				self["key_blue"].setText(_("Extra Info"))
 			else:
