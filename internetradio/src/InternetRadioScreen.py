@@ -53,6 +53,7 @@ from InternetRadioWebFunctions import sendUrlCommand
 from InternetRadioClasses import InternetRadioFilter, InternetRadioStation
 from InternetRadioVisualization import InternetRadioVisualization
 from InternetRadioPiPTVPlayer import InternetRadioPiPTVPlayer
+from json import loads as json_loads
 
 containerStreamripper = None
 
@@ -456,9 +457,8 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				else:
 					sTitle = v[0]
 				if config.plugins.internetradio.googlecover.value:
-					url='https://www.google.de/search?q=%s+-youtube&tbm=isch&source=lnt&tbs=isz:ex,iszw:500,iszh:500' %quote(sTitle)
-					getPage(url, timeout=4, agent='Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.56 Safari/537.17').addCallback(self.GoogleImageCallback).addErrback(self.Error)
-					#sendUrlCommand(url, None,10).addCallback(self.GoogleImageCallback).addErrback(self.Error)
+					url = "http://itunes.apple.com/search?term=%s&limit=1&media=music" %quote(sTitle)
+					getPage(url, timeout=4).addCallback(self.GoogleImageCallback).addErrback(self.Error)
 			else:
 				sTitle = "n/a"
 				self.hideCover()
@@ -943,13 +943,17 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 
 	def GoogleImageCallback(self, result):
 		self.hideCover()
-		urlsraw=re.findall(',"ou":".+?","ow"',result)
-		imageurls=[urlraw[7:-6].encode() for urlraw in urlsraw]
-		if imageurls:
-			print "[InternetRadio] downloading cover from %s " % imageurls[0]
-			downloadPage(imageurls[0], "/tmp/.cover").addCallback(self.coverDownloadFinished).addErrback(self.coverDownloadFailed)
+		url = ""
+		try:
+			data = json_loads(result)
+			url = data['results'][0]['artworkUrl100'].encode('utf-8').replace('100x100', '450x450').replace('https', 'http')
+		except:
+			pass
+		if url:
+			print "[InternetRadio] downloading cover from %s " % url
+			downloadPage(url, "/tmp/.cover").addCallback(self.coverDownloadFinished).addErrback(self.coverDownloadFailed)
 		else:
-			print 'Google no images found...'
+			print 'iTunes-images not found...'
 			
 	def coverDownloadFailed(self,result):
 		print "[InternetRadio] cover download failed: %s " % result
