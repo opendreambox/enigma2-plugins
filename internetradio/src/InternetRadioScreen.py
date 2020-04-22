@@ -299,7 +299,9 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		self.try_url = ""
 		self.url_tried = 0
 		
-		self.stationListURL = "http://www.radio-browser.info/xml.php"
+		self.currentCoverArtSearchRequest = ""
+
+		self.stationListURL = "https://de1.api.radio-browser.info/xml/stations?hidebroken=true"
 		self.filterSwitch = { _("Countries"):_("Genres"), _("Genres"):_("Countries")}
 
 
@@ -456,7 +458,8 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 					sTitle = "%s - %s" % (v[0],v[1])
 				else:
 					sTitle = v[0]
-				if config.plugins.internetradio.googlecover.value:
+				if config.plugins.internetradio.googlecover.value and self.currentCoverArtSearchRequest != sTitle:
+					self.currentCoverArtSearchRequest = sTitle
 					url = "http://itunes.apple.com/search?term=%s&limit=1&media=music" %quote(sTitle)
 					getPage(url, timeout=4).addCallback(self.GoogleImageCallback).addErrback(self.Error)
 			else:
@@ -797,7 +800,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			stationList.append(InternetRadioStation(name = childs.get("name").encode('utf-8','ignore'), 
 								tags = childs.get("tags").encode('utf-8','ignore'), country = childs.get("country").encode('utf-8','ignore'), url = childs.get("url"),
 								language = childs.get("language").encode('utf-8','ignore'), id = childs.get("id"), homepage = childs.get("homepage").encode('utf-8','ignore')))
-		return sorted(stationList, key=lambda stations: stations.name)
+		return stationList
 		
 
 	def menu_pressed(self):
@@ -975,6 +978,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			self.fullScreen.updateCover()
 		
 	def playServiceStream(self, url):
+		self.currentCoverArtSearchRequest = ""
 		self.musicPlayer.play(url)
 		if self.currentPlayingStation:
 			self.currentPlayingStation.url = url
