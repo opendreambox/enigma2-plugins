@@ -69,9 +69,13 @@ def checkSkin(session, **kwargs):
 							configDict[configData[0]] = configData[1].strip("\n")
 					f.close()
 					
-					# update skin with data from config				
-					MerlinSkinThemes.setThemes(resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value[:-9] + "/themes.xml", resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value, configDict, "update")
-					Notifications.AddNotificationWithCallback(messageBoxCallback, MessageBox, _("Skin was rebuilt and a restart of enigma2 is required. Do you want to restart now?"), MessageBox.TYPE_YESNO, 10, windowTitle="MerlinSkinThemes", domain = "MerlinSkinThemes")
+					if fileExists(resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value[:-9] + "/themes.xml"):
+						# update skin with data from config				
+						MerlinSkinThemes.setThemes(resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value[:-9] + "/themes.xml", resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value, configDict, "update")
+						Notifications.AddNotificationWithCallback(messageBoxCallback, MessageBox, _("Skin was rebuilt and a restart of enigma2 is required. Do you want to restart now?"), MessageBox.TYPE_YESNO, 10, windowTitle="MerlinSkinThemes", domain = "MerlinSkinThemes")
+					else:
+						print "[MST] - themes.xml not found"
+						Notifications.AddNotification(MessageBox, _("Skin could not be rebuilt due to missing themes.xml"), MessageBox.TYPE_ERROR, 10, windowTitle="MerlinSkinThemes", domain="MerlinSkinThemes")
 
 def messageBoxCallback(answer=False):
 	if answer == True:
