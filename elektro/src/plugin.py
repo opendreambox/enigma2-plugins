@@ -333,7 +333,7 @@ class ElektroIP(ConfigListScreen,Screen):
 			x[1].cancel()
 		self.close(False,self.session)
 
-class ElektroNASrun(ConfigListScreen,Screen):
+class ElektroNASrun(Screen):
 	skin = """
 		<screen name="ElektroNASrun" position="center,120" size="820,520" title="Powerdown...">
 		<widget source="TextTest" render="Label" position="10,10" size="800,500" font="Regular;20" />
