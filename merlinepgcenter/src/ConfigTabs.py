@@ -48,7 +48,7 @@ SKINLIST =	[ # order is important (HD_BORDER, XD_BORDER, SD, HD, XD)!
 # keep outdated events
 try:
 	KEEP_OUTDATED_TIME = config.misc.epgcache_outdated_timespan.value * 60
-except KeyError:
+except AttributeError:
 	KEEP_OUTDATED_TIME = 0
 	
 

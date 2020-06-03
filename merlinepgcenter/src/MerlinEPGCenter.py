@@ -169,7 +169,7 @@ class MerlinEPGCenter(TimerEditList, MerlinEPGActions, EmbeddedVolumeControl):
 				self.epgList = EPGList(timer = self.session.nav.RecordTimer)
 			else:
 				self.epgList = None
-		except KeyError:
+		except AttributeError:
 			self.epgList = None
 			
 		# needed stuff for timerlist
