@@ -7,7 +7,7 @@ from Components.config import config
 from Components.ActionMap import ActionMap
 from Components.Sources.StaticText import StaticText
 from Components.SelectionList import SelectionList
-from enigma import eServiceReference, eServiceCenter, iServiceInformation
+from enigma import eServiceReference, eServiceCenter, iServiceInformation, getDesktop
 from os import path as os_path
 
 def main(session, service, **kwargs):
@@ -23,19 +23,35 @@ def Plugins(**kwargs):
 	return PluginDescriptor(name = "TagEditor", description = _("edit tags"), where = PluginDescriptor.WHERE_MOVIELIST, fnc = main, needsRestart = False)
 
 class TagEditor(Screen):
-	skin = """
-	<screen name="TagEditor" position="center,center" size="600,310">
-		<ePixmap position="0,0" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-		<ePixmap position="140,0" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-		<ePixmap position="280,0" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
-		<ePixmap position="420,0" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
-		<widget source="key_red" render="Label" position="0,0" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-		<widget source="key_green" render="Label" position="140,0" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-		<widget source="key_yellow" render="Label" position="280,0" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-		<widget source="key_blue" render="Label" position="420,0" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-		<ePixmap position="562,10" size="35,25" pixmap="skin_default/buttons/key_menu.png" alphatest="on" />
-		<widget name="list" position="5,40" size="590,270" scrollbarMode="showOnDemand" />
-	</screen>"""
+	sz_w = getDesktop(0).size().width()
+	if sz_w >= 1920:
+		skin = """
+		<screen name="TagEditor" position="center,center" size="1000,520">
+			<ePixmap position="0,0" size="175,50" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
+			<ePixmap position="175,0" size="175,50" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
+			<ePixmap position="350,0" size="175,50" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
+			<ePixmap position="525,0" size="175,50" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
+			<widget source="key_red" render="Label" position="0,0" zPosition="1" size="175,50" valign="center" halign="center" font="Regular;28" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+			<widget source="key_green" render="Label" position="175,0" zPosition="1" size="175,50" valign="center" halign="center" font="Regular;28" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+			<widget source="key_yellow" render="Label" position="350,0" zPosition="1" size="175,50" valign="center" halign="center" font="Regular;28" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+			<widget source="key_blue" render="Label" position="525,0" zPosition="1" size="175,50" valign="center" halign="center" font="Regular;28" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+			<ePixmap position="700,0" size="65,50" pixmap="skin_default/buttons/key_menu.png" alphatest="on" />
+			<widget name="list" position="5,50" size="990,470" scrollbarMode="showOnDemand" />
+		</screen>"""
+	else:
+		skin = """
+		<screen name="TagEditor" position="center,center" size="600,310">
+			<ePixmap position="0,0" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
+			<ePixmap position="140,0" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
+			<ePixmap position="280,0" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
+			<ePixmap position="420,0" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
+			<widget source="key_red" render="Label" position="0,0" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+			<widget source="key_green" render="Label" position="140,0" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+			<widget source="key_yellow" render="Label" position="280,0" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+			<widget source="key_blue" render="Label" position="420,0" zPosition="1" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+			<ePixmap position="562,10" size="35,25" pixmap="skin_default/buttons/key_menu.png" alphatest="on" />
+			<widget name="list" position="5,40" size="590,270" scrollbarMode="showOnDemand" />
+		</screen>"""
 
 	def __init__(self, session, tags, txt = None, args = 0, parent = None):
 		Screen.__init__(self, session, parent = parent)
