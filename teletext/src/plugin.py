@@ -33,7 +33,7 @@ from enigma import DISABLED, BILINEAR, ANISOTROPIC, SHARP, SHARPER
 
 from ConfigParser import ConfigParser
 
-PLUGIN_VERSION="20190312"
+PLUGIN_VERSION="20200808"
 
 CMD_CTL_CACHE=1
 CMD_SHOW_PAGE=2
@@ -104,7 +104,7 @@ config.plugins.TeleText = ConfigSubsection()
 config.plugins.TeleText.scale_filter = ConfigSelection(filterList, default="%d"%BILINEAR)
 config.plugins.TeleText.scale_filter_zoom = ConfigSelection(filterList, default="%d"%BILINEAR)
 config.plugins.TeleText.brightness   = ConfigSlider(default=8,  increment=1, limits=(0,15))
-config.plugins.TeleText.contrast     = ConfigSlider(default=12, increment=1, limits=(0,15))
+config.plugins.TeleText.contrast     = ConfigSlider(default=15, increment=1, limits=(0,15))
 config.plugins.TeleText.transparency = ConfigSlider(default=8,  increment=1, limits=(0,15))
 config.plugins.TeleText.edge_cut = ConfigOnOff(default=False)
 config.plugins.TeleText.splitting_mode = ConfigSelection(splittingModeList, default=SPLIT_MODE_PAT)
@@ -112,7 +112,7 @@ config.plugins.TeleText.textlevel      = ConfigSelection(textlevelModeList, defa
 config.plugins.TeleText.region   = ConfigSelection(regionList, default="16")
 config.plugins.TeleText.debug    = ConfigOnOff(default=False)
 config.plugins.TeleText.pos      = ConfigSequence(default=[DEF_LEFT, DEF_TOP, DEF_RIGHT, DEF_BOTTOM], seperator = ",", limits = [(0,dsk_width>>3),(0,dsk_height>>3),(dsk_width-(dsk_width>>3),dsk_width),(dsk_height-(dsk_height>>3),dsk_height)])
-config.plugins.TeleText.tip_pos  = ConfigSequence(default=[(dsk_width>>1)+(dsk_width>>2), (dsk_height>>1)+(dsk_height>>2), dsk_width, dsk_height], seperator = ",", limits = [(0,dsk_width-MIN_W),(0,dsk_height-MIN_H),(MIN_W,dsk_width),(MIN_H,dsk_height)])
+config.plugins.TeleText.tip_pos  = ConfigSequence(default=[(dsk_width>>1), (dsk_height>>1), dsk_width, dsk_height], seperator = ",", limits = [(0,dsk_width-MIN_W),(0,dsk_height-MIN_H),(MIN_W,dsk_width),(MIN_H,dsk_height)])
 # state
 config.plugins.TeleText.textOnly = ConfigOnOff(default=True)
 config.plugins.TeleText.opaque   = ConfigOnOff(default=False)
@@ -692,7 +692,7 @@ class TeleText(Screen):
       log("splitting video")
       self.pig.move(ePoint(0,0))
       size = self.instance.size()
-      self.pig.resize(eSize(size.width()/2*100/108, size.height()*100/108))
+      self.pig.resize(eSize(size.width()/2, size.height()))
       self.pig.show()
     elif mode == SPLIT_MODE_TAP:
       left   = 0
@@ -701,8 +701,8 @@ class TeleText(Screen):
       height = dsk_height
       log("splitting video")
       size = self.instance.size()
-      self.pig.move(ePoint(size.width()/2*104/100,0))
-      self.pig.resize(eSize(size.width()/2*100/108, size.height()*100/108))
+      self.pig.move(ePoint(size.width()/2,0))
+      self.pig.resize(eSize(size.width()/2, size.height()))
       self.pig.show()
     elif mode == SPLIT_MODE_TIP:
       if self.nav_mode == NAV_MODE_TEXT:
@@ -1372,7 +1372,7 @@ class TeleTextMenu(ConfigListScreen, Screen):
     config.plugins.TeleText.region.setValue("16")
     config.plugins.TeleText.debug.setValue(False)
     config.plugins.TeleText.pos.setValue([DEF_LEFT, DEF_TOP, DEF_RIGHT, DEF_BOTTOM])
-    config.plugins.TeleText.tip_pos.setValue([(dsk_width>>1)+(dsk_width>>2), (dsk_height>>1)+(dsk_height>>2), dsk_width, dsk_height])
+    config.plugins.TeleText.tip_pos.setValue([(dsk_width>>1), (dsk_height>>1), dsk_width, dsk_height])
     config.plugins.TeleText.background_caching.setValue(True)
     self["config"].selectionChanged()
 
