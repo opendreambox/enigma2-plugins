@@ -1013,37 +1013,48 @@ class TeleTextSummary(Screen):
 
     TeleTextSummary.skin = ("""<screen name="TeleTextSummary" position="0,0" size="132,64" id="1">
       <widget name="page"     position="0,0"   size="132,20" font="Regular;20" valign="center" halign="center" zPosition="1"/>
-      <widget name="navi_off" position="12,28"  size="20,20" pixmap="%s" zPosition="1"/>
-      <widget name="info_off" position="100,28" size="20,20" pixmap="%s" zPosition="1"/>
-      <widget name="navi_on"  position="12,28"  size="20,20" pixmap="%s" zPosition="2"/>
-      <widget name="info_on"  position="100,28" size="20,20" pixmap="%s" zPosition="2"/>
+      <widget name="navi_off" position="12,28"  size="20,20" pixmap="skin_default/icons/lock_error.png" zPosition="1"/>
+      <widget name="info_off" position="100,28" size="20,20" pixmap="skin_default/icons/lock_error.png" zPosition="1"/>
+      <widget name="navi_on"  position="12,28"  size="20,20" pixmap="skin_default/icons/selectioncross.png" zPosition="2"/>
+      <widget name="info_on"  position="100,28" size="20,20" pixmap="skin_default/icons/selectioncross.png" zPosition="2"/>
       <widget name="tp_count" position="44,28"  size="44,20" font="Regular;16" valign="center" halign="center" zPosition="1"/>
       <widget name="navi_txt" position="0,50"  size="44,12" font="Regular;12" valign="center" halign="center" zPosition="1"/>
       <widget name="tp_txt"   position="44,50" size="44,12" font="Regular;12" valign="center" halign="center" zPosition="1"/>
       <widget name="info_txt" position="88,50" size="44,12" font="Regular;12" valign="center" halign="center" zPosition="1"/>
-    </screen>""" % (offPic, offPic, onPic, onPic),
+    </screen>""",
     """<screen name="TeleTextSummary" position="0,0" size="96,64" id="2">
       <widget name="page"     position="0,0"   size="96,20" font="Regular;20" valign="center" halign="center" zPosition="1"/>
-      <widget name="navi_off" position="6,28"  size="20,20" pixmap="%s" zPosition="1"/>
-      <widget name="info_off" position="70,28" size="20,20" pixmap="%s" zPosition="1"/>
-      <widget name="navi_on"  position="6,28"  size="20,20" pixmap="%s" zPosition="2"/>
-      <widget name="info_on"  position="70,28" size="20,20" pixmap="%s" zPosition="2"/>
+      <widget name="navi_off" position="6,28"  size="20,20" pixmap="skin_default/icons/lock_error.png" zPosition="1"/>
+      <widget name="info_off" position="70,28" size="20,20" pixmap="skin_default/icons/lock_error.png" zPosition="1"/>
+      <widget name="navi_on"  position="6,28"  size="20,20" pixmap="skin_default/icons/selectioncross.png" zPosition="2"/>
+      <widget name="info_on"  position="70,28" size="20,20" pixmap="skin_default/icons/selectioncross.png" zPosition="2"/>
       <widget name="tp_count" position="32,28" size="32,20" font="Regular;16" valign="center" halign="center" zPosition="1"/>
       <widget name="navi_txt" position="0,50"  size="32,12" font="Regular;12" valign="center" halign="center" zPosition="1"/>
       <widget name="tp_txt"   position="36,50" size="32,12" font="Regular;12" valign="center" halign="center" zPosition="1"/>
       <widget name="info_txt" position="64,50" size="32,12" font="Regular;12" valign="center" halign="center" zPosition="1"/>
-    </screen>""" % (offPic, offPic, onPic, onPic),
+    </screen>""",
     """<screen name="TeleTextSummary" position="0,0" size="400,240" id="3">
-      <widget name="page" font="Display;60" foregroundColor="#faff00" halign="center" position="10,5" size="380,65" valign="center" zPosition="1" />
-      <widget name="navi_off" pixmap="%s" position="50,95"  size="40,40" zPosition="1" />
-      <widget name="info_off" pixmap="%s" position="310,95" size="40,40" zPosition="1" />
-      <widget name="navi_on"  pixmap="%s" position="50,95"  size="40,40" zPosition="2" />
-      <widget name="info_on"  pixmap="%s" position="310,95" size="40,40" zPosition="2" />
+      <widget name="page" font="Display;60" foregroundColor="#faff00" halign="center" position="10,5" size="380,65" valign="center" zPosition="1"/>
+      <widget name="navi_off" pixmap="skin_default/icons/lock_error.png" position="50,95"  size="40,40" zPosition="1" />
+      <widget name="info_off" pixmap="skin_default/icons/lock_error.png" position="310,95" size="40,40" zPosition="1" />
+      <widget name="navi_on"  pixmap="skin_default/icons/selectioncross.png" position="50,95"  size="40,40" zPosition="2" />
+      <widget name="info_on"  pixmap="skin_default/icons/selectioncross.png" position="310,95" size="40,40" zPosition="2" />
       <widget name="tp_count" font="Display;50" halign="center" position="120,90" size="170,52" />
       <widget name="navi_txt" font="Display;40" halign="center" position="10,180" size="120,42" />
       <widget name="tp_txt"   font="Display;40" halign="center" position="145,180" size="120,42" />
       <widget name="info_txt" font="Display;40" halign="center" position="270,180" size="120,42" />
-    </screen>""" % (offPic, offPic, onPic, onPic))
+    </screen>""",
+    """<screen name="TeleTextSummary" position="0,0" size="240,86" id="100">
+      <widget font="Display;28" foregroundColor="#faff00" halign="center" position="0,5" size="240,28" name="page" zPosition="1"/>
+      <widget name="navi_off" pixmap="skin_default/icons/lock_error.png" position="30,30" size="30,30" zPosition="1"/>
+     <widget name="info_off" pixmap="skin_default/icons/lock_error.png" position="185,30" size="30,30" zPosition="1"/>
+     <widget name="navi_on" pixmap="skin_default/icons/selectioncross.png" position="30,30" size="30,30" zPosition="2"/>
+     <widget name="info_on" pixmap="skin_default/icons/selectioncross.png" position="185,30" size="30,30" zPosition="2"/>
+     <widget font="Display;28" halign="center" name="tp_count" position="70,31" size="100,28"/>
+     <widget font="Display;28" halign="center" name="navi_txt" position="0,57" size="80,28"/>
+     <widget font="Display;28" halign="center" name="tp_txt" position="80,57" size="80,28"/>
+     <widget font="Display;28" halign="center" name="info_txt" position="160,57" size="80,28"/>
+    </screen>""")
 
     Screen.__init__(self, session, parent = parent)
     self["page"] = Label("")
