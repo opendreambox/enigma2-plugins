@@ -13,6 +13,7 @@ SUBDIRS = \
 	birthdayreminder \
 	bonjour \
 	c3vocupdater \
+	cec \
 	cdinfo \
 	dreamexplorer \
 	dreamirc \

@@ -78,6 +78,10 @@ cdinfo/Makefile
 cdinfo/meta/Makefile
 cdinfo/src/Makefile
 
+cec/Makefile
+cec/meta/Makefile
+cec/src/Makefile
+
 dreamexplorer/Makefile
 dreamexplorer/meta/Makefile
 dreamexplorer/src/Makefile

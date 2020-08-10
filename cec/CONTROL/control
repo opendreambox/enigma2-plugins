@@ -1,0 +1,4 @@
+Description: HDMI-CEC: python based CEC control
+Depends: enigma2
+Replaces: enigma2-plugin-systemplugins-hdmicec
+Conflicts: enigma2-plugin-systemplugins-hdmicec

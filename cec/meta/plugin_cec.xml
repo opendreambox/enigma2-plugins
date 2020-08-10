@@ -1,0 +1,17 @@
+<default>
+	<prerequisites>
+		<tag type="Multimedia" />
+		<tag type="System" />
+	</prerequisites>
+	<info>
+		<author>Dream Property GmbH</author>
+		<name>HDMI-CEC</name>
+		<packagename>enigma2-plugin-systemplugins-cec</packagename>
+		<shortdescription>A python based HDMI-CEC plugin</shortdescription>
+		<description>A python based HDMI-CEC plugin allowing for easier extensions and manipulation</description>
+	</info>
+
+	<files type="package">		<!-- without version, without .deb -->
+		<file type="package" name="enigma2-plugin-systemplugins-cec" />
+	</files>
+</default>
