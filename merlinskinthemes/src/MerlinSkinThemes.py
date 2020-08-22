@@ -140,7 +140,7 @@ elif HardwareInfo().get_device_name() == 'two':
 	Arch64 = True
 	ArchString = "AARCH64"
 	IdString = "100"
-	DisplayXY = "240x86"
+	DisplayXY = "240x80"
 else:
 	if HardwareInfo().get_device_name() == 'dm820':
 		IdString = "2"
