@@ -1044,16 +1044,16 @@ class TeleTextSummary(Screen):
       <widget name="tp_txt"   font="Display;40" halign="center" position="145,180" size="120,42" />
       <widget name="info_txt" font="Display;40" halign="center" position="270,180" size="120,42" />
     </screen>""",
-    """<screen name="TeleTextSummary" position="0,0" size="240,86" id="100">
-      <widget font="Display;28" foregroundColor="#faff00" halign="center" position="0,5" size="240,28" name="page" zPosition="1"/>
-      <widget name="navi_off" pixmap="skin_default/icons/lock_error.png" position="30,30" size="30,30" zPosition="1"/>
-     <widget name="info_off" pixmap="skin_default/icons/lock_error.png" position="185,30" size="30,30" zPosition="1"/>
-     <widget name="navi_on" pixmap="skin_default/icons/selectioncross.png" position="30,30" size="30,30" zPosition="2"/>
-     <widget name="info_on" pixmap="skin_default/icons/selectioncross.png" position="185,30" size="30,30" zPosition="2"/>
-     <widget font="Display;28" halign="center" name="tp_count" position="70,31" size="100,28"/>
-     <widget font="Display;28" halign="center" name="navi_txt" position="0,57" size="80,28"/>
-     <widget font="Display;28" halign="center" name="tp_txt" position="80,57" size="80,28"/>
-     <widget font="Display;28" halign="center" name="info_txt" position="160,57" size="80,28"/>
+    """<screen name="TeleTextSummary" position="0,0" size="240,80" id="100">
+      <widget font="Display;28" foregroundColor="#faff00" halign="center" position="0,0" size="240,28" name="page" zPosition="1"/>
+      <widget name="navi_off" pixmap="skin_default/icons/lock_error.png" position="30,25" size="30,30" zPosition="1"/>
+     <widget name="info_off" pixmap="skin_default/icons/lock_error.png" position="185,25" size="30,30" zPosition="1"/>
+     <widget name="navi_on" pixmap="skin_default/icons/selectioncross.png" position="30,25" size="30,30" zPosition="2"/>
+     <widget name="info_on" pixmap="skin_default/icons/selectioncross.png" position="185,25" size="30,30" zPosition="2"/>
+     <widget font="Display;28" halign="center" name="tp_count" position="70,26" size="100,28"/>
+     <widget font="Display;28" halign="center" name="navi_txt" position="0,52" size="80,28"/>
+     <widget font="Display;28" halign="center" name="tp_txt" position="80,52" size="80,28"/>
+     <widget font="Display;28" halign="center" name="info_txt" position="160,52" size="80,28"/>
     </screen>""")
 
     Screen.__init__(self, session, parent = parent)
