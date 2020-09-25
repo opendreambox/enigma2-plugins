@@ -54,7 +54,7 @@ class ScreenSaverHandler(object):
 			width = info.getInfo(iServiceInformation.sVideoWidth)
 			Log.d(width)
 			self._screenSaver.enabled = width <= 0
-		elif evt in (iPlayableService.evStopped, iPlayableService.evPause):
+		elif evt in (iPlayableService.evStopped, iPlayableService.evPause, iPlayableService.evEnd):
 			self._screenSaver.enabled = True
 
 screenSaverHandler = ScreenSaverHandler()
