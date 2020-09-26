@@ -40,9 +40,9 @@ class MovieRetitle(Screen, ConfigListScreen):
 		self["key_green"] = StaticText(_("OK"))
 		self["key_red"] = StaticText(_("Cancel"))
 
-		self.input_file = ConfigText(default = self.file, fixed_size = False, visible_width = 42)
-		self.input_title = ConfigText(default = self.orig_title, fixed_size = False, visible_width = 42)
-		self.input_descr = ConfigText(default = self.descr, fixed_size = False, visible_width = 42)
+		self.input_file = ConfigText(default = self.file, fixed_size = False, visible_width = 70)
+		self.input_title = ConfigText(default = self.orig_title, fixed_size = False, visible_width = 70)
+		self.input_descr = ConfigText(default = self.descr, fixed_size = False, visible_width = 70)
 		tmp = config.movielist.videodirs.value
 		if not self.dir in tmp:
 			tmp.append(self.dir)
