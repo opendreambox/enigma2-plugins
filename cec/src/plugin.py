@@ -1,10 +1,12 @@
 from __future__ import absolute_import
 
 from enigma import getExitCode
+from Components.config import config
 from Plugins.Plugin import PluginDescriptor
+
+from .Cec import Cec, cec
 from .CecConfig import CecConfig
 
-from .Cec import cec
 def start(reason, session):
 	cec.start(session)
 

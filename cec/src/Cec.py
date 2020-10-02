@@ -6,6 +6,7 @@ from Screens.Standby import Standby
 
 from .CecDevice import CecDevice
 from .CecRemote import CecRemote
+from .CecBoot import CecBoot
 
 class Cec(object):
 	def __init__(self):
@@ -32,6 +33,14 @@ class Cec(object):
 
 	def start(self, session):
 		self.session = session
+
+	@property
+	def physicalAddress(self):
+		return self.physicalToString(self._physicalAddress)
+
+	@property
+	def logicalAddress(self):
+		return self._logicalAddress
 
 	def physicalToString(self, addr):
 		return "%x.%x.%x.%x" %( (addr[0] >> 4) & 0xf, addr[0] & 0xf, (addr[1] >> 4) & 0xf, addr[1] & 0xf)
@@ -111,8 +120,10 @@ class Cec(object):
 		self.powerOff()
 
 	def powerOff(self):
-		if not config.cec.receivepower.value:
+		if not (config.cec.enabled.value and config.cec.sendpower.value):
+			CecBoot.uninstall()
 			return
+		CecBoot.install(self.logicalAddress, "f.f.f.f")
 		self.systemStandby()
 		self.setPowerState(eCec.POWER_STATE_STANDBY)
 
