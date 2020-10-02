@@ -11,16 +11,16 @@ dm_cec image_view_on {logical}
 """
 	@staticmethod
 	def install(logical, physical):
-		Log.w("physical address: %s | logical address: %s" %(physical, logical))
+		Log.i("physical address: %s | logical address: %s" %(physical, logical))
 		try:
 			with open(CecBoot.UBOOT_SCRIPT_FILE, "w") as f:
-				Log.w(CecBoot.UBOOT_SCRIPT.format(logical=logical, physical=physical))
 				f.write(CecBoot.UBOOT_SCRIPT.format(logical=logical, physical=physical))
 		except:
 			Log.w("Could not write bootloader script!")
 
 	@staticmethod
 	def uninstall():
+		Log.i()
 		if fileExists(CecBoot.UBOOT_SCRIPT_FILE):
 			try:
 				remove(CecBoot.UBOOT_SCRIPT_FILE)

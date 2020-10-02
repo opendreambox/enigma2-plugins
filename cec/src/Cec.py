@@ -55,7 +55,7 @@ class Cec(object):
 		if self._activeSource == oldPhysical and self.isReady():
 			self.handleActiveSource(physicalAddress)
 
-		Log.w("Physical address: %s # Logical address: %s" %(self.physicalToString(self._physicalAddress), self._logicalAddress))
+		Log.i("Physical address: %s # Logical address: %s" %(self.physicalToString(self._physicalAddress), self._logicalAddress))
 		if not self.getDevice(eCec.ADDR_TV):
 			self.send(eCec.ADDR_TV, eCec.MSG_GIVE_PHYS_ADDR)
 
@@ -74,7 +74,7 @@ class Cec(object):
 
 	def dumpDevices(self):
 		for d in self._devices.values():
-			Log.w("%s (%s)\t%s\t%s" %(d.name, d.vendorString(), d.logicalAddress, self.physicalToString(d.physicalAddress)))
+			Log.i("%s (%s)\t%s\t%s" %(d.name, d.vendorString(), d.logicalAddress, self.physicalToString(d.physicalAddress)))
 
 	def onCheckDevices(self):
 		for d in self._devices.values():
@@ -134,7 +134,7 @@ class Cec(object):
 		self.oneTouchPlay()
 
 	def isActiveSource(self):
-		Log.w("%s <=> %s" %(self._activeSource, self._physicalAddress))
+		Log.i("%s <=> %s" %(self._activeSource, self._physicalAddress))
 		return self._activeSource == self._physicalAddress
 
 	def toHexString(self, message):
@@ -148,7 +148,7 @@ class Cec(object):
 
 	def send(self, to, command, message=[]):
 		message = (message)
-		Log.w("self > %x :: %02x %s (%s)" %(to, command, self.toHexString(message), config.cec.enabled.value))
+		Log.i("self > %x :: %02x %s (%s)" %(to, command, self.toHexString(message), config.cec.enabled.value))
 		if not config.cec.enabled.value:
 			return
 		self._cec.sendMsg(to, command, IntList(message))
@@ -168,7 +168,7 @@ class Cec(object):
 		self.send(to, eCec.MSG_FEATURE_ABORT, [command, reason])
 
 	def _onMessage(self, sender, receiver, message):
-		Log.w("%x > %x :: %s (%s)" %(sender, receiver, self.toHexString(message), config.cec.enabled.value))
+		Log.i("%x > %x :: %s (%s)" %(sender, receiver, self.toHexString(message), config.cec.enabled.value))
 		if not config.cec.enabled.value:
 			return
 		cmd = message[0]
@@ -265,11 +265,10 @@ class Cec(object):
 		self.setMenuStatus(sender)
 
 	def onStandby(self, sender):
-		Log.w("%s %s (%s)" %(sender, self.session, config.cec.receivepower.value))
+		Log.i("%s %s (%s)" %(sender, self.session, config.cec.receivepower.value))
 		if not config.cec.receivepower.value:
 			return
 		if sender == eCec.ADDR_TV and self.session:
-			Log.w(2)
 			from Screens.Standby import inStandby
 			if not inStandby and self.session.current_dialog and self.session.current_dialog.ALLOW_SUSPEND and self.session.in_exec:
 				self.session.open(Standby)
@@ -302,7 +301,7 @@ class Cec(object):
 		Log.w("%s :: %x %x" %(sender, message[1], message[2]))
 
 	def handleActiveSource(self, physicalAddress):
-		Log.w("%s %s" %(physicalAddress, self._activeSource))
+		Log.i("%s %s" %(physicalAddress, self._activeSource))
 		if physicalAddress == (0xff, 0xff):
 			return
 		if physicalAddress != self._activeSource:
@@ -310,7 +309,7 @@ class Cec(object):
 			self.onActiveSourceChanged()
 
 	def onActiveSourceChanged(self, force=False):
-		Log.w(self.physicalToString(self._activeSource))
+		Log.i(self.physicalToString(self._activeSource))
 		if config.cec.sendpower.value and (self.isActiveSource() or force):
 			from Screens.Standby import inStandby
 			if inStandby != None:
