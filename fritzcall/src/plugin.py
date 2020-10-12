@@ -2,9 +2,9 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1553 $
-$Date: 2019-04-25 09:36:05 +0200 (Thu, 25 Apr 2019) $
-$Id: plugin.py 1553 2019-04-25 07:36:05Z michael $
+$Revision: 1563 $
+$Date: 2020-10-12 16:04:39 +0200 (Mon, 12 Oct 2020) $
+$Id: plugin.py 1563 2020-10-12 14:04:39Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -66,7 +66,8 @@ from twisted.internet import reactor  # @UnresolvedImport
 from twisted.internet.protocol import ReconnectingClientFactory  # @UnresolvedImport
 from twisted.protocols.basic import LineReceiver  # @UnresolvedImport
 
-import FritzOutlookCSV, FritzLDIF
+from .FritzOutlookCSV import findNumber
+from .FritzLDIF import FindNumber
 from .nrzuname import ReverseLookupAndNotifier
 from . import _, __  # @UnresolvedImport # pylint: disable=W0611,F0401
 import six
@@ -374,8 +375,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1553 $"[1:-2] + "\n" +
-							"$Date: 2019-04-25 09:36:05 +0200 (Thu, 25 Apr 2019) $"[1:23] + "\n"
+							"$Revision: 1563 $"[1:-2] + "\n" +
+							"$Date: 2020-10-12 16:04:39 +0200 (Mon, 12 Oct 2020) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -1690,14 +1691,14 @@ class FritzOfferAction(Screen):
 		if self._lookupState == 1 and os.path.exists(os.path.join(phonebookLocation, "PhoneBook.csv")):
 			self._setTextAndResize(_("Searching in Outlook export..."))
 			self._lookupState = 2
-			self._lookedUp(self._number, FritzOutlookCSV.findNumber(self._number, os.path.join(phonebookLocation, "PhoneBook.csv")))  # @UndefinedVariable
+			self._lookedUp(self._number, findNumber(self._number, os.path.join(phonebookLocation, "PhoneBook.csv")))  # @UndefinedVariable
 			return
 		else:
 			self._lookupState = 2
 		if self._lookupState == 2 and os.path.exists(os.path.join(phonebookLocation, "PhoneBook.ldif")):
 			self._setTextAndResize(_("Searching in LDIF..."))
 			self._lookupState = 0
-			FritzLDIF.FindNumber(self._number, open(os.path.join(phonebookLocation, "PhoneBook.ldif")), self._lookedUp)
+			FindNumber(self._number, open(os.path.join(phonebookLocation, "PhoneBook.ldif")), self._lookedUp)
 			return
 		else:
 			self._lookupState = 0
@@ -2629,7 +2630,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1553 $"[1:-1] + "$Date: 2019-04-25 09:36:05 +0200 (Thu, 25 Apr 2019) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1563 $"[1:-1] + "$Date: 2020-10-12 16:04:39 +0200 (Mon, 12 Oct 2020) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -3238,7 +3239,7 @@ class FritzReverseLookupAndNotifier(object):
 
 class FritzProtocol(LineReceiver):  # pylint: disable=W0223
 	def __init__(self):
-		info("[FritzProtocol] " + "$Revision: 1553 $"[1:-1] + "$Date: 2019-04-25 09:36:05 +0200 (Thu, 25 Apr 2019) $"[7:23] + " starting")
+		info("[FritzProtocol] " + "$Revision: 1563 $"[1:-1] + "$Date: 2020-10-12 16:04:39 +0200 (Mon, 12 Oct 2020) $"[7:23] + " starting")
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
