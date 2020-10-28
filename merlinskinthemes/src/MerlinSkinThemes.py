@@ -154,7 +154,7 @@ else:
 	ArchMipsel = True
 	ArchString = "MIPSEL"
 ModelString = HardwareInfo().get_device_name().upper()
-displayDict = {"1": "lcdscreenthemes", "2": "oldescreenthemes", "3": "extlcdscreenthemes", "100": "lcdscreenthemes" }
+displayDict = {"1": "lcdscreenthemes", "2": "oledscreenthemes", "3": "extlcdscreenthemes", "100": "lcdscreenthemes" }
 displayTag = displayDict.get(IdString, None)
 
 print "------------------------------------------------"
@@ -460,7 +460,10 @@ def setThemes(themeFile=None, skinFile=None, configDict=None, mode="apply"):
 					if screens.get("name") == displayscreenname:
 						for screen in screens.findall(displayTag[:-1]):
 							if configDict is None:
-								currentValue = config.plugins.MerlinSkinThemes.DisplayScreens[displayscreenname].value
+								if "DisplayScreens" in config.plugins.MerlinSkinThemes.__dict__:
+									currentValue = config.plugins.MerlinSkinThemes.DisplayScreens[displayscreenname].value
+								else:
+									break
 							else:
 								currentValue = configDict.get("%s" %(displayscreenname), None)
 							if screen.get("name") == currentValue:
