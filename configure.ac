@@ -352,6 +352,10 @@ showclock/Makefile
 showclock/meta/Makefile
 showclock/src/Makefile
 
+simpleradio/Makefile
+simpleradio/meta/Makefile
+simpleradio/src/Makefile
+
 simplerss/Makefile
 simplerss/meta/Makefile
 simplerss/src/Makefile

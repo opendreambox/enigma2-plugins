@@ -74,6 +74,7 @@ SUBDIRS = \
 	serienfilm \
 	setpasswd \
 	showclock \
+	simpleradio \
 	simplerss \
 	skipintro \
 	startupservice \

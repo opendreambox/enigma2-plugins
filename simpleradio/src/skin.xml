@@ -1,0 +1,23 @@
+<skin>
+	<screen name="SimpleRadioScreen" position="0,0" size="100%,100%" title="">
+		<ePixmap pixmap="~/background.jpg" position="0,0" size="100%,100%" alphatest="off" scale="fill" zPosition="-1"/>
+		<ePixmap pixmap="skin_default/buttons/button_blue.png" position="81%,16%" size="20,20" zPosition="1" />
+		<widget source="country" render="Label" position="83%,16%" size="10%,20" zPosition="1" font="Regular;18" backgroundColor="#FF000000" blend="blend"/>
+		<eLabel position="center,15%" size="100%,60%" zPosition="-1"  backgroundColor="#80000000" blend="blend"/>
+		<widget source="list" render="Listbox" position="center,15%" size="60%,60%" enableWrapAround="1" scrollbarMode="showOnDemand" transparent="1" zPosition="1" backgroundColorSelected="#999999">
+			<convert type="TemplatedMultiContent">
+				{
+					"template": [
+							MultiContentEntryText(pos=(10,0),size=(580,35),flags=RT_HALIGN_LEFT|RT_VALIGN_CENTER,text=0) 
+						],
+					"fonts": [
+							gFont("Regular",20)
+						],
+					"itemHeight":35
+				}
+			</convert>
+		</widget>
+		<widget name="service" position="0, 80%" size="100%, 10%" font="Regular;48" halign="center" valign="center" blend="blend" backgroundColor="#80000000" zPosition="1"/>
+		<widget name="attribution" position="0, 90%" size="100%, 20" font="Regular;14" halign="center" valign="center" blend="blend" backgroundColor="#80000000" zPosition="1"/>
+	</screen>
+</skin>

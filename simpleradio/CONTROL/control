@@ -1,0 +1,2 @@
+Description: A simple internet radio for your dreambox
+Depends: enigma2, python-twisted-web
