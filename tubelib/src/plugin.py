@@ -53,6 +53,5 @@ def Plugins(path, **kwargs):
 			description=_("Add Live-Streaming Channel"),
 			where = PluginDescriptor.WHERE_CHANNEL_CONTEXT_MENU,
 			fnc=main_channellist,
-			helperfnc=check_channel,
-			icon="plugin.png"),
+			helperfnc=check_channel),
 		]
