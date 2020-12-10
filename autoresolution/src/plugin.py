@@ -245,8 +245,7 @@ class AutoRes(Screen):
 						self.lastmode = new_mode
 						self.changeVideomode()
 					elif old != resolutionlabel["content"].getText() and config.plugins.autoresolution.showinfo.value:
-						# sometimes mode is changed via displaymanager.. so we always call setMode here to update the label
-						self.setMode(new_mode, False)
+						self.setMode(new_mode)
 						resolutionlabel.show()
 
 	def changeVideomode(self):
@@ -275,6 +274,8 @@ class AutoRes(Screen):
 	def setMode(self, mode, set=True):
 		port_txt = "HDMI" if port == "DVI" else port
 
+		self.lastmode = mode
+
 		if mode.find("0p30") != -1 or mode.find("0p24") != -1 or mode.find("0p25") != -1:
 			match = re.search(r"(\d*?[ip])(\d*?)$", mode)
 			mode = match.group(1)
@@ -288,7 +289,6 @@ class AutoRes(Screen):
 			if config.plugins.autoresolution.showinfo.value:
 				resolutionlabel.show()
 			DisplayHardware.instance.setMode(port, mode, rate)
-		self.lastmode = mode
 
 class ResolutionLabel(Screen):
 	height = getDesktop(0).size().height()
