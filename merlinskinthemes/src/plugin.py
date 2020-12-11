@@ -4,8 +4,8 @@
 #  Modul PluginStart
 #  Coded by marthom (c)2012 - 2019
 #
-#  Support: board.dreambox-tools.info
-#  E-Mail: marthom@dreambox-tools.info
+#  Support: https://board.dreamboxtools.de/
+#  E-Mail: marthom@dreamboxtools.de
 #
 #  This plugin is open source but it is NOT free software.
 #
@@ -45,7 +45,7 @@ def merlinskinthemes_start(session, **kwargs):
 	session.open(MerlinSkinThemes.MerlinSkinThemes)
 
 def checkSkin(session, **kwargs):
-	if config.plugins.MerlinSkinThemes.rebuildSkinOnBoot.value:
+	if config.plugins.MerlinSkinThemes3.rebuildSkinOnBoot.value:
 
 		# a config exists for the currently active skin
 		if fileExists(CONFDIR + config.skin.primary_skin.value[:-9] + ".cfg"):
@@ -55,7 +55,8 @@ def checkSkin(session, **kwargs):
 				xmlFile = Tree.ElementTree(file=skinFile)
 				root = xmlFile.getroot()
 
-				if root.find("merlinskinthemes") is not None:
+				mst = root.find("merlinskinthemes")
+				if mst is not None:
 					print "[MST] - skin was edited with MST and tag is present - assume rebuild is not required"
 				else:
 					print "[MST] - skin was edited with MST but tag is not present - assume rebuild required"
