@@ -485,10 +485,10 @@ def setThemes(themeFile=None, skinFile=None, configDict=None, mode="apply", retF
 				
 	print "[MST] - updating screens and displayscreens"
 	screenDict = {}
-	for theme in [
-		("screenthemes", "screens", "screentheme", "screen"),
-		(displayTag, "screens", displayTag[:-1], "screen")
-	]:
+	screenThemeData = [("screenthemes", "screens", "screentheme", "screen")]
+	if displayTag is not None:
+		screenThemeData.append((displayTag, "screens", displayTag[:-1], "screen"))
+	for theme in screenThemeData:
 		for currenttheme in rootTheme.findall(theme[0]):
 			for currentscreen in currenttheme.findall(theme[1]):
 				screenname = currentscreen.get('name')
@@ -717,8 +717,8 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 
 			<widget name="ListLabel" position="10,60" size="945,40" font="Regular;26" zPosition="2" valign="center" halign="center" />
 	
-			<widget name="SkinsList" position="10,110" size="945,840" scrollbarMode="showOnDemand" zPosition="1" />
-			<widget name="config" position="10,110" size="945,840" scrollbarMode="showOnDemand" zPosition="1" separation="450" /> 
+			<widget name="SkinsList" position="10,110" size="945,840" scrollbarMode="showOnDemand" zPosition="4" />
+			<widget name="config" position="10,110" size="945,840" scrollbarMode="showOnDemand" zPosition="4" separation="450" /> 
 			
 			<widget name="descriptionText" position="10,970" size="945,50" font="Regular;26" halign="center" />
 			
