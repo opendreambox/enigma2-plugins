@@ -15,19 +15,19 @@ class MerlinSkinThemesHelpList(MenuList):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 		
 		sizes = componentSizes[MerlinSkinThemesHelpList.SKIN_COMPONENT_KEY]
-		self.itemHeight = sizes.get(MerlinSkinThemesHelpList.SKIN_COMPONENT_ITEM_HEIGHT, 40)
+		self.componentItemHeight = sizes.get(MerlinSkinThemesHelpList.SKIN_COMPONENT_ITEM_HEIGHT, 40)
 		self.keyWidth = sizes.get(MerlinSkinThemesHelpList.SKIN_COMPONENT_KEY_WIDTH, 250)
 		self.descrWidth = sizes.get(MerlinSkinThemesHelpList.SKIN_COMPONENT_DESCR_WIDTH, 750)
 		
 		tlf = TemplatedListFonts()
 		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
-		self.l.setItemHeight(self.itemHeight)
+		self.l.setItemHeight(self.componentItemHeight)
 		self.l.setBuildFunc(self.buildEntry)
 		
 	def buildEntry(self, keyText, descriptionText):
 		res = [ (keyText, descriptionText),
-			(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, self.keyWidth, self.itemHeight, 0, RT_HALIGN_CENTER|RT_VALIGN_CENTER, keyText),
-			(eListboxPythonMultiContent.TYPE_TEXT, 5 + self.keyWidth, 0, self.descrWidth, self.itemHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, descriptionText)
+			(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, self.keyWidth, self.componentItemHeight, 0, RT_HALIGN_CENTER|RT_VALIGN_CENTER, keyText),
+			(eListboxPythonMultiContent.TYPE_TEXT, 5 + self.keyWidth, 0, self.descrWidth, self.componentItemHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, descriptionText)
 				]
 		return res
 
