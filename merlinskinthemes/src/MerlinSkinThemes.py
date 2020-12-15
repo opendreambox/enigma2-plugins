@@ -1266,6 +1266,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						if self.themeDict.get(screenname) is not None:
 							if len(self.themeDict.get(screenname)):
 								config.plugins.MerlinSkinThemes3.Screens[screenname] = MyConfigSelection(default=defaultValue, choices = [ x[0] for x in self.themeDict.get(screenname)])
+								
 								if not config.plugins.MerlinSkinThemes3.designModified.value:
 									config.plugins.MerlinSkinThemes3.Screens[screenname].value = defaultValue
 							
@@ -1320,9 +1321,9 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 							if not config.plugins.MerlinSkinThemes3.designModified.value:
 								config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"].value = defaultValue
 				
-					self.clist2.append(getConfigListEntry(" ", ))
-					self.clist2.append(getConfigListEntry(" " + u'\u00b7' + " CORNERRADIUS", ))
-					self.clist2.append(getConfigListEntry("CornerRadius", config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"]))
+							self.clist2.append(getConfigListEntry(" ", ))
+							self.clist2.append(getConfigListEntry(" " + u'\u00b7' + " CORNERRADIUS", ))
+							self.clist2.append(getConfigListEntry("CornerRadius", config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"]))
 
 		if len(designList):
 			config.plugins.MerlinSkinThemes3.Designs["design"] = MyConfigSelection(default=defaultDesign, choices = designList)
@@ -1579,6 +1580,10 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				"skinpaththeme":				{ "name": "sample", "path": "skinname/folder/", "value" : "active" },
 			}
 			
+			cornerradius = Tree.SubElement(newTheme, "cornerradius")
+			Tree.SubElement(cornerradius, "radius", {"name": "0", "value": "active"})
+			Tree.SubElement(cornerradius, "radius", {"name": "20", "value": "inactive"})
+			Tree.SubElement(cornerradius, "radius", {"name": "30", "value": "inactive"})
 			
 			for node in [("colortheme", "colors", "color"), ("fonttheme", "fonts", "font"),("pngtheme", "png"), ("skinpaththeme", "theme"), ("globalstheme", "globals", "value"), ("bordersettheme", "borderset"), ("windowstylescrollbartheme", "*"), ("componenttheme", "components", "component"), ("layouttheme", "layouts", "layout")]:
 
@@ -1679,8 +1684,8 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			screenthemes = Tree.SubElement(newTheme, "screenthemes")
 			for screenname in screenList:
 				screennode = Tree.SubElement(screenthemes, "screens", {"name": screenname })
-				newNodeOrg = Tree.SubElement(screennode, "screentheme", {"name": "orginal", "value": "active"})
-				newNodeWork = Tree.SubElement(screennode, "screentheme", {"name": "orginal - work", "value": "inactive"})
+				newNodeOrg = Tree.SubElement(screennode, "screentheme", {"name": "original", "value": "active"})
+				newNodeWork = Tree.SubElement(screennode, "screentheme", {"name": "original - work", "value": "inactive"})
 				
 				skinElementList = skinTree.findall("screen[@name='%s']" %(screenname))
 				for element in skinElementList:
@@ -1692,12 +1697,92 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				displayscreenthemes = Tree.SubElement(newTheme, displayTag)
 				for displayscreenname in displayScreenList: 
 					displayscreennode = Tree.SubElement(displayscreenthemes, "screens", {"name": displayscreenname, "id": IdString})
-					newNodeOrg = Tree.SubElement(displayscreennode, displayTag[:-1], {"name": "orginal", "value": "active"})
-					newNodeWork = Tree.SubElement(displayscreennode, displayTag[:-1], {"name": "orginal - work", "value": "inactive"})
+					newNodeOrg = Tree.SubElement(displayscreennode, displayTag[:-1], {"name": "original", "value": "active"})
+					newNodeWork = Tree.SubElement(displayscreennode, displayTag[:-1], {"name": "original - work", "value": "inactive"})
 					skinElementList = skinTree.findall("screen[@name='%s'][@id='%s']" %(displayscreenname, IdString))
 					for element in skinElementList:
-						newNodeOrg.append(Tree.fromstring(Tree.tostring(skinScreen)))
-						newNodeWork.append(Tree.fromstring(Tree.tostring(skinScreen)))				
+						newNodeOrg.append(Tree.fromstring(Tree.tostring(element)))
+						newNodeWork.append(Tree.fromstring(Tree.tostring(element)))				
+
+			designs = Tree.SubElement(newTheme, "designs")
+			design1 = Tree.SubElement(designs, "design", {"name": "Design 1", "value": "active"})
+			design2 = Tree.SubElement(designs, "design", {"name": "Design 2", "value": "inactive"})
+			designcolors1 = Tree.SubElement(design1, "designColors")
+			designcolor11 = Tree.SubElement(designcolors1, "designColor", {"name": "Design Color 1", "value": "active"})
+			designcolor12 = Tree.SubElement(designcolors1, "designColor", {"name": "Design Color 2", "value": "inactive"})
+			designcolors2 = Tree.SubElement(design2, "designColors")
+			designcolor21 = Tree.SubElement(designcolors2, "designColor", {"name": "Design Color 1", "value": "active"})
+			designcolor22 = Tree.SubElement(designcolors2, "designColor", {"name": "Design Color 2", "value": "inactive"})
+			Tree.SubElement(designcolor11, "BorderSetTheme", {"name": "original"})
+			Tree.SubElement(designcolor12, "BorderSetTheme", {"name": "original - work"})
+			Tree.SubElement(designcolor11, "ColorTheme", {"name": "original"})
+			Tree.SubElement(designcolor12, "ColorTheme", {"name": "original - work"})
+			Tree.SubElement(designcolor11, "PNGTheme", {"name": "original"})
+			Tree.SubElement(designcolor12, "PNGTheme", {"name": "original - work"})
+			Tree.SubElement(designcolor21, "BorderSetTheme", {"name": "original"})
+			Tree.SubElement(designcolor22, "BorderSetTheme", {"name": "original - work"})
+			Tree.SubElement(designcolor21, "ColorTheme", {"name": "original"})
+			Tree.SubElement(designcolor22, "ColorTheme", {"name": "original - work"})
+			Tree.SubElement(designcolor21, "PNGTheme", {"name": "original"})
+			Tree.SubElement(designcolor22, "PNGTheme", {"name": "original - work"})
+			Tree.SubElement(design1, "LayoutTheme", {"name": "original"})
+			Tree.SubElement(design2, "LayoutTheme", {"name": "original - work"})
+			Tree.SubElement(design1, "GlobalsTheme", {"name": "original"})
+			Tree.SubElement(design2, "GlobalsTheme", {"name": "original - work"})
+			Tree.SubElement(design1, "FontTheme", {"name": "original"})
+			Tree.SubElement(design2, "FontTheme", {"name": "original - work"})
+			Tree.SubElement(design1, "SkinPathTheme", {"name": "original"})
+			Tree.SubElement(design2, "SkinPathTheme", {"name": "original - work"})
+			Tree.SubElement(design1, "GlobalsTheme", {"name": "original"})
+			Tree.SubElement(design2, "GlobalsTheme", {"name": "original - work"})
+			Tree.SubElement(design1, "WindowStyleScrollbarTheme", {"name": "original"})
+			Tree.SubElement(design2, "WindowStyleScrollbarTheme", {"name": "original - work"})
+			Tree.SubElement(design1, "ComponentTheme", {"name": "original"})
+			Tree.SubElement(design2, "ComponentTheme", {"name": "original - work"})
+			Tree.SubElement(design1, "InfoBar", {"name": "original"})
+			Tree.SubElement(design1, "SecondInfoBar", {"name": "original"})
+			Tree.SubElement(design1, "PluginBrowser", {"name": "original"})
+			Tree.SubElement(design1, "Menu", {"name": "original"})
+			Tree.SubElement(design1, "GraphMultiEPG", {"name": "original"})
+			Tree.SubElement(design1, "EventView", {"name": "original"})
+			Tree.SubElement(design1, "EPGSelection", {"name": "original"})
+			Tree.SubElement(design1, "MessageBox", {"name": "original"})
+			Tree.SubElement(design1, "InputBox", {"name": "original"})
+			Tree.SubElement(design1, "ChoiceBox", {"name": "original"})
+			Tree.SubElement(design1, "ChannelSelection", {"name": "original"})
+			Tree.SubElement(design1, "MovieSelection", {"name": "original"})			
+			Tree.SubElement(design1, "MoviePlayer", {"name": "original"})
+			Tree.SubElement(design1, "Mute", {"name": "original"})
+			Tree.SubElement(design1, "Volume", {"name": "original"})
+			Tree.SubElement(design1, "MerlinMusicPlayer2Screen_%s" %(ArchString), {"name": "original"})
+			Tree.SubElement(design1, "MerlinMusicPlayer2ScreenSaver_%s" %(ArchString), {"name": "original"})
+			Tree.SubElement(design1, "InfoBarSummary", {"name": "original"})
+			Tree.SubElement(design1, "StandbySummary", {"name": "original"})
+			Tree.SubElement(design1, "InfoBarMoviePlayerSummary", {"name": "original"})
+			Tree.SubElement(design1, "MerlinMusicPlayer2LCDScreen", {"name": "original"})
+			Tree.SubElement(design1, "EventView_summary", {"name": "original"})
+			Tree.SubElement(design2, "InfoBar", {"name": "original"})
+			Tree.SubElement(design2, "SecondInfoBar", {"name": "original"})
+			Tree.SubElement(design2, "PluginBrowser", {"name": "original"})
+			Tree.SubElement(design2, "Menu", {"name": "original"})
+			Tree.SubElement(design2, "GraphMultiEPG", {"name": "original"})
+			Tree.SubElement(design2, "EventView", {"name": "original"})
+			Tree.SubElement(design2, "EPGSelection", {"name": "original"})
+			Tree.SubElement(design2, "MessageBox", {"name": "original"})
+			Tree.SubElement(design2, "InputBox", {"name": "original"})
+			Tree.SubElement(design2, "ChoiceBox", {"name": "original"})
+			Tree.SubElement(design2, "ChannelSelection", {"name": "original"})
+			Tree.SubElement(design2, "MovieSelection", {"name": "original"})			
+			Tree.SubElement(design2, "MoviePlayer", {"name": "original"})
+			Tree.SubElement(design2, "Mute", {"name": "original"})
+			Tree.SubElement(design2, "Volume", {"name": "original"})
+			Tree.SubElement(design2, "MerlinMusicPlayer2Screen_%s" %(ArchString), {"name": "original"})
+			Tree.SubElement(design2, "MerlinMusicPlayer2ScreenSaver_%s" %(ArchString), {"name": "original"})
+			Tree.SubElement(design2, "InfoBarSummary", {"name": "original"})
+			Tree.SubElement(design2, "StandbySummary", {"name": "original"})
+			Tree.SubElement(design2, "InfoBarMoviePlayerSummary", {"name": "original"})
+			Tree.SubElement(design2, "MerlinMusicPlayer2LCDScreen", {"name": "original"})
+			Tree.SubElement(design2, "EventView_summary", {"name": "original"})
 			
 			XMLindent(newTheme,0)
 			
@@ -1728,8 +1813,8 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		rootSkin = curSkin.getroot()
 		copyright = rootSkin.find("copyright")
 		if copyright is not None:
-			if copyright.find("orginal") is not None:
-				org = copyright.find("orginal")
+			if copyright.find("original") is not None:
+				org = copyright.find("original")
 				oAuthor = org.get('author', "")
 				oVersion = org.get("version", "")
 				oName = org.get("name", "")
@@ -1738,7 +1823,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				
 				OrgText = _("Skin: %s by %s - Version: %s\nSupport: %s\n\nLicense: %s" %(oName, oAuthor, oVersion, oSupport, oLicense))			
 			else:
-				OrgText = _("Skin ORGINAL - No info available")
+				OrgText = _("Skin ORIGINAL - No info available")
 		
 			if copyright.find("mod") is not None:
 				mod = copyright.find("mod")
