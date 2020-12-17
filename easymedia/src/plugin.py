@@ -119,8 +119,8 @@ class MPanelList(MenuList):
 			isFHD = True
 			
 		sizes = componentSizes[MPanelList.SKIN_COMPONENT_KEY]
-		self.itemheight = sizes.get(MPanelList.SKIN_COMPONENT_ITEM_HEIGHT, 150 if isFHD else 100)
-		self.itemwidth = sizes.get(MPanelList.SKIN_COMPONENT_ITEM_WIDTH, 400 if isFHD else 300)
+		self.componentItemHeight = sizes.get(MPanelList.SKIN_COMPONENT_ITEM_HEIGHT, 150 if isFHD else 100)
+		self.componentItemWidth = sizes.get(MPanelList.SKIN_COMPONENT_ITEM_WIDTH, 400 if isFHD else 300)
 		self.imagewidth = sizes.get(MPanelList.SKIN_COMPONENT_IMAGE_WIDTH, 200 if isFHD else 135)
 		self.imageheight = sizes.get(MPanelList.SKIN_COMPONENT_IMAGE_HEIGHT, 140 if isFHD else 90)
 		self.imagexoffset = sizes.get(MPanelList.SKIN_COMPONENT_IMAGE_XOFFSET, 25)
@@ -136,8 +136,8 @@ class MPanelList(MenuList):
 
 		tlf = TemplatedListFonts()
 		self.l.setFont(0, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
-		self.l.setItemHeight(self.itemheight)
-		self.l.setItemWidth(self.itemwidth)
+		self.l.setItemHeight(self.componentItemHeight)
+		self.l.setItemWidth(self.componentItemWidth)
 		self.l.setBuildFunc(self.buildEntry)
 		self.selection = selection
 		
