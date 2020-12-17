@@ -224,7 +224,7 @@ class EasyInfoPanelList(MenuList):
 			self.easyInfoIconsPath = '/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/'
 		
 		sizes = componentSizes[EasyInfoPanelList.SKIN_COMPONENT_KEY]
-		self.itemHeight = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_ITEM_HEIGHT, 90 if isFHD else 60)
+		self.componentItemHeight = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_ITEM_HEIGHT, 90 if isFHD else 60)
 		self.textWidth = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_TEXT_WIDTH, 450 if isFHD else 300)
 		self.textHeight = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_TEXT_HEIGHT, 90 if isFHD else 60)
 		self.textXOffset = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_TEXT_XOFFSET, 175 if isFHD else 115)
@@ -240,7 +240,7 @@ class EasyInfoPanelList(MenuList):
 		
 		tlf = TemplatedListFonts()
 		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
-		self.l.setItemHeight(self.itemHeight)
+		self.l.setItemHeight(self.componentItemHeight)
 		self.l.setBuildFunc(self.buildEntry)
 		
 	def buildEntry(self, func, key):
@@ -763,7 +763,7 @@ class EasyInfoEventList(EPGList):
 		self.eventNameWidth = sizes.get(EasyInfoEventList.SKIN_COMPONENT_EVENTNAME_WIDTH, 700 if isFHD else 460)
 		self.eventNameYOffset = sizes.get(EasyInfoEventList.SKIN_COMPONENT_EVENTNAME_OFFSET, 2 if isFHD else 1)
 		self.timeYOffset = sizes.get(EasyInfoEventList.SKIN_COMPONENT_TIME_OFFSET, 5 if isFHD else 3)
-		self.itemHeight = sizes.get(EasyInfoEventList.SKIN_COMPONENT_ITEM_HEIGHT, 75 if isFHD else 50)
+		self.componentItemHeight = sizes.get(EasyInfoEventList.SKIN_COMPONENT_ITEM_HEIGHT, 75 if isFHD else 50)
 		self.recOffset = sizes.get(EasyInfoEventList.SKIN_COMPONENT_REC_OFFSET, 40 if isFHD else 25)
 		self.channelOffset = sizes.get(EasyInfoEventList.SKIN_COMPONENT_CHANNEL_OFFSET, 180 if isFHD else 120)
 		self.progressBarWidth = sizes.get(EasyInfoEventList.SKIN_COMPONENT_PROGRESSBAR_WIDTH, 60 if isFHD else 40)
@@ -778,7 +778,7 @@ class EasyInfoEventList(EPGList):
 		self.l.setFont(1, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
 		self.l.setFont(2, gFont(tlf.face(tlf.SMALLER), tlf.size(tlf.SMALLER)))
 		
-		self.l.setItemHeight(self.itemHeight)
+		self.l.setItemHeight(self.componentItemHeight)
 		self.l.setBuildFunc(self.buildMultiEntry)
 		
 		self.hasChannelInfo = hasChannelInfo
@@ -818,12 +818,12 @@ class EasyInfoEventList(EPGList):
 					self.piconWidth = picon.size().width()
 				if self.piconHeight == 0:
 					self.piconHeight = picon.size().height()
-				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, (self.channelWidth-self.piconWidth)/2, (self.itemHeight-self.piconHeight)/2, self.piconWidth, self.piconHeight, picon))
+				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, (self.channelWidth-self.piconWidth)/2, (self.componentItemHeight-self.piconHeight)/2, self.piconWidth, self.piconHeight, picon))
 			else:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, self.channelWidth, self.itemHeight, 1, RT_HALIGN_CENTER|RT_VALIGN_CENTER|RT_WRAP, service_name))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, self.channelWidth, self.componentItemHeight, 1, RT_HALIGN_CENTER|RT_VALIGN_CENTER|RT_WRAP, service_name))
 		
 		if rec:
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.timeIndicatorWidth+self.timeWidth+channelOffset, (self.itemHeight-self.recIconSize)/2, self.recIconSize, self.recIconSize, clock_pic)) 
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.timeIndicatorWidth+self.timeWidth+channelOffset, (self.componentItemHeight-self.recIconSize)/2, self.recIconSize, self.recIconSize, clock_pic)) 
 			recOffset = self.recOffset
 				
 		if beginTime is not None:
@@ -832,18 +832,18 @@ class EasyInfoEventList(EPGList):
 				end = localtime(beginTime+duration)
 				
 				res.extend((
-					(eListboxPythonMultiContent.TYPE_TEXT, channelOffset, self.timeYOffset, self.timeIndicatorWidth, self.itemHeight-2*self.timeYOffset, 1, RT_HALIGN_RIGHT, '>'),
-					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+channelOffset, self.timeYOffset, self.timeWidth, self.itemHeight-2*self.timeYOffset, 1, RT_HALIGN_LEFT, "%02d.%02d\n%02d.%02d"%(begin[3],begin[4],end[3],end[4])),
-					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+self.timeWidth+channelOffset+recOffset, self.eventNameYOffset, self.eventNameWidth-recOffset, self.itemHeight-2*self.eventNameYOffset, 0, flagValue, EventName)
+					(eListboxPythonMultiContent.TYPE_TEXT, channelOffset, self.timeYOffset, self.timeIndicatorWidth, self.componentItemHeight-2*self.timeYOffset, 1, RT_HALIGN_RIGHT, '>'),
+					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+channelOffset, self.timeYOffset, self.timeWidth, self.componentItemHeight-2*self.timeYOffset, 1, RT_HALIGN_LEFT, "%02d.%02d\n%02d.%02d"%(begin[3],begin[4],end[3],end[4])),
+					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+self.timeWidth+channelOffset+recOffset, self.eventNameYOffset, self.eventNameWidth-recOffset, self.componentItemHeight-2*self.eventNameYOffset, 0, flagValue, EventName)
 				))
 			else:
 				percent = (nowTime - beginTime)*100/duration
 				remaining = ((beginTime+duration)-nowTime)
 				
 				res.extend((
-					(eListboxPythonMultiContent.TYPE_PROGRESS, (self.remainingTimeWidth-self.progressBarWidth)/2+channelOffset, (self.itemHeight/2-self.progressBarHeight)/2, self.progressBarWidth, self.progressBarHeight, percent),
-					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+channelOffset, self.itemHeight/2, self.remainingTimeWidth, self.itemHeight/2, 1, RT_HALIGN_LEFT, "+%d:%02d" % (remaining/3600, (remaining/60)-((remaining /3600)*60))),
-					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+self.timeWidth+channelOffset+recOffset, self.eventNameYOffset, self.eventNameWidth-recOffset, self.itemHeight-2*self.eventNameYOffset, 0, flagValue, EventName)
+					(eListboxPythonMultiContent.TYPE_PROGRESS, (self.remainingTimeWidth-self.progressBarWidth)/2+channelOffset, (self.componentItemHeight/2-self.progressBarHeight)/2, self.progressBarWidth, self.progressBarHeight, percent),
+					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+channelOffset, self.componentItemHeight/2, self.remainingTimeWidth, self.componentItemHeight/2, 1, RT_HALIGN_LEFT, "+%d:%02d" % (remaining/3600, (remaining/60)-((remaining /3600)*60))),
+					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+self.timeWidth+channelOffset+recOffset, self.eventNameYOffset, self.eventNameWidth-recOffset, self.componentItemHeight-2*self.eventNameYOffset, 0, flagValue, EventName)
 				))
 		return res
 
