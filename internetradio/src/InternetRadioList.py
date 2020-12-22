@@ -26,16 +26,16 @@ class InternetRadioList(List):
 	def buildEntry(self, item):
 		text1 = ""
 		text2 = ""
-		if self.mode == 0: # GENRELIST
+		if self.listMode == 0: # GENRELIST
 			text1 =  item.name
-		elif self.mode == 1: # STATIONLIST
+		elif self.listMode == 1: # STATIONLIST
 			if len(item.country) != 0:
 				display = "%s (%s)" % (item.name, item.country)
 			else:
 				display = item.name
 			text1 = display
 			text2 = item.genre
-		elif self.mode == 2: # FAVORITELIST
+		elif self.listMode == 2: # FAVORITELIST
 			if len(item.configItem.country.value) != 0:
 				display = "%s (%s)" % (item.configItem.name.value, item.configItem.country.value)
 			else:
@@ -55,11 +55,11 @@ class InternetRadioList(List):
 
 	def __init__(self):
 		List.__init__(self, enableWrapAround=True, item_height=28, buildfunc=self.buildEntry)
-		self.mode = 0
+		self.listMode = 0
 		self.list = []
 
-	def setMode(self, mode):
-		self.mode = mode
+	def setListMode(self, mode):
+		self.listMode = mode
 		if mode == 0: # GENRELIST
 			self.style = "default"
 		elif mode == 1 or mode == 2: # STATIONLIST OR FAVORITELIST
@@ -87,7 +87,7 @@ class InternetRadioList(List):
 		List.setList(self, list)
 
 	def moveToFavorite(self, name, text):
-		if self.mode == 2: # FAVORITELIST
+		if self.listMode == 2: # FAVORITELIST
 			i = 0
 			for favs in self.list:
 				if favs[0].configItem.name.value == name and favs[0].configItem.text.value == text:

@@ -21,7 +21,7 @@
 
 from Plugins.Plugin import PluginDescriptor
 from Tools.HardwareInfo import HardwareInfo
-from Components.config import config, ConfigSubsection, ConfigSelection, ConfigDirectory, ConfigYesNo, Config, ConfigText
+from Components.config import config, ConfigSubsection, ConfigSelection, ConfigDirectory, ConfigYesNo, Config, ConfigText, ConfigNumber
 from InternetRadioScreen import InternetRadioScreen
 
 config.plugins.internetradio = ConfigSubsection()
@@ -30,7 +30,6 @@ config.plugins.internetradio.dirname = ConfigDirectory(default = "/media/hdd/str
 config.plugins.internetradio.riptosinglefile = ConfigYesNo(default = False)
 config.plugins.internetradio.createdirforeachstream = ConfigYesNo(default = True)
 config.plugins.internetradio.addsequenceoutputfile = ConfigYesNo(default = False)
-config.plugins.internetradio.filter = ConfigText(default=_("Countries"))
 if HardwareInfo().get_device_name() == "dm500hd":
 	config.plugins.internetradio.visualization = ConfigSelection(choices = [("2", _("On")), ("3", _("Off"))], default = "2")
 else:
@@ -40,6 +39,14 @@ config.plugins.internetradio.startupname = ConfigText(default = "")
 config.plugins.internetradio.startuptext = ConfigText(default = "")
 config.plugins.internetradio.fullscreenautoactivation = ConfigSelection(choices = [("30", _("30 seconds")), ("60", _("1 minutes")), ("180", _("3 minutes")), ("-1", _("Off"))], default = "30")
 config.plugins.internetradio.fullscreenlayout = ConfigSelection(choices = [("0", _("Visualization and Text")), ("1", _("Text only")), ("2", _("Blank"))], default = "0")
+config.plugins.internetradio.bitratemin = ConfigNumber(default= 0)
+config.plugins.internetradio.advancedsearch = ConfigYesNo(default=True)
+config.plugins.internetradio.savelastsearch = ConfigYesNo(default=False)
+config.plugins.internetradio.lastcountry = ConfigText(default="")
+config.plugins.internetradio.lastlanguage = ConfigText(default="")
+config.plugins.internetradio.lastcodec = ConfigText(default="")
+config.plugins.internetradio.lastgenre = ConfigText(default="")
+config.plugins.internetradio.pagingsize = ConfigSelection(default="100", choices = ["100", "250", "500", "750", "1000"])
 
 
 def sessionstart(reason, **kwargs):
