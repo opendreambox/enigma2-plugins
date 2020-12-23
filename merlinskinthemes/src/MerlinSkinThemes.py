@@ -54,7 +54,7 @@ import os
 from time import sleep
 
 # =========================================
-PluginVersion = "v3.0.0"
+PluginVersion = "v3.0.1"
 Title = "MerlinSkinThemes - The Original "
 Author = "by marthom"
 # =========================================
@@ -522,18 +522,6 @@ def setThemes(themeFile=None, skinFile=None, configDict=None, mode="apply", retF
 					else:
 						screentheme.set("value", "inactive")
 						
-	excludedCornerRadiusValue = None		
-
-	print "[MST] - updating cornerradius"	
-	for cRadius in rootTheme.findall("cornerradius"):
-		excludedCornerRadiusValue = cRadius.get('exclude')
-		for radius in cRadius.findall("radius"):
-			if "CornerRadius" in config.plugins.MerlinSkinThemes3.dict():
-				if radius.get("name") == config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"].value:
-					radius.set("value", "active")
-				else:
-					radius.set("value", "inactive")
-
 	if configDict is None:
 		if "CornerRadius" in config.plugins.MerlinSkinThemes3.CornerRadius.keys():
 			radiusValue = config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"].value
@@ -541,9 +529,20 @@ def setThemes(themeFile=None, skinFile=None, configDict=None, mode="apply", retF
 			print "[MST] - %s not found in config" %("CornerRadius")
 	else:
 		radiusValue = configDict.get('cornerradius')
+
+	excludedCornerRadiusValue = None		
+
+	print "[MST] - updating cornerradius"	
+	for cRadius in rootTheme.findall("cornerradius"):
+		excludedCornerRadiusValue = cRadius.get('exclude')
+		for radius in cRadius.findall("radius"):
+			if radius.get("name") == radiusValue:
+				radius.set("value", "active")
+			else:
+				radius.set("value", "inactive")
 			
-	if mode == "apply":						
-		f.write("%s:::%s\n" %("cornerradius", config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"].value))
+	if mode == "apply":
+		f.write("%s:::%s\n" %("cornerradius", radiusValue))
 	
 	if mode == "apply":
 		f.close()	
@@ -693,13 +692,11 @@ def setThemes(themeFile=None, skinFile=None, configDict=None, mode="apply", retF
 
 	print "[MST] - applying cornerradius"		
 	# replace value of cornerRadius attribute in all eLabel elements in skin.xml
-	if "CornerRadius" in config.plugins.MerlinSkinThemes3.dict():
-		if config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"].value != "":
-			for elabel in rootSkin.findall('.//eLabel[@cornerRadius]'):
-				# current cornerRadius is not matching excluded value from theme		
-				if elabel.get("cornerRadius") != excludedCornerRadiusValue:
-					if radiusValue is not None:
-						elabel.set("cornerRadius", radiusValue)
+	for elabel in rootSkin.findall('.//eLabel[@cornerRadius]'):
+		# current cornerRadius is not matching excluded value from theme		
+		if elabel.get("cornerRadius") != excludedCornerRadiusValue:
+			if radiusValue is not None:
+				elabel.set("cornerRadius", radiusValue)
 
 	# elementtree does not support pretty print - so we do it
 	XMLindent(rootSkin,0)
