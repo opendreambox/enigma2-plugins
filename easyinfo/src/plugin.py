@@ -816,8 +816,12 @@ class EasyInfoEventList(EPGList):
 			if picon is not None:
 				if self.piconWidth == 0:
 					self.piconWidth = picon.size().width()
+					if self.piconWidth > 100:
+						self.piconWidth = 100
 				if self.piconHeight == 0:
 					self.piconHeight = picon.size().height()
+					if self.piconHeight > 60:
+						self.piconHeight = 60
 				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, (self.channelWidth-self.piconWidth)/2, (self.componentItemHeight-self.piconHeight)/2, self.piconWidth, self.piconHeight, picon))
 			else:
 				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, self.channelWidth, self.componentItemHeight, 1, RT_HALIGN_CENTER|RT_VALIGN_CENTER|RT_WRAP, service_name))
