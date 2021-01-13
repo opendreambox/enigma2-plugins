@@ -21,6 +21,8 @@
 #
 #######################################################################
 
+from __future__ import print_function
+
 from Plugins.Plugin import PluginDescriptor
 
 from Screens.Screen import Screen
@@ -37,24 +39,23 @@ from Components.Button import Button
 from Components.Label import Label
 from Components.Pixmap import Pixmap
 from Components.MenuList import MenuList
-from Components.config import config, configfile, ConfigYesNo, ConfigSubsection, getConfigListEntry, ConfigSelection, ConfigNumber, ConfigText, ConfigInteger, ConfigSubDict, ConfigBoolean
+from Components.config import config, configfile, ConfigYesNo, ConfigSubsection, getConfigListEntry, ConfigSelection, ConfigNumber, ConfigText, ConfigInteger, ConfigSubDict, ConfigBoolean, NoSave
 from Components.ConfigList import ConfigListScreen
 
-from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT, RT_HALIGN_CENTER, RT_HALIGN_RIGHT, RT_VALIGN_CENTER, getEnigmaVersionString
+from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT, RT_HALIGN_CENTER, RT_HALIGN_RIGHT, RT_VALIGN_CENTER, getEnigmaVersionString, getDesktop
 
 from Tools.BoundFunction import boundFunction
 from Tools.HardwareInfo import HardwareInfo
 from Tools.Directories import resolveFilename, SCOPE_SKIN, SCOPE_PLUGINS, fileExists, createDir
+from Tools import Notifications
 
 from MerlinSkinThemesHelp import MerlinSkinThemesHelp
 
 import xml.etree.cElementTree as Tree
 import shutil
 import os
-from time import sleep
-
 # =========================================
-PluginVersion = "v3.0.1"
+PluginVersion = "v3.0.3"
 Title = "MerlinSkinThemes - The Original "
 Author = "by marthom"
 # =========================================
@@ -78,44 +79,33 @@ if fileExists(merlinChk):
 ArchArm = False
 Arch64 = False
 ArchMipsel = False
+
 if HardwareInfo().get_device_name() in ('dm900', 'dm920'):
 	ArchArm = True
 	ArchString = "ARM"
-	IdString = "3"
-	DisplayXY = "400x240"
 elif HardwareInfo().get_device_name() == 'one':
 	Arch64 = True
 	ArchString = "AARCH64"
-	IdString = "0" #no display
-	DisplayXY = "0x0"
 elif HardwareInfo().get_device_name() == 'two':
 	Arch64 = True
 	ArchString = "AARCH64"
-	IdString = "100"
-	DisplayXY = "240x86"
 else:
-	if HardwareInfo().get_device_name() == 'dm820':
-		IdString = "2"
-		DisplayXY = "96x64"
-	elif HardwareInfo().get_device_name() == 'dm7080':
-		IdString = "1"
-		DisplayXY = "132x64"
-	elif HardwareInfo().get_device_name() in ('dm520', 'dm525'):
-		IdString = "0"
-		DisplayXY = "0x0"
 	ArchMipsel = True
 	ArchString = "MIPSEL"
 ModelString = HardwareInfo().get_device_name().upper()
+IdString = "0" # no display
+if HardwareInfo().get_device_name() in ('dm900', 'dm920', 'dm820','dm7080', 'two'):
+	IdString = "%d" %(getDesktop(1).getStyleID())
 displayDict = {"1": "lcdscreenthemes", "2": "oledscreenthemes", "3": "extlcdscreenthemes", "100": "lcdscreenthemes" }
 displayTag = displayDict.get(IdString, None)
 
 # List of preview pics
 previewPicList = ["InfoBar", "Menu", "PluginBrowser", "ChannelSelection", "MovieSelection", "MoviePlayer", "SecondInfoBar", "GraphMultiEPG", "MessageBox", "InputBox", "ChoiceBox", "Mute", "Volume","MerlinMusicPlayer2Screen_%s" %(ArchString),"InfoBarSummary", "StandbySummary", "InfoBarMoviePlayerSummary", "MerlinMusicPlayer2LCDScreen"]
 
-print "------------------------------------------------"
-print HardwareInfo().get_device_name()
-print PluginVersion
-print "------------------------------------------------"
+print("------------------------------------------------")
+print(HardwareInfo().get_device_name())
+print(PluginVersion)
+print("------------------------------------------------")
 
 # windowstyle id=0: GUI --> borderset can only be defined here
 # windowstyle id=1: LCD
@@ -243,8 +233,7 @@ def hex2argb(value):
 def XMLindent(elem, level):
 	i = "\n" + (level*"    ")
 	#a = "\n%%-%ds" % level
-	#i = a % '  '
-		
+	#i = a % ' 
 	if len(elem):
 		if not elem.text or not elem.text.strip():
 			elem.text = i + "    "
@@ -258,61 +247,71 @@ def XMLindent(elem, level):
 		if level and (not elem.tail or not elem.tail.strip()):
 			elem.tail = i
 
-def setThemes(themeFile=None, skinFile=None, configDict=None, mode="apply", retFunc=None):
-	print "[MST] - start applying changes to themes.xml"
-	# first, we update themes.xml by setting the selected option to active and all others to inactive
-	curTheme = Tree.parse(themeFile)
-	rootTheme = curTheme.getroot()
+def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
+	print("[MST] - start applying changes to themes.xml")
 	
-	if mode == "apply":
-		if not fileExists(CONFDIR):
-			createDir("/etc/enigma2/merlinskinthemes")
-		f = open(CONFDIR + config.plugins.MerlinSkinThemes3.selSkin.value + ".cfg", 'w')
+	configDict = {}
+	# read config data
+	f = open(configDictFile, 'r')
+					
+	for line in f:
+		configData = line.split(":::")
+		if len(configData)==2:
+			configDict[configData[0]] = configData[1].strip("\n")
+	f.close()
+	
+	# first, we update themes.xml by setting the selected option to active and all others to inactive
+	with open(themeFile, 'rb') as theme:
+		curTheme = Tree.parse(theme)
+	rootTheme = curTheme.getroot()
+	themeVersion = rootTheme.get('version')
+	if themeVersion is not None:
+		if themeVersion not in ("1.0"):
+			return False
 
 	themeDict = {}
 	
-	print "[MST] - updating designs"
+	print("[MST] - updating designs")
 	if rootTheme.find("designs") is not None:
 		ds = rootTheme.find("designs")
+		designNameList = [ x.get('name') for x in ds.findall("design") ]
+		currentValue = configDict.get("design", None)
+		currentDscValue = configDict.get("designColor", None)
+		if not currentValue in designNameList:
+			activeDesignList = [ x.get('name') for x in ds.findall("design") if x.get('value') == 'active' ]
+			if len(activeDesignList):
+				print("[MST] - Design stored in config does no longer exist in skin. Using active design")
+				currentValue = activeDesignList[0]
+		activeDesignName = None
 		for design in ds.findall("design"):
-			if configDict is None:
-				# check if setting exists
-				if "design" in config.plugins.MerlinSkinThemes3.Designs.keys():
-					currentValue = config.plugins.MerlinSkinThemes3.Designs["design"].value
-				# setting does not exist which means we can continue with the next theme type
-				else:
-					print "[MST] - %s not found in config" %("design")
-					break
-				
-				if "designColor" in config.plugins.MerlinSkinThemes3.DesignColors.keys():
-					currentDscValue = config.plugins.MerlinSkinThemes3.DesignColors["designColor"].value
-				else:
-					print "[MST] - %s not found in config" %("designColor")
-			# use provided values
-			else:
-				currentValue = configDict.get("%s" %("design"), None)
-				currentDscValue = configDict.get("%s" %("designColor"), None)
-			
 			if design.get('name') == currentValue:
 				design.set("value", "active")
-				
-				if mode == "apply":
-					f.write("design:::%s\n" %(config.plugins.MerlinSkinThemes3.Designs["design"].value))
+				activeDesignName = design.get('name')
 			
 				if design.find("designColors") is not None:
-					dsc = design.find("designColors")
-					for designColor in dsc.findall("designColor"):
-						if designColor.get('name') == currentDscValue:
-							designColor.set("value", "active")
-						
-							if mode == "apply":
-								f.write("designcolor:::%s\n" %(config.plugins.MerlinSkinThemes3.DesignColors["designColor"].value))
-						else:
-							designColor.set("value", "inactive")
+					# don't update designColors if value is -none-
+					if currentDscValue != "-none-":
+						dsc = design.find("designColors")
+						designColorNameList = [ x.get('name') for x in dsc.findall('designColor') ]
+						if not currentDscValue in designColorNameList:
+							activeDesignColorList = [ x.get('name') for x in dsc.findall('designColor')  if x.get('value') == 'active' ]
+							if len(activeDesignColorList):
+								print("[MST] - Design color stored in config does no longer exist in skin. Using active design color")
+								currentDscValue = activeDesignColorList[0]
+						for designColor in dsc.findall("designColor"):
+							if designColor.get('name') == currentDscValue:
+								designColor.set("value", "active")
+							else:
+								designColor.set("value", "inactive")
 			else:
-				design.set("value", "inactive")
-
-	print "[MST] - updating themes"	
+				if currentValue is None:
+					if design.get('value') == 'active':
+						activeDesignName = design.get('name')
+						print("[MST] - current design is None - use active design from themes ", activeDesignName)
+				else:
+					design.set("value", "inactive")
+					
+	print("[MST] - updating themes")
 	for theme in [
 		("colortheme", "colors", "color"),
 		("fonttheme", "fonts", "font"), 
@@ -325,42 +324,41 @@ def setThemes(themeFile=None, skinFile=None, configDict=None, mode="apply", retF
 		("pngtheme", "png", ""),
 		]:
 		for currenttheme in rootTheme.findall(theme[0]):
-			# use e2 config
-			if configDict is None:
-				element = theme[0]
-				# skinpaththemes --> skinpaththeme
-				if theme[0] == "skinpaththemes":
-					element = theme[0][:-1]
-				# check if setting exists
-				if element in config.plugins.MerlinSkinThemes3.Themes.keys():
-					currentValue = config.plugins.MerlinSkinThemes3.Themes[element].value
-				# setting does not exist which means we can continue with the next theme type
-				else:
-					print "[MST] - %s not found in config" %(element)
-					break
-			# use provided values
-			else:
-				currentValue = configDict.get("%s" %(theme[0]), None)
+			currentValue = configDict.get("%s" %(theme[0]), None)
 			
 			# skinpaththemes has name on child level!
 			if theme[0] == "skinpaththemes":
+				currentValue = configDict.get("%s" %(theme[0][:-1]), None)
+				oldSkinPath = None
+				newPath = None
 				for child in currenttheme.findall(theme[1]):
 					if child.get('value') == 'active':
 						oldSkinPath = child.get('path')
+						child.set("value", "inactive")
 					if child.get("name") == currentValue:
 						child.set("value", "active")
-						themeDict[theme[0]] = child.get("path")
-						if mode == "apply":
-							f.write("skinpaththemes:::%s\n" %(currentValue))
+						newSkinPath = child.get('path')
+						themeDict[theme[0]] = newSkinPath
 					else:
 						child.set("value", "inactive")
+				if newSkinPath is not None and oldSkinPath is not None:
+					print("[MST] - replacing %s by %s in screens" %(oldSkinPath, newSkinPath))
+					for attr in ('pixmap', 'pointer', 'picServiceEventProgressbar'):
+						for pathElement in rootTheme.findall('.//screens/*/screen/*[@%s]' %(attr)):
+							currentPath = pathElement.get('%s' %(attr))
+							if currentPath is not None:
+								newPath = currentPath.replace(oldSkinPath, newSkinPath)
+								pathElement.set("%s"%(attr), newPath)
+					for pathElement in rootTheme.findall('.//bordersettheme/borderset/pixmap[@filename]'):
+						currentPath = pathElement.get('filename')
+						if currentPath is not None:
+							newPath = currentPath.replace(oldSkinPath, newSkinPath)
+							pathElement.set("filename", newPath)
+
 			else:
 				# name matches - set to active and store values
 				if currenttheme.get("name") == currentValue:
 					currenttheme.set("value", "active")
-					if mode == "apply":
-						f.write("%s:::%s\n" %(theme[0], currentValue))
-
 					themeElement = None
 					if theme[0] in ["bordersettheme", "globalstheme", "windowstylescrollbartheme", "fonttheme", "colortheme", "componenttheme", "layouttheme" ]:
 						subList = []
@@ -415,15 +413,15 @@ def setThemes(themeFile=None, skinFile=None, configDict=None, mode="apply", retF
 
 								if child.get("name") is not None:
 									subDict = {}
-									print "[MST] - theme[1] has name - use it to build subDict"
+									print("[MST] - theme[1] has name - use it to build subDict")
 									subDict[child.get("name")] = tempList
 									subList.append(subDict)
 									themeDict[theme[0]] = subList
 								else:
-									print "[MST] - theme[1] has no name - use theme[0]"
+									print("[MST] - theme[1] has no name - use theme[0]")
 									themeDict[theme[0]] = tempList
 							if theme[2] == "" and theme[1] != "*":
-								print "[MST] - theme[2] is empty - use theme[0]", tempList
+								print("[MST] - theme[2] is empty - use theme[0]", tempList)
 								themeDict[theme[0]] = tempList
 							
 					# pictures can be generated - no need to store values in dict
@@ -482,8 +480,8 @@ def setThemes(themeFile=None, skinFile=None, configDict=None, mode="apply", retF
 				# name does not match - set it to inactive	
 				else:
 					currenttheme.set("value", "inactive")
-				
-	print "[MST] - updating screens and displayscreens"
+	
+	print("[MST] - updating screens and displayscreens")
 	screenDict = {}
 	screenThemeData = [("screenthemes", "screens", "screentheme", "screen")]
 	if displayTag is not None:
@@ -492,70 +490,61 @@ def setThemes(themeFile=None, skinFile=None, configDict=None, mode="apply", retF
 		for currenttheme in rootTheme.findall(theme[0]):
 			for currentscreen in currenttheme.findall(theme[1]):
 				screenname = currentscreen.get('name')
-				if configDict is None:
-					if theme[0] == "screenthemes":
-						if screenname in config.plugins.MerlinSkinThemes3.Screens.keys():
-							currentValue = config.plugins.MerlinSkinThemes3.Screens[screenname].value
-						else:
-							# make sure screens for other archs are ignored
-							if screenname.startswith("MerlinMusicPlayer2Screen"):
-								pos = screenname.find("_")
-								if pos != -1:
-									if screenname[pos+1:] != ArchString:
-										continue
-							print "[MST] - %s not found in config" %(screenname)
-					elif theme[0] == displayTag:
-						if screenname in config.plugins.MerlinSkinThemes3.DisplayScreens.keys():
-							currentValue = config.plugins.MerlinSkinThemes3.DisplayScreens[screenname].value
-						else:
-							print "[MST] - %s not found in config" %(screenname)
-				else:
-					currentValue = configDict.get("%s" %(screenname))
+				currentValue = configDict.get("%s" %(screenname))
 				for screentheme in currentscreen.findall(theme[2]):
 					
 					if screentheme.get('name') == currentValue:
 						screentheme.set("value", "active")
-						if mode == "apply":
-							f.write("%s:::%s\n" %(screenname, currentValue))
 						newscreen = screentheme.find(theme[3])
 						screenDict[screenname]=Tree.tostring(newscreen)
 					else:
 						screentheme.set("value", "inactive")
-						
-	if configDict is None:
-		if "CornerRadius" in config.plugins.MerlinSkinThemes3.CornerRadius.keys():
-			radiusValue = config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"].value
-		else:
-			print "[MST] - %s not found in config" %("CornerRadius")
-	else:
+	
+	radiusFound = False	
+
+	radiusValue = configDict.get('CornerRadius')
+	if radiusValue is None:
 		radiusValue = configDict.get('cornerradius')
+	radiusFound = True
 
 	excludedCornerRadiusValue = None		
 
-	print "[MST] - updating cornerradius"	
-	for cRadius in rootTheme.findall("cornerradius"):
-		excludedCornerRadiusValue = cRadius.get('exclude')
-		for radius in cRadius.findall("radius"):
-			if radius.get("name") == radiusValue:
-				radius.set("value", "active")
-			else:
-				radius.set("value", "inactive")
-			
-	if mode == "apply":
-		f.write("%s:::%s\n" %("cornerradius", radiusValue))
-	
-	if mode == "apply":
-		f.close()	
+	print("[MST] - updating cornerradius")
+	if themeVersion is None:
+		for cRadius in rootTheme.findall("cornerradius"):
+			excludedCornerRadiusValue = cRadius.get('exclude')
+			for radius in cRadius.findall("radius"):
+				if radius.get("name") == radiusValue:
+					radius.set("value", "active")
+				else:
+					radius.set("value", "inactive")
+	elif themeVersion == "1.0":
+		designNode = rootTheme.find("designs")
+		if activeDesignName is not None:
+			activeDesign = designNode.find("design[@name='%s']" %(activeDesignName))
+			if activeDesign is not None:
+				cRadius = activeDesign.find("cornerRadius")
+				if cRadius is not None:
+					excludedCornerRadiusValue = cRadius.get('exclude')
+					for radius in cRadius.findall("radius"):
+						if radius.get("name") == radiusValue:
+							radius.set("value", "active")
+						else:
+							radius.set("value", "inactive")
+		else:
+			print("[MST] - cannot update CornerRadius as design does not longer exist")
 
 	# write changes to themes.xml
-	curTheme.write(themeFile)
-	print "[MST] - themes.xml updated"	
+	with open(themeFile, 'wb') as theme:
+		curTheme.write(theme)
+	print("[MST] - themes.xml updated")
 	
 	# now, we update skin.xml
-	curSkin = Tree.parse(skinFile)
+	with open(skinFile, 'rb') as skin:
+		curSkin = Tree.parse(skin)
 	rootSkin = curSkin.getroot()
 
-	print "[MST] - start applying changes to skin.xml"	
+	print("[MST] - start applying changes to skin.xml")
 	# let's brand the skin as edited by MST
 	if rootSkin.find("merlinskinthemes") is None:
 		mst = Tree.Element("merlinskinthemes", {"text":"Edited with MerlinSkinThemes3"})
@@ -572,19 +561,54 @@ def setThemes(themeFile=None, skinFile=None, configDict=None, mode="apply", retF
 		"skinpaththemes": ["theme"],
 		}
 
-	print "[MST] - applying themes"		
-	# iterate over the dict and update skin.xml		
-	for key, value in themeDict.iteritems():		
+	print("[MST] - applying screens")
+	for screen in rootSkin.findall('screen'):
+		screenname = screen.get('name')
+			
+		screenId = screen.get('id')
+		if screenId is not None and screenId != IdString:
+			continue
+
+		screenData = screenDict.get(screenname)
+		if screenData is not None:
+			
+			# delete old screen
+			rootSkin.remove(screen)
+			
+			# insert new screen
+			rootSkin.append(Tree.fromstring(screenData))
+
+	print("[MST] - applying themes")
+	# themes must be applied post screens as skinpaththemes update paths in screens
+	# iterate over the dict and update skin.xml	
+	for key, value in themeDict.iteritems():	
+		print("key is", key)	
 		tagList = tagDict.get(key)
 		node = tagList[0]
 		elementIndex = 1
 		
 		# for skinpaththemes we have to update the path in all elements with a path attribute
-		if key == "skinpaththemes":
-			for pathelement in rootSkin.findall('.//*[@path]'):
-				currentPath = pathelement.get('path')
-				newPath = currentPath.replace(oldSkinPath, value)
-				pathelement.set("path", newPath)
+		if key == "skinpaththemes" and oldSkinPath is not None:
+			for attr in ['pixmap', 'pointer', 'picServiceEventProgressbar']:
+				for pathelement in rootSkin.findall('.//*[@%s]' %(attr)):
+					currentPath = pathelement.get('%s' %(attr))
+					if currentPath is not None:
+						newPath = currentPath.replace(oldSkinPath, value)
+						pathelement.set("%s"%(attr), newPath)
+			
+			if themeDict.get('windowstylescrollbartheme') is None:
+				for idValue in ('4', '5'):
+					for pathelement in rootSkin.findall('.//windowstylescrollbar[@id="%s"]/pixmap[@filename]' %(idValue)):
+						currentPath = pathelement.get('filename')
+						if currentPath is not None:
+							newPath = currentPath.replace(oldSkinPath, value)
+							pathelement.set("filename", newPath)
+				
+			for pathelement in rootSkin.findall('.//windowstyle[@id="0"]/borderset/pixmap[@filename]'):
+				currentPath = pathelement.get('filename')
+				if currentPath is not None:
+					newPath = currentPath.replace(oldSkinPath, value)
+					pathelement.set("filename", newPath)
 			continue
 		
 		if key == "bordersettheme":
@@ -600,7 +624,7 @@ def setThemes(themeFile=None, skinFile=None, configDict=None, mode="apply", retF
 			if element.tag == "windowstyle" and element.get('id') != "0":
 				continue
 			if element.tag == "windowstylescrollbar" and element.get('id') not in ("4", "5"):
-				print "[MST] - windowstylescrollbar with id != 4/5"
+				print("[MST] - windowstylescrollbar with id != 4/5")
 				continue
 			# list with all matching elements in skin.xml
 			elementList = element.findall(tagList[elementIndex])
@@ -669,28 +693,7 @@ def setThemes(themeFile=None, skinFile=None, configDict=None, mode="apply", retF
 				else:
 					Tree.SubElement(element, tagList[elementIndex], item)	
 
-	print "[MST] - applying screens"
-	#screenDataString = ""	
-	for screen in rootSkin.findall('screen'):
-		screenname = screen.get('name')
-			
-		screenId = screen.get('id')
-		if screenId is not None and screenId != IdString:
-			continue
-
-		screenData = screenDict.get(screenname)
-		if screenData is not None:
-			
-			# delete old screen
-			rootSkin.remove(screen)
-			
-			# insert new screen
-			rootSkin.append(Tree.fromstring(screenData))
-			#this is really ugly but otherwise processing it too fast and elementtree raises an exception and a 0 byte crashlog is written
-			sleep(0.5)
-	#rootSkin.append(Tree.fromstring(screenDataString))
-
-	print "[MST] - applying cornerradius"		
+	print("[MST] - applying cornerradius")
 	# replace value of cornerRadius attribute in all eLabel elements in skin.xml
 	for elabel in rootSkin.findall('.//eLabel[@cornerRadius]'):
 		# current cornerRadius is not matching excluded value from theme		
@@ -700,9 +703,10 @@ def setThemes(themeFile=None, skinFile=None, configDict=None, mode="apply", retF
 
 	# elementtree does not support pretty print - so we do it
 	XMLindent(rootSkin,0)
+	#newXml = addIndent(rootSkin, 0)
 	# write updates to skin.xml
 	curSkin.write(skinFile)
-	print "[MST] - skin.xml updated"	
+	print("[MST] - skin.xml updated")
 	
 	if retFunc is not None:
 		retFunc
@@ -739,12 +743,11 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 	selThemeFile = ""
 	
 	def __init__(self, session):
-		print "[MST] " + PluginVersion + " running..."
+		print("[MST] " + PluginVersion + " running...")
 		self.session = session
 		Screen.__init__(self, session)
 		HelpableScreen.__init__(self)
 		
-		self.designHasDesignColors = False
 		self.configInitDone = False
 		self.clist = []
 		ConfigListScreen.__init__(self, self.clist)
@@ -904,17 +907,41 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 
 	def askYN(self, answer):
 		if answer is True:
-			for x in self["config"].list:
-				if len(x) > 1:
-					x[1].save()
-			configfile.save()
+			# only update settings when skin is currently active skin
+			if config.plugins.MerlinSkinThemes3.selSkin.value == SkinName:
+				config.plugins.MerlinSkinThemes3.designModified.save()
+				configfile.save()
 
-			if SkinName == MerlinSkinThemes.selSkinName:
-				retFunc = MerlinSkinThemes.restartYesNo(self)
-			else:
-				retFunc = MerlinSkinThemes.showConfirmationMessage(self)
-				
-			setThemes(MerlinSkinThemes.selThemeFile, MerlinSkinThemes.selSkinFile, None, "apply", retFunc)
+			self.updateConfigFile()
+			
+	def updateConfigFile(self):
+		if not fileExists(CONFDIR):
+			createDir("/etc/enigma2/merlinskinthemes")
+		
+		configDictFile = CONFDIR + config.plugins.MerlinSkinThemes3.selSkin.value + ".cfg"
+		f = open(configDictFile, 'w')
+
+		skinKeys = [ x[0].lower() for x in self.clist2 if len(x)==2 ]
+		for configKey in config.plugins.MerlinSkinThemes3.dict():
+			mst3Dict = config.plugins.MerlinSkinThemes3.__getattr__(configKey)
+			if not isinstance(mst3Dict, dict):
+				continue
+			for mst3DictKey, mst3DictValue in mst3Dict.items():
+				if mst3DictKey.lower() in skinKeys or mst3DictKey == "designColor":
+					f.write("%s:::%s\n" %(mst3DictKey, mst3DictValue.value))
+				elif mst3DictKey.lower() == "cornerradius":
+					print("[MST] - CornerRadius not used. Set to 0 to reset.")
+					f.write("%s:::%s\n" %(mst3DictKey, "0"))
+				else:
+					print("[MST] %s not in list. Don't save.", mst3DictKey)
+		f.close()
+
+		if SkinName == MerlinSkinThemes.selSkinName:
+			retFunc = MerlinSkinThemes.restartYesNo(self)
+		else:
+			retFunc = MerlinSkinThemes.showConfirmationMessage(self)		
+			
+		setThemes(MerlinSkinThemes.selThemeFile, MerlinSkinThemes.selSkinFile, configDictFile, retFunc)
 
 	def restartYesNo(self):
 		restartbox = self.session.openWithCallback(self.restartGUI,MessageBox,_("GUI needs a restart to apply a new skin\nDo you want to Restart the GUI now?"), MessageBox.TYPE_YESNO)
@@ -981,6 +1008,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			
 			curTree = Tree.parse(MerlinSkinThemes.selThemeFile)
 			xmlroot = curTree.getroot()
+			themeVersion = xmlroot.get('version')
 			
 			if xmlroot.find("designs") is None:
 				xmldesigns = Tree.SubElement(xmlroot, "designs")
@@ -1025,10 +1053,17 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 							Tree.SubElement(xmldesign, screen, {"name": "original" })
 			
 				# cornerRadius
-				if "CornerRadius" in config.plugins.MerlinSkinThemes3.CornerRadius.keys():
-					Tree.SubElement(xmldesign, "CornerRadius", {"name": config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"].value})
+				if themeVersion is None:
+					if "CornerRadius" in config.plugins.MerlinSkinThemes3.CornerRadius.keys():
+						Tree.SubElement(xmldesign, "CornerRadius", {"name": config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"].value})
+					else:
+						Tree.SubElement(xmldesign, "CornerRadius", {"name": "14" })
 				else:
-					Tree.SubElement(xmldesign, "CornerRadius", {"name": "14" })
+					cr = Tree.SubElement(xmldesign, "cornerRadius", {})
+					if "CornerRadius" in config.plugins.MerlinSkinThemes3.CornerRadius.keys():
+						Tree.SubElement(cr, "radius", {"name": config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"].value, "value": "active" })
+					else:
+						Tree.SubElement(cr, "radius", {"name": "14", "value": "active" })
 			
 			XMLindent(xmlroot, 0)
 			
@@ -1038,7 +1073,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			config.plugins.MerlinSkinThemes3.Designs["design"].value = designname
 			
 			if not "designColor" in config.plugins.MerlinSkinThemes3.DesignColors.keys():		
-				config.plugins.MerlinSkinThemes3.DesignColors["designColor"] = MyConfigSelection(default=designcolorname, choices = [designcolorname])
+				config.plugins.MerlinSkinThemes3.DesignColors["designColor"] = NoSave(MyConfigSelection(default=designcolorname, choices = [designcolorname]))
 				self.clist2.insert(6, getConfigListEntry("Design Color", config.plugins.MerlinSkinThemes3.DesignColors["designColor"]))
 			else:
 				config.plugins.MerlinSkinThemes3.DesignColors["designColor"].choices.choices.append(designcolorname)
@@ -1063,12 +1098,25 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				curTree.write(MerlinSkinThemes.selThemeFile)
 		
 				# it's sufficient to read designs only
-				self.readDesign()
+				self.readDesign("active")
 
 	# read all options available for themes - this is independent of a design
 	def readOptions(self, saveAsDesign=False):
-		print "[MST] - readOptions"
-		
+		print("[MST] - readOptions")
+
+		self.configDict = {}
+		print(config.plugins.MerlinSkinThemes3.Skin.value )
+		if fileExists(CONFDIR + config.plugins.MerlinSkinThemes3.Skin.value + ".cfg"):
+			print("[MST] - config found for active skin")
+			# read config data
+			f = open(CONFDIR + config.plugins.MerlinSkinThemes3.Skin.value + ".cfg", 'r')
+				
+			for line in f:
+				configData = line.split(":::")
+				if len(configData)==2:
+					self.configDict[configData[0]] = configData[1].strip("\n")
+			f.close()	
+			
 		if not self.configInitDone:
 			self.configInitDone = True
 			initConfigSubDict3()
@@ -1077,72 +1125,94 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		
 		xmlroot = xmltree.getroot()
 		
-		self.themeDict = {}
+		self.themeVersion = xmlroot.get('version')
 		
-		# <xyztheme></xyztheme>
-		for themeType in themeList:
-			themes = []
-			tag = themeType.lower()
-			if themeType == "SkinPathTheme":
-				tag = "%ss" %(tag)
-				
-			for themeOption in xmlroot.findall(tag):
-				# active skinpaththeme is on child level
-				if tag == "skinpaththemes":
-					for childOption in themeOption.findall('theme'):
-						themes.append((childOption.get("name"), childOption.get("value") == "active" ))
-				else:
-					themes.append((themeOption.get("name"),themeOption.get("value") == "active"))
-			self.themeDict[themeType] = themes
-			
-		# <screenthemes><screens><screentheme><screen></screen></screentheme></screens></screenthemes>
-		scrt = xmlroot.find("screenthemes")
-		if scrt is not None:
-			for screen in screenList:
-				themes = []			
-				scr = scrt.find('screens[@name="%s"]' %(screen))
-				if scr is not None:
-					for screenOption in scr.findall("screentheme"):
-						themes.append((screenOption.get("name"),screenOption.get("value") == "active"))
-				self.themeDict[screen] = themes
+		self.continueProcessing = True
+		if self.themeVersion is not None:
+			if self.themeVersion not in ("1.0"):
+				self.continueProcessing = False
+				self.ok(False)
 
-		# <lcdscreenthemes><screens><lcdscreentheme><screen></screen></lcdscreentheme></screens></lcdscreenthemes>
-		if displayTag is not None:
-			lscrt = xmlroot.find(displayTag)
-			if lscrt is not None:
-				for screen in displayScreenList:
+		if self.continueProcessing:
+			self.themeDict = {}
+		
+			# <xyztheme></xyztheme>
+			for themeType in themeList:
+				themes = []
+				tag = themeType.lower()
+				if themeType == "SkinPathTheme":
+					tag = "%ss" %(tag)
+				
+				for themeOption in xmlroot.findall(tag):
+					# active skinpaththeme is on child level
+					if tag == "skinpaththemes":
+						for childOption in themeOption.findall('theme'):
+							themes.append((childOption.get("name"), childOption.get("value") == "active" ))
+					else:
+						themes.append((themeOption.get("name"),themeOption.get("value") == "active"))
+				self.themeDict[themeType] = themes
+			
+			# <screenthemes><screens><screentheme><screen></screen></screentheme></screens></screenthemes>
+			scrt = xmlroot.find("screenthemes")
+			if scrt is not None:
+				for screen in screenList:
 					themes = []			
-					lscr = lscrt.find('screens[@name="%s"]' %(screen))
-					if lscr is not None:
-						for screenOption in lscr.findall(displayTag[:-1]):
+					scr = scrt.find('screens[@name="%s"]' %(screen))
+					if scr is not None:
+						for screenOption in scr.findall("screentheme"):
 							themes.append((screenOption.get("name"),screenOption.get("value") == "active"))
 					self.themeDict[screen] = themes
 
-		# <cornerradius><radius></radius></cornerradius>
-		themeType = "CornerRadius"
-		themes = []
-		cr = xmlroot.find("cornerradius")
-		if cr is not None:
-			for radius in cr.findall("radius"):
-				themes.append((radius.get("name"), radius.get("value") == "active"))
-			self.themeDict[themeType] = themes
+			# <lcdscreenthemes><screens><lcdscreentheme><screen></screen></lcdscreentheme></screens></lcdscreenthemes>
+			if displayTag is not None:
+				lscrt = xmlroot.find(displayTag)
+				if lscrt is not None:
+					for screen in displayScreenList:
+						themes = []			
+						lscr = lscrt.find('screens[@name="%s"]' %(screen))
+						if lscr is not None:
+							for screenOption in lscr.findall(displayTag[:-1]):
+								themes.append((screenOption.get("name"),screenOption.get("value") == "active"))
+						self.themeDict[screen] = themes
 
-		if not saveAsDesign:	
-			self.readDesign()
-		else:
-			self.readDesign(False, True)
+			if self.themeVersion is None:
+				# <cornerradius><radius></radius></cornerradius>
+				themeType = "CornerRadius"
+				themes = []
+				cr = xmlroot.find("cornerradius")
+				if cr is not None:
+					for radius in cr.findall("radius"):
+						themes.append((radius.get("name"), radius.get("value") == "active"))
+					self.themeDict[themeType] = themes
 
-	# read design and it's settings
-	def readDesign(self, getActive=True, saveAsDesign=False):
-		print "[MST] - readDesign"
+			if not saveAsDesign:	
+				self.readDesign("init")
+			else:
+				self.readDesign("save")
+
+	def readDesign(self, mode="init", what=None):
+		# modes
+		# init = set values as stored in .cfg
+		# read = set values based on selected design / design color
+		# active = if no .cfg found read active as defined by skinner
+		# save = read design just saved
+		print("[MST] - readDesign")
 		self.clist2 = []
-
+		
+		if not bool(self.configDict) and mode== "init":
+			mode = "active"
+		
+		print("[MST]- configDict", self.configDict)		
+		
+		print("[MST] - mode is ", mode)
+		if what is not None:
+			print("[MST] - what is ", what)
+		
 		selSkinList = []
 		selSkinList.append(MerlinSkinThemes.selSkinName)
-		config.plugins.MerlinSkinThemes3.selSkin = MyConfigSelection(default=MerlinSkinThemes.selSkinName, choices = selSkinList)
+		config.plugins.MerlinSkinThemes3.selSkin = NoSave(MyConfigSelection(default=MerlinSkinThemes.selSkinName, choices = selSkinList))
 		self.clist2.append(getConfigListEntry(" " + u'\u00b7' + " SKIN", ))
 		self.clist2.append(getConfigListEntry("Skin", config.plugins.MerlinSkinThemes3.selSkin))
-
 		self.clist2.append(getConfigListEntry(" ", ))
 		self.clist2.append(getConfigListEntry(" " + u'\u00b7' + " DESIGNS", ))
 		
@@ -1163,177 +1233,369 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			
 				designList.append(designName)
 			
-				# either get the theme defined as active by skinner or the user selected design
-				if (state == "active" and getActive) or (not getActive and designName == config.plugins.MerlinSkinThemes3.Designs["design"].value) or (getActive and designName == config.plugins.MerlinSkinThemes3.designModified.value):
+				# read the design
+				if (mode == "init" and designName == self.configDict.get('design')) or (mode == "init" and self.configDict.get('design') is None and state == "active") or (mode == "active" and state == "active") or ((mode == "read" or mode == "save") and designName == config.plugins.MerlinSkinThemes3.Designs["design"].value):
 					defaultDesign = designName
 					hasDesignColors = False
-					self.designHasDesignColors = False
 					designColors = design.find("designColors")
 					if designColors is not None:
 						for designColor in designColors:
 							designColorName = designColor.get("name")
-							designColorList.append(designColorName)
 							if designColorName is not None:
-								if (designColor.get("value") == "active" and getActive) or (not getActive and "designColor" in config.plugins.MerlinSkinThemes3.DesignColors.keys() and designColorName == config.plugins.MerlinSkinThemes3.DesignColors["designColor"].value and self["config"].getCurrent()[0] == "Design Color") or (designColor.get("value") == "active" and not getActive and self["config"].getCurrent()[0] == "Design") or saveAsDesign:
-									hasDesignColors = True
-									self.designHasDesignColors = False
-									defaultDesignColor = designColorName 
-							
-									for dsctheme in ['BorderSetTheme', 'ColorTheme', 'PNGTheme']:
-										dsct = designColor.find(dsctheme)
-										if dsct is not None:
-											dsctname = dsct.get('name')
-											if dsctname is not None:
+								designColorList.append(designColorName)
+								isSelectedDsc = False
+								if (mode == "active" and designColor.get('value') == "active") or (designColor.get('value') == "active" and what == "ds") or ((mode == "save" or what == "dsc") and config.plugins.MerlinSkinThemes3.DesignColors["designColor"].value == designColorName) or (mode == "init" and (designColorName == self.configDict.get('designColor') or self.configDict.get('designColor', '-none-') == '-none-')):
+									defaultDesignColor = designColor.get('name')
+									if mode == "init":
+										defaultDesignColor = self.configDict.get('designColor', "-none-")
+										if defaultDesignColor == "-none-" and designColor.get('value') == "inactive":
+											print("[MST] - ignore inactive design color when stored value is -none-")
+											continue
+									if designColor.get('value') == "active" or what == "dsc":
+										isSelectedDsc = True
+								else:
+									continue
+								
+								hasDesignColors = True
+								for dsctheme in ('BorderSetTheme', 'ColorTheme', 'PNGTheme'):
+									defaultValue = None
+									dsct = designColor.find(dsctheme)
+									if dsct is not None:
+										dsctname = dsct.get('name')
+										if dsctname is not None:
+											optionList = [ x[0] for x in self.themeDict.get(dsctheme, [])]
+											if isSelectedDsc:
 												defaultValue = dsctname
-									
-										if self.themeDict.get(dsctheme) is not None:
-											if len(self.themeDict.get(dsctheme)):
-												if not dsctheme.lower() in config.plugins.MerlinSkinThemes3.Themes.keys():
-													config.plugins.MerlinSkinThemes3.Themes[dsctheme.lower()] = MyConfigSelection(default=defaultValue, choices = [ x[0] for x in self.themeDict.get(dsctheme)])
-															
+												if defaultDesignColor == "-none-":
+													confValue = self.configDict.get(dsctheme.lower())
+													if confValue in optionList:
+														defaultValue = confValue
+										
+											if not defaultValue in optionList:
+												themeDefaultList = [ x[0] for x in self.themeDict.get(dsctheme, []) if x[1]]
+												if len(themeDefaultList):
+													defaultValue = themeDefaultList[0]
 												else:
-													if not config.plugins.MerlinSkinThemes3.designModified.value:
-														config.plugins.MerlinSkinThemes3.Themes[dsctheme.lower()].value = defaultValue
+													if len(optionList):
+														defaultValue = optionList[0]
+													else:
+														defaultValue = None
+									if defaultValue is not None and self.themeDict.get(dsctheme) is not None:
+										if len(self.themeDict.get(dsctheme)):
+											if not dsctheme.lower() in config.plugins.MerlinSkinThemes3.Themes.keys():
+												config.plugins.MerlinSkinThemes3.Themes[dsctheme.lower()] = NoSave(MyConfigSelection(default=defaultValue, choices = optionList ))
+											else:
+												config.plugins.MerlinSkinThemes3.Themes[dsctheme.lower()].setChoices(optionList, defaultValue)
+												config.plugins.MerlinSkinThemes3.Themes[dsctheme.lower()].value = defaultValue
 							
 					if not "designColor" in config.plugins.MerlinSkinThemes3.DesignColors.keys():
-						config.plugins.MerlinSkinThemes3.DesignColors["designColor"] = MyConfigSelection(default=defaultDesignColor, choices = designColorList)
-					else: 
-						config.plugins.MerlinSkinThemes3.DesignColors["designColor"].choices.choices = designColorList
+						config.plugins.MerlinSkinThemes3.DesignColors["designColor"] = NoSave(MyConfigSelection(default=defaultDesignColor, choices = designColorList))
 						config.plugins.MerlinSkinThemes3.DesignColors["designColor"].value = defaultDesignColor
-						
+					else: 
+						config.plugins.MerlinSkinThemes3.DesignColors["designColor"].setChoices(designColorList, defaultDesignColor)
+						config.plugins.MerlinSkinThemes3.DesignColors["designColor"].value = defaultDesignColor
 					self.clist2.append(getConfigListEntry("Design Color", config.plugins.MerlinSkinThemes3.DesignColors["designColor"]))
 				
-	
 					# name of theme is read and displayed in the section THEMES, active one is set as default
 					self.clist2.append(getConfigListEntry(" ", ))
 					self.clist2.append(getConfigListEntry(" " + u'\u00b7' + " THEMES", ))
 
 					# for each theme in the design set the value to the selected design
-				
 					for element in themeList:
 						# ignore BorderSetTheme, ColorTheme and PNGTheme as it's defined in designColor
 						if hasDesignColors and element in ['BorderSetTheme', 'ColorTheme', 'PNGTheme']:
-							print "[MST] - ignoring %s as designColor is used" %(element)
+							print("[MST] - ignoring %s as designColor is used" %(element))
 							self.clist2.append(getConfigListEntry(element, config.plugins.MerlinSkinThemes3.Themes[element.lower()]))
 							continue
-					
-						elementList = []
-						defaultValue = None
-					
+
 						tmp = design.find(element)
+						defaultValue = None
 						if tmp is not None:
 							if tmp.get("name") is not None:
-								print "[MST] - Default %s: %s" %(element, tmp.get("name"))
-								#config.plugins.MerlinSkinThemes3.Themes[element.lower()].value = tmp.get("name")
-								defaultValue = tmp.get("name")
+								defaultValue = tmp.get('name')
+								optionList = [ x[0] for x in self.themeDict.get(element, [])]
+								if mode == "init":
+									confValue = self.configDict.get(element.lower())
+									if confValue in optionList:
+										defaultValue = confValue
+								if not defaultValue in optionList:
+									themeDefaultList = [ x[0] for x in self.themeDict.get(element, []) if x[1]]
+									if len(themeDefaultList):
+										defaultValue = themeDefaultList[0]
+									else:
+										if len(optionList):
+											defaultValue = optionList[0]
+										else:
+											defaultValue = None
+								
+								print("[MST] - Default %s: %s" %(element, defaultValue))
 							else:
-								print "[MST] - %s has no name" %(element)
+								print("[MST] - %s has no name" %(element))
 						else:
-							print "[MST] - %s not found" %(element)
-
-						if self.themeDict.get(element) is not None:
+							print("[MST] - %s not found" %(element))
+						if defaultValue is not None and self.themeDict.get(element) is not None:
 							if len(self.themeDict.get(element)):
-								config.plugins.MerlinSkinThemes3.Themes[element.lower()] = MyConfigSelection(default=defaultValue, choices = [ x[0] for x in self.themeDict.get(element)])
-								if not config.plugins.MerlinSkinThemes3.designModified.value:
+								if not element.lower() in config.plugins.MerlinSkinThemes3.Themes.keys():
+									config.plugins.MerlinSkinThemes3.Themes[element.lower()] = NoSave(MyConfigSelection(default=defaultValue, choices = [ x[0] for x in self.themeDict.get(element)]))
+									if not config.plugins.MerlinSkinThemes3.designModified.value:
+										config.plugins.MerlinSkinThemes3.Themes[element.lower()].value = defaultValue
+								else:
+									config.plugins.MerlinSkinThemes3.Themes[element.lower()].setChoices([ x[0] for x in self.themeDict.get(element)], defaultValue)
 									config.plugins.MerlinSkinThemes3.Themes[element.lower()].value = defaultValue
 								self.clist2.append(getConfigListEntry(element, config.plugins.MerlinSkinThemes3.Themes[element.lower()]))
 
 					self.clist2.append(getConfigListEntry(" ", ))
 					self.clist2.append(getConfigListEntry(" " + u'\u00b7' + " SCREENS", ))
 
-
-					# for each screen in the design set the value to the selected design
-					for screenname in screenList:
-						elementList = []
-						defaultValue = None
-						tmp = design.find(screenname)
-						if tmp is not None:
-							if tmp.get("name") is not None:
-								print "[MST] - Default %s: %s" %(screenname, tmp.get("name"))
-								defaultValue = tmp.get("name")
-							else:
-								print "[MST] - %s has no name" %(screenname)
-						else:
-							print "[MST] - %s not found. Using default from themes instead." %(screenname)
-							options = self.themeDict.get(screenname, [])
-							for option in options:
-								if option[1]:
-									defaultValue = option[0]
-									break								
-						if self.themeDict.get(screenname) is not None:
-							if len(self.themeDict.get(screenname)):
-								config.plugins.MerlinSkinThemes3.Screens[screenname] = MyConfigSelection(default=defaultValue, choices = [ x[0] for x in self.themeDict.get(screenname)])
+					if self.themeVersion is None:
+						for screenname in screenList:
+							defaultValue = None
+							optionList = [ x[0] for x in self.themeDict.get(screenname, [])]
+							themeDefaultList = [ x[0] for x in self.themeDict.get(screenname, []) if x[1]]
+							if len(themeDefaultList):
+								defaultValue = themeDefaultList[0]
 								
-								if not config.plugins.MerlinSkinThemes3.designModified.value:
+							if len(optionList):
+								if not screenname in config.plugins.MerlinSkinThemes3.Screens.keys():
+									config.plugins.MerlinSkinThemes3.Screens[screenname] = NoSave(MyConfigSelection(default=defaultValue, choices = optionList))
+									if not config.plugins.MerlinSkinThemes3.designModified.value:
+										config.plugins.MerlinSkinThemes3.Screens[screenname].value = defaultValue
+								else:
+									config.plugins.MerlinSkinThemes3.Screens[screenname].setChoices(optionList, defaultValue)
 									config.plugins.MerlinSkinThemes3.Screens[screenname].value = defaultValue
-							
 								self.clist2.append(getConfigListEntry(screenname, config.plugins.MerlinSkinThemes3.Screens[screenname]))
+									
+						
+					else:
+						# for each screen in the design set the value to the selected design
+						for screenname in screenList:
+							tmp = design.find(screenname)
+							defaultValue = None
+							if tmp is not None:
+								if tmp.get("name") is not None:
+									defaultValue = tmp.get('name')
+									optionList = [ x[0] for x in self.themeDict.get(screenname, [])]
+									if mode == "init":
+										confValue = self.configDict.get(screenname)
+										if confValue in optionList:
+											defaultValue = confValue
+									if not defaultValue in optionList:
+										themeDefaultList = [ x[0] for x in self.themeDict.get(screenname, []) if x[1]]
+										if len(themeDefaultList):
+											defaultValue = themeDefaultList[0]
+										else:
+											if len(optionList):
+												defaultValue = optionList[0]
+											else:
+												defaultValue = None
+									print("[MST] - Default %s: %s" %(screenname, defaultValue))
+								else:
+									print("[MST] - %s has no name" %(screenname))
+							else:
+								print("[MST] - %s not found" %(screenname))
+					
+							if defaultValue is not None and self.themeDict.get(screenname) is not None:
+								if len(self.themeDict.get(screenname)):
+									if not screenname in config.plugins.MerlinSkinThemes3.Screens.keys():
+										config.plugins.MerlinSkinThemes3.Screens[screenname] = NoSave(MyConfigSelection(default=defaultValue, choices = optionList))
+										if not config.plugins.MerlinSkinThemes3.designModified.value:
+											config.plugins.MerlinSkinThemes3.Screens[screenname].value = defaultValue
+									else:
+										config.plugins.MerlinSkinThemes3.Screens[screenname].setChoices(optionList, defaultValue)
+										config.plugins.MerlinSkinThemes3.Screens[screenname].value = defaultValue
+									self.clist2.append(getConfigListEntry(screenname, config.plugins.MerlinSkinThemes3.Screens[screenname]))
 
-					self.clist2.append(getConfigListEntry(" ", ))
-					self.clist2.append(getConfigListEntry(" " + u'\u00b7' + " DISPLAY SCREENS ID=%s (%s) %s" %(IdString, ModelString, DisplayXY ), ))
-
-					# for each LCD screen in the design set the value to the selected design
-					for lcdscreenname in displayScreenList:
-						elementList = []
+					if displayTag is not None:
+						self.clist2.append(getConfigListEntry(" ", ))
+						self.clist2.append(getConfigListEntry(" " + u'\u00b7' + " DISPLAY SCREENS ID=%s (%s) %dx%d" %(IdString, ModelString, getDesktop(1).size().width(), getDesktop(1).size().height()), ))
+						
+						if self.themeVersion is None:
+							for lcdscreenname in displayScreenList:
+								defaultValue = None
+								optionList = [ x[0] for x in self.themeDict.get(lcdscreenname, [])]
+								themeDefaultList = [ x[0] for x in self.themeDict.get(lcdscreenname, []) if x[1]]
+								if len(themeDefaultList):
+									defaultValue = themeDefaultList[0]
+									
+								if len(optionList):
+									if not lcdscreenname in config.plugins.MerlinSkinThemes3.DisplayScreens.keys():
+										config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname] = NoSave(MyConfigSelection(default=defaultValue, choices = optionList))
+										if not config.plugins.MerlinSkinThemes3.designModified.value:
+											config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname].value = defaultValue
+									else:
+										config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname].setChoices(optionList, defaultValue)
+										config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname].value = defaultValue
+									self.clist2.append(getConfigListEntry(lcdscreenname, config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname]))									
+						else:
+							# for each LCD screen in the design set the value to the selected design
+							for lcdscreenname in displayScreenList:
+								# check for id-specific default
+								tmp = design.find("%s[@id='%s']" %(lcdscreenname, IdString))
+								defaultValue = None
+								if tmp is not None:
+									if tmp.get("name") is not None:
+										defaultValue = tmp.get('name')
+										optionList = [ x[0] for x in self.themeDict.get(lcdscreenname, [])]
+										if mode == "init":
+											confValue = self.configDict.get(lcdscreenname)
+											if confValue in optionList:
+												defaultValue = confValue
+										if not defaultValue in optionList:
+											themeDefaultList = [ x[0] for x in self.themeDict.get(lcdscreenname, []) if x[1]]
+											if len(themeDefaultList):
+												defaultValue = themeDefaultList[0]
+											else:
+												if len(optionList):
+													defaultValue = optionList[0]
+												else:
+													defaultValue = None
+										print("[MST] - Default %s (ID: %s): %s" %(lcdscreenname, IdString, defaultValue))
+									else:
+										print("[MST] - %s (ID: %s) has no name" %(lcdscreenname, IdString))
+								else:
+									# check for generic default
+									tmp = design.find(lcdscreenname)
+									if tmp is not None:
+										if tmp.get("name") is not None:
+											defaultValue = tmp.get('name')
+											optionList = [ x[0] for x in self.themeDict.get(lcdscreenname, [])]
+											if mode == "init":
+												confValue = self.configDict.get(lcdscreenname)
+												if confValue in optionList:
+													defaultValue = confValue
+											if not defaultValue in optionList:
+												themeDefaultList = [ x[0] for x in self.themeDict.get(lcdscreenname, []) if x[1]]
+												if len(themeDefaultList):
+													defaultValue = themeDefaultList[0]
+												else:
+													if len(optionList):
+														defaultValue = optionList[0]
+													else:
+														defaultValue = None
+											print("[MST] - Default %s: %s" %(lcdscreenname, defaultValue))
+										else:
+											print("[MST] - %s has no name" %(lcdscreenname))
+									else:							
+										print("[MST] - %s not found" %(lcdscreenname))
+	
+								if defaultValue is not None and self.themeDict.get(lcdscreenname) is not None:
+									if len(self.themeDict.get(lcdscreenname)):
+										if not lcdscreenname in config.plugins.MerlinSkinThemes3.DisplayScreens.keys():
+											config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname] = NoSave(MyConfigSelection(default=defaultValue, choices = optionList))
+											if not config.plugins.MerlinSkinThemes3.designModified.value:
+												config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname].value = defaultValue
+										else:
+											config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname].setChoices(optionList, defaultValue)
+											config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname].value = defaultValue
+										self.clist2.append(getConfigListEntry(lcdscreenname, config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname]))
+				
+					defaultRadius = "0"
+					# for each corner radius in the design set the value to the selected design
+					if self.themeVersion is None:
+						tmp = design.find("CornerRadius")
 						defaultValue = None
-						tmp = design.find(lcdscreenname)
 						if tmp is not None:
 							if tmp.get("name") is not None:
-								print "[MST] - Default %s: %s" %(lcdscreenname, tmp.get("name"))
+								defaultValue = tmp.get('name')
+								optionList = [ x[0] for x in self.themeDict.get("CornerRadius", [])]
+								if mode == "init":
+									confValue = self.configDict.get('CornerRadius')
+									if confValue is None:
+										confValue = self.configDict.get('cornerradius')
+									if confValue in optionList:
+										defaultValue = confValue
+								if not defaultValue in optionList:
+									themeDefaultList = [ x[0] for x in self.themeDict.get("CornerRadius", []) if x[1]]
+									if len(themeDefaultList):
+										defaultValue = themeDefaultList[0]
+									else:
+										if len(optionList):
+											defaultValue = optionList[0]
+										else:
+											defaultValue = None
+								print("[MST] - Default %s: %s" %("CornerRadius", defaultValue))
 							else:
-								print "[MST] - %s has no name" %(lcdscreenname)
+								print("[MST] - %s has no name" %("CornerRadius"))
 						else:
-							print "[MST] - %s not found. Using default from themes instead." %(lcdscreenname)
-							options = self.themeDict.get(lcdscreenname, [])
-							for option in options:
-								if option[1]:
-									defaultValue = option[0]
-									break
-								
-						if self.themeDict.get(lcdscreenname) is not None:
-							if len(self.themeDict.get(lcdscreenname)):
-								config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname] = MyConfigSelection(default=defaultValue, choices = [ x[0] for x in self.themeDict.get(lcdscreenname)])
-								if not config.plugins.MerlinSkinThemes3.designModified.value:
-									config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname].value = defaultValue
+							print("[MST] - CornerRadius not found")
 							
-								self.clist2.append(getConfigListEntry(lcdscreenname, config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname]))
+						if defaultValue is not None and self.themeDict.get("CornerRadius") is not None:
+							if len(self.themeDict.get("CornerRadius", [])):
+								if not "CornerRadius" in config.plugins.MerlinSkinThemes3.CornerRadius.keys():
+									config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"] = NoSave(MyConfigSelection(default=defaultValue, choices = optionList))
+									if not config.plugins.MerlinSkinThemes3.designModified.value:
+										config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"].value = defaultValue
+								else:
+									config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"].setChoices(optionList, defaultValue)
+									config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"].value = defaultValue
 				
-					# for each corner radius in the design set the value to the selected design
-					tmp = design.find("CornerRadius")
-					if tmp is not None:
-						elementList = []
-						defaultValue = None
-						if tmp.get("name") is not None:
-							defaultValue = tmp.get("name")
-							print "[MST] - Default %s: %s" %("CornerRadius", tmp.get("name"))
-							if not config.plugins.MerlinSkinThemes3.designModified.value:
-								defaultValue = tmp.get("name")
-						else:
-							print "[MST] - %s has no name" %("CornerRadius")
+								self.clist2.append(getConfigListEntry(" ", ))
+								self.clist2.append(getConfigListEntry(" " + u'\u00b7' + " CORNERRADIUS", ))
+								self.clist2.append(getConfigListEntry("CornerRadius", config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"]))
 					else:
-						print "[MST] - %s not found. Using default from themes instead." %("CornerRadius")		
-					if self.themeDict.get("CornerRadius") is not None:
-						if len(self.themeDict.get("CornerRadius", [])):
-							config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"] = MyConfigSelection(default=defaultValue, choices = [ x[0] for x in self.themeDict.get("CornerRadius")])
-							if not config.plugins.MerlinSkinThemes3.designModified.value:
+						cornerRadius = design.find("cornerRadius")
+						defaultValue = None
+						if cornerRadius is not None:
+							optionList = []
+							for radius in cornerRadius:
+								radiusValue = radius.get('name')
+								state = radius.get('value')
+								if radiusValue is not None:
+									optionList.append(radiusValue)
+									if state == 'active':
+										defaultValue = radiusValue
+						
+							if mode == "init":
+								confValue = self.configDict.get('CornerRadius')
+								if confValue is None:
+									confValue = self.configDict.get('cornerradius')		
+									if confValue in optionList:
+										defaultValue = confValue
+									if not defaultValue in optionList:
+										themeDefaultList = [ x[0] for x in self.themeDict.get("CornerRadius", []) if x[1]]
+										if len(themeDefaultList):
+											defaultValue = themeDefaultList[0]
+										else:
+											if len(optionList):
+												defaultValue = optionList[0]
+											else:
+												defaultValue = None
+							print("[MST] - Default CornerRadius: %s" %(defaultValue))
+						else:
+							print("[MST] - CornerRadius has no name")						
+									
+						if defaultValue is not None:		
+							if not "CornerRadius" in config.plugins.MerlinSkinThemes3.CornerRadius.keys():
+								config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"] = NoSave(MyConfigSelection(default=defaultValue, choices = optionList))
+							else: 
+								config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"].setChoices(optionList, defaultValue)
 								config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"].value = defaultValue
-				
 							self.clist2.append(getConfigListEntry(" ", ))
 							self.clist2.append(getConfigListEntry(" " + u'\u00b7' + " CORNERRADIUS", ))
-							self.clist2.append(getConfigListEntry("CornerRadius", config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"]))
-
+							self.clist2.append(getConfigListEntry("CornerRadius", config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"]))				
+	
+			
 		if len(designList):
-			config.plugins.MerlinSkinThemes3.Designs["design"] = MyConfigSelection(default=defaultDesign, choices = designList)
-			config.plugins.MerlinSkinThemes3.Designs["design"].value = defaultDesign
+			if not "design" in config.plugins.MerlinSkinThemes3.Designs.keys():
+				config.plugins.MerlinSkinThemes3.Designs["design"] = NoSave(MyConfigSelection(default=defaultDesign, choices = designList))
+				config.plugins.MerlinSkinThemes3.Designs["design"].value = defaultDesign
+			else:
+				config.plugins.MerlinSkinThemes3.Designs["design"].setChoices(designList, defaultDesign)
+				config.plugins.MerlinSkinThemes3.Designs["design"].value = defaultDesign
 		self.clist2.insert(4, getConfigListEntry("Design", config.plugins.MerlinSkinThemes3.Designs["design"]))
-		if saveAsDesign:
+
+		if mode == "save":
 			config.plugins.MerlinSkinThemes3.designModified.value = False
 		self.clist2.insert(5, getConfigListEntry(_("Design modified"), config.plugins.MerlinSkinThemes3.designModified))
 						
 		# refresh Screen
-		self["config"].setList(self.clist2)
+		self["config"].setList(self.clist2)		
 		
-	def ok(self):
+	def ok(self, retVal=None):
+	
+		if retVal == False:
+			self.curList = "config"
+			self.session.open(MessageBox, _("Theme version %s is not supported. Please check for updated version of MerlinSkinThemes." %(self.themeVersion)), MessageBox.TYPE_ERROR, timeout=5)
 		
 		if self.curList == "SkinsList":
 			if self["SkinsList"].getCurrent()[3][7] == "":
@@ -1343,27 +1605,26 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 
 				if fileExists(MerlinSkinThemes.selSkinFile):
 					self.CopyrightInfo()
-					
-				self.readOptions()
-
-				if self["config"].getCurrent()[0] == "Design":
-					self["key_green"].setText(_("apply themes"))
-					self["key_yellow"].setText(_("delete design"))
-				elif self["config"].getCurrent()[0] == "Skin":
-					self["key_green"].setText(_("apply themes"))
-					self["key_yellow"].setText(_("save as design"))
-				else:
-					self["key_green"].setText(_("apply themes"))
-					self["key_yellow"].setText(_("save as design"))
-				
-				self["key_green"].show()
-				self["key_yellow"].show()
-				
-				self["SkinsList"].hide()
-				self["config"].show()
 				
 				config.plugins.MerlinSkinThemes3.Skin.value = self["SkinsList"].getCurrent()[1][7]
+				self.readOptions()
 				
+				if self.continueProcessing:
+					if self["config"].getCurrent()[0] == "Design":
+						self["key_green"].setText(_("apply themes"))
+						self["key_yellow"].setText(_("delete design"))
+					elif self["config"].getCurrent()[0] == "Skin":
+						self["key_green"].setText(_("apply themes"))
+						self["key_yellow"].setText(_("save as design"))
+					else:
+						self["key_green"].setText(_("apply themes"))
+						self["key_yellow"].setText(_("save as design"))
+				
+					self["key_green"].show()
+					self["key_yellow"].show()
+				
+					self["SkinsList"].hide()
+					self["config"].show()
 			else:
 				self.CopyrightInfo()
 				self.session.open(MessageBox,_("No themes.xml or skin.xml found.\nPlease select a valid skin including themes.xml"), MessageBox.TYPE_ERROR, title=_("Error"))
@@ -1459,10 +1720,10 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			else:
 				self.setPreviewPic(None)
 			config.plugins.MerlinSkinThemes3.designModified.value = False
-			self.readDesign(False)
+			self.readDesign("read", "ds")
 		elif self["config"].getCurrent()[0] == "Design Color":
 			config.plugins.MerlinSkinThemes3.designModified.value = False
-			self.readDesign(False)
+			self.readDesign("read", "dsc")
 		else:
 			if self["config"].getCurrent()[0] != "Design modified":
 				self.adjustDesignSettings()
@@ -1494,9 +1755,6 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				
 	def adjustDesignSettings(self):
 		if config.plugins.MerlinSkinThemes3.Designs["design"].value != "-none-" or config.plugins.MerlinSkinThemes3.DesignColors["designColor"].value != "-none-":
-
-			#config.plugins.MerlinSkinThemes3.Designs["design"].value = "-none-"
-			
 			config.plugins.MerlinSkinThemes3.designModified.value = True
 			self["config"].invalidate((_("Design modified"), config.plugins.MerlinSkinThemes3.designModified))
 			self["config"].invalidate(("Design", config.plugins.MerlinSkinThemes3.Designs["design"]))
@@ -1549,7 +1807,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			# first let's parse the selected skin
 			skinTree = Tree.parse(MerlinSkinThemes.selSkinFile)
 			
-			newTheme = Tree.Element("themes")
+			newTheme = Tree.Element("themes", {"version": "1.0"})
 			newThemeTree = Tree.ElementTree(newTheme)
 			
 			# theme.xml : skin.xml
@@ -1574,15 +1832,10 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				"bordersettheme":				{ "filename": "folder/sample.png", "pos": "bpTop" },
 				"windowstylescrollbartheme":	{ "name": "ScrollbarWidth", "value":"10" },
 				"pngtheme":						{ "argb": "#ff664004", "argb2": "#ffcf8106", "gtype": "round", "height": "8", "name": "img/sample.png", "width": "995" },
-				"skinpaththeme":				{ "name": "sample", "path": "skinname/folder/", "value" : "active" },
+				"skinpaththemes":				{ "name": "sample1", "path": "skinname/folder1/", "value" : "active" },
 			}
 			
-			cornerradius = Tree.SubElement(newTheme, "cornerradius")
-			Tree.SubElement(cornerradius, "radius", {"name": "0", "value": "active"})
-			Tree.SubElement(cornerradius, "radius", {"name": "20", "value": "inactive"})
-			Tree.SubElement(cornerradius, "radius", {"name": "30", "value": "inactive"})
-			
-			for node in [("colortheme", "colors", "color"), ("fonttheme", "fonts", "font"),("pngtheme", "png"), ("skinpaththeme", "theme"), ("globalstheme", "globals", "value"), ("bordersettheme", "borderset"), ("windowstylescrollbartheme", "*"), ("componenttheme", "components", "component"), ("layouttheme", "layouts", "layout")]:
+			for node in [("colortheme", "colors", "color"), ("fonttheme", "fonts", "font"),("pngtheme", "png"), ("skinpaththemes", "theme"), ("globalstheme", "globals", "value"), ("bordersettheme", "borderset"), ("windowstylescrollbartheme", "*"), ("componenttheme", "components", "component"), ("layouttheme", "layouts", "layout")]:
 
 				# create the top nodes for the theme - always origina and original - work
 				if node[0] == "windowstylescrollbartheme":
@@ -1590,11 +1843,16 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					newNode4Work = Tree.SubElement(newTheme, node[0], {"name": "original - work", "value": "inactive", "id": "4"})					
 					newNode5Org = Tree.SubElement(newTheme, node[0], {"name": "original", "value": "active", "id": "5"})
 					newNode5Work = Tree.SubElement(newTheme, node[0], {"name": "original - work", "value": "inactive", "id": "5"})
+				elif node[0] == "skinpaththemes":
+					newNodeOrg = Tree.SubElement(newTheme, node[0])
+					newNodeOrg.append(Tree.Comment("Example only"))
+					childNodeOrg = Tree.SubElement(newNodeOrg, node[1], exampleDict.get(node[0], {} ))					
+					childNodeWork = Tree.SubElement(newNodeOrg, node[1], { "name":"sample2", "path":"skinpath/folder2/", "value":"inactive"} )
 				else:
 					newNodeOrg = Tree.SubElement(newTheme, node[0], {"name": "original", "value": "active"})
 					newNodeWork = Tree.SubElement(newTheme, node[0], {"name": "original - work", "value": "inactive"})
 					
-					if node[0] in ( "pngtheme", "skinpaththeme"):
+					if node[0] in ( "pngtheme"):
 						newNodeOrg.append(Tree.Comment("Example only"))
 						childNodeOrg = Tree.SubElement(newNodeOrg, node[1], exampleDict.get(node[0], {} ))
 						newNodeWork.append(Tree.Comment("Example only"))
@@ -1667,10 +1925,6 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					else:
 						if skinElement == "":
 							pass
-							#childNodeOrg.append(Tree.Comment("Example only"))
-							#Tree.SubElement(childNodeOrg, node[1], exampleDict.get(node[0], {}) )
-							#childNodeWork.append(Tree.Comment("Example only"))
-							#Tree.SubElement(childNodeWork, node[1], exampleDict.get(node[0], {}) )
 						else:							
 							childNodeOrg.append(Tree.Comment("Example only"))
 							Tree.SubElement(childNodeOrg, node[2], exampleDict.get(node[0], {}) )
@@ -1728,8 +1982,8 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			Tree.SubElement(design2, "GlobalsTheme", {"name": "original - work"})
 			Tree.SubElement(design1, "FontTheme", {"name": "original"})
 			Tree.SubElement(design2, "FontTheme", {"name": "original - work"})
-			Tree.SubElement(design1, "SkinPathTheme", {"name": "original"})
-			Tree.SubElement(design2, "SkinPathTheme", {"name": "original - work"})
+			Tree.SubElement(design1, "SkinPathTheme", {"name": "sample1"})
+			Tree.SubElement(design2, "SkinPathTheme", {"name": "sample2"})
 			Tree.SubElement(design1, "GlobalsTheme", {"name": "original"})
 			Tree.SubElement(design2, "GlobalsTheme", {"name": "original - work"})
 			Tree.SubElement(design1, "WindowStyleScrollbarTheme", {"name": "original"})
@@ -1780,6 +2034,14 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			Tree.SubElement(design2, "InfoBarMoviePlayerSummary", {"name": "original"})
 			Tree.SubElement(design2, "MerlinMusicPlayer2LCDScreen", {"name": "original"})
 			Tree.SubElement(design2, "EventView_summary", {"name": "original"})
+			cr1 = Tree.SubElement(design1, "cornerRadius")
+			cr2 = Tree.SubElement(design2, "cornerRadius")
+			Tree.SubElement(cr1, "radius", {"name": "0", "value": "active"})
+			Tree.SubElement(cr1, "radius", {"name": "20", "value": "inactive"})
+			Tree.SubElement(cr1, "radius", {"name": "30", "value": "inactive"})			
+			Tree.SubElement(cr2, "radius", {"name": "0", "value": "active"})
+			Tree.SubElement(cr2, "radius", {"name": "20", "value": "inactive"})
+			Tree.SubElement(cr2, "radius", {"name": "30", "value": "inactive"})	
 			
 			XMLindent(newTheme,0)
 			
@@ -1840,7 +2102,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		self["SkinCopyright"].setText(InfoText)
 	
 	def delSkinDir(self):
-		print "[MST] Delete: %s" % resolveFilename(SCOPE_SKIN) + MerlinSkinThemes.selSkinName + "/"
+		print("[MST] Delete: %s" % resolveFilename(SCOPE_SKIN) + MerlinSkinThemes.selSkinName + "/")
 		shutil.rmtree(resolveFilename(SCOPE_SKIN) + MerlinSkinThemes.selSkinName + "/")
 		self.updateSkinList()
 		
@@ -1856,7 +2118,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		restartbox.setTitle(_("Restart GUI now?"))
 
 	def exit(self, cancel=True):
-		print '[MST] closing'
+		print('[MST] closing')
 		self["SkinsList"].onSelectionChanged.remove(self.changedSkinsList)
 		if cancel:
 			# exit means settings must not be stored
