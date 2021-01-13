@@ -1,11 +1,11 @@
 #######################################################################
 #
-#  MerlinSkinThemes for Dreambox/Enigma-2
+#  MerlinSkinThemes for Dreambox/Enigma2
 #  Modul PluginStart
-#  Coded by marthom (c)2012 - 2019
+#  Coded by marthom/dre (c)2012 - 2021
 #
-#  Support: https://board.dreamboxtools.de/
-#  E-Mail: marthom@dreamboxtools.de
+#  Support: www.dreamboxtools.de
+#  E-Mail: marthom@dreamboxtools.de / dre@dreamboxtools.de
 #
 #  This plugin is open source but it is NOT free software.
 #
@@ -21,7 +21,7 @@
 #  you have to keep MY license and inform me about the modifications by mail.
 #
 #######################################################################
-
+from __future__ import print_function
 from Plugins.Plugin import PluginDescriptor
 from Components.config import config, configfile, ConfigYesNo, ConfigSubsection, getConfigListEntry, ConfigSelection, ConfigNumber, ConfigText, ConfigInteger, ConfigSubDict, ConfigBoolean
 from Screens.MessageBox import MessageBox
@@ -38,7 +38,7 @@ CONFDIR = "/etc/enigma2/merlinskinthemes/"
 try:
         Notifications.notificationQueue.registerDomain("MerlinSkinThemes", _("MerlinSkinThemes"), deferred_callable = True)
 except Exception as e:
-        print "[MST] - Error registering Notification-Domain: ", e
+        print("[MST] - Error registering Notification-Domain: ", e)
 
 def merlinskinthemes_start(session, **kwargs):
 	reload(MerlinSkinThemes)
@@ -49,7 +49,7 @@ def checkSkin(session, **kwargs):
 
 		# a config exists for the currently active skin
 		if fileExists(CONFDIR + config.skin.primary_skin.value[:-9] + ".cfg"):
-			print "[MST] - config found for active skin"
+			print("[MST] - config found for active skin")
 			skinFile = resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value
 			if fileExists(skinFile):
 				xmlFile = Tree.ElementTree(file=skinFile)
@@ -57,26 +57,24 @@ def checkSkin(session, **kwargs):
 
 				mst = root.find("merlinskinthemes")
 				if mst is not None:
-					print "[MST] - skin was edited with MST and tag is present - assume rebuild is not required"
+					print("[MST] - skin was edited with MST and tag is present - assume rebuild is not required")
 				else:
-					print "[MST] - skin was edited with MST but tag is not present - assume rebuild required"
-					configDict = {}
-					# read config data
-					f = open(CONFDIR + config.skin.primary_skin.value[:-9] + ".cfg", 'r')
-					
-					for line in f:
-						configData = line.split(":::")
-						if len(configData)==2:
-							configDict[configData[0]] = configData[1].strip("\n")
-					f.close()
+					print("[MST] - skin was edited with MST but tag is not present - assume rebuild required")
+					configDictFile = CONFDIR + config.skin.primary_skin.value[:-9] + ".cfg"
 					
 					if fileExists(resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value[:-9] + "/themes.xml"):
 						# update skin with data from config				
-						MerlinSkinThemes.setThemes(resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value[:-9] + "/themes.xml", resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value, configDict, "update")
-						Notifications.AddNotificationWithCallback(messageBoxCallback, MessageBox, _("Skin was rebuilt and a restart of enigma2 is required. Do you want to restart now?"), MessageBox.TYPE_YESNO, 10, windowTitle="MerlinSkinThemes", domain = "MerlinSkinThemes")
+						retValue = MerlinSkinThemes.setThemes(resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value[:-9] + "/themes.xml", resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value, configDictFile)
+						showMessage(retValue)
 					else:
-						print "[MST] - themes.xml not found"
+						print("[MST] - themes.xml not found")
 						Notifications.AddNotification(MessageBox, _("Skin could not be rebuilt due to missing themes.xml"), MessageBox.TYPE_ERROR, 10, windowTitle="MerlinSkinThemes", domain="MerlinSkinThemes")
+
+def showMessage(retValue=None):
+	if retValue == False:
+		Notifications.AddNotification(MessageBox, _("Skin could not be rebuilt due to unsupported version of theme"), MessageBox.TYPE_ERROR, 10, windowTitle="MerlinSkinThemes", domain="MerlinSkinThemes")
+	else:
+		Notifications.AddNotificationWithCallback(messageBoxCallback, MessageBox, _("Skin was rebuilt and a restart of enigma2 is required. Do you want to restart now?"), MessageBox.TYPE_YESNO, 10, windowTitle="MerlinSkinThemes", domain = "MerlinSkinThemes")
 
 def messageBoxCallback(answer=False):
 	if answer == True:
