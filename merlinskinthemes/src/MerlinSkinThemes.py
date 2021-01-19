@@ -55,7 +55,7 @@ import xml.etree.cElementTree as Tree
 import shutil
 import os
 # =========================================
-PluginVersion = "v3.0.3"
+PluginVersion = "v3.0.4"
 Title = "MerlinSkinThemes - The Original "
 Author = "by marthom"
 # =========================================
@@ -1172,7 +1172,8 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						lscr = lscrt.find('screens[@name="%s"]' %(screen))
 						if lscr is not None:
 							for screenOption in lscr.findall(displayTag[:-1]):
-								themes.append((screenOption.get("name"),screenOption.get("value") == "active"))
+								if screenOption.find('screen[@id="%s"]' %(IdString)) is not None:
+									themes.append((screenOption.get("name"),screenOption.get("value") == "active"))
 						self.themeDict[screen] = themes
 
 			if self.themeVersion is None:
