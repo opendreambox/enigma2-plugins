@@ -61,10 +61,11 @@ CMD_REGION=23
 CMD_VERSION=24
 CMD_CLOSE_DMN=99
 
+SPLIT_MODE_FULL = "full"
 SPLIT_MODE_PAT = "pat"
 SPLIT_MODE_TAP = "tap"
 SPLIT_MODE_TIP = "tip"
-splittingModeList = [ (SPLIT_MODE_PAT, _("picture and teletext")), (SPLIT_MODE_TAP, _("teletext and picture")), (SPLIT_MODE_TIP, _("teletext in picture")) ]
+splittingModeList = [ (SPLIT_MODE_PAT, _("picture and teletext")), (SPLIT_MODE_TAP, _("teletext and picture")), (SPLIT_MODE_TIP, _("teletext in picture")), (SPLIT_MODE_FULL, _("Fullscreen")) ]
 textlevelModeList = [ ("0", "1.0"), ("1", "1.5"), ("2", "2.5"), ("3", "3.5") ]
 regionList = [ ("0", _("Western and Central Europe")), ("8", _("Eastern Europe")), ("16", _("Western Europe and Turkey")), ("24", _("Central and Southeast Europe")), ("32", _("Cyrillic")), ("48", _("Turkish / Greek")), ("64", _("Arabic")), ("80", _("Hebrew / Arabic")) ]
 filterList = [ ("%d"%DISABLED,_("Disabled")), ("%d"%BILINEAR,_("bilinear")), ("%d"%ANISOTROPIC,_("anisotropic")), ("%d"%SHARP,_("sharp")), ("%d"%SHARPER,_("sharper"))]
@@ -114,7 +115,7 @@ config.plugins.TeleText.debug    = ConfigOnOff(default=False)
 config.plugins.TeleText.pos      = ConfigSequence(default=[DEF_LEFT, DEF_TOP, DEF_RIGHT, DEF_BOTTOM], seperator = ",", limits = [(0,dsk_width>>3),(0,dsk_height>>3),(dsk_width-(dsk_width>>3),dsk_width),(dsk_height-(dsk_height>>3),dsk_height)])
 config.plugins.TeleText.tip_pos  = ConfigSequence(default=[(dsk_width>>1), (dsk_height>>1), dsk_width, dsk_height], seperator = ",", limits = [(0,dsk_width-MIN_W),(0,dsk_height-MIN_H),(MIN_W,dsk_width),(MIN_H,dsk_height)])
 # state
-config.plugins.TeleText.textOnly = ConfigOnOff(default=True)
+config.plugins.TeleText.textOnly = ConfigOnOff(default=False)
 config.plugins.TeleText.opaque   = ConfigOnOff(default=False)
 config.plugins.TeleText.background_caching = ConfigOnOff(default=True)
 
@@ -678,7 +679,7 @@ class TeleText(Screen):
     bottom = pos[3]
     mode = config.plugins.TeleText.splitting_mode.value
 
-    if config.plugins.TeleText.textOnly.value == True:
+    if config.plugins.TeleText.textOnly.value == True or mode == SPLIT_MODE_FULL:
       left  = pos[0]
       width  = right - left
       top    = pos[1]
