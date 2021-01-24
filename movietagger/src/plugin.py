@@ -7,37 +7,69 @@ from Screens.InputBox import InputBox
 from Screens.MessageBox import MessageBox
 from Components.ActionMap import ActionMap
 from Components.MultiContent import MultiContentEntryText
-from enigma import eServiceReference, eListboxPythonMultiContent, eServiceCenter, gFont, iServiceInformation
+from enigma import eServiceReference, eListboxPythonMultiContent, eServiceCenter, gFont, iServiceInformation, getDesktop
+from skin import TemplatedListFonts, componentSizes
 
 from Tools.Directories import pathExists, resolveFilename, SCOPE_HDD, SCOPE_PLUGINS
 
-VERSION = "1.3"
+VERSION = "1.4"
 
 class MovieTagger(Screen):
-	skin = """
-		<screen position="center,70" size="600,460" title="Movie Tagger" >
-			<widget name="moviename" position="10,0" size="580,60" valign="top" font="Regular;25"/>
-			<ePixmap pixmap="skin_default/div-h.png" position="0,62" zPosition="1" size="600,2" />
-			<widget name="assignedTags" position="10,65" size="260,30" valign="top" halign="left" zPosition="2" foregroundColor="white" font="Regular;23"/>
-			<widget name="cTaglist" position="10,100" size="260,250" scrollbarMode="showOnDemand"/>
-			<widget name="definedTags" position="300,65" size="290,30" valign="top" halign="left" zPosition="2" foregroundColor="white" font="Regular;23"/>
-			<widget name="aTaglist" position="290,100" size="300,250" scrollbarMode="showOnDemand"/>
+	sz_w = getDesktop(0).size().width()
+	if sz_w == 1280:
+		skin = """
+			<screen position="center,70" size="600,460" title="Movie Tagger" >
+				<widget name="moviename" position="10,0" size="580,60" valign="top" font="Regular;25"/>
+				<ePixmap pixmap="skin_default/div-h.png" position="0,62" zPosition="1" size="600,2" />
+				<widget name="assignedTags" position="10,65" size="260,30" valign="top" halign="left" zPosition="2" foregroundColor="white" font="Regular;23"/>
+				<widget name="cTaglist" position="10,100" size="260,250" scrollbarMode="showOnDemand"/>
+				<widget name="definedTags" position="300,65" size="290,30" valign="top" halign="left" zPosition="2" foregroundColor="white" font="Regular;23"/>
+				<widget name="aTaglist" position="290,100" size="290,250" scrollbarMode="showOnDemand" />
                 
-			<ePixmap pixmap="skin_default/div-h.png" position="0,358" zPosition="1" size="600,2" />
-			<widget name="usedTag" position="10,365" size="185,50" valign="top" halign="center" zPosition="2" foregroundColor="#ffff00" font="Regular;21"/>
-			<widget name="userTag" position="200,365" size="185,50" valign="top" halign="center" zPosition="2" foregroundColor="#ff0000" font="Regular;21"/>
-			<widget name="preTag" position="400,365" size="190,50" valign="top" halign="center" zPosition="2" foregroundColor="#00ff00" font="Regular;21"/>
+				<ePixmap pixmap="skin_default/div-h.png" position="0,358" zPosition="1" size="600,2" />
+				<widget name="usedTag" position="10,365" size="185,50" valign="top" halign="center" zPosition="2" foregroundColor="#ffff00" font="Regular;21"/>
+				<widget name="userTag" position="200,365" size="185,50" valign="top" halign="center" zPosition="2" foregroundColor="#ff0000" font="Regular;21"/>
+				<widget name="preTag" position="400,365" size="190,50" valign="top" halign="center" zPosition="2" foregroundColor="#00ff00" font="Regular;21"/>
 
-			<ePixmap pixmap="skin_default/buttons/red.png" position="0,420" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="155,420" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/yellow.png" position="305,420" zPosition="0" size="140,40" transparent="1" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/blue.png" position="455,420" zPosition="0" size="140,40" transparent="1" alphatest="on" />
+				<ePixmap pixmap="skin_default/buttons/red.png" position="0,420" zPosition="0" size="140,40" transparent="1" alphatest="on" />
+				<ePixmap pixmap="skin_default/buttons/green.png" position="155,420" zPosition="0" size="140,40" transparent="1" alphatest="on" />
+				<ePixmap pixmap="skin_default/buttons/yellow.png" position="305,420" zPosition="0" size="140,40" transparent="1" alphatest="on" />
+				<ePixmap pixmap="skin_default/buttons/blue.png" position="455,420" zPosition="0" size="140,40" transparent="1" alphatest="on" />
 
-			<widget name="buttonred" position="0,420" size="140,40" valign="center" halign="center" zPosition="2" foregroundColor="white" transparent="1" font="Regular;18"/>
-			<widget name="buttongreen" position="155,420" size="140,40" valign="center" halign="center" zPosition="2" foregroundColor="white" transparent="1" font="Regular;18"/>
-			<widget name="buttonyellow" position="305,420" size="140,40" valign="center" halign="center" zPosition="2" foregroundColor="white" transparent="1" font="Regular;18"/>
-			<widget name="buttonblue" position="455,420" size="140,40" valign="center" halign="center" zPosition="2" foregroundColor="white" transparent="1" font="Regular;18"/>
-		</screen>"""
+				<widget name="buttonred" position="0,420" size="140,40" valign="center" halign="center" zPosition="2" foregroundColor="white" transparent="1" font="Regular;18"/>
+				<widget name="buttongreen" position="155,420" size="140,40" valign="center" halign="center" zPosition="2" foregroundColor="white" transparent="1" font="Regular;18"/>
+				<widget name="buttonyellow" position="305,420" size="140,40" valign="center" halign="center" zPosition="2" foregroundColor="white" transparent="1" font="Regular;18"/>
+				<widget name="buttonblue" position="455,420" size="140,40" valign="center" halign="center" zPosition="2" foregroundColor="white" transparent="1" font="Regular;18"/>
+			</screen>"""	
+	else:
+		skin = """
+			<screen position="center,70" size="1000,690" title="Movie Tagger" >
+				<widget name="moviename" position="10,0" size="980,80" valign="top" font="Regular;30"/>
+				<ePixmap pixmap="skin_default/div-h.png" position="0,82" zPosition="1" size="1000,2" />
+				
+				<widget name="assignedTags" position="10,90" size="490,30" valign="top" halign="left" zPosition="2" foregroundColor="white" font="Regular;26"/>
+				
+				<widget name="cTaglist" position="10,120" size="490,440" scrollbarMode="showOnDemand"/>
+				
+				<widget name="definedTags" position="500,90" size="490,30" valign="top" halign="left" zPosition="2" foregroundColor="white" font="Regular;26"/>
+				
+				<widget name="aTaglist" position="500,120" size="980,440" scrollbarMode="showOnDemand"/>
+                
+				<ePixmap pixmap="skin_default/div-h.png" position="0,578" zPosition="1" size="1000,2" />
+				<widget name="usedTag" position="5,600" size="330,50" valign="top" halign="center" zPosition="2" foregroundColor="#ffff00" font="Regular;26"/>
+				<widget name="userTag" position="335,600" size="330,50" valign="top" halign="center" zPosition="2" foregroundColor="#ff0000" font="Regular;26"/>
+				<widget name="preTag" position="665,600" size="330,50" valign="top" halign="center" zPosition="2" foregroundColor="#00ff00" font="Regular;26"/>
+
+				<ePixmap pixmap="skin_default/buttons/red.png" position="20,650" zPosition="0" size="235,40" transparent="1" alphatest="on" scale="stretch" />
+				<ePixmap pixmap="skin_default/buttons/green.png" position="265,650" zPosition="0" size="235,40" transparent="1" alphatest="on" scale="stretch" />
+				<ePixmap pixmap="skin_default/buttons/yellow.png" position="510,650" zPosition="0" size="235,40" transparent="1" alphatest="on" scale="stretch" />
+				<ePixmap pixmap="skin_default/buttons/blue.png" position="755,650" zPosition="0" size="235,40" transparent="1" alphatest="on" scale="stretch" />
+
+				<widget name="buttonred" position="20,650" size="235,40" valign="center" halign="center" zPosition="2" foregroundColor="white" transparent="1" font="Regular;24"/>
+				<widget name="buttongreen" position="265,650" size="235,40" valign="center" halign="center" zPosition="2" foregroundColor="white" transparent="1" font="Regular;24"/>
+				<widget name="buttonyellow" position="510,650" size="235,40" valign="center" halign="center" zPosition="2" foregroundColor="white" transparent="1" font="Regular;24"/>
+				<widget name="buttonblue" position="755,650" size="235,40" valign="center" halign="center" zPosition="2" foregroundColor="white" transparent="1" font="Regular;24"/>
+			</screen>"""
 
 	currList = None
 
@@ -59,7 +91,7 @@ class MovieTagger(Screen):
 		self["buttongreen"] = Label("green")
 		self["buttonyellow"] = Label("yellow")
 		self["buttonblue"] = Label("blue")
-		self["cTaglist"] = MenuList([])
+		self["cTaglist"] = TagMenuList([])
 		self["aTaglist"] = TagMenuList([])
 		self["actions"] = ActionMap(["WizardActions","MenuActions","ShortcutActions"],
 			{
@@ -96,7 +128,8 @@ class MovieTagger(Screen):
 		self.info = self.serviceHandler.info(self.service)
 		self.tags = self.info.getInfoString(self.service, iServiceInformation.sTags).split(' ')
 		self.tags.sort()
-		self["cTaglist"].l.setList(self.tags)
+		currentTagsList = [(x,) for x in self.tags]
+		self["cTaglist"].setList(currentTagsList)
 
 	def updateAllTagList(self):
 		root = eServiceReference("2:0:1:0:0:0:0:0:0:0:" + resolveFilename(SCOPE_HDD))
@@ -107,6 +140,7 @@ class MovieTagger(Screen):
 		self.usedTags = xtmp
 
 		e = []+self.pretags
+		testlist = []
 		for i in ml.tags:
 			try:
 				self.pretags.index(i)
@@ -115,19 +149,9 @@ class MovieTagger(Screen):
 
 		taglist = []
 		for i in e:
-			res = [ i ]
-			res.append(MultiContentEntryText(pos=(5,0),size=(500,25),font=0,text=i))
-			if self.isUsedTag(i):
-				res.append(MultiContentEntryText(pos=(220,0),size=(20,25),font=1,text="X",color=0x00FFFF00)) #yellow
-			if self.isUserTag(i) :
-				res.append(MultiContentEntryText(pos=(240,0),size=(20,25),font=1, text="X",color=0x00FF0000)) #red
-			if self.isPreTag(i):
-				res.append(MultiContentEntryText(pos=(260,0),size=(20,25),font=1,text="X",color=0x0000FF00)) #green
-
-			taglist.append(res)
-
+			taglist.append((i, self.isUsedTag(i), self.isUserTag(i), self.isPreTag(i) ))
 		taglist.sort()
-		self["aTaglist"].l.setList(taglist)
+		self["aTaglist"].setList(taglist)
 
 	def addTag(self,tagname):
 		try:
@@ -235,7 +259,8 @@ class MovieTagger(Screen):
 
 	def keyRed(self):
 		if self.currList is self["cTaglist"]:
-			self.removeTag(self["cTaglist"].getCurrent())
+			print "removing Tag", self["cTaglist"].getCurrent()[0] 
+			self.removeTag(self["cTaglist"].getCurrent()[0])
 
 		elif self.currList is self["aTaglist"]:
 			print "adding Tag",self["aTaglist"].getCurrent()[0]
@@ -290,14 +315,55 @@ class MovieTagger(Screen):
 			self.addTag(newTag.strip().replace(" ","_"))
 
 class TagMenuList(MenuList):
-	def __init__(self, list, enableWrapAround = False):
+	SKIN_COMPONENT_KEY = "MovieTaggerTagMenuList"
+	SKIN_COMPONENT_KEY_ITEM_HEIGHT = "itemHeight"
+	SKIN_COMPONENT_KEY_ITEM_WIDTH = "itemWidth"
+	SKIN_COMPONENT_KEY_XINDICATOR_WIDTH = "xIndicatorWidth"
+	SKIN_COMPONENT_KEY_XINDICATOR_OFFSET = "xIndicatorOffset"
+	SKIN_COMPONENT_KEY_XOFFSET = "xOffset"
+	SKIN_COMPONENT_KEY_USEDTAGCOLOR = "usedTagColor"
+	SKIN_COMPONENT_KEY_USERTAGCOLOR = "userTagColor"
+	SKIN_COMPONENT_KEY_PRETAGCOLOR = "preTagColor"
+
+	def __init__(self, list, enableWrapAround = True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-		self.l.setFont(0, gFont("Regular", 20))
-		self.l.setFont(1, gFont("Regular", 25))
+		
+		isFHD = False
+		sz_w = getDesktop(0).size().width()
+		if sz_w >= 1920:
+			isFHD = True
+			
+		sizes = componentSizes[TagMenuList.SKIN_COMPONENT_KEY]
+		self.componentItemHeight = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_ITEM_HEIGHT, 40 if isFHD else 25)
+		self.componentItemWidth = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_ITEM_WIDTH, 490 if isFHD else 290)
+		self.xOffset = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_XOFFSET, 10 if isFHD else 5)
+		self.xIndicatorWidth = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_XINDICATOR_WIDTH, 40 if isFHD else 20)
+		self.xIndicatorOffset = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_XINDICATOR_OFFSET, 370 if isFHD else 230)
+		self.usedTagColor = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_USEDTAGCOLOR, 0x00FFFF00)
+		self.userTagColor = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_USERTAGCOLOR, 0x00FF0000)
+		self.preTagColor = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_PRETAGCOLOR, 0x0000FF00)
+		
+		tlf = TemplatedListFonts()
+		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
+		self.l.setFont(1, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
+		self.l.setItemHeight(self.componentItemHeight)
+		self.l.setBuildFunc(self.buildTagMenuListEntry)
+
+	def buildTagMenuListEntry(self, tagName, isUsedTag=False, isUserTag=False, isPreTag=False):
+		res = [ tagName ]
+		res.append(MultiContentEntryText(pos=(self.xOffset,0),size=(self.componentItemWidth,self.componentItemHeight),font=0,text=tagName))
+		
+		if isUsedTag:
+			res.append(MultiContentEntryText(pos=(self.xIndicatorOffset,0),size=(self.xIndicatorWidth,self.componentItemHeight),font=1,text="X",color=self.usedTagColor))
+		if isUserTag:
+			res.append(MultiContentEntryText(pos=(self.xIndicatorOffset+self.xIndicatorWidth,0),size=(self.xIndicatorWidth,self.componentItemHeight),font=1, text="X",color=self.userTagColor))
+		if isPreTag:
+			res.append(MultiContentEntryText(pos=(self.xIndicatorOffset+(2*self.xIndicatorWidth),0),size=(self.xIndicatorWidth,self.componentItemHeight),font=1,text="X",color=self.preTagColor))
+		
+		return res
 
 	def postWidgetCreate(self, instance):
 		MenuList.postWidgetCreate(self, instance)
-		instance.setItemHeight(25)
 
 def main(session, service, **kwargs):
 	try:
