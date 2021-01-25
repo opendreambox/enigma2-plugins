@@ -7,8 +7,8 @@ from Screens.InputBox import InputBox
 from Screens.MessageBox import MessageBox
 from Components.ActionMap import ActionMap
 from Components.MultiContent import MultiContentEntryText
-from enigma import eServiceReference, eListboxPythonMultiContent, eServiceCenter, gFont, iServiceInformation, getDesktop
-from skin import TemplatedListFonts, componentSizes
+from enigma import eServiceReference, eListboxPythonMultiContent, eServiceCenter, gFont, iServiceInformation, getDesktop, RT_HALIGN_LEFT, RT_VALIGN_CENTER, RT_HALIGN_CENTER
+from skin import TemplatedListFonts, componentSizes, parseColor
 
 from Tools.Directories import pathExists, resolveFilename, SCOPE_HDD, SCOPE_PLUGINS
 
@@ -321,9 +321,7 @@ class TagMenuList(MenuList):
 	SKIN_COMPONENT_KEY_XINDICATOR_WIDTH = "xIndicatorWidth"
 	SKIN_COMPONENT_KEY_XINDICATOR_OFFSET = "xIndicatorOffset"
 	SKIN_COMPONENT_KEY_XOFFSET = "xOffset"
-	SKIN_COMPONENT_KEY_USEDTAGCOLOR = "usedTagColor"
-	SKIN_COMPONENT_KEY_USERTAGCOLOR = "userTagColor"
-	SKIN_COMPONENT_KEY_PRETAGCOLOR = "preTagColor"
+	# skinner: if you want different colors for "X" please define color usedTagColor, userTagColor, preTagColor in <colors>
 
 	def __init__(self, list, enableWrapAround = True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
@@ -339,9 +337,13 @@ class TagMenuList(MenuList):
 		self.xOffset = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_XOFFSET, 10 if isFHD else 5)
 		self.xIndicatorWidth = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_XINDICATOR_WIDTH, 40 if isFHD else 20)
 		self.xIndicatorOffset = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_XINDICATOR_OFFSET, 370 if isFHD else 230)
-		self.usedTagColor = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_USEDTAGCOLOR, 0x00FFFF00)
-		self.userTagColor = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_USERTAGCOLOR, 0x00FF0000)
-		self.preTagColor = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_PRETAGCOLOR, 0x0000FF00)
+		try: self.usedTagColor = parseColor("usedTagColor").argb()
+		except: self.usedTagColor = 0x00ffff00
+		try: self.userTagColor = parseColor("userTagColor").argb()
+		except: self.userTagColor = 0x00FF0000
+		try: self.preTagColor = parseColor("preTagColor").argb()
+		except: self.preTagColor = 0x0000FF00
+		
 		
 		tlf = TemplatedListFonts()
 		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
@@ -351,15 +353,16 @@ class TagMenuList(MenuList):
 
 	def buildTagMenuListEntry(self, tagName, isUsedTag=False, isUserTag=False, isPreTag=False):
 		res = [ tagName ]
-		res.append(MultiContentEntryText(pos=(self.xOffset,0),size=(self.componentItemWidth,self.componentItemHeight),font=0,text=tagName))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, self.xOffset, 0, self.componentItemWidth, self.componentItemHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, tagName))
 		
 		if isUsedTag:
-			res.append(MultiContentEntryText(pos=(self.xIndicatorOffset,0),size=(self.xIndicatorWidth,self.componentItemHeight),font=1,text="X",color=self.usedTagColor))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, self.xIndicatorOffset, 0, self.xIndicatorWidth, self.componentItemHeight,1, RT_HALIGN_CENTER|RT_VALIGN_CENTER, "X",self.usedTagColor))
 		if isUserTag:
-			res.append(MultiContentEntryText(pos=(self.xIndicatorOffset+self.xIndicatorWidth,0),size=(self.xIndicatorWidth,self.componentItemHeight),font=1, text="X",color=self.userTagColor))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT,self.xIndicatorOffset+self.xIndicatorWidth,0,self.xIndicatorWidth,self.componentItemHeight,1, RT_HALIGN_CENTER|RT_VALIGN_CENTER, "X",self.userTagColor))
 		if isPreTag:
-			res.append(MultiContentEntryText(pos=(self.xIndicatorOffset+(2*self.xIndicatorWidth),0),size=(self.xIndicatorWidth,self.componentItemHeight),font=1,text="X",color=self.preTagColor))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT,self.xIndicatorOffset+(2*self.xIndicatorWidth),0,self.xIndicatorWidth,self.componentItemHeight,1,RT_HALIGN_CENTER|RT_VALIGN_CENTER, "X",self.preTagColor))
 		
+		print "res", res
 		return res
 
 	def postWidgetCreate(self, instance):
