@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1564 $
-$Date: 2021-01-23 11:51:28 +0100 (Sat, 23 Jan 2021) $
-$Id: FritzCallFBF.py 1564 2021-01-23 10:51:28Z michael $
+$Revision: 1565 $
+$Date: 2021-01-25 18:02:50 +0100 (Mon, 25 Jan 2021) $
+$Id: FritzCallFBF.py 1565 2021-01-25 17:02:50Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -4104,6 +4104,7 @@ class FritzCallFBF_upnp():
 			if not name:
 				self.info("Skipping entry with no realName")
 				continue
+			name = name.replace(",", "")
 			numbers = contact.iterfind("./telephony/number")
 			for number in numbers:
 				# self.debug("Name: " + name)
