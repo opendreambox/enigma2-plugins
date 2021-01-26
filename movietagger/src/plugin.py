@@ -139,17 +139,11 @@ class MovieTagger(Screen):
 		xtmp.extend(ml.tags)
 		self.usedTags = xtmp
 
-		e = []+self.pretags
-		testlist = []
-		for i in ml.tags:
-			try:
-				self.pretags.index(i)
-			except ValueError:
-				e.append(i)
-
+		e = self.pretags + [ x for x in ml.tags if x not in self.pretags ]
+		
 		taglist = []
 		for i in e:
-			taglist.append((i, self.isUsedTag(i), self.isUserTag(i), self.isPreTag(i) ))
+			taglist.append(self.getFlags(i))
 		taglist.sort()
 		self["aTaglist"].setList(taglist)
 
@@ -237,26 +231,15 @@ class MovieTagger(Screen):
 		self.updateCurrentTagList()
 		self.updateAllTagList()
 
-	def isUsedTag(self,tag):
-		try:
-			self.usedTags.index(tag)
-			return True
-		except ValueError:
-			return False
-
-	def isPreTag(self,tag):
-		try:
-			self.pretags.index(tag)
-			return True
-		except ValueError:
-			return False
-
-	def isUserTag(self,tag):
-		if self.isPreTag(tag) is False and self.isUsedTag(tag) is True:
-			return True
-		else:
-			return False
-
+	def getFlags(self, tag):
+		usedTags = tag in self.usedTags
+		preTags = tag in self.pretags
+		print usedTags, preTags
+		userTags = False
+		if not preTags and usedTags:
+			userTags = True
+		return (tag, usedTags, preTags, userTags )
+	
 	def keyRed(self):
 		if self.currList is self["cTaglist"]:
 			print "removing Tag", self["cTaglist"].getCurrent()[0] 
@@ -362,7 +345,6 @@ class TagMenuList(MenuList):
 		if isPreTag:
 			res.append((eListboxPythonMultiContent.TYPE_TEXT,self.xIndicatorOffset+(2*self.xIndicatorWidth),0,self.xIndicatorWidth,self.componentItemHeight,1,RT_HALIGN_CENTER|RT_VALIGN_CENTER, "X",self.preTagColor))
 		
-		print "res", res
 		return res
 
 	def postWidgetCreate(self, instance):
