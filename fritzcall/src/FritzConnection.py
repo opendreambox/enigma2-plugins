@@ -478,9 +478,9 @@ class FritzConnection(object):
 					   password='',
 					   servicesToGet=None):
 		# self.debug("")
-		if password and type(password) is list:
+		if password and isinstance(password, list):
 			password = password[0]
-		if user and type(user) is list:
+		if user and isinstance(user, list):
 			user = user[0]
 		# The keys of the dictionary are becoming FritzAction instance
 		# attributes on calling the FritzSCDPParser.get_actions() method
@@ -555,7 +555,7 @@ class FritzConnection(object):
 		"""
 		actions = []
 		for service_name in sorted(self.services.keys()):
-			action_names = self.services[service_name].actions.keys()
+			action_names = list(self.services[service_name].actions.keys())
 			for action_name in sorted(action_names):
 				actions.append((service_name, action_name))
 		return actions

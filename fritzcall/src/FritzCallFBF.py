@@ -2,9 +2,9 @@
 '''
 Created on 30.09.2012
 $Author: michael $
-$Revision: 1552 $
-$Date: 2019-04-23 09:40:35 +0200 (Tue, 23 Apr 2019) $
-$Id: FritzCallFBF.py 1552 2019-04-23 07:40:35Z michael $
+$Revision: 1565 $
+$Date: 2021-01-25 18:02:50 +0100 (Mon, 25 Jan 2021) $
+$Id: FritzCallFBF.py 1565 2021-01-25 17:02:50Z michael $
 '''
 
 # C0111 (Missing docstring)
@@ -21,8 +21,9 @@ $Id: FritzCallFBF.py 1552 2019-04-23 07:40:35Z michael $
 # E0611 No name %r in module %r
 # pylint: disable=C0111,C0103,C0301,W0603,W0403,C0302,W0611,F0401,E0611
 
+from __future__ import absolute_import
 import re, time, hashlib, logging, StringIO, csv, json
-from urllib import urlencode
+from six.moves.urllib.parse import urlencode
 import xml.etree.ElementTree as ET
 
 
@@ -31,12 +32,14 @@ from Screens.MessageBox import MessageBox
 from twisted.web.client import getPage
 from enigma import eTimer #@UnresolvedImport
 
-from . import __ #@UnresolvedImport
-from plugin import config, stripCbCPrefix, resolveNumberWithAvon, FBF_IN_CALLS, FBF_OUT_CALLS, FBF_MISSED_CALLS, FBF_BLOCKED_CALLS, \
+from . import _, __ #@UnresolvedImport
+from .plugin import config, stripCbCPrefix, resolveNumberWithAvon, FBF_IN_CALLS, FBF_OUT_CALLS, FBF_MISSED_CALLS, FBF_BLOCKED_CALLS, \
 	decode
-from nrzuname import html2unicode
-from FritzConnection import FritzConnection
+from .nrzuname import html2unicode
+from .FritzConnection import FritzConnection
 from twisted.python.failure import Failure
+from six.moves import map
+from six.moves import range
 
 FBF_boxInfo = 0
 FBF_upTime = 1
@@ -525,7 +528,7 @@ class FritzCallFBF(object):
 		callListL = []
 		if config.plugins.FritzCall.filter.value and config.plugins.FritzCall.filterCallList.value:
 			filtermsns = [x.strip() for x in config.plugins.FritzCall.filtermsn.value.split(",")]
-			self.debug("filtermsns %s", repr(map(__, filtermsns)))
+			self.debug("filtermsns %s", repr(list(map(__, filtermsns))))
 
 		# Typ;Datum;Name;Rufnummer;Nebenstelle;Eigene Rufnummer;Dauer
 		# 0  ;1	   ;2   ;3		  ;4		  ;5			   ;6
@@ -1424,7 +1427,7 @@ class FritzCallFBF_05_27(object):
 		callListL = []
 		if config.plugins.FritzCall.filter.value and config.plugins.FritzCall.filterCallList.value:
 			filtermsns = [x.strip() for x in config.plugins.FritzCall.filtermsn.value.split(",")]
-			self.debug("[FritzCallFBF_05_27] _gotPageCalls: filtermsns %s", repr(map(__, filtermsns)))
+			self.debug("[FritzCallFBF_05_27] _gotPageCalls: filtermsns %s", repr(list(map(__, filtermsns))))
 
 		#=======================================================================
 		# linkP = open("/tmp/FritzCall_Calllist.htm", "w")
@@ -2099,7 +2102,7 @@ class FritzCallFBF_05_50(object):
 		callListL = []
 		if config.plugins.FritzCall.filter.value and config.plugins.FritzCall.filterCallList.value:
 			filtermsns = [x.strip() for x in config.plugins.FritzCall.filtermsn.value.split(",")]
-			self.info("filtermsns %s", repr(map(__, filtermsns)))
+			self.info("filtermsns %s", repr(list(map(__, filtermsns))))
 		else:
 			filtermsns = None
 
@@ -2111,8 +2114,8 @@ class FritzCallFBF_05_50(object):
 
 		# 0: direct; 1: date; 2: Name; 3: Nummer; 4: Nebenstelle; 5: Eigene Rufnumme; 6: Dauer
 		calls = csv.reader(StringIO.StringIO(csvString), delimiter = ';')
-		calls.next()  # skip sep
-		calls.next()  # skip header line
+		next(calls)  # skip sep
+		next(calls)  # skip header line
 		for call in calls:
 			if len(call) != 7:
 				self.warn("skip %s len: %s", repr(call), str(len(call)))
@@ -2867,7 +2870,7 @@ class FritzCallFBF_06_35(object):
 		callListL = []
 		if config.plugins.FritzCall.filter.value and config.plugins.FritzCall.filterCallList.value:
 			filtermsns = [x.strip() for x in config.plugins.FritzCall.filtermsn.value.split(",")]
-			self.info("filtermsns %s", repr(map(__, filtermsns)))
+			self.info("filtermsns %s", repr(list(map(__, filtermsns))))
 		else:
 			filtermsns = None
 
@@ -2879,8 +2882,8 @@ class FritzCallFBF_06_35(object):
 
 		# 0: direct; 1: date; 2: Name; 3: Nummer; 4: Nebenstelle; 5: Eigene Rufnumme; 6: Dauer
 		calls = csv.reader(StringIO.StringIO(csvString), delimiter = ';')
-		calls.next()  # skip sep
-		calls.next()  # skip header line
+		next(calls)  # skip sep
+		next(calls)  # skip header line
 
 		for call in calls:
 			if len(call) != 7:
@@ -3521,7 +3524,7 @@ class FritzCallFBF_upnp():
 		if self._loginFailure:
 			self.debug("skip because of login failure")
 		self._infoCallback = callback
-		if "DeviceConfig:1" in self.fc.services.keys():
+		if "DeviceConfig:1" in list(self.fc.services.keys()):
 			self.fc.call_action(self._getInfo, "DeviceConfig", "X_AVM-DE_CreateUrlSID")
 		else:
 			try:
@@ -3532,9 +3535,9 @@ class FritzCallFBF_upnp():
 			self._timerTick()
 
 	def _timerTick(self):
-		self.debug(repr(self.fc.services.keys()))
+		self.debug(repr(list(self.fc.services.keys())))
 		self._timeout -= 1
-		if "DeviceConfig:1" in self.fc.services.keys():
+		if "DeviceConfig:1" in list(self.fc.services.keys()):
 			if self._loginFailure:
 				self.debug("skip because of login failure")
 			else:
@@ -3911,7 +3914,7 @@ class FritzCallFBF_upnp():
 			self.debug("skip because of login failure")
 		self._callScreen = callScreen
 		self._callType = callType
-		if "X_AVM-DE_OnTel:1" in self.fc.services.keys():
+		if "X_AVM-DE_OnTel:1" in list(self.fc.services.keys()):
 			self.fc.call_action(lambda x: self._getCalls_cb1(x, callback), "X_AVM-DE_OnTel", "GetCallList")
 		else:
 			Notifications.AddNotification(MessageBox, _("Cannot get infos from FRITZ!Box yet\nStill initialising or wrong firmware version"), type = MessageBox.TYPE_ERROR, timeout = config.plugins.FritzCall.timeout.value)
@@ -4030,7 +4033,7 @@ class FritzCallFBF_upnp():
 
 		# newer OE versions don't have the callback
 		self._phonebook_timeout -= 1
-		if "X_AVM-DE_OnTel:1" in self.fc.services.keys():
+		if "X_AVM-DE_OnTel:1" in list(self.fc.services.keys()):
 			self.fc.call_action(self._loadFritzBoxPhonebook_cb1, "X_AVM-DE_OnTel", "GetPhonebookList")
 		else:
 			try:
@@ -4041,9 +4044,9 @@ class FritzCallFBF_upnp():
 			self._phonebook_timerTick()
 
 	def _phonebook_timerTick(self):
-		self.debug(repr(self.fc.services.keys()))
+		self.debug(repr(list(self.fc.services.keys())))
 		self._phonebook_timeout -= 1
-		if "X_AVM-DE_OnTel:1" in self.fc.services.keys():
+		if "X_AVM-DE_OnTel:1" in list(self.fc.services.keys()):
 			if self._loginFailure:
 				self.debug("skip because of login failure")
 			else:
@@ -4100,7 +4103,11 @@ class FritzCallFBF_upnp():
 		count = 0
 		contacts = root.iterfind(".//contact")
 		for contact in contacts:
-			name = contact.find("./person/realName").text.replace(",", "")
+			name = contact.find("./person/realName").text
+			if not name:
+				self.info("Skipping entry with no realName")
+				continue
+			name = name.replace(",", "")
 			numbers = contact.iterfind("./telephony/number")
 			for number in numbers:
 				# self.debug("Name: " + name)
@@ -4150,12 +4157,12 @@ class FritzCallFBF_upnp():
 		if not statusWLAN or (statusWLAN != '1' and statusWLAN != '0'):
 			return
 
-		if "WLANConfiguration:1" not in self.fc.services.keys():
+		if "WLANConfiguration:1" not in list(self.fc.services.keys()):
 			Notifications.AddNotification(MessageBox, _("Cannot get infos from FRITZ!Box yet\nStill initialising or wrong firmware version"), type = MessageBox.TYPE_ERROR, timeout = config.plugins.FritzCall.timeout.value)
 			return
 
-		if "WLANConfiguration:3" in self.fc.services.keys():
-			if "WLANConfiguration:2" in self.fc.services.keys():
+		if "WLANConfiguration:3" in list(self.fc.services.keys()):
+			if "WLANConfiguration:2" in list(self.fc.services.keys()):
 				self.fc.call_action(None, "WLANConfiguration:2", "SetEnable", NewEnable=int(statusWLAN))
 		self.fc.call_action(lambda x: self._general_cb(x, callback), "WLANConfiguration:1", "SetEnable", NewEnable=int(statusWLAN))
 
@@ -4170,19 +4177,19 @@ class FritzCallFBF_upnp():
 		if self._loginFailure:
 			self.debug("skip because of login failure")
 
-		if "WLANConfiguration:2" not in self.fc.services.keys():
+		if "WLANConfiguration:2" not in list(self.fc.services.keys()):
 			Notifications.AddNotification(MessageBox, _("Cannot get infos from FRITZ!Box yet\nStill initialising or wrong firmware version"), type = MessageBox.TYPE_ERROR, timeout = config.plugins.FritzCall.timeout.value)
 			return
 
 		if statusGuestAccess.find('WLAN') != -1:
 			self.debug("WLAN")
-			if "WLANConfiguration:3" in self.fc.services.keys():
+			if "WLANConfiguration:3" in list(self.fc.services.keys()):
 				self.fc.call_action(lambda x: self._general_cb(x, callback), "WLANConfiguration:3", "SetEnable", NewEnable=0)
 			else:
 				self.fc.call_action(lambda x: self._general_cb(x, callback), "WLANConfiguration:2", "SetEnable", NewEnable=0)
 		else:
 			self.debug("no WLAN")
-			if "WLANConfiguration:3" in self.fc.services.keys():
+			if "WLANConfiguration:3" in list(self.fc.services.keys()):
 				self.fc.call_action(lambda x: self._general_cb(x, callback), "WLANConfiguration:3", "SetEnable", NewEnable=1)
 			else:
 				self.fc.call_action(lambda x: self._general_cb(x, callback), "WLANConfiguration:2", "SetEnable", NewEnable=1)
@@ -4211,7 +4218,7 @@ class FritzCallFBF_upnp():
 			self.debug("skip because of login failure")
 
 		self.blacklist = ([], [])
-		if "X_AVM-DE_OnTel:1" not in self.fc.services.keys():
+		if "X_AVM-DE_OnTel:1" not in list(self.fc.services.keys()):
 			Notifications.AddNotification(MessageBox, _("Cannot get infos from FRITZ!Box yet\nStill initialising or wrong firmware version"), type = MessageBox.TYPE_ERROR, timeout = config.plugins.FritzCall.timeout.value)
 			return
 		self.fc.call_action(self._readBlacklist_cb, "X_AVM-DE_OnTel", "GetDeflections")
@@ -4284,7 +4291,7 @@ class FritzCallFBF_upnp():
 					self.blacklist[0].append("")
 				if deflection.find("./Type").text == "fromPB":
 					self.debug("get phonebook for blacklist")
-					if "X_AVM-DE_OnTel:1" in self.fc.services.keys():
+					if "X_AVM-DE_OnTel:1" in list(self.fc.services.keys()):
 						pbId = deflection.find("./PhonebookID").text
 						if pbId:
 							self.fc.call_action(_readPhonebookForBlacklist, "X_AVM-DE_OnTel", "GetPhonebook", NewPhonebookId=pbId)
@@ -4314,7 +4321,7 @@ class FritzCallFBF_upnp():
 		if self._loginFailure:
 			self.debug("skip because of login failure")
 
-		if "DeviceConfig:1" in self.fc.services.keys():
+		if "DeviceConfig:1" in list(self.fc.services.keys()):
 			self.fc.call_action(self._getInfo, "DeviceConfig", "Reboot")
 		else:
 			Notifications.AddNotification(MessageBox, _("Cannot get infos from FRITZ!Box yet\nStill initialising or wrong firmware version"), type = MessageBox.TYPE_ERROR, timeout = config.plugins.FritzCall.timeout.value)
