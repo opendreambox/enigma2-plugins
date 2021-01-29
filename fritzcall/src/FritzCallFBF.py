@@ -2435,13 +2435,13 @@ class FritzCallFBF_05_50(object):
 						wlanState[3] = found.group(1)
 					found = re.match(r'.*Funknetz \(2,4 GHz\): ([^,"]*)', wlans, re.S)
 					if found:
-						wlanState[3] = "2,4Ghz: " + found.group(1)
+						wlanState[3] = "2,4GHz: " + found.group(1)
 					found = re.match(r'.*Funknetz \(5 GHz\): ([^,"]*)', wlans, re.S)
 					if found:
 						if wlanState[3]:
-							wlanState[3] = wlanState[3] + " 5Ghz: " + found.group(1)
+							wlanState[3] = wlanState[3] + " 5GHz: " + found.group(1)
 						else:
-							wlanState[3] = "5Ghz: " + found.group(1)
+							wlanState[3] = "5GHz: " + found.group(1)
 				else:
 					# das ist wahrscheinlich alles falsch hier...
 					if found.group(3) and found.group(3).find(", gesichert") != -1:
@@ -3659,7 +3659,7 @@ class FritzCallFBF_upnp():
 		self.info("upTime: " + repr(upTime))
 		self.info("provider: " + repr(provider))
 		self.info("ipAddress: " + repr(ipAddress))
-		
+
 		if "ipv4" in boxData and "txt" in boxData["ipv4"]:
 			for item in boxData["ipv4"]["txt"]:
 				item = item.encode("utf-8")
@@ -3810,9 +3810,9 @@ class FritzCallFBF_upnp():
 			netName = re.sub(r".*: ", "", wlan["txt"]).encode("utf-8")
 			# self.debug("netName: %s; led: %s", repr(netName), repr(wlan["led"]))
 			if wlan["led"] == "led_green":
-				wlanState = ['1', '', '', "2,4Ghz/5GHz " + _("on") + ": " + netName]
+				wlanState = ['1', '', '', "2,4GHz/5GHz " + _("on") + ": " + netName]
 			else:
-				wlanState = ['0', '', '', "2,4Ghz/5GHz " + _("off") + ": " + netName]
+				wlanState = ['0', '', '', "2,4GHz/5GHz " + _("off") + ": " + netName]
 			# self.info("wlanState2,4/5: " + repr(wlanState))
 		self.info("wlanState: " + repr(wlanState))
 
@@ -4222,7 +4222,7 @@ class FritzCallFBF_upnp():
 			Notifications.AddNotification(MessageBox, _("Cannot get infos from FRITZ!Box yet\nStill initialising or wrong firmware version"), type = MessageBox.TYPE_ERROR, timeout = config.plugins.FritzCall.timeout.value)
 			return
 		self.fc.call_action(self._readBlacklist_cb, "X_AVM-DE_OnTel", "GetDeflections")
-		
+
 	def _readBlacklist_cb(self, result):
 		def _readPhonebookForBlacklist(result):
 			self.debug(repr(result))
@@ -4231,14 +4231,14 @@ class FritzCallFBF_upnp():
 				self._notify(text)
 				self._loginFailure = True
 				return
-	
+
 			if 'NewPhonebookName' not in result or 'NewPhonebookURL' not in result:
 				text = _("FRITZ!Box - ") + _("Could not load phonebook: %s") % 'NewPhonebookName'
 				self._notify(text)
 				return
-	
+
 			getPage(result["NewPhonebookURL"]).addCallback(_readPhonebookForBlacklist_cb)
-	
+
 		def _readPhonebookForBlacklist_cb(result):
 			root = ET.fromstring(result)
 			thisName = root.find(".//phonebook").attrib["name"]
@@ -4248,7 +4248,7 @@ class FritzCallFBF_upnp():
 				linkP = open("/tmp/FritzCall_readPhonebookForBlacklist_cb_%s.xml" % thisName, "w")
 				linkP.write(result)
 				linkP.close()
-	
+
 			contacts = root.iterfind(".//contact")
 			for contact in contacts:
 				numbers = contact.iterfind("./telephony/number")
