@@ -10,7 +10,7 @@ $Id: FritzOutlookCSV.py 1561 2020-10-12 13:32:07Z michael $
 #
 from __future__ import print_function
 try:
-	from . import _, normalizePhoneNumber #@UnresolvedImport # pylint: disable-msg=W0613,F0401
+	from . import normalizePhoneNumber #@UnresolvedImport # pylint: disable-msg=W0613,F0401
 except ValueError:
 	def _(string): # pylint: disable-msg=C0103
 		return string

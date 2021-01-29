@@ -12,7 +12,7 @@ $Id: FritzLDIF.py 1561 2020-10-12 13:32:07Z michael $
 from __future__ import print_function
 import ldif, re
 try:
-	from . import _, normalizePhoneNumber #@UnresolvedImport # pylint: disable-msg=F0401
+	from . import normalizePhoneNumber #@UnresolvedImport # pylint: disable-msg=F0401
 except ValueError:
 	def _(string): # pylint: disable-msg=C0103
 		return string

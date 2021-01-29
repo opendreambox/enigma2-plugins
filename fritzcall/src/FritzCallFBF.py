@@ -32,7 +32,7 @@ from Screens.MessageBox import MessageBox
 from twisted.web.client import getPage
 from enigma import eTimer #@UnresolvedImport
 
-from . import _, __ #@UnresolvedImport
+from . import __ #@UnresolvedImport
 from .plugin import config, stripCbCPrefix, resolveNumberWithAvon, FBF_IN_CALLS, FBF_OUT_CALLS, FBF_MISSED_CALLS, FBF_BLOCKED_CALLS, \
 	decode
 from .nrzuname import html2unicode

@@ -69,7 +69,7 @@ from twisted.protocols.basic import LineReceiver  # @UnresolvedImport
 from .FritzOutlookCSV import findNumber
 from .FritzLDIF import FindNumber
 from .nrzuname import ReverseLookupAndNotifier
-from . import _, __  # @UnresolvedImport # pylint: disable=W0611,F0401
+from . import __  # @UnresolvedImport # pylint: disable=W0611,F0401
 import six
 from six.moves import zip
 from six.moves import range
