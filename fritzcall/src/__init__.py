@@ -2,15 +2,16 @@
 '''
 general functions for FritzCall plugin
 
-$Id: __init__.py 1454 2017-06-11 13:24:13Z michael $
+$Id: __init__.py 1561 2020-10-12 13:32:07Z michael $
 $Author: michael $
-$Revision: 1454 $
-$Date: 2017-06-11 15:24:13 +0200 (Sun, 11 Jun 2017) $
+$Revision: 1561 $
+$Date: 2020-10-12 15:32:07 +0200 (Mon, 12 Oct 2020) $
 '''
 
 from Components.config import config #@UnresolvedImport
 from enigma import eBackgroundFileEraser
 from logging import NOTSET
+import re
 
 # scramble text
 def __(text, front=True):
@@ -28,13 +29,12 @@ def __(text, front=True):
 		out = out + text[i*2] + '.'
 	return out
 
-import re
 def normalizePhoneNumber(intNo):
 	
-	found = re.match(r'^\+' + config.plugins.FritzCall.country.value.replace('00','') + '(.*)', intNo)
+	found = re.match('^\+' + config.plugins.FritzCall.country.value.replace('00','') + '(.*)', intNo)
 	if found:
 		intNo = '0' + found.group(1)
-	found = re.match(r'^\+(.*)', intNo)
+	found = re.match('^\+(.*)', intNo)
 	if found:
 		intNo = '00' + found.group(1)
 	intNo = intNo.replace('(', '').replace(')', '').replace(' ', '').replace('/', '').replace('-', '')

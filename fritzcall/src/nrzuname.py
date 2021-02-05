@@ -1,10 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 '''
-$Id: nrzuname.py 1451 2017-06-08 16:35:18Z michael $
+$Id: nrzuname.py 1561 2020-10-12 13:32:07Z michael $
 $Author: michael $
-$Revision: 1451 $
-$Date: 2017-06-08 18:35:18 +0200 (Thu, 08 Jun 2017) $
+$Revision: 1561 $
+$Date: 2020-10-12 15:32:07 +0200 (Mon, 12 Oct 2020) $
 '''
 
 # C0111 (Missing docstring)
@@ -20,8 +20,10 @@ $Date: 2017-06-08 18:35:18 +0200 (Thu, 08 Jun 2017) $
 # C0410 multiple-imports
 # pylint: disable=C0111,C0103,C0301,W0603,W0403,C0302
 
+from __future__ import print_function
 import re, sys, os
 from xml.dom.minidom import parse
+from six import unichr
 
 try:
 	import logging
@@ -43,7 +45,7 @@ except ValueError:
 
 	def debug(message):
 		if debugVal:
-			print message
+			print(message)
 
 import htmlentitydefs
 
@@ -97,7 +99,7 @@ def html2unicode(in_html):
 			uml = unichr(int(codepoint))
 			debug("replace %s with %s in %s", repr(key), repr(uml), repr(in_html[0:20] + '...'))
 			in_html = in_html.replace(key, uml)
-		except ValueError, e:
+		except ValueError as e:
 			warn("html2utf8: ValueError " + repr(key) + ":" + repr(codepoint) + " (" + str(e) + ")")
 	return in_html
 
@@ -141,10 +143,10 @@ def out(number, caller):
 	elif ort:
 		name += ort
 
-	print name
+	print(name)
 
 def simpleout(number, caller):  # @UnusedVariable # pylint: disable=W0613
-	print caller
+	print(caller)
 
 try:
 	reverseLookupFileName = resolveFilename(SCOPE_PLUGINS, "Extensions/FritzCall/reverselookup.xml")

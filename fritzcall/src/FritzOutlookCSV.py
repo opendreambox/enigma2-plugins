@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 '''
 $Author: michael $
-$Revision: 1290 $
-$Date: 2016-05-01 18:09:29 +0200 (Sun, 01 May 2016) $
-$Id: FritzOutlookCSV.py 1290 2016-05-01 16:09:29Z michael $
+$Revision: 1561 $
+$Date: 2020-10-12 15:32:07 +0200 (Mon, 12 Oct 2020) $
+$Id: FritzOutlookCSV.py 1561 2020-10-12 13:32:07Z michael $
 '''
 #
 # needs python-textutils for csv
 #
+from __future__ import print_function
 try:
 	from . import normalizePhoneNumber #@UnresolvedImport # pylint: disable-msg=W0613,F0401
 except ValueError:
@@ -15,7 +16,7 @@ except ValueError:
 		return string
 	
 	def debug(text):
-		print text
+		print(text)
 	
 	import re
 	def normalizePhoneNumber(intNo):
@@ -40,7 +41,7 @@ logger = logging.getLogger("[FritzCall] OutlookCSV")
 debug = logger.debug
 
 def out(number, name):
-	print number + '#' + name
+	print(number + '#' + name)
 
 import csv
 #
@@ -65,9 +66,9 @@ def findNumber(number, filename):
 	if not fileD:
 		return
 	addrs = csv.reader(fileD, delimiter=',', quotechar='"')
-	addrs.next() # skip header
+	next(addrs) # skip header
 	for row in addrs:
-		row = map(lambda w: w.decode('cp1252').encode('utf-8'), row)
+		row = [w.decode('cp1252').encode('utf-8') for w in row]
 		name = u""
 		nameB = u""
 		address = u""
@@ -151,9 +152,9 @@ def readNumbers(filename, outFun):
 	if not fileD:
 		return
 	addrs = csv.reader(fileD, delimiter=',', quotechar='"')
-	addrs.next() # skip header
+	next(addrs) # skip header
 	for row in addrs:
-		row = map(lambda w: w.decode('cp1252'), row)
+		row = [w.decode('cp1252') for w in row]
 		name = u""
 		nameB = u""
 		address = u""
