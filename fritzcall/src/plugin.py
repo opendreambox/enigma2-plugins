@@ -20,8 +20,6 @@ $Id: plugin.py 1565 2021-01-25 17:02:50Z michael $
 # E501 line too long (85 > 79 characters)
 # pylint: disable=C0111,C0103,C0301,W0603,W0403,C0302,W0312
 
-from __future__ import division
-from __future__ import absolute_import
 import re, time, os, traceback, json
 from itertools import cycle, izip
 import base64
