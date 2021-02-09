@@ -9,5 +9,6 @@ class CecDevice(object):
 		self.powerState = eCec.POWER_STATE_UNKNOWN
 
 
-	def vendorString(self):
+	@property
+	def vendorName(self):
 		return eCec.vendor(self.vendor)

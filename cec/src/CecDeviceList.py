@@ -4,6 +4,8 @@ from Components.MenuList import MenuList
 from Screens.Screen import Screen
 from Tools.Log import Log
 
+from .Cec import cec
+
 class CecDeviceList(Screen):
 	DEVICE_TYPE = {
 		eCec.ADDR_TV : _("TV"),
@@ -35,12 +37,10 @@ class CecDeviceList(Screen):
 		self.reload()
 
 	def reload(self):
-		cec = eCec.getInstance()
-		deviceList = cec.getKnownDevices()
 		devices = []
-		for device in deviceList:
-			deviceType = self.DEVICE_TYPE.get(device.logicalAddress(), _("Other"))
-			text = "{0} - {1} {2}".format(deviceType, device.readableVendor(), device.deviceName())
+		for device in cec.devices:
+			deviceType = self.DEVICE_TYPE.get(device.logicalAddress, _("Other"))
+			text = "{0} - {1} {2}".format(deviceType, device.vendorName, device.name)
 			Log.i(text)
 			devices.append(text)
 		self["list"].setList(devices)

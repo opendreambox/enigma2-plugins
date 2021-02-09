@@ -35,6 +35,10 @@ class Cec(object):
 		self.session = session
 
 	@property
+	def devices(self):
+		return self._devices.values()
+
+	@property
 	def physicalAddress(self):
 		return self.physicalToString(self._physicalAddress)
 
@@ -74,7 +78,7 @@ class Cec(object):
 
 	def dumpDevices(self):
 		for d in self._devices.values():
-			Log.i("%s (%s)\t%s\t%s" %(d.name, d.vendorString(), d.logicalAddress, self.physicalToString(d.physicalAddress)))
+			Log.i("%s (%s)\t%s\t%s" %(d.name, d.vendorName, d.logicalAddress, self.physicalToString(d.physicalAddress)))
 
 	def onCheckDevices(self):
 		for d in self._devices.values():
