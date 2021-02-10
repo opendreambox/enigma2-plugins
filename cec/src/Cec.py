@@ -210,6 +210,8 @@ class Cec(object):
 			self.onUserControlReleased(sender, message)
 		elif cmd == eCec.MSG_SYSTEM_AUDIO_MODE_STATUS:
 			self.onSystemAudioModeStatus(sender, message)
+		elif cmd == eCec.MSG_SET_SYSTEM_AUDIO_MODE:
+			self.onSystemAudioModeStatus(sender, message)
 		elif cmd == eCec.MSG_SYSTEM_AUDIO_MODE_REQUEST:
 			self.onSystemAudioModeRequest(sender, message)
 		elif cmd == eCec.MSG_TEXT_VIEW_ON:
