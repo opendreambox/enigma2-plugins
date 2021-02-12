@@ -67,6 +67,7 @@ class Cec(object):
 			if oldPhysical != self._physicalAddress:
 				self.reportPhysicalAddress()
 				self.giveSystemAudioModeStatus()
+				self.giveDevicePowerStatus(eCec.ADDR_AUDIO_SYSTEM)
 			self.powerOn()
 			#self.requestActiveSource()
 
@@ -175,6 +176,11 @@ class Cec(object):
 		Log.i("%x > %x :: %s (%s)" %(sender, receiver, self.toHexString(message), config.cec.enabled.value))
 		if not config.cec.enabled.value:
 			return
+		self.requireDevice(sender)
+		if sender == eCec.ADDR_AUDIO_SYSTEM and self._volumeDest != eCec.ADDR_AUDIO_SYSTEM:
+			self._volumeDest = eCec.ADDR_AUDIO_SYSTEM
+			if self.isActiveSource():
+				self.systemAudioModeRequest()
 		cmd = message[0]
 		if cmd == eCec.MSG_GIVE_PHYS_ADDR:
 			self.onGivePhysicalAddress(sender)
@@ -211,7 +217,7 @@ class Cec(object):
 		elif cmd == eCec.MSG_SYSTEM_AUDIO_MODE_STATUS:
 			self.onSystemAudioModeStatus(sender, message)
 		elif cmd == eCec.MSG_SET_SYSTEM_AUDIO_MODE:
-			self.onSystemAudioModeStatus(sender, message)
+			self.onSetSystemAudioMode(sender, message)
 		elif cmd == eCec.MSG_SYSTEM_AUDIO_MODE_REQUEST:
 			self.onSystemAudioModeRequest(sender, message)
 		elif cmd == eCec.MSG_TEXT_VIEW_ON:
@@ -293,6 +299,9 @@ class Cec(object):
 
 	def onSystemAudioModeStatus(self, sender, message):
 		self._volumeDest = sender if message[1] else 0
+
+	def onSetSystemAudioMode(self, sender, message):
+		self.onSystemAudioModeStatus(sender, message)
 
 	def onSystemAudioModeRequest(self, sender, message):
 		device = self.getDevice(sender)
