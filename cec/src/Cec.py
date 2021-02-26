@@ -1,8 +1,8 @@
 from enigma import eCec, eTimer, IntList
 from Tools.Log import Log
 from Components.config import config
-from Components.HdmiCec import HdmiCec
-from Screens.Standby import Standby
+from Components.HdmiCec import HdmiCec #Keep this, it initializes the config elements
+from Screens import Standby
 
 from .CecDevice import CecDevice
 from .CecRemote import CecRemote
@@ -68,8 +68,8 @@ class Cec(object):
 				self.reportPhysicalAddress()
 				self.giveSystemAudioModeStatus()
 				self.giveDevicePowerStatus(eCec.ADDR_AUDIO_SYSTEM)
-			self.powerOn()
-			#self.requestActiveSource()
+			if Standby.inStandby == None:
+				self.powerOn()
 
 	def isReady(self):
 		return self._physicalAddress is not (0xff, 0xff)
@@ -120,8 +120,7 @@ class Cec(object):
 		self.dumpDevices()
 
 	def _onStandby(self, element):
-		from Screens.Standby import inStandby
-		inStandby.onClose.append(self.powerOn)
+		Standby.inStandby.onClose.append(self.powerOn)
 		self.powerOff()
 
 	def powerOff(self):
@@ -129,8 +128,9 @@ class Cec(object):
 			CecBoot.uninstall()
 			return
 		CecBoot.install(self.logicalAddress, "f.f.f.f")
-		self.systemStandby()
 		self.setPowerState(eCec.POWER_STATE_STANDBY)
+		self.systemStandby()
+		self.inactiveSource()
 
 	def powerOn(self):
 		if not config.cec.sendpower.value:
@@ -192,7 +192,7 @@ class Cec(object):
 			self.onSetOsdName(sender, message)
 		elif cmd == eCec.MSG_REPORT_POWER_STATUS:
 			self.onReportPowerStatus(sender, message)
-		elif cmd == eCec.MSG_REPORT_PHYS_ADDR:
+		elif cmd == eCec.MSG_GIVE_DEVICE_POWER_STATUS:
 			self.onGiveDevicePowerStatus(sender)
 		elif cmd == eCec.MSG_GIVE_DEVICE_VENDOR_ID:
 			self.onGiveDeviceVendorId(sender)
@@ -247,7 +247,7 @@ class Cec(object):
 		self.requireDevice(sender).name = "".join([chr(x) for x in message[1:]])
 
 	def onGiveDevicePowerStatus(self, sender):
-		self.giveDevicePowerStatus(sender)
+		self.reportPowerStatus(sender)
 
 	def onGiveDeviceVendorId(self, sender):
 		if sender == self._logicalAddress:
@@ -281,8 +281,7 @@ class Cec(object):
 		if not config.cec.receivepower.value:
 			return
 		if sender == eCec.ADDR_TV and self.session:
-			from Screens.Standby import inStandby
-			if not inStandby and self.session.current_dialog and self.session.current_dialog.ALLOW_SUSPEND and self.session.in_exec:
+			if not Standby.inStandby and self.session.current_dialog and self.session.current_dialog.ALLOW_SUSPEND and self.session.in_exec:
 				self.session.open(Standby)
 
 	def onUserControlPressed(self, sender, message):
@@ -326,13 +325,15 @@ class Cec(object):
 	def onActiveSourceChanged(self, force=False):
 		Log.i(self.physicalToString(self._activeSource))
 		if config.cec.sendpower.value and (self.isActiveSource() or force):
-			from Screens.Standby import inStandby
-			if inStandby != None:
-				inStandby.Power()
+			if Standby.inStandby != None:
+				Standby.inStandby.Power()
 			self.send(eCec.ADDR_UNREGISTERED_BROADCAST, eCec.MSG_ACTIVE_SOURCE, self._physicalAddress)
 
 	def giveDevicePowerStatus(self, to):
 		self.send(to, eCec.MSG_GIVE_DEVICE_POWER_STATUS)
+
+	def reportPowerStatus(self, to):
+		self.send(to, eCec.MSG_REPORT_POWER_STATUS, [self._powerState,])
 
 	def reportPhysicalAddress(self):
 		self.send(eCec.ADDR_UNREGISTERED_BROADCAST, eCec.MSG_REPORT_PHYS_ADDR, self._physicalAddress)
