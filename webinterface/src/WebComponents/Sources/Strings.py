@@ -153,7 +153,7 @@ class Strings(Source):
 			["up", _("Up")],
 			["get_screenshot", _("Get a Screenshot")],
 			["grab_video_and_osd", _("Grab Video & OSD")],
-			["send_long_keypress", _("Send \\\"long\\\" keypress")],
+			["send_long_keypress", _('Send "long" keypress')],
 			["refresh_screenshot", _("Refresh Screenshot")],
 			["settings_cookies_required", _("WARNING: Cookies are required to store the settings!")],
 			["enable_debug", _("Enable Debug")],
