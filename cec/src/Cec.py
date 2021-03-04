@@ -36,11 +36,11 @@ class Cec(object):
 		self.onKeyReleased = []
 		self._remote = CecRemote(self)
 
-		self.__ready_conn = self._cec.ready.connect(self._onReady)
-		self._onReady(self._cec.logicalAddress(), self._cec.physicalAddress())
-
 	def start(self, session):
 		self.session = session
+		#don't set this in init to avoid powerOn on boot to idle
+		self.__ready_conn = self._cec.ready.connect(self._onReady)
+		self._onReady(self._cec.logicalAddress(), self._cec.physicalAddress())
 
 	@property
 	def devices(self):
@@ -64,9 +64,6 @@ class Cec(object):
 		oldPhysical = self._physicalAddress
 		self._logicalAddress = logicalAddress
 		self._physicalAddress = tuple(physicalAddress)
-		if isPendingOrVisibleNotificationID("Standby"):
-			Log.i("Standby pending. Doing nothing")
-			return
 
 		if self._activeSource == oldPhysical and self.isReady():
 			self.handleActiveSource(physicalAddress)
@@ -80,6 +77,9 @@ class Cec(object):
 				self.reportPhysicalAddress()
 				self.giveSystemAudioModeStatus()
 				self.giveDevicePowerStatus(eCec.ADDR_AUDIO_SYSTEM)
+			if isPendingOrVisibleNotificationID("Standby"):
+				Log.i("Standby pending. Doing nothing")
+				return
 			if Standby.inStandby == None:
 				self.powerOn()
 			else:
@@ -95,12 +95,17 @@ class Cec(object):
 		for d in self._devices.values():
 			Log.i("%s (%s)\t%s\t%s" %(d.name, d.vendorName, d.logicalAddress, self.physicalToString(d.physicalAddress)))
 
+	def checkDevices(self):
+		self.onCheckDevices()
+
 	def onCheckDevices(self):
 		for d in self._devices.values():
 			commands = []
 			if d.vendor == eCec.VENDOR_UNKNOWN:
+				Log.i("requesting vendor of %s" %(d.logicalAddress))
 				commands.append(eCec.MSG_GIVE_DEVICE_VENDOR_ID)
 			if not d.name:
+				Log.i("requesting name of %s" %(d.logicalAddress))
 				commands.append(eCec.MSG_GIVE_OSD_NAME)
 			[self.send(d.logicalAddress, cmd) for cmd in commands]
 
@@ -108,6 +113,7 @@ class Cec(object):
 		device = self.getDevice(logicalAddress)
 		if device:
 			return device
+		Log.i("add device logicalAddress: %s" % logicalAddress)
 		device = CecDevice(logicalAddress)
 		self._devices[logicalAddress] = device
 		if not self._checkDevicesTimer.isActive():
@@ -123,18 +129,10 @@ class Cec(object):
 
 	def updateDeviceVendor(self, logicalAddress, vendor):
 		self.requireDevice(logicalAddress).vendor = vendor
-		#ATTENTION: polling devices this way might cause "CEC message loops", if this stays at all, we should default disable it and add an option for it
-		for device in self._devices.values():
-			if device.vendor == 0: #ask device for vendor
-				self.send(device.logicalAddress, eCec.MSG_GIVE_DEVICE_VENDOR_ID)
 		self.dumpDevices()
 
 	def updateDeviceName(self, logicalAddress, name):
 		self.requireDevice(logicalAddress).name = name
-		#ATTENTION: polling devices this way might cause "CEC message loops", if this stays at all, we should default disable it and add an option for it
-		for device in self._devices.values():
-			if device.name == None: #ask device for name
-				self.send(device.logicalAddress, eCec.MSG_GIVE_OSD_NAME)
 		self.dumpDevices()
 
 	def updateDevicePowerState(self, logicalAddress, powerState):
@@ -146,7 +144,7 @@ class Cec(object):
 		self.powerOff()
 
 	def powerOff(self):
-		Log.i("")
+		Log.i(" ")
 		if not (config.cec.enabled.value and config.cec.sendpower.value):
 			CecBoot.uninstall()
 			return
@@ -156,7 +154,7 @@ class Cec(object):
 		self.setPowerState(eCec.POWER_STATE_STANDBY)
 
 	def powerOn(self):
-		Log.i("")
+		Log.i(" ")
 		if not config.cec.sendpower.value:
 			return
 		self.setPowerState(eCec.POWER_STATE_ON)
@@ -214,6 +212,8 @@ class Cec(object):
 			self.onReportPhysicalAddress(sender, message)
 		elif cmd == eCec.MSG_GIVE_OSD_NAME:
 			self.onGiveOsdName(sender)
+		elif cmd == eCec.MSG_SET_MENU_LANG:
+			self.onSetMenuLang(sender,message)
 		elif cmd == eCec.MSG_SET_OSD_NAME:
 			self.onSetOsdName(sender, message)
 		elif cmd == eCec.MSG_REPORT_POWER_STATUS:
@@ -272,6 +272,9 @@ class Cec(object):
 	def onGiveOsdName(self, sender):
 		self.setOsdName(sender)
 
+	def onSetMenuLang(self, sender, message):
+		Log.i("".join([chr(x) for x in message[1:]]))
+
 	def onSetOsdName(self, sender, message):
 		self.updateDeviceName(sender,"".join([chr(x) for x in message[1:]]))
 
@@ -279,14 +282,15 @@ class Cec(object):
 		self.reportPowerStatus(sender)
 
 	def onGiveDeviceVendorId(self, sender):
-		if sender == self._logicalAddress:
-			self.deviceVendorId()
+		self.deviceVendorId(sender)
 
 	def onDeviceVendorId(self, sender, message):
 		self.updateDeviceVendor(sender, message[1] << 16 | message[2] << 8 | message[3])
 
 	def onVendorCommandWithId(self, sender, message):
 		self.onDeviceVendorId(sender, message)
+		#answer with MSG_FEATURE_ABORT to sender
+		self.featureAbort(sender, eCec.MSG_VENDOR_COMMAND_WITH_ID, eCec.ABORT_REASON_UNRECOGNIZED_OPCODE)
 
 	def onRoutingInformation(self, sender, message):
 		# cmd, pyhs_addr( (2bytes)
@@ -364,22 +368,24 @@ class Cec(object):
 			self.send(eCec.ADDR_UNREGISTERED_BROADCAST, eCec.MSG_ACTIVE_SOURCE, self._physicalAddress)
 
 	def giveDevicePowerStatus(self, to):
+		Log.i(" ")
 		self.send(to, eCec.MSG_GIVE_DEVICE_POWER_STATUS)
 
 	def reportPowerStatus(self, to):
 		self.send(to, eCec.MSG_REPORT_POWER_STATUS, [self._powerState,])
 
 	def reportCecVersion(self, to):
+		Log.i(" ")
 		self.send(to, eCec.MSG_VERSION, [self.CEC_VERSION_1_3a,]) # HDMI CEC Version 1.3a
 
 	def reportPhysicalAddress(self):
 		self.send(eCec.ADDR_UNREGISTERED_BROADCAST, eCec.MSG_REPORT_PHYS_ADDR, self._physicalAddress + (eCec.DEVICE_TYPE_TUNER,))
 
-	def deviceVendorId(self):
+	def deviceVendorId(self,to=eCec.ADDR_UNREGISTERED_BROADCAST):
 		vendor = [(self._vendor & 0xFF0000) >> 16]
 		vendor.append((self._vendor & 0xFF00) >> 8)
 		vendor.append((self._vendor & 0xFF))
-		self.send(eCec.ADDR_UNREGISTERED_BROADCAST, eCec.MSG_DEVICE_VENDOR_ID, vendor)
+		self.send(to, eCec.MSG_DEVICE_VENDOR_ID, vendor)
 
 	def setOsdName(self, to):
 		self.send(to, eCec.MSG_SET_OSD_NAME, self.stringMessage(config.cec.name.value))
@@ -405,6 +411,7 @@ class Cec(object):
 
 	def systemStandby(self):
 		if config.cec.sendpower.value and self.isActiveSource():
+			Log.i("send MSG_STANDBY")
 			self.send(eCec.ADDR_UNREGISTERED_BROADCAST, eCec.MSG_STANDBY)
 
 	def giveSystemAudioModeStatus(self):
@@ -424,8 +431,8 @@ class Cec(object):
 	def oneTouchPlay(self):
 		if not config.cec.sendpower.value:
 			return
-		self.activeSource()
 		self.imageViewOn()
+		self.activeSource()
 		self.systemAudioModeRequest()
 
 cec = Cec()
