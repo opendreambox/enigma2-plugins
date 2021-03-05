@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 from Components.ActionMap import ActionMap
-from Components.config import config, getConfigListEntry
+from Components.config import ConfigOnOff, ConfigSubsection, config, getConfigListEntry
 from Components.ConfigList import ConfigListScreen
 from Components.Sources.StaticText import StaticText
 from Screens.MessageBox import MessageBox
@@ -8,6 +8,9 @@ from Screens.Screen import Screen
 
 from .CecDeviceList import CecDeviceList
 
+
+config.cec2 = ConfigSubsection()
+config.cec2.active_source_agression = ConfigOnOff(default=False)
 class CecConfig(ConfigListScreen, Screen):
 	skin = """
 		<screen name="CecConfig" position="center,120" size="820,520" title="HDMI CEC: Setup">
@@ -89,6 +92,11 @@ class CecConfig(ConfigListScreen, Screen):
 			getConfigListEntry(_("Allow remote control via CEC"), config.cec.receive_remotekeys),
 			getConfigListEntry(_("Forward Volume keys to TV/AVR"), config.cec.volume_forward),
 			getConfigListEntry(_("Remote control repeat delay (ms)"), config.cec.remote_repeat_delay),
+		])
+
+		lst.extend([
+			getConfigListEntry(_("Expert options")),
+			getConfigListEntry(_("Aggressive Active-Source"), config.cec2.active_source_agression)
 		])
 
 		self["config"].list = lst

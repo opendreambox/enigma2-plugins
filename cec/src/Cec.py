@@ -9,12 +9,16 @@ from .CecDevice import CecDevice
 from .CecRemote import CecRemote
 from .CecBoot import CecBoot
 
+from twisted.internet import reactor
+
 class Cec(object):
 	CEC_VERSION_1_1 = 0x00
 	CEC_VERSION_1_2 = 0x01
 	CEC_VERSION_1_2a = 0x02
 	CEC_VERSION_1_3 = 0x03
 	CEC_VERSION_1_3a = 0x04
+	CEC_VERSION_1_4 = 0x05
+	CEC_VERSION_2_0 = 0x06
 
 	def __init__(self):
 		self._cec = eCec.getInstance()
@@ -31,7 +35,13 @@ class Cec(object):
 		self.__check_devices_connection = self._checkDevicesTimer.timeout.connect(self.onCheckDevices)
 		config.misc.standbyCounter.addNotifier(self._onStandby, initial_call = False)
 
+		#Volume control
 		self._volumeDest = eCec.ADDR_TV
+		self._volume = -1
+		self._muted = False
+		self.onVolumeChanged = []
+
+		#Remote control
 		self.onKeyPressed = []
 		self.onKeyReleased = []
 		self._remote = CecRemote(self)
@@ -70,13 +80,13 @@ class Cec(object):
 
 		Log.i("Physical address: %s # Logical address: %s" %(self.physicalToString(self._physicalAddress), self._logicalAddress))
 		if not self.getDevice(eCec.ADDR_TV):
-			self.send(eCec.ADDR_TV, eCec.MSG_GIVE_PHYS_ADDR)
+			self.givePhysicalAddress(eCec.ADDR_TV)
 
 		if self.isReady():
 			if oldPhysical != self._physicalAddress:
 				self.reportPhysicalAddress()
+				self.givePhysicalAddress(eCec.ADDR_AUDIO_SYSTEM)
 				self.giveSystemAudioModeStatus()
-				self.giveDevicePowerStatus(eCec.ADDR_AUDIO_SYSTEM)
 			if isPendingOrVisibleNotificationID("Standby"):
 				Log.i("Standby pending. Doing nothing")
 				return
@@ -96,17 +106,23 @@ class Cec(object):
 			Log.i("%s (%s)\t%s\t%s" %(d.name, d.vendorName, d.logicalAddress, self.physicalToString(d.physicalAddress)))
 
 	def checkDevices(self):
-		self.onCheckDevices()
+		self.onCheckDevices(allDevices=True)
 
-	def onCheckDevices(self):
+	def onCheckDevices(self, allDevices = False):
 		for d in self._devices.values():
+			if not allDevices and not d.logicalAddress in (eCec.ADDR_AUDIO_SYSTEM, eCec.ADDR_TV):
+				return
 			commands = []
+			if d.physicalAddress == (0xff,0xff):
+				Log.i("requesting physical address of %s" %(d.logicalAddress,))
+				commands.append(eCec.MSG_GIVE_PHYS_ADDR)
 			if d.vendor == eCec.VENDOR_UNKNOWN:
 				Log.i("requesting vendor of %s" %(d.logicalAddress))
 				commands.append(eCec.MSG_GIVE_DEVICE_VENDOR_ID)
 			if not d.name:
-				Log.i("requesting name of %s" %(d.logicalAddress))
+				Log.i("requesting name of %s" %(d.logicalAddress,))
 				commands.append(eCec.MSG_GIVE_OSD_NAME)
+			commands.append(eCec.MSG_GIVE_DEVICE_POWER_STATUS)
 			[self.send(d.logicalAddress, cmd) for cmd in commands]
 
 	def requireDevice(self, logicalAddress):
@@ -161,7 +177,7 @@ class Cec(object):
 		self.oneTouchPlay()
 
 	def isActiveSource(self):
-		Log.i("%s <=> %s" %(self._activeSource, self._physicalAddress))
+		Log.i("%s <=> %s" %(self.physicalToString(self._activeSource), self.physicalToString(self._physicalAddress)))
 		return self._activeSource == self._physicalAddress
 
 	def toHexString(self, message):
@@ -188,6 +204,7 @@ class Cec(object):
 	def sendSystemAudioKey(self, keyid, test=False):
 		if self._volumeDest is eCec.ADDR_AUDIO_SYSTEM:
 			self.sendKey(self._volumeDest, keyid)
+			self.giveAudioStatus()
 			return True
 		return False
 
@@ -198,11 +215,17 @@ class Cec(object):
 		Log.i("%x > %x :: %s (%s)" %(sender, receiver, self.toHexString(message), config.cec.enabled.value))
 		if not config.cec.enabled.value:
 			return
-		self.requireDevice(sender)
+		if sender == eCec.ADDR_FREE_USE:
+			return
+		device = self.requireDevice(sender)
 		if sender == eCec.ADDR_AUDIO_SYSTEM and self._volumeDest != eCec.ADDR_AUDIO_SYSTEM:
 			self._volumeDest = eCec.ADDR_AUDIO_SYSTEM
 			if self.isActiveSource():
 				self.systemAudioModeRequest()
+
+		if device.onMessage(self, sender, message):
+			return
+
 		cmd = message[0]
 		if cmd == eCec.MSG_GIVE_PHYS_ADDR:
 			self.onGivePhysicalAddress(sender)
@@ -210,6 +233,8 @@ class Cec(object):
 			self.onGetCecVersion(sender)
 		elif cmd == eCec.MSG_REPORT_PHYS_ADDR:
 			self.onReportPhysicalAddress(sender, message)
+		elif cmd == eCec.MSG_ACTIVE_SOURCE:
+			self.onActiveSource(sender, message)
 		elif cmd == eCec.MSG_GIVE_OSD_NAME:
 			self.onGiveOsdName(sender)
 		elif cmd == eCec.MSG_SET_MENU_LANG:
@@ -246,6 +271,8 @@ class Cec(object):
 			self.onSetSystemAudioMode(sender, message)
 		elif cmd == eCec.MSG_SYSTEM_AUDIO_MODE_REQUEST:
 			self.onSystemAudioModeRequest(sender, message)
+		elif cmd == eCec.MSG_REPORT_AUDIO_STATUS:
+			self.onReportAudioStatus(sender, message)
 		elif cmd == eCec.MSG_TEXT_VIEW_ON:
 			self.onTextViewOn(sender, message)
 		#error handling
@@ -261,7 +288,9 @@ class Cec(object):
 		self.updateDeviceAddress(sender, message[1:3])
 		if sender == eCec.ADDR_TV:
 			self.requestActiveSource()
-		self.giveDevicePowerStatus(sender)
+
+	def onActiveSource(self, sender, message):
+		self.handleActiveSource(message[1:3])
 
 	def onReportPowerStatus(self, sender, message):
 		self.requireDevice(sender).powerState = message[1]
@@ -350,15 +379,29 @@ class Cec(object):
 		self.handleActiveSource(self.getDevice(sender).physicalAddress)
 
 	def onFeatureAbort(self, sender, message):
-		Log.w("%s :: %x %x" %(sender, message[1], message[2]))
+		Log.w("%s :: %02x %02x" %(sender, message[1], message[2]))
+
+	def onReportAudioStatus(self, sender, message):
+		if not self._volumeDest:
+			self._volumeDest = sender
+		self._muted = message[1] & 0x80 == 0x80
+		self._volume = message[1] & 0x7f
+		Log.i("%s: muted: %s #  volume: %s" %(sender, self._muted, self._volume))
+		for fnc in self.onVolumeChanged:
+			fnc(self._muted, self._volume)
 
 	def handleActiveSource(self, physicalAddress):
 		Log.i("%s %s" %(physicalAddress, self._activeSource))
 		if physicalAddress == (0xff, 0xff):
 			return
 		if physicalAddress != self._activeSource:
+			reenforce = self.isActiveSource() and config.cec2.active_source_agression.value and physicalAddress == (0,0)
 			self._activeSource = physicalAddress
-			self.onActiveSourceChanged()
+			if reenforce:
+				Log.w("Reenforcing myself as Active Source!")
+				reactor.callLater(1, self.oneTouchPlay)
+			else:
+				self.onActiveSourceChanged()
 
 	def onActiveSourceChanged(self, force=False):
 		Log.i(self.physicalToString(self._activeSource))
@@ -366,6 +409,14 @@ class Cec(object):
 			if Standby.inStandby != None:
 				Standby.inStandby.Power()
 			self.send(eCec.ADDR_UNREGISTERED_BROADCAST, eCec.MSG_ACTIVE_SOURCE, self._physicalAddress)
+
+		if config.cec.receivepower.value and not self.isActiveSource() and not Standby.inStandby:
+			if self.session.current_dialog and self.session.current_dialog.ALLOW_SUSPEND and self.session.in_exec:
+				self.session.open(Standby.Standby)
+
+	def givePhysicalAddress(self, to):
+		Log.i(" ")
+		self.send(to, eCec.MSG_GIVE_PHYS_ADDR)
 
 	def giveDevicePowerStatus(self, to):
 		Log.i(" ")
@@ -421,6 +472,10 @@ class Cec(object):
 		if not config.cec.sendpower.value or not config.cec.enable_avr.value:
 			return
 		self.send(eCec.ADDR_AUDIO_SYSTEM, eCec.MSG_SYSTEM_AUDIO_MODE_REQUEST, self._physicalAddress)
+
+	def giveAudioStatus(self):
+		if self._volumeDest == eCec.ADDR_AUDIO_SYSTEM:
+			self.send(self._volumeDest, eCec.MSG_GIVE_AUDIO_STATUS)
 
 	def setPowerState(self, state):
 		if state == self._powerState:

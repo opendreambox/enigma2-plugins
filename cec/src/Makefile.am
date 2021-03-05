@@ -9,6 +9,8 @@ install_PYTHON = \
 	CecDeviceList.py \
 	CecRemote.py \
 	earlyplugin.py \
-	plugin.py
+	plugin.py \
+	VendorHandlerBase.py \
+	VendorHandlerSamsung.py
 
 install_DATA = maintainer.info LICENSE
