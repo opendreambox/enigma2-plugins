@@ -39,8 +39,7 @@ class CecDevice(object):
 	@vendor.setter
 	def vendor(self, value):
 		self._vendor = value
-		if self.vendorName == "Samsung":
-			self._vendorHandler = VendorHandlerSamsung()
+		self._checkVendorHandler()
 
 	@property
 	def vendorName(self):

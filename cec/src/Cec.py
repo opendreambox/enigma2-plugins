@@ -350,7 +350,7 @@ class Cec(object):
 			return
 		if sender == eCec.ADDR_TV and self.session:
 			if not Standby.inStandby and self.session.current_dialog and self.session.current_dialog.ALLOW_SUSPEND and self.session.in_exec:
-				self.session.open(Standby)
+				self.session.open(Standby.Standby)
 
 	def onUserControlPressed(self, sender, message):
 		Log.i("%s %s (%s)" %(sender, message, message[1]))
