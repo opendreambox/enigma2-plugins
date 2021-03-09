@@ -33,6 +33,8 @@ class Cec(object):
 		self._devices = {}
 		self._checkDevicesTimer = eTimer()
 		self.__check_devices_connection = self._checkDevicesTimer.timeout.connect(self.onCheckDevices)
+		self._audioStatusTimer = eTimer()
+		self.__audio_status_connection = self._audioStatusTimer.timeout.connect(self.giveAudioStatus)
 		config.misc.standbyCounter.addNotifier(self._onStandby, initial_call = False)
 
 		#Volume control
@@ -96,7 +98,7 @@ class Cec(object):
 				Log.i("Standby, not waking up.")
 
 	def isReady(self):
-		return self._physicalAddress is not (0xff, 0xff)
+		return self._physicalAddress != (0xff, 0xff)
 
 	def isForMe(self, logicalAddress):
 		return logicalAddress == self._logicalAddress
@@ -113,13 +115,13 @@ class Cec(object):
 			if not allDevices and not d.logicalAddress in (eCec.ADDR_AUDIO_SYSTEM, eCec.ADDR_TV):
 				return
 			commands = []
-			if d.physicalAddress == (0xff,0xff):
+			if allDevices and d.physicalAddress == (0xff,0xff):
 				Log.i("requesting physical address of %s" %(d.logicalAddress,))
 				commands.append(eCec.MSG_GIVE_PHYS_ADDR)
 			if d.vendor == eCec.VENDOR_UNKNOWN:
 				Log.i("requesting vendor of %s" %(d.logicalAddress))
 				commands.append(eCec.MSG_GIVE_DEVICE_VENDOR_ID)
-			if not d.name:
+			if allDevices and not d.name:
 				Log.i("requesting name of %s" %(d.logicalAddress,))
 				commands.append(eCec.MSG_GIVE_OSD_NAME)
 			commands.append(eCec.MSG_GIVE_DEVICE_POWER_STATUS)
@@ -204,7 +206,8 @@ class Cec(object):
 	def sendSystemAudioKey(self, keyid, test=False):
 		if self._volumeDest is eCec.ADDR_AUDIO_SYSTEM:
 			self.sendKey(self._volumeDest, keyid)
-			self.giveAudioStatus()
+			if not self._audioStatusTimer.isActive():
+				self._audioStatusTimer.start(500, True)
 			return True
 		return False
 
@@ -353,7 +356,7 @@ class Cec(object):
 		Log.i("%s %s (%s)" %(sender, message, message[1]))
 		#activate if we're getting keypresses from the tv
 		keyid = message[1]
-		if not self.isActiveSource() and sender == eCec.ADDR_TV and keyid is not eCec.RC_POWER_OFF:
+		if not self.isActiveSource() and sender == eCec.ADDR_TV and keyid != eCec.RC_POWER_OFF:
 			self.handleActiveSource(self._physicalAddress)
 		for fnc in self.onKeyPressed:
 			fnc(sender, keyid)
