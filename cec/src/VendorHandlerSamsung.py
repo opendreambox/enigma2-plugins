@@ -16,7 +16,7 @@ class VendorHandlerSamsung(VendorHandlerBase):
 		if cmd == eCec.MSG_SET_MENU_LANG:
 			device.powerState = eCec.POWER_STATE_ON
 		elif cmd == eCec.MSG_VENDOR_COMMAND_WITH_ID:
-			if len(message) < 6 or message[5] != self.MAGIC_TOKEN:
+			if len(message) < 5 or message[4] != self.MAGIC_TOKEN:
 				cec.featureAbort(sender, cmd, eCec.ABORT_REASON_INVALID_OPERAND)
 				return True
 			cec.send(sender, eCec.MSG_VENDOR_COMMAND_WITH_ID, (message[1], message[2], message[3], 0x24, 0x00, 0x80))
