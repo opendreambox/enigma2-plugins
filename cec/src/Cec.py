@@ -166,7 +166,7 @@ class Cec(object):
 		if not (config.cec.enabled.value and config.cec.sendpower.value):
 			CecBoot.uninstall()
 			return
-		CecBoot.install(self.logicalAddress, "f.f.f.f")
+		CecBoot.install(self.logicalAddress, self.physicalAddress)
 		self.systemStandby()
 		self.inactiveSource()
 		self.setPowerState(eCec.POWER_STATE_STANDBY)
