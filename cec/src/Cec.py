@@ -27,7 +27,7 @@ class Cec(object):
 		self.__msg_conn = self._cec.receivedMessage.connect(self._onMessage)
 		self._logicalAddress = self._cec.logicalAddress()
 		self._physicalAddress = tuple(self._cec.physicalAddress())
-		self._activeSource = (0, 0)
+		self._activeSource = None
 		self._vendor = eCec.VENDOR_DREAM
 		self._powerState = eCec.POWER_STATE_ON
 		self._devices = {}
@@ -67,6 +67,8 @@ class Cec(object):
 		return self._logicalAddress
 
 	def physicalToString(self, addr):
+		if not addr:
+			return "<invalid address>"
 		return "%x.%x.%x.%x" %( (addr[0] >> 4) & 0xf, addr[0] & 0xf, (addr[1] >> 4) & 0xf, addr[1] & 0xf)
 
 	def isStandby(self, state):
@@ -112,8 +114,9 @@ class Cec(object):
 
 	def onCheckDevices(self, allDevices = False):
 		for d in self._devices.values():
-			if not allDevices and not d.logicalAddress in (eCec.ADDR_AUDIO_SYSTEM, eCec.ADDR_TV):
-				return
+			if not allDevices:
+				if not d.logicalAddress in (eCec.ADDR_AUDIO_SYSTEM, eCec.ADDR_TV):
+					return
 			commands = []
 			if allDevices and d.physicalAddress == (0xff,0xff):
 				Log.i("requesting physical address of %s" %(d.logicalAddress,))
@@ -394,7 +397,7 @@ class Cec(object):
 			fnc(self._muted, self._volume)
 
 	def handleActiveSource(self, physicalAddress):
-		Log.i("%s %s" %(physicalAddress, self._activeSource))
+		Log.i("new: %s # old: %s" %(self.physicalToString(physicalAddress), self.physicalToString(self._activeSource)))
 		if physicalAddress == (0xff, 0xff):
 			return
 		if physicalAddress != self._activeSource:
@@ -461,7 +464,7 @@ class Cec(object):
 	def inactiveSource(self):
 		if self._activeSource == self._physicalAddress and config.cec.sendpower.value:
 			self.send(eCec.ADDR_UNREGISTERED_BROADCAST, eCec.MSG_INACTIVE_SOURCE, self._physicalAddress)
-		self.handleActiveSource((0,0))
+			self.handleActiveSource(None)
 
 	def systemStandby(self):
 		if config.cec.sendpower.value and self.isActiveSource():
