@@ -1,9 +1,9 @@
 #######################################################################
 #
-#    Dream-ExplorerII for Dreambox-Enigma2
+#    Dream Explorer 3 for DreamOS by dre (c) 2021
 #    Coded by Vali (c)2009-2011
 #    New version by dre (c) 2016
-#    Support: www.dreambox-tools.info
+#    Support: board.dreamboxtools.de
 #
 #    This program is free software; you can redistribute it and/or
 #    modify it under the terms of the GNU General Public License
@@ -17,29 +17,31 @@
 #
 #######################################################################
 
-from os import chmod, listdir, mkdir, rename, stat, symlink, walk
-from os.path import basename, join
-from subprocess import call, check_output
-from time import localtime, strftime
-
-from Plugins.Plugin import PluginDescriptor
-from Screens.Screen import Screen
-from Screens.InfoBar import MoviePlayer as MP_parent
-from Screens.Console import Console
-from Screens.ChoiceBox import ChoiceBox
-from Screens.MessageBox import MessageBox
-from Screens.EventView import EventViewSimple
-from Components.ActionMap import ActionMap
-from Components.MultiContent import MultiContentEntryText
-from Components.Label import Label
-from Components.Sources.List import List
 from Components.config import config, ConfigSubsection, ConfigText, ConfigOnOff
-from Tools.Directories import fileExists, pathExists
-from Tools.HardwareInfo import HardwareInfo
+from Components.ActionMap import ActionMap, NumberActionMap
+from Components.Label import Label
+from Components.MultiContent import MultiContentEntryText
+from Components.ScrollLabel import ScrollLabel
+from Components.Sources.List import List
+from DreamExplorerFileList import DreamExplorerFileList
+from Plugins.Plugin import PluginDescriptor
 from ServiceReference import ServiceReference
-from myFileList import FileList as myFileList
+from Screens.ChoiceBox import ChoiceBox
+from Screens.Console import Console
+from Screens.EventView import EventViewSimple
+from Screens.InfoBar import MoviePlayer as MP_parent
 from Screens.InputBox import InputBox
-from enigma import eConsoleAppContainer, eServiceReference, eServiceCenter
+from Screens.MessageBox import MessageBox
+from Screens.Screen import Screen
+from Tools.BoundFunction import boundFunction
+from Tools.Directories import fileExists, pathExists, createDir
+from Tools.HardwareInfo import HardwareInfo
+from Tools.NumericalTextInput import NumericalTextInput
+
+from enigma import eConsoleAppContainer, eServiceReference, getPrevAsciiCode, getDesktop
+from os import chmod, stat, walk
+from os.path import basename
+from subprocess import call, check_output
 
 try:
 	from Plugins.Extensions.PicturePlayer.plugin import Pic_Thumb, Pic_Full_View
@@ -54,7 +56,7 @@ except:
 	DVDPlayerInstalled = False
 
 try:
-	from Plugins.Extensions.MerlinMusicPlayer.plugin import MerlinMusicPlayerScreen, Item
+	from Plugins.Extensions.MerlinMusicPlayer2.plugin import MerlinMusicPlayer2Screen, Item
 	MMPlayerInstalled = True
 except:
 	MMPlayerInstalled = False
@@ -62,72 +64,132 @@ except:
 config.plugins.DreamExplorer = ConfigSubsection()
 config.plugins.DreamExplorer.startDir = ConfigText(default="/")
 config.plugins.DreamExplorer.useMediaFilter = ConfigOnOff(default=False)
-config.plugins.DreamExplorer.CopyDest = ConfigText(default="/")
 
 def Plugins(path, **kwargs):
-	global plugin_path
-	plugin_path = path
 	return [
-		PluginDescriptor(name=_("Dream-Explorer"), description=_("Explore your Dreambox."), where = [PluginDescriptor.WHERE_PLUGINMENU], icon="dreamexplorer.png", fnc=main),
-		PluginDescriptor(name=_("Dream-Explorer"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main)
+		PluginDescriptor(name=_("Dream Explorer"), description=_("A file explorer for DreamOS"), where = [PluginDescriptor.WHERE_PLUGINMENU], icon="dreamexplorer.png", fnc=main),
+		PluginDescriptor(name=_("Dream Explorer"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main)
 	]
 
 def main(session, **kwargs):
-	session.open(DreamExplorerII)
+	session.open(DreamExplorer3)
 
 ######## DREAM-EXPLORER START #######################
-class DreamExplorerII(Screen):
-	skin = """
-		<screen position="center,center" size="900,500" title="Dream-Explorer">
-			<widget name="filelist" position="0,0" scrollbarMode="showOnDemand" size="890,450" zPosition="4"/>
-			<eLabel backgroundColor="#555555" position="5,470" size="890,2" zPosition="5"/>
-			<ePixmap alphatest="on" pixmap="~/res/red.png" position="0,475" size="35,25" zPosition="5"/>
-			<ePixmap alphatest="on" pixmap="~/res/green.png" position="155,475" size="35,25" zPosition="5"/>
-			<ePixmap alphatest="on" pixmap="~/res/yellow.png" position="310,475" size="35,25" zPosition="5"/>
-			<ePixmap alphatest="on" pixmap="~/res/blue.png" position="465,475" size="35,25" zPosition="5"/>
-			<ePixmap alphatest="on" pixmap="~/res/menu.png" position="620,475" size="35,25" zPosition="5"/>
-			<ePixmap alphatest="on" pixmap="~/res/info.png" position="775,475" size="35,25" zPosition="5"/>
-			<eLabel font="Regular;18" halign="left" position="35,475" size="120,25" text="Delete" transparent="1" valign="center" zPosition="6"/>
-			<eLabel font="Regular;18" halign="left" position="190,475" size="120,25" text="Rename" transparent="1" valign="center" zPosition="6"/>
-			<eLabel font="Regular;18" halign="left" position="345,475" size="120,25" text="Move/Copy" transparent="1" valign="center" zPosition="6"/>
-			<eLabel font="Regular;18" halign="left" position="500,475" size="120,25" text="Bookmarks" transparent="1" valign="center" zPosition="6"/>
-			<eLabel font="Regular;18" halign="left" position="655,475" size="120,25" text="Options" transparent="1" valign="center" zPosition="6"/>
-			<eLabel font="Regular;18" halign="left" position="810,475" size="90,25" text="Info" transparent="1" valign="center" zPosition="6"/>
+class DreamExplorer3(Screen):
+	if getDesktop(0).size().width()>=1920:
+		skin = """
+		<screen name="DreamExplorer3" position="center,60" size="1840,1020" title="Dream Explorer 3">
+			<ePixmap alphatest="on" pixmap="/usr/share/enigma2/skin_default/div-h.png" position="0,3" size="1840,2" zPosition="5" scale="stretch" />
+			<widget name="filelist" position="0,5" scrollbarMode="showOnDemand" size="1840,880" zPosition="4" iconSet="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/icons" />
+			<ePixmap alphatest="on" pixmap="/usr/share/enigma2/skin_default/div-h.png" position="0,885" size="1840,2" zPosition="5" scale="stretch" />
+			
+			<eLabel font="Regular;20" position="10,895" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f50000" zPosition="6"/>
+			<eLabel font="Regular;20" position="340,895" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#009f00" zPosition="6"/>
+			<eLabel font="Regular;20" position="670,895" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f5f500" zPosition="6"/>
+			<eLabel font="Regular;20" position="1000,895" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#0000f9" zPosition="6"/>
+			<eLabel font="Regular;20" position="1330,895" size="60,30" text="MENU" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+
+			<eLabel font="Regular;25" halign="left" position="80,890" size="250,40" text="Delete" transparent="1" valign="center" zPosition="6"/>
+			<eLabel font="Regular;25" halign="left" position="410,890" size="250,40" text="Create" transparent="1" valign="center" zPosition="6"/>
+			<eLabel font="Regular;25" halign="left" position="740,890" size="250,40" text="Move/Copy" transparent="1" valign="center" zPosition="6"/>
+			<eLabel font="Regular;25" halign="left" position="1070,890" size="250,40" text="Rename" transparent="1" valign="center" zPosition="6"/>
+			<eLabel font="Regular;25" halign="left" position="1400,890" size="250,40" text="Options" transparent="1" valign="center" zPosition="6"/>
+			
+			<eLabel font="Regular;20" position="10,940" size="60,30" text="INFO" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<eLabel font="Regular;20" position="340,940" size="60,30" text="AUDIO" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<eLabel font="Regular;20" position="670,940" size="60,30" text="PVR" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<eLabel font="Regular;20" position="1000,940" size="60,30" text="B+" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<eLabel font="Regular;20" position="1330,940" size="60,30" text="B-" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			
+
+			<eLabel font="Regular;25" halign="left" position="80,935" size="250,40" text="Info" transparent="1" valign="center" zPosition="6"/>
+			<widget name="filtertext" font="Regular;25" halign="left" position="410,935" size="250,40" transparent="1" valign="center" zPosition="6"/>			
+			<eLabel font="Regular;25" halign="left" position="740,935" size="250,40" text="Bookmarks" transparent="1" valign="center" zPosition="6"/>
+			<widget name="namedate" font="Regular;25" halign="left" position="1070,935" size="250,40" transparent="1" valign="center" zPosition="6"/>
+			<widget name="ascdesc" font="Regular;25" halign="left" position="1400,935" size="250,40" transparent="1" valign="center" zPosition="6"/>
+
+			<eLabel font="Regular;20" position="10,985" size="60,30" text="OK" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<eLabel font="Regular;20" position="340,985" size="60,30" text="EXIT" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<widget name="texticon" font="Regular;20" position="670,985" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>			
+			<widget name="playicon" font="Regular;20" position="1000,985" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>	
+			
+			<widget name="oktext" font="Regular;25" halign="left" position="80,980" size="250,40" transparent="1" valign="center" zPosition="6" />
+			<eLabel font="Regular;25" halign="left" position="410,980" size="250,40" text="Close Plugin" transparent="1" valign="center" zPosition="6"/>
+			<widget name="chmodtext" font="Regular;25" halign="left" position="740,980" size="250,40" transparent="1" valign="center" zPosition="6"/>
+			<widget name="playtext" font="Regular;25" halign="left" position="1070,980" size="250,40" transparent="1" valign="center" zPosition="6"/>
+		</screen>"""
+	else:
+		skin = """
+		<screen name="DreamExplorer3" position="center,50" size="1230,650" title="Dream Explorer 3">
+			<ePixmap alphatest="on" pixmap="/usr/share/enigma2/skin_default/div-h.png" position="0,3" size="1230,2" zPosition="5" scale="stretch" />
+			<widget name="filelist" position="0,5" scrollbarMode="showOnDemand" size="1230,540" iconSet="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/icons" />
+			<ePixmap alphatest="on" pixmap="/usr/share/enigma2/skin_default/div-h.png" position="0,545" size="1230,2" zPosition="5" scale="stretch" />
+			
+			<eLabel font="Regular;12" position="10,555" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f50000" zPosition="6"/>
+			<eLabel font="Regular;12" position="240,555" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#009f00" zPosition="6"/>
+			<eLabel font="Regular;12" position="470,555" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f5f500" zPosition="6"/>
+			<eLabel font="Regular;12" position="700,555" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#0000f9" zPosition="6"/>
+			<eLabel font="Regular;12" position="930,555" size="40,20" text="MENU" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+
+			<eLabel font="Regular;16" halign="left" position="55,550" size="180,30" text="Delete" transparent="1" valign="center" zPosition="6"/>
+			<eLabel font="Regular;16" halign="left" position="285,550" size="180,30" text="Create" transparent="1" valign="center" zPosition="6"/>
+			<eLabel font="Regular;16" halign="left" position="515,550" size="180,30" text="Move/Copy" transparent="1" valign="center" zPosition="6"/>
+			<eLabel font="Regular;16" halign="left" position="745,550" size="180,30" text="Rename" transparent="1" valign="center" zPosition="6"/>
+			<eLabel font="Regular;16" halign="left" position="975,550" size="180,30" text="Options" transparent="1" valign="center" zPosition="6"/>
+			
+			<eLabel font="Regular;12" position="10,590" size="40,20" text="INFO" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<eLabel font="Regular;12" position="240,590" size="40,20" text="AUDIO" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<eLabel font="Regular;12" position="470,590" size="40,20" text="PVR" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<eLabel font="Regular;12" position="700,590" size="40,20" text="B+" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<eLabel font="Regular;12" position="930,590" size="40,20" text="B-" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			
+
+			<eLabel font="Regular;16" halign="left" position="55,585" size="180,30" text="Info" transparent="1" valign="center" zPosition="6"/>
+			<widget name="filtertext" font="Regular;16" halign="left" position="285,585" size="180,30" transparent="1" valign="center" zPosition="6"/>			
+			<eLabel font="Regular;16" halign="left" position="515,585" size="180,30" text="Bookmarks" transparent="1" valign="center" zPosition="6"/>
+			<widget name="namedate" font="Regular;16" halign="left" position="745,585" size="180,30" transparent="1" valign="center" zPosition="6"/>
+			<widget name="ascdesc" font="Regular;16" halign="left" position="975,585" size="180,30" transparent="1" valign="center" zPosition="6"/>
+
+			<eLabel font="Regular;12" position="10,625" size="40,20" text="OK" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<eLabel font="Regular;12" position="240,625" size="40,20" text="EXIT" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<widget name="texticon" font="Regular;12" position="470,625" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>			
+			<widget name="playicon" font="Regular;12" position="700,625" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>	
+			
+			<widget name="oktext" font="Regular;16" halign="left" position="55,620" size="180,30" transparent="1" valign="center" zPosition="6" />
+			<eLabel font="Regular;16" halign="left" position="285,620" size="180,30" text="Close Plugin" transparent="1" valign="center" zPosition="6"/>
+			<widget name="chmodtext" font="Regular;16" halign="left" position="515,620" size="180,30" transparent="1" valign="center" zPosition="6"/>
+			<widget name="playtext" font="Regular;16" halign="left" position="745,620" size="180,30" transparent="1" valign="center" zPosition="6"/>
 		</screen>"""
 
+
 	def __init__(self, session, args = None):
-		self.skin = DreamExplorerII.skin
+		self.skin = DreamExplorer3.skin
 		Screen.__init__(self, session)
-		self.skin_path = plugin_path
-		self.sesion = session
+		self.session = session
 		self.currentService = self.session.nav.getCurrentlyPlayingServiceReference()
-		self.boxtype = HardwareInfo().get_device_name()
 		self.command = [ "ls" ]
 		self.selectedDir = "/tmp/"
-		self.bookmarks = []
 		# DarkVolli 20120702: add filetype wmv
 		self.mediaPattern = "^.*\.(ts|m2ts|mp3|wav|ogg|jpg|jpeg|jpe|png|bmp|mpg|mpeg|mkv|mp4|mov|divx|avi|mp2|m4a|flac|ifo|vob|iso|sh|flv|3gp|mod|wmv)"
+		
+		startDirectory = None
 		if pathExists(config.plugins.DreamExplorer.startDir.value):
 			startDirectory = config.plugins.DreamExplorer.startDir.value
-		else:
-			startDirectory = None
-
-		if config.plugins.DreamExplorer.useMediaFilter.value == False:
-			self.useMediaFilter = False
-			self["filelist"] = myFileList(startDirectory, showDirectories = True, showFiles = True, matchingPattern = None, useServiceRef = False)
-		else:
-			self.useMediaFilter = True
-			self["filelist"] = myFileList(startDirectory, showDirectories = True, showFiles = True, matchingPattern = self.mediaPattern, useServiceRef = False)
-			
-		self["TEMPfl"] = myFileList("/", matchingPattern = "(?i)^.*\.(jpeg|jpg|jpe|png|bmp)")
 		
-		self["actions"] = ActionMap(["WizardActions", "DirectionActions", "ColorActions", "MenuActions", "EPGSelectActions", "InfobarActions"],
+		self.useMediaFilter = config.plugins.DreamExplorer.useMediaFilter.value
+
+		if self.useMediaFilter == False:
+			self["filelist"] = DreamExplorerFileList(directory = startDirectory, showDirectories = True, showFiles = True, matchingPattern = None)
+		else:
+			self["filelist"] = DreamExplorerFileList(directory = startDirectory, showDirectories = True, showFiles = True, matchingPattern = self.mediaPattern)
+			
+		self["actions"] = ActionMap(["WizardActions", "DirectionActions", "ColorActions", "MenuActions", "EPGSelectActions", "InfobarActions","InfobarAudioSelectionActions", "InfobarSeekActions"],
 		{
 			"ok": self.executeAction,
 			"back": self.exitPlugin,
-			"green": self.renameItem,
+			"green": self.showCreateOptions,
 			"red": self.deleteItem,
-			"blue": self.showBookmarks,
+			"blue": self.renameItem,
 			"yellow": self.openCopyMoveManager,
 			"menu": self.showContextMenu,
 			"info": self.showInfo,
@@ -135,248 +197,308 @@ class DreamExplorerII(Screen):
 			"right": self.right,
 			"up": self.up,
 			"down": self.down,
-			"nextBouquet": self.sortName,
-			"prevBouquet": self.sortDate,
+			"nextBouquet": self.sortByNameOrDate,
+			"prevBouquet": self.sortAscOrDesc,
+			"video":		self.openBookmarkManager,
+			"text":	self.chmodItem,
+			"audioSelection":	self.toggleMediaFilter,
+			"playpauseService":	self.showThumbnails,
 		}, -1)
 		
+		self["NumberActions"] = NumberActionMap(["NumberActions"],
+		{
+			"1": self.keyNumberGlobal,
+			"2": self.keyNumberGlobal,
+			"3": self.keyNumberGlobal,
+			"4": self.keyNumberGlobal,
+			"5": self.keyNumberGlobal,
+			"6": self.keyNumberGlobal,
+			"7": self.keyNumberGlobal,
+			"8": self.keyNumberGlobal,
+			"9": self.keyNumberGlobal,
+			"0": self.keyNumberGlobal,			
+		})
+		
+		self["oktext"] = Label(_("Change directory"))
+		self["chmodtext"] = Label(_("Set permissions"))
+		self["filtertext"] = Label(_("Enable media filter"))
+		self["namedate"] = Label(_("Sort by date"))
+		self["ascdesc"] = Label(_("Sort desc"))
+		
+		self["texticon"] = Label("TEXT")
+		self["playicon"] = Label("PLAY")
+		self["playtext"] = Label(_("Show thumbnails"))
+
+		if not PicturePlayerInstalled:
+			self["playicon"].hide()
+			self["playtext"].setText("")
+		
 		self.cmd= ""
+		self.useMediaFilter=False
+		
+		self.numericalTextInput = NumericalTextInput()
+		self.numericalTextInput.setUseableChars(u'.1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ')
 		
 		self.container = eConsoleAppContainer()
-		self.appClosed_conn = self.container.appClosed.connect(self.runFinished)		
-		
-		self.onLayoutFinish.append(self.readBookmarks)
+		self.appClosed_conn = self.container.appClosed.connect(self.runFinished)
+		self.dataavail_conn = self.container.dataAvail.connect(self.getData)
+		self["filelist"].onSelectionChanged.append(self.setOkText)	
+		self.onLayoutFinish.append(self.setOkText)	
+		self.updateLocationInfo()
 
+	def chmodItem(self):
+		if not self["filelist"].canDescent():
+			self.session.openWithCallback(self.chmodCallback, ChoiceBox, title=_("Please select new permissions..."), list=[(_("Read, write, execute (755)"), 0755), (_("Read, write (644)"), 0644)])
+			
+	def chmodCallback(self, answer):
+		if answer:
+			chmod(self["filelist"].getFilenameWithPath(), answer[1])
+		self["filelist"].refresh()
+
+	def toggleMediaFilter(self):
+		if self.useMediaFilter:
+			self.useMediaFilter=False
+			config.plugins.DreamExplorer.useMediaFilter.value = False
+			self["filelist"].matchingPattern = None
+			self["filtertext"].setText(_("Enable media filter"))
+		else:
+			self.useMediaFilter=True
+			config.plugins.DreamExplorer.useMediaFilter.value = True
+			self["filelist"].matchingPattern = self.mediaPattern
+			self["filtertext"].setText(_("Disable media filter"))
+		
+		config.plugins.DreamExplorer.useMediaFilter.save()
+		self["filelist"].refresh()
+		self.updateLocationInfo()		
+
+	def showThumbnails(self):
+		if PicturePlayerInstalled:
+			pictureList = self["filelist"].getFilteredFileList("picture", True)
+			# pictureList must be converted into a fake filelistEntryComponent entry to picture player to work properly
+			self.session.open(Pic_Thumb, [[(x, False), "", ""] for x in pictureList ], 0, self["filelist"].getCurrentDirectory())			
+
+	def keyNumberGlobal(self, number):
+		unichar = self.numericalTextInput.getKey(number)
+		charstr = unichar.encode("utf-8")
+		if len(charstr) == 1:
+			self["filelist"].moveToChar(charstr[0])
+
+	def keyAsciiCode(self):
+		unichar = unichr(getPrevAsciiCode())
+		charstr = unichar.encode("utf-8")
+		if len(charstr) == 1:
+			self["filelist"].moveToChar(charstr[0])
+
+	def setOkText(self):
+		okText = ""
+		playText = ""
+		if self["filelist"].canDescent():
+			okText = _("Change directory")
+			chmodText = ""
+		else:
+			filename = self["filelist"].getFilename()
+			if filename is not None:
+				fileExtensionType = self["filelist"].getFileExtensionType()
+				
+				if fileExtensionType == "music":
+					okText = _("Play song")
+				elif fileExtensionType == "picture":
+					okText = _("Show picture")
+					if PicturePlayerInstalled:
+						playText = _("Show thumbnails")
+				elif fileExtensionType == "movie":
+					okText = _("Play movie")
+				elif fileExtensionType == "package":
+					okText = _("Install package")
+				elif fileExtensionType == "archive":
+					okText = _("Uncompress archive")
+				elif fileExtensionType == "script":
+					okText = _("Run script")
+				elif self["filelist"].isSymLink():
+					okText = _("Follow symlink")
+				else:
+					okText = _("Open in vEditor2")
+			chmodText = _("Set permissions")
+		self["oktext"].setText(okText)
+		if okText == "":
+			self["texticon"].hide()
+		else:
+			self["texticon"].show()			
+		self["chmodtext"].setText(chmodText)
+		self["playtext"].setText(playText)
+		if playText == "":
+			self["playicon"].hide()
+		else:
+			self["playicon"].show()
+			
+	def showCreateOptions(self):
+		target = self["filelist"].getFilenameWithPath()
+		targetFileDir = self["filelist"].getPathForFile()
+		if target is None:
+			target = self["filelist"].getPathForFile()
+
+		self.session.openWithCallback(self.getSelection, ChoiceBox, title=_("Please select action..."), list=[(_("Create file in %s" %(targetFileDir)), "createFile"), (_("Create directory in %s" %(targetFileDir)), "createDir"), (_("Create symlink to %s" %(target)), "createSymlink")])
+		
+	def getSelection(self, selection):
+		if selection:
+			if selection[1] == "createFile":
+				element = "file"
+				target = self["filelist"].getPathForFile()
+				titletext = _("Create %s in %s with name:" %(element, target))
+			elif selection[1] == "createDir":
+				element = "directory"
+				target = self["filelist"].getPathForFile()
+				titletext = _("Create %s in %s with name:" %(element, target))
+			elif selection[1] == "createSymlink":
+				element = "symlink"
+				target = self["filelist"].getFilenameWithPath()
+				if target is None:
+					target = self["filelist"].getPathForFile()
+				titletext = _("Create %s to %s with name:" %(element, target))
+				
+			self.session.openWithCallback(boundFunction(self.createItem, element), InputBox,title=titletext, text=_("Name"))
+
+	def createItem(self, type, elementName):
+		if elementName:
+			self.executionData = ""
+			newElement = "%s%s" %(self["filelist"].getPathForFile(), elementName)
+			
+			if type == "symlink":
+				self.symlinkName = elementName
+				self.openCopyMoveManager(True)
+			else:			
+				if type == "file":
+					self.cmd = 'touch %s' %(newElement)
+					self.actionText = _("Creation of file %s" %(newElement))
+						
+				elif type == "directory":
+					self.cmd = 'mkdir %s' %(newElement)
+		
+					self.actionText = _("Creation of directory %s" %(newElement))
+					self.container.execute(self.cmd)		
+	
+				self.container.execute(self.cmd)
+			
 	def executeAction(self):
-		global DVDPlayerInstalled
-		global PicturePlayerInstalled
 		if self["filelist"].canDescent():
 			self["filelist"].descent()
 			self.updateLocationInfo()
 		else:
-			filename = self["filelist"].getCurrentDirectory() + self["filelist"].getFilename()
-			testFileName = self["filelist"].getFilename()
-			testFileName = testFileName.lower()
+			filenameWithPath = self["filelist"].getFilenameWithPath()
+			filename = self["filelist"].getFilename()
 
-			if filename != None:
-				extensionlist = testFileName.split('.')
-				extension = extensionlist[-1].lower()
-				if len(extensionlist) > 1:
-					tar = extensionlist[-2].lower()
+			if filenameWithPath != None:
+				fileExtension = self["filelist"].getFileExtension()
 
-				if extension == "ts":
-					fileRef = eServiceReference("1:0:0:0:0:0:0:0:0:0:" + filename)
+				if fileExtension == "ts":
+					fileRef = eServiceReference("1:0:0:0:0:0:0:0:0:0:" + filenameWithPath)
 					self.session.open(MoviePlayer, fileRef)
 					
-				elif extension in ["mpg","mpeg","mkv","m2ts","vob","mod","avi","mp4","divx","mov","flv","3gp","wmv"]:
-					fileRef = eServiceReference("4097:0:0:0:0:0:0:0:0:0:" + filename)
+				elif fileExtension in ["mpg","mpeg","mkv","m2ts","vob","mod","avi","mp4","divx","mov","flv","3gp","wmv"]:
+					fileRef = eServiceReference("4097:0:0:0:0:0:0:0:0:0:" + filenameWithPath)
 					self.session.open(MoviePlayer, fileRef)
 
-				elif extension in ["mp3","wav","ogg","m4a","mp2","flac"]:
+				elif fileExtension in ["mp3","wav","ogg","m4a","mp2","flac"]:
 					if MMPlayerInstalled:
 						SongList,SongIndex = self.searchMusic()
-						try:
-							self.session.openWithCallback(self.restartService, MerlinMusicPlayerScreen, SongList, SongIndex, False, self.currentService, None)
-						except:
-							self.session.open(MessageBox, _("Incompatible MerlinMusicPlayer version!"), MessageBox.TYPE_INFO)
+						self.session.openWithCallback(self.restartService, MerlinMusicPlayer2Screen, SongList, SongIndex, False, self.currentService, None)
 					else:
-						fileRef = eServiceReference("4097:0:0:0:0:0:0:0:0:0:" + filename)
+						fileRef = eServiceReference("4097:0:0:0:0:0:0:0:0:0:" + filenameWithPath)
 						m_dir = self["filelist"].getCurrentDirectory()
-						self.session.open(MusicExplorer, fileRef, m_dir, testFileName)
+						self.session.open(MusicExplorer, fileRef, m_dir, filenameWithPath)
 
-				elif extension in ["jpg","jpeg","jpe","png","bmp"]:
-					if self["filelist"].getSelectionIndex()!=0:
+				elif fileExtension in ["jpg","jpeg","jpe","png","bmp"]:
+					if self["filelist"].getCurrentIndex()!=0:
 						if PicturePlayerInstalled:
-							self["TEMPfl"].changeDir(self["filelist"].getCurrentDirectory())
-							self.session.open(Pic_Full_View, self["TEMPfl"].getFileList(), 0, self["filelist"].getCurrentDirectory())
-						
-						
-				elif extension == "mvi":
+							pictureList = self["filelist"].getFilteredFileList("picture", True)
+							# pictureList must be converted into a fake filelistEntryComponent entry to picture player to work properly
+							self.session.open(Pic_Full_View, [[(x, False), "", ""] for x in pictureList ], 0, self["filelist"].getCurrentDirectory())
+								
+				elif fileExtension == "mvi":
 					self.session.nav.stopService()
-					self.session.openWithCallback(self.restartService, MviExplorer, filename)
+					self.session.openWithCallback(self.restartService, MviExplorer, filenameWithPath)
 					
-				elif testFileName == "video_ts.ifo":
+				elif filename.lower() == "video_ts.ifo":
 					if DVDPlayerInstalled:
 						if (self["filelist"].getCurrentDirectory()).lower().endswith("video_ts/"):
 							self.session.openWithCallback(self.restartService, DVDPlayer, dvd_filelist=[self["filelist"].getCurrentDirectory()])
 							
-				elif extension == "iso":
+				elif fileExtension == "iso":
 					if DVDPlayerInstalled:
-						self.session.openWithCallback(self.restartService, DVDPlayer, dvd_filelist=[filename])
+						self.session.openWithCallback(self.restartService, DVDPlayer, dvd_filelist=[filenameWithPath])
 						
-				elif testFileName.endswith(".bootlogo.tar.gz"):
-					self.command = ["mount -rw /boot -o remount", "sleep 3","tar -xzvf " + filename + " -C /", "mount -ro /boot -o remount"]
-					askList = [(_("Cancel"), "NO"),(_("Install new bootlogo..."), "YES2ALL")]
-					msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Bootlogo-package:\n"+filename), list=askList)
-					msg.setTitle(_("Dream-Explorer : Install..."))
+				elif filename.lower().endswith(".bootlogo.tar.gz"):
+					self.command = ["mount -rw /boot -o remount", "sleep 3","tar -xzvf " + filenameWithPath + " -C /", "mount -ro /boot -o remount"]
+					askList = [(_("Cancel"), "NO"),(_("Install bootlogo"), "YES")]
+					msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" %(filename)), list=askList)
+					msg.setTitle(_("Dream Explorer 3"))
 					
-				elif extension in ["gz","bz2"] and tar == "tar":
-					if extension == "gz":
-						self.command = [ "tar -xzvf " + filename + " -C /" ]
-					elif extension == "bz2":
-						self.command = [ "tar -xjvf " + filename + " -C /" ]
+				elif fileExtension in ["gz","bz2"]:
+					if filename.lower()[-6:-3] == "tar":
+						if fileExtension == "gz":
+							self.command = [ "tar -xzvf " + filenameWithPath + " -C /" ]
+						elif fileExtension == "bz2":
+							self.command = [ "tar -xjvf " + filenameWithPath + " -C /" ]
 						
-					msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("%s-archive:\n%s" %(extension, filename)), list=[(_("Cancel"), "NO"),(_("Install this package"), "YES")])
-					msg.setTitle(_("Dream-Explorer : Install..."))
+						msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" %(filename)), list=[(_("Cancel"), "NO"),(_("Extract archive"), "YES")])
+						msg.setTitle(_("Dream Explorer 3"))
 
-				elif extension == "deb":
-					self.command = [ "apt-get update && dpkg -i " + filename ]
-					askList = [(_("Cancel"), "NO"),(_("Install this package"), "YES")]
-					msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("DEB-package:\n"+filename), list=askList)
-					msg.setTitle(_("Dream-Explorer : Install..."))
+				elif fileExtension == "deb":
+					self.command = [ "apt-get update && dpkg -i %s && apt-get -f install" %(filenameWithPath)]
+					askList = [(_("Cancel"), "NO"),(_("Install package"), "YES")]
+					msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" %(filename)), list=askList)
+					msg.setTitle(_("Dream Explorer 3"))
 					
-				elif testFileName.endswith(".sh"):
-					self.command = [ filename ]
-					askList = [(_("Cancel"), "NO"),(_("View this shell-script"), "VIEW"),(_("Execute script"), "YES")]
-					self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Do you want to execute %s?\n" %(filename)), list=askList)
-					
+				elif fileExtension == "sh":
+					self.command = [ filenameWithPath ]
+					askList = [(_("Cancel"), "NO"),(_("View script"), "VIEW"),(_("Execute script"), "YES")]
+					self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" %(filename)), list=askList)
 				else:
-					xfile=stat(filename)
+					xfile=stat(filenameWithPath)
 					if (xfile.st_size < 1024000):
-						self.session.open(vEditor, filename)
+						self.session.open(vEditor2, filenameWithPath)
 					else:
-						self.session.open(MessageBox, _("File is too big to display content"), MessageBox.TYPE_INFO, windowTitle=_("Dream-Explorer"))
+						self.session.open(MessageBox, _("File is too big to display content"), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 
 	def restartService(self):
 		if self.session.nav.getCurrentlyPlayingServiceReference() is None:
 			self.session.nav.playService(self.currentService)
 
-	def readBookmarks(self):
-		self.updateLocationInfo()
-		if fileExists("/etc/myBookmarks"):
-			try:
-				file = open("/etc/myBookmarks", "r")
-			except:
-				msg = self.session.open(MessageBox, _("Error reading bookmarks"), MessageBox.TYPE_ERROR)
-				msg.setTitle(_("Dream-Explorer"))
-			if file is not None:
-				for line in file:
-					self.bookmarks.append(line)
-				file.close()
-
 	def updateLocationInfo(self):
-		try:
-			if self.useMediaFilter:
-				self.setTitle(_("[Media files] " + self["filelist"].getCurrentDirectory()))
-			else:
-				self.setTitle(_("[All files] " + self["filelist"].getCurrentDirectory()))	
-		except:
-			self.setTitle(_("Dream-Explorer"))
+		filterText = _("[All files]")
+		if self.useMediaFilter:
+			filterText = _("[Media files]")
+		self.setTitle("Dream Explorer 3 - %s %s" %(filterText, self["filelist"].getCurrentDirectory()))
 
 	def showContextMenu(self):
-		if self.useMediaFilter:
-			mftext= _("Disable media filter")
-		else:
-			mftext= _("Enable media filter")
-		contextList = [
-			(_("Cancel"), "NO"),
-			(mftext, "FILTER"),
-			(_("Sort by name (bouquet+)"), "SORTNAME"),
-			(_("Sort by date (bouquet-)"), "SORTDATE")
-		]
+		contextList = []
 		if self["filelist"].canDescent():
-			if self["filelist"].getSelectionIndex()!=0:
-				self.selectedDir = self["filelist"].getSelection()[0]
-				if self.selectedDir + "\n" in self.bookmarks:
-					contextList.extend((
-						(_("Remove directory from Bookmarks"), "DELLINK"),
-					))
-				else:
-					contextList.extend((
-						(_("Add directory to Bookmarks"), "ADDLINK"),
-					))
+			if self["filelist"].getCurrentIndex()!=0 or self["filelist"].getCurrent()[0] == '<%s>' %(_("List of Storage Devices")):
 				contextList.extend((
-					(_("Create new file"), "NEWFILE"),
-					(_("Create new directory"), "NEWDIR"),
-					(_("Create softlink to selected"), "SYMLINKDIR"),
-					(_("Set start directory"), "SETSTARTDIR"),
+					(_("Set as start directory"), "SETSTARTDIR"),
 				))
-		else:
-			contextList.extend((
-				(_("Preview all pictures"), "PLAYDIRPICTURE"),
-				(_("Create new file"), "NEWFILE"),
-				(_("Create new directory"), "NEWDIR"),
-				(_("Create softlink to selected"), "SYMLINK"),
-				(_("Set archive mode (644)"), "CHMOD644"),
-				(_("Set executable mode (755)"), "CHMOD755"),
-			))
 		contextList.extend((
 			(_("About"), "ABOUT"),
 		))
 		
-		self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Options:\n"), list=contextList, windowTitle=_("Dream-Explorer"))
+		self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Options:\n"), list=contextList, windowTitle=_("Dream Explorer 3"))
 
 	def executeSelected(self, answer):
-		global PicturePlayerInstalled
 		answer = answer and answer[1]
 		if answer == "YES":
-			self.session.open(Console, cmdlist = [ self.command[0] ])
-		elif answer == "YES2ALL":
 			self.session.open(Console, cmdlist = self.command)
 		elif answer == "VIEW":
 			viewfile=stat(self.command[0])
 			if (viewfile.st_size < 61440):
-				self.session.open(vEditor, self.command[0])
-		elif answer == "PLAYDIRPICTURE":
-			if PicturePlayerInstalled:
-				self["TEMPfl"].changeDir(self["filelist"].getCurrentDirectory())
-				self.session.open(Pic_Thumb, self["TEMPfl"].getFileList(), 0, self["filelist"].getCurrentDirectory())
-			else:
-				msg = self.session.open(MessageBox, _("PicturePlayer not available."), MessageBox.TYPE_ERROR, windowTitle=_("Dream-Explorer"))
-		elif answer == "ADDLINK" or answer == "DELLINK":
-			try:
-				file = open("/etc/myBookmarks", "w")
-			except:
-				msg = self.session.open(MessageBox, _("Error writing bookmarks"), MessageBox.TYPE_ERROR, windowTitle=_("Dream-Explorer"))
-			if file is not None:
-				if answer == "ADDLINK":
-					self.bookmarks.append(self.selectedDir+"\n")
-				else:
-					self.bookmarks.remove(self.selectedDir+"\n")
-				
-				for bookmark in self.bookmarks:
-					file.write(bookmark)
-				file.close()
-
-		elif answer == "FILTER":
-			if self.useMediaFilter:
-				self.useMediaFilter=False
-				config.plugins.DreamExplorer.useMediaFilter.value = False
-				self["filelist"].matchingPattern = None
-			else:
-				self.useMediaFilter=True
-				config.plugins.DreamExplorer.useMediaFilter.value = True
-				self["filelist"].matchingPattern = self.mediaPattern
-
-			config.plugins.DreamExplorer.useMediaFilter.save()
-			self["filelist"].refresh()
-			self.updateLocationInfo()
-
-		elif answer == "NEWFILE":
-			self.session.openWithCallback(self.callbackNewFile, InputBox, title=_(self["filelist"].getCurrentDirectory()), windowTitle=_("Create new file in..."), text="name")
-		elif answer == "NEWDIR":
-			self.session.openWithCallback(self.callbackNewDir, InputBox, title=_(self["filelist"].getCurrentDirectory()), windowTitle=_("Create new directory in..."), text="name")
+				self.session.open(vEditor2, self.command[0])
 		elif answer == "SETSTARTDIR":
-			newStartDir = self["filelist"].getSelection()[0]
-			msg = self.session.openWithCallback(self.callbackSetStartDir,MessageBox,_("Do you want to set\n"+newStartDir+"\nas start directory?"), MessageBox.TYPE_YESNO, windowTitle=_("Dream-Explorer..."))
-		elif answer == "SORTNAME":
-			list = self.sortName()
-		elif answer == "SORTDATE":
-			list = self.sortDate()
+			startDir = self["filelist"].getSelection()[1]
+			if startDir is None:
+				startDir = self["filelist"].getCurrentDirectory()
+				
+			self.session.openWithCallback(self.callbackSetStartDir,MessageBox,_("Do you want to set\n%s\nas start directory?" %(startDir)), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3"))
 		elif answer == "ABOUT":
- 			msg = self.session.open(MessageBox, _("Dreambox-Explorer\noriginal version by Vali (2010)\nnew version by Dre (2016)\n\nSupport & help: board.dreambox-tools.info"), MessageBox.TYPE_INFO, windowTitle=_("Info..."))
-		elif answer == "SYMLINK":
-			if not(self.useMediaFilter):
-				target = self["filelist"].getCurrentDirectory() + self["filelist"].getFilename()
-				self.session.openWithCallback(self.callbackCopyMoveManager, SymlinkScreen, target, self["filelist"].getFilename())
-		elif answer == "SYMLINKDIR":
-			if not(self.useMediaFilter):
-				target = self["filelist"].getFilename()
-				linkname = self["filelist"].getFilename().split("/")[-2]
-				self.session.openWithCallback(self.callbackCopyMoveManager, SymlinkScreen, target, linkname)				
-		elif answer == "CHMOD644":
-			chmod(self["filelist"].getCurrentDirectory() + self["filelist"].getFilename(), 0644)
-		elif answer == "CHMOD755":
-			chmod(self["filelist"].getCurrentDirectory() + self["filelist"].getFilename(), 0755)
+ 			self.session.open(MessageBox, _("Dreambox Explorer II created by Vali (2010)\nDream Explorer 3 by Dre (2021)\n\nSupport: board.dreamboxtools.de"), MessageBox.TYPE_INFO, windowTitle=_("Info"))
 
 	def up(self):
 		self["filelist"].up()
@@ -394,25 +516,9 @@ class DreamExplorerII(Screen):
 		self["filelist"].pageDown()
 		self.updateLocationInfo()
 
-	def formatSize(self, size):
-		if (size < 1024):
-			formattedSize = str(size)+_(" B")
-		elif (size < 1048576):
-			formattedSize = str(size/1024)+_(" KB")
-		else:
-			formattedSize = str(size/1048576)+_(" MB")
-		return formattedSize
-
 	def showInfo(self):
 		if self["filelist"].canDescent():
-			if self["filelist"].getSelectionIndex()!=0:
-				curSelDir = self["filelist"].getSelection()[0]
-				dir_stats = stat(curSelDir)
-				dir_infos = "size "+str(self.formatSize(dir_stats.st_size))+"    "
-				dir_infos = dir_infos+"last-mod "+strftime("%d.%m.%Y %H:%M:%S",localtime(dir_stats.st_mtime))+"    "
-				dir_infos = dir_infos+"mode "+str(dir_stats.st_mode)
-				self.setTitle(_(dir_infos))
-			else:
+			if self["filelist"].getCurrentIndex()==0:
 				try:
 					out_line = check_output(['uptime'])
 					ret = "at" + out_line + "\n"
@@ -432,63 +538,55 @@ class DreamExplorerII(Screen):
 				except:
 					ret = "N/A"			
 			
-				msg = self.session.open(MessageBox, _("Dreambox model: " + self.boxtype + "\n\n" + ret), MessageBox.TYPE_INFO, windowTitle=_("Dream-Explorer"))
+				msg = self.session.open(MessageBox, _("Dreambox model: %s\n\n%s" %(HardwareInfo().get_device_name(),ret)), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
+		elif self["filelist"].getFileExtensionType() == "service":
+			self.session.open(SystemdViewer,self["filelist"].getFilename(), self["filelist"].getFilenameWithPath() )
 		else:
-			curSelFile = self["filelist"].getCurrentDirectory() + self["filelist"].getFilename()
-			file_stats = stat(curSelFile)
-			file_infos = "size "+str(self.formatSize(file_stats.st_size))+"    "
-			file_infos = file_infos+"last-mod "+strftime("%d.%m.%Y %H:%M:%S",localtime(file_stats.st_mtime))+"    "
-			file_infos = file_infos+"mode "+str(file_stats.st_mode)
-			self.setTitle(_(file_infos))
-			if curSelFile.endswith(".ts"):
-				serviceref = eServiceReference("1:0:0:0:0:0:0:0:0:0:" + curSelFile)
-				serviceHandler = eServiceCenter.getInstance()
-				info = serviceHandler.info(serviceref)
-				evt = info.getEvent(serviceref)
-				if evt:
-					self.session.open(EventViewSimple, evt, ServiceReference(serviceref))
+			evt, serviceref = self["filelist"].getTSEvent()
+			if evt is not None:
+				self.session.open(EventViewSimple, evt, ServiceReference(serviceref))
 
-	def setBookmark(self, answer):
-		answer = answer and answer[1]
-		try:
-			if answer[0] == "/":
-				self["filelist"].changeDir(answer[:-1])
-				self.updateLocationInfo()
-		except:
-			pass
+	def openBookmarkManager(self):
+		self.session.openWithCallback(self.setDirectory, BookmarkManager)
+		
+	def setDirectory(self, dir=False):
+		if dir:
+			self["filelist"].changeDirectory(dir)
 
-	def showBookmarks(self):
-		bookmarklist = [(_("Cancel"), "BACK")]
-		for bookmark in self.bookmarks:
-			bookmarklist.append((_(bookmark), bookmark))
-		self.session.openWithCallback(self.setBookmark, ChoiceBox, title=_("My Bookmarks"), list=bookmarklist, windowTitle=_("Dream-Explorer"))
+	def getData(self, data):
+		self.executionData += data
 
 	def runFinished(self, retval):
+		resultText = ""
 		if retval != 0:
-			msg = self.session.open(MessageBox,_("%s \nfailed!" % self.cmd), MessageBox.TYPE_ERROR, windowTitle=_("Dream-Explorer"))
+			resultText = _("failed\n%s" %(self.executionData))
+			state = False
 		else:
-			msg = self.session.open(MessageBox,_("%s \nexecuted!" % self.cmd), MessageBox.TYPE_ERROR, windowTitle=_("Dream-Explorer"), timeout=3)
-			
+			resultText = _("successful")
+			state = True	
+		
+		self.session.open(MessageBox, "%s %s" %(self.actionText, resultText), MessageBox.TYPE_INFO if state else MessageBox.TYPE_ERROR, timeout=0)
+		
 		self["filelist"].refresh()
 			
 	def deleteItem(self):
 		if self.useMediaFilter:
-			msg = self.session.open(MessageBox,_('Turn off the media-filter first.'), MessageBox.TYPE_INFO, windowTitle=_("Dream-Explorer..."))
+			msg = self.session.open(MessageBox,_('Turn off the media-filter first.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 			return
 			
 		if not(self["filelist"].canDescent()):
-			self.item = self["filelist"].getCurrentDirectory() + self["filelist"].getFilename()
+			self.item = self["filelist"].getFilenameWithPath()
 			self.type = "file"
 			self.typetext = _("file")
 			
-		elif (self["filelist"].getSelectionIndex()!=0) and (self["filelist"].canDescent()):
-			self.item = self["filelist"].getSelection()[0]
+		elif (self["filelist"].getCurrentIndex()!=0) and (self["filelist"].canDescent()):
+			self.item = self["filelist"].getSelection()[1]
 			self.type = "directory"
 			self.typetext = _("directory")
 		else:
 			return
 			
-		msg = self.session.openWithCallback(self.callbackDeleteItem,MessageBox,_("Do you really want to delete:\n"+self.item), MessageBox.TYPE_YESNO, windowTitle=_("Dream-Explorer - Delete %s..." %(self.type)))
+		msg = self.session.openWithCallback(self.callbackDeleteItem,MessageBox,_("Do you really want to delete:\n"+self.item), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3 - Delete %s..." %(self.type)))
 
 	def callbackDeleteItem(self, answer):
 		if answer is True:
@@ -496,211 +594,451 @@ class DreamExplorerII(Screen):
 				self.cmd = "rm -rf '%s'" %(self.item)
 			elif self.type == "file":
 				self.cmd = "rm -f '%s'" %(self.item)
-			
+
+			self.actionText = _("Deletion of %s %s" %(self.type, self.item))		
 			self.container.execute(self.cmd)
 
 	def renameItem(self):
 		if self.useMediaFilter:
-			msg = self.session.open(MessageBox,_('Turn off the media-filter first.'), MessageBox.TYPE_INFO, windowTitle=_("Dream-Explorer..."))
+			msg = self.session.open(MessageBox,_('Turn off the media-filter first.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 			return
 			
 		if not(self["filelist"].canDescent()):
-			self.item = self["filelist"].getFilename()
+			item = self["filelist"].getFilename()
 			self.type = "file"
 			self.typetext = _("file")
-		elif self["filelist"].getSelectionIndex()!=0 and self["filelist"].canDescent():
-			self.item = self["filelist"].getSelection()[0]
+		elif self["filelist"].getCurrentIndex()!=0 and self["filelist"].canDescent():
+			item = self["filelist"].getSelection()[0]
 			self.type = "directory"
 			self.typetext = _("directory")
 		else:
 			return
 			
-		self.session.openWithCallback(self.callbackRenameItem, InputBox, title=_("Old:  "+ self.item), windowTitle=_("Rename %s..." %(self.typetext)), text=self.item)
+		self.session.openWithCallback(self.callbackRenameItem, InputBox, title=_("Current name: %s" %(item)), windowTitle=_("Rename %s..." %(self.typetext)), text=item)
 
 	def callbackRenameItem(self, answer):
 		if answer is not None:
+			path = self["filelist"].getCurrentDirectory()
 			if self.type == "file":
-				path = self["filelist"].getCurrentDirectory()
-				source = path + self.item
-				dest = path + answer
+				oldName = self["filelist"].getFilenameWithPath()
 			elif self.type == "directory":
-				source = self.item
-				dest = answer
-				
-			try:
-				rename(source, dest)
-			except:
-				msg = self.session.open(MessageBox,_("Rename: %s \nfailed!" % answer), MessageBox.TYPE_ERROR, windowTitle=_("Dream-Explorer"))
-			self["filelist"].refresh()
+				oldName = self["filelist"].getCurrentDirectory() + self["filelist"].getFilename()
+			newName = path + answer
 
-	def callbackNewFile(self, answer):
-		if answer is None:
-			return
-		dest = self["filelist"].getCurrentDirectory()
-		if (" " in answer) or (" " in dest) or (answer==""):
-			msg = self.session.open(MessageBox,_("File name error !"), MessageBox.TYPE_ERROR, windowTitle=_("Dream-Explorer"))
-			return
-		else:
-			order = dest + answer
-			try:
-				open(order, 'a').close()
-				self["filelist"].refresh()
-			except:
-				msg = self.session.open(MessageBox,_("%s \nfailed!" % order), MessageBox.TYPE_ERROR, windowTitle=_("Dream-Explorer"))
-				self["filelist"].refresh()
-
-	def callbackNewDir(self, answer):
-		if answer is None:
-			return
-		dest = self["filelist"].getCurrentDirectory()
-		if (" " in answer) or (" " in dest) or (answer==""):
-			msg = self.session.open(MessageBox,_("Directory name error !"), MessageBox.TYPE_ERROR, windowTitle=_("Dream-Explorer"))
-			return
-		else:
-			order = dest + answer
-			try:
-				if not pathExists(order):
-					mkdir(order)
-				self["filelist"].refresh()
-			except:
-				msg = self.session.open(MessageBox,_("%s \nfailed!" % order), MessageBox.TYPE_ERROR, windowTitle=_("Dream-Explorer"))
-				self["filelist"].refresh()
-
-	def openCopyMoveManager(self):
+			self.cmd = 'mv %s %s' %(oldName, newName)
+			
+			self.actionText = _("Renaming of %s to %s" %(oldName, newName))
+			self.container.execute(self.cmd)
+			
+	def openCopyMoveManager(self, setSymLink=False):
 		if self.useMediaFilter:
-			msg = self.session.open(MessageBox,_('Turn off the media-filter first.'), MessageBox.TYPE_INFO, windowTitle=_("Dream-Explorer..."))
+			msg = self.session.open(MessageBox,_('Turn off the media-filter first.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 			return
 			
 		if not(self["filelist"].canDescent()):
-			source = self["filelist"].getCurrentDirectory() + self["filelist"].getFilename()
-		elif (self["filelist"].getSelectionIndex()!=0) and (self["filelist"].canDescent()): #NEW
-			source = self["filelist"].getSelection()[0]
+			source = self["filelist"].getFilenameWithPath()
+		elif (self["filelist"].getCurrentIndex()!=0) and (self["filelist"].canDescent()): #NEW
+			source = self["filelist"].getSelection()[1]
 		else:
 			return
-		self.session.openWithCallback(self.callbackCopyMoveManager, CopyMoveManager, source)
+		
+		if setSymLink:
+			mode = "symlink"
+			showFiles = False
+		else:
+			mode = "copymove"
+			showFiles = False
+			self.symlinkName = None
+		self.session.openWithCallback(self.callbackCopyMoveManager, FolderSelection, source, self.symlinkName, showFiles=showFiles, mode=mode)
 
 	def callbackCopyMoveManager(self, answer):
-		self["filelist"].refresh()
+		if answer is not None:
+			self.actionText = answer[0]
+			self.cmd = answer[1]
+			
+			self.container.execute(self.cmd)
 
 	def callbackSetStartDir(self, answerSD):
 		if answerSD is True:
-			config.plugins.DreamExplorer.startDir.value = self["filelist"].getSelection()[0]
+			startDir = self["filelist"].getSelection()[1]
+			if startDir is None:
+				startDir = self["filelist"].getCurrentDirectory()
+			config.plugins.DreamExplorer.startDir.value = startDir
 			config.plugins.DreamExplorer.startDir.save()
 
-	def sortName(self):
-		list = self["filelist"].sortName()
-		self.setTitle(_("[sort by Name] " + self["filelist"].getCurrentDirectory()))
+	def sortByNameOrDate(self):
+		# SORT_NAME_ASC
+		if self["filelist"].getSortType() == DreamExplorerFileList.SORT_NAME_ASC:
+			# SORT_DATE_ASC
+			self["filelist"].setSortType(DreamExplorerFileList.SORT_DATE_ASC)
+			self["namedate"].setText(_("Sort by name"))
+		# SORT_NAME_DESC
+		elif self["filelist"].getSortType() == DreamExplorerFileList.SORT_NAME_DESC:
+			# SORT_DATE_DESC
+			self["filelist"].setSortType(DreamExplorerFileList.SORT_DATE_DESC)
+			self["namedate"].setText(_("Sort by name"))
+		# SORT_DATE_ASC
+		elif self["filelist"].getSortType() == DreamExplorerFileList.SORT_DATE_ASC:
+			# SORT_NAME_ASC
+			self["filelist"].setSortType(DreamExplorerFileList.SORT_NAME_ASC)
+			self["namedate"].setText(_("Sort by date"))
+		# SORT_DATE_DESC
+		elif self["filelist"].getSortType() == DreamExplorerFileList.SORT_DATE_DESC:
+			# SORT_NAME_DESC
+			self["filelist"].setSortType(DreamExplorerFileList.SORT_NAME_DESC)
+			self["namedate"].setText(_("Sort by date"))
 
-	def sortDate(self):
-		list = self["filelist"].sortDate()
-		self.setTitle(_("[sort by Date] " + self["filelist"].getCurrentDirectory()))
+		self["filelist"].sortList()
+		self["filelist"].setList()
+			
+	def sortAscOrDesc(self):
+		if self["filelist"].getSortType() == DreamExplorerFileList.SORT_NAME_DESC:
+			self["filelist"].setSortType(DreamExplorerFileList.SORT_NAME_ASC)
+			self["ascdesc"].setText(_("Sort desc"))
+		elif self["filelist"].getSortType() == DreamExplorerFileList.SORT_DATE_DESC:
+			self["filelist"].setSortType(DreamExplorerFileList.SORT_DATE_ASC)
+			self["ascdesc"].setText(_("Sort desc"))
+		elif self["filelist"].getSortType() == DreamExplorerFileList.SORT_NAME_ASC:
+			self["filelist"].setSortType(DreamExplorerFileList.SORT_NAME_DESC)
+			self["ascdesc"].setText(_("Sort asc"))
+		elif self["filelist"].getSortType() == DreamExplorerFileList.SORT_DATE_ASC:
+			self["filelist"].setSortType(DreamExplorerFileList.SORT_DATE_DESC)
+			self["ascdesc"].setText(_("Sort asc"))
 
+		self["filelist"].sortList()
+		self["filelist"].setList()
+	
 	def searchMusic(self):
 		slist = []
 		foundIndex = 0
 		index = 0
-		files = listdir(self["filelist"].getCurrentDirectory())
-		files.sort()
-		for name in files:
-			testname = name.lower()
-			if testname.endswith(".mp3") or name.endswith(".m4a") or name.endswith(".ogg") or name.endswith(".flac"):
-				slist.append((Item(text = name, filename = join(self["filelist"].getCurrentDirectory(),name)),))
-				if self["filelist"].getFilename() == name:
-					foundIndex = index
-				index = index + 1
+		musicList = self["filelist"].getFilteredFileList("music")
+		for song in musicList:
+			slist.append((Item(text = song[0], filename = song[2]),))
+			if self["filelist"].getFilename() == song[0]:
+				foundIndex = index
+			index = index + 1
 		return slist,foundIndex
 
 	def exitPlugin(self):
-		if self.useMediaFilter:
-			config.plugins.DreamExplorer.useMediaFilter.value = True
-		else:
-			config.plugins.DreamExplorer.useMediaFilter.value = False
-		config.plugins.DreamExplorer.useMediaFilter.save()
-
 		self.close()
 
 ######## DREAM-EXPLORER END ####################### 
 
-class vEditor(Screen):
-	skin = """
-		<screen position="center,center" size="900,500" title="File-Explorer">
-			<widget source="filedata" render="Listbox" position="0,0" size="900,500" scrollbarMode="showOnDemand">
+class BookmarkManager(Screen):
+	if getDesktop(0).size().width()>=1920:
+		skin = """
+		<screen name="BookmarkManager" position="center,center" size="1000,630" title="Bookmark Manager">
+			<widget name="folders" position="0,5" size="600,40" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" valign="center" />
+			<widget name="filelist" position="0,45" scrollbarMode="showOnDemand" size="600,480" zPosition="4" iconSet="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/icons" />
+			<widget name="bookmarks" position="600,5" size="400,40" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" valign="center" />
+			<widget source="bookmarklist" render="Listbox" position="600,45" size="400,480" scrollbarMode="showOnDemand">
+				<convert type="TemplatedMultiContent">
+					{"template":
+						[
+							MultiContentEntryText(pos=(10,0), size=(380,40), font=0, text=0),
+						],
+					"fonts": [gFont("Regular",28)],
+					"itemHeight": 40
+					}
+				</convert>
+			</widget>
+			<eLabel font="Regular;20" position="0,540" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f50000" zPosition="6"/>
+			<eLabel font="Regular;20" position="240,540" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#009f00" zPosition="6"/>
+			<eLabel font="Regular;20" position="480,540" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f5f500" zPosition="6"/>
+			<eLabel font="Regular;20" position="720,540" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#0000f9" zPosition="6"/>
+			<eLabel font="Regular;20" position="0,580" size="40,20" text="OK" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<eLabel font="Regular;20" position="240,580" size="40,20" text="EXIT" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<widget name="deleteBookmark" font="Regular;25" halign="left" position="50,535" size="180,40" transparent="1" valign="center" zPosition="6"/>
+			<widget  name="addBookmark" font="Regular;25" halign="left" position="290,535" size="180,40" transparent="1" valign="center" zPosition="6"/>
+			<widget name="saveBookmarks" font="Regular;25" halign="left" position="530,535" size="180,40" transparent="1" valign="center" zPosition="6"/>
+			<widget name="toggleList" font="Regular;25" halign="left" position="770,535" size="180,40" transparent="1" valign="center" zPosition="6"/>	
+			<widget name="ok" font="Regular;25" halign="left" position="50,575" size="180,40" transparent="1" valign="center" zPosition="6"/>
+			<widget  name="exit" font="Regular;25" halign="left" position="290,575" size="180,40" transparent="1" valign="center" zPosition="6"/>
+		</screen>
+		"""
+	else:
+		skin = """
+		<screen name="BookmarkManager" position="center,center" size="1000,630" title="Bookmark Manager">
+			<widget name="folders" position="0,5" size="600,40" font="Regular;18" foregroundColor="#f0f0f0" transparent="1" halign="left" valign="center" />
+			<widget name="filelist" position="0,45" scrollbarMode="showOnDemand" size="600,480" zPosition="4" iconSet="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/icons" />
+			<widget name="bookmarks" position="600,5" size="400,40" font="Regular;18" foregroundColor="#f0f0f0" transparent="1" halign="left" valign="center" />
+			<widget source="bookmarklist" render="Listbox" position="600,45" size="400,480" scrollbarMode="showOnDemand">
+				<convert type="TemplatedMultiContent">
+					{"template":
+						[
+							MultiContentEntryText(pos=(10,0), size=(380,30), font=0, text=0),
+						],
+					"fonts": [gFont("Regular",18)],
+					"itemHeight": 30
+					}
+				</convert>
+			</widget>
+			<eLabel font="Regular;12" position="0,540" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f50000" zPosition="6"/>
+			<eLabel font="Regular;12" position="260,540" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#009f00" zPosition="6"/>
+			<eLabel font="Regular;12" position="520,540" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f5f500" zPosition="6"/>
+			<eLabel font="Regular;12" position="780,540" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#0000f9" zPosition="6"/>
+			<eLabel font="Regular;12" position="0,580" size="60,30" text="OK" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<eLabel font="Regular;12" position="260,580" size="60,30" text="EXIT" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<widget name="deleteBookmark" font="Regular;16" halign="left" position="70,535" size="180,30" transparent="1" valign="center" zPosition="6"/>
+			<widget  name="addBookmark" font="Regular;16" halign="left" position="330,535" size="180,30" transparent="1" valign="center" zPosition="6"/>
+			<widget name="saveBookmarks" font="Regular;16" halign="left" position="590,535" size="180,30" transparent="1" valign="center" zPosition="6"/>
+			<widget name="toggleList" font="Regular;16" halign="left" position="850,535" size="180,30" transparent="1" valign="center" zPosition="6"/>	
+			<widget name="ok" font="Regular;16" halign="left" position="70,575" size="180,30" transparent="1" valign="center" zPosition="6"/>
+			<widget  name="exit" font="Regular;16" halign="left" position="330,575" size="180,30" transparent="1" valign="center" zPosition="6"/>
+		</screen>
+		"""		
+	def __init__(self, session, args=None):
+		Screen.__init__(self, session)
+		
+		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "DirectionActions" ],
+		{
+			"ok":	self.changeDirOrSelectBookmark,
+			"cancel": self.close,
+			"green": self.addToBookmarks,
+			"red": self.removeFromBookmarks,
+			"blue": self.toggleList,
+			"yellow": self.saveBookmarks,
+			"down": self.moveDown,
+			"up":	self.moveUp,
+			"left":	self.pageUp,
+			"right":	self.pageDown,
+		}, -1)
+		
+		self.currentList = "bookmarklist"
+		
+		self["filelist"] = DreamExplorerFileList(list_type=DreamExplorerFileList.LIST_TYPE_NODETAILS, directory = "/", showDirectories = True, showFiles = False, matchingPattern = None, showDetails = False)
+		
+		self["folders"] = Label(_("Folders"))
+		self["bookmarks"] = Label(_("Bookmarks"))
+		self["deleteBookmark"] = Label(_("Delete bookmark"))
+		self["addBookmark"] = Label(_("Add bookmark"))
+		self["addBookmark"].hide()
+		self["saveBookmarks"] = Label(_("Save bookmarks"))
+		self["toggleList"] = Label(_("Toggle list"))
+		self["ok"] = Label(_("Open bookmark"))
+		self["exit"] = Label(_("Close"))
+		
+		self["bookmarklist"] = List()
+		
+		self.readBookmarks()
+		
+		self.onLayoutFinish.append(self.setListState)
+
+	def moveUp(self):
+		if self.currentList == "bookmarklist":
+			self[self.currentList].moveSelection("moveUp")
+		else:
+			self[self.currentList].up()
+		
+	def moveDown(self):
+		if self.currentList == "bookmarklist":
+			self[self.currentList].moveSelection("moveDown")
+		else:
+			self[self.currentList].down()
+
+	def pageUp(self):
+		if self.currentList == "bookmarklist":
+			self[self.currentList].moveSelection("pageUp")
+		else:
+			self[self.currentList].pageUp()
+		
+	def pageDown(self):
+		if self.currentList == "bookmarklist":
+			self[self.currentList].moveSelection("pageDown")
+		else:
+			self[self.currentList].pageDown()	
+		
+	def setListState(self):
+		self["filelist"].setSelectionEnabled(False)
+		self["bookmarklist"].setSelectionEnabled(True)
+		
+	def changeDirOrSelectBookmark(self):
+		if self.currentList == "filelist":
+			if self["filelist"].canDescent():
+				self["filelist"].descent()
+		else:
+			cur = self["bookmarklist"].getCurrent()
+			if cur is not None:			
+				self.close(cur[0])
+	
+	def addToBookmarks(self):
+		cur = self["filelist"].getCurrent()
+		if cur is not None:
+			if not cur[1] in self.bookmarks:
+				if cur[1] is not None:
+					self.bookmarks.append(cur[1])
+				
+					self.updateBookmarks()
+				else:
+					self.session.open(MessageBox, _("Only directories can be bookmarked"), MessageBox.TYPE_INFO, timeout=3)
+			else:
+				self.session.open(MessageBox, _("Diretory is already in bookmarks"), MessageBox.TYPE_INFO, timeout=3)
+		
+	def removeFromBookmarks(self):
+		cur = self["bookmarklist"].getCurrent()
+		if cur is not None:
+			self.bookmarks.remove(cur[0])
+			
+		self.updateBookmarks()
+			
+	def updateBookmarks(self):
+		self.bookmarklist = []
+		for bookmark in self.bookmarks:
+			self.bookmarklist.append((bookmark,))		
+			
+		self["bookmarklist"].setList(self.bookmarklist)
+		
+	def readBookmarks(self):
+		if not pathExists("/etc/enigma2/DreamExplorer"):
+			createDir("/etc/enigma2/DreamExplorer")
+		
+		if fileExists("/etc/enigma2/DreamExplorer/bookmarks"):
+			with open("/etc/enigma2/DreamExplorer/bookmarks", 'r') as file:
+				self.bookmarks = file.read().splitlines()
+		
+		self.updateBookmarks()
+		
+	def toggleList(self):
+		if self.currentList == "bookmarklist":
+			self[self.currentList].setSelectionEnabled(False)
+			self.currentList = "filelist"
+			self[self.currentList].setSelectionEnabled(True)
+			self["addBookmark"].show()
+			self["deleteBookmark"].hide()
+			self["ok"].setText(_("Change directory"))
+		else:
+			self[self.currentList].setSelectionEnabled(False)
+			self.currentList = "bookmarklist"
+			self[self.currentList].setSelectionEnabled(True)
+			self["addBookmark"].hide()
+			self["deleteBookmark"].show()
+			self["ok"].setText(_("Open bookmark"))
+
+	def saveBookmarks(self):
+		with open("/etc/enigma2/DreamExplorer/bookmarks", "w+") as file:
+			for bookmark in self.bookmarks:
+				file.write(bookmark + "\n")
+
+class vEditor2(Screen):
+	if getDesktop(0).size().width()>=1920:
+		skin = """
+		<screen name="vEditor2" position="center,50" size="1500,975" title="vEditor2">
+			<widget source="filedata" render="Listbox" position="0,0" size="1500,875" scrollbarMode="showOnDemand">
 				<convert type="TemplatedMultiContent">
 					{"template":[
-									MultiContentEntryText(pos=(0,0), size=(900,25), text=0),					],
-					"fonts": [gFont("Regular",20)],
+									MultiContentEntryText(pos=(0,0), size=(900,35), text=0),					],
+					"fonts": [gFont("Regular",30)],
+					"itemHeight": 35
+					}
+				</convert>
+			</widget>
+			<eLabel font="Regular;20" position="10,890" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f50000" zPosition="6"/>
+			<eLabel font="Regular;20" position="360,890" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#009f00" zPosition="6"/>
+			<eLabel font="Regular;20" position="710,890" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f5f500" zPosition="6"/>
+			<eLabel font="Regular;20" position="1060,890" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#0000f9" zPosition="6"/>
+			<eLabel font="Regular;25" halign="left" position="80,885" size="250,40" text="Delete line" transparent="0" valign="center" zPosition="6"/>
+			<eLabel font="Regular;25" halign="left" position="430,885" size="250,40" text="Add line" transparent="0" valign="center" zPosition="6"/>
+			<eLabel font="Regular;25" halign="left" position="780,885" size="250,40" text="Edit line" transparent="0" valign="center" zPosition="6"/>
+			<eLabel font="Regular;20" position="10,925" size="60,30" text="OK" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<eLabel font="Regular;20" position="360,925" size="60,30" text="EXIT" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>	
+			<eLabel font="Regular;25" halign="left" position="80,920" size="250,40" text="Edit line" transparent="0" valign="center" zPosition="6"/>
+			<eLabel font="Regular;25" halign="left" position="430,920" size="250,40" text="Close editor" transparent="0" valign="center" zPosition="6"/>	
+		</screen>"""
+	else:
+		skin = """
+		<screen name="vEditor2" position="center,50" size="1200,650" title="vEditor2">
+			<widget source="filedata" render="Listbox" position="0,0" size="1200,575" scrollbarMode="showOnDemand">
+				<convert type="TemplatedMultiContent">
+					{"template":[
+									MultiContentEntryText(pos=(0,0), size=(900,30), text=0),					],
+					"fonts": [gFont("Regular",18)],
 					"itemHeight": 25
 					}
 				</convert>
-			</widget>			
+			</widget>
+			<eLabel font="Regular;12" position="10,585" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f50000" zPosition="6"/>
+			<eLabel font="Regular;12" position="250,585" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#009f00" zPosition="6"/>
+			<eLabel font="Regular;12" position="490,585" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f5f500" zPosition="6"/>
+			<eLabel font="Regular;12" position="740,585" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#0000f9" zPosition="6"/>
+			<eLabel font="Regular;16" halign="left" position="60,585" size="180,30" text="Delete line" transparent="0" valign="center" zPosition="6"/>
+			<eLabel font="Regular;16" halign="left" position="300,585" size="180,30" text="Add line" transparent="0" valign="center" zPosition="6"/>
+			<eLabel font="Regular;16" halign="left" position="540,585" size="180,30" text="Edit line" transparent="0" valign="center" zPosition="6"/>
+			<eLabel font="Regular;12" position="10,620" size="40,20" text="OK" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<eLabel font="Regular;16" position="250,620" size="40,20" text="EXIT" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>	
+			<eLabel font="Regular;16" halign="left" position="60,615" size="180,30" text="Edit line" transparent="0" valign="center" zPosition="6"/>
+			<eLabel font="Regular;16" halign="left" position="300,615" size="180,30" text="Close editor" transparent="0" valign="center" zPosition="6"/>	
 		</screen>"""
 
-	def __init__(self, session, file):
-		self.skin = vEditor.skin
+	def __init__(self, session, filename):
 		Screen.__init__(self, session)
-		self.skin_path = plugin_path
 		self.session = session
-		self.file_name = file
+		self.filename = filename
 		self.list = []
 		self["filedata"] = List(self.list)
-		self["actions"] = ActionMap(["WizardActions"],
+		self["actions"] = ActionMap(["WizardActions", "ColorActions"],
 		{
 			"ok": self.editLine,
-			"back": self.exitEditor
+			"back": self.exitEditor,
+			"red": self.deleteLine,
+			"green": self.addLine,
+			"yellow": self.editLine,
 		}, -1)
-		self.selLine = None
-		self.oldLine = None
+		
+		self.lineIndex = 0
+		self.oldLine = ""
 		self.isChanged = False
 		
 		self.getFileContent()
 
+	def addLine(self):
+		self.lineIndex = self["filedata"].getIndex()
+		self.session.openWithCallback(self.insertLine, InputBox, title=_("New line:"), windowTitle=_("Insert line after line %d" %(self.lineIndex+1)), text="")
+		
+	def insertLine(self, newline):
+		if newline is not None:
+			self.list.insert(self.lineIndex+1, ["%s\n" %(newline)])
+			self["filedata"].updateList(self.list)
+			self.isChanged = True
+
+	def deleteLine(self):
+		cur = self["filedata"].getCurrent()
+		if cur is not None:
+			self.list.remove(cur)
+			self["filedata"].updateList(self.list)
+			self.isChanged = True
+		
 	def exitEditor(self):
 		if self.isChanged:
-			warningtext = "\nhas been changed! Do you want to save it?\n\nWARNING!"
-			warningtext = warningtext + "\n\nThe editor is beta (not fully tested)."
-			warningtext = warningtext + "\nThe author is NOT responsible\nfor any data lost!"
-			msg = self.session.openWithCallback(self.saveFile, MessageBox,_(self.file_name+warningtext), MessageBox.TYPE_YESNO, windowTitle=_("Dream-Explorer..."))
+			msg = self.session.openWithCallback(self.saveFile, MessageBox, _("You have changed %s. Do you want to save your changes?" %(self.filename)), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3"))
 		else:
 			self.close()
 
 	def getFileContent(self):
-		try:
-			flines = open(self.file_name, "r")
-			self.templist = flines.readlines()
+		with open(self.filename, "r") as f:
+			self.list = [ [line] for line in f.readlines()]
 
-			for entry in self.templist:
-				self.list.append([entry])
-			flines.close()
-
-			self.setTitle(self.file_name)
-			self["filedata"].setList(self.list)
-		except:
-			pass
+		self.setTitle("vEditor2 - %s" %(self.filename))
+		self["filedata"].setList(self.list)
 
 	def editLine(self):
-		self.selLine = self["filedata"].index
+		self.lineIndex = self["filedata"].getIndex()
 		
-		self.oldLine = self.list[self.selLine][0]
-		editableText = self.oldLine.strip("\n")
-		self.session.openWithCallback(self.callbackEditLine, InputBox, title=_("Old:\n %s" %(self.oldLine)), windowTitle=_("Edit line: %d" %(self.selLine+1)), text=editableText)
+		if self["filedata"].getCurrent() is not None:
+			self.rowContent = self["filedata"].getCurrent()[0]
+			editableText = self.rowContent.strip("\n")
+			self.session.openWithCallback(self.callbackEditLine, InputBox, title=_("Current content: %s" %(self.rowContent)), windowTitle=_("Edit line: %d" %(self.lineIndex+1)), text=editableText)
 
 	def callbackEditLine(self, newline):
 		if newline is not None:
 			self.isChanged = True
-			self.list[self.selLine][0] = "%s\n" %(newline)
-			self["filedata"].setList(self.list)
-		self.selLine = None
-		self.oldLine = None
+			self.list[self.lineIndex][0] = "%s\n" %(newline)
+			self["filedata"].updateList(self.list)
 
 	def saveFile(self, answer):
 		if answer is True:
-			try:
-				eFile = open(self.file_name, "w")
-				for x in self.list:
-					eFile.writelines(x)
-				eFile.close()
-			except:
-				pass
+			with open(self.filename, "w") as f:
+				f.writelines([ x[0] for x in self.list])
 		self.close()
 
 class MviExplorer(Screen):
@@ -710,8 +1048,7 @@ class MviExplorer(Screen):
 	def __init__(self, session, file):
 		self.skin = MviExplorer.skin
 		Screen.__init__(self, session)
-		self.skin_path = plugin_path
-		self.file_name = file
+		self.filename = file
 		self["actions"] = ActionMap(["WizardActions"],
 		{
 			"ok": self.close,
@@ -720,7 +1057,7 @@ class MviExplorer(Screen):
 		self.onLayoutFinish.append(self.showMvi)
 		
 	def showMvi(self):
-		call(['showiframe', self.file_name])
+		call(['showiframe', self.filename])
 
 class MoviePlayer(MP_parent):
 	def __init__(self, session, service):
@@ -766,7 +1103,6 @@ class MusicExplorer(MoviePlayer):
 	def __init__(self, session, service, MusicDir, theFile):
 		self.session = session
 		MoviePlayer.__init__(self, session, service)
-		self.skin_path = plugin_path
 		self.MusicDir = MusicDir
 		self.musicList = []
 		self.Mindex = 0
@@ -775,7 +1111,7 @@ class MusicExplorer(MoviePlayer):
 		self.onLayoutFinish.append(self.showMMI)
 
 	def showMMI(self):
-		call(['showiframe', '%s/res/music.mvi' % plugin_path])
+		call(['showiframe', '/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/music.mvi'])
 
 	def searchMusic(self):
 		midx = 0
@@ -796,7 +1132,7 @@ class MusicExplorer(MoviePlayer):
 				nextRef = eServiceReference("4097:0:0:0:0:0:0:0:0:0:" + nextfile)
 				self.session.nav.playService(nextRef)
 			else:
-				self.session.open(MessageBox,_('No more playable files.'), MessageBox.TYPE_INFO, windowTitle=_("Dream-Explorer"))
+				self.session.open(MessageBox,_('No more playable files.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 
 	def seekBack(self):
 		if len(self.musicList)>2:
@@ -806,7 +1142,7 @@ class MusicExplorer(MoviePlayer):
 				nextRef = eServiceReference("4097:0:0:0:0:0:0:0:0:0:" + nextfile)
 				self.session.nav.playService(nextRef)
 			else:
-				self.session.open(MessageBox,_('No more playable files.'), MessageBox.TYPE_INFO, windowTitle=_("Dream-Explorer"))
+				self.session.open(MessageBox,_('No more playable files.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 
 	def doEofInternal(self, playing):
 		if not self.execing:
@@ -815,146 +1151,352 @@ class MusicExplorer(MoviePlayer):
 			return
 		self.seekFwd()
 
-class CopyMoveManager(Screen):
-	skin = """
-			<screen position="center,center" size="900,500" title="Select target location...">
-				<widget name="Warning" font="Regular;20" halign="center" position="0,0" size="900,100" transparent="1" valign="center" zPosition="4"/>
-				<widget name="TargetDir" position="0,100" scrollbarMode="showOnDemand" size="900,325" zPosition="4"/>
-				<eLabel backgroundColor="#555555" position="5,470" size="890,2" zPosition="5"/>
-				<ePixmap alphatest="on" pixmap="~/res/red.png" position="0,475" size="35,25" zPosition="5"/>
-				<ePixmap alphatest="on" pixmap="~/res/yellow.png" position="310,475" size="35,25" zPosition="5"/>
-				<eLabel font="Regular;18" halign="left" position="35,475" size="120,25" text="Move" transparent="1" valign="center" zPosition="6"/>
-				<eLabel font="Regular;18" halign="left" position="345,475" size="120,25" text="Copy" transparent="1" valign="center" zPosition="6"/>
-			</screen>"""
+class FolderSelection(Screen):
+	if getDesktop(0).size().width()>=1920:
+		skin = """
+			<screen name="FolderSelection" position="center,center" size="800,600" title="Select target location...">
+				<widget name="infotext" font="Regular;25" halign="center" position="0,0" size="800,100" transparent="0" valign="center" zPosition="4"/>
+				<widget name="TargetDir" position="0,100" scrollbarMode="showOnDemand" size="800,400" zPosition="4" iconSet="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/icons" />
+				<eLabel backgroundColor="#555555" position="5,505" size="790,2" zPosition="5"/>
 
-	def __init__(self, session, source = "/tmp/none"):
-		self.skin = CopyMoveManager.skin
+				<eLabel font="Regular;20" position="10,515" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f50000" zPosition="6"/>
+				<eLabel font="Regular;20" position="340,515" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#009f00" zPosition="6"/>
+				<widget name="redtext" font="Regular;25" halign="left" position="80,510" size="250,40" transparent="0" valign="center" zPosition="6"/>
+				<widget name="greentext" font="Regular;25" halign="left" position="410,510" size="250,40" transparent="0" valign="center" zPosition="6"/>
+			</screen>"""
+	else:
+		skin = """
+			<screen name="FolderSelection" position="center,center" size="800,600" title="Select target location...">
+				<widget name="infotext" font="Regular;18" halign="center" position="0,0" size="800,100" transparent="0" valign="center" zPosition="4"/>
+				<widget name="TargetDir" position="0,100" scrollbarMode="showOnDemand" size="800,390" zPosition="4" iconSet="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/icons" />
+				<eLabel backgroundColor="#555555" position="5,505" size="790,2" zPosition="5"/>
+
+				<eLabel font="Regular;20" position="10,515" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f50000" zPosition="6"/>
+				<eLabel font="Regular;20" position="340,515" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#009f00" zPosition="6"/>
+				<widget name="redtext" font="Regular;18" halign="left" position="60,510" size="250,30" transparent="0" valign="center" zPosition="6"/>
+				<widget name="greentext" font="Regular;18" halign="left" position="390,510" size="250,30" transparent="0" valign="center" zPosition="6"/>
+			</screen>"""		
+			
+	def __init__(self, session, item = "/tmp", linkname=None, isDir=False, showFiles=False, mode=None):
 		Screen.__init__(self, session)
-		self.skin_path = plugin_path
-		self.sesion = session
-		self.source = source
-		self["Warning"] = Label(_("WARNING! You're about to move or copy\n%s\nto:") %(source))
-		self["TargetDir"] = myFileList(config.plugins.DreamExplorer.CopyDest.value, showDirectories = True, showFiles = False, matchingPattern = "^.*\.*", useServiceRef = False)
+		self.session = session
+		self.item = item
+		self.linkname = linkname
+		self.mode = mode
 		
+		self["infotext"] = Label()
+		self["redtext"] = Label()
+		self["greentext"] = Label()
+
 		self["actions"] = ActionMap(["WizardActions", "ColorActions"],
 		{
 			"ok": self.enterFolder,
 			"back": self.exit,
-			"red": self.moveFile,
-			"yellow": self.copyFile
+			"green": self.moveFile,
+			"red": self.copyFile,
+			"yellow": self.createSymlink,
+			"blue": self.setSymlinkName,
 		}, -1)
-		
+
+		self["TargetDir"] = DreamExplorerFileList(list_type = DreamExplorerFileList.LIST_TYPE_NODETAILS, directory = item, showDirectories = True, showFiles = showFiles, matchingPattern = "^.*\.*", showDetails=False)
+
+		if mode == "copymove":
+			self["greentext"].setText(_("Move"))
+			self["redtext"].setText(_("Copy"))
+		elif mode == "symlink":
+			self["actions"].actions.update({"green":self.createSymlink, "red":self.setSymlinkName})
+			self["greentext"].setText(_("Create symlink"))
+			self["redtext"].setText(_("Change symlink name"))
+		self["TargetDir"].onSelectionChanged.append(self.setInfoText)
+
 		self.cmd= ""
-		
-		self.container = eConsoleAppContainer()
-		self.appClosed_conn = self.container.appClosed.connect(self.runFinished)
+		self.actionText = ""
 		
 		self.onLayoutFinish.append(self.enterFolder)
+		self.setTitle(_("Select target location..."))
 
-	def runFinished(self, retval):
-		if retval != 0:
-			msg = self.session.open(MessageBox,_("%s \nfailed!" % self.cmd), MessageBox.TYPE_ERROR, windowTitle=_("Dream-Explorer"))
-		else:
-			msg = self.session.open(MessageBox,_("%s \nexecuted!" % self.cmd), MessageBox.TYPE_ERROR, windowTitle=_("Dream-Explorer"), timeout=3)
-			
-		self.close(" ")
+	def setInfoText(self):
+		if self.mode == "copymove":
+			self["infotext"].setText(_("Copy/move\n%s\nto %s:") %(self.item, self["TargetDir"].getPathForFile()))
+		elif self.mode == "symlink":
+			self["infotext"].setText(_("Create symlink %s\nin %s to %s") %(self.linkname,  self["TargetDir"].getPathForFile(), self.item))
 
-	
 	def enterFolder(self):
 		if self["TargetDir"].canDescent():
 			self["TargetDir"].descent()
 
 	def exit(self):
-		self.close(" ")
+		self.close(None)
 
 	def copyFile(self):
-		if self["TargetDir"].getSelectionIndex()!=0:
-			dest = self["TargetDir"].getSelection()[0]
-			if self.source[len(self.source)-1] == '/':
-				self.cmd = "cp -af %s %s" %(self.source, dest)
+		if self["TargetDir"].getCurrentIndex()!=0:
+			dest = self["TargetDir"].getSelection()[1]
+			self.actionText = _("Copying %s to %s" %(self.item, dest))
+			if self.item[-1:] == '/':
+				self.cmd = "cp -afr %s %s" %(self.item, dest)
 			else:
-				self.cmd = "cp %s %s" %(self.source, dest)
+				self.cmd = "cp %s %s" %(self.item, dest)
 
-			config.plugins.DreamExplorer.CopyDest.value = dest
-			config.plugins.DreamExplorer.CopyDest.save()
-
-			self.container.execute(self.cmd)
+			self.close((self.actionText, self.cmd))
 
 	def moveFile(self):
-		if self["TargetDir"].getSelectionIndex()!=0:
-			dest = self["TargetDir"].getSelection()[0]
-			if self.source[len(self.source)-1] == '/':
-				self.cmd = "mv -f %s %s" %(self.source, dest)
-			else:
-				self.cmd = "mv -f %s %s" %(self.source, dest)
+		if self["TargetDir"].getCurrentIndex()!=0:
+			dest = self["TargetDir"].getSelection()[1]
+			self.actionText = _("Moving %s to %s" %(self.item, dest))
+			self.cmd = "mv -f %s %s" %(self.item, dest)
 
-			config.plugins.DreamExplorer.CopyDest.value = dest
-			config.plugins.DreamExplorer.CopyDest.save()
-			
-			self.container.execute(self.cmd)
-
-class SymlinkScreen(Screen):
-	skin = """
-			<screen position="center,center" size="900,500" title="Create a symlink...">
-				<widget name="Warning" font="Regular;20" halign="center" position="0,0" size="900,100" transparent="1" valign="center" zPosition="4"/>
-				<widget name="Target" position="0,100" scrollbarMode="showOnDemand" size="900,325" zPosition="4"/>
-				<eLabel backgroundColor="#555555" position="5,470" size="890,2" zPosition="5"/>
-				<ePixmap alphatest="on" pixmap="~/res/red.png" position="0,475" size="35,25" zPosition="5"/>
-				<ePixmap alphatest="on" pixmap="~/res/yellow.png" position="310,475" size="35,25" zPosition="5"/>
-				<eLabel font="Regular;18" halign="left" position="35,475" size="180,25" text="Change symlink name" transparent="1" valign="center" zPosition="6"/>
-				<eLabel font="Regular;18" halign="left" position="345,475" size="220,25" text="Create softlink" transparent="1" valign="center" zPosition="6"/>
-			</screen>"""
-			
-	def __init__(self, session, target="/tmp", linkname=None, isDir=False):
-		self.skin = SymlinkScreen.skin
-		Screen.__init__(self, session)
-		self.skin_path = plugin_path
-		self.session = session
-		self.target = target
-		self.linkname = linkname
-		self["Warning"] = Label("")
-		self["Target"] = myFileList('/', showDirectories=True, showFiles=True, matchingPattern = None, useServiceRef = False)
-		self["Target"].onSelectionChanged.append(self.updateText)
-		self["actions"] = ActionMap(["WizardActions", "ColorActions"],
-		{
-			"ok": self.enterFolder,
-			"back": self.exit,
-			"red": self.changeSymlinkName,
-			"yellow": self.createSymlink
-		}, -1)
-		
-		self.updateText()
-
-	def updateText(self):
-		if self["Target"].getSelectionIndex() == 0:
-			self.current = "/"
-		elif self["Target"].canDescent():
-			self.current = self["Target"].getFilename()
-		else:
-			self.current = self["Target"].getCurrentDirectory()
-		self["Warning"].setText(_("You're about to create a symlink to %s\nfrom\n%s%s" %(self.target, self.current, self.linkname)))
-
-	def changeSymlinkName(self):
-		self.session.openWithCallback(self.callbackSetSymlinkName, InputBox, title=_("Define the new symlink name here:"), windowTitle=_("Dream Explorer..."), text=self.linkname)
-
-	def callbackSetSymlinkName(self, answer):
-		if answer is None:
-			return
-		if (" " in answer) or (answer==""):
-			msg = self.session.open(MessageBox,_("Symlink name error!"), MessageBox.TYPE_ERROR, windowTitle=_("Dream-Explorer"))
-			return
-		else:
-			self.linkname = answer
-			self.updateText()
-
-	def enterFolder(self):
-		if self["Target"].canDescent():
-			self["Target"].descent()
-
-	def exit(self):
-		self.close(" ")
-
+			self.close((self.actionText, self.cmd))
+	
 	def createSymlink(self):
 		if basename(self.linkname) == self.linkname:
-			symlink(self.target, join(self.current, self.linkname))
-		self.close(" ")
+			symlinkdir = self["TargetDir"].getCurrent()[1]
+			
+			self.actionText = _("Creation of symlink %s in %s to %s" %(self.linkname, symlinkdir, self.item))
+			self.cmd = "ln -s %s %s/%s" %(self.item, symlinkdir, self.linkname)
+			self.close((self.actionText, self.cmd))
+		
+	def setSymlinkName(self):
+		self.session.openWithCallback(self.callbackSetSymlinkName, InputBox, title=_("Set symlink name:"), windowTitle=_("Dream Explorer 3"), text=self.linkname)
+		
+	def callbackSetSymlinkName(sefl, answer):
+		if answer:
+			self.linkname = answer
+
+class SystemdViewer(Screen):
+	if getDesktop(0).size().width()>=1920:
+		skin = """
+		<screen name="SystemdViewer" position="center,60" size="1800,1010" title="SystemD Viewer">
+			<widget name="enabledlabel" position="0,5" size="300,40" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" />
+			<widget name="enabledtext" position="300,5" size="300,40" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" />
+			<widget name="activelabel" position="600,5" size="300,40" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" />
+			<widget name="activetext" position="900,5" size="300,40" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" />
+			<widget name="failedlabel" position="1200,5" size="300,40" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" />
+			<widget name="failedtext" position="1500,5" size="300,40" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" />
+
+			<ePixmap alphatest="on" pixmap="/usr/share/enigma2/skin_default/div-h.png" position="0,50" size="1800,2" zPosition="5" scale="stretch" />
+
+			<widget name="statuslabel" position="0,55" size="1800,40" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" valign="center" />						
+			<widget name="statustext" position="0,100" size="1800,400" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" />
+						
+			<ePixmap alphatest="on" pixmap="/usr/share/enigma2/skin_default/div-h.png" position="0,505" size="1800,2" zPosition="5" scale="stretch" />
+			
+			<widget name="servicelabel" position="0,510" size="1800,40" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" valign="center" />
+			<widget name="servicetext" position="0,555" size="1800,400" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" />
+
+
+			<eLabel font="Regular;20" position="0,965" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f50000" zPosition="6"/>
+			<eLabel font="Regular;20" position="260,965" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#009f00" zPosition="6"/>
+			<eLabel font="Regular;20" position="520,965" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f5f500" zPosition="6"/>
+			<eLabel font="Regular;20" position="780,965" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#0000f9" zPosition="6"/>
+			<eLabel font="Regular;20" position="1040,965" size="60,30" text="OK" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<eLabel font="Regular;20" position="1300,965" size="60,30" text="EXIT" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			
+			<widget name="deleteBookmark" font="Regular;25" halign="left" position="70,960" size="180,40" transparent="1" valign="center" zPosition="6"/>
+			<widget  name="editService" font="Regular;25" halign="left" position="330,960" size="180,40" transparent="1" valign="center" zPosition="6"/>
+			<widget name="toggleLabel" font="Regular;25" halign="left" position="590,960" size="180,40" transparent="1" valign="center" zPosition="6"/>
+			<widget name="enableDisableService" font="Regular;25" halign="left" position="850,960" size="180,40" transparent="1" valign="center" zPosition="6"/>	
+			<widget name="ok" font="Regular;25" halign="left" position="1110,960" size="180,40" transparent="1" valign="center" zPosition="6"/>
+			<widget  name="exit" font="Regular;25" halign="left" position="1370,960" size="180,40" transparent="1" valign="center" zPosition="6"/>
+		</screen>
+		"""
+	else:
+		skin = """
+		<screen name="SystemdViewer" position="center,50" size="1260,660" title="SystemD Viewer">
+			<widget name="enabledlabel" position="0,5" size="210,30" font="Regular;18" foregroundColor="#f0f0f0" transparent="1" halign="left" />
+			<widget name="enabledtext" position="210,5" size="210,30" font="Regular;18" foregroundColor="#f0f0f0" transparent="1" halign="left" />
+			<widget name="activelabel" position="420,5" size="210,30" font="Regular;18" foregroundColor="#f0f0f0" transparent="1" halign="left" />
+			<widget name="activetext" position="630,5" size="210,30" font="Regular;18" foregroundColor="#f0f0f0" transparent="1" halign="left" />
+			<widget name="failedlabel" position="840,5" size="210,30" font="Regular;18" foregroundColor="#f0f0f0" transparent="1" halign="left" />
+			<widget name="failedtext" position="1050,5" size="210,30" font="Regular;18" foregroundColor="#f0f0f0" transparent="1" halign="left" />
+
+			<ePixmap alphatest="on" pixmap="/usr/share/enigma2/skin_default/div-h.png" position="0,40" size="1260,2" zPosition="5" scale="stretch" />
+
+			<widget name="statuslabel" position="0,45" size="1200,30" font="Regular;18" foregroundColor="#f0f0f0" transparent="1" halign="left" valign="center" />						
+			<widget name="statustext" position="0,80" size="1200,240" font="Regular;16" foregroundColor="#f0f0f0" transparent="1" halign="left" />
+						
+			<ePixmap alphatest="on" pixmap="/usr/share/enigma2/skin_default/div-h.png" position="0,335" size="1260,2" zPosition="5" scale="stretch" />
+			
+			<widget name="servicelabel" position="0,340" size="1200,30" font="Regular;18" foregroundColor="#f0f0f0" transparent="1" halign="left" valign="center" />
+			<widget name="servicetext" position="0,375" size="1200,240" font="Regular;16" foregroundColor="#f0f0f0" transparent="1" halign="left" />
+
+
+			<eLabel font="Regular;12" position="0,635" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f50000" zPosition="6"/>
+			<eLabel font="Regular;12" position="210,635" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#009f00" zPosition="6"/>
+			<eLabel font="Regular;12" position="420,635" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f5f500" zPosition="6"/>
+			<eLabel font="Regular;12" position="630,635" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#0000f9" zPosition="6"/>
+			<eLabel font="Regular;12" position="840,635" size="40,20" text="OK" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<eLabel font="Regular;12" position="1050,635" size="40,20" text="EXIT" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			
+			<widget name="deleteBookmark" font="Regular;16" halign="left" position="50,630" size="150,30" transparent="1" valign="center" zPosition="6"/>
+			<widget  name="editService" font="Regular;16" halign="left" position="260,630" size="150,30" transparent="1" valign="center" zPosition="6"/>
+			<widget name="toggleLabel" font="Regular;16" halign="left" position="470,630" size="150,30" transparent="1" valign="center" zPosition="6"/>
+			<widget name="enableDisableService" font="Regular;16" halign="left" position="680,630" size="150,30" transparent="1" valign="center" zPosition="6"/>	
+			<widget name="ok" font="Regular;16" halign="left" position="890,630" size="150,30" transparent="1" valign="center" zPosition="6"/>
+			<widget  name="exit" font="Regular;16" halign="left" position="1100,630" size="150,30" transparent="1" valign="center" zPosition="6"/>
+		</screen>
+		"""	
+	
+	def __init__(self, session, serviceFile=None, serviceFileWithPath=None):
+		Screen.__init__(self, session)
+		
+		self["actions"] = ActionMap(["OkCancelActions", "ColorActions","DirectionActions"],
+		{
+			"ok":	self.editService,
+			"cancel": self.close,
+			"green": self.editService,
+			"red": self.close,
+			"blue": self.enableDisableService,
+			"yellow": self.toggleLabel,
+			"left": self.left,
+			"right": self.right,
+			"up": self.up,
+			"down": self.down,
+		}, -1)
+		
+		self.serviceFile = serviceFile
+		self.serviceFileWithPath = serviceFileWithPath
+		
+		self["enabledlabel"] = Label(_("Start at boot"))
+		self["enabledtext"] = Label()
+		self["activelabel"] = Label(_("Currently"))
+		self["activetext"] = Label()
+		self["failedlabel"] = Label(_("State"))
+		self["failedtext"] = Label()
+		self["servicelabel"] = Label("Service")
+		self["servicetext"] = ScrollLabel()
+		self["statuslabel"] = Label("Log")
+		self["statustext"] = ScrollLabel()
+		self["deleteBookmark"] = Label()
+		self["editService"] = Label(_("Edit service"))
+		self["toggleLabel"] = Label(_("Toggle label"))
+		self["enableDisableService"] = Label()
+		self["ok"] = Label(_("Edit service"))
+		self["exit"] = Label(_("Close"))
+		
+		self.setTitle(_("SystemD Viewer - %s" %(self.serviceFile)))
+		
+		self.container = eConsoleAppContainer()
+		self.appClosed_conn = self.container.appClosed.connect(self.runFinished)
+		self.dataavail_conn = self.container.dataAvail.connect(self.getData)
+		self.executionData = ""
+		self.serviceIsEnabled = False
+		self.enableDisablePossible = False
+		self.activeLabel = "servicetext"
+
+		self.cmdList = ["systemctl is-enabled %s" %(self.serviceFile), "systemctl is-active %s" %(self.serviceFile), "systemctl is-failed %s" %(self.serviceFile), "systemctl status %s" %(self.serviceFile), "systemctl enable %s" %(self.serviceFile), "systemctl disable %s" %(self.serviceFile)]
+		self.getServiceInfo()
+			
+		self.onLayoutFinish.append(self.readServiceFile)
+
+	def up(self):
+		self[self.activeLabel].pageUp()
+
+	def down(self):
+		self[self.activeLabel].pageDown()
+
+	def left(self):
+		self[self.activeLabel].pageUp()
+
+	def right(self):
+		self[self.activeLabel].pageDown()
+
+	def toggleLabel(self):
+		if self.activeLabel == "servicetext":
+			self.activeLabel = "statustext"
+		else:
+			self.activeLabel = "servicetext"
+
+	def editService(self):
+		self.session.open(vEditor2, self.serviceFileWithPath)
+
+	def getServiceInfo(self):
+		self.run = 0
+		self.maxRun = 4
+		self.container.execute(self.cmdList[self.run])
+
+	def enableDisableService(self):
+		if self.enableDisablePossible:
+			if self.serviceIsEnabled:
+				cmd = "systemctl disable %s" %(self.serviceFile)
+				self.run = 5
+				self.maxRun = 5
+			else:
+				cmd = "systemctl enable %s" %(self.serviceFile)
+				self.run = 4
+				self.maxRun = 4
+		
+			self.container.execute(self.cmdList[self.run])	
+		
+	def readServiceFile(self):
+		if self.serviceFile is not None:
+			with open(self.serviceFileWithPath, "r") as f:
+				content = f.read()
+				
+			self["servicetext"].setText(content)
+			
+	def getData(self, data):
+		self.executionData += data.strip()
+
+	def runFinished(self, retval):
+		if retval != 0:
+			if self.run == 0:
+				self["enabledtext"].setText(_("%s" %(self.executionData)))
+				if self.executionData == "enabled":
+					self["enableDisableService"].setText(_("Disable service"))
+					self.enableDisablePossible = True
+					self.serviceIsEnabled = True
+				elif self.executionData == "disabled":
+					self["enableDisableService"].setText(_("Enable service"))
+					self.enableDisablePossible = True
+					self.serviceIsEnabled = False
+				else:
+					self["enableDisableService"].setText("")
+					self.enableDisablePossible = False
+			elif self.run == 1:
+				self["activetext"].setText(_("%s" %(self.executionData)))
+			elif self.run == 2:
+				self["failedtext"].setText(_("%s" %(self.executionData)))
+			elif self.run == 3:
+				self["statustext"].setText(_("%s" %(self.executionData)))
+			elif self.run == 4:
+				self.run = -1
+				self.session.open(MessageBox, _("Service %s could not be enabled" %(self.serviceFile)), MessageBox.TYPE_ERROR, timeout=0)
+			elif self.run == 5:
+				self.run = -1
+				self.session.open(MessageBox, _("Service %s could not be disabled" %(self.serviceFile)), MessageBox.TYPE_ERROR, timeout=0)
+				
+		else:
+			if self.run == 0:
+				self["enabledtext"].setText(_("%s" %(self.executionData)))
+				if self.executionData == "enabled":
+					self["enableDisableService"].setText(_("Disable service"))
+					self.enableDisablePossible = True
+					self.serviceIsEnabled = True
+				elif self.executionData == "disabled":
+					self["enableDisableService"].setText(_("Enable service"))
+					self.enableDisablePossible = True
+					self.serviceIsEnabled = False
+				else:
+					self["enableDisableService"].setText("")
+					self.enableDisablePossible = False		
+			elif self.run == 1:
+				self["activetext"].setText(_("%s" %(self.executionData)))
+			elif self.run == 2:
+				self["failedtext"].setText(_("%s" %(self.executionData)))
+			elif self.run == 3:
+				self["statustext"].setText(_("%s" %(self.executionData)))
+			elif self.run == 4:
+				self.run = -1
+				self.session.open(MessageBox, _("Service %s enabled" %(self.serviceFile)), MessageBox.TYPE_INFO, timeout=0)
+			elif self.run == 5:
+				self.run = -1
+				self.session.open(MessageBox, _("Service %s disabled" %(self.serviceFile)), MessageBox.TYPE_INFO, timeout=0)
+				
+		self.executionData = ""
+		if self.run == -1:
+			self.getServiceInfo()
+		else:
+			self.run += 1				
+			if self.run < len(self.cmdList) and self.run<self.maxRun:
+				self.container.execute(self.cmdList[self.run])
+	
