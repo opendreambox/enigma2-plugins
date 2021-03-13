@@ -1111,7 +1111,7 @@ class MusicExplorer(MoviePlayer):
 		self.onLayoutFinish.append(self.showMMI)
 
 	def showMMI(self):
-		call(['showiframe', '/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/res/music.mvi'])
+		call(['showiframe', '/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/icons/music.mvi'])
 
 	def searchMusic(self):
 		midx = 0
