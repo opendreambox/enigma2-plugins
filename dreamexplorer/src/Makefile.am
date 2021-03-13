@@ -1,6 +1,6 @@
 installdir = $(libdir)/enigma2/python/Plugins/Extensions/DreamExplorer
 
-SUBDIRS = res
+SUBDIRS = icons
 
 install_PYTHON = *.py
 
