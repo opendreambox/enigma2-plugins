@@ -81,7 +81,7 @@ cdinfo/src/Makefile
 dreamexplorer/Makefile
 dreamexplorer/meta/Makefile
 dreamexplorer/src/Makefile
-dreamexplorer/src/res/Makefile
+dreamexplorer/src/icons/Makefile
 
 dreamirc/Makefile
 dreamirc/meta/Makefile
