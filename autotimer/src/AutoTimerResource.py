@@ -264,7 +264,8 @@ class AutoTimerAddXMLAutoTimerResource(AutoTimerBaseResource):
 	def render_POST(self, req):
 		req.setResponseCode(http.OK)
 		req.setHeader('Content-type', 'application/xhtml+xml;' )
-		req.setHeader('charset', 'UTF-8')	
+		req.setHeader('charset', 'UTF-8')
+		autotimer.readXml() # read current timers to ensure autotimer.timers is populated with current autotimers
 		autotimer.readXmlTimer(req.args['xml'][0])
 		if config.plugins.autotimer.always_write_config.value:
 			autotimer.writeXml()
