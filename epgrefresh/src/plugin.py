@@ -36,7 +36,14 @@ config.plugins.epgrefresh.usetimebased = ConfigYesNo(default = False)
 config.plugins.epgrefresh.interval_seconds = ConfigNumber(default = 120)
 config.plugins.epgrefresh.delay_standby = ConfigNumber(default = 10)
 config.plugins.epgrefresh.inherit_autotimer = ConfigYesNo(default = False)
-config.plugins.epgrefresh.afterevent = ConfigYesNo(default = False)
+defaultafterevent = "nothing"
+try:
+	config.plugins.epgrefresh.afterevent = ConfigYesNo(default = False)
+	if config.plugins.epgrefresh.afterevent.value == True:
+		defaultafterevent = "standby"
+except:
+	pass
+config.plugins.epgrefresh.afterevent = ConfigSelection(default = defaultafterevent, choices = [("nothing", _("do nothing")), ("auto", _("auto")), ("standby", _("standby")), ("idle", _("idle mode"))])
 config.plugins.epgrefresh.epgsave = ConfigYesNo(default = False)
 config.plugins.epgrefresh.epgreset = ConfigYesNo(default = False)
 config.plugins.epgrefresh.force = ConfigYesNo(default = False)
