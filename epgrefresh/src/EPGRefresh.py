@@ -56,6 +56,8 @@ from RecordAdapter import RecordAdapter
 from enigma import eTimer
 from enigma import eDVBSatelliteEquipmentControl
 
+import NavigationInstance
+
 # Path to configuration
 CONFIG = "/etc/enigma2/epgrefresh.xml"
 XML_VERSION = "1"
@@ -526,18 +528,25 @@ class EPGRefresh:
                         myEpg = eEPGCache.getInstance()
                         myEpg.save()
 		
-		# shutdown if we're supposed to go to standby and not recording
-		# forced scan --> manually started scan / non-forced scan --> automated scan
-		# dontshutdownonabort overrides the shutdown
-		if not self.forcedScan and config.plugins.epgrefresh.afterevent.value \
-			and not Screens.Standby.inTryQuitMainloop:
-			if (not config.plugins.epgrefresh.dontshutdownonabort.value and self.doStopRunningRefresh) or not self.doStopRunningRefresh:
-				self.forcedScan = False
-				if Screens.Standby.inStandby:
-					RecordTimerEntry.TryQuitMainloop()
-				else:
-					Notifications.AddNotificationWithID("Shutdown", Screens.Standby.TryQuitMainloop, 1, domain = NOTIFICATIONDOMAIN)
-		# reset doStopRunningRefresh here instead of cleanUp as it is needed to avoid shutdown
+		force_auto_shutdown = NavigationInstance.instance.wasTimerWakeup() and \
+				config.plugins.epgrefresh.afterevent.value == "auto" and \
+				Screens.Standby.inStandby and config.misc.standbyCounter.value == 1
+
+		if not self.forcedScan:
+			# shutdown
+			if config.plugins.epgrefresh.afterevent.value == "standby" or force_auto_shutdown:
+				if not Screens.Standby.inTryQuitMainloop:
+					if (not config.plugins.epgrefresh.dontshutdownonabort.value and self.doStopRunningRefresh) or not self.doStopRunningRefresh:
+						self.forcedScan = False
+						if Screens.Standby.inStandby:
+							RecordTimerEntry.TryQuitMainloop()
+						else:
+							Notifications.AddNotificationWithID("Shutdown", Screens.Standby.TryQuitMainloop, 1, domain = NOTIFICATIONDOMAIN)
+			# idle
+			elif config.plugins.epgrefresh.afterevent.value == "idle":
+				if not Screens.Standby.inStandby:
+					Notifications.AddNotificationWithCallback(self.sendStandbyNotification, MessageBox, _("EPGRefresh wants to set your\nDreambox to idle. Do that now?"), timeout = 10, domain=NOTIFICATIONDOMAIN)
+		
 		self.doStopRunningRefresh = False
 		self.forcedScan = False
 		self.isrunning = False
