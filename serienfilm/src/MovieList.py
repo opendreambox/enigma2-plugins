@@ -320,8 +320,9 @@ class MovieList(GUIComponent):
 		parent = None
 		info = self.serviceHandler.info(root)
 		pwd = info and info.getName(root)
+		defM = defaultMoviePath()
 		print "[SF-Plugin] MovieList.realDirUp: pwd = >%s<" % (str(pwd))
-		if pwd and os.path.exists(pwd) and not os.path.samefile(pwd, defaultMoviePath()):
+		if pwd and os.path.exists(pwd) and os.path.exists(defM) and not os.path.samefile(pwd, defM):
 			parentdir = pwd[:pwd.rfind("/", 0, -1)] + "/"
 			parent = eServiceReference("2:0:1:0:0:0:0:0:0:0:" + parentdir)
 			info = self.serviceHandler.info(parent)
