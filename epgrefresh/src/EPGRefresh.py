@@ -56,8 +56,6 @@ from RecordAdapter import RecordAdapter
 from enigma import eTimer
 from enigma import eDVBSatelliteEquipmentControl
 
-import NavigationInstance
-
 # Path to configuration
 CONFIG = "/etc/enigma2/epgrefresh.xml"
 XML_VERSION = "1"
@@ -528,9 +526,9 @@ class EPGRefresh:
                         myEpg = eEPGCache.getInstance()
                         myEpg.save()
 		
-		force_auto_shutdown = NavigationInstance.instance.wasTimerWakeup() and \
+		force_auto_shutdown = self.session.nav.wasTimerWakeup() and \
 				config.plugins.epgrefresh.afterevent.value == "auto" and \
-				Screens.Standby.inStandby and config.misc.standbyCounter.value == 1
+				config.misc.prev_wakeup_time.value == config.plugins.epgrefresh.wakeup_time.value
 
 		if not self.forcedScan:
 			# shutdown
