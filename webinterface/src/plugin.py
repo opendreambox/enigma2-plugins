@@ -470,11 +470,11 @@ class HTTPAuthResource(HTTPRootResource):
 			#If streamauth is disabled allow all acces from localhost
 			if not config.plugins.Webinterface.streamauth.value:
 				if self._isLocalHost(host.ip):
-					Log.i("Streaming auth is disabled - Bypassing Authcheck because host '%s' is local!" %host)
+					Log.d("Streaming auth is disabled - Bypassing Authcheck because host '%s' is local!" %host)
 					return True
 			if not config.plugins.Webinterface.localauth.value:
 				if self._isLocalClient(host.ip):
-					Log.i("Local auth is disabled - Bypassing Authcheck because host '%s' is local!" %host)
+					Log.d("Local auth is disabled - Bypassing Authcheck because host '%s' is local!" %host)
 					return True
 
 		# get the Session from the Request
