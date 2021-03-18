@@ -24,7 +24,7 @@ class Network(Source):
 	ConvertIP = lambda self, l: "%s.%s.%s.%s" % tuple(l) if l and len(l) == 4 else "0.0.0.0"
 
 	def __getInterfaceAttribs(self, iface):
-		Log.i(iface)
+		Log.d(iface)
 		attribs = [iface.ethernet.interface, iface.ethernet.mac]
 		ip4 = iface.ipv4
 		ip6 = iface.ipv6
@@ -51,7 +51,7 @@ class Network(Source):
 
 	def getInterface(self):
 		ifaces = iNetworkInfo.getConfiguredInterfaces()
-		Log.i(ifaces)
+		Log.d(ifaces)
 		for key in ifaces.iterkeys():
 			iface = ifaces[key]
 			if iface.ethernet.interface == self.iface:
@@ -63,7 +63,7 @@ class Network(Source):
 	def getList(self):
 		lst = []
 		ifaces = iNetworkInfo.getConfiguredInterfaces()
-		Log.i(ifaces)
+		Log.d(ifaces)
 		for key in ifaces.iterkeys():
 			iface = ifaces[key]
 			lst.append(self.__getInterfaceAttribs(iface))
