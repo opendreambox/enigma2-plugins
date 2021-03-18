@@ -528,6 +528,7 @@ class EPGRefresh:
 		
 		force_auto_shutdown = self.session.nav.wasTimerWakeup() and \
 				config.plugins.epgrefresh.afterevent.value == "auto" and \
+				Screens.Standby.inStandby and config.misc.standbyCounter.value == 1 and \
 				config.misc.prev_wakeup_time.value == config.plugins.epgrefresh.wakeup_time.value
 
 		if not self.forcedScan:
@@ -539,7 +540,7 @@ class EPGRefresh:
 						if Screens.Standby.inStandby:
 							RecordTimerEntry.TryQuitMainloop()
 						else:
-							Notifications.AddNotificationWithID("Shutdown", Screens.Standby.TryQuitMainloop, 1, domain = NOTIFICATIONDOMAIN)
+							Notifications.AddNotificationWithCallback(self.sendTryQuitMainloopNotification, MessageBox, _("EPGRefresh wants to shut down\nyour Dreambox. Shutdown now?"), timeout = 10, domain=NOTIFICATIONDOMAIN)
 			# idle
 			elif config.plugins.epgrefresh.afterevent.value == "idle":
 				if not Screens.Standby.inStandby:
@@ -549,6 +550,14 @@ class EPGRefresh:
 		self.forcedScan = False
 		self.isrunning = False
 		self._nextTodo()
+
+	def sendStandbyNotification(self, answer):
+		if answer:
+			Notifications.AddNotificationWithID("Standby", Screens.Standby.Standby, domain=NOTIFICATIONDOMAIN)
+
+	def sendTryQuitMainloopNotification(self, answer):
+		if answer:
+			Notifications.AddNotificationWithID("Shutdown", Screens.Standby.TryQuitMainloop, 1, domain=NOTIFICATIONDOMAIN)
 		
 	def refresh(self):
 		if self.doStopRunningRefresh:
