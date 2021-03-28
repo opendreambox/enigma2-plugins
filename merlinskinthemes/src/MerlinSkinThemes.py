@@ -441,9 +441,9 @@ def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 
 							if png_name is not None and png_width is not None and png_height is not None and png_argb is not None:						
 								if acolor2 is not None and gradienttype is not None:
-									imageCreator.createRectangle(png_width, png_height, (acolor[1], acolor[2], acolor[3], acolor2[0]),(acolor2[1], acolor2[2], acolor2[3], acolor2[0]), resolveFilename(SCOPE_SKIN) + SkinName + "/" + png_name, gradienttype) 
+									imageCreator.createRectangle(png_width, png_height, (acolor[1], acolor[2], acolor[3], acolor2[0]),(acolor2[1], acolor2[2], acolor2[3], acolor2[0]), skinFile[:-8] + png_name, gradienttype) 
 								else:
-									imageCreator.createRectangle(png_width, png_height, (acolor[1], acolor[2], acolor[3], acolor[0]), None, resolveFilename(SCOPE_SKIN) + SkinName + "/" + png_name) 
+									imageCreator.createRectangle(png_width, png_height, (acolor[1], acolor[2], acolor[3], acolor[0]), None, skinFile[:-8] + png_name) 
 
 					# add all elements from themes.xml to skin.xml
 					if themeElement is not None:
