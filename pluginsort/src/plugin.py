@@ -92,6 +92,12 @@ class MyPluginList(PluginList):
 	def right(self):
 		instance = self.__instance()
 		if instance: instance.moveSelection(instance.moveRight)
+	
+	def updateList(self, list):
+		PluginList.updateList(self, list)
+		# to refresh the plugin-description if show in a different widget 
+		# like TemplatedMultiContent or StringListSelection-Converter
+		self.selectionChanged(self.index)
 
 WHEREMAP = {}
 pdict = PluginDescriptor.__dict__
