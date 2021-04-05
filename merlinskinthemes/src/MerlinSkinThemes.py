@@ -331,6 +331,7 @@ def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 				currentValue = configDict.get("%s" %(theme[0][:-1]), None)
 				oldSkinPath = None
 				newPath = None
+				newSkinPath = None
 				for child in currenttheme.findall(theme[1]):
 					if child.get('value') == 'active':
 						oldSkinPath = child.get('path')
@@ -439,11 +440,11 @@ def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 								acolor2 = None
 							gradienttype = tp.get("gtype", None)
 
-							if png_name is not None and png_width is not None and png_height is not None and png_argb is not None:						
+							if png_name is not None and png_width is not None and png_height is not None and png_argb is not None:
 								if acolor2 is not None and gradienttype is not None:
 									imageCreator.createRectangle(png_width, png_height, (acolor[1], acolor[2], acolor[3], acolor2[0]),(acolor2[1], acolor2[2], acolor2[3], acolor2[0]), skinFile[:-8] + png_name, gradienttype) 
 								else:
-									imageCreator.createRectangle(png_width, png_height, (acolor[1], acolor[2], acolor[3], acolor[0]), None, skinFile[:-8] + png_name) 
+									imageCreator.createRectangle(png_width, png_height, (acolor[1], acolor[2], acolor[3], acolor[0]), None, skinFile[:-8] + png_name)
 
 					# add all elements from themes.xml to skin.xml
 					if themeElement is not None:
