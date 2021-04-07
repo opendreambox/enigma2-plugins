@@ -306,15 +306,6 @@ podcast/Makefile
 podcast/meta/Makefile
 podcast/src/Makefile
 
-pushservice/Makefile
-pushservice/etc/Makefile
-pushservice/meta/Makefile
-pushservice/src/Makefile
-pushservice/src/Controller/Makefile
-pushservice/src/Services/Makefile
-pushservice/src/Services/gntp/Makefile
-pushservice/src/Services/mail/Makefile
-
 quickbutton/Makefile
 quickbutton/meta/Makefile
 quickbutton/src/Makefile

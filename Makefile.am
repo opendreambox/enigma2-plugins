@@ -64,7 +64,6 @@ SUBDIRS = \
 	pluginhider \
 	pluginsort \
 	podcast \
-	pushservice \
 	quickbutton \
 	remotetimer \
 	satipclient \
