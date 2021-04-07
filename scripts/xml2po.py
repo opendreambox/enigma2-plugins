@@ -27,7 +27,7 @@ class parseXML(ContentHandler, LexicalHandler):
 			self.last_comment = comment
 
 	def startElement(self, name, attrs):
-		#print "startElement", name, attrs
+		#print("startElement", name, attrs)
 		self.last_comment = None
 		self.data = ""
 		for x in ["text", "title", "value", "caption", "description"]:
@@ -38,7 +38,7 @@ class parseXML(ContentHandler, LexicalHandler):
 				pass
 
 	def endElement(self, name):
-		#print "endElement", name
+		#print("endElement", name)
 		if name in ("shortdescription", "description"):
 			attrlist.add((self.data.strip().decode("utf-8"), self.last_comment,self.currentFile))
 		self.data = ""
@@ -52,7 +52,7 @@ parser = make_parser()
 attrlist = set()
 
 for arg in sys.argv[1:]:
-	#print "processing:",arg
+	#print("processing:",arg)
 	parse_path = ""
 	if os.path.isdir(arg):
 		for file in os.listdir(arg):
@@ -75,20 +75,20 @@ for arg in sys.argv[1:]:
 	for (k,c,f) in attrlist:
 		if c:
 			for l in c.split("\n"):
-				print "#. ", l
+				print( "#. ", l)
 		if arg == f:
-			print "#: %s" % (arg)
+			print("#: %s" % (arg))
 		else:
-			print "#: %s" % (arg + f)
+			print("#: %s" % (arg + f))
 		msgid = saxutils.escape(k, {'"': '&quot;'}).encode("utf-8")
-		#print type(msgid), repr(msgid)
+		#print(type(msgid), repr(msgid))
 		string.replace(msgid, "\\n", "\"\n\"")
 		msgstr = ""
 		if msgid.strip() != "":
 			if msgid.find("\&quot;") != -1:
-				print "msgid \"%s\"" % (msgid.replace('\&quot;', '\\"'))
+				print("msgid \"%s\"" % (msgid.replace('\&quot;', '\\"')))
 			else:
-				print "msgid \"%s\"" % (msgid)
-			print "msgstr \"%s\"\n" % (msgstr)
+				print("msgid \"%s\"" % (msgid))
+			print("msgstr \"%s\"\n" % (msgstr))
 
 	attrlist = set()

@@ -27,14 +27,14 @@ class parseXML(ContentHandler, LexicalHandler):
 			self.last_comment = comment
 
 	def startElement(self, name, attrs):
-		#print "startElement", name
+		#print("startElement", name)
 		self.elements.append(name)
 		if name in ( "shortdescription", "description" ):
 			self.data = ""
 
 	def endElement(self, name):
-		#print "endElement", name
-		#print "self.elements:", self.elements
+		#print("endElement", name)
+		#print("self.elements:", self.elements)
 		self.elements.pop()
 
 		if len(self.attributes) == 2:
@@ -73,14 +73,14 @@ for arg in sys.argv[1:]:
 	attrlist.sort(key=lambda a: a[2])
 
 	for (k,c,f) in attrlist:
-		print
-		print '#: ' + arg + f
+		print("")
+		print('#: ' + arg + f)
 		string.replace(k, "\\n", "\"\n\"")
 		if c:
 			for l in c.split('\n'):
-				print "#. ", l
+				print( "#. ", l)
 		if str(k).strip() != "":
-			print 'msgid "' + str(k) + '"'
-			print 'msgstr ""'
+			print('msgid "' + str(k) + '"')
+			print('msgstr ""')
 
 	attrlist = set()
