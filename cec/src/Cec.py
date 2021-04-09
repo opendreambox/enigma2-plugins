@@ -52,7 +52,7 @@ class Cec(object):
 		self.session = session
 		#don't set this in init to avoid powerOn on boot to idle
 		self.__ready_conn = self._cec.ready.connect(self._onReady)
-		self._onReady(self._cec.logicalAddress(), self._cec.physicalAddress())
+		self._onReady(self._cec.logicalAddress(), self._cec.physicalAddress(), force=True)
 
 	@property
 	def devices(self):
@@ -74,7 +74,7 @@ class Cec(object):
 	def isStandby(self, state):
 		return state == eCec.POWER_STATE_STANDBY or state == eCec.POWER_STATE_TRANSITION_ON_TO_STANDBY
 
-	def _onReady(self, logicalAddress, physicalAddress):
+	def _onReady(self, logicalAddress, physicalAddress, force=False):
 		oldPhysical = self._physicalAddress
 		self._logicalAddress = logicalAddress
 		self._physicalAddress = tuple(physicalAddress)
@@ -87,7 +87,7 @@ class Cec(object):
 			self.givePhysicalAddress(eCec.ADDR_TV)
 
 		if self.isReady():
-			if oldPhysical != self._physicalAddress:
+			if oldPhysical != self._physicalAddress or force:
 				self.reportPhysicalAddress()
 				self.givePhysicalAddress(eCec.ADDR_AUDIO_SYSTEM)
 				self.giveSystemAudioModeStatus()
