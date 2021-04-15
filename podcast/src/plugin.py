@@ -24,7 +24,8 @@ from Tools.Downloader import downloadWithProgress
 from twisted.web.client import getPage
 from xml.etree.cElementTree import parse
 from xml.dom.minidom import parseString as xmlparseString, parse as xmlparse
-import re, urllib2
+import re
+import urllib2
 
 ###################################################
 

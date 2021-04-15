@@ -3,7 +3,8 @@ Common functions for EmailClient
 '''
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN_IMAGE
 from Components.config import config
-import os, time
+import os
+import time
 
 def initLog():
 	try:

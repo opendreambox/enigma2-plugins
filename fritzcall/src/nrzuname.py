@@ -21,7 +21,9 @@ $Date: 2020-10-12 15:32:07 +0200 (Mon, 12 Oct 2020) $
 # pylint: disable=C0111,C0103,C0301,W0603,W0403,C0302
 
 from __future__ import print_function
-import re, sys, os
+import re
+import sys
+import os
 from xml.dom.minidom import parse
 from six import unichr
 

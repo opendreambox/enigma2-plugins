@@ -118,7 +118,8 @@ class AutoPollerThread(Thread):
 				pump.send(0)
 			except Exception:
 				# Dump error to stdout
-				import traceback, sys
+				import traceback
+				import sys
 				traceback.print_exc(file=sys.stdout)
 			#Keep that eTimer in the mainThread
 			reactor.callFromThread(timer.startLongTimer, config.plugins.autotimer.interval.value*3600)

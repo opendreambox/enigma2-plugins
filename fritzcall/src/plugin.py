@@ -22,7 +22,11 @@ $Id: plugin.py 1565 2021-01-25 17:02:50Z michael $
 
 from __future__ import division
 from __future__ import absolute_import
-import re, time, os, traceback, json
+import re
+import time
+import os
+import traceback
+import json
 from itertools import cycle
 import base64
 from logging import NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL

@@ -145,7 +145,8 @@ themeList = ["ColorTheme", "SkinPathTheme", "FontTheme",  "BorderSetTheme", "Win
 
 # shared functions
 # ImageCreator
-import Image,ImageDraw
+import Image
+import ImageDraw
 import math
 
 class ImageCreator:

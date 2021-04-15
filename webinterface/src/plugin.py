@@ -26,7 +26,10 @@ from os.path import isfile as os_isfile, exists as os_exists
 
 from __init__ import __version__
 
-import random, uuid, time, hashlib
+import random
+import uuid
+import time
+import hashlib
 
 from netaddr import IPNetwork
 

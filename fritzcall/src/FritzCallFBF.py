@@ -22,7 +22,13 @@ $Id: FritzCallFBF.py 1565 2021-01-25 17:02:50Z michael $
 # pylint: disable=C0111,C0103,C0301,W0603,W0403,C0302,W0611,F0401,E0611
 
 from __future__ import absolute_import
-import re, time, hashlib, logging, StringIO, csv, json
+import re
+import time
+import hashlib
+import logging
+import StringIO
+import csv
+import json
 from six.moves.urllib.parse import urlencode
 import xml.etree.ElementTree as ET
 

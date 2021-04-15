@@ -10,7 +10,8 @@ $Id: FritzLDIF.py 1561 2020-10-12 13:32:07Z michael $
 #
 
 from __future__ import print_function
-import ldif, re
+import ldif
+import re
 try:
 	from . import normalizePhoneNumber #@UnresolvedImport # pylint: disable-msg=F0401
 except ValueError:
@@ -192,7 +193,8 @@ def lookedUp(number, name):
 	print(number + ' ' + name)
 
 if __name__ == '__main__':
-	import os, sys
+	import os
+	import sys
 	cwd = os.path.dirname(sys.argv[0])
 	if (len(sys.argv) == 1):
 		ReadNumbers(open("Kontakte.ldif"), out)

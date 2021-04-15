@@ -9,7 +9,8 @@ from YoutubeQueryBase import YoutubeQueryBase
 
 from Tools.Log import Log
 
-import datetime, re
+import datetime
+import re
 from Tools.HardwareInfo import HardwareInfo
 
 class Videos(YoutubeQueryBase):

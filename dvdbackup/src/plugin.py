@@ -20,7 +20,8 @@ from Screens.VirtualKeyBoard import VirtualKeyBoard
 from time import time
 from Tools.BoundFunction import boundFunction
 from Tools.Directories import fileExists
-import os, stat
+import os
+import stat
 
 config.plugins.DVDBackup = ConfigSubsection()
 config.plugins.DVDBackup.device = ConfigText(default="/dev/sr0", fixed_size=False)

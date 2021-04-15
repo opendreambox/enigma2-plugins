@@ -27,7 +27,13 @@ __all__ = [
   'LDIFCopy',
 ]
 
-import urlparse,six.moves.urllib.request,six.moves.urllib.parse,six.moves.urllib.error,base64,re,types
+import urlparse
+import six.moves.urllib.request
+import six.moves.urllib.parse
+import six.moves.urllib.error
+import base64
+import re
+import types
 
 try:
   from cStringIO import StringIO

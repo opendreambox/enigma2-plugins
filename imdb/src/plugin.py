@@ -19,7 +19,8 @@ from Components.ProgressBar import ProgressBar
 from Components.Sources.StaticText import StaticText
 from Components.Sources.Boolean import Boolean
 from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN_IMAGE
-import os, re
+import os
+import re
 try:
 	from urllib import quote_plus
 except ImportError as ie:

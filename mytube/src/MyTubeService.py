@@ -2,7 +2,8 @@
 from Tools.Log import Log
 
 from socket import gaierror, error
-import os, httplib
+import os
+import httplib
 from urllib import quote
 from httplib import HTTPConnection, CannotSendRequest, BadStatusLine
 
