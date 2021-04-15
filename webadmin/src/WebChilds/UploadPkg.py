@@ -13,7 +13,7 @@ class UploadPkgResource(resource.Resource):
 	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 			"http://www.w3.org/TR/html4/loose.dtd">
 	<html>
-					
+
 	<head>
 		<link rel="shortcut icon" type="/web-data/image/x-icon" href="/web-data/img/favicon.ico">
 		<meta content="text/html; charset=UTF-8" http-equiv="content-type">
@@ -30,7 +30,7 @@ class UploadPkgResource(resource.Resource):
 	</body>
 	</html>
 	"""
-			
+
 	def render_POST(self, req):
 		data = req.args['file'][0]
 		if not data:
@@ -39,7 +39,7 @@ class UploadPkgResource(resource.Resource):
 					_("Close"),
 					 _("Add")
 					)
-		
+
 		fd, fn = mkstemp(suffix='.deb')
 		cnt = write(fd, data)
 		close(fd)
@@ -64,7 +64,7 @@ class UploadPkgResource(resource.Resource):
 				<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 						"http://www.w3.org/TR/html4/loose.dtd">
 				<html>
-					
+
 				<head>
 				<link rel="shortcut icon" type="/web-data/image/x-icon" href="/web-data/img/favicon.ico">
 				<meta content="text/html; charset=UTF-8" http-equiv="content-type">

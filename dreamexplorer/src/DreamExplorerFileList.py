@@ -49,7 +49,7 @@ EXTENSIONS = {
 		"ts": "movie",
 		"avi": "movie",
 		"divx": "movie",
-		"m4v": "movie",		
+		"m4v": "movie",
 		"mpg": "movie",
 		"mpeg": "movie",
 		"mkv": "movie",
@@ -75,17 +75,17 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 	COMPONENT_ID = "DreamExplorerFileList"
 	LIST_TYPE_FULL = 1
 	LIST_TYPE_NODETAILS = 2
-	
+
 	SORT_NAME_ASC = 1
 	SORT_NAME_DESC = 2
 	SORT_DATE_ASC = 3
 	SORT_DATE_DESC = 4
-	
+
 	LIST_STYLES = {
 		LIST_TYPE_FULL: "default",
 		LIST_TYPE_NODETAILS: "nodetails",
 	}
-	
+
 	if getDesktop(0).size().width() >= 1920:
 		default_template = """{
 			"templates":
@@ -109,7 +109,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 					]
 				),
 			},
-			"fonts":	
+			"fonts":
 			[
 				gFont("Regular", 28),
 			]
@@ -137,18 +137,18 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 					]
 				),
 			},
-			"fonts":	
+			"fonts":
 			[
 				gFont("Regular", 18),
 			]
-		}"""		
+		}"""
 
 	def __init__(self, list_type=None, sortType=None, directory=None, showDirectories=True, showFiles=True, showMountpoints=True, matchingPattern=None, inhibitDirs=False, inhibitMounts=False, isTop=False, enableWrapAround=True, additionalExtensions=None, showDetails=True):
 		TemplatedMultiContentComponent.__init__(self)
 		self.list = []
 		self.setListType(list_type or self.LIST_TYPE_FULL)
 		self.sortType = sortType or self.SORT_NAME_ASC
-		
+
 		self.mountpoints = []
 		self.current_directory = None
 		self.current_mountpoint = None
@@ -163,14 +163,14 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 		self.showDetails = showDetails
 		self.iconSet = "/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/icons"
 
-		self.serviceHandler = eServiceCenter.getInstance()	
-		
+		self.serviceHandler = eServiceCenter.getInstance()
+
 		self.refreshMountpoints()
 		if directory is not None:
 			self.changeDirectory(directory)
 
 		self.l.setBuildFunc(self.buildEntry)
-		
+
 		self.onSelectionChanged = []
 
 	def applySkin(self, desktop, parent):
@@ -206,11 +206,11 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 		return self.sortType
 
 	def setSelectionEnabled(self, enabled):
-		self.instance.setSelectionEnable(enabled)		
+		self.instance.setSelectionEnable(enabled)
 
 	def setList(self):
 		self.l.setList(self.list)
-		
+
 	def buildEntry(self, filename, path, pathFilename=None, isDir=False, isMovie=False, mediaType=None):
 		png = None
 		fileSize = ""
@@ -228,7 +228,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 				lastModified = strftime("%d.%m.%Y %H:%M:%S", localtime(fileInfo.st_mtime))
 				fileSize = prettySize(getSize(pathFilename))
 				isLink = stat_stat.S_ISLNK(fileInfo.st_mode)
-				
+
 				if os_path.islink(pathFilename):
 					realPath = " >> %s" % (os_path.realpath(pathFilename))
 		elif path is not None and filename not in ('<%s>' % (_("List of Storage Devices")), '<%s>' % (_("Parent Directory"))):
@@ -255,27 +255,27 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 			res.extend((filename, path, pathFilename, isDir, isMovie, mediaType, png, fileSize, lastModified, fileAttrib, realPath))
 		else:
 			res.extend((filename, path, pathFilename, isDir, isMovie, mediaType, png))
-		
+
 		return res
 
 	def down(self):
 		self.instance.moveSelection(self.instance.moveDown)
-		
+
 	def up(self):
 		self.instance.moveSelection(self.instance.moveUp)
-		
+
 	def pageDown(self):
 		self.instance.moveSelection(self.instance.pageDown)
-		
+
 	def pageUp(self):
 		self.instance.moveSelection(self.instance.pageUp)
 
 	def moveToIndex(self, index):
 		self.instance.moveSelectionTo(index)
-		
+
 	def getCurrentIndex(self):
 		return self.instance.getCurrentIndex()
-		
+
 	def getCurrent(self):
 		l = self.l.getCurrentSelection()
 		return l
@@ -284,7 +284,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 		if self.l.getCurrentSelection() is None:
 			return None
 		return self.l.getCurrentSelection()
-		
+
 	GUI_WIDGET = eListbox
 
 	def postWidgetCreate(self, instance):
@@ -300,8 +300,8 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 
 	def changeDirectory(self, directory, select=None):
 		self.list = []
-		
-		# if we are just entering from the list of mount points:		
+
+		# if we are just entering from the list of mount points:
 		if self.current_directory is None:
 			if directory and self.showMountpoints:
 				self.current_mountpoint = self.getMountpointLink(directory)
@@ -310,12 +310,12 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 		self.current_directory = directory
 		directories = []
 		files = []
-		
+
 		if directory is None and self.showMountpoints: # present available mountpoints
 			for p in harddiskmanager.getMountedPartitions():
 				path = os_path.join(p.mountpoint, "")
 				if path not in self.inhibitMounts and not self.inParentDirs(path, self.inhibitDirs):
-					self.list.append((p.description, path, None, True, False, None)) 
+					self.list.append((p.description, path, None, True, False, None))
 			files = []
 			directories = []
 		elif directory is None:
@@ -333,13 +333,13 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 					if os_path.isdir(directory + x):
 						directories.append(directory + x + "/")
 						files.remove(x)
-		
+
 		if directory is not None and self.showDirectories and not self.isTop:
 			if directory == self.current_mountpoint and self.showMountpoints:
 				self.list.append(("<%s>" % (_("List of Storage Devices")), None, None, True, False, None))
 			elif (directory != "/") and not (self.inhibitMounts and self.getMountpoint(directory) in self.inhibitMounts):
 				self.list.append(("<%s>" % (_("Parent Directory")), '/'.join(directory.split('/')[:-2]) + '/', None, True, False, None))
-				
+
 		if self.showDirectories:
 			for x in directories:
 				if not (self.inhibitMounts and self.getMountpoint(x) in self.inhibitMounts) and not self.inParentDirs(x, self.inhibitDirs):
@@ -349,7 +349,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 			for x in files:
 				path = directory + x
 				name = x
-				
+
 				if (self.matchingPattern is None) or re_compile(self.matchingPattern).search(path):
 					nx = None
 					if (config.plugins.DreamExplorer.useMediaFilter.value == "on"):
@@ -361,7 +361,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 					extensionPos = name.rfind('.')
 					if extensionPos != -1:
 						extension = name[extensionPos + 1:].lower()
-					mediaType = EXTENSIONS.get(extension)					
+					mediaType = EXTENSIONS.get(extension)
 					if nx is None:
 						fileInfo = os_lstat(path)
 						lastModified = strftime("%d.%m.%Y %H:%M:%S", localtime(fileInfo.st_mtime))
@@ -369,21 +369,21 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 					else:
 						extname = name + " [" + self.getTSLength(path) + "]"
 						self.list.append((extname, directory, path, False, True, mediaType))
-						
+
 		# let's sort the list to retain the last selection after directory change
 		self.sortList()
-				
+
 		self.l.setList(self.list)
-		
+
 		if select is not None:
 			i = 0
 			self.moveToIndex(0)
 			for x in self.list:
 				p = x[1]
-				
+
 				if isinstance(p, eServiceReference):
 					p = p.getPath()
-					
+
 				if p == select:
 					self.moveToIndex(i)
 					break
@@ -407,11 +407,11 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 
 	def getFileList(self):
 		return self.list
-		
+
 	def getFilteredFileList(self, mediaType, fileNameOnly=False):
 		if fileNameOnly:
 			return [x[0] for x in self.list if x[5] == mediaType]
-		return [x for x in self.list if x[5] == mediaType]	
+		return [x for x in self.list if x[5] == mediaType]
 
 	def isSymLink(self):
 		if self.getSelection() is None:
@@ -421,7 +421,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 				if self.getSelection()[10] != "":
 					return True
 		return False
-	
+
 	### filename ###
 
 	def getFilename(self):
@@ -437,7 +437,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 
 	def getFileExtensionType(self):
 		fileExtension = self.getFileExtension()
-		
+
 		return EXTENSIONS.get(fileExtension)
 
 	def getFileExtension(self):
@@ -524,13 +524,13 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 			if not serviceref.valid():
 				return None, serviceref
 			info = self.serviceHandler.info(serviceref)
-			if info is not None:			
+			if info is not None:
 				return (info.getEvent(serviceref), serviceref)
 		return None, None
-	
+
 	def getTSInfo(self, path=None):
 		if path is None:
-			path = self.getFilenameWithPath()	
+			path = self.getFilenameWithPath()
 		if path.endswith(".ts"):
 			serviceref = self.getServiceRefForPath(path)
 			if not serviceref.valid():
@@ -583,7 +583,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 			return cmp(b[3], a[3]) or cmp(stat2.st_ctime, stat1.st_ctime)
 		else:
 			return cmp(b[3], a[3]) or cmp(stat1.st_ctime, stat2.st_ctime)
-		
+
 	def sortList(self):
 		if self.getSortType() in (self.SORT_NAME_ASC, self.SORT_NAME_DESC):
 			self.list.sort(self.byNameFunc)
@@ -597,7 +597,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 				break
 
 	### move by char ###
-			
+
 	def moveToChar(self, char):
 		index = self.getFirstMatchingEntry(char)
 		self.instance.moveSelectionTo(index)

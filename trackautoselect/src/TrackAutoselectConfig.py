@@ -146,4 +146,3 @@ class TrackAutoselectConfig():
 				print "[TrackAutoselectConfig] getAvailableChoicesAndPreferenceTuplelist Error in settings! couldn't find key '%s'" % e
 
 		return (choicelist, preference_tuplelist)
-

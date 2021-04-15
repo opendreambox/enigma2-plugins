@@ -33,9 +33,9 @@ def initLog():
 	global logger
 	logger = logger or logging.getLogger("AutoTimer")
 	logger.setLevel(logging.DEBUG)
-	
-	logger.handlers = [] 
-	
+
+	logger.handlers = []
+
 	if config.plugins.autotimer.log_shell.value:
 		shandler = logging.StreamHandler(sys.stdout)
 		shandler.setLevel(logging.DEBUG)
@@ -45,7 +45,7 @@ def initLog():
 
 		logger.addHandler(shandler)
 		logger.setLevel(logging.DEBUG)
-		
+
 	if config.plugins.autotimer.log_write.value:
 		fhandler = logging.FileHandler(config.plugins.autotimer.log_file.value)
 		fhandler.setLevel(logging.DEBUG)
@@ -77,26 +77,26 @@ def getLog():
 
 def doDebug(*args):
 	strargs = " ".join([str(arg) for arg in args])
-	
+
 	global logger
 	if logger:
 		logger.debug(strargs)
-	
+
 	elif config.plugins.autotimer.log_shell.value:
 		print strargs
 
 
 def doLog(*args):
 	strargs = " ".join([str(arg) for arg in args])
-	
+
 	global log, localLog
 	if localLog:
 		log += "&#13;&#10;" + strargs
-	
+
 	global logger
 	if logger:
 		logger.info(strargs)
-	
+
 	elif config.plugins.autotimer.log_shell.value:
 		print strargs
 

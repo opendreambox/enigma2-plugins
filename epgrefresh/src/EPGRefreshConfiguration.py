@@ -69,7 +69,7 @@ class EPGFunctionMenu(FixedMenu):
 
 class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 	"""Configuration of EPGRefresh"""
-        
+
         skin = """<screen name="EPGRefreshConfiguration" position="center,120" size="820,520" >
 		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
@@ -85,7 +85,7 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 		<widget source="help" render="Label" position="60,410" size="700,100" font="Regular;22" valign="center" halign="center" />
 		<ePixmap position="760,490" size="50,25" pixmap="skin_default/buttons/key_info.png" alphatest="on" />
 	</screen>"""
-	
+
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		HelpableScreen.__init__(self)
@@ -93,9 +93,9 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 		# Summary
 		self.setup_title = _("EPGRefresh Configuration")
 		self.onChangedEntry = []
-		
+
 		self.session = session
-		
+
 		# Although EPGRefresh keeps services in a Set we prefer a list
 		self.services = (
 			[x for x in epgrefresh.services[0]],
@@ -144,19 +144,19 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 				"save": (self.keySave, _("Close and save changes")),
 			}
 		)
-		
+
 		# Trigger change
 		self.changed()
 		self.needsEnigmaRestart = False
 		self.ServicesChanged = False
-		
+
 		self.onLayoutFinish.append(self.setCustomTitle)
 		self.onFirstExecBegin.append(self.firstExec)
 		self["config"].isChanged = self._ConfigisChanged
 
 	def _getConfig(self):
 		# Name, configElement, HelpTxt, reloadConfig
-		self.list = [] 
+		self.list = []
 		self.list.append(getConfigListEntry(_("Refresh EPG automatically"), config.plugins.epgrefresh.enabled, _("Unless this is enabled, EPGRefresh won't automatically run but needs to be explicitly started by the yellow button in this menu."), True))
 		if config.plugins.epgrefresh.enabled.value:
 			# temporary until new mode is successfully tested
@@ -179,17 +179,17 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 				self.list.append(getConfigListEntry(_("After EPG refresh"), config.plugins.epgrefresh.afterevent, _("This setting controls whether the receiver should be set to standby after refresh is completed."), True))
 				if config.plugins.epgrefresh.afterevent.value:
 					self.list.append(getConfigListEntry(_("Don't shutdown after manual abort of automated refresh"), config.plugins.epgrefresh.dontshutdownonabort, _("Activate this setting to avoid shutdown after manual abort of automated refresh"), False))
-				self.list.append(getConfigListEntry(_("Force save EPG.db"), config.plugins.epgrefresh.epgsave, _("If this is enabled, the Plugin save the epg.db /etc/enigma2/epg.db."), False)) 
-				self.list.append(getConfigListEntry(_("Reset") + " " + _("EPG.db"), config.plugins.epgrefresh.epgreset, _("If this is enabled, the Plugin shows the Reset EPG.db function."), False)) 
+				self.list.append(getConfigListEntry(_("Force save EPG.db"), config.plugins.epgrefresh.epgsave, _("If this is enabled, the Plugin save the epg.db /etc/enigma2/epg.db."), False))
+				self.list.append(getConfigListEntry(_("Reset") + " " + _("EPG.db"), config.plugins.epgrefresh.epgreset, _("If this is enabled, the Plugin shows the Reset EPG.db function."), False))
 				try:
 					# try to import autotimer module to check for its existence
 					from Plugins.Extensions.AutoTimer.AutoTimer import AutoTimer
-		
+
 					self.list.append(getConfigListEntry(_("Inherit Services from AutoTimer"), config.plugins.epgrefresh.inherit_autotimer, _("Extend the list of services to refresh by those your AutoTimers use?"), True))
 					self.list.append(getConfigListEntry(_("Run AutoTimer after refresh"), config.plugins.epgrefresh.parse_autotimer, _("After a successful refresh the AutoTimer will automatically search for new matches if this is enabled. The options 'Ask*' has only affect on a manually refresh. If EPG-Refresh was called in background the default-Answer will be executed!"), False))
 				except ImportError as ie:
 					print("[EPGRefresh] AutoTimer Plugin not installed:", ie)
-			
+
 		self["config"].list = self.list
 		self["config"].setList(self.list)
 
@@ -211,7 +211,7 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 	def keyRight(self):
 		ConfigListScreen.keyRight(self)
 		self._onKeyChange()
-	
+
 	# overwrite configlist.isChanged
 	def _ConfigisChanged(self):
 		is_changed = False
@@ -219,10 +219,10 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 			if not x[1].save_disabled:
 				is_changed |= x[1].isChanged()
 		return is_changed
-	
+
 	def isConfigurationChanged(self):
 		return self.ServicesChanged or self._ConfigisChanged()
-	
+
 	def _onKeyChange(self):
 		cur = self["config"].getCurrent()
 		if cur and cur[3]:
@@ -240,12 +240,12 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 			self._showMainHelp()
 		else:
 			self._showKeyhelp()
-	
+
 	def _showMainHelp(self):
 		from plugin import epgrefreshHelp
 		if epgrefreshHelp:
 			epgrefreshHelp.open(self.session)
-	
+
 	def _showKeyhelp(self):
 		self.session.openWithCallback(self.callHelpAction, HelpMenu, self.helpList)
 
@@ -274,11 +274,11 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 		except:
 			print("[EPGRefresh] Error in Function - Call")
 			print_exc(file=stdout)
-	
+
 	def forceRefresh(self):
 		if not epgrefresh.isRefreshAllowed():
 			return
-	
+
 		self._saveConfiguration()
 		epgrefresh.services = (set(self.services[0]), set(self.services[1]))
 		epgrefresh.forceRefresh(self.session)
@@ -289,7 +289,7 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 
 	def showPendingServices(self):
 		epgrefresh.showPendingServices(self.session)
-	
+
 	def stopRunningRefresh(self):
 		epgrefresh.stopRunningRefresh(self.session)
 
@@ -312,7 +312,7 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 				x()
 			except Exception:
 				pass
-	
+
 	# for Summary
 	def getCurrentEntry(self):
 		if self["config"].getCurrent():
@@ -363,15 +363,15 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 			)
 		else:
 			self.close(self.session, False)
-	
+
 	def _saveConfiguration(self):
 		epgrefresh.services = (set(self.services[0]), set(self.services[1]))
 		epgrefresh.saveConfiguration()
 
 		for x in self["config"].list:
-			x[1].save()		
+			x[1].save()
 		configfile.save()
-		
+
 	def keySave(self, doSaveConfiguration=True):
 		if self.isConfigurationChanged():
 			if not epgrefresh.isRefreshAllowed():
@@ -383,13 +383,11 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 
 		if len(self.services[0]) == 0 and len(self.services[1]) == 0 and config.plugins.epgrefresh.enabled.value:
 			self.session.openWithCallback(self.checkAnswer, MessageBox, _("EPGRefresh requires services/bouquets to be configured. Configure now?"), MessageBox.TYPE_YESNO, timeout=0)
-		else:					
+		else:
 			self.close(self.session, self.needsEnigmaRestart)
 
 	def checkAnswer(self, answer):
 		if answer:
 			self.editServices()
-		else:		
+		else:
 			self.close(self.session, self.needsEnigmaRestart)
-
-

@@ -113,7 +113,7 @@ class InternetRadioVisualization(object):
 				self.pegelvalues[i] = (currentvalue, time.time(), 0, hide)
 				if hide:
 					self["top_%d" % i].hide()
-				else:	
+				else:
 					self["top_%d" % i].instance.move(ePoint(self["top_%d" % i].instance.position().x(), barvalues[1] - currentvalue - barvalues[2]))
 			self["progress_%d" % i].setValue(value)
 			i += 1

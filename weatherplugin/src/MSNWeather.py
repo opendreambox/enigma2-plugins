@@ -35,7 +35,7 @@ class WeatherIconItem:
 		self.filename = filename
 		self.index = index
 		self.error = error
-		
+
 
 class MSNWeatherItem:
 	def __init__(self):
@@ -56,7 +56,7 @@ class MSNWeatherItem:
 		self.shortday = ""
 		self.iconFilename = ""
 		self.code = ""
-		
+
 
 class MSNWeather:
 
@@ -90,7 +90,7 @@ class MSNWeather:
 			except:
 				pass
 		return extension
-		
+
 	def initialize(self):
 		self.city = ""
 		self.degreetype = ""
@@ -100,19 +100,19 @@ class MSNWeather:
 		self.callback = None
 		self.callbackShowIcon = None
 		self.callbackAllIconsDownloaded = None
-		
+
 	def cancel(self):
 		self.callback = None
 		self.callbackShowIcon = None
-		
+
 	def setIconPath(self, iconpath):
 		if not os_path.exists(iconpath):
 			os_mkdir(iconpath)
 		self.iconpath = iconpath
-		
+
 	def setIconExtension(self, iconextension):
 		self.iconextension = iconextension
-		
+
 	def getWeatherData(self, degreetype, locationcode, city, callback, callbackShowIcon, callbackAllIconsDownloaded=None):
 		self.initialize()
 		language = config.osd.language.value.replace("_", "-")
@@ -126,7 +126,7 @@ class MSNWeather:
 		self.callbackAllIconsDownloaded = callbackAllIconsDownloaded
 		url = "http://weather.service.msn.com/data.aspx?src=outlook&weadegreetype=%s&culture=%s&wealocations=%s" % (degreetype, language, urllib_quote(locationcode))
 		getPage(url).addCallback(self.xmlCallback).addErrback(self.error)
-		
+
 	def getDefaultWeatherData(self, callback=None, callbackAllIconsDownloaded=None):
 		self.initialize()
 		weatherPluginEntryCount = config.plugins.WeatherPlugin.entrycount.value
@@ -136,14 +136,14 @@ class MSNWeather:
 			return 1
 		else:
 			return 0
-		
+
 	def error(self, error=None):
 		errormessage = ""
 		if error is not None:
 			errormessage = str(error.getErrorMessage())
 		if self.callback is not None:
 			self.callback(self.ERROR, errormessage)
-			
+
 	def errorIconDownload(self, error=None, item=None):
 		item.error = True
 		if os_path.exists(item.filename): # delete 0 kb file
@@ -152,15 +152,15 @@ class MSNWeather:
 	def finishedIconDownload(self, result, item):
 		if not item.error:
 			self.showIcon(item.index, item.filename)
-		
+
 	def showIcon(self, index, filename):
 		if self.callbackShowIcon is not None:
 				self.callbackShowIcon(index, filename)
-				
+
 	def finishedAllDownloadFiles(self, result):
 		if self.callbackAllIconsDownloaded is not None:
 			self.callbackAllIconsDownloaded()
-		
+
 	def xmlCallback(self, xmlstring):
 		IconDownloadList = []
 		root = cet_fromstring(xmlstring)
@@ -216,17 +216,17 @@ class MSNWeather:
 					else:
 						self.showIcon(index, filename)
 					self.weatherItems[str(index)] = weather
-		
+
 		if len(IconDownloadList) != 0:
 			ds = defer.DeferredSemaphore(tokens=len(IconDownloadList))
 			downloads = [ds.run(download, item).addErrback(self.errorIconDownload, item).addCallback(self.finishedIconDownload, item) for item in IconDownloadList]
 			finished = defer.DeferredList(downloads).addErrback(self.error).addCallback(self.finishedAllDownloadFiles)
 		else:
 			self.finishedAllDownloadFiles(None)
-			
+
 		if self.callback is not None:
 			self.callback(self.OK, None)
-		
+
 
 def download(item):
 	return downloadPage(item.url, file(item.filename, 'wb'))

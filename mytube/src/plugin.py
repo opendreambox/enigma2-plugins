@@ -469,13 +469,13 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 					(_("Related videos"), "related"),
 					(_("Channel videos"), "channel_videos"),
 				))
-			
+
 			if myTubeService.is_auth() is True:
 				menulist.extend((
 						(_("Subscribe to channel"), "subscribe"),
 						(_("Add to favorites"), "favorite"),
-					))				
-			
+					))
+
 			if config.usage.setup_level.index >= 2: # expert+
 				menulist.extend((
 					(_("Download Video"), "download"),
@@ -504,7 +504,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		elif answer == "favorite":
 			current = self["feedlist"].getCurrent()[0]
 			self.session.open(MessageBox, current.addToFavorites(), MessageBox.TYPE_INFO)
-					
+
 		elif answer == "response":
 			current = self["feedlist"].getCurrent()[0]
 			self.setState('getFeed')

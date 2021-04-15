@@ -1,6 +1,6 @@
 def _log(message):
   print "[TeleText]", message
-  
+
 
 def _debug(message):
   d = open("/tmp/dbttcp.log", "a")

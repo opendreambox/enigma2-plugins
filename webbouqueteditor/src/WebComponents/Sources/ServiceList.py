@@ -47,7 +47,7 @@ class ServiceList(Source):
 			isStream = "0"
 			if item[0].getPath():
 				isStream = "1"
-					
+
 			list.append((item[0].toString(), item[1], isGroup, isMarker, isProtected, isStream))
 		print "list", list
 		return list
@@ -55,7 +55,7 @@ class ServiceList(Source):
 	def getServiceList(self):
 		serviceHandler = eServiceCenter.getInstance()
 		return serviceHandler.list(self.root)
-		
+
 	def getRoot(self):
 		return self.__root
 
@@ -63,7 +63,7 @@ class ServiceList(Source):
 		assert isinstance(root, eServiceReference)
 		self.__root = root
 		self.changed()
-		
+
 	root = property(getRoot, setRoot)
 
 	def validateReference(self, ref):
@@ -79,4 +79,4 @@ class ServiceList(Source):
 			self.command_func(ref)
 
 	list = property(getServicesAsList)
-	lut = {"Reference": 0, "Name": 1, "isGroup": 2, "isMarker": 3, "isProtected": 4, "isStream": 5}			
+	lut = {"Reference": 0, "Name": 1, "isGroup": 2, "isMarker": 3, "isProtected": 4, "isStream": 5}

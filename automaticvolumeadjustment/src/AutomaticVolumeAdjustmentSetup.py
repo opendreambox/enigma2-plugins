@@ -7,8 +7,8 @@
 #  Coded by Dr.Best (c) 2010
 #  Support: www.dreambox-tools.info
 #
-#  This plugin is licensed under the Creative Commons 
-#  Attribution-NonCommercial-ShareAlike 3.0 Unported 
+#  This plugin is licensed under the Creative Commons
+#  Attribution-NonCommercial-ShareAlike 3.0 Unported
 #  License. To view a copy of this license, visit
 #  http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to Creative
 #  Commons, 559 Nathan Abbott Way, Stanford, California 94305, USA.
@@ -17,7 +17,7 @@
 #  is licensed by Dream Property GmbH.
 
 #  This plugin is NOT free software. It is open source, you are allowed to
-#  modify it (if you keep the license), but it may not be commercially 
+#  modify it (if you keep the license), but it may not be commercially
 #  distributed other than under the conditions noted above.
 #
 from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT, RT_HALIGN_RIGHT, RT_VALIGN_CENTER, eServiceReference
@@ -34,7 +34,7 @@ from AutomaticVolumeAdjustment import AutomaticVolumeAdjustment
 from AutomaticVolumeAdjustmentConfig import AutomaticVolumeAdjustmentConfig
 from skin import TemplatedListFonts, componentSizes
 
-		
+
 class AutomaticVolumeAdjustmentConfigScreen(ConfigListScreen, Screen):
 	skin = """
 		<screen name="AutomaticVolumeAdjustmentConfigScreen" position="center,center" size="820,400">
@@ -66,7 +66,7 @@ class AutomaticVolumeAdjustmentConfigScreen(ConfigListScreen, Screen):
 		self.list = []
 		ConfigListScreen.__init__(self, self.list, session=session)
 		self.createSetup("config")
-		
+
 	def createSetup(self, widget):
 		self.list = []
 		self.config_enable = getConfigListEntry(_("Enable"), self.configVA.config.enable)
@@ -85,7 +85,7 @@ class AutomaticVolumeAdjustmentConfigScreen(ConfigListScreen, Screen):
 			self.config_modus = None
 		self[widget].list = self.list
 		self[widget].l.setList(self.list)
-	
+
 	def newConfig(self):
 		if self["config"].getCurrent() in (self.config_enable, self.config_modus):
 			self.createSetup("config")
@@ -97,7 +97,7 @@ class AutomaticVolumeAdjustmentConfigScreen(ConfigListScreen, Screen):
 	def keyRight(self):
 			ConfigListScreen.keyRight(self)
 			self.newConfig()
-		
+
 	def blue(self):
 		if self.configVA.config.modus.value == "0":
 			self.session.open(AutomaticVolumeAdjustmentEntriesListConfigScreen, self.configVA)
@@ -112,7 +112,7 @@ class AutomaticVolumeAdjustmentConfigScreen(ConfigListScreen, Screen):
 
 	def keyCancel(self):
 		ConfigListScreen.cancelConfirm(self, True)
-		
+
 
 class AutomaticVolumeAdjustmentEntriesListConfigScreen(Screen):
 	skin = """
@@ -203,7 +203,7 @@ class AutomaticVolumeAdjustmentEntryList(MenuList):
 	SKIN_COMPONENT_KEY = "AutomaticVolumeAdjustmentList"
 	SKIN_COMPONENT_TEXT_WIDTH = "textWidth"
 	SKIN_COMPONENT_TEXT_HEIGHT = "textHeight"
-	
+
 	def __init__(self, list, enableWrapAround=True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 		tlf = TemplatedListFonts()
@@ -216,17 +216,17 @@ class AutomaticVolumeAdjustmentEntryList(MenuList):
 
 	def getCurrentIndex(self):
 		return self.instance.getCurrentIndex()
-		
+
 	def setConfig(self, configVA):
 		self.configVA = configVA
-		
+
 	def buildList(self):
 		list = []
-		
+
 		sizes = componentSizes[AutomaticVolumeAdjustmentEntryList.SKIN_COMPONENT_KEY]
 		textWidth = sizes.get(AutomaticVolumeAdjustmentEntryList.SKIN_COMPONENT_TEXT_WIDTH, 570)
 		textHeight = sizes.get(AutomaticVolumeAdjustmentEntryList.SKIN_COMPONENT_TEXT_HEIGHT, 30)
-				
+
 		for c in self.configVA.config.Entries:
 			c.name.value = ServiceReference(eServiceReference(c.servicereference.value)).getServiceName()
 			res = [
@@ -251,7 +251,7 @@ class AutomaticVolumeAdjustmentEntryConfigScreen(ConfigListScreen, Screen):
 			<widget name="config" position="10,60" size="800,240" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 
-	def __init__(self, session, entry, configVA):	
+	def __init__(self, session, entry, configVA):
 		self.session = session
 		Screen.__init__(self, session)
 		self.title = _("Automatic Volume Adjustment - Entry Config")
@@ -281,12 +281,12 @@ class AutomaticVolumeAdjustmentEntryConfigScreen(ConfigListScreen, Screen):
 		self.list.append(self.adjustValue)
 		ConfigListScreen.__init__(self, self.list, session)
 		self.automaticVolumeAdjustmentInstance = AutomaticVolumeAdjustment.instance
-		
+
 	def keySelect(self):
 		cur = self["config"].getCurrent()
 		if cur == self.service:
 			self.session.openWithCallback(self.channelSelected, SimpleChannelSelection, _("Channel Selection"))
-			
+
 	def channelSelected(self, ref=None):
 		if ref:
 			self.current.name.value = ServiceReference(ref).getServiceName()

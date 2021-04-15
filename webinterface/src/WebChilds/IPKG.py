@@ -111,4 +111,3 @@ class IPKGConsoleStream:
 		if data != self.lastdata or self.lastdata is None and self.stillAlive:
 			self.lastdata = data
 			self.request.write(data.replace("\n", "<br>\n"))
-

@@ -36,7 +36,7 @@ class M3u8Client(http.HTTPClient):
 	def connectionLost(self, reason):
 		print "[StreamServerSeek] m3u8 %s: connectionLost (%s)" % (hex(id(self)), reason)
 		http.HTTPClient.connectionLost(self, reason)
-	
+
 	def clientConnectionFailed(self, connector, reason):
 		print "[StreamServerSeek] m3u8 %s: clientConnectionFailed (%s)" % (hex(id(self)), reason)
 		http.HTTPClient.clientConnectionFailed(self, connector, reason)
@@ -91,7 +91,7 @@ class MyProxyClient(proxy.ProxyClient):
 		self.responseEndCallback = responseEndCallback
 		self.statusCallback = statusCallback
 		father.notifyFinish().addBoth(self.disconnectChildConn)
-	
+
 	def connectionMade(self):
 		print "[StreamServerSeek] client %s: connectionMade" % hex(id(self))
 		proxy.ProxyClient.connectionMade(self)
@@ -99,7 +99,7 @@ class MyProxyClient(proxy.ProxyClient):
 	def connectionLost(self, reason):
 		print "[StreamServerSeek] client %s: connectionLost (%s)" % (hex(id(self)), reason)
 		proxy.ProxyClient.connectionLost(self, reason)
-	
+
 	def clientConnectionFailed(self, connector, reason):
 		print "[StreamServerSeek] client %s: clientConnectionFailed (%s)" % (hex(id(self)), reason)
 		proxy.ProxyClient.clientConnectionFailed(self, connector, reason)
@@ -135,7 +135,7 @@ class MyProxyClient(proxy.ProxyClient):
 	def handleHeader(self, key, value):
 		if not self._preventWrite and not self.responseEndCallback or key.lower() != 'content-length':
 			proxy.ProxyClient.handleHeader(self, key, value)
-	
+
 	def handleEndHeaders(self):
 		if not self._preventWrite:
 			proxy.ProxyClient.handleEndHeaders(self)
@@ -149,7 +149,7 @@ class MyProxyClient(proxy.ProxyClient):
 			self.father.setResponseCode(int(code), message)
 		if self.statusCallback:
 			self.statusCallback(int(code), self.rest)
-	
+
 	def disconnectChildConn(self, ignored):
 		if self.father._disconnected:
 			print "[StreamServerSeek] notifiyFinish close client conn"
@@ -209,13 +209,13 @@ class VodRequestHandler(object):
 		self._timer = eTimer()
 		self._timer_conn = self._timer.timeout.connect(self.reConnectClientFactory)
 		print "[StreamServerSeek] handler %s" % hex(id(self))
-	
+
 	def setClient(self, client):
 		self._client = client
-	
+
 	def streamWrite(self, buffer):
 		self._m3u8.write(buffer)
-	
+
 	def streamEndCallback(self, request):
 		seek = self.streamServerSeek.getSeek()
 		if not seek:
@@ -226,7 +226,7 @@ class VodRequestHandler(object):
 		self.streamServerSeek._isVodActive = True
 		self.streamServerSeek._expectedSegment = 0
 		self.streamServerSeek._lastSuccessfullSegment = -1
-		
+
 		self.m3u8EndCallback(self._m3u8)
 
 		response = StringIO()
@@ -245,7 +245,7 @@ class VodRequestHandler(object):
 		for i in range(0, movieSegments):
 			response.write("#EXTINF:%s,\n" % self._resource.segmentLength)
 			response.write("segment%d.ts\n" % i)
-			
+
 		response.write("#EXT-X-ENDLIST\n")
 
 		self._origWrite(response.getvalue())
@@ -267,10 +267,10 @@ class VodRequestHandler(object):
 				segmentLength = line[8:-1]
 				segmentFollows = True
 			line = m3u8.readline()
-		
+
 		self.streamServerSeek._vodSegments = segments
 		self._resource.segmentLength = segmentLength
-		
+
 		if self.streamServerSeek._lastSegmentRequest + 30 > time.time():
 			if self.streamServerSeek._m3u8Timer is None:
 				print "[StreamServerSeek] ReRequestM3u8"
@@ -291,10 +291,10 @@ class VodRequestHandler(object):
 
 #	def reConnectClientFactoryError(self, ignored):
 #		print "[StreamServerSeek] reConnectClientFactoryError %s" % ignored
-	
+
 	def __del__(self):
 		print "[StreamServerSeek] handler %s died" % hex(id(self))
-	
+
 	def segmentStatusCallback(self, status, path):
 		print "[StreamServerSeek] segmentStatusCallback %s %s" % (status, path)
 		self._status = status
@@ -338,7 +338,7 @@ class VodRequestHandler(object):
 			self._segmentBuffer = create_string_buffer(buffer, len(buffer))
 		else:
 			self._segmentBuffer = create_string_buffer(self._segmentBuffer.raw + buffer, len(self._segmentBuffer.raw) + len(buffer))
-	
+
 	def segmentEndCallback(self, request):
 		if request.finished or request._disconnected:
 			return
@@ -370,7 +370,7 @@ class VodRequestHandler(object):
 			"GET", "/stream.m3u8", "HTTP/1.1",
 			self._resource._requestHeaders, None, self.m3u8EndCallback)
 		reactor.connectTCP(self._resource._requestHostname, 8080, clientFactory)
-	
+
 	def connectClientFactory(self,
 		command, rest, version, headers, data, father, responseEndCallback, statusCallback, setClientCallback,
 		hostname, port):
@@ -386,7 +386,7 @@ class VodRequestHandler(object):
 		self.hostname = hostname
 		self.port = port
 		self.reConnectClientFactory()
-	
+
 	def reConnectClientFactory(self):
 		print "[StreamServerSeek] reConnectClientFactory"
 		clientFactory = VodResource.proxyClientFactoryClass(
@@ -406,7 +406,7 @@ class VodResource(resource.Resource):
 	isLeaf = True
 	session = None
 	_status = None
-	
+
 	proxyClientFactoryClass = MyProxyClientFactory
 
 	def __init__(self, session):
@@ -417,13 +417,13 @@ class VodResource(resource.Resource):
 	def render(self, request):
 		request.requestHeaders.setRawHeaders(b"host", [request.getRequestHostname().encode('ascii') + b":8080"])
 		request.content.seek(0, 0)
-		
+
 		path = "/" + "/".join(request.postpath)
 
 		qs = urlparse.urlparse(request.uri)[4]
 		if qs:
 			path = path + '?' + qs
-		
+
 		responseEndCallback = False
 		statusCallback = False
 		setClientCallback = False
@@ -452,18 +452,18 @@ class VodResource(resource.Resource):
 					if seek:
 						seek.seekTo(segment * 2 * 90000)
 					self._nextExpectedSegment = segment + 1
-					
+
 					index = -2
 					if len(self.streamServerSeek._vodSegments) == 1:
 						index = -1
 					self.streamServerSeek._lastSuccessfullSegment = self.streamServerSeek._vodSegments[index] - 1
-				
+
 				handler._realSegment = self.streamServerSeek._lastSuccessfullSegment + 1
 				if segment != handler._realSegment:
 					request.write = handler.segmentWrite
 					responseEndCallback = handler.segmentEndCallback
 					handler._requestedSegment = segment
-				
+
 				oldpath = path
 				path = "/segment%d.ts" % (self.streamServerSeek._lastSuccessfullSegment + 1)
 				print "[StreamServerSeek] Vod-Proxy %s -> %s" % (oldpath, path)

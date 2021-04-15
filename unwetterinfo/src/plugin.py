@@ -174,7 +174,7 @@ class UnwetterMain(Screen):
 		self.picload_thumb_land = ePicLoad()
 		self.picload_thumbs_land_conn = self.picload_thumb_land.PictureData.connect(self.gotThumbLand)
 		self.picload_thumb_land.setPara((90, 40, sc[0], sc[1], 0, 0, '#ff000000'))
-		
+
 		self.picload_thumb = ePicLoad()
 		self.picload_thumbs_conn = self.picload_thumb.PictureData.connect(self.gotThumb)
 		self.picload_thumb.setPara((90, 40, sc[0], sc[1], 0, 0, '#ff000000'))

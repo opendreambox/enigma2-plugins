@@ -1,7 +1,7 @@
 from enigma import ePythonMessagePump
 import threading
 from twisted.internet import defer
- 
+
 
 class SimpleThread(threading.Thread):
 	instances = []

@@ -9,7 +9,7 @@ from Tools.Log import Log
 from Plugins.Plugin import PluginDescriptor
 
 import string
-from random import Random 
+from random import Random
 
 
 class ChangePasswordScreen(ChoiceBox):
@@ -61,7 +61,7 @@ class ChangePasswordScreen(ChoiceBox):
 	def _getRandom(self):
 		passwdChars = string.letters + string.digits
 		passwdLength = 10
-		return ''.join(Random().sample(passwdChars, passwdLength)) 
+		return ''.join(Random().sample(passwdChars, passwdLength))
 
 	def _lock(self):
 		Log.w("Removing password for %s" % (self._user))
@@ -96,7 +96,7 @@ class ChangePasswordScreen(ChoiceBox):
 
 
 def startChange(menuid):
-	if menuid != "system": 
+	if menuid != "system":
 		return []
 	return [(_("Password"), main, "change_root_passwd", 50)]
 

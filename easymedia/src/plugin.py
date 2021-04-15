@@ -3,7 +3,7 @@
 #    EasyMedia for Dreambox-Enigma2
 #    Coded by Vali (c)2010-2011 / Updates by dre (c) 2019
 #
-#  This plugin is licensed under the Creative Commons 
+#  This plugin is licensed under the Creative Commons
 #  Attribution-NonCommercial-ShareAlike 3.0 Unported License.
 #  To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/
 #  or send a letter to Creative Commons, 559 Nathan Abbott Way, Stanford, California 94305, USA.
@@ -12,7 +12,7 @@
 #  is licensed by Dream Property GmbH.
 #
 #  This plugin is NOT free software. It is open source, you are allowed to
-#  modify it (if you keep the license), but it may not be commercially 
+#  modify it (if you keep the license), but it may not be commercially
 #  distributed other than under the conditions noted above.
 #
 #######################################################################
@@ -79,7 +79,7 @@ def EasyMediaAutostart(reason, **kwargs):
 
 def InfoBarPlugins__init__(self):
 	global EMStartOnlyOneTime
-	if not EMStartOnlyOneTime: 
+	if not EMStartOnlyOneTime:
 		EMStartOnlyOneTime = True
 		global InfoBar_instance
 		InfoBar_instance = self
@@ -123,7 +123,7 @@ class MPanelList(MenuList):
 		sz_w = getDesktop(0).size().width()
 		if sz_w >= 1920:
 			isFHD = True
-			
+
 		sizes = componentSizes[MPanelList.SKIN_COMPONENT_KEY]
 		self.componentItemHeight = sizes.get(MPanelList.SKIN_COMPONENT_ITEM_HEIGHT, 150 if isFHD else 100)
 		self.componentItemWidth = sizes.get(MPanelList.SKIN_COMPONENT_ITEM_WIDTH, 400 if isFHD else 300)
@@ -146,7 +146,7 @@ class MPanelList(MenuList):
 		self.l.setItemWidth(self.componentItemWidth)
 		self.l.setBuildFunc(self.buildEntry)
 		self.selection = selection
-		
+
 	def postWidgetCreate(self, instance):
 		MenuList.postWidgetCreate(self, instance)
 		self.moveToIndex(self.selection)
@@ -167,7 +167,7 @@ class MPanelList(MenuList):
 			if png is not None:
 				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.imagexoffset, self.imageyoffset, self.imagewidth, self.imageheight, png))
 		return res
-		
+
 
 def BookmarksCallback(choice):
 	choice = choice and choice[1]
@@ -242,7 +242,7 @@ class AddPlug(Screen):
 						MultiContentEntryText(pos = (120, 5), size = (320, 25), font = 0, text = 1), # index 1 is the plugin.name
 						MultiContentEntryText(pos = (120, 26), size = (320, 17), font = 1, text = 2), # index 2 is the plugin.description
 						MultiContentEntryPixmapAlphaTest(pos = (10, 5), size = (100, 40), png = 3), # index 3 is the icon
-						
+
 					]),
 				},
 				"fonts": [gFont("Regular", 20), gFont("Regular", 14)],
@@ -321,14 +321,14 @@ class EasyMediaSummary(Screen):
 			<screen position="0,0" size="400,240" id="3">
 				<eLabel text="EasyMedia:" position="0,0" size="400,50" font="Regular;40"/>
 				<widget name="text1" position="0,50" size="400,190" font="Regular;45"/>
-			</screen>"""	
+			</screen>"""
 	else:
 		skin = """
 			<screen position="0,0" size="132,64" id="1">
 				<eLabel text="EasyMedia:" position="0,0" size="132,24" font="Regular;14"/>
 				<widget name="text1" position="0,24" size="132,40" font="Regular;16"/>
-			</screen>"""		
-	
+			</screen>"""
+
 	def __init__(self, session, parent):
 		Screen.__init__(self, session)
 		self["text1"] = Label()
@@ -377,16 +377,16 @@ class EasyMedia(Screen):
 		}, -1)
 
 		self.list = []
-		self.__keys = []		
+		self.__keys = []
 		self["list"] = MPanelList(list=self.list, selection=0)
 		self["list"].onSelectionChanged.append(self.updateOLED)
-		
+
 		self["key_pvr"] = StaticText(" ")
 		self["key_yellow"] = StaticText(" ")
 		self["key_green"] = StaticText(" ")
 		self["key_red"] = StaticText(" ")
 		self["key_blue"] = StaticText(" ")
-	
+
 		self.onLayoutFinish.append(self.buildEasyMediaList)
 
 	def buildEasyMediaList(self):
@@ -444,7 +444,7 @@ class EasyMedia(Screen):
 			try:
 				inputfile = open(("/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/" + plugin + ".plug"), 'rb')
 				binPlug = pickle.load(inputfile)
-				inputfile.close()	
+				inputfile.close()
 				self.__keys.append(binPlug.name)
 				self.menuItemList.append((binPlug.name, ("++++" + binPlug.name)))
 			except:
@@ -464,7 +464,7 @@ class EasyMedia(Screen):
 			elif pos == 4:
 				self["key_blue"].setText(self.menuItemList[4][0])
 			pos += 1
-					
+
 		self["list"].setList(self.list)
 
 	def cancel(self):
@@ -596,7 +596,7 @@ def MPcallbackFunc(answer):
 		try:
 			inputfile = open(("/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/" + pluginToRun + ".plug"), 'rb')
 			runPlugin = pickle.load(inputfile)
-			inputfile.close()	
+			inputfile.close()
 			runPlugin(session=EMsession)
 		except:
 			EMsession.open(MessageBox, text=(pluginToRun + " not found!"), type=MessageBox.TYPE_WARNING)

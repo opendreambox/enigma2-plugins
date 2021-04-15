@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #=========================================================================================
 #
-# All Files of this Software are licensed under the Creative Commons 
-# Attribution-NonCommercial-ShareAlike 3.0 Unported 
+# All Files of this Software are licensed under the Creative Commons
+# Attribution-NonCommercial-ShareAlike 3.0 Unported
 # License if not stated otherwise in a Files Head. To view a copy of this license, visit
 # http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to Creative
 # Commons, 559 Nathan Abbott Way, Stanford, California 94305, USA.
@@ -11,7 +11,7 @@
 # is licensed by Dream Property GmbH.
 #
 # This plugin is NOT free software. It is open source, you are allowed to
-# modify it (if you keep the license), but it may not be commercially 
+# modify it (if you keep the license), but it may not be commercially
 # distributed other than under the conditions noted above.
 #
 # Copyright (C) 2015 by nixkoenner@newnigma2.to
@@ -35,7 +35,7 @@ from shutil import move
 from Components.config import getConfigListEntry, config, \
     ConfigSubsection, ConfigText, ConfigIP, ConfigYesNo, \
     ConfigPassword, ConfigNumber, KEY_LEFT, KEY_RIGHT, KEY_0, ConfigClock
-    
+
 
 from time import time, strftime, mktime, localtime
 now = localtime()
@@ -53,23 +53,23 @@ config.plugins.epgCopy.copytime = ConfigClock(default=int(autoCopy))
 
 def myPrint(txt, prefix=None):
     print("\033[91m[EPGCopy] %s\033[m " % txt)
-    
 
-def myFtp(): 
-    directory_local = '/tmp/' 
-    directory = '/etc/enigma2/' 
+
+def myFtp():
+    directory_local = '/tmp/'
+    directory = '/etc/enigma2/'
     fileQuelle = 'epg.db'
     fileZiel = 'epgSync.db'
-    
+
     if path.isfile(directory_local + fileZiel):
         try:
             remove(directory_local + fileZiel)
             myPrint("deleted pre-existing " + fileZiel)
         except OSError:
             myPrint("could not remove pre-existing " + fileZiel)
-        
+
     remoteip = "%d.%d.%d.%d" % tuple(config.plugins.epgCopy.ip.value)
-    f = ftplib.FTP(remoteip) 
+    f = ftplib.FTP(remoteip)
     f.login(config.plugins.epgCopy.username.value, config.plugins.epgCopy.password.value)
     f.cwd(directory)
     #f.retrlines('LIST')
@@ -93,8 +93,8 @@ class copyEveryDay(Screen):
         self.timer = eTimer()
         self.timer_conn = self.timer.timeout.connect(self.__doCopy)
         self.configChange()
-    
-    def configChange(self, configElement=None):   
+
+    def configChange(self, configElement=None):
         if self.timer.isActive(): # stop timer if running
             self.timer.stop()
         now = localtime()
@@ -109,7 +109,7 @@ class copyEveryDay(Screen):
         next = int(abs(time() - begin))
         myPrint("[copyEveryDay] next reset: %s" % strftime("%c", localtime(time() + next)))
         self.timer.startLongTimer(next)
-        
+
     def __doCopy(self):
         if config.plugins.epgCopy.copytime.value:
             myPrint("[__doCopy] do reset: %s" % strftime("%c", localtime(time())))
@@ -139,7 +139,7 @@ class epgCopyScreen(Screen, ConfigListScreen):
             <ePixmap name="green" position="150,475" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
             <widget name="key_green" position="150,475" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
             <ePixmap name="yellow" position="295,475" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
-            <widget name="key_yellow" position="295,475" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />    
+            <widget name="key_yellow" position="295,475" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
             </screen>""" % _("EPG Copy view 1280")
     else:
         skin = """
@@ -150,9 +150,9 @@ class epgCopyScreen(Screen, ConfigListScreen):
             <ePixmap name="green" position="150,365" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
             <widget name="key_green" position="150,365" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
             <ePixmap name="yellow" position="295,365" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
-            <widget name="key_yellow" position="295,365" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />    
+            <widget name="key_yellow" position="295,365" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
             </screen>""" % _("EPG Copy view")
-            
+
     def __init__(self, session):
         Screen.__init__(self, session)
         self["actions"] = ActionMap(["SetupActions", "ColorActions"],
@@ -161,26 +161,26 @@ class epgCopyScreen(Screen, ConfigListScreen):
             "yellow": self.startManually,
             "cancel": self.close,
         }, -1)
-       
+
         self["key_green"] = Button(_("save"))
         self["key_yellow"] = Button(_("manually"))
         self["key_red"] = Button(_("cancel"))
-        
+
         ConfigListScreen.__init__(self, [
             getConfigListEntry(_("EPG Copy - Source Network IP"), config.plugins.epgCopy.ip),
             getConfigListEntry(_("EPG Copy - Username"), config.plugins.epgCopy.username),
             getConfigListEntry(_("EPG Copy - Password"), config.plugins.epgCopy.password),
             getConfigListEntry(_("EPG Copy - Time to Copy"), config.plugins.epgCopy.copytime),
         ], session)
-      
+
     def saveSettings(self):
           config.plugins.epgCopy.save()
           copyEveryDay.instance.configChange()
           self.close()
-    
+
     def startManually(self):
         self.myStart()
-        
+
     def myStart(self):
         ftpOK = False
         myEpg = None
@@ -190,7 +190,7 @@ class epgCopyScreen(Screen, ConfigListScreen):
             ftpOK = True
         except:
             ftpOK = False
-        
+
         if ftpOK:
             myEpg.load()
             self.session.openWithCallback(self.epgLoadFinishedConfirm, MessageBox, _("Successfully transferred and loaded EPG"), MessageBox.TYPE_INFO, timeout=4)
@@ -198,10 +198,10 @@ class epgCopyScreen(Screen, ConfigListScreen):
         else:
             self.session.open(MessageBox, _("An error occurred while transferring the epg. Please check your ftp credentials."), MessageBox.TYPE_INFO, timeout=10)
             myPrint("an error occurred while transferring the epg")
-        
+
     def epgLoadFinishedConfirm(self, result):
         self.close()
-        
+
 
 def autoCpy(reason, **kwargs):
     if kwargs.has_key("session"):
@@ -222,4 +222,3 @@ def Plugins(path, **kwargs):
              PluginDescriptor(name="epgCopy", where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main),
              PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=autoCpy)
              ]
-      

@@ -138,14 +138,14 @@ class InternetRadioOledDisplay(Screen, InternetRadioVisualization):
 			<widget name="top_14" position="114,5" zPosition="6" size="7,2" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/topvalue-lcd-fs8.png" />
 			<widget name="top_15" position="122,5" zPosition="6" size="7,2" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/topvalue-lcd-fs8.png" />
 		</screen>""")
-		
+
 	def __init__(self, session, parent):
 		Screen.__init__(self, session)
 		InternetRadioVisualization.__init__(self)
 		self["text1"] = Label(_("Internet Radio"))
 		self["text2"] = Label("")
 		self.onLayoutFinish.append(self.startRun)
-		
+
 		# helper for skinning
 #		skincontent = ""
 #		skincontent2 = ""
@@ -159,7 +159,7 @@ class InternetRadioOledDisplay(Screen, InternetRadioVisualization):
 #			x += 1
 #			if x == count:
 #				break
-		
+
 	def startRun(self):
 		self.setProperties()
 		self.hideControls()
@@ -174,9 +174,7 @@ class InternetRadioOledDisplay(Screen, InternetRadioVisualization):
 			self["text1"].show()
 			self["text2"].show()
 			self.hideControls()
-			
+
 		else:
 			self["text1"].hide()
 			self["text2"].hide()
-
-

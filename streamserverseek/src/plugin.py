@@ -41,5 +41,5 @@ def autostart(reason, **kwargs):
 		addExternalChild(("streamserverseek", root))
 
 
-def Plugins(**kwargs): 
+def Plugins(**kwargs):
 	return [PluginDescriptor(where=[PluginDescriptor.WHERE_SESSIONSTART], fnc=autostart)]

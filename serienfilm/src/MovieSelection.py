@@ -175,7 +175,7 @@ class MovieContextMenu(Screen):
 	def deleteConfirmed(self, confirmed):
 		if not confirmed:
 			return self.close()
-		
+
 		serviceHandler = eServiceCenter.getInstance()
 		offline = serviceHandler.offlineOperations(self.service)
 		result = False
@@ -183,7 +183,7 @@ class MovieContextMenu(Screen):
 			# really delete!
 			if not offline.deleteFromDisk(0):
 				result = True
-		
+
 		if result == False:
 			self.session.openWithCallback(self.close, MessageBox, _("Delete failed!"), MessageBox.TYPE_ERROR)
 		else:
@@ -263,7 +263,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo):
 		self["freeDiskSpace"] = self.diskinfo = DiskInfo(config.movielist.last_videodir.value, DiskInfo.FREE, update=False)
 
 		if config.usage.setup_level.index >= 2: # expert+
-			self["InfobarActions"] = HelpableActionMap(self, "InfobarActions", 
+			self["InfobarActions"] = HelpableActionMap(self, "InfobarActions",
 				{
 					"showMovies": (self.doPathSelect, _("select the movie path")),
 				})
@@ -405,7 +405,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo):
 				self.tag_second = "<" + _("Tag 2") + ">"
 		self["key_green"].text = self.tag_first
 		self["key_yellow"].text = self.tag_second
-		
+
 		# the rest is presented in a list, available on the
 		# fourth ("blue") button
 		if self.tags:
@@ -514,4 +514,3 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo):
 
 	def showTagWarning(self):
 		self.session.open(MessageBox, _("No tags are set on these movies."), MessageBox.TYPE_ERROR)
-

@@ -19,7 +19,7 @@ class PkgConfList(Source):
 		self.wap = wap
 		self.session = session
 		self.res = (False, "Missing or Wrong Argument")
-			
+
 	def handleCommand(self, cmd):
 		if cmd is not None:
 			if self.func is self.SWITCH:
@@ -28,7 +28,7 @@ class PkgConfList(Source):
 				self.res = self.getMem()
 			elif self.func is self.LIST:
 				pass
-			
+
 	def switch(self, cmd):
 		if cmd:
 			filename = cmd.get('file')
@@ -51,7 +51,7 @@ class PkgConfList(Source):
 			return (False, "statvfs() failed")
 		freespace = stat.f_bfree / 1000 * stat.f_bsize / 1000
 		return (True, '%d' % freespace)
-			
+
 	def getList(self):
 		sources = []
 		for filename in sorted(glob('%s/*.list*' % self.sources_list_d)):
@@ -69,7 +69,7 @@ class PkgConfList(Source):
 		return (False, "illegal call")
 
 	result = property(getResult)
-	
+
 	list = property(getList)
 	lut = {"Name": 0			, "Text": 1
 		}

@@ -39,7 +39,7 @@ class InternetRadioSetup(Screen, ConfigListScreen):
 			<widget render="Label" source="key_red" position="10,0" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 			<widget render="Label" source="key_green" position="150,0" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 			<widget name="config" position="10,50" size="580,400" scrollbarMode="showOnDemand" />
-		</screen>""" 
+		</screen>"""
 
 	def __init__(self, session):
 		Screen.__init__(self, session)
@@ -59,7 +59,7 @@ class InternetRadioSetup(Screen, ConfigListScreen):
 			]
 		self.dirname = getConfigListEntry(_("Recording location:"), config.plugins.internetradio.dirname)
 		self.list.append(self.dirname)
-		
+
 		ConfigListScreen.__init__(self, self.list, session)
 		self["setupActions"] = ActionMap(["SetupActions", "ColorActions"],
 		{
@@ -87,8 +87,8 @@ class InternetRadioSetup(Screen, ConfigListScreen):
 		for x in self["config"].list:
 			x[1].cancel()
 		self.close(False)
-		
-		
+
+
 class InternetRadioStreamripperRecordingPath(Screen):
 	skin = """<screen name="InternetRadioStreamripperRecordingPath" position="center,center" size="560,320" title="Select record path for streamripper">
 			<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" zPosition="0" size="140,40" transparent="1" alphatest="on" />
@@ -100,7 +100,7 @@ class InternetRadioStreamripperRecordingPath(Screen):
 			<widget render="Label" source="key_red" position="0,0" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 			<widget render="Label" source="key_green" position="140,0" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 		</screen>"""
-		
+
 	def __init__(self, session, initDir):
 		Screen.__init__(self, session)
 		inhibitDirs = ["/bin", "/boot", "/dev", "/etc", "/lib", "/proc", "/sbin", "/sys", "/usr", "/var"]
@@ -117,7 +117,7 @@ class InternetRadioStreamripperRecordingPath(Screen):
 			"ok": self.ok,
 			"green": self.green,
 			"red": self.cancel
-			
+
 		}, -1)
 		self["key_red"] = StaticText(_("Cancel"))
 		self["key_green"] = StaticText(_("OK"))

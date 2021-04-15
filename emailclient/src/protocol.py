@@ -19,7 +19,7 @@ class SimpleIMAP4Client(imap4.IMAP4Client):
 
 
 class SimpleIMAP4ClientFactory(protocol.ReconnectingClientFactory):
-	
+
 	protocol = SimpleIMAP4Client
 
 	def __init__(self, e2session, username, factory):

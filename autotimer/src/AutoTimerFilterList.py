@@ -37,7 +37,7 @@ class AutoTimerFilterList(MenuList):
 		self.l.setFont(0, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
 
 	def applySkin(self, desktop, parent):
-		attribs = [] 
+		attribs = []
 		if self.skinAttributes is not None:
 			for (attrib, value) in self.skinAttributes:
 				if attrib == "font":
@@ -52,7 +52,7 @@ class AutoTimerFilterList(MenuList):
 		return MenuList.applySkin(self, desktop, parent)
 
 	def buildListboxEntry(self, filter_txt):
-		
+
 		size = self.l.getItemSize()
 		color = None
 
@@ -117,7 +117,7 @@ class AutoTimerFilterListOverview(Screen):
 
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		
+
 		try:
 			self.skinName = "AutoTimerEditor"
 
@@ -129,7 +129,7 @@ class AutoTimerFilterListOverview(Screen):
 			self["key_blue"] = StaticText(_("Add"))
 			self["key_red"] = StaticText(_("Close"))
 			self["help"] = StaticText()
-			
+
 			filter_txt = ""
 			path_filter_txt = "/etc/enigma2/autotimer_filter.txt"
 			if os_path.exists(path_filter_txt):
@@ -137,31 +137,31 @@ class AutoTimerFilterListOverview(Screen):
 				filter_txt = filter_txt.split("\n")
 
 			self.FilterList = []
-			
+
 			for count, filter in enumerate(filter_txt):
 				filter1 = filter.split(' - "')
 				if len(filter1) > 1:
 					time1 = time.mktime(datetime.datetime.strptime(filter1[0], "%d.%m.%Y, %H:%M").timetuple())
 					Filter = ([count, filter1[1][:-1], time1],)
 					self.FilterList.append(Filter)
-			
+
 			#sort alphabetically
 			self.FilterList.sort(key=lambda x: x[0][1].lower())
 			self.sorted = 1
 
 			self["config"] = AutoTimerFilterList(self.FilterList)
 			self.updateFilterDate()
-			
+
 			self["config"].onSelectionChanged.append(self.updateFilterDate)
 
 			# Define Actions
 			self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "InfobarActions", "MenuActions"],
 				{
-					"ok": self.ok, 
+					"ok": self.ok,
 					"cancel": self.cancel,
 					"red": self.cancel,
-					"green": self.save, 
-					"yellow": self.remove, 
+					"green": self.save,
+					"yellow": self.remove,
 					"blue": self.add,
 					"showTv": self.sortList,
 					"menu": self.add_copy,
@@ -170,7 +170,7 @@ class AutoTimerFilterListOverview(Screen):
 			)
 
 			self.onLayoutFinish.append(self.setCustomTitle)
-		
+
 		except Exception:
 			import traceback
 			traceback.print_exc()
@@ -187,7 +187,7 @@ class AutoTimerFilterListOverview(Screen):
 			pass
 
 	def sortList(self):
-		
+
 		if self.sorted == 1:
 			#sort by org order in filterlist
 			self.sorted = 0
@@ -200,9 +200,9 @@ class AutoTimerFilterListOverview(Screen):
 			#sort alphabetically
 			self.FilterList.sort(key=lambda x: x[0][1].lower())
 			self.sorted = 1
-		
+
 		self["config"].setList(self.FilterList)
-		
+
 	def selectionChanged(self):
 		#sel = self["entries"].getCurrent()
 		#text = sel and sel.name or ""
@@ -214,7 +214,7 @@ class AutoTimerFilterListOverview(Screen):
 		pass
 
 	def add(self):
-		
+
 		self.session.openWithCallback(self.add_edit_Callback, AutoTimerFilterListEditor, None, 'add')
 
 	def add_copy(self):
@@ -230,13 +230,13 @@ class AutoTimerFilterListOverview(Screen):
 			self.session.openWithCallback(self.add_edit_Callback, AutoTimerFilterListEditor, current, 'edit')
 
 	def add_edit_Callback(self, ret, add_edit):
-		
+
 		if ret:
-			
+
 			date1 = ret[0][1].value
 			time1 = ret[1][1].value
 			filtertext = ret[2][1].value.strip().replace('"', "")
-			
+
 			for filter in self.FilterList:
 				if filter[0][1] == filtertext:
 					self.session.open(MessageBox, _("'%s' already exists in filter list!\nThe change was cancelled.") % filtertext, MessageBox.TYPE_INFO)
@@ -245,19 +245,19 @@ class AutoTimerFilterListOverview(Screen):
 			date1 = datetime.datetime.fromtimestamp(date1)
 			datetime1 = datetime.datetime(date1.year, date1.month, date1.day, time1[0], time1[1])
 			filtertime = time.mktime(datetime1.timetuple())
-			
+
 			Filter = ([len(self.FilterList), filtertext, filtertime],)
 
 			if add_edit == "add":
 				self.FilterList.append(Filter)
-				
+
 			elif add_edit == "edit":
 				cur_index = self["config"].getCurrentIndex()
 				self.FilterList[cur_index] = Filter
-			
+
 			self.FilterList.sort(key=lambda x: x[0][self.sorted])
 			self["config"].setList(self.FilterList)
-			
+
 			self.changed = True
 
 	def remove(self):
@@ -271,9 +271,9 @@ class AutoTimerFilterListOverview(Screen):
 		if ret and cur is not None:
 			print("=== index: ", int(cur))
 			del self.FilterList[cur]
-			
+
 			self["config"].setList(self.FilterList)
-			
+
 			self.changed = True
 
 	def cancel(self):
@@ -292,7 +292,7 @@ class AutoTimerFilterListOverview(Screen):
 			self.save()
 
 	def save(self):
-			
+
 			if self.changed:
 				self.FilterList.sort(key=lambda x: x[0][0])
 				path_filter_txt = "/etc/enigma2/autotimer_filter.txt"
@@ -303,7 +303,7 @@ class AutoTimerFilterListOverview(Screen):
 					filter_txt += timertime + ' - "' + filter[0][1] + '"\n'
 				file_search_log.write(filter_txt)
 				file_search_log.close()
-			
+
 			self.close()
 
 
@@ -348,7 +348,7 @@ class AutoTimerFilterListEditor(Screen, ConfigListScreen):
 			self.skinName = "AutoTimerFilterEditor"
 			self.onChangedEntry = []
 			self.add_edit = add_edit
-			
+
 			if filterEntry is not None:
 				self.EntryDate = NoSave(ConfigDateTime(filterEntry[2], _("%d.%B %Y"), increment=86400))
 				self.EntryTime = NoSave(ConfigClock(default=filterEntry[2]))
@@ -400,19 +400,19 @@ class AutoTimerFilterListEditor(Screen, ConfigListScreen):
 				pass
 
 	def cancel(self):
-		
+
 		if self["config"].isChanged():
 			self.session.openWithCallback(self.cancelConfirm, MessageBox, _("Really close without saving settings?"), )
 		else:
 			self.close(None, self.add_edit)
 
 	def cancelConfirm(self, ret):
-		
+
 		if ret:
 			self.close(None, self.add_edit)
 
 	def save(self):
-		
+
 		if not self.list[2][1].value.strip():
 			self.session.open(MessageBox, _("The title attribute is mandatory."), type=MessageBox.TYPE_ERROR, timeout=5)
 		else:
@@ -420,5 +420,3 @@ class AutoTimerFilterListEditor(Screen, ConfigListScreen):
 				self.close(self.list, self.add_edit)
 			else:
 				self.close(None, self.add_edit)
-
-

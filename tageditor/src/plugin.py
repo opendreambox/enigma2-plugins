@@ -354,4 +354,3 @@ class MovieTagEditor(TagEditor):
 			parentscreen.close()
 		except AttributeError:
 			pass
-

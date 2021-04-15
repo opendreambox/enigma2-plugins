@@ -173,7 +173,7 @@ class TrailerList(GUIComponent, object):
 		configEntryWidth = sizes.get(componentSizes.ITEM_WIDTH, 800)
 		titleHeight = sizes.get(TrailerList.SKIN_COMPONENT_TITLE_HEIGHT, 25)
 		descriptionHeight = sizes.get(TrailerList.SKIN_COMPONENT_DESCRIPTION_HEIGHT, 40)
-		lineSpacing = sizes.get(TrailerList.SKIN_COMPONENT_LINE_SPACING, 3)		
+		lineSpacing = sizes.get(TrailerList.SKIN_COMPONENT_LINE_SPACING, 3)
 		res = [entry]
 		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 2, configEntryWidth, titleHeight, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, entry.title))
 		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, titleHeight + lineSpacing, configEntryWidth, descriptionHeight, 1, RT_WRAP, entry.description))
@@ -275,4 +275,3 @@ class YTTrailerSetup(ConfigListScreen, Screen):
 		for x in self["config"].list:
 			x[1].cancel()
 		self.close()
-

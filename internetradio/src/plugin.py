@@ -73,4 +73,3 @@ def Plugins(**kwargs):
 		list.append(PluginDescriptor(name="Internet-Radio", description=_("listen to internet-radio"), where=[PluginDescriptor.WHERE_EXTENSIONSMENU], fnc=main))
 	list.append(PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=sessionstart, needsRestart=False))
 	return list
-

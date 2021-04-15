@@ -64,7 +64,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 	FAVORITELIST = 2
 	SEARCHLIST = 3
 	STREAMRIPPER_BIN = '/usr/bin/streamripper'
-	
+
 	sz_w = getDesktop(0).size().width()
 	if sz_w == 1280:
 		# helper for skinning ;)
@@ -95,9 +95,9 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				<widget render="Label" source="key_yellow" position="350,30" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 				<widget render="Label" source="key_blue" position="500,30" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 				<widget name="headertext" position="50,77" zPosition="1" size="1180,23" font="Regular;20" transparent="1"  foregroundColor="#fcc000" backgroundColor="#00000000"/>
-				
-				
-				
+
+
+
 				<widget source="list" render="Listbox" position="50,110" zPosition="2" size="1180,340" scrollbarMode="showOnDemand" transparent="0" backgroundColor="#00000000">
 					<convert type="TemplatedMultiContent">
 						{"templates": {
@@ -112,9 +112,9 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 						},
 							"fonts": [gFont("Regular",22),gFont("Regular",18)],
 						}
-					</convert>				
+					</convert>
 				</widget>
-				
+
 				<widget name="statustext" position="50,470" zPosition="2" size="1240,18" font="Regular;16" transparent="0"  backgroundColor="#00000000"/>
 				<widget name="cover" zPosition="2" position="50,490" size="51,55" />
 				<eLabel name="stationCap" position="50,550" size="85,20" text="Station:" font="Regular;18" transparent="1"  zPosition="1" backgroundColor="#00000000"/>
@@ -169,9 +169,9 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				<widget render="Label" source="key_yellow" position="350,30" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;24" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 				<widget render="Label" source="key_blue" position="500,30" size="140,40" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular;24" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
 				<widget name="headertext" position="50,77" zPosition="1" size="1180,23" font="Regular;20" transparent="1"  foregroundColor="#fcc000" backgroundColor="#00000000"/>
-				
-				
-				
+
+
+
 				<widget source="list" render="Listbox" position="50,110" zPosition="2" size="1820,510" scrollbarMode="showOnDemand" transparent="0" backgroundColor="#00000000">
 					<convert type="TemplatedMultiContent">
 						{"templates": {
@@ -188,7 +188,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 						}
 					</convert>
 				</widget>
-				
+
 				<widget name="statustext" position="50,705" zPosition="2" size="1240,30" font="Regular;24" transparent="0"  backgroundColor="#00000000"/>
 				<widget name="cover" zPosition="2" position="50,735" size="51,55" />
 				<eLabel name="stationCap" position="50,825" size="100,32" text="Station:" font="Regular;28" transparent="1"  zPosition="1" backgroundColor="#00000000"/>
@@ -229,7 +229,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				<widget name="top_14" position="1595,698" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
 				<widget name="top_15" position="1620,698" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
 			</screen>"""
-	
+
 	def __init__(self, session, url=None, radioStation=None):
 		self.session = session
 		Screen.__init__(self, session)
@@ -257,7 +257,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			"yellow": self.yellow_pressed,
 			"blue": self.blue_pressed,
 			"info": self.info_pressed,
-			
+
 		}, -1)
 
 		self.stationList = []
@@ -272,7 +272,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		self.stationListFiltered = []
 
 		self.favoriteConfig = InternetRadioFavoriteConfig()
-		
+
 		self["title"] = Label()
 		self["station"] = Label()
 		self["headertext"] = Label()
@@ -281,7 +281,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		self.stationHeaderText = ""
 		self.searchInternetRadioString = ""
 
-		self.currentPlayingStation = None 
+		self.currentPlayingStation = None
 
 		self.onClose.append(self.__onClose)
 		self.onLayoutFinish.append(self.startRun)
@@ -293,7 +293,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 
 		self.try_url = ""
 		self.url_tried = 0
-		
+
 		self.stationListURL = "http://www.radio-browser.info/xml.php"
 		self.filterSwitch = {_("Countries"): _("Genres"), _("Genres"): _("Countries")}
 
@@ -305,9 +305,9 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 
 		self.fullScreenAutoActivationTimer = eTimer()
 		self.fullScreenAutoActivationTimer_conn = self.fullScreenAutoActivationTimer.timeout.connect(self.fullScreenAutoActivationTimerCallback)
-		
+
 		self.visible = True
-		
+
 		self.fullScreen = session.instantiateDialog(InternetRadioFullScreen, zPosition=1000)
 		self.autoActivationKeyPressedActionSlot = eActionMap.getInstance().bindAction('', -0x7FFFFFFF, self.autoActivationKeyPressed)
 
@@ -328,14 +328,14 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			self.currentPlayingStation = InternetRadioStation(name=_("Recording stream station"))
 			self.playServiceStream("http://localhost:9191")
 		self.session.nav.SleepTimer.on_state_change.append(self.sleepTimerEntryOnStateChange)
-	
+
 	def sleepTimerEntryOnStateChange(self, timer):
 		if timer.state == TimerEntry.StateEnded:
 			self.closePlayer()
 
 	def onBeginExec(self):
 		if config.plugins.internetradio.visualization.value in ("2", "3"):
-			self.summaries.setLabelVisibility(True)			
+			self.summaries.setLabelVisibility(True)
 
 	def visualizationConfigOnChange(self, configElement=None):
 		if config.plugins.internetradio.visualization.value in ("0", "1"):
@@ -415,7 +415,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				self.fullScreen.setText("")
 				self.fullScreen.setVisibilityCover(False)
 			self.fullScreenKeyPressedActionSlot = eActionMap.getInstance().bindAction('', -0x7FFFFFFF, self.fullScreenKeyPressed)
-			
+
 	def fullScreenKeyPressed(self, key=None, flag=None):
 		if self.fullScreen.isVisible():
 			self.visible = True
@@ -458,7 +458,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				sTitle = "n/a"
 				self.hideCover()
 			self["title"].setText(sTitle)
-			
+
 			self.summaries.setText(sTitle)
 			if self.fullScreen.isVisible() and config.plugins.internetradio.fullscreenlayout.value in ("0", "1"):
 				self.fullScreen.setText(sTitle)
@@ -527,7 +527,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			cmd = [self.STREAMRIPPER_BIN, self.STREAMRIPPER_BIN] + args
 			containerStreamripper.execute(*cmd)
 			self["key_red"].setText(_("Stop record"))
-			
+
 	def deleteRecordingConfirmed(self, val):
 		if val:
 			containerStreamripper.sendCtrlC()
@@ -567,7 +567,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 					self.getStationList(_("All Countries"))
 				else:
 					self.getStationList(_("All Genres"))
-				
+
 	def blue_pressed(self):
 		if self.mode != self.FAVORITELIST:
 			self.getFavoriteList(self.favoriteListIndex)
@@ -592,7 +592,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 	def callbackFilterList(self, xmlstring):
 		self.stationList = self.fillStationList(xmlstring)
 		self.setFilterList()
-		
+
 	def setFilterList(self):
 		self["headertext"].setText(_("InternetRadio filter list (%s)") % config.plugins.internetradio.filter.value)
 		self.filterListIndex = 0
@@ -612,7 +612,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				self.setStatusText(_("%s...") % str(error.getErrorMessage()), 15000)
 			except:
 				pass
-			
+
 	def fillGenreList(self):
 		genreList = []
 		genres = {} # stupid helper... FIXME!
@@ -620,19 +620,19 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			for genre in items.tags.split(","):
 				genre = genre.strip().lower()
 				if not genres.has_key(genre):
-					genres[genre] = 0 # FIXME 
+					genres[genre] = 0 # FIXME
 					genreList.append(((InternetRadioFilter(name=genre)),))
 		genreList = sorted(genreList, key=lambda genrelist: genrelist[0].name)
 		genreList.insert(0, ((InternetRadioFilter(name=_("All Genres"))),))
 		return genreList
-		
+
 	def fillCountryList(self):
 		countryList = []
 		countries = {} # stupid helper... FIXME!
 		for items in self.stationList:
 			country = items.country.lower()
 			if not countries.has_key(country):
-				countries[country] = 0 # FIXME 
+				countries[country] = 0 # FIXME
 				countryList.append(((InternetRadioFilter(name=items.country)),))
 		countryList = sorted(countryList, key=lambda countrylist: countrylist[0].name)
 		countryList.insert(0, ((InternetRadioFilter(name=_("All Countries"))),))
@@ -681,7 +681,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 								self.getStationList(sel.configItem.name.value)
 					if goOn == True:
 						self.playRadioStation(url, currentPlayingStation)
-				
+
 				elif self.mode == self.SEARCHLIST and self.searchInternetRadioString != "":
 					self.searchInternetRadio(self.searchInternetRadioString)
 
@@ -695,10 +695,10 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			sendUrlCommand(url, None, 10).addCallback(self.callbackPlayList).addErrback(self.callbackStationListError)
 		else:
 			self.playServiceStream(url)
-			
+
 	def stopPlaying(self):
 		self.musicPlayer.play("")
-		self.currentPlayingStation = None 
+		self.currentPlayingStation = None
 		self["title"].setText("")
 		self["station"].setText("")
 		self.summaries.setText("")
@@ -730,7 +730,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			stationList = []
 			try:
 				root = xml.etree.cElementTree.fromstring(result.lower())
-			except: 
+			except:
 				root = None
 			if root:
 				for childs in root.findall("entry"):
@@ -762,7 +762,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		self.stationList = self.fillStationList(xmlstring)
 		self.stationListFiltered = self.getFilteredStationList(filter_string)
 		self.setStationList()
-		
+
 	def setStationList(self):
 		self.setStatusText("")
 		self.mode = self.STATIONLIST
@@ -771,7 +771,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		self["list"].setList(self.stationListFiltered)
 		if len(self.stationList):
 			self["list"].moveToIndex(self.stationListIndex)
-		
+
 	def getFilteredStationList(self, filter_string):
 		if self.mode == self.SEARCHLIST:
 			return [(x,) for x in self.stationList if (self.searchInternetRadioString in x.tags.lower() or self.searchInternetRadioString in x.name.lower())]
@@ -792,11 +792,11 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		except:
 			return []
 		for childs in root.findall("station"):
-			stationList.append(InternetRadioStation(name=childs.get("name").encode('utf-8', 'ignore'), 
+			stationList.append(InternetRadioStation(name=childs.get("name").encode('utf-8', 'ignore'),
 								tags=childs.get("tags").encode('utf-8', 'ignore'), country=childs.get("country").encode('utf-8', 'ignore'), url=childs.get("url"),
 								language=childs.get("language").encode('utf-8', 'ignore'), id=childs.get("id"), homepage=childs.get("homepage").encode('utf-8', 'ignore')))
 		return sorted(stationList, key=lambda stations: stations.name)
-		
+
 	def menu_pressed(self):
 		self.fullScreenAutoActivationTimer.stop()
 		options = [(_("Config"), self.config), (_("Search"), self.search), ]
@@ -833,7 +833,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			self["actions"].setEnabled(True)
 			self.show()
 			self.visible = True
-			self.autoActivationKeyPressed()			
+			self.autoActivationKeyPressed()
 
 	def startUpStation(self, add):
 		if add == True:
@@ -853,13 +853,13 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				favoritetype = 2
 			else:
 				favoritetype = 1
-			self.favoriteConfig.addFavorite(name=sel.name, text=sel.name, favoritetype=favoritetype, tags="", country="", homepage="")			
+			self.favoriteConfig.addFavorite(name=sel.name, text=sel.name, favoritetype=favoritetype, tags="", country="", homepage="")
 
 	def addStationToFavorite(self):
 		sel = self.getSelectedItem()
 		if sel is not None:
-			self.favoriteConfig.addFavorite(name=sel.name, text=sel.url, favoritetype=0, tags=sel.genre, country=sel.country, homepage=sel.homepage)			
-		
+			self.favoriteConfig.addFavorite(name=sel.name, text=sel.url, favoritetype=0, tags=sel.genre, country=sel.country, homepage=sel.homepage)
+
 	def addCurrentStreamToFavorite(self):
 		self.favoriteConfig.addFavorite(name=self.currentPlayingStation.name, text=self.currentPlayingStation.url, favoritetype=0, tags=self.currentPlayingStation.tags, country=self.currentPlayingStation.country, homepage=self.currentPlayingStation.homepage)
 
@@ -917,7 +917,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				self.setStatusText(str(error.getErrorMessage()), 15000)
 			except:
 				pass
-	
+
 	def __onClose(self):
 		global dataAvail_conn
 		global appClosed_conn
@@ -933,7 +933,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			config.plugins.internetradio.visualization.removeNotifier(self.visualizationConfigOnChange)
 			config.plugins.internetradio.fullscreenautoactivation.removeNotifier(self.fullscreenautoactivationConfigOnChange)
 			config.plugins.internetradio.fullscreenlayout.removeNotifier(self.fullscreenlayoutConfigOnChange)
-		
+
 		except:
 			config.plugins.internetradio.visualization.notifiers.remove(self.visualizationConfigOnChange)
 			config.plugins.internetradio.fullscreenautoactivation.notifiers.remove(self.fullscreenautoactivationConfigOnChange)
@@ -948,11 +948,11 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			downloadPage(imageurls[0], "/tmp/.cover").addCallback(self.coverDownloadFinished).addErrback(self.coverDownloadFailed)
 		else:
 			print 'Google no images found...'
-			
+
 	def coverDownloadFailed(self, result):
 		print "[InternetRadio] cover download failed: %s " % result
 		self.hideCover()
-		
+
 	def hideCover(self):
 		self["cover"].hide()
 		self["cover"].setPicloaded(False)
@@ -967,7 +967,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		self["cover"].show()
 		if self.fullScreen.isVisible() and config.plugins.internetradio.fullscreenlayout.value in ("0", "1"):
 			self.fullScreen.updateCover()
-		
+
 	def playServiceStream(self, url):
 		self.musicPlayer.play(url)
 		if self.currentPlayingStation:
@@ -985,7 +985,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		except:
 			return None
 		return sel
-		
+
 	def closePlayer(self):
 		self.fullScreenKeyPressed()
 		self.close()
@@ -1010,7 +1010,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			return (True, "%s - %s" % (self["station"].getText(), self["title"].getText()))
 		else:
 			return (False, _("nothing playing..."))
-		
+
 	# used from webinterface
 	def getStreamingInfos(self):
 		return self.musicPlayer.getMetaInfos()
@@ -1024,7 +1024,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			self["list"].setList(favoriteList)
 			if len(favoriteList):
 				self["list"].moveToIndex(index)
-		
+
 
 class InternetRadioFullScreen(Screen, InternetRadioVisualization):
 
@@ -1184,9 +1184,9 @@ class InternetRadioFullScreen(Screen, InternetRadioVisualization):
 			self["cover"].show()
 		else:
 			self["cover"].hide()
-			
+
 	def updateCover(self):
 		self["cover"].updateIcon("/tmp/.cover")
-		
+
 	def coverLoaded(self):
 		self.setVisibilityCover(True)

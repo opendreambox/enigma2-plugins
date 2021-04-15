@@ -26,7 +26,7 @@ class MovieTagger(Screen):
 				<widget name="cTaglist" position="10,100" size="260,250" scrollbarMode="showOnDemand"/>
 				<widget name="definedTags" position="300,65" size="290,30" valign="top" halign="left" zPosition="2" foregroundColor="white" font="Regular;23"/>
 				<widget name="aTaglist" position="290,100" size="290,250" scrollbarMode="showOnDemand" />
-                
+
 				<ePixmap pixmap="skin_default/div-h.png" position="0,358" zPosition="1" size="600,2" />
 				<widget name="usedTag" position="10,365" size="185,50" valign="top" halign="center" zPosition="2" foregroundColor="#ffff00" font="Regular;21"/>
 				<widget name="userTag" position="200,365" size="185,50" valign="top" halign="center" zPosition="2" foregroundColor="#ff0000" font="Regular;21"/>
@@ -41,21 +41,21 @@ class MovieTagger(Screen):
 				<widget name="buttongreen" position="155,420" size="140,40" valign="center" halign="center" zPosition="2" foregroundColor="white" transparent="1" font="Regular;18"/>
 				<widget name="buttonyellow" position="305,420" size="140,40" valign="center" halign="center" zPosition="2" foregroundColor="white" transparent="1" font="Regular;18"/>
 				<widget name="buttonblue" position="455,420" size="140,40" valign="center" halign="center" zPosition="2" foregroundColor="white" transparent="1" font="Regular;18"/>
-			</screen>"""	
+			</screen>"""
 	else:
 		skin = """
 			<screen position="center,70" size="1000,690" title="Movie Tagger" >
 				<widget name="moviename" position="10,0" size="980,80" valign="top" font="Regular;30"/>
 				<ePixmap pixmap="skin_default/div-h.png" position="0,82" zPosition="1" size="1000,2" />
-				
+
 				<widget name="assignedTags" position="10,90" size="490,30" valign="top" halign="left" zPosition="2" foregroundColor="white" font="Regular;26"/>
-				
+
 				<widget name="cTaglist" position="10,120" size="490,440" scrollbarMode="showOnDemand"/>
-				
+
 				<widget name="definedTags" position="500,90" size="490,30" valign="top" halign="left" zPosition="2" foregroundColor="white" font="Regular;26"/>
-				
+
 				<widget name="aTaglist" position="500,120" size="980,440" scrollbarMode="showOnDemand"/>
-                
+
 				<ePixmap pixmap="skin_default/div-h.png" position="0,578" zPosition="1" size="1000,2" />
 				<widget name="usedTag" position="5,600" size="330,50" valign="top" halign="center" zPosition="2" foregroundColor="#ffff00" font="Regular;26"/>
 				<widget name="userTag" position="335,600" size="330,50" valign="top" halign="center" zPosition="2" foregroundColor="#ff0000" font="Regular;26"/>
@@ -141,7 +141,7 @@ class MovieTagger(Screen):
 		self.usedTags = xtmp
 
 		e = self.pretags + [x for x in ml.tags if x not in self.pretags]
-		
+
 		taglist = []
 		for i in e:
 			taglist.append(self.getFlags(i))
@@ -238,10 +238,10 @@ class MovieTagger(Screen):
 		if not preTags and usedTags:
 			userTags = True
 		return (tag, usedTags, preTags, userTags)
-	
+
 	def keyRed(self):
 		if self.currList is self["cTaglist"]:
-			print "removing Tag", self["cTaglist"].getCurrent()[0] 
+			print "removing Tag", self["cTaglist"].getCurrent()[0]
 			self.removeTag(self["cTaglist"].getCurrent()[0])
 
 		elif self.currList is self["aTaglist"]:
@@ -308,12 +308,12 @@ class TagMenuList(MenuList):
 
 	def __init__(self, list, enableWrapAround=True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-		
+
 		isFHD = False
 		sz_w = getDesktop(0).size().width()
 		if sz_w >= 1920:
 			isFHD = True
-			
+
 		sizes = componentSizes[TagMenuList.SKIN_COMPONENT_KEY]
 		self.componentItemHeight = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_ITEM_HEIGHT, 40 if isFHD else 25)
 		self.componentItemWidth = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_ITEM_WIDTH, 490 if isFHD else 290)
@@ -332,7 +332,7 @@ class TagMenuList(MenuList):
 			self.preTagColor = parseColor("preTagColor").argb()
 		except:
 			self.preTagColor = 0x0000FF00
-		
+
 		tlf = TemplatedListFonts()
 		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
 		self.l.setFont(1, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
@@ -342,14 +342,14 @@ class TagMenuList(MenuList):
 	def buildTagMenuListEntry(self, tagName, isUsedTag=False, isUserTag=False, isPreTag=False):
 		res = [tagName]
 		res.append((eListboxPythonMultiContent.TYPE_TEXT, self.xOffset, 0, self.componentItemWidth, self.componentItemHeight, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, tagName))
-		
+
 		if isUsedTag:
 			res.append((eListboxPythonMultiContent.TYPE_TEXT, self.xIndicatorOffset, 0, self.xIndicatorWidth, self.componentItemHeight, 1, RT_HALIGN_CENTER | RT_VALIGN_CENTER, "X", self.usedTagColor))
 		if isUserTag:
 			res.append((eListboxPythonMultiContent.TYPE_TEXT, self.xIndicatorOffset + self.xIndicatorWidth, 0, self.xIndicatorWidth, self.componentItemHeight, 1, RT_HALIGN_CENTER | RT_VALIGN_CENTER, "X", self.userTagColor))
 		if isPreTag:
 			res.append((eListboxPythonMultiContent.TYPE_TEXT, self.xIndicatorOffset + (2 * self.xIndicatorWidth), 0, self.xIndicatorWidth, self.componentItemHeight, 1, RT_HALIGN_CENTER | RT_VALIGN_CENTER, "X", self.preTagColor))
-		
+
 		return res
 
 	def postWidgetCreate(self, instance):

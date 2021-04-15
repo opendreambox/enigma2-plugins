@@ -109,7 +109,7 @@ class AutoTimerOverview(Screen, HelpableScreen):
 
 		# Create List of Timers
 		self["entries"] = AutoTimerList(autotimer.getSortedTupleTimerList())
-		
+
 		# Summary
 		self.onChangedEntry = []
 		self["entries"].onSelectionChanged.append(self.selectionChanged)
@@ -153,7 +153,7 @@ class AutoTimerOverview(Screen, HelpableScreen):
 		self.onFirstExecBegin.append(self.firstExec)
 
 	def showSearchLog(self):
-		
+
 		searchlog_txt = ""
 		logpath = config.plugins.autotimer.searchlog_path.value
 		if logpath == "?likeATlog?":
@@ -165,7 +165,7 @@ class AutoTimerOverview(Screen, HelpableScreen):
 			self.session.open(MessageBox, _("No search log found!\n\nNo timer added or modified during last autotimer search."), MessageBox.TYPE_INFO)
 
 	def showFilterTxt(self):
-		
+
 		reload(AutoTimerFilterList)
 		from AutoTimerFilterList import AutoTimerFilterListOverview
 		self.session.open(AutoTimerFilterListOverview)
@@ -379,7 +379,7 @@ class AutoTimerOverview(Screen, HelpableScreen):
 						AutoTimerEditor,
 						newTimer
 					)
-				
+
 	def save(self, startSearching=True):
 		# Just close here, saving will be done by cb
 		if startSearching:
@@ -388,4 +388,3 @@ class AutoTimerOverview(Screen, HelpableScreen):
 		else:
 			#close and save without start searching
 			self.close(None)
-

@@ -45,7 +45,7 @@ class AC3LipSyncSetup(ConfigListScreen, Screen):
             getConfigListEntry(_("Step in ms for key %i") % (5), config.plugins.AC3LipSync.absoluteStep5),
             getConfigListEntry(_("Step in ms for key %i") % (8), config.plugins.AC3LipSync.absoluteStep8)
         ]
-        
+
         ConfigListScreen.__init__(self, self.list)
 
         self["config"].list = self.list

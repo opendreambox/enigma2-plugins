@@ -86,4 +86,3 @@ class Network(Source):
 			"Netmask6": 8,
 			"Gateway6": 9,
 	}
-

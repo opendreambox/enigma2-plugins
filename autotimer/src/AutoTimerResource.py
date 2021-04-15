@@ -183,7 +183,7 @@ class AutoTimerTestBackgroundThread(AutoTimerBackgroundThread):
 			self.id = int(id[0])
 		else:
 			self.id = None
-		
+
 		try:
 			autotimer.parseEPG(simulateOnly=True, uniqueId=self.id, callback=self.intermediateWrite)
 		except Exception as e:
@@ -228,7 +228,7 @@ class AutoTimerTestBackgroundThread(AutoTimerBackgroundThread):
 					'   <e2message>', stringToXML(message), '</e2message>\n'
 					'</e2simulatedtimer>\n'
 				))
-		
+
 		if self._stillAlive:
 			reactor.callFromThread(lambda: self._req.write(''.join(returnlist)))
 
@@ -268,15 +268,15 @@ class AutoTimerRemoveAutoTimerResource(AutoTimerBaseResource):
 		id = req.args.get("id")
 		if id:
 			autotimer.remove(int(id[0]))
-			
+
 			# Save modified xml
 			if config.plugins.autotimer.always_write_config.value:
 				autotimer.writeXml()
-			
+
 			return self.returnResult(req, True, _("AutoTimer was removed"))
 		else:
 			return self.returnResult(req, False, _("missing parameter \"id\""))
-			
+
 
 class AutoTimerAddXMLAutoTimerResource(AutoTimerBaseResource):
 	def render_POST(self, req):
@@ -288,17 +288,17 @@ class AutoTimerAddXMLAutoTimerResource(AutoTimerBaseResource):
 		if config.plugins.autotimer.always_write_config.value:
 			autotimer.writeXml()
 		return self.returnResult(req, True, _("AutoTimer was added successfully"))
-		
+
 
 class AutoTimerUploadXMLConfigurationAutoTimerResource(AutoTimerBaseResource):
 	def render_POST(self, req):
 		req.setResponseCode(http.OK)
 		req.setHeader('Content-type', 'application/xhtml+xml;')
-		req.setHeader('charset', 'UTF-8')	
+		req.setHeader('charset', 'UTF-8')
 		autotimer.readXml(xml_string=req.args['xml'][0])
 		if config.plugins.autotimer.always_write_config.value:
 			autotimer.writeXml()
-		return self.returnResult(req, True, _("AutoTimers were changed successfully"))	
+		return self.returnResult(req, True, _("AutoTimers were changed successfully"))
 
 
 class AutoTimerAddOrEditAutoTimerResource(AutoTimerBaseResource):
@@ -555,7 +555,7 @@ class AutoTimerAddOrEditAutoTimerResource(AutoTimerBaseResource):
 			message = _("AutoTimer was added successfully")
 		else:
 			message = _("AutoTimer was changed successfully")
-		
+
 		# Save modified xml
 		if config.plugins.autotimer.always_write_config.value:
 			autotimer.writeXml()

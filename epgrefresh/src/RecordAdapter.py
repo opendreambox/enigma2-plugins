@@ -48,4 +48,3 @@ class RecordAdapter:
 	def stop(self):
 		print("[EPGRefresh.RecordAdapter.stop]")
 		self.stopStreaming()
-

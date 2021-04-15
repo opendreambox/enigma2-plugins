@@ -136,4 +136,3 @@ class ScreenPage(resource.Resource):
 
 		path += ".xml"
 		return ScreenPage(self.session, path)
-

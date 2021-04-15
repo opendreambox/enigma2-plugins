@@ -460,7 +460,7 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 
 		self.partnerbox = False
 		if "partnerbox" in kwargs:
-			self.partnerbox = kwargs["partnerbox"]			
+			self.partnerbox = kwargs["partnerbox"]
 
 		# Summary
 		self.setup_title = _("AutoTimer Editor")
@@ -927,7 +927,7 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 
 		self.timer.series_labeling = self.series_labeling.value
 		self.timer.series_save_filter = self.series_save_filter.value
-		
+
 		# Close
 		self.close(self.timer)
 
@@ -1029,9 +1029,9 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 		return SetupSummary
 
 	def saveCurrent(self):
-		
+
 		# Warning, accessing a ConfigListEntry directly might be considered evil!
-		
+
 		#reset all filter in self and refill new from configList
 		idx = -1
 		for type in self.typeSelection.getChoices():
@@ -1077,14 +1077,14 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 			getConfigListEntry(_("Enable Filtering"), self.enabled),
 			getConfigListEntry(_("Filter"), self.typeSelection)
 		]
-		
+
 		for type in self.typeSelection.getChoices():
-			
+
 			print "=== type ", type
-			if type[0] == "day": 
+			if type[0] == "day":
 				self.idx = 3
 				cfgList = []
-				
+
 				# Weekdays are presented as ConfigSelection
 				cfgList.extend([
 					getConfigListEntry(_("Exclude"), NoSave(ConfigSelection(choices=weekdays, default=x)))
@@ -1102,7 +1102,7 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 					self.list.append(getConfigListEntry(type[1]))
 					cfgList = sorted(cfgList, key=lambda x: [x[0], x[1].value], reverse=False)
 					self.list.extend(cfgList)
-		
+
 			else:
 				if type[0] == "title":
 					self.idx = 0
@@ -1110,9 +1110,9 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 					self.idx = 1
 				else: # self.typeSelection.value == "desc":
 					self.idx = 2
-				
+
 				cfgList = []
-				
+
 				cfgList.extend([
 					getConfigListEntry(_("Exclude"), NoSave(ExtendedConfigText(default=x, fixed_size=False)))
 						for x in self.excludes[self.idx]
@@ -1141,7 +1141,7 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 			print "==== len getcurrent:", len(self["config"].getCurrent())
 
 			#self.refresh()
-			
+
 			if len(self["config"].getCurrent()) < 2:
 				self.remove()
 			#	list.remove(self["config"].getCurrent())
@@ -1169,7 +1169,7 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 				entry = getConfigListEntry(ret[0], NoSave(ConfigSelection(choices=weekdays)))
 			else:
 				entry = getConfigListEntry(ret[0], NoSave(ExtendedConfigText(fixed_size=False)))
-			
+
 			#get the position of the new filterentry
 			pos = 0
 			filter_exist = False
@@ -1289,9 +1289,9 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 		self.setTitle(_("Edit AutoTimer services"))
 
 	def saveCurrent(self):
-		
+
 		# Warning, accessing a ConfigListEntry directly might be considered evil!
-		
+
 		#reset all Servicefilter in self and refill new from configList
 		idx = -1
 		for type in self.typeSelection.getChoices():
@@ -1322,7 +1322,7 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 		self["config"].setList(self.list)
 
 	def reloadList(self):
-		
+
 		self.list = [
 			getConfigListEntry(_("Enable Service Restriction"), self.enabled),
 			getConfigListEntry(_("Editing"), self.typeSelection)
@@ -1339,7 +1339,7 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 					getConfigListEntry(_("Record on"), NoSave(ConfigSelection(choices=[(str(x), ServiceReference(str(x)).getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', ''))])))
 						for x in self.services[self.idx]
 			])
-			
+
 			if len(cfgList):
 				self.list.append(getConfigListEntry(type[1]))
 				cfgList = sorted(cfgList, key=lambda x: [x[1].getText()], reverse=False)
@@ -1362,7 +1362,7 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 		return SetupSummary
 
 	def remove(self):
-		
+
 		idx = self["config"].getCurrentIndex()
 		if idx and idx > 1:
 			list = self["config"].getList()
@@ -1398,12 +1398,12 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 					if sname[pos - 1] == ':':
 						pos -= 1
 					sname = sname[:pos + 1]
-			
+
 			# get the filtertype-text
 			type_text = list[1][1].getText()
 
 			entry = getConfigListEntry(_("Record on"), NoSave(ConfigSelection(choices=[(sname, ServiceReference(args[0]).getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', ''))])))
-			
+
 			#get the position of the new filterentry
 			pos = 0
 			filter_exist = False

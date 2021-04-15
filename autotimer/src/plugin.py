@@ -185,7 +185,7 @@ def editCallback(session):
 
 
 def showFinishPopup(ret):
-	
+
 	#prepare searchlogentries to show in finishPopup
 	searchlog_txt = ""
 	logpath = config.plugins.autotimer.searchlog_path.value
@@ -194,11 +194,11 @@ def showFinishPopup(ret):
 	path_search_log = os_path.join(logpath, "autotimer_search.log")
 	if os_path.exists(path_search_log):
 		searchlog_txt = open(path_search_log).read()
-		#find last log in logfile 
+		#find last log in logfile
 		if "\n########## " in searchlog_txt:
 			searchlog_txt = searchlog_txt.split("\n########## ")
 			searchlog_txt = str(searchlog_txt[-1]).split("\n")[2:]
-			
+
 			#check count and length of searchlog_entries
 			maxlistcount = 10
 			maxtextlength = 55
@@ -217,9 +217,9 @@ def showFinishPopup(ret):
 
 
 def parseEPGCallback(ret):
-	
+
 	showFinishPopup(ret)
-	
+
 	# Save xml
 	if config.plugins.autotimer.always_write_config.value:
 		autotimer.writeXml()
@@ -262,23 +262,23 @@ def extensionsmenu(session, **kwargs):
 
 
 def extensionsmenu_scan(session, **kwargs):
-	
+
 	try:
 		autotimer.readXml()
 	except SyntaxError as se:
 		session.open(MessageBox, _("Your config file is not well-formed:\n%s") % (str(se)), type=MessageBox.TYPE_ERROR, timeout=10)
 		return
-	
+
 	editCallback(session)
-	
+
 
 # Movielist menu add to filterList
 def add_to_filterList(session, service, services=None, *args, **kwargs):
-	
+
 	try:
 		if services:
 			if not isinstance(services, list):
-				services = [services]	
+				services = [services]
 		else:
 			services = [service]
 		autotimer.addToFilterList(session, services)
@@ -332,9 +332,8 @@ def Plugins(**kwargs):
 	if config.plugins.autotimer.show_in_extensionsmenu.value:
 		l.append(extDescriptor)
 		l.append(extDescriptor_scan)
-	
+
 	if config.plugins.autotimer.show_addto_in_filmmenu.value:
 		l.append(filmDescriptor_addto)
-		
-	return l
 
+	return l

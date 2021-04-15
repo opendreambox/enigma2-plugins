@@ -127,7 +127,7 @@ def ChannelSelection_togglePipzap(self):
 
 		# Move to service playing in pip (will not work with subservices)
 		self.setCurrentSelection(self.session.pip.getCurrentService())
-		
+
 		# Channelname in Screen schreiben
 		if config.plugins.pipzap.show_channelname.value:
 			servicereference = ServiceReference(self.session.pip.getCurrentService())
@@ -154,7 +154,7 @@ def ChannelSelection_zap(self, *args, **kwargs):
 				if not self.session.pip.playService(nref):
 					# XXX: Make sure we set an invalid ref
 					self.session.pip.playService(None)
-		
+
 		#Channelname in Screen schreiben
 		if config.plugins.pipzap.show_channelname.value:
 			servicereference = ServiceReference(self.session.pip.getCurrentService())
@@ -338,7 +338,7 @@ def InfoBarPiP_closePiP(self):
 				self.showPiP()
 		elif config.plugins.pipzap.enable_exitkey.value == "False":
 			pass
-  
+
   except:
     pass
 
@@ -472,7 +472,7 @@ class PictureInPictureZappingWithChannelName(Screen):
 		self["border_top"] = Label(" ")
 		self["border_left"] = Label(" ")
 		self["border_right"] = Label(" ")
-		
+
 	def refreshPosition(self):
 
 		#== position des PiP abfragen (kommt mit SD-Werten)
@@ -480,7 +480,7 @@ class PictureInPictureZappingWithChannelName(Screen):
 		y1 = config.av.pip.value[1]
 		x2 = config.av.pip.value[2]
 		y2 = config.av.pip.value[3]
-		
+
 		#== Abmessungen des Screens ermitteln
 		width = getDesktop(0).size().width()
 		height = getDesktop(0).size().height()
@@ -490,39 +490,39 @@ class PictureInPictureZappingWithChannelName(Screen):
 		yt = y1 * height / 576
 		ht = y2 * height / 576
 		wt = x2 * width / 720
-		
+
 		# Korrektur wenn das PiP ueber den unteren bzw. rechten Rand gehen wuerde
 		tmp = xt - (wt * 4) / 100
 		if tmp < 0:
 			xt = 0
 		else:
 			xt = tmp
-		
+
 		tmp = yt - (ht * 4) / 100
 		if tmp < 0:
 			yt = 0
 		else:
 			yt = tmp
-		
+
 		tmp = (wt * 108) / 100
 		if xt + tmp > width:
 			wt = width - xt
 		else:
 			wt = tmp
-		
+
 		tmp = (ht * 108) / 100
 		if yt + tmp > height:
 			ht = height - yt
 		else:
 			ht = tmp
-		
+
 		border_width = self["border_top"].instance.size().height()
-		
+
 		x = xt - (border_width / 2) - 1
 		y = yt - border_width + 1
 		h = ht + (border_width / 2)
 		w = wt + (2 * border_width) - 1
-		
+
 		border_txt_height = self["border_txt"].instance.size().height()
 
 		h_border_txt = border_txt_height + 5 # Versatz/Hoehe des Text-Rahmens
@@ -533,7 +533,7 @@ class PictureInPictureZappingWithChannelName(Screen):
 			h_border_txt = h
 			show_txt_ontop_of_pip = True
 		h_border = h - 6
-		
+
 		#== Groessen und Positionen der Screen-Elemente anpassen ====
 		self.instance.resize(eSize(*(w, h)))
 		self.instance.move(ePoint(int(x), int(y)))
@@ -577,7 +577,7 @@ def PictureInPicture_inactive(self):
 def PictureInPicture_resize(self, *args, **kwargs):
 	baseMethods.PictureInPicture_resize(self, *args, **kwargs)
 	self.pipActive.refreshPosition()
-	
+
 #pragma mark -
 #pragma mark - Help
 #pragma mark -
@@ -633,7 +633,7 @@ def overwriteFunctions():
 	baseMethods.ChannelSelection_channelSelected = ChannelSelection.channelSelected
 	ChannelSelection.channelSelected = ChannelSelection_channelSelected
 
-	ChannelSelection.togglePipzap = ChannelSelection_togglePipzap 
+	ChannelSelection.togglePipzap = ChannelSelection_togglePipzap
 
 	baseMethods.ChannelSelection_zap = ChannelSelection.zap
 	ChannelSelection.zap = ChannelSelection_zap
@@ -691,10 +691,10 @@ def overwriteFunctions():
 
 	PictureInPicture.active = PictureInPicture_active
 	PictureInPicture.inactive = PictureInPicture_inactive
-	
+
 	#baseMethods.PictureInPicture_move = PictureInPicture.move
 	#PictureInPicture.move = PictureInPicture_move
-	
+
 	baseMethods.PictureInPicture_resize = PictureInPicture.resize
 	PictureInPicture.resize = PictureInPicture_resize
 

@@ -76,7 +76,7 @@ class MSNWeatherPluginEntriesListConfigScreen(Screen):
 		self["city"] = StaticText(_("City"))
 		self["degreetype"] = StaticText(_("System"))
 		self["key_red"] = StaticText(_("Back"))
-		self["key_green"] = StaticText(_("Add"))		
+		self["key_green"] = StaticText(_("Add"))
 		self["key_yellow"] = StaticText(_("Edit"))
 		self["key_blue"] = StaticText(_("Delete"))
 		self["entrylist"] = WeatherPluginEntryList([])
@@ -85,7 +85,7 @@ class MSNWeatherPluginEntriesListConfigScreen(Screen):
 			 "ok": self.keyOK,
 			 "back": self.keyClose,
 			 "red": self.keyClose,
-			 "green": self.keyGreen,    
+			 "green": self.keyGreen,
 			 "yellow": self.keyYellow,
 			 "blue": self.keyDelete,
 			 }, -1)
@@ -161,8 +161,8 @@ class WeatherPluginEntryList(MenuList):
 		sizes = componentSizes[WeatherPluginEntryList.SKIN_COMPONENT_KEY]
 		textHeight = sizes.get(WeatherPluginEntryList.SKIN_COMPONENT_TEXT_HEIGHT, 30)
 		textWidth = sizes.get(WeatherPluginEntryList.SKIN_COMPONENT_TEXT_WIDTH, 500)
-		text2Width = sizes.get(WeatherPluginEntryList.SKIN_COMPONENT_TEXT2_WIDTH, 80)	
-		itemMargin = sizes.get(WeatherPluginEntryList.SKIN_COMPONENT_ITEM_MARGIN, 10)	
+		text2Width = sizes.get(WeatherPluginEntryList.SKIN_COMPONENT_TEXT2_WIDTH, 80)
+		itemMargin = sizes.get(WeatherPluginEntryList.SKIN_COMPONENT_ITEM_MARGIN, 10)
 		list = []
 		for c in config.plugins.WeatherPlugin.Entry:
 			res = [
@@ -222,7 +222,7 @@ class MSNWeatherPluginEntryConfigScreen(ConfigListScreen, Screen):
 		]
 
 		ConfigListScreen.__init__(self, cfglist, session)
-		
+
 	def searchLocation(self):
 		if self.current.city.value != "":
 			language = config.osd.language.value.replace("_", "-")
@@ -258,7 +258,7 @@ class MSNWeatherPluginEntryConfigScreen(ConfigListScreen, Screen):
 	def keyDelete(self):
 		if self.newmode == 1:
 			self.keyCancel()
-		else:		
+		else:
 			self.session.openWithCallback(self.deleteConfirm, MessageBox, _("Really delete this WeatherPlugin Entry?"))
 
 	def deleteConfirm(self, result):
@@ -271,7 +271,7 @@ class MSNWeatherPluginEntryConfigScreen(ConfigListScreen, Screen):
 		config.plugins.WeatherPlugin.save()
 		configfile.save()
 		self.close()
-		
+
 	def xmlCallback(self, xmlstring):
 		if xmlstring:
 			errormessage = ""
@@ -281,20 +281,20 @@ class MSNWeatherPluginEntryConfigScreen(ConfigListScreen, Screen):
 					errormessage = childs.attrib.get("errormessage").encode("utf-8", 'ignore')
 					break
 			if len(errormessage) != 0:
-				self.session.open(MessageBox, errormessage, MessageBox.TYPE_ERROR)					
+				self.session.open(MessageBox, errormessage, MessageBox.TYPE_ERROR)
 			else:
 				self.session.openWithCallback(self.searchCallback, MSNWeatherPluginSearch, xmlstring)
-			
+
 	def error(self, error=None):
 		if error is not None:
 			print error
-		
+
 	def searchCallback(self, result):
 		if result:
 			self.current.weatherlocationcode.value = result[0]
 			self.current.city.value = result[1]
-	
-		
+
+
 class MSNWeatherPluginSearch(Screen):
 	skin = """
 		<screen name="MSNWeatherPluginSearch" position="center,120" size="820,520">
@@ -304,13 +304,13 @@ class MSNWeatherPluginSearch(Screen):
 	     	<widget source="key_green" render="Label" position="210,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
 	    	<eLabel position="10,50" size="800,1" backgroundColor="grey" />
 	    	<widget name="entrylist" position="10,60" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand" />
-		</screen>""" 
+		</screen>"""
 
 	def __init__(self, session, xmlstring):
 		Screen.__init__(self, session)
 		self.title = _("MSN location search result")
 		self["key_red"] = StaticText(_("Back"))
-		self["key_green"] = StaticText(_("OK"))		
+		self["key_green"] = StaticText(_("OK"))
 		self["entrylist"] = MSNWeatherPluginSearchResultList([])
 		self["actions"] = ActionMap(["WizardActions", "MenuActions", "ShortcutActions"],
 			{
@@ -334,7 +334,7 @@ class MSNWeatherPluginSearch(Screen):
 		except:
 			sel = None
 		self.close(sel)
-		
+
 
 class MSNWeatherPluginSearchResultList(MenuList):
 	SKIN_COMPONENT_KEY = "WeatherPluginList"

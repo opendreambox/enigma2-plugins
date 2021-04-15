@@ -28,12 +28,12 @@ except ImportError:
 class EPGSearchATEditor(AutoTimerEditor):
 	def __init__(self, session, timer, editingDefaults=False, **kwargs):
 		AutoTimerEditor.__init__(self, session, timer, editingDefaults=False, **kwargs)
-		
+
 		self.skinName = ["EPGSearchATEditor", "AutoTimerEditor"]
 		self.setup_title = _("SearchFilter Editor")
 		self.partnerbox = False
 		self.removeConfigListEntries()
-		
+
 	def removeConfigListEntries(self):
 		#remove config entries not use in EPGSearch filter
 		try:
@@ -55,7 +55,7 @@ class EPGSearchATEditor(AutoTimerEditor):
 			#import traceback
 			#traceback.print_exc()
 			pass
-	
+
 	def reloadList(self, value):
 		self.refresh()
 		self.removeConfigListEntries()
@@ -63,7 +63,7 @@ class EPGSearchATEditor(AutoTimerEditor):
 
 	def setCustomTitle(self):
 		self.setTitle(_("Edit EPGSearch search filter"))
-	
+
 	def editFilter(self):
 		self.session.openWithCallback(
 			self.editFilterCallback,
@@ -72,7 +72,7 @@ class EPGSearchATEditor(AutoTimerEditor):
 			self.excludes,
 			self.includes
 		)
-	
+
 	def editServices(self):
 		self.session.openWithCallback(
 			self.editServicesCallback,
@@ -86,10 +86,10 @@ class EPGSearchATEditor(AutoTimerEditor):
 class EPSearchFilterEditor(AutoTimerFilterEditor, ConfigListScreen):
 	def __init__(self, session, filterset, excludes, includes):
 		AutoTimerFilterEditor.__init__(self, session, filterset, excludes, includes)
-		
+
 		self.skinName = ["EPGSearchATFilterEditor", "AutoTimerFilterEditor"]
 		self.setup_title = _("EPGSearch Filters")
-	
+
 	def setCustomTitle(self):
 		self.setTitle(_("Edit EPGSearch filter"))
 
@@ -97,10 +97,10 @@ class EPSearchFilterEditor(AutoTimerFilterEditor, ConfigListScreen):
 class EPSearchServiceEditor(AutoTimerServiceEditor, ConfigListScreen):
 	def __init__(self, session, servicerestriction, servicelist, bouquetlist):
 		AutoTimerServiceEditor.__init__(self, session, servicerestriction, servicelist, bouquetlist)
-		
+
 		self.skinName = ["EPGSearchATServiceEditor", "AutoTimerServiceEditor"]
 		self.setup_title = _("EPGSearch Services")
-	
+
 	def setCustomTitle(self):
 		self.setTitle(_("Edit EPGSearch Services"))
 
@@ -148,7 +148,7 @@ def ATeditorCallback(session, save, timer):
 				evt = epgcache.lookupEventTime(eServiceReference(t[3]), rbegin)
 				if evt:
 					results.append((t[3], evt.getEventId(), rbegin, rend - rbegin, t[0]))
-		
+
 		from EPGSearch import EPGSearch
 		if results:
 			kwargs = {"AT": results}
@@ -180,13 +180,13 @@ class EPGSearchATOverview(AutoTimerOverview):
 		self["EPGSelectActions"].setEnabled(False)
 		self["InfobarActions"].setEnabled(False)
 		self.skinName = ["EPGSearchATOverview", "AutoTimerOverview"]
-		
+
 		self["InfobarActions"] = HelpableActionMap(self, "InfobarActions",
 			{
 				"showMovies": (self.search, _("search for current search filter")),
 			}
 		)
-		
+
 		self["MenuActions"] = HelpableActionMap(self, "MenuActions",
 			{
 				"menu": (self.menu, _("Open Context Menu"))
@@ -249,7 +249,7 @@ class EPGSearchATOverview(AutoTimerOverview):
 	def add(self):
 		newTimer = self.autotimer.defaultTimer.clone()
 		newTimer.id = self.autotimer.getUniqueId()
-		
+
 		self.session.openWithCallback(
 				self.addCallback,
 				EPGSearchATEditor,

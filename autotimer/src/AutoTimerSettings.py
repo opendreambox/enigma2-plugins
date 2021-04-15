@@ -159,4 +159,3 @@ class AutoTimerSettings(Screen, ConfigListScreen):
 
 	def pageDown(self):
 		self["config"].instance.moveSelection(self["config"].instance.pageDown)
-

@@ -5,7 +5,7 @@ class StopService(Source):
 	def __init__(self, session):
 		Source.__init__(self)
 		self.session = session
-		
+
 	def pipAvailable(self):
 		# pip isn't available in every state of e2
 		try:
@@ -32,4 +32,3 @@ class StopService(Source):
 		return text
 
 	text = property(command)
-

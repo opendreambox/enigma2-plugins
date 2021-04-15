@@ -82,7 +82,7 @@ class MSNWeatherPlugin(Screen):
 			<widget render="Label" source="weekday5_temp" position="595,320" size="105,60" halign="center" valign="top" font="Regular;16"/>
 			<widget render="Label" source="statustext" position="0,0" size="720,400" font="Regular;20" halign="center" valign="center" transparent="1"/>
 		</screen>"""
-	
+
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.title = _("Weather Plugin")
@@ -105,7 +105,7 @@ class MSNWeatherPlugin(Screen):
 		self["observationtime"] = StaticText()
 		self["observationpoint"] = StaticText()
 		self["feelsliketemp"] = StaticText()
-		
+
 		i = 1
 		while i <= 5:
 			self["weekday%s" % i] = StaticText()
@@ -113,7 +113,7 @@ class MSNWeatherPlugin(Screen):
 			self["weekday%s_temp" % i] = StaticText()
 			i += 1
 		del i
-		
+
 		self.weatherPluginEntryIndex = -1
 		self.weatherPluginEntryCount = config.plugins.WeatherPlugin.entrycount.value
 		if self.weatherPluginEntryCount >= 1:
@@ -123,11 +123,11 @@ class MSNWeatherPlugin(Screen):
 			self.weatherPluginEntry = None
 
 		self.webSite = ""
-		
+
 		self.weatherData = None
 		self.onLayoutFinish.append(self.startRun)
 		self.onClose.append(self.__onClose)
-		
+
 	def __onClose(self):
 		if self.weatherData is not None:
 			self.weatherData.cancel()
@@ -215,7 +215,7 @@ class MSNWeatherPlugin(Screen):
 					lowTemp = item.low
 					highTemp = item.high
 					self["weekday%s_temp" % index].text = "%s°%s|%s°%s\n%s" % (highTemp, self.weatherData.degreetype, lowTemp, self.weatherData.degreetype, item.skytextday)
-		
+
 		if self.weatherPluginEntryIndex == 1 and WeatherMSNComp is not None:
 			WeatherMSNComp.updateWeather(self.weatherData, result, errortext)
 
@@ -287,10 +287,9 @@ class WeatherIcon(Pixmap):
 			self.instance.setPixmap(ptr)
 		else:
 			self.instance.setPixmap(None)
-		
+
 	def updateIcon(self, filename):
 		new_IconFileName = filename
 		if (self.IconFileName != new_IconFileName):
 			self.IconFileName = new_IconFileName
 			self.picload.startDecode(self.IconFileName)
-

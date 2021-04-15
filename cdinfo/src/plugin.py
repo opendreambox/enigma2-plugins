@@ -34,7 +34,7 @@ class CDInfo(ConfigListScreen, Screen):
 			<widget source="info2" render="Label" position="5,350" size="520,80" font="Regular;20" backgroundColor="#25062748" transparent="1" />
 		</screen>
 		"""
-	
+
 	def __init__(self, session, args=None):
 		self.skin = CDInfo.skin
 		Screen.__init__(self, session)
@@ -182,7 +182,7 @@ class Query:
 		for tag in self.albuminfo:
 			if tag not in self.mp.AudioCD_albuminfo or replace:
 				self.mp.AudioCD_albuminfo[tag] = self.albuminfo[tag]
-	
+
 	def updatePlaylist(self, replace=False):
 		for idx in range(len(self.playlist)):
 			ref = self.playlist.getServiceRefList()[idx]

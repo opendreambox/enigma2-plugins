@@ -53,7 +53,6 @@ class InternetRadioCover(Pixmap):
 
 	def setPicloaded(self, value):
 		self.picloaded = value
-		
+
 	def getPicloaded(self):
 		return self.picloaded
-		

@@ -4,8 +4,8 @@
 #  Coded by TheDOC and Dr.Best (c) 2011
 #  Support: www.dreambox-tools.info
 #
-#  This plugin is licensed under the Creative Commons 
-#  Attribution-NonCommercial-ShareAlike 3.0 Unported 
+#  This plugin is licensed under the Creative Commons
+#  Attribution-NonCommercial-ShareAlike 3.0 Unported
 #  License. To view a copy of this license, visit
 #  http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to Creative
 #  Commons, 559 Nathan Abbott Way, Stanford, California 94305, USA.
@@ -14,7 +14,7 @@
 #  is licensed by Dream Property GmbH.
 
 #  This plugin is NOT free software. It is open source, you are allowed to
-#  modify it (if you keep the license), but it may not be commercially 
+#  modify it (if you keep the license), but it may not be commercially
 #  distributed other than under the conditions noted above.
 #
 
@@ -106,7 +106,7 @@ def switchmode(mode):
 
 def switchsbs(session, **kwargs):
 	switchmode(THREE_D_SIDE_BY_SIDE)
-	
+
 
 def switchtb(session, **kwargs):
 	switchmode(THREE_D_TOP_BOTTOM)
@@ -145,7 +145,7 @@ class AutoThreeD(Screen):
 	def __evUpdatedInfo(self):
 		if self.newService and config.plugins.threed.autothreed.value != "0" and self.session.nav.getCurrentlyPlayingServiceReference():
 			self.newService = False
-			ref = self.session.nav.getCurrentService() 
+			ref = self.session.nav.getCurrentService()
 			serviceRef = self.session.nav.getCurrentlyPlayingServiceReference()
 			spath = serviceRef.getPath()
 			if spath:
@@ -198,12 +198,12 @@ class ThreeDSettings(Screen, ConfigListScreen):
 		self["yellow"] = StaticText("")
 		self["blue"] = StaticText("")
 		self.updateButtons()
-		
+
 		self.list = []
 		ConfigListScreen.__init__(self, self.list, session=self.session)
 		self.createSetup()
-		
-		self["actions"] = ActionMap(["OkCancelActions", "ColorActions"], 
+
+		self["actions"] = ActionMap(["OkCancelActions", "ColorActions"],
 		{
 			"ok": self.save,
 			"cancel": self.cancel,
@@ -211,9 +211,9 @@ class ThreeDSettings(Screen, ConfigListScreen):
 			"green": self.save,
 			"yellow": self.sideBySide,
 			"blue": self.topBottom,
-			
+
 		}, -1)
-		
+
 	def updateButtons(self):
 		currentmode = getmode()
 		if currentmode == THREE_D_OFF:
@@ -225,7 +225,7 @@ class ThreeDSettings(Screen, ConfigListScreen):
 		elif currentmode == THREE_D_TOP_BOTTOM:
 			self["blue"].setText(_("2D mode"))
 			self["yellow"].setText("")
-		
+
 	def createSetup(self):
 		self.list = []
 		self.list.append(getConfigListEntry(_("Show side by side option in extension menu"), config.plugins.threed.showSBSmenu))
@@ -239,17 +239,17 @@ class ThreeDSettings(Screen, ConfigListScreen):
 			self.list.append(getConfigListEntry(_("Offset"), config.plugins.threed.zoffset))
 		self["config"].list = self.list
 		self["config"].l.setList(self.list)
-	
+
 	def cancel(self):
 		config.plugins.threed.zoffset.save()
 		self.keyCancel()
-	
+
 	def save(self):
 		self.saveAll()
 		config.plugins.threed.zoffset.save()
 		plugins.readPluginList(resolveFilename(SCOPE_PLUGINS))
 		self.close()
-	
+
 	def sideBySide(self):
 		currentmode = getmode()
 		if currentmode == THREE_D_OFF:
@@ -258,7 +258,7 @@ class ThreeDSettings(Screen, ConfigListScreen):
 			switchmode(THREE_D_OFF)
 		self.updateButtons()
 		self.createSetup()
-	
+
 	def topBottom(self):
 		currentmode = getmode()
 		if currentmode == THREE_D_OFF:
@@ -267,7 +267,7 @@ class ThreeDSettings(Screen, ConfigListScreen):
 			switchmode(THREE_D_OFF)
 		self.updateButtons()
 		self.createSetup()
-		
+
 
 def opensettings(session, **kwargs):
 	session.open(ThreeDSettings)

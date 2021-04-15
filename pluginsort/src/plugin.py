@@ -106,10 +106,10 @@ class MyPluginList(PluginList):
 		instance = self.__instance()
 		if instance:
 			instance.moveSelection(instance.moveRight)
-	
+
 	def updateList(self, list):
 		PluginList.updateList(self, list)
-		# to refresh the plugin-description if show in a different widget 
+		# to refresh the plugin-description if show in a different widget
 		# like TemplatedMultiContent or StringListSelection-Converter
 		self.selectionChanged(self.index)
 
@@ -183,7 +183,7 @@ class PluginWeights:
 				extend(('  <plugin name="', stringToXML(str(key)), '" weight="', str(value), '" />\n'))
 			append((' </where>\n'))
 		append('\n</pluginsort>\n')
-		
+
 		with open(XML_CONFIG, 'w') as config:
 			config.writelines(lst)
 
@@ -432,7 +432,7 @@ class SortingPluginBrowser(OriginalPluginBrowser):
 			# XXX: modifyEntry is broken - I'd say a job well done :P
 			#self["pluginlist"].modifyEntry(self.selected, self.list[self.selected])
 			self["pluginlist"].updateList(self.list)
-	
+
 	def openMenu(self):
 		if self.movemode:
 			# TRANSLATORS: there is no need to translate this string, as it was reused from e2 core

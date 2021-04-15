@@ -104,7 +104,7 @@ def FClog(wert):
 					f.close()
 			except IOError:
 				FC2Log.append(strftime("%H:%M:%S ") + "Event-Log-Error")
-				
+
 
 def FClogE(wert):
 	if config.plugins.FanControl.EnableEventLog.value:
@@ -268,14 +268,14 @@ class ControllerPI:
 	controlSignal = 0.0
 	coeffKp = 0.0
 	coeffKi = 0.0
- 
+
 	def __init__(self, givenName="PI Controller"):
 		self.name = givenName
 #		FClogE("%s : creating object" % self.name)
 
 	def ReturnInputError(self):
 		return self.inputError
-      
+
 	def ResetIntegrator(self):
 		FClogE("%s : integrator output %3.2f" % (self.name, self.integratorOutput))
 		self.integratorOutput = 0.0
@@ -358,7 +358,7 @@ class FanControl2Test(Screen):
 
 		self["TextTest1"].setText(_("please wait (until 3min)..."))
 
-		self["actions"] = ActionMap(["OkCancelActions"], 
+		self["actions"] = ActionMap(["OkCancelActions"],
 		{
 			"ok": self.cancel,
 			"cancel": self.cancel
@@ -486,7 +486,7 @@ class FanControl2Monitor(Screen):
 			<widget source="ProFan" render="Progress" position="260,220" size="325,5" borderWidth="1" />
 
 		</screen>"""
-	
+
 	def __init__(self, session, args=None):
 		Screen.__init__(self, session)
 
@@ -504,7 +504,7 @@ class FanControl2Monitor(Screen):
 		self["TxtMinTemp"] = Label("30")
 		self["TxtMaxTemp"] = Label("55")
 
-		self["actions"] = ActionMap(["OkCancelActions", "EPGSelectActions"], 
+		self["actions"] = ActionMap(["OkCancelActions", "EPGSelectActions"],
 		{
 			"ok": self.cancel,
 			"cancel": self.cancel,
@@ -518,14 +518,14 @@ class FanControl2Monitor(Screen):
 		tempcount = len(templist)
 		for count in range(tempcount):
 			tt = sensors.getSensorValue(count)
-			self["ProTemp%d" % count].value = int((tt - 30) * 100 / (55 - 30)) 
+			self["ProTemp%d" % count].value = int((tt - 30) * 100 / (55 - 30))
 			if sensors.getSensorName(count) == "undefined":
 				self["TxtTemp%d" % count].setText(_("%s   %02d C") % (TempName[count], tt))
 			else:
 				self["TxtTemp%d" % count].setText(_("%s   %02d C") % (sensors.getSensorName(count), tt))
 		if harddiskmanager.HDDCount() > 0 and len(AktHDD) > 0:
 			if max(AktHDD) > 0:
-				self["ProHDD"].value = int((max(AktHDD) - 30) * 100 / (55 - 30)) 
+				self["ProHDD"].value = int((max(AktHDD) - 30) * 100 / (55 - 30))
 				self["TxtHDD"].setText(_("%s   %02d C") % ("HDD", max(AktHDD)))
 			elif config.plugins.FanControl.CheckHDDTemp.value != "never":
 				self["TxtHDD"].setText(_("press Info for HDD-Temp"))
@@ -534,7 +534,7 @@ class FanControl2Monitor(Screen):
 		if tempcount > 1:
 			self["TxtFC2Temp"].setText("%4.1f" % AktTemp)
 		self.temp_timer.start(2000, True)
-        
+
 	def cancel(self):
 		self.close(False, self.session)
 
@@ -579,7 +579,7 @@ class FanControl2SpezialSetup(Screen, ConfigListScreen):
 		self.list.append(getConfigListEntry(_("Enable Thread use"), config.plugins.FanControl.EnableThread))
 		ConfigListScreen.__init__(self, self.list, session=self.session, on_change=self.selectionChanged)
 
-		self["actions"] = ActionMap(["OkCancelActions"], 
+		self["actions"] = ActionMap(["OkCancelActions"],
 		{
 			"ok": self.keyOK,
 			"cancel": self.cancel
@@ -600,7 +600,7 @@ class FanControl2SpezialSetup(Screen, ConfigListScreen):
 			if dir[-1:] != "/":
 				dir += "/"
 			config.plugins.FanControl.LogPath.value = dir
-        
+
 	def cancel(self):
 		global disableHDDread
 		if config.plugins.FanControl.LogPath.value[-1:] != "/":
@@ -726,8 +726,8 @@ class FanControl2Plugin(ConfigListScreen, Screen):
 		self["PixERR"] = Progress()
 		self["TxtERR"] = StaticText()
 		self["T10ERR"] = StaticText()
-		
-		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "MenuActions", "EPGSelectActions"], 
+
+		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "MenuActions", "EPGSelectActions"],
 		{
 			"ok": self.save,
 			"cancel": self.cancel,
@@ -797,7 +797,7 @@ class FanControl2Plugin(ConfigListScreen, Screen):
 			if int(abs(ErrRPM)) <= 10 and ErrRPM != 0:
 				self["PixERR"].value = int(abs(ErrRPM) * 10)
 				self["T10ERR"].setText("10%")
-			else:	
+			else:
 				self["PixERR"].value = int(abs(ErrRPM))
 				self["T10ERR"].setText("")
 			self["TxtERR"].setText(_("PID Ctl Err %03.2f %%") % ErrRPM)
@@ -929,7 +929,7 @@ def GetHDDtemp(OneTime):
 	return
 
 
-def HDDsSleeping(): 
+def HDDsSleeping():
 	for hdd in harddiskmanager.HDDList():
 		if hdd[1].model().startswith("ATA"):
 			if not hdd[1].isSleeping():
@@ -955,22 +955,22 @@ def FC2fanReset():
 	FClog("Fan Reset")
 
 
-class FC2Worker(Thread): 
+class FC2Worker(Thread):
 	def __init__(self, index, s, session):
 		Thread.__init__(self)
 		self.index = index
 		self.session = session
 		self.s = s
- 
-	def run(self): 
+
+	def run(self):
 		global FritzTime
 		while True:
 #			print "worker a", self.index
 			zahl = Briefkasten.get()
 			if zahl == 1:
 				self.s.queryRun()
- 
-			Briefkasten.task_done() 
+
+			Briefkasten.task_done()
 
 
 class FanControl2(Screen):
@@ -1008,10 +1008,10 @@ class FanControl2(Screen):
 		HDDtestTemp()
 		GetHDDtemp(False)
 		DeleteData()
-		FC2threads = [FC2Worker(i, self, session) for i in range(3)] 
-		for thread in FC2threads: 
-			thread.setDaemon(True) 
-			thread.start() 
+		FC2threads = [FC2Worker(i, self, session) for i in range(3)]
+		for thread in FC2threads:
+			thread.setDaemon(True)
+			thread.start()
 		self.timer = eTimer()
 		self.timer_conn = self.timer.timeout.connect(self.query)
 		self.timer.startLongTimer(10)
@@ -1050,7 +1050,7 @@ class FanControl2(Screen):
 		if m2 == 0.1:
 			m2 = m1
 		return (m1 + m2) / 2.0
-                
+
 	def cycle(self):
 		self.Range = self.maxTemp - self.targetTemp
 		x = AktTemp - self.targetTemp
@@ -1073,7 +1073,7 @@ class FanControl2(Screen):
 					GetHDDtemp(False)
 			if config.plugins.FanControl.EnableThread.value == True:
 				if Briefkasten.qsize() <= 3:
-					Briefkasten.put(1) 
+					Briefkasten.put(1)
 				else:
 					FClog("Queue full, Thread hanging?")
 			else:
@@ -1093,7 +1093,7 @@ class FanControl2(Screen):
 				FClog("Emergency Shutdown %dC" % AktTemp)
 				self.FC2AskShutdown()
 		self.timer.startLongTimer(10)
-		
+
 	def queryRun(self):
 		global FirstStart
 		global istStandbySave
@@ -1102,7 +1102,7 @@ class FanControl2(Screen):
 		global FanOffWait
 		global RPMread
 		global RPMdiff
-		global FanFehler            
+		global FanFehler
 		global ZielRPM
 		global AktRPM
 		global AktTemp
@@ -1110,12 +1110,12 @@ class FanControl2(Screen):
 		global AktPWM
 
 		global AktPWMCTL
-		global IntegralRPM      
+		global IntegralRPM
 		global ErrRPM
 		tt = time.time()
 		try:
 			if self.targetTemp != config.plugins.FanControl.temp.value:
-				self.RPMController.ResetIntegrator() 
+				self.RPMController.ResetIntegrator()
 			self.targetTemp = config.plugins.FanControl.temp.value
 			self.maxTemp = config.plugins.FanControl.tempmax.value
 			self.Fan = config.plugins.FanControl.Fan.value
@@ -1197,7 +1197,7 @@ class FanControl2(Screen):
 					if config.plugins.FanControl.EnableThread.value == True:
 						if Briefkasten.qsize() <= 2:
 							time.sleep(0.4)
-							Briefkasten.put(1) 
+							Briefkasten.put(1)
 					else:
 						self.timer.start(400, True)
 					return
@@ -1223,7 +1223,7 @@ class FanControl2(Screen):
 				if (FanOffWait and OverheatTimer < 30) or (Overheat and OverheatTimer < 60):
 					ZielRPM = self.FanMin
 					OverheatTimer += 1
-					FClog("FanStartTimeout set MinRPM (%d)" % (OverheatTimer)) 
+					FClog("FanStartTimeout set MinRPM (%d)" % (OverheatTimer))
 				else:
 					FanOffWait = False
 				FClog(_("currentRPM:%d targetRPM:%d Temp:%4.1f") % (AktRPM, ZielRPM, AktTemp))
@@ -1310,31 +1310,31 @@ def autostart(reason, **kwargs):
 			return
 		session = kwargs["session"]
 		session.open(FanControl2)
-          
+
 
 def Plugins(**kwargs):
 	list = [
-	PluginDescriptor(name="Fan Control", 
-	description="Fan Control 2", 
-	where=[PluginDescriptor.WHERE_SESSIONSTART, 
-	PluginDescriptor.WHERE_AUTOSTART], 
+	PluginDescriptor(name="Fan Control",
+	description="Fan Control 2",
+	where=[PluginDescriptor.WHERE_SESSIONSTART,
+	PluginDescriptor.WHERE_AUTOSTART],
 	fnc=autostart)]
 	if os.path.exists("/proc/stb/fp/fan_vlt"):
-		list.append(PluginDescriptor(name="Fan Control 2", 
-		description="Fan Control", 
+		list.append(PluginDescriptor(name="Fan Control 2",
+		description="Fan Control",
 		where=PluginDescriptor.WHERE_PLUGINMENU,
 		icon="plugin.png",
 		fnc=main))
 		if config.plugins.FanControl.FanControlInExtension.value:
-			list.append(PluginDescriptor(name="Fan Control 2", 
-			description="Fan Control", 
+			list.append(PluginDescriptor(name="Fan Control 2",
+			description="Fan Control",
 			where=PluginDescriptor.WHERE_EXTENSIONSMENU,
 			icon="plugin.png",
 			fnc=main))
 		if config.plugins.FanControl.MonitorInExtension.value:
 			list.append(PluginDescriptor(
-			name="Fan Control 2 - Monitor", 
-			description="Fan Control", 
+			name="Fan Control 2 - Monitor",
+			description="Fan Control",
 			where=PluginDescriptor.WHERE_EXTENSIONSMENU,
 			icon="plugin.png",
 			fnc=mainMonitor))

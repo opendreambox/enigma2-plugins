@@ -817,4 +817,3 @@ def buildConfig(defaultTimer, timers, webif=False):
 	append('</autotimer>\n')
 
 	return list
-

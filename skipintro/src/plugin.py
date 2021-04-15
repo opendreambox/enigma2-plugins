@@ -120,7 +120,7 @@ def InfoBarSeek__init__(self, actionmap="InfobarSeekActions"):
 					self.skipTimeStopPos = self.skipTimeStopPos[0]
 				else:
 					self.skipTimeStopPos = self.skipTimeStopPos[1]
-			self.skipSeekTime = int(self.skipTimeStopPos) - int(self.skipTimeStartPos) 
+			self.skipSeekTime = int(self.skipTimeStopPos) - int(self.skipTimeStartPos)
 
 			title = getServiceName(self)
 

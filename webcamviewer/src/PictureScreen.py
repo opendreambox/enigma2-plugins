@@ -242,4 +242,3 @@ class PictureScreen(Screen):
 			self.closetimer.stop()
 			self.paused = True
 		self.slideshowcallback()
-

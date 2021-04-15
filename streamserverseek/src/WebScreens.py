@@ -4,7 +4,7 @@ from Plugins.Extensions.WebInterface.WebScreens import WebScreen
 class StreamServerSeekWebScreen(WebScreen):
 	def __init__(self, session, request):
 		WebScreen.__init__(self, session, request)
-		
+
 		from WebComponents.Sources.StreamServerSeekSource import StreamServerSeekSource
 		self["SeekTo"] = StreamServerSeekSource(session, StreamServerSeekSource.SEEK_TO)
 		self["SeekRelative"] = StreamServerSeekSource(session, StreamServerSeekSource.SEEK_RELATIVE)
@@ -36,7 +36,7 @@ class StreamServerSeekInfoWebScreen(WebScreen):
 
 		currentServiceSource = CurrentService(session)
 		currentService = currentServiceSource.service
-		
+
 		self["State"] = StaticText(str(currentServiceSource.state))
 		self["StateText"] = StaticText(currentServiceSource.statetext)
 

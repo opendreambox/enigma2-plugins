@@ -32,20 +32,20 @@ class StreamServerSeekSource(Source):
 
 	_pause = None
 	_seek = None
-	
+
 	res = None
 
 	def __init__(self, session, func):
 		Source.__init__(self)
 		self.session = session
 		self.func = func
-		
+
 	def pause(self):
 		return self._pause.pause()
-	
+
 	def unpause(self):
 		return self._pause.unpause()
-	
+
 	def fastForward(self, speed):
 		if speed == 0:
 			return self.unpause()
@@ -53,15 +53,15 @@ class StreamServerSeekSource(Source):
 
 	def fastBackward(self, speed):
 		return self.fastForward(speed * -1)
-	
+
 	def slowMotion(self, speed):
 		if speed == 0:
 			return self.unpause()
 		return self._pause.setSlowMotion(speed)
-	
+
 	def seekTo(self, pos):
 		return self._seek.seekTo(pos * self._unitMultiplier)
-	
+
 	def seekRelative(self, pos):
 		if pos > 0:
 			return self._seek.seekRelative(1, pos * self._unitMultiplier)
@@ -71,7 +71,7 @@ class StreamServerSeekSource(Source):
 
 	def seekChapter(self, number):
 		return self._seek.seekChapter(number)
-	
+
 	def getLength(self):
 		result = self._seek.getLength()
 		if not result[0]:
@@ -102,20 +102,20 @@ class StreamServerSeekSource(Source):
 				self.res = (False, _("encoder service not pausable"))
 				return False
 			self._pause = pause
-		
+
 		if self.func in self.REQUIRE_SEEKABLE:
 			seek = encoderService.seek()
 			if not seek:
 				self.res = (False, _("encoder service not seekable"))
 				return False
 			self._seek = seek
-		
+
 		return True
 
 	def handleCommand(self, params):
 		if not self.initVars():
 			return
-		
+
 		pos = None
 		number = None
 		speed = None
@@ -141,7 +141,7 @@ class StreamServerSeekSource(Source):
 			except Exception:
 				self.res = (False, _("invalid parameter '%s'") % "number")
 				return
-		
+
 		if self.func is self.FAST_FORWARD or self.func is self.FAST_BACKWARD or self.func is self.SLOW_MOTION:
 			speed = params
 			if not speed:
@@ -152,7 +152,7 @@ class StreamServerSeekSource(Source):
 			except Exception:
 				self.res = (False, _("invalid parameter '%s'") % "speed")
 				return
-		
+
 		if self.func is self.SEEK_TO or self.func is self.SEEK_RELATIVE or self.func is self.GET_LENGTH or self.func is self.GET_PLAY_POSITION:
 			self._unitMultiplier = 1
 			if self.func is self.GET_LENGTH or self.func is self.GET_PLAY_POSITION:
@@ -187,7 +187,7 @@ class StreamServerSeekSource(Source):
 			result = self.info()
 
 		self.res = (True, result)
-	
+
 	def getResult(self):
 		if not self.res:
 			if not self.initVars():

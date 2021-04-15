@@ -41,7 +41,7 @@ class InternetRadioList(List):
 				display = "%s (%s)" % (item.configItem.name.value, item.configItem.country.value)
 			else:
 				display = item.configItem.name.value
-				
+
 			if item.configItem.type.value > 0:
 				if item.configItem.type.value == 1:
 					filtername = _("Genres")
@@ -75,13 +75,13 @@ class InternetRadioList(List):
 			return self.master.getIndex()
 		else:
 			return 0
-			
+
 	@cached
 	def getCurrentSelection(self):
 		data = self.current and self.current[0]
 		if data:
 			return data
-		return None			
+		return None
 
 	def setList(self, list):
 		self.list = list

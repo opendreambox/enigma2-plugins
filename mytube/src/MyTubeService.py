@@ -184,33 +184,33 @@ class MyTubePlayerService():
 	def SubscribeToUser(self, username):
 		try:
 			new_subscription = self.yt_service.AddSubscriptionToChannel(username_to_subscribe_to=username)
-	
+
 			if isinstance(new_subscription, gdata.youtube.YouTubeSubscriptionEntry):
 				print '[MyTube] MyTubePlayerService: New subscription added'
 				return _('New subscription added')
-			
+
 			return _('Unknown error')
 		except gdata.service.RequestError as req:
 			return str('Error: ' + str(req[0]["body"]))
 		except Exception as e:
 			return str('Error: ' + e)
-	
+
 	def addToFavorites(self, video_id):
 		try:
 			video_entry = self.yt_service.GetYouTubeVideoEntry(video_id=video_id)
 			response = self.yt_service.AddVideoEntryToFavorites(video_entry)
-			
+
 			# The response, if succesfully posted is a YouTubeVideoEntry
 			if isinstance(response, gdata.youtube.YouTubeVideoEntry):
 				print '[MyTube] MyTubePlayerService: Video successfully added to favorites'
-				return _('Video successfully added to favorites')	
-	
+				return _('Video successfully added to favorites')
+
 			return _('Unknown error')
 		except gdata.service.RequestError as req:
 			return str('Error: ' + str(req[0]["body"]))
 		except Exception as e:
 			return str('Error: ' + e)
-	
+
 	def getTitle(self):
 		return ""
 
@@ -234,4 +234,3 @@ class MyTubePlayerService():
 
 
 myTubeService = MyTubePlayerService()
-

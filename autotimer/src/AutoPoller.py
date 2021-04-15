@@ -95,7 +95,7 @@ class AutoPollerThread(Thread):
 			# NOTE: we have to check this here and not using the while to prevent the parser to be started on shutdown
 			if not self.running:
 				break
-			
+
 			if config.plugins.autotimer.skip_during_records.value:
 				try:
 					import NavigationInstance

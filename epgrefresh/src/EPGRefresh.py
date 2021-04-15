@@ -42,9 +42,9 @@ from Screens.MessageBox import MessageBox
 from Tools import Notifications
 from Tools.BoundFunction import boundFunction
 
-# epg.db 
-from enigma import cachestate                                                
-from sqlite3 import dbapi2 as sqlite      
+# epg.db
+from enigma import cachestate
+from sqlite3 import dbapi2 as sqlite
 
 # ... II
 from . import ENDNOTIFICATIONID, NOTIFICATIONDOMAIN
@@ -79,7 +79,7 @@ class EPGRefresh:
 
 		# Mtime of configuration files
 		self.configMtime = -1
-		
+
 		# Todos after finish
 		self._initFinishTodos()
 
@@ -92,9 +92,9 @@ class EPGRefresh:
 		# timeout timer for eEPGCache-signal based refresh
 		self.epgTimeoutTimer = eTimer()
 		self.epgTimeoutTimer_conn = self.epgTimeoutTimer.timeout.connect(self.epgTimeout)
-		
+
 		# set state for pending services message box
-		self.showPendingServicesMessageShown = False		
+		self.showPendingServicesMessageShown = False
 
 	def epgTimeout(self):
 		if eDVBSatelliteEquipmentControl.getInstance().isRotorMoving():
@@ -108,7 +108,7 @@ class EPGRefresh:
 					self.refresh,
 					nocheck=True)
 			)
-			
+
 	# _onCacheStateChanged is called whenever an eEPGCache-signal is sent by enigma2
 	#  0 = started, 1 = stopped, 2 = aborted, 3 = deferred, 4 = load_finished, 5 = save_finished
 	def _onCacheStateChanged(self, cState):
@@ -149,7 +149,7 @@ class EPGRefresh:
 
 	def _initFinishTodos(self):
 		self.finishTodos = [self._ToDoCallAutotimer, self._ToDoAutotimerCalled, self._callFinishNotifiers, self.finish]
-	
+
 	def addFinishNotifier(self, notifier):
 		if not callable(notifier):
 			print("[EPGRefresh] notifier" + str(notifier) + " isn't callable")
@@ -259,7 +259,7 @@ class EPGRefresh:
 		self.forcedScan = True
 		self.prepareRefresh()
 		return True
-	
+
 	def stopRunningRefresh(self, session=None):
 		print("[EPGRefresh] Forcing stop of EPGRefresh")
 		if self.session is None:
@@ -352,7 +352,7 @@ class EPGRefresh:
 
 	def isRunning(self):
 		return self.isrunning
-	
+
 	def isRefreshAllowed(self):
 		if self.isRunning():
 			message = _("There is still a refresh running. The Operation isn't allowed at this moment.")
@@ -409,7 +409,7 @@ class EPGRefresh:
 		except:
 			print("[EPGRefresh] Error while adding 'Stop Running EPG-Refresh' to Extensionmenu")
 			print_exc(file=stdout)
-			
+
 		self.refresh()
 
 	def cleanUp(self):
@@ -418,7 +418,7 @@ class EPGRefresh:
 		config.plugins.epgrefresh.lastscan.save()
 		# stop the epgTimeoutTimer - just in case one is running
 		self.epgTimeoutTimer.stop()
-		
+
 		try:
 			from plugin import AdjustExtensionsmenu, housekeepingExtensionsmenu, extStopDescriptor, extPendingServDescriptor
 			AdjustExtensionsmenu(False, extPendingServDescriptor)
@@ -466,12 +466,12 @@ class EPGRefresh:
 			try:
 				# Import Instance
 				from Plugins.Extensions.AutoTimer.plugin import autotimer
-	
+
 				if autotimer is None:
 					# Create an instance
 					from Plugins.Extensions.AutoTimer.AutoTimer import AutoTimer
 					autotimer = AutoTimer()
-	
+
 				# Parse EPG
 				autotimer.parseEPGAsync(simulateOnly=False).addCallback(self._nextTodo).addErrback(self._autotimerErrback)
 			except:
@@ -480,7 +480,7 @@ class EPGRefresh:
 				self._nextTodo()
 		else:
 			self._nextTodo()
-	
+
 	def _autotimerErrback(self, failure):
 		print("[EPGRefresh] Debug: AutoTimer failed:" + str(failure))
 		if config.plugins.epgrefresh.enablemessage.value:
@@ -494,7 +494,7 @@ class EPGRefresh:
 				# Autotimer has been started
 				ret = args[0]
 				try:
-					#try import new advanced AT-message with searchlog-info 
+					#try import new advanced AT-message with searchlog-info
 					from Plugins.Extensions.AutoTimer.plugin import showFinishPopup
 					showFinishPopup(ret)
 				except:
@@ -503,15 +503,15 @@ class EPGRefresh:
 					Notifications.AddPopup(_("Found a total of %d matching Events.\n%d Timer were added and\n%d modified,\n%d conflicts encountered,\n%d similars added.")
 					% (ret[0], ret[1], ret[2], len(ret[4]), len(ret[5])),
 					MessageBox.TYPE_INFO, 10, domain=NOTIFICATIONDOMAIN)
-		
+
 		self._nextTodo()
-	
+
 	def _callFinishNotifiers(self, *args, **kwargs):
 		for notifier in self.finishNotifiers.keys():
 			print("[EPGRefresh] Debug: call " + str(notifier))
 			self.finishNotifiers[notifier]()
 		self._nextTodo()
-	
+
 	def finish(self, *args, **kwargs):
 		if self.showPendingServicesMessageShown:
 			self.msg.close()
@@ -526,7 +526,7 @@ class EPGRefresh:
                         myEpg = None
                         myEpg = eEPGCache.getInstance()
                         myEpg.save()
-		
+
 		force_auto_shutdown = self.session.nav.wasTimerWakeup() and \
 				config.plugins.epgrefresh.afterevent.value == "auto" and \
 				Screens.Standby.inStandby and config.misc.standbyCounter.value == 1 and \
@@ -546,7 +546,7 @@ class EPGRefresh:
 			elif config.plugins.epgrefresh.afterevent.value == "idle":
 				if not Screens.Standby.inStandby:
 					Notifications.AddNotificationWithCallback(self.sendStandbyNotification, MessageBox, _("EPGRefresh wants to set your\nDreambox to idle. Do that now?"), timeout=10, domain=NOTIFICATIONDOMAIN)
-		
+
 		self.doStopRunningRefresh = False
 		self.forcedScan = False
 		self.isrunning = False
@@ -559,12 +559,12 @@ class EPGRefresh:
 	def sendTryQuitMainloopNotification(self, answer):
 		if answer:
 			Notifications.AddNotificationWithID("Shutdown", Screens.Standby.TryQuitMainloop, 1, domain=NOTIFICATIONDOMAIN)
-		
+
 	def refresh(self):
 		if self.doStopRunningRefresh:
 			self.cleanUp()
 			return
-		
+
 		if self.forcedScan:
 			self.nextService()
 		else:
@@ -615,7 +615,7 @@ class EPGRefresh:
 		# update pending services message box (if shown)
 		if self.showPendingServicesMessageShown:
 			print("[EPGRefresh] - MessageBox is shown. Update pending services")
-			self.showPendingServices(self.session)			
+			self.showPendingServices(self.session)
 
 		try:
 			# Get next reference
@@ -638,7 +638,7 @@ class EPGRefresh:
 					print("[EPGRefresh] Service is protected, skipping!")
 					self.refresh()
 					return
-			
+
 			# If the current adapter is unable to run in background and we are in fact in background now,
 			# fall back to main picture
 			if (not self.refreshAdapter.backgroundCapable and Screens.Standby.inStandby):
@@ -657,7 +657,7 @@ class EPGRefresh:
 			ref = ServiceReference(service.sref)
 			channelname = ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
 			print("[EPGRefresh] - Service is: %s" % (str(channelname)))
-					
+
 			if config.plugins.epgrefresh.usetimebased.value:
 				# Start Timer
 				delay = service.duration or config.plugins.epgrefresh.interval_seconds.value
@@ -706,7 +706,7 @@ class EPGRefresh:
 		connection.close()
 		self.myEpgCacheInstance = eEPGCache.getInstance()
 		self.EpgCacheStateChanged_conn = self.myEpgCacheInstance.cacheState.connect(self.resetStateChanged)
-		self.myEpgCacheInstance.load()                   
+		self.myEpgCacheInstance.load()
 
 	def resetStateChanged(self, state):
 		if state.state == cachestate.load_finished:
@@ -718,7 +718,7 @@ class EPGRefresh:
 		if answer is not None:
 			if answer:
 				quitMainloop(3)
-			
+
 	def showPendingServices(self, session):
 		LISTMAX = 15
 		servcounter = 0
@@ -733,10 +733,10 @@ class EPGRefresh:
 					txt = ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
 					servtxt = servtxt + str(txt) + "\n"
 				servcounter = servcounter + 1
-			
+
 			if servcounter > LISTMAX:
 				servtxt = servtxt + _("%d more services") % (servcounter - LISTMAX)
-			
+
 			# open message box only if not already shown
 			if self.showPendingServicesMessageShown == False:
 				self.msg = session.open(MessageBox, _("Following Services have to be scanned:")
@@ -746,13 +746,13 @@ class EPGRefresh:
 				self.showPendingServicesMessageShown = True
 			else:
 				self.msg["text"].setText(_("Following Services have to be scanned:") + "\n" + servtxt)
-			self.msg["Text"].setText(_("Remaining services: %d") % (servcounter))	
+			self.msg["Text"].setText(_("Remaining services: %d") % (servcounter))
 		except:
 			print("[EPGRefresh] showPendingServices Error!")
 			print_exc(file=stdout)
-			
+
 	def setMessageBoxState(self):
-		self.showPendingServicesMessageShown = False				
+		self.showPendingServicesMessageShown = False
 
 
 epgrefresh = EPGRefresh()

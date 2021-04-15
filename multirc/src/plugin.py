@@ -64,7 +64,7 @@ class MultiRCSetup(ConfigListScreen, Screen):
 			<widget name="config" position="10,10" size="480,40" seperation="240" scrollbarMode="showOnDemand" />
 			<widget name="warning" position="10,50" size="480,220" font="Regular;20" halign="center"/>
 			</screen>"""
-			
+
 	# most of the following is black magic copied from other plugins.
 	# e2 devs should really make some best practices or wrapper for this!
 	def __init__(self, session, args=None):

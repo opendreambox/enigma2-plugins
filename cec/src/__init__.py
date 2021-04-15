@@ -1,6 +1,6 @@
 from .Cec import cec
 
-"""	
+"""
 	enum CEC_MESSAGE_IDS {
 		MSG_FEATURE_ABORT = 0x00,
 		MSG_IMAGE_VIEW_ON = 0x04,

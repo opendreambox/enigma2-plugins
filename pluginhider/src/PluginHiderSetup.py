@@ -153,19 +153,19 @@ class PluginHiderSetup(Screen, HelpableScreen):
 		self.updateList()
 
 	def updateSelectedColor(self):
-		
+
 		try:
 			pluginColor = extensionsColor = eventinfoColor = movielistColor = 0
-			
-			if self.selectedList == 0: 
+
+			if self.selectedList == 0:
 				pluginColor = 1
-			elif self.selectedList == 1: 
+			elif self.selectedList == 1:
 				extensionsColor = 1
-			elif self.selectedList == 2: 
+			elif self.selectedList == 2:
 				eventinfoColor = 1
-			else: 
+			else:
 				movielistColor = 1
-			
+
 			self["plugins"].instance.setBackgroundColor(self["selectedlistColors"].backColors[pluginColor])
 			self["plugins"].instance.setForegroundColor(self["selectedlistColors"].foreColors[pluginColor])
 			self["plugins"].instance.invalidate()
@@ -178,7 +178,7 @@ class PluginHiderSetup(Screen, HelpableScreen):
 			self['movielist'].instance.setBackgroundColor(self["selectedlistColors"].backColors[movielistColor])
 			self['movielist'].instance.setForegroundColor(self["selectedlistColors"].foreColors[movielistColor])
 			self['movielist'].instance.invalidate()
-			
+
 		except:
 				import traceback
 				traceback.print_exc()

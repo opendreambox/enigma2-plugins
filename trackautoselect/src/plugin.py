@@ -31,4 +31,3 @@ def localeAndConfigInit():
 	from TrackAutoselectConfig import TrackAutoselectConfig
 	global track_autoselect_config
 	track_autoselect_config = TrackAutoselectConfig()
-

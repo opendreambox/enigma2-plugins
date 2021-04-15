@@ -105,7 +105,7 @@ class RadioBrowserClient(object):
 				callback(lst)
 			self._parseJson(data, _onJson)
 		options = {
-			"order": "clickcount", 
+			"order": "clickcount",
 			"reverse": True,
 			"offset": offset,
 			"limit": limit,

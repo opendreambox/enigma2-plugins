@@ -124,4 +124,3 @@ class Country(object):
 	@property
 	def stationCount(self):
 		return self._data["stationcount"]
-

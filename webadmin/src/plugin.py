@@ -31,7 +31,7 @@ def autostart(reason, **kwargs):
 		root.putChild("script", Script())
 		root.putChild("terminal", TerminalResource())
 		addExternalChild(("webadmin", root, "WebAdmin", 1, True, "_self"))
-			
+
 
 def Plugins(**kwargs):
 	return [PluginDescriptor(name="WebAdmin",

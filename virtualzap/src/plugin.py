@@ -7,8 +7,8 @@
 #  Coding idea and design by Vali
 #  Support: www.dreambox-tools.info
 #
-#  This plugin is licensed under the Creative Commons 
-#  Attribution-NonCommercial-ShareAlike 3.0 Unported 
+#  This plugin is licensed under the Creative Commons
+#  Attribution-NonCommercial-ShareAlike 3.0 Unported
 #  License. To view a copy of this license, visit
 #  http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to Creative
 #  Commons, 559 Nathan Abbott Way, Stanford, California 94305, USA.
@@ -17,7 +17,7 @@
 #  is licensed by Dream Property GmbH.
 
 #  This plugin is NOT free software. It is open source, you are allowed to
-#  modify it (if you keep the license), but it may not be commercially 
+#  modify it (if you keep the license), but it may not be commercially
 #  distributed other than under the conditions noted above.
 #
 from Plugins.Plugin import PluginDescriptor
@@ -271,9 +271,9 @@ class VirtualZap(Screen):
 		self["NextEPG"] = Label()
 		self["NowTime"] = Label()
 		self["NextTime"] = Label()
-		self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ChannelSelectBaseActions", "ChannelSelectEPGActions", "ColorActions"], 
+		self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ChannelSelectBaseActions", "ChannelSelectEPGActions", "ColorActions"],
 		{
-			"ok": self.ok, 
+			"ok": self.ok,
 			"cancel": self.closing,
 			"right": self.nextService,
 			"left": self.prevService,
@@ -315,8 +315,8 @@ class VirtualZap(Screen):
 		# this is the servicelist from ChannelSelectionBase
 		self.servicelist = servicelist
 		# save orig. method of zap in servicelist
-		self.servicelist_orig_zap = self.servicelist.zap 
-		# when displaying ChannelSelection, do not zap when pressing "ok", so new method is needed	
+		self.servicelist_orig_zap = self.servicelist.zap
+		# when displaying ChannelSelection, do not zap when pressing "ok", so new method is needed
 		self.servicelist.zap = self.servicelist_overwrite_zap
 		# overwrite the actionmap of ChannelSelection
 		self.servicelist["actions"] = ActionMap(["OkCancelActions"],
@@ -512,7 +512,7 @@ class VirtualZap(Screen):
 		# select running service in servicelist again
 		self.setServicelistSelection(self.curBouquet, self.curRef.ref)
 		self.close()
-			
+
 	def ok(self):
 		# we have to close PiP first, otherwise the service-display is freezed
 		if self.pipAvailable:
@@ -565,7 +565,7 @@ class VirtualZap(Screen):
 		self.CheckForEPG.stop()
 		self.updateInfos()
 
-	# if available play service in PiP 
+	# if available play service in PiP
 	def playService(self, service):
 		if parentalControl.getProtectionLevel(service.toCompareString()) == -1 or (parentalControl.configInitialized and parentalControl.sessionPinCached and parentalControl.sessionPinCachedValue): # check parentalControl, only play a protected service when Pin-Cache is activated and still valid
 			current_service = service
@@ -704,7 +704,7 @@ class VirtualZap(Screen):
 			self.updateInfos()
 
 	def __onClose(self):
-		# reverse changes of ChannelSelection 
+		# reverse changes of ChannelSelection
 		self.servicelist.zap = self.servicelist_orig_zap
 		self.servicelist["actions"] = ActionMap(["OkCancelActions", "TvRadioActions"],
 			{
@@ -751,7 +751,7 @@ class VirtualZapConfig(Screen, ConfigListScreen):
 		configfile.save()
 		restartbox = self.session.openWithCallback(self.restartGUI, MessageBox, _("GUI needs a restart to apply the new settings.\nDo you want to Restart the GUI now?"), MessageBox.TYPE_YESNO)
 		restartbox.setTitle(_("Restart GUI now?"))
-		
+
 	def keyClose(self):
 		for x in self["config"].list:
 			x[1].cancel()
@@ -762,4 +762,3 @@ class VirtualZapConfig(Screen, ConfigListScreen):
 			self.session.open(TryQuitMainloop, 3)
 		else:
 			self.close()
-

@@ -35,4 +35,3 @@ class NetworkInfo(Converter):
 			return iface.nameserver
 
 	text = property(getText)
-

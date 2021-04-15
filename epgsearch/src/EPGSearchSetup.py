@@ -84,16 +84,16 @@ class EPGSearchSetup(Screen, ConfigListScreen):
 		if not config.plugins.epgsearch.show_picon.value:
 			self.list.append(getConfigListEntry(_("Show best matching channelname in screen title"), config.plugins.epgsearch.show_sname_in_title, _("Shows the best matching channelname in the screen title to have more space to display event name and short description.")))
 		self.list.append(getConfigListEntry(_("Show short description"), config.plugins.epgsearch.show_shortdesc, _("Add the short description of the event to the search result.")))
-		
-		self.list.append(getConfigListEntry(_("BUTTONS"), )) 
+
+		self.list.append(getConfigListEntry(_("BUTTONS"), ))
 		self.list.append(getConfigListEntry(_("Buttons for 'Search EPG'"), config.plugins.epgsearch.searchEPG_menu, _("Select the buttons, which show this menu item (on change GUI-restart is necessary).")))
 		self.list.append(getConfigListEntry(_("Buttons for 'open EPGSearch search list'"), config.plugins.epgsearch.openSearchFilter_menu, _("Select the buttons, which show this menu item (on change GUI-restart is necessary).")))
-		
+
 		from EPGSearch import autoTimerAvailable
 		if autoTimerAvailable:
 			self.list.append(getConfigListEntry(_("Buttons for 'add search filter to EPGSearch'"), config.plugins.epgsearch.addSearchFilter_menu, _("Select the buttons, which show this menu item (on change GUI-restart is necessary).")))
 			self.list.append(getConfigListEntry(_("Blue button function (search list)"), config.plugins.epgsearch.blue_function, _("Select the search list to show on blue button in the EPGSearch match list (default = text search history and search filter list).")))
-			
+
 	def getScopeChoicesDefault(self):
 		scopeChoices_default = "all"
 

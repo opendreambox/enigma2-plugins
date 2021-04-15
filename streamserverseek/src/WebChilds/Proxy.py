@@ -43,7 +43,7 @@ class MyProxyClientFactory(proxy.ProxyClientFactory):
 class ProxyResource(resource.Resource):
 	isLeaf = True
 	session = None
-	
+
 	proxyClientFactoryClass = MyProxyClientFactory
 
 	def __init__(self, session):
@@ -54,13 +54,13 @@ class ProxyResource(resource.Resource):
 	def render(self, request):
 		request.requestHeaders.setRawHeaders(b"host", [request.getRequestHostname().encode('ascii') + b":8080"])
 		request.content.seek(0, 0)
-		
+
 		path = "/" + "/".join(request.postpath)
 
 		qs = urlparse.urlparse(request.uri)[4]
 		if qs:
 			path = path + '?' + qs
-		
+
 		print "[StreamServerSeek] Reverse-Proxy %s" % path
 
 		clientFactory = self.proxyClientFactoryClass(

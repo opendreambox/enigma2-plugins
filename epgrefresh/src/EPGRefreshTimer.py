@@ -163,19 +163,19 @@ class EPGRefreshTimer(timer.Timer):
 
 	def isActive(self):
 		return len(self.timer_list) > 0
-	      
+
 	def calcNextActivation(self):
 		# FIXME FIXME FIXME
 		# Dr.Best 09-04-2014 --> good solution?
 		# if eDVBLocalTimeHandler is updating the transponder time (negativ), the timewarp code in the orginal calcNextActivation() method is the reason why epgrefresh triggers all remaining refresh timers at once.
 		# I believe the timewarp code is not necessary here in the EPGRefreshTimer class, so I removed it.
 		# FIXME FIXME FIXME
-		
+
 		self.processActivation()
 		self.lastActivation = time()
-	
+
 		min = int(time()) + self.MaxWaitTime
-		
+
 		# calculate next activation point
 		timer_list = [t for t in self.timer_list if not t.disabled]
 		if timer_list:
@@ -184,8 +184,8 @@ class EPGRefreshTimer(timer.Timer):
 				min = w
 			else:
 				print("[EPGRefreshTimer] next real activation is %s" % (strftime("%c", localtime(w))))
-		
-		self.setNextActivation(min)      
+
+		self.setNextActivation(min)
 
 
 epgrefreshtimer = EPGRefreshTimer()

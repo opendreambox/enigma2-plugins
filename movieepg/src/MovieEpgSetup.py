@@ -91,4 +91,3 @@ class MovieEpgSetup(Screen, ConfigListScreen):
 
 	def createSummary(self):
 		return SetupSummary
-

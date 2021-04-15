@@ -60,7 +60,7 @@ try:
 	MMPlayerInstalled = True
 except:
 	MMPlayerInstalled = False
-	
+
 config.plugins.DreamExplorer = ConfigSubsection()
 config.plugins.DreamExplorer.startDir = ConfigText(default="/")
 config.plugins.DreamExplorer.useMediaFilter = ConfigOnOff(default=False)
@@ -86,7 +86,7 @@ class DreamExplorer3(Screen):
 			<ePixmap alphatest="on" pixmap="/usr/share/enigma2/skin_default/div-h.png" position="0,3" size="1840,2" zPosition="5" scale="stretch" />
 			<widget name="filelist" position="0,5" scrollbarMode="showOnDemand" size="1840,880" zPosition="4" iconSet="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/icons" />
 			<ePixmap alphatest="on" pixmap="/usr/share/enigma2/skin_default/div-h.png" position="0,885" size="1840,2" zPosition="5" scale="stretch" />
-			
+
 			<eLabel font="Regular;20" position="10,895" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f50000" zPosition="6"/>
 			<eLabel font="Regular;20" position="340,895" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#009f00" zPosition="6"/>
 			<eLabel font="Regular;20" position="670,895" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f5f500" zPosition="6"/>
@@ -98,25 +98,25 @@ class DreamExplorer3(Screen):
 			<eLabel font="Regular;25" halign="left" position="740,890" size="250,40" text="Move/Copy" transparent="1" valign="center" zPosition="6"/>
 			<eLabel font="Regular;25" halign="left" position="1070,890" size="250,40" text="Rename" transparent="1" valign="center" zPosition="6"/>
 			<eLabel font="Regular;25" halign="left" position="1400,890" size="250,40" text="Options" transparent="1" valign="center" zPosition="6"/>
-			
+
 			<eLabel font="Regular;20" position="10,940" size="60,30" text="INFO" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
 			<eLabel font="Regular;20" position="340,940" size="60,30" text="AUDIO" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
 			<eLabel font="Regular;20" position="670,940" size="60,30" text="PVR" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
 			<eLabel font="Regular;20" position="1000,940" size="60,30" text="B+" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
 			<eLabel font="Regular;20" position="1330,940" size="60,30" text="B-" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
-			
+
 
 			<eLabel font="Regular;25" halign="left" position="80,935" size="250,40" text="Info" transparent="1" valign="center" zPosition="6"/>
-			<widget name="filtertext" font="Regular;25" halign="left" position="410,935" size="250,40" transparent="1" valign="center" zPosition="6"/>			
+			<widget name="filtertext" font="Regular;25" halign="left" position="410,935" size="250,40" transparent="1" valign="center" zPosition="6"/>
 			<eLabel font="Regular;25" halign="left" position="740,935" size="250,40" text="Bookmarks" transparent="1" valign="center" zPosition="6"/>
 			<widget name="namedate" font="Regular;25" halign="left" position="1070,935" size="250,40" transparent="1" valign="center" zPosition="6"/>
 			<widget name="ascdesc" font="Regular;25" halign="left" position="1400,935" size="250,40" transparent="1" valign="center" zPosition="6"/>
 
 			<eLabel font="Regular;20" position="10,985" size="60,30" text="OK" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
 			<eLabel font="Regular;20" position="340,985" size="60,30" text="EXIT" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
-			<widget name="texticon" font="Regular;20" position="670,985" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>			
-			<widget name="playicon" font="Regular;20" position="1000,985" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>	
-			
+			<widget name="texticon" font="Regular;20" position="670,985" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<widget name="playicon" font="Regular;20" position="1000,985" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+
 			<widget name="oktext" font="Regular;25" halign="left" position="80,980" size="250,40" transparent="1" valign="center" zPosition="6" />
 			<eLabel font="Regular;25" halign="left" position="410,980" size="250,40" text="Close Plugin" transparent="1" valign="center" zPosition="6"/>
 			<widget name="chmodtext" font="Regular;25" halign="left" position="740,980" size="250,40" transparent="1" valign="center" zPosition="6"/>
@@ -128,7 +128,7 @@ class DreamExplorer3(Screen):
 			<ePixmap alphatest="on" pixmap="/usr/share/enigma2/skin_default/div-h.png" position="0,3" size="1230,2" zPosition="5" scale="stretch" />
 			<widget name="filelist" position="0,5" scrollbarMode="showOnDemand" size="1230,540" iconSet="/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/icons" />
 			<ePixmap alphatest="on" pixmap="/usr/share/enigma2/skin_default/div-h.png" position="0,545" size="1230,2" zPosition="5" scale="stretch" />
-			
+
 			<eLabel font="Regular;12" position="10,555" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f50000" zPosition="6"/>
 			<eLabel font="Regular;12" position="240,555" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#009f00" zPosition="6"/>
 			<eLabel font="Regular;12" position="470,555" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#f5f500" zPosition="6"/>
@@ -140,25 +140,25 @@ class DreamExplorer3(Screen):
 			<eLabel font="Regular;16" halign="left" position="515,550" size="180,30" text="Move/Copy" transparent="1" valign="center" zPosition="6"/>
 			<eLabel font="Regular;16" halign="left" position="745,550" size="180,30" text="Rename" transparent="1" valign="center" zPosition="6"/>
 			<eLabel font="Regular;16" halign="left" position="975,550" size="180,30" text="Options" transparent="1" valign="center" zPosition="6"/>
-			
+
 			<eLabel font="Regular;12" position="10,590" size="40,20" text="INFO" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
 			<eLabel font="Regular;12" position="240,590" size="40,20" text="AUDIO" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
 			<eLabel font="Regular;12" position="470,590" size="40,20" text="PVR" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
 			<eLabel font="Regular;12" position="700,590" size="40,20" text="B+" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
 			<eLabel font="Regular;12" position="930,590" size="40,20" text="B-" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
-			
+
 
 			<eLabel font="Regular;16" halign="left" position="55,585" size="180,30" text="Info" transparent="1" valign="center" zPosition="6"/>
-			<widget name="filtertext" font="Regular;16" halign="left" position="285,585" size="180,30" transparent="1" valign="center" zPosition="6"/>			
+			<widget name="filtertext" font="Regular;16" halign="left" position="285,585" size="180,30" transparent="1" valign="center" zPosition="6"/>
 			<eLabel font="Regular;16" halign="left" position="515,585" size="180,30" text="Bookmarks" transparent="1" valign="center" zPosition="6"/>
 			<widget name="namedate" font="Regular;16" halign="left" position="745,585" size="180,30" transparent="1" valign="center" zPosition="6"/>
 			<widget name="ascdesc" font="Regular;16" halign="left" position="975,585" size="180,30" transparent="1" valign="center" zPosition="6"/>
 
 			<eLabel font="Regular;12" position="10,625" size="40,20" text="OK" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
 			<eLabel font="Regular;12" position="240,625" size="40,20" text="EXIT" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
-			<widget name="texticon" font="Regular;12" position="470,625" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>			
-			<widget name="playicon" font="Regular;12" position="700,625" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>	
-			
+			<widget name="texticon" font="Regular;12" position="470,625" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+			<widget name="playicon" font="Regular;12" position="700,625" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
+
 			<widget name="oktext" font="Regular;16" halign="left" position="55,620" size="180,30" transparent="1" valign="center" zPosition="6" />
 			<eLabel font="Regular;16" halign="left" position="285,620" size="180,30" text="Close Plugin" transparent="1" valign="center" zPosition="6"/>
 			<widget name="chmodtext" font="Regular;16" halign="left" position="515,620" size="180,30" transparent="1" valign="center" zPosition="6"/>
@@ -174,18 +174,18 @@ class DreamExplorer3(Screen):
 		self.selectedDir = "/tmp/"
 		# DarkVolli 20120702: add filetype wmv
 		self.mediaPattern = "^.*\.(ts|m2ts|mp3|wav|ogg|jpg|jpeg|jpe|png|bmp|mpg|mpeg|mkv|mp4|mov|divx|avi|mp2|m4a|flac|ifo|vob|iso|sh|flv|3gp|mod|wmv)"
-		
+
 		startDirectory = None
 		if pathExists(config.plugins.DreamExplorer.startDir.value):
 			startDirectory = config.plugins.DreamExplorer.startDir.value
-		
+
 		self.useMediaFilter = config.plugins.DreamExplorer.useMediaFilter.value
 
 		if self.useMediaFilter == False:
 			self["filelist"] = DreamExplorerFileList(directory=startDirectory, showDirectories=True, showFiles=True, matchingPattern=None)
 		else:
 			self["filelist"] = DreamExplorerFileList(directory=startDirectory, showDirectories=True, showFiles=True, matchingPattern=self.mediaPattern)
-			
+
 		self["actions"] = ActionMap(["WizardActions", "DirectionActions", "ColorActions", "MenuActions", "EPGSelectActions", "InfobarActions", "InfobarAudioSelectionActions", "InfobarSeekActions"],
 		{
 			"ok": self.executeAction,
@@ -207,7 +207,7 @@ class DreamExplorer3(Screen):
 			"audioSelection": self.toggleMediaFilter,
 			"playpauseService": self.showThumbnails,
 		}, -1)
-		
+
 		self["NumberActions"] = NumberActionMap(["NumberActions"],
 		{
 			"1": self.keyNumberGlobal,
@@ -219,15 +219,15 @@ class DreamExplorer3(Screen):
 			"7": self.keyNumberGlobal,
 			"8": self.keyNumberGlobal,
 			"9": self.keyNumberGlobal,
-			"0": self.keyNumberGlobal,			
+			"0": self.keyNumberGlobal,
 		})
-		
+
 		self["oktext"] = Label(_("Change directory"))
 		self["chmodtext"] = Label(_("Set permissions"))
 		self["filtertext"] = Label(_("Enable media filter"))
 		self["namedate"] = Label(_("Sort by date"))
 		self["ascdesc"] = Label(_("Sort desc"))
-		
+
 		self["texticon"] = Label("TEXT")
 		self["playicon"] = Label("PLAY")
 		self["playtext"] = Label(_("Show thumbnails"))
@@ -235,24 +235,24 @@ class DreamExplorer3(Screen):
 		if not PicturePlayerInstalled:
 			self["playicon"].hide()
 			self["playtext"].setText("")
-		
+
 		self.cmd = ""
 		self.useMediaFilter = False
-		
+
 		self.numericalTextInput = NumericalTextInput()
 		self.numericalTextInput.setUseableChars(u'.1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ')
-		
+
 		self.container = eConsoleAppContainer()
 		self.appClosed_conn = self.container.appClosed.connect(self.runFinished)
 		self.dataavail_conn = self.container.dataAvail.connect(self.getData)
-		self["filelist"].onSelectionChanged.append(self.setOkText)	
-		self.onLayoutFinish.append(self.setOkText)	
+		self["filelist"].onSelectionChanged.append(self.setOkText)
+		self.onLayoutFinish.append(self.setOkText)
 		self.updateLocationInfo()
 
 	def chmodItem(self):
 		if not self["filelist"].canDescent():
 			self.session.openWithCallback(self.chmodCallback, ChoiceBox, title=_("Please select new permissions..."), list=[(_("Read, write, execute (755)"), 0755), (_("Read, write (644)"), 0644)])
-			
+
 	def chmodCallback(self, answer):
 		if answer:
 			chmod(self["filelist"].getFilenameWithPath(), answer[1])
@@ -269,16 +269,16 @@ class DreamExplorer3(Screen):
 			config.plugins.DreamExplorer.useMediaFilter.value = True
 			self["filelist"].matchingPattern = self.mediaPattern
 			self["filtertext"].setText(_("Disable media filter"))
-		
+
 		config.plugins.DreamExplorer.useMediaFilter.save()
 		self["filelist"].refresh()
-		self.updateLocationInfo()		
+		self.updateLocationInfo()
 
 	def showThumbnails(self):
 		if PicturePlayerInstalled:
 			pictureList = self["filelist"].getFilteredFileList("picture", True)
 			# pictureList must be converted into a fake filelistEntryComponent entry to picture player to work properly
-			self.session.open(Pic_Thumb, [[(x, False), "", ""] for x in pictureList], 0, self["filelist"].getCurrentDirectory())			
+			self.session.open(Pic_Thumb, [[(x, False), "", ""] for x in pictureList], 0, self["filelist"].getCurrentDirectory())
 
 	def keyNumberGlobal(self, number):
 		unichar = self.numericalTextInput.getKey(number)
@@ -302,7 +302,7 @@ class DreamExplorer3(Screen):
 			filename = self["filelist"].getFilename()
 			if filename is not None:
 				fileExtensionType = self["filelist"].getFileExtensionType()
-				
+
 				if fileExtensionType == "music":
 					okText = _("Play song")
 				elif fileExtensionType == "picture":
@@ -326,14 +326,14 @@ class DreamExplorer3(Screen):
 		if okText == "":
 			self["texticon"].hide()
 		else:
-			self["texticon"].show()			
+			self["texticon"].show()
 		self["chmodtext"].setText(chmodText)
 		self["playtext"].setText(playText)
 		if playText == "":
 			self["playicon"].hide()
 		else:
 			self["playicon"].show()
-			
+
 	def showCreateOptions(self):
 		target = self["filelist"].getFilenameWithPath()
 		targetFileDir = self["filelist"].getPathForFile()
@@ -341,7 +341,7 @@ class DreamExplorer3(Screen):
 			target = self["filelist"].getPathForFile()
 
 		self.session.openWithCallback(self.getSelection, ChoiceBox, title=_("Please select action..."), list=[(_("Create file in %s" % (targetFileDir)), "createFile"), (_("Create directory in %s" % (targetFileDir)), "createDir"), (_("Create symlink to %s" % (target)), "createSymlink")])
-		
+
 	def getSelection(self, selection):
 		if selection:
 			if selection[1] == "createFile":
@@ -358,30 +358,30 @@ class DreamExplorer3(Screen):
 				if target is None:
 					target = self["filelist"].getPathForFile()
 				titletext = _("Create %s to %s with name:" % (element, target))
-				
+
 			self.session.openWithCallback(boundFunction(self.createItem, element), InputBox, title=titletext, text=_("Name"))
 
 	def createItem(self, type, elementName):
 		if elementName:
 			self.executionData = ""
 			newElement = "%s%s" % (self["filelist"].getPathForFile(), elementName)
-			
+
 			if type == "symlink":
 				self.symlinkName = elementName
 				self.openCopyMoveManager(True)
-			else:			
+			else:
 				if type == "file":
 					self.cmd = 'touch %s' % (newElement)
 					self.actionText = _("Creation of file %s" % (newElement))
-						
+
 				elif type == "directory":
 					self.cmd = 'mkdir %s' % (newElement)
-		
+
 					self.actionText = _("Creation of directory %s" % (newElement))
-					self.container.execute(self.cmd)		
-	
+					self.container.execute(self.cmd)
+
 				self.container.execute(self.cmd)
-			
+
 	def executeAction(self):
 		if self["filelist"].canDescent():
 			self["filelist"].descent()
@@ -396,7 +396,7 @@ class DreamExplorer3(Screen):
 				if fileExtension == "ts":
 					fileRef = eServiceReference("1:0:0:0:0:0:0:0:0:0:" + filenameWithPath)
 					self.session.open(MoviePlayer, fileRef)
-					
+
 				elif fileExtension in ["mpg", "mpeg", "mkv", "m2ts", "vob", "mod", "avi", "mp4", "divx", "mov", "flv", "3gp", "wmv"]:
 					fileRef = eServiceReference("4097:0:0:0:0:0:0:0:0:0:" + filenameWithPath)
 					self.session.open(MoviePlayer, fileRef)
@@ -416,33 +416,33 @@ class DreamExplorer3(Screen):
 							pictureList = self["filelist"].getFilteredFileList("picture", True)
 							# pictureList must be converted into a fake filelistEntryComponent entry to picture player to work properly
 							self.session.open(Pic_Full_View, [[(x, False), "", ""] for x in pictureList], 0, self["filelist"].getCurrentDirectory())
-								
+
 				elif fileExtension == "mvi":
 					self.session.nav.stopService()
 					self.session.openWithCallback(self.restartService, MviExplorer, filenameWithPath)
-					
+
 				elif filename.lower() == "video_ts.ifo":
 					if DVDPlayerInstalled:
 						if (self["filelist"].getCurrentDirectory()).lower().endswith("video_ts/"):
 							self.session.openWithCallback(self.restartService, DVDPlayer, dvd_filelist=[self["filelist"].getCurrentDirectory()])
-							
+
 				elif fileExtension == "iso":
 					if DVDPlayerInstalled:
 						self.session.openWithCallback(self.restartService, DVDPlayer, dvd_filelist=[filenameWithPath])
-						
+
 				elif filename.lower().endswith(".bootlogo.tar.gz"):
 					self.command = ["mount -rw /boot -o remount", "sleep 3", "tar -xzvf " + filenameWithPath + " -C /", "mount -ro /boot -o remount"]
 					askList = [(_("Cancel"), "NO"), (_("Install bootlogo"), "YES")]
 					msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" % (filename)), list=askList)
 					msg.setTitle(_("Dream Explorer 3"))
-					
+
 				elif fileExtension in ["gz", "bz2"]:
 					if filename.lower()[-6:-3] == "tar":
 						if fileExtension == "gz":
 							self.command = ["tar -xzvf " + filenameWithPath + " -C /"]
 						elif fileExtension == "bz2":
 							self.command = ["tar -xjvf " + filenameWithPath + " -C /"]
-						
+
 						msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" % (filename)), list=[(_("Cancel"), "NO"), (_("Extract archive"), "YES")])
 						msg.setTitle(_("Dream Explorer 3"))
 
@@ -451,7 +451,7 @@ class DreamExplorer3(Screen):
 					askList = [(_("Cancel"), "NO"), (_("Install package"), "YES")]
 					msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" % (filename)), list=askList)
 					msg.setTitle(_("Dream Explorer 3"))
-					
+
 				elif fileExtension == "sh":
 					self.command = [filenameWithPath]
 					askList = [(_("Cancel"), "NO"), (_("View script"), "VIEW"), (_("Execute script"), "YES")]
@@ -483,7 +483,7 @@ class DreamExplorer3(Screen):
 		contextList.extend((
 			(_("About"), "ABOUT"),
 		))
-		
+
 		self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Options:\n"), list=contextList, windowTitle=_("Dream Explorer 3"))
 
 	def executeSelected(self, answer):
@@ -498,7 +498,7 @@ class DreamExplorer3(Screen):
 			startDir = self["filelist"].getSelection()[1]
 			if startDir is None:
 				startDir = self["filelist"].getCurrentDirectory()
-				
+
 			self.session.openWithCallback(self.callbackSetStartDir, MessageBox, _("Do you want to set\n%s\nas start directory?" % (startDir)), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3"))
 		elif answer == "ABOUT":
  			self.session.open(MessageBox, _("Dreambox Explorer II created by Vali (2010)\nDream Explorer 3 by Dre (2021)\n\nSupport: board.dreamboxtools.de"), MessageBox.TYPE_INFO, windowTitle=_("Info"))
@@ -539,8 +539,8 @@ class DreamExplorer3(Screen):
 							if tokens[0] == 'procs_running':
 								ret += _("Running processes: ") + tokens[1]
 				except:
-					ret = "N/A"			
-			
+					ret = "N/A"
+
 				msg = self.session.open(MessageBox, _("Dreambox model: %s\n\n%s" % (HardwareInfo().get_device_name(), ret)), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 		elif self["filelist"].getFileExtensionType() == "service":
 			self.session.open(SystemdViewer, self["filelist"].getFilename(), self["filelist"].getFilenameWithPath())
@@ -551,7 +551,7 @@ class DreamExplorer3(Screen):
 
 	def openBookmarkManager(self):
 		self.session.openWithCallback(self.setDirectory, BookmarkManager)
-		
+
 	def setDirectory(self, dir=False):
 		if dir:
 			self["filelist"].changeDirectory(dir)
@@ -566,29 +566,29 @@ class DreamExplorer3(Screen):
 			state = False
 		else:
 			resultText = _("successful")
-			state = True	
-		
+			state = True
+
 		self.session.open(MessageBox, "%s %s" % (self.actionText, resultText), MessageBox.TYPE_INFO if state else MessageBox.TYPE_ERROR, timeout=0)
-		
+
 		self["filelist"].refresh()
-			
+
 	def deleteItem(self):
 		if self.useMediaFilter:
 			msg = self.session.open(MessageBox, _('Turn off the media-filter first.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 			return
-			
+
 		if not(self["filelist"].canDescent()):
 			self.item = self["filelist"].getFilenameWithPath()
 			self.type = "file"
 			self.typetext = _("file")
-			
+
 		elif (self["filelist"].getCurrentIndex() != 0) and (self["filelist"].canDescent()):
 			self.item = self["filelist"].getSelection()[1]
 			self.type = "directory"
 			self.typetext = _("directory")
 		else:
 			return
-			
+
 		msg = self.session.openWithCallback(self.callbackDeleteItem, MessageBox, _("Do you really want to delete:\n" + self.item), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3 - Delete %s..." % (self.type)))
 
 	def callbackDeleteItem(self, answer):
@@ -598,14 +598,14 @@ class DreamExplorer3(Screen):
 			elif self.type == "file":
 				self.cmd = "rm -f '%s'" % (self.item)
 
-			self.actionText = _("Deletion of %s %s" % (self.type, self.item))		
+			self.actionText = _("Deletion of %s %s" % (self.type, self.item))
 			self.container.execute(self.cmd)
 
 	def renameItem(self):
 		if self.useMediaFilter:
 			msg = self.session.open(MessageBox, _('Turn off the media-filter first.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 			return
-			
+
 		if not(self["filelist"].canDescent()):
 			item = self["filelist"].getFilename()
 			self.type = "file"
@@ -616,7 +616,7 @@ class DreamExplorer3(Screen):
 			self.typetext = _("directory")
 		else:
 			return
-			
+
 		self.session.openWithCallback(self.callbackRenameItem, InputBox, title=_("Current name: %s" % (item)), windowTitle=_("Rename %s..." % (self.typetext)), text=item)
 
 	def callbackRenameItem(self, answer):
@@ -629,22 +629,22 @@ class DreamExplorer3(Screen):
 			newName = path + answer
 
 			self.cmd = 'mv %s %s' % (oldName, newName)
-			
+
 			self.actionText = _("Renaming of %s to %s" % (oldName, newName))
 			self.container.execute(self.cmd)
-			
+
 	def openCopyMoveManager(self, setSymLink=False):
 		if self.useMediaFilter:
 			msg = self.session.open(MessageBox, _('Turn off the media-filter first.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 			return
-			
+
 		if not(self["filelist"].canDescent()):
 			source = self["filelist"].getFilenameWithPath()
 		elif (self["filelist"].getCurrentIndex() != 0) and (self["filelist"].canDescent()): #NEW
 			source = self["filelist"].getSelection()[1]
 		else:
 			return
-		
+
 		if setSymLink:
 			mode = "symlink"
 			showFiles = False
@@ -658,7 +658,7 @@ class DreamExplorer3(Screen):
 		if answer is not None:
 			self.actionText = answer[0]
 			self.cmd = answer[1]
-			
+
 			self.container.execute(self.cmd)
 
 	def callbackSetStartDir(self, answerSD):
@@ -693,7 +693,7 @@ class DreamExplorer3(Screen):
 
 		self["filelist"].sortList()
 		self["filelist"].setList()
-			
+
 	def sortAscOrDesc(self):
 		if self["filelist"].getSortType() == DreamExplorerFileList.SORT_NAME_DESC:
 			self["filelist"].setSortType(DreamExplorerFileList.SORT_NAME_ASC)
@@ -710,7 +710,7 @@ class DreamExplorer3(Screen):
 
 		self["filelist"].sortList()
 		self["filelist"].setList()
-	
+
 	def searchMusic(self):
 		slist = []
 		foundIndex = 0
@@ -726,7 +726,7 @@ class DreamExplorer3(Screen):
 	def exitPlugin(self):
 		self.close()
 
-######## DREAM-EXPLORER END ####################### 
+######## DREAM-EXPLORER END #######################
 
 
 class BookmarkManager(Screen):
@@ -756,7 +756,7 @@ class BookmarkManager(Screen):
 			<widget name="deleteBookmark" font="Regular;25" halign="left" position="50,535" size="180,40" transparent="1" valign="center" zPosition="6"/>
 			<widget  name="addBookmark" font="Regular;25" halign="left" position="290,535" size="180,40" transparent="1" valign="center" zPosition="6"/>
 			<widget name="saveBookmarks" font="Regular;25" halign="left" position="530,535" size="180,40" transparent="1" valign="center" zPosition="6"/>
-			<widget name="toggleList" font="Regular;25" halign="left" position="770,535" size="180,40" transparent="1" valign="center" zPosition="6"/>	
+			<widget name="toggleList" font="Regular;25" halign="left" position="770,535" size="180,40" transparent="1" valign="center" zPosition="6"/>
 			<widget name="ok" font="Regular;25" halign="left" position="50,575" size="180,40" transparent="1" valign="center" zPosition="6"/>
 			<widget  name="exit" font="Regular;25" halign="left" position="290,575" size="180,40" transparent="1" valign="center" zPosition="6"/>
 		</screen>
@@ -787,15 +787,15 @@ class BookmarkManager(Screen):
 			<widget name="deleteBookmark" font="Regular;16" halign="left" position="70,535" size="180,30" transparent="1" valign="center" zPosition="6"/>
 			<widget  name="addBookmark" font="Regular;16" halign="left" position="330,535" size="180,30" transparent="1" valign="center" zPosition="6"/>
 			<widget name="saveBookmarks" font="Regular;16" halign="left" position="590,535" size="180,30" transparent="1" valign="center" zPosition="6"/>
-			<widget name="toggleList" font="Regular;16" halign="left" position="850,535" size="180,30" transparent="1" valign="center" zPosition="6"/>	
+			<widget name="toggleList" font="Regular;16" halign="left" position="850,535" size="180,30" transparent="1" valign="center" zPosition="6"/>
 			<widget name="ok" font="Regular;16" halign="left" position="70,575" size="180,30" transparent="1" valign="center" zPosition="6"/>
 			<widget  name="exit" font="Regular;16" halign="left" position="330,575" size="180,30" transparent="1" valign="center" zPosition="6"/>
 		</screen>
-		"""		
+		"""
 
 	def __init__(self, session, args=None):
 		Screen.__init__(self, session)
-		
+
 		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "DirectionActions"],
 		{
 			"ok": self.changeDirOrSelectBookmark,
@@ -809,11 +809,11 @@ class BookmarkManager(Screen):
 			"left": self.pageUp,
 			"right": self.pageDown,
 		}, -1)
-		
+
 		self.currentList = "bookmarklist"
-		
+
 		self["filelist"] = DreamExplorerFileList(list_type=DreamExplorerFileList.LIST_TYPE_NODETAILS, directory="/", showDirectories=True, showFiles=False, matchingPattern=None, showDetails=False)
-		
+
 		self["folders"] = Label(_("Folders"))
 		self["bookmarks"] = Label(_("Bookmarks"))
 		self["deleteBookmark"] = Label(_("Delete bookmark"))
@@ -823,11 +823,11 @@ class BookmarkManager(Screen):
 		self["toggleList"] = Label(_("Toggle list"))
 		self["ok"] = Label(_("Open bookmark"))
 		self["exit"] = Label(_("Close"))
-		
+
 		self["bookmarklist"] = List()
-		
+
 		self.readBookmarks()
-		
+
 		self.onLayoutFinish.append(self.setListState)
 
 	def moveUp(self):
@@ -835,7 +835,7 @@ class BookmarkManager(Screen):
 			self[self.currentList].moveSelection("moveUp")
 		else:
 			self[self.currentList].up()
-		
+
 	def moveDown(self):
 		if self.currentList == "bookmarklist":
 			self[self.currentList].moveSelection("moveDown")
@@ -847,63 +847,63 @@ class BookmarkManager(Screen):
 			self[self.currentList].moveSelection("pageUp")
 		else:
 			self[self.currentList].pageUp()
-		
+
 	def pageDown(self):
 		if self.currentList == "bookmarklist":
 			self[self.currentList].moveSelection("pageDown")
 		else:
-			self[self.currentList].pageDown()	
-		
+			self[self.currentList].pageDown()
+
 	def setListState(self):
 		self["filelist"].setSelectionEnabled(False)
 		self["bookmarklist"].setSelectionEnabled(True)
-		
+
 	def changeDirOrSelectBookmark(self):
 		if self.currentList == "filelist":
 			if self["filelist"].canDescent():
 				self["filelist"].descent()
 		else:
 			cur = self["bookmarklist"].getCurrent()
-			if cur is not None:			
+			if cur is not None:
 				self.close(cur[0])
-	
+
 	def addToBookmarks(self):
 		cur = self["filelist"].getCurrent()
 		if cur is not None:
 			if not cur[1] in self.bookmarks:
 				if cur[1] is not None:
 					self.bookmarks.append(cur[1])
-				
+
 					self.updateBookmarks()
 				else:
 					self.session.open(MessageBox, _("Only directories can be bookmarked"), MessageBox.TYPE_INFO, timeout=3)
 			else:
 				self.session.open(MessageBox, _("Diretory is already in bookmarks"), MessageBox.TYPE_INFO, timeout=3)
-		
+
 	def removeFromBookmarks(self):
 		cur = self["bookmarklist"].getCurrent()
 		if cur is not None:
 			self.bookmarks.remove(cur[0])
-			
+
 		self.updateBookmarks()
-			
+
 	def updateBookmarks(self):
 		self.bookmarklist = []
 		for bookmark in self.bookmarks:
-			self.bookmarklist.append((bookmark,))		
-			
+			self.bookmarklist.append((bookmark,))
+
 		self["bookmarklist"].setList(self.bookmarklist)
-		
+
 	def readBookmarks(self):
 		if not pathExists("/etc/enigma2/DreamExplorer"):
 			createDir("/etc/enigma2/DreamExplorer")
-		
+
 		if fileExists("/etc/enigma2/DreamExplorer/bookmarks"):
 			with open("/etc/enigma2/DreamExplorer/bookmarks", 'r') as file:
 				self.bookmarks = file.read().splitlines()
-		
+
 		self.updateBookmarks()
-		
+
 	def toggleList(self):
 		if self.currentList == "bookmarklist":
 			self[self.currentList].setSelectionEnabled(False)
@@ -947,9 +947,9 @@ class vEditor2(Screen):
 			<eLabel font="Regular;25" halign="left" position="430,885" size="250,40" text="Add line" transparent="0" valign="center" zPosition="6"/>
 			<eLabel font="Regular;25" halign="left" position="780,885" size="250,40" text="Edit line" transparent="0" valign="center" zPosition="6"/>
 			<eLabel font="Regular;20" position="10,925" size="60,30" text="OK" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
-			<eLabel font="Regular;20" position="360,925" size="60,30" text="EXIT" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>	
+			<eLabel font="Regular;20" position="360,925" size="60,30" text="EXIT" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
 			<eLabel font="Regular;25" halign="left" position="80,920" size="250,40" text="Edit line" transparent="0" valign="center" zPosition="6"/>
-			<eLabel font="Regular;25" halign="left" position="430,920" size="250,40" text="Close editor" transparent="0" valign="center" zPosition="6"/>	
+			<eLabel font="Regular;25" halign="left" position="430,920" size="250,40" text="Close editor" transparent="0" valign="center" zPosition="6"/>
 		</screen>"""
 	else:
 		skin = """
@@ -971,9 +971,9 @@ class vEditor2(Screen):
 			<eLabel font="Regular;16" halign="left" position="300,585" size="180,30" text="Add line" transparent="0" valign="center" zPosition="6"/>
 			<eLabel font="Regular;16" halign="left" position="540,585" size="180,30" text="Edit line" transparent="0" valign="center" zPosition="6"/>
 			<eLabel font="Regular;12" position="10,620" size="40,20" text="OK" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
-			<eLabel font="Regular;16" position="250,620" size="40,20" text="EXIT" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>	
+			<eLabel font="Regular;16" position="250,620" size="40,20" text="EXIT" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
 			<eLabel font="Regular;16" halign="left" position="60,615" size="180,30" text="Edit line" transparent="0" valign="center" zPosition="6"/>
-			<eLabel font="Regular;16" halign="left" position="300,615" size="180,30" text="Close editor" transparent="0" valign="center" zPosition="6"/>	
+			<eLabel font="Regular;16" halign="left" position="300,615" size="180,30" text="Close editor" transparent="0" valign="center" zPosition="6"/>
 		</screen>"""
 
 	def __init__(self, session, filename):
@@ -990,17 +990,17 @@ class vEditor2(Screen):
 			"green": self.addLine,
 			"yellow": self.editLine,
 		}, -1)
-		
+
 		self.lineIndex = 0
 		self.oldLine = ""
 		self.isChanged = False
-		
+
 		self.getFileContent()
 
 	def addLine(self):
 		self.lineIndex = self["filedata"].getIndex()
 		self.session.openWithCallback(self.insertLine, InputBox, title=_("New line:"), windowTitle=_("Insert line after line %d" % (self.lineIndex + 1)), text="")
-		
+
 	def insertLine(self, newline):
 		if newline is not None:
 			self.list.insert(self.lineIndex + 1, ["%s\n" % (newline)])
@@ -1013,7 +1013,7 @@ class vEditor2(Screen):
 			self.list.remove(cur)
 			self["filedata"].updateList(self.list)
 			self.isChanged = True
-		
+
 	def exitEditor(self):
 		if self.isChanged:
 			msg = self.session.openWithCallback(self.saveFile, MessageBox, _("You have changed %s. Do you want to save your changes?" % (self.filename)), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3"))
@@ -1029,7 +1029,7 @@ class vEditor2(Screen):
 
 	def editLine(self):
 		self.lineIndex = self["filedata"].getIndex()
-		
+
 		if self["filedata"].getCurrent() is not None:
 			self.rowContent = self["filedata"].getCurrent()[0]
 			editableText = self.rowContent.strip("\n")
@@ -1063,7 +1063,7 @@ class MviExplorer(Screen):
 			"back": self.close
 		}, -1)
 		self.onLayoutFinish.append(self.showMvi)
-		
+
 	def showMvi(self):
 		call(['showiframe', self.filename])
 
@@ -1074,7 +1074,7 @@ class MoviePlayer(MP_parent):
 		MP_parent.__init__(self, self.session, service)
 
 	def leavePlayer(self):
-		try: 
+		try:
 			self.updateMovieData() # Merlin only feature
 		except:
 			pass
@@ -1085,7 +1085,7 @@ class MoviePlayer(MP_parent):
 		pass
 
 	def doEofInternal(self, playing):
-		try: 
+		try:
 			self.updateMovieData() # Merlin only feature
 		except:
 			pass
@@ -1096,7 +1096,7 @@ class MoviePlayer(MP_parent):
 		self.leavePlayer()
 
 	def showMovies(self):
-		try: 
+		try:
 			self.updateMovieData() # Merlin only feature
 		except:
 			pass
@@ -1190,15 +1190,15 @@ class FolderSelection(Screen):
 				<eLabel font="Regular;20" position="340,515" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#009f00" zPosition="6"/>
 				<widget name="redtext" font="Regular;18" halign="left" position="60,510" size="250,30" transparent="0" valign="center" zPosition="6"/>
 				<widget name="greentext" font="Regular;18" halign="left" position="390,510" size="250,30" transparent="0" valign="center" zPosition="6"/>
-			</screen>"""		
-			
+			</screen>"""
+
 	def __init__(self, session, item="/tmp", linkname=None, isDir=False, showFiles=False, mode=None):
 		Screen.__init__(self, session)
 		self.session = session
 		self.item = item
 		self.linkname = linkname
 		self.mode = mode
-		
+
 		self["infotext"] = Label()
 		self["redtext"] = Label()
 		self["greentext"] = Label()
@@ -1226,7 +1226,7 @@ class FolderSelection(Screen):
 
 		self.cmd = ""
 		self.actionText = ""
-		
+
 		self.onLayoutFinish.append(self.enterFolder)
 		self.setTitle(_("Select target location..."))
 
@@ -1261,18 +1261,18 @@ class FolderSelection(Screen):
 			self.cmd = "mv -f %s %s" % (self.item, dest)
 
 			self.close((self.actionText, self.cmd))
-	
+
 	def createSymlink(self):
 		if basename(self.linkname) == self.linkname:
 			symlinkdir = self["TargetDir"].getCurrent()[1]
-			
+
 			self.actionText = _("Creation of symlink %s in %s to %s" % (self.linkname, symlinkdir, self.item))
 			self.cmd = "ln -s %s %s/%s" % (self.item, symlinkdir, self.linkname)
 			self.close((self.actionText, self.cmd))
-		
+
 	def setSymlinkName(self):
 		self.session.openWithCallback(self.callbackSetSymlinkName, InputBox, title=_("Set symlink name:"), windowTitle=_("Dream Explorer 3"), text=self.linkname)
-		
+
 	def callbackSetSymlinkName(sefl, answer):
 		if answer:
 			self.linkname = answer
@@ -1291,11 +1291,11 @@ class SystemdViewer(Screen):
 
 			<ePixmap alphatest="on" pixmap="/usr/share/enigma2/skin_default/div-h.png" position="0,50" size="1800,2" zPosition="5" scale="stretch" />
 
-			<widget name="statuslabel" position="0,55" size="1800,40" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" valign="center" />						
+			<widget name="statuslabel" position="0,55" size="1800,40" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" valign="center" />
 			<widget name="statustext" position="0,100" size="1800,400" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" />
-						
+
 			<ePixmap alphatest="on" pixmap="/usr/share/enigma2/skin_default/div-h.png" position="0,505" size="1800,2" zPosition="5" scale="stretch" />
-			
+
 			<widget name="servicelabel" position="0,510" size="1800,40" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" valign="center" />
 			<widget name="servicetext" position="0,555" size="1800,400" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" />
 
@@ -1306,11 +1306,11 @@ class SystemdViewer(Screen):
 			<eLabel font="Regular;20" position="780,965" size="60,30" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#0000f9" zPosition="6"/>
 			<eLabel font="Regular;20" position="1040,965" size="60,30" text="OK" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
 			<eLabel font="Regular;20" position="1300,965" size="60,30" text="EXIT" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
-			
+
 			<widget name="deleteBookmark" font="Regular;25" halign="left" position="70,960" size="180,40" transparent="1" valign="center" zPosition="6"/>
 			<widget  name="editService" font="Regular;25" halign="left" position="330,960" size="180,40" transparent="1" valign="center" zPosition="6"/>
 			<widget name="toggleLabel" font="Regular;25" halign="left" position="590,960" size="180,40" transparent="1" valign="center" zPosition="6"/>
-			<widget name="enableDisableService" font="Regular;25" halign="left" position="850,960" size="180,40" transparent="1" valign="center" zPosition="6"/>	
+			<widget name="enableDisableService" font="Regular;25" halign="left" position="850,960" size="180,40" transparent="1" valign="center" zPosition="6"/>
 			<widget name="ok" font="Regular;25" halign="left" position="1110,960" size="180,40" transparent="1" valign="center" zPosition="6"/>
 			<widget  name="exit" font="Regular;25" halign="left" position="1370,960" size="180,40" transparent="1" valign="center" zPosition="6"/>
 		</screen>
@@ -1327,11 +1327,11 @@ class SystemdViewer(Screen):
 
 			<ePixmap alphatest="on" pixmap="/usr/share/enigma2/skin_default/div-h.png" position="0,40" size="1260,2" zPosition="5" scale="stretch" />
 
-			<widget name="statuslabel" position="0,45" size="1200,30" font="Regular;18" foregroundColor="#f0f0f0" transparent="1" halign="left" valign="center" />						
+			<widget name="statuslabel" position="0,45" size="1200,30" font="Regular;18" foregroundColor="#f0f0f0" transparent="1" halign="left" valign="center" />
 			<widget name="statustext" position="0,80" size="1200,240" font="Regular;16" foregroundColor="#f0f0f0" transparent="1" halign="left" />
-						
+
 			<ePixmap alphatest="on" pixmap="/usr/share/enigma2/skin_default/div-h.png" position="0,335" size="1260,2" zPosition="5" scale="stretch" />
-			
+
 			<widget name="servicelabel" position="0,340" size="1200,30" font="Regular;18" foregroundColor="#f0f0f0" transparent="1" halign="left" valign="center" />
 			<widget name="servicetext" position="0,375" size="1200,240" font="Regular;16" foregroundColor="#f0f0f0" transparent="1" halign="left" />
 
@@ -1342,19 +1342,19 @@ class SystemdViewer(Screen):
 			<eLabel font="Regular;12" position="630,635" size="40,20" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#0000f9" zPosition="6"/>
 			<eLabel font="Regular;12" position="840,635" size="40,20" text="OK" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
 			<eLabel font="Regular;12" position="1050,635" size="40,20" text="EXIT" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
-			
+
 			<widget name="deleteBookmark" font="Regular;16" halign="left" position="50,630" size="150,30" transparent="1" valign="center" zPosition="6"/>
 			<widget  name="editService" font="Regular;16" halign="left" position="260,630" size="150,30" transparent="1" valign="center" zPosition="6"/>
 			<widget name="toggleLabel" font="Regular;16" halign="left" position="470,630" size="150,30" transparent="1" valign="center" zPosition="6"/>
-			<widget name="enableDisableService" font="Regular;16" halign="left" position="680,630" size="150,30" transparent="1" valign="center" zPosition="6"/>	
+			<widget name="enableDisableService" font="Regular;16" halign="left" position="680,630" size="150,30" transparent="1" valign="center" zPosition="6"/>
 			<widget name="ok" font="Regular;16" halign="left" position="890,630" size="150,30" transparent="1" valign="center" zPosition="6"/>
 			<widget  name="exit" font="Regular;16" halign="left" position="1100,630" size="150,30" transparent="1" valign="center" zPosition="6"/>
 		</screen>
-		"""	
-	
+		"""
+
 	def __init__(self, session, serviceFile=None, serviceFileWithPath=None):
 		Screen.__init__(self, session)
-		
+
 		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "DirectionActions"],
 		{
 			"ok": self.editService,
@@ -1368,10 +1368,10 @@ class SystemdViewer(Screen):
 			"up": self.up,
 			"down": self.down,
 		}, -1)
-		
+
 		self.serviceFile = serviceFile
 		self.serviceFileWithPath = serviceFileWithPath
-		
+
 		self["enabledlabel"] = Label(_("Start at boot"))
 		self["enabledtext"] = Label()
 		self["activelabel"] = Label(_("Currently"))
@@ -1388,9 +1388,9 @@ class SystemdViewer(Screen):
 		self["enableDisableService"] = Label()
 		self["ok"] = Label(_("Edit service"))
 		self["exit"] = Label(_("Close"))
-		
+
 		self.setTitle(_("SystemD Viewer - %s" % (self.serviceFile)))
-		
+
 		self.container = eConsoleAppContainer()
 		self.appClosed_conn = self.container.appClosed.connect(self.runFinished)
 		self.dataavail_conn = self.container.dataAvail.connect(self.getData)
@@ -1401,7 +1401,7 @@ class SystemdViewer(Screen):
 
 		self.cmdList = ["systemctl is-enabled %s" % (self.serviceFile), "systemctl is-active %s" % (self.serviceFile), "systemctl is-failed %s" % (self.serviceFile), "systemctl status %s" % (self.serviceFile), "systemctl enable %s" % (self.serviceFile), "systemctl disable %s" % (self.serviceFile)]
 		self.getServiceInfo()
-			
+
 		self.onLayoutFinish.append(self.readServiceFile)
 
 	def up(self):
@@ -1440,16 +1440,16 @@ class SystemdViewer(Screen):
 				cmd = "systemctl enable %s" % (self.serviceFile)
 				self.run = 4
 				self.maxRun = 4
-		
-			self.container.execute(self.cmdList[self.run])	
-		
+
+			self.container.execute(self.cmdList[self.run])
+
 	def readServiceFile(self):
 		if self.serviceFile is not None:
 			with open(self.serviceFileWithPath, "r") as f:
 				content = f.read()
-				
+
 			self["servicetext"].setText(content)
-			
+
 	def getData(self, data):
 		self.executionData += data.strip()
 
@@ -1480,7 +1480,7 @@ class SystemdViewer(Screen):
 			elif self.run == 5:
 				self.run = -1
 				self.session.open(MessageBox, _("Service %s could not be disabled" % (self.serviceFile)), MessageBox.TYPE_ERROR, timeout=0)
-				
+
 		else:
 			if self.run == 0:
 				self["enabledtext"].setText(_("%s" % (self.executionData)))
@@ -1494,7 +1494,7 @@ class SystemdViewer(Screen):
 					self.serviceIsEnabled = False
 				else:
 					self["enableDisableService"].setText("")
-					self.enableDisablePossible = False		
+					self.enableDisablePossible = False
 			elif self.run == 1:
 				self["activetext"].setText(_("%s" % (self.executionData)))
 			elif self.run == 2:
@@ -1507,12 +1507,11 @@ class SystemdViewer(Screen):
 			elif self.run == 5:
 				self.run = -1
 				self.session.open(MessageBox, _("Service %s disabled" % (self.serviceFile)), MessageBox.TYPE_INFO, timeout=0)
-				
+
 		self.executionData = ""
 		if self.run == -1:
 			self.getServiceInfo()
 		else:
-			self.run += 1				
+			self.run += 1
 			if self.run < len(self.cmdList) and self.run < self.maxRun:
 				self.container.execute(self.cmdList[self.run])
-	

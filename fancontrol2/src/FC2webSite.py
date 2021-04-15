@@ -12,10 +12,10 @@ import datetime
 
 
 class FC2web(resource.Resource):
-    
+
 	title = "FanControl2 Webinterface"
  	isLeaf = False
-   
+
 	def render(self, req):
 		req.setHeader('Content-type', 'text/html')
 		req.setHeader('charset', 'UTF-8')
@@ -94,7 +94,7 @@ class FC2web(resource.Resource):
 		html += "</script>\n"
 		html += "<iframe id=\"myIFrameId\" name=\"myIFrameName\" width=\"500\" height=\"320\" marginwidth=\"5\" vspace=\"2\" marginheight=\"5\" frameborder=\"1\" scrolling=\"auto\"></iframe>\n"
 		html += "<script>doLogWrite();\n"
-		html += "myIFrameName.document.body.scrollTop = myIFrameName.document.body.scrollHeight*100;\n" 
+		html += "myIFrameName.document.body.scrollTop = myIFrameName.document.body.scrollHeight*100;\n"
 		html += "</script>\n"
 
 		html += "<table border=\"1\" width=\"500\">\n"
@@ -115,7 +115,7 @@ class FC2web(resource.Resource):
 
 
 class FC2webLog(resource.Resource):
-    
+
 	title = "FanControl2 Webinterface"
 	isLeaf = True
 
@@ -354,10 +354,10 @@ def CreateDataHead():
 
 
 class FC2webChart(resource.Resource):
-    
+
 	title = "FanControl2 Webinterface"
 	isLeaf = True
-    
+
 	def render(self, req):
 		command = req.args.get("cmd", None)
 		html = ""

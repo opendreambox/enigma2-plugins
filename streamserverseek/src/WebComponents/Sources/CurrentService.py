@@ -13,7 +13,7 @@ else:
 class CurrentService(Source):
 	session = None
 	_state = None
-	
+
 	STATE_INACTIVE = 0
 	STATE_BACKGROUND = 1
 	STATE_LIVE = 2
@@ -46,7 +46,7 @@ class CurrentService(Source):
 		return self._state
 
 	state = property(getState)
-	
+
 	def getStateText(self):
 		if self.state == self.STATE_BACKGROUND:
 			return "BACKGROUND"
@@ -56,6 +56,6 @@ class CurrentService(Source):
 			return "INACTIVE"
 
 	statetext = property(getStateText)
-	
+
 	def destroy(self):
 		Source.destroy(self)

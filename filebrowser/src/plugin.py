@@ -194,7 +194,7 @@ class FilebrowserScreen(Screen):
                     titletxt = _("copying directory ...")
                 else:
 	                cmd = ["cp \"" + sourceDir + filename + "\" \"" + targetDir + "\""]
-	                titletxt = _("copying file ...")                
+	                titletxt = _("copying file ...")
                 self.session.openWithCallback(self.doCopyCB, Console, title=titletxt, cmdlist=cmd)
 
     def doCopyCB(self):
@@ -208,7 +208,7 @@ class FilebrowserScreen(Screen):
             if self.SOURCELIST.canDescent():
                 titletxt = _("delete directory")
             else:
-                titletxt = _("delete file")            
+                titletxt = _("delete file")
             self.session.openWithCallback(self.doDelete, ChoiceBox, title=titletxt + "?\n%s\nfrom dir\n%s" % (filename, sourceDir), list=[(_("yes"), True), (_("no"), False)])
         else:
             return
@@ -231,7 +231,7 @@ class FilebrowserScreen(Screen):
 
     # move ###################
     def goGreen(self):
-        if not(self.SOURCELIST.canDescent()) or (self.SOURCELIST.canDescent() and self.SOURCELIST.getSelectionIndex() != 0):    
+        if not(self.SOURCELIST.canDescent()) or (self.SOURCELIST.canDescent() and self.SOURCELIST.getSelectionIndex() != 0):
             filename = self.SOURCELIST.getFilename()
             sourceDir = self.SOURCELIST.getCurrentDirectory()
             targetDir = self.TARGETLIST.getCurrentDirectory()
@@ -248,7 +248,7 @@ class FilebrowserScreen(Screen):
             if result[1]:
                 filename = self.SOURCELIST.getFilename()
                 sourceDir = self.SOURCELIST.getCurrentDirectory()
-                targetDir = self.TARGETLIST.getCurrentDirectory()  
+                targetDir = self.TARGETLIST.getCurrentDirectory()
                 if self.SOURCELIST.canDescent():
                 	cmd = ["mv \"" + filename + "\" \"" + targetDir + "\""]
                 	titletxt = _("moving directory ...")
@@ -268,7 +268,7 @@ class FilebrowserScreen(Screen):
             if self.SOURCELIST.canDescent():
             	titletxt = _("rename directory")
             else:
-            	titletxt = _("rename file")            
+            	titletxt = _("rename file")
             self.session.openWithCallback(self.doRename, InputBox, text=filename, title=filename, windowTitle=titletxt)
         else:
             return
@@ -362,5 +362,3 @@ def Plugins(path, **kwargs):
     if config.plugins.filebrowser.add_mainmenu_entry.value:
         list.append(desc_mainmenu)
     return list
-
-

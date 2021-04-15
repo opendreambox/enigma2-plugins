@@ -38,7 +38,7 @@ class StreamResource(resource.Resource):
 			self.streamServerSeek._isTemporaryLiveModeActive = True
 
 		reactor.callLater(1, self.finishRequest)
-	
+
 	def finishRequest(self):
 		self._request.finish()
 
@@ -50,7 +50,7 @@ class StreamResource(resource.Resource):
 		request.setHeader('Pragma-Directive', 'no-cache')
 		request.setHeader('Pragma', 'no-cache')
 		request.setHeader('Expires', '0')
-		
+
 		streamUrl = False
 		length = len(request.postpath)
 		if length > 0:
@@ -63,11 +63,11 @@ class StreamResource(resource.Resource):
 					streamUrl = "/streamserverseek/vod/stream.m3u8"
 			elif request.postpath[0] == 'player':
 				streamUrl = "/stream/?sss-vod"
-		
+
 		if not streamUrl:
 			request.setResponseCode(http.NOT_FOUND)
 			return ""
-		
+
 		moviePath = ""
 		movieNameWExt = ""
 		i = 1
@@ -75,7 +75,7 @@ class StreamResource(resource.Resource):
 			moviePath += "/%s" % request.postpath[i]
 			movieNameWExt = request.postpath[i]
 			i += 1
-		
+
 		movieSplit = movieNameWExt.split(".")
 		movieName = ""
 		movieExt = ""
@@ -83,9 +83,9 @@ class StreamResource(resource.Resource):
 		while i < (len(movieSplit) - 1):
 			movieName += movieSplit[i]
 			i += 1
-		
+
 		movieExt = movieSplit[-1]
-		
+
 		if not os.path.isfile(moviePath):
 			moviePath = moviePath.replace("+", " ")
 			if i - 1 < length:
@@ -117,7 +117,7 @@ class StreamResource(resource.Resource):
 				print "[StreamServerSeek] Set input mode to BACKGROUND"
 				StreamServerSeek().forceInputMode(eStreamServer.INPUT_MODE_BACKGROUND)
 				wait = True
-				
+
 			result = streamServerControl.setEncoderService(eServiceReference("1:0:0:0:0:0:0:0:0:0:" + urllib.quote(moviePath)))
 			if result == streamServerControl.ENCODER_SERVICE_SET or result == streamServerControl.ENCODER_SERVICE_ALREADY_ACTIVE:
 				if not os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/GstRtspServer/StreamServerControl.py"):
@@ -132,7 +132,7 @@ class StreamResource(resource.Resource):
 				request.finish()
 
 			return server.NOT_DONE_YET
-		
+
 		from Screens.Standby import inStandby
 		if inStandby is None:
 			if self.streamServerSeek._isTemporaryLiveMode:
@@ -142,7 +142,7 @@ class StreamResource(resource.Resource):
 				if service.toCompareString() != self.session.nav.getCurrentServiceReference().toCompareString():
 					self.session.nav.playService(service)
 					print "[StreamServerSeek] service %s" % service
-				
+
 				print "[StreamServerSeek] Seek is now %s" % self.streamServerSeek._seekToMin
 				self.streamServerSeek.doSeek()
 
@@ -163,7 +163,7 @@ class StreamResource(resource.Resource):
 			print "%s" % StreamServerSeek()
 			StreamServerSeek().changeIdleMode(False)
 			self.streamServerSeek._isTemporaryLiveMode = True
-			
+
 			if streamServerControl.getInputMode() != eStreamServer.INPUT_MODE_LIVE:
 				print "[StreamServerSeek] Set input mode to LIVE"
 				StreamServerSeek().forceInputMode(eStreamServer.INPUT_MODE_LIVE)

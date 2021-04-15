@@ -47,27 +47,27 @@ class StreamServerSeek(PerServiceBase):
 			raise StreamServerSeekAlreadyInitializedException
 
 		return StreamServerSeek.__instance
-	
+
 	def __init__(self, *p, **k):
 		if not 'session' in k:
 			return
 
 		print "[StreamServerSeek] init"
-		
+
 		config.misc.standbyCounter.addNotifier(self._onStandby, initial_call=False)
 
 		PerServiceBase.__init__(self, self._session.nav,
-			{ 
+			{
 				iPlayableService.evServiceChanged: self._onServiceChanged,
 				iPlayableService.evEOF: self._onEOF,
 				iPlayableService.evPlay: self._onPlaying
 			}, with_event=False)
-		
+
 		self._timer = eTimer()
 		self._timer_conn = self._timer.timeout.connect(self.endTemporaryLiveMode)
 
 		streamServerControl.onSourceStateChanged.append(self._onSourceStateChanged)
-		
+
 	def _onStandby(self, element):
 		if self._isTemporaryLiveMode:
 			print "[StreamServerSeek] onStandBy: Ending temporary Live-Mode"
@@ -91,7 +91,7 @@ class StreamServerSeek(PerServiceBase):
 	def _onPlaying(self):
 		if self._isTemporaryLiveModeActive:
 			self.doSeek()
-	
+
 	def _onSourceStateChanged(self, state):
 		if self._isTemporaryLiveMode and (state == False or state == 2):
 			print "[StreamServerSeek] Temporary Live-Mode active, but all clients disconnected. End it in 15 seconds"
@@ -99,7 +99,7 @@ class StreamServerSeek(PerServiceBase):
 		elif self._isTemporaryLiveMode and self._timer.isActive():
 			print "[StreamServerSeek] Reset end-timer"
 			self._timer.stop()
-		
+
 		if state == True or state == 4:
 			self.doSeek()
 		elif state == False or state == 2:
@@ -193,12 +193,12 @@ class StreamServerSeek(PerServiceBase):
 		self._isTemporaryLiveModeActive = False
 		self._temporaryLiveModeService = False
 		self._isVodActive = False
-		
+
 		if self._tvLastService:
 			service = eServiceReference(self._tvLastService)
 			if service and service.valid():
 				self._session.nav.playService(service)
-	
+
 		print "[StreamServerSeek] Set input mode to BACKGROUND"
 		self.forceInputMode(eStreamServer.INPUT_MODE_BACKGROUND)
 

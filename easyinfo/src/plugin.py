@@ -4,7 +4,7 @@
 #    Coded by Vali (c)2011
 #    Re-worked by dre (c) 2019 - 2020
 #
-#  This plugin is licensed under the Creative Commons 
+#  This plugin is licensed under the Creative Commons
 #  Attribution-NonCommercial-ShareAlike 3.0 Unported License.
 #  To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/
 #  or send a letter to Creative Commons, 559 Nathan Abbott Way, Stanford, California 94305, USA.
@@ -13,7 +13,7 @@
 #  is licensed by Dream Property GmbH.
 #
 #  This plugin is NOT free software. It is open source, you are allowed to
-#  modify it (if you keep the license), but it may not be commercially 
+#  modify it (if you keep the license), but it may not be commercially
 #  distributed other than under the conditions noted above.
 #
 #######################################################################
@@ -111,7 +111,7 @@ def EasyInfoAutostart(reason, **kwargs):
 
 def InfoBarPlugins__init__(self):
 	global EasyInfoStartOnlyOnce
-	if not EasyInfoStartOnlyOnce: 
+	if not EasyInfoStartOnlyOnce:
 		EasyInfoStartOnlyOnce = True
 		global InfoBar_instance
 		InfoBar_instance = self
@@ -148,7 +148,7 @@ def showInfo(self):
 			self.session.open(EasyInfo)
 	else:
 		self.session.open(EasyInfo)
-		
+
 
 def eventViewCallback(self, setEvent, setService, val): #used for now/next displaying
 	epglist = self.epglist
@@ -156,7 +156,7 @@ def eventViewCallback(self, setEvent, setService, val): #used for now/next displ
 		tmp = epglist[0]
 		epglist[0] = epglist[1]
 		epglist[1] = tmp
-		setEvent(epglist[0])	
+		setEvent(epglist[0])
 
 
 def buttonTV(self):
@@ -195,7 +195,7 @@ def getPluginByName(sstr):
 		if sstr == xs[0]:
 			sret = xs[1]
 			break
-			
+
 	return sret
 
 
@@ -214,7 +214,7 @@ class EasyInfoPanelList(MenuList):
 	SKIN_COMPONENT_KEYICON_HEIGHT = "keyIconHeight"
 	SKIN_COMPONENT_KEYICON_XOFFSET = "keyIconXOffset"
 	SKIN_COMPONENT_KEYICON_YOFFSET = "keyIconYOffset"
-			
+
 	def __init__(self, list, enableWrapAround=True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 
@@ -227,13 +227,13 @@ class EasyInfoPanelList(MenuList):
 			self.easyInfoIconsPath = '/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/icons/'
 		else:
 			self.easyInfoIconsPath = '/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/'
-		
+
 		sizes = componentSizes[EasyInfoPanelList.SKIN_COMPONENT_KEY]
 		self.componentItemHeight = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_ITEM_HEIGHT, 90 if isFHD else 60)
 		self.textWidth = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_TEXT_WIDTH, 450 if isFHD else 300)
 		self.textHeight = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_TEXT_HEIGHT, 90 if isFHD else 60)
 		self.textXOffset = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_TEXT_XOFFSET, 175 if isFHD else 115)
-		self.textYOffset = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_TEXT_YOFFSET, 0)		
+		self.textYOffset = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_TEXT_YOFFSET, 0)
 		self.iconWidth = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_ICON_WIDTH, 150 if isFHD else 100)
 		self.iconHeight = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_ICON_HEIGHT, 75 if isFHD else 50)
 		self.iconXOffset = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_ICON_XOFFSET, 7 if isFHD else 5)
@@ -242,28 +242,28 @@ class EasyInfoPanelList(MenuList):
 		self.keyIconHeight = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_KEYICON_HEIGHT, 75 if isFHD else 50)
 		self.keyIconXOffset = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_KEYICON_XOFFSET, 0)
 		self.keyIconYOffset = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_KEYICON_YOFFSET, 7 if isFHD else 5)
-		
+
 		tlf = TemplatedListFonts()
 		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
 		self.l.setItemHeight(self.componentItemHeight)
 		self.l.setBuildFunc(self.buildEntry)
-		
+
 	def buildEntry(self, func, key):
 		res = [None]
-		
+
 		text = getPluginByName(func)
-		
+
 		bpng = LoadPixmap(self.easyInfoIconsPath + "key-" + key + ".png")
 		if bpng is not None:
 			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.keyIconXOffset, self.keyIconYOffset, self.keyIconWidth, self.keyIconHeight, bpng))
 		png = LoadPixmap(self.easyInfoIconsPath + func + ".png")
 		if png is not None:
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.iconXOffset, self.iconYOffset, self.iconWidth, self.iconHeight, png))	
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.iconXOffset, self.iconYOffset, self.iconWidth, self.iconHeight, png))
 
 		if not config.plugins.EasyInfo.showEventInfoFirst.value:
 			res.append((eListboxPythonMultiContent.TYPE_TEXT, self.textXOffset, self.textYOffset, self.textWidth, self.textHeight, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, text))
-		
-		return res	
+
+		return res
 
 
 class EasyInfoConfig(ConfigListScreen, Screen):
@@ -325,7 +325,7 @@ class EasyInfo(Screen):
 			<screen name="EasyInfo" flags="wfNoBorder" position="center,center" size="750,1080" title="Easy Info">
 				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/bg.png" position="0,0" size="750,1080"/>
 				<widget name="list" position="105,90" size="540,990" scrollbarMode="showNever" transparent="1" zPosition="2"/>
-			</screen>"""	
+			</screen>"""
 		else:
 			skin = """
 			<screen name="EasyInfo" flags="wfNoBorder" position="center,center" size="500,740" title="Easy Info">
@@ -347,20 +347,20 @@ class EasyInfo(Screen):
 				</widget>
 				<widget foregroundColor="#555555" borderColor="#555555" borderWidth="4" position="490,57" render="Progress" size="120,14" source="session.Event_Now" zPosition="2">
 					<convert type="EventTime">Progress</convert>
-				</widget>				
+				</widget>
 				<widget font="Regular;28" foregroundColor="#fcc000" position="630,50" render="Label" size="600,33" source="session.CurrentService" transparent="1" zPosition="1">
 					<convert type="ServiceName">Name</convert>
 				</widget>
-				
+
 				<widget font="Regular;28" noWrap="1" position="250,90" render="Label" size="900,33" source="session.Event_Now" transparent="1" zPosition="1">
 					<convert type="EventName">Name</convert>
 				</widget>
-				
+
 				<widget font="Regular;26" position="250,125" render="Label" size="1280,400" source="session.Event_Now" transparent="1" valign="top" zPosition="5">
 					<convert type="EventName">ExtendedDescription</convert>
 				</widget>
 				<eLabel backgroundColor="#666666" position="250,527" size="1280,2" />
-				
+
 				<widget font="Regular;28" position="250,550" render="Label" size="100,33" source="session.Event_Next" transparent="1" zPosition="1">
 					<convert type="EventTime">StartTime</convert>
 					<convert type="ClockToText">Default</convert>
@@ -375,7 +375,7 @@ class EasyInfo(Screen):
 				<widget font="Regular;26" foregroundColor="#aaaaaa" position="250,630" render="Label" size="1280,400" source="session.Event_Next" transparent="1" valign="top" zPosition="5">
 					<convert type="EventName">ExtendedDescription</convert>
 				</widget>
-			</screen>"""		
+			</screen>"""
 		else:
 			skin = """
 			<screen name="EventViewWithEasyInfo" backgroundColor="background" flags="wfNoBorder" position="center,0" size="1280,720" title="Easy Info">
@@ -423,7 +423,7 @@ class EasyInfo(Screen):
 		self.list = []
 		self.__keys = []
 		EasyInfoPluginsList = []
-		
+
 		if not config.plugins.EasyInfo.showEventInfoFirst.value:
 			self.skinName = "EasyInfo"
 		else:
@@ -434,7 +434,7 @@ class EasyInfo(Screen):
 		self["key_green"] = StaticText(" ")
 		self["key_red"] = StaticText(" ")
 		self["key_blue"] = StaticText(" ")
-		
+
 		self["list"] = EasyInfoPanelList(self.getMenuItems())
 		self["actions"] = ActionMap(["WizardActions", "MenuActions", "ColorActions", "EPGSelectActions"],
 		{
@@ -461,7 +461,7 @@ class EasyInfo(Screen):
 			list.append((config.plugins.EasyInfo.pos3.value, "green"))
 		if config.plugins.EasyInfo.pos4.value != "no":
 			self["key_yellow"].setText(_(getPluginByName(config.plugins.EasyInfo.pos4.value)))
-			list.append((config.plugins.EasyInfo.pos4.value, "yellow"))			
+			list.append((config.plugins.EasyInfo.pos4.value, "yellow"))
 		if config.plugins.EasyInfo.pos5.value != "no":
 			self["key_blue"].setText(_(getPluginByName(config.plugins.EasyInfo.pos5.value)))
 			list.append((config.plugins.EasyInfo.pos5.value, "blue"))
@@ -476,8 +476,8 @@ class EasyInfo(Screen):
 		if config.plugins.EasyInfo.pos10.value != "no":
 			list.append((config.plugins.EasyInfo.pos10.value, "x"))
 		if config.plugins.EasyInfo.pos11.value != "no":
-			list.append((config.plugins.EasyInfo.pos11.value, "x"))	
-			
+			list.append((config.plugins.EasyInfo.pos11.value, "x"))
+
 		return list
 
 	def cancel(self):
@@ -545,13 +545,13 @@ def EasyInfoZapTo(NewService):
 def EasyInfoCallbackFunc(answer):
 	if answer is None:
 		return
-	
+
 	if EasyInfoSession is None:
 		return
-	
+
 	if not InfoBar_instance:
 		return
-	
+
 	if answer == "singleepg":
 		ref = InfoBar_instance.servicelist.getCurrentSelection()
 		if ref:
@@ -675,13 +675,13 @@ class EasyInfoEventView(Screen, EventViewBase):
 		Screen.__init__(self, session)
 		self.session = session
 		self.skinName = "EventView"
-		
+
 		EventViewBase.__init__(self, Event, Ref, callback=InfoBar_instance.eventViewCallback)
-		
+
 		self["key_yellow"].setText(_(getPluginByName(config.plugins.EasyInfo.eventViewYellow.value)))
 		self["key_blue"].setText(_(getPluginByName(config.plugins.EasyInfo.eventViewBlue.value)))
 		self["key_red"].setText(_("Similar"))
-		
+
 		self["epgactions"] = ActionMap(["EventViewEPGActions", "EPGSelectActions", "EventViewActions"],
 			{
 				"openSingleServiceEPG": self.singleEPGCB,
@@ -771,7 +771,7 @@ class EasyInfoEventList(EPGList):
 		sz_w = getDesktop(0).size().width()
 		if sz_w >= 1920:
 			isFHD = True
-		
+
 		sizes = componentSizes[EasyInfoEventList.SKIN_COMPONENT_KEY]
 		self.channelWidth = sizes.get(EasyInfoEventList.SKIN_COMPONENT_CHANNEL_WIDTH, 180 if isFHD else 120)
 		self.timeWidth = sizes.get(EasyInfoEventList.SKIN_COMPONENT_TIME_WIDTH, 110 if isFHD else 70)
@@ -793,10 +793,10 @@ class EasyInfoEventList(EPGList):
 		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
 		self.l.setFont(1, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
 		self.l.setFont(2, gFont(tlf.face(tlf.SMALLER), tlf.size(tlf.SMALLER)))
-		
+
 		self.l.setItemHeight(self.componentItemHeight)
 		self.l.setBuildFunc(self.buildMultiEntry)
-		
+
 		self.hasChannelInfo = hasChannelInfo
 		self.nameCache = {}
 
@@ -806,7 +806,7 @@ class EasyInfoEventList(EPGList):
 			return LoadPixmap(cached=True, path=pngname)
 		else:
 			return None
-			
+
 	def findPicon(self, sRef):
 		pngname = "%s%s.png" % (config.plugins.EasyInfo.piconPath.value, sRef)
 		if not fileExists(pngname):
@@ -816,17 +816,17 @@ class EasyInfoEventList(EPGList):
 	def buildMultiEntry(self, changecount, service, eventId, beginTime, duration, EventName, nowTime, service_name):
 		(clock_pic, rec) = self.getPixmapForEntry(service, eventId, beginTime, duration)
 		res = [None]
-		
+
 		channelOffset = 0
 		recOffset = 0
-		
+
 		flagValue = RT_HALIGN_LEFT | RT_VALIGN_CENTER | RT_WRAP
 		if self.hasChannelInfo:
 			channelOffset = self.channelOffset
-			
+
 		if EventName is not None and len(EventName) > 60:
 			flagValue = RT_HALIGN_LEFT | RT_VALIGN_TOP | RT_WRAP
-		
+
 		if self.hasChannelInfo:
 			picon = self.getPicon(service)
 			if picon is not None:
@@ -841,16 +841,16 @@ class EasyInfoEventList(EPGList):
 				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, (self.channelWidth - self.piconWidth) / 2, (self.componentItemHeight - self.piconHeight) / 2, self.piconWidth, self.piconHeight, picon))
 			else:
 				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, self.channelWidth, self.componentItemHeight, 1, RT_HALIGN_CENTER | RT_VALIGN_CENTER | RT_WRAP, service_name))
-		
+
 		if rec:
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.timeIndicatorWidth + self.timeWidth + channelOffset, (self.componentItemHeight - self.recIconSize) / 2, self.recIconSize, self.recIconSize, clock_pic)) 
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.timeIndicatorWidth + self.timeWidth + channelOffset, (self.componentItemHeight - self.recIconSize) / 2, self.recIconSize, self.recIconSize, clock_pic))
 			recOffset = self.recOffset
-				
+
 		if beginTime is not None:
 			if nowTime < beginTime:
 				begin = localtime(beginTime)
 				end = localtime(beginTime + duration)
-				
+
 				res.extend((
 					(eListboxPythonMultiContent.TYPE_TEXT, channelOffset, self.timeYOffset, self.timeIndicatorWidth, self.componentItemHeight - 2 * self.timeYOffset, 1, RT_HALIGN_RIGHT, '>'),
 					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth + channelOffset, self.timeYOffset, self.timeWidth, self.componentItemHeight - 2 * self.timeYOffset, 1, RT_HALIGN_LEFT, "%02d.%02d\n%02d.%02d" % (begin[3], begin[4], end[3], end[4])),
@@ -859,7 +859,7 @@ class EasyInfoEventList(EPGList):
 			else:
 				percent = (nowTime - beginTime) * 100 / duration
 				remaining = ((beginTime + duration) - nowTime)
-				
+
 				res.extend((
 					(eListboxPythonMultiContent.TYPE_PROGRESS, (self.remainingTimeWidth - self.progressBarWidth) / 2 + channelOffset, (self.componentItemHeight / 2 - self.progressBarHeight) / 2, self.progressBarWidth, self.progressBarHeight, percent),
 					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth + channelOffset, self.componentItemHeight / 2, self.remainingTimeWidth, self.componentItemHeight / 2, 1, RT_HALIGN_LEFT, "+%d:%02d" % (remaining / 3600, (remaining / 60) - ((remaining / 3600) * 60))),
@@ -879,11 +879,11 @@ class EasyInfoEventList(EPGList):
 			index += 1
 		if x[1] != refstr:
 			self.instance.moveSelectionTo(0)
-			
+
 
 class EasyPG(EPGSelection, Screen):
 	sz_w = getDesktop(0).size().width()
-	
+
 	if sz_w >= 1920:
 		skin = """
 			<screen name="NewEasyPG" backgroundColor="#101220" flags="wfNoBorder" position="center,0" size="1920,1080" title="Easy PG">
@@ -922,7 +922,7 @@ class EasyPG(EPGSelection, Screen):
 					<convert type="EventName">ExtendedDescription</convert>
 				</widget>
 			</screen>"""
-	else:	
+	else:
 		skin = """
 			<screen name="NewEasyPG" backgroundColor="#101220" flags="wfNoBorder" position="center,0" size="1280,720" title="Easy PG">
 				<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/lines.png" position="60,35" size="660,650" zPosition="-1"/>
@@ -966,7 +966,7 @@ class EasyPG(EPGSelection, Screen):
 		EPGSelection.__init__(self, session, service, zapFunc, eventid, bouquetChangeCB, serviceChangeCB)
 		EPGSelection.skinName = "NewEasyPG"
 		self.skinName = "NewEasyPG"
-		
+
 		global EINposition
 		EINposition = 0
 		allbouq = InfoBar_instance.servicelist.getBouquetList()
@@ -974,18 +974,18 @@ class EasyPG(EPGSelection, Screen):
 			if InfoBar_instance.servicelist.getRoot() == allbouq[newpos][1]:
 				EINposition = newpos
 				break
-		
+
 		self.initPrimeTime = False
 		self.session = session
 
 		self.primeTimeHour = config.plugins.EasyInfo.primeTime2.value[0]
 		self.primeTimeMinute = config.plugins.EasyInfo.primeTime2.value[1]
-		
+
 		self["list"] = EasyInfoEventList(type=EPG_TYPE_MULTI, selChangedCB=self.onSelectionChanged, timer=session.nav.RecordTimer)
 
 		self.refreshTimer = eTimer()
 		self.refreshTimer_conn = self.refreshTimer.timeout.connect(self.refreshEPG)
-		
+
 		self["actions"] = ActionMap(["EPGSelectActions", "OkCancelActions", "NumberActions", "InfobarActions"],
 			{
 				"cancel": self.closeScreen,
@@ -1100,7 +1100,7 @@ class EasyPG(EPGSelection, Screen):
 
 class EasySelection(EPGSelection, Screen):
 	sz_w = getDesktop(0).size().width()
-	
+
 	if sz_w >= 1920:
 		skin = """
 			<screen name="NewEasySelection" backgroundColor="#101220" flags="wfNoBorder" position="center,0" size="1920,1080" title="Easy Selection">
@@ -1108,7 +1108,7 @@ class EasySelection(EPGSelection, Screen):
 				<ePixmap alphatest="on" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EasyInfo/lines.png" position="1010,35" size="990,975" zPosition="-1" scale="stretch" />
 				<widget name="list" position="20,35" scrollbarMode="showNever" size="990,975" transparent="1"/>
 				<widget name="listNext" position="1010,35" scrollbarMode="showNever" size="990,975" transparent="1"/>
-			</screen>"""	
+			</screen>"""
 	else:
 		skin = """
 			<screen name="NewEasySelection" backgroundColor="#101220" flags="wfNoBorder" position="center,0" size="1240,720" title="Easy Selection">
@@ -1123,7 +1123,7 @@ class EasySelection(EPGSelection, Screen):
 		EPGSelection.__init__(self, session, service, zapFunc, eventid, bouquetChangeCB, serviceChangeCB)
 		EPGSelection.skinName = "NewEasySelection"
 		self.skinName = "NewEasySelection"
-		
+
 		global EINposition
 		EINposition = 0
 		bouquets = InfoBar_instance.servicelist.getBouquetList()
@@ -1131,7 +1131,7 @@ class EasySelection(EPGSelection, Screen):
 			if InfoBar_instance.servicelist.getRoot() == bouquets[pos][1]:
 				EINposition = pos
 				break
-		
+
 		self.session = session
 
 		self["list"] = EasyInfoEventList(type=EPG_TYPE_MULTI, selChangedCB=self.onSelectionChanged, timer=session.nav.RecordTimer)
@@ -1156,7 +1156,7 @@ class EasySelection(EPGSelection, Screen):
 				"prevService": self.setModeNowNext,
 				"menu": self.openConfig,
 			}, -1)
-		
+
 		self.onLayoutFinish.append(self.layoutFinished)
 
 	def layoutFinished(self):
@@ -1222,4 +1222,3 @@ class EasySelection(EPGSelection, Screen):
 
 	def openConfig(self):
 		self.session.open(EasyInfoConfig)
-		

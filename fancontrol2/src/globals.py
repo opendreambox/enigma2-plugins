@@ -1,5 +1,5 @@
 Version = "V2.9r3"
-# globale Variablen        
+# globale Variablen
 ZielRPM = 0
 AktVLT = 0
 AktPWM = 0

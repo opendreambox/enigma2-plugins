@@ -38,7 +38,7 @@ class Message(Source):
 			typeint = int(self.cmd['type'])
 		except (ValueError, TypeError):
 			return (False, _("type %s is not a number") % self.cmd['type'])
-			
+
 		sel = True
 		if self.cmd['default'] is not None and self.cmd['default'] == "no":
 			sel = False

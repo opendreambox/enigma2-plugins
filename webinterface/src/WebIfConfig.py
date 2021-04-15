@@ -109,5 +109,3 @@ class WebIfConfigScreen(ConfigListScreen, Screen):
 			if len(x) > 1:
 				x[1].cancel()
 		self.close(False, self.session)
-
-

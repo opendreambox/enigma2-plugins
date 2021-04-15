@@ -192,10 +192,10 @@ class EPGSearch(EPGSelection):
 		self.searchargs = args
 		self.searchkwargs = kwargs
 		self.currSearch = ""
-		
+
 		self.currSearchSave = False
 		self.currSearchDescription = False
-		
+
 		# XXX: we lose sort begin/end here
 		self["key_yellow"] = Button(_("New Search"))
 		self["key_blue"] = Button(self.getBlueButtonText())
@@ -243,22 +243,22 @@ class EPGSearch(EPGSelection):
 				"0": self.setup,
 				"audioSelection": self.searchNoNumber,
 			})
-		
+
 		if autoTimerAvailable:
 			self["EPGSeachFilterActions"] = ActionMap(["WizardActions"],
 			{
-				"video": self.openSearchFilterList, 
+				"video": self.openSearchFilterList,
 			})
-		
+
 		self["actions"].csel = self
 		self["list"].mostSearchService = ""
 		self.onLayoutFinish.append(self.onCreate)
 		# end stripped copy of EPGSelection.__init__
-		
+
 		# Partnerbox
 		if PartnerBoxIconsEnabled:
 			EPGSelection.PartnerboxInit(self, False)
-		
+
 		self.pluginList = [(p.name, p) for p in plugins.getPlugins(where=[PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED])]
 		self.was_history_start = False
 		if self.searchkwargs and self.searchkwargs.has_key("startWithHistory") and self.searchkwargs["startWithHistory"]:
@@ -267,7 +267,7 @@ class EPGSearch(EPGSelection):
 	def onCreate(self):
 		self.setTitle(_("EPG Search"))
 		self.currSearchATList = None
-		
+
 		if self.searchkwargs and self.searchkwargs.has_key("AT"):
 			#show matches from SearchFilter
 			l = self["list"]
@@ -288,7 +288,7 @@ class EPGSearch(EPGSelection):
 			l.l.setList(l.list)
 		del self.searchargs
 		del self.searchkwargs
-		
+
 		# Partnerbox
 		if PartnerBoxIconsEnabled:
 			EPGSelection.GetPartnerboxTimerlist(self)
@@ -363,7 +363,7 @@ class EPGSearch(EPGSelection):
 				searchEventWithFilter(self.session, event, service)
 		else:
 			self.session.open(MessageBox, _("AutoTimer-plugin must be installed to use the search filter function!"), type=MessageBox.TYPE_INFO)
-		
+
 	def openSimilarList(self, eventid, refstr):
 		self.session.open(EPGSelection, refstr, None, eventid)
 
@@ -403,7 +403,7 @@ class EPGSearch(EPGSelection):
 
 		options.append((_("Setup"), self.setup))
 		keys.append("0")
-		
+
 		options.append((_("open EPGSearch search filter list"), self.openSearchFilterList))
 		options.append((_("add search filter to EPGSearch"), self.addSearchFilter))
 
@@ -550,7 +550,7 @@ class EPGSearch(EPGSelection):
 	def getBlueButtonText(self):
 		if not autoTimerAvailable:
 			config.plugins.epgsearch.blue_function.value = "history"
-		
+
 		if config.plugins.epgsearch.blue_function.value == "searchlist":
 			return _("Search filter")
 		elif config.plugins.epgsearch.blue_function.value == "history":
@@ -575,14 +575,14 @@ class EPGSearch(EPGSelection):
 						]
 			self.session.openWithCallback(self.blueButtonPressed, ChoiceBox, list=choices, title=_("Select the action to search"))
 			return
-		
+
 		if blue_function == "searchlist":
 			self.openSearchFilterList()
 			return
-		
+
 		# blue_function == "history" or "combi"
 		options = [(x, x) for x in config.plugins.epgsearch.history.value]
-		
+
 		if blue_function == "combi" and autoTimerAvailable:
 				epgsearchAT = EPGSearchAT()
 				epgsearchAT.load()
@@ -634,7 +634,7 @@ class EPGSearch(EPGSelection):
 				self.searchkwargs = {"AT": results}
 				epgsearchAT = None
 				self.onCreate()
-				
+
 			else:
 				self.searchEPG(ret[1])
 		elif self.was_history_start:

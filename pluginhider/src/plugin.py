@@ -51,7 +51,7 @@ def PluginComponent_getPlugins(self, where):
 		hide = config.plugins.pluginhider.hidemovielist.value
 		res.extend((x for x in self.plugins.get(PluginDescriptor.WHERE_MOVIELIST, []) if x.name not in hide))
 		where.remove(PluginDescriptor.WHERE_MOVIELIST)
-	
+
 	if where:
 		res.extend(PluginComponent.pluginHider_baseGetPlugins(self, where))
 	if hasPluginWeight:

@@ -63,7 +63,7 @@ class FTPQueueManager(Screen):
 	def __init__(self, session, queue):
 		Screen.__init__(self, session)
 		self.queue = queue or []
-		
+
 		self["key_red"] = StaticText("")
 		self["key_green"] = StaticText("")
 		self["key_yellow"] = StaticText("")
@@ -80,7 +80,7 @@ class FTPQueueManager(Screen):
 				"cancel": self.exit,
 				"ok": self.ok,
 			}, -1)
-		
+
 		self.onLayoutFinish.extend((
 			self.layoutFinished,
 			self.updateList,

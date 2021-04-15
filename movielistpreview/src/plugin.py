@@ -124,15 +124,15 @@ class MovielistPreviewPositionerCoordinateEdit(ConfigListScreen, Screen):
 
 	def __init__(self, session, x, y, w, h):
 		Screen.__init__(self, session)
-		
+
 		self["key_green"] = Label(_("OK"))
-		
+
 		self.xEntry = ConfigInteger(default=x, limits=(0, w))
 		self.yEntry = ConfigInteger(default=y, limits=(0, h))
 		ConfigListScreen.__init__(self, [
 			getConfigListEntry("x position:", self.xEntry),
 			getConfigListEntry("y position:", self.yEntry)])
-		
+
 		self["actions"] = ActionMap(["OkCancelActions", "ColorActions"],
 			{
 				"green": self.ok,
@@ -151,7 +151,7 @@ class MovielistPreviewPositioner(Screen):
 		self.skin = SKIN
 		self["background"] = Label("")
 		self["preview"] = Pixmap()
-		
+
 		self["actions"] = ActionMap(["EPGSelectActions", "MenuActions", "WizardActions"],
 		{
 			"left": self.left,
@@ -164,15 +164,15 @@ class MovielistPreviewPositioner(Screen):
 			"nextBouquet": self.bigger,
 			"prevBouquet": self.smaller
 		}, -1)
-		
+
 		desktop = getDesktop(0)
 		self.desktopWidth = desktop.size().width()
 		self.desktopHeight = desktop.size().height()
-		
+
 		self.moveTimer = eTimer()
 		self.moveTimer_conn = self.moveTimer.timeout.connect(self.movePosition)
 		self.moveTimer.start(50, 1)
-		
+
 		self.onShow.append(self.__onShow)
 
 	def __onShow(self):
@@ -293,21 +293,21 @@ class MovielistPreviewManualCreator(Screen, InfoBarBase, InfoBarSeek, InfoBarCue
 		InfoBarSeek.__init__(self)
 		InfoBarCueSheetSupport.__init__(self)
 		InfoBarBase.__init__(self, steal_current_service=True)
-		
+
 		self.session = session
 		self.service = service
 		self.working = False
 		self.oldService = self.session.nav.getCurrentlyPlayingServiceReference()
 		self.session.nav.playService(service)
 		previewcreator.callback = self.grabDone
-		
+
 		desktopSize = getDesktop(0).size()
 		self["video"] = VideoWindow(decoder=0, fb_width=desktopSize.width(), fb_height=desktopSize.height())
 		self["seekState"] = Label()
-		
+
 		self.onPlayStateChanged.append(self.updateStateLabel)
 		self.updateStateLabel(self.seekstate)
-		
+
 		self["actions"] = ActionMap(["OkCancelActions"],
 			{
 				"ok": self.grab,
@@ -346,7 +346,7 @@ class MovielistPreviewAutoCreator(Screen):
 
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		
+
 		self.session = session
 		self.files = []
 		self.filescount = 0
@@ -357,14 +357,14 @@ class MovielistPreviewAutoCreator(Screen):
 		previewcreator.callback = self.grabDone
 		self.playable = ["avi", "dat", "divx", "m2ts", "m4a", "mkv", "mp4", "mov", "mpg", "ts", "vob"]
 		self.oldService = self.session.nav.getCurrentlyPlayingServiceReference()
-		
+
 		self["label"] = Label()
-		
+
 		self.timer = eTimer()
 		self.timer_conn = self.timer.timeout.connect(self.seekAndCreatePreview)
-		
+
 		self["actions"] = ActionMap(["OkCancelActions"], {"cancel": self.exit}, -1)
-		
+
 		self.onLayoutFinish.append(self.createPreviews)
 
 	def exit(self):

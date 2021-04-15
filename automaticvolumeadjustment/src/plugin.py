@@ -7,8 +7,8 @@
 #  Coded by Dr.Best (c) 2010
 #  Support: www.dreambox-tools.info
 #
-#  This plugin is licensed under the Creative Commons 
-#  Attribution-NonCommercial-ShareAlike 3.0 Unported 
+#  This plugin is licensed under the Creative Commons
+#  Attribution-NonCommercial-ShareAlike 3.0 Unported
 #  License. To view a copy of this license, visit
 #  http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to Creative
 #  Commons, 559 Nathan Abbott Way, Stanford, California 94305, USA.
@@ -17,7 +17,7 @@
 #  is licensed by Dream Property GmbH.
 
 #  This plugin is NOT free software. It is open source, you are allowed to
-#  modify it (if you keep the license), but it may not be commercially 
+#  modify it (if you keep the license), but it may not be commercially
 #  distributed other than under the conditions noted above.
 #
 from Plugins.Plugin import PluginDescriptor
@@ -38,7 +38,7 @@ def autoend(reason, **kwargs):
 		if AutomaticVolumeAdjustment.instance:
 			if AutomaticVolumeAdjustment.instance.enabled and AutomaticVolumeAdjustment.instance.modus != "0":
 				saveVolumeDict(AutomaticVolumeAdjustment.instance.serviceList)
-	
+
 
 def setup(session, **kwargs):
 	session.open(AutomaticVolumeAdjustmentConfigScreen) # start setup
@@ -48,8 +48,7 @@ def startSetup(menuid):
 	if menuid != "osd_video_audio": # show setup only in system level menu
 		return []
 	return [(_("Automatic Volume Adjustment"), setup, "AutomaticVolumeAdjustment", 46)]
-	
+
 
 def Plugins(**kwargs):
 	return [PluginDescriptor(where=[PluginDescriptor.WHERE_SESSIONSTART], fnc=autostart), PluginDescriptor(where=[PluginDescriptor.WHERE_AUTOSTART], fnc=autoend), PluginDescriptor(name="Automatic Volume Adjustment", description=_("Automatic Volume Adjustment"), where=PluginDescriptor.WHERE_MENU, fnc=startSetup)]
-

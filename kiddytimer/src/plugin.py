@@ -47,7 +47,7 @@ def autostart(reason, **kwargs):
 
 def extensionMenu(session, **kwargs):
     kiddyTimer.showExtensionsMenu()
-        
+
 
 def Plugins(path, **kwargs):
     # Assign global variable plugin_path
@@ -57,4 +57,3 @@ def Plugins(path, **kwargs):
             PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART, fnc=autostart),
             PluginDescriptor(name=_("KiddyTimer"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=extensionMenu),
             PluginDescriptor(name=_("KiddyTimer"), description=_("Allows to controls your kids' daily TV usage"), icon="KiddyTimer.png", where=PluginDescriptor.WHERE_PLUGINMENU, fnc=setup)]
-

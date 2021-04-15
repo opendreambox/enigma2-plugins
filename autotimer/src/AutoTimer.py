@@ -172,14 +172,14 @@ class AutoTimer:
 	def writeXml(self):
 		# XXX: we probably want to indicate failures in some way :)
 		saveFile(XML_CONFIG, buildConfig(self.defaultTimer, self.timers))
-		
+
 	def writeXmlTimer(self, timers):
 		return ''.join(buildConfig(self.defaultTimer, timers))
-	
+
 	def readXmlTimer(self, xml_string):
 		# Parse xml string
 		configuration = cet_fromstring(xml_string)
-		
+
 		parseConfig(
 			configuration,
 			self.timers,
@@ -188,7 +188,7 @@ class AutoTimer:
 			self.defaultTimer
 		)
 		self.uniqueTimerId += 1
-		
+
 		# reset time
 		self.configMtime = -1
 
@@ -251,16 +251,16 @@ class AutoTimer:
 		epgmatches.sort(key=itemgetter(3))
 
 		# Contains the the marked similar eits and the conflicting strings
-		similardict = defaultdict(list)		
+		similardict = defaultdict(list)
 
 		# Loop over all EPG matches
 		for idx, (serviceref, eit, name, begin, duration, shortdesc, extdesc) in enumerate(epgmatches):
-			
+
 			startLog()
-			
+
 			# timer destination dir
 			dest = timer.destination or config.usage.default_path.value
-			
+
 			evtBegin = begin
 			evtEnd = end = begin + duration
 
@@ -330,7 +330,7 @@ class AutoTimer:
 			newEntry = None
 			oldExists = False
 			allow_modify = True
-			
+
 			# Eventually change service to alternative
 			if timer.overrideAlternatives:
 				serviceref = timer.getAlternative(serviceref)
@@ -349,7 +349,7 @@ class AutoTimer:
 				else:
 					# Nothing found
 					doLog(str(sp))
-					
+
 					# If AutoTimer name not equal match, do a second lookup with the name
 					if timer.name.lower() != timer.match.lower():
 						#doLog("Request name, desc, path %s %s %s" % (timer.name,shortdesc,dest))
@@ -368,7 +368,7 @@ class AutoTimer:
 				doLog("Skipping an event because of filter check")
 				skipped.append((name, begin, end, serviceref, timer.name, getLog()))
 				continue
-			
+
 			if timer.hasOffset():
 				# Apply custom Offset
 				begin, end = timer.applyOffset(begin, end)
@@ -532,7 +532,7 @@ class AutoTimer:
 				msg = "[AutoTimer] Try to add new timer based on AutoTimer %s." % (timer.name)
 				doLog(msg)
 				newEntry.log(500, msg)
-				
+
 				# Mark this entry as AutoTimer (only AutoTimers will have this Attribute set)
 				# It is only temporarily, after a restart it will be lost,
 				# because it won't be stored in the timer xml file
@@ -636,11 +636,11 @@ class AutoTimer:
 						newEntry.disabled = True
 						# We might want to do the sanity check locally so we don't run it twice - but I consider this workaround a hack anyway
 						conflicts = recordHandler.record(newEntry)
-		
+
 		return (new, modified)
 
 	def addToSearchLogfile(self, timerEntry, entryType, simulateOnlyValue=False):
-		
+
 		if not simulateOnlyValue:
 			#write eventname totextfile
 			logpath = config.plugins.autotimer.searchlog_path.value
@@ -656,7 +656,7 @@ class AutoTimer:
 			file_search_log.close()
 
 	def prepareSearchLogfile(self):
-		
+
 		# prepare searchlog at begin of real search (max. last 5 searches)
 		logpath = config.plugins.autotimer.searchlog_path.value
 		if logpath == "?likeATlog?":
@@ -675,14 +675,14 @@ class AutoTimer:
 					searchlog_txt = "\n########## " + "\n########## ".join(searchlog_txt)
 				else:
 					searchlog_txt = "\n########## ".join(searchlog_txt)
-		
+
 		searchlog_txt += "\n########## " + _("begin of search log on") + " " + str(strftime('%d.%m.%Y, %H:%M', localtime())) + " ########\n\n"
 		file_search_log = open(path_search_log, "w")
 		file_search_log.write(searchlog_txt)
 		file_search_log.close()
 
 	def addToFilterfile(self, name, begin, simulateOnlyValue=False, sp_title="xxxxxxxxxxxxxxxx"):
-		
+
 		#== add to filterList
 		path_filter_txt = "/etc/enigma2/autotimer_filter.txt"
 		if os_path.exists(path_filter_txt):
@@ -700,33 +700,33 @@ class AutoTimer:
 		file_filter_txt.write(filter_txt)
 		file_filter_txt.close()
 		doLog("added a new event to autotimer_filter")
-		
+
 		return True
-		
+
 	def addToFilterList(self, session, services, *args, **kwargs):
-		
+
 		if services:
 			serviceHandler = eServiceCenter.getInstance()
 			add_counter = 0
-			
+
 			try:
 				for service in services:
-					
+
 					info = serviceHandler.info(service)
 					name = info and info.getName(service) or ""
-					
+
 					if info:
 						begin = info.getInfo(service, iServiceInformation.sTimeCreate)
 					else:
 						doLog("No recordinfo available")
 						continue
-					
+
 					ret = self.addToFilterfile(name, begin)
 					if ret:
 						add_counter += 1
-					
+
 				session.open(MessageBox, _("finished adding to filter list with %s event(s):\n\n %s event(s) added \n %s event(s) skipped") % (len(services), add_counter, len(services) - add_counter), type=MessageBox.TYPE_INFO, timeout=config.plugins.autotimer.popup_timeout.value)
-					
+
 			except Exception as e:
 				doLog("Error in addToFilterList", e)
 				print("======== Error in addToFilterList ", e)
@@ -750,7 +750,7 @@ class AutoTimer:
 		# prepare searchlog at begin of real search
 		if not simulateOnly:
 			self.prepareSearchLogfile()
-		
+
 		if currentThread().getName() == 'MainThread':
 			doBlockingCallFromMainThread = lambda f, *a, **kw: f(*a, **kw)
 		else:
@@ -793,11 +793,11 @@ class AutoTimer:
 				else:
 					new += tup[0]
 					modified += tup[1]
-		
+
 		if not simulateOnly:
 			if sp_showResult is not None:
 				blockingCallFromMainThread(sp_showResult)
-		
+
 		return (len(timers), new, modified, timers, conflicting, similars)
 
 # Supporting functions
@@ -832,7 +832,7 @@ class AutoTimer:
 								doLog("Remove timer because of eit check " + timer.name)
 								self.addToSearchLogfile(timer, "-", simulateOnly)
 								NavigationInstance.instance.RecordTimer.removeEntry(timer)
-								
+
 					except:
 						pass
 		del remove

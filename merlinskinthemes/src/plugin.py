@@ -63,9 +63,9 @@ def checkSkin(session, **kwargs):
 				else:
 					print("[MST] - skin was edited with MST but tag is not present - assume rebuild required")
 					configDictFile = CONFDIR + config.skin.primary_skin.value[:-9] + ".cfg"
-					
+
 					if fileExists(resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value[:-9] + "/themes.xml"):
-						# update skin with data from config				
+						# update skin with data from config
 						retValue = MerlinSkinThemes.setThemes(resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value[:-9] + "/themes.xml", resolveFilename(SCOPE_SKIN) + config.skin.primary_skin.value, configDictFile)
 						showMessage(retValue)
 					else:

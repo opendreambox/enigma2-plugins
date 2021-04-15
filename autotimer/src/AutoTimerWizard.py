@@ -243,4 +243,3 @@ class AutoTimerWizard(WizardLanguage, AutoTimerEditorBase, Rc):
 			WizardLanguage.close(self, None)
 		else:
 			WizardLanguage.close(self, self.timer)
-

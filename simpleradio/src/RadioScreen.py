@@ -145,4 +145,3 @@ class RadioScreen(Screen, ServiceStopScreen, InfoBarServiceErrorPopupSupport, In
 				self._list.index = index
 				break
 			index += 1
-

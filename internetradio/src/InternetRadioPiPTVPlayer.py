@@ -53,7 +53,7 @@ class InternetRadioPiPTVPlayer(object):
 			"9": self.keyNumberGlobal,
 		}, -1)
 		self["numberActions"].setEnabled(False)
-		self["zapActions"] = ActionMap(["OkCancelActions", "DirectionActions", "ChannelSelectBaseActions", "ChannelSelectEPGActions"], 
+		self["zapActions"] = ActionMap(["OkCancelActions", "DirectionActions", "ChannelSelectBaseActions", "ChannelSelectEPGActions"],
 		{
 			"cancel": self.disablePiPPlayer,
 			"ok": self.disablePiPPlayer,
@@ -252,4 +252,3 @@ class InternetRadioPiPTVPlayer(object):
 		if self.pipservice and not self.pipservice.setTarget(1):
 			self.pipservice.start()
 			self.currService = ref
-		

@@ -243,4 +243,3 @@ class ServiceListSave(resource.Resource):
 
 	def getFilenameForIndex(self, type):
 		return "bouquets" + self.EXTENSIONS[type]
-

@@ -26,13 +26,13 @@ from Plugins.Extensions.InternetRadio.InternetRadioFavoriteConfig import Interne
 class InternetRadioWebFavoriteList(Source):
 	def __init__(self):
 		Source.__init__(self)
-		
+
 	def getFavoritesList(self):
 		favoriteConfig = InternetRadioFavoriteConfig()
 		return favoriteConfig.getFavoriteList(html=True)
-		
+
 	def handleCommand(self, cmd):
 		self.getFavoritesList()
 
 	list = property(getFavoritesList)
-	lut = {"Name": 0, "Text": 1, "Type": 2, "Tags": 3, "Country": 4, "Homepage": 5}			
+	lut = {"Name": 0, "Text": 1, "Type": 2, "Tags": 3, "Country": 4, "Homepage": 5}

@@ -14,7 +14,7 @@ class SearchType:
 	CHOICES[EXACT_TITLE] = _("Exact match of title")
 	CHOICES[TITLE] = _("Partial match of title")
 	CHOICES[TITLE_DESCRIPTION] = _("Partial match of title or description")
-	
+
 	BUTTON_CHOICES = [("none", _("none")), ("red", _("Channellist red")), ("blue", _("EPG Single/Eventview blue")), ("all", _("all"))]
 
 

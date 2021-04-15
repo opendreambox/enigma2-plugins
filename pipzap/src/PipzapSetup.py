@@ -34,7 +34,7 @@ class PipzapSetup(Screen, ConfigListScreen):
 		# Summary
 		self.setup_title = _("pipzap Setup")
 		self.onChangedEntry = []
-		
+
 		# Initialize widgets
 		self["key_green"] = StaticText(_("OK"))
 		self["key_red"] = StaticText(_("Cancel"))
@@ -45,7 +45,7 @@ class PipzapSetup(Screen, ConfigListScreen):
 		else:
 			self["key_blue"] = StaticText("")
 		self["help"] = StaticText()
-		
+
 		# Define Actions
 		self["actions"] = ActionMap(["SetupActions", "ColorActions"],
 					{
@@ -58,7 +58,7 @@ class PipzapSetup(Screen, ConfigListScreen):
 		self.list = []
 		self.buildConfig()
 		ConfigListScreen.__init__(self, self.list, session=session, on_change=self.changed)
-		
+
 		def selectionChanged():
 			if self["config"].current:
 				self["config"].current[1].onDeselect(self.session)
@@ -73,11 +73,11 @@ class PipzapSetup(Screen, ConfigListScreen):
 
 		# Trigger change
 		self.changed()
-		
+
 		self.onLayoutFinish.append(self.setCustomTitle)
 
 	def buildConfig(self):
-			
+
 			self.list.append(getConfigListEntry(_("Enable Hotkey"), config.plugins.pipzap.enable_hotkey, _("Use the STOP-Key to quickly enable/disable pipzap in TV-Mode? Changing this setting requires a restart.")))
 			if config.plugins.pipzap.enable_hotkey.value:
 				self.list.append(getConfigListEntry(_("  Open/Close PiP with Exit-Key"), config.plugins.pipzap.enable_exitkey, _("Use the Exit-Key to open/close the PiP.")))
@@ -98,7 +98,7 @@ class PipzapSetup(Screen, ConfigListScreen):
 		self.list = []
 		self.buildConfig()
 		self["config"].setList(self.list)
-		
+
 	def changed(self):
 		for x in self.onChangedEntry:
 			x()

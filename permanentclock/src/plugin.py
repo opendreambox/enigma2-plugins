@@ -75,7 +75,7 @@ class PermanentClockPositioner(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.skin = SKIN
-		
+
 		self["actions"] = ActionMap(["WizardActions"],
 		{
 			"left": self.left,
@@ -85,11 +85,11 @@ class PermanentClockPositioner(Screen):
 			"ok": self.ok,
 			"back": self.exit
 		}, -1)
-		
+
 		desktop = getDesktop(0)
 		self.desktopWidth = desktop.size().width()
 		self.desktopHeight = desktop.size().height()
-		
+
 		self.moveTimer = eTimer()
 		self.moveTimer_conn = self.moveTimer.timeout.connect(self.movePosition)
 		self.onExecBegin.append(self.movePosition)
@@ -188,7 +188,7 @@ def startConfig(session, **kwargs):
 
 
 def main(menuid):
-	if menuid != "system": 
+	if menuid != "system":
 		return []
 	return [(_("Permanent Clock"), startConfig, "permanent_clock", None)]
 
