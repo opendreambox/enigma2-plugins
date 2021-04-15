@@ -182,8 +182,8 @@ def getNextWakeup():
 		return begin
 
 	# otherwise add 1 day
-	setConfigWakeupTime(begin+86400)
-	return begin+86400
+	setConfigWakeupTime(begin + 86400)
+	return begin + 86400
 
 def setConfigWakeupTime(value):
 	config.plugins.epgrefresh.wakeup_time.value = value
@@ -238,7 +238,7 @@ def eventinfo(session, servicelist, **kwargs):
 	# strip all after last :
 	pos = sref.rfind(':')
 	if pos != -1:
-		sref = sref[:pos+1]
+		sref = sref[:pos + 1]
 
 	epgrefresh.services[0].add(EPGRefreshService(str(sref), None))
 

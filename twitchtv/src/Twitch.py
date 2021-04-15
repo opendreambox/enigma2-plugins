@@ -43,7 +43,7 @@ class TwitchChannel(TwitchDataObject):
 		self.followers = channel["followers"] if channel.get("followers", None) else ""
 
 	def __str__(self):
-		return "~TwitchChannel-%s-%s-%s-%s-%s" %(self.name, self.display_name, self.status, self.followers, self.banner)
+		return "~TwitchChannel-%s-%s-%s-%s-%s" % (self.name, self.display_name, self.status, self.followers, self.banner)
 
 class TwitchVideoBase(TwitchDataObject):
 	def __init__(self, data, type_key):
@@ -64,7 +64,7 @@ class TwitchStream(TwitchVideoBase):
 		self.viewers = stream["viewers"]
 
 	def __str__(self):
-		return "~TwitchStream-%s-%s-%s-(%s | %s | %s)" %(self.type, self.viewers, self.channel, self.preview_small, self.preview_medium, self.preview_large)
+		return "~TwitchStream-%s-%s-%s-(%s | %s | %s)" % (self.type, self.viewers, self.channel, self.preview_small, self.preview_medium, self.preview_large)
 
 class TwitchVOD(TwitchVideoBase):
 	def __init__(self, vod):
@@ -88,7 +88,7 @@ class Twitch(object):
 			"Accept": "application/vnd.twitchtv.v5+json",
 		}
 		if args:
-			url = "%s%s" %(url, urllib.urlencode(args))
+			url = "%s%s" % (url, urllib.urlencode(args))
 		Log.w(url)
 		return getPage(url, method=method, agent=Twitch.USERAGENT, headers=headers)
 
@@ -113,7 +113,7 @@ class Twitch(object):
 		callback(items)
 
 	def _onErrorLivestreams(self, error, callback):
-		Log.w("Couldnt get all livestreams! Error: %s" %(error,))
+		Log.w("Couldnt get all livestreams! Error: %s" % (error,))
 		callback([])
 
 	def followedChannels(self, username, callback):
@@ -125,7 +125,7 @@ class Twitch(object):
 			data = json.loads(html)
 			userid = urllib.quote(str(data["users"] and data["users"][0]["_id"]))
 			if userid:
-				self._get("https://api.twitch.tv/kraken/users/%s/follows/channels" %(userid)).addCallbacks(self._onFollowedChannels, self._onErrorFollowedChannels, callbackArgs=[callback], errbackArgs=[callback])
+				self._get("https://api.twitch.tv/kraken/users/%s/follows/channels" % (userid)).addCallbacks(self._onFollowedChannels, self._onErrorFollowedChannels, callbackArgs=[callback], errbackArgs=[callback])
 				return
 		except:
 			pass
@@ -157,7 +157,7 @@ class Twitch(object):
 		callback(None)
 
 	def channelDetails(self, channel_id, callback):
-		self._get("https://api.twitch.tv/kraken/channels/%s" %(channel_id,)).addCallbacks(self._onChannelDetails, self._onErrorChannelDetails, callbackArgs=[callback], errbackArgs=[callback])
+		self._get("https://api.twitch.tv/kraken/channels/%s" % (channel_id,)).addCallbacks(self._onChannelDetails, self._onErrorChannelDetails, callbackArgs=[callback], errbackArgs=[callback])
 
 	def _onChannelDetails(self, html, callback):
 		Log.i("Received Channel Details!")
@@ -170,11 +170,11 @@ class Twitch(object):
 		callback(channel)
 
 	def _onErrorChannelDetails(self, error, callback):
-		Log.w("Error while getting channel details: %s" %(error,))
+		Log.w("Error while getting channel details: %s" % (error,))
 		callback(None)
 
 	def liveStreamDetails(self, channel_id, callback):
-		self._get("https://api.twitch.tv/kraken/streams/%s" %(str(channel_id),)).addCallbacks(self._onLiveStreamDetails, self._onErrorLiveStreamDetails, callbackArgs=[callback], errbackArgs=[callback])
+		self._get("https://api.twitch.tv/kraken/streams/%s" % (str(channel_id),)).addCallbacks(self._onLiveStreamDetails, self._onErrorLiveStreamDetails, callbackArgs=[callback], errbackArgs=[callback])
 		#self._get("https://api.twitch.tv/kraken/streams/?", args=[("channel", channel_id)]).addCallbacks(self._onLiveStreamDetails, self._onErrorLiveStreamDetails, callbackArgs=[callback], errbackArgs=[callback])
 
 	def _onLiveStreamDetails(self, html, callback):
@@ -186,11 +186,11 @@ class Twitch(object):
 		callback(stream)
 
 	def _onErrorLiveStreamDetails(self, error, callback):
-		Log.w("Error while getting live stream details: %s" %(error))
+		Log.w("Error while getting live stream details: %s" % (error))
 		callback(None)
 
 	def videosForChannel(self, channel_id, broadcast_type, callback):
-		url = "https://api.twitch.tv/kraken/channels/%s/videos?" %(channel_id,)
+		url = "https://api.twitch.tv/kraken/channels/%s/videos?" % (channel_id,)
 		self._get(url, args=[("limit", 100), ("broadcast_type", broadcast_type)]).addCallbacks(self._onVideosForChannel, self._onErrorVideosForChannel, callbackArgs=[callback], errbackArgs=[callback])
 
 	def _onVideosForChannel(self, html, callback):
@@ -205,7 +205,7 @@ class Twitch(object):
 		callback(total_vods, items)
 
 	def _onErrorVideosForChannel(self, error, callback):
-		Log.w("Error while getting videos from channel: %s" %(error,))
+		Log.w("Error while getting videos from channel: %s" % (error,))
 		callback(-1, [])
 
 	def topGames(self, callback, limit=100, offset=0):

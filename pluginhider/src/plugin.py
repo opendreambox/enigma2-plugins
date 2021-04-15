@@ -11,10 +11,10 @@ from PluginHiderSetup import PluginHiderSetup
 from operator import attrgetter
 
 config.plugins.pluginhider = ConfigSubsection()
-config.plugins.pluginhider.hideextensions 	= ConfigSet(choices=[])
-config.plugins.pluginhider.hideplugins 			= ConfigSet(choices=[])
-config.plugins.pluginhider.hideeventinfo 		= ConfigSet(choices=[])
-config.plugins.pluginhider.hidemovielist 		= ConfigSet(choices=[])
+config.plugins.pluginhider.hideextensions = ConfigSet(choices=[])
+config.plugins.pluginhider.hideplugins = ConfigSet(choices=[])
+config.plugins.pluginhider.hideeventinfo = ConfigSet(choices=[])
+config.plugins.pluginhider.hidemovielist = ConfigSet(choices=[])
 
 hasPluginWeight = True
 
@@ -85,7 +85,7 @@ def menu(menuid):
 	return [(_("Hide Plugins"), main, "pluginhider_setup", None)]
 
 def Plugins(**kwargs):
-	pd =  PluginDescriptor(
+	pd = PluginDescriptor(
 		name=_("Hide Plugins"),
 		description=_("Hide Plugins"),
 		where=PluginDescriptor.WHERE_AUTOSTART,

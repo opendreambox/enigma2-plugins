@@ -55,9 +55,9 @@ class GoogleSuggestions():
 						charset = "ISO-8859-1"
 						try:
 							charset = header.split(";")[1].split("=")[1]
-							print "[MyTube - GoogleSuggestions] Got charset %s" %charset
+							print "[MyTube - GoogleSuggestions] Got charset %s" % charset
 						except:
-							print "[MyTube - GoogleSuggestions] No charset in Header, falling back to %s" %charset
+							print "[MyTube - GoogleSuggestions] No charset in Header, falling back to %s" % charset
 						data = data.decode(charset).encode("utf-8")
 						self.conn.close()
 						return data

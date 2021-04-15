@@ -54,7 +54,7 @@ def FTPFileEntryComponent(file, directory):
 
 	res = [
 		(absolute, isDir, file['size']),
-		(eListboxPythonMultiContent.TYPE_TEXT, tx, ty, tw, th, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, name)
+		(eListboxPythonMultiContent.TYPE_TEXT, tx, ty, tw, th, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, name)
 	]
 	if isDir:
 		png = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, "extensions/directory.png"))
@@ -66,7 +66,7 @@ def FTPFileEntryComponent(file, directory):
 		else:
 			png = None
 	if png is not None:
-		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 10, (th-pxh)/2, pxw, pxh, png))
+		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 10, (th - pxh) / 2, pxw, pxh, png))
 
 	return res
 
@@ -106,7 +106,7 @@ class FTPFileList(FileList):
 		list = [FTPFileEntryComponent(file, self.current_directory) for file in self.filelist.files]
 		list.sort(key=lambda x: (not x[0][1], x[0][0]))
 		if self.current_directory != "/":
-			list.insert(0, FileEntryComponent(name="<" +_("Parent Directory") + ">", absolute='/'.join(self.current_directory.split('/')[:-2]) + '/', isDir=True))
+			list.insert(0, FileEntryComponent(name="<" + _("Parent Directory") + ">", absolute='/'.join(self.current_directory.split('/')[:-2]) + '/', isDir=True))
 
 		self.isValid = True
 		self.l.setList(list)
@@ -128,7 +128,7 @@ class FTPFileList(FileList):
 		# XXX: we might end up here if login fails, we might want to add some check for this (e.g. send a dummy command before doing actual work)
 		if self.current_directory != "/":
 			self.list = [
-				FileEntryComponent(name="<" +_("Parent Directory") + ">", absolute='/'.join(self.current_directory.split('/')[:-2]) + '/', isDir=True),
+				FileEntryComponent(name="<" + _("Parent Directory") + ">", absolute='/'.join(self.current_directory.split('/')[:-2]) + '/', isDir=True),
 				FileEntryComponent(name="<" + _("Error") + ">", absolute=None, isDir=False),
 			]
 		else:
@@ -722,7 +722,7 @@ class FTPBrowser(Screen, Protocol, InfoBarNotifications, HelpableScreen):
 		elif int(newTime - lastTime) >= 2:
 			lastApprox = round(((pos - self.lastLength) / (newTime - lastTime) / 1024), 2)
 
-			secLen = int(round(((max-pos) / 1024) / lastApprox))
+			secLen = int(round(((max - pos) / 1024) / lastApprox))
 			self["eta"].text = _("ETA %d:%02d min") % (secLen / 60, secLen % 60)
 			self["speed"].text = _("%d kb/s") % (lastApprox)
 

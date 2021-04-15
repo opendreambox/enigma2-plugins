@@ -54,14 +54,14 @@ def myPrint(txt, prefix=None):
     print("\033[91m[EPGCopy] %s\033[m " % txt)
     
 def myFtp(): 
-    directory_local='/tmp/' 
+    directory_local = '/tmp/' 
     directory = '/etc/enigma2/' 
-    fileQuelle='epg.db'
-    fileZiel='epgSync.db'
+    fileQuelle = 'epg.db'
+    fileZiel = 'epgSync.db'
     
-    if path.isfile(directory_local+fileZiel):
+    if path.isfile(directory_local + fileZiel):
         try:
-            remove(directory_local+fileZiel)
+            remove(directory_local + fileZiel)
             myPrint("deleted pre-existing " + fileZiel)
         except OSError:
             myPrint("could not remove pre-existing " + fileZiel)
@@ -71,13 +71,13 @@ def myFtp():
     f.login(config.plugins.epgCopy.username.value, config.plugins.epgCopy.password.value)
     f.cwd(directory)
     #f.retrlines('LIST')
-    file = open(directory_local+fileZiel, 'wb')
-    f.retrbinary('RETR '+ fileQuelle, file.write)
+    file = open(directory_local + fileZiel, 'wb')
+    f.retrbinary('RETR ' + fileQuelle, file.write)
     file.close()
     f.quit()
-    if path.isfile(directory+fileQuelle):
-        remove(directory+fileQuelle)
-    move(directory_local+fileZiel,directory+fileQuelle)
+    if path.isfile(directory + fileQuelle):
+        remove(directory + fileQuelle)
+    move(directory_local + fileZiel,directory + fileQuelle)
     myPrint("epg.db was successfully transferred")
 
 class copyEveryDay(Screen):
@@ -104,7 +104,7 @@ class copyEveryDay(Screen):
         if begin < time():
             begin += 86400
         next = int(abs(time() - begin))
-        myPrint("[copyEveryDay] next reset: %s" % strftime("%c", localtime(time()+ next)))
+        myPrint("[copyEveryDay] next reset: %s" % strftime("%c", localtime(time() + next)))
         self.timer.startLongTimer(next)
         
     def __doCopy(self):
@@ -136,7 +136,7 @@ class epgCopyScreen(Screen, ConfigListScreen):
             <widget name="key_green" position="150,475" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
             <ePixmap name="yellow" position="295,475" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
             <widget name="key_yellow" position="295,475" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />    
-            </screen>"""% _("EPG Copy view 1280")
+            </screen>""" % _("EPG Copy view 1280")
     else:
         skin = """
             <screen position="center,center" size="585,410" title="%s" >
@@ -147,7 +147,7 @@ class epgCopyScreen(Screen, ConfigListScreen):
             <widget name="key_green" position="150,365" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
             <ePixmap name="yellow" position="295,365" zPosition="4" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
             <widget name="key_yellow" position="295,365" zPosition="5" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />    
-            </screen>"""% _("EPG Copy view")
+            </screen>""" % _("EPG Copy view")
             
     def __init__(self, session):
         Screen.__init__(self, session)
@@ -211,7 +211,7 @@ def main(session, **kwargs):
 def Plugins(path,**kwargs):
     global plugin_path
     plugin_path = path
-    return  [
+    return [
              PluginDescriptor(name="epgCopy",description="copy epg.db", where=[PluginDescriptor.WHERE_PLUGINMENU], icon="epg.png", fnc=main),
              PluginDescriptor(name="epgCopy", where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main),
              PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART,fnc=autoCpy)

@@ -18,7 +18,7 @@ import os
 
 from .RadioBrowserClient import RadioBrowserClient
 
-loadSkin("%s/skin.xml" %(os.path.dirname(__file__)))
+loadSkin("%s/skin.xml" % (os.path.dirname(__file__)))
 
 config.plugins.simpleradio = ConfigSubsection()
 config.plugins.simpleradio.country = ConfigText(default="Germany", fixed_size=False)

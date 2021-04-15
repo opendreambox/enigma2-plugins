@@ -25,7 +25,7 @@ from enigma import eServiceCenter, getBestPlayableServiceReference, eServiceRefe
 from Components.VideoWindow import VideoWindow
 from ServiceReference import ServiceReference
 from Screens.EpgSelection import EPGSelection
-from Screens.EventView import  EventViewEPGSelect
+from Screens.EventView import EventViewEPGSelect
 from Components.config import config
 
 # PiPServiceRelation installed?
@@ -107,7 +107,7 @@ class InternetRadioPiPTVPlayer(object):
 				serviceIterator = servicelist.getNext()
 				if not serviceIterator.valid(): #check end of list
 					break
-				playable = not (serviceIterator.flags & (eServiceReference.isMarker|eServiceReference.isDirectory))
+				playable = not (serviceIterator.flags & (eServiceReference.isMarker | eServiceReference.isDirectory))
 				if playable:
 					num -= 1
 			if not num: #found service with searched number ?
@@ -186,7 +186,7 @@ class InternetRadioPiPTVPlayer(object):
 	def isPlayable(self):
 		# check if service is playable
 		current = ServiceReference(self.servicelist.getCurrentSelection())
-		return not (current.ref.flags & (eServiceReference.isMarker|eServiceReference.isDirectory))
+		return not (current.ref.flags & (eServiceReference.isMarker | eServiceReference.isDirectory))
 
 	def nextBouquet(self):
 		if self.servicelist is not None:

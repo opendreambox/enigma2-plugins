@@ -63,9 +63,9 @@ class AutoPollerThread(Thread):
 	def start(self, initial=True):
 		# NOTE: we wait for several minutes on initial launch to not delay enigma2 startup time
 		if initial:
-			delay = config.plugins.autotimer.delay.value*60
+			delay = config.plugins.autotimer.delay.value * 60
 		else:
-			delay = config.plugins.autotimer.interval.value*3600
+			delay = config.plugins.autotimer.interval.value * 3600
 
 		self.__timer.startLongTimer(delay)
 		if not self.isAlive():
@@ -99,7 +99,7 @@ class AutoPollerThread(Thread):
 					import NavigationInstance
 					if NavigationInstance.instance.RecordTimer.isRecording():
 						doLog("[AutoTimer]: Skip check during running records")
-						reactor.callFromThread(timer.startLongTimer, config.plugins.autotimer.interval.value*3600)
+						reactor.callFromThread(timer.startLongTimer, config.plugins.autotimer.interval.value * 3600)
 						continue
 				except:
 					pass
@@ -109,7 +109,7 @@ class AutoPollerThread(Thread):
 					from Plugins.Extensions.EPGRefresh.EPGRefresh import epgrefresh
 					if epgrefresh.isrunning:
 						doLog("[AutoTimer]: Skip check during EPGRefresh")
-						reactor.callFromThread(timer.startLongTimer, config.plugins.autotimer.interval.value*3600)
+						reactor.callFromThread(timer.startLongTimer, config.plugins.autotimer.interval.value * 3600)
 						continue
 				except:
 					pass
@@ -125,7 +125,7 @@ class AutoPollerThread(Thread):
 				import sys
 				traceback.print_exc(file=sys.stdout)
 			#Keep that eTimer in the mainThread
-			reactor.callFromThread(timer.startLongTimer, config.plugins.autotimer.interval.value*3600)
+			reactor.callFromThread(timer.startLongTimer, config.plugins.autotimer.interval.value * 3600)
 
 class AutoPoller:
 	"""Manages actual thread which does the polling. Used for convenience."""

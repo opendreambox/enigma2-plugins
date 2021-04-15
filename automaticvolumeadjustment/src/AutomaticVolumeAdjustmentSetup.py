@@ -144,12 +144,12 @@ class AutomaticVolumeAdjustmentEntriesListConfigScreen(Screen):
 		self["entrylist"] = AutomaticVolumeAdjustmentEntryList([])
 		self["actions"] = ActionMap(["WizardActions","MenuActions","ShortcutActions"],
 			{
-			 "ok"	:	self.keyOK,
-			 "back"	:	self.keyClose,
-			 "red"	:	self.keyRed,
-			 "green":	self.keyClose,
-			 "yellow":	self.keyYellow,
-			 "blue": 	self.keyDelete,
+			 "ok"	: self.keyOK,
+			 "back"	: self.keyClose,
+			 "red"	: self.keyRed,
+			 "green": self.keyClose,
+			 "yellow": self.keyYellow,
+			 "blue": self.keyDelete,
 			 }, -1)
 		self.automaticVolumeAdjustmentInstance = AutomaticVolumeAdjustment.instance
 		self["entrylist"].setConfig(configVA)
@@ -230,8 +230,8 @@ class AutomaticVolumeAdjustmentEntryList(MenuList):
 			c.name.value = ServiceReference(eServiceReference(c.servicereference.value)).getServiceName()
 			res = [
 				c,
-				(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, textWidth-10, textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, c.name.value),
-				(eListboxPythonMultiContent.TYPE_TEXT, textWidth, 0,220, textHeight, 0, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, str(c.adjustvalue.value)),
+				(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, textWidth - 10, textHeight, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, c.name.value),
+				(eListboxPythonMultiContent.TYPE_TEXT, textWidth, 0,220, textHeight, 0, RT_HALIGN_RIGHT | RT_VALIGN_CENTER, str(c.adjustvalue.value)),
 			]
 			list.append(res)
 		self.list = list

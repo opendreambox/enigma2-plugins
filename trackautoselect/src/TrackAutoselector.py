@@ -15,7 +15,7 @@ class Stream(object):
 		self.forced = forced
 		self.description = description
 	def __repr__(self):
-		return "<stream idx=%i, codec=%s, languages='%s'%s%s%s%s>" % (self.idx, str(self.codec), str(self.languages), self.description and " description='"+self.description+"'" or "", self.saved and " SAVED" or "", self.default and " DEFAULT" or "", self.forced and " FORCED" or "")
+		return "<stream idx=%i, codec=%s, languages='%s'%s%s%s%s>" % (self.idx, str(self.codec), str(self.languages), self.description and " description='" + self.description + "'" or "", self.saved and " SAVED" or "", self.default and " DEFAULT" or "", self.forced and " FORCED" or "")
 
 class TrackAutoselector(object):
 	instance = None

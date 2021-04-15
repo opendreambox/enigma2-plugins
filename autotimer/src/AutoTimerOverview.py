@@ -129,13 +129,13 @@ class AutoTimerOverview(Screen, HelpableScreen):
 
 		self["EPGSelectActions"] = HelpableActionMap(self, "EPGSelectActions",
 			{
-				"info":   (self.showSearchLog, _("Show last search log")),
+				"info": (self.showSearchLog, _("Show last search log")),
 			}
 		)
 
 		self["InfobarActions"] = HelpableActionMap(self, "InfobarActions",
 			{
-				"showTv":   (self.showFilterTxt, _("Show AutoTimer filters")),
+				"showTv": (self.showFilterTxt, _("Show AutoTimer filters")),
 			}
 		)
 

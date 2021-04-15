@@ -79,12 +79,12 @@ class MSNWeatherPluginEntriesListConfigScreen(Screen):
 		self["entrylist"] = WeatherPluginEntryList([])
 		self["actions"] = ActionMap(["WizardActions","MenuActions","ShortcutActions"],
 			{
-			 "ok"	:	self.keyOK,
-			 "back"	:	self.keyClose,
-			 "red"	:	self.keyClose,
-			 "green":	self.keyGreen,			 
-			 "yellow":	self.keyYellow,
-			 "blue": 	self.keyDelete,
+			 "ok"	: self.keyOK,
+			 "back"	: self.keyClose,
+			 "red"	: self.keyClose,
+			 "green": self.keyGreen,    
+			 "yellow": self.keyYellow,
+			 "blue": self.keyDelete,
 			 }, -1)
 		self.updateList()
 
@@ -163,8 +163,8 @@ class WeatherPluginEntryList(MenuList):
 		for c in config.plugins.WeatherPlugin.Entry:
 			res = [
 				c,
-				(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, textWidth, textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, str(c.city.value)),
-				(eListboxPythonMultiContent.TYPE_TEXT, itemMargin+textWidth, 0, text2Width, textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, str(c.degreetype .value)),
+				(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, textWidth, textHeight, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, str(c.city.value)),
+				(eListboxPythonMultiContent.TYPE_TEXT, itemMargin + textWidth, 0, text2Width, textHeight, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, str(c.degreetype .value)),
 			]
 			list.append(res)
 		self.list = list
@@ -276,7 +276,7 @@ class MSNWeatherPluginEntryConfigScreen(ConfigListScreen, Screen):
 				if childs.tag == "weather" and childs.attrib.has_key("errormessage"):
 					errormessage = childs.attrib.get("errormessage").encode("utf-8", 'ignore')
 					break
-			if len(errormessage) !=0:
+			if len(errormessage) != 0:
 				self.session.open(MessageBox, errormessage, MessageBox.TYPE_ERROR)					
 			else:
 				self.session.openWithCallback(self.searchCallback, MSNWeatherPluginSearch, xmlstring)
@@ -311,9 +311,9 @@ class MSNWeatherPluginSearch(Screen):
 		self["entrylist"] = MSNWeatherPluginSearchResultList([])
 		self["actions"] = ActionMap(["WizardActions","MenuActions","ShortcutActions"],
 			{
-			 "ok"	:	self.keyOK,
+			 "ok"	: self.keyOK,
 			 "green": self.keyOK,
-			 "back"	:	self.keyClose,
+			 "back"	: self.keyClose,
 			 "red": self.keyClose,
 			 }, -1)
 		self.updateList(xmlstring)
@@ -368,8 +368,8 @@ class MSNWeatherPluginSearchResultList(MenuList):
 				weatherlocationcode = childs.attrib.get("weatherlocationcode").encode("utf-8", 'ignore')
 				res = [
 					(weatherlocationcode, searchlocation),
-					(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, textWidth, textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, searchlocation),
-					(eListboxPythonMultiContent.TYPE_TEXT, 5, textHeight+lineSpacing, textWidth, textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, searchresult),
+					(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, textWidth, textHeight, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, searchlocation),
+					(eListboxPythonMultiContent.TYPE_TEXT, 5, textHeight + lineSpacing, textWidth, textHeight, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, searchresult),
 				]
 				list.append(res)
 		self.list = list

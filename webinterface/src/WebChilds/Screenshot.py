@@ -43,18 +43,18 @@ class ScreenshotResource(resource.Resource):
 				video = True
 			elif key == "res":
 				try:
-					x, y  = map(lambda val: int(val), value[0].split("x"))
+					x, y = map(lambda val: int(val), value[0].split("x"))
 				except Exception as e:
 					print e
-					Log.w("%s is not a valid value for video size. Please use something in the style of '1280x720'" %value)
+					Log.w("%s is not a valid value for video size. Please use something in the style of '1280x720'" % value)
 			elif key == 'display':
 				display = True
 		if not osd and not video:
 			osd = True
 
-		filename = "%s.%s" %(filename, format)
-		Log.i("display=%s, osd=%s, video=%s, filename=%s" %(display, osd, video, filename))
-		request.setHeader('Content-Disposition', 'inline; filename=%s;' %filename)
+		filename = "%s.%s" % (filename, format)
+		Log.i("display=%s, osd=%s, video=%s, filename=%s" % (display, osd, video, filename))
+		request.setHeader('Content-Disposition', 'inline; filename=%s;' % filename)
 		#no caching!
 		request.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate')
 		request.setHeader('Cache-Directive', 'no-cache')
@@ -69,7 +69,7 @@ class ScreenshotResource(resource.Resource):
 			request.finish()
 			return server.NOT_DONE_YET
 		mimetype = {'jpg': 'jpeg'}.get(format, format)
-		request.setHeader('Content-Type','image/%s' %mimetype)
+		request.setHeader('Content-Type','image/%s' % mimetype)
 		pixmap = ePixmap(None)
 		size = desktop.size()
 		if x > 0 and y > 0:

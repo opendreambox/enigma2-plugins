@@ -31,7 +31,7 @@ class DreamboxServerProtocol(WebSocketServerProtocol):
 	KEY_EPG_NOW = 0
 	KEY_EPG_NEXT = 1
 
-	REQUEST_BASE_SCHEMA =  vol.Schema({
+	REQUEST_BASE_SCHEMA = vol.Schema({
 		vol.Required('id'): int,
 		vol.Optional('cookie'): unicode,
 	})
@@ -163,7 +163,7 @@ class DreamboxServerProtocol(WebSocketServerProtocol):
 		try:
 			return validator(msg)
 		except Exception as e:
-			self.sendError(msg.get("id", -1), -1, "INVALID CALL! %s" %e)
+			self.sendError(msg.get("id", -1), -1, "INVALID CALL! %s" % e)
 
 	def do_auth(self, msg):
 		msg = self.validate(msg, self.AUTH_MESSAGE_SCHEMA)
@@ -173,7 +173,7 @@ class DreamboxServerProtocol(WebSocketServerProtocol):
 		if 'session' in msg:
 			session = msg['session']
 			if self.server.checkSession(session):
-				Log.w("session: %s" %(session))
+				Log.w("session: %s" % (session))
 				self._sessionId = session
 				self.sendAuthOk()
 				return
@@ -201,7 +201,7 @@ class DreamboxServerProtocol(WebSocketServerProtocol):
 			return
 		id = msg['id']
 		ref = msg['reference']
-		sref =  eServiceReference(str(msg['reference']))
+		sref = eServiceReference(str(msg['reference']))
 
 		svcs = []
 		serviceHandler = eServiceCenter.getInstance()

@@ -65,11 +65,11 @@ class TwitchMiddleware(object):
 
 	def _onLiveStreamDetails(self, session, channel, infoCallback, stream):
 		if not stream:
-			session.toastManager.showToast(_("%s is offline") %(channel.display_name), 3)
+			session.toastManager.showToast(_("%s is offline") % (channel.display_name), 3)
 		else:
 			ref = eServiceReference(eServiceReference.idURI, 0, "twitch://" + stream.channel.display_name)
 			ref.setName("%s - %s" % (stream.channel.display_name, stream.channel.status))
-			session.toastManager.showToast(_("%s is live, please wait...") %(stream.channel.display_name,), 3)
+			session.toastManager.showToast(_("%s is live, please wait...") % (stream.channel.display_name,), 3)
 			session.open(MoviePlayer, ref, infoCallback=infoCallback, streamMode=True)
 
 	def watchVOD(self, session, vod, infoCallback=None):

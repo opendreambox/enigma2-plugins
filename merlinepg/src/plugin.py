@@ -43,46 +43,46 @@ from time import localtime
 if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/AutoTimer/AutoTimerEditor.pyo"):
 	from Plugins.Extensions.AutoTimer.AutoTimerEditor import addAutotimerFromEvent
 	from Plugins.Extensions.AutoTimer.plugin import main as AutoTimerView
-	AutoTimerPresent=True
+	AutoTimerPresent = True
 else:
-	AutoTimerPresent=False
+	AutoTimerPresent = False
 if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/IMDb/plugin.pyo"):
 	from Plugins.Extensions.IMDb.plugin import IMDB
-	IMDbPresent=True
+	IMDbPresent = True
 else:
-	IMDbPresent=False
+	IMDbPresent = False
 if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/AdvancedMovieSelection/plugin.pyo"):
 	from Plugins.Extensions.AdvancedMovieSelection.plugin import tmdbInfo
-	TMDbPresent=True
+	TMDbPresent = True
 else:
-	TMDbPresent=False
+	TMDbPresent = False
 if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/AdvancedMovieSelection/plugin.pyo"):
 	from Plugins.Extensions.AdvancedMovieSelection.plugin import tvdbInfo
-	TVDbPresent=True
+	TVDbPresent = True
 else:
-	TVDbPresent=False
+	TVDbPresent = False
 if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/SeriesPlugin/plugin.pyo"):
 	from Plugins.Extensions.SeriesPlugin.SeriesPluginInfoScreen import SeriesPluginInfoScreen
-	SeriesPluginPresent=True
+	SeriesPluginPresent = True
 else:
-	SeriesPluginPresent=False
+	SeriesPluginPresent = False
 if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/EPGSearch/EPGSearch.pyo"):
 	from Plugins.Extensions.EPGSearch.EPGSearch import EPGSearchList, EPGSearch
-	epgSpresent=True
+	epgSpresent = True
 else:
-	epgSpresent=False
+	epgSpresent = False
 
 
 
 config.plugins.MerlinEPG = ConfigSubsection()
 config.plugins.MerlinEPG.Columns = ConfigYesNo(default=True)
 config.plugins.MerlinEPG.StartFirst = ConfigYesNo(default=False)
-config.plugins.MerlinEPG.Primetime  = ConfigInteger(default=20, limits=(0, 23))
-config.plugins.MerlinEPG.PTlow  = ConfigInteger(default=10, limits=(0, 59))
-config.plugins.MerlinEPG.PThi  = ConfigInteger(default=20, limits=(0, 59))
-config.plugins.MerlinEPG.AutoPT  = ConfigYesNo(default=False)
-config.plugins.MerlinEPG.ZapOnOK  = ConfigYesNo(default=False)
-config.plugins.MerlinEPG.PageUDonBouquets  = ConfigYesNo(default=True)
+config.plugins.MerlinEPG.Primetime = ConfigInteger(default=20, limits=(0, 23))
+config.plugins.MerlinEPG.PTlow = ConfigInteger(default=10, limits=(0, 59))
+config.plugins.MerlinEPG.PThi = ConfigInteger(default=20, limits=(0, 59))
+config.plugins.MerlinEPG.AutoPT = ConfigYesNo(default=False)
+config.plugins.MerlinEPG.ZapOnOK = ConfigYesNo(default=False)
+config.plugins.MerlinEPG.PageUDonBouquets = ConfigYesNo(default=True)
 
 
 
@@ -174,33 +174,33 @@ class MerlinEPGList(EPGList):
 		width = esize.width()
 		height = esize.height()
 		self.datetime_rect = Rect(5,2, width * 0.80, self._iconHeight)
-		self.descr_rect = Rect(5, self._iconHeight +5, width-10, self._textHeight)
+		self.descr_rect = Rect(5, self._iconHeight + 5, width - 10, self._textHeight)
 		self.evCnt = 0
 
 	def buildSingleEntry(self, service, eventId, beginTime, duration, EventName):
 		(clock_pic, rec) = self.getPixmapForEntry(service, eventId, beginTime, duration)
-		r2=self.datetime_rect
-		r3=self.descr_rect
+		r2 = self.datetime_rect
+		r3 = self.descr_rect
 		t = localtime(beginTime)
 		self.evCnt = self.evCnt + 1
-		if (t[3]==config.plugins.MerlinEPG.Primetime.value) and (t[4]>=config.plugins.MerlinEPG.PTlow.value) and (t[4]<config.plugins.MerlinEPG.PThi.value):
+		if (t[3] == config.plugins.MerlinEPG.Primetime.value) and (t[4] >= config.plugins.MerlinEPG.PTlow.value) and (t[4] < config.plugins.MerlinEPG.PThi.value):
 			res = [
 				None,
-				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r2.left() +self._itemMargin, 1, self._iconWidth, self._iconHeight, self.PTpicture),
-				(eListboxPythonMultiContent.TYPE_TEXT, r2.left(), r2.top(), r2.width(), r2.height(), 0, RT_HALIGN_LEFT, (("%02d:%02d"%(t[3],t[4]))+" - "+self.days[t[6]]))
+				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r2.left() + self._itemMargin, 1, self._iconWidth, self._iconHeight, self.PTpicture),
+				(eListboxPythonMultiContent.TYPE_TEXT, r2.left(), r2.top(), r2.width(), r2.height(), 0, RT_HALIGN_LEFT, (("%02d:%02d" % (t[3],t[4])) + " - " + self.days[t[6]]))
 			]
 		else:
 			res = [
 				None,
-				(eListboxPythonMultiContent.TYPE_TEXT, r2.left(), r2.top(), r2.width(), r2.height(), 0, RT_HALIGN_LEFT, (("%02d:%02d"%(t[3],t[4]))+" - "+self.days[t[6]]))
+				(eListboxPythonMultiContent.TYPE_TEXT, r2.left(), r2.top(), r2.width(), r2.height(), 0, RT_HALIGN_LEFT, (("%02d:%02d" % (t[3],t[4])) + " - " + self.days[t[6]]))
 			]
 		if rec:
 			res.extend((
-				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r2.left() +self._itemMargin*1.9, r2.top(), self._iconWidth, self._iconHeight, clock_pic),
-				(eListboxPythonMultiContent.TYPE_TEXT, r3.left(), r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT|RT_WRAP, EventName)
+				(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, r2.left() + self._itemMargin * 1.9, r2.top(), self._iconWidth, self._iconHeight, clock_pic),
+				(eListboxPythonMultiContent.TYPE_TEXT, r3.left(), r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT | RT_WRAP, EventName)
 			))
 		else:
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, r3.left(), r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT|RT_WRAP, EventName))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, r3.left(), r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT | RT_WRAP, EventName))
 		return res
 
 	def getBgTime(self):
@@ -214,7 +214,7 @@ class MerlinEPGList(EPGList):
 		for OneLine in range(0,self.evCnt):
 			evBgTime, evBgMin = self.getBgTime()
 			if evBgTime is not None:
-				if (evBgTime==config.plugins.MerlinEPG.Primetime.value) and (evBgMin>=config.plugins.MerlinEPG.PTlow.value) and (evBgMin<config.plugins.MerlinEPG.PThi.value):
+				if (evBgTime == config.plugins.MerlinEPG.Primetime.value) and (evBgMin >= config.plugins.MerlinEPG.PTlow.value) and (evBgMin < config.plugins.MerlinEPG.PThi.value):
 					break
 				self.moveDown()
 			else:
@@ -385,9 +385,9 @@ class Merlin_PGII(Screen):
 		#
 			for idx in range(1, len(self.list)):
 				name = str(idx) + ". " + nameROH
-				if name == self.list[idx-1]:
+				if name == self.list[idx - 1]:
 					break
-			self["prg_list"].moveToIndex(idx-1)
+			self["prg_list"].moveToIndex(idx - 1)
 		else:
 			self["prg_list"].moveToIndex(0)
 		self.updateInfos()
@@ -404,7 +404,7 @@ class Merlin_PGII(Screen):
 		myService = ServiceReference(CurrentPrg[0])
 		l.fillSingleEPG(myService)
 		prgIndex = prgIndex + 1
-		if prgIndex < (self.chCount+1):
+		if prgIndex < (self.chCount + 1):
 			self["epg_list2"].show()
 			CurrentPrg = self.myServices[prgIndex]
 			self["currCh2"].setText(str(CurrentPrg[1]))
@@ -416,7 +416,7 @@ class Merlin_PGII(Screen):
 			self["currCh2"].setText(str(" "))
 			self["epg_list2"].hide()
 		prgIndex = prgIndex + 1
-		if prgIndex < (self.chCount+1):
+		if prgIndex < (self.chCount + 1):
 			self["epg_list3"].show()
 			CurrentPrg = self.myServices[prgIndex]
 			self["currCh3"].setText(str(CurrentPrg[1]))
@@ -428,7 +428,7 @@ class Merlin_PGII(Screen):
 			self["currCh3"].setText(str(" "))
 			self["epg_list3"].hide()
 		prgIndex = prgIndex + 1
-		if prgIndex < (self.chCount+1):
+		if prgIndex < (self.chCount + 1):
 			self["epg_list4"].show()
 			CurrentPrg = self.myServices[prgIndex]
 			self["currCh4"].setText(str(CurrentPrg[1]))
@@ -443,7 +443,7 @@ class Merlin_PGII(Screen):
 			self["epg_list4"].hide()
 		if self.Fields == 6:
 			prgIndex = prgIndex + 1
-			if prgIndex < (self.chCount+1):
+			if prgIndex < (self.chCount + 1):
 				self["epg_list5"].show()
 				CurrentPrg = self.myServices[prgIndex]
 				self["currCh5"].setText(str(CurrentPrg[1]))
@@ -458,7 +458,7 @@ class Merlin_PGII(Screen):
 			 self.AutoPrime.start(500)
 
 	def onSelectionChanged(self):
-		curEV = self["epg_list"+str(self.ActiveEPG)].getCurrent()
+		curEV = self["epg_list" + str(self.ActiveEPG)].getCurrent()
 		event = curEV[0]
 		ext = event and event.getExtendedDescription() or ""
 		self["fullEventInfo"].setText(str(ext))
@@ -476,15 +476,15 @@ class Merlin_PGII(Screen):
 	def displayActiveEPG(self):
 		for xA in range(1,self.Fields):
 			if xA == self.ActiveEPG:
-				self["Active"+str(xA)].show()
+				self["Active" + str(xA)].show()
 			else:
-				self["Active"+str(xA)].hide()
+				self["Active" + str(xA)].hide()
 
 	def getActivePrg(self):
-		return self["prg_list"].getSelectionIndex()+(self.ActiveEPG-1)
+		return self["prg_list"].getSelectionIndex() + (self.ActiveEPG - 1)
 
 	def ZapTo(self):
-		if (self.getActivePrg() > self.chCount) or (self.srvList==None):
+		if (self.getActivePrg() > self.chCount) or (self.srvList == None):
 			return
 		CurrentPrg = self.myServices[self.getActivePrg()]
 		CurrentBqt = self.myBqts[self.getActivePrg()]
@@ -499,7 +499,7 @@ class Merlin_PGII(Screen):
 		self.close()
 
 	def ZapForRefresh(self):
-		if (self.getActivePrg() > self.chCount) or (self.srvList==None):
+		if (self.getActivePrg() > self.chCount) or (self.srvList == None):
 			return
 		CurrentPrg = self.myServices[self.getActivePrg()]
 		myService = ServiceReference(CurrentPrg[0])
@@ -509,36 +509,36 @@ class Merlin_PGII(Screen):
 	def CheckItNow(self):
 		self.CheckForEPG.stop()
 		CurrentPrg = self.myServices[self.getActivePrg()]
-		l = self["epg_list"+str(self.ActiveEPG)]
+		l = self["epg_list" + str(self.ActiveEPG)]
 		l.recalcEntrySize()
 		myService = ServiceReference(CurrentPrg[0])
 		l.fillSingleEPG(myService)
 
 	def up(self):
-		self["epg_list"+str(self.ActiveEPG)].moveUp()
+		self["epg_list" + str(self.ActiveEPG)].moveUp()
 
 	def down(self):
-		self["epg_list"+str(self.ActiveEPG)].moveDown()
+		self["epg_list" + str(self.ActiveEPG)].moveDown()
 
 	def AllUp(self):
 		if config.plugins.MerlinEPG.PageUDonBouquets.value:
 			for xU in range(1,self.Fields):
-				self["epg_list"+str(xU)].instance.moveSelection(self["epg_list"+str(xU)].instance.pageUp)
+				self["epg_list" + str(xU)].instance.moveSelection(self["epg_list" + str(xU)].instance.pageUp)
 		else:
 			for xU in range(1,self.Fields):
-				self["epg_list"+str(xU)].moveUp()
+				self["epg_list" + str(xU)].moveUp()
 
 	def AllDown(self):
 		if config.plugins.MerlinEPG.PageUDonBouquets.value:
 			for xU in range(1,self.Fields):
-				self["epg_list"+str(xU)].instance.moveSelection(self["epg_list"+str(xU)].instance.pageDown)
+				self["epg_list" + str(xU)].instance.moveSelection(self["epg_list" + str(xU)].instance.pageDown)
 		else:
 			for xD in range(1,self.Fields):
-				self["epg_list"+str(xD)].moveDown()
+				self["epg_list" + str(xD)].moveDown()
 
 	def go2now(self):
 		for xD in range(1,self.Fields):
-			self["epg_list"+str(xD)].instance.moveSelection(self["epg_list"+str(xD)].instance.moveTop)
+			self["epg_list" + str(xD)].instance.moveSelection(self["epg_list" + str(xD)].instance.moveTop)
 
 	def go2first(self):
 		self["prg_list"].moveToIndex(0)
@@ -551,12 +551,12 @@ class Merlin_PGII(Screen):
 			self.displayActiveEPG()
 		else:
 			self["prg_list"].pageUp()
-			self.ActiveEPG = (self.Fields-1)
+			self.ActiveEPG = (self.Fields - 1)
 			self.updateInfos()
 		self.onSelectionChanged()
 
 	def right(self):
-		if self.ActiveEPG < (self.Fields-1):
+		if self.ActiveEPG < (self.Fields - 1):
 			self.ActiveEPG = self.ActiveEPG + 1
 			self.displayActiveEPG()
 		else:
@@ -574,7 +574,7 @@ class Merlin_PGII(Screen):
 			self.session.openWithCallback(self.showConfirmedInfo, ChoiceBox, title=_("Select Info type..."), list=[(_("Standard EPG info"), "Ei"),(_("IMDb info"), "Ii"),(_("TMDb info"), "Tm"),(_("TVDb info"), "Tv"),(_("SeriesPlugin"), "Sp")])
 
 	def showConfirmedInfo(self,answer):
-		curEV = self["epg_list"+str(self.ActiveEPG)].getCurrent()
+		curEV = self["epg_list" + str(self.ActiveEPG)].getCurrent()
 		event = curEV[0]
 		service = curEV[1]
 		answer = answer and answer[1]
@@ -583,19 +583,19 @@ class Merlin_PGII(Screen):
 				self.session.open(EventViewSimple, event, service)
 		if answer == "Ii":
 			if event is not None:
-				IeventName=event.getEventName()
+				IeventName = event.getEventName()
 				self.session.open(IMDB, IeventName)
 		if answer == "Tm":
 			if event is not None:
-				IeventName=event.getEventName()
+				IeventName = event.getEventName()
 				tmdbInfo(self.session, IeventName)
 		if answer == "Tv":
 			if event is not None:
-				IeventName=event.getEventName()
+				IeventName = event.getEventName()
 				tvdbInfo(self.session, IeventName)
 		if answer == "Sp":
 			if event is not None:
-				IeventName=event.getEventName()
+				IeventName = event.getEventName()
 				self.session.open(SeriesPluginInfoScreen, service, event)
 
 	def timerAdd(self):
@@ -605,7 +605,7 @@ class Merlin_PGII(Screen):
 			self.session.openWithCallback(self.AddConfirmedTimer, ChoiceBox, title=_("Select timer type..."), list=[(_("Standard timer"), "NT"),(_("AutoTimer"), "AT"),(_("View AutoTimers"), "ATV")])
 
 	def AddConfirmedTimer(self, answer):
-		cur = self["epg_list"+str(self.ActiveEPG)].getCurrent()
+		cur = self["epg_list" + str(self.ActiveEPG)].getCurrent()
 		event = cur[0]
 		serviceref = cur[1]
 		if event is None:
@@ -675,9 +675,9 @@ class Merlin_PGII(Screen):
 		if self.AutoPrime.isActive():
 			self.AutoPrime.stop()
 		for xFL in range(1, self.Fields):
-			self["epg_list"+str(xFL)].instance.moveSelection(self["epg_list"+str(xFL)].instance.moveTop)
-			for i in range(0,(self.Fields*3)):
-				self["epg_list"+str(xFL)].foudPrimetime()
+			self["epg_list" + str(xFL)].instance.moveSelection(self["epg_list" + str(xFL)].instance.moveTop)
+			for i in range(0,(self.Fields * 3)):
+				self["epg_list" + str(xFL)].foudPrimetime()
 
 	def myhelp(self):
 		self.session.open(ShowMe, "/usr/lib/enigma2/python/Plugins/Extensions/MerlinEPG/help.jpg")
@@ -689,7 +689,7 @@ class Merlin_PGII(Screen):
 			self.showConfirmedInfo([None,"Ei"])
 
 	def editCurTimer(self):
-		cur = self["epg_list"+str(self.ActiveEPG)].getCurrent()
+		cur = self["epg_list" + str(self.ActiveEPG)].getCurrent()
 		event = cur[0]
 		serviceref = cur[1]
 		if event is None:
@@ -708,7 +708,7 @@ class Merlin_PGII(Screen):
 
 	def runEpgSeartch(self):
 		if epgSpresent:
-			cur = self["epg_list"+str(self.ActiveEPG)].getCurrent()
+			cur = self["epg_list" + str(self.ActiveEPG)].getCurrent()
 			epg_event = cur[0]
 			epg_name = epg_event and epg_event.getEventName() or ''
 			self.session.open(EPGSearch, epg_name, False)
@@ -828,9 +828,9 @@ class Merlin_PGd(Screen):
 		#
 			for idx in range(1, len(self.list)):
 				name = str(idx) + ". " + nameROH
-				if name == self.list[idx-1]:
+				if name == self.list[idx - 1]:
 					break
-			self["prg_list"].moveToIndex(idx-1)
+			self["prg_list"].moveToIndex(idx - 1)
 		else:
 			self["prg_list"].moveToIndex(0)
 		self.updateInfos()
@@ -889,7 +889,7 @@ class Merlin_PGd(Screen):
 			self.session.open(EventViewSimple, event, service)
 
 	def ZapTo(self):
-		if self.srvList==None:
+		if self.srvList == None:
 			return
 		CurrentPrg = self.myServices[self["prg_list"].getSelectionIndex()]
 		CurrentBqt = self.myBqts[self["prg_list"].getSelectionIndex()]
@@ -904,7 +904,7 @@ class Merlin_PGd(Screen):
 		self.close()
 
 	def ZapForRefresh(self):
-		if self.srvList==None:
+		if self.srvList == None:
 			return
 		CurrentPrg = self.myServices[self["prg_list"].getSelectionIndex()]
 		myService = ServiceReference(CurrentPrg[0])
@@ -947,7 +947,7 @@ class Merlin_PGd(Screen):
 	def removeTimer(self, timer):
 		timer.afterEvent = AFTEREVENT.NONE
 		self.session.nav.RecordTimer.removeEntry(timer)
-		self["epg_list"+str(self.ActiveEPG)].rebuild()
+		self["epg_list" + str(self.ActiveEPG)].rebuild()
 
 	def finishedAdd(self, answer):
 		if answer[0]:
@@ -1029,7 +1029,7 @@ if epgSpresent:
 			res = [
 				None,
 				(eListboxPythonMultiContent.TYPE_TEXT, r2.left(), r2.top(), r2.width(), r2.height(), 0, RT_HALIGN_LEFT, self.days[t[6]]),
-				(eListboxPythonMultiContent.TYPE_TEXT, r2.left(), r2.top(), r2.width()-20, r2.height(), 0, RT_HALIGN_LEFT, "%02d.%02d, %02d:%02d"%(t[2],t[1],t[3],t[4]))
+				(eListboxPythonMultiContent.TYPE_TEXT, r2.left(), r2.top(), r2.width() - 20, r2.height(), 0, RT_HALIGN_LEFT, "%02d.%02d, %02d:%02d" % (t[2],t[1],t[3],t[4]))
 			]
 			res.append((eListboxPythonMultiContent.TYPE_TEXT, r3.left(), r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT, EventName + " <" + serviceref.getServiceName()))
 			return res

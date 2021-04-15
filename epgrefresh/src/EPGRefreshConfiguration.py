@@ -56,7 +56,7 @@ class EPGFunctionMenu(FixedMenu):
 		else:
 			if config.plugins.epgrefresh.epgreset.value:
 				menu = [(_("Refresh now"), boundFunction(self.close, self.FUNCTION_RETURN_FORCEREFRESH)),
-					(_("Reset")+" "+_("EPG.db"), boundFunction(self.close, self.FUNCTION_RETURN_EPGRESET))]
+					(_("Reset") + " " + _("EPG.db"), boundFunction(self.close, self.FUNCTION_RETURN_EPGRESET))]
 			else:
 				menu = [(_("Refresh now"), boundFunction(self.close, self.FUNCTION_RETURN_FORCEREFRESH))]
 		menu.append((_("Cancel"), self.close))
@@ -166,7 +166,7 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 			self.list.append(getConfigListEntry(_("Refresh EPG using"), config.plugins.epgrefresh.adapter, _("If you want to refresh the EPG in background, you can choose the method which best suits your needs here, e.g. hidden, fake reocrding or regular Picture in Picture."), False))
 			self.list.append(getConfigListEntry(_("Show Advanced Options"), NoSave(config.plugins.epgrefresh.showadvancedoptions), _("Display more Options"), True))
 			if config.plugins.epgrefresh.showadvancedoptions.value:
-				if config.ParentalControl.configured.value and  config.ParentalControl.servicepinactive.value:
+				if config.ParentalControl.configured.value and config.ParentalControl.servicepinactive.value:
 					self.list.append(getConfigListEntry(_("Skip protected Services"), config.plugins.epgrefresh.skipProtectedServices, _("Should protected services be skipped if refresh was started in interactive-mode?"), False))
 				self.list.append(getConfigListEntry(_("Show Setup in extension menu"), config.plugins.epgrefresh.show_in_extensionsmenu, _("Enable this to be able to access the EPGRefresh configuration from within the extension menu."), False))
 				self.list.append(getConfigListEntry(_("Show 'EPGRefresh Start now' in extension menu"), config.plugins.epgrefresh.show_run_in_extensionsmenu, _("Enable this to be able to start the EPGRefresh from within the extension menu."), False))
@@ -177,7 +177,7 @@ class EPGRefreshConfiguration(Screen, HelpableScreen, ConfigListScreen):
 				if config.plugins.epgrefresh.afterevent.value:
 					self.list.append(getConfigListEntry(_("Don't shutdown after manual abort of automated refresh"), config.plugins.epgrefresh.dontshutdownonabort, _("Activate this setting to avoid shutdown after manual abort of automated refresh"), False))
 				self.list.append(getConfigListEntry(_("Force save EPG.db"), config.plugins.epgrefresh.epgsave, _("If this is enabled, the Plugin save the epg.db /etc/enigma2/epg.db."), False)) 
-				self.list.append(getConfigListEntry(_("Reset")+" "+_("EPG.db"), config.plugins.epgrefresh.epgreset, _("If this is enabled, the Plugin shows the Reset EPG.db function."), False)) 
+				self.list.append(getConfigListEntry(_("Reset") + " " + _("EPG.db"), config.plugins.epgrefresh.epgreset, _("If this is enabled, the Plugin shows the Reset EPG.db function."), False)) 
 				try:
 					# try to import autotimer module to check for its existence
 					from Plugins.Extensions.AutoTimer.AutoTimer import AutoTimer

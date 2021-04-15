@@ -79,7 +79,7 @@ class StreamResource(resource.Resource):
 		movieName = ""
 		movieExt = ""
 		i = 0
-		while i < (len(movieSplit) -1):
+		while i < (len(movieSplit) - 1):
 			movieName += movieSplit[i]
 			i += 1
 		
@@ -87,8 +87,8 @@ class StreamResource(resource.Resource):
 		
 		if not os.path.isfile(moviePath):
 			moviePath = moviePath.replace("+", " ")
-			if i -1 < length:
-				movieNameWExt = request.postpath[i-1].replace("+", " ")
+			if i - 1 < length:
+				movieNameWExt = request.postpath[i - 1].replace("+", " ")
 			if not os.path.isfile(moviePath):
 				request.setResponseCode(http.NOT_FOUND)
 				return ""

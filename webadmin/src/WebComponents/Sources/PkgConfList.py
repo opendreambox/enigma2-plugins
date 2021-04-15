@@ -6,9 +6,9 @@ from os.path import basename, isfile, join
 from shutil import move
 
 class PkgConfList(Source):
-	LIST=0
-	SWITCH=1
-	MEM=2
+	LIST = 0
+	SWITCH = 1
+	MEM = 2
 
 	sources_list_d = '/etc/apt/sources.list.d'
 
@@ -49,7 +49,7 @@ class PkgConfList(Source):
 		except OSError:
 			return (False, "statvfs() failed")
 		freespace = stat.f_bfree / 1000 * stat.f_bsize / 1000
-		return (True, '%d' %freespace)
+		return (True, '%d' % freespace)
 			
 	def getList(self):
 		sources = []

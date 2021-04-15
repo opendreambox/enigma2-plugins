@@ -126,16 +126,16 @@ class EPGRefresh:
 		ns = sdata(4)
 
 		if cState.tsid != tsid or cState.onid != onid or cState.dvbnamespace != ns:
-			print("[EPGRefresh] - ignored EPG message for wrong transponder %04x:%04x:%08x <> %04x:%04x:%08x" %(cState.tsid, cState.onid, cState.dvbnamespace, tsid, onid, ns))
+			print("[EPGRefresh] - ignored EPG message for wrong transponder %04x:%04x:%08x <> %04x:%04x:%08x" % (cState.tsid, cState.onid, cState.dvbnamespace, tsid, onid, ns))
 			return
 
 		print("[EPGRefresh] - state is:" + str(cState.state))
 
 		self.epgTimeoutTimer.stop()
 		if cState.state == cachestate.started:
-			print("[EPGRefresh] - EPG update started for transponder %04x:%04x:%08x" %(tsid, onid, ns))
+			print("[EPGRefresh] - EPG update started for transponder %04x:%04x:%08x" % (tsid, onid, ns))
 		elif cState.state == cachestate.stopped or cState.state == cachestate.deferred:
-			print("[EPGRefresh] - EPG update finished for transponder %04x:%04x:%08x" %(tsid, onid, ns))
+			print("[EPGRefresh] - EPG update finished for transponder %04x:%04x:%08x" % (tsid, onid, ns))
 
 			if self.refreshAdapter:
 				self.refreshAdapter.stop()
@@ -193,10 +193,10 @@ class EPGRefresh:
 				pos = value.rfind(':')
 				# don't split alternative service
 				if pos != -1 and not value.startswith('1:134:'):
-					value = value[:pos+1]
+					value = value[:pos + 1]
 
 				duration = service.get('duration', None)
-				duration = duration and int(duration)*factor
+				duration = duration and int(duration) * factor
 
 				self.services[0].add(EPGRefreshService(value, duration))
 		for bouquet in configuration.findall("bouquet"):
@@ -287,7 +287,7 @@ class EPGRefresh:
 			service = eServiceReference(scanservice.sref)
 			if not service.valid() \
 				or service.type != eServiceReference.idDVB \
-				or (service.flags & (eServiceReference.isMarker|eServiceReference.isDirectory)):
+				or (service.flags & (eServiceReference.isMarker | eServiceReference.isDirectory)):
 				continue
 
 			channelID = '%08x%04x%04x' % (
@@ -491,7 +491,7 @@ class EPGRefresh:
 		if config.plugins.epgrefresh.enablemessage.value:
 			if len(args):
 				# Autotimer has been started
-				ret=args[0]
+				ret = args[0]
 				try:
 					#try import new advanced AT-message with searchlog-info 
 					from Plugins.Extensions.AutoTimer.plugin import showFinishPopup
@@ -588,7 +588,7 @@ class EPGRefresh:
 
 					# Recheck later
 					epgrefreshtimer.add(EPGRefreshTimerEntry(
-							time() + config.plugins.epgrefresh.delay_standby.value*60,
+							time() + config.plugins.epgrefresh.delay_standby.value * 60,
 							self.refresh,
 							nocheck=True)
 					)
@@ -655,7 +655,7 @@ class EPGRefresh:
 			self.refreshAdapter.play(self.currentServiceRef)
 			ref = ServiceReference(service.sref)
 			channelname = ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
-			print("[EPGRefresh] - Service is: %s" %(str(channelname)))
+			print("[EPGRefresh] - Service is: %s" % (str(channelname)))
 					
 			if config.plugins.epgrefresh.usetimebased.value:
 				# Start Timer
@@ -667,7 +667,7 @@ class EPGRefresh:
 				)
 
 	def resetEPG(self, session):
-		self.reset_session=session
+		self.reset_session = session
 		# remove database
 		if path.exists(config.misc.epgcache_filename.value):
 			remove(config.misc.epgcache_filename.value)
@@ -710,7 +710,7 @@ class EPGRefresh:
 	def resetStateChanged(self, state):
 		if state.state == cachestate.load_finished:
 			self.reset_session.openWithCallback(self.doRestart, MessageBox,
-				text=_("Reset")+" "+_("EPG.db")+" "+_("successful")+"\n\n"+_("Restart GUI now?"),
+				text =_("Reset") + " " + _("EPG.db") + " " + _("successful") + "\n\n" + _("Restart GUI now?"),
 				type=MessageBox.TYPE_YESNO, default=True, timeout=10)
 
 	def doRestart(self, answer):
@@ -734,7 +734,7 @@ class EPGRefresh:
 				servcounter = servcounter + 1
 			
 			if servcounter > LISTMAX:
-				servtxt = servtxt + _("%d more services") % (servcounter-LISTMAX)
+				servtxt = servtxt + _("%d more services") % (servcounter - LISTMAX)
 			
 			# open message box only if not already shown
 			if self.showPendingServicesMessageShown == False:
@@ -745,7 +745,7 @@ class EPGRefresh:
 				self.showPendingServicesMessageShown = True
 			else:
 				self.msg["text"].setText(_("Following Services have to be scanned:") + "\n" + servtxt)
-			self.msg["Text"].setText(_("Remaining services: %d") %(servcounter))	
+			self.msg["Text"].setText(_("Remaining services: %d") % (servcounter))	
 		except:
 			print("[EPGRefresh] showPendingServices Error!")
 			print_exc(file=stdout)

@@ -69,7 +69,7 @@ class Cec(object):
 	def physicalToString(self, addr):
 		if not addr:
 			return "<invalid address>"
-		return "%x.%x.%x.%x" %((addr[0] >> 4) & 0xf, addr[0] & 0xf, (addr[1] >> 4) & 0xf, addr[1] & 0xf)
+		return "%x.%x.%x.%x" % ((addr[0] >> 4) & 0xf, addr[0] & 0xf, (addr[1] >> 4) & 0xf, addr[1] & 0xf)
 
 	def isStandby(self, state):
 		return state == eCec.POWER_STATE_STANDBY or state == eCec.POWER_STATE_TRANSITION_ON_TO_STANDBY
@@ -82,7 +82,7 @@ class Cec(object):
 		if self._activeSource == oldPhysical and self.isReady():
 			self.handleActiveSource(physicalAddress)
 
-		Log.i("Physical address: %s # Logical address: %s" %(self.physicalToString(self._physicalAddress), self._logicalAddress))
+		Log.i("Physical address: %s # Logical address: %s" % (self.physicalToString(self._physicalAddress), self._logicalAddress))
 		if not self.getDevice(eCec.ADDR_TV):
 			self.givePhysicalAddress(eCec.ADDR_TV)
 
@@ -107,7 +107,7 @@ class Cec(object):
 
 	def dumpDevices(self):
 		for d in self._devices.values():
-			Log.i("%s (%s)\t%s\t%s" %(d.name, d.vendorName, d.logicalAddress, self.physicalToString(d.physicalAddress)))
+			Log.i("%s (%s)\t%s\t%s" % (d.name, d.vendorName, d.logicalAddress, self.physicalToString(d.physicalAddress)))
 
 	def checkDevices(self):
 		self.onCheckDevices(allDevices=True)
@@ -119,13 +119,13 @@ class Cec(object):
 					return
 			commands = []
 			if allDevices and d.physicalAddress == (0xff,0xff):
-				Log.i("requesting physical address of %s" %(d.logicalAddress,))
+				Log.i("requesting physical address of %s" % (d.logicalAddress,))
 				commands.append(eCec.MSG_GIVE_PHYS_ADDR)
 			if d.vendor == eCec.VENDOR_UNKNOWN:
-				Log.i("requesting vendor of %s" %(d.logicalAddress))
+				Log.i("requesting vendor of %s" % (d.logicalAddress))
 				commands.append(eCec.MSG_GIVE_DEVICE_VENDOR_ID)
 			if allDevices and not d.name:
-				Log.i("requesting name of %s" %(d.logicalAddress,))
+				Log.i("requesting name of %s" % (d.logicalAddress,))
 				commands.append(eCec.MSG_GIVE_OSD_NAME)
 			commands.append(eCec.MSG_GIVE_DEVICE_POWER_STATUS)
 			[self.send(d.logicalAddress, cmd) for cmd in commands]
@@ -182,13 +182,13 @@ class Cec(object):
 		self.oneTouchPlay()
 
 	def isActiveSource(self):
-		Log.i("%s <=> %s" %(self.physicalToString(self._activeSource), self.physicalToString(self._physicalAddress)))
+		Log.i("%s <=> %s" % (self.physicalToString(self._activeSource), self.physicalToString(self._physicalAddress)))
 		return self._activeSource == self._physicalAddress
 
 	def toHexString(self, message):
 		msg = ""
 		for b in message:
-			msg += "%02x " %(b)
+			msg += "%02x " % (b)
 		return msg
 
 	def stringMessage(self, value):
@@ -196,7 +196,7 @@ class Cec(object):
 
 	def send(self, to, command, message=[]):
 		message = (message)
-		Log.i("self > %x :: %02x %s (%s)" %(to, command, self.toHexString(message), config.cec.enabled.value))
+		Log.i("self > %x :: %02x %s (%s)" % (to, command, self.toHexString(message), config.cec.enabled.value))
 		if not config.cec.enabled.value:
 			return
 		self._cec.sendMsg(to, command, IntList(message))
@@ -218,7 +218,7 @@ class Cec(object):
 		self.send(to, eCec.MSG_FEATURE_ABORT, [command, reason])
 
 	def _onMessage(self, sender, receiver, message):
-		Log.i("%x > %x :: %s (%s)" %(sender, receiver, self.toHexString(message), config.cec.enabled.value))
+		Log.i("%x > %x :: %s (%s)" % (sender, receiver, self.toHexString(message), config.cec.enabled.value))
 		if not config.cec.enabled.value:
 			return
 		if sender == eCec.ADDR_FREE_USE:
@@ -341,14 +341,14 @@ class Cec(object):
 
 	def onSetStreamPath(self, sender, message):
 		# same as routing information
-		Log.i("sender: %s, message: %s" %(sender, message))
+		Log.i("sender: %s, message: %s" % (sender, message))
 		self.onRoutingInformation(sender, message)
 
 	def onMenuRequest(self, sender):
 		self.setMenuStatus(sender)
 
 	def onStandby(self, sender):
-		Log.i("%s %s (%s)" %(sender, self.session, config.cec.receivepower.value))
+		Log.i("%s %s (%s)" % (sender, self.session, config.cec.receivepower.value))
 		if not config.cec.receivepower.value:
 			return
 		if sender == eCec.ADDR_TV and self.session:
@@ -356,7 +356,7 @@ class Cec(object):
 				self.session.open(Standby.Standby)
 
 	def onUserControlPressed(self, sender, message):
-		Log.i("%s %s (%s)" %(sender, message, message[1]))
+		Log.i("%s %s (%s)" % (sender, message, message[1]))
 		#activate if we're getting keypresses from the tv
 		keyid = message[1]
 		if not self.isActiveSource() and sender == eCec.ADDR_TV and keyid != eCec.RC_POWER_OFF:
@@ -365,7 +365,7 @@ class Cec(object):
 			fnc(sender, keyid)
 
 	def onUserControlReleased(self, sender, message):
-		Log.i("%s %s" %(sender, message))
+		Log.i("%s %s" % (sender, message))
 		for fnc in self.onKeyReleased:
 			fnc(sender)
 
@@ -385,19 +385,19 @@ class Cec(object):
 		self.handleActiveSource(self.getDevice(sender).physicalAddress)
 
 	def onFeatureAbort(self, sender, message):
-		Log.w("%s :: %02x %02x" %(sender, message[1], message[2]))
+		Log.w("%s :: %02x %02x" % (sender, message[1], message[2]))
 
 	def onReportAudioStatus(self, sender, message):
 		if not self._volumeDest:
 			self._volumeDest = sender
 		self._muted = message[1] & 0x80 == 0x80
 		self._volume = message[1] & 0x7f
-		Log.i("%s: muted: %s #  volume: %s" %(sender, self._muted, self._volume))
+		Log.i("%s: muted: %s #  volume: %s" % (sender, self._muted, self._volume))
 		for fnc in self.onVolumeChanged:
 			fnc(self._muted, self._volume)
 
 	def handleActiveSource(self, physicalAddress):
-		Log.i("new: %s # old: %s" %(self.physicalToString(physicalAddress), self.physicalToString(self._activeSource)))
+		Log.i("new: %s # old: %s" % (self.physicalToString(physicalAddress), self.physicalToString(self._activeSource)))
 		if physicalAddress == (0xff, 0xff):
 			return
 		if physicalAddress != self._activeSource:

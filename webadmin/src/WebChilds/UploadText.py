@@ -90,7 +90,7 @@ class UploadTextResource(resource.Resource):
 							<input type="button" value="%s" onClick="window.close();">
 						</form>
 					</body>
-					</html>""" %(filename, _("Close"))
+					</html>""" % (filename, _("Close"))
 
 	def render_GET(self, req):
 		try:

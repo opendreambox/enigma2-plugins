@@ -95,7 +95,7 @@ class AutoTimerSettings(Screen, ConfigListScreen):
 				getConfigListEntry(_("Match ratio for extended description duplicate check"), config.plugins.autotimer.extdesc_match_ratio, _("Match ratio defines a minimum value to be met to consider a timer a duplicate when comparing the extended description (min.=80, max.=100; extended description must be identical to skip duplicates when set to 100, default=90)")),
 				getConfigListEntry(_("Match ratio for short description duplicate check"), config.plugins.autotimer.shortdesc_match_ratio, _("Match ratio defines a minimum value to be met to consider a timer a duplicate when comparing the short description (min.=80, max.=100; short description must be identical to skip duplicates when set to 100, default=90)")),
 				getConfigListEntry(_("Location of autotimer_search.log"), config.plugins.autotimer.searchlog_path, _("Select the path where the autotimer_search.log should be saved")),
-				getConfigListEntry(_("Max number of retained search logs"), config.plugins.autotimer.searchlog_max, _("Define the number of search logs to be retained")+" (min.=5, max.=20)"),
+				getConfigListEntry(_("Max number of retained search logs"), config.plugins.autotimer.searchlog_max, _("Define the number of search logs to be retained") + " (min.=5, max.=20)"),
 			],
 			session=session,
 			on_change=self.changed
@@ -121,8 +121,8 @@ class AutoTimerSettings(Screen, ConfigListScreen):
 			{
 				"cancel": self.keyCancel,
 				"save": self.keySave,
-				"nextBouquet":	self.pageUp,
-				"prevBouquet":	self.pageDown,
+				"nextBouquet": self.pageUp,
+				"prevBouquet": self.pageDown,
 			}
 		)
 

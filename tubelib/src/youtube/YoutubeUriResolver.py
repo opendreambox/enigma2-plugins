@@ -18,14 +18,14 @@ try:
 				uri = uri.split("://")[1]
 				uri = uri.split("/")
 				if uri[0] == "live":
-					watch_url = "https://www.youtube.com/user/%s/live" %(uri[1],)
+					watch_url = "https://www.youtube.com/user/%s/live" % (uri[1],)
 				else:
 					video_id = uri[0]
 					watch_url = "https://www.youtube.com/watch?v=%s" % (video_id,)
 			except:
 				pass
 			def onUrlReady(uri, format, suburi=""):
-				Log.d("%s # %s (%s)" %(uri, suburi, format))
+				Log.d("%s # %s (%s)" % (uri, suburi, format))
 				try:
 					if not service.ptrValid():
 						Log.w("Service became invalid!")

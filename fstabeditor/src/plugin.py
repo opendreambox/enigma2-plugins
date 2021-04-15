@@ -125,13 +125,13 @@ class fstabViewerScreen(Screen,HelpableScreen):
 			"red": (self.removeEntry, _("Remove entry")),
 			"green": (self.addEntry, _("Add entry")),
 			"yellow": (self.restoreBackUp, _("Restore back up of fstab")),
-			"blue":	(self.mountall, _("Run mount -a")),
+			"blue": (self.mountall, _("Run mount -a")),
 		}, -1)
 		
 		self["OkCancelActions"] = HelpableActionMap(self, "OkCancelActions",
 		{
-			"cancel":	(self.close, _("Close plugin")),
-			"ok":		(self.openEditScreen, _("Open editor")),
+			"cancel": (self.close, _("Close plugin")),
+			"ok": (self.openEditScreen, _("Open editor")),
 		}, -1)
 
 		self.buildScreen()
@@ -163,11 +163,11 @@ class fstabViewerScreen(Screen,HelpableScreen):
 					if len(entry[3]) > lengthList[3]:
 						lengthList[3] = len(entry[3])
 					self.fstabEntryList.append(fstabMenuListEntry(entry[0],entry[1],entry[2],entry[3],entry[4],entry[5]))
-					self.counter = self.counter+1
+					self.counter = self.counter + 1
 			fstabFile.close()
 			
 		self["menulist"].l.setList(self.fstabEntryList)
-		self["entryinfo"].setText("%d / %d" %(self["menulist"].getSelectedIndex()+1, self.counter))
+		self["entryinfo"].setText("%d / %d" % (self["menulist"].getSelectedIndex() + 1, self.counter))
 		if entryList[0][0] in ("rootfs", "proc", "sysfs", "devpts", "tmpfs"):
 			self["ButtonRed"].hide()
 			self["ButtonRedText"].hide()
@@ -178,13 +178,13 @@ class fstabViewerScreen(Screen,HelpableScreen):
 			os.system("cp /etc/fstab /etc/fstab.backup")
 			configFile = open('/etc/fstab', 'w')
 			for i in range(len(entryList)):
-				line = "%*s %*s %*s %*s %s %s\n" %(int(lengthList[0])*-1, entryList[i][0], int(lengthList[1])*-1, entryList[i][1], int(lengthList[2])*-1, entryList[i][2], int(lengthList[3])*-1, entryList[i][3],str(entryList[i][4]), str(entryList[i][5]))
+				line = "%*s %*s %*s %*s %s %s\n" % (int(lengthList[0]) * -1, entryList[i][0], int(lengthList[1]) * -1, entryList[i][1], int(lengthList[2]) * -1, entryList[i][2], int(lengthList[3]) * -1, entryList[i][3],str(entryList[i][4]), str(entryList[i][5]))
 				configFile.write(line)
 			configFile.close()
 			self.buildScreen()
 			
 	def selectionChanged(self):
-		self["entryinfo"].setText("%d / %d" %(self["menulist"].getSelectedIndex()+1, self.counter))
+		self["entryinfo"].setText("%d / %d" % (self["menulist"].getSelectedIndex() + 1, self.counter))
 		if entryList[self["menulist"].getSelectedIndex()][0] in ("rootfs", "proc", "sysfs", "devpts", "tmpfs"):
 			self["ButtonRed"].hide()
 			self["ButtonRedText"].hide()
@@ -259,15 +259,15 @@ class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
 		self["ColorActions"] = HelpableActionMap(self, "ColorActions",
 		{
 			"red": (self.removeEntry, _("Remove entry")),
-			"green":	(self.checkEntry, _("Return with saving")),
-			"blue":		(self.addOption, _("Add option")),
-			"yellow":	(self.removeOption, _("Remove option")),
+			"green": (self.checkEntry, _("Return with saving")),
+			"blue": (self.addOption, _("Add option")),
+			"yellow": (self.removeOption, _("Remove option")),
 		}, -1)
 		
 		self["OkCancelActions"] = HelpableActionMap(self, "OkCancelActions",
 		{
-			"cancel":	(self.cancelEntry, _("Return without saving")),
-			"ok":		(self.ok, _("Open selector")),
+			"cancel": (self.cancelEntry, _("Return without saving")),
+			"ok": (self.ok, _("Open selector")),
 		}, -1)	
 		
 		self.list = []
@@ -279,7 +279,7 @@ class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
 		
 	def selectionChanged(self):
 		self.selectedOptionEntry = self["config"].getCurrentIndex()
-		if self.selectedOptionEntry > 3 and self.selectedOptionEntry < len(self.list)-2:
+		if self.selectedOptionEntry > 3 and self.selectedOptionEntry < len(self.list) - 2:
 			self["ButtonYellow"].show()
 			self["ButtonYellowText"].show()
 		else:
@@ -290,7 +290,7 @@ class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
 		self.list = []
 		self.optionList = []
 				
-		if 	self.addEntry:
+		if self.addEntry:
 			self.devicename = NoSave(ConfigText(default=""))
 			self.mountpoint = NoSave(ConfigText(default=""))
 			self.fstype = NoSave(ConfigSelection([("auto","auto"),("ext2","ext2"),("ext3","ext3"),("ext4","ext4"),("swap","swap"),("tmpfs","tmpfs"),("proc","proc"),("cifs","cifs"),("nfs","nfs"),("jffs2","jffs2"),("usbfs","usbfs"),("devpts","devpts"),("vfat","vfat"),("fat","fat"),("ntfs","ntfs"),("noauto", "no auto"), ("xfs", "xfs")], default="auto"))
@@ -314,7 +314,7 @@ class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
 		self.list.append((_("options: "),))
 		i = 1
 		for entry in self.optionList:
-			self.list.append(getConfigListEntry(_("option %d: ") %(i), entry))
+			self.list.append(getConfigListEntry(_("option %d: ") % (i), entry))
 			i += 1
 		self.list.append(getConfigListEntry(_("dump frequency (in days): "), self.dumpfreq))
 		self.list.append(getConfigListEntry(_("pass num: "), self.passnum))
@@ -337,7 +337,7 @@ class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
 			if optionsString == "":
 				optionsString = entry.value
 			else:
-				optionsString += ",%s" %(entry.value)
+				optionsString += ",%s" % (entry.value)
 
 		# keep the print for debug purpose in case problems occur				
 		print "optionsString", optionsString
@@ -366,13 +366,13 @@ class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
 			self.session.openWithCallback(self.dirSelectDlgClosed, dirSelectDlg, "/media/dummy/", False)  # just add any (not even existing) subdir to start in /media
 		elif self.selectedOptionEntry == 0:
 			self.session.openWithCallback(self.dirSelectDlgClosed, dirSelectDlg, "/dev/disk/dummy/", True) # just add any (not even existing) subdir to start in /dev
-		elif self.selectedOptionEntry > 3 and self.selectedOptionEntry < len(self.list)-2:
+		elif self.selectedOptionEntry > 3 and self.selectedOptionEntry < len(self.list) - 2:
 			self.session.openWithCallback(self.updateSelectedOption, optionSelector, self.list[self.selectedOptionEntry][1].value)
 			
 	def updateSelectedOption(self, returnValue=""):
 		print returnValue
-		self.list[self.selectedOptionEntry][1].value=returnValue
-		self.optionList[self.selectedOptionEntry-4].value = returnValue
+		self.list[self.selectedOptionEntry][1].value = returnValue
+		self.optionList[self.selectedOptionEntry - 4].value = returnValue
 	
 	def dirSelectDlgClosed(self, mountpoint):
 		#use print to see in crashlog what's been selected
@@ -396,15 +396,15 @@ class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
 				
 	def addOption(self):
 		self.optionList.append(NoSave(ConfigText(default="")))
-		self.list.insert(len(self.list)-2, getConfigListEntry(_("new option: "), NoSave(ConfigText(default=""))))
+		self.list.insert(len(self.list) - 2, getConfigListEntry(_("new option: "), NoSave(ConfigText(default=""))))
 		self["config"].setList(self.list)
 		
 	def removeOption(self):
 		self.selectedOptionEntry = self["config"].getCurrentIndex()
 		if len(self.optionList) > 1:
-			if self.selectedOptionEntry > 3 and self.selectedOptionEntry < len(self.list)-2:
+			if self.selectedOptionEntry > 3 and self.selectedOptionEntry < len(self.list) - 2:
 				del self.list[self.selectedOptionEntry]
-				del self.optionList[self.selectedOptionEntry-4]
+				del self.optionList[self.selectedOptionEntry - 4]
 			else:
 				self.session.open(MessageBox, _("Cannot remove option. At least one option is required. Option will be set to defaults"), MessageBox.TYPE_ERROR, timeout=5)
 				self.list[self.selectedOptionEntry][1].value = "defaults"
@@ -439,13 +439,13 @@ class optionSelector(Screen,ConfigListScreen,HelpableScreen):
 
 		self["ColorActions"] = HelpableActionMap(self, "ColorActions",
 		{
-			"green":	(self.saveOption, _("Return with saving")),
-			"red":		(self.removeOption, _("Remove entry")),
+			"green": (self.saveOption, _("Return with saving")),
+			"red": (self.removeOption, _("Remove entry")),
 		}, -1)
 
 		self["OkCancelActions"] = HelpableActionMap(self, "OkCancelActions",
 		{
-			"cancel":	(self.closeScreen, _("Return without saving")),
+			"cancel": (self.closeScreen, _("Return without saving")),
 		}, -1)	
 
 		# this list contains all options that required a value
@@ -539,7 +539,7 @@ class optionSelector(Screen,ConfigListScreen,HelpableScreen):
 				self.optionValue = NoSave(ConfigText(default=""))
 				self.list.append(getConfigListEntry(_("value: "), self.optionValue))
 		elif len(self.list) == 2:
-			self.optionValue.value=""
+			self.optionValue.value = ""
 			del self.list[1]
 		self["description"].setText(self.descriptionDict.get(self.options.value, ""))
 		self["config"].setList(self.list)
@@ -547,7 +547,7 @@ class optionSelector(Screen,ConfigListScreen,HelpableScreen):
 	def saveOption(self):
 		if self.options.value in self.needsValueList:
 			if self.optionValue.value != "":
-				self.close("%s=%s" %(self.options.value, self.optionValue.value))
+				self.close("%s=%s" % (self.options.value, self.optionValue.value))
 			else:
 				self.session.open(MessageBox, _("A value is required for the selected option"), MessageBox.TYPE_ERROR, timeout=5)
 		else:
@@ -558,7 +558,7 @@ class optionSelector(Screen,ConfigListScreen,HelpableScreen):
 	
 	def closeScreen(self):
 		if self.options.value in self.needsValueList:
-			self.close("%s=%s" %(self.options.value, self.optionValue.value))
+			self.close("%s=%s" % (self.options.value, self.optionValue.value))
 		else:
 			self.close(self.options.value)
 		

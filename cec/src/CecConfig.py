@@ -72,7 +72,7 @@ class CecConfig(ConfigListScreen, Screen):
 		self._createSetup()
 
 	def _createSetup(self):
-		lst =  [getConfigListEntry(_("HDMI CEC"), config.cec.enabled),]
+		lst = [getConfigListEntry(_("HDMI CEC"), config.cec.enabled),]
 		if not config.cec.enabled.value:
 			self["config"].list = lst
 			return

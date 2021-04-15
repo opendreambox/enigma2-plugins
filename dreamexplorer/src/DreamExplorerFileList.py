@@ -85,7 +85,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 		LIST_TYPE_NODETAILS: "nodetails",
 	}
 	
-	if getDesktop(0).size().width()>=1920:
+	if getDesktop(0).size().width() >= 1920:
 		default_template = """{
 			"templates":
 			{
@@ -225,32 +225,32 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 		if not isDir:
 			if self.showFiles:
 				fileInfo = os_lstat(pathFilename)
-				fileAttrib =  oct(stat_stat.S_IMODE(fileInfo.st_mode))
+				fileAttrib = oct(stat_stat.S_IMODE(fileInfo.st_mode))
 				lastModified = strftime("%d.%m.%Y %H:%M:%S",localtime(fileInfo.st_mtime))
 				fileSize = prettySize(getSize(pathFilename))
 				isLink = stat_stat.S_ISLNK(fileInfo.st_mode)
 				
 				if os_path.islink(pathFilename):
-					realPath = " >> %s" %(os_path.realpath(pathFilename))
-		elif path is not None and filename not in ('<%s>' %(_("List of Storage Devices")), '<%s>' %(_("Parent Directory"))):
+					realPath = " >> %s" % (os_path.realpath(pathFilename))
+		elif path is not None and filename not in ('<%s>' % (_("List of Storage Devices")), '<%s>' % (_("Parent Directory"))):
 			try:
 				fileInfo = os_lstat(path)
-				fileAttrib =  oct(stat_stat.S_IMODE(fileInfo.st_mode))
+				fileAttrib = oct(stat_stat.S_IMODE(fileInfo.st_mode))
 				if os_path.islink(path[:-1]):
-					realPath = " >> %s" %(os_path.realpath(path[:-1]))
+					realPath = " >> %s" % (os_path.realpath(path[:-1]))
 			except OSError:
 				print("OSError occured")
 
 		# icons
 		if isDir:
-			png = LoadPixmap(cached=True, path="%s/dir.png" %(self.iconSet))
+			png = LoadPixmap(cached=True, path="%s/dir.png" % (self.iconSet))
 		else:
 			extension = filename.split('.')
 			extension = extension[-1].lower()
 			if EXTENSIONS.has_key(extension):
-				png = LoadPixmap("%s/%s.png" %(self.iconSet, EXTENSIONS[extension]))
+				png = LoadPixmap("%s/%s.png" % (self.iconSet, EXTENSIONS[extension]))
 			elif isMovie:
-				png = LoadPixmap("%s/movie.png" %(self.iconSet))
+				png = LoadPixmap("%s/movie.png" % (self.iconSet))
 
 		
 		if self.showDetails:
@@ -338,9 +338,9 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 		
 		if directory is not None and self.showDirectories and not self.isTop:
 			if directory == self.current_mountpoint and self.showMountpoints:
-				self.list.append(("<%s>" %(_("List of Storage Devices")),  None, None, True, False, None))
+				self.list.append(("<%s>" % (_("List of Storage Devices")), None, None, True, False, None))
 			elif (directory != "/") and not (self.inhibitMounts and self.getMountpoint(directory) in self.inhibitMounts):
-				self.list.append(("<%s>" %(_("Parent Directory")), '/'.join(directory.split('/')[:-2]) + '/', None, True, False, None))
+				self.list.append(("<%s>" % (_("Parent Directory")), '/'.join(directory.split('/')[:-2]) + '/', None, True, False, None))
 				
 		if self.showDirectories:
 			for x in directories:
@@ -362,7 +362,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 					extension = None
 					extensionPos = name.rfind('.')
 					if extensionPos != -1:
-						extension = name[extensionPos+1:].lower()
+						extension = name[extensionPos + 1:].lower()
 					mediaType = EXTENSIONS.get(extension)					
 					if nx is None:
 						fileInfo = os_lstat(path)
@@ -446,7 +446,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 		cur = self.getSelection()
 		if cur is not None:
 			filenameSplitList = cur[0].split('.')
-			if len(filenameSplitList)>1:
+			if len(filenameSplitList) > 1:
 				return filenameSplitList[-1].lower()
 		return None
 
@@ -593,7 +593,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 			self.list.sort(self.byDateFunc)
 
 		for i in range(len(self.list)):
-			if self.list[i][0] == "<%s>" %(_("Parent Directory")) or self.list[i][0] == "<%s>" %(_("List of Storage Devices")):
+			if self.list[i][0] == "<%s>" % (_("Parent Directory")) or self.list[i][0] == "<%s>" % (_("List of Storage Devices")):
 				entry = self.list.pop(i)
 				self.list.insert(0, entry)
 				break

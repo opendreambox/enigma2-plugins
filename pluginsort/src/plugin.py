@@ -233,9 +233,9 @@ if DEBUG:
 			PluginComponent.pluginSort_baseRemovePlugin(self, plugin, *args, **kwargs)
 		except ValueError as ve:
 			revMap = reverse(WHEREMAP)
-			print("-"*40)
-			print("-"*40)
-			print("-"*40)
+			print("-" * 40)
+			print("-" * 40)
+			print("-" * 40)
 			print("[PluginSort] pluginList: %s" % (repr([(x.name, x.path, repr([revMap[y] for y in x.where])) for x in self.pluginList]),))
 			for w in plugin.where:
 				print("[PluginSort] plugins[%s]: %s" % (revMap[w], repr([(x.name, x.path, repr([revMap[y] for y in x.where])) for x in self.plugins[w]])))
@@ -512,7 +512,7 @@ def autostart(reason, *args, **kwargs):
 			# "fix" weight of plugins already added to list, future ones will be fixed automatically
 			fixed = []
 			for plugin in pluginlist:
-				alreadyfixed=False
+				alreadyfixed = False
 				for pl in fixed:
 					if pl.name == plugin.name and (pl.where in plugin.where or pl.where == plugin.where):
 						alreadyfixed = True

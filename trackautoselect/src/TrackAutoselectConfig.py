@@ -72,7 +72,7 @@ class TrackAutoselectConfig():
 				self.audio_format_dict[idx] = short
 
 		self.sub_format_dict = {}
-		self.gstsub_format_dict= {}
+		self.gstsub_format_dict = {}
 		for idx, (short, text, rank) in sorted(SUB_FORMATS.items(), key=lambda x: x[1][2]):
 			if rank > 0:
 				self.sub_format_choices.append((short, text))

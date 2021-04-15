@@ -45,7 +45,7 @@ EMStartOnlyOneTime = False
 EMsession = None
 InfoBar_instance = None
 
-config.plugins.easyMedia  = ConfigSubsection()
+config.plugins.easyMedia = ConfigSubsection()
 config.plugins.easyMedia.music = ConfigSelection(default="mediaplayer", choices=[("no", _("Disabled")), ("mediaplayer", _("MediaPlayer")), ("merlinmp", _("MerlinMusicPlayer2"))])
 config.plugins.easyMedia.files = ConfigSelection(default="dreamexplorer", choices=[("no", _("Disabled")), ("filebrowser", _("Filebrowser")), ("dreamexplorer", _("DreamExplorer"))])
 config.plugins.easyMedia.videodb = ConfigSelection(default="no", choices=[("no", _("Disabled")), ("yes", _("Enabled"))])
@@ -148,8 +148,8 @@ class MPanelList(MenuList):
 	def buildEntry(self, key, text, cell):
 		res = [text]
 
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, self.textxoffset, self.textyoffset, self.textwidth, self.textheight, 0, RT_HALIGN_LEFT|RT_WRAP|RT_VALIGN_CENTER, text[0]))
-		if cell<5:
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, self.textxoffset, self.textyoffset, self.textwidth, self.textheight, 0, RT_HALIGN_LEFT | RT_WRAP | RT_VALIGN_CENTER, text[0]))
+		if cell < 5:
 			bpng = LoadPixmap('/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/key-' + str(cell) + ".png")
 			if bpng is not None:
 				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.iconxoffset, self.iconyoffset, self.iconwidth, self.iconheight, bpng))
@@ -438,15 +438,15 @@ class EasyMedia(Screen):
 		for x in self.menuItemList:
 			strpos = str(self.__keys[pos])
 			self.list.append((strpos, x, pos))
-			if pos==0:
+			if pos == 0:
 				self["key_pvr"].setText(self.menuItemList[0][0])
-			elif pos==1:
+			elif pos == 1:
 				self["key_red"].setText(self.menuItemList[1][0])
-			elif pos==2:
+			elif pos == 2:
 				self["key_green"].setText(self.menuItemList[2][0])
-			elif pos==3:
+			elif pos == 3:
 				self["key_yellow"].setText(self.menuItemList[3][0])
-			elif pos==4:
+			elif pos == 4:
 				self["key_blue"].setText(self.menuItemList[4][0])
 			pos += 1
 					
@@ -499,7 +499,7 @@ def MPcallbackFunc(answer):
 	elif answer == "BOOKMARKS":
 		tmpBookmarks = config.movielist.videodirs
 		myBookmarks = tmpBookmarks and tmpBookmarks.value[:] or []
-		if len(myBookmarks)>0:
+		if len(myBookmarks) > 0:
 			askBM = []
 			for s in myBookmarks:
 				askBM.append((s, s))

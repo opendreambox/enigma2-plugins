@@ -84,7 +84,7 @@ def blockingCallFromMainThread(f, *a, **kw):
 	result = None
 	while True:
 		try:
-			result = queue.get(True, config.plugins.autotimer.timeout.value*60)
+			result = queue.get(True, config.plugins.autotimer.timeout.value * 60)
 		except Queue.Empty as qe:
 			if True: #not reactor.running: # reactor.running is only False AFTER shutdown, we are during.
 				doLog("Reactor no longer active, aborting.")
@@ -270,7 +270,7 @@ class AutoTimer:
 			# Try to determine real service (we always choose the last one)
 			n = evt.getNumOfLinkageServices()
 			if n > 0:
-				i = evt.getLinkageService(eserviceref, n-1)
+				i = evt.getLinkageService(eserviceref, n - 1)
 				serviceref = i.toString()
 				doLog("Serviceref2 %s" % (str(serviceref)))
 
@@ -421,7 +421,7 @@ class AutoTimer:
 					#rbegin = revent.getBeginTime() or 0
 					#rduration = revent.getDuration() or 0
 					#rend = rbegin + rduration or 0
-					if getTimeDiff(rbegin, rend, evtBegin, evtEnd) > ((duration/10)*8):
+					if getTimeDiff(rbegin, rend, evtBegin, evtEnd) > ((duration / 10) * 8):
 						oldExists = True
 						doLog("We found a timer based on time guessing")
 						newEntry = rtimer
@@ -461,7 +461,7 @@ class AutoTimer:
 					continue
 
 			# if set option for check/save timer in filterlist and only if not found an existing timer
-			isnewFilterEntry=False
+			isnewFilterEntry = False
 			if (config.plugins.autotimer.series_save_filter.value or timer.series_save_filter) and oldExists == False:
 				# only if use series_labeling and if sp_getSeasonEpisode was succesful
 				if timer.series_labeling and sp_getSeasonEpisode is not None:
@@ -475,7 +475,7 @@ class AutoTimer:
 								doLog("only simulate - new Timer would be saved in autotimer_filter")
 							else:
 								doLog("new Timer saved in autotimer_filter")
-								isnewFilterEntry=True
+								isnewFilterEntry = True
 						else:
 							skipped.append((name, begin, end, serviceref, timer.name, getLog()))
 							continue
@@ -585,7 +585,7 @@ class AutoTimer:
 						# Attention we have to use a copy of the list, because we have to append the previous older matches
 						lepgm = len(epgmatches)
 						for i in xrange(lepgm):
-							servicerefS, eitS, nameS, beginS, durationS, shortdescS, extdescS = epgmatches[(i+idx+1)%lepgm]
+							servicerefS, eitS, nameS, beginS, durationS, shortdescS, extdescS = epgmatches[(i + idx + 1) % lepgm]
 							if self.checkDuplicates(timer, name, nameS, shortdesc, shortdescS, extdesc, extdescS, force=True):
 								# Check if the similar is already known
 								if eitS not in similardict:
@@ -645,7 +645,7 @@ class AutoTimer:
 				logpath = os_path.dirname(config.plugins.autotimer.log_file.value)
 			path_search_log = os_path.join(logpath, "autotimer_search.log")
 			file_search_log = open(path_search_log, "a")
-			log_txt  = "(" + str(entryType) + ") "
+			log_txt = "(" + str(entryType) + ") "
 			log_txt += str(strftime('%d.%m., %H:%M', localtime(timerEntry.begin)))
 			log_txt += ' - ' + timerEntry.service_ref.getServiceName()
 			log_txt += ' - "' + str(timerEntry.name) + '"\n'
@@ -707,7 +707,7 @@ class AutoTimer:
 		
 		if services:
 			serviceHandler = eServiceCenter.getInstance()
-			add_counter=0
+			add_counter = 0
 			
 			try:
 				for service in services:
@@ -723,9 +723,9 @@ class AutoTimer:
 					
 					ret = self.addToFilterfile(name, begin)
 					if ret:
-						add_counter +=1
+						add_counter += 1
 					
-				session.open(MessageBox, _("finished adding to filter list with %s event(s):\n\n %s event(s) added \n %s event(s) skipped") % (len(services), add_counter,len(services)-add_counter), type=MessageBox.TYPE_INFO, timeout=config.plugins.autotimer.popup_timeout.value)
+				session.open(MessageBox, _("finished adding to filter list with %s event(s):\n\n %s event(s) added \n %s event(s) skipped") % (len(services), add_counter,len(services) - add_counter), type=MessageBox.TYPE_INFO, timeout=config.plugins.autotimer.popup_timeout.value)
 					
 			except Exception as e:
 				doLog("Error in addToFilterList", e)

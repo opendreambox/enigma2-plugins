@@ -26,8 +26,8 @@ class MerlinSkinThemesHelpList(MenuList):
 		
 	def buildEntry(self, keyText, descriptionText):
 		res = [(keyText, descriptionText),
-			(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, self.keyWidth, self.componentItemHeight, 0, RT_HALIGN_CENTER|RT_VALIGN_CENTER, keyText),
-			(eListboxPythonMultiContent.TYPE_TEXT, 5 + self.keyWidth, 0, self.descrWidth, self.componentItemHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, descriptionText)
+			(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, self.keyWidth, self.componentItemHeight, 0, RT_HALIGN_CENTER | RT_VALIGN_CENTER, keyText),
+			(eListboxPythonMultiContent.TYPE_TEXT, 5 + self.keyWidth, 0, self.descrWidth, self.componentItemHeight, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, descriptionText)
 				]
 		return res
 
@@ -42,7 +42,7 @@ class MerlinSkinThemesHelp(Screen):
 		
 		self["OkCancelActions"] = ActionMap(["OkCancelActions"],
 		{
-			"cancel":	self.close,
+			"cancel": self.close,
 		}, -1)
 		
 		self.setTitle(_("MerlinSkinThemes - Help"))

@@ -36,15 +36,15 @@ class InternetRadioVisualization(object):
 			self["top_%d" % i] = Pixmap()
 			self["top_%d" % i].hide()
 			self.pegelvalues[i] = (0, time.time(),0, 1)
-			i  += 1
+			i += 1
 			if i == self.BANDS:
 				break
 
 	def setProperties(self):
 		i = 0
 		while True:
-			self.bars[i] = (self["progress_%d"%i].instance.size().height(), self["progress_%d"%i].instance.size().height() + self["progress_%d"%i].instance.position().y(), self["top_%d"%i].instance.size().height())
-			i  += 1
+			self.bars[i] = (self["progress_%d" % i].instance.size().height(), self["progress_%d" % i].instance.size().height() + self["progress_%d" % i].instance.position().y(), self["top_%d" % i].instance.size().height())
+			i += 1
 			if i == self.BANDS:
 				break
 
@@ -52,7 +52,7 @@ class InternetRadioVisualization(object):
 		i = 0
 		while True:
 			self["progress_%d" % i].setValue(0)
-			i  += 1
+			i += 1
 			if i == self.BANDS:
 				break
 
@@ -62,7 +62,7 @@ class InternetRadioVisualization(object):
 			self["progress_%d" % i].setValue(0)
 			self["top_%d" % i].hide()
 			self.pegelvalues[i] = (0, time.time(),0, 1)
-			i  += 1
+			i += 1
 			if i == self.BANDS:
 				break
 
@@ -72,7 +72,7 @@ class InternetRadioVisualization(object):
 			barvalues = self.bars.get(i,(0,0,0))
 			progressbarHeight = barvalues[0]
 			value = int(1.25 * (v[i] + 80))
-			currentvalue = int(value*progressbarHeight/100)
+			currentvalue = int(value * progressbarHeight / 100)
 			oldvalue = self.pegelvalues.get(i,None)
 			if currentvalue <= 0:
 				hide = 1
@@ -100,7 +100,7 @@ class InternetRadioVisualization(object):
 							hide = 1
 						else:
 							hide = 0
-						self.pegelvalues[i] = (currentvalue, d,oldvalue[2]+1,hide)
+						self.pegelvalues[i] = (currentvalue, d,oldvalue[2] + 1,hide)
 						if hide:
 							self["top_%d" % i].hide()
 						else:
@@ -126,7 +126,7 @@ class InternetRadioVisualization(object):
 			if oldvalue and oldvalue[3] == 0:
 				cleanup = True
 				break
-			i  += 1
+			i += 1
 			if i == self.BANDS:
 				break
 		return cleanup

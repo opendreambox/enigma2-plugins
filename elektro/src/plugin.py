@@ -78,7 +78,7 @@ config.plugins.elektro = ConfigSubsection()
 config.plugins.elektro.nextday = ConfigClock(default=((6 * 60 + 0) * 60))
 config.plugins.elektro.nextday2 = ConfigClock(default=((6 * 60 + 0) * 60))
 config.plugins.elektro.profile = ConfigSelection(choices=[("1", "Profile 1"), ("2", "Profile 2")], default="1")
-config.plugins.elektro.profileShift =  ConfigYesNo(default=False)
+config.plugins.elektro.profileShift = ConfigYesNo(default=False)
 
 config.plugins.elektro.sleep = ConfigSubDict()
 for i in range(7):
@@ -110,11 +110,11 @@ config.plugins.elektro.checkSleepAfterManualBoot = ConfigYesNo(default=False)
 config.plugins.elektro.nextwakeup = ConfigNumber(default=0)
 config.plugins.elektro.force = ConfigYesNo(default=False)
 config.plugins.elektro.dontwakeup = ConfigYesNo(default=False)
-config.plugins.elektro.holiday =  ConfigYesNo(default=False)
-config.plugins.elektro.hddsleep =  ConfigYesNo(default=False)
-config.plugins.elektro.netsleep =  ConfigYesNo(default=False)
-config.plugins.elektro.nfssleep =  ConfigYesNo(default=False)
-config.plugins.elektro.IPenable =  ConfigYesNo(default=False)
+config.plugins.elektro.holiday = ConfigYesNo(default=False)
+config.plugins.elektro.hddsleep = ConfigYesNo(default=False)
+config.plugins.elektro.netsleep = ConfigYesNo(default=False)
+config.plugins.elektro.nfssleep = ConfigYesNo(default=False)
+config.plugins.elektro.IPenable = ConfigYesNo(default=False)
 config.plugins.elektro.deepstandby_wakeup_time = ConfigInteger(default=0)
 
 config.plugins.elektro.NASenable = ConfigSelection(choices=[("false", "no"), ("true", "yes"), ("1", _("yes, Profile 1")), ("2", _("yes, Profile 2"))], default="false")
@@ -123,7 +123,7 @@ config.plugins.elektro.NASuser = ConfigText(default="", fixed_size=False, visibl
 config.plugins.elektro.NASpass = ConfigText(default="", fixed_size=False, visible_width=50)
 config.plugins.elektro.NAScommand = ConfigText(default="poweroff", fixed_size=False, visible_width=50)
 config.plugins.elektro.NASport = ConfigNumber(default=23)
-config.plugins.elektro.NASwait =  ConfigYesNo(default=False)
+config.plugins.elektro.NASwait = ConfigYesNo(default=False)
 
 weekdays = [
 	_("Monday"),
@@ -143,10 +143,10 @@ def NASpowerdown(Nname,Nuser,Npass,Ncommand,Nport):
 	from telnetlib import Telnet
 	if Nname == "":
 		return _("no Name")
-	l=_("Connection Error")
+	l = _("Connection Error")
 	try:
 		tn = Telnet(Nname, Nport, 5)
-		l=""
+		l = ""
 		if Nuser != "":
 			l = l + tn.expect(['ogin:','sername'],10)[2]
 			l = l + tn.read_very_lazy()
@@ -163,7 +163,7 @@ def NASpowerdown(Nname,Nuser,Npass,Ncommand,Nport):
 		if config.plugins.elektro.NASwait.value == True:
 			tt = time() + 90
 			l = l + "\n waiting...\n"
-			while tt>time() and ping.doOne(Nname,1) != None:
+			while tt > time() and ping.doOne(Nname,1) != None:
 				sleep(2)
 		tn.write('exit\r')
 		l = l + tn.expect(['#',">"],5)[2]
@@ -185,7 +185,7 @@ def getNextWakeup():
 	wakeuptime = 0
 
 	now = time()
-	print pluginPrintname, "Now:", strftime("%a:%H:%M:%S",  gmtime(now))
+	print pluginPrintname, "Now:", strftime("%a:%H:%M:%S", gmtime(now))
 
 	if ElektroWakeUpTime > now:
 		print pluginPrintname, "Will wake up at", strftime("%a:%H:%M:%S", gmtime(ElektroWakeUpTime))
@@ -202,7 +202,7 @@ def Plugins(**kwargs):
 	list = [
 		PluginDescriptor(
 			name=config.plugins.elektro.name.value,
-			description=config.plugins.elektro.description.value + " "  + _("Ver.") + " " + elektro_pluginversion,
+			description=config.plugins.elektro.description.value + " " + _("Ver.") + " " + elektro_pluginversion,
 			where=[
 				PluginDescriptor.WHERE_SESSIONSTART,
 				PluginDescriptor.WHERE_AUTOSTART
@@ -213,7 +213,7 @@ def Plugins(**kwargs):
 	if config.plugins.elektro.menu.value == "plugin":
 		list.append(PluginDescriptor(
 			name=config.plugins.elektro.name.value,
-			description=config.plugins.elektro.description.value + " "  + _("Ver.") + " " + elektro_pluginversion,
+			description=config.plugins.elektro.description.value + " " + _("Ver.") + " " + elektro_pluginversion,
 			where=PluginDescriptor.WHERE_PLUGINMENU,
 			icon="elektro.png",
 			fnc=main)
@@ -221,7 +221,7 @@ def Plugins(**kwargs):
 	else:
 		list.append(PluginDescriptor(
 			name=config.plugins.elektro.name.value,
-			description=config.plugins.elektro.description.value + " "  + _("Ver.") + " " + elektro_pluginversion,
+			description=config.plugins.elektro.description.value + " " + _("Ver.") + " " + elektro_pluginversion,
 			where=PluginDescriptor.WHERE_EXTENSIONSMENU,
 			fnc=main)
 		)
@@ -253,13 +253,13 @@ class ElektroProfile(ConfigListScreen,Screen):
 		self.list = []
 
 		for i in range(7):
-			self.list.append(getConfigListEntry(" 1. " + weekdays[i] + ": "  + _("Wakeup"), config.plugins.elektro.wakeup[i]))
-			self.list.append(getConfigListEntry(" 1. " + weekdays[i] + ": "  + _("Sleep"), config.plugins.elektro.sleep[i]))
+			self.list.append(getConfigListEntry(" 1. " + weekdays[i] + ": " + _("Wakeup"), config.plugins.elektro.wakeup[i]))
+			self.list.append(getConfigListEntry(" 1. " + weekdays[i] + ": " + _("Sleep"), config.plugins.elektro.sleep[i]))
 		self.list.append(getConfigListEntry(" 1. " + _("Next day starts at"), config.plugins.elektro.nextday,
 			_("If the box is supposed to enter deep standby e.g. monday night at 1 AM, it actually is already tuesday. To enable this anyway, differing next day start time can be specified here.")))
 		for i in range(7):
-			self.list.append(getConfigListEntry(" 2. " + weekdays[i] + ": "  + _("Wakeup"), config.plugins.elektro.wakeup2[i]))
-			self.list.append(getConfigListEntry(" 2. " + weekdays[i] + ": "  + _("Sleep"), config.plugins.elektro.sleep2[i]))
+			self.list.append(getConfigListEntry(" 2. " + weekdays[i] + ": " + _("Wakeup"), config.plugins.elektro.wakeup2[i]))
+			self.list.append(getConfigListEntry(" 2. " + weekdays[i] + ": " + _("Sleep"), config.plugins.elektro.sleep2[i]))
 		self.list.append(getConfigListEntry(" 2. " + _("Next day starts at"), config.plugins.elektro.nextday2,
 			_("If the box is supposed to enter deep standby e.g. monday night at 1 AM, it actually is already tuesday. To enable this anyway, differing next day start time can be specified here.")))
 
@@ -452,7 +452,7 @@ class Elektro(ConfigListScreen,Screen):
 				_("Puts the box in standby mode after boot.")),
 			getConfigListEntry(_("Standby on manual boot"), config.plugins.elektro.standbyOnManualBoot,
 				_("Whether to put the box in standby when booted manually. On manual boot the box will not go to standby before the next deep standby interval starts, even if this option is set. This option is only active if 'Standby on boot' option is set, too.")),
-			getConfigListEntry(_("check for sleep directly after manual boot"), config.plugins.elektro.checkSleepAfterManualBoot,	_("If set to 'yes' the box will check to deepstandby directly after manual boot if sleep time is already reached. If set to 'no' (default) the box will check to deepstandby only if the next deepstandby interval starts (after next wakeuptime)")),
+			getConfigListEntry(_("check for sleep directly after manual boot"), config.plugins.elektro.checkSleepAfterManualBoot, _("If set to 'yes' the box will check to deepstandby directly after manual boot if sleep time is already reached. If set to 'no' (default) the box will check to deepstandby only if the next deepstandby interval starts (after next wakeuptime)")),
 			getConfigListEntry(_("Force sleep (even when not in standby)"), config.plugins.elektro.force,
 				_("Forces deep standby, even when not in standby mode. Scheduled recordings remain unaffected.")),
 			getConfigListEntry(_("Avoid deep standby when HDD is active, e.g. for FTP"), config.plugins.elektro.hddsleep,
@@ -514,7 +514,7 @@ class Elektro(ConfigListScreen,Screen):
 		self.onLayoutFinish.append(self.setCustomTitle)
 
 	def setCustomTitle(self):
-		self.setTitle(config.plugins.elektro.name.value + " "  + _("Ver.") + " " + elektro_pluginversion)
+		self.setTitle(config.plugins.elektro.name.value + " " + _("Ver.") + " " + elektro_pluginversion)
 
 	def configHelp(self):
 		cur = self["config"].getCurrent()
@@ -606,7 +606,7 @@ class DoElektro(Screen):
 		self.last_nfsread = "0"
 
 	def clkToTime(self, clock):
-		return ((clock.value[0]) * 60 + (int)(clock.value[1]))  * 60
+		return ((clock.value[0]) * 60 + (int)(clock.value[1])) * 60
 
 	def getTime(self):
 		ltime = localtime()
@@ -622,7 +622,7 @@ class DoElektro(Screen):
 			nextday = self.clkToTime(config.plugins.elektro.nextday)
 		else:
 			nextday = self.clkToTime(config.plugins.elektro.nextday2)
-		return (time - nextday) %  (24 * 60 * 60)
+		return (time - nextday) % (24 * 60 * 60)
 
 	def setNextWakeuptime(self):
 		# Do not set a wakeup time if
@@ -721,7 +721,7 @@ class DoElektro(Screen):
 
 		#convert into relative Times
 		time_s = self.getReltime(time_s)
-		wakeuptime  = self.getReltime(wakeuptime)
+		wakeuptime = self.getReltime(wakeuptime)
 		sleeptime = self.getReltime(sleeptime)
 
 		if debug:
@@ -840,7 +840,7 @@ class DoElektro(Screen):
 
 		# Will there be a recording in a short while?
 		nextRecTime = self.session.nav.RecordTimer.getNextRecordingTime()
-		if trysleep == True and (nextRecTime > 0) and (nextRecTime - (int)(time()) <  elektroShutdownThreshold):
+		if trysleep == True and (nextRecTime > 0) and (nextRecTime - (int)(time()) < elektroShutdownThreshold):
 			print pluginPrintname, "don't sleep - there be a recording in a short while"
 			trysleep = False
 

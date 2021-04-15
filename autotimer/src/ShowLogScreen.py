@@ -21,22 +21,22 @@ class ShowLogScreen(Screen):
 		self.skinName = ["TestBox", "Console"]
 		title = ""
 		text = ""
-		self.logFile       = logFile
-		self.titleText     = titleText
+		self.logFile = logFile
+		self.titleText = titleText
 		self.firstLineText = firstLineText
-		self.lastLineText  = lastLineText
+		self.lastLineText = lastLineText
 		
 		self["text"] = ScrollLabel("")
 		self["actions"] = ActionMap(["WizardActions", "DirectionActions", "ChannelSelectBaseActions"], 
 		{
-			"ok":    self.cancel,
-			"back":  self.cancel,
-			"up":    self["text"].pageUp,
-			"down":  self["text"].pageDown,
-			"left":  self["text"].pageUp,
+			"ok": self.cancel,
+			"back": self.cancel,
+			"up": self["text"].pageUp,
+			"down": self["text"].pageDown,
+			"left": self["text"].pageUp,
 			"right": self["text"].pageDown,
-			"nextBouquet":	self["text"].lastPage,
-			"prevBouquet":	self.firstPage,
+			"nextBouquet": self["text"].lastPage,
+			"prevBouquet": self.firstPage,
 		}, -1)
 		
 		self.onLayoutFinish.append(self.readLog)

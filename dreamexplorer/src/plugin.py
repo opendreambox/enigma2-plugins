@@ -76,7 +76,7 @@ def main(session, **kwargs):
 
 ######## DREAM-EXPLORER START #######################
 class DreamExplorer3(Screen):
-	if getDesktop(0).size().width()>=1920:
+	if getDesktop(0).size().width() >= 1920:
 		skin = """
 		<screen name="DreamExplorer3" position="center,60" size="1840,1020" title="Dream Explorer 3">
 			<ePixmap alphatest="on" pixmap="/usr/share/enigma2/skin_default/div-h.png" position="0,3" size="1840,2" zPosition="5" scale="stretch" />
@@ -199,10 +199,10 @@ class DreamExplorer3(Screen):
 			"down": self.down,
 			"nextBouquet": self.sortByNameOrDate,
 			"prevBouquet": self.sortAscOrDesc,
-			"video":		self.openBookmarkManager,
-			"text":	self.chmodItem,
-			"audioSelection":	self.toggleMediaFilter,
-			"playpauseService":	self.showThumbnails,
+			"video": self.openBookmarkManager,
+			"text": self.chmodItem,
+			"audioSelection": self.toggleMediaFilter,
+			"playpauseService": self.showThumbnails,
 		}, -1)
 		
 		self["NumberActions"] = NumberActionMap(["NumberActions"],
@@ -233,8 +233,8 @@ class DreamExplorer3(Screen):
 			self["playicon"].hide()
 			self["playtext"].setText("")
 		
-		self.cmd= ""
-		self.useMediaFilter=False
+		self.cmd = ""
+		self.useMediaFilter = False
 		
 		self.numericalTextInput = NumericalTextInput()
 		self.numericalTextInput.setUseableChars(u'.1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ')
@@ -257,12 +257,12 @@ class DreamExplorer3(Screen):
 
 	def toggleMediaFilter(self):
 		if self.useMediaFilter:
-			self.useMediaFilter=False
+			self.useMediaFilter = False
 			config.plugins.DreamExplorer.useMediaFilter.value = False
 			self["filelist"].matchingPattern = None
 			self["filtertext"].setText(_("Enable media filter"))
 		else:
-			self.useMediaFilter=True
+			self.useMediaFilter = True
 			config.plugins.DreamExplorer.useMediaFilter.value = True
 			self["filelist"].matchingPattern = self.mediaPattern
 			self["filtertext"].setText(_("Disable media filter"))
@@ -337,44 +337,44 @@ class DreamExplorer3(Screen):
 		if target is None:
 			target = self["filelist"].getPathForFile()
 
-		self.session.openWithCallback(self.getSelection, ChoiceBox, title=_("Please select action..."), list=[(_("Create file in %s" %(targetFileDir)), "createFile"), (_("Create directory in %s" %(targetFileDir)), "createDir"), (_("Create symlink to %s" %(target)), "createSymlink")])
+		self.session.openWithCallback(self.getSelection, ChoiceBox, title=_("Please select action..."), list=[(_("Create file in %s" % (targetFileDir)), "createFile"), (_("Create directory in %s" % (targetFileDir)), "createDir"), (_("Create symlink to %s" % (target)), "createSymlink")])
 		
 	def getSelection(self, selection):
 		if selection:
 			if selection[1] == "createFile":
 				element = "file"
 				target = self["filelist"].getPathForFile()
-				titletext = _("Create %s in %s with name:" %(element, target))
+				titletext = _("Create %s in %s with name:" % (element, target))
 			elif selection[1] == "createDir":
 				element = "directory"
 				target = self["filelist"].getPathForFile()
-				titletext = _("Create %s in %s with name:" %(element, target))
+				titletext = _("Create %s in %s with name:" % (element, target))
 			elif selection[1] == "createSymlink":
 				element = "symlink"
 				target = self["filelist"].getFilenameWithPath()
 				if target is None:
 					target = self["filelist"].getPathForFile()
-				titletext = _("Create %s to %s with name:" %(element, target))
+				titletext = _("Create %s to %s with name:" % (element, target))
 				
 			self.session.openWithCallback(boundFunction(self.createItem, element), InputBox,title=titletext, text=_("Name"))
 
 	def createItem(self, type, elementName):
 		if elementName:
 			self.executionData = ""
-			newElement = "%s%s" %(self["filelist"].getPathForFile(), elementName)
+			newElement = "%s%s" % (self["filelist"].getPathForFile(), elementName)
 			
 			if type == "symlink":
 				self.symlinkName = elementName
 				self.openCopyMoveManager(True)
 			else:			
 				if type == "file":
-					self.cmd = 'touch %s' %(newElement)
-					self.actionText = _("Creation of file %s" %(newElement))
+					self.cmd = 'touch %s' % (newElement)
+					self.actionText = _("Creation of file %s" % (newElement))
 						
 				elif type == "directory":
-					self.cmd = 'mkdir %s' %(newElement)
+					self.cmd = 'mkdir %s' % (newElement)
 		
-					self.actionText = _("Creation of directory %s" %(newElement))
+					self.actionText = _("Creation of directory %s" % (newElement))
 					self.container.execute(self.cmd)		
 	
 				self.container.execute(self.cmd)
@@ -408,7 +408,7 @@ class DreamExplorer3(Screen):
 						self.session.open(MusicExplorer, fileRef, m_dir, filenameWithPath)
 
 				elif fileExtension in ["jpg","jpeg","jpe","png","bmp"]:
-					if self["filelist"].getCurrentIndex()!=0:
+					if self["filelist"].getCurrentIndex() != 0:
 						if PicturePlayerInstalled:
 							pictureList = self["filelist"].getFilteredFileList("picture", True)
 							# pictureList must be converted into a fake filelistEntryComponent entry to picture player to work properly
@@ -430,7 +430,7 @@ class DreamExplorer3(Screen):
 				elif filename.lower().endswith(".bootlogo.tar.gz"):
 					self.command = ["mount -rw /boot -o remount", "sleep 3","tar -xzvf " + filenameWithPath + " -C /", "mount -ro /boot -o remount"]
 					askList = [(_("Cancel"), "NO"),(_("Install bootlogo"), "YES")]
-					msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" %(filename)), list=askList)
+					msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" % (filename)), list=askList)
 					msg.setTitle(_("Dream Explorer 3"))
 					
 				elif fileExtension in ["gz","bz2"]:
@@ -440,21 +440,21 @@ class DreamExplorer3(Screen):
 						elif fileExtension == "bz2":
 							self.command = ["tar -xjvf " + filenameWithPath + " -C /"]
 						
-						msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" %(filename)), list=[(_("Cancel"), "NO"),(_("Extract archive"), "YES")])
+						msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" % (filename)), list=[(_("Cancel"), "NO"),(_("Extract archive"), "YES")])
 						msg.setTitle(_("Dream Explorer 3"))
 
 				elif fileExtension == "deb":
-					self.command = ["apt-get update && dpkg -i %s && apt-get -f install" %(filenameWithPath)]
+					self.command = ["apt-get update && dpkg -i %s && apt-get -f install" % (filenameWithPath)]
 					askList = [(_("Cancel"), "NO"),(_("Install package"), "YES")]
-					msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" %(filename)), list=askList)
+					msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" % (filename)), list=askList)
 					msg.setTitle(_("Dream Explorer 3"))
 					
 				elif fileExtension == "sh":
 					self.command = [filenameWithPath]
 					askList = [(_("Cancel"), "NO"),(_("View script"), "VIEW"),(_("Execute script"), "YES")]
-					self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" %(filename)), list=askList)
+					self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" % (filename)), list=askList)
 				else:
-					xfile=stat(filenameWithPath)
+					xfile = stat(filenameWithPath)
 					if (xfile.st_size < 1024000):
 						self.session.open(vEditor2, filenameWithPath)
 					else:
@@ -468,12 +468,12 @@ class DreamExplorer3(Screen):
 		filterText = _("[All files]")
 		if self.useMediaFilter:
 			filterText = _("[Media files]")
-		self.setTitle("Dream Explorer 3 - %s %s" %(filterText, self["filelist"].getCurrentDirectory()))
+		self.setTitle("Dream Explorer 3 - %s %s" % (filterText, self["filelist"].getCurrentDirectory()))
 
 	def showContextMenu(self):
 		contextList = []
 		if self["filelist"].canDescent():
-			if self["filelist"].getCurrentIndex()!=0 or self["filelist"].getCurrent()[0] == '<%s>' %(_("List of Storage Devices")):
+			if self["filelist"].getCurrentIndex() != 0 or self["filelist"].getCurrent()[0] == '<%s>' % (_("List of Storage Devices")):
 				contextList.extend((
 					(_("Set as start directory"), "SETSTARTDIR"),
 				))
@@ -488,7 +488,7 @@ class DreamExplorer3(Screen):
 		if answer == "YES":
 			self.session.open(Console, cmdlist=self.command)
 		elif answer == "VIEW":
-			viewfile=stat(self.command[0])
+			viewfile = stat(self.command[0])
 			if (viewfile.st_size < 61440):
 				self.session.open(vEditor2, self.command[0])
 		elif answer == "SETSTARTDIR":
@@ -496,7 +496,7 @@ class DreamExplorer3(Screen):
 			if startDir is None:
 				startDir = self["filelist"].getCurrentDirectory()
 				
-			self.session.openWithCallback(self.callbackSetStartDir,MessageBox,_("Do you want to set\n%s\nas start directory?" %(startDir)), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3"))
+			self.session.openWithCallback(self.callbackSetStartDir,MessageBox,_("Do you want to set\n%s\nas start directory?" % (startDir)), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3"))
 		elif answer == "ABOUT":
  			self.session.open(MessageBox, _("Dreambox Explorer II created by Vali (2010)\nDream Explorer 3 by Dre (2021)\n\nSupport: board.dreamboxtools.de"), MessageBox.TYPE_INFO, windowTitle=_("Info"))
 
@@ -518,7 +518,7 @@ class DreamExplorer3(Screen):
 
 	def showInfo(self):
 		if self["filelist"].canDescent():
-			if self["filelist"].getCurrentIndex()==0:
+			if self["filelist"].getCurrentIndex() == 0:
 				try:
 					out_line = check_output(['uptime'])
 					ret = "at" + out_line + "\n"
@@ -538,7 +538,7 @@ class DreamExplorer3(Screen):
 				except:
 					ret = "N/A"			
 			
-				msg = self.session.open(MessageBox, _("Dreambox model: %s\n\n%s" %(HardwareInfo().get_device_name(),ret)), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
+				msg = self.session.open(MessageBox, _("Dreambox model: %s\n\n%s" % (HardwareInfo().get_device_name(),ret)), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 		elif self["filelist"].getFileExtensionType() == "service":
 			self.session.open(SystemdViewer,self["filelist"].getFilename(), self["filelist"].getFilenameWithPath())
 		else:
@@ -559,13 +559,13 @@ class DreamExplorer3(Screen):
 	def runFinished(self, retval):
 		resultText = ""
 		if retval != 0:
-			resultText = _("failed\n%s" %(self.executionData))
+			resultText = _("failed\n%s" % (self.executionData))
 			state = False
 		else:
 			resultText = _("successful")
 			state = True	
 		
-		self.session.open(MessageBox, "%s %s" %(self.actionText, resultText), MessageBox.TYPE_INFO if state else MessageBox.TYPE_ERROR, timeout=0)
+		self.session.open(MessageBox, "%s %s" % (self.actionText, resultText), MessageBox.TYPE_INFO if state else MessageBox.TYPE_ERROR, timeout=0)
 		
 		self["filelist"].refresh()
 			
@@ -579,23 +579,23 @@ class DreamExplorer3(Screen):
 			self.type = "file"
 			self.typetext = _("file")
 			
-		elif (self["filelist"].getCurrentIndex()!=0) and (self["filelist"].canDescent()):
+		elif (self["filelist"].getCurrentIndex() != 0) and (self["filelist"].canDescent()):
 			self.item = self["filelist"].getSelection()[1]
 			self.type = "directory"
 			self.typetext = _("directory")
 		else:
 			return
 			
-		msg = self.session.openWithCallback(self.callbackDeleteItem,MessageBox,_("Do you really want to delete:\n"+self.item), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3 - Delete %s..." %(self.type)))
+		msg = self.session.openWithCallback(self.callbackDeleteItem,MessageBox,_("Do you really want to delete:\n" + self.item), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3 - Delete %s..." % (self.type)))
 
 	def callbackDeleteItem(self, answer):
 		if answer is True:
 			if self.type == "directory":
-				self.cmd = "rm -rf '%s'" %(self.item)
+				self.cmd = "rm -rf '%s'" % (self.item)
 			elif self.type == "file":
-				self.cmd = "rm -f '%s'" %(self.item)
+				self.cmd = "rm -f '%s'" % (self.item)
 
-			self.actionText = _("Deletion of %s %s" %(self.type, self.item))		
+			self.actionText = _("Deletion of %s %s" % (self.type, self.item))		
 			self.container.execute(self.cmd)
 
 	def renameItem(self):
@@ -607,14 +607,14 @@ class DreamExplorer3(Screen):
 			item = self["filelist"].getFilename()
 			self.type = "file"
 			self.typetext = _("file")
-		elif self["filelist"].getCurrentIndex()!=0 and self["filelist"].canDescent():
+		elif self["filelist"].getCurrentIndex() != 0 and self["filelist"].canDescent():
 			item = self["filelist"].getSelection()[0]
 			self.type = "directory"
 			self.typetext = _("directory")
 		else:
 			return
 			
-		self.session.openWithCallback(self.callbackRenameItem, InputBox, title=_("Current name: %s" %(item)), windowTitle=_("Rename %s..." %(self.typetext)), text=item)
+		self.session.openWithCallback(self.callbackRenameItem, InputBox, title=_("Current name: %s" % (item)), windowTitle=_("Rename %s..." % (self.typetext)), text=item)
 
 	def callbackRenameItem(self, answer):
 		if answer is not None:
@@ -625,9 +625,9 @@ class DreamExplorer3(Screen):
 				oldName = self["filelist"].getCurrentDirectory() + self["filelist"].getFilename()
 			newName = path + answer
 
-			self.cmd = 'mv %s %s' %(oldName, newName)
+			self.cmd = 'mv %s %s' % (oldName, newName)
 			
-			self.actionText = _("Renaming of %s to %s" %(oldName, newName))
+			self.actionText = _("Renaming of %s to %s" % (oldName, newName))
 			self.container.execute(self.cmd)
 			
 	def openCopyMoveManager(self, setSymLink=False):
@@ -637,7 +637,7 @@ class DreamExplorer3(Screen):
 			
 		if not(self["filelist"].canDescent()):
 			source = self["filelist"].getFilenameWithPath()
-		elif (self["filelist"].getCurrentIndex()!=0) and (self["filelist"].canDescent()): #NEW
+		elif (self["filelist"].getCurrentIndex() != 0) and (self["filelist"].canDescent()): #NEW
 			source = self["filelist"].getSelection()[1]
 		else:
 			return
@@ -726,7 +726,7 @@ class DreamExplorer3(Screen):
 ######## DREAM-EXPLORER END ####################### 
 
 class BookmarkManager(Screen):
-	if getDesktop(0).size().width()>=1920:
+	if getDesktop(0).size().width() >= 1920:
 		skin = """
 		<screen name="BookmarkManager" position="center,center" size="1000,630" title="Bookmark Manager">
 			<widget name="folders" position="0,5" size="600,40" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" valign="center" />
@@ -793,16 +793,16 @@ class BookmarkManager(Screen):
 		
 		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "DirectionActions"],
 		{
-			"ok":	self.changeDirOrSelectBookmark,
+			"ok": self.changeDirOrSelectBookmark,
 			"cancel": self.close,
 			"green": self.addToBookmarks,
 			"red": self.removeFromBookmarks,
 			"blue": self.toggleList,
 			"yellow": self.saveBookmarks,
 			"down": self.moveDown,
-			"up":	self.moveUp,
-			"left":	self.pageUp,
-			"right":	self.pageDown,
+			"up": self.moveUp,
+			"left": self.pageUp,
+			"right": self.pageDown,
 		}, -1)
 		
 		self.currentList = "bookmarklist"
@@ -921,7 +921,7 @@ class BookmarkManager(Screen):
 				file.write(bookmark + "\n")
 
 class vEditor2(Screen):
-	if getDesktop(0).size().width()>=1920:
+	if getDesktop(0).size().width() >= 1920:
 		skin = """
 		<screen name="vEditor2" position="center,50" size="1500,975" title="vEditor2">
 			<widget source="filedata" render="Listbox" position="0,0" size="1500,875" scrollbarMode="showOnDemand">
@@ -993,11 +993,11 @@ class vEditor2(Screen):
 
 	def addLine(self):
 		self.lineIndex = self["filedata"].getIndex()
-		self.session.openWithCallback(self.insertLine, InputBox, title=_("New line:"), windowTitle=_("Insert line after line %d" %(self.lineIndex+1)), text="")
+		self.session.openWithCallback(self.insertLine, InputBox, title=_("New line:"), windowTitle=_("Insert line after line %d" % (self.lineIndex + 1)), text="")
 		
 	def insertLine(self, newline):
 		if newline is not None:
-			self.list.insert(self.lineIndex+1, ["%s\n" %(newline)])
+			self.list.insert(self.lineIndex + 1, ["%s\n" % (newline)])
 			self["filedata"].updateList(self.list)
 			self.isChanged = True
 
@@ -1010,7 +1010,7 @@ class vEditor2(Screen):
 		
 	def exitEditor(self):
 		if self.isChanged:
-			msg = self.session.openWithCallback(self.saveFile, MessageBox, _("You have changed %s. Do you want to save your changes?" %(self.filename)), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3"))
+			msg = self.session.openWithCallback(self.saveFile, MessageBox, _("You have changed %s. Do you want to save your changes?" % (self.filename)), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3"))
 		else:
 			self.close()
 
@@ -1018,7 +1018,7 @@ class vEditor2(Screen):
 		with open(self.filename, "r") as f:
 			self.list = [[line] for line in f.readlines()]
 
-		self.setTitle("vEditor2 - %s" %(self.filename))
+		self.setTitle("vEditor2 - %s" % (self.filename))
 		self["filedata"].setList(self.list)
 
 	def editLine(self):
@@ -1027,12 +1027,12 @@ class vEditor2(Screen):
 		if self["filedata"].getCurrent() is not None:
 			self.rowContent = self["filedata"].getCurrent()[0]
 			editableText = self.rowContent.strip("\n")
-			self.session.openWithCallback(self.callbackEditLine, InputBox, title=_("Current content: %s" %(self.rowContent)), windowTitle=_("Edit line: %d" %(self.lineIndex+1)), text=editableText)
+			self.session.openWithCallback(self.callbackEditLine, InputBox, title=_("Current content: %s" % (self.rowContent)), windowTitle=_("Edit line: %d" % (self.lineIndex + 1)), text=editableText)
 
 	def callbackEditLine(self, newline):
 		if newline is not None:
 			self.isChanged = True
-			self.list[self.lineIndex][0] = "%s\n" %(newline)
+			self.list[self.lineIndex][0] = "%s\n" % (newline)
 			self["filedata"].updateList(self.list)
 
 	def saveFile(self, answer):
@@ -1128,8 +1128,8 @@ class MusicExplorer(MoviePlayer):
 					midx = midx + 1
 
 	def seekFwd(self):
-		if len(self.musicList)>2:
-			if self.Mindex<(len(self.musicList)-1):
+		if len(self.musicList) > 2:
+			if self.Mindex < (len(self.musicList) - 1):
 				self.Mindex = self.Mindex + 1
 				nextfile = self.MusicDir + str(self.musicList[self.Mindex])
 				nextRef = eServiceReference("4097:0:0:0:0:0:0:0:0:0:" + nextfile)
@@ -1138,8 +1138,8 @@ class MusicExplorer(MoviePlayer):
 				self.session.open(MessageBox,_('No more playable files.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 
 	def seekBack(self):
-		if len(self.musicList)>2:
-			if self.Mindex>0:
+		if len(self.musicList) > 2:
+			if self.Mindex > 0:
 				self.Mindex = self.Mindex - 1
 				nextfile = self.MusicDir + str(self.musicList[self.Mindex])
 				nextRef = eServiceReference("4097:0:0:0:0:0:0:0:0:0:" + nextfile)
@@ -1155,7 +1155,7 @@ class MusicExplorer(MoviePlayer):
 		self.seekFwd()
 
 class FolderSelection(Screen):
-	if getDesktop(0).size().width()>=1920:
+	if getDesktop(0).size().width() >= 1920:
 		skin = """
 			<screen name="FolderSelection" position="center,center" size="800,600" title="Select target location...">
 				<widget name="infotext" font="Regular;25" halign="center" position="0,0" size="800,100" transparent="0" valign="center" zPosition="4"/>
@@ -1212,7 +1212,7 @@ class FolderSelection(Screen):
 			self["redtext"].setText(_("Change symlink name"))
 		self["TargetDir"].onSelectionChanged.append(self.setInfoText)
 
-		self.cmd= ""
+		self.cmd = ""
 		self.actionText = ""
 		
 		self.onLayoutFinish.append(self.enterFolder)
@@ -1220,9 +1220,9 @@ class FolderSelection(Screen):
 
 	def setInfoText(self):
 		if self.mode == "copymove":
-			self["infotext"].setText(_("Copy/move\n%s\nto %s:") %(self.item, self["TargetDir"].getPathForFile()))
+			self["infotext"].setText(_("Copy/move\n%s\nto %s:") % (self.item, self["TargetDir"].getPathForFile()))
 		elif self.mode == "symlink":
-			self["infotext"].setText(_("Create symlink %s\nin %s to %s") %(self.linkname,  self["TargetDir"].getPathForFile(), self.item))
+			self["infotext"].setText(_("Create symlink %s\nin %s to %s") % (self.linkname, self["TargetDir"].getPathForFile(), self.item))
 
 	def enterFolder(self):
 		if self["TargetDir"].canDescent():
@@ -1232,21 +1232,21 @@ class FolderSelection(Screen):
 		self.close(None)
 
 	def copyFile(self):
-		if self["TargetDir"].getCurrentIndex()!=0:
+		if self["TargetDir"].getCurrentIndex() != 0:
 			dest = self["TargetDir"].getSelection()[1]
-			self.actionText = _("Copying %s to %s" %(self.item, dest))
+			self.actionText = _("Copying %s to %s" % (self.item, dest))
 			if self.item[-1:] == '/':
-				self.cmd = "cp -afr %s %s" %(self.item, dest)
+				self.cmd = "cp -afr %s %s" % (self.item, dest)
 			else:
-				self.cmd = "cp %s %s" %(self.item, dest)
+				self.cmd = "cp %s %s" % (self.item, dest)
 
 			self.close((self.actionText, self.cmd))
 
 	def moveFile(self):
-		if self["TargetDir"].getCurrentIndex()!=0:
+		if self["TargetDir"].getCurrentIndex() != 0:
 			dest = self["TargetDir"].getSelection()[1]
-			self.actionText = _("Moving %s to %s" %(self.item, dest))
-			self.cmd = "mv -f %s %s" %(self.item, dest)
+			self.actionText = _("Moving %s to %s" % (self.item, dest))
+			self.cmd = "mv -f %s %s" % (self.item, dest)
 
 			self.close((self.actionText, self.cmd))
 	
@@ -1254,8 +1254,8 @@ class FolderSelection(Screen):
 		if basename(self.linkname) == self.linkname:
 			symlinkdir = self["TargetDir"].getCurrent()[1]
 			
-			self.actionText = _("Creation of symlink %s in %s to %s" %(self.linkname, symlinkdir, self.item))
-			self.cmd = "ln -s %s %s/%s" %(self.item, symlinkdir, self.linkname)
+			self.actionText = _("Creation of symlink %s in %s to %s" % (self.linkname, symlinkdir, self.item))
+			self.cmd = "ln -s %s %s/%s" % (self.item, symlinkdir, self.linkname)
 			self.close((self.actionText, self.cmd))
 		
 	def setSymlinkName(self):
@@ -1266,7 +1266,7 @@ class FolderSelection(Screen):
 			self.linkname = answer
 
 class SystemdViewer(Screen):
-	if getDesktop(0).size().width()>=1920:
+	if getDesktop(0).size().width() >= 1920:
 		skin = """
 		<screen name="SystemdViewer" position="center,60" size="1800,1010" title="SystemD Viewer">
 			<widget name="enabledlabel" position="0,5" size="300,40" font="Regular;28" foregroundColor="#f0f0f0" transparent="1" halign="left" />
@@ -1344,7 +1344,7 @@ class SystemdViewer(Screen):
 		
 		self["actions"] = ActionMap(["OkCancelActions", "ColorActions","DirectionActions"],
 		{
-			"ok":	self.editService,
+			"ok": self.editService,
 			"cancel": self.close,
 			"green": self.editService,
 			"red": self.close,
@@ -1376,7 +1376,7 @@ class SystemdViewer(Screen):
 		self["ok"] = Label(_("Edit service"))
 		self["exit"] = Label(_("Close"))
 		
-		self.setTitle(_("SystemD Viewer - %s" %(self.serviceFile)))
+		self.setTitle(_("SystemD Viewer - %s" % (self.serviceFile)))
 		
 		self.container = eConsoleAppContainer()
 		self.appClosed_conn = self.container.appClosed.connect(self.runFinished)
@@ -1386,7 +1386,7 @@ class SystemdViewer(Screen):
 		self.enableDisablePossible = False
 		self.activeLabel = "servicetext"
 
-		self.cmdList = ["systemctl is-enabled %s" %(self.serviceFile), "systemctl is-active %s" %(self.serviceFile), "systemctl is-failed %s" %(self.serviceFile), "systemctl status %s" %(self.serviceFile), "systemctl enable %s" %(self.serviceFile), "systemctl disable %s" %(self.serviceFile)]
+		self.cmdList = ["systemctl is-enabled %s" % (self.serviceFile), "systemctl is-active %s" % (self.serviceFile), "systemctl is-failed %s" % (self.serviceFile), "systemctl status %s" % (self.serviceFile), "systemctl enable %s" % (self.serviceFile), "systemctl disable %s" % (self.serviceFile)]
 		self.getServiceInfo()
 			
 		self.onLayoutFinish.append(self.readServiceFile)
@@ -1420,11 +1420,11 @@ class SystemdViewer(Screen):
 	def enableDisableService(self):
 		if self.enableDisablePossible:
 			if self.serviceIsEnabled:
-				cmd = "systemctl disable %s" %(self.serviceFile)
+				cmd = "systemctl disable %s" % (self.serviceFile)
 				self.run = 5
 				self.maxRun = 5
 			else:
-				cmd = "systemctl enable %s" %(self.serviceFile)
+				cmd = "systemctl enable %s" % (self.serviceFile)
 				self.run = 4
 				self.maxRun = 4
 		
@@ -1443,7 +1443,7 @@ class SystemdViewer(Screen):
 	def runFinished(self, retval):
 		if retval != 0:
 			if self.run == 0:
-				self["enabledtext"].setText(_("%s" %(self.executionData)))
+				self["enabledtext"].setText(_("%s" % (self.executionData)))
 				if self.executionData == "enabled":
 					self["enableDisableService"].setText(_("Disable service"))
 					self.enableDisablePossible = True
@@ -1456,21 +1456,21 @@ class SystemdViewer(Screen):
 					self["enableDisableService"].setText("")
 					self.enableDisablePossible = False
 			elif self.run == 1:
-				self["activetext"].setText(_("%s" %(self.executionData)))
+				self["activetext"].setText(_("%s" % (self.executionData)))
 			elif self.run == 2:
-				self["failedtext"].setText(_("%s" %(self.executionData)))
+				self["failedtext"].setText(_("%s" % (self.executionData)))
 			elif self.run == 3:
-				self["statustext"].setText(_("%s" %(self.executionData)))
+				self["statustext"].setText(_("%s" % (self.executionData)))
 			elif self.run == 4:
 				self.run = -1
-				self.session.open(MessageBox, _("Service %s could not be enabled" %(self.serviceFile)), MessageBox.TYPE_ERROR, timeout=0)
+				self.session.open(MessageBox, _("Service %s could not be enabled" % (self.serviceFile)), MessageBox.TYPE_ERROR, timeout=0)
 			elif self.run == 5:
 				self.run = -1
-				self.session.open(MessageBox, _("Service %s could not be disabled" %(self.serviceFile)), MessageBox.TYPE_ERROR, timeout=0)
+				self.session.open(MessageBox, _("Service %s could not be disabled" % (self.serviceFile)), MessageBox.TYPE_ERROR, timeout=0)
 				
 		else:
 			if self.run == 0:
-				self["enabledtext"].setText(_("%s" %(self.executionData)))
+				self["enabledtext"].setText(_("%s" % (self.executionData)))
 				if self.executionData == "enabled":
 					self["enableDisableService"].setText(_("Disable service"))
 					self.enableDisablePossible = True
@@ -1483,23 +1483,23 @@ class SystemdViewer(Screen):
 					self["enableDisableService"].setText("")
 					self.enableDisablePossible = False		
 			elif self.run == 1:
-				self["activetext"].setText(_("%s" %(self.executionData)))
+				self["activetext"].setText(_("%s" % (self.executionData)))
 			elif self.run == 2:
-				self["failedtext"].setText(_("%s" %(self.executionData)))
+				self["failedtext"].setText(_("%s" % (self.executionData)))
 			elif self.run == 3:
-				self["statustext"].setText(_("%s" %(self.executionData)))
+				self["statustext"].setText(_("%s" % (self.executionData)))
 			elif self.run == 4:
 				self.run = -1
-				self.session.open(MessageBox, _("Service %s enabled" %(self.serviceFile)), MessageBox.TYPE_INFO, timeout=0)
+				self.session.open(MessageBox, _("Service %s enabled" % (self.serviceFile)), MessageBox.TYPE_INFO, timeout=0)
 			elif self.run == 5:
 				self.run = -1
-				self.session.open(MessageBox, _("Service %s disabled" %(self.serviceFile)), MessageBox.TYPE_INFO, timeout=0)
+				self.session.open(MessageBox, _("Service %s disabled" % (self.serviceFile)), MessageBox.TYPE_INFO, timeout=0)
 				
 		self.executionData = ""
 		if self.run == -1:
 			self.getServiceInfo()
 		else:
 			self.run += 1				
-			if self.run < len(self.cmdList) and self.run<self.maxRun:
+			if self.run < len(self.cmdList) and self.run < self.maxRun:
 				self.container.execute(self.cmdList[self.run])
 	

@@ -4,7 +4,7 @@ from glob import glob
 from os.path import basename
 
 class WebScriptList(Source):
-	LIST=0
+	LIST = 0
 
 	def __init__(self, session, func=LIST, wap=False):
 		Source.__init__(self)

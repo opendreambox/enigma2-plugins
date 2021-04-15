@@ -61,7 +61,7 @@ class TunerEntry():
 		return self._data.get(key, default)
 
 	def isValidSatIPEntry(self):
-		return 	self.entryType == self.VTUNER_TYPE_SATIP_CLIENT \
+		return self.entryType == self.VTUNER_TYPE_SATIP_CLIENT \
 			and self.ipAddress \
 			and self.tunerType
 

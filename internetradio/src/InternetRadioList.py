@@ -27,7 +27,7 @@ class InternetRadioList(List):
 		text1 = ""
 		text2 = ""
 		if self.mode == 0: # GENRELIST
-			text1 =  item.name
+			text1 = item.name
 		elif self.mode == 1: # STATIONLIST
 			if len(item.country) != 0:
 				display = "%s (%s)" % (item.name, item.country)

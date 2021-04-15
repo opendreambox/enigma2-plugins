@@ -18,14 +18,14 @@ try:
 				uri = uri.split("://")[1]
 				uri = uri.split("/")
 				if len(uri) > 1 and uri[0] == "video":
-					uri = "videos/%s" %(uri[1])
+					uri = "videos/%s" % (uri[1])
 				else:
 					uri = uri[0]
-				watch_url = "http://twitch.tv/%s" %(uri,)
+				watch_url = "http://twitch.tv/%s" % (uri,)
 			except Exception as e:
 				Log.w(e)
 			def onUrlReady(uri, fmt):
-				Log.w("%s (%s)" %(uri, fmt))
+				Log.w("%s (%s)" % (uri, fmt))
 				try:
 					if not service.ptrValid():
 						Log.w("Service became invalid!")

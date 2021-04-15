@@ -94,7 +94,7 @@ class AutoTimerDoParseResource(AutoTimerBaseResource):
 	def epgCallback(self, ret):
 		if self._stillAlive:
 			ret = """<e2state>True</e2state>
-	<e2statetext>"""+ \
+	<e2statetext>""" + \
 	_("Found a total of %(matches)d matching Events.\n%(timer)d Timer were added and\n%(modified)d modified,\n%(conflicts)d conflicts encountered,\n%(similars)d similars added.") % \
 	{"matches":ret[0], "timer":ret[1], "modified":ret[2], "conflicts":len(ret[4]), "similars":len(ret[5])} \
 	+ "</e2statetext></e2simplexmlresult>"
@@ -106,7 +106,7 @@ class AutoTimerDoParseResource(AutoTimerBaseResource):
 	def epgErrback(self, failure):
 		if self._stillAlive:
 			ret = """<e2state>False</e2state>
-	<e2statetext>"""+ _("AutoTimer failed with error %s") % (str(failure),) + "</e2statetext></e2simplexmlresult>"
+	<e2statetext>""" + _("AutoTimer failed with error %s") % (str(failure),) + "</e2statetext></e2simplexmlresult>"
 			def finishRequest():
 				self._req.write(ret)
 				self._req.finish()
@@ -129,7 +129,7 @@ class AutoTimerSimulateBackgroundThread(AutoTimerBackgroundThread):
 			autotimer.parseEPG(simulateOnly=True, callback=self.intermediateWrite)
 		except Exception as e:
 			def finishRequest():
-				req.write('<exception>'+str(e)+'</exception><|PURPOSEFULLYBROKENXML<')
+				req.write('<exception>' + str(e) + '</exception><|PURPOSEFULLYBROKENXML<')
 				req.finish()
 
 		if self._stillAlive:
@@ -178,7 +178,7 @@ class AutoTimerTestBackgroundThread(AutoTimerBackgroundThread):
 			autotimer.parseEPG(simulateOnly=True, uniqueId=self.id, callback=self.intermediateWrite)
 		except Exception as e:
 			def finishRequest():
-				req.write('<exception>'+str(e)+'</exception><|PURPOSEFULLYBROKENXML<')
+				req.write('<exception>' + str(e) + '</exception><|PURPOSEFULLYBROKENXML<')
 				req.finish()
 
 		if self._stillAlive:
@@ -377,9 +377,9 @@ class AutoTimerAddOrEditAutoTimerResource(AutoTimerBaseResource):
 					# strip all after last :
 					pos = value.rfind(':')
 					if pos != -1:
-						if value[pos-1] == ':':
+						if value[pos - 1] == ':':
 							pos -= 1
-						value = value[:pos+1]
+						value = value[:pos + 1]
 
 				if myref.valid():
 					appendlist.append(value)
@@ -433,7 +433,7 @@ class AutoTimerAddOrEditAutoTimerResource(AutoTimerBaseResource):
 		# Maxduration
 		maxduration = get("maxduration")
 		if maxduration:
-			timer.maxduration = int(maxduration)*60
+			timer.maxduration = int(maxduration) * 60
 		elif maxduration == '':
 			timer.maxduration = None
 

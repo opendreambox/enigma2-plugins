@@ -122,7 +122,7 @@ def ChannelSelection_togglePipzap(self):
 		if config.plugins.pipzap.show_channelname.value:
 			servicereference = ServiceReference(self.session.pip.getCurrentService())
 			if servicereference:
-				channel_name=servicereference.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
+				channel_name = servicereference.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
 				self.session.pip.pipActive["channel_txt"].setText(" " + channel_name)
 
 		title += " (PiP)"
@@ -135,7 +135,7 @@ def ChannelSelection_zap(self, *args, **kwargs):
 			self.session.pip = self.session.instantiateDialog(PictureInPicture)
 			self.session.pip.show()
 			self.session.pipshown = True
-		self.revertMode=None
+		self.revertMode = None
 		ref = self.session.pip.getCurrentService()
 		nref = self.getCurrentSelection()
 		if ref is None or ref != nref:
@@ -148,7 +148,7 @@ def ChannelSelection_zap(self, *args, **kwargs):
 		if config.plugins.pipzap.show_channelname.value:
 			servicereference = ServiceReference(self.session.pip.getCurrentService())
 			if servicereference:
-				channel_name=servicereference.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
+				channel_name = servicereference.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
 				self.session.pip.pipActive["channel_txt"].setText(" " + channel_name)
 	else:
 		baseMethods.ChannelSelection_zap(self, *args, **kwargs)
@@ -395,7 +395,7 @@ def InfoBarPiP_swapPiP(self):
 			if config.plugins.pipzap.show_channelname.value:
 				servicereference = ServiceReference(self.session.pip.getCurrentService())
 				if servicereference:
-					channel_name=servicereference.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
+					channel_name = servicereference.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
 					self.session.pip.pipActive["channel_txt"].setText(" " + channel_name)
 
 #pragma mark -
@@ -452,10 +452,10 @@ class PictureInPictureZappingWithChannelName(Screen):
 		height = getDesktop(0).size().height()
 
 		#position des PiP in Skin-Werte umrechnen
-		xt = x1 * width  / 720
+		xt = x1 * width / 720
 		yt = y1 * height / 576
 		ht = y2 * height / 576
-		wt = x2 * width  / 720
+		wt = x2 * width / 720
 		
 		# Korrektur wenn das PiP ueber den unteren bzw. rechten Rand gehen wuerde
 		tmp = xt - (wt * 4) / 100
@@ -484,20 +484,20 @@ class PictureInPictureZappingWithChannelName(Screen):
 		
 		border_width = self["border_top"].instance.size().height()
 		
-		x = xt - (border_width/2) -1
+		x = xt - (border_width / 2) - 1
 		y = yt - border_width + 1
-		h = ht + (border_width/2)
-		w = wt + (2 * border_width) -1
+		h = ht + (border_width / 2)
+		w = wt + (2 * border_width) - 1
 		
 		border_txt_height = self["border_txt"].instance.size().height()
 
 		h_border_txt = border_txt_height + 5 # Versatz/Hoehe des Text-Rahmens
 		h = h + h_border_txt #Hoehe
-		show_txt_ontop_of_pip=False
+		show_txt_ontop_of_pip = False
 		if (y + h) > height: # wenn PiP am unteren Rand
 			y = y - border_txt_height + border_width
 			h_border_txt = h
-			show_txt_ontop_of_pip=True
+			show_txt_ontop_of_pip = True
 		h_border = h - 6
 		
 		#== Groessen und Positionen der Screen-Elemente anpassen ====
@@ -506,17 +506,17 @@ class PictureInPictureZappingWithChannelName(Screen):
 
 		self["border_top"].instance.resize(eSize(*(w,border_width)))
 		if show_txt_ontop_of_pip:
-			self["border_top"].instance.move(ePoint(int(0),int(h_border-border_width)))
+			self["border_top"].instance.move(ePoint(int(0),int(h_border - border_width)))
 		else:
 			self["border_top"].instance.move(ePoint(int(0),int(0)))
 		self["border_left"].instance.resize(eSize(*(border_width,h_border)))
 		self["border_right"].instance.resize(eSize(*(border_width,h_border)))
-		self["border_right"].instance.move(ePoint(int(w-border_width),int(0)))
+		self["border_right"].instance.move(ePoint(int(w - border_width),int(0)))
 
 		self["border_txt"].instance.resize(eSize(*(w,border_txt_height)))
-		self["border_txt"].instance.move(ePoint(int(0),int(h-h_border_txt)))
-		self["channel_txt"].instance.resize(eSize(*(w-(2*border_width),29)))
-		self["channel_txt"].instance.move(ePoint(int(border_width),int(h-h_border_txt+2)))
+		self["border_txt"].instance.move(ePoint(int(0),int(h - h_border_txt)))
+		self["channel_txt"].instance.resize(eSize(*(w - (2 * border_width),29)))
+		self["channel_txt"].instance.move(ePoint(int(border_width),int(h - h_border_txt + 2)))
 
 
 def PictureInPicture__init__(self, session, *args, **kwargs):

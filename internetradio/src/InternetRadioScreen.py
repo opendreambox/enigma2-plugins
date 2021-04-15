@@ -366,12 +366,12 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		if config.plugins.internetradio.fullscreenautoactivation.value == "-1":
 			self.fullScreenAutoActivationTimer.stop()
 		else:
-			self.fullScreenAutoActivationTimer.start(int(config.plugins.internetradio.fullscreenautoactivation.value)*1000)
+			self.fullScreenAutoActivationTimer.start(int(config.plugins.internetradio.fullscreenautoactivation.value) * 1000)
 
 	def autoActivationKeyPressed(self, key=None, flag=None):
 		self.fullScreenAutoActivationTimer.stop()
-		if  self.shown == True and self.visible == True and config.plugins.internetradio.fullscreenautoactivation.value != "-1":
-			self.fullScreenAutoActivationTimer.start(int(config.plugins.internetradio.fullscreenautoactivation.value)*1000)
+		if self.shown == True and self.visible == True and config.plugins.internetradio.fullscreenautoactivation.value != "-1":
+			self.fullScreenAutoActivationTimer.start(int(config.plugins.internetradio.fullscreenautoactivation.value) * 1000)
 		return 0
 
 	def fullScreenAutoActivationTimerCallback(self):
@@ -450,13 +450,13 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				self.setValues(v)
 		elif code == 1:
 			cleanup = True
-			if (len(v[0]) !=0):
+			if (len(v[0]) != 0):
 				if len(v[1]) != 0:
 					sTitle = "%s - %s" % (v[0],v[1])
 				else:
 					sTitle = v[0]
 				if config.plugins.internetradio.googlecover.value:
-					url='https://www.google.de/search?q=%s+-youtube&tbm=isch&source=lnt&tbs=isz:ex,iszw:500,iszh:500' %quote(sTitle)
+					url = 'https://www.google.de/search?q=%s+-youtube&tbm=isch&source=lnt&tbs=isz:ex,iszw:500,iszh:500' % quote(sTitle)
 					getPage(url, timeout=4, agent='Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.56 Safari/537.17').addCallback(self.GoogleImageCallback).addErrback(self.Error)
 					#sendUrlCommand(url, None,10).addCallback(self.GoogleImageCallback).addErrback(self.Error)
 			else:
@@ -510,7 +510,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 
 	def InputBoxStartRecordingCallback(self, returnValue=None):
 		if returnValue:
-			recordingLength =  int(returnValue) * 60
+			recordingLength = int(returnValue) * 60
 			if not os.path.exists(config.plugins.internetradio.dirname.value):
 				os.mkdir(config.plugins.internetradio.dirname.value)
 			args = []
@@ -542,7 +542,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			self.session.openWithCallback(self.deleteRecordingConfirmed, MessageBox, _("Do you really want to stop the recording?"))
 		else:
 			if self.currentPlayingStation and len(self.currentPlayingStation.url) != 0:
-				self.session.openWithCallback(self.InputBoxStartRecordingCallback, InputBox, windowTitle=_("Recording length"),  title=_("Enter in minutes (0 means unlimited)"), text="0", type=Input.NUMBER)
+				self.session.openWithCallback(self.InputBoxStartRecordingCallback, InputBox, windowTitle=_("Recording length"), title=_("Enter in minutes (0 means unlimited)"), text="0", type=Input.NUMBER)
 			else:
 				self.session.open(MessageBox, _("Only running streamings can be recorded!"), type=MessageBox.TYPE_INFO,timeout=20)
 
@@ -604,9 +604,9 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		self.mode = self.FILTERLIST
 		self["list"].setMode(self.mode)
 		if config.plugins.internetradio.filter.value == _("Countries"):
-			self.filterList  = self.fillCountryList()
+			self.filterList = self.fillCountryList()
 		else:
-			self.filterList  = self.fillGenreList()
+			self.filterList = self.fillGenreList()
 		self["list"].setList(self.filterList)
 		if len(self.filterList):
 			self["list"].moveToIndex(self.filterListIndex)
@@ -627,7 +627,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				if not genres.has_key(genre):
 					genres[genre] = 0 # FIXME 
 					genreList.append(((InternetRadioFilter(name=genre)),))
-		genreList =  sorted(genreList, key=lambda genrelist: genrelist[0].name)
+		genreList = sorted(genreList, key=lambda genrelist: genrelist[0].name)
 		genreList.insert(0,((InternetRadioFilter(name=_("All Genres"))),))
 		return genreList
 		
@@ -754,7 +754,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 	def getStationList(self,filter_string):
 		self.stationHeaderText = _("InternetRadio station list for filter: %s") % filter_string
 		self["headertext"].setText(self.stationHeaderText)
-		self.setStatusText(_("Getting %s") %  self.stationHeaderText)
+		self.setStatusText(_("Getting %s") % self.stationHeaderText)
 
 		if len(self.stationList) == 0:
 			self.stationListIndex = 0
@@ -895,7 +895,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 
 	def searchInternetRadio(self, searchstring=None):
 		if searchstring:
-			self.stationHeaderText =  _("InternetRadio station list for search-criteria: %s") % searchstring
+			self.stationHeaderText = _("InternetRadio station list for search-criteria: %s") % searchstring
 			self["headertext"].setText(self.stationHeaderText)
 			self.setStatusText(_("Searching InternetRadio for %s...") % searchstring)
 			self.mode = self.SEARCHLIST
@@ -948,8 +948,8 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 
 	def GoogleImageCallback(self, result):
 		self.hideCover()
-		urlsraw=re.findall(',"ou":".+?","ow"',result)
-		imageurls=[urlraw[7:-6].encode() for urlraw in urlsraw]
+		urlsraw = re.findall(',"ou":".+?","ow"',result)
+		imageurls = [urlraw[7:-6].encode() for urlraw in urlsraw]
 		if imageurls:
 			print "[InternetRadio] downloading cover from %s " % imageurls[0]
 			downloadPage(imageurls[0], "/tmp/.cover").addCallback(self.coverDownloadFinished).addErrback(self.coverDownloadFailed)
@@ -1161,7 +1161,7 @@ class InternetRadioFullScreen(Screen, InternetRadioVisualization):
 		self.session = session
 		Screen.__init__(self, session)
 		InternetRadioVisualization.__init__(self)
-		self["title"] =  Label("")
+		self["title"] = Label("")
 		self["station"] = Label("")
 		self["cover"] = InternetRadioCover(self.coverLoaded)
 		self.onLayoutFinish.append(self.startRun)

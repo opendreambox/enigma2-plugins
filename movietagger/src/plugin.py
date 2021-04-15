@@ -95,15 +95,15 @@ class MovieTagger(Screen):
 		self["aTaglist"] = TagMenuList([])
 		self["actions"] = ActionMap(["WizardActions","MenuActions","ShortcutActions"],
 			{
-			"back": 	self.close,
-			"red": 		self.keyRed,
-			"green": 	self.keyGreen,
-			"yellow": 	self.keyYellow,
-			"blue": 	self.keyBlue,
-			"up": 		self.up,
-			"down": 	self.down,
-			"left": 	self.left,
-			"right": 	self.right,
+			"back": self.close,
+			"red": self.keyRed,
+			"green": self.keyGreen,
+			"yellow": self.keyYellow,
+			"blue": self.keyBlue,
+			"up": self.up,
+			"down": self.down,
+			"left": self.left,
+			"right": self.right,
 			}, -1)
 		self.pretags = self.loadPreTags("/etc/enigma2/movietags") or self.loadPreTags(resolveFilename(SCOPE_PLUGINS, "Extensions/MovieTagger/movietags"))
 		self.updateCurrentTagList()
@@ -152,7 +152,7 @@ class MovieTagger(Screen):
 			self.tags.index(tagname)
 		except ValueError:
 			self.tags.append(tagname)
-			if len(self.tags) >1:
+			if len(self.tags) > 1:
 				self.setTags(" ".join(self.tags))
 			else:
 				self.setTags(tagname)
@@ -176,16 +176,16 @@ class MovieTagger(Screen):
 		else:
 			serviceRef = service
 
-		service_name =serviceRef.toString().split(":")[-1]
-		filename = service_name+".meta"
+		service_name = serviceRef.toString().split(":")[-1]
+		filename = service_name + ".meta"
 		metadata = self.readMETAData(filename)
 		if metadata is not False:
 			metadata.append(tagstring.strip())
-			return  self.writeMETAData(filename,metadata)
+			return self.writeMETAData(filename,metadata)
 		else:
 			if userNotice is True:
 				self.session.open(MessageBox,_("Can't write movietags, because no meta-file found!"), MessageBox.TYPE_ERROR)
-			return  False
+			return False
 
 
 	def readMETAData(self,filename):
@@ -254,7 +254,7 @@ class MovieTagger(Screen):
 			self.session.openWithCallback(self.newTagEntered,InputBox, title=_('Whitepace will be replaced by "_"'),windowTitle=_("Enter the new Tag"))
 
 	def keyYellow(self):
-		if  self.currList is self["aTaglist"]:
+		if self.currList is self["aTaglist"]:
 			self.session.openWithCallback(self.clearAllTags,MessageBox,_("Clear all Tags?\n\nThis will delete ALL tags in ALL recodings!\nAre you sure?"), MessageBox.TYPE_YESNO)
 
 	def keyBlue(self):
@@ -294,7 +294,7 @@ class MovieTagger(Screen):
 		self.currList.pageDown()
 
 	def newTagEntered(self,newTag):
-		if newTag >=0:
+		if newTag >= 0:
 			self.addTag(newTag.strip().replace(" ","_"))
 
 class TagMenuList(MenuList):
@@ -342,14 +342,14 @@ class TagMenuList(MenuList):
 
 	def buildTagMenuListEntry(self, tagName, isUsedTag=False, isUserTag=False, isPreTag=False):
 		res = [tagName]
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, self.xOffset, 0, self.componentItemWidth, self.componentItemHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, tagName))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, self.xOffset, 0, self.componentItemWidth, self.componentItemHeight, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, tagName))
 		
 		if isUsedTag:
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, self.xIndicatorOffset, 0, self.xIndicatorWidth, self.componentItemHeight,1, RT_HALIGN_CENTER|RT_VALIGN_CENTER, "X",self.usedTagColor))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, self.xIndicatorOffset, 0, self.xIndicatorWidth, self.componentItemHeight,1, RT_HALIGN_CENTER | RT_VALIGN_CENTER, "X",self.usedTagColor))
 		if isUserTag:
-			res.append((eListboxPythonMultiContent.TYPE_TEXT,self.xIndicatorOffset+self.xIndicatorWidth,0,self.xIndicatorWidth,self.componentItemHeight,1, RT_HALIGN_CENTER|RT_VALIGN_CENTER, "X",self.userTagColor))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT,self.xIndicatorOffset + self.xIndicatorWidth,0,self.xIndicatorWidth,self.componentItemHeight,1, RT_HALIGN_CENTER | RT_VALIGN_CENTER, "X",self.userTagColor))
 		if isPreTag:
-			res.append((eListboxPythonMultiContent.TYPE_TEXT,self.xIndicatorOffset+(2*self.xIndicatorWidth),0,self.xIndicatorWidth,self.componentItemHeight,1,RT_HALIGN_CENTER|RT_VALIGN_CENTER, "X",self.preTagColor))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT,self.xIndicatorOffset + (2 * self.xIndicatorWidth),0,self.xIndicatorWidth,self.componentItemHeight,1,RT_HALIGN_CENTER | RT_VALIGN_CENTER, "X",self.preTagColor))
 		
 		return res
 

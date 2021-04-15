@@ -120,7 +120,7 @@ class CecRemote(object):
 			return
 		keyid = self.KEY_MAP_SEND[keyid]
 		if keyid == self._lastKey and not self._isRepeatAllowed():
-			Log.d("skipping keypress for %s to honor minimum delay" %keyid)
+			Log.d("skipping keypress for %s to honor minimum delay" % keyid)
 			return
 		self._keyPressed(keyid)
 		self._cec.sendSystemAudioKey(keyid)
@@ -131,7 +131,7 @@ class CecRemote(object):
 				return
 			keyid = self.KEY_MAP_SEND[keyid]
 		if keyid == self._lastKey and not self._isRepeatAllowed():
-			Log.d("skipping keypress for %s to honor minimum delay" %keyid)
+			Log.d("skipping keypress for %s to honor minimum delay" % keyid)
 			return
 		self._keyPressed(keyid)
 		self._cec.sendKey(dest, keyid)

@@ -198,10 +198,10 @@ def showFinishPopup(ret):
 			searchlog_txt = searchlog_txt[:maxlistcount]
 			for i, entry in enumerate(searchlog_txt):
 				if len(entry) > maxtextlength:
-					searchlog_txt[i] = entry[:maxtextlength-3] + "..."
+					searchlog_txt[i] = entry[:maxtextlength - 3] + "..."
 			searchlog_txt = "\n".join(searchlog_txt)
-			if listcount > maxlistcount+1:
-				searchlog_txt += "\n" + "and %d searchlog-entries more ..." % (listcount-maxlistcount)
+			if listcount > maxlistcount + 1:
+				searchlog_txt += "\n" + "and %d searchlog-entries more ..." % (listcount - maxlistcount)
 
 	AddPopup(_("Found a total of %(matches)d matching Events.\n%(timer)d Timer were added and\n%(modified)d modified,\n%(conflicts)d conflicts encountered,\n%(similars)d similars added.") %
 		{"matches":ret[0], "timer":ret[1], "modified":ret[2], "conflicts":len(ret[4]), "similars":len(ret[5])} + "\n\n" + str(searchlog_txt),

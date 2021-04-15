@@ -231,7 +231,7 @@ class AutoRes(Screen):
 				else:
 					setDeinterlacer(config.plugins.autoresolution.deinterlacer.value)
 
-				print "[AutoRes] new content is %sx%s%s%s" %(width, height, prog, frate)
+				print "[AutoRes] new content is %sx%s%s%s" % (width, height, prog, frate)
 
 				if videoresolution_dictionary.has_key(new_mode):
 					new_mode = videoresolution_dictionary[new_mode].value
@@ -358,13 +358,13 @@ class AutoResSetupMenu(Screen, ConfigListScreen):
 					if (not mode.startswith("2160p") or have_2160p) and (mode != 'fhd_p' or have_1080p):
 						self.list.append(getConfigListEntry(label, videoresolution_dictionary[mode]))
 				self.list.extend((
-					getConfigListEntry(_("Refresh Rate")+" 720p", config.av.videorate["720p"]),
-					getConfigListEntry(_("Refresh Rate")+" 1080i", config.av.videorate["1080i"])
+					getConfigListEntry(_("Refresh Rate") + " 720p", config.av.videorate["720p"]),
+					getConfigListEntry(_("Refresh Rate") + " 1080i", config.av.videorate["1080i"])
 				))
 				if have_1080p:
-					self.list.append(getConfigListEntry(_("Refresh Rate")+" 1080p", config.av.videorate["1080p"]))
+					self.list.append(getConfigListEntry(_("Refresh Rate") + " 1080p", config.av.videorate["1080p"]))
 				if have_2160p:
-					self.list.append(getConfigListEntry(_("Refresh Rate")+" 2160p", config.av.videorate["2160p"]))
+					self.list.append(getConfigListEntry(_("Refresh Rate") + " 2160p", config.av.videorate["2160p"]))
 				self.list.extend((
 					getConfigListEntry(_("Show info screen"), config.plugins.autoresolution.showinfo),
 					getConfigListEntry(_("Delay x seconds after service started"), config.plugins.autoresolution.delay_switch_mode),

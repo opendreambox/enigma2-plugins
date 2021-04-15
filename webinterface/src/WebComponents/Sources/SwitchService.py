@@ -26,7 +26,7 @@ class SwitchService(Source):
 				try:
 					from types import MethodType
 					def zap(self, nref=None, root=None):
-						self.revertMode=None
+						self.revertMode = None
 						ref = self.session.nav.getCurrentlyPlayingServiceReference()
 						if not nref:
 							nref = self.getCurrentSelection()
@@ -50,7 +50,7 @@ class SwitchService(Source):
 		self.session.nav.playService(ref)
 
 	def switchService(self, cmd):
-		print "[SwitchService] ref=%s, root=%s" %(cmd["sRef"], cmd["root"])
+		print "[SwitchService] ref=%s, root=%s" % (cmd["sRef"], cmd["root"])
 		root = cmd["root"]
 		if config.plugins.Webinterface.allowzapping.value:
 			from Screens.Standby import inStandby
@@ -99,7 +99,7 @@ class SwitchService(Source):
 					elif eref.getName() != "":
 						name = eref.getName()
 
-					return (True, _("Active service is now '%s'") %name)
+					return (True, _("Active service is now '%s'") % name)
 				else:
 					return (False, _("Obligatory parameter 'sRef' is missing"))
 			else:

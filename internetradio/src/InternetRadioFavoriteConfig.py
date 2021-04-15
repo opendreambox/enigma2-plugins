@@ -28,7 +28,7 @@ class Favorite:
 		self.configItem = configItem
 
 class InternetRadioFavoriteConfig(object):
-	FAVORITE_FILE_DEFAULT =  eEnv.resolve('${libdir}/enigma2/python/Plugins/Extensions/InternetRadio/internetradio_favorites') #'/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/internetradio_favorites'
+	FAVORITE_FILE_DEFAULT = eEnv.resolve('${libdir}/enigma2/python/Plugins/Extensions/InternetRadio/internetradio_favorites') #'/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/internetradio_favorites'
 	FAVORITE_FILE = eEnv.resolve("${sysconfdir}/enigma2/internetradio_favorites.user") #'/etc/enigma2/internetradio_favorites.user'
 	def __init__(self):
 		self.loadFavoriteConfig()
@@ -39,13 +39,13 @@ class InternetRadioFavoriteConfig(object):
 			self.favoriteConfig.loadFromFile(self.FAVORITE_FILE)
 		else:
 			self.favoriteConfig.loadFromFile(self.FAVORITE_FILE_DEFAULT)
-		self.favoriteConfig.entriescount =  ConfigInteger(0)
+		self.favoriteConfig.entriescount = ConfigInteger(0)
 		self.favoriteConfig.Entries = ConfigSubList()
 		self.initFavouriteConfig()
 
 	def initFavouriteEntryConfig(self):
 		self.favoriteConfig.Entries.append(ConfigSubsection())
-		i = len(self.favoriteConfig.Entries) -1
+		i = len(self.favoriteConfig.Entries) - 1
 		self.favoriteConfig.Entries[i].name = ConfigText(default="")
 		self.favoriteConfig.Entries[i].text = ConfigText(default="")
 		self.favoriteConfig.Entries[i].type = ConfigInteger(0)

@@ -22,7 +22,7 @@ from twisted.internet import reactor, ssl
 from twisted.internet._sslverify import ClientTLSOptions
 
 PLUGIN_PATH = resolveFilename(SCOPE_PLUGINS, "Extensions/TwitchTV")
-loadSkin("%s/skin.xml" %(PLUGIN_PATH))
+loadSkin("%s/skin.xml" % (PLUGIN_PATH))
 
 config.plugins.twitchtv = ConfigSubsection()
 config.plugins.twitchtv.user = ConfigText(default="", fixed_size=False)
@@ -258,7 +258,7 @@ class TwitchLiveStreams(TwitchStreamGrid):
 			MultiContentEntryText(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._contentHeight), font=0, backcolor=0, text=""),
 			MultiContentEntryPixmapAlphaBlend(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._contentHeight), png=pixmap, backcolor=0x000000, backcolor_sel=0x000000, scale_flags=SCALE_ASPECT),
 			MultiContentEntryTextAlphaBlend(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._bannerHeight), font=1, backcolor=0x50000000, backcolor_sel=0x50000000, flags=RT_HALIGN_CENTER | RT_VALIGN_CENTER, text=stream.channel.display_name),
-			MultiContentEntryTextAlphaBlend(pos=(self._itemPadding, self._footerOffset), size=(self._contentWidth, self._footerHeight), font=1, backcolor=0x50000000, backcolor_sel=0x50000000, flags=RT_HALIGN_CENTER | RT_VALIGN_CENTER | RT_WRAP, text="plays %s" %(stream.channel.game,)),
+			MultiContentEntryTextAlphaBlend(pos=(self._itemPadding, self._footerOffset), size=(self._contentWidth, self._footerHeight), font=1, backcolor=0x50000000, backcolor_sel=0x50000000, flags=RT_HALIGN_CENTER | RT_VALIGN_CENTER | RT_WRAP, text="plays %s" % (stream.channel.game,)),
 		]
 		if not selected:
 			content.append(MultiContentEntryTextAlphaBlend(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._contentHeight), font=0, backcolor=0x80000000, text=""))
@@ -287,7 +287,7 @@ class TwitchChannelVideos(TwitchStreamGrid):
 			vodType = _("Highlights")
 		elif self._vodType == self.TYPE_UPLOAD:
 			vodType = _("Uploads")
-		self.setTitle("%s - %s" %(self._channel.display_name, vodType))
+		self.setTitle("%s - %s" % (self._channel.display_name, vodType))
 
 	def _setupButtons(self):
 		self["key_red"].text = _("Archive")
@@ -353,7 +353,7 @@ class TwitchChannelDetails(Screen):
 		self.twitchMiddleware = TwitchMiddleware.instance
 		self.stream = stream
 		self.channel = channel or stream.channel
-		self.setTitle(_("TwitchTV - %s") %(self.channel.name,))
+		self.setTitle(_("TwitchTV - %s") % (self.channel.name,))
 		self.is_online = False
 		self.is_live = self.stream and self.stream.type == TwitchStream.TYPE_LIVE
 
@@ -418,7 +418,7 @@ class TwitchChannelDetails(Screen):
 		self["channel_status"].setText(self.channel.status)
 		self["channel_game"].setText(self.channel.game)
 		if self.stream:
-			self["channel_viewers"].setText(_("Viewers: %s") %(self.stream.viewers,))
+			self["channel_viewers"].setText(_("Viewers: %s") % (self.stream.viewers,))
 		else:
 			self["channel_viewers"].setText("")
 
@@ -508,7 +508,7 @@ class TwitchChannelList(Screen):
 		if not channels:
 			channels = self.twitchMiddleware.favorites
 			self["key_green"].text = _("Add")
-			self["key_yellow"].text =_("Remove")
+			self["key_yellow"].text = _("Remove")
 
 		for channel in channels:
 			l.append((channel.display_name, channel))
@@ -610,7 +610,7 @@ class TwitchGamesGrid(TwitchStreamGrid):
 		content = [game,
 			MultiContentEntryText(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._contentHeight), font=0, backcolor=0, text=""),
 			MultiContentEntryPixmapAlphaBlend(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._contentHeight), png=pixmap, backcolor=0x000000, backcolor_sel=0x000000, scale_flags=SCALE_ASPECT),
-			MultiContentEntryTextAlphaBlend(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._bannerHeight), font=1, backcolor=0x50000000, backcolor_sel=0x50000000, flags=RT_HALIGN_CENTER | RT_VALIGN_CENTER, text="%s" %(game.viewers,)),
+			MultiContentEntryTextAlphaBlend(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._bannerHeight), font=1, backcolor=0x50000000, backcolor_sel=0x50000000, flags=RT_HALIGN_CENTER | RT_VALIGN_CENTER, text="%s" % (game.viewers,)),
 			MultiContentEntryTextAlphaBlend(pos=(self._itemPadding, self._footerOffset), size=(self._contentWidth, self._footerHeight), font=1, backcolor=0x50000000, backcolor_sel=0x50000000, flags=RT_HALIGN_CENTER | RT_VALIGN_CENTER | RT_WRAP, text=game.name),
 		]
 		if not selected:
@@ -621,7 +621,7 @@ class TwitchGamesGrid(TwitchStreamGrid):
 		game = self.current
 		if not game:
 			return
-		self.session.open(TwitchLiveStreams, game=game, windowTitle=_("%s - Livestreams") %(game.name,))
+		self.session.open(TwitchLiveStreams, game=game, windowTitle=_("%s - Livestreams") % (game.name,))
 
 
 class TwitchMain(Screen):
@@ -682,7 +682,7 @@ class TwitchMain(Screen):
 		elif selection == self.ITEM_SEARCH_CHANNEL:
 			self.session.openWithCallback(self.callbackSearchChannel, TwitchInputBox, title=_("Enter the name of the channel you're searching for"), text="")
 		elif selection == self.ITEM_FOLLOWED_CHANNELS:
-			self.session.toastManager.showToast(_("Loading followed channels for %s") %(config.plugins.twitchtv.user.value,), duration=3)
+			self.session.toastManager.showToast(_("Loading followed channels for %s") % (config.plugins.twitchtv.user.value,), duration=3)
 			self.twitch.followedChannels(config.plugins.twitchtv.user.value, self._onFollowedChannelsResult)
 		elif selection == self.ITEM_SETUP:
 			self.session.openWithCallback(self.callbackSetupUser, TwitchInputBox, title=_("Enter your twitch user"), text=config.plugins.twitchtv.user.value)
@@ -698,20 +698,20 @@ class TwitchMain(Screen):
 		if not needle:
 			return
 		boundCallback = boundFunction(self._onSearchChannelResult, needle)
-		self.session.toastManager.showToast(_("Searching for channels containing '%s'") %(needle,))
+		self.session.toastManager.showToast(_("Searching for channels containing '%s'") % (needle,))
 		self.twitch.searchChannel(needle, boundCallback)
 
 	def _onSearchChannelResult(self, needle, channels):
 		if channels:
-			self.session.open(TwitchChannelList, channels=channels, windowTitle=_("%s results for '%s'") %(len(channels), needle))
+			self.session.open(TwitchChannelList, channels=channels, windowTitle=_("%s results for '%s'") % (len(channels), needle))
 		else:
-			self.session.toastManager.showToast(_("Nothing found for '%s'...") %(needle,))
+			self.session.toastManager.showToast(_("Nothing found for '%s'...") % (needle,))
 
 	def _onFollowedChannelsResult(self, channels):
 		if channels:
-			self.session.open(TwitchChannelList, channels=channels, windowTitle=_("%s folllows %s channels") %(config.plugins.twitchtv.user.value, len(channels)))
+			self.session.open(TwitchChannelList, channels=channels, windowTitle=_("%s folllows %s channels") % (config.plugins.twitchtv.user.value, len(channels)))
 		else:
-			self.session.toastManager.showToast(_("%s does not follow any channel") %(config.plugins.twitchtv.user.value,))
+			self.session.toastManager.showToast(_("%s does not follow any channel") % (config.plugins.twitchtv.user.value,))
 
 def main(session, **kwargs):
 	session.open(TwitchMain)

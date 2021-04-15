@@ -59,7 +59,7 @@ class FilebrowserConfigScreen(ConfigListScreen,Screen):
         self.onLayoutFinish.append(self.onLayout)
 
     def onLayout(self):
-        self.setTitle(pname+" "+_("Settings"))
+        self.setTitle(pname + " " + _("Settings"))
 
     def save(self):
         print "saving"
@@ -117,9 +117,9 @@ class FilebrowserScreen(Screen):
 
         self["actions"] = ActionMap(["ChannelSelectBaseActions","WizardActions", "DirectionActions","MenuActions","NumberActions","ColorActions"],
             {
-             "ok":      self.ok,
-             "back":    self.exit,
-             "menu":    self.goMenu,
+             "ok": self.ok,
+             "back": self.exit,
+             "menu": self.goMenu,
              "nextMarker": self.listRight,
              "prevMarker": self.listLeft,
              "up": self.goUp,
@@ -170,7 +170,7 @@ class FilebrowserScreen(Screen):
 
     # copy ###################
     def goYellow(self):
-        if not(self.SOURCELIST.canDescent()) or (self.SOURCELIST.canDescent() and self.SOURCELIST.getSelectionIndex()!=0):
+        if not(self.SOURCELIST.canDescent()) or (self.SOURCELIST.canDescent() and self.SOURCELIST.getSelectionIndex() != 0):
             filename = self.SOURCELIST.getFilename()
             sourceDir = self.SOURCELIST.getCurrentDirectory()
             targetDir = self.TARGETLIST.getCurrentDirectory()
@@ -178,7 +178,7 @@ class FilebrowserScreen(Screen):
                 titletxt = _("copy directory")
             else:
                 titletxt = _("copy file")
-            self.session.openWithCallback(self.doCopy,ChoiceBox, title=titletxt + "?\n%s\nfrom %s to %s" %(filename,sourceDir,targetDir),list=[(_("yes"), True),(_("no"), False)])
+            self.session.openWithCallback(self.doCopy,ChoiceBox, title=titletxt + "?\n%s\nfrom %s to %s" % (filename,sourceDir,targetDir),list=[(_("yes"), True),(_("no"), False)])
         else:
             return
 
@@ -189,10 +189,10 @@ class FilebrowserScreen(Screen):
                 sourceDir = self.SOURCELIST.getCurrentDirectory()
                 targetDir = self.TARGETLIST.getCurrentDirectory()
                 if self.SOURCELIST.canDescent():
-                    cmd = ["cp -R \""+filename+"\" \""+targetDir+"\""]
+                    cmd = ["cp -R \"" + filename + "\" \"" + targetDir + "\""]
                     titletxt = _("copying directory ...")
                 else:
-	                cmd = ["cp \""+sourceDir+filename+"\" \""+targetDir+"\""]
+	                cmd = ["cp \"" + sourceDir + filename + "\" \"" + targetDir + "\""]
 	                titletxt = _("copying file ...")                
                 self.session.openWithCallback(self.doCopyCB,Console, title=titletxt, cmdlist=cmd)
 
@@ -201,14 +201,14 @@ class FilebrowserScreen(Screen):
 
     # delete ###################
     def goRed(self):
-        if not(self.SOURCELIST.canDescent()) or (self.SOURCELIST.canDescent() and self.SOURCELIST.getSelectionIndex()!=0):
+        if not(self.SOURCELIST.canDescent()) or (self.SOURCELIST.canDescent() and self.SOURCELIST.getSelectionIndex() != 0):
             filename = self.SOURCELIST.getFilename()
             sourceDir = self.SOURCELIST.getCurrentDirectory()
             if self.SOURCELIST.canDescent():
                 titletxt = _("delete directory")
             else:
                 titletxt = _("delete file")            
-            self.session.openWithCallback(self.doDelete,ChoiceBox, title=titletxt +"?\n%s\nfrom dir\n%s"%(filename,sourceDir),list=[(_("yes"), True),(_("no"), False)])
+            self.session.openWithCallback(self.doDelete,ChoiceBox, title=titletxt + "?\n%s\nfrom dir\n%s" % (filename,sourceDir),list=[(_("yes"), True),(_("no"), False)])
         else:
             return
 
@@ -218,10 +218,10 @@ class FilebrowserScreen(Screen):
                 filename = self.SOURCELIST.getFilename()
                 sourceDir = self.SOURCELIST.getCurrentDirectory()
                 if self.SOURCELIST.canDescent():
-                    cmd = ["rm -rf \""+filename+"\""]
+                    cmd = ["rm -rf \"" + filename + "\""]
                     titletxt = _("deleting directory ...")
                 else:
-	                cmd = ["rm \""+sourceDir+filename+"\""]
+	                cmd = ["rm \"" + sourceDir + filename + "\""]
 	                titletxt = _("deleting file ...")
                 self.session.openWithCallback(self.doDeleteCB,Console, title=titletxt, cmdlist=cmd)
 
@@ -230,7 +230,7 @@ class FilebrowserScreen(Screen):
 
     # move ###################
     def goGreen(self):
-        if not(self.SOURCELIST.canDescent()) or (self.SOURCELIST.canDescent() and self.SOURCELIST.getSelectionIndex()!=0):    
+        if not(self.SOURCELIST.canDescent()) or (self.SOURCELIST.canDescent() and self.SOURCELIST.getSelectionIndex() != 0):    
             filename = self.SOURCELIST.getFilename()
             sourceDir = self.SOURCELIST.getCurrentDirectory()
             targetDir = self.TARGETLIST.getCurrentDirectory()
@@ -238,7 +238,7 @@ class FilebrowserScreen(Screen):
                 titletxt = _("move directory")
             else:
                 titletxt = _("move file")
-            self.session.openWithCallback(self.doMove,ChoiceBox, title=titletxt+"?\n%s\nfrom %s to %s"%(filename,sourceDir,targetDir),list=[(_("yes"), True),(_("no"), False)])
+            self.session.openWithCallback(self.doMove,ChoiceBox, title=titletxt + "?\n%s\nfrom %s to %s" % (filename,sourceDir,targetDir),list=[(_("yes"), True),(_("no"), False)])
         else:
             return
 
@@ -249,10 +249,10 @@ class FilebrowserScreen(Screen):
                 sourceDir = self.SOURCELIST.getCurrentDirectory()
                 targetDir = self.TARGETLIST.getCurrentDirectory()  
                 if self.SOURCELIST.canDescent():
-                	cmd = ["mv \""+filename+"\" \""+targetDir+"\""]
+                	cmd = ["mv \"" + filename + "\" \"" + targetDir + "\""]
                 	titletxt = _("moving directory ...")
                 else:
-                	cmd = ["mv \""+sourceDir+filename+"\" \""+targetDir+"\""]
+                	cmd = ["mv \"" + sourceDir + filename + "\" \"" + targetDir + "\""]
                 	titletxt = _("moving file ...")
                 self.session.openWithCallback(self.doMoveCB,Console, title=titletxt, cmdlist=cmd)
 
@@ -261,7 +261,7 @@ class FilebrowserScreen(Screen):
 
     # move ###################
     def goBlue(self):
-        if not(self.SOURCELIST.canDescent()) or (self.SOURCELIST.canDescent() and self.SOURCELIST.getSelectionIndex()!=0):
+        if not(self.SOURCELIST.canDescent()) or (self.SOURCELIST.canDescent() and self.SOURCELIST.getSelectionIndex() != 0):
             filename = self.SOURCELIST.getFilename()
             sourceDir = self.SOURCELIST.getCurrentDirectory()
             if self.SOURCELIST.canDescent():
@@ -277,10 +277,10 @@ class FilebrowserScreen(Screen):
             filename = self.SOURCELIST.getFilename()
             sourceDir = self.SOURCELIST.getCurrentDirectory()
             if self.SOURCELIST.canDescent():
-            	cmd = ["mv \""+filename+"\" \""+newname+"\""]
+            	cmd = ["mv \"" + filename + "\" \"" + newname + "\""]
             	titletxt = _("renaming directory ...")
             else:
-            	cmd = ["mv \""+sourceDir+filename+"\" \""+sourceDir+newname+"\""]
+            	cmd = ["mv \"" + sourceDir + filename + "\" \"" + sourceDir + newname + "\""]
             	titletxt = _("renaming file ...")
             self.session.openWithCallback(self.doRenameCB,Console, title=titletxt, cmdlist=cmd)
 
@@ -308,7 +308,7 @@ class FilebrowserScreen(Screen):
 
     def onFileAction(self):
         try:
-            x = openFile(self.session,guess_type(self.SOURCELIST.getFilename())[0],self.SOURCELIST.getCurrentDirectory()+self.SOURCELIST.getFilename())
+            x = openFile(self.session,guess_type(self.SOURCELIST.getFilename())[0],self.SOURCELIST.getCurrentDirectory() + self.SOURCELIST.getFilename())
             print "RESULT OPEN FILE",x
         except TypeError,e:
             # catching error
@@ -321,7 +321,7 @@ class FilebrowserScreen(Screen):
 ##################################
 
 def filescan_open(list, session, **kwargs):
-    path = "/".join(list[0].path.split("/")[:-1])+"/"
+    path = "/".join(list[0].path.split("/")[:-1]) + "/"
     session.open(FilebrowserScreen,path_left=path)
 
 def start_from_filescan(**kwargs):
@@ -346,8 +346,8 @@ def start_from_pluginmenu(session,**kwargs):
     session.open(FilebrowserScreen)
 
 def Plugins(path,**kwargs):
-    desc_mainmenu  = PluginDescriptor(name=pname, description=pdesc,  where=PluginDescriptor.WHERE_MENU, fnc=start_from_mainmenu)
-    desc_pluginmenu = PluginDescriptor(name=pname, description=pdesc,  where=PluginDescriptor.WHERE_PLUGINMENU,icon="filebrowser.svg", fnc=start_from_pluginmenu)
+    desc_mainmenu = PluginDescriptor(name=pname, description=pdesc, where=PluginDescriptor.WHERE_MENU, fnc=start_from_mainmenu)
+    desc_pluginmenu = PluginDescriptor(name=pname, description=pdesc, where=PluginDescriptor.WHERE_PLUGINMENU,icon="filebrowser.svg", fnc=start_from_pluginmenu)
     desc_extensionmenu = PluginDescriptor(name=pname, description=pdesc, where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=start_from_pluginmenu)
     desc_filescan = PluginDescriptor(name=pname, where=PluginDescriptor.WHERE_FILESCAN, fnc=start_from_filescan)
     list = []

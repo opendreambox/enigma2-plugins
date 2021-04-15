@@ -42,7 +42,7 @@ class TwitchVideoUrlResolver(object):
 		if not url:
 			url = str(twitchInfo[self.KEY_URL])
 			fmt = str(twitchInfo[self.KEY_FORMAT_ID])
-		Log.w("Selected resolution: %s" %(fmt,))
+		Log.w("Selected resolution: %s" % (fmt,))
 		return url, fmt
 
 	def _request(self):

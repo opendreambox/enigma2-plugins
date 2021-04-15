@@ -194,7 +194,7 @@ def startWebserver(session):
 		if config.plugins.Webinterface.http.enabled.value is True:
 			ret = startServerInstance(session, port, useauth=auth)
 			if not ret:
-				errors = "%s port %i\n" %(errors, port)
+				errors = "%s port %i\n" % (errors, port)
 			else:
 				registerBonjourService('http', port)
 
@@ -207,7 +207,7 @@ def startWebserver(session):
 
 			ret = startServerInstance(session, 80, useauth=auth, ipaddress=local4)
 			if not ret:
-				errors = "%s%s:%i\n" %(errors, local4, 80)
+				errors = "%s%s:%i\n" % (errors, local4, 80)
 			ret = startServerInstance(session, 80, useauth=auth, ipaddress=local4mapped, ipaddress2=local6)
 			#ip6 is optional
 #			if not ret:
@@ -220,7 +220,7 @@ def startWebserver(session):
 
 			ret = startServerInstance(session, sport, useauth=sauth, usessl=True)
 			if not ret:
-				errors = "%s%s:%i\n" %(errors, "0.0.0.0 / ::", sport)
+				errors = "%s%s:%i\n" % (errors, "0.0.0.0 / ::", sport)
 			else:
 				registerBonjourService('https', sport)
 
@@ -310,7 +310,7 @@ class ChainedOpenSSLContextFactory(ssl.DefaultOpenSSLContextFactory):
 
 	def cacheContext(self):
 		ctx = SSL.Context(self.sslmethod)
-		ctx.set_options(SSL.OP_NO_SSLv3|SSL.OP_NO_SSLv2)
+		ctx.set_options(SSL.OP_NO_SSLv3 | SSL.OP_NO_SSLv2)
 		ctx.use_certificate_chain_file(self.certificateChainFileName)
 		ctx.use_privatekey_file(self.privateKeyFileName)
 		self._context = ctx
@@ -360,14 +360,14 @@ class HTTPRootResource(resource.Resource):
 	def getClientToken(self, request):
 		ip = request.getClientIP()
 		ua = request.getHeader("User-Agent") or "Default UA"
-		return hashlib.sha1("%s/%s" %(ip, ua)).hexdigest()
+		return hashlib.sha1("%s/%s" % (ip, ua)).hexdigest()
 
 	def isSessionValid(self, request):
 		session = self._sessions.get(self.getClientToken(request), None)
 		if session is None or session.expired():
 			session = SimpleSession()
 			key = self.getClientToken(request)
-			print "[HTTPRootResource].isSessionValid :: created session with id '%s' for client with token '%s'" %(session.id, key)
+			print "[HTTPRootResource].isSessionValid :: created session with id '%s' for client with token '%s'" % (session.id, key)
 			self._sessions[key] = session
 
 		request.enigma2_session = session
@@ -428,10 +428,10 @@ class HTTPAuthResource(HTTPRootResource):
 			#LAN
 			for key, iface in ifaces.iteritems():
 				if iface.ipv4.address != "0.0.0.0":
-					v4net = IPNetwork("%s/%s" %(iface.ipv4.address, iface.ipv4.netmask))
+					v4net = IPNetwork("%s/%s" % (iface.ipv4.address, iface.ipv4.netmask))
 					self._localNetworks.append(v4net)
 				if iface.ipv6.address != "::":
-					v6net = IPNetwork("%s/%s" %(iface.ipv6.address, iface.ipv6.netmask))
+					v6net = IPNetwork("%s/%s" % (iface.ipv6.address, iface.ipv6.netmask))
 					self._localNetworks.append(v6net)
 			Log.w(self._localNetworks)
 
@@ -473,11 +473,11 @@ class HTTPAuthResource(HTTPRootResource):
 			#If streamauth is disabled allow all acces from localhost
 			if not config.plugins.Webinterface.streamauth.value:
 				if self._isLocalHost(host.ip):
-					Log.d("Streaming auth is disabled - Bypassing Authcheck because host '%s' is local!" %host)
+					Log.d("Streaming auth is disabled - Bypassing Authcheck because host '%s' is local!" % host)
 					return True
 			if not config.plugins.Webinterface.localauth.value:
 				if self._isLocalClient(host.ip):
-					Log.d("Local auth is disabled - Bypassing Authcheck because host '%s' is local!" %host)
+					Log.d("Local auth is disabled - Bypassing Authcheck because host '%s' is local!" % host)
 					return True
 
 		# get the Session from the Request
@@ -538,11 +538,11 @@ def registerBonjourService(protocol, port):
 
 		service = bonjour.buildService(protocol, port)
 		bonjour.registerService(service, True)
-		print "[WebInterface.registerBonjourService] Service for protocol '%s' with port '%i' registered!" %(protocol, port)
+		print "[WebInterface.registerBonjourService] Service for protocol '%s' with port '%i' registered!" % (protocol, port)
 		return True
 
 	except ImportError, e:
-		print "[WebInterface.registerBonjourService] %s" %e
+		print "[WebInterface.registerBonjourService] %s" % e
 		return False
 
 def unregisterBonjourService(protocol):
@@ -550,11 +550,11 @@ def unregisterBonjourService(protocol):
 		from Plugins.Extensions.Bonjour.Bonjour import bonjour
 
 		bonjour.unregisterService(protocol)
-		print "[WebInterface.unregisterBonjourService] Service for protocol '%s' unregistered!" %(protocol)
+		print "[WebInterface.unregisterBonjourService] Service for protocol '%s' unregistered!" % (protocol)
 		return True
 
 	except ImportError, e:
-		print "[WebInterface.unregisterBonjourService] %s" %e
+		print "[WebInterface.unregisterBonjourService] %s" % e
 		return False
 
 def checkBonjour():

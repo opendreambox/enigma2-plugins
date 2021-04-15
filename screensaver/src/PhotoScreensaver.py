@@ -90,7 +90,7 @@ class PhotoScreensaver(Screen):
 		return self._isEnabled
 
 	def setEnabled(self, enabled):
-		Log.i("%s" %(enabled,))
+		Log.i("%s" % (enabled,))
 		if enabled == self._isEnabled:
 			return
 		self._isEnabled = enabled

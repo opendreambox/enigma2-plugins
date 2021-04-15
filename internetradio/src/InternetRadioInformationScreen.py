@@ -68,7 +68,7 @@ class InternetRadioInformationScreen(Screen):
 		Screen.__init__(self, session)
 		self["key_red"] = StaticText(_("Close"))
 		self["headertext"] = StaticText(_("Streaming Information"))
-		self["text"] =  ScrollLabel(meta)
+		self["text"] = ScrollLabel(meta)
 		self["actions"] = ActionMap(["WizardActions", "DirectionActions", "ColorActions", "EPGSelectActions", "InfobarActions"],
 		{
 			"ok": self.close,

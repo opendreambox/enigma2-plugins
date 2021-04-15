@@ -69,14 +69,14 @@ class BonjourScreen(Screen):
 		self["menuList"].setList(list)
 		
 	def __buildMenuEntry(self, service):
-		print "[Bonjour.__buildMenuEntry] service=%s" %service
+		print "[Bonjour.__buildMenuEntry] service=%s" % service
 		
-		file = "%s" %(service['file'])
-		name = "Name: %s" %(service['name'])
-		type = "Type: %s" %(service['type'].split('.')[0].replace('_',''))
-		prot = "Protocol: %s" %(service['type'].split('.')[1].replace('_',''))
-		port = "Port: %s" %(service['port'])
-		text = "Text: %s" %(service['text'])
+		file = "%s" % (service['file'])
+		name = "Name: %s" % (service['name'])
+		type = "Type: %s" % (service['type'].split('.')[0].replace('_',''))
+		prot = "Protocol: %s" % (service['type'].split('.')[1].replace('_',''))
+		port = "Port: %s" % (service['port'])
+		text = "Text: %s" % (service['text'])
 		
 		sizes = componentSizes[BonjourScreen.SKIN_COMPONENT_KEY]
 		fileWidth = sizes.get(BonjourScreen.SKIN_COMPONENT_FILE_WIDTH, 235)
@@ -91,17 +91,17 @@ class BonjourScreen(Screen):
 		return [
 			service,
 			MultiContentEntryText(pos=(itemMargin, 2), size=(fileWidth, textHeight), font=0, text=file),
-			MultiContentEntryText(pos=(itemMargin+fileWidth, 2), size=(nameWidth, textHeight), font=0, text=name),
-			MultiContentEntryText(pos=(itemMargin, textHeight+itemMargin), size=(typeWidth, textHeight), font=1, text=type),
-			MultiContentEntryText(pos=(itemMargin+typeWidth, textHeight), size=(protWidth, textHeight), font=1, text=prot),
-			MultiContentEntryText(pos=(itemMargin+typeWidth+protWidth, textHeight), size=(portWidth, textHeight), font=1, text=port),
-			MultiContentEntryText(pos=(itemMargin, textHeight*2), size=(textWidth, textHeight), font=1, text=text)
+			MultiContentEntryText(pos=(itemMargin + fileWidth, 2), size=(nameWidth, textHeight), font=0, text=name),
+			MultiContentEntryText(pos=(itemMargin, textHeight + itemMargin), size=(typeWidth, textHeight), font=1, text=type),
+			MultiContentEntryText(pos=(itemMargin + typeWidth, textHeight), size=(protWidth, textHeight), font=1, text=prot),
+			MultiContentEntryText(pos=(itemMargin + typeWidth + protWidth, textHeight), size=(portWidth, textHeight), font=1, text=port),
+			MultiContentEntryText(pos=(itemMargin, textHeight * 2), size=(textWidth, textHeight), font=1, text=text)
 		]
 		
 def opencontrol(session):
 	bonjour.reloadConfig()
 	session.open(BonjourScreen, bonjour.services, bonjour.files)
-	print "[Bonjour.opencontrol] %s" %(bonjour.files)
+	print "[Bonjour.opencontrol] %s" % (bonjour.files)
 	#TODO GUI-Stuff
 
 	

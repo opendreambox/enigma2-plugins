@@ -26,7 +26,7 @@ from Components.PluginComponent import plugins
 from Plugins.Plugin import PluginDescriptor
 from Components.Sources.StaticText import StaticText
 from Components.GUIComponent import GUIComponent
-from enigma import eServiceReference,  RT_WRAP, RT_VALIGN_CENTER, RT_HALIGN_LEFT, gFont, eListbox, eListboxPythonMultiContent
+from enigma import eServiceReference, RT_WRAP, RT_VALIGN_CENTER, RT_HALIGN_LEFT, gFont, eListbox, eListboxPythonMultiContent
 
 from Components.config import config, ConfigSubsection, ConfigSelection, getConfigListEntry, configfile, ConfigText, ConfigInteger, ConfigYesNo
 from Components.ConfigList import ConfigListScreen
@@ -38,8 +38,8 @@ from skin import TemplatedListFonts, componentSizes
 config.plugins.yttrailer = ConfigSubsection()
 config.plugins.yttrailer.show_in_extensionsmenu = ConfigYesNo(default=False)
 config.plugins.yttrailer.ext_descr = ConfigText(default="german", fixed_size=False)
-config.plugins.yttrailer.max_results =  ConfigInteger(5,limits=(1, 10))
-config.plugins.yttrailer.close_player_with_exit =  ConfigYesNo(default=False)
+config.plugins.yttrailer.max_results = ConfigInteger(5,limits=(1, 10))
+config.plugins.yttrailer.close_player_with_exit = ConfigYesNo(default=False)
 
 from Plugins.SystemPlugins.TubeLib.youtube.Base import buildYoutube
 from Plugins.SystemPlugins.TubeLib.youtube.Search import Search
@@ -97,7 +97,7 @@ class YTTrailer:
 	def setServiceReference(self, entry):
 		if not entry.id:
 			return
-		url = "yt://%s" %(entry.id)
+		url = "yt://%s" % (entry.id)
 		if url:
 			ref = eServiceReference(eServiceReference.idURI, 0, url)
 			ref.setName(entry.title)
@@ -168,8 +168,8 @@ class TrailerList(GUIComponent, object):
 		descriptionHeight = sizes.get(TrailerList.SKIN_COMPONENT_DESCRIPTION_HEIGHT, 40)
 		lineSpacing = sizes.get(TrailerList.SKIN_COMPONENT_LINE_SPACING, 3)		
 		res = [entry]
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 2, configEntryWidth, titleHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, entry.title))
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, titleHeight+lineSpacing, configEntryWidth, descriptionHeight, 1, RT_WRAP, entry.description))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 2, configEntryWidth, titleHeight, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, entry.title))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, titleHeight + lineSpacing, configEntryWidth, descriptionHeight, 1, RT_WRAP, entry.description))
 		return res
 
 	def getCurrent(self):

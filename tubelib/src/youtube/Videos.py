@@ -210,7 +210,7 @@ class VideoUrlRequest(object):
 		'271+172', #DASH-webm 1440p
 		'271+171', #DASH-webm 1440p
 	]
-	VIDEO_FMT_PRIORITY_MAP_FHD_WEBM =  [
+	VIDEO_FMT_PRIORITY_MAP_FHD_WEBM = [
 		'170+172',#DASH-webm 1080p
 		'170+171', #DASH-webm 1080p
 		'248+172', #DASH-webm 1080p

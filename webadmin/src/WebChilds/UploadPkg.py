@@ -7,7 +7,7 @@ from twisted.web import http, resource, server
 from PKG import PKGConsoleStream
 
 class UploadPkgResource(resource.Resource):
-	res="""
+	res = """
 	<?xml version="1.0" encoding="UTF-8"?>
 	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 			"http://www.w3.org/TR/html4/loose.dtd">

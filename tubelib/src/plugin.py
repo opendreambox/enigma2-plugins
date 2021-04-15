@@ -24,7 +24,7 @@ def isBouquetAndOrRoot(csel):
 	current_root = csel.getRoot()
 	current_root_path = current_root and current_root.getPath()
 	inBouquetRootList = current_root_path and current_root_path.find('FROM BOUQUET "bouquets.') != -1 #FIXME HACK
-	Log.w("inBouquet: %s, current_root_path %s, inBouquetRootList %s" %(inBouquet, current_root_path, inBouquetRootList))
+	Log.w("inBouquet: %s, current_root_path %s, inBouquetRootList %s" % (inBouquet, current_root_path, inBouquetRootList))
 	return (inBouquet, inBouquetRootList)
 
 def check_channel(csel):

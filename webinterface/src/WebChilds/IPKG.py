@@ -24,7 +24,7 @@ class IPKGResource(resource.Resource):
 			elif self.command in IPKGResource.PACKAGECMDS:
 				return self.execPackageCmd(request)
 			else:
-				return self.doErrorPage(request, "Unknown command: "+ self.command)
+				return self.doErrorPage(request, "Unknown command: " + self.command)
 		else:
 			return self.doIndexPage(request)
 
@@ -104,7 +104,7 @@ class IPKGConsoleStream:
 			self.request.finish()
 
 	def dataAvail(self, data):
-		print"[IPKGConsoleStream].dataAvail: '%s'" %data
+		print"[IPKGConsoleStream].dataAvail: '%s'" % data
 		#FIXME - filter strange reapeated outputs since we switched to opkg
 		if data != self.lastdata or self.lastdata is None and self.stillAlive:
 			self.lastdata = data

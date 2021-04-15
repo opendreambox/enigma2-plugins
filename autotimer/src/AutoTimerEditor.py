@@ -314,7 +314,7 @@ class AutoTimerEditorBase:
 			duration = timer.getDuration()
 		else:
 			default = False
-			duration =70
+			duration = 70
 		self.duration = NoSave(ConfigOnOff(default=default))
 		self.durationlength = NoSave(ConfigNumber(default=duration))
 
@@ -853,7 +853,7 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 
 		# Offset
 		if self.offset.value:
-			self.timer.offset = (self.offsetbegin.value*60, self.offsetend.value*60)
+			self.timer.offset = (self.offsetbegin.value * 60, self.offsetend.value * 60)
 		else:
 			self.timer.offset = None
 
@@ -877,7 +877,7 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 
 		# Maxduration
 		if self.duration.value:
-			self.timer.maxduration = self.durationlength.value*60
+			self.timer.maxduration = self.durationlength.value * 60
 		else:
 			self.timer.maxduration = None
 
@@ -1044,7 +1044,7 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 					if _(type[1]) == item[0]:
 						self.idx = idx_type
 						break
-					idx_type +=1
+					idx_type += 1
 				#print "=== self.idx: ", self.idx
 			elif idx > 1: # set include/exclude
 				#print "=== item: ", idx, item[0]
@@ -1136,7 +1136,7 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 
 			#self.refresh()
 			
-			if len(self["config"].getCurrent())<2:
+			if len(self["config"].getCurrent()) < 2:
 				self.remove()
 			#	list.remove(self["config"].getCurrent())
 			#	self["config"].setList(list)
@@ -1165,16 +1165,16 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 				entry = getConfigListEntry(ret[0], NoSave(ExtendedConfigText(fixed_size=False)))
 			
 			#get the position of the new filterentry
-			pos=0
+			pos = 0
 			filter_exist = False
 			for item in list:
-				pos +=1
+				pos += 1
 				if item[0] == _(type_text):
 					filter_exist = True
 					break
 			if filter_exist == False:
 				list.insert(pos, getConfigListEntry(_(type_text)))
-				pos +=1
+				pos += 1
 			list.insert(pos, entry)
 			self["config"].setList(list)
 			self["config"].setCurrentIndex(pos) #select the new entry in the list
@@ -1303,7 +1303,7 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 					if _(type[1]) == item[0]:
 						self.idx = idx_type
 						break
-					idx_type +=1
+					idx_type += 1
 			# Skip empty entries (and those which are no filters)
 			if idx < 2 or len(item) < 2 or item[1].value == "":
 				continue
@@ -1363,7 +1363,7 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 			list.remove(self["config"].getCurrent())
 			self["config"].setList(list)
 			#remove empty config-section
-			if len(self["config"].getCurrent())<2:
+			if len(self["config"].getCurrent()) < 2:
 				self.remove()
 
 	def new(self):
@@ -1389,9 +1389,9 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 				# strip all after last : when adding a (non alternative) channel
 				pos = sname.rfind(':')
 				if pos != -1:
-					if sname[pos-1] == ':':
+					if sname[pos - 1] == ':':
 						pos -= 1
-					sname = sname[:pos+1]
+					sname = sname[:pos + 1]
 			
 			# get the filtertype-text
 			type_text = list[1][1].getText()
@@ -1399,16 +1399,16 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 			entry = getConfigListEntry(_("Record on"), NoSave(ConfigSelection(choices=[(sname, ServiceReference(args[0]).getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', ''))])))
 			
 			#get the position of the new filterentry
-			pos=0
+			pos = 0
 			filter_exist = False
 			for item in list:
-				pos +=1
+				pos += 1
 				if item[0] == _(type_text):
 					filter_exist = True
 					break
 			if filter_exist == False:
 				list.insert(pos, getConfigListEntry(_(type_text)))
-				pos +=1
+				pos += 1
 			list.insert(pos, entry)
 			self["config"].setList(list)
 			self["config"].setCurrentIndex(pos) #select the new entry in the list
@@ -1480,15 +1480,15 @@ def addAutotimerFromEvent(session, evt=None, service=None, importer_Callback=imp
 			# strip all after last :
 			pos = service.rfind(':')
 			if pos != -1:
-				if service[pos-1] == ':':
+				if service[pos - 1] == ':':
 					pos -= 1
-				service = service[:pos+1]
+				service = service[:pos + 1]
 
 		sref = ServiceReference(myref)
 	if evt:
 		# timespan defaults to +- 1h
-		begin = evt.getBeginTime()-3600
-		end = begin + evt.getDuration()+7200
+		begin = evt.getBeginTime() - 3600
+		end = begin + evt.getDuration() + 7200
 	else:
 		begin = end = 0
 
@@ -1532,9 +1532,9 @@ def addAutotimerFromService(session, service=None, importer_Callback=importerCal
 		# strip all after last :
 		pos = sref.rfind(':')
 		if pos != -1:
-			if sref[pos-1] == ':':
+			if sref[pos - 1] == ':':
 				pos -= 1
-			sref = sref[:pos+1]
+			sref = sref[:pos + 1]
 
 		sref = ServiceReference(sref)
 	if info:

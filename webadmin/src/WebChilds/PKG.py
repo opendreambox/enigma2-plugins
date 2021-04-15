@@ -14,7 +14,7 @@ class PKGConsoleStream(IPKGConsoleStream):
 	def __init__(self, request, cmd):
 		self.cmd = cmd
 		self.request = request
-		html="""<?xml version="1.0" encoding="UTF-8"?>
+		html = """<?xml version="1.0" encoding="UTF-8"?>
 					<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 							"http://www.w3.org/TR/html4/loose.dtd">
 					<html>
@@ -41,7 +41,7 @@ class PKGConsoleStream(IPKGConsoleStream):
 		self.container.execute(*cmd)
 
 	def dataAvail(self, data):
-		print"[IPKGConsoleStream].dataAvail: '%s'" %data
+		print"[IPKGConsoleStream].dataAvail: '%s'" % data
 		if data != self.lastdata or self.lastdata is None and self.stillAlive:
 			self.lastdata = data
 			self.request.write(data)
@@ -50,7 +50,7 @@ class PKGConsoleStream(IPKGConsoleStream):
 		if self.stillAlive:
 			print "[PKGConsoleStream].self.cmd ",self.cmd
 			if "/usr/bin/opkg" in self.cmd and not "update" in self.cmd:
-				html="""</p>
+				html = """</p>
 						<hr>
 						<form>
 							<input type="button" value="%s" onClick="opener.core.power.set('gui');">
@@ -58,14 +58,14 @@ class PKGConsoleStream(IPKGConsoleStream):
 							<input type="button" value="%s" onClick="window.close();">
 						</form>
 					</body>
-					</html>""" %(_("Restart GUI"), _("Restart"), _("Close"))
+					</html>""" % (_("Restart GUI"), _("Restart"), _("Close"))
 			else:
-				html="""</pre>
+				html = """</pre>
 						<hr>
 						<form>
 							<input type="button" value="%s" onClick="window.close();">
 						</form>
 					</body>
-					</html>""" %_("Close")
+					</html>""" % _("Close")
 			self.request.write(html)
 			self.request.finish()

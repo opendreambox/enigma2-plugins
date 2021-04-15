@@ -186,7 +186,7 @@ class Movie(Source):
 			event = info.getEvent(serviceref)
 			ext = event and event.getExtendedDescription() or ""
 
-			filename = "/%s" %(serviceref.getPath(),)
+			filename = "/%s" % (serviceref.getPath(),)
 			servicename = ServiceReference(serviceref).getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
 
 			append((

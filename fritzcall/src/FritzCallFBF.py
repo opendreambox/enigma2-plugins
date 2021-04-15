@@ -3482,7 +3482,7 @@ class FritzCallFBF_06_35(object):
 		self._notify(text)
 		self._logout(md5Sid, "_errorBlacklist")
 
-TIMEOUT=20
+TIMEOUT = 20
 
 class FritzCallFBF_upnp():
 	logger = logging.getLogger("FritzCall.FBF_upnp")
@@ -3557,7 +3557,7 @@ class FritzCallFBF_upnp():
 	def _getInfo(self, result):
 		self.debug(repr(result))
 		if isinstance(result, Failure):
-			text = _("FRITZ!Box - Error getting status: ")  + _("wrong user or password?")
+			text = _("FRITZ!Box - Error getting status: ") + _("wrong user or password?")
 			self._loginFailure = True
 			self._notify(text)
 			return
@@ -3567,7 +3567,7 @@ class FritzCallFBF_upnp():
 			return
 
 		md5Sid = result["NewX_AVM-DE_UrlSID"]
-		md5Sid = md5Sid[md5Sid.find("sid=")+4:]
+		md5Sid = md5Sid[md5Sid.find("sid=") + 4:]
 		self.debug("md5sid: " + md5Sid)
 
 		self._readBlacklist()
@@ -3929,7 +3929,7 @@ class FritzCallFBF_upnp():
 		self.debug("")
 
 		if isinstance(result, Failure):
-			text = _("FRITZ!Box - Could not load calls: %s")  % _("wrong user or password?")
+			text = _("FRITZ!Box - Could not load calls: %s") % _("wrong user or password?")
 			self._loginFailure = True
 			self._notify(text)
 			return
@@ -4204,7 +4204,7 @@ class FritzCallFBF_upnp():
 	def _general_cb(self, result, callback):
 		self.debug("result: " + repr(result))
 		if isinstance(result, Failure):
-			text = _("FRITZ!Box - Error logging in: %s")  % _("wrong user or password?")
+			text = _("FRITZ!Box - Error logging in: %s") % _("wrong user or password?")
 			self._loginFailure = True
 			self._notify(text)
 			return
@@ -4213,7 +4213,7 @@ class FritzCallFBF_upnp():
 	def _general_cb1(self, result):
 		self.debug("result: " + repr(result))
 		if isinstance(result, Failure):
-			text = _("FRITZ!Box - Error logging in: %s")  % _("wrong user or password?")
+			text = _("FRITZ!Box - Error logging in: %s") % _("wrong user or password?")
 			self._loginFailure = True
 			self._notify(text)
 			return
@@ -4277,7 +4277,7 @@ class FritzCallFBF_upnp():
 
 		self.debug("")
 		if isinstance(result, Failure):
-			text = _("FRITZ!Box - Error getting blacklist: %s")  % _("wrong user or password?")
+			text = _("FRITZ!Box - Error getting blacklist: %s") % _("wrong user or password?")
 			self._loginFailure = True
 			self._notify(text)
 			return

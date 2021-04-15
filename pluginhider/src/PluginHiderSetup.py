@@ -71,7 +71,7 @@ class PluginHiderSetup(Screen, HelpableScreen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		HelpableScreen.__init__(self)
-		self.skinName="PluginHiderSetup_New"
+		self.skinName = "PluginHiderSetup_New"
 
 		# Initialize widgets
 		self["key_green"] = StaticText(_("OK"))
@@ -154,16 +154,16 @@ class PluginHiderSetup(Screen, HelpableScreen):
 	def updateSelectedColor(self):
 		
 		try:
-			pluginColor=extensionsColor=eventinfoColor=movielistColor=0
+			pluginColor = extensionsColor = eventinfoColor = movielistColor = 0
 			
 			if self.selectedList == 0: 
-				pluginColor=1
+				pluginColor = 1
 			elif self.selectedList == 1: 
-				extensionsColor=1
+				extensionsColor = 1
 			elif self.selectedList == 2: 
-				eventinfoColor=1
+				eventinfoColor = 1
 			else: 
-				movielistColor=1
+				movielistColor = 1
 			
 			self["plugins"].instance.setBackgroundColor(self["selectedlistColors"].backColors[pluginColor])
 			self["plugins"].instance.setForegroundColor(self["selectedlistColors"].foreColors[pluginColor])

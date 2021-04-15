@@ -52,7 +52,7 @@ class AC3LipSyncSetup(ConfigListScreen, Screen):
         self.skin_path = plugin_path
 
         # Plugin Information
-        self["PluginInfo"] = Label(_("Plugin: %(plugin)s , Version: %(version)s") %dict(plugin=PLUGIN_BASE,version=PLUGIN_VERSION))
+        self["PluginInfo"] = Label(_("Plugin: %(plugin)s , Version: %(version)s") % dict(plugin=PLUGIN_BASE,version=PLUGIN_VERSION))
 
         # BUTTONS
         self["key_red"] = Button(_("Cancel"))

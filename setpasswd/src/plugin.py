@@ -26,7 +26,7 @@ class ChangePasswordScreen(ChoiceBox):
 				(_("Disable password-based login"), self.KEY_LOCK),
 				(_("Remove password protection (DANGEROUS!)"), self.KEY_REMOVE),
 			]
-		ChoiceBox.__init__(self, session, title=_("If you want to login to your Dreambox using SSH, FTP or a remote web browser, you need to configure a password first.\nThe username will be '%s'.") %(user), list=options, windowTitle=ChangePasswordScreen.WINDOW_TITLE)
+		ChoiceBox.__init__(self, session, title=_("If you want to login to your Dreambox using SSH, FTP or a remote web browser, you need to configure a password first.\nThe username will be '%s'.") % (user), list=options, windowTitle=ChangePasswordScreen.WINDOW_TITLE)
 		self._user = user
 		self._password = ""
 		self._wasLocked = False
@@ -41,7 +41,7 @@ class ChangePasswordScreen(ChoiceBox):
 			return
 		selected = selected[1]
 		if selected == self.KEY_SET:
-			self.session.openWithCallback(self._onPasswordInputFinished, InputBox, title=_("Please enter a new password for %s") %(self._user), windowTitle=_("New Password"), text=self._getRandom())
+			self.session.openWithCallback(self._onPasswordInputFinished, InputBox, title=_("Please enter a new password for %s") % (self._user), windowTitle=_("New Password"), text=self._getRandom())
 			return
 		elif selected == self.KEY_RANDOM:
 			self._apply(self._getRandom())
@@ -70,23 +70,23 @@ class ChangePasswordScreen(ChoiceBox):
 		self._container.execute("passwd -l %s" % self._user)
 
 	def _commandFinished(self,retval):
-		if retval==0:
-			type=MessageBox.TYPE_INFO
-			windowTitle=_("Password changed")
+		if retval == 0:
+			type = MessageBox.TYPE_INFO
+			windowTitle = _("Password changed")
 			if self._password:
 				message = _("The password for '%s' was successfully changed to:\n\n%s") % (self._user, self._password)
 			else:
 				type = MessageBox.TYPE_WARNING
 				if self._wasLocked:
-					windowTitle=_("Password locked")
+					windowTitle = _("Password locked")
 					message = _("The password for '%s' is now disabled!") % (self._user,)
 				else:
-					windowTitle=_("Password removed")
-					message = _("The password protection for '%s' was removed!") %(self._user,)
+					windowTitle = _("Password removed")
+					message = _("The password protection for '%s' was removed!") % (self._user,)
 		else:
-			windowTitle=_("Password change failed!")
-			message=_("Unable to set new password for '%s'") % self._user
-			type=MessageBox.TYPE_ERROR
+			windowTitle = _("Password change failed!")
+			message = _("Unable to set new password for '%s'") % self._user
+			type = MessageBox.TYPE_ERROR
 		self.session.open(MessageBox, message, type, windowTitle=windowTitle)
 		self.close()
 

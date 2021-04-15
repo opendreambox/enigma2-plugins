@@ -137,8 +137,8 @@ class EPGSearchList(EPGList):
 
 		res = [
 			None, # no private data needed
-			(eListboxPythonMultiContent.TYPE_TEXT, r1.left(), r1.top(), r1.width(), r1.height(), 0, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, self.days[t[6]]),
-			(eListboxPythonMultiContent.TYPE_TEXT, r2.left(), r2.top(), r2.width(), r1.height(), 0, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, "%02d.%02d, %02d:%02d"%(t[2],t[1],t[3],t[4]))
+			(eListboxPythonMultiContent.TYPE_TEXT, r1.left(), r1.top(), r1.width(), r1.height(), 0, RT_HALIGN_RIGHT | RT_VALIGN_CENTER, self.days[t[6]]),
+			(eListboxPythonMultiContent.TYPE_TEXT, r2.left(), r2.top(), r2.width(), r1.height(), 0, RT_HALIGN_RIGHT | RT_VALIGN_CENTER, "%02d.%02d, %02d:%02d" % (t[2],t[1],t[3],t[4]))
 		]
 
 		#add picon if set this option in setup
@@ -147,7 +147,7 @@ class EPGSearchList(EPGList):
 			picon = self.piconLoader.getPicon(service)
 		left_pos = r3.left()
 		if picon is not None:
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, left_pos, 2, self._picon_width, r3.height()-3, picon))
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, left_pos, 2, self._picon_width, r3.height() - 3, picon))
 			left_pos = r3.left() + self._picon_width + self._itemMargin
 			serviceName = "" #if load picon delete servicename
 
@@ -164,13 +164,13 @@ class EPGSearchList(EPGList):
 				res.extend((
 					(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, left_pos, self._iconHPos, self._iconWidth, self._iconHeight, clock_pic),
 					(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, left_pos + self._iconWidth + self._itemMargin, self._iconHPos, self._iconWidth, self._iconHeight, clock_pic_partnerbox),
-					(eListboxPythonMultiContent.TYPE_TEXT, left_pos + self._iconWidth*2 + self._itemMargin*2, r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, serviceName + EventName)))
+					(eListboxPythonMultiContent.TYPE_TEXT, left_pos + self._iconWidth * 2 + self._itemMargin * 2, r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, serviceName + EventName)))
 			else:
 				res.extend((
 					(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, left_pos, self._iconHPos, self._iconWidth, self._iconHeight, clock_pic),
-					(eListboxPythonMultiContent.TYPE_TEXT, left_pos + self._iconWidth + self._itemMargin, r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, serviceName + EventName)))
+					(eListboxPythonMultiContent.TYPE_TEXT, left_pos + self._iconWidth + self._itemMargin, r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, serviceName + EventName)))
 		else:
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, left_pos, r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, serviceName + EventName))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, left_pos, r3.top(), r3.width(), r3.height(), 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, serviceName + EventName))
 		return res
 
 # main class of plugin
@@ -200,7 +200,7 @@ class EPGSearch(EPGSelection):
 		self["Service"] = ServiceEvent()
 		self["Event"] = Event()
 		self.type = EPG_TYPE_SINGLE
-		self.currentService=None
+		self.currentService = None
 		self.zapFunc = None
 		self.sort_type = 0
 		self["key_green"] = Button(_("Add timer"))
@@ -484,7 +484,7 @@ class EPGSearch(EPGSelection):
 			return
 		try:
 			from Plugins.Extensions.SeriesPlugin.SeriesPluginInfoScreen import SeriesPluginInfoScreen
-			service=cur[1]
+			service = cur[1]
 			event = cur[0]
 			self.session.open(SeriesPluginInfoScreen, service, event)
 		except ImportError as ie:
@@ -634,11 +634,11 @@ class EPGSearch(EPGSelection):
 		if not searchString:
 			return
 		searchType = config.plugins.epgsearch.search_type.value
-		if  searchType == SearchType.ASK:
+		if searchType == SearchType.ASK:
 			boundCallback = boundFunction(self.onSearchEPGCallback, searchString=searchString, searchSave=searchSave)
 			choices = [(_("Title only"), False),
 						(_("Title and Description"), True)]
-			self.session.openWithCallback(boundCallback, ChoiceBox, list=choices, title=_("Where to search for '%s'?") %(searchString), windowTitle=_("EPG Search"))
+			self.session.openWithCallback(boundCallback, ChoiceBox, list=choices, title=_("Where to search for '%s'?") % (searchString), windowTitle=_("EPG Search"))
 		else:
 			searchDescription = searchType == SearchType.TITLE_DESCRIPTION
 			self.doSearchEPG(searchString, searchSave, searchDescription)
@@ -717,12 +717,12 @@ class EPGSearch(EPGSelection):
 		if len(services): #only if return services to check
 			ret1 = []
 			for event in matches:
-				timecheck=True
-				if config.plugins.epgsearch.show_events.value == "current_future" and int(event[2])+int(event[3]) < time():
+				timecheck = True
+				if config.plugins.epgsearch.show_events.value == "current_future" and int(event[2]) + int(event[3]) < time():
 					timecheck = False #if is an old event
 				elif config.plugins.epgsearch.show_events.value == "future" and int(event[2]) < time():
 					timecheck = False #if is a current or old event
-				if config.plugins.epgsearch.show_events.value == "current" and (int(event[2]) > time() or int(event[2])+int(event[3]) < time()):
+				if config.plugins.epgsearch.show_events.value == "current" and (int(event[2]) > time() or int(event[2]) + int(event[3]) < time()):
 					timecheck = False #if is a future or an old event
 				if str(event[0]) in services and timecheck:
 					ret1.append(event)
@@ -730,7 +730,7 @@ class EPGSearch(EPGSelection):
 		return matches
 
 	def addShortDescription(self, epgcache, events):
-		new_events=[]
+		new_events = []
 		for event in events:
 			epgEvent = epgcache.lookupEventId(eServiceReference(event[0]), int(event[1]))
 			if epgEvent:
@@ -756,9 +756,9 @@ class EPGSearch(EPGSelection):
 				service_ref = service.ref.toString()
 
 				serviceref_split = service_ref.split(":")
-				if len(serviceref_split)>10: #perhaps on ip-tv or renamed service
-					serviceref_split[0]="1"
-					serviceref_split[1]="0"
+				if len(serviceref_split) > 10: #perhaps on ip-tv or renamed service
+					serviceref_split[0] = "1"
+					serviceref_split[1] = "0"
 					#cut the service_ref
 					service_ref = ":".join(serviceref_split[:10]) + ":"
 

@@ -51,7 +51,7 @@ EasyInfoSession = None
 EINposition = 0
 InfoBar_instance = None
 
-CHOICELIST=[("no", _("Disabled")),
+CHOICELIST = [("no", _("Disabled")),
 			("eventinfo", _("Event info")),
 			("singleepg", _("Single EPG")),
 			("multiepg", _("Multi EPG")),
@@ -70,7 +70,7 @@ CHOICELIST=[("no", _("Disabled")),
 			]
 
 COLORCHOICELIST = [("singleepg", _("Single EPG")),("multiepg", _("Multi EPG")),("easypg", _("Easy-PG")),("graphepg", _("Graphik multi-EPG")),("merlinepg", _("Merlin EPG")),("cooltv", _("Cool-TV")),("imdbinfo", _("IMDB info"))]
-config.plugins.EasyInfo  = ConfigSubsection()
+config.plugins.EasyInfo = ConfigSubsection()
 config.plugins.EasyInfo.pos1 = ConfigSelection(default="eventinfo", choices=CHOICELIST)
 config.plugins.EasyInfo.pos2 = ConfigSelection(default="singleepg", choices=CHOICELIST)
 config.plugins.EasyInfo.pos3 = ConfigSelection(default="merlinepg", choices=CHOICELIST)
@@ -135,10 +135,10 @@ def showInfo(self):
 		service = self.session.nav.getCurrentService()
 		ref = self.session.nav.getCurrentlyPlayingServiceReference()
 		info = service.info()
-		ptr=info.getEvent(0)
+		ptr = info.getEvent(0)
 		if ptr:
 			epglist.append(ptr)
-		ptr=info.getEvent(1)
+		ptr = info.getEvent(1)
 		if ptr:
 			epglist.append(ptr)
 		if epglist:
@@ -234,7 +234,7 @@ class EasyInfoPanelList(MenuList):
 		self.iconXOffset = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_ICON_XOFFSET, 7 if isFHD else 5)
 		self.iconYOffset = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_ICON_YOFFSET, 7 if isFHD else 5)
 		self.keyIconWidth = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_KEYICON_WIDTH, 7 if isFHD else 5)
-		self.keyIconHeight = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_KEYICON_HEIGHT, 75  if isFHD else 50)
+		self.keyIconHeight = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_KEYICON_HEIGHT, 75 if isFHD else 50)
 		self.keyIconXOffset = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_KEYICON_XOFFSET, 0)
 		self.keyIconYOffset = sizes.get(EasyInfoPanelList.SKIN_COMPONENT_KEYICON_YOFFSET, 7 if isFHD else 5)
 		
@@ -256,7 +256,7 @@ class EasyInfoPanelList(MenuList):
 			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.iconXOffset, self.iconYOffset, self.iconWidth, self.iconHeight, png))	
 
 		if not config.plugins.EasyInfo.showEventInfoFirst.value:
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, self.textXOffset, self.textYOffset, self.textWidth, self.textHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, text))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, self.textXOffset, self.textYOffset, self.textWidth, self.textHeight, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, text))
 		
 		return res	
 
@@ -509,13 +509,13 @@ class EasyInfo(Screen):
 def EasyInfoChangeBouquetCB(direction, epg):
 	global EINposition
 	IBbouquets = InfoBar_instance.servicelist.getBouquetList()
-	if EINposition>0 and direction<0:
+	if EINposition > 0 and direction < 0:
 		EINposition = EINposition - 1
-	elif EINposition==0 and direction<0:
+	elif EINposition == 0 and direction < 0:
 		EINposition = len(IBbouquets) - 1
-	elif EINposition<(len(IBbouquets)-1) and direction>0:
+	elif EINposition < (len(IBbouquets) - 1) and direction > 0:
 		EINposition = EINposition + 1
-	elif EINposition==(len(IBbouquets)-1) and direction>0:
+	elif EINposition == (len(IBbouquets) - 1) and direction > 0:
 		EINposition = 0
 	InfoBarServices = InfoBar_instance.getBouquetServices(IBbouquets[EINposition][1])
 	if InfoBarServices:
@@ -542,7 +542,7 @@ def EasyInfoCallbackFunc(answer):
 		return
 	
 	if answer == "singleepg":
-		ref=InfoBar_instance.servicelist.getCurrentSelection()
+		ref = InfoBar_instance.servicelist.getCurrentSelection()
 		if ref:
 			InfoBar_instance.servicelist.savedService = ref
 			EasyInfoSession.openWithCallback(InfoBar_instance.servicelist.SingleServiceEPGClosed, EPGSelection, ref, serviceChangeCB=InfoBar_instance.servicelist.changeServiceCB)
@@ -587,10 +587,10 @@ def EasyInfoCallbackFunc(answer):
 		service = EasyInfoSession.nav.getCurrentService()
 		ref = EasyInfoSession.nav.getCurrentlyPlayingServiceReference()
 		info = service.info()
-		ptr=info.getEvent(0)
+		ptr = info.getEvent(0)
 		if ptr:
 			epglist.append(ptr)
-		ptr=info.getEvent(1)
+		ptr = info.getEvent(1)
 		if ptr:
 			epglist.append(ptr)
 		if epglist:
@@ -615,7 +615,7 @@ def EasyInfoCallbackFunc(answer):
 			from Plugins.Extensions.EPGSearch.EPGSearch import EPGSearch
 			service = EasyInfoSession.nav.getCurrentService()
 			info = service.info()
-			epg_event=info.getEvent(0)
+			epg_event = info.getEvent(0)
 			if epg_event:
 				epg_name = epg_event and epg_event.getEventName() or ''
 				EasyInfoSession.open(EPGSearch, epg_name, False)
@@ -628,7 +628,7 @@ def EasyInfoCallbackFunc(answer):
 			from Plugins.Extensions.IMDb.plugin import IMDB
 			service = EasyInfoSession.nav.getCurrentService()
 			info = service.info()
-			epg_event=info.getEvent(0)
+			epg_event = info.getEvent(0)
 			if epg_event:
 				IeventName = epg_event.getEventName()
 				EasyInfoSession.open(IMDB, IeventName)
@@ -670,7 +670,7 @@ class EasyInfoEventView(Screen, EventViewBase):
 		self["key_blue"].setText(_(getPluginByName(config.plugins.EasyInfo.eventViewBlue.value)))
 		self["key_red"].setText(_("Similar"))
 		
-		self["epgactions"] = ActionMap(["EventViewEPGActions", "EPGSelectActions",  "EventViewActions"],
+		self["epgactions"] = ActionMap(["EventViewEPGActions", "EPGSelectActions", "EventViewActions"],
 			{
 				"openSingleServiceEPG": self.singleEPGCB,
 				"openMultiServiceEPG": self.multiEPGCB,
@@ -713,7 +713,7 @@ class EasyInfoEventView(Screen, EventViewBase):
 		self.setTitle(event.getEventName())
 		self["epg_description"].setText(text)
 		self["datetime"].setText(event.getBeginTimeString())
-		self["duration"].setText(_("%d min")%(event.getDuration()/60))
+		self["duration"].setText(_("%d min") % (event.getDuration() / 60))
 		self["key_red"].setText(_("Similar"))
 		serviceref = self.currentService
 		eventid = self.event.getEventId()
@@ -807,12 +807,12 @@ class EasyInfoEventList(EPGList):
 		channelOffset = 0
 		recOffset = 0
 		
-		flagValue = RT_HALIGN_LEFT|RT_VALIGN_CENTER|RT_WRAP
+		flagValue = RT_HALIGN_LEFT | RT_VALIGN_CENTER | RT_WRAP
 		if self.hasChannelInfo:
 			channelOffset = self.channelOffset
 			
 		if EventName is not None and len(EventName) > 60:
-			flagValue = RT_HALIGN_LEFT|RT_VALIGN_TOP|RT_WRAP
+			flagValue = RT_HALIGN_LEFT | RT_VALIGN_TOP | RT_WRAP
 		
 		if self.hasChannelInfo:
 			picon = self.getPicon(service)
@@ -825,32 +825,32 @@ class EasyInfoEventList(EPGList):
 					self.piconHeight = picon.size().height()
 					if self.piconHeight > 60:
 						self.piconHeight = 60
-				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, (self.channelWidth-self.piconWidth)/2, (self.componentItemHeight-self.piconHeight)/2, self.piconWidth, self.piconHeight, picon))
+				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, (self.channelWidth - self.piconWidth) / 2, (self.componentItemHeight - self.piconHeight) / 2, self.piconWidth, self.piconHeight, picon))
 			else:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, self.channelWidth, self.componentItemHeight, 1, RT_HALIGN_CENTER|RT_VALIGN_CENTER|RT_WRAP, service_name))
+				res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 0, self.channelWidth, self.componentItemHeight, 1, RT_HALIGN_CENTER | RT_VALIGN_CENTER | RT_WRAP, service_name))
 		
 		if rec:
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.timeIndicatorWidth+self.timeWidth+channelOffset, (self.componentItemHeight-self.recIconSize)/2, self.recIconSize, self.recIconSize, clock_pic)) 
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.timeIndicatorWidth + self.timeWidth + channelOffset, (self.componentItemHeight - self.recIconSize) / 2, self.recIconSize, self.recIconSize, clock_pic)) 
 			recOffset = self.recOffset
 				
 		if beginTime is not None:
 			if nowTime < beginTime:
 				begin = localtime(beginTime)
-				end = localtime(beginTime+duration)
+				end = localtime(beginTime + duration)
 				
 				res.extend((
-					(eListboxPythonMultiContent.TYPE_TEXT, channelOffset, self.timeYOffset, self.timeIndicatorWidth, self.componentItemHeight-2*self.timeYOffset, 1, RT_HALIGN_RIGHT, '>'),
-					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+channelOffset, self.timeYOffset, self.timeWidth, self.componentItemHeight-2*self.timeYOffset, 1, RT_HALIGN_LEFT, "%02d.%02d\n%02d.%02d"%(begin[3],begin[4],end[3],end[4])),
-					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+self.timeWidth+channelOffset+recOffset, self.eventNameYOffset, self.eventNameWidth-recOffset, self.componentItemHeight-2*self.eventNameYOffset, 0, flagValue, EventName)
+					(eListboxPythonMultiContent.TYPE_TEXT, channelOffset, self.timeYOffset, self.timeIndicatorWidth, self.componentItemHeight - 2 * self.timeYOffset, 1, RT_HALIGN_RIGHT, '>'),
+					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth + channelOffset, self.timeYOffset, self.timeWidth, self.componentItemHeight - 2 * self.timeYOffset, 1, RT_HALIGN_LEFT, "%02d.%02d\n%02d.%02d" % (begin[3],begin[4],end[3],end[4])),
+					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth + self.timeWidth + channelOffset + recOffset, self.eventNameYOffset, self.eventNameWidth - recOffset, self.componentItemHeight - 2 * self.eventNameYOffset, 0, flagValue, EventName)
 				))
 			else:
-				percent = (nowTime - beginTime)*100/duration
-				remaining = ((beginTime+duration)-nowTime)
+				percent = (nowTime - beginTime) * 100 / duration
+				remaining = ((beginTime + duration) - nowTime)
 				
 				res.extend((
-					(eListboxPythonMultiContent.TYPE_PROGRESS, (self.remainingTimeWidth-self.progressBarWidth)/2+channelOffset, (self.componentItemHeight/2-self.progressBarHeight)/2, self.progressBarWidth, self.progressBarHeight, percent),
-					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+channelOffset, self.componentItemHeight/2, self.remainingTimeWidth, self.componentItemHeight/2, 1, RT_HALIGN_LEFT, "+%d:%02d" % (remaining/3600, (remaining/60)-((remaining /3600)*60))),
-					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth+self.timeWidth+channelOffset+recOffset, self.eventNameYOffset, self.eventNameWidth-recOffset, self.componentItemHeight-2*self.eventNameYOffset, 0, flagValue, EventName)
+					(eListboxPythonMultiContent.TYPE_PROGRESS, (self.remainingTimeWidth - self.progressBarWidth) / 2 + channelOffset, (self.componentItemHeight / 2 - self.progressBarHeight) / 2, self.progressBarWidth, self.progressBarHeight, percent),
+					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth + channelOffset, self.componentItemHeight / 2, self.remainingTimeWidth, self.componentItemHeight / 2, 1, RT_HALIGN_LEFT, "+%d:%02d" % (remaining / 3600, (remaining / 60) - ((remaining / 3600) * 60))),
+					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth + self.timeWidth + channelOffset + recOffset, self.eventNameYOffset, self.eventNameWidth - recOffset, self.componentItemHeight - 2 * self.eventNameYOffset, 0, flagValue, EventName)
 				))
 		return res
 
@@ -1011,7 +1011,7 @@ class EasyPG(EPGSelection, Screen):
 			self["list"].fillMultiEPG(self.services, self.ask_time)
 
 	def okPressed(self):
-		if  config.plugins.EasyInfo.easyPGOK.value == "exitzap":
+		if config.plugins.EasyInfo.easyPGOK.value == "exitzap":
 			self.zapTo()
 			self.close(True)
 		elif config.plugins.EasyInfo.easyPGOK.value == "zap":

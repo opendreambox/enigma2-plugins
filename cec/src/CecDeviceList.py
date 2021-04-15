@@ -76,10 +76,10 @@ class CecDeviceList(Screen):
 	def updateDeviceInfo(self):
 		cec.checkDevices()
 		for device in cec.devices:
-			Log.i("requesting latest powerState from %s" %(device.logicalAddress))
+			Log.i("requesting latest powerState from %s" % (device.logicalAddress))
 			commands = [eCec.MSG_GIVE_DEVICE_POWER_STATUS]
 			if device.physicalAddress == (255,255):
-				Log.i("requesting physicalAddress from %s" %(device.logicalAddress))
+				Log.i("requesting physicalAddress from %s" % (device.logicalAddress))
 				commands.append(eCec.MSG_GIVE_PHYS_ADDR)
 			[cec.send(device.logicalAddress, cmd) for cmd in commands]
 		self._reloadtimer.start(1500,True)
@@ -89,7 +89,7 @@ class CecDeviceList(Screen):
 		if cur:
 			device = cec.getDevice(cur[1])
 			if device:
-				txt  = _("Name: %s\n") % (device.name or _("Unknown"),)
+				txt = _("Name: %s\n") % (device.name or _("Unknown"),)
 				txt += _("Type: %s\n") % self.DEVICE_TYPE.get(device.logicalAddress, _("Other"))
 				txt += _("Vendor: %s\n") % _(device.vendorName)
 				txt += _("Logical address: %s\n") % cur[1]

@@ -46,7 +46,7 @@ class AutoTimerList(MenuList):
 
 		return [
 			None,
-			(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, size.width() - 5, size.height(), 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, timer.name, color, color)
+			(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, size.width() - 5, size.height(), 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, timer.name, color, color)
 		]
 
 	def getCurrent(self):

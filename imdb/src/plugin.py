@@ -534,14 +534,14 @@ class IMDB(Screen):
 			else:
 				splitpos = self.eventName.find('(')
 				if splitpos > 0:
-					self.eventName = self.eventName[:splitpos-1]
+					self.eventName = self.eventName[:splitpos - 1]
 					self["statusbar"].setText(_("Re-Query IMDb: %s...") % (self.eventName))
 					fetchurl = "https://www.imdb.com/find?ref_=nv_sr_fn&q=" + quoteEventName(self.eventName) + "&s=all"
 					getPage(fetchurl, agent=agent, headers=imdb_headers).addCallback(self.IMDBquery).addErrback(self.http_failed)
 				else:
 					splitpos = self.eventName.find('-')
 					if splitpos > 0:
-						self.eventName = self.eventName[:splitpos-1].strip()
+						self.eventName = self.eventName[:splitpos - 1].strip()
 						self["statusbar"].setText(_("Re-Query IMDb: %s...") % (self.eventName))
 						fetchurl = "https://www.imdb.com/find?ref_=nv_sr_fn&q=" + quoteEventName(self.eventName) + "&s=all"
 						getPage(fetchurl, agent=agent, headers=imdb_headers).addCallback(self.IMDBquery).addErrback(self.http_failed)
@@ -576,7 +576,7 @@ class IMDB(Screen):
 
 			for category in ("originaltitle", "premiere", "country", "runtime", "seasons"):
 				if self.generalinfos.group(category):
-					Detailstext += self.generalinfos.group('g_'+category).title() + ": " + stripmask.sub(' ', self.htmltags.sub('', self.generalinfos.group(category).replace('\n',' ').replace('<br>', '\n').replace('<br />','\n'))).replace(' | ',', ').strip() + "\n"
+					Detailstext += self.generalinfos.group('g_' + category).title() + ": " + stripmask.sub(' ', self.htmltags.sub('', self.generalinfos.group(category).replace('\n',' ').replace('<br>', '\n').replace('<br />','\n'))).replace(' | ',', ').strip() + "\n"
 
 			genreblock = self.genreblockmask.findall(self.inhtml)
 			if genreblock:
@@ -595,7 +595,7 @@ class IMDB(Screen):
 				if self.generalinfos.group(category):
 					striplink1 = re.compile('(<a href="/name/nm\d+.{0,1}\?ref_=tt_ov_.."(?:.{0,1}itemprop=\'url\'|)>)', re.S)
 					striplink2 = re.compile('(<a href="fullcredits\?ref_=tt_ov_..#.*?">)', re.S)
-					Detailstext += self.generalinfos.group('g_'+category) + ": " + striplink2.sub('', striplink1.sub('', stripmask.sub(' ', self.htmltags.sub('', self.generalinfos.group(category)).replace('\n','').replace('|','')))) + "\n"
+					Detailstext += self.generalinfos.group('g_' + category) + ": " + striplink2.sub('', striplink1.sub('', stripmask.sub(' ', self.htmltags.sub('', self.generalinfos.group(category)).replace('\n','').replace('|','')))) + "\n"
 
 			rating = self.ratingmask.search(self.inhtml)
 			Ratingtext = _("no user rating yet")
@@ -604,9 +604,9 @@ class IMDB(Screen):
 				if ratingval != '<span id="voteuser"></span>':
 					count = ''
 					if rating.group("ratingcount"):
-						count = ' (' + rating.group("ratingcount").replace(',','.') + ' ' + _("votes") +')'
+						count = ' (' + rating.group("ratingcount").replace(',','.') + ' ' + _("votes") + ')'
 					Ratingtext = _("User Rating") + ": " + ratingval + "/10" + count
-					self.ratingstars = int(10*round(float(ratingval.replace(',','.')),1))
+					self.ratingstars = int(10 * round(float(ratingval.replace(',','.')),1))
 					self["stars"].show()
 					self["stars"].setValue(self.ratingstars)
 					self["starsbg"].show()
@@ -651,8 +651,8 @@ class IMDB(Screen):
 			if extrainfos:
 				Extratext = ""
 				for category in ("tagline","keywords","cert","mpaa","language","color","aspect","company","sound","locations","trivia","goofs","quotes","crazy","connections"):
-					if extrainfos.group('g_'+category):
-						Extratext += extrainfos.group('g_'+category) + ":\n" + re.sub('\s{5,30}',', ', self.htmltags.sub('', extrainfos.group(category).replace('\n','').replace('<br>', '\n').replace('<br />','\n').replace('&view=simple&sort=alpha&ref_=tt_stry_pl" >',' ').replace('&nbsp;','').replace('&quot;','"').replace('|','').replace(' : ',':').replace(',        ',' / ')).strip()) + "\n\n"
+					if extrainfos.group('g_' + category):
+						Extratext += extrainfos.group('g_' + category) + ":\n" + re.sub('\s{5,30}',', ', self.htmltags.sub('', extrainfos.group(category).replace('\n','').replace('<br>', '\n').replace('<br />','\n').replace('&view=simple&sort=alpha&ref_=tt_stry_pl" >',' ').replace('&nbsp;','').replace('&quot;','"').replace('|','').replace(' : ',':').replace(',        ',' / ')).strip()) + "\n\n"
 				if extrainfos.group("g_comments"):
 					stripmask = re.compile('\s{2,}', re.S)
 					Extratext += extrainfos.group("g_comments") + " [" + stripmask.sub(' ', self.htmltags.sub('', extrainfos.group("commenter"))) + "]:\n" + transHTML(self.htmltags.sub('',extrainfos.group("comment").replace("\n",' '))).strip()

@@ -268,15 +268,15 @@ def addEPGSearchATFromEvent(session, evt, service, importer_Callback):
 			# strip all after last :
 			pos = service.rfind(':')
 			if pos != -1:
-				if service[pos-1] == ':':
+				if service[pos - 1] == ':':
 					pos -= 1
-				service = service[:pos+1]
+				service = service[:pos + 1]
 
 		sref = ServiceReference(myref)
 	if evt:
 		# timespan defaults to +- 1h
-		begin = evt.getBeginTime()-3600
-		end = begin + evt.getDuration()+7200
+		begin = evt.getBeginTime() - 3600
+		end = begin + evt.getDuration() + 7200
 	else:
 		begin = end = 0
 
@@ -315,9 +315,9 @@ def addEPGSearchATFromService(session, service, event, importer_Callback):
 		# strip all after last :
 		pos = sref.rfind(':')
 		if pos != -1:
-			if sref[pos-1] == ':':
+			if sref[pos - 1] == ':':
 				pos -= 1
-			sref = sref[:pos+1]
+			sref = sref[:pos + 1]
 
 		sref = ServiceReference(sref)
 	if info:

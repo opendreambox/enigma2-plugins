@@ -39,7 +39,7 @@ config.plugins.autotimer.always_write_config = ConfigOnOff(default=False)
 
 config.plugins.autotimer.log_shell = ConfigYesNo(default=False)
 config.plugins.autotimer.log_write = ConfigYesNo(default=False)
-config.plugins.autotimer.log_file  = ConfigText(default="/tmp/autotimer.log", fixed_size=False)
+config.plugins.autotimer.log_file = ConfigText(default="/tmp/autotimer.log", fixed_size=False)
 
 config.plugins.autotimer.series_save_filter = ConfigYesNo(default=False)
 config.plugins.autotimer.show_addto_in_filmmenu = ConfigYesNo(default=False)

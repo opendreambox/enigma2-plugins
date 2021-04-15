@@ -145,7 +145,7 @@ class InternetRadioOledDisplay(Screen, InternetRadioVisualization):
 	def __init__(self, session, parent):
 		Screen.__init__(self, session)
 		InternetRadioVisualization.__init__(self)
-		self["text1"] =  Label(_("Internet Radio"))
+		self["text1"] = Label(_("Internet Radio"))
 		self["text2"] = Label("")
 		self.onLayoutFinish.append(self.startRun)
 		
