@@ -45,7 +45,7 @@ class CecConfig(ConfigListScreen, Screen):
 			"red": self.cancel,
 			"green": self.save,
 			"yellow": self.restoreDefaults,
-			"blue" : self._showDeviceList,
+			"blue": self._showDeviceList,
 			"save": self.save,
 			"cancel": self.cancel,
 			"ok": self.save,

@@ -95,8 +95,8 @@ class YoutubeAuth(object):
 			'POST',
 			self.AUTH_REQUEST_URI,
 			Headers({
-				'User-Agent' : [self.USER_AGENT],
-				'Content-Type' : ["application/x-www-form-urlencoded"],
+				'User-Agent': [self.USER_AGENT],
+				'Content-Type': ["application/x-www-form-urlencoded"],
 			}),
 			StringProducer("client_id=%s&scope=%s" % (self.CLIENT_ID, self._auth_scope))
 		)
@@ -159,8 +159,8 @@ class YoutubeAuth(object):
 			'POST',
 			self.AUTH_RESPONSE_URI,
 			Headers({
-				'User-Agent' : [self.USER_AGENT],
-				'Content-Type' : ["application/x-www-form-urlencoded"],
+				'User-Agent': [self.USER_AGENT],
+				'Content-Type': ["application/x-www-form-urlencoded"],
 			}),
 			StringProducer("client_id=%s&client_secret=%s&code=%s&grant_type=%s" % (self.CLIENT_ID, self.CLIENT_SECRET, str(self._user_code.device_code), self.GRANT_TYPE_DEVICE_AUTH))
 		)
@@ -203,7 +203,7 @@ class YoutubeAuth(object):
 		elif "access_token" in result:
 			access_token = result.get("access_token")
 			refresh_token = result.get("refresh_token")
-			token_expiry = str( int(time()) + int(result.get("expires_in")) )
+			token_expiry = str(int(time()) + int(result.get("expires_in")))
 			self._credentials = OAuth2Credentials(access_token, self.CLIENT_ID, self.CLIENT_SECRET, refresh_token, token_expiry, self.AUTH_REQUEST_URI, self.USER_AGENT)
 			for fnc in self.onCredentialsReady:
 				fnc(self._credentials)

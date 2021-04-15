@@ -34,7 +34,7 @@ class C3vocScreen (Screen):
 		<widget name="myGreenBtn" position="310,75" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-2,-2"/>
 		</screen>"""
 
-	def __init__ (self, session):
+	def __init__(self, session):
 		self.session = session
 		Screen.__init__(self, session)
 

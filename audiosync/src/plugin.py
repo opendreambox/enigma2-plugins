@@ -32,5 +32,5 @@ def audioMenu(session, **kwargs):
 def Plugins(path,**kwargs):
     global plugin_path
     plugin_path = path
-    return [ PluginDescriptor(name=_("Audio Sync Setup"), description=_("Setup for the Audio Sync Plugin"), icon="AudioSync.png", where=PluginDescriptor.WHERE_PLUGINMENU, fnc=setup),
+    return [PluginDescriptor(name=_("Audio Sync Setup"), description=_("Setup for the Audio Sync Plugin"), icon="AudioSync.png", where=PluginDescriptor.WHERE_PLUGINMENU, fnc=setup),
         PluginDescriptor(name=_("Audio Sync"), description=_("sets the Audio Delay (LipSync)"), where=PluginDescriptor.WHERE_AUDIOMENU, fnc=audioMenu)]

@@ -211,7 +211,7 @@ class InternetRadioPiPTVPlayer(object):
 
 	def openEventView(self):
 		# show EPG Event
-		epglist = [ ]
+		epglist = []
 		self.epglist = epglist
 		service = ServiceReference(self.servicelist.getCurrentSelection())
 		ref = service.ref

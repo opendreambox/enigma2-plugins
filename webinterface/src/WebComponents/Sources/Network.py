@@ -73,14 +73,14 @@ class Network(Source):
 
 	lut = {
 			"Name": 0,
-			"Mac" : 1,
-			"Dhcp" : 2,
-			"Ip" : 3,
-			"Netmask" : 4,
-			"Gateway" : 5,
+			"Mac": 1,
+			"Dhcp": 2,
+			"Ip": 3,
+			"Netmask": 4,
+			"Gateway": 5,
 			"Method6": 6,
-			"Ip6" : 7,
-			"Netmask6" : 8,
-			"Gateway6" : 9,
+			"Ip6": 7,
+			"Netmask6": 8,
+			"Gateway6": 9,
 	}
 

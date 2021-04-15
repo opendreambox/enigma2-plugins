@@ -29,7 +29,7 @@ class parseXML(ContentHandler, LexicalHandler):
 	def startElement(self, name, attrs):
 		#print("startElement", name)
 		self.elements.append(name)
-		if name in ( "shortdescription", "description" ):
+		if name in ("shortdescription", "description"):
 			self.data = ""
 
 	def endElement(self, name):
@@ -78,7 +78,7 @@ for arg in sys.argv[1:]:
 		string.replace(k, "\\n", "\"\n\"")
 		if c:
 			for l in c.split('\n'):
-				print( "#. ", l)
+				print("#. ", l)
 		if str(k).strip() != "":
 			print('msgid "' + str(k) + '"')
 			print('msgstr ""')

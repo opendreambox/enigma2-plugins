@@ -73,7 +73,7 @@ class fstabMenuList(MenuList):
 		self.l.setFont(1, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
 		
 def fstabMenuListEntry(devicename, mountpoint,fstype, options, dumpfreq, passnum):
-	res = [ (devicename, mountpoint,fstype, options, dumpfreq, passnum) ]
+	res = [(devicename, mountpoint,fstype, options, dumpfreq, passnum)]
 	res.append(MultiContentEntryText(pos=(270,15),size=(800,30), font=0, text=devicename))
 	res.append(MultiContentEntryText(pos=(270,60),size=(800,30), font=0, text=mountpoint))
 	res.append(MultiContentEntryText(pos=(270,90),size=(800,30), font=0, text=fstype))
@@ -145,7 +145,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 	def buildScreen(self):
 		self.fstabEntryList = []
 		if fileExists("/etc/fstab"):
-			fstabFile = open("/etc/fstab" ,"r")
+			fstabFile = open("/etc/fstab","r")
 			global entryList
 			entryList = []
 			self.counter = 0

@@ -139,7 +139,7 @@ class MovieTagger(Screen):
 		xtmp.extend(ml.tags)
 		self.usedTags = xtmp
 
-		e = self.pretags + [ x for x in ml.tags if x not in self.pretags ]
+		e = self.pretags + [x for x in ml.tags if x not in self.pretags]
 		
 		taglist = []
 		for i in e:
@@ -238,7 +238,7 @@ class MovieTagger(Screen):
 		userTags = False
 		if not preTags and usedTags:
 			userTags = True
-		return (tag, usedTags, preTags, userTags )
+		return (tag, usedTags, preTags, userTags)
 	
 	def keyRed(self):
 		if self.currList is self["cTaglist"]:
@@ -341,7 +341,7 @@ class TagMenuList(MenuList):
 		self.l.setBuildFunc(self.buildTagMenuListEntry)
 
 	def buildTagMenuListEntry(self, tagName, isUsedTag=False, isUserTag=False, isPreTag=False):
-		res = [ tagName ]
+		res = [tagName]
 		res.append((eListboxPythonMultiContent.TYPE_TEXT, self.xOffset, 0, self.componentItemWidth, self.componentItemHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, tagName))
 		
 		if isUsedTag:

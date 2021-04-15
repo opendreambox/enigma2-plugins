@@ -47,19 +47,19 @@ class DreamboxServerProtocol(WebSocketServerProtocol):
 	}, extra=vol.ALLOW_EXTRA)
 
 	AUTH_MESSAGE_SCHEMA = REQUEST_BASE_SCHEMA.extend({
-		vol.Required('type') : TYPE_AUTH,
-		vol.Exclusive('token', 'auth') : unicode,
-		vol.Exclusive('session', 'auth') : unicode,
+		vol.Required('type'): TYPE_AUTH,
+		vol.Exclusive('token', 'auth'): unicode,
+		vol.Exclusive('session', 'auth'): unicode,
 	})
 
 	GET_SERVICES_MESSAGE_SCHEMA = REQUEST_BASE_SCHEMA.extend({
-		vol.Required('type') : TYPE_GET_SERVICES,
-		vol.Required('reference') : unicode,
+		vol.Required('type'): TYPE_GET_SERVICES,
+		vol.Required('reference'): unicode,
 	})
 
 	GET_EPG_NOWNEXT_MESSAGE_SCHEMA = REQUEST_BASE_SCHEMA.extend({
-		vol.Required('type') : TYPE_GET_EPG_NOWNEXT,
-		vol.Required('reference') : unicode,
+		vol.Required('type'): TYPE_GET_EPG_NOWNEXT,
+		vol.Required('reference'): unicode,
 		vol.Required('which'): vol.Any(
 				KEY_EPG_NOWNEXT,
 				KEY_EPG_NOW,
@@ -68,7 +68,7 @@ class DreamboxServerProtocol(WebSocketServerProtocol):
 	})
 
 	GET_STREAM_SETTINGS_SCHEMA = REQUEST_BASE_SCHEMA.extend({
-		vol.Required('type') : TYPE_GET_STREAM_SETTINGS
+		vol.Required('type'): TYPE_GET_STREAM_SETTINGS
 	})
 
 	server = None
@@ -122,28 +122,28 @@ class DreamboxServerProtocol(WebSocketServerProtocol):
 		if not self._sessionId:
 			self._sessionId = self._genSID()
 			self.server.addSession(self._sessionId)
-		self.sendJSON({"type" : self.TYPE_AUTH_OK, "session" : self._sessionId})
+		self.sendJSON({"type": self.TYPE_AUTH_OK, "session": self._sessionId})
 
 	def sendAuthRequest(self):
-		self.sendJSON({"type" : self.TYPE_AUTH_REQUIRED})
+		self.sendJSON({"type": self.TYPE_AUTH_REQUIRED})
 
 	def sendResult(self, id, result=None):
 		msg = {
-			"id" : id,
-			"type" : self.TYPE_RESULT,
-			"success" : True,
-			"result" : result,
+			"id": id,
+			"type": self.TYPE_RESULT,
+			"success": True,
+			"result": result,
 		}
 		self.sendJSON(msg)
 
 	def sendError(self, id, code, message=None):
 		data = {
-			"id" : id,
-			"type" : self.TYPE_RESULT,
-			"success" : False,
-			"error" : {
-				"code" : code,
-				"message" : message,
+			"id": id,
+			"type": self.TYPE_RESULT,
+			"success": False,
+			"error": {
+				"code": code,
+				"message": message,
 			}
 		}
 		self.sendJSON(data)
@@ -209,17 +209,17 @@ class DreamboxServerProtocol(WebSocketServerProtocol):
 		sref.setName(info and info.getName(sref) or '')
 
 		services = serviceHandler.list(sref)
-		services = ( services and services.getContent('SN', True) ) or []
+		services = (services and services.getContent('SN', True)) or []
 		for service in services:
 			svcs.append({
-				"reference" : service[0],
-				"name" : service[1]
+				"reference": service[0],
+				"name": service[1]
 			})
 
 		res = {
-			"reference" : ref,
-			"name" : sref.getName(),
-			"data" : svcs
+			"reference": ref,
+			"name": sref.getName(),
+			"data": svcs
 		}
 		self.sendResult(id, res)
 
@@ -255,15 +255,15 @@ class DreamboxServerProtocol(WebSocketServerProtocol):
 		events = eEPGCache.getInstance().lookupEvent(search)
 		def evtToDict(event):
 			return {
-					"id" : event[0],					#I
-					"begin" : event[1],					#B
-					"duration" : event[2],				#D
-					"current" : event[3],				#C
-					"title" : event[4],					#T
-					"short_description" : event[5],		#S
-					"extended_description" : event[6],	#E
-					"reference" : event[7],				#R
-					"name" : event[8],					#N
+					"id": event[0],					#I
+					"begin": event[1],					#B
+					"duration": event[2],				#D
+					"current": event[3],				#C
+					"title": event[4],					#T
+					"short_description": event[5],		#S
+					"extended_description": event[6],	#E
+					"reference": event[7],				#R
+					"name": event[8],					#N
 				}
 
 		evts = []
@@ -275,9 +275,9 @@ class DreamboxServerProtocol(WebSocketServerProtocol):
 			evts.append(evtToDict(events))
 
 		res = {
-			"reference" : ref,
-			"name" : sref.getName(),
-			"data" : evts or ()
+			"reference": ref,
+			"name": sref.getName(),
+			"data": evts or ()
 		}
 		self.sendResult(id, res)
 
@@ -305,4 +305,4 @@ class DreamboxServerProtocol(WebSocketServerProtocol):
 		self.sendResult(id, result)
 
 	def do_ping(self, msg):
-		self.sendJSON({"type" : self.TYPE_PING})
+		self.sendJSON({"type": self.TYPE_PING})

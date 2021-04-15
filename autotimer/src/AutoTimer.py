@@ -240,7 +240,7 @@ class AutoTimer:
 		modified = 0
 
 		# Search EPG, default to empty list
-		epgmatches = epgcache.search( ('RITBDSE', 1000, typeMap[timer.searchType], timer.match, caseMap[timer.searchCase]) ) or []
+		epgmatches = epgcache.search(('RITBDSE', 1000, typeMap[timer.searchType], timer.match, caseMap[timer.searchCase])) or []
 
 		# Sort list of tuples by begin time 'B'
 		epgmatches.sort(key=itemgetter(3))
@@ -249,7 +249,7 @@ class AutoTimer:
 		similardict = defaultdict(list)		
 
 		# Loop over all EPG matches
-		for idx, ( serviceref, eit, name, begin, duration, shortdesc, extdesc ) in enumerate( epgmatches ):
+		for idx, (serviceref, eit, name, begin, duration, shortdesc, extdesc) in enumerate(epgmatches):
 			
 			startLog()
 			
@@ -389,7 +389,7 @@ class AutoTimer:
 				if dest and dest not in moviedict:
 					self.addDirectoryToMovieDict(moviedict, dest, serviceHandler)
 				for movieinfo in moviedict.get(dest, ()):
-					if self.checkDuplicates(timer, name, movieinfo.get("name"), shortdesc, movieinfo.get("shortdesc"), extdesc, movieinfo.get("extdesc") ):
+					if self.checkDuplicates(timer, name, movieinfo.get("name"), shortdesc, movieinfo.get("shortdesc"), extdesc, movieinfo.get("extdesc")):
 						doLog("We found a matching recorded movie, skipping event:", name)
 						movieExists = True
 						break
@@ -428,7 +428,7 @@ class AutoTimer:
 						break
 				if timer.avoidDuplicateDescription >= 1 \
 					and not rtimer.disabled:
-						if self.checkDuplicates(timer, name, rtimer.name, shortdesc, rtimer.description, extdesc, rtimer.extdesc ):
+						if self.checkDuplicates(timer, name, rtimer.name, shortdesc, rtimer.description, extdesc, rtimer.extdesc):
 						# if searchForDuplicateDescription > 1 then check short description
 							oldExists = True
 							doLog("We found a timer (similar service) with same description, skipping event")
@@ -444,9 +444,9 @@ class AutoTimer:
 
 				# We want to search for possible doubles
 				if timer.avoidDuplicateDescription >= 2:
-					for rtimer in chain.from_iterable( itervalues(timerdict) ):
+					for rtimer in chain.from_iterable(itervalues(timerdict)):
 						if not rtimer.disabled:
-							if self.checkDuplicates(timer, name, rtimer.name, shortdesc, rtimer.description, extdesc, rtimer.extdesc ):
+							if self.checkDuplicates(timer, name, rtimer.name, shortdesc, rtimer.description, extdesc, rtimer.extdesc):
 								oldExists = True
 								doLog("We found a timer (any service) with same description, skipping event")
 								break
@@ -468,7 +468,7 @@ class AutoTimer:
 					if sp and type(sp) in (tuple, list) and len(sp) > 3:
 						filter_title = str(sp[0])
 						if len(sp) > 4:
-							filter_title = "{series:s} - S{season:02d}E{rawepisode:s} - {title:s}".format( **sp[4] )
+							filter_title = "{series:s} - S{season:02d}E{rawepisode:s} - {title:s}".format(**sp[4])
 						ret = self.addToFilterfile(filter_title, begin, simulateOnly, str(sp[0]))
 						if ret:
 							if simulateOnly:
@@ -585,8 +585,8 @@ class AutoTimer:
 						# Attention we have to use a copy of the list, because we have to append the previous older matches
 						lepgm = len(epgmatches)
 						for i in xrange(lepgm):
-							servicerefS, eitS, nameS, beginS, durationS, shortdescS, extdescS = epgmatches[ (i+idx+1)%lepgm ]
-							if self.checkDuplicates(timer, name, nameS, shortdesc, shortdescS, extdesc, extdescS, force=True ):
+							servicerefS, eitS, nameS, beginS, durationS, shortdescS, extdescS = epgmatches[(i+idx+1)%lepgm]
+							if self.checkDuplicates(timer, name, nameS, shortdesc, shortdescS, extdesc, extdescS, force=True):
 								# Check if the similar is already known
 								if eitS not in similardict:
 									doLog("Found similar Timer: " + name)
@@ -688,7 +688,7 @@ class AutoTimer:
 			search_txt = '"' + name + '"'
 			search_txt_sp = '"' + sp_title + '"'
 			if (search_txt or search_txt_sp) in open(path_filter_txt).read():
-				print ("Skipping an event because found event in autotimer_filter")
+				print("Skipping an event because found event in autotimer_filter")
 				doLog("Skipping an event because found event in autotimer_filter")
 				return False
 		if simulateOnlyValue:
@@ -725,11 +725,11 @@ class AutoTimer:
 					if ret:
 						add_counter +=1
 					
-				session.open( MessageBox, _("finished adding to filter list with %s event(s):\n\n %s event(s) added \n %s event(s) skipped") % (len(services), add_counter,len(services)-add_counter), type=MessageBox.TYPE_INFO, timeout=config.plugins.autotimer.popup_timeout.value )
+				session.open(MessageBox, _("finished adding to filter list with %s event(s):\n\n %s event(s) added \n %s event(s) skipped") % (len(services), add_counter,len(services)-add_counter), type=MessageBox.TYPE_INFO, timeout=config.plugins.autotimer.popup_timeout.value)
 					
 			except Exception as e:
 				doLog("Error in addToFilterList", e)
-				print ("======== Error in addToFilterList ", e)
+				print("======== Error in addToFilterList ", e)
 
 
 	def parseEPG(self, simulateOnly=False, uniqueId=None, callback=None):

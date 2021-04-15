@@ -92,20 +92,20 @@ class StreamServerSeekSource(Source):
 		if StreamServerSeek()._isTemporaryLiveMode:
 			encoderService = self.session.nav.getCurrentService()
 		elif not encoderService:
-			self.res = ( False, _("encoder service not running") )
+			self.res = (False, _("encoder service not running"))
 			return False
 
 		if self.func in self.REQUIRE_PAUSABLE:
 			pause = encoderService.pause()
 			if not pause:
-				self.res = ( False, _("encoder service not pausable") )
+				self.res = (False, _("encoder service not pausable"))
 				return False
 			self._pause = pause
 		
 		if self.func in self.REQUIRE_SEEKABLE:
 			seek = encoderService.seek()
 			if not seek:
-				self.res = ( False, _("encoder service not seekable") )
+				self.res = (False, _("encoder service not seekable"))
 				return False
 			self._seek = seek
 		
@@ -122,34 +122,34 @@ class StreamServerSeekSource(Source):
 		if self.func is self.SEEK_TO or self.func is self.SEEK_RELATIVE:
 			pos = params.get("pos", None)
 			if not pos:
-				self.res = ( False, _("required parameter '%s' missing") % "pos" )
+				self.res = (False, _("required parameter '%s' missing") % "pos")
 				return
 			try:
 				pos = int(pos)
 			except Exception:
-				self.res = ( False, _("invalid parameter '%s'") % "pos" )
+				self.res = (False, _("invalid parameter '%s'") % "pos")
 				return
 
 		if self.func is self.SEEK_CHAPTER:
 			number = params
 			if not number:
-				self.res = ( False, _("required parameter '%s' missing") % "number" )
+				self.res = (False, _("required parameter '%s' missing") % "number")
 				return
 			try:
 				number = int(number)
 			except Exception:
-				self.res = ( False, _("invalid parameter '%s'") % "number" )
+				self.res = (False, _("invalid parameter '%s'") % "number")
 				return
 		
 		if self.func is self.FAST_FORWARD or self.func is self.FAST_BACKWARD or self.func is self.SLOW_MOTION:
 			speed = params
 			if not speed:
-				self.res = ( False, _("required parameter '%s' missing") % "speed" )
+				self.res = (False, _("required parameter '%s' missing") % "speed")
 				return
 			try:
 				speed = int(speed)
 			except Exception:
-				self.res = ( False, _("invalid parameter '%s'") % "speed" )
+				self.res = (False, _("invalid parameter '%s'") % "speed")
 				return
 		
 		if self.func is self.SEEK_TO or self.func is self.SEEK_RELATIVE or self.func is self.GET_LENGTH or self.func is self.GET_PLAY_POSITION:
@@ -163,7 +163,7 @@ class StreamServerSeekSource(Source):
 			elif unit and unit == "min":
 				self._unitMultiplier = 90000 * 60
 			elif unit:
-				self.res = ( False, _("invalid parameter '%s'") % "unit" )
+				self.res = (False, _("invalid parameter '%s'") % "unit")
 				return
 
 		if self.func is self.SEEK_TO:
@@ -185,24 +185,24 @@ class StreamServerSeekSource(Source):
 		elif self.func is self.INFO:
 			result = self.info()
 
-		self.res = ( True, result )
+		self.res = (True, result)
 	
 	def getResult(self):
 		if not self.res:
 			if not self.initVars():
 				return self.res
 			elif self.func is self.GET_LENGTH:
-				return ( True, self.getLength() )
+				return (True, self.getLength())
 			elif self.func is self.GET_PLAY_POSITION:
-				return ( True, self.getPlayPosition() )
+				return (True, self.getPlayPosition())
 			elif self.func is self.PAUSE:
-				return ( True, self.pause() )
+				return (True, self.pause())
 			elif self.func is self.UNPAUSE or self.func is self.PLAY:
-				return ( True, self.unpause() )
+				return (True, self.unpause())
 			elif self.func is self.INFO:
 				return self.info()
 			else:
-				return ( False, _("required parameter(s) missing") )
+				return (False, _("required parameter(s) missing"))
 
 		return self.res
 

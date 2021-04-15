@@ -32,7 +32,7 @@ def pluginOpen(session, **kwargs):
 
 def startSetup(menuid):
     if menuid != "osd_video_audio":
-        return [ ]
+        return []
     return [(_("A/V-Color space settings"), pluginOpen, "av_colorspace_setup", 40)]
 
 def Plugins(**kwargs):

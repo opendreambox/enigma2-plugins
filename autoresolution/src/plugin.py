@@ -47,7 +47,7 @@ def setDeinterlacer(mode):
 	#f.write("%s\n" % mode)
 	#f.close()
 
-frqdic = { 23976: '24',
+frqdic = {23976: '24',
 		24000: '24',
 		25000: '25',
 		29970: '30',
@@ -326,11 +326,11 @@ class ResolutionLabel(Screen):
 class AutoResSetupMenu(Screen, ConfigListScreen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		self.skinName = [ "AutoResSetupMenu", "Setup" ]
+		self.skinName = ["AutoResSetupMenu", "Setup"]
 		self.setup_title = _("Autoresolution videomode setup")
 
-		self.onChangedEntry = [ ]
-		self.list = [ ]
+		self.onChangedEntry = []
+		self.list = []
 		ConfigListScreen.__init__(self, self.list, session=session, on_change=self.changedEntry)
 
 		self["actions"] = ActionMap(["SetupActions"],
@@ -349,7 +349,7 @@ class AutoResSetupMenu(Screen, ConfigListScreen):
 		self.setTitle(_("Autoresolution settings"))
 
 	def createSetup(self):
-		self.list = [ getConfigListEntry(_("Enable Autoresolution"), config.plugins.autoresolution.enable) ]
+		self.list = [getConfigListEntry(_("Enable Autoresolution"), config.plugins.autoresolution.enable)]
 		if config.plugins.autoresolution.enable.value:
 			if usable:
 				have_1080p = config.av.videorate.get("1080p", False)
@@ -416,7 +416,7 @@ def autostart(reason, **kwargs):
 
 def startSetup(menuid):
 	if menuid != "osd_video_audio":
-		return [ ]
+		return []
 	return [(_("Autoresolution"), autoresSetup, "autores_setup", 45)]
 
 def autoresSetup(session, **kwargs):
@@ -425,4 +425,4 @@ def autoresSetup(session, **kwargs):
 
 def Plugins(path, **kwargs):
 	return [PluginDescriptor(where=[PluginDescriptor.WHERE_SESSIONSTART], fnc=autostart),
-		PluginDescriptor(name="Autoresolution", description=_("Autoresolution Switch"), where=PluginDescriptor.WHERE_MENU, fnc=startSetup) ]
+		PluginDescriptor(name="Autoresolution", description=_("Autoresolution Switch"), where=PluginDescriptor.WHERE_MENU, fnc=startSetup)]

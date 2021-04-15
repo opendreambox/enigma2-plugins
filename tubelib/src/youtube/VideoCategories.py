@@ -10,10 +10,10 @@ class VideoCategories(YoutubeQueryBase):
 		if not region:
 			region = lang
 		self._args = {
-			'part' : 'id,snippet',
-			'hl' : lang,
-			'regionCode' : region,
-			'fields' : 'items(id,snippet(title))'
+			'part': 'id,snippet',
+			'hl': lang,
+			'regionCode': region,
+			'fields': 'items(id,snippet(title))'
 		}
 		return self._doQuery(callback)
 

@@ -48,7 +48,7 @@ class KiddyTimerScreen(Screen):
     def renderScreen(self):
         self["TimerSlider"].setValue(int(kiddyTimer.remainingPercentage*100)) 
         self["TimerGraph"].setPixmapNum(kiddyTimer.curImg)
-        self.sTimeLeft = KTglob.getTimeFromSeconds( (kiddyTimer.remainingTime + 59) , False ) # Add 59 Seconds to show one minute if less than 1 minute left...
+        self.sTimeLeft = KTglob.getTimeFromSeconds((kiddyTimer.remainingTime + 59), False) # Add 59 Seconds to show one minute if less than 1 minute left...
         self["TimerText"].setText(self.sTimeLeft)
         self["TimerSliderText"].setText(self.sTimeLeft)
         self["TimerTransparentText"].setText(self.sTimeLeft)
@@ -137,7 +137,7 @@ class KiddyTimer():
                 # This command may be double, just made to be sure, the observer is stopped when the real timer starts
                 self.stopObserve()
                 # Date of the current day
-                self.currentDay = time.strftime("%d.%m.%Y" , time.localtime())
+                self.currentDay = time.strftime("%d.%m.%Y", time.localtime())
                 # First check for Cheat- attempts by kids
                 if self.detectCheatAttempt():
                     config.plugins.KiddyTimer.remainingTime.value = 0
@@ -191,7 +191,7 @@ class KiddyTimer():
 
     def timerHasToRun(self):
         curStartTime = time.localtime()
-        iPluginStart = KTglob.getSecondsFromClock( [curStartTime[3],curStartTime[4]] )
+        iPluginStart = KTglob.getSecondsFromClock([curStartTime[3],curStartTime[4]])
         iMonitorEnd = KTglob.getSecondsFromClock(config.plugins.KiddyTimer.monitorEndTime.getValue())  
         iMonitorStart = KTglob.getSecondsFromClock(config.plugins.KiddyTimer.monitorStartTime.getValue())  
         return (iPluginStart < iMonitorEnd) & (iPluginStart >= iMonitorStart)
@@ -204,7 +204,7 @@ class KiddyTimer():
     
     def startObserve(self):
         curStartTime = time.localtime()
-        iPluginStart = KTglob.getSecondsFromClock( [curStartTime[3],curStartTime[4]] )
+        iPluginStart = KTglob.getSecondsFromClock([curStartTime[3],curStartTime[4]])
         iMonitorStart = KTglob.getSecondsFromClock(config.plugins.KiddyTimer.monitorStartTime.getValue())  
 
         # If we are after Pluginstart, then sleep until next day
@@ -251,7 +251,7 @@ class KiddyTimer():
         self.startLoop()
 
     def askForPIN(self):
-        self.session.openWithCallback( self.pinEntered, PinInput, pinList=[config.plugins.KiddyTimer.pin.getValue()], triesEntry=self.getTriesEntry(), title=_("Please enter the correct pin code"), windowTitle=_("Enter pin code"))
+        self.session.openWithCallback(self.pinEntered, PinInput, pinList=[config.plugins.KiddyTimer.pin.getValue()], triesEntry=self.getTriesEntry(), title=_("Please enter the correct pin code"), windowTitle=_("Enter pin code"))
     
     def getTriesEntry(self):
         return config.ParentalControl.retries.setuppin
@@ -318,7 +318,7 @@ class KiddyTimer():
                 self.stopTimer()
             self.startTimer(True, iSeconds)
     
-    def toggleActiveState(self , bStatus):
+    def toggleActiveState(self, bStatus):
         # Initialize dialog
         if self.dialog == None and bStatus:
             self.dialog = self.session.instantiateDialog(KiddyTimerScreen)
@@ -364,7 +364,7 @@ class KiddyTimer():
             self.stopTimer()
 
     def setImageNumber(self):
-        iCurPercent = int( self.remainingPercentage * 1000 )
+        iCurPercent = int(self.remainingPercentage * 1000)
         iCount = 0
         for iPercent in self.dialog.percentageList:
            if iCurPercent <= iPercent:

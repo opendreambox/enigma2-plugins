@@ -52,10 +52,10 @@ class WebIfConfigScreen(ConfigListScreen, Screen):
 		self.createSetup()
 
 	def createSetup(self):
-		list = [ getConfigListEntry(_("Start Webinterface"), config.plugins.Webinterface.enabled), ]
+		list = [getConfigListEntry(_("Start Webinterface"), config.plugins.Webinterface.enabled), ]
 
 		if config.plugins.Webinterface.enabled.value:
-			list.extend( [
+			list.extend([
 				getConfigListEntry(_("General")),
 				getConfigListEntry(_("Show Setup in Extensions menu"), config.plugins.Webinterface.show_in_extensionsmenu),
 				getConfigListEntry(_("Enable /media"), config.plugins.Webinterface.includemedia),

@@ -48,12 +48,12 @@ config.plugins.Webinterface.version = ConfigText(__version__) # used to make the
 
 config.plugins.Webinterface.http = ConfigSubsection()
 config.plugins.Webinterface.http.enabled = ConfigYesNo(default=True)
-config.plugins.Webinterface.http.port = ConfigInteger(default=80, limits=(1, 65535) )
+config.plugins.Webinterface.http.port = ConfigInteger(default=80, limits=(1, 65535))
 config.plugins.Webinterface.http.auth = ConfigYesNo(default=True)
 
 config.plugins.Webinterface.https = ConfigSubsection()
 config.plugins.Webinterface.https.enabled = ConfigYesNo(default=True)
-config.plugins.Webinterface.https.port = ConfigInteger(default=443, limits=(1, 65535) )
+config.plugins.Webinterface.https.port = ConfigInteger(default=443, limits=(1, 65535))
 config.plugins.Webinterface.https.auth = ConfigYesNo(default=True)
 
 config.plugins.Webinterface.streamauth = ConfigYesNo(default=False)
@@ -322,7 +322,7 @@ class SimpleSession(object):
 
 	def _generateId(self):
 		if config.plugins.Webinterface.extended_security.value:
-			self._id = str ( uuid.uuid4() )
+			self._id = str(uuid.uuid4())
 		else:
 			self._id = "0"
 
@@ -363,12 +363,12 @@ class HTTPRootResource(resource.Resource):
 		return hashlib.sha1("%s/%s" %(ip, ua)).hexdigest()
 
 	def isSessionValid(self, request):
-		session = self._sessions.get( self.getClientToken(request), None )
+		session = self._sessions.get(self.getClientToken(request), None)
 		if session is None or session.expired():
 			session = SimpleSession()
 			key = self.getClientToken(request)
 			print "[HTTPRootResource].isSessionValid :: created session with id '%s' for client with token '%s'" %(session.id, key)
-			self._sessions[ key ] = session
+			self._sessions[key] = session
 
 		request.enigma2_session = session
 
@@ -493,7 +493,7 @@ class HTTPAuthResource(HTTPRootResource):
 		#if the auth-information already is in the http_session
 		else:
 			if http_session['authenticated'] is False:
-				http_session['authenticated'] = check_passwd(request.getUser(), request.getPassword() )
+				http_session['authenticated'] = check_passwd(request.getUser(), request.getPassword())
 
 		#return the current authentication status
 		return http_session['authenticated']
@@ -558,9 +558,9 @@ def unregisterBonjourService(protocol):
 		return False
 
 def checkBonjour():
-	if ( not config.plugins.Webinterface.http.enabled.value ) or ( not config.plugins.Webinterface.enabled.value ):
+	if (not config.plugins.Webinterface.http.enabled.value) or (not config.plugins.Webinterface.enabled.value):
 		unregisterBonjourService('http')
-	if ( not config.plugins.Webinterface.https.enabled.value ) or ( not config.plugins.Webinterface.enabled.value ):
+	if (not config.plugins.Webinterface.https.enabled.value) or (not config.plugins.Webinterface.enabled.value):
 		unregisterBonjourService('https')
 
 #===============================================================================

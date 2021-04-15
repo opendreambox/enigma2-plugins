@@ -7,8 +7,8 @@ from os.path import basename
 class IPKGResource(resource.Resource):
 	IPKG_PATH = "/usr/bin/opkg"
 
-	SIMPLECMDS = ( "list", "list_installed", "list_upgradable", "update", "upgrade" )
-	PACKAGECMDS = ( "info", "status", "install", "remove" )
+	SIMPLECMDS = ("list", "list_installed", "list_upgradable", "update", "upgrade")
+	PACKAGECMDS = ("info", "status", "install", "remove")
 
 	def render(self, request):
 		self.args = request.args

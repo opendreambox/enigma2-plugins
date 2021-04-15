@@ -58,7 +58,7 @@ def sessionstart(reason, **kwargs):
 			session = kwargs["session"]
 			root = File(util.sibpath(__file__, "web-data"))
 			root.putChild("web", ScreenPage(session, util.sibpath(__file__, "web"), True))
-			addExternalChild( ("internetradio", root, "Internet-Radio", "1", True) )
+			addExternalChild(("internetradio", root, "Internet-Radio", "1", True))
 		except ImportError:
 			pass # pah!
 
@@ -68,7 +68,7 @@ def main(session,**kwargs):
 def Plugins(**kwargs):
 	list = [PluginDescriptor(name="Internet-Radio", description=_("listen to internet-radio"), where=[PluginDescriptor.WHERE_PLUGINMENU], icon="plugin.png", fnc=main)] # always show in plugin menu
 	if config.plugins.internetradio.showinextensions.value:
-		list.append (PluginDescriptor(name="Internet-Radio", description=_("listen to internet-radio"), where=[PluginDescriptor.WHERE_EXTENSIONSMENU], fnc=main))
-	list.append (PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=sessionstart, needsRestart=False))
+		list.append(PluginDescriptor(name="Internet-Radio", description=_("listen to internet-radio"), where=[PluginDescriptor.WHERE_EXTENSIONSMENU], fnc=main))
+	list.append(PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=sessionstart, needsRestart=False))
 	return list
 

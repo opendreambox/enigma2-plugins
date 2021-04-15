@@ -1093,7 +1093,7 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 					print "=== cfgList day:", cfgList
 					for item in cfgList:
 						print "=== cfgList day item:", item, item[0], item[1], item[1].value
-					self.list.append( getConfigListEntry(type[1]) )
+					self.list.append(getConfigListEntry(type[1]))
 					cfgList = sorted(cfgList, key=lambda x: [x[0],x[1].value], reverse=False)
 					self.list.extend(cfgList)
 		
@@ -1117,7 +1117,7 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 						for x in self.includes[self.idx]
 				])
 				if len(cfgList):
-					self.list.append( getConfigListEntry(type[1]) )
+					self.list.append(getConfigListEntry(type[1]))
 					cfgList = sorted(cfgList, key=lambda x: [x[0],x[1].value], reverse=False)
 					self.list.extend(cfgList)
 
@@ -1173,7 +1173,7 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 					filter_exist = True
 					break
 			if filter_exist == False:
-				list.insert(pos, getConfigListEntry(_(type_text)) )
+				list.insert(pos, getConfigListEntry(_(type_text)))
 				pos +=1
 			list.insert(pos, entry)
 			self["config"].setList(list)
@@ -1335,7 +1335,7 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 			])
 			
 			if len(cfgList):
-				self.list.append( getConfigListEntry(type[1]) )
+				self.list.append(getConfigListEntry(type[1]))
 				cfgList = sorted(cfgList, key=lambda x: [x[1].getText()], reverse=False)
 				self.list.extend(cfgList)
 
@@ -1407,7 +1407,7 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 					filter_exist = True
 					break
 			if filter_exist == False:
-				list.insert(pos, getConfigListEntry(_(type_text)) )
+				list.insert(pos, getConfigListEntry(_(type_text)))
 				pos +=1
 			list.insert(pos, entry)
 			self["config"].setList(list)

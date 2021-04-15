@@ -105,7 +105,7 @@ class MyTubePlayer(Screen, InfoBarNotifications, InfoBarSeek):
 		self.state = self.STATE_PLAYING
 		self.lastseekstate = self.STATE_PLAYING
 
-		self.onPlayStateChanged = [ ]
+		self.onPlayStateChanged = []
 		self.__seekableStatusChanged()
 
 		self.play()
@@ -308,6 +308,6 @@ class MyTubePlayer(Screen, InfoBarNotifications, InfoBarSeek):
 	def doEofInternal(self, playing):
 		if not self.execing:
 			return
-		if not playing :
+		if not playing:
 			return
 		self.handleLeave(config.usage.on_movie_eof.value)

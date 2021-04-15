@@ -167,7 +167,7 @@ class DreamExplorer3(Screen):
 		Screen.__init__(self, session)
 		self.session = session
 		self.currentService = self.session.nav.getCurrentlyPlayingServiceReference()
-		self.command = [ "ls" ]
+		self.command = ["ls"]
 		self.selectedDir = "/tmp/"
 		# DarkVolli 20120702: add filetype wmv
 		self.mediaPattern = "^.*\.(ts|m2ts|mp3|wav|ogg|jpg|jpeg|jpe|png|bmp|mpg|mpeg|mkv|mp4|mov|divx|avi|mp2|m4a|flac|ifo|vob|iso|sh|flv|3gp|mod|wmv)"
@@ -275,7 +275,7 @@ class DreamExplorer3(Screen):
 		if PicturePlayerInstalled:
 			pictureList = self["filelist"].getFilteredFileList("picture", True)
 			# pictureList must be converted into a fake filelistEntryComponent entry to picture player to work properly
-			self.session.open(Pic_Thumb, [[(x, False), "", ""] for x in pictureList ], 0, self["filelist"].getCurrentDirectory())			
+			self.session.open(Pic_Thumb, [[(x, False), "", ""] for x in pictureList], 0, self["filelist"].getCurrentDirectory())			
 
 	def keyNumberGlobal(self, number):
 		unichar = self.numericalTextInput.getKey(number)
@@ -412,7 +412,7 @@ class DreamExplorer3(Screen):
 						if PicturePlayerInstalled:
 							pictureList = self["filelist"].getFilteredFileList("picture", True)
 							# pictureList must be converted into a fake filelistEntryComponent entry to picture player to work properly
-							self.session.open(Pic_Full_View, [[(x, False), "", ""] for x in pictureList ], 0, self["filelist"].getCurrentDirectory())
+							self.session.open(Pic_Full_View, [[(x, False), "", ""] for x in pictureList], 0, self["filelist"].getCurrentDirectory())
 								
 				elif fileExtension == "mvi":
 					self.session.nav.stopService()
@@ -436,21 +436,21 @@ class DreamExplorer3(Screen):
 				elif fileExtension in ["gz","bz2"]:
 					if filename.lower()[-6:-3] == "tar":
 						if fileExtension == "gz":
-							self.command = [ "tar -xzvf " + filenameWithPath + " -C /" ]
+							self.command = ["tar -xzvf " + filenameWithPath + " -C /"]
 						elif fileExtension == "bz2":
-							self.command = [ "tar -xjvf " + filenameWithPath + " -C /" ]
+							self.command = ["tar -xjvf " + filenameWithPath + " -C /"]
 						
 						msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" %(filename)), list=[(_("Cancel"), "NO"),(_("Extract archive"), "YES")])
 						msg.setTitle(_("Dream Explorer 3"))
 
 				elif fileExtension == "deb":
-					self.command = [ "apt-get update && dpkg -i %s && apt-get -f install" %(filenameWithPath)]
+					self.command = ["apt-get update && dpkg -i %s && apt-get -f install" %(filenameWithPath)]
 					askList = [(_("Cancel"), "NO"),(_("Install package"), "YES")]
 					msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" %(filename)), list=askList)
 					msg.setTitle(_("Dream Explorer 3"))
 					
 				elif fileExtension == "sh":
-					self.command = [ filenameWithPath ]
+					self.command = [filenameWithPath]
 					askList = [(_("Cancel"), "NO"),(_("View script"), "VIEW"),(_("Execute script"), "YES")]
 					self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" %(filename)), list=askList)
 				else:
@@ -540,7 +540,7 @@ class DreamExplorer3(Screen):
 			
 				msg = self.session.open(MessageBox, _("Dreambox model: %s\n\n%s" %(HardwareInfo().get_device_name(),ret)), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 		elif self["filelist"].getFileExtensionType() == "service":
-			self.session.open(SystemdViewer,self["filelist"].getFilename(), self["filelist"].getFilenameWithPath() )
+			self.session.open(SystemdViewer,self["filelist"].getFilename(), self["filelist"].getFilenameWithPath())
 		else:
 			evt, serviceref = self["filelist"].getTSEvent()
 			if evt is not None:
@@ -791,7 +791,7 @@ class BookmarkManager(Screen):
 	def __init__(self, session, args=None):
 		Screen.__init__(self, session)
 		
-		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "DirectionActions" ],
+		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "DirectionActions"],
 		{
 			"ok":	self.changeDirOrSelectBookmark,
 			"cancel": self.close,
@@ -1016,7 +1016,7 @@ class vEditor2(Screen):
 
 	def getFileContent(self):
 		with open(self.filename, "r") as f:
-			self.list = [ [line] for line in f.readlines()]
+			self.list = [[line] for line in f.readlines()]
 
 		self.setTitle("vEditor2 - %s" %(self.filename))
 		self["filedata"].setList(self.list)
@@ -1038,7 +1038,7 @@ class vEditor2(Screen):
 	def saveFile(self, answer):
 		if answer is True:
 			with open(self.filename, "w") as f:
-				f.writelines([ x[0] for x in self.list])
+				f.writelines([x[0] for x in self.list])
 		self.close()
 
 class MviExplorer(Screen):
@@ -1082,7 +1082,7 @@ class MoviePlayer(MP_parent):
 			pass
 		if not self.execing:
 			return
-		if not playing :
+		if not playing:
 			return
 		self.leavePlayer()
 
@@ -1150,7 +1150,7 @@ class MusicExplorer(MoviePlayer):
 	def doEofInternal(self, playing):
 		if not self.execing:
 			return
-		if not playing :
+		if not playing:
 			return
 		self.seekFwd()
 

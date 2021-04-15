@@ -20,7 +20,7 @@ class AutoTimerList(MenuList):
 		self.l.setFont(0, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
 
 	def applySkin(self, desktop, parent):
-		attribs = [ ] 
+		attribs = [] 
 		if self.skinAttributes is not None:
 			for (attrib, value) in self.skinAttributes:
 				if attrib == "font":

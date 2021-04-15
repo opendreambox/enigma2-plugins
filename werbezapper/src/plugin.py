@@ -17,7 +17,7 @@ def main(session, servicelist, **kwargs):
 	global zapperInstance
 	if zapperInstance is None:
 		from WerbeZapper import WerbeZapper
-		zapperInstance = session.instantiateDialog( WerbeZapper, servicelist, cleanup )
+		zapperInstance = session.instantiateDialog(WerbeZapper, servicelist, cleanup)
 	# Show dialog
 	zapperInstance.showSelection()
 
@@ -27,7 +27,7 @@ def startstop(session, servicelist, **kwargs):
 	global zapperInstance
 	if zapperInstance is None:
 		from WerbeZapper import WerbeZapper
-		zapperInstance = session.instantiateDialog( WerbeZapper, servicelist, cleanup )
+		zapperInstance = session.instantiateDialog(WerbeZapper, servicelist, cleanup)
 	# Start or stop monitoring
 	if not zapperInstance.monitor_timer.isActive():
 		zapperInstance.startMonitoring()

@@ -6,9 +6,9 @@ from Subscriptions import Subscription
 class Activities(YoutubeQueryBase):
 	def list(self, callback, home=True, maxResults=25):
 		self._args = {
-			'part' : 'id,snippet,contentDetails',
-			'home' : 'true' if home else 'false',
-			'maxResults' : 25,
+			'part': 'id,snippet,contentDetails',
+			'home': 'true' if home else 'false',
+			'maxResults': 25,
 		}
 		return self._doQuery(callback)
 

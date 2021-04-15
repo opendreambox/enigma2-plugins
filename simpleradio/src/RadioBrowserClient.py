@@ -69,7 +69,7 @@ class RadioBrowserClient(object):
 		self._agent.request(
 			'POST',
 			uri.encode("utf-8"),
-			Headers({'Content-Type' : ['application/json']}),
+			Headers({'Content-Type': ['application/json']}),
 			StringBodyProducer(json.dumps(options)),
 		).addCallbacks(self._onResponse, errback=self._onReloadError, callbackArgs=(callback,))
 
@@ -89,7 +89,7 @@ class RadioBrowserClient(object):
 			def _onJson(countries):
 				callback([Country(data) for data in countries])
 			self._parseJson(data, _onJson)
-		self.request("{}{}".format(self.URL_BASE, self.URL_COUNTRIES), onReloadFinished, options={"order" : "name", "hidebroken" : True})
+		self.request("{}{}".format(self.URL_BASE, self.URL_COUNTRIES), onReloadFinished, options={"order": "name", "hidebroken": True})
 
 	def stations(self, country, callback, offset=0, limit=2000):
 		def onReloadFinished(data):
@@ -103,11 +103,11 @@ class RadioBrowserClient(object):
 				callback(lst)
 			self._parseJson(data, _onJson)
 		options = {
-			"order" : "clickcount", 
-			"reverse" : True,
-			"offset" : offset,
-			"limit" : limit,
-			"hidebroken" : True
+			"order": "clickcount", 
+			"reverse": True,
+			"offset": offset,
+			"limit": limit,
+			"hidebroken": True
 		}
 		self.request("{}{}/{}".format(self.URL_BASE, self.URL_STATIONS_BY_COUNTRY, quote(country)), onReloadFinished, options=options)
 

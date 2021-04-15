@@ -37,7 +37,7 @@ class EPGSearchSetup(Screen, ConfigListScreen):
 		#set config-values for search_scope-config
 		self.scopeChoices = self.getScopeChoices()
 		self.scopeChoices_default = self.getScopeChoicesDefault()
-		self.config_search_scope = NoSave( ConfigSelection(choices=self.scopeChoices, default=self.scopeChoices_default) )
+		self.config_search_scope = NoSave(ConfigSelection(choices=self.scopeChoices, default=self.scopeChoices_default))
 
 		self.list = []
 		self.buildConfig()
@@ -73,25 +73,25 @@ class EPGSearchSetup(Screen, ConfigListScreen):
 		self.onLayoutFinish.append(self.setCustomTitle)
 
 	def buildConfig(self):
-		self.list.append( getConfigListEntry(_("Length of History"), config.plugins.epgsearch.history_length, _("Number of entries to retain in the search history at most. Set to 0 to disable history entirely.")) )
-		self.list.append( getConfigListEntry(_("Add search text to history when opening plugin"), config.plugins.epgsearch.add_history_onOpen , _("Enable to add search text to history when opening the plugin.")) )
-		self.list.append( getConfigListEntry(_("Search type"), config.plugins.epgsearch.search_type, _("Select \"exact match of title\" for a perfect match or \"partial match\" if you want to search for a part of the title or the description. Select \"Ask user\" to choose when searching.")) )
-		self.list.append( getConfigListEntry(_("Search scope"), self.config_search_scope, _("Search will return only matches from services in the selected bouquet.")) )
+		self.list.append(getConfigListEntry(_("Length of History"), config.plugins.epgsearch.history_length, _("Number of entries to retain in the search history at most. Set to 0 to disable history entirely.")))
+		self.list.append(getConfigListEntry(_("Add search text to history when opening plugin"), config.plugins.epgsearch.add_history_onOpen, _("Enable to add search text to history when opening the plugin.")))
+		self.list.append(getConfigListEntry(_("Search type"), config.plugins.epgsearch.search_type, _("Select \"exact match of title\" for a perfect match or \"partial match\" if you want to search for a part of the title or the description. Select \"Ask user\" to choose when searching.")))
+		self.list.append(getConfigListEntry(_("Search scope"), self.config_search_scope, _("Search will return only matches from services in the selected bouquet.")))
 		if self.config_search_scope.value != "all":
-			self.list.append( getConfigListEntry(_("Show events"), config.plugins.epgsearch.show_events, _("Show 'all', 'current', 'future' or 'current & future' events. This allows filtering matches by the event time.")) )
-		self.list.append( getConfigListEntry(_("Show Picons"), config.plugins.epgsearch.show_picon, _("Show the the picon of the channel instead of channelname. Use the picon path from the channelselection settings.")) )
+			self.list.append(getConfigListEntry(_("Show events"), config.plugins.epgsearch.show_events, _("Show 'all', 'current', 'future' or 'current & future' events. This allows filtering matches by the event time.")))
+		self.list.append(getConfigListEntry(_("Show Picons"), config.plugins.epgsearch.show_picon, _("Show the the picon of the channel instead of channelname. Use the picon path from the channelselection settings.")))
 		if not config.plugins.epgsearch.show_picon.value:
-			self.list.append( getConfigListEntry(_("Show best matching channelname in screen title"), config.plugins.epgsearch.show_sname_in_title, _("Shows the best matching channelname in the screen title to have more space to display event name and short description.")) )
-		self.list.append( getConfigListEntry(_("Show short description"), config.plugins.epgsearch.show_shortdesc, _("Add the short description of the event to the search result.")) )
+			self.list.append(getConfigListEntry(_("Show best matching channelname in screen title"), config.plugins.epgsearch.show_sname_in_title, _("Shows the best matching channelname in the screen title to have more space to display event name and short description.")))
+		self.list.append(getConfigListEntry(_("Show short description"), config.plugins.epgsearch.show_shortdesc, _("Add the short description of the event to the search result.")))
 		
 		self.list.append(getConfigListEntry(_("BUTTONS"), )) 
-		self.list.append( getConfigListEntry(_("Buttons for 'Search EPG'"), config.plugins.epgsearch.searchEPG_menu, _("Select the buttons, which show this menu item (on change GUI-restart is necessary).")) )
-		self.list.append( getConfigListEntry(_("Buttons for 'open EPGSearch search list'"), config.plugins.epgsearch.openSearchFilter_menu, _("Select the buttons, which show this menu item (on change GUI-restart is necessary).")) )
+		self.list.append(getConfigListEntry(_("Buttons for 'Search EPG'"), config.plugins.epgsearch.searchEPG_menu, _("Select the buttons, which show this menu item (on change GUI-restart is necessary).")))
+		self.list.append(getConfigListEntry(_("Buttons for 'open EPGSearch search list'"), config.plugins.epgsearch.openSearchFilter_menu, _("Select the buttons, which show this menu item (on change GUI-restart is necessary).")))
 		
 		from EPGSearch import autoTimerAvailable
 		if autoTimerAvailable:
-			self.list.append( getConfigListEntry(_("Buttons for 'add search filter to EPGSearch'"), config.plugins.epgsearch.addSearchFilter_menu, _("Select the buttons, which show this menu item (on change GUI-restart is necessary).")) )
-			self.list.append( getConfigListEntry(_("Blue button function (search list)"), config.plugins.epgsearch.blue_function, _("Select the search list to show on blue button in the EPGSearch match list (default = text search history and search filter list).")) )
+			self.list.append(getConfigListEntry(_("Buttons for 'add search filter to EPGSearch'"), config.plugins.epgsearch.addSearchFilter_menu, _("Select the buttons, which show this menu item (on change GUI-restart is necessary).")))
+			self.list.append(getConfigListEntry(_("Blue button function (search list)"), config.plugins.epgsearch.blue_function, _("Select the search list to show on blue button in the EPGSearch match list (default = text search history and search filter list).")))
 			
 
 	def getScopeChoicesDefault(self):

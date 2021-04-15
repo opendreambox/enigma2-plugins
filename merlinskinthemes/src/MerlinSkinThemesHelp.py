@@ -25,7 +25,7 @@ class MerlinSkinThemesHelpList(MenuList):
 		self.l.setBuildFunc(self.buildEntry)
 		
 	def buildEntry(self, keyText, descriptionText):
-		res = [ (keyText, descriptionText),
+		res = [(keyText, descriptionText),
 			(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, self.keyWidth, self.componentItemHeight, 0, RT_HALIGN_CENTER|RT_VALIGN_CENTER, keyText),
 			(eListboxPythonMultiContent.TYPE_TEXT, 5 + self.keyWidth, 0, self.descrWidth, self.componentItemHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, descriptionText)
 				]

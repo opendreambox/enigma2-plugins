@@ -16,20 +16,20 @@ class TunerEntry():
 	KEY_VTUNER_TYPE = "vtuner_type"
 
 	MAP_FROM_DLNA = {
-		SatIPTuner.TUNER_TYPE_S : TUNER_TYPE_S,
-		SatIPTuner.TUNER_TYPE_S2 : TUNER_TYPE_S,
-		SatIPTuner.TUNER_TYPE_T : TUNER_TYPE_T,
-		SatIPTuner.TUNER_TYPE_T2 : TUNER_TYPE_T,
-		SatIPTuner.TUNER_TYPE_C : TUNER_TYPE_C,
-		SatIPTuner.TUNER_TYPE_C2 : TUNER_TYPE_C
+		SatIPTuner.TUNER_TYPE_S: TUNER_TYPE_S,
+		SatIPTuner.TUNER_TYPE_S2: TUNER_TYPE_S,
+		SatIPTuner.TUNER_TYPE_T: TUNER_TYPE_T,
+		SatIPTuner.TUNER_TYPE_T2: TUNER_TYPE_T,
+		SatIPTuner.TUNER_TYPE_C: TUNER_TYPE_C,
+		SatIPTuner.TUNER_TYPE_C2: TUNER_TYPE_C
 	}
 
 	@staticmethod
 	def create(ip, tunerType, entryType=VTUNER_TYPE_SATIP_CLIENT):
 		data = {
-			TunerEntry.KEY_VTUNER_TYPE : entryType,
-			TunerEntry.KEY_TUNER_TYPE : tunerType,
-			TunerEntry.KEY_IPADDR : ip,
+			TunerEntry.KEY_VTUNER_TYPE: entryType,
+			TunerEntry.KEY_TUNER_TYPE: tunerType,
+			TunerEntry.KEY_IPADDR: ip,
 		}
 		return TunerEntry(data)
 

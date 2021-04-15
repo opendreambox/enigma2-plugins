@@ -81,8 +81,8 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 	SORT_DATE_DESC = 4
 	
 	LIST_STYLES = {
-		LIST_TYPE_FULL : "default",
-		LIST_TYPE_NODETAILS : "nodetails",
+		LIST_TYPE_FULL: "default",
+		LIST_TYPE_NODETAILS: "nodetails",
 	}
 	
 	if getDesktop(0).size().width()>=1920:
@@ -218,7 +218,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 		lastModified = ""
 		realPath = ""
 
-		res = [ ]
+		res = []
 
 
 		# info
@@ -317,12 +317,12 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 			for p in harddiskmanager.getMountedPartitions():
 				path = os_path.join(p.mountpoint, "")
 				if path not in self.inhibitMounts and not self.inParentDirs(path, self.inhibitDirs):
-					self.list.append(( p.description, path, None, True, False, None)) 
-			files = [ ]
-			directories = [ ]
+					self.list.append((p.description, path, None, True, False, None)) 
+			files = []
+			directories = []
 		elif directory is None:
-			files = [ ]
-			directories = [ ]
+			files = []
+			directories = []
 		else:
 			if os_path.exists(directory):
 				try:
@@ -340,7 +340,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 			if directory == self.current_mountpoint and self.showMountpoints:
 				self.list.append(("<%s>" %(_("List of Storage Devices")),  None, None, True, False, None))
 			elif (directory != "/") and not (self.inhibitMounts and self.getMountpoint(directory) in self.inhibitMounts):
-				self.list.append(( "<%s>" %(_("Parent Directory")), '/'.join(directory.split('/')[:-2]) + '/', None, True, False, None))
+				self.list.append(("<%s>" %(_("Parent Directory")), '/'.join(directory.split('/')[:-2]) + '/', None, True, False, None))
 				
 		if self.showDirectories:
 			for x in directories:
@@ -367,10 +367,10 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 					if nx is None:
 						fileInfo = os_lstat(path)
 						lastModified = strftime("%d.%m.%Y %H:%M:%S",localtime(fileInfo.st_mtime))
-						self.list.append(( name, directory, path, False, False, mediaType ))
+						self.list.append((name, directory, path, False, False, mediaType))
 					else:
 						extname = name + " [" + self.getTSLength(path) + "]"
-						self.list.append(( extname, directory, path, False, True, mediaType ))
+						self.list.append((extname, directory, path, False, True, mediaType))
 						
 		# let's sort the list to retain the last selection after directory change
 		self.sortList()
@@ -412,8 +412,8 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 		
 	def getFilteredFileList(self, mediaType, fileNameOnly=False):
 		if fileNameOnly:
-			return [ x[0] for x in self.list if x[5] == mediaType ]
-		return [ x for x in self.list if x[5] == mediaType ]	
+			return [x[0] for x in self.list if x[5] == mediaType]
+		return [x for x in self.list if x[5] == mediaType]	
 
 	def isSymLink(self):
 		if self.getSelection() is None:

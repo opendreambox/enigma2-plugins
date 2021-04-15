@@ -51,7 +51,7 @@ config.plugins.epgCopy.ip = ConfigIP(default=[0, 0, 0, 0])
 config.plugins.epgCopy.copytime = ConfigClock(default=int(autoCopy))
 
 def myPrint(txt, prefix=None):
-    print ("\033[91m[EPGCopy] %s\033[m " % txt)
+    print("\033[91m[EPGCopy] %s\033[m " % txt)
     
 def myFtp(): 
     directory_local='/tmp/' 
@@ -62,9 +62,9 @@ def myFtp():
     if path.isfile(directory_local+fileZiel):
         try:
             remove(directory_local+fileZiel)
-            myPrint ("deleted pre-existing " + fileZiel)
+            myPrint("deleted pre-existing " + fileZiel)
         except OSError:
-            myPrint ("could not remove pre-existing " + fileZiel)
+            myPrint("could not remove pre-existing " + fileZiel)
         
     remoteip = "%d.%d.%d.%d" % tuple(config.plugins.epgCopy.ip.value)
     f = ftplib.FTP(remoteip) 
@@ -120,7 +120,7 @@ class copyEveryDay(Screen):
                 ftpOK = False
             if ftpOK:
                 myEpg.load()
-                myPrint ("epg was loaded into memory")
+                myPrint("epg was loaded into memory")
             else:
                 myPrint("an error occurred while transferring the epg")
         self.configChange()
@@ -190,10 +190,10 @@ class epgCopyScreen(Screen, ConfigListScreen):
         if ftpOK:
             myEpg.load()
             self.session.openWithCallback(self.epgLoadFinishedConfirm, MessageBox, _("Successfully transferred and loaded EPG"), MessageBox.TYPE_INFO, timeout=4)
-            myPrint ("epg was loaded into memory")
+            myPrint("epg was loaded into memory")
         else:
             self.session.open(MessageBox,_("An error occurred while transferring the epg. Please check your ftp credentials."), MessageBox.TYPE_INFO, timeout=10)
-            myPrint ("an error occurred while transferring the epg")
+            myPrint("an error occurred while transferring the epg")
         
     def epgLoadFinishedConfirm(self, result):
         self.close()
@@ -212,7 +212,7 @@ def Plugins(path,**kwargs):
     global plugin_path
     plugin_path = path
     return  [
-             PluginDescriptor(name="epgCopy",description="copy epg.db", where=[ PluginDescriptor.WHERE_PLUGINMENU ], icon="epg.png", fnc=main),
+             PluginDescriptor(name="epgCopy",description="copy epg.db", where=[PluginDescriptor.WHERE_PLUGINMENU], icon="epg.png", fnc=main),
              PluginDescriptor(name="epgCopy", where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main),
              PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART,fnc=autoCpy)
              ]

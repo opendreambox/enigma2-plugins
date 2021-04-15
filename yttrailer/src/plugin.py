@@ -167,9 +167,9 @@ class TrailerList(GUIComponent, object):
 		titleHeight = sizes.get(TrailerList.SKIN_COMPONENT_TITLE_HEIGHT, 25)
 		descriptionHeight = sizes.get(TrailerList.SKIN_COMPONENT_DESCRIPTION_HEIGHT, 40)
 		lineSpacing = sizes.get(TrailerList.SKIN_COMPONENT_LINE_SPACING, 3)		
-		res = [ entry ]
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 2, configEntryWidth , titleHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, entry.title))
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, titleHeight+lineSpacing, configEntryWidth , descriptionHeight, 1, RT_WRAP, entry.description))
+		res = [entry]
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 2, configEntryWidth, titleHeight, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, entry.title))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, titleHeight+lineSpacing, configEntryWidth, descriptionHeight, 1, RT_WRAP, entry.description))
 		return res
 
 	def getCurrent(self):
@@ -244,7 +244,7 @@ class YTTrailerSetup(ConfigListScreen, Screen):
 		self["key_red"] = StaticText(_("Cancel"))
 		self["key_green"] = StaticText(_("Save"))
 
-		cfglist = [ ]
+		cfglist = []
 		cfglist.append(getConfigListEntry(_("Show Setup in Extensions menu"), config.plugins.yttrailer.show_in_extensionsmenu))
 		cfglist.append(getConfigListEntry(_("Extended search filter"), config.plugins.yttrailer.ext_descr))
 		cfglist.append(getConfigListEntry(_("Max. results in list-mode"), config.plugins.yttrailer.max_results))

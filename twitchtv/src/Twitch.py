@@ -84,8 +84,8 @@ class Twitch(object):
 
 	def _get(self, url, args=[], method="GET",):
 		headers = {
-			"Client-ID" : self._client_id,
-			"Accept" : "application/vnd.twitchtv.v5+json",
+			"Client-ID": self._client_id,
+			"Accept": "application/vnd.twitchtv.v5+json",
 		}
 		if args:
 			url = "%s%s" %(url, urllib.urlencode(args))
@@ -118,14 +118,14 @@ class Twitch(object):
 
 	def followedChannels(self, username, callback):
 		Log.w(username)
-		self._get("https://api.twitch.tv/kraken/users?", args=[("login", str(username))]).addCallbacks(self._onFollowedChannelsUserID, self._onErrorFollowedChannels, callbackArgs=[callback], errbackArgs=[callback] )
+		self._get("https://api.twitch.tv/kraken/users?", args=[("login", str(username))]).addCallbacks(self._onFollowedChannelsUserID, self._onErrorFollowedChannels, callbackArgs=[callback], errbackArgs=[callback])
 
 	def _onFollowedChannelsUserID(self, html, callback):
 		try:
 			data = json.loads(html)
 			userid = urllib.quote(str(data["users"] and data["users"][0]["_id"]))
 			if userid:
-				self._get("https://api.twitch.tv/kraken/users/%s/follows/channels" %(userid)).addCallbacks(self._onFollowedChannels, self._onErrorFollowedChannels, callbackArgs=[callback], errbackArgs=[callback] )
+				self._get("https://api.twitch.tv/kraken/users/%s/follows/channels" %(userid)).addCallbacks(self._onFollowedChannels, self._onErrorFollowedChannels, callbackArgs=[callback], errbackArgs=[callback])
 				return
 		except:
 			pass

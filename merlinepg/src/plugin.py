@@ -206,9 +206,9 @@ class MerlinEPGList(EPGList):
 	def getBgTime(self):
 		tmp = self.l.getCurrentSelection()
 		if tmp is None:
-			return ( None )
+			return (None)
 		bt = localtime(tmp[2])
-		return ( bt[3], bt[4] )
+		return (bt[3], bt[4])
 
 	def foudPrimetime(self):
 		for OneLine in range(0,self.evCnt):
@@ -618,7 +618,7 @@ class Merlin_PGII(Screen):
 		elif answer == "NT":
 			for timer in self.session.nav.RecordTimer.timer_list:
 				if timer.eit == eventid and timer.service_ref.ref.toString() == refstr:
-					cb_func = lambda ret : not ret or self.removeTimer(timer)
+					cb_func = lambda ret: not ret or self.removeTimer(timer)
 					self.session.openWithCallback(cb_func, MessageBox, _("Do you really want to delete %s?") % event.getEventName())
 					break
 			else:
@@ -935,7 +935,7 @@ class Merlin_PGd(Screen):
 		elif answer == "NT":
 			for timer in self.session.nav.RecordTimer.timer_list:
 				if timer.eit == eventid and timer.service_ref.ref.toString() == refstr:
-					cb_func = lambda ret : not ret or self.removeTimer(timer)
+					cb_func = lambda ret: not ret or self.removeTimer(timer)
 					self.session.openWithCallback(cb_func, MessageBox, _("Do you really want to delete %s?") % event.getEventName())
 					break
 			else:

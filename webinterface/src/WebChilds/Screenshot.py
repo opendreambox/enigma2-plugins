@@ -68,7 +68,7 @@ class ScreenshotResource(resource.Resource):
 			request.setResponseCode(http.NOT_FOUND)
 			request.finish()
 			return server.NOT_DONE_YET
-		mimetype = {'jpg' : 'jpeg'}.get(format, format)
+		mimetype = {'jpg': 'jpeg'}.get(format, format)
 		request.setHeader('Content-Type','image/%s' %mimetype)
 		pixmap = ePixmap(None)
 		size = desktop.size()

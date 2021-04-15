@@ -36,9 +36,9 @@ class PkgList(Source):
 			return []
 
 	list = property(getOpkgfeed)
-	lut = {"Packagename" : 0,
-		"Release" : 1,
-		"Info" : 2,
-		"State" : 3,
-		"Update" : 4,
+	lut = {"Packagename": 0,
+		"Release": 1,
+		"Info": 2,
+		"State": 3,
+		"Update": 4,
 	}

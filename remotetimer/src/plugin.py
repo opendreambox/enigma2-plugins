@@ -44,7 +44,7 @@ from urllib import quote_plus
 #------------------------------------------------------------------------------------------
 
 config.plugins.remoteTimer = ConfigSubsection()
-config.plugins.remoteTimer.httphost = ConfigText(default="" , fixed_size=False)
+config.plugins.remoteTimer.httphost = ConfigText(default="", fixed_size=False)
 config.plugins.remoteTimer.httpip = ConfigIP(default=[0, 0, 0, 0])
 config.plugins.remoteTimer.httpport = ConfigNumber(default=80)
 config.plugins.remoteTimer.username = ConfigText(default="root", fixed_size=False)
@@ -106,7 +106,7 @@ class RemoteTimerScreen(Screen):
 		self["text"] = Label("")
 
 		remoteip = "%d.%d.%d.%d" % tuple(config.plugins.remoteTimer.httpip.value)
-		self.remoteurl = "%s:%s" % ( remoteip, str(config.plugins.remoteTimer.httpport.value))
+		self.remoteurl = "%s:%s" % (remoteip, str(config.plugins.remoteTimer.httpport.value))
 
 		self.onLayoutFinish.append(self.getInfo)
 
@@ -357,7 +357,7 @@ def _gotPageLoadCb(timerEntry, doClose, *args):
 		timerEntry.keyCancel()
 
 def _gotPageLoad(session, timerEntry, html):
-	remoteresponse = parseXml( html)
+	remoteresponse = parseXml(html)
 	#print "print _gotPageLoad remoteresponse:", remoteresponse
 	# XXX: should be improved...
 	doClose = remoteresponse == "Timer added successfully!"
@@ -402,7 +402,7 @@ def main(session, **kwargs):
 
 def Plugins(**kwargs):
  	return [
-		PluginDescriptor(name="Remote Timer",description="Remote Timer Setup", where=[ PluginDescriptor.WHERE_PLUGINMENU ], icon="remotetimer.png", fnc=main),
+		PluginDescriptor(name="Remote Timer",description="Remote Timer Setup", where=[PluginDescriptor.WHERE_PLUGINMENU], icon="remotetimer.png", fnc=main),
 		PluginDescriptor(name="Remote Timer", where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main),
 		PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=autostart)
 	]

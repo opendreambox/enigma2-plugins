@@ -11,6 +11,6 @@ class NaSource(Source):
 		return
 	
 	def getResult(self):
-		return ( False, self.na )
+		return (False, self.na)
 
 	result = property(getResult)

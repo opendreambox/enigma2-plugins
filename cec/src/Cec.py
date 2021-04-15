@@ -69,7 +69,7 @@ class Cec(object):
 	def physicalToString(self, addr):
 		if not addr:
 			return "<invalid address>"
-		return "%x.%x.%x.%x" %( (addr[0] >> 4) & 0xf, addr[0] & 0xf, (addr[1] >> 4) & 0xf, addr[1] & 0xf)
+		return "%x.%x.%x.%x" %((addr[0] >> 4) & 0xf, addr[0] & 0xf, (addr[1] >> 4) & 0xf, addr[1] & 0xf)
 
 	def isStandby(self, state):
 		return state == eCec.POWER_STATE_STANDBY or state == eCec.POWER_STATE_TRANSITION_ON_TO_STANDBY

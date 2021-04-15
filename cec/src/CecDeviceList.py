@@ -10,26 +10,26 @@ from .Cec import cec
 
 class CecDeviceList(Screen):
 	DEVICE_TYPE = {
-		eCec.ADDR_TV : _("TV"),
-		eCec.ADDR_RECORDING_DEVICE_1 : _("Recording Device"),
-		eCec.ADDR_RECORDING_DEVICE_2 : _("Recording Device 2"),
-		eCec.ADDR_TUNER_1 : _("Tuner"),
-		eCec.ADDR_PLAYBACK_DEVICE_1 : _("Playback Device"),
-		eCec.ADDR_AUDIO_SYSTEM : _("Audio System"),
-		eCec.ADDR_TUNER_2 : _("Tuner 2"),
-		eCec.ADDR_TUNER_3 : _("Tuner 3"),
-		eCec.ADDR_PLAYBACK_DEVICE_2 : _("Playback Device 2"),
-		eCec.ADDR_RECORDING_DEVICE_3 : _("Recording Device 3"),
-		eCec.ADDR_TUNER_4 : _("Tuner 4"),
-		eCec.ADDR_PLAYBACK_DEVICE_3 : _("Playback Device 3"),
+		eCec.ADDR_TV: _("TV"),
+		eCec.ADDR_RECORDING_DEVICE_1: _("Recording Device"),
+		eCec.ADDR_RECORDING_DEVICE_2: _("Recording Device 2"),
+		eCec.ADDR_TUNER_1: _("Tuner"),
+		eCec.ADDR_PLAYBACK_DEVICE_1: _("Playback Device"),
+		eCec.ADDR_AUDIO_SYSTEM: _("Audio System"),
+		eCec.ADDR_TUNER_2: _("Tuner 2"),
+		eCec.ADDR_TUNER_3: _("Tuner 3"),
+		eCec.ADDR_PLAYBACK_DEVICE_2: _("Playback Device 2"),
+		eCec.ADDR_RECORDING_DEVICE_3: _("Recording Device 3"),
+		eCec.ADDR_TUNER_4: _("Tuner 4"),
+		eCec.ADDR_PLAYBACK_DEVICE_3: _("Playback Device 3"),
 	}
 
 	DEVICE_POWERSTATE = {
-		eCec.POWER_STATE_ON : _("On"),
-		eCec.POWER_STATE_STANDBY : _("Standby"),
-		eCec.POWER_STATE_TRANSITION_STANDBY_TO_ON : _("Standby to On"),
-		eCec.POWER_STATE_TRANSITION_ON_TO_STANDBY : _("On to Standby"),
-		eCec.POWER_STATE_UNKNOWN : _("Unknown"),
+		eCec.POWER_STATE_ON: _("On"),
+		eCec.POWER_STATE_STANDBY: _("Standby"),
+		eCec.POWER_STATE_TRANSITION_STANDBY_TO_ON: _("Standby to On"),
+		eCec.POWER_STATE_TRANSITION_ON_TO_STANDBY: _("On to Standby"),
+		eCec.POWER_STATE_UNKNOWN: _("Unknown"),
 	}
 
 	skin = """
@@ -54,10 +54,10 @@ class CecDeviceList(Screen):
 		self["key_yellow"] = StaticText(_("Scan"))
 		self["deviceActions"] = ActionMap(["OkCancelActions","ColorActions","EPGSelectActions"],
 		actions={
-			"cancel" : self.close,
-			"green"  : self.updateDeviceInfo,
-			"yellow" : self.scanDevices,
-			"info"   : self.deviceInfo,
+			"cancel": self.close,
+			"green": self.updateDeviceInfo,
+			"yellow": self.scanDevices,
+			"info": self.deviceInfo,
 		})
 
 		self._reloadtimer = eTimer()

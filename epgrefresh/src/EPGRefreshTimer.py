@@ -173,13 +173,13 @@ class EPGRefreshTimer(timer.Timer):
 		min = int(time()) + self.MaxWaitTime
 		
 		# calculate next activation point
-		timer_list = [ t for t in self.timer_list if not t.disabled ]
+		timer_list = [t for t in self.timer_list if not t.disabled]
 		if timer_list:
 			w = timer_list[0].getNextActivation()
 			if w < min:
 				min = w
 			else:
-				print ("[EPGRefreshTimer] next real activation is %s" % (strftime("%c", localtime(w))))
+				print("[EPGRefreshTimer] next real activation is %s" % (strftime("%c", localtime(w))))
 		
 		self.setNextActivation(min)      
 

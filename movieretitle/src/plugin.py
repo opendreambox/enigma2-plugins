@@ -20,7 +20,7 @@ def Plugins(**kwargs):
 class MovieRetitle(Screen, ConfigListScreen):
 	def __init__(self, session, service, parent, args=0):
 		Screen.__init__(self, session, parent=parent)
-		self.skinName = [ "MovieRetitle", "Setup" ]
+		self.skinName = ["MovieRetitle", "Setup"]
 
 		serviceHandler = eServiceCenter.getInstance()
 		info = serviceHandler.info(service)

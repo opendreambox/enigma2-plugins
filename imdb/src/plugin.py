@@ -264,8 +264,7 @@ class IMDB(Screen):
 		'(?:.*?<h4 class="float-left">(?P<g_seasons>Seasons?)\s*</h4>.*?<a.*?>(?P<seasons>(?:\d+|unknown)?)</a>)*'
 		'(?:.*?<h4 class="inline">\s*(?P<g_country>Country):\s*</h4>.*?<a.*?>(?P<country>.*?)</a>)*'
 		'(?:.*?<h4 class="inline">\s*(?P<g_premiere>Release Date).*?</h4>\s+(?P<premiere>.*?)\D+\s+<span)*'
-		'(?:.*?<h4 class="inline">(?P<g_runtime>Runtime):</h4>\s*(?P<runtime>.*?)</div>)*'
-		, re.S)
+		'(?:.*?<h4 class="inline">(?P<g_runtime>Runtime):</h4>\s*(?P<runtime>.*?)</div>)*'		, re.S)
 
 		self.extrainfomask = re.compile(
 		'(?:.*?<h4 class="inline">(?P<g_keywords>Plot Keywords):</h4>(?P<keywords>.*?)(?:See All|</div>))*'
@@ -283,8 +282,7 @@ class IMDB(Screen):
 		'(?:.*?<h4>(?P<g_quotes>Quotes)</h4>.*?class="character">(?P<quotes>.*?)(?:See more))*'
 		'(?:.*?<h4>(?P<g_crazy>Crazy Credits)</h4>\s*(?P<crazy>.*?)(?:See more))*'
 		'(?:.*?<h4>(?P<g_connections>Connections)</h4>\s*(?P<connections>.*?)(?:See more|<span))*'
-		'(?:.*?<h2>(?P<g_comments>User Reviews)</h2>.*?href="/user/ur\d+/\?ref_=tt_urv".{0,1}>(?:<span itemprop="author">)(?P<commenter>.*?)</span>.*?<p\sitemprop="reviewBody">(?P<comment>.*?)</p>)*'
-		, re.S)
+		'(?:.*?<h2>(?P<g_comments>User Reviews)</h2>.*?href="/user/ur\d+/\?ref_=tt_urv".{0,1}>(?:<span itemprop="author">)(?P<commenter>.*?)</span>.*?<p\sitemprop="reviewBody">(?P<comment>.*?)</p>)*'		, re.S)
 
 		self.genreblockmask = re.compile('href="/genre/.*?\?ref_=tt_stry_gnr.*?\n.*?\s(?P<genre>.*?)</a>', re.S)
 		self.ratingmask = re.compile('aggregateRating.*?ratingCount":\s(?P<ratingcount>\d+),.*?ratingValue":\s"(?P<rating>.*?)"', re.S)
@@ -344,7 +342,7 @@ class IMDB(Screen):
 			self["extralabel"].pageDown()
 
 	def showMenu(self):
-		if ( self.Page is 1 or self.Page is 2 ) and self.resultlist:
+		if (self.Page is 1 or self.Page is 2) and self.resultlist:
 			self["menu"].show()
 			self["stars"].hide()
 			self["starsbg"].hide()

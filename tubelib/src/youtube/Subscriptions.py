@@ -5,9 +5,9 @@ from YoutubeQueryBase import YoutubeQueryBase
 class Subscriptions(YoutubeQueryBase):
 	def list(self, callback, maxResults=25):
 		self._args = {
-			'part' : 'id,snippet,contentDetails',
-			'mine' : 'true',
-			'maxResults' : 25,
+			'part': 'id,snippet,contentDetails',
+			'mine': 'true',
+			'maxResults': 25,
 		}
 		return self._doQuery(callback)
 

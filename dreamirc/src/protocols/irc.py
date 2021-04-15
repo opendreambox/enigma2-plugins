@@ -1929,7 +1929,7 @@ def ctcpExtract(message):
     extended_messages = []
     normal_messages = []
     retval = {'extended': extended_messages,
-              'normal': normal_messages }
+              'normal': normal_messages}
 
     messages = string.split(message, X_DELIM)
     odd = 0

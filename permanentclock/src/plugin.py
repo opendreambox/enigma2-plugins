@@ -181,7 +181,7 @@ def startConfig(session, **kwargs):
 
 def main(menuid):
 	if menuid != "system": 
-		return [ ]
+		return []
 	return [(_("Permanent Clock"), startConfig, "permanent_clock", None)]
 
 ##############################################################################

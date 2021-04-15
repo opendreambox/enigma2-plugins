@@ -104,7 +104,7 @@ class AutoTimerComponent(object):
 		else:
 			self._bouquets = []
 
-	bouquets = property(lambda self: self._bouquets , setBouquets)
+	bouquets = property(lambda self: self._bouquets, setBouquets)
 
 	def setExclude(self, exclude):
 		if exclude:

@@ -22,7 +22,7 @@ class FTPProgressDownloader(Protocol):
 		self.currentlength = 0
 		self.totallength = None
 		if writeProgress and type(writeProgress) is not list:
-			writeProgress = [ writeProgress ]
+			writeProgress = [writeProgress]
 		self.writeProgress = writeProgress
 
 		# Output
@@ -51,7 +51,7 @@ class FTPProgressDownloader(Protocol):
 		code, msg = msgs[0].split()
 		if code == '213':
 			self.totallength = int(msg)
-			for cb in self.writeProgress or [ ]:
+			for cb in self.writeProgress or []:
 				cb(0, self.totallength)
 
 			# We know the size, so start fetching
@@ -72,7 +72,7 @@ class FTPProgressDownloader(Protocol):
 			return
 
 		self.totallength = self.filelist.files[0]['size']
-		for cb in self.writeProgress or [ ]:
+		for cb in self.writeProgress or []:
 			cb(0, self.totallength)
 
 		# Invalidate list

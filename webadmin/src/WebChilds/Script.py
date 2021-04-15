@@ -26,7 +26,7 @@ class Script(resource.Resource):
 
 		if path.endswith('.sh') and access(path, X_OK):
 			request.setResponseCode(http.OK)
-			PKGConsoleStream(request, [ path ] + args)
+			PKGConsoleStream(request, [path] + args)
 			return server.NOT_DONE_YET
 
 		request.setResponseCode(http.FORBIDDEN)

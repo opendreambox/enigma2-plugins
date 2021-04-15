@@ -11,7 +11,7 @@ class WebScriptList(Source):
 		self.func = func
 		self.wap = wap
 		self.session = session
-		self.res = ( False, "Missing or Wrong Argument" )
+		self.res = (False, "Missing or Wrong Argument")
 
 	def handleCommand(self, cmd):
 		pass
@@ -31,6 +31,5 @@ class WebScriptList(Source):
 
 	result = property(getResult)
 	list = property(getList)
-	lut = {"Name": 0
-			, "Text": 1
+	lut = {"Name": 0			, "Text": 1
 		}

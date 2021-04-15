@@ -5,8 +5,8 @@ from Tools.Log import Log
 
 class TwitchVideoUrlResolver(object):
 	_ytdl = YoutubeDL(params={
-			"nocheckcertificate" : True,
-			"noplaylist" : False
+			"nocheckcertificate": True,
+			"noplaylist": False
 		})
 
 	KEY_FORMAT_ID = u"format_id"

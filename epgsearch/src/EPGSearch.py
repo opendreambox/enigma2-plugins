@@ -559,7 +559,7 @@ class EPGSearch(EPGSelection):
 			blue_function = config.plugins.epgsearch.blue_function.value
 
 		if blue_function == "ask":
-			choices = [ (_("Open text search history with search filters"), "combi"),
+			choices = [(_("Open text search history with search filters"), "combi"),
 						(_("Open search filter list"), "searchlist"),
 						(_("Open text search history list"), "history")
 						]
@@ -636,8 +636,8 @@ class EPGSearch(EPGSelection):
 		searchType = config.plugins.epgsearch.search_type.value
 		if  searchType == SearchType.ASK:
 			boundCallback = boundFunction(self.onSearchEPGCallback, searchString=searchString, searchSave=searchSave)
-			choices = [ (_("Title only"), False),
-						(_("Title and Description"), True) ]
+			choices = [(_("Title only"), False),
+						(_("Title and Description"), True)]
 			self.session.openWithCallback(boundCallback, ChoiceBox, list=choices, title=_("Where to search for '%s'?") %(searchString), windowTitle=_("EPG Search"))
 		else:
 			searchDescription = searchType == SearchType.TITLE_DESCRIPTION

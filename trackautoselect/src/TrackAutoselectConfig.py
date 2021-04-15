@@ -53,7 +53,7 @@ class TrackAutoselectConfig():
 	handle_services_choices = [("servicegst",_("Media Files")), ("servicedvb",_("TV Services")), ("servicedvd",_("DVD"))]
 	[SERVICE_GST, SERVICE_DVB, SERVICE_DVD] = [x[0] for x in handle_services_choices]
 
-	services_dict = { eServiceReference.idDVB: SERVICE_DVB, 0x1001: SERVICE_GST, 0x1111: SERVICE_DVD }
+	services_dict = {eServiceReference.idDVB: SERVICE_DVB, 0x1001: SERVICE_GST, 0x1111: SERVICE_DVD}
 
 	def __init__(self):
 		from Screens.AudioSelection import AUDIO_FORMATS, SUB_FORMATS, GST_SUB_FORMATS

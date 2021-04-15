@@ -46,9 +46,9 @@ class RadioScreen(Screen, ServiceStopScreen, InfoBarServiceErrorPopupSupport, In
 		self["service"] = self._serviceLabel
 		self["actions"] = NumberActionMap(["OkCancelActions", "NumberActions", "ColorActions"],
 		{
-			"ok": self._onOk ,
-			"cancel" : self.close,
-			"blue" : self._onBlue,
+			"ok": self._onOk,
+			"cancel": self.close,
+			"blue": self._onBlue,
 			"1": self._onKeyChar,
 			"2": self._onKeyChar,
 			"3": self._onKeyChar,

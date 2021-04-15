@@ -32,10 +32,10 @@ class SatIPTunerSetup(Screen):
 
 		self["setupActions"] = ActionMap(["OkCancelActions", "ColorActions"],
 		{
-			"ok" : self._close,
-			"cancel" : self._close,
-			"green" : self._add,
-			"red" : self._remove,
+			"ok": self._close,
+			"cancel": self._close,
+			"green": self._add,
+			"red": self._remove,
 		})
 		self._changed = False
 		self._console = Console()

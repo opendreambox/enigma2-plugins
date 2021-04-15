@@ -36,7 +36,7 @@ class AutoTimerFilterList(MenuList):
 		self.l.setFont(0, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
 
 	def applySkin(self, desktop, parent):
-		attribs = [ ] 
+		attribs = [] 
 		if self.skinAttributes is not None:
 			for (attrib, value) in self.skinAttributes:
 				if attrib == "font":
@@ -277,7 +277,7 @@ class AutoTimerFilterListOverview(Screen):
 	def removeCallback(self, ret):
 		cur = self["config"].getCurrentIndex()
 		if ret and cur is not None:
-			print ("=== index: ", int(cur))
+			print("=== index: ", int(cur))
 			del self.FilterList[cur]
 			
 			self["config"].setList(self.FilterList)
@@ -287,7 +287,7 @@ class AutoTimerFilterListOverview(Screen):
 
 	def cancel(self):
 		if self.changed:
-			self.session.openWithCallback(self.cancelConfirm, ChoiceBox, title=_('Really close without saving settings?\nWhat do you want to do?') , list=[(_('close without saving'), 'close'), (_('close and save'), 'close_save'),(_('cancel'), 'exit'), ])
+			self.session.openWithCallback(self.cancelConfirm, ChoiceBox, title=_('Really close without saving settings?\nWhat do you want to do?'), list=[(_('close without saving'), 'close'), (_('close and save'), 'close_save'),(_('cancel'), 'exit'), ])
 		else:
 			self.close()
 
@@ -432,7 +432,7 @@ class AutoTimerFilterListEditor(Screen, ConfigListScreen):
 	def save(self):
 		
 		if not self.list[2][1].value.strip():
-			self.session.open( MessageBox, _("The title attribute is mandatory."), type=MessageBox.TYPE_ERROR, timeout=5 )
+			self.session.open(MessageBox, _("The title attribute is mandatory."), type=MessageBox.TYPE_ERROR, timeout=5)
 		else:
 			if self["config"].isChanged():
 				self.close(self.list, self.add_edit)

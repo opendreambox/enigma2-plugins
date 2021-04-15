@@ -71,7 +71,7 @@ def getLog():
 	return log
 
 def doDebug(*args):
-	strargs = " ".join( [ str(arg) for arg in args ] )
+	strargs = " ".join([str(arg) for arg in args])
 	
 	global logger
 	if logger:
@@ -81,7 +81,7 @@ def doDebug(*args):
 		print strargs
 
 def doLog(*args):
-	strargs = " ".join( [ str(arg) for arg in args ] )
+	strargs = " ".join([str(arg) for arg in args])
 	
 	global log, localLog
 	if localLog:

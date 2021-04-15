@@ -47,7 +47,7 @@ class InternetRadioWeb(Source):
 		elif self.func is self.STOP_PLAYING:
 			self.result = self.stopPlaying()
 		else:
-			self.result = ( False, "one two three four unknown command" )
+			self.result = (False, "one two three four unknown command")
 
 	def handleCommand(self, cmd):
 		print "[WebComponents.InternetRadioWeb] handleCommand with cmd = ", cmd
@@ -60,7 +60,7 @@ class InternetRadioWeb(Source):
 		elif self.func is self.PLAY_STATION:
 				self.result = self.playStation(cmd)
 		else:
-			self.result = ( False, "one two three four unknown command" )
+			self.result = (False, "one two three four unknown command")
 
 	def addFavorite(self, param):
 		print "[WebComponents.InternetRadioWeb] addFavorite with param = ", param

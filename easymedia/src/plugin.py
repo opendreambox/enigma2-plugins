@@ -146,7 +146,7 @@ class MPanelList(MenuList):
 		self.moveToIndex(self.selection)
 
 	def buildEntry(self, key, text, cell):
-		res = [ text ]
+		res = [text]
 
 		res.append((eListboxPythonMultiContent.TYPE_TEXT, self.textxoffset, self.textyoffset, self.textwidth, self.textheight, 0, RT_HALIGN_LEFT|RT_WRAP|RT_VALIGN_CENTER, text[0]))
 		if cell<5:

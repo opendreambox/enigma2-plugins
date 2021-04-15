@@ -21,9 +21,9 @@ class Videos(YoutubeQueryBase):
 			chart = self.MOST_POPULAR
 
 		self._args = {
-			"part" : "id,snippet,statistics,contentDetails",
-			"maxResults" : maxResults,
-			"hl" : config.osd.language.value.split("_")[0]
+			"part": "id,snippet,statistics,contentDetails",
+			"maxResults": maxResults,
+			"hl": config.osd.language.value.split("_")[0]
 		}
 		if videoCategoryId:
 			self._args["videoCategoryId"] = videoCategoryId
@@ -211,7 +211,7 @@ class VideoUrlRequest(object):
 		'271+171', #DASH-webm 1440p
 	]
 	VIDEO_FMT_PRIORITY_MAP_FHD_WEBM =  [
-		'170+172' ,#DASH-webm 1080p
+		'170+172',#DASH-webm 1080p
 		'170+171', #DASH-webm 1080p
 		'248+172', #DASH-webm 1080p
 		'248+171', #DASH-webm 1080p
@@ -257,10 +257,10 @@ class VideoUrlRequest(object):
 		self._async = async
 		self._params = {
 			"youtube_include_dash_manifest": False,
-			"nocheckcertificate" : True,
-			"noplaylist" : False,
-			"playlist_items" : 1,
-			"logger" : YTDLLogger(),
+			"nocheckcertificate": True,
+			"noplaylist": False,
+			"playlist_items": 1,
+			"logger": YTDLLogger(),
 		}
 		self._setupFormatMap()
 		if self._async:

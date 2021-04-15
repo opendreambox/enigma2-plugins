@@ -255,7 +255,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			"green": self.green_pressed,
 			"yellow": self.yellow_pressed,
 			"blue": self.blue_pressed,
-			"info" : self.info_pressed,
+			"info": self.info_pressed,
 			
 		}, -1)
 
@@ -299,7 +299,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		self.url_tried = 0
 		
 		self.stationListURL = "http://www.radio-browser.info/xml.php"
-		self.filterSwitch = { _("Countries"):_("Genres"), _("Genres"):_("Countries")}
+		self.filterSwitch = {_("Countries"):_("Genres"), _("Genres"):_("Countries")}
 
 
 		self.visuCleanerTimer = eTimer()
@@ -544,7 +544,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			if self.currentPlayingStation and len(self.currentPlayingStation.url) != 0:
 				self.session.openWithCallback(self.InputBoxStartRecordingCallback, InputBox, windowTitle=_("Recording length"),  title=_("Enter in minutes (0 means unlimited)"), text="0", type=Input.NUMBER)
 			else:
-				self.session.open(MessageBox, _("Only running streamings can be recorded!"), type=MessageBox.TYPE_INFO,timeout=20 )
+				self.session.open(MessageBox, _("Only running streamings can be recorded!"), type=MessageBox.TYPE_INFO,timeout=20)
 
 	def green_pressed(self):
 		if self.mode != self.FILTERLIST:
@@ -779,16 +779,16 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		
 	def getFilteredStationList(self, filter_string):
 		if self.mode == self.SEARCHLIST:
-			return [ (x,) for x in self.stationList if ( self.searchInternetRadioString in x.tags.lower() or self.searchInternetRadioString in x.name.lower())]
+			return [(x,) for x in self.stationList if (self.searchInternetRadioString in x.tags.lower() or self.searchInternetRadioString in x.name.lower())]
 		else:
 			self.searchInternetRadioString = ""
 			if filter_string != _("All Genres") and filter_string != _("All Countries"):
 				if config.plugins.internetradio.filter.value == _("Countries"):
-					return [ (x,) for x in self.stationList if ( filter_string == x.country)]
+					return [(x,) for x in self.stationList if (filter_string == x.country)]
 				else:
-					return [ (x,) for x in self.stationList if ( filter_string in x.tags)]
+					return [(x,) for x in self.stationList if (filter_string in x.tags)]
 			else:
-				return [ (x,) for x in self.stationList]
+				return [(x,) for x in self.stationList]
 
 	def fillStationList(self,xmlstring):
 		stationList = []

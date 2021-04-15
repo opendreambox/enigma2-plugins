@@ -78,13 +78,13 @@ class PipzapSetup(Screen, ConfigListScreen):
 
 	def buildConfig(self):
 			
-			self.list.append( getConfigListEntry(_("Enable Hotkey"), config.plugins.pipzap.enable_hotkey, _("Use the STOP-Key to quickly enable/disable pipzap in TV-Mode? Changing this setting requires a restart.") ) )
+			self.list.append(getConfigListEntry(_("Enable Hotkey"), config.plugins.pipzap.enable_hotkey, _("Use the STOP-Key to quickly enable/disable pipzap in TV-Mode? Changing this setting requires a restart.")))
 			if config.plugins.pipzap.enable_hotkey.value:
-				self.list.append( getConfigListEntry(_("  Open/Close PiP with Exit-Key"), config.plugins.pipzap.enable_exitkey, _("Use the Exit-Key to open/close the PiP.") ) )
-			self.list.append( getConfigListEntry(_("Show in Plugin menu"), config.plugins.pipzap.show_in_plugins, _("Adds an entry to the Plugin menu to toggle pipzap") ) )
-			self.list.append( getConfigListEntry(_("Show indicator label if zapping PiP"), config.plugins.pipzap.show_label, _("Displays a label in the opposite corner of PiP if pipzap is enabled.") ) )
+				self.list.append(getConfigListEntry(_("  Open/Close PiP with Exit-Key"), config.plugins.pipzap.enable_exitkey, _("Use the Exit-Key to open/close the PiP.")))
+			self.list.append(getConfigListEntry(_("Show in Plugin menu"), config.plugins.pipzap.show_in_plugins, _("Adds an entry to the Plugin menu to toggle pipzap")))
+			self.list.append(getConfigListEntry(_("Show indicator label if zapping PiP"), config.plugins.pipzap.show_label, _("Displays a label in the opposite corner of PiP if pipzap is enabled.")))
 			if config.plugins.pipzap.show_label.value:
-				self.list.append( getConfigListEntry(_("  Show label with channelname under PiP"), config.plugins.pipzap.show_channelname, _("Displays the channelname in a label directly under the PiP - instead of indicator label.") ) )
+				self.list.append(getConfigListEntry(_("  Show label with channelname under PiP"), config.plugins.pipzap.show_channelname, _("Displays the channelname in a label directly under the PiP - instead of indicator label.")))
 
 
 	def setCustomTitle(self):

@@ -75,7 +75,7 @@ for arg in sys.argv[1:]:
 	for (k,c,f) in attrlist:
 		if c:
 			for l in c.split("\n"):
-				print( "#. ", l)
+				print("#. ", l)
 		if arg == f:
 			print("#: %s" % (arg))
 		else:

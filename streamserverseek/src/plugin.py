@@ -32,11 +32,11 @@ def autostart(reason,**kwargs):
 		print "session %s" % sss
 
 		root = File(eEnv.resolve("${libdir}/enigma2/python/Plugins/Extensions/StreamServerSeek/web-data"))
-		root.putChild("web", ScreenPageCORS(kwargs["session"], util.sibpath(__file__, "web"), True) )
+		root.putChild("web", ScreenPageCORS(kwargs["session"], util.sibpath(__file__, "web"), True))
 		root.putChild("stream", StreamResource(kwargs["session"]))
 		root.putChild("proxy", ProxyResource(kwargs["session"]))
 		root.putChild("vod", EncodingResourceWrapper(VodResource(kwargs["session"]), [M3u8GzipEncoderFactory()]))
-		addExternalChild( ("streamserverseek", root) )
+		addExternalChild(("streamserverseek", root))
 
 def Plugins(**kwargs): 
 	return [PluginDescriptor(where=[PluginDescriptor.WHERE_SESSIONSTART], fnc=autostart)]

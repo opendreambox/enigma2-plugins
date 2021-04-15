@@ -178,7 +178,7 @@ class FilebrowserScreen(Screen):
                 titletxt = _("copy directory")
             else:
                 titletxt = _("copy file")
-            self.session.openWithCallback(self.doCopy,ChoiceBox, title=titletxt + "?\n%s\nfrom %s to %s" %(filename,sourceDir,targetDir),list=[(_("yes"), True ),(_("no"), False )])
+            self.session.openWithCallback(self.doCopy,ChoiceBox, title=titletxt + "?\n%s\nfrom %s to %s" %(filename,sourceDir,targetDir),list=[(_("yes"), True),(_("no"), False)])
         else:
             return
 
@@ -208,7 +208,7 @@ class FilebrowserScreen(Screen):
                 titletxt = _("delete directory")
             else:
                 titletxt = _("delete file")            
-            self.session.openWithCallback(self.doDelete,ChoiceBox, title=titletxt +"?\n%s\nfrom dir\n%s"%(filename,sourceDir),list=[(_("yes"), True ),(_("no"), False )])
+            self.session.openWithCallback(self.doDelete,ChoiceBox, title=titletxt +"?\n%s\nfrom dir\n%s"%(filename,sourceDir),list=[(_("yes"), True),(_("no"), False)])
         else:
             return
 
@@ -238,7 +238,7 @@ class FilebrowserScreen(Screen):
                 titletxt = _("move directory")
             else:
                 titletxt = _("move file")
-            self.session.openWithCallback(self.doMove,ChoiceBox, title=titletxt+"?\n%s\nfrom %s to %s"%(filename,sourceDir,targetDir),list=[(_("yes"), True ),(_("no"), False )])
+            self.session.openWithCallback(self.doMove,ChoiceBox, title=titletxt+"?\n%s\nfrom %s to %s"%(filename,sourceDir,targetDir),list=[(_("yes"), True),(_("no"), False)])
         else:
             return
 

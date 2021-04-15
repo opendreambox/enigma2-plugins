@@ -130,7 +130,7 @@ def InfoBarPlugins__init__(self):
 
 def showInfo(self):
 	if not config.plugins.EasyInfo.showEventInfoFirst.value:
-		epglist = [ ]
+		epglist = []
 		self.epglist = epglist
 		service = self.session.nav.getCurrentService()
 		ref = self.session.nav.getCurrentlyPlayingServiceReference()
@@ -244,7 +244,7 @@ class EasyInfoPanelList(MenuList):
 		self.l.setBuildFunc(self.buildEntry)
 		
 	def buildEntry(self, func, key):
-		res = [ None ]
+		res = [None]
 		
 		text = getPluginByName(func)
 		
@@ -273,10 +273,10 @@ class EasyInfoConfig(ConfigListScreen, Screen):
 		self.session = session
 		self.oldsetting = [config.plugins.EasyInfo.showEventInfoFirst.value, config.plugins.EasyInfo.buttonTV.value]
 		list = []
-		list.append(getConfigListEntry(_("Replace event info with EasyInfo:"), config.plugins.EasyInfo.showEventInfoFirst ))
-		list.append(getConfigListEntry(_("Replace TV-button function:"), config.plugins.EasyInfo.buttonTV ))
-		list.append(getConfigListEntry(_("EventInfo yellow button:"), config.plugins.EasyInfo.eventViewYellow ))
-		list.append(getConfigListEntry(_("EventInfo blue button:"), config.plugins.EasyInfo.eventViewBlue ))
+		list.append(getConfigListEntry(_("Replace event info with EasyInfo:"), config.plugins.EasyInfo.showEventInfoFirst))
+		list.append(getConfigListEntry(_("Replace TV-button function:"), config.plugins.EasyInfo.buttonTV))
+		list.append(getConfigListEntry(_("EventInfo yellow button:"), config.plugins.EasyInfo.eventViewYellow))
+		list.append(getConfigListEntry(_("EventInfo blue button:"), config.plugins.EasyInfo.eventViewBlue))
 		list.append(getConfigListEntry(_("OK function in Easy-PG:"), config.plugins.EasyInfo.easyPGOK))
 		list.append(getConfigListEntry(_("Easy-PG picons path:"), config.plugins.EasyInfo.piconPath))
 		list.append(getConfigListEntry(_("Easy-PG Primetime 1:"), config.plugins.EasyInfo.primeTime1))
@@ -582,7 +582,7 @@ def EasyInfoCallbackFunc(answer):
 		elif cnt == 1:
 			InfoBar_instance.openBouquetEPG(bouquets[0][1], True)
 	elif answer == "eventinfo":
-		epglist = [ ]
+		epglist = []
 		InfoBar_instance.epglist = epglist
 		service = EasyInfoSession.nav.getCurrentService()
 		ref = EasyInfoSession.nav.getCurrentlyPlayingServiceReference()
@@ -785,7 +785,7 @@ class EasyInfoEventList(EPGList):
 		self.l.setBuildFunc(self.buildMultiEntry)
 		
 		self.hasChannelInfo = hasChannelInfo
-		self.nameCache = { }
+		self.nameCache = {}
 
 	def getPicon(self, sRef):
 		pngname = PiconResolver.getPngName(sRef, self.nameCache, self.findPicon)
@@ -802,7 +802,7 @@ class EasyInfoEventList(EPGList):
 
 	def buildMultiEntry(self, changecount, service, eventId, beginTime, duration, EventName, nowTime, service_name):
 		(clock_pic, rec) = self.getPixmapForEntry(service, eventId, beginTime, duration)
-		res = [ None ]
+		res = [None]
 		
 		channelOffset = 0
 		recOffset = 0

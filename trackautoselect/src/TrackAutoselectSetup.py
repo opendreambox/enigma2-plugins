@@ -42,7 +42,7 @@ class TrackAutoselectSetup(Screen, ConfigListScreen):
 		{
 			"save": self.keySave,
 			"cancel": self.keyCancel,
-			"ok" : self.modifyEntry,
+			"ok": self.modifyEntry,
 			"blue": self.modifyEntry,
 			"yellow": self.keyYellow
 		}, -3)

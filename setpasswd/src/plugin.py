@@ -87,7 +87,7 @@ class ChangePasswordScreen(ChoiceBox):
 			windowTitle=_("Password change failed!")
 			message=_("Unable to set new password for '%s'") % self._user
 			type=MessageBox.TYPE_ERROR
-		self.session.open(MessageBox, message , type, windowTitle=windowTitle)
+		self.session.open(MessageBox, message, type, windowTitle=windowTitle)
 		self.close()
 
 	def _onPasswordInputFinished(self, password):
@@ -96,7 +96,7 @@ class ChangePasswordScreen(ChoiceBox):
 
 def startChange(menuid):
 	if menuid != "system": 
-		return [ ]
+		return []
 	return [(_("Password"), main, "change_root_passwd", 50)]
 
 def main(session, **kwargs):

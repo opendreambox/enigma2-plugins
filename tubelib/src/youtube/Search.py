@@ -17,11 +17,11 @@ class Search(Videos):
 	def list(self, callback, searchTerm=None, order=ORDER_RELEVANCE, maxResults=25, relatedToVideoId=None, channelId=None, safeSearch=SAFE_SEARCH_NONE):
 		self._listrequest = None
 		self._args = {
-			'part' : 'id',
-			'type' : 'video',
-			'maxResults' : maxResults,
-			'order' : order,
-			'safeSearch' : safeSearch
+			'part': 'id',
+			'type': 'video',
+			'maxResults': maxResults,
+			'order': order,
+			'safeSearch': safeSearch
 		}
 		if searchTerm:
 			self._args['q'] = searchTerm
@@ -40,10 +40,10 @@ class Search(Videos):
 			for item in data['items']:
 				items.append(item["id"]["videoId"])
 			kwargs = {
-				"part" : "id,snippet,statistics,contentDetails",
-				"maxResults" : 50,
-				"hl" : config.osd.language.value.split("_")[0],
-				"id" : ",".join(items)
+				"part": "id,snippet,statistics,contentDetails",
+				"maxResults": 50,
+				"hl": config.osd.language.value.split("_")[0],
+				"id": ",".join(items)
 			}
 			request = self._youtube.videos().list(**kwargs)
 			return request

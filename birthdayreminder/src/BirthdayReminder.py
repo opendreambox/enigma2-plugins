@@ -366,7 +366,7 @@ class BirthdayReminder(Screen, HelpableScreen):
 			self["name"].instance.setForegroundColor(parseColor("yellow"))
 			self["birthday"].instance.setForegroundColor(parseColor("white"))
 			self["age"].instance.setForegroundColor(parseColor("white"))
-			self.birthdaytimer.bDayList.sort(key=lambda t : tuple(t[0].lower()))
+			self.birthdaytimer.bDayList.sort(key=lambda t: tuple(t[0].lower()))
 		elif config.plugins.birthdayreminder.sortby.value == "2": # sort by upcoming birthday
 			self["name"].instance.setForegroundColor(parseColor("white"))
 			self["birthday"].instance.setForegroundColor(parseColor("yellow"))
@@ -487,11 +487,11 @@ class BirthdayReminder(Screen, HelpableScreen):
 		self.birthdaytimer.broadcastProtocol.sendBroadcast("offeringList")
 		
 class BirthdayList(List):
-	def __init__(self, list=[ ], enableWrapAround=False, item_height=25, fonts=[ ]):
-		List.__init__(self, list=[ ], enableWrapAround=False, item_height=25, fonts=[ ])
+	def __init__(self, list=[], enableWrapAround=False, item_height=25, fonts=[]):
+		List.__init__(self, list=[], enableWrapAround=False, item_height=25, fonts=[])
 		Source.__init__(self)
 		self.__list = list
-		self.onSelectionChanged = [ ]
+		self.onSelectionChanged = []
 		self.item_height = item_height
 		self.fonts = fonts
 		self.disable_callbacks = False
@@ -509,7 +509,7 @@ class BirthdayList(List):
 		else:
 			format = "%d.%m.%Y"
 		
-		l = [ ]
+		l = []
 		for entry in self.__list:
 			name = entry[0]
 			birthday = entry[1].strftime(format)

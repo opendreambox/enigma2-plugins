@@ -52,7 +52,7 @@ class TwitchStreamGrid(Screen):
 			"cancel": self.close,
 			"red": self._onRed,
 			"green": self._onGreen,
-			"yellow" : self._onYellow,
+			"yellow": self._onYellow,
 			"blue": self._onBlue,
 		}, -1)
 
@@ -116,7 +116,7 @@ class TwitchStreamGrid(Screen):
 		self.validateCache(True)
 
 	def reload(self):
-		self._items = [ ("loading",) ]
+		self._items = [("loading",)]
 		self._list.setList(self._items)
 		self._loadContent()
 
