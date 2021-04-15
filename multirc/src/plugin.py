@@ -41,7 +41,7 @@ else:
 	MASK = "/proc/stb/ir/rc/mask"
 
 config.plugins.MultiRC = ConfigSubsection()
-config.plugins.MultiRC.mask = ConfigSelection(choices = CONFIGS, default = "f")
+config.plugins.MultiRC.mask = ConfigSelection(choices=CONFIGS, default="f")
 
 class MultiRCSetup(ConfigListScreen, Screen):
 	height = getDesktop(0).size().height()
@@ -66,7 +66,7 @@ class MultiRCSetup(ConfigListScreen, Screen):
 			
 	# most of the following is black magic copied from other plugins.
 	# e2 devs should really make some best practices or wrapper for this!
-	def __init__(self, session, args = None):
+	def __init__(self, session, args=None):
 		Screen.__init__(self, session)
 		self.list = [getConfigListEntry(_("Listen on Remote Control"), config.plugins.MultiRC.mask)]
 		ConfigListScreen.__init__(self, self.list)
@@ -85,8 +85,8 @@ Information about re-configuring the RC is available at https://dreambox.de/boar
 
 	def ask_save(self):
 		if not set_mask():
-			self.session.open(MessageBox, text = _("Error writing to %s!") % MASK,
-				type = MessageBox.TYPE_WARNING)
+			self.session.open(MessageBox, text=_("Error writing to %s!") % MASK,
+				type=MessageBox.TYPE_WARNING)
 			return
 		# mask value 0xf allows all RCs, no need to verify
 		if config.plugins.MultiRC.mask.value == "f":
@@ -94,7 +94,7 @@ Information about re-configuring the RC is available at https://dreambox.de/boar
 		else:
 			self.session.openWithCallback(self.confirm_save, MessageBox,
 				_("Is the RC still working?"), MessageBox.TYPE_YESNO,
-				timeout = 20, default = False)
+				timeout=20, default=False)
 
 	def confirm_save(self, confirmed):
 		if confirmed:
@@ -157,7 +157,7 @@ def Plugins(**kwargs):
 	return [PluginDescriptor(name="Multi RemoteControl",
 				description=_("Multi Dreambox RC layer setup"),
 				where=PluginDescriptor.WHERE_PLUGINMENU,
-				fnc = multirc_setup),
+				fnc=multirc_setup),
 
 		PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART,
-				fnc = multirc_autostart)]
+				fnc=multirc_autostart)]

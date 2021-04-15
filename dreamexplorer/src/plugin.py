@@ -67,8 +67,8 @@ config.plugins.DreamExplorer.useMediaFilter = ConfigOnOff(default=False)
 
 def Plugins(path, **kwargs):
 	return [
-		PluginDescriptor(name=_("Dream Explorer"), description=_("A file explorer for DreamOS"), where = [PluginDescriptor.WHERE_PLUGINMENU], icon="dreamexplorer.png", fnc=main),
-		PluginDescriptor(name=_("Dream Explorer"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main)
+		PluginDescriptor(name=_("Dream Explorer"), description=_("A file explorer for DreamOS"), where=[PluginDescriptor.WHERE_PLUGINMENU], icon="dreamexplorer.png", fnc=main),
+		PluginDescriptor(name=_("Dream Explorer"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main)
 	]
 
 def main(session, **kwargs):
@@ -162,7 +162,7 @@ class DreamExplorer3(Screen):
 		</screen>"""
 
 
-	def __init__(self, session, args = None):
+	def __init__(self, session, args=None):
 		self.skin = DreamExplorer3.skin
 		Screen.__init__(self, session)
 		self.session = session
@@ -179,9 +179,9 @@ class DreamExplorer3(Screen):
 		self.useMediaFilter = config.plugins.DreamExplorer.useMediaFilter.value
 
 		if self.useMediaFilter == False:
-			self["filelist"] = DreamExplorerFileList(directory = startDirectory, showDirectories = True, showFiles = True, matchingPattern = None)
+			self["filelist"] = DreamExplorerFileList(directory=startDirectory, showDirectories=True, showFiles=True, matchingPattern=None)
 		else:
-			self["filelist"] = DreamExplorerFileList(directory = startDirectory, showDirectories = True, showFiles = True, matchingPattern = self.mediaPattern)
+			self["filelist"] = DreamExplorerFileList(directory=startDirectory, showDirectories=True, showFiles=True, matchingPattern=self.mediaPattern)
 			
 		self["actions"] = ActionMap(["WizardActions", "DirectionActions", "ColorActions", "MenuActions", "EPGSelectActions", "InfobarActions","InfobarAudioSelectionActions", "InfobarSeekActions"],
 		{
@@ -486,7 +486,7 @@ class DreamExplorer3(Screen):
 	def executeSelected(self, answer):
 		answer = answer and answer[1]
 		if answer == "YES":
-			self.session.open(Console, cmdlist = self.command)
+			self.session.open(Console, cmdlist=self.command)
 		elif answer == "VIEW":
 			viewfile=stat(self.command[0])
 			if (viewfile.st_size < 61440):
@@ -714,7 +714,7 @@ class DreamExplorer3(Screen):
 		index = 0
 		musicList = self["filelist"].getFilteredFileList("music")
 		for song in musicList:
-			slist.append((Item(text = song[0], filename = song[2]),))
+			slist.append((Item(text=song[0], filename=song[2]),))
 			if self["filelist"].getFilename() == song[0]:
 				foundIndex = index
 			index = index + 1
@@ -807,7 +807,7 @@ class BookmarkManager(Screen):
 		
 		self.currentList = "bookmarklist"
 		
-		self["filelist"] = DreamExplorerFileList(list_type=DreamExplorerFileList.LIST_TYPE_NODETAILS, directory = "/", showDirectories = True, showFiles = False, matchingPattern = None, showDetails = False)
+		self["filelist"] = DreamExplorerFileList(list_type=DreamExplorerFileList.LIST_TYPE_NODETAILS, directory="/", showDirectories=True, showFiles=False, matchingPattern=None, showDetails=False)
 		
 		self["folders"] = Label(_("Folders"))
 		self["bookmarks"] = Label(_("Bookmarks"))
@@ -1180,7 +1180,7 @@ class FolderSelection(Screen):
 				<widget name="greentext" font="Regular;18" halign="left" position="390,510" size="250,30" transparent="0" valign="center" zPosition="6"/>
 			</screen>"""		
 			
-	def __init__(self, session, item = "/tmp", linkname=None, isDir=False, showFiles=False, mode=None):
+	def __init__(self, session, item="/tmp", linkname=None, isDir=False, showFiles=False, mode=None):
 		Screen.__init__(self, session)
 		self.session = session
 		self.item = item
@@ -1201,7 +1201,7 @@ class FolderSelection(Screen):
 			"blue": self.setSymlinkName,
 		}, -1)
 
-		self["TargetDir"] = DreamExplorerFileList(list_type = DreamExplorerFileList.LIST_TYPE_NODETAILS, directory = item, showDirectories = True, showFiles = showFiles, matchingPattern = "^.*\.*", showDetails=False)
+		self["TargetDir"] = DreamExplorerFileList(list_type=DreamExplorerFileList.LIST_TYPE_NODETAILS, directory=item, showDirectories=True, showFiles=showFiles, matchingPattern="^.*\.*", showDetails=False)
 
 		if mode == "copymove":
 			self["greentext"].setText(_("Move"))

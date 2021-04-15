@@ -10,11 +10,11 @@ from Components.config import config, ConfigSubsection, ConfigSelection
 from NamezapSetup import NamezapSetup
 
 config.plugins.namezap = ConfigSubsection()
-config.plugins.namezap.style = ConfigSelection(choices = [
+config.plugins.namezap.style = ConfigSelection(choices=[
 		("number", _("Only Number")),
 		("name", _("Service Name")),
 		("both", _("Number and Name"))
-	], default = "both"
+	], default="both"
 )
 
 NumberZap = InfoBarGenerics.NumberZap

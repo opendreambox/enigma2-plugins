@@ -36,9 +36,9 @@ from skin import TemplatedListFonts, componentSizes
 
 def initWeatherPluginEntryConfig():
 	s = ConfigSubsection()
-	s.city = ConfigText(default = "Heidelberg", visible_width = 100, fixed_size = False)
-	s.degreetype = ConfigSelection(choices = [("C", _("metric system")), ("F", _("imperial system"))], default = "C")
-	s.weatherlocationcode = ConfigText(default = "", visible_width = 100, fixed_size = False)
+	s.city = ConfigText(default="Heidelberg", visible_width=100, fixed_size=False)
+	s.degreetype = ConfigSelection(choices=[("C", _("metric system")), ("F", _("imperial system"))], default="C")
+	s.weatherlocationcode = ConfigText(default="", visible_width=100, fixed_size=False)
 	config.plugins.WeatherPlugin.Entry.append(s)
 	return s
 
@@ -141,7 +141,7 @@ class WeatherPluginEntryList(MenuList):
 	SKIN_COMPONENT_TEXT2_WIDTH = "text2Width"
 	SKIN_COMPONENT_ITEM_MARGIN = "itemMargin"
 
-	def __init__(self, list, enableWrapAround = True):
+	def __init__(self, list, enableWrapAround=True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 		tlf = TemplatedListFonts()
 		self.l.setFont(0, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
@@ -281,7 +281,7 @@ class MSNWeatherPluginEntryConfigScreen(ConfigListScreen, Screen):
 			else:
 				self.session.openWithCallback(self.searchCallback, MSNWeatherPluginSearch, xmlstring)
 			
-	def error(self, error = None):
+	def error(self, error=None):
 		if error is not None:
 			print error
 		
@@ -339,7 +339,7 @@ class MSNWeatherPluginSearchResultList(MenuList):
 	SKIN_COMPONENT_TEXT_WIDTH = "textWidth"
 	SKIN_COMPONENT_LINE_SPACING = "lineSpacing"
 
-	def __init__(self, list, enableWrapAround = True):
+	def __init__(self, list, enableWrapAround=True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 		tlf = TemplatedListFonts()
 		self.l.setFont(0, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))

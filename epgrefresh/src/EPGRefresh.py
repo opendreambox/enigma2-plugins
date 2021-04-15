@@ -105,7 +105,7 @@ class EPGRefresh:
 			epgrefreshtimer.add(EPGRefreshTimerEntry(
 					time(),
 					self.refresh,
-					nocheck = True)
+					nocheck=True)
 			)
 			
 	# _onCacheStateChanged is called whenever an eEPGCache-signal is sent by enigma2
@@ -143,7 +143,7 @@ class EPGRefresh:
 			epgrefreshtimer.add(EPGRefreshTimerEntry(
 					time(),
 					self.refresh,
-					nocheck = True)
+					nocheck=True)
 			)
 
 	def _initFinishTodos(self):
@@ -206,7 +206,7 @@ class EPGRefresh:
 				duration = duration and int(duration)
 				self.services[1].add(EPGRefreshService(value, duration))
 
-	def buildConfiguration(self, webif = False):
+	def buildConfiguration(self, webif=False):
 		list = ['<?xml version="1.0" ?>\n<epgrefresh version="', XML_VERSION, '">\n\n']
 
 		if webif:
@@ -247,7 +247,7 @@ class EPGRefresh:
 			self.refreshAdapter.stop()
 			self.refreshAdapter = None
 
-	def forceRefresh(self, session = None):
+	def forceRefresh(self, session=None):
 		print("[EPGRefresh] Forcing start of EPGRefresh")
 		if self.session is None:
 			if session is not None:
@@ -259,7 +259,7 @@ class EPGRefresh:
 		self.prepareRefresh()
 		return True
 	
-	def stopRunningRefresh(self, session = None):
+	def stopRunningRefresh(self, session=None):
 		print("[EPGRefresh] Forcing stop of EPGRefresh")
 		if self.session is None:
 			if session is not None:
@@ -271,7 +271,7 @@ class EPGRefresh:
 		if config.plugins.epgrefresh.usetimebased.value == False:
 			self.nextService()
 
-	def start(self, session = None):
+	def start(self, session=None):
 		if session is not None:
 			self.session = session
 
@@ -362,7 +362,7 @@ class EPGRefresh:
 			except:
 				print("[EPGRefresh] Error while opening Messagebox!")
 				print_exc(file=stdout)
-				Notifications.AddPopup(message, MessageBox.TYPE_INFO, 10, domain = NOTIFICATIONDOMAIN)
+				Notifications.AddPopup(message, MessageBox.TYPE_INFO, 10, domain=NOTIFICATIONDOMAIN)
 			return False
 		return True
 
@@ -445,8 +445,8 @@ class EPGRefresh:
 				if self.forcedScan:
 					# only if we are interactive
 					Notifications.AddNotificationWithCallback(self._ToDoCallAutotimerCB, MessageBox,
-						text = _("EPG refresh finished.\nShould AutoTimer be search for new matches?"),
-						type = MessageBox.TYPE_YESNO, default = defaultanswer, timeout = 10, domain = NOTIFICATIONDOMAIN)
+						text=_("EPG refresh finished.\nShould AutoTimer be search for new matches?"),
+						type=MessageBox.TYPE_YESNO, default=defaultanswer, timeout=10, domain=NOTIFICATIONDOMAIN)
 				else:
 					self._ToDoCallAutotimerCB(parseAT=defaultanswer)
 			else:
@@ -484,7 +484,7 @@ class EPGRefresh:
 		print("[EPGRefresh] Debug: AutoTimer failed:" + str(failure))
 		if config.plugins.epgrefresh.enablemessage.value:
 			Notifications.AddPopup(_("AutoTimer failed with error %s") % (str(failure)),
-				MessageBox.TYPE_ERROR, 10, domain = NOTIFICATIONDOMAIN)
+				MessageBox.TYPE_ERROR, 10, domain=NOTIFICATIONDOMAIN)
 		self._nextTodo()
 
 	def _ToDoAutotimerCalled(self, *args, **kwargs):
@@ -501,7 +501,7 @@ class EPGRefresh:
 					print("[EPGRefresh] Could not start Autotimer showPopup:" + str(format_exc()))
 					Notifications.AddPopup(_("Found a total of %d matching Events.\n%d Timer were added and\n%d modified,\n%d conflicts encountered,\n%d similars added.")
 					% (ret[0], ret[1], ret[2], len(ret[4]), len(ret[5])),
-					MessageBox.TYPE_INFO, 10, domain = NOTIFICATIONDOMAIN)
+					MessageBox.TYPE_INFO, 10, domain=NOTIFICATIONDOMAIN)
 		
 		self._nextTodo()
 	
@@ -516,11 +516,11 @@ class EPGRefresh:
 			self.msg.close()
 		print("[EPGRefresh] Debug: Refresh finished!")
 		if config.plugins.epgrefresh.enablemessage.value:
-			Notifications.AddPopup(_("EPG refresh finished."), MessageBox.TYPE_INFO, 4, ENDNOTIFICATIONID, domain = NOTIFICATIONDOMAIN)
+			Notifications.AddPopup(_("EPG refresh finished."), MessageBox.TYPE_INFO, 4, ENDNOTIFICATIONID, domain=NOTIFICATIONDOMAIN)
 		epgrefreshtimer.cleanup()
 		self.maybeStopAdapter()
                 if config.plugins.epgrefresh.epgsave.value:
-                        Notifications.AddPopup(_("EPG refresh save."), MessageBox.TYPE_INFO, 4, ENDNOTIFICATIONID, domain = NOTIFICATIONDOMAIN)
+                        Notifications.AddPopup(_("EPG refresh save."), MessageBox.TYPE_INFO, 4, ENDNOTIFICATIONID, domain=NOTIFICATIONDOMAIN)
                         from enigma import eEPGCache
                         myEpg = None
                         myEpg = eEPGCache.getInstance()
@@ -540,11 +540,11 @@ class EPGRefresh:
 						if Screens.Standby.inStandby:
 							RecordTimerEntry.TryQuitMainloop()
 						else:
-							Notifications.AddNotificationWithCallback(self.sendTryQuitMainloopNotification, MessageBox, _("EPGRefresh wants to shut down\nyour Dreambox. Shutdown now?"), timeout = 10, domain=NOTIFICATIONDOMAIN)
+							Notifications.AddNotificationWithCallback(self.sendTryQuitMainloopNotification, MessageBox, _("EPGRefresh wants to shut down\nyour Dreambox. Shutdown now?"), timeout=10, domain=NOTIFICATIONDOMAIN)
 			# idle
 			elif config.plugins.epgrefresh.afterevent.value == "idle":
 				if not Screens.Standby.inStandby:
-					Notifications.AddNotificationWithCallback(self.sendStandbyNotification, MessageBox, _("EPGRefresh wants to set your\nDreambox to idle. Do that now?"), timeout = 10, domain=NOTIFICATIONDOMAIN)
+					Notifications.AddNotificationWithCallback(self.sendStandbyNotification, MessageBox, _("EPGRefresh wants to set your\nDreambox to idle. Do that now?"), timeout=10, domain=NOTIFICATIONDOMAIN)
 		
 		self.doStopRunningRefresh = False
 		self.forcedScan = False
@@ -590,7 +590,7 @@ class EPGRefresh:
 					epgrefreshtimer.add(EPGRefreshTimerEntry(
 							time() + config.plugins.epgrefresh.delay_standby.value*60,
 							self.refresh,
-							nocheck = True)
+							nocheck=True)
 					)
 
 	def createWaitTimer(self):
@@ -663,7 +663,7 @@ class EPGRefresh:
 				epgrefreshtimer.add(EPGRefreshTimerEntry(
 					time() + delay,
 					self.refresh,
-					nocheck = True)
+					nocheck=True)
 				)
 
 	def resetEPG(self, session):
@@ -710,8 +710,8 @@ class EPGRefresh:
 	def resetStateChanged(self, state):
 		if state.state == cachestate.load_finished:
 			self.reset_session.openWithCallback(self.doRestart, MessageBox,
-				text = _("Reset")+" "+_("EPG.db")+" "+_("successful")+"\n\n"+_("Restart GUI now?"),
-				type = MessageBox.TYPE_YESNO, default = True, timeout = 10)
+				text=_("Reset")+" "+_("EPG.db")+" "+_("successful")+"\n\n"+_("Restart GUI now?"),
+				type=MessageBox.TYPE_YESNO, default=True, timeout=10)
 
 	def doRestart(self, answer):
 		if answer is not None:

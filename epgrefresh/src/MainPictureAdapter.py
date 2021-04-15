@@ -18,7 +18,7 @@ class MainPictureAdapter:
 
 	def prepare(self):
 		if config.plugins.epgrefresh.enablemessage.value:
-			Notifications.AddPopup(_("EPG refresh starts scanning channels."), MessageBox.TYPE_INFO, 4, STARTNOTIFICATIONID, domain = NOTIFICATIONDOMAIN)
+			Notifications.AddPopup(_("EPG refresh starts scanning channels."), MessageBox.TYPE_INFO, 4, STARTNOTIFICATIONID, domain=NOTIFICATIONDOMAIN)
 		self.previousService = self.navcore.getCurrentlyPlayingServiceReference()
 		print("[EPGRefresh] DEBUG prepare.previousService=" + str(self.previousService))
 		return True

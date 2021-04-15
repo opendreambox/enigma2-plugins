@@ -24,8 +24,8 @@ with open(pattern_config_file_path, "r") as read_file:
     data = json.load(read_file)
 title_pattern_choices = list(data.items())
 
-config.plugins.skipintro.show_skipmsg = ConfigYesNo(default = True)
-config.plugins.skipintro.show_videostartmsg = ConfigYesNo(default = False)
-config.plugins.skipintro.skiptime_decrease = ConfigSelectionNumber(0, 5, 1, default = 0)
-config.plugins.skipintro.title_pattern = ConfigSelection(choices = title_pattern_choices, default = default_title_pattern)
+config.plugins.skipintro.show_skipmsg = ConfigYesNo(default=True)
+config.plugins.skipintro.show_videostartmsg = ConfigYesNo(default=False)
+config.plugins.skipintro.skiptime_decrease = ConfigSelectionNumber(0, 5, 1, default=0)
+config.plugins.skipintro.title_pattern = ConfigSelection(choices=title_pattern_choices, default=default_title_pattern)
 #config.plugins.skipintro.save_season = ConfigYesNo(default = False)

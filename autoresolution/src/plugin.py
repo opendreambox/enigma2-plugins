@@ -30,14 +30,12 @@ resolutions = (('sd_i_50', (_("SD 25/50HZ Interlace Mode"))), ('sd_i_60', (_("SD
 			('p2160_25', (_("Enable 2160p25 Mode"))), ('p2160_30', (_("Enable 2160p30 Mode"))))
 
 config.plugins.autoresolution = ConfigSubsection()
-config.plugins.autoresolution.enable = ConfigYesNo(default = False)
-config.plugins.autoresolution.showinfo = ConfigYesNo(default = True)
-config.plugins.autoresolution.testmode = ConfigYesNo(default = False)
-config.plugins.autoresolution.deinterlacer = ConfigSelection(default = "auto", choices =
-		[("off", _("off")), ("auto", _("auto")), ("on", _("on")), ("bob", _("bob"))])
-config.plugins.autoresolution.deinterlacer_progressive = ConfigSelection(default = "auto", choices =
-		[("off", _("off")), ("auto", _("auto")), ("on", _("on")), ("bob", _("bob"))])
-config.plugins.autoresolution.delay_switch_mode = ConfigSelection(default = "1000", choices = [
+config.plugins.autoresolution.enable = ConfigYesNo(default=False)
+config.plugins.autoresolution.showinfo = ConfigYesNo(default=True)
+config.plugins.autoresolution.testmode = ConfigYesNo(default=False)
+config.plugins.autoresolution.deinterlacer = ConfigSelection(default="auto", choices=[("off", _("off")), ("auto", _("auto")), ("on", _("on")), ("bob", _("bob"))])
+config.plugins.autoresolution.deinterlacer_progressive = ConfigSelection(default="auto", choices=[("off", _("off")), ("auto", _("auto")), ("on", _("on")), ("bob", _("bob"))])
+config.plugins.autoresolution.delay_switch_mode = ConfigSelection(default="1000", choices=[
 		("50", "0.05 " + _("seconds")), ("500", "0.5 " + _("seconds")),
 		("1000", "1 " + _("second")), ("2000", "2 " + _("seconds")), ("3000", "3 " + _("seconds")),
 		("4000", "4 " + _("seconds")), ("5000", "5 " + _("seconds")), ("6000", "6 " + _("seconds")), ("7000", "7 " + _("seconds")),
@@ -62,8 +60,7 @@ class AutoRes(Screen):
 	def __init__(self, session):
 		global port
 		Screen.__init__(self, session)
-		self.__event_tracker = ServiceEventTracker(screen = self, eventmap =
-			{
+		self.__event_tracker = ServiceEventTracker(screen=self, eventmap={
 				iPlayableService.evVideoSizeChanged: self.__evVideoSizeChanged,
 				iPlayableService.evVideoProgressiveChanged: self.__evVideoProgressiveChanged,
 				iPlayableService.evVideoFramerateChanged: self.__evVideoFramerateChanged,
@@ -75,21 +72,21 @@ class AutoRes(Screen):
 		if config.av.videoport.value in config.av.videomode:
 			self.lastmode = config.av.videomode[config.av.videoport.value].value
 		config.av.videoport.addNotifier(self.defaultModeChanged)
-		config.plugins.autoresolution.enable.addNotifier(self.enableChanged, initial_call = False)
-		config.plugins.autoresolution.deinterlacer.addNotifier(self.enableChanged, initial_call = False)
-		config.plugins.autoresolution.deinterlacer_progressive.addNotifier(self.enableChanged, initial_call = False)
+		config.plugins.autoresolution.enable.addNotifier(self.enableChanged, initial_call=False)
+		config.plugins.autoresolution.deinterlacer.addNotifier(self.enableChanged, initial_call=False)
+		config.plugins.autoresolution.deinterlacer_progressive.addNotifier(self.enableChanged, initial_call=False)
 		if default:
 			self.setMode(default[0], False)
 		self.after_switch_delay = False
 		self.newService = False
 		if "720p" in config.av.videorate:
-			config.av.videorate["720p"].addNotifier(self.__videorate_720p_changed, initial_call = False, immediate_feedback = False)
+			config.av.videorate["720p"].addNotifier(self.__videorate_720p_changed, initial_call=False, immediate_feedback=False)
 		if "1080i" in config.av.videorate:
-			config.av.videorate["1080i"].addNotifier(self.__videorate_1080i_changed, initial_call = False, immediate_feedback = False)
+			config.av.videorate["1080i"].addNotifier(self.__videorate_1080i_changed, initial_call=False, immediate_feedback=False)
 		if "1080p" in config.av.videorate:
-			config.av.videorate["1080p"].addNotifier(self.__videorate_1080p_changed, initial_call = False, immediate_feedback = False)
+			config.av.videorate["1080p"].addNotifier(self.__videorate_1080p_changed, initial_call=False, immediate_feedback=False)
 		if "2160p" in config.av.videorate:
-			config.av.videorate["2160p"].addNotifier(self.__videorate_2160p_changed, initial_call = False, immediate_feedback = False)
+			config.av.videorate["2160p"].addNotifier(self.__videorate_2160p_changed, initial_call=False, immediate_feedback=False)
 
 	def __videorate_720p_changed(self, configEntry):
 		if self.lastmode == "720p":
@@ -161,8 +158,8 @@ class AutoRes(Screen):
 						choices = ['720p24', '1080p24'] + preferedmodes
 					else:
 						choices = preferedmodes
-				config.plugins.autoresolution.videoresolution[mode[0]] = ConfigSelection(default = default[0], choices = choices)
-				config.plugins.autoresolution.videoresolution[mode[0]].addNotifier(self.modeConfigChanged, initial_call = False, immediate_feedback = False)
+				config.plugins.autoresolution.videoresolution[mode[0]] = ConfigSelection(default=default[0], choices=choices)
+				config.plugins.autoresolution.videoresolution[mode[0]].addNotifier(self.modeConfigChanged, initial_call=False, immediate_feedback=False)
 				videoresolution_dictionary[mode[0]] = (config.plugins.autoresolution.videoresolution[mode[0]])
 
 	def modeConfigChanged(self, configElement):
@@ -259,8 +256,8 @@ class AutoRes(Screen):
 					MessageBox,
 					_("Autoresolution Plugin Testmode:\nIs %s OK?") % (resolutionlabeltxt),
 					MessageBox.TYPE_YESNO,
-					timeout = 15,
-					default = False
+					timeout=15,
+					default=False
 				)
 		else:
 			setDeinterlacer("auto")
@@ -334,7 +331,7 @@ class AutoResSetupMenu(Screen, ConfigListScreen):
 
 		self.onChangedEntry = [ ]
 		self.list = [ ]
-		ConfigListScreen.__init__(self, self.list, session = session, on_change = self.changedEntry)
+		ConfigListScreen.__init__(self, self.list, session=session, on_change=self.changedEntry)
 
 		self["actions"] = ActionMap(["SetupActions"],
 			{
@@ -427,5 +424,5 @@ def autoresSetup(session, **kwargs):
 	session.open(AutoResSetupMenu)
 
 def Plugins(path, **kwargs):
-	return [PluginDescriptor(where = [PluginDescriptor.WHERE_SESSIONSTART], fnc = autostart),
-		PluginDescriptor(name="Autoresolution", description=_("Autoresolution Switch"), where = PluginDescriptor.WHERE_MENU, fnc=startSetup) ]
+	return [PluginDescriptor(where=[PluginDescriptor.WHERE_SESSIONSTART], fnc=autostart),
+		PluginDescriptor(name="Autoresolution", description=_("Autoresolution Switch"), where=PluginDescriptor.WHERE_MENU, fnc=startSetup) ]

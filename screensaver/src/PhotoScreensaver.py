@@ -58,7 +58,7 @@ class PhotoScreensaver(Screen):
 
 		self.onShow.append(self._onShow)
 		self.onClose.append(self._onClose)
-		config.plugins.screensaver.photo.speed.addNotifier(self._setupAnimation, initial_call = False)
+		config.plugins.screensaver.photo.speed.addNotifier(self._setupAnimation, initial_call=False)
 
 	def _onShow(self):#
 		self._immediateShow = self._isInitial

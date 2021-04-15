@@ -23,7 +23,7 @@ from enigma import ePicLoad
 from Components.Pixmap import Pixmap
 
 class InternetRadioCover(Pixmap):
-	def __init__(self, callback = None):
+	def __init__(self, callback=None):
 		Pixmap.__init__(self)
 		self.picload = ePicLoad()
 		self.picload_conn = self.picload.PictureData.connect(self.paintIconPixmapCB)

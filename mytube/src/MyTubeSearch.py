@@ -51,7 +51,7 @@ class SuggestionsQueryThread(Thread):
 			message[1](message[0])
 
 class ConfigTextWithGoogleSuggestions(ConfigText):
-	def __init__(self, default = "", fixed_size = True, visible_width = False):
+	def __init__(self, default="", fixed_size=True, visible_width=False):
 		ConfigText.__init__(self, default, fixed_size, visible_width)
 		self.suggestions = GoogleSuggestions()
 		self.suggestionsThread = None

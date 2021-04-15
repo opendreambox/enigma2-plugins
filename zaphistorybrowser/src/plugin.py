@@ -18,11 +18,11 @@ from enigma import eServiceReference
 from skin import TemplatedListFonts, componentSizes
 
 config.plugins.ZapHistoryConfigurator = ConfigSubsection()
-config.plugins.ZapHistoryConfigurator.enable_zap_history = ConfigSelection(choices = {"off": _("disabled"), "on": _("enabled"), "parental_lock": _("disabled at parental lock")}, default="on")
+config.plugins.ZapHistoryConfigurator.enable_zap_history = ConfigSelection(choices={"off": _("disabled"), "on": _("enabled"), "parental_lock": _("disabled at parental lock")}, default="on")
 config.plugins.ZapHistoryConfigurator.maxEntries_zap_history = ConfigInteger(default=20, limits=(1, 60))
-config.plugins.ZapHistoryConfigurator.e1_like_history = ConfigYesNo(default = False)
-config.plugins.ZapHistoryConfigurator.history_tv = ConfigSet(choices = [])
-config.plugins.ZapHistoryConfigurator.history_radio = ConfigSet(choices = [])
+config.plugins.ZapHistoryConfigurator.e1_like_history = ConfigYesNo(default=False)
+config.plugins.ZapHistoryConfigurator.history_tv = ConfigSet(choices=[])
+config.plugins.ZapHistoryConfigurator.history_radio = ConfigSet(choices=[])
 
 ################################################
 
@@ -140,8 +140,8 @@ def ZapHistoryBrowserListEntry(serviceName, eventName):
 	eventNameHeight = sizes.get(ZapHistoryBrowserList.SKIN_COMPONENT_EVENT_NAME_HEIGHT, 20)
 	lineSpacing = sizes.get(ZapHistoryBrowserList.SKIN_COMPONENT_LINE_SPACING, 5)
 	res = [serviceName]
-	res.append(MultiContentEntryText(pos=(5,0), size=(textWidth, serviceNameHeight), font=0, flags = RT_VALIGN_CENTER, text=serviceName))
-	res.append(MultiContentEntryText(pos=(5, serviceNameHeight+lineSpacing), size=(textWidth, eventNameHeight), font=1, flags = RT_VALIGN_CENTER, text=eventName))
+	res.append(MultiContentEntryText(pos=(5,0), size=(textWidth, serviceNameHeight), font=0, flags=RT_VALIGN_CENTER, text=serviceName))
+	res.append(MultiContentEntryText(pos=(5, serviceNameHeight+lineSpacing), size=(textWidth, eventNameHeight), font=1, flags=RT_VALIGN_CENTER, text=eventName))
 	return res
 
 ################################################

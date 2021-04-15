@@ -25,21 +25,21 @@ from Components.config import config, ConfigSubsection, ConfigSelection, ConfigD
 from InternetRadioScreen import InternetRadioScreen
 
 config.plugins.internetradio = ConfigSubsection()
-config.plugins.internetradio.showinextensions = ConfigYesNo(default = True)
-config.plugins.internetradio.dirname = ConfigDirectory(default = "/media/hdd/streamripper/")
-config.plugins.internetradio.riptosinglefile = ConfigYesNo(default = False)
-config.plugins.internetradio.createdirforeachstream = ConfigYesNo(default = True)
-config.plugins.internetradio.addsequenceoutputfile = ConfigYesNo(default = False)
+config.plugins.internetradio.showinextensions = ConfigYesNo(default=True)
+config.plugins.internetradio.dirname = ConfigDirectory(default="/media/hdd/streamripper/")
+config.plugins.internetradio.riptosinglefile = ConfigYesNo(default=False)
+config.plugins.internetradio.createdirforeachstream = ConfigYesNo(default=True)
+config.plugins.internetradio.addsequenceoutputfile = ConfigYesNo(default=False)
 config.plugins.internetradio.filter = ConfigText(default=_("Countries"))
 if HardwareInfo().get_device_name() == "dm500hd":
-	config.plugins.internetradio.visualization = ConfigSelection(choices = [("2", _("On")), ("3", _("Off"))], default = "2")
+	config.plugins.internetradio.visualization = ConfigSelection(choices=[("2", _("On")), ("3", _("Off"))], default="2")
 else:
-	config.plugins.internetradio.visualization = ConfigSelection(choices = [("0", _("Screen and OLED")), ("1", _("OLED only")), ("2", _("Screen only")), ("3", _("Off"))], default = "2")
-config.plugins.internetradio.googlecover = ConfigYesNo(default = False)
-config.plugins.internetradio.startupname = ConfigText(default = "")
-config.plugins.internetradio.startuptext = ConfigText(default = "")
-config.plugins.internetradio.fullscreenautoactivation = ConfigSelection(choices = [("30", _("30 seconds")), ("60", _("1 minutes")), ("180", _("3 minutes")), ("-1", _("Off"))], default = "30")
-config.plugins.internetradio.fullscreenlayout = ConfigSelection(choices = [("0", _("Visualization and Text")), ("1", _("Text only")), ("2", _("Blank"))], default = "0")
+	config.plugins.internetradio.visualization = ConfigSelection(choices=[("0", _("Screen and OLED")), ("1", _("OLED only")), ("2", _("Screen only")), ("3", _("Off"))], default="2")
+config.plugins.internetradio.googlecover = ConfigYesNo(default=False)
+config.plugins.internetradio.startupname = ConfigText(default="")
+config.plugins.internetradio.startuptext = ConfigText(default="")
+config.plugins.internetradio.fullscreenautoactivation = ConfigSelection(choices=[("30", _("30 seconds")), ("60", _("1 minutes")), ("180", _("3 minutes")), ("-1", _("Off"))], default="30")
+config.plugins.internetradio.fullscreenlayout = ConfigSelection(choices=[("0", _("Visualization and Text")), ("1", _("Text only")), ("2", _("Blank"))], default="0")
 
 
 def sessionstart(reason, **kwargs):
@@ -66,9 +66,9 @@ def main(session,**kwargs):
 	session.open(InternetRadioScreen)
 
 def Plugins(**kwargs):
-	list = [PluginDescriptor(name="Internet-Radio", description=_("listen to internet-radio"), where = [PluginDescriptor.WHERE_PLUGINMENU], icon="plugin.png", fnc=main)] # always show in plugin menu
+	list = [PluginDescriptor(name="Internet-Radio", description=_("listen to internet-radio"), where=[PluginDescriptor.WHERE_PLUGINMENU], icon="plugin.png", fnc=main)] # always show in plugin menu
 	if config.plugins.internetradio.showinextensions.value:
-		list.append (PluginDescriptor(name="Internet-Radio", description=_("listen to internet-radio"), where = [PluginDescriptor.WHERE_EXTENSIONSMENU], fnc=main))
+		list.append (PluginDescriptor(name="Internet-Radio", description=_("listen to internet-radio"), where=[PluginDescriptor.WHERE_EXTENSIONSMENU], fnc=main))
 	list.append (PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=sessionstart, needsRestart=False))
 	return list
 

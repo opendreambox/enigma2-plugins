@@ -65,7 +65,7 @@ class MyTubePlayer(Screen, InfoBarNotifications, InfoBarSeek):
 		</widget>
 	</screen>"""
 
-	def __init__(self, session, service, lastservice, infoCallback = None, nextCallback = None, prevCallback = None):
+	def __init__(self, session, service, lastservice, infoCallback=None, nextCallback=None, prevCallback=None):
 		Screen.__init__(self, session)
 		InfoBarNotifications.__init__(self)
 		InfoBarSeek.__init__(self)
@@ -78,8 +78,7 @@ class MyTubePlayer(Screen, InfoBarNotifications, InfoBarSeek):
 		self.nextservice = None
 
 		print "evEOF=%d" % iPlayableService.evEOF
-		self.__event_tracker = ServiceEventTracker(screen = self, eventmap =
-			{
+		self.__event_tracker = ServiceEventTracker(screen=self, eventmap={
 				iPlayableService.evSeekableStatusChanged: self.__seekableStatusChanged,
 				iPlayableService.evStart: self.__serviceStarted,
 				iPlayableService.evEOF: self.__evEOF,
@@ -239,7 +238,7 @@ class MyTubePlayer(Screen, InfoBarNotifications, InfoBarSeek):
 		self.state = self.STATE_PLAYING
 		self.__seekableStatusChanged()
 
-	def setSeekState(self, wantstate, onlyGUI = False):
+	def setSeekState(self, wantstate, onlyGUI=False):
 		print "setSeekState"
 		if wantstate == self.STATE_PAUSED:
 			print "trying to switch to Pause- state:",self.STATE_PAUSED
@@ -275,7 +274,7 @@ class MyTubePlayer(Screen, InfoBarNotifications, InfoBarSeek):
 
 		return True
 
-	def handleLeave(self, how, error = False):
+	def handleLeave(self, how, error=False):
 		self.is_closing = True
 		if how == "ask":
 			list = (
@@ -285,9 +284,9 @@ class MyTubePlayer(Screen, InfoBarNotifications, InfoBarSeek):
 				(_("Yes, but play previous video"), "playprev"),
 			)
 			if error is False:
-				self.session.openWithCallback(self.leavePlayerConfirmed, ChoiceBox, title=_("Stop playing this movie?"), list = list)
+				self.session.openWithCallback(self.leavePlayerConfirmed, ChoiceBox, title=_("Stop playing this movie?"), list=list)
 			else:
-				self.session.openWithCallback(self.leavePlayerConfirmed, ChoiceBox, title=_("No playable video found! Stop playing this movie?"), list = list)
+				self.session.openWithCallback(self.leavePlayerConfirmed, ChoiceBox, title=_("No playable video found! Stop playing this movie?"), list=list)
 		else:
 			self.leavePlayerConfirmed([True, how])
 

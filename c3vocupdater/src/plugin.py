@@ -80,7 +80,7 @@ class C3vocScreen (Screen):
 
 			shutil.move("/tmp/c3voc","/etc/enigma2/userbouquet.c3voc__tv_.tv")
 			eDVBDB.getInstance().reloadBouquets()
-			self.session.open(MessageBox, text = _("c3voc stream bouquet updated"), type = MessageBox.TYPE_INFO, timeout=4)
+			self.session.open(MessageBox, text=_("c3voc stream bouquet updated"), type=MessageBox.TYPE_INFO, timeout=4)
 		except:
 			pass
 
@@ -96,4 +96,4 @@ def main(session, **kwargs):
 	session.open(C3vocScreen)
 
 def Plugins(**kwargs):
-	return PluginDescriptor(name="C3vocUpdater", description="update the c3voc stream bouquet", where = PluginDescriptor.WHERE_PLUGINMENU, fnc=main)
+	return PluginDescriptor(name="C3vocUpdater", description="update the c3voc stream bouquet", where=PluginDescriptor.WHERE_PLUGINMENU, fnc=main)

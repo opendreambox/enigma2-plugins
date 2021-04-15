@@ -49,27 +49,27 @@ def openHistory(session, event, service):
 def Plugins(**kwargs):
 	
 	l = [PluginDescriptor(
-		where = PluginDescriptor.WHERE_AUTOSTART,
-		fnc = autostart, needsRestart = False)]
+		where=PluginDescriptor.WHERE_AUTOSTART,
+		fnc=autostart, needsRestart=False)]
 	
 	l.append(PluginDescriptor(
-		name = "EPGSearch", 
+		name="EPGSearch", 
 		# TRANSLATORS: description of EPGSearch in PluginBrowser
-		description = _("Search EPG"),
-		where = PluginDescriptor.WHERE_PLUGINMENU,
-		fnc = main, icon = "EPGSearch.png", needsRestart = False))
+		description=_("Search EPG"),
+		where=PluginDescriptor.WHERE_PLUGINMENU,
+		fnc=main, icon="EPGSearch.png", needsRestart=False))
 	
 	l.append(PluginDescriptor(
 		# TRANSLATORS: EPGSearch title in EventInfo dialog (requires the user to select an event to search for)
-		name = _("search EPG..."),
-		where = PluginDescriptor.WHERE_EVENTINFO,
-		fnc = eventinfo, needsRestart = False))
+		name=_("search EPG..."),
+		where=PluginDescriptor.WHERE_EVENTINFO,
+		fnc=eventinfo, needsRestart=False))
 	
 	l.append(PluginDescriptor(
 		# TRANSLATORS: EPGSearch title in MovieList (does not require further user interaction)
-		description = _("Search EPG"),
-		where = PluginDescriptor.WHERE_MOVIELIST,
-		fnc = movielist, needsRestart = False))
+		description=_("Search EPG"),
+		where=PluginDescriptor.WHERE_MOVIELIST,
+		fnc=movielist, needsRestart=False))
 	
 	searchEventDescriptors = []
 	if config.plugins.epgsearch.searchEPG_menu.value in ("all", "blue"):
@@ -79,8 +79,8 @@ def Plugins(**kwargs):
 	if searchEventDescriptors:
 		l.append(PluginDescriptor(
 			name=_("Search EPG"), 
-			where = searchEventDescriptors, 
-			fnc = searchEvent))
+			where=searchEventDescriptors, 
+			fnc=searchEvent))
 
 	openHistoryDescriptors = []
 	if config.plugins.epgsearch.openSearchFilter_menu.value in ("all", "blue"):
@@ -90,16 +90,16 @@ def Plugins(**kwargs):
 	if openHistoryDescriptors:
 		l.append(PluginDescriptor(
 			name=_("open EPGSearch search list"),
-			where = openHistoryDescriptors,
-			fnc = openHistory))
+			where=openHistoryDescriptors,
+			fnc=openHistory))
 	
 	#add only if AutoTimer-Plugin is found
 	if autoTimerAvailable:
 		l.append(PluginDescriptor(
 			name=_("add search filter to EPGSearch"),
-			description= _("add search filter to EPGSearch"),
-			where = [PluginDescriptor.WHERE_MOVIELIST],
-			fnc = addSearchFilterFromMovieList))
+			description=_("add search filter to EPGSearch"),
+			where=[PluginDescriptor.WHERE_MOVIELIST],
+			fnc=addSearchFilterFromMovieList))
 	
 		searchEventWithFilterDescriptors = []
 		if config.plugins.epgsearch.addSearchFilter_menu.value in ("all", "blue"):
@@ -109,8 +109,8 @@ def Plugins(**kwargs):
 		if searchEventWithFilterDescriptors:
 			l.append(PluginDescriptor(
 				name=_("add search filter to EPGSearch"),
-				where = searchEventWithFilterDescriptors,
-				fnc = searchEventWithFilter))
+				where=searchEventWithFilterDescriptors,
+				fnc=searchEventWithFilter))
 	
 	return l
 

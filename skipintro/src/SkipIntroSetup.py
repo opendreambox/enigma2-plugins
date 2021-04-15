@@ -158,8 +158,8 @@ class SISetupScreen(ConfigListScreen, Screen):
 		self.session.openWithCallback(
 			self.menuCallback,
 			ChoiceBox,
-			title = _('Menu SkipIntro'),
-			list = list,
+			title=_('Menu SkipIntro'),
+			list=list,
 		)
 
 	def menuCallback(self, ret):
@@ -171,8 +171,8 @@ class SISetupScreen(ConfigListScreen, Screen):
 					self.session.openWithCallback(
 						self.NTIVirtualKeyBoardCallback,
 						NTIVirtualKeyBoard,
-						title = _("Enter series name"),
-						text = currentSelection[0]
+						title=_("Enter series name"),
+						text=currentSelection[0]
 						)
 
 	def NTIVirtualKeyBoardCallback(self, ret):

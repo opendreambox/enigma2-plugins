@@ -26,7 +26,7 @@ class AutoTimerFilterList(MenuList):
 	"""Defines a simple Component to show Timer name"""
 
 	def __init__(self, entries):
-		MenuList.__init__(self, entries, False, content = eListboxPythonMultiContent)
+		MenuList.__init__(self, entries, False, content=eListboxPythonMultiContent)
 
 		self.l.setFont(0, gFont("Regular", 22))
 		self.l.setBuildFunc(self.buildListboxEntry)
@@ -363,20 +363,20 @@ class AutoTimerFilterListEditor(Screen, ConfigListScreen):
 			self.add_edit = add_edit
 			
 			if filterEntry is not None:
-				self.EntryDate  = NoSave(ConfigDateTime(filterEntry[2], _("%d.%B %Y"), increment = 86400))
-				self.EntryTime  = NoSave(ConfigClock(default = filterEntry[2]))
-				self.EntryTitle = NoSave(ConfigText(default = filterEntry[1], fixed_size = False))
+				self.EntryDate  = NoSave(ConfigDateTime(filterEntry[2], _("%d.%B %Y"), increment=86400))
+				self.EntryTime  = NoSave(ConfigClock(default=filterEntry[2]))
+				self.EntryTitle = NoSave(ConfigText(default=filterEntry[1], fixed_size=False))
 			else:
-				self.EntryDate  = NoSave(ConfigDateTime(time.time(), _("%d.%B %Y"), increment = 86400))
-				self.EntryTime  = NoSave(ConfigClock(default = time.time()))
-				self.EntryTitle = NoSave(ConfigText(default = "", fixed_size = False))
+				self.EntryDate  = NoSave(ConfigDateTime(time.time(), _("%d.%B %Y"), increment=86400))
+				self.EntryTime  = NoSave(ConfigClock(default=time.time()))
+				self.EntryTitle = NoSave(ConfigText(default="", fixed_size=False))
 
 			self.list = [
 				getConfigListEntry(_("Date"), self.EntryDate),
 				getConfigListEntry(_("Time"), self.EntryTime),
 				getConfigListEntry(_("Title"), self.EntryTitle),
 			]
-			ConfigListScreen.__init__(self, self.list, session = session, on_change = self.changed)
+			ConfigListScreen.__init__(self, self.list, session=session, on_change=self.changed)
 
 			# Initialize Buttons
 			self["key_red"] = StaticText(_("Cancel"))
@@ -432,7 +432,7 @@ class AutoTimerFilterListEditor(Screen, ConfigListScreen):
 	def save(self):
 		
 		if not self.list[2][1].value.strip():
-			self.session.open( MessageBox, _("The title attribute is mandatory."), type = MessageBox.TYPE_ERROR, timeout = 5 )
+			self.session.open( MessageBox, _("The title attribute is mandatory."), type=MessageBox.TYPE_ERROR, timeout=5 )
 		else:
 			if self["config"].isChanged():
 				self.close(self.list, self.add_edit)

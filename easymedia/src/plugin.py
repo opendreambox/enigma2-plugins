@@ -46,23 +46,23 @@ EMsession = None
 InfoBar_instance = None
 
 config.plugins.easyMedia  = ConfigSubsection()
-config.plugins.easyMedia.music = ConfigSelection(default="mediaplayer", choices = [("no", _("Disabled")), ("mediaplayer", _("MediaPlayer")), ("merlinmp", _("MerlinMusicPlayer2"))])
-config.plugins.easyMedia.files = ConfigSelection(default="dreamexplorer", choices = [("no", _("Disabled")), ("filebrowser", _("Filebrowser")), ("dreamexplorer", _("DreamExplorer"))])
-config.plugins.easyMedia.videodb = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
-config.plugins.easyMedia.bookmarks = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
-config.plugins.easyMedia.pictures = ConfigSelection(default="yes", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
-config.plugins.easyMedia.mytube = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
-config.plugins.easyMedia.dvd = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
-config.plugins.easyMedia.weather = ConfigSelection(default="yes", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
-config.plugins.easyMedia.iradio = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
-config.plugins.easyMedia.idream = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
-config.plugins.easyMedia.zdfmedia = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
-config.plugins.easyMedia.radio = ConfigSelection(default="yes", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
-config.plugins.easyMedia.timers = ConfigSelection(default="no", choices = [("no", _("Disabled")), ("yes", _("Enabled"))])
+config.plugins.easyMedia.music = ConfigSelection(default="mediaplayer", choices=[("no", _("Disabled")), ("mediaplayer", _("MediaPlayer")), ("merlinmp", _("MerlinMusicPlayer2"))])
+config.plugins.easyMedia.files = ConfigSelection(default="dreamexplorer", choices=[("no", _("Disabled")), ("filebrowser", _("Filebrowser")), ("dreamexplorer", _("DreamExplorer"))])
+config.plugins.easyMedia.videodb = ConfigSelection(default="no", choices=[("no", _("Disabled")), ("yes", _("Enabled"))])
+config.plugins.easyMedia.bookmarks = ConfigSelection(default="no", choices=[("no", _("Disabled")), ("yes", _("Enabled"))])
+config.plugins.easyMedia.pictures = ConfigSelection(default="yes", choices=[("no", _("Disabled")), ("yes", _("Enabled"))])
+config.plugins.easyMedia.mytube = ConfigSelection(default="no", choices=[("no", _("Disabled")), ("yes", _("Enabled"))])
+config.plugins.easyMedia.dvd = ConfigSelection(default="no", choices=[("no", _("Disabled")), ("yes", _("Enabled"))])
+config.plugins.easyMedia.weather = ConfigSelection(default="yes", choices=[("no", _("Disabled")), ("yes", _("Enabled"))])
+config.plugins.easyMedia.iradio = ConfigSelection(default="no", choices=[("no", _("Disabled")), ("yes", _("Enabled"))])
+config.plugins.easyMedia.idream = ConfigSelection(default="no", choices=[("no", _("Disabled")), ("yes", _("Enabled"))])
+config.plugins.easyMedia.zdfmedia = ConfigSelection(default="no", choices=[("no", _("Disabled")), ("yes", _("Enabled"))])
+config.plugins.easyMedia.radio = ConfigSelection(default="yes", choices=[("no", _("Disabled")), ("yes", _("Enabled"))])
+config.plugins.easyMedia.timers = ConfigSelection(default="no", choices=[("no", _("Disabled")), ("yes", _("Enabled"))])
 
 def Plugins(**kwargs):
-	return [PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, fnc = EasyMediaAutostart),
-			PluginDescriptor(name="EasyMedia", description=_("Not easy way to start EasyMedia"), where = PluginDescriptor.WHERE_PLUGINMENU, fnc=startFromPluginMenu),]
+	return [PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=EasyMediaAutostart),
+			PluginDescriptor(name="EasyMedia", description=_("Not easy way to start EasyMedia"), where=PluginDescriptor.WHERE_PLUGINMENU, fnc=startFromPluginMenu),]
 
 def EasyMediaAutostart(reason, **kwargs):
 	global EMbaseInfoBarPlugins__init__
@@ -110,7 +110,7 @@ class MPanelList(MenuList):
 	SKIN_COMPONENT_TEXT_XOFFSET = "textXOffset"
 	SKIN_COMPONENT_TEXT_YOFFSET = "textYOffset"
 
-	def __init__(self, list, selection = 0, enableWrapAround=True):
+	def __init__(self, list, selection=0, enableWrapAround=True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 
 		isFHD = False
@@ -263,7 +263,7 @@ class AddPlug(Screen):
 			for (pluginname, error) in plugins.warnings:
 				text += _("%s (%s)\n") % (pluginname, error)
 			plugins.resetWarnings()
-			self.session.open(MessageBox, text = text, type = MessageBox.TYPE_WARNING)
+			self.session.open(MessageBox, text=text, type=MessageBox.TYPE_WARNING)
 
 	def updateList(self):
 		self.pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
@@ -279,16 +279,16 @@ class AddPlug(Screen):
 				outf = open(("/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/" + plugin.name + ".plug"), 'wb')
 				pickle.dump(plugin, outf)
 				outf.close()
-				self.session.open(MessageBox, text = (plugin.name + _(" added to EasyMedia")), type = MessageBox.TYPE_INFO)
+				self.session.open(MessageBox, text=(plugin.name + _(" added to EasyMedia")), type=MessageBox.TYPE_INFO)
 			except:
-				self.session.open(MessageBox, text = "Write Error!", type = MessageBox.TYPE_WARNING)
+				self.session.open(MessageBox, text="Write Error!", type=MessageBox.TYPE_WARNING)
 		else:
 			order = 'rm -f \"' + '/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/' + plugin.name + '.plug' + '\"'
 			try:
 				os_system(order)
-				self.session.open(MessageBox, text = (plugin.name + _(" removed from EasyMedia")), type = MessageBox.TYPE_INFO)
+				self.session.open(MessageBox, text=(plugin.name + _(" removed from EasyMedia")), type=MessageBox.TYPE_INFO)
 			except:
-				self.session.open(MessageBox, text = "Write Error!", type = MessageBox.TYPE_WARNING)
+				self.session.open(MessageBox, text="Write Error!", type=MessageBox.TYPE_WARNING)
 
 class EasyMediaSummary(Screen):
 	if HardwareInfo().get_device_name() == "dm820":
@@ -363,7 +363,7 @@ class EasyMedia(Screen):
 
 		self.list = []
 		self.__keys = []		
-		self["list"] = MPanelList(list = self.list, selection = 0)
+		self["list"] = MPanelList(list=self.list, selection=0)
 		self["list"].onSelectionChanged.append(self.updateOLED)
 		
 		self["key_pvr"] = StaticText(" ")
@@ -492,7 +492,7 @@ def MPcallbackFunc(answer):
 			askBM.append((_("TV-mode"), "TM"))
 			askBM.append((_("Radio-mode"), "RM"))
 			askBM.append((_("Nothing"), "NO"))
-			EMsession.openWithCallback(TvRadioCallback, ChoiceBox, title="EasyMedia...", list = askBM)
+			EMsession.openWithCallback(TvRadioCallback, ChoiceBox, title="EasyMedia...", list=askBM)
 		else:
 			if InfoBar_instance:
 				InfoBar_instance.showRadio()
@@ -503,13 +503,13 @@ def MPcallbackFunc(answer):
 			askBM = []
 			for s in myBookmarks:
 				askBM.append((s, s))
-			EMsession.openWithCallback(BookmarksCallback, ChoiceBox, title=_("Select bookmark..."), list = askBM)
+			EMsession.openWithCallback(BookmarksCallback, ChoiceBox, title=_("Select bookmark..."), list=askBM)
 	elif answer == "PICTURES":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/PicturePlayer/plugin.pyo"):
 			from Plugins.Extensions.PicturePlayer.plugin import picshow
 			EMsession.open(picshow)
 		else:
-			EMsession.open(MessageBox, text = _('Picture-player is not installed!'), type = MessageBox.TYPE_ERROR)
+			EMsession.open(MessageBox, text=_('Picture-player is not installed!'), type=MessageBox.TYPE_ERROR)
 	elif answer == "MUSIC":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/MerlinMusicPlayer2/plugin.pyo") and (config.plugins.easyMedia.music.value == "merlinmp"):
 			from Plugins.Extensions.MerlinMusicPlayer2.plugin import MerlinMusicPlayer2FileList
@@ -519,7 +519,7 @@ def MPcallbackFunc(answer):
 			from Plugins.Extensions.MediaPlayer.plugin import MediaPlayer
 			EMsession.open(MediaPlayer)
 		else:
-			EMsession.open(MessageBox, text = _('No Music-Player installed!'), type = MessageBox.TYPE_ERROR)
+			EMsession.open(MessageBox, text=_('No Music-Player installed!'), type=MessageBox.TYPE_ERROR)
 	elif answer == "FILES":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/plugin.pyo") and (config.plugins.easyMedia.files.value == "dreamexplorer"):
 			from Plugins.Extensions.DreamExplorer.plugin import DreamExplorerII
@@ -528,50 +528,50 @@ def MPcallbackFunc(answer):
 			from Plugins.Extensions.Filebrowser.plugin import FilebrowserScreen
 			EMsession.open(FilebrowserScreen)
 		else:
-			EMsession.open(MessageBox, text = _('No File-Manager installed!'), type = MessageBox.TYPE_ERROR)
+			EMsession.open(MessageBox, text=_('No File-Manager installed!'), type=MessageBox.TYPE_ERROR)
 	elif answer == "WEATHER":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/WeatherPlugin/plugin.pyo"):
 			from Plugins.Extensions.WeatherPlugin.plugin import MSNWeatherPlugin
 			EMsession.open(MSNWeatherPlugin)
 		else:
-			EMsession.open(MessageBox, text = _('Weather Plugin is not installed!'), type = MessageBox.TYPE_ERROR)
+			EMsession.open(MessageBox, text=_('Weather Plugin is not installed!'), type=MessageBox.TYPE_ERROR)
 	elif answer == "DVD":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/DVDPlayer/plugin.pyo"):
 			from Plugins.Extensions.DVDPlayer.plugin import DVDPlayer
 			EMsession.open(DVDPlayer)
 		else:
-			EMsession.open(MessageBox, text = _('DVDPlayer Plugin is not installed!'), type = MessageBox.TYPE_ERROR)
+			EMsession.open(MessageBox, text=_('DVDPlayer Plugin is not installed!'), type=MessageBox.TYPE_ERROR)
 	elif answer == "MYTUBE":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/MyTube/plugin.pyo"):
 			from Plugins.Extensions.MyTube.plugin import *
 			MyTubeMain(EMsession)
 		else:
-			EMsession.open(MessageBox, text = _('MyTube Plugin is not installed!'), type = MessageBox.TYPE_ERROR)
+			EMsession.open(MessageBox, text=_('MyTube Plugin is not installed!'), type=MessageBox.TYPE_ERROR)
 	elif answer == "INTERNETRADIO":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/plugin.pyo"):
 			from Plugins.Extensions.InternetRadio.InternetRadioScreen import InternetRadioScreen
 			EMsession.open(InternetRadioScreen)
 		else:
-			EMsession.open(MessageBox, text = _('SHOUTcast Plugin is not installed!'), type = MessageBox.TYPE_ERROR)
+			EMsession.open(MessageBox, text=_('SHOUTcast Plugin is not installed!'), type=MessageBox.TYPE_ERROR)
 	elif answer == "ZDF":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/ZDFMediathek/plugin.pyo"):
 			from Plugins.Extensions.ZDFMediathek.plugin import ZDFMediathek
 			EMsession.open(ZDFMediathek)
 		else:
-			EMsession.open(MessageBox, text = _('ZDFmediathek Plugin is not installed!'), type = MessageBox.TYPE_ERROR)
+			EMsession.open(MessageBox, text=_('ZDFmediathek Plugin is not installed!'), type=MessageBox.TYPE_ERROR)
 	elif answer == "IDREAM":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/MerlinMusicPlayer2/plugin.pyo"):
 			from Plugins.Extensions.MerlinMusicPlayer2.plugin import iDream
 			servicelist = None
 			EMsession.open(iDream, servicelist)
 		else:
-			EMsession.open(MessageBox, text = _('Merlin iDream2 is not installed!'), type = MessageBox.TYPE_ERROR)
+			EMsession.open(MessageBox, text=_('Merlin iDream2 is not installed!'), type=MessageBox.TYPE_ERROR)
 	elif answer == "VIDEODB":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/VideoDB/plugin.pyo"):
 			from Plugins.Extensions.VideoDB.plugin import main as vdbmain
 			vdbmain(EMsession)
 		else:
-			EMsession.open(MessageBox, text = _('VideoDB is not installed!'), type = MessageBox.TYPE_ERROR)
+			EMsession.open(MessageBox, text=_('VideoDB is not installed!'), type=MessageBox.TYPE_ERROR)
 	elif answer == "TIMERS":
 		from Screens.TimerEdit import TimerEditList
 		EMsession.open(TimerEditList)
@@ -581,6 +581,6 @@ def MPcallbackFunc(answer):
 			inputfile = open(("/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/" + pluginToRun + ".plug"), 'rb')
 			runPlugin = pickle.load(inputfile)
 			inputfile.close()	
-			runPlugin(session = EMsession)
+			runPlugin(session=EMsession)
 		except:
-			EMsession.open(MessageBox, text = (pluginToRun + " not found!"), type = MessageBox.TYPE_WARNING)
+			EMsession.open(MessageBox, text=(pluginToRun + " not found!"), type=MessageBox.TYPE_WARNING)

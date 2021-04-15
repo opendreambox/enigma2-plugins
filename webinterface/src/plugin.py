@@ -39,7 +39,7 @@ hw = HardwareInfo()
 #init the config
 config.plugins.Webinterface = ConfigSubsection()
 config.plugins.Webinterface.enabled = ConfigYesNo(default=True)
-config.plugins.Webinterface.show_in_extensionsmenu = ConfigYesNo(default = False)
+config.plugins.Webinterface.show_in_extensionsmenu = ConfigYesNo(default=False)
 config.plugins.Webinterface.allowzapping = ConfigYesNo(default=True)
 config.plugins.Webinterface.includemedia = ConfigYesNo(default=False)
 config.plugins.Webinterface.autowritetimer = ConfigYesNo(default=False)
@@ -48,12 +48,12 @@ config.plugins.Webinterface.version = ConfigText(__version__) # used to make the
 
 config.plugins.Webinterface.http = ConfigSubsection()
 config.plugins.Webinterface.http.enabled = ConfigYesNo(default=True)
-config.plugins.Webinterface.http.port = ConfigInteger(default = 80, limits=(1, 65535) )
+config.plugins.Webinterface.http.port = ConfigInteger(default=80, limits=(1, 65535) )
 config.plugins.Webinterface.http.auth = ConfigYesNo(default=True)
 
 config.plugins.Webinterface.https = ConfigSubsection()
 config.plugins.Webinterface.https.enabled = ConfigYesNo(default=True)
-config.plugins.Webinterface.https.port = ConfigInteger(default = 443, limits=(1, 65535) )
+config.plugins.Webinterface.https.port = ConfigInteger(default=443, limits=(1, 65535) )
 config.plugins.Webinterface.https.auth = ConfigYesNo(default=True)
 
 config.plugins.Webinterface.streamauth = ConfigYesNo(default=False)

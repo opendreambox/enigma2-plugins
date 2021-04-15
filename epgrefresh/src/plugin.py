@@ -28,62 +28,62 @@ end = mktime((
 
 #Configuration
 config.plugins.epgrefresh = ConfigSubsection()
-config.plugins.epgrefresh.enabled = ConfigYesNo(default = False)
-config.plugins.epgrefresh.begin = ConfigClock(default = int(begin))
-config.plugins.epgrefresh.end = ConfigClock(default = int(end))
+config.plugins.epgrefresh.enabled = ConfigYesNo(default=False)
+config.plugins.epgrefresh.begin = ConfigClock(default=int(begin))
+config.plugins.epgrefresh.end = ConfigClock(default=int(end))
 #temporary config item until new mode has been successfully tested
-config.plugins.epgrefresh.usetimebased = ConfigYesNo(default = False)
-config.plugins.epgrefresh.interval_seconds = ConfigNumber(default = 120)
-config.plugins.epgrefresh.delay_standby = ConfigNumber(default = 10)
-config.plugins.epgrefresh.inherit_autotimer = ConfigYesNo(default = False)
+config.plugins.epgrefresh.usetimebased = ConfigYesNo(default=False)
+config.plugins.epgrefresh.interval_seconds = ConfigNumber(default=120)
+config.plugins.epgrefresh.delay_standby = ConfigNumber(default=10)
+config.plugins.epgrefresh.inherit_autotimer = ConfigYesNo(default=False)
 defaultafterevent = "nothing"
 try:
-	config.plugins.epgrefresh.afterevent = ConfigYesNo(default = False)
+	config.plugins.epgrefresh.afterevent = ConfigYesNo(default=False)
 	if config.plugins.epgrefresh.afterevent.value == True:
 		defaultafterevent = "standby"
 except:
 	pass
-config.plugins.epgrefresh.afterevent = ConfigSelection(default = defaultafterevent, choices = [("nothing", _("do nothing")), ("auto", _("auto")), ("standby", _("standby")), ("idle", _("idle mode"))])
-config.plugins.epgrefresh.epgsave = ConfigYesNo(default = False)
-config.plugins.epgrefresh.epgreset = ConfigYesNo(default = False)
-config.plugins.epgrefresh.force = ConfigYesNo(default = False)
-config.plugins.epgrefresh.dontshutdownonabort = ConfigYesNo(default = False)
-config.plugins.epgrefresh.skipProtectedServices = ConfigSelection(choices = [
+config.plugins.epgrefresh.afterevent = ConfigSelection(default=defaultafterevent, choices=[("nothing", _("do nothing")), ("auto", _("auto")), ("standby", _("standby")), ("idle", _("idle mode"))])
+config.plugins.epgrefresh.epgsave = ConfigYesNo(default=False)
+config.plugins.epgrefresh.epgreset = ConfigYesNo(default=False)
+config.plugins.epgrefresh.force = ConfigYesNo(default=False)
+config.plugins.epgrefresh.dontshutdownonabort = ConfigYesNo(default=False)
+config.plugins.epgrefresh.skipProtectedServices = ConfigSelection(choices=[
 		("bg_only", _("Background only")),
 		("always", _("Foreground also")),
-	], default = "bg_only"
+	], default="bg_only"
 )
-config.plugins.epgrefresh.enablemessage = ConfigYesNo(default = True)
-config.plugins.epgrefresh.wakeup = ConfigYesNo(default = False)
-config.plugins.epgrefresh.lastscan = ConfigNumber(default = 0)
-config.plugins.epgrefresh.parse_autotimer = ConfigSelection(choices = [
+config.plugins.epgrefresh.enablemessage = ConfigYesNo(default=True)
+config.plugins.epgrefresh.wakeup = ConfigYesNo(default=False)
+config.plugins.epgrefresh.lastscan = ConfigNumber(default=0)
+config.plugins.epgrefresh.parse_autotimer = ConfigSelection(choices=[
 		("always", _("Yes")),
 		("never", _("No")),
 		("bg_only", _("Background only")),
 		("ask_yes", _("Ask default Yes")),
 		("ask_no", _("Ask default No")),
-	], default = "never"
+	], default="never"
 )
-config.plugins.epgrefresh.adapter = ConfigSelection(choices = [
+config.plugins.epgrefresh.adapter = ConfigSelection(choices=[
 		("main", _("Main Picture")),
 		("pip", _("Picture in Picture")),
 		("pip_hidden", _("Picture in Picture (hidden)")),
 		("record", _("Fake recording")),
-	], default = "record"
+	], default="record"
 )
-config.plugins.epgrefresh.show_in_extensionsmenu = ConfigYesNo(default = False)
-config.plugins.epgrefresh.show_run_in_extensionsmenu = ConfigYesNo(default = True)
-config.plugins.epgrefresh.show_help = ConfigYesNo(default = True)
+config.plugins.epgrefresh.show_in_extensionsmenu = ConfigYesNo(default=False)
+config.plugins.epgrefresh.show_run_in_extensionsmenu = ConfigYesNo(default=True)
+config.plugins.epgrefresh.show_help = ConfigYesNo(default=True)
 config.plugins.epgrefresh.wakeup_time = ConfigInteger(default=-1)
-config.plugins.epgrefresh.showadvancedoptions = NoSave(ConfigYesNo(default = False))
+config.plugins.epgrefresh.showadvancedoptions = NoSave(ConfigYesNo(default=False))
 
 # convert previous parameters
-config.plugins.epgrefresh.background = ConfigYesNo(default = False)
+config.plugins.epgrefresh.background = ConfigYesNo(default=False)
 if config.plugins.epgrefresh.background.value:
 	config.plugins.epgrefresh.adapter.value = "pip_hidden"
 	config.plugins.epgrefresh.background.value = False
 	config.plugins.epgrefresh.save()
-config.plugins.epgrefresh.interval = ConfigNumber(default = 2)
+config.plugins.epgrefresh.interval = ConfigNumber(default=2)
 if config.plugins.epgrefresh.interval.value != 2:
 	config.plugins.epgrefresh.interval_seconds.value = config.plugins.epgrefresh.interval.value * 60
 	config.plugins.epgrefresh.interval.value = 2
@@ -111,7 +111,7 @@ except Exception as e:
 # Notification-Domain
 from Tools import Notifications
 try:
-	Notifications.notificationQueue.registerDomain(NOTIFICATIONDOMAIN, _("EPGREFRESH_NOTIFICATION_DOMAIN"), deferred_callable = True)
+	Notifications.notificationQueue.registerDomain(NOTIFICATIONDOMAIN, _("EPGREFRESH_NOTIFICATION_DOMAIN"), deferred_callable=True)
 except Exception as e:
 	EPGRefreshNotificationKey = ""
 	print("[EPGRefresh] Error registering Notification-Domain:", e)
@@ -214,7 +214,7 @@ def doneConfiguring(session, needsRestart):
 	if needsRestart:
 		session.openWithCallback(boundFunction(restartGUICB, session), MessageBox,
 				_("To apply your Changes the GUI has to be restarted.\nDo you want to restart the GUI now?"),
-				MessageBox.TYPE_YESNO, timeout =  30)
+				MessageBox.TYPE_YESNO, timeout=30)
 	else:
 		_startAfterConfig(session)
 
@@ -248,10 +248,10 @@ def extensionsmenu(session, **kwargs):
 	main(session, **kwargs)
 
 extPrefix = _("EXTENSIONMENU_PREFIX")
-extSetupDescriptor = PluginDescriptor(name = extPrefix + " " + _("EXTENSIONNAME_SETUP"), description = _("Automatically refresh EPG"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = extensionsmenu, needsRestart=False)
-extRunDescriptor = PluginDescriptor(name = extPrefix + " " + _("Refresh now"), description = _("Start EPGrefresh immediately"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = forceRefresh, needsRestart = False)
-extStopDescriptor = PluginDescriptor(name = extPrefix + " " + _("Stop Refresh"), description = _("Stop Running EPG-refresh"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = stopRunningRefresh, needsRestart = False)
-extPendingServDescriptor = PluginDescriptor(name = extPrefix + " " + _("Pending Services"), description = _("Show the pending Services for refresh"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = showPendingServices, needsRestart = False)
+extSetupDescriptor = PluginDescriptor(name=extPrefix + " " + _("EXTENSIONNAME_SETUP"), description=_("Automatically refresh EPG"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=extensionsmenu, needsRestart=False)
+extRunDescriptor = PluginDescriptor(name=extPrefix + " " + _("Refresh now"), description=_("Start EPGrefresh immediately"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=forceRefresh, needsRestart=False)
+extStopDescriptor = PluginDescriptor(name=extPrefix + " " + _("Stop Refresh"), description=_("Stop Running EPG-refresh"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=stopRunningRefresh, needsRestart=False)
+extPendingServDescriptor = PluginDescriptor(name=extPrefix + " " + _("Pending Services"), description=_("Show the pending Services for refresh"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=showPendingServices, needsRestart=False)
 
 def AdjustExtensionsmenu(enable, PlugDescriptor):
 	if enable:
@@ -273,8 +273,8 @@ def housekeepingExtensionsmenu(configentry, force=False):
 		if PlugDescriptor != None:
 			AdjustExtensionsmenu(configentry.value, PlugDescriptor)
 
-config.plugins.epgrefresh.show_in_extensionsmenu.addNotifier(housekeepingExtensionsmenu, initial_call = False, immediate_feedback = True)
-config.plugins.epgrefresh.show_run_in_extensionsmenu.addNotifier(housekeepingExtensionsmenu, initial_call = False, immediate_feedback = True)
+config.plugins.epgrefresh.show_in_extensionsmenu.addNotifier(housekeepingExtensionsmenu, initial_call=False, immediate_feedback=True)
+config.plugins.epgrefresh.show_run_in_extensionsmenu.addNotifier(housekeepingExtensionsmenu, initial_call=False, immediate_feedback=True)
 
 def Plugins(**kwargs):
 	# NOTE: this might be a little odd to check this, but a user might expect
@@ -287,28 +287,28 @@ def Plugins(**kwargs):
 	needsRestart = config.plugins.epgrefresh.enabled.value and not plugins.firstRun
 	list = [
 		PluginDescriptor(
-			name = "EPGRefresh",
-			where = [
+			name="EPGRefresh",
+			where=[
 				PluginDescriptor.WHERE_AUTOSTART,
 				PluginDescriptor.WHERE_SESSIONSTART
 			],
-			fnc = autostart,
-			wakeupfnc = getNextWakeup,
-			needsRestart = needsRestart,
+			fnc=autostart,
+			wakeupfnc=getNextWakeup,
+			needsRestart=needsRestart,
 		),
 		PluginDescriptor(
-			name = _("add to EPGRefresh"),
-			where = PluginDescriptor.WHERE_EVENTINFO,
-			fnc = eventinfo,
-			needsRestart = needsRestart,
+			name=_("add to EPGRefresh"),
+			where=PluginDescriptor.WHERE_EVENTINFO,
+			fnc=eventinfo,
+			needsRestart=needsRestart,
 		),
 		PluginDescriptor(
-			name = _("PLUGINNAME_EPGRefresh"),
-			description = _("Automatically refresh EPG"),
-			where = PluginDescriptor.WHERE_PLUGINMENU, 
-			fnc = main,
-			icon = "EPGRefresh.png",
-			needsRestart = needsRestart,
+			name=_("PLUGINNAME_EPGRefresh"),
+			description=_("Automatically refresh EPG"),
+			where=PluginDescriptor.WHERE_PLUGINMENU, 
+			fnc=main,
+			icon="EPGRefresh.png",
+			needsRestart=needsRestart,
 		),
 	]
 	if config.plugins.epgrefresh.show_in_extensionsmenu.value:

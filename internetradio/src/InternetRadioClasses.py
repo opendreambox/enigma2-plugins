@@ -20,11 +20,11 @@
 #
 
 class InternetRadioFilter:
-	def __init__(self, name = ""):
+	def __init__(self, name=""):
 		self.name = name
 
 class InternetRadioStation:
-	def __init__(self, name = "", tags = "", country = "", url = "", language = "", id = "", homepage = ""):
+	def __init__(self, name="", tags="", country="", url="", language="", id="", homepage=""):
 		if name is None:
 			name = ""
 		self.name = name

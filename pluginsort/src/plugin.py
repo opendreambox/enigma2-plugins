@@ -56,7 +56,7 @@ if "ListboxMarkedAndSelectedForeground" in colors:
 else:
 	markedForegroundSelected = 8388608
 
-SelectedPluginEntryComponent = lambda plugin: MyPluginEntryComponent(plugin, backcolor_sel = markedForegroundSelected)
+SelectedPluginEntryComponent = lambda plugin: MyPluginEntryComponent(plugin, backcolor_sel=markedForegroundSelected)
 
 class MyPluginList(PluginList):
 	def __init__(self, *args, **kwargs):
@@ -442,7 +442,7 @@ class SortingPluginBrowser(OriginalPluginBrowser):
 		self.session.openWithCallback(
 			self.menuCallback,
 			ChoiceBox,
-			list = list,
+			list=list,
 		)
 
 	def menuCallback(self, ret):

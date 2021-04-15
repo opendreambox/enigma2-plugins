@@ -186,7 +186,7 @@ def MoviePlayer__init__(self, *args, **kwargs):
 		{
 			"left": self.left,
 			"right": self.right
-		}, prio = -2)
+		}, prio=-2)
 
 def MoviePlayer_up(self):
 	slist = self.servicelist
@@ -660,12 +660,12 @@ def overwriteFunctions():
 	PictureInPicture.resize = PictureInPicture_resize
 
 config.plugins.pipzap = ConfigSubsection()
-config.plugins.pipzap.enable_hotkey = ConfigOnOff(default = True)
-config.plugins.pipzap.enable_exitkey = ConfigSelection(choices=[("False",_("no")), ("True",_("yes")), ("Close",_("only Close")), ("Open",_("only Open"))], default = "False")
-config.plugins.pipzap.show_in_plugins = ConfigOnOff(default = False)
-config.plugins.pipzap.show_label = ConfigOnOff(default = True)
-config.plugins.pipzap.show_channelname = ConfigOnOff(default = False)
-config.plugins.pipzap.show_help = ConfigOnOff(default = True)
+config.plugins.pipzap.enable_hotkey = ConfigOnOff(default=True)
+config.plugins.pipzap.enable_exitkey = ConfigSelection(choices=[("False",_("no")), ("True",_("yes")), ("Close",_("only Close")), ("Open",_("only Open"))], default="False")
+config.plugins.pipzap.show_in_plugins = ConfigOnOff(default=False)
+config.plugins.pipzap.show_label = ConfigOnOff(default=True)
+config.plugins.pipzap.show_channelname = ConfigOnOff(default=False)
+config.plugins.pipzap.show_help = ConfigOnOff(default=True)
 
 def autostart(reason, **kwargs):
 	if reason == 0:

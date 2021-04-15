@@ -62,7 +62,7 @@ def InfoBarSeek__seekableStatusChanged(self):
 			else:
 				self["SkipIntroSeekActions"].setEnabled(True)
 
-def InfoBarSeek__init__(self, actionmap = "InfobarSeekActions"):
+def InfoBarSeek__init__(self, actionmap="InfobarSeekActions"):
 	print "== InfoBarSeek__init__ SkipIntro"
 	self["SkipIntroSeekActions"] = None
 	baseInfoBarSeek__init__(self, actionmap)

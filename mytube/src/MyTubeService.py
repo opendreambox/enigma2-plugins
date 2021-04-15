@@ -164,7 +164,7 @@ class MyTubePlayerService():
 		else:
 			Log.w(data)
 
-	def getFeed(self, callback = None, errorback = None, chart=None, videoCategoryId=None, ids=[]):
+	def getFeed(self, callback=None, errorback=None, chart=None, videoCategoryId=None, ids=[]):
 		Log.i()
 		self.feedentries = []
 		self._currentQuery = Videos(self._youtube)

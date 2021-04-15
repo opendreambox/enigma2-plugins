@@ -48,9 +48,9 @@ def decodeHtml(text):
 	return text
 
 config.plugins.imdb = ConfigSubsection()
-config.plugins.imdb.showinplugins = ConfigYesNo(default = True)
-config.plugins.imdb.ignore_tags = ConfigText(visible_width = 50, fixed_size = False)
-config.plugins.imdb.language = ConfigSelection(default = None, choices = [(None, _("Default")),("en-us", _("English")),("fr-fr", _("French")),("de-de", _("German")),("it-it", _("Italian")),("es-es", _("Spanish"))])
+config.plugins.imdb.showinplugins = ConfigYesNo(default=True)
+config.plugins.imdb.ignore_tags = ConfigText(visible_width=50, fixed_size=False)
+config.plugins.imdb.language = ConfigSelection(default=None, choices=[(None, _("Default")),("en-us", _("English")),("fr-fr", _("French")),("de-de", _("German")),("it-it", _("Italian")),("es-es", _("Spanish"))])
 
 imdb_headers = {}
 agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.167 Safari/537.36'
@@ -79,15 +79,15 @@ class IMDBChannelSelection(SimpleChannelSelection):
 				self.epgClosed,
 				IMDBEPGSelection,
 				ref,
-				openPlugin = False
+				openPlugin=False
 			)
 
-	def epgClosed(self, ret = None):
+	def epgClosed(self, ret=None):
 		if ret:
 			self.close(ret)
 
 class IMDBEPGSelection(EPGSelection):
-	def __init__(self, session, ref, openPlugin = True):
+	def __init__(self, session, ref, openPlugin=True):
 		EPGSelection.__init__(self, session, ref)
 		self.skinName = "EPGSelection"
 		self["key_green"].setText(_("Lookup"))
@@ -416,10 +416,10 @@ class IMDB(Screen):
 			self.menuCallback,
 			ChoiceBox,
 			title=_("IMDb Menu"),
-			list = list,
+			list=list,
 		)
 
-	def menuCallback(self, ret = None):
+	def menuCallback(self, ret=None):
 		ret and ret[1]()
 
 	def openYttrailer(self):
@@ -447,8 +447,8 @@ class IMDB(Screen):
 		self.session.openWithCallback(
 			self.gotSearchString,
 			VirtualKeyBoard,
-			title = _("Enter text to search for"),
-			text = self.eventName
+			title=_("Enter text to search for"),
+			text=self.eventName
 		)
 
 	def openChannelSelection(self):
@@ -457,7 +457,7 @@ class IMDB(Screen):
 			IMDBChannelSelection
 		)
 
-	def gotSearchString(self, ret = None):
+	def gotSearchString(self, ret=None):
 		if ret:
 			self.eventName = ret
 			self.Page = 0
@@ -729,7 +729,7 @@ class IMDbSetup(Screen, ConfigListScreen):
 			}, -2)
 
 		self.list = []
-		ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.changedEntry)
+		ConfigListScreen.__init__(self, self.list, session=self.session, on_change=self.changedEntry)
 		self.createSetup()
 		self.changedEntry()
 		self.onLayoutFinish.append(self.layoutFinished)

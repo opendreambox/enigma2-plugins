@@ -18,11 +18,11 @@ pname = _("Filebrowser")
 pdesc = _("manage local Files")
 
 config.plugins.filebrowser = ConfigSubsection()
-config.plugins.filebrowser.savedirs = ConfigYesNo(default = True)
-config.plugins.filebrowser.add_mainmenu_entry = ConfigYesNo(default = True)
-config.plugins.filebrowser.add_extensionmenu_entry = ConfigYesNo(default = True)
-config.plugins.filebrowser.path_left = ConfigText(default = "/")
-config.plugins.filebrowser.path_right = ConfigText(default = "/")
+config.plugins.filebrowser.savedirs = ConfigYesNo(default=True)
+config.plugins.filebrowser.add_mainmenu_entry = ConfigYesNo(default=True)
+config.plugins.filebrowser.add_extensionmenu_entry = ConfigYesNo(default=True)
+config.plugins.filebrowser.path_left = ConfigText(default="/")
+config.plugins.filebrowser.path_right = ConfigText(default="/")
 
 
 ##################################
@@ -107,8 +107,8 @@ class FilebrowserScreen(Screen):
         self.session = session
         Screen.__init__(self, session)
 
-        self["list_left"] = FileList(path_left, matchingPattern = "^.*")
-        self["list_right"] = FileList(path_right, matchingPattern = "^.*")
+        self["list_left"] = FileList(path_left, matchingPattern="^.*")
+        self["list_right"] = FileList(path_right, matchingPattern="^.*")
         self["red"] = Label(_("delete"))
         self["green"] = Label(_("move"))
         self["yellow"] = Label(_("copy"))
@@ -178,7 +178,7 @@ class FilebrowserScreen(Screen):
                 titletxt = _("copy directory")
             else:
                 titletxt = _("copy file")
-            self.session.openWithCallback(self.doCopy,ChoiceBox, title = titletxt + "?\n%s\nfrom %s to %s" %(filename,sourceDir,targetDir),list=[(_("yes"), True ),(_("no"), False )])
+            self.session.openWithCallback(self.doCopy,ChoiceBox, title=titletxt + "?\n%s\nfrom %s to %s" %(filename,sourceDir,targetDir),list=[(_("yes"), True ),(_("no"), False )])
         else:
             return
 
@@ -194,7 +194,7 @@ class FilebrowserScreen(Screen):
                 else:
 	                cmd = ["cp \""+sourceDir+filename+"\" \""+targetDir+"\""]
 	                titletxt = _("copying file ...")                
-                self.session.openWithCallback(self.doCopyCB,Console, title = titletxt, cmdlist = cmd)
+                self.session.openWithCallback(self.doCopyCB,Console, title=titletxt, cmdlist=cmd)
 
     def doCopyCB(self):
         self.doRefresh()
@@ -208,7 +208,7 @@ class FilebrowserScreen(Screen):
                 titletxt = _("delete directory")
             else:
                 titletxt = _("delete file")            
-            self.session.openWithCallback(self.doDelete,ChoiceBox, title = titletxt +"?\n%s\nfrom dir\n%s"%(filename,sourceDir),list=[(_("yes"), True ),(_("no"), False )])
+            self.session.openWithCallback(self.doDelete,ChoiceBox, title=titletxt +"?\n%s\nfrom dir\n%s"%(filename,sourceDir),list=[(_("yes"), True ),(_("no"), False )])
         else:
             return
 
@@ -223,7 +223,7 @@ class FilebrowserScreen(Screen):
                 else:
 	                cmd = ["rm \""+sourceDir+filename+"\""]
 	                titletxt = _("deleting file ...")
-                self.session.openWithCallback(self.doDeleteCB,Console, title = titletxt, cmdlist = cmd)
+                self.session.openWithCallback(self.doDeleteCB,Console, title=titletxt, cmdlist=cmd)
 
     def doDeleteCB(self):
         self.doRefresh()
@@ -238,7 +238,7 @@ class FilebrowserScreen(Screen):
                 titletxt = _("move directory")
             else:
                 titletxt = _("move file")
-            self.session.openWithCallback(self.doMove,ChoiceBox, title = titletxt+"?\n%s\nfrom %s to %s"%(filename,sourceDir,targetDir),list=[(_("yes"), True ),(_("no"), False )])
+            self.session.openWithCallback(self.doMove,ChoiceBox, title=titletxt+"?\n%s\nfrom %s to %s"%(filename,sourceDir,targetDir),list=[(_("yes"), True ),(_("no"), False )])
         else:
             return
 
@@ -254,7 +254,7 @@ class FilebrowserScreen(Screen):
                 else:
                 	cmd = ["mv \""+sourceDir+filename+"\" \""+targetDir+"\""]
                 	titletxt = _("moving file ...")
-                self.session.openWithCallback(self.doMoveCB,Console, title = titletxt, cmdlist = cmd)
+                self.session.openWithCallback(self.doMoveCB,Console, title=titletxt, cmdlist=cmd)
 
     def doMoveCB(self):
         self.doRefresh()
@@ -268,7 +268,7 @@ class FilebrowserScreen(Screen):
             	titletxt = _("rename directory")
             else:
             	titletxt = _("rename file")            
-            self.session.openWithCallback(self.doRename,InputBox,text=filename, title = filename, windowTitle=titletxt)
+            self.session.openWithCallback(self.doRename,InputBox,text=filename, title=filename, windowTitle=titletxt)
         else:
             return
 
@@ -282,7 +282,7 @@ class FilebrowserScreen(Screen):
             else:
             	cmd = ["mv \""+sourceDir+filename+"\" \""+sourceDir+newname+"\""]
             	titletxt = _("renaming file ...")
-            self.session.openWithCallback(self.doRenameCB,Console, title = titletxt, cmdlist = cmd)
+            self.session.openWithCallback(self.doRenameCB,Console, title=titletxt, cmdlist=cmd)
 
     def doRenameCB(self):
         self.doRefresh()
@@ -314,7 +314,7 @@ class FilebrowserScreen(Screen):
             # catching error
             #  File "/home/tmbinc/opendreambox/1.5/dm8000/experimental/build/tmp/work/enigma2-2.6git20090627-r1/image/usr/lib/enigma2/python/Components/Scanner.py", line 43, in handleFile
             #  TypeError: 'in <string>' requires string as left operand
-            self.session.open(MessageBox,_("no Viewer installed for this mimetype!"), type = MessageBox.TYPE_ERROR, timeout = 5, close_on_any_key = True)
+            self.session.open(MessageBox,_("no Viewer installed for this mimetype!"), type=MessageBox.TYPE_ERROR, timeout=5, close_on_any_key=True)
 
 
 
@@ -328,13 +328,12 @@ def start_from_filescan(**kwargs):
     from Components.Scanner import Scanner, ScanPath
     return \
         Scanner(mimetypes=None,
-            paths_to_scan =
-                [
-                    ScanPath(path = "", with_subdirs = False),
+            paths_to_scan=[
+                    ScanPath(path="", with_subdirs=False),
                 ],
-            name = pname,
-            description = pdesc,
-            openfnc = filescan_open,
+            name=pname,
+            description=pdesc,
+            openfnc=filescan_open,
         )
 
 def start_from_mainmenu(menuid, **kwargs):
@@ -347,10 +346,10 @@ def start_from_pluginmenu(session,**kwargs):
     session.open(FilebrowserScreen)
 
 def Plugins(path,**kwargs):
-    desc_mainmenu  = PluginDescriptor(name=pname, description=pdesc,  where = PluginDescriptor.WHERE_MENU, fnc = start_from_mainmenu)
-    desc_pluginmenu = PluginDescriptor(name=pname, description=pdesc,  where = PluginDescriptor.WHERE_PLUGINMENU,icon = "filebrowser.svg", fnc = start_from_pluginmenu)
-    desc_extensionmenu = PluginDescriptor(name=pname, description=pdesc, where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = start_from_pluginmenu)
-    desc_filescan = PluginDescriptor(name=pname, where = PluginDescriptor.WHERE_FILESCAN, fnc = start_from_filescan)
+    desc_mainmenu  = PluginDescriptor(name=pname, description=pdesc,  where=PluginDescriptor.WHERE_MENU, fnc=start_from_mainmenu)
+    desc_pluginmenu = PluginDescriptor(name=pname, description=pdesc,  where=PluginDescriptor.WHERE_PLUGINMENU,icon="filebrowser.svg", fnc=start_from_pluginmenu)
+    desc_extensionmenu = PluginDescriptor(name=pname, description=pdesc, where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=start_from_pluginmenu)
+    desc_filescan = PluginDescriptor(name=pname, where=PluginDescriptor.WHERE_FILESCAN, fnc=start_from_filescan)
     list = []
     list.append(desc_pluginmenu)
     #buggie list.append(desc_filescan)

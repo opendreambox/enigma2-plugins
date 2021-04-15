@@ -206,7 +206,7 @@ class EPGSearch(EPGSelection):
 		self["key_green"] = Button(_("Add timer"))
 		self.key_green_choice = self.ADD_TIMER
 		self.key_red_choice = self.EMPTY
-		self["list"] = EPGSearchList(type = self.type, selChangedCB = self.onSelectionChanged, timer = session.nav.RecordTimer)
+		self["list"] = EPGSearchList(type=self.type, selChangedCB=self.onSelectionChanged, timer=session.nav.RecordTimer)
 		self["actions"] = ActionMap(["EPGSelectActions", "OkCancelActions", "MenuActions", "InputActions", "InfobarAudioSelectionActions"],
 			{
 				"menu": self.menu,
@@ -249,7 +249,7 @@ class EPGSearch(EPGSelection):
 		if PartnerBoxIconsEnabled:
 			EPGSelection.PartnerboxInit(self, False)
 		
-		self.pluginList = [(p.name, p) for p in plugins.getPlugins(where = [PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED])]
+		self.pluginList = [(p.name, p) for p in plugins.getPlugins(where=[PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE, PluginDescriptor.WHERE_CHANNEL_SELECTION_RED])]
 		self.was_history_start = False
 		if self.searchkwargs and self.searchkwargs.has_key("startWithHistory") and self.searchkwargs["startWithHistory"]:
 			self.onShown.append(self.__onShownStartHistory)
@@ -307,7 +307,7 @@ class EPGSearch(EPGSelection):
 						proceed = True
 					break
 			if proceed:
-				newEntry = RecordTimerEntry(serviceref, checkOldTimers = True, dirname = preferredTimerPath(), *event)
+				newEntry = RecordTimerEntry(serviceref, checkOldTimers=True, dirname=preferredTimerPath(), *event)
 				self.session.openWithCallback(self.finishedAdd, TimerEntry, newEntry)
 			else:
 				EPGSelection.timerAdd(self)
@@ -321,8 +321,8 @@ class EPGSearch(EPGSelection):
 		self.session.openWithCallback(
 			self.searchEPG,
 			NTIVirtualKeyBoard,
-			title = _("Enter text to search for"),
-			text = self.currSearch
+			title=_("Enter text to search for"),
+			text=self.currSearch
 		)
 
 	def infoKeyPressed(self):
@@ -337,7 +337,7 @@ class EPGSearch(EPGSelection):
 			EPGSearchFilter_openSearchFilterList(self.session, None, None)
 			self.onShow.append(self.__backFromSearchFilterList)
 		else:
-			self.session.open(MessageBox,_("AutoTimer-plugin must be installed to use the search filter function!"),type = MessageBox.TYPE_INFO)
+			self.session.open(MessageBox,_("AutoTimer-plugin must be installed to use the search filter function!"),type=MessageBox.TYPE_INFO)
 
 	def __backFromSearchFilterList(self):
 		self.onShow.remove(self.__backFromSearchFilterList)
@@ -352,7 +352,7 @@ class EPGSearch(EPGSelection):
 			if event is not None:
 				searchEventWithFilter(self.session, event, service)
 		else:
-			self.session.open(MessageBox,_("AutoTimer-plugin must be installed to use the search filter function!"),type = MessageBox.TYPE_INFO)
+			self.session.open(MessageBox,_("AutoTimer-plugin must be installed to use the search filter function!"),type=MessageBox.TYPE_INFO)
 		
 	def openSimilarList(self, eventid, refstr):
 		self.session.open(EPGSelection, refstr, None, eventid)
@@ -404,9 +404,9 @@ class EPGSearch(EPGSelection):
 		self.session.openWithCallback(
 			self.menuCallback,
 			ChoiceBox,
-			list = options,
-			keys = keys,
-			title = _("EPGSearch menu")
+			list=options,
+			keys=keys,
+			title=_("EPGSearch menu")
 		)
 
 	def menuCallback(self, ret):
@@ -449,7 +449,7 @@ class EPGSearch(EPGSelection):
 			self.session.open(
 				MessageBox,
 				_("Could not read AutoTimer timer list: %s") % e,
-				type = MessageBox.TYPE_ERROR
+				type=MessageBox.TYPE_ERROR
 			)
 		else:
 			# Fetch match strings
@@ -459,8 +459,8 @@ class EPGSearch(EPGSelection):
 			self.session.openWithCallback(
 				self.searchEPGWrapper,
 				ChoiceBox,
-				title = _("Select text to search for"),
-				list = options
+				title=_("Select text to search for"),
+				list=options
 			)
 		finally:
 			# Remove instance if there wasn't one before
@@ -548,7 +548,7 @@ class EPGSearch(EPGSelection):
 		else:
 			return _("Search list")
 
-	def blueButtonPressed(self, ret = False):
+	def blueButtonPressed(self, ret=False):
 		if ret is None:
 			if self.was_history_start:
 				self.closeScreen()
@@ -583,14 +583,14 @@ class EPGSearch(EPGSelection):
 			self.session.openWithCallback(
 				self.searchEPGWrapper,
 				ChoiceBox,
-				title = _("Select text to search for"),
-				list = options
+				title=_("Select text to search for"),
+				list=options
 			)
 		else:
 			self.session.open(
 				MessageBox,
 				_("No history"),
-				type = MessageBox.TYPE_INFO
+				type=MessageBox.TYPE_INFO
 			)
 
 	def searchEPGWrapper(self, ret):
@@ -605,7 +605,7 @@ class EPGSearch(EPGSelection):
 				timer = ret[1]
 				epgsearchAT = EPGSearchAT()
 				epgsearchAT.add(timer)
-				total, new, modified, timers, conflicts, similars = epgsearchAT.parseEPG(simulateOnly = True)
+				total, new, modified, timers, conflicts, similars = epgsearchAT.parseEPG(simulateOnly=True)
 				results = []
 				if timers:
 					epgcache = eEPGCache.getInstance()
@@ -630,7 +630,7 @@ class EPGSearch(EPGSelection):
 		elif self.was_history_start:
 			self.closeScreen()
 
-	def searchEPG(self, searchString = None, searchSave = True):
+	def searchEPG(self, searchString=None, searchSave=True):
 		if not searchString:
 			return
 		searchType = config.plugins.epgsearch.search_type.value
@@ -647,7 +647,7 @@ class EPGSearch(EPGSelection):
 		searchDescription = answer and answer[1]
 		self.doSearchEPG(searchString, searchSave, searchDescription)
 
-	def doSearchEPG(self, searchString = None, searchSave = True, searchDescription=False):
+	def doSearchEPG(self, searchString=None, searchSave=True, searchDescription=False):
 		self.currSearchSave = searchSave
 		self.currSearchDescription = searchDescription
 		if searchString:
@@ -709,7 +709,7 @@ class EPGSearch(EPGSelection):
 
 	def getMostSearchService(self, matches):
 		services = [x[0]for x in matches]
-		mostSearchService = max(services, key = services.count)
+		mostSearchService = max(services, key=services.count)
 		return mostSearchService
 
 	def filterEPGmatches(self, matches):
@@ -802,7 +802,7 @@ class EPGSearchTimerImport(Screen):
 
 		for timer in self.session.nav.RecordTimer.processed_timers:
 			l.append((timer, True))
-		l.sort(key = lambda x: x[0].begin)
+		l.sort(key=lambda x: x[0].begin)
 
 	def search(self):
 		cur = self["timerlist"].getCurrent()
@@ -834,7 +834,7 @@ class EPGSearchChannelSelection(SimpleChannelSelection):
 				False
 			)
 
-	def epgClosed(self, ret = None):
+	def epgClosed(self, ret=None):
 		if ret:
 			self.close(ret)
 

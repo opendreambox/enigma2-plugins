@@ -45,12 +45,12 @@ autoCopy = mktime((
 )
 
 config.plugins.epgCopy = ConfigSubsection()
-config.plugins.epgCopy.username = ConfigText(default = "root", fixed_size = False)
-config.plugins.epgCopy.password = ConfigPassword(default = "", fixed_size = False)
-config.plugins.epgCopy.ip = ConfigIP(default = [0, 0, 0, 0])
-config.plugins.epgCopy.copytime = ConfigClock(default = int(autoCopy))
+config.plugins.epgCopy.username = ConfigText(default="root", fixed_size=False)
+config.plugins.epgCopy.password = ConfigPassword(default="", fixed_size=False)
+config.plugins.epgCopy.ip = ConfigIP(default=[0, 0, 0, 0])
+config.plugins.epgCopy.copytime = ConfigClock(default=int(autoCopy))
 
-def myPrint(txt, prefix = None):
+def myPrint(txt, prefix=None):
     print ("\033[91m[EPGCopy] %s\033[m " % txt)
     
 def myFtp(): 
@@ -91,7 +91,7 @@ class copyEveryDay(Screen):
         self.timer_conn = self.timer.timeout.connect(self.__doCopy)
         self.configChange()
     
-    def configChange(self, configElement = None):   
+    def configChange(self, configElement=None):   
         if self.timer.isActive(): # stop timer if running
             self.timer.stop()
         now = localtime()
@@ -212,8 +212,8 @@ def Plugins(path,**kwargs):
     global plugin_path
     plugin_path = path
     return  [
-             PluginDescriptor(name="epgCopy",description="copy epg.db", where = [ PluginDescriptor.WHERE_PLUGINMENU ], icon="epg.png", fnc = main),
-             PluginDescriptor(name="epgCopy", where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main),
-             PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART,fnc = autoCpy)
+             PluginDescriptor(name="epgCopy",description="copy epg.db", where=[ PluginDescriptor.WHERE_PLUGINMENU ], icon="epg.png", fnc=main),
+             PluginDescriptor(name="epgCopy", where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main),
+             PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART,fnc=autoCpy)
              ]
       

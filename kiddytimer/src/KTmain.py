@@ -108,7 +108,7 @@ class KiddyTimer():
         self.observeTimer = eTimer()
         self.observeTimer_conn = self.observeTimer.timeout.connect(self.observeTime)
 
-        config.misc.standbyCounter.addNotifier(self.enterStandby, initial_call = False)
+        config.misc.standbyCounter.addNotifier(self.enterStandby, initial_call=False)
 
     def gotSession(self, session):
         self.session = session
@@ -251,7 +251,7 @@ class KiddyTimer():
         self.startLoop()
 
     def askForPIN(self):
-        self.session.openWithCallback( self.pinEntered, PinInput, pinList = [config.plugins.KiddyTimer.pin.getValue()], triesEntry = self.getTriesEntry(), title = _("Please enter the correct pin code"), windowTitle = _("Enter pin code"))
+        self.session.openWithCallback( self.pinEntered, PinInput, pinList=[config.plugins.KiddyTimer.pin.getValue()], triesEntry=self.getTriesEntry(), title=_("Please enter the correct pin code"), windowTitle=_("Enter pin code"))
     
     def getTriesEntry(self):
         return config.ParentalControl.retries.setuppin

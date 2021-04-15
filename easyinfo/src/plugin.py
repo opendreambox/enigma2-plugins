@@ -71,31 +71,31 @@ CHOICELIST=[("no", _("Disabled")),
 
 COLORCHOICELIST = [("singleepg", _("Single EPG")),("multiepg", _("Multi EPG")),("easypg", _("Easy-PG")),("graphepg", _("Graphik multi-EPG")),("merlinepg", _("Merlin EPG")),("cooltv", _("Cool-TV")),("imdbinfo", _("IMDB info"))]
 config.plugins.EasyInfo  = ConfigSubsection()
-config.plugins.EasyInfo.pos1 = ConfigSelection(default="eventinfo", choices = CHOICELIST)
-config.plugins.EasyInfo.pos2 = ConfigSelection(default="singleepg", choices = CHOICELIST)
-config.plugins.EasyInfo.pos3 = ConfigSelection(default="merlinepg", choices = CHOICELIST)
-config.plugins.EasyInfo.pos4 = ConfigSelection(default="timers", choices = CHOICELIST)
-config.plugins.EasyInfo.pos5 = ConfigSelection(default="channelinfo", choices = CHOICELIST)
-config.plugins.EasyInfo.pos6 = ConfigSelection(default="no", choices = CHOICELIST)
-config.plugins.EasyInfo.pos7 = ConfigSelection(default="no", choices = CHOICELIST)
-config.plugins.EasyInfo.pos8 = ConfigSelection(default="no", choices = CHOICELIST)
-config.plugins.EasyInfo.pos9 = ConfigSelection(default="no", choices = CHOICELIST)
-config.plugins.EasyInfo.pos10 = ConfigSelection(default="no", choices = CHOICELIST)
-config.plugins.EasyInfo.pos11 = ConfigSelection(default="no", choices = CHOICELIST)
+config.plugins.EasyInfo.pos1 = ConfigSelection(default="eventinfo", choices=CHOICELIST)
+config.plugins.EasyInfo.pos2 = ConfigSelection(default="singleepg", choices=CHOICELIST)
+config.plugins.EasyInfo.pos3 = ConfigSelection(default="merlinepg", choices=CHOICELIST)
+config.plugins.EasyInfo.pos4 = ConfigSelection(default="timers", choices=CHOICELIST)
+config.plugins.EasyInfo.pos5 = ConfigSelection(default="channelinfo", choices=CHOICELIST)
+config.plugins.EasyInfo.pos6 = ConfigSelection(default="no", choices=CHOICELIST)
+config.plugins.EasyInfo.pos7 = ConfigSelection(default="no", choices=CHOICELIST)
+config.plugins.EasyInfo.pos8 = ConfigSelection(default="no", choices=CHOICELIST)
+config.plugins.EasyInfo.pos9 = ConfigSelection(default="no", choices=CHOICELIST)
+config.plugins.EasyInfo.pos10 = ConfigSelection(default="no", choices=CHOICELIST)
+config.plugins.EasyInfo.pos11 = ConfigSelection(default="no", choices=CHOICELIST)
 config.plugins.EasyInfo.showEventInfoFirst = ConfigYesNo(default=False)
-config.plugins.EasyInfo.eventViewYellow = ConfigSelection(default="singleepg", choices= COLORCHOICELIST)
-config.plugins.EasyInfo.eventViewBlue = ConfigSelection(default="multiepg", choices= COLORCHOICELIST)
-config.plugins.EasyInfo.piconPath = ConfigSelection(default="/data/picon_50x30/", choices = [("/data/picon_50x30/", "/data/picon_50x30/"), ("/usr/share/enigma2/picon_50x30/", "/usr/share/enigma2/picon_50x30/"),("/data/picon/", "/data/picon/"), ("/usr/share/enigma2/picon/", "/usr/share/enigma2/picon/")])
-config.plugins.EasyInfo.easyPGOK = ConfigSelection(default="info", choices = [("info", _("Event info")), ("zap", _("Just zap")),("exitzap", _("Zap and Exit"))])
-config.plugins.EasyInfo.primeTime1 = ConfigClock(default = 63000)
-config.plugins.EasyInfo.primeTime2 = ConfigClock(default = 69300)
-config.plugins.EasyInfo.primeTime3 = ConfigClock(default = 75600)
-config.plugins.EasyInfo.buttonTV = ConfigSelection(default="easysel", choices = [("no", _("Disabled")), ("easysel", _("Easy-Selection")), ("easypg", _("Easy-PG"))])
+config.plugins.EasyInfo.eventViewYellow = ConfigSelection(default="singleepg", choices=COLORCHOICELIST)
+config.plugins.EasyInfo.eventViewBlue = ConfigSelection(default="multiepg", choices=COLORCHOICELIST)
+config.plugins.EasyInfo.piconPath = ConfigSelection(default="/data/picon_50x30/", choices=[("/data/picon_50x30/", "/data/picon_50x30/"), ("/usr/share/enigma2/picon_50x30/", "/usr/share/enigma2/picon_50x30/"),("/data/picon/", "/data/picon/"), ("/usr/share/enigma2/picon/", "/usr/share/enigma2/picon/")])
+config.plugins.EasyInfo.easyPGOK = ConfigSelection(default="info", choices=[("info", _("Event info")), ("zap", _("Just zap")),("exitzap", _("Zap and Exit"))])
+config.plugins.EasyInfo.primeTime1 = ConfigClock(default=63000)
+config.plugins.EasyInfo.primeTime2 = ConfigClock(default=69300)
+config.plugins.EasyInfo.primeTime3 = ConfigClock(default=75600)
+config.plugins.EasyInfo.buttonTV = ConfigSelection(default="easysel", choices=[("no", _("Disabled")), ("easysel", _("Easy-Selection")), ("easypg", _("Easy-PG"))])
 
 
 
 def Plugins(**kwargs):
-	return [PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, fnc = EasyInfoAutostart)]
+	return [PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=EasyInfoAutostart)]
 
 def EasyInfoAutostart(reason, **kwargs):
 	global EasyInfoBaseInfoBarPlugins__init__
@@ -300,7 +300,7 @@ class EasyInfoConfig(ConfigListScreen, Screen):
 		for x in self["config"].list:
 			x[1].save()
 		if self.oldsetting != [config.plugins.EasyInfo.showEventInfoFirst.value, config.plugins.EasyInfo.buttonTV.value]:
-			self.session.open(MessageBox, text = _('You need GUI-restart to load the new settings!'), type = MessageBox.TYPE_INFO)
+			self.session.open(MessageBox, text=_('You need GUI-restart to load the new settings!'), type=MessageBox.TYPE_INFO)
 		self.close()
 
 	def exit(self):
@@ -545,7 +545,7 @@ def EasyInfoCallbackFunc(answer):
 		ref=InfoBar_instance.servicelist.getCurrentSelection()
 		if ref:
 			InfoBar_instance.servicelist.savedService = ref
-			EasyInfoSession.openWithCallback(InfoBar_instance.servicelist.SingleServiceEPGClosed, EPGSelection, ref, serviceChangeCB = InfoBar_instance.servicelist.changeServiceCB)
+			EasyInfoSession.openWithCallback(InfoBar_instance.servicelist.SingleServiceEPGClosed, EPGSelection, ref, serviceChangeCB=InfoBar_instance.servicelist.changeServiceCB)
 	elif answer == "easypg":
 		bouquets = InfoBar_instance.servicelist.getBouquetList()
 		if bouquets is None:
@@ -603,13 +603,13 @@ def EasyInfoCallbackFunc(answer):
 			else:
 				EasyInfoSession.open(Merlin_PGd, InfoBar_instance.servicelist)
 		else:
-			EasyInfoSession.open(MessageBox, text = _('MerlinEPG is not installed!'), type = MessageBox.TYPE_INFO)
+			EasyInfoSession.open(MessageBox, text=_('MerlinEPG is not installed!'), type=MessageBox.TYPE_INFO)
 	elif answer == "autotimer":
 		try:
 			from Plugins.Extensions.AutoTimer.plugin import main as AutoTimerView
 			AutoTimerView(EasyInfoSession)
 		except ImportError as ie:
-			EasyInfoSession.open(MessageBox, text = _('Autotimer is not installed!'), type = MessageBox.TYPE_INFO)
+			EasyInfoSession.open(MessageBox, text=_('Autotimer is not installed!'), type=MessageBox.TYPE_INFO)
 	elif answer == "epgsearch":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/EPGSearch/plugin.pyo"):
 			from Plugins.Extensions.EPGSearch.EPGSearch import EPGSearch
@@ -620,7 +620,7 @@ def EasyInfoCallbackFunc(answer):
 				epg_name = epg_event and epg_event.getEventName() or ''
 				EasyInfoSession.open(EPGSearch, epg_name, False)
 		else:
-			EasyInfoSession.open(MessageBox, text = _('EPGsearch is not installed!'), type = MessageBox.TYPE_INFO)
+			EasyInfoSession.open(MessageBox, text=_('EPGsearch is not installed!'), type=MessageBox.TYPE_INFO)
 	elif answer == "channelinfo":
 		EasyInfoSession.open(ServiceInfo, InfoBar_instance.servicelist.getCurrentSelection())
 	elif answer == "imdbinfo":
@@ -633,30 +633,30 @@ def EasyInfoCallbackFunc(answer):
 				IeventName = epg_event.getEventName()
 				EasyInfoSession.open(IMDB, IeventName)
 		else:
-			EasyInfoSession.open(MessageBox, text = _('IMDB is not installed!'), type = MessageBox.TYPE_INFO)
+			EasyInfoSession.open(MessageBox, text=_('IMDB is not installed!'), type=MessageBox.TYPE_INFO)
 	elif answer == "graphepg":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/GraphMultiEPG/plugin.pyo"):
 			from Plugins.Extensions.GraphMultiEPG.plugin import main as gmepgmain
 			gmepgmain(EasyInfoSession, InfoBar_instance.servicelist)
 		else:
-			EasyInfoSession.open(MessageBox, text = _('GraphMultiEPG is not installed!'), type = MessageBox.TYPE_INFO)
+			EasyInfoSession.open(MessageBox, text=_('GraphMultiEPG is not installed!'), type=MessageBox.TYPE_INFO)
 	elif answer == "epgrefresh":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/EPGRefresh/plugin.pyo"):
 			from Plugins.Extensions.EPGRefresh.plugin import main as epgrefmain
 			epgrefmain(EasyInfoSession)
 		else:
-			EasyInfoSession.open(MessageBox, text = _('EPGRefresh is not installed!'), type = MessageBox.TYPE_INFO)
+			EasyInfoSession.open(MessageBox, text=_('EPGRefresh is not installed!'), type=MessageBox.TYPE_INFO)
 	elif answer == "cooltv":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/CoolTVGuide/plugin.pyo"):
 			from Plugins.Extensions.CoolTVGuide.plugin import main as ctvmain
 			ctvmain(EasyInfoSession, InfoBar_instance.servicelist)
 		else:
-			EasyInfoSession.open(MessageBox, text = _('CoolTVGuide is not installed!'), type = MessageBox.TYPE_INFO)
+			EasyInfoSession.open(MessageBox, text=_('CoolTVGuide is not installed!'), type=MessageBox.TYPE_INFO)
 	elif answer == "sleep":
 		from Screens.SleepTimerEdit import SleepTimerEdit
 		EasyInfoSession.open(SleepTimerEdit)
 	else:
-		EasyInfoSession.open(MessageBox, text = _('This function is yet not available!'), type = MessageBox.TYPE_INFO)
+		EasyInfoSession.open(MessageBox, text=_('This function is yet not available!'), type=MessageBox.TYPE_INFO)
 
 class EasyInfoEventView(Screen, EventViewBase):
 	def __init__(self, session, Event, Ref, callback=None, singleEPGCB=None, multiEPGCB=None):
@@ -751,7 +751,7 @@ class EasyInfoEventList(EPGList):
 	SKIN_COMPONENT_REC_OFFSET = "RecOffset" # offset applied when a timer exists for the event
 	SKIN_COMPONENT_REC_ICON_SIZE = "RecIconSize" # size of record icon
 
-	def __init__(self, type=EPG_TYPE_MULTI, selChangedCB=None, timer = None, hasChannelInfo=True):
+	def __init__(self, type=EPG_TYPE_MULTI, selChangedCB=None, timer=None, hasChannelInfo=True):
 		EPGList.__init__(self, type, selChangedCB, timer)
 
 		isFHD = False
@@ -790,7 +790,7 @@ class EasyInfoEventList(EPGList):
 	def getPicon(self, sRef):
 		pngname = PiconResolver.getPngName(sRef, self.nameCache, self.findPicon)
 		if fileExists(pngname):
-			return LoadPixmap(cached = True, path = pngname)
+			return LoadPixmap(cached=True, path=pngname)
 		else:
 			return None
 			
@@ -967,7 +967,7 @@ class EasyPG(EPGSelection, Screen):
 		self.primeTimeHour = config.plugins.EasyInfo.primeTime2.value[0]
 		self.primeTimeMinute = config.plugins.EasyInfo.primeTime2.value[1]
 		
-		self["list"] = EasyInfoEventList(type = EPG_TYPE_MULTI, selChangedCB = self.onSelectionChanged, timer = session.nav.RecordTimer)
+		self["list"] = EasyInfoEventList(type=EPG_TYPE_MULTI, selChangedCB=self.onSelectionChanged, timer=session.nav.RecordTimer)
 
 		self.refreshTimer = eTimer()
 		self.refreshTimer_conn = self.refreshTimer.timeout.connect(self.refreshEPG)
@@ -1027,7 +1027,7 @@ class EasyPG(EPGSelection, Screen):
 				epg_name = epg_event and epg_event.getEventName() or ''
 				self.session.open(EPGSearch, epg_name, False)
 		else:
-			self.session.open(MessageBox, text = _('EPGsearch is not installed!'), type = MessageBox.TYPE_INFO)
+			self.session.open(MessageBox, text=_('EPGsearch is not installed!'), type=MessageBox.TYPE_INFO)
 
 	def goToPrimeTimeNextDay(self):
 		if not self["list"].getCurrent()[0]:
@@ -1119,8 +1119,8 @@ class EasySelection(EPGSelection, Screen):
 		
 		self.session = session
 
-		self["list"] = EasyInfoEventList(type = EPG_TYPE_MULTI, selChangedCB = self.onSelectionChanged, timer = session.nav.RecordTimer)
-		self["listNext"] = EasyInfoEventList(type = EPG_TYPE_MULTI, selChangedCB = self.onSelectionChanged, timer = session.nav.RecordTimer, hasChannelInfo=False)
+		self["list"] = EasyInfoEventList(type=EPG_TYPE_MULTI, selChangedCB=self.onSelectionChanged, timer=session.nav.RecordTimer)
+		self["listNext"] = EasyInfoEventList(type=EPG_TYPE_MULTI, selChangedCB=self.onSelectionChanged, timer=session.nav.RecordTimer, hasChannelInfo=False)
 
 		self["myActions"] = ActionMap(["EPGSelectActions", "OkCancelActions", "DirectionActions","MenuActions"],
 			{
@@ -1203,7 +1203,7 @@ class EasySelection(EPGSelection, Screen):
 		ref = eServiceReference(service)
 		if ref:
 			InfoBar_instance.servicelist.savedService = ref
-			self.session.openWithCallback(InfoBar_instance.servicelist.SingleServiceEPGClosed, EPGSelection, ref, serviceChangeCB = InfoBar_instance.servicelist.changeServiceCB)
+			self.session.openWithCallback(InfoBar_instance.servicelist.SingleServiceEPGClosed, EPGSelection, ref, serviceChangeCB=InfoBar_instance.servicelist.changeServiceCB)
 
 	def openConfig(self):
 		self.session.open(EasyInfoConfig)

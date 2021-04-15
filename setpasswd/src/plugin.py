@@ -106,4 +106,4 @@ def Plugins(**kwargs):
 	return PluginDescriptor(
 		name=ChangePasswordScreen.WINDOW_TITLE,
 		description=_("Change or reset the root password of your dreambox"),
-		where = [PluginDescriptor.WHERE_MENU], fnc = startChange)
+		where=[PluginDescriptor.WHERE_MENU], fnc=startChange)

@@ -22,7 +22,7 @@ class RecordAdapter:
 		if not self.backgroundRefreshAvailable:
 			return False
 		if config.plugins.epgrefresh.enablemessage.value:
-			Notifications.AddPopup(_("EPG refresh started in background."), MessageBox.TYPE_INFO, 4, STARTNOTIFICATIONID, domain = NOTIFICATIONDOMAIN)
+			Notifications.AddPopup(_("EPG refresh started in background."), MessageBox.TYPE_INFO, 4, STARTNOTIFICATIONID, domain=NOTIFICATIONDOMAIN)
 
 		return True
 

@@ -43,7 +43,7 @@ class ShowMe(Screen):
 				<widget name="Picture" position="0,0" size="1280,720" zPosition="1"/>
 			</screen>"""
 
-	def __init__(self, session, whatPic = None):
+	def __init__(self, session, whatPic=None):
 		self.skin = ShowMe.skin
 		Screen.__init__(self, session)
 		self.whatPic = whatPic

@@ -90,7 +90,7 @@ resource.ErrorPage.template = """<!doctype html>
 """
 
 class ScreenPage(resource.Resource):
-	def __init__(self, session, path, addSlash = False):
+	def __init__(self, session, path, addSlash=False):
 		resource.Resource.__init__(self)
 
 		self.session = session

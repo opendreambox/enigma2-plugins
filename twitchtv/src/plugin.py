@@ -249,19 +249,19 @@ class TwitchLiveStreams(TwitchStreamGrid):
 	def _buildFunc(self, stream, selected):
 		if stream == "loading":
 			return [None,
-				MultiContentEntryText(pos = (self._itemPadding, self._itemPadding), size = (self._contentWidth, self._contentHeight), font = 0, backcolor = 0x000000, backcolor_sel=0x000000, flags = RT_HALIGN_CENTER | RT_VALIGN_CENTER, text=_("Loading...")),
+				MultiContentEntryText(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._contentHeight), font=0, backcolor=0x000000, backcolor_sel=0x000000, flags=RT_HALIGN_CENTER | RT_VALIGN_CENTER, text=_("Loading...")),
 			]
 
 		pixmap = self._pixmapCache.get(stream.preview, self._defaultPixmap)
 
 		content = [stream,
-			MultiContentEntryText(pos = (self._itemPadding, self._itemPadding), size = (self._contentWidth, self._contentHeight), font = 0, backcolor = 0, text=""),
-			MultiContentEntryPixmapAlphaBlend(pos = (self._itemPadding, self._itemPadding), size = (self._contentWidth, self._contentHeight), png = pixmap, backcolor = 0x000000, backcolor_sel=0x000000, scale_flags = SCALE_ASPECT),
-			MultiContentEntryTextAlphaBlend(pos = (self._itemPadding, self._itemPadding), size = (self._contentWidth, self._bannerHeight), font = 1, backcolor = 0x50000000, backcolor_sel=0x50000000, flags = RT_HALIGN_CENTER | RT_VALIGN_CENTER, text=stream.channel.display_name),
-			MultiContentEntryTextAlphaBlend(pos = (self._itemPadding, self._footerOffset), size = (self._contentWidth, self._footerHeight), font = 1, backcolor = 0x50000000, backcolor_sel=0x50000000, flags = RT_HALIGN_CENTER | RT_VALIGN_CENTER | RT_WRAP, text="plays %s" %(stream.channel.game,)),
+			MultiContentEntryText(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._contentHeight), font=0, backcolor=0, text=""),
+			MultiContentEntryPixmapAlphaBlend(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._contentHeight), png=pixmap, backcolor=0x000000, backcolor_sel=0x000000, scale_flags=SCALE_ASPECT),
+			MultiContentEntryTextAlphaBlend(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._bannerHeight), font=1, backcolor=0x50000000, backcolor_sel=0x50000000, flags=RT_HALIGN_CENTER | RT_VALIGN_CENTER, text=stream.channel.display_name),
+			MultiContentEntryTextAlphaBlend(pos=(self._itemPadding, self._footerOffset), size=(self._contentWidth, self._footerHeight), font=1, backcolor=0x50000000, backcolor_sel=0x50000000, flags=RT_HALIGN_CENTER | RT_VALIGN_CENTER | RT_WRAP, text="plays %s" %(stream.channel.game,)),
 		]
 		if not selected:
-			content.append(MultiContentEntryTextAlphaBlend(pos = (self._itemPadding, self._itemPadding), size = (self._contentWidth, self._contentHeight), font = 0, backcolor = 0x80000000, text=""))
+			content.append(MultiContentEntryTextAlphaBlend(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._contentHeight), font=0, backcolor=0x80000000, text=""))
 		return content
 
 	def _onOk(self):
@@ -323,18 +323,18 @@ class TwitchChannelVideos(TwitchStreamGrid):
 	def _buildFunc(self, stream, selected):
 		if stream == "loading":
 			return [None,
-				MultiContentEntryText(pos = (self._itemPadding, self._itemPadding), size = (self._contentWidth, self._contentHeight), font = 0, backcolor = 0x000000, backcolor_sel=0x000000, flags = RT_HALIGN_CENTER | RT_VALIGN_CENTER, text=_("Loading...")),
+				MultiContentEntryText(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._contentHeight), font=0, backcolor=0x000000, backcolor_sel=0x000000, flags=RT_HALIGN_CENTER | RT_VALIGN_CENTER, text=_("Loading...")),
 			]
 
 		pixmap = self._pixmapCache.get(stream.preview, self._defaultPixmap)
 
 		content = [stream,
-			MultiContentEntryText(pos = (self._itemPadding, self._itemPadding), size = (self._contentWidth, self._contentHeight), font = 0, backcolor = 0, text=""),
-			MultiContentEntryPixmapAlphaBlend(pos = (self._itemPadding, self._itemPadding), size = (self._contentWidth, self._contentHeight), png = pixmap, backcolor = 0x000000, backcolor_sel=0x000000, scale_flags = SCALE_ASPECT),
-			MultiContentEntryTextAlphaBlend(pos = (self._itemPadding, self._footerOffset), size = (self._contentWidth, self._footerHeight), font = 1, backcolor = 0x50000000, backcolor_sel=0x50000000, flags = RT_HALIGN_CENTER | RT_VALIGN_CENTER | RT_WRAP, text=stream.title),
+			MultiContentEntryText(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._contentHeight), font=0, backcolor=0, text=""),
+			MultiContentEntryPixmapAlphaBlend(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._contentHeight), png=pixmap, backcolor=0x000000, backcolor_sel=0x000000, scale_flags=SCALE_ASPECT),
+			MultiContentEntryTextAlphaBlend(pos=(self._itemPadding, self._footerOffset), size=(self._contentWidth, self._footerHeight), font=1, backcolor=0x50000000, backcolor_sel=0x50000000, flags=RT_HALIGN_CENTER | RT_VALIGN_CENTER | RT_WRAP, text=stream.title),
 		]
 		if not selected:
-			content.append(MultiContentEntryTextAlphaBlend(pos = (self._itemPadding, self._itemPadding), size = (self._contentWidth, self._contentHeight), font = 0, backcolor = 0x80000000, text=""))
+			content.append(MultiContentEntryTextAlphaBlend(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._contentHeight), font=0, backcolor=0x80000000, text=""))
 		return content
 
 	def _onOk(self):
@@ -602,19 +602,19 @@ class TwitchGamesGrid(TwitchStreamGrid):
 	def _buildFunc(self, game, selected):
 		if game == "loading":
 			return [None,
-				MultiContentEntryText(pos = (self._itemPadding, self._itemPadding), size = (self._contentWidth, self._contentHeight), font = 0, backcolor = 0x000000, backcolor_sel=0x000000, flags = RT_HALIGN_CENTER | RT_VALIGN_CENTER, text=_("Loading...")),
+				MultiContentEntryText(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._contentHeight), font=0, backcolor=0x000000, backcolor_sel=0x000000, flags=RT_HALIGN_CENTER | RT_VALIGN_CENTER, text=_("Loading...")),
 			]
 
 		pixmap = self._pixmapCache.get(game.preview, self._defaultPixmap)
 
 		content = [game,
-			MultiContentEntryText(pos = (self._itemPadding, self._itemPadding), size = (self._contentWidth, self._contentHeight), font = 0, backcolor = 0, text=""),
-			MultiContentEntryPixmapAlphaBlend(pos = (self._itemPadding, self._itemPadding), size = (self._contentWidth, self._contentHeight), png = pixmap, backcolor = 0x000000, backcolor_sel=0x000000, scale_flags = SCALE_ASPECT),
-			MultiContentEntryTextAlphaBlend(pos = (self._itemPadding, self._itemPadding), size = (self._contentWidth, self._bannerHeight), font = 1, backcolor = 0x50000000, backcolor_sel=0x50000000, flags = RT_HALIGN_CENTER | RT_VALIGN_CENTER, text="%s" %(game.viewers,)),
-			MultiContentEntryTextAlphaBlend(pos = (self._itemPadding, self._footerOffset), size = (self._contentWidth, self._footerHeight), font = 1, backcolor = 0x50000000, backcolor_sel=0x50000000, flags = RT_HALIGN_CENTER | RT_VALIGN_CENTER | RT_WRAP, text=game.name),
+			MultiContentEntryText(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._contentHeight), font=0, backcolor=0, text=""),
+			MultiContentEntryPixmapAlphaBlend(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._contentHeight), png=pixmap, backcolor=0x000000, backcolor_sel=0x000000, scale_flags=SCALE_ASPECT),
+			MultiContentEntryTextAlphaBlend(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._bannerHeight), font=1, backcolor=0x50000000, backcolor_sel=0x50000000, flags=RT_HALIGN_CENTER | RT_VALIGN_CENTER, text="%s" %(game.viewers,)),
+			MultiContentEntryTextAlphaBlend(pos=(self._itemPadding, self._footerOffset), size=(self._contentWidth, self._footerHeight), font=1, backcolor=0x50000000, backcolor_sel=0x50000000, flags=RT_HALIGN_CENTER | RT_VALIGN_CENTER | RT_WRAP, text=game.name),
 		]
 		if not selected:
-			content.append(MultiContentEntryTextAlphaBlend(pos = (self._itemPadding, self._itemPadding), size = (self._contentWidth, self._contentHeight), font = 0, backcolor = 0x80000000, text=""))
+			content.append(MultiContentEntryTextAlphaBlend(pos=(self._itemPadding, self._itemPadding), size=(self._contentWidth, self._contentHeight), font=0, backcolor=0x80000000, text=""))
 		return content
 
 	def _onOk(self):

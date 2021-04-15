@@ -87,8 +87,8 @@ config.plugins.MerlinEPG.PageUDonBouquets  = ConfigYesNo(default=True)
 
 
 def Plugins(**kwargs):
- 	list = [(PluginDescriptor(name="Merlin Programm Guide", description="Merlin Programm Guide", where = PluginDescriptor.WHERE_EVENTINFO, fnc=startMerlinPG))]
-	list.append(PluginDescriptor(name="Merlin Programm Guide", where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=startMerlinPGnew))
+ 	list = [(PluginDescriptor(name="Merlin Programm Guide", description="Merlin Programm Guide", where=PluginDescriptor.WHERE_EVENTINFO, fnc=startMerlinPG))]
+	list.append(PluginDescriptor(name="Merlin Programm Guide", where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=startMerlinPGnew))
 	return list
 
 
@@ -156,7 +156,7 @@ class MerlinEPGList(EPGList):
 	SKIN_COMPONENT_ITEM_MARGIN = "itemMargin"
 	SKIN_COMPONENT_TEXT_HEIGHT = "textHeight"
 
-	def __init__(self, type=EPG_TYPE_SINGLE, selChangedCB=None, timer = None):
+	def __init__(self, type=EPG_TYPE_SINGLE, selChangedCB=None, timer=None):
 		EPGList.__init__(self, type, selChangedCB, timer)
 		tlf = TemplatedListFonts()
 		self.l.setFont(0, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
@@ -314,11 +314,11 @@ class Merlin_PGII(Screen):
 		self["Active3"] = Label(" ")
 		self["Active4"] = Label(" ")
 		self["Active5"] = Label(" ")
-		self["epg_list1"] = MerlinEPGList(type = EPG_TYPE_SINGLE, selChangedCB = self.onSelectionChanged, timer = session.nav.RecordTimer)
-		self["epg_list2"] = MerlinEPGList(type = EPG_TYPE_SINGLE, selChangedCB = self.onSelectionChanged, timer = session.nav.RecordTimer)
-		self["epg_list3"] = MerlinEPGList(type = EPG_TYPE_SINGLE, selChangedCB = self.onSelectionChanged, timer = session.nav.RecordTimer)
-		self["epg_list4"] = MerlinEPGList(type = EPG_TYPE_SINGLE, selChangedCB = self.onSelectionChanged, timer = session.nav.RecordTimer)
-		self["epg_list5"] = MerlinEPGList(type = EPG_TYPE_SINGLE, selChangedCB = self.onSelectionChanged, timer = session.nav.RecordTimer)
+		self["epg_list1"] = MerlinEPGList(type=EPG_TYPE_SINGLE, selChangedCB=self.onSelectionChanged, timer=session.nav.RecordTimer)
+		self["epg_list2"] = MerlinEPGList(type=EPG_TYPE_SINGLE, selChangedCB=self.onSelectionChanged, timer=session.nav.RecordTimer)
+		self["epg_list3"] = MerlinEPGList(type=EPG_TYPE_SINGLE, selChangedCB=self.onSelectionChanged, timer=session.nav.RecordTimer)
+		self["epg_list4"] = MerlinEPGList(type=EPG_TYPE_SINGLE, selChangedCB=self.onSelectionChanged, timer=session.nav.RecordTimer)
+		self["epg_list5"] = MerlinEPGList(type=EPG_TYPE_SINGLE, selChangedCB=self.onSelectionChanged, timer=session.nav.RecordTimer)
 		self["actions"] = ActionMap(["OkCancelActions", "EPGSelectActions", "DirectionActions", "ColorActions", "MenuActions", "NumberActions", "HelpActions", "InfobarActions"], {
 						"ok": self.UserOK,
 						"cancel": self.close,
@@ -622,7 +622,7 @@ class Merlin_PGII(Screen):
 					self.session.openWithCallback(cb_func, MessageBox, _("Do you really want to delete %s?") % event.getEventName())
 					break
 			else:
-				newEntry = RecordTimerEntry(serviceref, checkOldTimers = True, *parseEvent(event))
+				newEntry = RecordTimerEntry(serviceref, checkOldTimers=True, *parseEvent(event))
 				self.session.openWithCallback(self.finishedAdd, TimerEntry, newEntry)
 		elif answer == "ATV":
 			AutoTimerView(self.session)
@@ -704,7 +704,7 @@ class Merlin_PGII(Screen):
 		if epgSpresent:
 			self.session.open(myEPGSearch)
 		else:
-			self.session.open(MessageBox, text = _('EPGsearch is not installed!'), type = MessageBox.TYPE_ERROR)
+			self.session.open(MessageBox, text=_('EPGsearch is not installed!'), type=MessageBox.TYPE_ERROR)
 
 	def runEpgSeartch(self):
 		if epgSpresent:
@@ -713,7 +713,7 @@ class Merlin_PGII(Screen):
 			epg_name = epg_event and epg_event.getEventName() or ''
 			self.session.open(EPGSearch, epg_name, False)
 		else:
-			self.session.open(MessageBox, text = _('EPGsearch is not installed!'), type = MessageBox.TYPE_ERROR)
+			self.session.open(MessageBox, text=_('EPGsearch is not installed!'), type=MessageBox.TYPE_ERROR)
 
 
 
@@ -782,7 +782,7 @@ class Merlin_PGd(Screen):
 		self["currCh"] = Label(_("Channel"))
 		self["fullEventInfo"] = Label(" ")
 		self["prg_list"] = MenuList(self.getChannels())
-		self["epg_list"] = EPGList(type = EPG_TYPE_SINGLE, selChangedCB = self.onSelectionChanged, timer = session.nav.RecordTimer)
+		self["epg_list"] = EPGList(type=EPG_TYPE_SINGLE, selChangedCB=self.onSelectionChanged, timer=session.nav.RecordTimer)
 		self["actions"] = ActionMap(["OkCancelActions", "EPGSelectActions", "ColorActions", "DirectionActions", "MenuActions", "HelpActions", "InfobarActions"], {
 									"ok": self.ok,
 									"cancel": self.close,
@@ -939,7 +939,7 @@ class Merlin_PGd(Screen):
 					self.session.openWithCallback(cb_func, MessageBox, _("Do you really want to delete %s?") % event.getEventName())
 					break
 			else:
-				newEntry = RecordTimerEntry(serviceref, checkOldTimers = True, *parseEvent(event))
+				newEntry = RecordTimerEntry(serviceref, checkOldTimers=True, *parseEvent(event))
 				self.session.openWithCallback(self.finishedAdd, TimerEntry, newEntry)
 		elif answer == "ATV":
 			AutoTimerView(self.session)
@@ -1001,7 +1001,7 @@ class Merlin_PGd(Screen):
 		if epgSpresent:
 			self.session.open(myEPGSearch)
 		else:
-			self.session.open(MessageBox, text = _('EPGsearch is not installed!'), type = MessageBox.TYPE_ERROR)
+			self.session.open(MessageBox, text=_('EPGsearch is not installed!'), type=MessageBox.TYPE_ERROR)
 
 	def runEpgSeartch(self):
 		if epgSpresent:
@@ -1010,7 +1010,7 @@ class Merlin_PGd(Screen):
 			epg_name = epg_event and epg_event.getEventName() or ''
 			self.session.open(EPGSearch, epg_name, False)
 		else:
-			self.session.open(MessageBox, text = _('EPGsearch is not installed!'), type = MessageBox.TYPE_ERROR)
+			self.session.open(MessageBox, text=_('EPGsearch is not installed!'), type=MessageBox.TYPE_ERROR)
 
 
 
@@ -1042,7 +1042,7 @@ if epgSpresent:
 			EPGSearch.__init__(self, session)
 			Screen.__init__(self, session)
 			self.skinName = ["EPGSearch", "EPGSelection"]
-			self["list"] = myEPGSearchList(type = EPG_TYPE_SINGLE, selChangedCB = self.onSelectionChanged, timer = session.nav.RecordTimer)
+			self["list"] = myEPGSearchList(type=EPG_TYPE_SINGLE, selChangedCB=self.onSelectionChanged, timer=session.nav.RecordTimer)
 			self.onLayoutFinish.append(self.fillMe)
 
 		def fillMe(self):
@@ -1051,12 +1051,12 @@ if epgSpresent:
 			self["key_blue"].hide()
 			self.searchEPG("")
 
-		def searchEPG(self, searchString = None, searchSave = True):
+		def searchEPG(self, searchString=None, searchSave=True):
 			self.currSearch = ""
 			encoding = config.plugins.epgsearch.encoding.value
 			epgcache = eEPGCache.getInstance()
 			ret = epgcache.search(('RIBDT', 2000, eEPGCache.PARTIAL_TITLE_SEARCH, "", eEPGCache.NO_CASE_CHECK)) or []
-			ret.sort(key = lambda x: x[4])
+			ret.sort(key=lambda x: x[4])
 			l = self["list"]
 			l.recalcEntrySize()
 			l.list = ret

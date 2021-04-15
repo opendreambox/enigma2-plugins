@@ -36,10 +36,10 @@ from Components.ServiceEventTracker import InfoBarBase
 from skin import TemplatedListFonts, componentSizes
 
 config.plugins.yttrailer = ConfigSubsection()
-config.plugins.yttrailer.show_in_extensionsmenu = ConfigYesNo(default = False)
-config.plugins.yttrailer.ext_descr = ConfigText(default="german", fixed_size = False)
-config.plugins.yttrailer.max_results =  ConfigInteger(5,limits = (1, 10))
-config.plugins.yttrailer.close_player_with_exit =  ConfigYesNo(default = False)
+config.plugins.yttrailer.show_in_extensionsmenu = ConfigYesNo(default=False)
+config.plugins.yttrailer.ext_descr = ConfigText(default="german", fixed_size=False)
+config.plugins.yttrailer.max_results =  ConfigInteger(5,limits=(1, 10))
+config.plugins.yttrailer.close_player_with_exit =  ConfigYesNo(default=False)
 
 from Plugins.SystemPlugins.TubeLib.youtube.Base import buildYoutube
 from Plugins.SystemPlugins.TubeLib.youtube.Search import Search
@@ -49,12 +49,12 @@ def setup(session,**kwargs):
 	session.open(YTTrailerSetup)
 
 def Plugins(**kwargs):
-	list = [PluginDescriptor(name="YTTrailer Setup", description=_("YouTube-Trailer Setup"), where = PluginDescriptor.WHERE_PLUGINMENU, fnc=setup, icon="YTtrailer.png"),
-			PluginDescriptor(name=_("Watch Trailer"), where = [PluginDescriptor.WHERE_EVENTVIEW, PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE], fnc = showTrailer),
-			PluginDescriptor(name=_("Show Trailers"), where = [PluginDescriptor.WHERE_EVENTVIEW, PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE], fnc = showTrailerList),
+	list = [PluginDescriptor(name="YTTrailer Setup", description=_("YouTube-Trailer Setup"), where=PluginDescriptor.WHERE_PLUGINMENU, fnc=setup, icon="YTtrailer.png"),
+			PluginDescriptor(name=_("Watch Trailer"), where=[PluginDescriptor.WHERE_EVENTVIEW, PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE], fnc=showTrailer),
+			PluginDescriptor(name=_("Show Trailers"), where=[PluginDescriptor.WHERE_EVENTVIEW, PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE], fnc=showTrailerList),
 	]
 	if config.plugins.yttrailer.show_in_extensionsmenu.value:
-		list.append(PluginDescriptor(name="YTTrailer Setup", description=_("YouTube-Trailer Setup"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=setup, icon="YTtrailer.png"))
+		list.append(PluginDescriptor(name="YTTrailer Setup", description=_("YouTube-Trailer Setup"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=setup, icon="YTtrailer.png"))
 	return list
 
 def showConfig(self):
@@ -239,7 +239,7 @@ class YTTrailerSetup(ConfigListScreen, Screen):
 			<widget name="config" position="10,60" size="800,330" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 
-	def __init__(self, session, args = None):
+	def __init__(self, session, args=None):
 		Screen.__init__(self, session)
 		self["key_red"] = StaticText(_("Cancel"))
 		self["key_green"] = StaticText(_("Save"))

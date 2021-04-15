@@ -27,8 +27,7 @@ class TrackAutoselector(object):
 		self.session = session
 		self.track_autoselect_config = track_autoselect_config
 		self.onClose = []
-		self.__event_tracker = ServiceEventTracker(screen=self, eventmap=
-		{
+		self.__event_tracker = ServiceEventTracker(screen=self, eventmap={
 			iPlayableService.evStart: self.__initializeVars,
 			iPlayableService.evEnd: self.__serviceStopped,
 			iPlayableService.evUpdatedInfo: self.__updatedInfo,

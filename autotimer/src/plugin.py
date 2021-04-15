@@ -36,7 +36,7 @@ except Exception as e:
 # Notification-Domain
 from Tools.Notifications import notificationQueue
 try:
-	notificationQueue.registerDomain(NOTIFICATIONDOMAIN, _("AutoTimer"), deferred_callable = True)
+	notificationQueue.registerDomain(NOTIFICATIONDOMAIN, _("AutoTimer"), deferred_callable=True)
 except Exception as e:
 	print("[AutoTimer] Error registering Notification-Domain:", e)
 # Autostart
@@ -126,8 +126,8 @@ def main(session, **kwargs):
 		session.open(
 			MessageBox,
 			_("Your config file is not well-formed:\n%s") % (str(se)),
-			type = MessageBox.TYPE_ERROR,
-			timeout = 10
+			type=MessageBox.TYPE_ERROR,
+			timeout=10
 		)
 		return
 
@@ -150,7 +150,7 @@ def handleAutoPoller():
 		if autopoller is None:
 			from AutoPoller import AutoPoller
 			autopoller = AutoPoller()
-		autopoller.start(initial = False)
+		autopoller.start(initial=False)
 	# Remove instance if not running in background
 	else:
 		autopoller = None
@@ -205,7 +205,7 @@ def showFinishPopup(ret):
 
 	AddPopup(_("Found a total of %(matches)d matching Events.\n%(timer)d Timer were added and\n%(modified)d modified,\n%(conflicts)d conflicts encountered,\n%(similars)d similars added.") %
 		{"matches":ret[0], "timer":ret[1], "modified":ret[2], "conflicts":len(ret[4]), "similars":len(ret[5])} + "\n\n" + str(searchlog_txt),
-		MessageBox.TYPE_INFO, config.plugins.autotimer.popup_timeout.value, domain = NOTIFICATIONDOMAIN, id = 'AT_PopUp_ID_ParseEPGCallback')
+		MessageBox.TYPE_INFO, config.plugins.autotimer.popup_timeout.value, domain=NOTIFICATIONDOMAIN, id='AT_PopUp_ID_ParseEPGCallback')
 
 def parseEPGCallback(ret):
 	
@@ -234,7 +234,7 @@ def eventview(session, event, ref):
 		from enigma import eServiceReference
 		addAutotimerFromService(session, eServiceReference(str(ref)))
 	else:
-		addAutotimerFromEvent(session, evt = event, service = ref, importer_Callback = importerCallback)
+		addAutotimerFromEvent(session, evt=event, service=ref, importer_Callback=importerCallback)
 
 # XXX: we need this helper function to identify the descriptor
 # Extensions menu - open Autotimer
@@ -247,7 +247,7 @@ def extensionsmenu_scan(session, **kwargs):
 	try:
 		autotimer.readXml()
 	except SyntaxError as se:
-		session.open( MessageBox, _("Your config file is not well-formed:\n%s") % (str(se)), type = MessageBox.TYPE_ERROR, timeout = 10 )
+		session.open( MessageBox, _("Your config file is not well-formed:\n%s") % (str(se)), type=MessageBox.TYPE_ERROR, timeout=10 )
 		return
 	
 	editCallback(session)
@@ -288,24 +288,24 @@ def housekeepingFilmmenu(el):
 		except ValueError as ve:
 			doLog("[AutoTimer] housekeepingFilmmenu got confused, tried to remove non-existant plugin entry... ignoring.")
 
-config.plugins.autotimer.show_in_extensionsmenu.addNotifier(housekeepingExtensionsmenu, initial_call = False, immediate_feedback = True)
-extDescriptor = PluginDescriptor(name="AutoTimer", description = _("Edit Timers and scan for new Events"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = extensionsmenu, needsRestart = False)
-extDescriptor_scan = PluginDescriptor(name="AutoTimer scan", description = _("scan for new Events"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = extensionsmenu_scan, needsRestart = False)
+config.plugins.autotimer.show_in_extensionsmenu.addNotifier(housekeepingExtensionsmenu, initial_call=False, immediate_feedback=True)
+extDescriptor = PluginDescriptor(name="AutoTimer", description=_("Edit Timers and scan for new Events"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=extensionsmenu, needsRestart=False)
+extDescriptor_scan = PluginDescriptor(name="AutoTimer scan", description=_("scan for new Events"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=extensionsmenu_scan, needsRestart=False)
 
-config.plugins.autotimer.show_addto_in_filmmenu.addNotifier(housekeepingFilmmenu, initial_call = False, immediate_feedback = True)
-filmDescriptor_addto = PluginDescriptor(name = _("add to AutoTimer filter list"), description = _("add to AutoTimer filter list"), where = PluginDescriptor.WHERE_MOVIELIST, fnc = add_to_filterList, needsRestart = False)
+config.plugins.autotimer.show_addto_in_filmmenu.addNotifier(housekeepingFilmmenu, initial_call=False, immediate_feedback=True)
+filmDescriptor_addto = PluginDescriptor(name=_("add to AutoTimer filter list"), description=_("add to AutoTimer filter list"), where=PluginDescriptor.WHERE_MOVIELIST, fnc=add_to_filterList, needsRestart=False)
 
 def Plugins(**kwargs):
 	l = [
 		PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART, fnc=autostart, needsRestart=False),
 		PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=sessionstart, needsRestart=False),
 		# TRANSLATORS: description of AutoTimer in PluginBrowser
-		PluginDescriptor(name="AutoTimer", description = _("Edit Timers and scan for new Events"), where = PluginDescriptor.WHERE_PLUGINMENU, icon = "plugin.png", fnc = main, needsRestart = False),
+		PluginDescriptor(name="AutoTimer", description=_("Edit Timers and scan for new Events"), where=PluginDescriptor.WHERE_PLUGINMENU, icon="plugin.png", fnc=main, needsRestart=False),
 		# TRANSLATORS: AutoTimer title in MovieList (automatically opens importer, I consider this no further interaction)
-		PluginDescriptor(name="AutoTimer", description= _("add AutoTimer"), where = PluginDescriptor.WHERE_MOVIELIST, fnc = movielist, needsRestart = False),
+		PluginDescriptor(name="AutoTimer", description=_("add AutoTimer"), where=PluginDescriptor.WHERE_MOVIELIST, fnc=movielist, needsRestart=False),
 		# TRANSLATORS: AutoTimer title in EventInfo dialog (requires the user to select an event to base the AutoTimer on)
-		PluginDescriptor(name = _("add AutoTimer..."), where = PluginDescriptor.WHERE_EVENTINFO, fnc = eventinfo, needsRestart = False),
-		PluginDescriptor(name = _("add AutoTimer..."), where = [PluginDescriptor.WHERE_EVENTVIEW, PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE], fnc = eventview, needsRestart = False, weight = 100),
+		PluginDescriptor(name=_("add AutoTimer..."), where=PluginDescriptor.WHERE_EVENTINFO, fnc=eventinfo, needsRestart=False),
+		PluginDescriptor(name=_("add AutoTimer..."), where=[PluginDescriptor.WHERE_EVENTVIEW, PluginDescriptor.WHERE_EPG_SELECTION_SINGLE_BLUE], fnc=eventview, needsRestart=False, weight=100),
 	]
 	if config.plugins.autotimer.show_in_extensionsmenu.value:
 		l.append(extDescriptor)

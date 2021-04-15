@@ -35,7 +35,7 @@ class Cec(object):
 		self.__check_devices_connection = self._checkDevicesTimer.timeout.connect(self.onCheckDevices)
 		self._audioStatusTimer = eTimer()
 		self.__audio_status_connection = self._audioStatusTimer.timeout.connect(self.giveAudioStatus)
-		config.misc.standbyCounter.addNotifier(self._onStandby, initial_call = False)
+		config.misc.standbyCounter.addNotifier(self._onStandby, initial_call=False)
 
 		#Volume control
 		self._volumeDest = eCec.ADDR_TV
@@ -112,7 +112,7 @@ class Cec(object):
 	def checkDevices(self):
 		self.onCheckDevices(allDevices=True)
 
-	def onCheckDevices(self, allDevices = False):
+	def onCheckDevices(self, allDevices=False):
 		for d in self._devices.values():
 			if not allDevices:
 				if not d.logicalAddress in (eCec.ADDR_AUDIO_SYSTEM, eCec.ADDR_TV):

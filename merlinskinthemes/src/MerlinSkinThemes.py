@@ -1075,7 +1075,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			config.plugins.MerlinSkinThemes3.Designs["design"].value = designname
 			
 			if not "designColor" in config.plugins.MerlinSkinThemes3.DesignColors.keys():		
-				config.plugins.MerlinSkinThemes3.DesignColors["designColor"] = NoSave(MyConfigSelection(default=designcolorname, choices = [designcolorname]))
+				config.plugins.MerlinSkinThemes3.DesignColors["designColor"] = NoSave(MyConfigSelection(default=designcolorname, choices=[designcolorname]))
 				self.clist2.insert(6, getConfigListEntry("Design Color", config.plugins.MerlinSkinThemes3.DesignColors["designColor"]))
 			else:
 				config.plugins.MerlinSkinThemes3.DesignColors["designColor"].choices.choices.append(designcolorname)
@@ -1213,7 +1213,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		
 		selSkinList = []
 		selSkinList.append(MerlinSkinThemes.selSkinName)
-		config.plugins.MerlinSkinThemes3.selSkin = NoSave(MyConfigSelection(default=MerlinSkinThemes.selSkinName, choices = selSkinList))
+		config.plugins.MerlinSkinThemes3.selSkin = NoSave(MyConfigSelection(default=MerlinSkinThemes.selSkinName, choices=selSkinList))
 		self.clist2.append(getConfigListEntry(" " + u'\u00b7' + " SKIN", ))
 		self.clist2.append(getConfigListEntry("Skin", config.plugins.MerlinSkinThemes3.selSkin))
 		self.clist2.append(getConfigListEntry(" ", ))
@@ -1286,13 +1286,13 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 									if defaultValue is not None and self.themeDict.get(dsctheme) is not None:
 										if len(self.themeDict.get(dsctheme)):
 											if not dsctheme.lower() in config.plugins.MerlinSkinThemes3.Themes.keys():
-												config.plugins.MerlinSkinThemes3.Themes[dsctheme.lower()] = NoSave(MyConfigSelection(default=defaultValue, choices = optionList ))
+												config.plugins.MerlinSkinThemes3.Themes[dsctheme.lower()] = NoSave(MyConfigSelection(default=defaultValue, choices=optionList ))
 											else:
 												config.plugins.MerlinSkinThemes3.Themes[dsctheme.lower()].setChoices(optionList, defaultValue)
 												config.plugins.MerlinSkinThemes3.Themes[dsctheme.lower()].value = defaultValue
 							
 					if not "designColor" in config.plugins.MerlinSkinThemes3.DesignColors.keys():
-						config.plugins.MerlinSkinThemes3.DesignColors["designColor"] = NoSave(MyConfigSelection(default=defaultDesignColor, choices = designColorList))
+						config.plugins.MerlinSkinThemes3.DesignColors["designColor"] = NoSave(MyConfigSelection(default=defaultDesignColor, choices=designColorList))
 						config.plugins.MerlinSkinThemes3.DesignColors["designColor"].value = defaultDesignColor
 					else: 
 						config.plugins.MerlinSkinThemes3.DesignColors["designColor"].setChoices(designColorList, defaultDesignColor)
@@ -1339,7 +1339,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						if defaultValue is not None and self.themeDict.get(element) is not None:
 							if len(self.themeDict.get(element)):
 								if not element.lower() in config.plugins.MerlinSkinThemes3.Themes.keys():
-									config.plugins.MerlinSkinThemes3.Themes[element.lower()] = NoSave(MyConfigSelection(default=defaultValue, choices = [ x[0] for x in self.themeDict.get(element)]))
+									config.plugins.MerlinSkinThemes3.Themes[element.lower()] = NoSave(MyConfigSelection(default=defaultValue, choices=[ x[0] for x in self.themeDict.get(element)]))
 									if not config.plugins.MerlinSkinThemes3.designModified.value:
 										config.plugins.MerlinSkinThemes3.Themes[element.lower()].value = defaultValue
 								else:
@@ -1360,7 +1360,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 								
 							if len(optionList):
 								if not screenname in config.plugins.MerlinSkinThemes3.Screens.keys():
-									config.plugins.MerlinSkinThemes3.Screens[screenname] = NoSave(MyConfigSelection(default=defaultValue, choices = optionList))
+									config.plugins.MerlinSkinThemes3.Screens[screenname] = NoSave(MyConfigSelection(default=defaultValue, choices=optionList))
 									if not config.plugins.MerlinSkinThemes3.designModified.value:
 										config.plugins.MerlinSkinThemes3.Screens[screenname].value = defaultValue
 								else:
@@ -1400,7 +1400,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 							if defaultValue is not None and self.themeDict.get(screenname) is not None:
 								if len(self.themeDict.get(screenname)):
 									if not screenname in config.plugins.MerlinSkinThemes3.Screens.keys():
-										config.plugins.MerlinSkinThemes3.Screens[screenname] = NoSave(MyConfigSelection(default=defaultValue, choices = optionList))
+										config.plugins.MerlinSkinThemes3.Screens[screenname] = NoSave(MyConfigSelection(default=defaultValue, choices=optionList))
 										if not config.plugins.MerlinSkinThemes3.designModified.value:
 											config.plugins.MerlinSkinThemes3.Screens[screenname].value = defaultValue
 									else:
@@ -1422,7 +1422,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 									
 								if len(optionList):
 									if not lcdscreenname in config.plugins.MerlinSkinThemes3.DisplayScreens.keys():
-										config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname] = NoSave(MyConfigSelection(default=defaultValue, choices = optionList))
+										config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname] = NoSave(MyConfigSelection(default=defaultValue, choices=optionList))
 										if not config.plugins.MerlinSkinThemes3.designModified.value:
 											config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname].value = defaultValue
 									else:
@@ -1484,7 +1484,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 								if defaultValue is not None and self.themeDict.get(lcdscreenname) is not None:
 									if len(self.themeDict.get(lcdscreenname)):
 										if not lcdscreenname in config.plugins.MerlinSkinThemes3.DisplayScreens.keys():
-											config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname] = NoSave(MyConfigSelection(default=defaultValue, choices = optionList))
+											config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname] = NoSave(MyConfigSelection(default=defaultValue, choices=optionList))
 											if not config.plugins.MerlinSkinThemes3.designModified.value:
 												config.plugins.MerlinSkinThemes3.DisplayScreens[lcdscreenname].value = defaultValue
 										else:
@@ -1525,7 +1525,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						if defaultValue is not None and self.themeDict.get("CornerRadius") is not None:
 							if len(self.themeDict.get("CornerRadius", [])):
 								if not "CornerRadius" in config.plugins.MerlinSkinThemes3.CornerRadius.keys():
-									config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"] = NoSave(MyConfigSelection(default=defaultValue, choices = optionList))
+									config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"] = NoSave(MyConfigSelection(default=defaultValue, choices=optionList))
 									if not config.plugins.MerlinSkinThemes3.designModified.value:
 										config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"].value = defaultValue
 								else:
@@ -1569,7 +1569,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 									
 						if defaultValue is not None:		
 							if not "CornerRadius" in config.plugins.MerlinSkinThemes3.CornerRadius.keys():
-								config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"] = NoSave(MyConfigSelection(default=defaultValue, choices = optionList))
+								config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"] = NoSave(MyConfigSelection(default=defaultValue, choices=optionList))
 							else: 
 								config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"].setChoices(optionList, defaultValue)
 								config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"].value = defaultValue
@@ -1580,7 +1580,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			
 		if len(designList):
 			if not "design" in config.plugins.MerlinSkinThemes3.Designs.keys():
-				config.plugins.MerlinSkinThemes3.Designs["design"] = NoSave(MyConfigSelection(default=defaultDesign, choices = designList))
+				config.plugins.MerlinSkinThemes3.Designs["design"] = NoSave(MyConfigSelection(default=defaultDesign, choices=designList))
 				config.plugins.MerlinSkinThemes3.Designs["design"].value = defaultDesign
 			else:
 				config.plugins.MerlinSkinThemes3.Designs["design"].setChoices(designList, defaultDesign)
@@ -2152,7 +2152,7 @@ def main(session, **kwargs):
 	session.open(MerlinSkinThemes)
 
 def Plugins(path,**kwargs):
-	list = [PluginDescriptor(name = "MerlinSkinThemes", description = "MerlinSkinThemes", where = PluginDescriptor.WHERE_PLUGINMENU, icon = "plugin.png", fnc = main)]
+	list = [PluginDescriptor(name="MerlinSkinThemes", description="MerlinSkinThemes", where=PluginDescriptor.WHERE_PLUGINMENU, icon="plugin.png", fnc=main)]
 	return list		
 
 class MerlinSkinThemesConfig(Screen, HelpableScreen, ConfigListScreen):
@@ -2218,7 +2218,7 @@ class GetSkinsList(MenuList, MerlinSkinThemes):
 	SKIN_COMPONENT_INFO_WIDTH = "infoWidth"
 	SKIN_COMPONENT_SKINENTRY_HEIGHT = "skinEntryHeight"
 
-	def __init__(self, list, enableWrapAround = True):
+	def __init__(self, list, enableWrapAround=True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 		tlf = TemplatedListFonts()
 		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))

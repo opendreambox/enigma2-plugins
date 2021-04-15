@@ -28,7 +28,7 @@ class M3u8GzipEncoderFactory(GzipEncoderFactory):
 
 def autostart(reason,**kwargs):
 	if "session" in kwargs:
-		sss = StreamServerSeek(session = kwargs["session"])
+		sss = StreamServerSeek(session=kwargs["session"])
 		print "session %s" % sss
 
 		root = File(eEnv.resolve("${libdir}/enigma2/python/Plugins/Extensions/StreamServerSeek/web-data"))
@@ -39,4 +39,4 @@ def autostart(reason,**kwargs):
 		addExternalChild( ("streamserverseek", root) )
 
 def Plugins(**kwargs): 
-	return [PluginDescriptor(where = [PluginDescriptor.WHERE_SESSIONSTART], fnc = autostart)]
+	return [PluginDescriptor(where=[PluginDescriptor.WHERE_SESSIONSTART], fnc=autostart)]

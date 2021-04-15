@@ -24,7 +24,7 @@ from Components.config import config, ConfigSubsection, Config, ConfigInteger, C
 from enigma import eEnv
 
 class Favorite:
-	def __init__(self, configItem = None):
+	def __init__(self, configItem=None):
 		self.configItem = configItem
 
 class InternetRadioFavoriteConfig(object):
@@ -46,12 +46,12 @@ class InternetRadioFavoriteConfig(object):
 	def initFavouriteEntryConfig(self):
 		self.favoriteConfig.Entries.append(ConfigSubsection())
 		i = len(self.favoriteConfig.Entries) -1
-		self.favoriteConfig.Entries[i].name = ConfigText(default = "")
-		self.favoriteConfig.Entries[i].text = ConfigText(default = "")
+		self.favoriteConfig.Entries[i].name = ConfigText(default="")
+		self.favoriteConfig.Entries[i].text = ConfigText(default="")
 		self.favoriteConfig.Entries[i].type = ConfigInteger(0)
-		self.favoriteConfig.Entries[i].tags = ConfigText(default = "")
-		self.favoriteConfig.Entries[i].country = ConfigText(default = "")
-		self.favoriteConfig.Entries[i].homepage = ConfigText(default = "")
+		self.favoriteConfig.Entries[i].tags = ConfigText(default="")
+		self.favoriteConfig.Entries[i].country = ConfigText(default="")
+		self.favoriteConfig.Entries[i].homepage = ConfigText(default="")
 		return self.favoriteConfig.Entries[i]
 
 	def initFavouriteConfig(self):
@@ -62,7 +62,7 @@ class InternetRadioFavoriteConfig(object):
 				self.initFavouriteEntryConfig()
 				i += 1
 
-	def addFavorite(self, name = "", text = "", favoritetype = "", tags = "", country = "", homepage = ""):
+	def addFavorite(self, name="", text="", favoritetype="", tags="", country="", homepage=""):
 		self.favoriteConfig.entriescount.value = self.favoriteConfig.entriescount.value + 1
 		self.favoriteConfig.entriescount.save()
 		newFavorite = self.initFavouriteEntryConfig()
@@ -108,7 +108,7 @@ class InternetRadioFavoriteConfig(object):
 				break
 		return result
 
-	def getFavoriteList(self, html = False):
+	def getFavoriteList(self, html=False):
 		favoriteList = []
 		for item in self.favoriteConfig.Entries:
 			if html == True:

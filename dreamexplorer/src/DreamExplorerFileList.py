@@ -142,7 +142,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 			]
 		}"""		
 
-	def __init__(self, list_type=None, sortType=None, directory=None, showDirectories = True, showFiles = True, showMountpoints = True, matchingPattern = None, inhibitDirs = False, inhibitMounts = False, isTop = False, enableWrapAround = True, additionalExtensions = None, showDetails=True):
+	def __init__(self, list_type=None, sortType=None, directory=None, showDirectories=True, showFiles=True, showMountpoints=True, matchingPattern=None, inhibitDirs=False, inhibitMounts=False, isTop=False, enableWrapAround=True, additionalExtensions=None, showDetails=True):
 		TemplatedMultiContentComponent.__init__(self)
 		self.list = []
 		self.setListType(list_type or self.LIST_TYPE_FULL)
@@ -300,7 +300,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 	def __len__(self):
 		return len(self.list)
 
-	def changeDirectory(self, directory, select = None):
+	def changeDirectory(self, directory, select=None):
 		self.list = []
 		
 		# if we are just entering from the list of mount points:		
@@ -480,7 +480,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 		if self.getSelection() is None:
 			return
 
-		self.changeDirectory(self.getSelection()[1], select = self.current_directory)
+		self.changeDirectory(self.getSelection()[1], select=self.current_directory)
 
 	def inParentDirs(self, dir, parents):
 		dir = os_path.realpath(dir)
@@ -493,7 +493,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 
 	def refreshMountpoints(self):
 		self.mountpoints = [os_path.join(p.mountpoint, "") for p in harddiskmanager.getMountedPartitions()]
-		self.mountpoints.sort(reverse = True)
+		self.mountpoints.sort(reverse=True)
 
 	def getMountpoint(self, file):
 		file = os_path.join(os_path.realpath(file), "")

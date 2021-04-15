@@ -17,8 +17,8 @@ def Plugins(path, **kwargs):
 		from Screens.AudioSelection import AUDIO_FORMATS
 		from Components.Language import language
 		language.addCallback(localeAndConfigInit)
-		return [PluginDescriptor(name=_("Track Autoselect"), description=_("Configure Track Autoselect"), where = PluginDescriptor.WHERE_AUDIOMENU, fnc=config_fnc),
-			PluginDescriptor(name=_("Track Autoselect"), where = PluginDescriptor.WHERE_INFOBAR, fnc=start_fnc)]
+		return [PluginDescriptor(name=_("Track Autoselect"), description=_("Configure Track Autoselect"), where=PluginDescriptor.WHERE_AUDIOMENU, fnc=config_fnc),
+			PluginDescriptor(name=_("Track Autoselect"), where=PluginDescriptor.WHERE_INFOBAR, fnc=start_fnc)]
 	except ImportError:
 		print "[TrackAutoselect] can't load plugin, needs new Enigma2 audio/subtitle API from April 2016!"
 		return PluginDescriptor()

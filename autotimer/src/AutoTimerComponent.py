@@ -24,7 +24,7 @@ class AutoTimerComponent(object):
 	"""
 	 Unsets all Attributes
 	"""
-	def clear(self, id = -1, enabled = False):
+	def clear(self, id=-1, enabled=False):
 		self.id = id
 		self.setValues('', '', enabled)
 
@@ -200,7 +200,7 @@ class AutoTimerComponent(object):
 	"""
 	 Returns a tulple of (input begin, input end, begin earlier than end)
 	"""
-	def calculateDayspan(self, begin, end, ignore = None):
+	def calculateDayspan(self, begin, end, ignore=None):
 		if end[0] < begin[0] or (end[0] == begin[0] and end[1] <= begin[1]):
 			return (begin, end, True)
 		else:
@@ -209,7 +209,7 @@ class AutoTimerComponent(object):
 	"""
 	 Returns if a given timestruct is in a timespan
 	"""
-	def checkAnyTimespan(self, time, begin = None, end = None, haveDayspan = False):
+	def checkAnyTimespan(self, time, begin=None, end=None, haveDayspan=False):
 		if begin is None:
 			return False
 
@@ -502,32 +502,32 @@ class AutoTimerComponent(object):
 			self.name,
 			self.match,
 			self.enabled,
-			timespan = self.timespan,
-			services = self.services,
-			offset = self.offset,
-			afterevent = self.afterevent,
-			exclude = (self.getExcludedTitle(), self.getExcludedShort(), self.getExcludedDescription(), self.getExcludedDays()),
-			maxduration = self.maxduration,
-			destination = self.destination,
-			include = (self.getIncludedTitle(), self.getIncludedShort(), self.getIncludedDescription(), self.getIncludedDays()),
-			matchCount = self.matchCount,
-			matchLeft = self.matchLeft,
-			matchLimit = self.matchLimit,
-			matchFormatString = self.matchFormatString,
-			lastBegin = self.lastBegin,
-			justplay = self.justplay,
-			avoidDuplicateDescription = self.avoidDuplicateDescription,
-			searchForDuplicateDescription = self.searchForDuplicateDescription,
-			bouquets = self.bouquets,
-			tags = self.tags,
-			searchType = self.searchType,
-			searchCase = self.searchCase,
-			overrideAlternatives = self.overrideAlternatives,
-			timeframe = self.timeframe,
-			vps_enabled = self.vps_enabled,
-			vps_overwrite = self.vps_overwrite,
-			series_labeling = self.series_labeling,
-			series_save_filter = self.series_save_filter,
+			timespan=self.timespan,
+			services=self.services,
+			offset=self.offset,
+			afterevent=self.afterevent,
+			exclude=(self.getExcludedTitle(), self.getExcludedShort(), self.getExcludedDescription(), self.getExcludedDays()),
+			maxduration=self.maxduration,
+			destination=self.destination,
+			include=(self.getIncludedTitle(), self.getIncludedShort(), self.getIncludedDescription(), self.getIncludedDays()),
+			matchCount=self.matchCount,
+			matchLeft=self.matchLeft,
+			matchLimit=self.matchLimit,
+			matchFormatString=self.matchFormatString,
+			lastBegin=self.lastBegin,
+			justplay=self.justplay,
+			avoidDuplicateDescription=self.avoidDuplicateDescription,
+			searchForDuplicateDescription=self.searchForDuplicateDescription,
+			bouquets=self.bouquets,
+			tags=self.tags,
+			searchType=self.searchType,
+			searchCase=self.searchCase,
+			overrideAlternatives=self.overrideAlternatives,
+			timeframe=self.timeframe,
+			vps_enabled=self.vps_enabled,
+			vps_overwrite=self.vps_overwrite,
+			series_labeling=self.series_labeling,
+			series_save_filter=self.series_save_filter,
 		)
 
 	def __deepcopy__(self, memo):
@@ -536,32 +536,32 @@ class AutoTimerComponent(object):
 			self.name,
 			self.match,
 			self.enabled,
-			timespan = self.timespan,
-			services = self.services[:],
-			offset = self.offset and self.offset[:],
-			afterevent = self.afterevent[:],
-			exclude = (self.getExcludedTitle(), self.getExcludedShort(), self.getExcludedDescription(), self.exclude[3][:]),
-			maxduration = self.maxduration,
-			destination = self.destination,
-			include = (self.getIncludedTitle(), self.getIncludedShort(), self.getIncludedDescription(), self.include[3][:]),
-			matchCount = self.matchCount,
-			matchLeft = self.matchLeft,
-			matchLimit = self.matchLimit,
-			matchFormatString = self.matchFormatString,
-			lastBegin = self.lastBegin,
-			justplay = self.justplay,
-			avoidDuplicateDescription = self.avoidDuplicateDescription,
-			searchForDuplicateDescription = self.searchForDuplicateDescription,
-			bouquets = self.bouquets[:],
-			tags = self.tags[:],
-			searchType = self.searchType,
-			searchCase = self.searchCase,
-			overrideAlternatives = self.overrideAlternatives,
-			timeframe = self.timeframe,
-			vps_enabled = self.vps_enabled,
-			vps_overwrite = self.vps_overwrite,
-			series_labeling = self.series_labeling,
-			series_save_filter = self.series_save_filter,
+			timespan=self.timespan,
+			services=self.services[:],
+			offset=self.offset and self.offset[:],
+			afterevent=self.afterevent[:],
+			exclude=(self.getExcludedTitle(), self.getExcludedShort(), self.getExcludedDescription(), self.exclude[3][:]),
+			maxduration=self.maxduration,
+			destination=self.destination,
+			include=(self.getIncludedTitle(), self.getIncludedShort(), self.getIncludedDescription(), self.include[3][:]),
+			matchCount=self.matchCount,
+			matchLeft=self.matchLeft,
+			matchLimit=self.matchLimit,
+			matchFormatString=self.matchFormatString,
+			lastBegin=self.lastBegin,
+			justplay=self.justplay,
+			avoidDuplicateDescription=self.avoidDuplicateDescription,
+			searchForDuplicateDescription=self.searchForDuplicateDescription,
+			bouquets=self.bouquets[:],
+			tags=self.tags[:],
+			searchType=self.searchType,
+			searchCase=self.searchCase,
+			overrideAlternatives=self.overrideAlternatives,
+			timeframe=self.timeframe,
+			vps_enabled=self.vps_enabled,
+			vps_overwrite=self.vps_overwrite,
+			series_labeling=self.series_labeling,
+			series_save_filter=self.series_save_filter,
 		)
 
 	def __eq__(self, other):

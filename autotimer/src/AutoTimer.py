@@ -161,7 +161,7 @@ class AutoTimer:
 		)
 		self.uniqueTimerId = len(self.timers)
 
-	def getXml(self, webif = True):
+	def getXml(self, webif=True):
 		return buildConfig(self.defaultTimer, self.timers, webif)
 
 	def writeXml(self):
@@ -228,7 +228,7 @@ class AutoTimer:
 			idx += 1
 		self.timers.append(timer)
 
-	def parseEPGAsync(self, simulateOnly = False):
+	def parseEPGAsync(self, simulateOnly=False):
 		t = SimpleThread(lambda: self.parseEPG(simulateOnly=simulateOnly))
 		t.start()
 		return t.deferred
@@ -725,7 +725,7 @@ class AutoTimer:
 					if ret:
 						add_counter +=1
 					
-				session.open( MessageBox, _("finished adding to filter list with %s event(s):\n\n %s event(s) added \n %s event(s) skipped") % (len(services), add_counter,len(services)-add_counter), type = MessageBox.TYPE_INFO, timeout = config.plugins.autotimer.popup_timeout.value )
+				session.open( MessageBox, _("finished adding to filter list with %s event(s):\n\n %s event(s) added \n %s event(s) skipped") % (len(services), add_counter,len(services)-add_counter), type=MessageBox.TYPE_INFO, timeout=config.plugins.autotimer.popup_timeout.value )
 					
 			except Exception as e:
 				doLog("Error in addToFilterList", e)
@@ -758,7 +758,7 @@ class AutoTimer:
 			doBlockingCallFromMainThread = blockingCallFromMainThread
 
 		# NOTE: the config option specifies "the next X days" which means today (== 1) + X
-		delta = timedelta(days = config.plugins.autotimer.maxdaysinfuture.value + 1)
+		delta = timedelta(days=config.plugins.autotimer.maxdaysinfuture.value + 1)
 		evtLimit = mktime((date.today() + delta).timetuple())
 		checkEvtLimit = delta.days > 1
 		del delta

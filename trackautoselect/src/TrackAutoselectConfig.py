@@ -98,7 +98,7 @@ class TrackAutoselectConfig():
 
 		config.plugins.TrackAutoselect.handle_services = ConfigSet(self.handle_services_choices, default=[x[0] for x in self.handle_services_choices[:2]], resort=False)
 		config.plugins.TrackAutoselect.same_languages = ConfigYesNo(default=False)
-		config.plugins.TrackAutoselect.wait_for_eit = ConfigInteger(default=1500, limits = (0, 99999))
+		config.plugins.TrackAutoselect.wait_for_eit = ConfigInteger(default=1500, limits=(0, 99999))
 
 		config.plugins.TrackAutoselect.audio_language_preference.addNotifier(self.updateLanguageComparisonDict, initial_call=True)
 		config.plugins.TrackAutoselect.subtitle_language_preference.addNotifier(self.updateLanguageComparisonDict, initial_call=True)

@@ -97,8 +97,8 @@ class AutoTimerSettings(Screen, ConfigListScreen):
 				getConfigListEntry(_("Location of autotimer_search.log"), config.plugins.autotimer.searchlog_path, _("Select the path where the autotimer_search.log should be saved")),
 				getConfigListEntry(_("Max number of retained search logs"), config.plugins.autotimer.searchlog_max, _("Define the number of search logs to be retained")+" (min.=5, max.=20)"),
 			],
-			session = session,
-			on_change = self.changed
+			session=session,
+			on_change=self.changed
 		)
 		def selectionChanged():
 			if self["config"].current:

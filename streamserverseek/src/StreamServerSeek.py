@@ -51,7 +51,7 @@ class StreamServerSeek(PerServiceBase):
 
 		print "[StreamServerSeek] init"
 		
-		config.misc.standbyCounter.addNotifier(self._onStandby, initial_call = False)
+		config.misc.standbyCounter.addNotifier(self._onStandby, initial_call=False)
 
 		PerServiceBase.__init__(self, self._session.nav,
 			{ 
@@ -183,7 +183,7 @@ class StreamServerSeek(PerServiceBase):
 		streamServerControl.enableHLS(hls_enabled, hls_path, 8080, hls_user, hls_password)
 		streamServerControl.config.streamserver.mediator.enabled.value = isMediatorEnabled
 
-	def endTemporaryLiveMode(self, idle = True):
+	def endTemporaryLiveMode(self, idle=True):
 		if not self._isTemporaryLiveMode:
 			return
 

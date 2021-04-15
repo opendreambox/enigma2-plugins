@@ -251,7 +251,7 @@ class MovieTagger(Screen):
 
 	def keyGreen(self):
 		if self.currList is self["cTaglist"]:
-			self.session.openWithCallback(self.newTagEntered,InputBox, title=_('Whitepace will be replaced by "_"'),windowTitle = _("Enter the new Tag"))
+			self.session.openWithCallback(self.newTagEntered,InputBox, title=_('Whitepace will be replaced by "_"'),windowTitle=_("Enter the new Tag"))
 
 	def keyYellow(self):
 		if  self.currList is self["aTaglist"]:
@@ -306,7 +306,7 @@ class TagMenuList(MenuList):
 	SKIN_COMPONENT_KEY_XOFFSET = "xOffset"
 	# skinner: if you want different colors for "X" please define color usedTagColor, userTagColor, preTagColor in <colors>
 
-	def __init__(self, list, enableWrapAround = True):
+	def __init__(self, list, enableWrapAround=True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 		
 		isFHD = False
@@ -363,4 +363,4 @@ def main(session, service, **kwargs):
 		raise e
 
 def Plugins(path,**kwargs):
- 	return PluginDescriptor(name="Movie Tagger", description=_("Movie Tagger..."), where = PluginDescriptor.WHERE_MOVIELIST, fnc=main)
+ 	return PluginDescriptor(name="Movie Tagger", description=_("Movie Tagger..."), where=PluginDescriptor.WHERE_MOVIELIST, fnc=main)

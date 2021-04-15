@@ -56,7 +56,7 @@ def checkForReadOnly(reason, **kwargs):
 				if entry[3] == 'ro':
 					print "[fstabEditor]  - rootfs is mounted ro"
 					from Tools import Notifications
-					Notifications.notificationQueue.registerDomain("fstabEditor", "fstabEditor", deferred_callable = True)
+					Notifications.notificationQueue.registerDomain("fstabEditor", "fstabEditor", deferred_callable=True)
 					Notifications.AddNotificationWithCallback(runRemountCommand, MessageBox, _("rootfs is mounted readonly. This is usually caused by a corrupted fstab. Do you want to remount now to be able to fix this?"), MessageBox.TYPE_YESNO, 5, windowTitle="fstabEditor", domain="fstabEditor")
 					break
 		mountFile.close()
@@ -106,7 +106,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 		<widget name="entryinfo" position="10,310" size="800,25" font="Regular;22" halign="center" />
 		</screen>"""
 		
-	def __init__(self, session, args = 0):
+	def __init__(self, session, args=0):
 		self.skin = fstabViewerScreen.skin
 		self.session = session
 		Screen.__init__(self, session)
@@ -291,22 +291,22 @@ class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
 		self.optionList = []
 				
 		if 	self.addEntry:
-			self.devicename = NoSave(ConfigText(default = ""))
-			self.mountpoint = NoSave(ConfigText(default = ""))
-			self.fstype = NoSave(ConfigSelection([("auto","auto"),("ext2","ext2"),("ext3","ext3"),("ext4","ext4"),("swap","swap"),("tmpfs","tmpfs"),("proc","proc"),("cifs","cifs"),("nfs","nfs"),("jffs2","jffs2"),("usbfs","usbfs"),("devpts","devpts"),("vfat","vfat"),("fat","fat"),("ntfs","ntfs"),("noauto", "no auto"), ("xfs", "xfs")], default = "auto"))
-			self.optionList.append(NoSave(ConfigText(default = "defaults")))
+			self.devicename = NoSave(ConfigText(default=""))
+			self.mountpoint = NoSave(ConfigText(default=""))
+			self.fstype = NoSave(ConfigSelection([("auto","auto"),("ext2","ext2"),("ext3","ext3"),("ext4","ext4"),("swap","swap"),("tmpfs","tmpfs"),("proc","proc"),("cifs","cifs"),("nfs","nfs"),("jffs2","jffs2"),("usbfs","usbfs"),("devpts","devpts"),("vfat","vfat"),("fat","fat"),("ntfs","ntfs"),("noauto", "no auto"), ("xfs", "xfs")], default="auto"))
+			self.optionList.append(NoSave(ConfigText(default="defaults")))
 			
-			self.dumpfreq = NoSave(ConfigNumber(default = 0))
-			self.passnum = NoSave(ConfigSelection([("0","0"),("1","1"),("2","2")], default = "0"))			
+			self.dumpfreq = NoSave(ConfigNumber(default=0))
+			self.passnum = NoSave(ConfigSelection([("0","0"),("1","1"),("2","2")], default="0"))			
 		else:
-			self.devicename = NoSave(ConfigText(default = entryList[self.selectedEntry][0]))
-			self.mountpoint = NoSave(ConfigText(default = entryList[self.selectedEntry][1]))
-			self.fstype = NoSave(ConfigSelection([("auto","auto"),("ext2","ext2"),("ext3","ext3"),("ext4","ext4"),("swap","swap"),("tmpfs","tmpfs"),("proc","proc"),("cifs","cifs"),("nfs","nfs"),("jffs2","jffs2"),("usbfs","usbfs"),("devpts","devpts"),("vfat","vfat"),("fat","fat"),("ntfs","ntfs"),("noauto", "no auto"), ("xfs", "xfs"), ("rootfs","rootfs"),("sysfs","sysfs")], default = entryList[self.selectedEntry][2]))
+			self.devicename = NoSave(ConfigText(default=entryList[self.selectedEntry][0]))
+			self.mountpoint = NoSave(ConfigText(default=entryList[self.selectedEntry][1]))
+			self.fstype = NoSave(ConfigSelection([("auto","auto"),("ext2","ext2"),("ext3","ext3"),("ext4","ext4"),("swap","swap"),("tmpfs","tmpfs"),("proc","proc"),("cifs","cifs"),("nfs","nfs"),("jffs2","jffs2"),("usbfs","usbfs"),("devpts","devpts"),("vfat","vfat"),("fat","fat"),("ntfs","ntfs"),("noauto", "no auto"), ("xfs", "xfs"), ("rootfs","rootfs"),("sysfs","sysfs")], default=entryList[self.selectedEntry][2]))
 			splitoptions = entryList[self.selectedEntry][3].split(",")
 			for option in splitoptions:
 				self.optionList.append(NoSave(ConfigText(default=option)))
-			self.dumpfreq = NoSave(ConfigNumber(default = int(entryList[self.selectedEntry][4])))
-			self.passnum = NoSave(ConfigSelection([("0","0"),("1","1"),("2","2")], default = entryList[self.selectedEntry][5]))
+			self.dumpfreq = NoSave(ConfigNumber(default=int(entryList[self.selectedEntry][4])))
+			self.passnum = NoSave(ConfigSelection([("0","0"),("1","1"),("2","2")], default=entryList[self.selectedEntry][5]))
 		
 		self.list.append(getConfigListEntry(_("device name: "), self.devicename))
 		self.list.append(getConfigListEntry(_("mount point: "), self.mountpoint))
@@ -564,6 +564,6 @@ class optionSelector(Screen,ConfigListScreen,HelpableScreen):
 		
 def Plugins(**kwargs):
 	return [
-		PluginDescriptor(name="fstab-Editor", description=_("Plugin to edit fstab"), where = [PluginDescriptor.WHERE_PLUGINMENU], icon="fstabEditor.png", fnc=main),
-		PluginDescriptor(name="fstab-Editor", where = [PluginDescriptor.WHERE_SESSIONSTART], fnc=checkForReadOnly)
+		PluginDescriptor(name="fstab-Editor", description=_("Plugin to edit fstab"), where=[PluginDescriptor.WHERE_PLUGINMENU], icon="fstabEditor.png", fnc=main),
+		PluginDescriptor(name="fstab-Editor", where=[PluginDescriptor.WHERE_SESSIONSTART], fnc=checkForReadOnly)
 		]

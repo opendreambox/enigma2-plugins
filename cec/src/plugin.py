@@ -26,7 +26,7 @@ def menu(menuid, **kwargs):
 
 def Plugins(**kwargs):
 	return [
-		PluginDescriptor(where = [PluginDescriptor.WHERE_SESSIONSTART] , fnc = start, weight=100),
-		PluginDescriptor(where = [PluginDescriptor.WHERE_AUTOSTART] , fnc = autostart, weight=100),
-		PluginDescriptor(name = "HDMI CEC 2.0", description = "Configure HDMI CEC 2.0", where = PluginDescriptor.WHERE_MENU, needsRestart = True, fnc = menu)
+		PluginDescriptor(where=[PluginDescriptor.WHERE_SESSIONSTART] , fnc=start, weight=100),
+		PluginDescriptor(where=[PluginDescriptor.WHERE_AUTOSTART] , fnc=autostart, weight=100),
+		PluginDescriptor(name="HDMI CEC 2.0", description="Configure HDMI CEC 2.0", where=PluginDescriptor.WHERE_MENU, needsRestart=True, fnc=menu)
 		]

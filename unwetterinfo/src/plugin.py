@@ -57,7 +57,7 @@ class PictureView(Screen):
 	def getPic(self):
 		self.picload.startDecode(self.picfile)
 
-	def gotPic(self, picInfo = None):
+	def gotPic(self, picInfo=None):
 		ptr = self.picload.getData()
 		if ptr:
 			self["picture"].instance.setPixmap(ptr)
@@ -110,7 +110,7 @@ class HelpPictureView(Screen):
 	def getPic(self):
 		self.picload.startDecode(self.list[self.index])
 
-	def gotPic(self, picInfo = None):
+	def gotPic(self, picInfo=None):
 		ptr = self.picload.getData()
 		if ptr:
 			self["picture"].instance.setPixmap(ptr)
@@ -271,7 +271,7 @@ class UnwetterMain(Screen):
 			picture = pluginpath + "/uwzat.png"
 		self.picload_thumb_land.startDecode(picture)
 
-	def gotThumbLand(self, picInfo = None):
+	def gotThumbLand(self, picInfo=None):
 		ptr = self.picload_thumb_land.getData()
 		if ptr:
 			self["thumbland"].instance.setPixmap(ptr)
@@ -294,7 +294,7 @@ class UnwetterMain(Screen):
 				height = 150
 			self.picload_thumb.startDecode(picture)
 
-	def gotThumb(self, picInfo = None):
+	def gotThumb(self, picInfo=None):
 		ptr = self.picload_thumb.getData()
 		if ptr:
 			self["statuslabel"].setText("")
@@ -431,5 +431,5 @@ def Plugins(path,**kwargs):
 		name="Unwetterzentrale",
 		description="www.unwetterzentrale.de und www.uwz.at",
 		icon="uwz.png",
-		where = PluginDescriptor.WHERE_PLUGINMENU,
+		where=PluginDescriptor.WHERE_PLUGINMENU,
 		fnc=main)

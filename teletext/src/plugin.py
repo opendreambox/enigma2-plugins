@@ -112,8 +112,8 @@ config.plugins.TeleText.splitting_mode = ConfigSelection(splittingModeList, defa
 config.plugins.TeleText.textlevel      = ConfigSelection(textlevelModeList, default="2")
 config.plugins.TeleText.region   = ConfigSelection(regionList, default="16")
 config.plugins.TeleText.debug    = ConfigOnOff(default=False)
-config.plugins.TeleText.pos      = ConfigSequence(default=[DEF_LEFT, DEF_TOP, DEF_RIGHT, DEF_BOTTOM], seperator = ",", limits = [(0,dsk_width>>3),(0,dsk_height>>3),(dsk_width-(dsk_width>>3),dsk_width),(dsk_height-(dsk_height>>3),dsk_height)])
-config.plugins.TeleText.tip_pos  = ConfigSequence(default=[(dsk_width>>1), (dsk_height>>1), dsk_width, dsk_height], seperator = ",", limits = [(0,dsk_width-MIN_W),(0,dsk_height-MIN_H),(MIN_W,dsk_width),(MIN_H,dsk_height)])
+config.plugins.TeleText.pos      = ConfigSequence(default=[DEF_LEFT, DEF_TOP, DEF_RIGHT, DEF_BOTTOM], seperator=",", limits=[(0,dsk_width>>3),(0,dsk_height>>3),(dsk_width-(dsk_width>>3),dsk_width),(dsk_height-(dsk_height>>3),dsk_height)])
+config.plugins.TeleText.tip_pos  = ConfigSequence(default=[(dsk_width>>1), (dsk_height>>1), dsk_width, dsk_height], seperator=",", limits=[(0,dsk_width-MIN_W),(0,dsk_height-MIN_H),(MIN_W,dsk_width),(MIN_H,dsk_height)])
 # state
 config.plugins.TeleText.textOnly = ConfigOnOff(default=False)
 config.plugins.TeleText.opaque   = ConfigOnOff(default=False)
@@ -156,7 +156,7 @@ class TeleText(Screen):
     TeleText.skin = """<screen position="0,0" size="%d,%d" title="TeleText" backgroundColor="#FF000000" flags="wfNoBorder"/>""" % (dsk_width, dsk_height)
     Screen.__init__(self, session)
 
-    self.__event_tracker = ServiceEventTracker(screen = self, eventmap={
+    self.__event_tracker = ServiceEventTracker(screen=self, eventmap={
       iPlayableService.evStart : self.serviceStarted,
       iPlayableService.evEnd : self.serviceStopped,
       iPlayableService.evUpdatedInfo : self.serviceInfoChanged,
@@ -257,7 +257,7 @@ class TeleText(Screen):
     self.listen_sn_conn = self.listen_sn.activated.connect(self.listen_data_avail)
     self.socket.listen(1)
 
-  def socketSend(self, buf, fd = None):
+  def socketSend(self, buf, fd=None):
     log("send %s" % (buf))
     try:
       s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
@@ -494,7 +494,7 @@ class TeleText(Screen):
       # open favorites
       if len(self.pid_list) > 0:
         self.inMenu = True
-        self.session.openWithCallback(self.favoritesResult, TeleTextFavoritesMenu, parent = self, service = self.pid_list[self.pid_index], page = self.cur_page.split("-",1)[0], favorites = self.favorites)
+        self.session.openWithCallback(self.favoritesResult, TeleTextFavoritesMenu, parent=self, service=self.pid_list[self.pid_index], page=self.cur_page.split("-",1)[0], favorites=self.favorites)
     else:
       # position setup
       if self.nav_pos[3] > (self.nav_pos[1] + MIN_H):
@@ -632,7 +632,7 @@ class TeleText(Screen):
     self.__closed()
     self.resetVideo()
     self.inMenu = True
-    self.session.openWithCallback(self.menuResult, TeleTextMenu, parent = self)
+    self.session.openWithCallback(self.menuResult, TeleTextMenu, parent=self)
 
   def menuResult(self, result):
     self.inMenu = False
@@ -724,7 +724,7 @@ class TeleText(Screen):
     log("reset video")
     self.pig.hide()
 
-  def sendSettings(self, result = True):
+  def sendSettings(self, result=True):
     if result:
       # region
       x = array.array('B')
@@ -912,7 +912,7 @@ class TeleText(Screen):
         log("serviceInfoChanged")
         self.checkServiceInfo(config.plugins.TeleText.background_caching.value or self.inMenu or self.execing)
 
-  def checkServiceInfo(self, do_send = True):
+  def checkServiceInfo(self, do_send=True):
     service = self.session.nav.getCurrentService()
     info = service and service.info()
     self.txtpid_origin = info and info.getInfo(iServiceInformation.sTXTPID)
@@ -926,7 +926,7 @@ class TeleText(Screen):
     self.read_data = True
     self.switchChannel(do_send)
 
-  def switchChannel(self, do_send = True):
+  def switchChannel(self, do_send=True):
     if self.demux > -1 and self.txtpid > -1 and do_send:
       x = array.array('B', (CMD_CTL_CACHE, (self.txtpid & 0xFF00) >> 8, (self.txtpid & 0xFF), self.demux))
       self.socketSend(x)
@@ -1057,7 +1057,7 @@ class TeleTextSummary(Screen):
      <widget font="Display;28" halign="center" name="info_txt" position="160,52" size="80,28"/>
     </screen>""")
 
-    Screen.__init__(self, session, parent = parent)
+    Screen.__init__(self, session, parent=parent)
     self["page"] = Label("")
     self["navi_txt"] = Label("NAVI")
     self["tp_txt"] = Label("TPT")
@@ -1227,7 +1227,7 @@ class TeleTextTransponderSummary(Screen):
       <widget name="n_service" position="6,39" size="90,20" font="Regular;20" halign="right"/>
     </screen>""")
 
-    Screen.__init__(self, session, parent = parent)
+    Screen.__init__(self, session, parent=parent)
     self["c_service"] = Label(self.parent.getCurrentService())
     self["n_service"] = Label(self.parent.getNewService())
     self.onShow.append(self.addWatcher)
@@ -1489,7 +1489,7 @@ class TeleTextMenuSummary(Screen):
     </screen>""")
 
   def __init__(self, session, parent):
-    Screen.__init__(self, session, parent = parent)
+    Screen.__init__(self, session, parent=parent)
     self["SetupTitle"] = Label(_("TeleText settings"))
     self["SetupEntry"] = Label("")
     self["SetupValue"] = Label("")
@@ -1576,7 +1576,7 @@ class TeleTextAboutSummary(Screen):
     </screen>""")
 
   def __init__(self, session, parent):
-    Screen.__init__(self, session, parent = parent)
+    Screen.__init__(self, session, parent=parent)
     self["title"] = Label("TeleText")
     self["daemon"] = Label("Daemon v%s" % parent.getDaemonVersion())
     self["plugin"] = Label("Plugin v%s" % PLUGIN_VERSION)
@@ -1667,7 +1667,7 @@ class TeleTextFavoritesMenu(Screen):
     self.favorites = favorites
 
     Screen.__init__(self, session, parent)
-    self["fav_list"] = MenuList([], enableWrapAround = True)
+    self["fav_list"] = MenuList([], enableWrapAround=True)
     self["fav_list"].onSelectionChanged.append(self.updateLayout)
 
     self["actions"] = NumberActionMap(["OkCancelActions", "TeleTextActions"],
@@ -1760,8 +1760,8 @@ class TeleTextFavoritesMenu(Screen):
     self.session.openWithCallback(
       self.addFavorite,
       NTIVirtualKeyBoard,
-      title = _("Enter text for page %s")%page,
-      text = value
+      title=_("Enter text for page %s")%page,
+      text=value
     )
 
   def addFavorite(self, text):
@@ -1827,7 +1827,7 @@ class TeleTextFavoritesSummary(Screen):
     </screen>""")
 
   def __init__(self, session, parent):
-    Screen.__init__(self, session, parent = parent)
+    Screen.__init__(self, session, parent=parent)
     self["title"] = Label(_("TeleText favorites"))
     self["page"]  = Label()
     self["text"]  = Label()
@@ -1873,7 +1873,7 @@ def mainText(session, **kwargs):
     if len(ttx_screen.pid_list) > 0:
       session.openWithCallback(selectText, TeleTextTransponderMenu, ttx_screen.pid_list, ttx_screen.pid_index)
     else:
-      session.open(MessageBox, _("No teletext available."), MessageBox.TYPE_INFO, timeout = 3)
+      session.open(MessageBox, _("No teletext available."), MessageBox.TYPE_INFO, timeout=3)
 
 def selectText(result):
   global my_session
@@ -1892,9 +1892,9 @@ def mainMenu(session, **kwargs):
 def Plugins(**kwargs):
   log("plugins")
   return [
-    PluginDescriptor(name="TeleText", description="teletext", where = PluginDescriptor.WHERE_TELETEXT, fnc=mainText),
-    PluginDescriptor(needsRestart = False, where = PluginDescriptor.WHERE_SESSIONSTART, fnc=sessionstart),
-    PluginDescriptor(needsRestart = False, where = PluginDescriptor.WHERE_AUTOSTART, fnc=autostart)
+    PluginDescriptor(name="TeleText", description="teletext", where=PluginDescriptor.WHERE_TELETEXT, fnc=mainText),
+    PluginDescriptor(needsRestart=False, where=PluginDescriptor.WHERE_SESSIONSTART, fnc=sessionstart),
+    PluginDescriptor(needsRestart=False, where=PluginDescriptor.WHERE_AUTOSTART, fnc=autostart)
     ]
 
 # EOF

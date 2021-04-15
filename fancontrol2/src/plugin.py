@@ -160,29 +160,29 @@ def setPWM(fanid, value):
 
 #Configuration
 config.plugins.FanControl = ConfigSubsection()
-config.plugins.FanControl.Fan = ConfigSelection(choices = [("disabled", _("disabled")), ("aus", _("Control disabled")), ("3pin", _("3Pin")), ("4pin", _("4Pin")), ("4pinREG", _("4Pin (PID)"))], default = "disabled")
-config.plugins.FanControl.StandbyOff = ConfigSelection(choices = [("false", _("no")), ("true", _("yes")), ("trueRec", _("yes, Except for Recording or HDD"))], default="false")
-config.plugins.FanControl.minRPM = ConfigSlider(default = 600, increment = 50, limits = (0, 1500))
-config.plugins.FanControl.maxRPM = ConfigSlider(default = 3000, increment = 50, limits = (500, 6000))
-config.plugins.FanControl.temp = ConfigSlider(default = 40, increment = 1, limits = (30, 50))
-config.plugins.FanControl.tempmax = ConfigSlider(default = 50, increment = 1, limits = (35, 55))
-config.plugins.FanControl.pwm = ConfigSlider(default = 130, increment = 5, limits = (0, 255))
-config.plugins.FanControl.vlt = ConfigSlider(default = 255, increment = 5, limits = (0, 255))
-config.plugins.FanControl.ShowError = ConfigSelection(choices = [("false", _("do nothing")), ("true", _("display Info")), ("shutdown", _("Box Shutdown"))], default="true")
-config.plugins.FanControl.ShutdownTemp = ConfigInteger(default = 65,limits = (50, 80))
-config.plugins.FanControl.AddOverheat = ConfigInteger(default = 0,limits = (0, 9))
-config.plugins.FanControl.DisableDMM = ConfigYesNo(default = False)
-config.plugins.FanControl.LogCount = ConfigInteger(default = 40,limits = (40, 999))
+config.plugins.FanControl.Fan = ConfigSelection(choices=[("disabled", _("disabled")), ("aus", _("Control disabled")), ("3pin", _("3Pin")), ("4pin", _("4Pin")), ("4pinREG", _("4Pin (PID)"))], default="disabled")
+config.plugins.FanControl.StandbyOff = ConfigSelection(choices=[("false", _("no")), ("true", _("yes")), ("trueRec", _("yes, Except for Recording or HDD"))], default="false")
+config.plugins.FanControl.minRPM = ConfigSlider(default=600, increment=50, limits=(0, 1500))
+config.plugins.FanControl.maxRPM = ConfigSlider(default=3000, increment=50, limits=(500, 6000))
+config.plugins.FanControl.temp = ConfigSlider(default=40, increment=1, limits=(30, 50))
+config.plugins.FanControl.tempmax = ConfigSlider(default=50, increment=1, limits=(35, 55))
+config.plugins.FanControl.pwm = ConfigSlider(default=130, increment=5, limits=(0, 255))
+config.plugins.FanControl.vlt = ConfigSlider(default=255, increment=5, limits=(0, 255))
+config.plugins.FanControl.ShowError = ConfigSelection(choices=[("false", _("do nothing")), ("true", _("display Info")), ("shutdown", _("Box Shutdown"))], default="true")
+config.plugins.FanControl.ShutdownTemp = ConfigInteger(default=65,limits=(50, 80))
+config.plugins.FanControl.AddOverheat = ConfigInteger(default=0,limits=(0, 9))
+config.plugins.FanControl.DisableDMM = ConfigYesNo(default=False)
+config.plugins.FanControl.LogCount = ConfigInteger(default=40,limits=(40, 999))
 config.plugins.FanControl.LogPath = ConfigText(default="/tmp/", fixed_size=False)
-config.plugins.FanControl.DeleteData = ConfigSelection(choices = [("0", _("no")), ("2", "2"), ("3", "3"), ("7", "7"), ("14", "14"), ("30", "30")], default="14")
-config.plugins.FanControl.EnableConsoleLog = ConfigYesNo(default = False)
-config.plugins.FanControl.EnableDataLog = ConfigYesNo(default = False)
-config.plugins.FanControl.EnableEventLog = ConfigYesNo(default = False)
-config.plugins.FanControl.CheckHDDTemp = ConfigSelection(choices = [("false", _("no")), ("true", _("yes")), ("auto", _("auto")), ("never", _("never"))], default="auto")
-config.plugins.FanControl.MonitorInExtension = ConfigYesNo(default = True)
-config.plugins.FanControl.FanControlInExtension = ConfigYesNo(default = True)
-config.plugins.FanControl.Multi = ConfigSelection(choices = [("1", "RPM"), ("2", "RPM/2")], default = "2")
-config.plugins.FanControl.EnableThread = ConfigYesNo(default = True)
+config.plugins.FanControl.DeleteData = ConfigSelection(choices=[("0", _("no")), ("2", "2"), ("3", "3"), ("7", "7"), ("14", "14"), ("30", "30")], default="14")
+config.plugins.FanControl.EnableConsoleLog = ConfigYesNo(default=False)
+config.plugins.FanControl.EnableDataLog = ConfigYesNo(default=False)
+config.plugins.FanControl.EnableEventLog = ConfigYesNo(default=False)
+config.plugins.FanControl.CheckHDDTemp = ConfigSelection(choices=[("false", _("no")), ("true", _("yes")), ("auto", _("auto")), ("never", _("never"))], default="auto")
+config.plugins.FanControl.MonitorInExtension = ConfigYesNo(default=True)
+config.plugins.FanControl.FanControlInExtension = ConfigYesNo(default=True)
+config.plugins.FanControl.Multi = ConfigSelection(choices=[("1", "RPM"), ("2", "RPM/2")], default="2")
+config.plugins.FanControl.EnableThread = ConfigYesNo(default=True)
 
 def GetFanRPM():
 	global RPMread
@@ -249,7 +249,7 @@ class ControllerPI:
 	coeffKp = 0.0
 	coeffKi = 0.0
  
-	def __init__(self, givenName = "PI Controller"):
+	def __init__(self, givenName="PI Controller"):
 		self.name = givenName
 #		FClogE("%s : creating object" % self.name)
 
@@ -321,7 +321,7 @@ class FanControl2Test(Screen):
 		</screen>"""
 
 
-	def __init__(self, session, args = 0):
+	def __init__(self, session, args=0):
 		self.session = session
 		Screen.__init__(self, session)
 
@@ -467,7 +467,7 @@ class FanControl2Monitor(Screen):
 
 		</screen>"""
 	
-	def __init__(self, session, args = None):
+	def __init__(self, session, args=None):
 		Screen.__init__(self, session)
 
 		self.temp_timer = eTimer()
@@ -532,7 +532,7 @@ class FanControl2SpezialSetup(Screen, ConfigListScreen):
 			<widget name="config" position="10,10" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 
-	def __init__(self, session, args = None):
+	def __init__(self, session, args=None):
 		Screen.__init__(self, session)
 
 		config.plugins.FanControl.DisableDMM.value = isDMMdisabled()
@@ -556,7 +556,7 @@ class FanControl2SpezialSetup(Screen, ConfigListScreen):
 		self.list.append(getConfigListEntry(_("Auto-Delete Data older than (Days)"), config.plugins.FanControl.DeleteData))
 		self.list.append(getConfigListEntry(_("Enable Event Logging"), config.plugins.FanControl.EnableEventLog))
 		self.list.append(getConfigListEntry(_("Enable Thread use"), config.plugins.FanControl.EnableThread))
-		ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.selectionChanged)
+		ConfigListScreen.__init__(self, self.list, session=self.session, on_change=self.selectionChanged)
 
 		self["actions"] = ActionMap(["OkCancelActions"], 
 		{
@@ -570,7 +570,7 @@ class FanControl2SpezialSetup(Screen, ConfigListScreen):
 			from Screens.LocationBox import LocationBox
 			sel = self["config"].getCurrent()[1]
 			if sel == config.plugins.FanControl.LogPath:
-				self.session.openWithCallback(self.dirSelected, LocationBox, text = _("Choose path"), filename = "", currDir = self["config"].getCurrent()[1].value, minFree = 50)
+				self.session.openWithCallback(self.dirSelected, LocationBox, text=_("Choose path"), filename="", currDir=self["config"].getCurrent()[1].value, minFree=50)
 		except Exception, e:
 			self.session.open(MessageBox, "Error:\n" + str(e), MessageBox.TYPE_ERROR)
 
@@ -663,7 +663,7 @@ class FanControl2Plugin(ConfigListScreen,Screen):
 			<ePixmap pixmap="skin_default/buttons/key_menu.png" position="770,490" size="40,20" alphatest="on" />
 		</screen>"""
 
-	def __init__(self, session, args = 0):
+	def __init__(self, session, args=0):
 		global LastVLT
 		global LastPWM
 		self.session = session
@@ -681,7 +681,7 @@ class FanControl2Plugin(ConfigListScreen,Screen):
 		self.list.append(getConfigListEntry(_("End temperature C"), config.plugins.FanControl.tempmax))
 		self.list.append(getConfigListEntry(_("Initial Voltage"), config.plugins.FanControl.vlt))
 		self.list.append(getConfigListEntry(_("Initial PWM"), config.plugins.FanControl.pwm))
-		ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.selectionChanged)
+		ConfigListScreen.__init__(self, self.list, session=self.session, on_change=self.selectionChanged)
 		LastVLT = config.plugins.FanControl.vlt.value
 		LastPWM = config.plugins.FanControl.pwm.value
 
@@ -985,12 +985,12 @@ class FanControl2(Screen):
 		self.timer = eTimer()
 		self.timer_conn = self.timer.timeout.connect(self.query)
 		self.timer.startLongTimer(10)
-		config.misc.standbyCounter.addNotifier(self.standbyQuery, initial_call = False)
+		config.misc.standbyCounter.addNotifier(self.standbyQuery, initial_call=False)
 
 	def FC2AskShutdown(self):
 		if not self.dontshutdown:
 			self.dontshutdown = True
-			self.session.openWithCallback(self.FC2DoShutdown, MessageBox, _("FanControl2 emergency, Box Shutdown now?"),type = MessageBox.TYPE_YESNO,timeout = 60)
+			self.session.openWithCallback(self.FC2DoShutdown, MessageBox, _("FanControl2 emergency, Box Shutdown now?"),type=MessageBox.TYPE_YESNO,timeout=60)
 
 	def FC2DoShutdown(self,retval):
 		if (retval):
@@ -1284,26 +1284,26 @@ def Plugins(**kwargs):
 	list = [
 	PluginDescriptor(name="Fan Control", 
 	description="Fan Control 2", 
-	where = [PluginDescriptor.WHERE_SESSIONSTART, 
+	where=[PluginDescriptor.WHERE_SESSIONSTART, 
 	PluginDescriptor.WHERE_AUTOSTART], 
-	fnc = autostart)]
+	fnc=autostart)]
 	if os.path.exists("/proc/stb/fp/fan_vlt"):
 		list.append(PluginDescriptor(name="Fan Control 2", 
 		description="Fan Control", 
-		where = PluginDescriptor.WHERE_PLUGINMENU,
-		icon = "plugin.png",
-		fnc = main))
+		where=PluginDescriptor.WHERE_PLUGINMENU,
+		icon="plugin.png",
+		fnc=main))
 		if config.plugins.FanControl.FanControlInExtension.value:
 			list.append(PluginDescriptor(name="Fan Control 2", 
 			description="Fan Control", 
-			where = PluginDescriptor.WHERE_EXTENSIONSMENU,
-			icon = "plugin.png",
-			fnc = main))
+			where=PluginDescriptor.WHERE_EXTENSIONSMENU,
+			icon="plugin.png",
+			fnc=main))
 		if config.plugins.FanControl.MonitorInExtension.value:
 			list.append(PluginDescriptor(
 			name="Fan Control 2 - Monitor", 
 			description="Fan Control", 
-			where = PluginDescriptor.WHERE_EXTENSIONSMENU,
-			icon = "plugin.png",
-			fnc = mainMonitor))
+			where=PluginDescriptor.WHERE_EXTENSIONSMENU,
+			icon="plugin.png",
+			fnc=mainMonitor))
 	return list

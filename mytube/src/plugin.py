@@ -106,27 +106,27 @@ config.plugins.mytube.search.lr = ConfigSelection(
 				], "de")
 
 config.plugins.mytube.general = ConfigSubsection()
-config.plugins.mytube.general.showHelpOnOpen = ConfigYesNo(default = True)
-config.plugins.mytube.general.loadFeedOnOpen = ConfigYesNo(default = True)
+config.plugins.mytube.general.showHelpOnOpen = ConfigYesNo(default=True)
+config.plugins.mytube.general.loadFeedOnOpen = ConfigYesNo(default=True)
 config.plugins.mytube.general.startFeed = ConfigSelection(
 				[
 				 ("top_rated", _("Top rated")),
 				], "top_rated")
-config.plugins.mytube.general.on_movie_stop = ConfigSelection(default = "ask", choices = [
+config.plugins.mytube.general.on_movie_stop = ConfigSelection(default="ask", choices=[
 	("ask", _("Ask user")), ("quit", _("Return to movie list")), ("playnext", _("Play next video")), ("playagain", _("Play video again")) ])
 
-config.plugins.mytube.general.on_exit = ConfigSelection(default = "ask", choices = [
+config.plugins.mytube.general.on_exit = ConfigSelection(default="ask", choices=[
 	("ask", _("Ask user")), ("quit", _("Return to movie list"))])
 
 default = resolveFilename(SCOPE_HDD)
 tmp = config.movielist.videodirs.value
 if default not in tmp:
 	tmp.append(default)
-config.plugins.mytube.general.videodir = ConfigSelection(default = default, choices = tmp)
+config.plugins.mytube.general.videodir = ConfigSelection(default=default, choices=tmp)
 config.plugins.mytube.general.history = ConfigText(default="")
-config.plugins.mytube.general.clearHistoryOnClose = ConfigYesNo(default = False)
-config.plugins.mytube.general.AutoLoadFeeds = ConfigYesNo(default = True)
-config.plugins.mytube.general.resetPlayService = ConfigYesNo(default = False)
+config.plugins.mytube.general.clearHistoryOnClose = ConfigYesNo(default=False)
+config.plugins.mytube.general.AutoLoadFeeds = ConfigYesNo(default=True)
+config.plugins.mytube.general.resetPlayService = ConfigYesNo(default=False)
 config.plugins.mytube.general.authenticate = ConfigYesNo(default=False)
 
 class downloadJob(Job):
@@ -395,7 +395,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		self["config"].list = self.searchContextEntries
 		self["config"].l.setList(self.searchContextEntries)
 
-	def setState(self,status = None):
+	def setState(self,status=None):
 		if status:
 			self.currList = "status"
 			self["videoactions"].setEnabled(False)
@@ -437,16 +437,16 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		print "[handleHelpWindow]"
 		if self.currList == "configlist":
 			self.hideSuggestions()
-			self.session.openWithCallback(self.ScreenClosed, MyTubeVideoHelpScreen, self.skin_path, wantedinfo = self.searchtext, wantedtitle = _("MyTubePlayer Help") )
+			self.session.openWithCallback(self.ScreenClosed, MyTubeVideoHelpScreen, self.skin_path, wantedinfo=self.searchtext, wantedtitle=_("MyTubePlayer Help") )
 		elif self.currList == "feedlist":
-			self.session.openWithCallback(self.ScreenClosed, MyTubeVideoHelpScreen, self.skin_path, wantedinfo = self.feedtext, wantedtitle = _("MyTubePlayer Help") )
+			self.session.openWithCallback(self.ScreenClosed, MyTubeVideoHelpScreen, self.skin_path, wantedinfo=self.feedtext, wantedtitle=_("MyTubePlayer Help") )
 
 	def handleFirstHelpWindow(self):
 		print "[handleFirstHelpWindow]"
 		if config.plugins.mytube.general.showHelpOnOpen.value is True:
 			if self.currList == "configlist":
 				self.hideSuggestions()
-				self.session.openWithCallback(self.firstRunHelpClosed, MyTubeVideoHelpScreen, self.skin_path,wantedinfo = self.feedtext, wantedtitle = _("MyTubePlayer Help") )
+				self.session.openWithCallback(self.firstRunHelpClosed, MyTubeVideoHelpScreen, self.skin_path,wantedinfo=self.feedtext, wantedtitle=_("MyTubePlayer Help") )
 		else:
 			self.FirstRun = False
 
@@ -461,7 +461,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 					(_("MyTube Settings"), "settings"),
 				)
 			self.hideSuggestions()
-			self.session.openWithCallback(self.openMenu, ChoiceBox, title=_("Select your choice."), list = menulist)
+			self.session.openWithCallback(self.openMenu, ChoiceBox, title=_("Select your choice."), list=menulist)
 
 		elif self.currList == "feedlist":
 			menulist = [(_("MyTube Settings"), "settings")]
@@ -483,7 +483,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 				))
 
 			self.hideSuggestions()
-			self.session.openWithCallback(self.openMenu, ChoiceBox, title=_("Select your choice."), list = menulist)
+			self.session.openWithCallback(self.openMenu, ChoiceBox, title=_("Select your choice."), list=menulist)
 
 	def openMenu(self, answer):
 		answer = answer and answer[1]
@@ -528,7 +528,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 
 	def openKeyboard(self):
 		self.hideSuggestions()
-		self.session.openWithCallback(self.SearchEntryCallback, VirtualKeyBoard, title = (_("Enter your search term(s)")), text = config.plugins.mytube.search.searchTerm.value)
+		self.session.openWithCallback(self.SearchEntryCallback, VirtualKeyBoard, title=(_("Enter your search term(s)")), text=config.plugins.mytube.search.searchTerm.value)
 
 	def ScreenClosed(self):
 		print "ScreenCLosed, restoring old window state"
@@ -542,7 +542,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		elif self.currList == "feedlist":
 			self.switchToFeedList()
 
-	def SearchEntryCallback(self, callback = None):
+	def SearchEntryCallback(self, callback=None):
 		if callback is not None and len(callback):
 			config.plugins.mytube.search.searchTerm.value = callback
 			ConfigListScreen.keyOK(self)
@@ -576,7 +576,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 					(_("No"), "continue"),
 					(_("No, but switch to video search."), "switch2search")
 				)
-			self.session.openWithCallback(self.leavePlayerConfirmed, ChoiceBox, title=_("Really quit MyTube Player?"), list = list)
+			self.session.openWithCallback(self.leavePlayerConfirmed, ChoiceBox, title=_("Really quit MyTube Player?"), list=list)
 		else:
 			self.leavePlayerConfirmed([True, how])
 
@@ -675,14 +675,14 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 						uri = "yt://%s" %(video.id,)
 						myreference = eServiceReference(eServiceReference.idURI,0,uri)
 						myreference.setName(video.title)
-						self.session.openWithCallback(self.onPlayerClosed, MyTubePlayer, myreference, self.lastservice, infoCallback = self.showVideoInfo, nextCallback = self.getNextEntry, prevCallback = self.getPrevEntry )
+						self.session.openWithCallback(self.onPlayerClosed, MyTubePlayer, myreference, self.lastservice, infoCallback=self.showVideoInfo, nextCallback=self.getNextEntry, prevCallback=self.getPrevEntry )
 					else:
 						myurl = video.url
 						print "Playing URL",myurl
 						if myurl is not None:
 							myreference = eServiceReference(4097,0,myurl)
 							myreference.setName(video.title)
-							self.session.openWithCallback(self.onPlayerClosed, MyTubePlayer, myreference, self.lastservice, infoCallback = self.showVideoInfo, nextCallback = self.getNextEntry, prevCallback = self.getPrevEntry )
+							self.session.openWithCallback(self.onPlayerClosed, MyTubePlayer, myreference, self.lastservice, infoCallback=self.showVideoInfo, nextCallback=self.getNextEntry, prevCallback=self.getPrevEntry )
 						else:
 							self.session.open(MessageBox, _("Sorry, video is not available!"), MessageBox.TYPE_INFO)
 		elif self.currList == "historylist":
@@ -779,7 +779,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 #				(_("My Uploads"), "my_uploads"),
 #			))
 
-		self.session.openWithCallback(self.openStandardFeedClosed, ChoiceBox, title=_("Select new feed to view."), list = menulist)
+		self.session.openWithCallback(self.openStandardFeedClosed, ChoiceBox, title=_("Select new feed to view."), list=menulist)
 
 	def handleSuggestions(self):
 		print "handleSuggestions"
@@ -836,7 +836,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		if self.FirstRun == True:
 			self.handleFirstHelpWindow()
 
-	def switchToFeedList(self, append = False):
+	def switchToFeedList(self, append=False):
 		print "switchToFeedList"
 		print "switching to feedlist from:",self.currList
 		print "len(self.videolist):",len(self.videolist)
@@ -946,7 +946,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		if video:
 			self.search(channelId=video.channelId)
 
-	def runSearch(self, searchTerm = None):
+	def runSearch(self, searchTerm=None):
 		Log.d(searchTerm)
 		if searchTerm:
 			self.search(searchTerm=searchTerm)
@@ -1151,7 +1151,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 				video = current[0]
 				if video:
 					print "Title im showVideoInfo",video.title
-					self.session.open(MyTubeVideoInfoScreen, self.skin_path, video = video )
+					self.session.open(MyTubeVideoInfoScreen, self.skin_path, video=video )
 
 	def downloadThumbnails(self):
 		self.timer_startDownload.stop()
@@ -1171,13 +1171,13 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 					else:
 						if tubeid not in self.pixmaps_to_load:
 							self.pixmaps_to_load.append(tubeid)
-							self.fetchFinished(False,tubeid, failed = True)
+							self.fetchFinished(False,tubeid, failed=True)
 
 	def fetchFailed(self,string,tubeid):
 		print "thumbnail-fetchFailed for: ",tubeid,string.getErrorMessage()
-		self.fetchFinished(False,tubeid, failed = True)
+		self.fetchFinished(False,tubeid, failed=True)
 
-	def fetchFinished(self,x,tubeid, failed = False):
+	def fetchFinished(self,x,tubeid, failed=False):
 		print "thumbnail-fetchFinished for:",tubeid
 		self.pixmaps_to_load.remove(tubeid)
 		if failed:
@@ -1192,7 +1192,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 			self.picloads[tubeid].startDecode(thumbnailFile)
 		else:
 			self.pixmaps_to_load.append(tubeid)
-			self.fetchFinished(False,tubeid, failed = True)
+			self.fetchFinished(False,tubeid, failed=True)
 
 	def finish_decode(self,tubeid,info):
 		print "thumbnail finish_decode:", tubeid,info
@@ -1263,7 +1263,7 @@ class MyTubeVideoInfoScreen(Screen):
 		<widget name="title" position="0,0" size="0,0"/>
 	</screen>"""
 
-	def __init__(self, session, plugin_path, video = None):
+	def __init__(self, session, plugin_path, video=None):
 		Screen.__init__(self, session)
 		self.session = session
 		self.skin_path = plugin_path
@@ -1386,7 +1386,7 @@ class MyTubeVideoInfoScreen(Screen):
 				else:
 					print "[decodePic] Thumbnail file NOT FOUND !!!-->:",thumbnailFile
 
-	def finish_decode(self, picindex = None, picInfo=None):
+	def finish_decode(self, picindex=None, picInfo=None):
 		print "finish_decode - of INDEX", picindex
 		ptr = self.picloads[picindex].getData()
 		if ptr != None:
@@ -1441,7 +1441,7 @@ class MyTubeVideoHelpScreen(Screen):
 		<widget name="title" position="0,0" size="0,0"/>
 	</screen>"""
 
-	def __init__(self, session, plugin_path, wantedinfo = None, wantedtitle = None):
+	def __init__(self, session, plugin_path, wantedinfo=None, wantedtitle=None):
 		Screen.__init__(self, session)
 		self.session = session
 		self.skin_path = plugin_path
@@ -1493,5 +1493,5 @@ def Plugins(path, **kwargs):
 	return PluginDescriptor(
 		name=_("My TubePlayer"),
 		description=_("Play YouTube movies"),
-		where = [ PluginDescriptor.WHERE_EXTENSIONSMENU, PluginDescriptor.WHERE_PLUGINMENU ],
-		icon = "plugin.png", fnc = MyTubeMain)
+		where=[ PluginDescriptor.WHERE_EXTENSIONSMENU, PluginDescriptor.WHERE_PLUGINMENU ],
+		icon="plugin.png", fnc=MyTubeMain)

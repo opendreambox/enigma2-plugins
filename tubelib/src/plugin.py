@@ -51,7 +51,7 @@ def Plugins(path, **kwargs):
 		PluginDescriptor(
 			name=_("Add Live-Streaming Channel"),
 			description=_("Add Live-Streaming Channel"),
-			where = PluginDescriptor.WHERE_CHANNEL_CONTEXT_MENU,
+			where=PluginDescriptor.WHERE_CHANNEL_CONTEXT_MENU,
 			fnc=main_channellist,
 			helperfnc=check_channel),
 		]

@@ -25,8 +25,8 @@ except ImportError:
 	hasVps = False
 
 class EPGSearchATEditor(AutoTimerEditor):
-	def __init__(self, session, timer, editingDefaults = False, **kwargs):
-		AutoTimerEditor.__init__(self, session, timer, editingDefaults = False, **kwargs)
+	def __init__(self, session, timer, editingDefaults=False, **kwargs):
+		AutoTimerEditor.__init__(self, session, timer, editingDefaults=False, **kwargs)
 		
 		self.skinName = ["EPGSearchATEditor", "AutoTimerEditor"]
 		self.setup_title = _("SearchFilter Editor")
@@ -128,7 +128,7 @@ def ATeditorCallback(session, save, timer):
 	if timer:
 		epgsearchAT = EPGSearchAT()
 		epgsearchAT.add(timer)
-		total, new, modified, timers, conflicts, similars = epgsearchAT.parseEPG(simulateOnly = True)
+		total, new, modified, timers, conflicts, similars = epgsearchAT.parseEPG(simulateOnly=True)
 		results = []
 		if timers:
 			epgcache = eEPGCache.getInstance()
@@ -228,7 +228,7 @@ class EPGSearchATOverview(AutoTimerOverview):
 		self.session.openWithCallback(
 			self.menuCallback,
 			ChoiceBox,
-			list = list,
+			list=list,
 		)
 
 	def menuCallback(self, ret):

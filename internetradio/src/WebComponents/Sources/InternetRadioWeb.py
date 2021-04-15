@@ -85,7 +85,7 @@ class InternetRadioWeb(Source):
 		if homepage is None:
 			homepage = ""
 		favoriteConfig = InternetRadioFavoriteConfig()
-		favoriteConfig.addFavorite(name = name, text = text, favoritetype = int(favoritetype), tags = tags, country = country, homepage = homepage)
+		favoriteConfig.addFavorite(name=name, text=text, favoritetype=int(favoritetype), tags=tags, country=country, homepage=homepage)
 		player = self.getPlayerInstance()
 		if player is not None:
 			player.updateFavoriteList()
@@ -106,7 +106,7 @@ class InternetRadioWeb(Source):
 			return (False, "favorite type has to be a number between 0 and 2!")
 		found = 0
 		favoriteConfig = InternetRadioFavoriteConfig()
-		if favoriteConfig.removeFavoriteHTML(name = name, text = text, favoritetype = int(favoritetype)) == 1:
+		if favoriteConfig.removeFavoriteHTML(name=name, text=text, favoritetype=int(favoritetype)) == 1:
 			player = self.getPlayerInstance()
 			if player is not None:
 				player.updateFavoriteList()
@@ -133,7 +133,7 @@ class InternetRadioWeb(Source):
 			return (False, "No favorite newname given!")
 		found = 0
 		favoriteConfig = InternetRadioFavoriteConfig()
-		if favoriteConfig.renameFavoriteHTML(name = name, text = text, favoritetype = int(favoritetype), newname = newname, newtext = newtext) == 1:
+		if favoriteConfig.renameFavoriteHTML(name=name, text=text, favoritetype=int(favoritetype), newname=newname, newtext=newtext) == 1:
 			player = self.getPlayerInstance()
 			if player is not None:
 				player.updateFavoriteList()
@@ -150,7 +150,7 @@ class InternetRadioWeb(Source):
 		url = param["url"]
 		if url is None:
 			return (False, "No url given!")
-		radioStation = InternetRadioStation(name = name)
+		radioStation = InternetRadioStation(name=name)
 		player = self.getPlayerInstance()
 		if player is not None:
 			player.playRadioStation(url, radioStation)

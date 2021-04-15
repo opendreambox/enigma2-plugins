@@ -75,7 +75,7 @@ def main(session, **kwargs):
 
 def Plugins(**kwargs):
 	return [
-		PluginDescriptor(name=_("Screensaver"), description=_("Screensaver using random photos"), where = PluginDescriptor.WHERE_MENU, fnc=menu),
-		PluginDescriptor(name=_("Screensaver"), description=_("Screensaver using random photos"), where = PluginDescriptor.WHERE_INFOBAR, fnc=infobar),
-		PluginDescriptor(name=_("Screensaver"), description=_("Screensaver using random photos"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main)
+		PluginDescriptor(name=_("Screensaver"), description=_("Screensaver using random photos"), where=PluginDescriptor.WHERE_MENU, fnc=menu),
+		PluginDescriptor(name=_("Screensaver"), description=_("Screensaver using random photos"), where=PluginDescriptor.WHERE_INFOBAR, fnc=infobar),
+		PluginDescriptor(name=_("Screensaver"), description=_("Screensaver using random photos"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main)
 	]

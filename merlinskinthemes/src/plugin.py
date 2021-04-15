@@ -36,7 +36,7 @@ import MerlinSkinThemes
 CONFDIR = "/etc/enigma2/merlinskinthemes/"
 
 try:
-        Notifications.notificationQueue.registerDomain("MerlinSkinThemes", _("MerlinSkinThemes"), deferred_callable = True)
+        Notifications.notificationQueue.registerDomain("MerlinSkinThemes", _("MerlinSkinThemes"), deferred_callable=True)
 except Exception as e:
         print("[MST] - Error registering Notification-Domain: ", e)
 
@@ -74,7 +74,7 @@ def showMessage(retValue=None):
 	if retValue == False:
 		Notifications.AddNotification(MessageBox, _("Skin could not be rebuilt due to unsupported version of theme"), MessageBox.TYPE_ERROR, 10, windowTitle="MerlinSkinThemes", domain="MerlinSkinThemes")
 	else:
-		Notifications.AddNotificationWithCallback(messageBoxCallback, MessageBox, _("Skin was rebuilt and a restart of enigma2 is required. Do you want to restart now?"), MessageBox.TYPE_YESNO, 10, windowTitle="MerlinSkinThemes", domain = "MerlinSkinThemes")
+		Notifications.AddNotificationWithCallback(messageBoxCallback, MessageBox, _("Skin was rebuilt and a restart of enigma2 is required. Do you want to restart now?"), MessageBox.TYPE_YESNO, 10, windowTitle="MerlinSkinThemes", domain="MerlinSkinThemes")
 
 def messageBoxCallback(answer=False):
 	if answer == True:
@@ -82,7 +82,7 @@ def messageBoxCallback(answer=False):
 
 def Plugins(**kwargs):
 	return [
-		PluginDescriptor(name="MerlinSkinThemes", description="MerlinSkinThemes",where = [PluginDescriptor.WHERE_PLUGINMENU], icon = "plugin.png", fnc=merlinskinthemes_start),
-		PluginDescriptor(name="MerlinSkinThemes", description="MerlinSkinThemes", where = [PluginDescriptor.WHERE_EXTENSIONSMENU], fnc=merlinskinthemes_start),
-		PluginDescriptor(where = [PluginDescriptor.WHERE_INFOBAR], fnc=checkSkin)
+		PluginDescriptor(name="MerlinSkinThemes", description="MerlinSkinThemes",where=[PluginDescriptor.WHERE_PLUGINMENU], icon="plugin.png", fnc=merlinskinthemes_start),
+		PluginDescriptor(name="MerlinSkinThemes", description="MerlinSkinThemes", where=[PluginDescriptor.WHERE_EXTENSIONSMENU], fnc=merlinskinthemes_start),
+		PluginDescriptor(where=[PluginDescriptor.WHERE_INFOBAR], fnc=checkSkin)
 	]

@@ -44,11 +44,11 @@ from urllib import quote_plus
 #------------------------------------------------------------------------------------------
 
 config.plugins.remoteTimer = ConfigSubsection()
-config.plugins.remoteTimer.httphost = ConfigText(default = "" , fixed_size = False)
-config.plugins.remoteTimer.httpip = ConfigIP(default = [0, 0, 0, 0])
-config.plugins.remoteTimer.httpport = ConfigNumber(default = 80)
-config.plugins.remoteTimer.username = ConfigText(default = "root", fixed_size = False)
-config.plugins.remoteTimer.password = ConfigPassword(default = "", fixed_size = False)
+config.plugins.remoteTimer.httphost = ConfigText(default="" , fixed_size=False)
+config.plugins.remoteTimer.httpip = ConfigIP(default=[0, 0, 0, 0])
+config.plugins.remoteTimer.httpport = ConfigNumber(default=80)
+config.plugins.remoteTimer.username = ConfigText(default="root", fixed_size=False)
+config.plugins.remoteTimer.password = ConfigPassword(default="", fixed_size=False)
 
 def localGetPage(url):
 	username = config.plugins.remoteTimer.username.value
@@ -60,7 +60,7 @@ def localGetPage(url):
 	else:
 		headers = {}
 
-	return getPage(url, headers = headers)
+	return getPage(url, headers=headers)
 
 class RemoteService:
 	def __init__(self, sref, sname):
@@ -168,21 +168,21 @@ class RemoteTimerScreen(Screen):
 			return [
 				(
 					E2Timer(
-						sref = str(timer.findtext("e2servicereference", '').encode("utf-8", 'ignore')),
-						sname = str(timer.findtext("e2servicename", 'n/a').encode("utf-8", 'ignore')),
-						name = str(timer.findtext("e2name", '').encode("utf-8", 'ignore')),
-						disabled = int(timer.findtext("e2disabled", 0)),
-						timebegin = int(timer.findtext("e2timebegin", 0)),
-						timeend = int(timer.findtext("e2timeend", 0)),
-						duration = int(timer.findtext("e2duration", 0)),
-						startprepare = int(timer.findtext("e2startprepare", 0)),
-						state = int(timer.findtext("e2state", 0)),
-						repeated = int(timer.findtext("e2repeated", 0)),
-						justplay = int(timer.findtext("e2justplay", 0)),
-						eventId = int(timer.findtext("e2eit", -1)),
-						afterevent = int(timer.findtext("e2afterevent", 0)),
-						dirname = str(timer.findtext("e2dirname", '').encode("utf-8", 'ignore')),
-						description = str(timer.findtext("e2description", '').encode("utf-8", 'ignore'))
+						sref=str(timer.findtext("e2servicereference", '').encode("utf-8", 'ignore')),
+						sname=str(timer.findtext("e2servicename", 'n/a').encode("utf-8", 'ignore')),
+						name=str(timer.findtext("e2name", '').encode("utf-8", 'ignore')),
+						disabled=int(timer.findtext("e2disabled", 0)),
+						timebegin=int(timer.findtext("e2timebegin", 0)),
+						timeend=int(timer.findtext("e2timeend", 0)),
+						duration=int(timer.findtext("e2duration", 0)),
+						startprepare=int(timer.findtext("e2startprepare", 0)),
+						state=int(timer.findtext("e2state", 0)),
+						repeated=int(timer.findtext("e2repeated", 0)),
+						justplay=int(timer.findtext("e2justplay", 0)),
+						eventId=int(timer.findtext("e2eit", -1)),
+						afterevent=int(timer.findtext("e2afterevent", 0)),
+						dirname=str(timer.findtext("e2dirname", '').encode("utf-8", 'ignore')),
+						description=str(timer.findtext("e2description", '').encode("utf-8", 'ignore'))
 					),
 					False
 				)
@@ -190,10 +190,10 @@ class RemoteTimerScreen(Screen):
 			]
 
 class E2Timer:
-	def __init__(self, sref = "", sname = "", name = "", disabled = 0,
-			timebegin = 0, timeend = 0, duration = 0, startprepare = 0,
-			state = 0, repeated = 0, justplay = 0, eventId = 0, afterevent = 0,
-			dirname = "", description = ""):
+	def __init__(self, sref="", sname="", name="", disabled=0,
+			timebegin=0, timeend=0, duration=0, startprepare=0,
+			state=0, repeated=0, justplay=0, eventId=0, afterevent=0,
+			dirname="", description=""):
 		self.service_ref = RemoteService(sref, sname)
 		self.name = name
 		self.disabled = disabled
@@ -300,7 +300,7 @@ def newnigma2KeyGo(self):
 						if i.toString() == ref.toString():
 							selection = x
 						tlist.append((i.getName(), i))
-					self.session.openWithCallback(boundFunction(newnigma2SubserviceSelected, self), ChoiceBox, title=_("Please select a subservice to record..."), list = tlist, selection = selection)
+					self.session.openWithCallback(boundFunction(newnigma2SubserviceSelected, self), ChoiceBox, title=_("Please select a subservice to record..."), list=tlist, selection=selection)
 					return
 				elif n > 0:
 					parent = service_ref.ref
@@ -402,7 +402,7 @@ def main(session, **kwargs):
 
 def Plugins(**kwargs):
  	return [
-		PluginDescriptor(name="Remote Timer",description="Remote Timer Setup", where = [ PluginDescriptor.WHERE_PLUGINMENU ], icon="remotetimer.png", fnc = main),
-		PluginDescriptor(name="Remote Timer", where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main),
-		PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, fnc = autostart)
+		PluginDescriptor(name="Remote Timer",description="Remote Timer Setup", where=[ PluginDescriptor.WHERE_PLUGINMENU ], icon="remotetimer.png", fnc=main),
+		PluginDescriptor(name="Remote Timer", where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main),
+		PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=autostart)
 	]

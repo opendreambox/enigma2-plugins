@@ -11,7 +11,7 @@ class MerlinSkinThemesHelpList(MenuList):
 	SKIN_COMPONENT_DESCR_WIDTH = "descrWidth"
 	SKIN_COMPONENT_ITEM_HEIGHT = "itemHeight"
 
-	def __init__(self, list, enableWrapAround = True):
+	def __init__(self, list, enableWrapAround=True):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 		
 		sizes = componentSizes[MerlinSkinThemesHelpList.SKIN_COMPONENT_KEY]

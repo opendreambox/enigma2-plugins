@@ -39,7 +39,7 @@ except:
 class InternetRadioPiPTVPlayer(object):
 	def __init__(self, session, currService, closePlayerCallBack):
 		self.session = session
-		self["video"] = VideoWindow(fb_width = getDesktop(0).size().width(), fb_height = getDesktop(0).size().height())
+		self["video"] = VideoWindow(fb_width=getDesktop(0).size().width(), fb_height=getDesktop(0).size().height())
 		self["numberActions"] = NumberActionMap(["NumberActions"],
 		{
 			"1": self.keyNumberGlobal,
