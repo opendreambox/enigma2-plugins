@@ -17,6 +17,7 @@ from plugin import autotimer, AUTOTIMER_VERSION
 
 API_VERSION = "1.6"
 
+
 class AutoTimerBaseResource(resource.Resource):
 	def returnResult(self, req, state, statetext):
 		req.setResponseCode(http.OK)
@@ -28,6 +29,7 @@ class AutoTimerBaseResource(resource.Resource):
 	<e2state>%s</e2state>
 	<e2statetext>%s</e2statetext>
 </e2simplexmlresult>""" % ('True' if state else 'False', statetext)
+
 
 class AutoTimerBackgroundThread(threading.Thread):
 	def __init__(self, req, fnc):
@@ -50,6 +52,7 @@ class AutoTimerBackgroundThread(threading.Thread):
 		except Exception as e:
 			ret = str(e)
 			code = http.INTERNAL_SERVER_ERROR
+
 		def finishRequest():
 			req.setResponseCode(code)
 			if code == http.OK:
@@ -60,6 +63,7 @@ class AutoTimerBackgroundThread(threading.Thread):
 		if self._stillAlive:
 			reactor.callFromThread(finishRequest)
 
+
 class AutoTimerBackgroundingResource(AutoTimerBaseResource, threading.Thread):
 	def render(self, req):
 		AutoTimerBackgroundThread(req, self.renderBackground)
@@ -67,6 +71,7 @@ class AutoTimerBackgroundingResource(AutoTimerBaseResource, threading.Thread):
 
 	def renderBackground(self, req):
 		pass
+
 
 class AutoTimerDoParseResource(AutoTimerBaseResource):
 	def render(self, req):
@@ -76,6 +81,7 @@ class AutoTimerDoParseResource(AutoTimerBaseResource):
 			req.notifyFinish().addErrback(self.connectionLost)
 
 		d = autotimer.parseEPGAsync().addCallback(self.epgCallback).addErrback(self.epgErrback)
+
 		def timeout():
 			if not d.called and self._stillAlive:
 				reactor.callFromThread(lambda: req.write("<ignore />"))
@@ -98,6 +104,7 @@ class AutoTimerDoParseResource(AutoTimerBaseResource):
 	_("Found a total of %(matches)d matching Events.\n%(timer)d Timer were added and\n%(modified)d modified,\n%(conflicts)d conflicts encountered,\n%(similars)d similars added.") % \
 	{"matches": ret[0], "timer": ret[1], "modified": ret[2], "conflicts": len(ret[4]), "similars": len(ret[5])} \
 	+ "</e2statetext></e2simplexmlresult>"
+
 			def finishRequest():
 				self._req.write(ret)
 				self._req.finish()
@@ -107,10 +114,12 @@ class AutoTimerDoParseResource(AutoTimerBaseResource):
 		if self._stillAlive:
 			ret = """<e2state>False</e2state>
 	<e2statetext>""" + _("AutoTimer failed with error %s") % (str(failure),) + "</e2statetext></e2simplexmlresult>"
+
 			def finishRequest():
 				self._req.write(ret)
 				self._req.finish()
 			reactor.callFromThread(finishRequest)
+
 
 class AutoTimerSimulateBackgroundThread(AutoTimerBackgroundThread):
 	def run(self):
@@ -154,6 +163,7 @@ class AutoTimerSimulateBackgroundThread(AutoTimerBackgroundThread):
 
 		if self._stillAlive:
 			reactor.callFromThread(lambda: self._req.write(''.join(returnlist)))
+
 
 class AutoTimerTestBackgroundThread(AutoTimerBackgroundThread):
 	def run(self):
@@ -222,15 +232,18 @@ class AutoTimerTestBackgroundThread(AutoTimerBackgroundThread):
 		if self._stillAlive:
 			reactor.callFromThread(lambda: self._req.write(''.join(returnlist)))
 
+
 class AutoTimerSimulateResource(AutoTimerBaseResource):
 	def render(self, req):
 		AutoTimerSimulateBackgroundThread(req, None)
 		return server.NOT_DONE_YET
 
+
 class AutoTimerTestResource(AutoTimerBaseResource):
 	def render(self, req):
 		AutoTimerTestBackgroundThread(req, None)
 		return server.NOT_DONE_YET
+
 
 class AutoTimerListAutoTimerResource(AutoTimerBaseResource):
 	def render(self, req):
@@ -249,6 +262,7 @@ class AutoTimerListAutoTimerResource(AutoTimerBaseResource):
 		req.setHeader('charset', 'UTF-8')
 		return ''.join(autotimer.getXml(webif))
 
+
 class AutoTimerRemoveAutoTimerResource(AutoTimerBaseResource):
 	def render(self, req):
 		id = req.args.get("id")
@@ -263,6 +277,7 @@ class AutoTimerRemoveAutoTimerResource(AutoTimerBaseResource):
 		else:
 			return self.returnResult(req, False, _("missing parameter \"id\""))
 			
+
 class AutoTimerAddXMLAutoTimerResource(AutoTimerBaseResource):
 	def render_POST(self, req):
 		req.setResponseCode(http.OK)
@@ -274,6 +289,7 @@ class AutoTimerAddXMLAutoTimerResource(AutoTimerBaseResource):
 			autotimer.writeXml()
 		return self.returnResult(req, True, _("AutoTimer was added successfully"))
 		
+
 class AutoTimerUploadXMLConfigurationAutoTimerResource(AutoTimerBaseResource):
 	def render_POST(self, req):
 		req.setResponseCode(http.OK)
@@ -283,6 +299,7 @@ class AutoTimerUploadXMLConfigurationAutoTimerResource(AutoTimerBaseResource):
 		if config.plugins.autotimer.always_write_config.value:
 			autotimer.writeXml()
 		return self.returnResult(req, True, _("AutoTimers were changed successfully"))	
+
 
 class AutoTimerAddOrEditAutoTimerResource(AutoTimerBaseResource):
 	# TODO: recheck if we can modify regular config parser to work on this
@@ -545,6 +562,7 @@ class AutoTimerAddOrEditAutoTimerResource(AutoTimerBaseResource):
 
 		return self.returnResult(req, True, message)
 
+
 class AutoTimerChangeSettingsResource(AutoTimerBaseResource):
 	def render(self, req):
 		for key, value in iteritems(req.args):
@@ -599,6 +617,7 @@ class AutoTimerChangeSettingsResource(AutoTimerBaseResource):
 				plugin.autopoller = None
 
 		return self.returnResult(req, True, _("config changed."))
+
 
 class AutoTimerSettingsResource(resource.Resource):
 	def render(self, req):

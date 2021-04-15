@@ -29,6 +29,7 @@ LIST_MOVIELIST = 3
 
 sz_w = getDesktop(0).size().width()
 
+
 class PluginHiderSetup(Screen, HelpableScreen):
 
 	if sz_w == 1920:
@@ -181,7 +182,6 @@ class PluginHiderSetup(Screen, HelpableScreen):
 		except:
 				import traceback
 				traceback.print_exc()
-
 
 	def updateList(self):
 		if hasattr(plugins, 'pluginHider_baseGetPlugins'):

@@ -11,6 +11,8 @@ from .CecDeviceList import CecDeviceList
 
 config.cec2 = ConfigSubsection()
 config.cec2.active_source_agression = ConfigOnOff(default=False)
+
+
 class CecConfig(ConfigListScreen, Screen):
 	skin = """
 		<screen name="CecConfig" position="center,120" size="820,520" title="HDMI CEC: Setup">

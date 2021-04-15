@@ -5,6 +5,7 @@ from Screens.InfoBarGenerics import InfoBarSubtitleSupport, InfoBarAudioSelectio
 from Screens.Screen import Screen
 from enigma import eTimer, eServiceReference, iPlayableService, iSubtitleFilterType_ENUMS, iSubtitleType_ENUMS
 
+
 class Stream(object):
 	def __init__(self, idx, codec, languages, saved=False, default=False, forced=False, description=""):
 		self.idx = int(idx)
@@ -14,8 +15,10 @@ class Stream(object):
 		self.default = default
 		self.forced = forced
 		self.description = description
+
 	def __repr__(self):
 		return "<stream idx=%i, codec=%s, languages='%s'%s%s%s%s>" % (self.idx, str(self.codec), str(self.languages), self.description and " description='" + self.description + "'" or "", self.saved and " SAVED" or "", self.default and " DEFAULT" or "", self.forced and " FORCED" or "")
+
 
 class TrackAutoselector(object):
 	instance = None

@@ -83,10 +83,15 @@ from six.moves import range
 # decode = lambda x : codecs.decode(x, "rot13")
 
 # decode = encode = lambda x : ''.join(chr(ord(c)^ord(k)) for c,k in izip(x, cycle('secret key')))
+
+
 def encode(x):
 	return base64.encodestring(''.join(chr(ord(c) ^ ord(k)) for c, k in zip(x, cycle('secret key')))).strip()
+
+
 def decode(x):
 	return ''.join(chr(ord(c) ^ ord(k)) for c, k in zip(base64.decodestring(x), cycle('secret key')))
+
 
 DESKTOP_WIDTH = getDesktop(0).size().width()
 DESKTOP_HEIGHT = getDesktop(0).size().height()
@@ -98,20 +103,27 @@ DESKTOP_HEIGHT = getDesktop(0).size().height()
 # else something scaled accordingly
 # if one of the parameters is -1, scale proportionally
 #
+
+
 def scaleH(y2, y1):
 	if y2 == -1:
 		y2 = y1 * 1280 // 720
 	elif y1 == -1:
 		y1 = y2 * 720 // 1280
 	return scale(y2, y1, 1280, 720, DESKTOP_WIDTH)
+
+
 def scaleV(y2, y1):
 	if y2 == -1:
 		y2 = y1 * 720 // 576
 	elif y1 == -1:
 		y1 = y2 * 576 // 720
 	return scale(y2, y1, 720, 576, DESKTOP_HEIGHT)
+
+
 def scale(y2, y1, x2, x1, x):
 	return (y2 - y1) * (x - x1) // (x2 - x1) + y1
+
 
 my_global_session = None
 
@@ -219,6 +231,7 @@ fritzbox = None
 
 avon = {}
 
+
 def initAvon():
 	avonFileName = resolveFilename(SCOPE_PLUGINS, "Extensions/FritzCall/avon.dat")
 	if os.path.exists(avonFileName):
@@ -229,6 +242,7 @@ def initAvon():
 			parts = line.split(':')
 			if len(parts) == 2:
 				avon[parts[0].replace('-', '').replace('*', '').replace('/', '')] = parts[1]
+
 
 def resolveNumberWithAvon(number, countrycode):
 	if not countrycode or not number or number[0] != '0':
@@ -247,6 +261,7 @@ def resolveNumberWithAvon(number, countrycode):
 		if normNumber[:i] in avon:
 			return '[' + avon[normNumber[:i]].strip() + ']'
 	return ""
+
 
 def handleReverseLookupResult(name):
 	found = re.match("NA: ([^;]*);VN: ([^;]*);STR: ([^;]*);HNR: ([^;]*);PLZ: ([^;]*);ORT: ([^;]*)", name)
@@ -276,7 +291,10 @@ def handleReverseLookupResult(name):
 			name += city
 	return name
 
+
 cbcInfos = {}
+
+
 def initCbC():
 	callbycallFileName = resolveFilename(SCOPE_PLUGINS, "Extensions/FritzCall/callbycall_world.xml")
 	if os.path.exists(callbycallFileName):
@@ -287,6 +305,7 @@ def initCbC():
 				cbcInfos[code] = cbc.getElementsByTagName("callbycall")
 	else:
 		error("[FritzCall] initCbC: callbycallFileName does not exist?!?!")
+
 
 def stripCbCPrefix(number, countrycode):
 	if not countrycode:
@@ -304,7 +323,9 @@ def stripCbCPrefix(number, countrycode):
 				return number[length:]
 	return number
 
+
 from . import FritzCallFBF  # wrong-import-position # pylint: disable=
+
 
 class FritzAbout(Screen):
 
@@ -392,7 +413,10 @@ class FritzAbout(Screen):
 	def exit(self):
 		self.close()
 
+
 from .FritzCallFBF import FBF_dectActive, FBF_faxActive, FBF_rufumlActive, FBF_tamActive, FBF_wlanState  # wrong-import-position # pylint: disable=
+
+
 class FritzMenu(Screen, HelpableScreen):
 	def __init__(self, session):
 		if not fritzbox or not fritzbox.information:
@@ -1739,8 +1763,11 @@ class FritzOfferAction(Screen):
 	def _exit(self):
 		self.close()
 
+
 OneHour = 60 * 60 * 1000
 # OneHour = 1000
+
+
 class FritzCallPhonebook(object):
 	def __init__(self):
 		debug("[FritzCallPhonebook]")
@@ -2439,7 +2466,9 @@ class FritzCallPhonebook(object):
 		def exit(self):
 			self.close()
 
+
 phonebook = FritzCallPhonebook()
+
 
 class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
@@ -2806,7 +2835,9 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 		else:
 			self.session.open(MessageBox, _("Plugin not enabled"), type=MessageBox.TYPE_INFO)
 
+
 standbyMode = False
+
 
 class FritzCallList(object):
 	def __init__(self):
@@ -2886,7 +2917,9 @@ class FritzCallList(object):
 		Notifications.AddNotification(MessageBox, text, type=MessageBox.TYPE_INFO)
 		self.callList = []
 
+
 callList = FritzCallList()
+
 
 def findFace(number, name):
 	# debug("[FritzCall] number/name: %s/%s" % (number, name))
@@ -2944,6 +2977,7 @@ def findFace(number, name):
 
 	info("[FritzCall] result: %s", __(facesFile))
 	return facesFile
+
 
 class MessageBoxPixmap(Screen):
 	def __init__(self, session, text, number="", name="", timeout=-1):
@@ -3110,6 +3144,7 @@ class MessageBoxPixmap(Screen):
 	def _exit(self):
 		self.close()
 
+
 def runUserActionScript(event, date, number, caller, phone):
 	# user exit
 	# call FritzCallserAction.sh in the same dir as Phonebook.json with the following parameters:
@@ -3124,7 +3159,10 @@ def runUserActionScript(event, date, number, caller, phone):
 		info("[FritzCall] calling: %s", cmd)
 		eConsoleAppContainer().execute(cmd)
 
+
 userActionList = [runUserActionScript]
+
+
 def registerUserAction(fun):
 	#===========================================================================
 	# other plugins can register a function, which is then called for each displayed call
@@ -3143,7 +3181,10 @@ def registerUserAction(fun):
 	info("[FritzCall] register: %s", fun.__name__)
 	userActionList.append(fun)
 
+
 mutedOnConnID = None
+
+
 def notifyCall(event, date, number, caller, phone, connID): # @UnusedVariable # pylint: disable=W0613
 	if Standby.inStandby is None or config.plugins.FritzCall.afterStandby.value == "each":
 		if event == "RING":
@@ -3178,6 +3219,7 @@ def notifyCall(event, date, number, caller, phone, connID): # @UnusedVariable # 
 
 countries = {}
 reverselookupMtime = 0
+
 
 class FritzReverseLookupAndNotifier(object):
 	def __init__(self, event, number, caller, phone, date, connID):
@@ -3240,6 +3282,7 @@ class FritzReverseLookupAndNotifier(object):
 				self.caller = name
 		notifyCall(self.event, self.date, self.number, self.caller, self.phone, self.connID)
 		# kill that object...
+
 
 class FritzProtocol(LineReceiver):  # pylint: disable=W0223
 	def __init__(self):
@@ -3390,6 +3433,7 @@ class FritzProtocol(LineReceiver):  # pylint: disable=W0223
 
 				self.notifyAndReset()
 
+
 class FritzClientFactory(ReconnectingClientFactory):
 
 	def __init__(self):
@@ -3466,6 +3510,7 @@ class FritzClientFactory(ReconnectingClientFactory):
 		ReconnectingClientFactory.clientConnectionFailed(self, connector, reason)
 		fritzbox = None
 
+
 class FritzCall(object):
 	def __init__(self):
 		self.dialog = None
@@ -3489,6 +3534,7 @@ class FritzCall(object):
 			self.desc[1].disconnect()
 			self.desc = None
 
+
 def displayCalls(session, servicelist=None):  # @UnusedVariable # pylint: disable=W0613
 	if config.plugins.FritzCall.enable.value:
 		if fritzbox and config.plugins.FritzCall.fwVersion.value:
@@ -3497,6 +3543,7 @@ def displayCalls(session, servicelist=None):  # @UnusedVariable # pylint: disabl
 			Notifications.AddNotification(MessageBox, _("Cannot get calls from FRITZ!Box"), type=MessageBox.TYPE_INFO)
 	else:
 		Notifications.AddNotification(MessageBox, _("Plugin not enabled"), type=MessageBox.TYPE_INFO)
+
 
 def displayPhonebook(session, servicelist=None):  # @UnusedVariable # pylint: disable=W0613
 	if phonebook:
@@ -3507,6 +3554,7 @@ def displayPhonebook(session, servicelist=None):  # @UnusedVariable # pylint: di
 	else:
 		Notifications.AddNotification(MessageBox, _("No phonebook"), type=MessageBox.TYPE_INFO)
 
+
 def displayFBFStatus(session, servicelist=None):  # @UnusedVariable # pylint: disable=W0613
 	if config.plugins.FritzCall.enable.value:
 		if fritzbox and fritzbox.information:
@@ -3516,10 +3564,13 @@ def displayFBFStatus(session, servicelist=None):  # @UnusedVariable # pylint: di
 	else:
 		Notifications.AddNotification(MessageBox, _("Plugin not enabled"), type=MessageBox.TYPE_INFO)
 
+
 def main(session, **kwargs):  # @UnusedVariable  pylint: disable=W0613
 	session.open(FritzCallSetup)
 
+
 fritz_call = None
+
 
 def autostart(reason, **kwargs):
 	global fritz_call
@@ -3537,6 +3588,7 @@ def autostart(reason, **kwargs):
 	elif reason == 1:
 		fritz_call.shutdown()
 		fritz_call = None
+
 
 def Plugins(**kwargs):  # @UnusedVariable # pylint: disable=W0613,C0103
 	what = _("Display FRITZ!box-Fon calls on screen")

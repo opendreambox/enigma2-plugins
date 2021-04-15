@@ -40,9 +40,11 @@ try:
 except Exception as e:
         print("[MST] - Error registering Notification-Domain: ", e)
 
+
 def merlinskinthemes_start(session, **kwargs):
 	reload(MerlinSkinThemes)
 	session.open(MerlinSkinThemes.MerlinSkinThemes)
+
 
 def checkSkin(session, **kwargs):
 	if config.plugins.MerlinSkinThemes3.rebuildSkinOnBoot.value:
@@ -70,15 +72,18 @@ def checkSkin(session, **kwargs):
 						print("[MST] - themes.xml not found")
 						Notifications.AddNotification(MessageBox, _("Skin could not be rebuilt due to missing themes.xml"), MessageBox.TYPE_ERROR, 10, windowTitle="MerlinSkinThemes", domain="MerlinSkinThemes")
 
+
 def showMessage(retValue=None):
 	if retValue == False:
 		Notifications.AddNotification(MessageBox, _("Skin could not be rebuilt due to unsupported version of theme"), MessageBox.TYPE_ERROR, 10, windowTitle="MerlinSkinThemes", domain="MerlinSkinThemes")
 	else:
 		Notifications.AddNotificationWithCallback(messageBoxCallback, MessageBox, _("Skin was rebuilt and a restart of enigma2 is required. Do you want to restart now?"), MessageBox.TYPE_YESNO, 10, windowTitle="MerlinSkinThemes", domain="MerlinSkinThemes")
 
+
 def messageBoxCallback(answer=False):
 	if answer == True:
 		quitMainloop(3)
+
 
 def Plugins(**kwargs):
 	return [

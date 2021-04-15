@@ -13,6 +13,7 @@ from zope.interface import implements
 
 import json
 
+
 class StringProducer(object):
 	implements(IBodyProducer)
 
@@ -30,6 +31,7 @@ class StringProducer(object):
 	def stopProducing(self):
 		pass
 
+
 class GoogleUserCode(object):
 	def __init__(self, data):
 		self._data = data
@@ -46,9 +48,11 @@ class GoogleUserCode(object):
 	def __str__(self):
 		return "[GoogleUserCode] %s" % (self._data,)
 
+
 class WebClientContextFactory(ClientContextFactory):
 	def getContext(self, hostname, port):
 		return ClientContextFactory.getContext(self)
+
 
 class YoutubeAuth(object):
 	AUTH_SCOPE_YT = "https://www.googleapis.com/auth/youtube"
@@ -218,6 +222,7 @@ class YoutubeAuth(object):
 			self._onCredentialsPollBodyReady(failure.value.response)
 		else:
 			self._onError(self.ERROR_CREDENTIALS_REQUEST_PARSE, str(failure))
+
 
 if __name__ == "__main__":
 	def userCodeReady(userCode):

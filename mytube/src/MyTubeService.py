@@ -17,6 +17,7 @@ from Plugins.SystemPlugins.TubeLib.youtube.YoutubeAuth import YoutubeAuth
 
 from Tools.Directories import resolveFilename, SCOPE_CONFIG
 
+
 class GoogleSuggestions():
 	def __init__(self):
 		self.hl = "en"
@@ -66,6 +67,7 @@ class GoogleSuggestions():
 						return None
 		else:
 			return None
+
 
 class MyTubePlayerService():
 	YT_CREDENTIALS_FILE = resolveFilename(SCOPE_CONFIG, "youtube-credentials-oauth2.json")
@@ -229,6 +231,7 @@ class MyTubePlayerService():
 
 	def getCurrentPage(self):
 		return 1
+
 
 myTubeService = MyTubePlayerService()
 

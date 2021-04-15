@@ -11,6 +11,7 @@ from .CecBoot import CecBoot
 
 from twisted.internet import reactor
 
+
 class Cec(object):
 	CEC_VERSION_1_1 = 0x00
 	CEC_VERSION_1_2 = 0x01
@@ -495,5 +496,6 @@ class Cec(object):
 		self.imageViewOn()
 		self.activeSource()
 		self.systemAudioModeRequest()
+
 
 cec = Cec()

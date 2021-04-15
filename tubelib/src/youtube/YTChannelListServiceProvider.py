@@ -4,6 +4,7 @@ from Tools.Log import Log
 
 from Plugins.SystemPlugins.TubeLib.ChannelListTubeServiceHelper import ChannelListServiceProviderBase, ChannelListTubeServiceHelper
 
+
 class YTChannelListServiceProvider(ChannelListServiceProviderBase):
 	TYPE = "youtube"
 	DESCRIPTION = _("Youtube Live Channel")
@@ -29,5 +30,6 @@ class YTChannelListServiceProvider(ChannelListServiceProviderBase):
 			self._finish(ref)
 		else:
 			self._finish(None)
+
 
 ChannelListTubeServiceHelper.addProvider(YTChannelListServiceProvider.TYPE, YTChannelListServiceProvider)

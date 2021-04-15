@@ -23,13 +23,16 @@ import os
 from Components.config import config, ConfigSubsection, Config, ConfigInteger, ConfigSubList, ConfigText
 from enigma import eEnv
 
+
 class Favorite:
 	def __init__(self, configItem=None):
 		self.configItem = configItem
 
+
 class InternetRadioFavoriteConfig(object):
 	FAVORITE_FILE_DEFAULT = eEnv.resolve('${libdir}/enigma2/python/Plugins/Extensions/InternetRadio/internetradio_favorites') #'/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/internetradio_favorites'
 	FAVORITE_FILE = eEnv.resolve("${sysconfdir}/enigma2/internetradio_favorites.user") #'/etc/enigma2/internetradio_favorites.user'
+
 	def __init__(self):
 		self.loadFavoriteConfig()
 

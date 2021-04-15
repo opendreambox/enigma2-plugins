@@ -17,6 +17,7 @@ try:
 except ImportError:
 	tarfile = None
 
+
 class Backup(Source):
 	BACKUP = 0
 	RESTORE = 1

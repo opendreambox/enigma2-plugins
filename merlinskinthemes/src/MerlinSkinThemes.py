@@ -136,6 +136,7 @@ def initConfigSubDict3():
 	config.plugins.MerlinSkinThemes3.DisplayScreens = ConfigSubDict()
 	config.plugins.MerlinSkinThemes3.CornerRadius = ConfigSubDict()
 		
+
 # list of display screens (a.k.a. summaries)
 displayScreenList = ["InfoBarSummary", "EventView_summary", "StandbySummary", "InfoBarMoviePlayerSummary", "MerlinMusicPlayer2LCDScreen"]
 # list of screens
@@ -148,6 +149,7 @@ themeList = ["ColorTheme", "SkinPathTheme", "FontTheme", "BorderSetTheme", "Wind
 import Image
 import ImageDraw
 import math
+
 
 class ImageCreator:
 	def __init__(self):
@@ -224,13 +226,16 @@ class ImageCreator:
 			# for each pixel from 0 to imagewidth * 2: r/g/b/a(from) + r/g/b/a(delta) * i
 			yield [int(round(f + delta * i)) for f, delta in zip(fromColor, delta_co)]
 		
+
 imageCreator = ImageCreator()
+
 
 def hex2argb(value):
 	value = value.lstrip('#')
 	lv = len(value)
 	return tuple(int(value[i:i + lv / 4], 16) for i in range(0, lv, lv / 4))
 	
+
 def XMLindent(elem, level):
 	i = "\n" + (level * "    ")
 	#a = "\n%%-%ds" % level
@@ -247,6 +252,7 @@ def XMLindent(elem, level):
 	else:
 		if level and (not elem.tail or not elem.tail.strip()):
 			elem.tail = i
+
 
 def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 	print("[MST] - start applying changes to themes.xml")
@@ -402,7 +408,6 @@ def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 												if len(l5List):
 													l4ValueDict['l5'] = l5List
 												
-
 												l4ValueDict['attrib'] = greatgrandchild.attrib
 												l4ValueDict['text'] = greatgrandchild.text
 												l4Dict[greatgrandchild.tag] = l4ValueDict
@@ -675,7 +680,6 @@ def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 									del subitem['tag']
 									Tree.SubElement(tempElement, tag, subitem)
 
-
 			# add element again with data from dict
 			if not hasSub:
 				# check if we have an additional level
@@ -712,6 +716,7 @@ def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 	
 	if retFunc is not None:
 		retFunc
+
 
 class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 	skin = """
@@ -1368,7 +1373,6 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 									config.plugins.MerlinSkinThemes3.Screens[screenname].value = defaultValue
 								self.clist2.append(getConfigListEntry(screenname, config.plugins.MerlinSkinThemes3.Screens[screenname]))
 									
-						
 					else:
 						# for each screen in the design set the value to the selected design
 						for screenname in screenList:
@@ -1577,7 +1581,6 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 							self.clist2.append(getConfigListEntry(" " + u'\u00b7' + " CORNERRADIUS", ))
 							self.clist2.append(getConfigListEntry("CornerRadius", config.plugins.MerlinSkinThemes3.CornerRadius["CornerRadius"]))				
 	
-			
 		if len(designList):
 			if not "design" in config.plugins.MerlinSkinThemes3.Designs.keys():
 				config.plugins.MerlinSkinThemes3.Designs["design"] = NoSave(MyConfigSelection(default=defaultDesign, choices=designList))
@@ -2148,12 +2151,15 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					config.plugins.MerlinSkinThemes3.CornerRadius[key].cancel()
 		self.close()
 		
+
 def main(session, **kwargs):
 	session.open(MerlinSkinThemes)
+
 
 def Plugins(path, **kwargs):
 	list = [PluginDescriptor(name="MerlinSkinThemes", description="MerlinSkinThemes", where=PluginDescriptor.WHERE_PLUGINMENU, icon="plugin.png", fnc=main)]
 	return list		
+
 
 class MerlinSkinThemesConfig(Screen, HelpableScreen, ConfigListScreen):
 	skin = """
@@ -2210,6 +2216,7 @@ class MerlinSkinThemesConfig(Screen, HelpableScreen, ConfigListScreen):
 		self.close()
 
 # =================================================================================================
+
 
 class GetSkinsList(MenuList, MerlinSkinThemes):
 	SKIN_COMPONENT_KEY = "MerlinSkinThemesList"
@@ -2270,17 +2277,16 @@ class GetSkinsList(MenuList, MerlinSkinThemes):
 					]
 					list.append(res)
 
-					
 		self.list = list.sort()
 		for x in range(len(list)):
 			if list[x][2][7] == _("active skin"):
 				self.selectedIndex = x
 
-			
 		self.l.setList(list)
 
 # =================================================================================================
 		
+
 class MyConfigSelection(ConfigSelection):
 	def getText(self):
 		if self._descr is not None:

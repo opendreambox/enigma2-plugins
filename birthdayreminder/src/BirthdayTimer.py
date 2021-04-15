@@ -37,6 +37,7 @@ from enigma import eDVBLocalTimeHandler
 from Screens.MessageBox import MessageBox
 from Tools import Notifications
 
+
 class BirthdayTimerEntry(TimerEntry):
 	def __init__(self, begin, end, preremind):
 		TimerEntry.__init__(self, int(begin), int(end))
@@ -85,6 +86,7 @@ class BirthdayTimerEntry(TimerEntry):
 		
 	def timeChanged(self):
 		self.state = self.StatePrepared
+
 
 class BirthdayTimer(Timer, BirthdayStore):
 	def __init__(self):

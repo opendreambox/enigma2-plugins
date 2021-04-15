@@ -22,18 +22,22 @@ from Components.config import config
 from Plugins.Plugin import PluginDescriptor
 from VideoColorSpace import VideoColorSpace, initializeConfig
 
+
 def autostart(reason, **kwargs):
     if reason == 0:
         print "[VideoColorSpace] startup..."
         initializeConfig()
 
+
 def pluginOpen(session, **kwargs):
     session.open(VideoColorSpace)
+
 
 def startSetup(menuid):
     if menuid != "osd_video_audio":
         return []
     return [(_("A/V-Color space settings"), pluginOpen, "av_colorspace_setup", 40)]
+
 
 def Plugins(**kwargs):
     descriptors = []

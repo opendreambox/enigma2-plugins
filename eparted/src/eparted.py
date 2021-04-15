@@ -46,11 +46,13 @@ PA_NAME = 7
 
 #-----------------------------------------------------------------------------
 
+
 def getInt_epart(val):
 	try:
 		return int(float(val[0:-2]))#Einheit abschneiden
 	except:
 		return 0
+
 
 def parseCmd(result):
 	devlist = []
@@ -87,6 +89,7 @@ def parseCmd(result):
 		return []
 	return devlist
 
+
 def myExecute(cmd, session, test=False):
 	if test:
 		from time import sleep
@@ -100,6 +103,7 @@ def myExecute(cmd, session, test=False):
 		session.open(MessageBox, _("Error command '%s'") % cmd, MessageBox.TYPE_ERROR, timeout=8)
 	return result
 	
+
 def getMountP():
 	try:
 		mounts = open("/proc/mounts")
@@ -110,6 +114,7 @@ def getMountP():
 	mounts.close()
 	return lines
 
+
 def ismounted(dev):
 	for x in getMountP():
 		parts = x.strip().split(" ")
@@ -119,13 +124,16 @@ def ismounted(dev):
 				return parts[1]
 	return None
 
+
 rereaddevices = False
 #-------------------------------------------------------------------------------------
+
 
 class Ceparted(Screen):
 	skin = """<screen position="center,center" size="820,320" title="eParted v0.13">
 			<widget name="list" position="10,10" size="800,300" enableWrapAround="1" scrollbarMode="showOnDemand"/>
 		</screen>"""
+
 	def __init__(self, session):
 		Screen.__init__(self, session)
 
@@ -172,6 +180,7 @@ class Ceparted(Screen):
 			self["list"].setList(list)
 
 #-------------------------------------------------------------------------------------
+
 
 class AddPart(Screen, ConfigListScreen):
 	skin = """<screen name="AddPart" position="center,center" size="820,320" title="add Partition" >
@@ -234,6 +243,7 @@ class AddPart(Screen, ConfigListScreen):
 			self.close((config.plugins.eparted.size.value, config.plugins.eparted.fs.value))
 
 #-------------------------------------------------------------------------------------
+
 
 class Cpart(Screen):
 	PA_TYPE_USE = 1
@@ -479,7 +489,6 @@ class Cpart(Screen):
 					else:
 						self.__addPart2Comlist(self.__comlist, self.__new_part_list[x])
 		
-
 		#for x in self.__comlist: print "[eParted] com =",x
 		if len(self.__comlist):
 			self["PixmapBlue"].setPixmapNum(1)
@@ -487,6 +496,7 @@ class Cpart(Screen):
 		else:
 			self["PixmapBlue"].setPixmapNum(0)
 			self["LabelBlue"].setText("")
+
 
 class Cpartexe(Screen):
 	skin = """<screen position="center,center" size="820,320" title=" ">

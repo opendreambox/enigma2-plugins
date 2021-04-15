@@ -2,6 +2,7 @@
 from Components.Sources.Source import Source
 from subprocess import check_output
 
+
 class PkgList(Source):
 	def __init__(self, session, wap=False):
 		Source.__init__(self)

@@ -127,6 +127,7 @@ from Plugins.Plugin import PluginDescriptor
 #pragma mark - Workaround for unset clock
 from enigma import eDVBLocalTimeHandler
 
+
 def timeCallback(isCallback=True):
 	global time_updated_conn
 	"""Time Callback/Autostart management."""
@@ -141,6 +142,8 @@ def timeCallback(isCallback=True):
 	epgrefresh.start()
 
 # Autostart
+
+
 def autostart(reason, **kwargs):
 	if reason == 0 and "session" in kwargs:
 		session = kwargs["session"]
@@ -159,6 +162,7 @@ def autostart(reason, **kwargs):
 	elif reason == 1:
 		epgrefresh.myEpgCacheInstance = None
 		epgrefresh.stop()
+
 
 def getNextWakeup():
 	# Return invalid time if not automatically refreshing
@@ -185,11 +189,14 @@ def getNextWakeup():
 	setConfigWakeupTime(begin + 86400)
 	return begin + 86400
 
+
 def setConfigWakeupTime(value):
 	config.plugins.epgrefresh.wakeup_time.value = value
 	config.plugins.epgrefresh.save()
 
 # Mainfunction
+
+
 def main(session, **kwargs):
 	try:
 		from EPGRefreshConfiguration import EPGRefreshConfiguration
@@ -201,14 +208,18 @@ def main(session, **kwargs):
 		print("[EPGRefresh] Error while Opening EPGRefreshConfiguration")
 		print_exc(file=stdout)
 
+
 def forceRefresh(session, **kwargs):
 	epgrefresh.forceRefresh(session)
+
 
 def stopRunningRefresh(session, **kwargs):
 	epgrefresh.stopRunningRefresh(session)
 
+
 def showPendingServices(session, **kwargs):
 	epgrefresh.showPendingServices(session)
+
 
 def doneConfiguring(session, needsRestart):
 	if needsRestart:
@@ -218,11 +229,13 @@ def doneConfiguring(session, needsRestart):
 	else:
 		_startAfterConfig(session)
 
+
 def restartGUICB(session, answer):
 	if answer is True:
 		session.open(TryQuitMainloop, 3)
 	else:
 		_startAfterConfig(session)
+
 
 def _startAfterConfig(session):
 	if config.plugins.epgrefresh.enabled.value:
@@ -230,6 +243,8 @@ def _startAfterConfig(session):
 			epgrefresh.start(session)
 
 # Eventinfo
+
+
 def eventinfo(session, servicelist, **kwargs):
 	ref = session.nav.getCurrentlyPlayingServiceReference()
 	if not ref:
@@ -244,14 +259,18 @@ def eventinfo(session, servicelist, **kwargs):
 
 # XXX: we need this helper function to identify the descriptor
 # Extensions menu
+
+
 def extensionsmenu(session, **kwargs):
 	main(session, **kwargs)
+
 
 extPrefix = _("EXTENSIONMENU_PREFIX")
 extSetupDescriptor = PluginDescriptor(name=extPrefix + " " + _("EXTENSIONNAME_SETUP"), description=_("Automatically refresh EPG"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=extensionsmenu, needsRestart=False)
 extRunDescriptor = PluginDescriptor(name=extPrefix + " " + _("Refresh now"), description=_("Start EPGrefresh immediately"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=forceRefresh, needsRestart=False)
 extStopDescriptor = PluginDescriptor(name=extPrefix + " " + _("Stop Refresh"), description=_("Stop Running EPG-refresh"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=stopRunningRefresh, needsRestart=False)
 extPendingServDescriptor = PluginDescriptor(name=extPrefix + " " + _("Pending Services"), description=_("Show the pending Services for refresh"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=showPendingServices, needsRestart=False)
+
 
 def AdjustExtensionsmenu(enable, PlugDescriptor):
 	if enable:
@@ -263,6 +282,7 @@ def AdjustExtensionsmenu(enable, PlugDescriptor):
 			if PlugDescriptor != extRunDescriptor:
 				print("[EPGRefresh] AdjustExtensionsmenu got confused, tried to remove non-existant plugin entry... ignoring.")
 
+
 def housekeepingExtensionsmenu(configentry, force=False):
 	if force or (epgrefresh != None and not epgrefresh.isRunning()):
 		PlugDescriptor = None
@@ -273,8 +293,10 @@ def housekeepingExtensionsmenu(configentry, force=False):
 		if PlugDescriptor != None:
 			AdjustExtensionsmenu(configentry.value, PlugDescriptor)
 
+
 config.plugins.epgrefresh.show_in_extensionsmenu.addNotifier(housekeepingExtensionsmenu, initial_call=False, immediate_feedback=True)
 config.plugins.epgrefresh.show_run_in_extensionsmenu.addNotifier(housekeepingExtensionsmenu, initial_call=False, immediate_feedback=True)
+
 
 def Plugins(**kwargs):
 	# NOTE: this might be a little odd to check this, but a user might expect

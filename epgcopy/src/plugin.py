@@ -50,9 +50,11 @@ config.plugins.epgCopy.password = ConfigPassword(default="", fixed_size=False)
 config.plugins.epgCopy.ip = ConfigIP(default=[0, 0, 0, 0])
 config.plugins.epgCopy.copytime = ConfigClock(default=int(autoCopy))
 
+
 def myPrint(txt, prefix=None):
     print("\033[91m[EPGCopy] %s\033[m " % txt)
     
+
 def myFtp(): 
     directory_local = '/tmp/' 
     directory = '/etc/enigma2/' 
@@ -79,6 +81,7 @@ def myFtp():
         remove(directory + fileQuelle)
     move(directory_local + fileZiel, directory + fileQuelle)
     myPrint("epg.db was successfully transferred")
+
 
 class copyEveryDay(Screen):
     instance = None
@@ -124,6 +127,7 @@ class copyEveryDay(Screen):
             else:
                 myPrint("an error occurred while transferring the epg")
         self.configChange()
+
 
 class epgCopyScreen(Screen, ConfigListScreen):
     if getDesktop(0).size().width() == 1280:
@@ -205,8 +209,10 @@ def autoCpy(reason, **kwargs):
         Session = kwargs["session"]
         Session.open(copyEveryDay)
 
+
 def main(session, **kwargs):
     session.open(epgCopyScreen)
+
 
 def Plugins(path, **kwargs):
     global plugin_path

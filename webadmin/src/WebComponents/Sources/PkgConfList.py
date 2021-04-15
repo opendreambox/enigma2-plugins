@@ -5,6 +5,7 @@ from os import statvfs
 from os.path import basename, isfile, join
 from shutil import move
 
+
 class PkgConfList(Source):
 	LIST = 0
 	SWITCH = 1

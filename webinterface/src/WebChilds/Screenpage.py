@@ -89,6 +89,7 @@ resource.ErrorPage.template = """<!doctype html>
 <!-- IE needs 512+ bytes: https://blogs.msdn.microsoft.com/ieinternals/2010/08/18/friendly-http-error-pages/ -->
 """
 
+
 class ScreenPage(resource.Resource):
 	def __init__(self, session, path, addSlash=False):
 		resource.Resource.__init__(self)

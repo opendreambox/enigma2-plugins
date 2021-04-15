@@ -1,5 +1,6 @@
 from Plugins.Extensions.WebInterface.WebChilds.Screenpage import ScreenPage
 
+
 class ScreenPageCORS(ScreenPage):
 	def render(self, request):
 		request.setHeader('Access-Control-Allow-Origin', '*')

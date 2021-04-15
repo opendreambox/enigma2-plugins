@@ -4,6 +4,7 @@ from os.path import basename, dirname, isfile, join, realpath
 from twisted.web import server, resource, http
 from PKG import PKGConsoleStream
 
+
 class Script(resource.Resource):
 	def render(self, request):
 		command = request.args.get('command', [None])[0]

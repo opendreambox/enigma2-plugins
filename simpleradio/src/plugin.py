@@ -3,13 +3,16 @@ from __future__ import absolute_import
 from Plugins.Plugin import PluginDescriptor
 from .RadioScreen import RadioScreen
 
+
 def main(session, **kwargs):
 	session.open(RadioScreen)
+
 
 def menu(menuid):
 	if menuid != "mainmenu":
 		return []
 	return [(_("Simple Radio"), main, "radio_listen", None)]
+
 
 def Plugins(**kwargs):
 	return [PluginDescriptor(

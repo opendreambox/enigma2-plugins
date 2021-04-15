@@ -94,13 +94,16 @@ class ChangePasswordScreen(ChoiceBox):
 		if password:
 			self._apply(password)
 
+
 def startChange(menuid):
 	if menuid != "system": 
 		return []
 	return [(_("Password"), main, "change_root_passwd", 50)]
 
+
 def main(session, **kwargs):
 	session.open(ChangePasswordScreen)
+
 
 def Plugins(**kwargs):
 	return PluginDescriptor(

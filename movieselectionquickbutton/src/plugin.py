@@ -45,6 +45,8 @@ config.plugins.MovieSelectionQuickButton.show_in_extensionsmenu = ConfigYesNo(de
 ###########################################
 baseMovieSelection__init__ = None
 baseupdateTags = None
+
+
 def MovieSelectionInit():
 	global baseMovieSelection__init__, baseupdateTags
 	if baseMovieSelection__init__ is None:
@@ -60,6 +62,7 @@ def MovieSelectionInit():
 	MovieSelection.bluepressed = bluepressed
 	MovieSelection.getPluginCaption = getPluginCaption
 
+
 def MovieSelection__init__(self, session, selectedmovie=None):
 	baseMovieSelection__init__(self, session, selectedmovie)
 	self["key_red"] = Button(self.getPluginCaption(str(config.plugins.MovieSelectionQuickButton.red.value)))
@@ -74,17 +77,22 @@ def MovieSelection__init__(self, session, selectedmovie=None):
 		"blue": (self.bluepressed, _("Assign plugin to blue key pressed")),
 	})
 
+
 def redpressed(self):
 	startPlugin(self, str(config.plugins.MovieSelectionQuickButton.red.value), 0)
+
 
 def greenpressed(self):
 	startPlugin(self, str(config.plugins.MovieSelectionQuickButton.green.value), 1)
 
+
 def yellowpressed(self):
 	startPlugin(self, str(config.plugins.MovieSelectionQuickButton.yellow.value), 2)
 
+
 def bluepressed(self):
 	startPlugin(self, str(config.plugins.MovieSelectionQuickButton.blue.value), 3)
+
 
 def getPluginCaption(self, pname):
 	if pname != _("Nothing"):
@@ -105,6 +113,7 @@ def getPluginCaption(self, pname):
 					else:
 						return p.name
 	return ""
+
 
 def startPlugin(self, pname, index):
 	plugin = None
@@ -156,8 +165,10 @@ def startPlugin(self, pname, index):
 		if no_plugin:
 			self.session.open(MessageBox, msgText, MessageBox.TYPE_INFO)
 
+
 def noUpdateTages(self):
 	pass #nothing to do here, just ovewrite the method
+
 
 class MovieSelectionButtonSetup(ConfigListScreen, Screen):
 	skin = """
@@ -236,14 +247,17 @@ class MovieSelectionButtonSetup(ConfigListScreen, Screen):
 		else:
 			return "0"
 
+
 def setup(session, **kwargs):
 	session.open(MovieSelectionButtonSetup)
+
 
 def main(session, **kwargs):
 	try:
 		MovieSelectionInit()
 	except:
 		pass
+
 
 def Plugins(**kwargs):
 	list = [PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=main)]	

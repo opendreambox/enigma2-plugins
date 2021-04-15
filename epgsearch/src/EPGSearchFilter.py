@@ -24,6 +24,7 @@ except ImportError:
 	AutoTimer = AutoTimerOverview = AutoTimerImporter = Screen
 	hasVps = False
 
+
 class EPGSearchATEditor(AutoTimerEditor):
 	def __init__(self, session, timer, editingDefaults=False, **kwargs):
 		AutoTimerEditor.__init__(self, session, timer, editingDefaults=False, **kwargs)
@@ -81,6 +82,7 @@ class EPGSearchATEditor(AutoTimerEditor):
 			self.bouquets
 		)
 
+
 class EPSearchFilterEditor(AutoTimerFilterEditor, ConfigListScreen):
 	def __init__(self, session, filterset, excludes, includes):
 		AutoTimerFilterEditor.__init__(self, session, filterset, excludes, includes)
@@ -90,6 +92,7 @@ class EPSearchFilterEditor(AutoTimerFilterEditor, ConfigListScreen):
 	
 	def setCustomTitle(self):
 		self.setTitle(_("Edit EPGSearch filter"))
+
 
 class EPSearchServiceEditor(AutoTimerServiceEditor, ConfigListScreen):
 	def __init__(self, session, servicerestriction, servicelist, bouquetlist):
@@ -101,8 +104,10 @@ class EPSearchServiceEditor(AutoTimerServiceEditor, ConfigListScreen):
 	def setCustomTitle(self):
 		self.setTitle(_("Edit EPGSearch Services"))
 
+
 class EPGSearchAT(AutoTimer):
 	FILENAME = "/etc/enigma2/epgsearchAT.xml"
+
 	def readXml(self, **kwargs):
 		if "xml_string" in kwargs:
 			AutoTimer.readXml(self, **kwargs)
@@ -123,6 +128,7 @@ class EPGSearchAT(AutoTimer):
 			self.timers.append(timer)
 		from Tools.IO import saveFile
 		saveFile(EPGSearchAT.FILENAME, buildConfig(self.defaultTimer, self.timers))
+
 
 def ATeditorCallback(session, save, timer):
 	if timer:
@@ -156,14 +162,17 @@ def ATeditorCallback(session, save, timer):
 				epgsearchAT.save()
 		epgsearchAT = None
 
+
 def ATimporterCallback(ret):
 	if ret:
 		ret, session = ret
 		session.openWithCallback(boundFunction(ATeditorCallback, session, True), EPGSearchATEditor, ret)
 
+
 def ATeditCallback(epgsearchAT):
 	if epgsearchAT is not None:
 		epgsearchAT.save()
+
 
 class EPGSearchATOverview(AutoTimerOverview):
 	def __init__(self, session, autotimer):
@@ -247,6 +256,7 @@ class EPGSearchATOverview(AutoTimerOverview):
 				newTimer
 			)
 
+
 class EPGSearchATImporter(AutoTimerImporter):
 	def __init__(self, session, autotimer, name, begin, end, disabled, sref, afterEvent, justplay, dirname, tags):
 		AutoTimerImporter.__init__(self, session, autotimer, name, begin, end, disabled, sref, afterEvent, justplay, dirname, tags)
@@ -254,6 +264,7 @@ class EPGSearchATImporter(AutoTimerImporter):
 
 	def setCustomTitle(self):
 		self.setTitle(_("Add EPGSearch search filter"))
+
 
 def addEPGSearchATFromEvent(session, evt, service, importer_Callback):
 	epgsearchAT = EPGSearchAT()
@@ -303,6 +314,7 @@ def addEPGSearchATFromEvent(session, evt, service, importer_Callback):
 		[]			# Proposed tags
 	)
 
+
 def addEPGSearchATFromService(session, service, event, importer_Callback):
 	epgsearchAT = EPGSearchAT()
 	epgsearchAT.load()
@@ -350,6 +362,8 @@ def addEPGSearchATFromService(session, service, event, importer_Callback):
 	)
 
 # from pluginlist (WHERE_EPG_SELECTION_SINGLE_BLUE, WHERE_CHANNEL_SELECTION_RED)
+
+
 def searchEventWithFilter(session, event, service):
 	if service.getPath() and service.getPath()[0] == "/":
 		addEPGSearchATFromService(session, eServiceReference(str(service)), event, ATimporterCallback)
@@ -358,12 +372,16 @@ def searchEventWithFilter(session, event, service):
 			addEPGSearchATFromEvent(session, event, service, ATimporterCallback)
 
 # from pluginlist (WHERE_EPG_SELECTION_SINGLE_BLUE, WHERE_CHANNEL_SELECTION_RED)
+
+
 def openSearchFilterList(session, event, service):
 	epgsearchAT = EPGSearchAT()
 	epgsearchAT.load()
 	session.openWithCallback(ATeditCallback, EPGSearchATOverview, epgsearchAT)
 
 # from pluginlist (WHERE_MOVIELIST)
+
+
 def addSearchFilterFromMovieList(session, service):
 	info = eServiceCenter.getInstance().info(service)
 	event = info and info.getEvent(service) or None

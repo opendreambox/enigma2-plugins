@@ -11,6 +11,7 @@ from Components.MultiContent import MultiContentEntryText
 from Components.ActionMap import ActionMap
 from skin import TemplatedListFonts, componentSizes
 
+
 class BonjourScreen(Screen):	
 	skin = """
 	<screen position="center,120" size="820,520" title="Bonjour" >
@@ -98,6 +99,7 @@ class BonjourScreen(Screen):
 			MultiContentEntryText(pos=(itemMargin, textHeight * 2), size=(textWidth, textHeight), font=1, text=text)
 		]
 		
+
 def opencontrol(session):
 	bonjour.reloadConfig()
 	session.open(BonjourScreen, bonjour.services, bonjour.files)

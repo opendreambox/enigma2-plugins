@@ -75,14 +75,18 @@ CERT_FILE = resolveFilename(SCOPE_CONFIG, "cert.pem")
 #===============================================================================
 # Helperclass to close running Instances of the Webinterface
 #===============================================================================
+
+
 class Closer:
 	counter = 0
+
 	def __init__(self, session, callback=None):
 		self.callback = callback
 		self.session = session
 #===============================================================================
 # Closes all running Instances of the Webinterface
 #===============================================================================
+
 	def stop(self):
 		global running_defered
 		for d in running_defered:
@@ -107,6 +111,7 @@ class Closer:
 		if self.counter < 1:
 			if self.callback is not None:
 				self.callback(self.session)
+
 
 def installCertificates(session):
 	if not os_exists(CERT_FILE) \
@@ -165,6 +170,8 @@ def restartWebserver(session):
 #===============================================================================
 # start the Webinterface for all configured Interfaces
 #===============================================================================
+
+
 def startWebserver(session):
 	global running_defered
 	global toplevel
@@ -230,6 +237,8 @@ def startWebserver(session):
 #===============================================================================
 # stop the Webinterface for all configured Interfaces
 #===============================================================================
+
+
 def stopWebserver(session):
 	try:
 		del session.mediaplayer
@@ -248,6 +257,8 @@ def stopWebserver(session):
 # Starts an Instance of the Webinterface
 # on given ipaddress, port, w/o auth, w/o ssl
 #===============================================================================
+
+
 def startServerInstance(session, port, useauth=False, usessl=False, ipaddress="::", ipaddress2=None):
 	if useauth:
 # HTTPAuthResource handles the authentication for every Resource you want it to
@@ -301,6 +312,7 @@ def startServerInstance(session, port, useauth=False, usessl=False, ipaddress=":
 		#print "[Webinterface] starting FAILED on %s:%i!" % (ipaddress, port), e
 		#return False
 
+
 class ChainedOpenSSLContextFactory(ssl.DefaultOpenSSLContextFactory):
 	def __init__(self, privateKeyFileName, certificateChainFileName, sslmethod=SSL.SSLv23_METHOD):
 		self.privateKeyFileName = privateKeyFileName
@@ -314,6 +326,7 @@ class ChainedOpenSSLContextFactory(ssl.DefaultOpenSSLContextFactory):
 		ctx.use_certificate_chain_file(self.certificateChainFileName)
 		ctx.use_privatekey_file(self.privateKeyFileName)
 		self._context = ctx
+
 
 class SimpleSession(object):
 	def __init__(self, expires=0):
@@ -344,6 +357,8 @@ class SimpleSession(object):
 
 #Every request made will pass this Resource (as it is the root resource)
 #Any "global" checks should be done here
+
+
 class HTTPRootResource(resource.Resource):
 	SESSION_PROTECTED_PATHS = ['/web/', '/opkg', '/ipkg']
 	SESSION_EXCEPTIONS = [
@@ -411,6 +426,8 @@ class HTTPRootResource(resource.Resource):
 # HTTPAuthResource
 # Handles HTTP Authorization for a given Resource
 #===============================================================================
+
+
 class HTTPAuthResource(HTTPRootResource):
 	LOCALHOSTS = (IPNetwork("127.0.0.1"), IPNetwork("::1"))
 
@@ -518,6 +535,7 @@ class HTTPAuthResource(HTTPRootResource):
 			print "[Webinterface.HTTPAuthResource.getChildWithDefault] !!! unauthorized !!!"
 			return self.unauthorized(request)
 
+
 from auth import check_passwd
 
 global_session = None
@@ -526,6 +544,8 @@ global_session = None
 # sessionstart
 # Actions to take place on Session start
 #===============================================================================
+
+
 def sessionstart(reason, session):
 	global global_session
 	global_session = session
@@ -545,6 +565,7 @@ def registerBonjourService(protocol, port):
 		print "[WebInterface.registerBonjourService] %s" % e
 		return False
 
+
 def unregisterBonjourService(protocol):
 	try:
 		from Plugins.Extensions.Bonjour.Bonjour import bonjour
@@ -557,6 +578,7 @@ def unregisterBonjourService(protocol):
 		print "[WebInterface.unregisterBonjourService] %s" % e
 		return False
 
+
 def checkBonjour():
 	if (not config.plugins.Webinterface.http.enabled.value) or (not config.plugins.Webinterface.enabled.value):
 		unregisterBonjourService('http')
@@ -568,6 +590,8 @@ def checkBonjour():
 # Actions to take place after Network is up (startup the Webserver)
 #===============================================================================
 #def networkstart(reason, **kwargs):
+
+
 def networkstart(reason, session):
 	if reason is True:
 		startWebserver(session)
@@ -577,14 +601,17 @@ def networkstart(reason, session):
 		stopWebserver(session)
 		checkBonjour()
 
+
 def openconfig(session, **kwargs):
 	session.openWithCallback(configCB, WebIfConfigScreen)
+
 
 def menu_config(menuid, **kwargs):
 	if menuid == "network":
 		return [(_("Webinterface"), openconfig, "webif", 60)]
 	else:
 		return []
+
 
 def configCB(result, session):
 	if result:
@@ -593,6 +620,7 @@ def configCB(result, session):
 		checkBonjour()
 	else:
 		print "[WebIf] config not changed"
+
 
 def Plugins(**kwargs):
 	p = PluginDescriptor(where=[PluginDescriptor.WHERE_SESSIONSTART], fnc=sessionstart)

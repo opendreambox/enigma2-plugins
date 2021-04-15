@@ -35,9 +35,11 @@ from HTMLParser import HTMLParser
 
 sz_w = getDesktop(0).size().width()
 
+
 def transHTML(text):
 	h = HTMLParser()
 	return h.unescape(text)
+
 
 def decodeHtml(text):
 	h = HTMLParser()
@@ -47,6 +49,7 @@ def decodeHtml(text):
 		text = text.decode('latin1').encode('utf-8')
 	return text
 
+
 config.plugins.imdb = ConfigSubsection()
 config.plugins.imdb.showinplugins = ConfigYesNo(default=True)
 config.plugins.imdb.ignore_tags = ConfigText(visible_width=50, fixed_size=False)
@@ -55,9 +58,11 @@ config.plugins.imdb.language = ConfigSelection(default=None, choices=[(None, _("
 imdb_headers = {}
 agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.167 Safari/537.36'
 
+
 def quoteEventName(eventName):
 	eventName = eventName.replace(' ', '+')
 	return quote_plus(eventName, safe='+')
+
 
 class IMDBChannelSelection(SimpleChannelSelection):
 	def __init__(self, session):
@@ -86,6 +91,7 @@ class IMDBChannelSelection(SimpleChannelSelection):
 		if ret:
 			self.close(ret)
 
+
 class IMDBEPGSelection(EPGSelection):
 	def __init__(self, session, ref, openPlugin=True):
 		EPGSelection.__init__(self, session, ref)
@@ -113,6 +119,7 @@ class IMDBEPGSelection(EPGSelection):
 
 	def onSelectionChanged(self):
 		pass
+
 
 class IMDB(Screen):
 	if sz_w == 1920:
@@ -687,6 +694,7 @@ class IMDB(Screen):
 	def createSummary(self):
 		return IMDbLCDScreenV2
 
+
 class IMDbLCDScreenV2(Screen):
 	skin = (
 	"""<screen title="IMDB Plugin" position="0,0" size="132,64" id="1">
@@ -707,6 +715,7 @@ class IMDbLCDScreenV2(Screen):
 	def __init__(self, session, parent):
 		Screen.__init__(self, session, parent)
 		self["headline"] = Label(_("IMDb Plugin"))
+
 
 class IMDbSetup(Screen, ConfigListScreen):
 	def __init__(self, session):
@@ -781,6 +790,7 @@ class IMDbSetup(Screen, ConfigListScreen):
 		plugins.readPluginList(resolveFilename(SCOPE_PLUGINS))
 		self.close()
 
+
 def eventinfo(session, eventName="", **kwargs):
 	if not eventName:
 		s = session.nav.getCurrentService()
@@ -790,10 +800,13 @@ def eventinfo(session, eventName="", **kwargs):
 			eventName = event and event.getEventName() or ''
 	session.open(IMDB, eventName)
 
+
 def main(session, eventName="", **kwargs):
 	session.open(IMDB, eventName)
 
+
 pluginlist = PluginDescriptor(name=_("IMDb Details"), description=_("Query details from the Internet Movie Database"), icon="imdb.png", where=PluginDescriptor.WHERE_PLUGINMENU, fnc=main, needsRestart=False)
+
 
 def Plugins(**kwargs):
 	l = [PluginDescriptor(name=_("IMDb Details") + "...",

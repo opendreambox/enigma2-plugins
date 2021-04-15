@@ -6,6 +6,7 @@ from Screens.InfoBar import InfoBar, MoviePlayer
 
 from Tools.Log import Log
 
+
 class SwitchService(Source):
 	def __init__(self, session):
 		Source.__init__(self)
@@ -25,6 +26,7 @@ class SwitchService(Source):
 			except:
 				try:
 					from types import MethodType
+
 					def zap(self, nref=None, root=None):
 						self.revertMode = None
 						ref = self.session.nav.getCurrentlyPlayingServiceReference()

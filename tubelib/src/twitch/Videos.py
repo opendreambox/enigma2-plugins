@@ -3,6 +3,7 @@ from youtube_dl.YoutubeDL import YoutubeDL
 from Components.config import config
 from Tools.Log import Log
 
+
 class TwitchVideoUrlResolver(object):
 	_ytdl = YoutubeDL(params={
 			"nocheckcertificate": True,
@@ -23,7 +24,6 @@ class TwitchVideoUrlResolver(object):
 			threads.deferToThread(self._request)
 		else:
 			self._request()
-
 
 	def _selectFormat(self, twitchInfo):
 		try:

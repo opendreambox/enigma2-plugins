@@ -3,6 +3,7 @@ import sqlite3
 SI_DATABASE_PATH = '/etc/enigma2/SkipIntro.db'
 SI_DATABASE_VERSION = '1.0'
 
+
 class SIDatabase:
 	def __init__(self):
 		self._dbfilepath = SI_DATABASE_PATH

@@ -2,6 +2,7 @@
 from Components.config import config, ConfigSet, ConfigSubsection, ConfigText, ConfigNumber, ConfigYesNo, ConfigSelection
 from collections import OrderedDict
 
+
 class SearchType:
 	ASK = "ask"
 	EXACT_TITLE = "exact_title"
@@ -15,6 +16,7 @@ class SearchType:
 	CHOICES[TITLE_DESCRIPTION] = _("Partial match of title or description")
 	
 	BUTTON_CHOICES = [("none", _("none")), ("red", _("Channellist red")), ("blue", _("EPG Single/Eventview blue")), ("all", _("all"))]
+
 
 config.plugins.epgsearch = ConfigSubsection()
 config.plugins.epgsearch.history = ConfigSet(choices=[])

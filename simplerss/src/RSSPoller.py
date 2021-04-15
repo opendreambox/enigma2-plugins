@@ -17,6 +17,7 @@ NOTIFICATIONID = 'SimpleRSSUpdateNotification'
 
 update_callbacks = []
 
+
 class RSSPoller:
 	"""Keeps all Feed and takes care of (automatic) updates"""
 

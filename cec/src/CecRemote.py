@@ -6,6 +6,7 @@ from Components.config import config
 from Tools.Log import Log
 from keyids import KEYIDS
 
+
 class CecRemote(object):
 	KEY_MAP_RECEIVE = {
 		eCec.RC_SELECT: KEYIDS["KEY_OK"],

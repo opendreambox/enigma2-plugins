@@ -2,6 +2,7 @@ from Tools.Log import Log
 
 from YoutubeQueryBase import YoutubeQueryBase
 
+
 class Subscriptions(YoutubeQueryBase):
 	def list(self, callback, maxResults=25):
 		self._args = {
@@ -21,6 +22,7 @@ class Subscriptions(YoutubeQueryBase):
 			for item in data['items']:
 				subscriptions.append(Subscription(item))
 		self._callback(success, subscriptions)
+
 
 class Subscription(object):
 	def __init__(self, entry):

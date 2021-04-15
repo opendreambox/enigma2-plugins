@@ -7,6 +7,7 @@ try:
 	class TwitchUriResolver(eUriResolver):
 		_schemas = ("twitch", "tw")
 		instance = None
+
 		def __init__(self):
 			eUriResolver.__init__(self, StringList(self._schemas))
 			Log.i(self._schemas)
@@ -24,6 +25,7 @@ try:
 				watch_url = "http://twitch.tv/%s" % (uri,)
 			except Exception as e:
 				Log.w(e)
+
 			def onUrlReady(uri, fmt):
 				Log.w("%s (%s)" % (uri, fmt))
 				try:

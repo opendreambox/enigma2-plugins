@@ -14,6 +14,7 @@ from Tools.Directories import pathExists, resolveFilename, SCOPE_HDD, SCOPE_PLUG
 
 VERSION = "1.4"
 
+
 class MovieTagger(Screen):
 	sz_w = getDesktop(0).size().width()
 	if sz_w == 1280:
@@ -159,7 +160,6 @@ class MovieTagger(Screen):
 		self.updateCurrentTagList()
 		self.updateAllTagList()
 
-
 	def removeTag(self, tagname):
 		newtags = []
 		for i in self.tags:
@@ -168,7 +168,6 @@ class MovieTagger(Screen):
 		self.setTags(" ".join(newtags))
 		self.updateCurrentTagList()
 		self.updateAllTagList()
-
 
 	def setTags(self, tagstring, service=False, userNotice=True):
 		if service is False:
@@ -187,7 +186,6 @@ class MovieTagger(Screen):
 				self.session.open(MessageBox, _("Can't write movietags, because no meta-file found!"), MessageBox.TYPE_ERROR)
 			return False
 
-
 	def readMETAData(self, filename):
 		if pathExists(filename):
 			fp = open(filename, "r")
@@ -200,6 +198,7 @@ class MovieTagger(Screen):
 			return data
 		else:
 			return False
+
 	def writeMETAData(self, filename, metadata):
 		if pathExists(filename):
 			fp = open(filename, "w")
@@ -297,6 +296,7 @@ class MovieTagger(Screen):
 		if newTag >= 0:
 			self.addTag(newTag.strip().replace(" ", "_"))
 
+
 class TagMenuList(MenuList):
 	SKIN_COMPONENT_KEY = "MovieTaggerTagMenuList"
 	SKIN_COMPONENT_KEY_ITEM_HEIGHT = "itemHeight"
@@ -333,7 +333,6 @@ class TagMenuList(MenuList):
 		except:
 			self.preTagColor = 0x0000FF00
 		
-		
 		tlf = TemplatedListFonts()
 		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
 		self.l.setFont(1, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
@@ -356,11 +355,13 @@ class TagMenuList(MenuList):
 	def postWidgetCreate(self, instance):
 		MenuList.postWidgetCreate(self, instance)
 
+
 def main(session, service, **kwargs):
 	try:
 		session.open(MovieTagger, service)
 	except Exception, e:
 		raise e
+
 
 def Plugins(path, **kwargs):
  	return PluginDescriptor(name="Movie Tagger", description=_("Movie Tagger..."), where=PluginDescriptor.WHERE_MOVIELIST, fnc=main)

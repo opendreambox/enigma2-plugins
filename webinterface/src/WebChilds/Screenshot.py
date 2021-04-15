@@ -3,6 +3,7 @@ from twisted.web import resource, http, http_headers, server
 
 from Tools.Log import Log
 
+
 class ScreenshotResource(resource.Resource):
 	def __init__(self):
 		resource.Resource.__init__(self)

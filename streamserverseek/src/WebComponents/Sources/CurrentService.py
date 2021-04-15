@@ -9,6 +9,7 @@ if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/GstRtspServer/S
 else:
 	from Components.StreamServerControl import streamServerControl
 
+
 class CurrentService(Source):
 	session = None
 	_state = None

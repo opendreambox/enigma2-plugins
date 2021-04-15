@@ -45,8 +45,10 @@ from Plugins.SystemPlugins.TubeLib.youtube.Base import buildYoutube
 from Plugins.SystemPlugins.TubeLib.youtube.Search import Search
 from Plugins.SystemPlugins.TubeLib.youtube.Videos import Videos
 
+
 def setup(session, **kwargs):
 	session.open(YTTrailerSetup)
+
 
 def Plugins(**kwargs):
 	list = [PluginDescriptor(name="YTTrailer Setup", description=_("YouTube-Trailer Setup"), where=PluginDescriptor.WHERE_PLUGINMENU, fnc=setup, icon="YTtrailer.png"),
@@ -57,8 +59,10 @@ def Plugins(**kwargs):
 		list.append(PluginDescriptor(name="YTTrailer Setup", description=_("YouTube-Trailer Setup"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=setup, icon="YTtrailer.png"))
 	return list
 
+
 def showConfig(self):
 	self.session.open(YTTrailerSetup)
+
 
 def showTrailer(session, event, ref):
 	if not event:
@@ -67,8 +71,10 @@ def showTrailer(session, event, ref):
 	ytTrailer = YTTrailer(session)
 	ytTrailer.showTrailer(eventname)
 
+
 def showTrailerList(session, event, ref):
 	session.open(YTTrailerList, event.getEventName())
+
 
 class YTTrailer:
 	def __init__(self, session):
@@ -104,6 +110,7 @@ class YTTrailer:
 		else:
 			ref = None
 		return ref
+
 
 class YTTrailerList(Screen, YTTrailer):
 
@@ -143,12 +150,12 @@ class YTTrailerList(Screen, YTTrailer):
 			if ref:
 				self.session.open(TrailerPlayer, ref)
 
+
 class TrailerList(GUIComponent, object):
 	SKIN_COMPONENT_KEY = "YTTrailerList"
 	SKIN_COMPONENT_TITLE_HEIGHT = "titleHeight"
 	SKIN_COMPONENT_DESCRIPTION_HEIGHT = "descriptionHeight"
 	SKIN_COMPONENT_LINE_SPACING = "lineSpacing"
-
 
 	GUI_WIDGET = eListbox
 
@@ -186,6 +193,7 @@ class TrailerList(GUIComponent, object):
 	def setList(self, list):
 		self.l.setList(list)
 
+
 class TrailerPlayer(InfoBarBase, InfoBarShowHide, InfoBarSeek, InfoBarAudioSelection, InfoBarNotifications, InfoBarServiceNotifications, InfoBarPVRState, InfoBarMoviePlayerSummarySupport, Screen):
 
 	ENABLE_RESUME_SUPPORT = True
@@ -204,7 +212,6 @@ class TrailerPlayer(InfoBarBase, InfoBarShowHide, InfoBarSeek, InfoBarAudioSelec
 				{
 					"back": (self.close, _("leave movie player..."))
 				})
-
 
 		self.allowPiP = False
 		for x in InfoBarShowHide, InfoBarBase, InfoBarSeek, \
@@ -228,6 +235,7 @@ class TrailerPlayer(InfoBarBase, InfoBarShowHide, InfoBarSeek, InfoBarAudioSelec
 	def __onClose(self):
 		self.session.nav.playService(self.lastservice)
 
+
 class YTTrailerSetup(ConfigListScreen, Screen):
 	skin = """
 		<screen position="center,center" size="820,410" title="YT-Trailer Setup">
@@ -249,7 +257,6 @@ class YTTrailerSetup(ConfigListScreen, Screen):
 		cfglist.append(getConfigListEntry(_("Extended search filter"), config.plugins.yttrailer.ext_descr))
 		cfglist.append(getConfigListEntry(_("Max. results in list-mode"), config.plugins.yttrailer.max_results))
 		cfglist.append(getConfigListEntry(_("Close Player with exit-key"), config.plugins.yttrailer.close_player_with_exit))
-
 
 		ConfigListScreen.__init__(self, cfglist, session)
 		self["setupActions"] = ActionMap(["SetupActions", "ColorActions"],

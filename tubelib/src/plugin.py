@@ -17,6 +17,7 @@ try:
 except ImportError as e:
 	Log.w(e)
 
+
 def isBouquetAndOrRoot(csel):
 	if csel.movemode:
 		return (False, False)
@@ -27,14 +28,17 @@ def isBouquetAndOrRoot(csel):
 	Log.w("inBouquet: %s, current_root_path %s, inBouquetRootList %s" % (inBouquet, current_root_path, inBouquetRootList))
 	return (inBouquet, inBouquetRootList)
 
+
 def check_channel(csel):
 	inBouquet, inBouquetRootList = isBouquetAndOrRoot(csel)
 	return inBouquet and not inBouquetRootList
+
 
 def main_channellist(session, ref, csel, **kwargs):
 	Log.i(kwargs)
 	if ref:
 		ChannelListTubeServiceHelper(session, csel, onChannelSelected)
+
 
 def onChannelSelected(csel, data, bouquetName=None):
 	if not csel or not data:
@@ -45,6 +49,7 @@ def onChannelSelected(csel, data, bouquetName=None):
 	if csel.inBouquet() and data:
 		if isinstance(data, eServiceReference):
 			csel.addServiceToBouquet(csel.getRoot(), service=data)
+
 
 def Plugins(path, **kwargs):
 	return [

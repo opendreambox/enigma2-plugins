@@ -13,6 +13,7 @@ from base64 import b64decode
 from binascii import hexlify
 from os import urandom
 
+
 class DreamboxServerProtocol(WebSocketServerProtocol):
 	API_VERSION = 1
 
@@ -253,6 +254,7 @@ class DreamboxServerProtocol(WebSocketServerProtocol):
 		else:
 			search.append(ref, which, -1)
 		events = eEPGCache.getInstance().lookupEvent(search)
+
 		def evtToDict(event):
 			return {
 					"id": event[0],					#I

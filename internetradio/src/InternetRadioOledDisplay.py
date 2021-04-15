@@ -26,9 +26,8 @@ from Components.Label import Label
 from Components.Sources.StaticText import StaticText
 from InternetRadioVisualization import InternetRadioVisualization
 
+
 class InternetRadioOledDisplay(Screen, InternetRadioVisualization):
-
-
 
 	skin = ("""
 		<screen name="InternetRadioOledDisplay" position="0,0" size="96,64" id="2">
@@ -140,15 +139,12 @@ class InternetRadioOledDisplay(Screen, InternetRadioVisualization):
 			<widget name="top_15" position="122,5" zPosition="6" size="7,2" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/topvalue-lcd-fs8.png" />
 		</screen>""")
 		
-
-
 	def __init__(self, session, parent):
 		Screen.__init__(self, session)
 		InternetRadioVisualization.__init__(self)
 		self["text1"] = Label(_("Internet Radio"))
 		self["text2"] = Label("")
 		self.onLayoutFinish.append(self.startRun)
-		
 		
 		# helper for skinning
 #		skincontent = ""
@@ -164,7 +160,6 @@ class InternetRadioOledDisplay(Screen, InternetRadioVisualization):
 #			if x == count:
 #				break
 		
-
 	def startRun(self):
 		self.setProperties()
 		self.hideControls()

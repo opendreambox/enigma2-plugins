@@ -22,6 +22,7 @@
 from Components.Sources.Source import Source
 from Plugins.Extensions.InternetRadio.InternetRadioFavoriteConfig import InternetRadioFavoriteConfig
 
+
 class InternetRadioWebFavoriteList(Source):
 	def __init__(self):
 		Source.__init__(self)

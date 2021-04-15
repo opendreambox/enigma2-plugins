@@ -77,4 +77,5 @@ class TwitchMiddleware(object):
 		ref.setName("%s - %s" % (vod.channel.display_name, vod.title))
 		session.open(MoviePlayer, ref, infoCallback=infoCallback, streamMode=True)
 
+
 TwitchMiddleware()

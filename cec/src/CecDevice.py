@@ -1,6 +1,8 @@
 from enigma import eCec
 
 from .VendorHandlerSamsung import VendorHandlerSamsung
+
+
 class CecDevice(object):
 	def __init__(self, logicalAddress=eCec.ADDR_FREE_USE):
 		self._physicalAddress = (0xff, 0xff)

@@ -26,6 +26,7 @@ config.plugins.ZapHistoryConfigurator.history_radio = ConfigSet(choices=[])
 
 ################################################
 
+
 def addToHistory(instance, ref):
 	if config.plugins.ZapHistoryConfigurator.enable_zap_history.value == "off":
 		return
@@ -55,7 +56,9 @@ def addToHistory(instance, ref):
 				config.plugins.ZapHistoryConfigurator.history_radio.value = [[y.toString() for y in x] for x in instance.history]
 			config.plugins.ZapHistoryConfigurator.save()
 
+
 ChannelSelection.addToHistory = addToHistory
+
 
 def newInit(self, session):
 	baseInit(self, session)
@@ -73,10 +76,12 @@ def newInit(self, session):
 		else:
 			self.history_pos = len(self.history_radio) - 1
 
+
 baseInit = ChannelSelection.__init__
 ChannelSelection.__init__ = newInit
 
 ################################################
+
 
 class ZapHistoryConfigurator(ConfigListScreen, Screen):
 	skin = """
@@ -120,6 +125,7 @@ class ZapHistoryConfigurator(ConfigListScreen, Screen):
 
 ################################################
 
+
 class ZapHistoryBrowserList(MenuList):
 	SKIN_COMPONENT_KEY = "ZapHistoryBrowserList"
 	SKIN_COMPONENT_SERVICE_NAME_HEIGHT = "serviceNameHeight"
@@ -133,6 +139,7 @@ class ZapHistoryBrowserList(MenuList):
 		self.l.setFont(0, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
 		self.l.setFont(1, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
 
+
 def ZapHistoryBrowserListEntry(serviceName, eventName):
 	sizes = componentSizes[ZapHistoryBrowserList.SKIN_COMPONENT_KEY]
 	textWidth = sizes.get(componentSizes.ITEM_WIDTH, 800)
@@ -145,6 +152,7 @@ def ZapHistoryBrowserListEntry(serviceName, eventName):
 	return res
 
 ################################################
+
 
 class ZapHistoryBrowser(Screen, ProtectedScreen):
 	skin = """
@@ -266,8 +274,10 @@ class ZapHistoryBrowser(Screen, ProtectedScreen):
 
 ################################################
 
+
 def main(session, servicelist, **kwargs):
 	session.open(ZapHistoryBrowser, servicelist)
+
 
 def Plugins(**kwargs):
 	return PluginDescriptor(name=_("Zap-History Browser"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main)

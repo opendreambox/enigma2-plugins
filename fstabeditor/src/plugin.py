@@ -44,9 +44,11 @@ from skin import TemplatedListFonts, componentSizes
 entryList = []
 lengthList = [0, 0, 0, 0]
 
+
 def main(session, **kwargs):
     session.open(fstabViewerScreen)
     
+
 def checkForReadOnly(reason, **kwargs):
 	if reason == 0:
 		mountFile = open('/proc/mounts', 'r')
@@ -61,10 +63,12 @@ def checkForReadOnly(reason, **kwargs):
 					break
 		mountFile.close()
 		
+
 def runRemountCommand(answer):
 	if answer:
 		os.system("mount -o rw,remount / ")    
 	
+
 class fstabMenuList(MenuList):
 	def __init__(self, list):
 		MenuList.__init__(self, list, False, eListboxPythonMultiContent)
@@ -72,6 +76,7 @@ class fstabMenuList(MenuList):
 		self.l.setFont(0, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
 		self.l.setFont(1, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
 		
+
 def fstabMenuListEntry(devicename, mountpoint, fstype, options, dumpfreq, passnum):
 	res = [(devicename, mountpoint, fstype, options, dumpfreq, passnum)]
 	res.append(MultiContentEntryText(pos=(270, 15), size=(800, 30), font=0, text=devicename))
@@ -213,6 +218,7 @@ class fstabViewerScreen(Screen, HelpableScreen):
 		os.system("cp /etc/fstab.backup /etc/fstab")
 		self.buildScreen()
 		
+
 class fstabEditorScreen(Screen, ConfigListScreen, HelpableScreen):
 	skin = """
 		<screen position="center,center" size="820,640" title="fstab-Editor" >
@@ -411,6 +417,7 @@ class fstabEditorScreen(Screen, ConfigListScreen, HelpableScreen):
 				self.optionList[0].value = "defaults"
 			self["config"].setList(self.list)
 
+
 class optionSelector(Screen, ConfigListScreen, HelpableScreen):
 	skin = """
 		<screen position="center,center" size="820,280" title="Option Selector" >
@@ -422,6 +429,7 @@ class optionSelector(Screen, ConfigListScreen, HelpableScreen):
 		<widget name="config" position="10,60" size="800,100" enableWrapAround="1" scrollbarMode="showOnDemand" />
 		<widget name="description" position="10,170" size="800,100" zPosition="1" valign="top" halign="left" backgroundColor="#1f771f" font="Regular;18" transparent="1" foregroundColor="white" />
 		</screen>"""
+
 	def __init__(self, session, currentValue=""):
 		self.skin = optionSelector.skin
 		self.session = session
@@ -562,6 +570,7 @@ class optionSelector(Screen, ConfigListScreen, HelpableScreen):
 		else:
 			self.close(self.options.value)
 		
+
 def Plugins(**kwargs):
 	return [
 		PluginDescriptor(name="fstab-Editor", description=_("Plugin to edit fstab"), where=[PluginDescriptor.WHERE_PLUGINMENU], icon="fstabEditor.png", fnc=main),

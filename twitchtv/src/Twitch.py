@@ -14,10 +14,12 @@ import urllib
 
 # Infos zu Video : https://api.twitch.tv/api/videos/<id>?client_id=jk9zwvlr4npb3ujr0dshx1k33zxksa
 
+
 class TwitchDataObject(object):
 	def __init__(self, data):
 		self.data = data
 		self.preview = None
+
 
 class TwitchGameData(TwitchDataObject):
 	def __init__(self, data):
@@ -30,6 +32,7 @@ class TwitchGameData(TwitchDataObject):
 		self.boxArtMedium = data["game"]["box"].get("medium", "").encode("utf-8")
 		self.boxArtSmall = data["game"]["box"].get("small", "").encode("utf-8")
 		self.preview = self.boxArtLarge
+
 
 class TwitchChannel(TwitchDataObject):
 	def __init__(self, channel):
@@ -45,6 +48,7 @@ class TwitchChannel(TwitchDataObject):
 	def __str__(self):
 		return "~TwitchChannel-%s-%s-%s-%s-%s" % (self.name, self.display_name, self.status, self.followers, self.banner)
 
+
 class TwitchVideoBase(TwitchDataObject):
 	def __init__(self, data, type_key):
 		TwitchDataObject.__init__(self, data)
@@ -56,6 +60,7 @@ class TwitchVideoBase(TwitchDataObject):
 		self.preview_large = data["preview"]["large"].encode('utf-8')
 		self.preview = self.preview_medium
 
+
 class TwitchStream(TwitchVideoBase):
 	TYPE_LIVE = "live"
 
@@ -66,6 +71,7 @@ class TwitchStream(TwitchVideoBase):
 	def __str__(self):
 		return "~TwitchStream-%s-%s-%s-(%s | %s | %s)" % (self.type, self.viewers, self.channel, self.preview_small, self.preview_medium, self.preview_large)
 
+
 class TwitchVOD(TwitchVideoBase):
 	def __init__(self, vod):
 		TwitchVideoBase.__init__(self, vod, "broadcast_type")
@@ -74,6 +80,7 @@ class TwitchVOD(TwitchVideoBase):
 		self.views = vod["views"]
 		self.game = vod["game"].encode("utf-8") if vod.get("game", None) else ""
 		self.title = vod["title"].encode('utf-8')
+
 
 class Twitch(object):
 	USERAGENT = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"

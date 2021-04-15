@@ -22,6 +22,7 @@ from Logger import doLog
 
 sz_w = getDesktop(0).size().width()
 
+
 class AutoTimerWizard(WizardLanguage, AutoTimerEditorBase, Rc):
 	STEP_ID_BASIC = 2
 	STEP_ID_TIMESPAN = 5

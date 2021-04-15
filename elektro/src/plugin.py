@@ -139,6 +139,7 @@ weekdays = [
 #global ElektroWakeUpTime
 ElektroWakeUpTime = -1
 
+
 def NASpowerdown(Nname, Nuser, Npass, Ncommand, Nport):
 	from telnetlib import Telnet
 	if Nname == "":
@@ -179,6 +180,7 @@ def autostart(reason, **kwargs):
 		session = kwargs["session"]
 		session.open(DoElektro)
 
+
 def getNextWakeup():
 	global ElektroWakeUpTime
 
@@ -195,6 +197,7 @@ def getNextWakeup():
 	config.plugins.elektro.deepstandby_wakeup_time.save()
 
 	return wakeuptime or -1
+
 
 def Plugins(**kwargs):
 	if debug:
@@ -234,6 +237,7 @@ def main(session, **kwargs):
 	 	session.open(Elektro)
 	except:
 		print pluginPrintname, "Pluginexecution failed"
+
 
 class ElektroProfile(ConfigListScreen, Screen):
 	skin = """
@@ -288,6 +292,7 @@ class ElektroProfile(ConfigListScreen, Screen):
 			x[1].cancel()
 		self.close(False, self.session)
 
+
 class ElektroIP(ConfigListScreen, Screen):
 	skin = """
 			<screen position="center,120" size="820,520" title="Elektro Power Save IP Addresses to wait">
@@ -333,6 +338,7 @@ class ElektroIP(ConfigListScreen, Screen):
 			x[1].cancel()
 		self.close(False, self.session)
 
+
 class ElektroNASrun(Screen):
 	skin = """
 		<screen name="ElektroNASrun" position="center,120" size="820,520" title="Powerdown...">
@@ -360,6 +366,7 @@ class ElektroNASrun(Screen):
 	def DoNASrun(self):
 		ret = NASpowerdown(config.plugins.elektro.NASname.value, config.plugins.elektro.NASuser.value, config.plugins.elektro.NASpass.value, config.plugins.elektro.NAScommand.value, config.plugins.elektro.NASport.value)
 		self["TextTest"].setText(ret)
+
 
 class ElektroNAS(ConfigListScreen, Screen):
 	skin = """
@@ -415,6 +422,7 @@ class ElektroNAS(ConfigListScreen, Screen):
 		for x in self["config"].list:
 			x[1].cancel()
 		self.close(False, self.session)
+
 
 class Elektro(ConfigListScreen, Screen):
 	skin = """
@@ -546,6 +554,7 @@ class Elektro(ConfigListScreen, Screen):
 
 	def profile(self):
 		self.session.open(ElektroProfile)
+
 
 class DoElektro(Screen):
 	skin = """ <screen position="center,center" size="300,300" title="Elektro Plugin Menu" > </screen>"""
@@ -680,7 +689,6 @@ class DoElektro(Screen):
 
 		#Write everything to the global variable
 		ElektroWakeUpTime = wakeuptime
-
 
 	def CheckElektro(self):
 		# first set the next wakeuptime - it would be much better to call that function on sleep. This will be a todo!
@@ -855,7 +863,6 @@ class DoElektro(Screen):
 
 		#set Timer, which calls this function again.
 		self.TimerSleep.startLongTimer(elektrostarttime)
-
 
 	def DoElektroSleep(self, retval):
 		config_NASenable = True if config.plugins.elektro.NASenable.value == config.plugins.elektro.profile.value else False

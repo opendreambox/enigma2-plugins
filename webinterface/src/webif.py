@@ -37,6 +37,8 @@ from os import urandom
 #
 # This is the Standard Element for Rendering a "standard" WebElement
 #===============================================================================
+
+
 class OneTimeElement(Element):
 	def __init__(self, id):
 		Element.__init__(self)
@@ -81,6 +83,8 @@ class OneTimeElement(Element):
 #
 # A MacroElement helps using OneTimeElements inside a (Simple)ListFiller Loop
 #===============================================================================
+
+
 class MacroElement(OneTimeElement):
 	def __init__(self, id, macro_dict, macro_name):
 		OneTimeElement.__init__(self, id)
@@ -96,6 +100,8 @@ class MacroElement(OneTimeElement):
 # In difference to an OneTimeElement a StreamingElement sends an ongoing Stream
 # of Data. The end of the Streaming is usually when the client disconnects
 #===============================================================================
+
+
 class StreamingElement(OneTimeElement):
 	def __init__(self, id):
 		OneTimeElement.__init__(self, id)
@@ -113,6 +119,8 @@ class StreamingElement(OneTimeElement):
 #
 # a to-be-filled list item
 #===============================================================================
+
+
 class ListItem:
 	def __init__(self, name, filternum):
 		self.name = name
@@ -123,6 +131,8 @@ class ListItem:
 #
 # MacroItem inside a (Simple)ListFiller
 #===============================================================================
+
+
 class ListMacroItem:
 	def __init__(self, macrodict, macroname):
 		self.macrodict = macrodict
@@ -143,6 +153,8 @@ class TextToHTML(Converter):
 #
 # Escapes the given Text to be XML conform
 #===============================================================================
+
+
 class TextToXML(Converter):
 	def getHTML(self, id):
 		return escape_xml(self.source.text).replace('\xc2\x86', '').replace('\xc2\x87', '').replace("\x19", "").replace("\x1c", "").replace("\x1e", "").decode("utf-8", "ignore").encode("utf-8")
@@ -152,6 +164,8 @@ class TextToXML(Converter):
 #
 # Escapes the given Text so it can be used inside a URL
 #===============================================================================
+
+
 class TextToURL(Converter):
 	def getHTML(self, id):
 		return self.source.text.replace(" ", "%20").replace("+", "%2b").replace("&", "%26").replace('\xc2\x86', '').replace('\xc2\x87', '').decode("utf-8", "ignore").encode("utf-8")
@@ -161,6 +175,8 @@ class TextToURL(Converter):
 #
 # Returns a XML only consisting of <rootElement />
 #===============================================================================
+
+
 class ReturnEmptyXML(Converter):
 	def getHTML(self, id):
 		return "<rootElement />"
@@ -170,6 +186,8 @@ class ReturnEmptyXML(Converter):
 # Return simply NOTHING
 # Useful if you only want to issue a command.
 #===============================================================================
+
+
 class Null(Converter):
 	def getHTML(self, id):
 		return ""
@@ -191,6 +209,8 @@ class JavascriptUpdate(Converter):
 #
 # The performant 'one-dimensonial listfiller' engine (podlfe)
 #===============================================================================
+
+
 class SimpleListFiller(Converter):
 	def getText(self):
 		l = self.source.simplelist
@@ -231,6 +251,8 @@ class SimpleListFiller(Converter):
 #===============================================================================
 # the performant 'listfiller'-engine (plfe)
 #===============================================================================
+
+
 class ListFiller(Converter):
 	def getText(self):
 		l = self.source.list
@@ -270,6 +292,7 @@ class ListFiller(Converter):
 		return ''.join(strlist)
 
 	text = property(getText)
+
 
 def appendListItem(item, filternum, append):
 	if filternum == webifHandler.FILTER_JAVASCRIPT:
@@ -323,6 +346,8 @@ def appendListItem(item, filternum, append):
 # Handles the Content of a Web-Request
 # It looks up the source, instantiates the Element and Calls the Converter
 #===============================================================================
+
+
 class webifHandler(ContentHandler):
 	FILTER_NONE = 1
 	FILTER_JAVASCRIPT = 2
@@ -513,6 +538,8 @@ class webifHandler(ContentHandler):
 # Creates the Handler for a Request and calls it
 # Also ensures that the Handler is finished after the Request is done
 #===============================================================================
+
+
 def renderPage(request, path, session):
 	# read in the template, create required screens
 	# we don't have persistense yet.
@@ -588,6 +615,8 @@ def renderPage(request, path, session):
 #
 # This has to be/is called at the end of every ScreenPage-based Request
 #===============================================================================
+
+
 def requestFinish(handler, request, requestAlreadyFinished=False):
 	handler.cleanup()
 	if not requestAlreadyFinished:

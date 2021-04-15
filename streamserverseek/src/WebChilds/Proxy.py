@@ -5,6 +5,7 @@ from Plugins.Extensions.StreamServerSeek.StreamServerSeek import StreamServerSee
 
 import urlparse
 
+
 class MyProxyClient(proxy.ProxyClient):
 	def __init__(self, command, rest, version, headers, data, father, responseEndCallback):
 		proxy.ProxyClient.__init__(self, command, rest, version, headers, data, father)
@@ -26,6 +27,7 @@ class MyProxyClient(proxy.ProxyClient):
 		if not self.responseEndCallback or key.lower() != 'content-length':
 			proxy.ProxyClient.handleHeader(self, key, value)
 
+
 class MyProxyClientFactory(proxy.ProxyClientFactory):
 	protocol = MyProxyClient
 
@@ -36,6 +38,7 @@ class MyProxyClientFactory(proxy.ProxyClientFactory):
 	def buildProtocol(self, addr):
 		return self.protocol(self.command, self.rest, self.version,
 			self.headers, self.data, self.father, self.responseEndCallback)
+
 
 class ProxyResource(resource.Resource):
 	isLeaf = True

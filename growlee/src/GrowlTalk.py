@@ -13,6 +13,7 @@ from . import NOTIFICATIONID
 
 GROWL_UDP_PORT = 9887
 
+
 class GrowlTalk(DatagramProtocol):
 	addr = None
 
@@ -120,6 +121,7 @@ class GrowlTalk(DatagramProtocol):
 			timeout=5,
 			close_on_any_key=True,
 		)
+
 
 class GrowlTalkAbstraction:
 	def __init__(self, host):

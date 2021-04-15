@@ -14,6 +14,8 @@ from logging import NOTSET
 import re
 
 # scramble text
+
+
 def __(text, front=True):
 	#===========================================================================
 	# if len(text) > 5:
@@ -28,6 +30,7 @@ def __(text, front=True):
 	for i in range(len(text) / 2):
 		out = out + text[i * 2] + '.'
 	return out
+
 
 def normalizePhoneNumber(intNo):
 	

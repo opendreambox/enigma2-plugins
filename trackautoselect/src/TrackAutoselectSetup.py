@@ -9,6 +9,7 @@ from Screens.Screen import Screen
 from Screens.ChoiceBox import ChoiceBox
 from Tools.BoundFunction import boundFunction
 
+
 class TrackAutoselectSetup(Screen, ConfigListScreen):
 	skin = """
 		<screen name="TrackAutoselectSetup" position="center,120" size="820,520" title="Track Autoselect configuration">
@@ -122,6 +123,7 @@ class TrackAutoselectSetup(Screen, ConfigListScreen):
 
 	def close(self):
 		Screen.close(self)
+
 
 class TrackAutoselectPreferenceListScreen(Screen, SortableListScreen):
 	skin = """

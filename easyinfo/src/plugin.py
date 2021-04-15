@@ -19,7 +19,6 @@
 #######################################################################
 
 
-
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
@@ -93,9 +92,9 @@ config.plugins.EasyInfo.primeTime3 = ConfigClock(default=75600)
 config.plugins.EasyInfo.buttonTV = ConfigSelection(default="easysel", choices=[("no", _("Disabled")), ("easysel", _("Easy-Selection")), ("easypg", _("Easy-PG"))])
 
 
-
 def Plugins(**kwargs):
 	return [PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=EasyInfoAutostart)]
+
 
 def EasyInfoAutostart(reason, **kwargs):
 	global EasyInfoBaseInfoBarPlugins__init__
@@ -108,6 +107,7 @@ def EasyInfoAutostart(reason, **kwargs):
 		InfoBarPlugins.showInfo = showInfo
 		if config.plugins.EasyInfo.buttonTV.value != "no":
 			InfoBarPlugins.buttonTV = buttonTV
+
 
 def InfoBarPlugins__init__(self):
 	global EasyInfoStartOnlyOnce
@@ -127,6 +127,7 @@ def InfoBarPlugins__init__(self):
 		if config.plugins.EasyInfo.buttonTV.value != "no":
 			InfoBarPlugins.buttonTV = None
 	EasyInfoBaseInfoBarPlugins__init__(self)
+
 
 def showInfo(self):
 	if not config.plugins.EasyInfo.showEventInfoFirst.value:
@@ -148,6 +149,7 @@ def showInfo(self):
 	else:
 		self.session.open(EasyInfo)
 		
+
 def eventViewCallback(self, setEvent, setService, val): #used for now/next displaying
 	epglist = self.epglist
 	if len(epglist) > 1:
@@ -155,6 +157,7 @@ def eventViewCallback(self, setEvent, setService, val): #used for now/next displ
 		epglist[0] = epglist[1]
 		epglist[1] = tmp
 		setEvent(epglist[0])	
+
 
 def buttonTV(self):
 	currentService = self.session.nav.getCurrentService()
@@ -185,6 +188,7 @@ def buttonTV(self):
 		if config.plugins.EasyInfo.buttonTV.value == "easypg":
 			InfoBar_instance.dlg_stack.append(InfoBar_instance.session.open(EasyPG, InfoBarServices, EasyInfoZapTo, None, EasyInfoChangeBouquetCB))
 
+
 def getPluginByName(sstr):
 	sret = " "
 	for xs in CHOICELIST:
@@ -193,6 +197,7 @@ def getPluginByName(sstr):
 			break
 			
 	return sret
+
 
 class EasyInfoPanelList(MenuList):
 	SKIN_COMPONENT_KEY = "EasyInfoPanelList"
@@ -260,6 +265,7 @@ class EasyInfoPanelList(MenuList):
 		
 		return res	
 
+
 class EasyInfoConfig(ConfigListScreen, Screen):
 	skin = """
 		<screen name="EasyInfoConfig" position="center,center" size="900,600" title="EasyInfo settings...">
@@ -267,6 +273,7 @@ class EasyInfoConfig(ConfigListScreen, Screen):
 			<eLabel font="Regular;26" foregroundColor="#00ff4A3C" halign="center" position="20,550" size="150,30" text="Cancel"/>
 			<eLabel font="Regular;26" foregroundColor="#0056C856" halign="center" position="165,550" size="150,30" text="Save"/>
 		</screen>"""
+
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.setTitle(_("EasyInfo settings..."))
@@ -307,6 +314,7 @@ class EasyInfoConfig(ConfigListScreen, Screen):
 		for x in self["config"].list:
 			x[1].cancel()
 		self.close()
+
 
 class EasyInfo(Screen):
 	sz_w = getDesktop(0).size().width()
@@ -506,6 +514,7 @@ class EasyInfo(Screen):
 		if config.plugins.EasyInfo.pos5.value != "no":
 			EasyInfoCallbackFunc(config.plugins.EasyInfo.pos5.value)
 
+
 def EasyInfoChangeBouquetCB(direction, epg):
 	global EINposition
 	IBbouquets = InfoBar_instance.servicelist.getBouquetList()
@@ -521,6 +530,7 @@ def EasyInfoChangeBouquetCB(direction, epg):
 	if InfoBarServices:
 		epg.setServices(InfoBarServices)
 
+
 def EasyInfoZapTo(NewService):
 	IBbouquets = InfoBar_instance.servicelist.getBouquetList()
 	NewBbouquet = IBbouquets[EINposition][1]
@@ -530,6 +540,7 @@ def EasyInfoZapTo(NewService):
 	InfoBar_instance.servicelist.enterPath(NewBbouquet)
 	InfoBar_instance.servicelist.setCurrentSelection(NewService)
 	InfoBar_instance.servicelist.zap()
+
 
 def EasyInfoCallbackFunc(answer):
 	if answer is None:
@@ -658,6 +669,7 @@ def EasyInfoCallbackFunc(answer):
 	else:
 		EasyInfoSession.open(MessageBox, text=_('This function is yet not available!'), type=MessageBox.TYPE_INFO)
 
+
 class EasyInfoEventView(Screen, EventViewBase):
 	def __init__(self, session, Event, Ref, callback=None, singleEPGCB=None, multiEPGCB=None):
 		Screen.__init__(self, session)
@@ -734,6 +746,7 @@ class EasyInfoEventView(Screen, EventViewBase):
 		self.hide()
 		self.session.open(EasyInfo)
 		self.close()
+
 
 class EasyInfoEventList(EPGList):
 	SKIN_COMPONENT_KEY = "EasyInfoEventList"
@@ -867,6 +880,7 @@ class EasyInfoEventList(EPGList):
 		if x[1] != refstr:
 			self.instance.moveSelectionTo(0)
 			
+
 class EasyPG(EPGSelection, Screen):
 	sz_w = getDesktop(0).size().width()
 	
@@ -1082,6 +1096,7 @@ class EasyPG(EPGSelection, Screen):
 	def refreshEPG(self):
 		self.refreshTimer.stop()
 		self.GoFirst()
+
 
 class EasySelection(EPGSelection, Screen):
 	sz_w = getDesktop(0).size().width()

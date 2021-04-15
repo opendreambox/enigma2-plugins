@@ -11,6 +11,8 @@ config.plugins.mediadownloader.bookmarks = ConfigLocations(default=[resolveFilen
 # TODO: support custom bookmark element?
 
 # Download a single File
+
+
 def download_file(session, url, to=None, askOpen=False, callback=None,
 	**kwargs):
 	"""Provides a simple downloader Application"""
@@ -22,6 +24,8 @@ def download_file(session, url, to=None, askOpen=False, callback=None,
 	session.open(MediaDownloader, file, askOpen, to, callback)
 
 # Item chosen
+
+
 def filescan_chosen(session, item):
 	if item:
 		from MediaDownloader import MediaDownloader
@@ -29,6 +33,8 @@ def filescan_chosen(session, item):
 		session.open(MediaDownloader, item[1], askOpen=True)
 
 # Open as FileScanner
+
+
 def filescan_open(items, session, **kwargs):
 	"""Download a file from a given List"""
 
@@ -60,6 +66,8 @@ def filescan_open(items, session, **kwargs):
 		session.open(MediaDownloader, items[0], askOpen=True)
 
 # Return Scanner provided by this Plugin
+
+
 def filescan(**kwargs):
 	from Components.Scanner import Scanner, ScanPath
 
@@ -79,6 +87,7 @@ def filescan(**kwargs):
 			openfnc=filescan_open,
 		)
 	]
+
 
 def Plugins(**kwargs):
 	from Plugins.Plugin import PluginDescriptor

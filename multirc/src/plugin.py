@@ -43,6 +43,7 @@ else:
 config.plugins.MultiRC = ConfigSubsection()
 config.plugins.MultiRC.mask = ConfigSelection(choices=CONFIGS, default="f")
 
+
 class MultiRCSetup(ConfigListScreen, Screen):
 	height = getDesktop(0).size().height()
 	if height == 2160:
@@ -112,11 +113,13 @@ Information about re-configuring the RC is available at https://dreambox.de/boar
 		set_mask()
 		self.close()
 
+
 def write_mask(fname, value):
 	print "MultiRC:", fname, value
 	f = open(fname, "w")
 	f.write(value)
 	f.close()
+
 
 def set_mask(mask=None):
 	if not mask:
@@ -144,14 +147,17 @@ def set_mask(mask=None):
 		return False
 	return True
 
+
 def multirc_setup(session, **kwargs):
 	session.open(MultiRCSetup)
+
 
 def multirc_autostart(reason, **kwargs):
 	# on startup, set correct remote mask
 	if reason == 0:
 		set_mask()
 		pass
+
 
 def Plugins(**kwargs):
 	return [PluginDescriptor(name="Multi RemoteControl",

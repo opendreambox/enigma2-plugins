@@ -3,6 +3,7 @@ from Components.Sources.Source import Source
 from glob import glob
 from os.path import basename
 
+
 class WebScriptList(Source):
 	LIST = 0
 

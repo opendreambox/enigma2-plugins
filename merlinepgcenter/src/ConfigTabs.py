@@ -168,6 +168,8 @@ class ConfigBaseTab():
 		pass
 		
 # config general
+
+
 class ConfigGeneral(ConfigBaseTab):
 	def __init__(self):
 		ConfigBaseTab.__init__(self)
@@ -191,6 +193,8 @@ class ConfigGeneral(ConfigBaseTab):
 		self.configList = cfgList
 		
 # config list settings
+
+
 class ConfigListSettings(ConfigBaseTab):
 	def __init__(self):
 		ConfigBaseTab.__init__(self)
@@ -234,6 +238,8 @@ class ConfigListSettings(ConfigBaseTab):
 		config.plugins.merlinEpgCenter.epgPaths.save()
 		
 # config event information
+
+
 class ConfigEventInfo(ConfigBaseTab):
 	def __init__(self):
 		ConfigBaseTab.__init__(self)
@@ -257,6 +263,8 @@ class ConfigEventInfo(ConfigBaseTab):
 		config.plugins.merlinEpgCenter.showEventInfo.removeNotifier(self.expandableSettingChanged)
 		
 # config key settings
+
+
 class ConfigKeys(ConfigBaseTab):
 	def __init__(self):
 		ConfigBaseTab.__init__(self)

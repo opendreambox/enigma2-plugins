@@ -34,6 +34,7 @@ from twisted.web.client import getPage
 from urllib import quote as urllib_quote
 from skin import TemplatedListFonts, componentSizes
 
+
 def initWeatherPluginEntryConfig():
 	s = ConfigSubsection()
 	s.city = ConfigText(default="Heidelberg", visible_width=100, fixed_size=False)
@@ -42,6 +43,7 @@ def initWeatherPluginEntryConfig():
 	config.plugins.WeatherPlugin.Entry.append(s)
 	return s
 
+
 def initConfig():
 	count = config.plugins.WeatherPlugin.entrycount.value
 	if count != 0:
@@ -49,6 +51,7 @@ def initConfig():
 		while i < count:
 			initWeatherPluginEntryConfig()
 			i += 1
+
 
 class MSNWeatherPluginEntriesListConfigScreen(Screen):
 	skin = """
@@ -134,6 +137,7 @@ class MSNWeatherPluginEntriesListConfigScreen(Screen):
 		configfile.save()
 		self.updateList()
 
+
 class WeatherPluginEntryList(MenuList):
 	SKIN_COMPONENT_KEY = "WeatherPluginList"
 	SKIN_COMPONENT_TEXT_HEIGHT = "textHeight"
@@ -170,6 +174,7 @@ class WeatherPluginEntryList(MenuList):
 		self.list = list
 		self.l.setList(list)
 		self.moveToIndex(0)
+
 
 class MSNWeatherPluginEntryConfigScreen(ConfigListScreen, Screen):
 	skin = """
@@ -267,7 +272,6 @@ class MSNWeatherPluginEntryConfigScreen(ConfigListScreen, Screen):
 		configfile.save()
 		self.close()
 		
-		
 	def xmlCallback(self, xmlstring):
 		if xmlstring:
 			errormessage = ""
@@ -290,7 +294,6 @@ class MSNWeatherPluginEntryConfigScreen(ConfigListScreen, Screen):
 			self.current.weatherlocationcode.value = result[0]
 			self.current.city.value = result[1]
 	
-		
 		
 class MSNWeatherPluginSearch(Screen):
 	skin = """

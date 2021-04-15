@@ -1,6 +1,8 @@
 from Components.Sources.Source import Source
 from Components.Network import iNetworkInfo
 from Tools.Log import Log
+
+
 class Interface:
 	def __init__(self, name):
 		self.name = name
@@ -9,6 +11,7 @@ class Interface:
 		self.ip = None
 		self.netmask = None
 		self.gateway = None
+
 
 class Network(Source):
 	LAN = 0

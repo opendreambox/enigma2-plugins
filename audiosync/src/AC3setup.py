@@ -6,6 +6,7 @@ from Components.Label import Label
 from Components.config import config, getConfigListEntry
 from Screens.Screen import Screen
 
+
 class AC3LipSyncSetup(ConfigListScreen, Screen):
     skin = """
     <screen position="center,center" size="560,400" title="AC3 Lip Sync Setup">

@@ -15,6 +15,7 @@ from Components.Sources.StaticText import StaticText
 # Configuration
 from Components.config import config, getConfigListEntry
 
+
 class EPGSearchSetup(Screen, ConfigListScreen):
 	skin = """<screen name="EPGSearchSetup" position="center,90" size="820,570">
 		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40"/>
@@ -93,7 +94,6 @@ class EPGSearchSetup(Screen, ConfigListScreen):
 			self.list.append(getConfigListEntry(_("Buttons for 'add search filter to EPGSearch'"), config.plugins.epgsearch.addSearchFilter_menu, _("Select the buttons, which show this menu item (on change GUI-restart is necessary).")))
 			self.list.append(getConfigListEntry(_("Blue button function (search list)"), config.plugins.epgsearch.blue_function, _("Select the search list to show on blue button in the EPGSearch match list (default = text search history and search filter list).")))
 			
-
 	def getScopeChoicesDefault(self):
 		scopeChoices_default = "all"
 

@@ -22,6 +22,7 @@
 from Components.Sources.List import List
 from Components.Element import cached
 
+
 class InternetRadioList(List):
 	def buildEntry(self, item):
 		text1 = ""

@@ -3,6 +3,7 @@ from Tools.Directories import fileExists
 
 from os import remove
 
+
 class CecBoot(object):
 	UBOOT_SCRIPT_FILE = "/etc/u-boot.scr.d/001_cec.scr"
 	UBOOT_SCRIPT = """dm_cec init

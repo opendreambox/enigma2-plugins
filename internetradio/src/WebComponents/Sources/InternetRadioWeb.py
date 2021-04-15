@@ -25,6 +25,7 @@ from Plugins.Extensions.InternetRadio.InternetRadioFavoriteConfig import Interne
 from Plugins.Extensions.InternetRadio.InternetRadioScreen import InternetRadioScreen
 from Plugins.Extensions.InternetRadio.InternetRadioClasses import InternetRadioStation
 
+
 class InternetRadioWeb(Source):
 
 	ADD_FAVORITE = 0
@@ -140,7 +141,6 @@ class InternetRadioWeb(Source):
 			return (True, "favorite %s renamed." % name)
 		else:
 			return (False, "Could not find favorite %s!" % name)
-
 
 	def playStation(self, param):
 		print "[WebComponents.InternetRadioWeb] playStation with param = ", param

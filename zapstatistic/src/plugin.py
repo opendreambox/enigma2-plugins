@@ -17,6 +17,7 @@ from Tools.Directories import fileExists
 from xml.etree.cElementTree import parse
 from skin import TemplatedListFonts, componentSizes
 
+
 def decode_charset(str, charset):
 	try:
 		uni = unicode(str, charset, 'strict')
@@ -26,6 +27,7 @@ def decode_charset(str, charset):
 
 ###########################################################
 
+
 def deformXml(xml):
 	xml = xml.replace("&", "&amp;")
 	xml = xml.replace("'", "&apos;")
@@ -33,6 +35,7 @@ def deformXml(xml):
 	xml = xml.replace(">", "&gt;")
 	xml = xml.replace('"', "&quot;")
 	return xml
+
 
 def reformXml(xml):
 	xml = xml.replace("&amp;", "&")
@@ -43,6 +46,7 @@ def reformXml(xml):
 	return xml
 
 ###########################################################
+
 
 class ZapEntry:
 	def __init__(self, ref, begin=None, end=None):
@@ -59,6 +63,7 @@ class ZapEntry:
 
 ###########################################################
 
+
 class DurationZapEntry:
 	def __init__(self, zapentry):
 		self.ref = zapentry.ref
@@ -69,6 +74,7 @@ class DurationZapEntry:
 		self.begin = "%02d.%02d. %02d:%02d:%02d" % (t[2], t[1], t[3], t[4], t[5])
 
 ###########################################################
+
 
 class CombinedZapEntry:
 	def __init__(self, zapentry):
@@ -83,6 +89,7 @@ class CombinedZapEntry:
 		return strftime("%H:%M:%S", gmtime(self.duration))
 
 ###########################################################
+
 
 class ZapStatistic:
 	def __init__(self):
@@ -131,6 +138,7 @@ class ZapStatistic:
 			self.zapEntries.append(self.currentEntry)
 			self.currentEntry = None
 
+
 zapstatistic = ZapStatistic()
 
 ###########################################################
@@ -140,10 +148,12 @@ global StopService
 PlayService = None
 StopService = None
 
+
 def playService(ref, checkParentalControl=True, forceRestart=False):
 	if PlayService:
 		zapstatistic.handlePlayServiceCommand(ref)
 		PlayService(ref, checkParentalControl, forceRestart)
+
 
 def stopService():
 	if StopService:
@@ -151,6 +161,7 @@ def stopService():
 		StopService()
 
 ###########################################################
+
 
 class ZapStatisticBrowserList(MenuList):
 	SKIN_COMPONENT_KEY = "ZapStatisticBrowserList"
@@ -165,6 +176,7 @@ class ZapStatisticBrowserList(MenuList):
 		tlf = TemplatedListFonts()
 		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
 
+
 def ZapStatisticBrowserListEntry(entry):
 	sizes = componentSizes[ZapStatisticBrowserList.SKIN_COMPONENT_KEY]
 	text1Width = sizes.get(ZapStatisticBrowserList.SKIN_COMPONENT_TEXT1_WIDTH, 300)
@@ -178,6 +190,7 @@ def ZapStatisticBrowserListEntry(entry):
 	res.append(MultiContentEntryText(pos=(text1Width, 0), size=(text2Width, textHeight), font=0, flags=RT_VALIGN_CENTER, text=entry.name))
 	return res
 
+
 def ZapStatisticBrowserDurationListEntry(entry):
 	sizes = componentSizes[ZapStatisticBrowserList.SKIN_COMPONENT_KEY]
 	text1Width = sizes.get(ZapStatisticBrowserList.SKIN_COMPONENT_TEXT1_WIDTH, 300)
@@ -188,6 +201,7 @@ def ZapStatisticBrowserDurationListEntry(entry):
 	res.append(MultiContentEntryText(pos=(5, 0), size=(text1Width, textHeight), font=0, flags=RT_VALIGN_CENTER, text="%s (%s)" % (entry.duration, entry.begin)))
 	res.append(MultiContentEntryText(pos=(text1Width, 0), size=(text2Width, textHeight), font=0, flags=RT_VALIGN_CENTER, text=entry.name))
 	return res
+
 
 def ZapStatisticBrowserCombinedListEntry(entry):
 	sizes = componentSizes[ZapStatisticBrowserList.SKIN_COMPONENT_KEY]
@@ -201,6 +215,7 @@ def ZapStatisticBrowserCombinedListEntry(entry):
 	return res
 
 ###########################################################
+
 
 class ZapStatisticDurationScreen(Screen):
 	SORT_NAME_ASCENDING = 0
@@ -303,6 +318,7 @@ class ZapStatisticDurationScreen(Screen):
 		self.buildList()
 
 ###########################################################
+
 
 class ZapStatisticCombinedScreen(Screen):
 	SORT_NAME_ASCENDING = 0
@@ -413,6 +429,7 @@ class ZapStatisticCombinedScreen(Screen):
 		self.buildList()
 
 ###########################################################
+
 
 class ZapStatisticScreen(Screen, ProtectedScreen):
 	SORT_NAME_ASCENDING = 0
@@ -592,8 +609,10 @@ class ZapStatisticScreen(Screen, ProtectedScreen):
 
 ###########################################################
 
+
 def main(session, **kwargs):
 	session.open(ZapStatisticScreen)
+
 
 def sessionstart(reason, **kwargs):
 	if reason == 0:
@@ -606,9 +625,11 @@ def sessionstart(reason, **kwargs):
 		session.nav.playService = playService
 		session.nav.stopService = stopService
 
+
 def autostart(reason, **kwargs):
 	if reason == 1:
 		zapstatistic.saveZapEntries()
+
 
 def Plugins(**kwargs):
 	return [PluginDescriptor(name=_("Zap Statistic"), description=_("Shows the watched services with some statistic"), where=PluginDescriptor.WHERE_PLUGINMENU, fnc=main),

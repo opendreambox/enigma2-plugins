@@ -2,6 +2,7 @@
 from Components.config import config
 from Videos import Videos
 
+
 class Search(Videos):
 	ORDER_DATE = "date"
 	ORDER_RATING = "rating"
@@ -33,6 +34,7 @@ class Search(Videos):
 
 	def _doQuery(self, callback):
 		request = self._youtube.search().list(**self._args)
+
 		def subquery(data):
 			if not data:
 				self._onResult(False, [])

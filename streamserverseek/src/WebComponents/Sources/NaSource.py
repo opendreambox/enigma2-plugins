@@ -1,5 +1,6 @@
 from Components.Sources.Source import Source
 
+
 class NaSource(Source):
 	na = ""
 

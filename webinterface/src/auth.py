@@ -3,6 +3,7 @@ from crypt import crypt
 from pwd import getpwnam
 from spwd import getspnam
 
+
 def check_passwd(name, passwd):
 	cryptedpass = None
 	try:

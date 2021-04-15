@@ -32,6 +32,8 @@ from twisted.internet.protocol import DatagramProtocol, ServerFactory, ClientFac
 from Components.config import config
 
 # this class handles UDP broadcasts (send/receive)
+
+
 class BroadcastProtocol(DatagramProtocol):
 	def __init__(self, parent):
 		self.parent = parent
@@ -64,6 +66,8 @@ class BroadcastProtocol(DatagramProtocol):
 		return urandom(16)
 		
 # the server classes are used to send and receive birthday lists
+
+
 class TransferServerProtocol(Protocol):
 	def __init__(self, parent):
 		self.parent = parent
@@ -104,6 +108,7 @@ class TransferServerProtocol(Protocol):
 		else:
 			print "[Birthday Reminder] lost connection to client %s. Reason: %s" % (self.transport.getPeer().host, str(reason.value))
 			
+
 class TransferServerFactory(ServerFactory):
 	def __init__(self, parent):
 		self.parent = parent
@@ -112,6 +117,8 @@ class TransferServerFactory(ServerFactory):
 		return TransferServerProtocol(self.parent)
 		
 # the client classes are used to request and receive birthday lists
+
+
 class TransferClientProtocol(Protocol):
 	def __init__(self, parent, data):
 		self.parent = parent
@@ -139,6 +146,7 @@ class TransferClientProtocol(Protocol):
 	def connectionMade(self):
 		self.transport.write(self.data)
 		
+
 class TransferClientFactory(ClientFactory):
 	def __init__(self, parent, data):
 		self.parent = parent

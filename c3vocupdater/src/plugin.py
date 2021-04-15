@@ -12,6 +12,7 @@ import re
 
 sz_w = getDesktop(0).size().width()
 
+
 class C3vocScreen (Screen):
 	if sz_w == 1920:
 		skin = """
@@ -92,8 +93,10 @@ class C3vocScreen (Screen):
 				continue
 			return stream["urls"]["hls"]["url"]
 
+
 def main(session, **kwargs):
 	session.open(C3vocScreen)
+
 
 def Plugins(**kwargs):
 	return PluginDescriptor(name="C3vocUpdater", description="update the c3voc stream bouquet", where=PluginDescriptor.WHERE_PLUGINMENU, fnc=main)

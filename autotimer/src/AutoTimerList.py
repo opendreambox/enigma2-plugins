@@ -6,6 +6,7 @@ from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT, RT_VALIGN_
 
 from skin import parseColor, parseFont, TemplatedListFonts
 
+
 class AutoTimerList(MenuList):
 	"""Defines a simple Component to show Timer name"""
 

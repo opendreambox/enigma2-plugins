@@ -129,10 +129,12 @@ config.plugins.mytube.general.AutoLoadFeeds = ConfigYesNo(default=True)
 config.plugins.mytube.general.resetPlayService = ConfigYesNo(default=False)
 config.plugins.mytube.general.authenticate = ConfigYesNo(default=False)
 
+
 class downloadJob(Job):
 	def __init__(self, url, file, title):
 		Job.__init__(self, title)
 		downloadTask(self, url, file)
+
 
 class downloadTask(Task):
 	def __init__(self, job, url, file):
@@ -163,6 +165,7 @@ class downloadTask(Task):
 			error_message = failure_instance.getErrorMessage()
 			print "[http_failed] " + error_message
 			Task.processFinished(self, 1)
+
 
 class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 	Details = {}
@@ -257,7 +260,6 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		self["VKeyIcon"].hide()
 		self["result"] = Label("")
 
-
 		self["searchactions"] = ActionMap(["ShortcutActions", "WizardActions", "HelpActions", "MediaPlayerActions"],
 		{
 			"ok": self.keyOK,
@@ -288,7 +290,6 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 			"right": self.keyRight,
 			"0": self.toggleScreenVisibility
 		}, -2)
-
 
 		self["videoactions"] = ActionMap(["ShortcutActions", "WizardActions", "MediaPlayerActions", "MovieSelectionActions", "HelpActions"],
 		{
@@ -427,7 +428,6 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 				self.switchToConfigList()
 			self["feedlist"].style = "state"
 			self['feedlist'].setList(self.statuslist)
-
 
 	def _onUserCodeReady(self, userCode):
 		self._userCodeMbx = self.session.open(MessageBox, str(_("Please visit: %s\nAnd enter: %s") % (userCode.verification_url, userCode.user_code)), type=MessageBox.TYPE_INFO, title=_("Authentication awaiting"))
@@ -739,6 +739,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		elif self.currList == "historylist":
 			if self.HistoryWindow is not None and self.HistoryWindow.shown:
 				self.HistoryWindow.down()
+
 	def keyRight(self):
 		print "self.currList im KeyRight", self.currList
 		if self.propagateUpDownNormally:
@@ -764,6 +765,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 			elif self.currList == "historylist":
 				if self.HistoryWindow is not None and self.HistoryWindow.shown:
 					self.HistoryWindow.pageDown()
+
 	def keyStdFeed(self):
 		self.hideSuggestions()
 		menulist = []
@@ -860,7 +862,6 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 			self["feedlist"].updateList(self.videolist)
 		else:
 			self.setState('noVideos')
-
 
 	def switchToHistory(self):
 		print "switchToHistory"
@@ -1486,6 +1487,7 @@ class MyTubeVideoHelpScreen(Screen):
 
 def MyTubeMain(session, **kwargs):
 	session.open(MyTubePlayerMainScreen)
+
 
 def Plugins(path, **kwargs):
 	global plugin_path

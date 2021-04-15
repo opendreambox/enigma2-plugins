@@ -19,6 +19,7 @@ from Components.config import config, getConfigListEntry
 
 sz_w = getDesktop(0).size().width()
 
+
 class AutoTimerSettings(Screen, ConfigListScreen):
 
 	if sz_w == 1920:
@@ -51,7 +52,6 @@ class AutoTimerSettings(Screen, ConfigListScreen):
 		<eLabel	position="10,430" size="800,1" backgroundColor="grey"/>
 		<widget source="help" render="Label" position="10,440" size="800,70" font="Regular;20" halign="center" valign="center" />
 	</screen>"""
-
 
 	def __init__(self, session):
 		Screen.__init__(self, session)
@@ -100,6 +100,7 @@ class AutoTimerSettings(Screen, ConfigListScreen):
 			session=session,
 			on_change=self.changed
 		)
+
 		def selectionChanged():
 			if self["config"].current:
 				self["config"].current[1].onDeselect(self.session)

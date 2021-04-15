@@ -41,11 +41,13 @@ config.plugins.autoresolution.delay_switch_mode = ConfigSelection(default="1000"
 		("4000", "4 " + _("seconds")), ("5000", "5 " + _("seconds")), ("6000", "6 " + _("seconds")), ("7000", "7 " + _("seconds")),
 		("8000", "8 " + _("seconds")), ("9000", "9 " + _("seconds")), ("10000", "10 " + _("seconds")), ("60000", "60 " + _("seconds"))])
 
+
 def setDeinterlacer(mode):
 	print "[AutoRes] switch deinterlacer mode to %s (currently not working)" % mode
 	#f = open('/proc/stb/vmpeg/deinterlace' , "w")
 	#f.write("%s\n" % mode)
 	#f.close()
+
 
 frqdic = {23976: '24',
 		24000: '24',
@@ -55,6 +57,7 @@ frqdic = {23976: '24',
 		50000: '50',
 		59940: '60',
 		60000: '60'}
+
 
 class AutoRes(Screen):
 	def __init__(self, session):
@@ -287,6 +290,7 @@ class AutoRes(Screen):
 				resolutionlabel.show()
 			DisplayHardware.instance.setMode(port, mode, rate)
 
+
 class ResolutionLabel(Screen):
 	height = getDesktop(0).size().height()
 	if height == 2160:
@@ -407,6 +411,7 @@ class AutoResSetupMenu(Screen, ConfigListScreen):
 	def createSummary(self):
 		return SetupSummary
 
+
 def autostart(reason, **kwargs):
 	if "session" in kwargs and resolutionlabel is None:
 		global resolutionlabel
@@ -414,14 +419,17 @@ def autostart(reason, **kwargs):
 		resolutionlabel = session.instantiateDialog(ResolutionLabel)
 		AutoRes(session)
 
+
 def startSetup(menuid):
 	if menuid != "osd_video_audio":
 		return []
 	return [(_("Autoresolution"), autoresSetup, "autores_setup", 45)]
 
+
 def autoresSetup(session, **kwargs):
 	autostart(reason=0, session=session)
 	session.open(AutoResSetupMenu)
+
 
 def Plugins(path, **kwargs):
 	return [PluginDescriptor(where=[PluginDescriptor.WHERE_SESSIONSTART], fnc=autostart),

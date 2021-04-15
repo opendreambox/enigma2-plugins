@@ -23,6 +23,7 @@ loadSkin("%s/skin.xml" % (os.path.dirname(__file__)))
 config.plugins.simpleradio = ConfigSubsection()
 config.plugins.simpleradio.country = ConfigText(default="Germany", fixed_size=False)
 
+
 class RadioScreen(Screen, ServiceStopScreen, InfoBarServiceErrorPopupSupport, InfoBarGstreamerErrorPopupSupport):
 	def __init__(self, session):
 		Screen.__init__(self, session, windowTitle=_("Radio"))

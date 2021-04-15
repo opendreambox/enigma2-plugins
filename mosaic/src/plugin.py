@@ -28,6 +28,7 @@ config.plugins.Mosaic.countdown = ConfigInteger(default=5, limits=config_limits)
 playingIcon = loadPNG(resolveFilename(SCOPE_SKIN_IMAGE, 'skin_default/icons/ico_mp_play.png'))
 pausedIcon = loadPNG(resolveFilename(SCOPE_SKIN_IMAGE, 'skin_default/icons/ico_mp_pause.png'))
 
+
 class Mosaic(Screen):
 	PLAY = 0
 	PAUSE = 1
@@ -320,9 +321,11 @@ class Mosaic(Screen):
 ################################################
 # Most stuff stolen from the GraphMultiEPG
 
+
 Session = None
 Servicelist = None
 BouquetSelectorScreen = None
+
 
 def getBouquetServices(bouquet):
 	services = []
@@ -337,15 +340,18 @@ def getBouquetServices(bouquet):
 			services.append(service)
 	return services
 
+
 def closeBouquetSelectorScreen(ret=None):
 	if BouquetSelectorScreen is not None:
 		BouquetSelectorScreen.close()
+
 
 def openMosaic(bouquet):
 	if bouquet is not None:
 		services = getBouquetServices(bouquet)
 		if len(services):
 			Session.openWithCallback(closeBouquetSelectorScreen, Mosaic, services)
+
 
 def main(session, servicelist, **kwargs):
 	global Session
@@ -360,6 +366,7 @@ def main(session, servicelist, **kwargs):
 			openMosaic(bouquets[0][1])
 		elif len(bouquets) > 1:
 			BouquetSelectorScreen = Session.open(BouquetSelector, bouquets, openMosaic, enableWrapAround=True)
+
 
 def Plugins(**kwargs):
 	return PluginDescriptor(name=_("Mosaic"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main)

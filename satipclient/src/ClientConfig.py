@@ -3,6 +3,7 @@ from Tools.Log import Log
 from Tools.Directories import fileExists
 from SatIPTuner import SatIPTuner
 
+
 class TunerEntry():
 	VTUNER_TYPE_SATIP_CLIENT = "satip_client"
 
@@ -38,18 +39,21 @@ class TunerEntry():
 
 	def getEntryType(self):
 		return self._data.get(self.KEY_VTUNER_TYPE, None)
+
 	def setEntryType(self, type):
 		self._data[self.KEY_VTUNER_TYPE] = type
 	entryType = property(getEntryType, setEntryType)
 
 	def getIpAddress(self):
 		return self._data.get(self.KEY_IPADDR, None)
+
 	def setIpAddress(self, ip):
 		self._data[self.KEY_IPADDR] = ip
 	ipAddress = property(getIpAddress, setIpAddress)
 
 	def getTunerType(self):
 		return self._data.get(self.KEY_TUNER_TYPE, None)
+
 	def setTunerType(self, type):
 		self._data[self.KEY_TUNER_TYPE] = type
 	tunerType = property(getTunerType, setTunerType)
@@ -74,8 +78,10 @@ class TunerEntry():
 	def __repr__(self):
 		return self.__str__()
 
+
 class ClientConfig(object):
 	CONFIG_FILE = eEnv.resolve("${sysconfdir}/vtuner.conf")
+
 	def __init__(self):
 		self._config = {}
 		self.reload()
@@ -138,5 +144,6 @@ class ClientConfig(object):
 				f.write(cfgline)
 				index += 1
 		self.reload()
+
 
 vtunerClientConfig = ClientConfig()

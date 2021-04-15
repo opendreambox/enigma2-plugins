@@ -9,6 +9,8 @@ import os
 import datetime
 
 ########################################################
+
+
 class FC2web(resource.Resource):
     
 	title = "FanControl2 Webinterface"
@@ -110,6 +112,8 @@ class FC2web(resource.Resource):
 		return html
 
 ##########################################################
+
+
 class FC2webLog(resource.Resource):
     
 	title = "FanControl2 Webinterface"
@@ -324,6 +328,7 @@ class FC2webLog(resource.Resource):
 
 		return html
 
+
 def LogRefresh():
 	h = "<html>"
 	h += "<head>"
@@ -332,6 +337,7 @@ def LogRefresh():
 	h += "</html>"
 	h += "</head>"
 	return h
+
 
 def CreateDataHead():
 	if not os.path.exists(config.plugins.FanControl.LogPath.value + "FC2data.csv") and config.plugins.FanControl.EnableDataLog.value and Free(config.plugins.FanControl.LogPath.value):
@@ -345,6 +351,8 @@ def CreateDataHead():
 			pass
 
 ##########################################################
+
+
 class FC2webChart(resource.Resource):
     
 	title = "FanControl2 Webinterface"
@@ -499,6 +507,7 @@ class FC2webChart(resource.Resource):
 		html += "</html>"
 
 		return html
+
 
 def BoxStatus():
 	h = ""

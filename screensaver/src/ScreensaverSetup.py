@@ -4,6 +4,7 @@ from Components.ConfigList import ConfigListScreen
 from Components.ActionMap import ActionMap
 from Components.Sources.StaticText import StaticText
 
+
 class ScreensaverSetup(Screen, ConfigListScreen):
 	def __init__(self, session):
 		title = _("Screensaver - Setup")

@@ -56,6 +56,7 @@ from InternetRadioPiPTVPlayer import InternetRadioPiPTVPlayer
 
 containerStreamripper = None
 
+
 class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTVPlayer):
 
 	FILTERLIST = 0
@@ -270,20 +271,15 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 
 		self.stationListFiltered = []
 
-		
 		self.favoriteConfig = InternetRadioFavoriteConfig()
 		
-		
-
 		self["title"] = Label()
 		self["station"] = Label()
 		self["headertext"] = Label()
 		self["console"] = Label()
 
-
 		self.stationHeaderText = ""
 		self.searchInternetRadioString = ""
-
 
 		self.currentPlayingStation = None 
 
@@ -300,7 +296,6 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		
 		self.stationListURL = "http://www.radio-browser.info/xml.php"
 		self.filterSwitch = {_("Countries"): _("Genres"), _("Genres"): _("Countries")}
-
 
 		self.visuCleanerTimer = eTimer()
 		self.visuCleanerTimer_conn = self.visuCleanerTimer.timeout.connect(self.visuCleanerTimerCallback)
@@ -802,7 +797,6 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 								language=childs.get("language").encode('utf-8', 'ignore'), id=childs.get("id"), homepage=childs.get("homepage").encode('utf-8', 'ignore')))
 		return sorted(stationList, key=lambda stations: stations.name)
 		
-
 	def menu_pressed(self):
 		self.fullScreenAutoActivationTimer.stop()
 		options = [(_("Config"), self.config), (_("Search"), self.search), ]
@@ -840,7 +834,6 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			self.show()
 			self.visible = True
 			self.autoActivationKeyPressed()			
-
 
 	def startUpStation(self, add):
 		if add == True:
@@ -1032,6 +1025,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			if len(favoriteList):
 				self["list"].moveToIndex(index)
 		
+
 class InternetRadioFullScreen(Screen, InternetRadioVisualization):
 
 	sz_w = getDesktop(0).size().width()
@@ -1114,9 +1108,6 @@ class InternetRadioFullScreen(Screen, InternetRadioVisualization):
 				<widget name="top_15" position="687,133" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
 			</screen>"""
 
-
-
-			
 	else:
 		skin = """
 			<screen name="InternetRadioFullScreen" position="0,0" size="720,576" flags="wfNoBorder" backgroundColor="#00000000" title="InternetRadio">
@@ -1156,7 +1147,6 @@ class InternetRadioFullScreen(Screen, InternetRadioVisualization):
 				<widget name="top_15" position="545,133" zPosition="6" size="25,5" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
 			</screen>"""
 
-
 	def __init__(self, session):
 		self.session = session
 		Screen.__init__(self, session)
@@ -1176,7 +1166,6 @@ class InternetRadioFullScreen(Screen, InternetRadioVisualization):
 
 	def setStation(self, station):
 		self["station"].setText(station)
-
 
 	def setVisibility(self, visible):
 		if visible:

@@ -27,6 +27,7 @@ from Components.Sources.StaticText import StaticText
 
 sz_w = getDesktop(0).size().width()
 
+
 class AutoTimerOverviewSummary(Screen):
 	skin = (
 	"""<screen position="0,0" size="132,64" id="1">
@@ -60,6 +61,7 @@ class AutoTimerOverviewSummary(Screen):
 
 	def selectionChanged(self, text):
 		self["entry"].text = text
+
 
 class AutoTimerOverview(Screen, HelpableScreen):
 	"""Overview of AutoTimers"""
@@ -108,7 +110,6 @@ class AutoTimerOverview(Screen, HelpableScreen):
 		# Create List of Timers
 		self["entries"] = AutoTimerList(autotimer.getSortedTupleTimerList())
 		
-
 		# Summary
 		self.onChangedEntry = []
 		self["entries"].onSelectionChanged.append(self.selectionChanged)
@@ -168,7 +169,6 @@ class AutoTimerOverview(Screen, HelpableScreen):
 		reload(AutoTimerFilterList)
 		from AutoTimerFilterList import AutoTimerFilterListOverview
 		self.session.open(AutoTimerFilterListOverview)
-
 
 	def firstExec(self):
 		from plugin import autotimerHelp
@@ -281,7 +281,6 @@ class AutoTimerOverview(Screen, HelpableScreen):
 			#close and save without searching
 			self.save(False)
 
-
 	def menu(self):
 		list = [
 			(_("Preview"), "preview"),
@@ -381,7 +380,6 @@ class AutoTimerOverview(Screen, HelpableScreen):
 						newTimer
 					)
 				
-
 	def save(self, startSearching=True):
 		# Just close here, saving will be done by cb
 		if startSearching:

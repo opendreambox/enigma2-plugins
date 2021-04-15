@@ -22,9 +22,11 @@ from urllib import quote
 
 from .RadioBrowser import Station, Country
 
+
 @zope.interface.implementer(IBodyProducer)
 class StringBodyProducer(object):
 	"""An IBodyProducer implementation that directly produces a string."""
+
 	def __init__(self, body_str, mime_type=None):
 		self._body_str = body_str
 		self.body_str = body_str
@@ -50,13 +52,13 @@ class StringBodyProducer(object):
 	def resumeProducing(self):
 		pass
 
+
 class RadioBrowserClient(object):
 	URL_BASE = "https://de1.api.radio-browser.info/json"
 	URL_COUNTRIES = "/countries"
 	URL_STATIONS = "/stations"
 	URL_STATIONS_BY_NAME = "/stations/byname"
 	URL_STATIONS_BY_COUNTRY = "/stations/bycountry"
-
 
 	def __init__(self):
 		self._agent = BrowserLikeRedirectAgent(Agent(reactor))

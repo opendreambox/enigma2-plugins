@@ -62,8 +62,10 @@ def sessionstart(reason, **kwargs):
 		except ImportError:
 			pass # pah!
 
+
 def main(session, **kwargs):
 	session.open(InternetRadioScreen)
+
 
 def Plugins(**kwargs):
 	list = [PluginDescriptor(name="Internet-Radio", description=_("listen to internet-radio"), where=[PluginDescriptor.WHERE_PLUGINMENU], icon="plugin.png", fnc=main)] # always show in plugin menu

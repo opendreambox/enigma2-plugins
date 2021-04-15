@@ -28,6 +28,7 @@ SKIN = """
 
 ##############################################################################
 
+
 class PermanentClockScreen(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
@@ -39,6 +40,7 @@ class PermanentClockScreen(Screen):
 			self.instance.move(ePoint(config.plugins.PermanentClock.position_x.value, config.plugins.PermanentClock.position_y.value))
 
 ##############################################################################
+
 
 class PermanentClock():
 	def __init__(self):
@@ -63,9 +65,11 @@ class PermanentClock():
 		else:
 			self.dialog.hide()
 
+
 pClock = PermanentClock()
 
 ##############################################################################
+
 
 class PermanentClockPositioner(Screen):
 	def __init__(self, session):
@@ -134,6 +138,7 @@ class PermanentClockPositioner(Screen):
 
 ##############################################################################
 
+
 class PermanentClockMenu(Screen):
 	skin = """
 		<screen position="center,center" size="420,105" title="%s">
@@ -172,12 +177,15 @@ class PermanentClockMenu(Screen):
 
 ##############################################################################
 
+
 def sessionstart(reason, **kwargs):
 	if reason == 0:
 		pClock.gotSession(kwargs["session"])
 
+
 def startConfig(session, **kwargs):
 	session.open(PermanentClockMenu)
+
 
 def main(menuid):
 	if menuid != "system": 
@@ -185,6 +193,7 @@ def main(menuid):
 	return [(_("Permanent Clock"), startConfig, "permanent_clock", None)]
 
 ##############################################################################
+
 
 def Plugins(**kwargs):
 	return [

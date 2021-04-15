@@ -16,6 +16,7 @@ from Tools.FuzzyDate import FuzzyTime
 
 sz_w = getDesktop(0).size().width()
 
+
 class AutoTimerPreview(Screen):
 	"""Preview Timers which would be set"""
 

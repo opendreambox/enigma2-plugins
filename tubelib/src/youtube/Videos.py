@@ -13,6 +13,7 @@ import datetime
 import re
 from Tools.HardwareInfo import HardwareInfo
 
+
 class Videos(YoutubeQueryBase):
 	MOST_POPULAR = "mostPopular"
 
@@ -49,6 +50,7 @@ class Videos(YoutubeQueryBase):
 					Log.w("Skipped video '%s (%s)'" % (v.title, v.id))
 		if self._callback:
 			self._callback(success, videos, data)
+
 
 class Video(object):
 	def __init__(self, entry):
@@ -177,8 +179,11 @@ class Video(object):
 			return self._url
 	url = property(getUrl)
 
+
 from sys import _getframe
 from Tools.LogConfig import LOG_TYPE_INFO, LOG_TYPE_WARNING, LOG_TYPE_ERROR
+
+
 class YTDLLogger(object):
 	def debug(self, msg):
 		self._log(LOG_TYPE_INFO, msg)
@@ -196,6 +201,7 @@ class YTDLLogger(object):
 		except:
 			pass
 		Log._log(logType, msg, callframe)
+
 
 class VideoUrlRequest(object):
 	VIDEO_FMT_PRIORITY_MAP_UHD = [
@@ -267,8 +273,6 @@ class VideoUrlRequest(object):
 			threads.deferToThread(self._request)
 		else:
 			self._request()
-
-
 
 	def _setupFormatMap(self):
 		fmt = self.VIDEO_FMT_PRIORITY_MAP

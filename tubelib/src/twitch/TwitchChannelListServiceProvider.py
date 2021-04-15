@@ -4,6 +4,7 @@ from Tools.Log import Log
 
 from Plugins.SystemPlugins.TubeLib.ChannelListTubeServiceHelper import ChannelListServiceProviderBase, ChannelListTubeServiceHelper
 
+
 class TwitchChannelListServiceProvider(ChannelListServiceProviderBase):
 	TYPE = "twitch"
 	DESCRIPTION = _("twitch.tv Live Channel")
@@ -29,5 +30,6 @@ class TwitchChannelListServiceProvider(ChannelListServiceProviderBase):
 			self._finish(ref)
 		else:
 			self._finish(None)
+
 
 ChannelListTubeServiceHelper.addProvider(TwitchChannelListServiceProvider.TYPE, TwitchChannelListServiceProvider)

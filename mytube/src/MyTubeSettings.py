@@ -7,6 +7,7 @@ from Components.ConfigList import ConfigListScreen
 from Screens.LocationBox import MovieLocationBox
 from Screens.Screen import Screen
 
+
 class MyTubeSettingsScreen(Screen, ConfigListScreen):
 	skin = """
 		<screen name="MyTubeSettingsScreen" position="center,120" size="820,520" title="MyTube - Settings">

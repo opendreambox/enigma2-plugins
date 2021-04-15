@@ -37,8 +37,10 @@ XML_CONFIG = "/etc/enigma2/menusort.xml"
 DEBUG = False
 HIDDENWEIGHT = -195948557
 
+
 class baseMethods:
 	pass
+
 
 class MenuWeights:
 	def __init__(self):
@@ -104,7 +106,10 @@ class MenuWeights:
 
 	def set(self, tuple):
 		self.weights[tuple[0]] = (tuple[3], tuple[4])
+
+
 menuWeights = MenuWeights()
+
 
 def Menu__init__(self, session, parent, *args, **kwargs):
 	baseMethods.Menu__init__(self, session, parent, *args, **kwargs)
@@ -122,6 +127,7 @@ def Menu__init__(self, session, parent, *args, **kwargs):
 		del list[:i]
 
 	self["menu"].list = list
+
 
 class SortableMenuList(MenuList):
 	def __init__(self, list):
@@ -168,6 +174,7 @@ class SortableMenuList(MenuList):
 			l.insert(1, (eListboxPythonMultiContent.TYPE_TEXT, 0, 0, width, height, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER | RT_WRAP, '', None, None, None, self.selectedColor, None, None))
 		return l
 
+
 class SortableMenu(Menu, HelpableScreen):
 	skin = """<screen name="SortableMenu" title="Menu Sort" position="center,120" size="500,520">
 			<ePixmap pixmap="skin_default/buttons/blue.png" position="310,0" size="180,40" alphatest="on" />
@@ -176,6 +183,7 @@ class SortableMenu(Menu, HelpableScreen):
 			<widget source="title" render="Label" position="10,8" size="290,28" font="Regular;24" />
 			<widget name="menu" position="15,60" size="470,450" scrollbarMode="showOnDemand" />
 		</screen>"""
+
 	def __init__(self, *args, **kwargs):
 		baseMethods.Menu__init__(self, *args, **kwargs) # using the base initializer saves us a few cycles
 		HelpableScreen.__init__(self)
@@ -306,6 +314,7 @@ class SortableMenu(Menu, HelpableScreen):
 	def keyNumberGlobal(self, number):
 		pass
 
+
 def autostart(reason, *args, **kwargs):
 	if reason == 0:
 		try:
@@ -321,8 +330,10 @@ def autostart(reason, *args, **kwargs):
 	else:
 		Menu.__init__ = baseMethods.Menu__init__
 
+
 def main(session, *args, **kwargs):
 	session.open(SortableMenu, mdom.getroot())
+
 
 def Plugins(**kwargs):
 	return [

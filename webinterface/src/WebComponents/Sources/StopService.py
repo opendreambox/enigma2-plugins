@@ -1,5 +1,6 @@
 from Components.Sources.Source import Source
 
+
 class StopService(Source):
 	def __init__(self, session):
 		Source.__init__(self)

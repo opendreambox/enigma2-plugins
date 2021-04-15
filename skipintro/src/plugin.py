@@ -12,6 +12,7 @@ baseInfoBarSeek__init__ = None
 baseInfoBarSeek__serviceStarted = None
 baseInfoBarSeek__seekableStatusChanged = None
 
+
 def getServiceName(self):
 		service = self.session.nav.getCurrentService()
 		info = service and service.info()
@@ -29,6 +30,7 @@ def getServiceName(self):
 			return (serviceNameRegexResult.group(1), season) if serviceNameRegexResult else (serviceName, season)
 		else:
 			return (serviceName, season)
+
 
 def InfoBarSeek__serviceStarted(self):
 	print "=== InfoBarSeek__serviceStarted SkipIntro"
@@ -52,6 +54,7 @@ def InfoBarSeek__serviceStarted(self):
 			msgtxt = _("Saved skip time found for\n%s:\n%s seconds") % (self.seriesName, str(self.skipSeekTime / 90000))
 		Notifications.AddNotification(MessageBox, msgtxt, MessageBox.TYPE_INFO, timeout=3)
 
+
 def InfoBarSeek__seekableStatusChanged(self):
 		print "=== InfoBarSeek__seekableStatusChanged SkipIntro"
 		baseInfoBarSeek__seekableStatusChanged(self)
@@ -61,6 +64,7 @@ def InfoBarSeek__seekableStatusChanged(self):
 				self["SkipIntroSeekActions"].setEnabled(False)
 			else:
 				self["SkipIntroSeekActions"].setEnabled(True)
+
 
 def InfoBarSeek__init__(self, actionmap="InfobarSeekActions"):
 	print "== InfoBarSeek__init__ SkipIntro"
@@ -165,6 +169,7 @@ def InfoBarSeek__init__(self, actionmap="InfobarSeekActions"):
 
 ##############################################
 
+
 def autostart(reason, **kwargs):
 	if reason == 0 and "session" in kwargs:
 		session = kwargs["session"]
@@ -184,10 +189,12 @@ def autostart(reason, **kwargs):
 			baseInfoBarSeek__seekableStatusChanged = InfoBarSeek._InfoBarSeek__seekableStatusChanged
 		InfoBarSeek._InfoBarSeek__seekableStatusChanged = InfoBarSeek__seekableStatusChanged
 
+
 def setup(session, **kwargs):
 	session.open(SISetupScreen)
 
 ##############################################
+
 
 def Plugins(**kwargs):
 	from SkipIntroSetup import version

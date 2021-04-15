@@ -8,6 +8,7 @@ from Tools.Log import Log
 
 from .Cec import cec
 
+
 class CecDeviceList(Screen):
 	DEVICE_TYPE = {
 		eCec.ADDR_TV: _("TV"),

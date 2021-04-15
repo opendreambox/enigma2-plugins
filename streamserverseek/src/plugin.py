@@ -21,10 +21,12 @@ if hasattr(static.File, 'render_GET'):
 else:
 	File = static.File
 
+
 class M3u8GzipEncoderFactory(GzipEncoderFactory):
 	def encoderForRequest(self, request):
 		if request.postpath[0].startswith("stream.m3u8"):
 			return GzipEncoderFactory.encoderForRequest(self, request)
+
 
 def autostart(reason, **kwargs):
 	if "session" in kwargs:
@@ -37,6 +39,7 @@ def autostart(reason, **kwargs):
 		root.putChild("proxy", ProxyResource(kwargs["session"]))
 		root.putChild("vod", EncodingResourceWrapper(VodResource(kwargs["session"]), [M3u8GzipEncoderFactory()]))
 		addExternalChild(("streamserverseek", root))
+
 
 def Plugins(**kwargs): 
 	return [PluginDescriptor(where=[PluginDescriptor.WHERE_SESSIONSTART], fnc=autostart)]

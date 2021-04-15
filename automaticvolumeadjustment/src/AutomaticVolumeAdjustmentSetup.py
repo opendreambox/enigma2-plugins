@@ -198,6 +198,7 @@ class AutomaticVolumeAdjustmentEntriesListConfigScreen(Screen):
 			self.automaticVolumeAdjustmentInstance.initializeConfigValues(self["entrylist"].configVA, True) # submit config values
 		self.updateList()
 
+
 class AutomaticVolumeAdjustmentEntryList(MenuList):
 	SKIN_COMPONENT_KEY = "AutomaticVolumeAdjustmentList"
 	SKIN_COMPONENT_TEXT_WIDTH = "textWidth"
@@ -237,6 +238,7 @@ class AutomaticVolumeAdjustmentEntryList(MenuList):
 		self.list = list
 		self.l.setList(list)
 		self.moveToIndex(0)
+
 
 class AutomaticVolumeAdjustmentEntryConfigScreen(ConfigListScreen, Screen):
 	skin = """

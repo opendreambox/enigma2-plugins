@@ -183,6 +183,7 @@ class SISetupScreen(ConfigListScreen, Screen):
 				self.itemChanged = True
 				self.populateList()
 
+
 class SISettingsScreen(ConfigListScreen, Screen):
 
 	if sz_w == 1920:

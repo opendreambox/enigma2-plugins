@@ -3,6 +3,7 @@ from Tools.Log import Log
 from YoutubeQueryBase import YoutubeQueryBase
 from Subscriptions import Subscription
 
+
 class Activities(YoutubeQueryBase):
 	def list(self, callback, home=True, maxResults=25):
 		self._args = {
@@ -23,9 +24,11 @@ class Activities(YoutubeQueryBase):
 				activities.append(Subscription(item))
 		self._callback(success, activities)
 
+
 class Activity(object):
 	TYPE_UPLOAD = "upload"
 	TYPE_RECOMMENDATION = "recommendation"
+
 	def __init__(self, entry):
 		self._entry = entry
 

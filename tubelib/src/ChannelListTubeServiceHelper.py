@@ -1,6 +1,7 @@
 from Screens.ChoiceBox import ChoiceBox
 from Tools.Log import Log
 
+
 class ChannelListServiceProviderBase(object):
 	def __init__(self, session, csel, callback):
 		self._session = session
@@ -14,6 +15,7 @@ class ChannelListServiceProviderBase(object):
 
 	def _finish(self, ref):
 		self._callback(self._csel, ref)
+
 
 class ChannelListTubeServiceHelper(object):
 	PROVIDER = {}

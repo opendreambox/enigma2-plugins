@@ -4,6 +4,7 @@ from Components.ResourceManager import resourcemanager
 from Screens.Screen import Screen
 from Tools.Log import Log
 
+
 class SatIPTuner(object):
 	TUNER_TYPE_S = "DVBS"
 	TUNER_TYPE_S2 = "DVBS2"
@@ -51,12 +52,14 @@ class SatIPTuner(object):
 		return ", ".join(caps)
 	readableCaps = property(getReadableCaps)
 
+
 class SatIPTunerOverview(Screen):
 	skin = """
 		<screen name="SatIPTunerOverview" position="center,120" size="720,520" title="Sat>IP Tuner Overview">
 			<widget name="list" position="5,5" size="510,510" scrollbarMode="showOnDemand" zPosition="1"/>
 		</screen>
 	"""
+
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self._cp = resourcemanager.getResource("UPnPControlPoint")

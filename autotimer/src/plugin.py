@@ -41,6 +41,7 @@ except Exception as e:
 	print("[AutoTimer] Error registering Notification-Domain:", e)
 # Autostart
 
+
 def autostart(reason, **kwargs):
 	global autopoller
 
@@ -71,6 +72,8 @@ def autostart(reason, **kwargs):
 			autotimer.writeXml()
 
 # Webgui
+
+
 def sessionstart(reason, **kwargs):
 	if reason == 0 and "session" in kwargs:
 		try:
@@ -117,6 +120,8 @@ def sessionstart(reason, **kwargs):
 			addExternalChild(("autotimereditor", root, "AutoTimer", "1", True))
 
 # Mainfunction
+
+
 def main(session, **kwargs):
 	global autopoller
 
@@ -142,6 +147,7 @@ def main(session, **kwargs):
 		autotimer
 	)
 
+
 def handleAutoPoller():
 	global autopoller
 
@@ -154,6 +160,7 @@ def handleAutoPoller():
 	# Remove instance if not running in background
 	else:
 		autopoller = None
+
 
 def editCallback(session):
 	# Don't parse EPG if editing was canceled
@@ -175,6 +182,7 @@ def editCallback(session):
 #	if config.plugins.autotimer.always_write_config.value:
 #		autotimer.writeXml()
 #	handleAutoPoller()
+
 
 def showFinishPopup(ret):
 	
@@ -207,6 +215,7 @@ def showFinishPopup(ret):
 		{"matches": ret[0], "timer": ret[1], "modified": ret[2], "conflicts": len(ret[4]), "similars": len(ret[5])} + "\n\n" + str(searchlog_txt),
 		MessageBox.TYPE_INFO, config.plugins.autotimer.popup_timeout.value, domain=NOTIFICATIONDOMAIN, id='AT_PopUp_ID_ParseEPGCallback')
 
+
 def parseEPGCallback(ret):
 	
 	showFinishPopup(ret)
@@ -217,17 +226,23 @@ def parseEPGCallback(ret):
 	handleAutoPoller()
 
 # Movielist
+
+
 def movielist(session, service, **kwargs):
 	from AutoTimerEditor import addAutotimerFromService
 	addAutotimerFromService(session, service)
 
 # Event Info
+
+
 def eventinfo(session, servicelist, **kwargs):
 	from AutoTimerEditor import AutoTimerEPGSelection
 	ref = session.nav.getCurrentlyPlayingServiceReference()
 	session.open(AutoTimerEPGSelection, ref)
 
 # EventView or EPGSelection
+
+
 def eventview(session, event, ref):
 	from AutoTimerEditor import addAutotimerFromEvent, addAutotimerFromService, importerCallback
 	if ref.getPath() and ref.getPath()[0] == "/":
@@ -238,10 +253,14 @@ def eventview(session, event, ref):
 
 # XXX: we need this helper function to identify the descriptor
 # Extensions menu - open Autotimer
+
+
 def extensionsmenu(session, **kwargs):
 	main(session, **kwargs)
 
 # Extensions menu - only scan Autotimer
+
+
 def extensionsmenu_scan(session, **kwargs):
 	
 	try:
@@ -279,6 +298,7 @@ def housekeepingExtensionsmenu(el):
 		except ValueError as ve:
 			doLog("[AutoTimer] housekeepingExtensionsmenu got confused, tried to remove non-existant plugin entry... ignoring.")
 
+
 def housekeepingFilmmenu(el):
 	if el.value:
 		plugins.addPlugin(filmDescriptor_addto)
@@ -288,12 +308,14 @@ def housekeepingFilmmenu(el):
 		except ValueError as ve:
 			doLog("[AutoTimer] housekeepingFilmmenu got confused, tried to remove non-existant plugin entry... ignoring.")
 
+
 config.plugins.autotimer.show_in_extensionsmenu.addNotifier(housekeepingExtensionsmenu, initial_call=False, immediate_feedback=True)
 extDescriptor = PluginDescriptor(name="AutoTimer", description=_("Edit Timers and scan for new Events"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=extensionsmenu, needsRestart=False)
 extDescriptor_scan = PluginDescriptor(name="AutoTimer scan", description=_("scan for new Events"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=extensionsmenu_scan, needsRestart=False)
 
 config.plugins.autotimer.show_addto_in_filmmenu.addNotifier(housekeepingFilmmenu, initial_call=False, immediate_feedback=True)
 filmDescriptor_addto = PluginDescriptor(name=_("add to AutoTimer filter list"), description=_("add to AutoTimer filter list"), where=PluginDescriptor.WHERE_MOVIELIST, fnc=add_to_filterList, needsRestart=False)
+
 
 def Plugins(**kwargs):
 	l = [

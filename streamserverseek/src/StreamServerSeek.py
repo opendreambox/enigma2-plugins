@@ -15,11 +15,14 @@ else:
 
 from subprocess import call
 
+
 class StreamServerSeekNoSessionException(BaseException):
 	pass
 
+
 class StreamServerSeekAlreadyInitializedException(BaseException):
 	pass
+
 
 class StreamServerSeek(PerServiceBase):
 	__instance = None
@@ -59,7 +62,6 @@ class StreamServerSeek(PerServiceBase):
 				iPlayableService.evEOF: self._onEOF,
 				iPlayableService.evPlay: self._onPlaying
 			}, with_event=False)
-		
 		
 		self._timer = eTimer()
 		self._timer_conn = self._timer.timeout.connect(self.endTemporaryLiveMode)

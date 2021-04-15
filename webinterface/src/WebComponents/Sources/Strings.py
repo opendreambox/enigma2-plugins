@@ -1,5 +1,6 @@
 from Components.Sources.Source import Source
 
+
 class Strings(Source):
 	def __init__(self):
 		Source.__init__(self)
@@ -8,6 +9,7 @@ class Strings(Source):
 	This returns all string the webinterface requires, currently translated into the language that's configured in e2
 	With a small hack it should be possible to actually return the strings in the browser's/requester's language
 	"""
+
 	def getList(self):
 		return [
 			["television", _("TeleVision")],

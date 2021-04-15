@@ -1,5 +1,6 @@
 from ThreadedRequest import ThreadedRequest
 
+
 class YoutubeQueryBase(object):
 	def __init__(self, youtube):
 		self._youtube = youtube

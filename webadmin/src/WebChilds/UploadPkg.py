@@ -6,6 +6,7 @@ from twisted.web import http, resource, server
 
 from PKG import PKGConsoleStream
 
+
 class UploadPkgResource(resource.Resource):
 	res = """
 	<?xml version="1.0" encoding="UTF-8"?>

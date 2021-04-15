@@ -11,8 +11,10 @@ from Components.config import config
 
 from . import STARTNOTIFICATIONID, NOTIFICATIONDOMAIN
 
+
 class RecordAdapter:
 	backgroundCapable = True
+
 	def __init__(self, session):
 		self.backgroundRefreshAvailable = True
 		self.__service = None

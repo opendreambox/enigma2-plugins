@@ -5,6 +5,8 @@ from twisted.protocols.ftp import FTPClient, FTPFileListProtocol
 from os import SEEK_END
 
 # XXX: did I ever actually test supportPartial?
+
+
 class FTPDownloader(Protocol):
 	"""Download to a file from FTP."""
 

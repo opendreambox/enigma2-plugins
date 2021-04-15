@@ -3,6 +3,7 @@ from Components.Language import language
 from Tools.ISO639 import ISO639Language
 from enigma import eServiceReference
 
+
 class Autoselect639Language(ISO639Language):
 		def __init__(self):
 			ISO639Language.__init__(self, self.SECONDARY)
@@ -29,6 +30,7 @@ class Autoselect639Language(ISO639Language):
 				choices_dict["en"] = enlangname
 				defaults.append("en")
 			return (choices_dict, choices_list, defaults)
+
 
 class TrackAutoselectConfig():
 	CATEGORY_AUDIO_ORDER = _("Sort order of audio parameters")

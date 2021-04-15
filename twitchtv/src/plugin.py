@@ -27,14 +27,17 @@ loadSkin("%s/skin.xml" % (PLUGIN_PATH))
 config.plugins.twitchtv = ConfigSubsection()
 config.plugins.twitchtv.user = ConfigText(default="", fixed_size=False)
 
+
 class TwitchInputBox(InputBox):
 	pass
+
 
 class TLSSNIContextFactory(ssl.ClientContextFactory):
 	def getContext(self, hostname=None, port=None):
 		ctx = ssl.ClientContextFactory.getContext(self)
 		ClientTLSOptions(hostname, ctx)
 		return ctx
+
 
 class TwitchStreamGrid(Screen):
 	TMP_PREVIEW_FILE_PATH = "/tmp/twitch_channel_preview.jpg"
@@ -225,6 +228,7 @@ class TwitchStreamGrid(Screen):
 		self._defaultPixmap = self._picload.getData()
 		self.reload()
 
+
 class TwitchLiveStreams(TwitchStreamGrid):
 	def __init__(self, session, game=None, windowTitle=_("Live Streams")):
 		TwitchStreamGrid.__init__(self, session, windowTitle=windowTitle)
@@ -232,8 +236,10 @@ class TwitchLiveStreams(TwitchStreamGrid):
 
 	def _onRed(self):
 		self.goDetails()
+
 	def _onGreen(self):
 		self.addToFavs()
+
 	def _onBlue(self):
 		self.reload()
 
@@ -269,6 +275,7 @@ class TwitchLiveStreams(TwitchStreamGrid):
 		if stream is None or not isinstance(stream, TwitchVideoBase):
 			return
 		self.twitchMiddleware.watchLivestream(self.session, stream.channel)
+
 
 class TwitchChannelVideos(TwitchStreamGrid):
 	TYPE_ARCHIVE = "archive"
@@ -342,6 +349,7 @@ class TwitchChannelVideos(TwitchStreamGrid):
 		if vod is None or not isinstance(vod, TwitchVideoBase):
 			return
 		self.twitchMiddleware.watchVOD(self.session, vod)
+
 
 class TwitchChannelDetails(Screen):
 	TMP_BANNER_FILE_PATH = "/tmp/twitch_channel_banner.jpg"
@@ -473,6 +481,7 @@ class TwitchChannelDetails(Screen):
 	def getChannelVideos(self):
 		self.session.open(TwitchChannelVideos, self.channel)
 
+
 class TwitchChannelList(Screen):
 	def __init__(self, session, channels=[], windowTitle=_("Favorites")):
 		Screen.__init__(self, session, windowTitle=windowTitle)
@@ -554,6 +563,7 @@ class TwitchChannelList(Screen):
 			return
 		self.twitchMiddleware.removeFromFavorites(channel)
 		self.reload()
+
 
 class TwitchGamesGrid(TwitchStreamGrid):
 	TMP_PREVIEW_FILE_PATH = "/tmp/twitch_game_cover.jpg"
@@ -712,6 +722,7 @@ class TwitchMain(Screen):
 			self.session.open(TwitchChannelList, channels=channels, windowTitle=_("%s folllows %s channels") % (config.plugins.twitchtv.user.value, len(channels)))
 		else:
 			self.session.toastManager.showToast(_("%s does not follow any channel") % (config.plugins.twitchtv.user.value,))
+
 
 def main(session, **kwargs):
 	session.open(TwitchMain)

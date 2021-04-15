@@ -12,6 +12,7 @@ from Screens.HelpMenu import HelpableScreen
 from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
 
+
 class AC3LipSync(Screen, HelpableScreen, MovableScreen):
 
     def __init__(self, session, plugin_path):
@@ -232,6 +233,7 @@ class AC3LipSync(Screen, HelpableScreen, MovableScreen):
 
         self["ServiceInfo"].setText(sActiveAudio)
             
+
 class AC3SetCustomValue:
     def __init__(self, session, iDelay, keyStep):
         self.keyStep = keyStep

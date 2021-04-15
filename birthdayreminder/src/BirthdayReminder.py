@@ -151,6 +151,7 @@ class BirthdayStore:
 	def getEntry(self, idx):
 		return self.bDayList[idx]
 		
+
 class BirthdayReminder(Screen, HelpableScreen):
 	skin = """
 		<screen position="center,center" size="560,320" title="%s" >
@@ -486,6 +487,7 @@ class BirthdayReminder(Screen, HelpableScreen):
 		print "[Birthday Reminder] broadcasting list offer"
 		self.birthdaytimer.broadcastProtocol.sendBroadcast("offeringList")
 		
+
 class BirthdayList(List):
 	def __init__(self, list=[], enableWrapAround=False, item_height=25, fonts=[]):
 		List.__init__(self, list=[], enableWrapAround=False, item_height=25, fonts=[])
@@ -525,6 +527,7 @@ class BirthdayList(List):
 		else:
 			return None
 		
+
 class EditBirthdayScreen(Screen, ConfigListScreen, HelpableScreen):
 	skin = """
 		<screen position="center,center" size="560,320" >
@@ -598,6 +601,7 @@ class EditBirthdayScreen(Screen, ConfigListScreen, HelpableScreen):
 		except ValueError:
 			self["error"].show()
 			
+
 class BirthdayReminderSettings(Screen, ConfigListScreen, HelpableScreen):
 	skin = """
 		<screen position="center,center" size="560,320" title="%s" >
@@ -690,6 +694,7 @@ class BirthdayReminderSettings(Screen, ConfigListScreen, HelpableScreen):
 	def editBirthdays(self):
 		self.session.open(BirthdayReminder, self.birthdaytimer)
 		
+
 class PathSelectionScreen(Screen):
 	skin = """
 		<screen position="center,center" size="560,320" title="%s" >
@@ -760,6 +765,7 @@ class PathSelectionScreen(Screen):
 		else:
 			self["target"].setText(_("Invalid Location"))
 			
+
 def getAge(birthday):
 	today = date.today()
 	

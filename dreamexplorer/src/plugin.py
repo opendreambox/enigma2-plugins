@@ -65,16 +65,20 @@ config.plugins.DreamExplorer = ConfigSubsection()
 config.plugins.DreamExplorer.startDir = ConfigText(default="/")
 config.plugins.DreamExplorer.useMediaFilter = ConfigOnOff(default=False)
 
+
 def Plugins(path, **kwargs):
 	return [
 		PluginDescriptor(name=_("Dream Explorer"), description=_("A file explorer for DreamOS"), where=[PluginDescriptor.WHERE_PLUGINMENU], icon="dreamexplorer.png", fnc=main),
 		PluginDescriptor(name=_("Dream Explorer"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main)
 	]
 
+
 def main(session, **kwargs):
 	session.open(DreamExplorer3)
 
 ######## DREAM-EXPLORER START #######################
+
+
 class DreamExplorer3(Screen):
 	if getDesktop(0).size().width() >= 1920:
 		skin = """
@@ -160,7 +164,6 @@ class DreamExplorer3(Screen):
 			<widget name="chmodtext" font="Regular;16" halign="left" position="515,620" size="180,30" transparent="1" valign="center" zPosition="6"/>
 			<widget name="playtext" font="Regular;16" halign="left" position="745,620" size="180,30" transparent="1" valign="center" zPosition="6"/>
 		</screen>"""
-
 
 	def __init__(self, session, args=None):
 		self.skin = DreamExplorer3.skin
@@ -725,6 +728,7 @@ class DreamExplorer3(Screen):
 
 ######## DREAM-EXPLORER END ####################### 
 
+
 class BookmarkManager(Screen):
 	if getDesktop(0).size().width() >= 1920:
 		skin = """
@@ -788,6 +792,7 @@ class BookmarkManager(Screen):
 			<widget  name="exit" font="Regular;16" halign="left" position="330,575" size="180,30" transparent="1" valign="center" zPosition="6"/>
 		</screen>
 		"""		
+
 	def __init__(self, session, args=None):
 		Screen.__init__(self, session)
 		
@@ -920,6 +925,7 @@ class BookmarkManager(Screen):
 			for bookmark in self.bookmarks:
 				file.write(bookmark + "\n")
 
+
 class vEditor2(Screen):
 	if getDesktop(0).size().width() >= 1920:
 		skin = """
@@ -1041,10 +1047,12 @@ class vEditor2(Screen):
 				f.writelines([x[0] for x in self.list])
 		self.close()
 
+
 class MviExplorer(Screen):
 	skin = """
 		<screen position="-300,-300" size="10,10" title="mvi-Explorer">
 		</screen>"""
+
 	def __init__(self, session, file):
 		self.skin = MviExplorer.skin
 		Screen.__init__(self, session)
@@ -1058,6 +1066,7 @@ class MviExplorer(Screen):
 		
 	def showMvi(self):
 		call(['showiframe', self.filename])
+
 
 class MoviePlayer(MP_parent):
 	def __init__(self, session, service):
@@ -1093,6 +1102,7 @@ class MoviePlayer(MP_parent):
 			pass
 		self.close()
 
+
 class MusicExplorer(MoviePlayer):
 	skin = """
 	<screen backgroundColor="#50070810" flags="wfNoBorder" name="MusicExplorer" position="center,center" size="720,30">
@@ -1103,6 +1113,7 @@ class MusicExplorer(MoviePlayer):
 			<convert type="ServiceName">Name</convert>
 		</widget>
 	</screen>"""
+
 	def __init__(self, session, service, MusicDir, theFile):
 		self.session = session
 		MoviePlayer.__init__(self, session, service)
@@ -1153,6 +1164,7 @@ class MusicExplorer(MoviePlayer):
 		if not playing:
 			return
 		self.seekFwd()
+
 
 class FolderSelection(Screen):
 	if getDesktop(0).size().width() >= 1920:
@@ -1264,6 +1276,7 @@ class FolderSelection(Screen):
 	def callbackSetSymlinkName(sefl, answer):
 		if answer:
 			self.linkname = answer
+
 
 class SystemdViewer(Screen):
 	if getDesktop(0).size().width() >= 1920:

@@ -9,6 +9,7 @@ from Tools.Log import Log
 
 from twisted.web.client import downloadPage
 
+
 class MyPixmap(Pixmap):
 	def postWidgetCreate(self, instance):
 		Pixmap.postWidgetCreate(self, instance)

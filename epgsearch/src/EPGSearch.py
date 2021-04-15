@@ -60,13 +60,17 @@ try:
 except ImportError:
 	autoTimerAvailable = False
 
+
 def searchEvent(session, event, service):
 	if not event:
 		return
 	session.open(EPGSearch, event.getEventName())
 
+
 # Overwrite pzyP4T.__init__ with our modified one
 basePzyP4T__init__ = None
+
+
 def pzyP4TInit():
 	global basePzyP4T__init__
 	try:
@@ -78,6 +82,8 @@ def pzyP4TInit():
 		basepzyP4T__init__ = None
 
 # Modified PzyP4T__init__ for audio-key
+
+
 def PzyP4T__init__(self, session):
 	basePzyP4T__init__(self, session)
 
@@ -93,6 +99,8 @@ def PzyP4T__init__(self, session):
 			})
 
 # Modified EPGSearchList with support for PartnerBox
+
+
 class EPGSearchList(EPGList):
 	def __init__(self, type=EPG_TYPE_SINGLE, selChangedCB=None, timer=None):
 		EPGList.__init__(self, type, selChangedCB, timer)
@@ -174,6 +182,8 @@ class EPGSearchList(EPGList):
 		return res
 
 # main class of plugin
+
+
 class EPGSearch(EPGSelection):
 	def __init__(self, session, *args, **kwargs):
 		Screen.__init__(self, session)
@@ -766,6 +776,7 @@ class EPGSearch(EPGSelection):
 
 			return service_list
 
+
 class EPGSearchTimerImport(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
@@ -812,6 +823,7 @@ class EPGSearchTimerImport(Screen):
 	def cancel(self):
 		self.close(None)
 
+
 class EPGSearchChannelSelection(SimpleChannelSelection):
 	def __init__(self, session):
 		SimpleChannelSelection.__init__(self, session, _("Channel Selection"))
@@ -837,6 +849,7 @@ class EPGSearchChannelSelection(SimpleChannelSelection):
 	def epgClosed(self, ret=None):
 		if ret:
 			self.close(ret)
+
 
 class EPGSearchEPGSelection(EPGSelection):
 	def __init__(self, session, ref, openPlugin):

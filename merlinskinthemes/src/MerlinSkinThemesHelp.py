@@ -5,6 +5,7 @@ from Screens.Screen import Screen
 from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT, RT_HALIGN_CENTER, RT_HALIGN_RIGHT, RT_VALIGN_CENTER
 from skin import TemplatedListFonts, componentSizes
 
+
 class MerlinSkinThemesHelpList(MenuList):
 	SKIN_COMPONENT_KEY = "MerlinSkinThemesHelpList"
 	SKIN_COMPONENT_KEY_WIDTH = "keyWidth"
@@ -30,6 +31,7 @@ class MerlinSkinThemesHelpList(MenuList):
 			(eListboxPythonMultiContent.TYPE_TEXT, 5 + self.keyWidth, 0, self.descrWidth, self.componentItemHeight, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, descriptionText)
 				]
 		return res
+
 
 class MerlinSkinThemesHelp(Screen):
 	skin = """

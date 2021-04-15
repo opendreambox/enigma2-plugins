@@ -1,5 +1,6 @@
 from Plugins.Extensions.WebInterface.WebScreens import WebScreen
 
+
 class StreamServerSeekWebScreen(WebScreen):
 	def __init__(self, session, request):
 		WebScreen.__init__(self, session, request)
@@ -16,6 +17,7 @@ class StreamServerSeekWebScreen(WebScreen):
 		self["FastBackward"] = StreamServerSeekSource(session, StreamServerSeekSource.FAST_BACKWARD)
 		self["SlowMotion"] = StreamServerSeekSource(session, StreamServerSeekSource.SLOW_MOTION)
 		self["Play"] = StreamServerSeekSource(session, StreamServerSeekSource.PLAY)
+
 
 class StreamServerSeekInfoWebScreen(WebScreen):
 	def __init__(self, session, request):

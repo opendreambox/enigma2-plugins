@@ -6,6 +6,7 @@ from Tools.Log import Log
 from PhotoScreensaver import PhotoScreensaver
 from ScreensaverSetup import ScreensaverSetup
 
+
 class ScreenSaverHandler(object):
 	def __init__(self):
 		self.session = None
@@ -57,21 +58,27 @@ class ScreenSaverHandler(object):
 		elif evt in (iPlayableService.evStopped, iPlayableService.evPause, iPlayableService.evEnd):
 			self._screenSaver.enabled = True
 
+
 screenSaverHandler = ScreenSaverHandler()
+
 
 def runSetup(session, *args):
 	session.open(ScreensaverSetup)
+
 
 def menu(menuid, *args):
 	if menuid == "osd_video_audio":
 		return [(_("Screensaver"), runSetup, "screensaver", 100)]
 	return []
 
+
 def infobar(session):
 	screenSaverHandler.start(session)
 
+
 def main(session, **kwargs):
 	session.open(PhotoScreensaver)
+
 
 def Plugins(**kwargs):
 	return [

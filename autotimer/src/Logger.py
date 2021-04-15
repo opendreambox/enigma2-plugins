@@ -28,6 +28,7 @@ localLog = False
 log = ""
 logger = None
 
+
 def initLog():
 	global logger
 	logger = logger or logging.getLogger("AutoTimer")
@@ -55,20 +56,24 @@ def initLog():
 		logger.addHandler(fhandler)
 		logger.setLevel(logging.DEBUG)
 
+
 def shutdownLog():
 	global logger
 	if logger:
 		logger.shutdown()
+
 
 def startLog():
 	global log, localLog
 	log = ""
 	localLog = True
 
+
 def getLog():
 	global log, localLog
 	localLog = False
 	return log
+
 
 def doDebug(*args):
 	strargs = " ".join([str(arg) for arg in args])
@@ -79,6 +84,7 @@ def doDebug(*args):
 	
 	elif config.plugins.autotimer.log_shell.value:
 		print strargs
+
 
 def doLog(*args):
 	strargs = " ".join([str(arg) for arg in args])
@@ -93,5 +99,6 @@ def doLog(*args):
 	
 	elif config.plugins.autotimer.log_shell.value:
 		print strargs
+
 
 initLog()

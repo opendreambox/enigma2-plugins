@@ -1,6 +1,7 @@
 from MPHelp import HelpPage
 from xml.etree.cElementTree import parse as cet_parse
 
+
 class XMLHelpPage(HelpPage):
 	def __init__(self, node, translate=_):
 		# calling HelpPage.__init__ is not required
@@ -15,6 +16,7 @@ class XMLHelpPage(HelpPage):
 
 	def getTitle(self):
 		return self.__translate(self.node.get('title', ''))
+
 
 class XMLHelpReader:
 	def __init__(self, filename, translate=_):
@@ -35,5 +37,6 @@ class XMLHelpReader:
 				return self.__dom.get('skin', "") # additional skin name
 			raise IndexError('no more indices')
 		raise RuntimeError('no valid dom')
+
 
 __all__ = ['XMLHelpReader']

@@ -6,6 +6,7 @@ from Screens.ChoiceBox import ChoiceBox
 from Screens.InfoBarGenerics import InfoBarNotifications, InfoBarSeek
 from Screens.Screen import Screen
 
+
 class MyTubePlayer(Screen, InfoBarNotifications, InfoBarSeek):
 	STATE_IDLE = 0
 	STATE_PLAYING = 1
@@ -94,7 +95,6 @@ class MyTubePlayer(Screen, InfoBarNotifications, InfoBarSeek):
 				"seekBack": self.playPrevFile,
 				"showEventInfo": self.showVideoInfo,
 			}, -2)
-
 
 		self.lastservice = lastservice
 
@@ -206,7 +206,6 @@ class MyTubePlayer(Screen, InfoBarNotifications, InfoBarSeek):
 		print "unPauseService"
 		if self.state == self.STATE_PAUSED:
 			self.setSeekState(self.STATE_PLAYING)
-
 
 	def getSeek(self):
 		service = self.session.nav.getCurrentService()

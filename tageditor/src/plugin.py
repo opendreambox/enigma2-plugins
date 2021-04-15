@@ -10,8 +10,10 @@ from Components.SelectionList import SelectionList
 from enigma import eServiceReference, eServiceCenter, iServiceInformation, getDesktop
 from os import path as os_path
 
+
 def main(session, service, **kwargs):
 	session.open(MovieTagEditor, service, session.current_dialog, **kwargs)
+
 
 def Plugins(**kwargs):
 	try:
@@ -21,6 +23,7 @@ def Plugins(**kwargs):
 		pass
 	# TRANSLATORS: this is the string used in the movie context menu for TagEditor
 	return PluginDescriptor(name="TagEditor", description=_("edit tags"), where=PluginDescriptor.WHERE_MOVIELIST, fnc=main, needsRestart=False)
+
 
 class TagEditor(Screen):
 	sz_w = getDesktop(0).size().width()
@@ -293,6 +296,7 @@ class TagEditor(Screen):
 		if not self.origtags == self.tags:
 			self.saveTagsFile(self.tags)
 		self.close(list)
+
 
 class MovieTagEditor(TagEditor):
 	def __init__(self, session, service, parent, args=0):

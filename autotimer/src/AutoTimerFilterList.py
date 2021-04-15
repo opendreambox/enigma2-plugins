@@ -22,6 +22,7 @@ import datetime
 
 sz_w = getDesktop(0).size().width()
 
+
 class AutoTimerFilterList(MenuList):
 	"""Defines a simple Component to show Timer name"""
 
@@ -50,7 +51,6 @@ class AutoTimerFilterList(MenuList):
 		self.skinAttributes = attribs
 		return MenuList.applySkin(self, desktop, parent)
 
-
 	def buildListboxEntry(self, filter_txt):
 		
 		size = self.l.getItemSize()
@@ -78,7 +78,6 @@ class AutoTimerFilterList(MenuList):
 				self.instance.moveSelectionTo(idx)
 				break
 			idx += 1
-
 
 
 class AutoTimerFilterListOverview(Screen):
@@ -179,7 +178,6 @@ class AutoTimerFilterListOverview(Screen):
 	def setCustomTitle(self):
 		self.setTitle("AutoTimer " + _("Filter List"))
 
-
 	def updateFilterDate(self):
 		cur = self["config"].getCurrent()
 		if cur is not None:
@@ -187,7 +185,6 @@ class AutoTimerFilterListOverview(Screen):
 			timertime = datetime.datetime.fromtimestamp(cur[2]).strftime("%d.%m.%Y, %H:%M")
 			self["help"].text = "Timer from:\n" + timertime
 			pass
-
 
 	def sortList(self):
 		
@@ -206,7 +203,6 @@ class AutoTimerFilterListOverview(Screen):
 		
 		self["config"].setList(self.FilterList)
 		
-
 	def selectionChanged(self):
 		#sel = self["entries"].getCurrent()
 		#text = sel and sel.name or ""
@@ -216,7 +212,6 @@ class AutoTimerFilterListOverview(Screen):
 			#except Exception:
 				#pass
 		pass
-
 
 	def add(self):
 		
@@ -228,13 +223,11 @@ class AutoTimerFilterListOverview(Screen):
 		if current is not None:
 			self.session.openWithCallback(self.add_edit_Callback, AutoTimerFilterListEditor, current, 'add')
 
-
 	def ok(self):
 		# ok on selected filter
 		current = self["config"].getCurrent()
 		if current is not None:
 			self.session.openWithCallback(self.add_edit_Callback, AutoTimerFilterListEditor, current, 'edit')
-
 
 	def add_edit_Callback(self, ret, add_edit):
 		
@@ -267,7 +260,6 @@ class AutoTimerFilterListOverview(Screen):
 			
 			self.changed = True
 
-
 	def remove(self):
 		# Remove selected Filter
 		current = self["config"].getCurrent()
@@ -284,13 +276,11 @@ class AutoTimerFilterListOverview(Screen):
 			
 			self.changed = True
 
-
 	def cancel(self):
 		if self.changed:
 			self.session.openWithCallback(self.cancelConfirm, ChoiceBox, title=_('Really close without saving settings?\nWhat do you want to do?'), list=[(_('close without saving'), 'close'), (_('close and save'), 'close_save'), (_('cancel'), 'exit'), ])
 		else:
 			self.close()
-
 
 	def cancelConfirm(self, ret):
 		ret = ret and ret[1]
@@ -300,7 +290,6 @@ class AutoTimerFilterListOverview(Screen):
 		elif ret == 'close_save':
 			#close and save without searching
 			self.save()
-
 
 	def save(self):
 			
@@ -352,8 +341,6 @@ class AutoTimerFilterListEditor(Screen, ConfigListScreen):
 		<widget name="config" position="10,60" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand"/>
 	</screen>"""
 
-
-
 	def __init__(self, session, filterEntry, add_edit):
 		Screen.__init__(self, session)
 
@@ -401,10 +388,8 @@ class AutoTimerFilterListEditor(Screen, ConfigListScreen):
 			import traceback
 			traceback.print_exc()
 
-
 	def setCustomTitle(self):
 		self.setTitle(_("AutoTimer %s Filter List Entry") % self.add_edit)
-
 
 	def changed(self):
 		pass
@@ -414,7 +399,6 @@ class AutoTimerFilterListEditor(Screen, ConfigListScreen):
 			except Exception:
 				pass
 
-
 	def cancel(self):
 		
 		if self["config"].isChanged():
@@ -422,12 +406,10 @@ class AutoTimerFilterListEditor(Screen, ConfigListScreen):
 		else:
 			self.close(None, self.add_edit)
 
-
 	def cancelConfirm(self, ret):
 		
 		if ret:
 			self.close(None, self.add_edit)
-
 
 	def save(self):
 		

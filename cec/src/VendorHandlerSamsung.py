@@ -3,6 +3,7 @@ from enigma import eCec
 
 from .VendorHandlerBase import VendorHandlerBase
 
+
 class VendorHandlerSamsung(VendorHandlerBase):
 	MAGIC_TOKEN = 0x23
 

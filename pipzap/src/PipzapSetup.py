@@ -12,6 +12,7 @@ from Components.Sources.StaticText import StaticText
 # Configuration
 from Components.config import config, getConfigListEntry
 
+
 class PipzapSetup(Screen, ConfigListScreen):
 	skin = """<screen name="PipzapSetup" position="center,center" size="565,370">
 		<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" scale="stretch" alphatest="on" />
@@ -75,7 +76,6 @@ class PipzapSetup(Screen, ConfigListScreen):
 		
 		self.onLayoutFinish.append(self.setCustomTitle)
 
-
 	def buildConfig(self):
 			
 			self.list.append(getConfigListEntry(_("Enable Hotkey"), config.plugins.pipzap.enable_hotkey, _("Use the STOP-Key to quickly enable/disable pipzap in TV-Mode? Changing this setting requires a restart.")))
@@ -85,7 +85,6 @@ class PipzapSetup(Screen, ConfigListScreen):
 			self.list.append(getConfigListEntry(_("Show indicator label if zapping PiP"), config.plugins.pipzap.show_label, _("Displays a label in the opposite corner of PiP if pipzap is enabled.")))
 			if config.plugins.pipzap.show_label.value:
 				self.list.append(getConfigListEntry(_("  Show label with channelname under PiP"), config.plugins.pipzap.show_channelname, _("Displays the channelname in a label directly under the PiP - instead of indicator label.")))
-
 
 	def setCustomTitle(self):
 		self.setTitle(self.setup_title)

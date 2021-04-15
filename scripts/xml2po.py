@@ -14,6 +14,7 @@ except ImportError:
 		pass
 	no_comments = True
 
+
 class parseXML(ContentHandler, LexicalHandler):
 	def __init__(self, attrlist, file):
 		self.isPointsElement, self.isReboundsElement = 0, 0

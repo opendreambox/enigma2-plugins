@@ -60,9 +60,11 @@ config.plugins.easyMedia.zdfmedia = ConfigSelection(default="no", choices=[("no"
 config.plugins.easyMedia.radio = ConfigSelection(default="yes", choices=[("no", _("Disabled")), ("yes", _("Enabled"))])
 config.plugins.easyMedia.timers = ConfigSelection(default="no", choices=[("no", _("Disabled")), ("yes", _("Enabled"))])
 
+
 def Plugins(**kwargs):
 	return [PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=EasyMediaAutostart),
 			PluginDescriptor(name="EasyMedia", description=_("Not easy way to start EasyMedia"), where=PluginDescriptor.WHERE_PLUGINMENU, fnc=startFromPluginMenu), ]
+
 
 def EasyMediaAutostart(reason, **kwargs):
 	global EMbaseInfoBarPlugins__init__
@@ -73,6 +75,7 @@ def EasyMediaAutostart(reason, **kwargs):
 			EMbaseInfoBarPlugins__init__ = InfoBarPlugins.__init__
 		InfoBarPlugins.__init__ = InfoBarPlugins__init__
 		InfoBarPlugins.startWithPvrButton = startWithPvrButton
+
 
 def InfoBarPlugins__init__(self):
 	global EMStartOnlyOneTime
@@ -87,11 +90,14 @@ def InfoBarPlugins__init__(self):
 		InfoBarPlugins.startWithPvrButton = None
 	EMbaseInfoBarPlugins__init__(self)
 
+
 def startWithPvrButton(self):
 	self.session.openWithCallback(MPcallbackFunc, EasyMedia)
 
+
 def startFromPluginMenu(session, **kwargs):
 	session.openWithCallback(MPcallbackFunc, EasyMedia)
+
 
 class MPanelList(MenuList):
 	SKIN_COMPONENT_KEY = "EasyMediaPanelList"
@@ -162,6 +168,7 @@ class MPanelList(MenuList):
 				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, self.imagexoffset, self.imageyoffset, self.imagewidth, self.imageheight, png))
 		return res
 		
+
 def BookmarksCallback(choice):
 	choice = choice and choice[1]
 	if choice:
@@ -169,6 +176,7 @@ def BookmarksCallback(choice):
 		config.movielist.last_videodir.save()
 		if InfoBar_instance:
 			InfoBar_instance.showMovies()
+
 
 def TvRadioCallback(choice):
 	choice = choice and choice[1]
@@ -179,6 +187,7 @@ def TvRadioCallback(choice):
 		if InfoBar_instance:
 			InfoBar_instance.showRadio()
 
+
 class ConfigEasyMedia(ConfigListScreen, Screen):
 	skin = """
 		<screen name="ConfigEasyMedia" position="center,center" size="600,410" title="EasyMedia settings...">
@@ -187,6 +196,7 @@ class ConfigEasyMedia(ConfigListScreen, Screen):
 			<eLabel font="Regular;20" foregroundColor="#0056C856" halign="center" position="165,388" size="140,26" text="Save"/>
 			<eLabel font="Regular;20" foregroundColor="#00f3ca09" halign="center" position="310,388" size="140,26" text="Plugins"/>
 		</screen>"""
+
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.setTitle(_("EasyMedia settings..."))
@@ -221,6 +231,7 @@ class ConfigEasyMedia(ConfigListScreen, Screen):
 	def addPlugin(self):
 		self.session.open(AddPlug)
 
+
 class AddPlug(Screen):
 	skin = """
 		<screen name="AddPlug" position="center,center" size="440,420" title="EasyMedia...">
@@ -240,6 +251,7 @@ class AddPlug(Screen):
 			</convert>
 		</widget>
 		</screen>"""
+
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.setTitle(_("Add/remove plugin"))
@@ -290,6 +302,7 @@ class AddPlug(Screen):
 			except:
 				self.session.open(MessageBox, text="Write Error!", type=MessageBox.TYPE_WARNING)
 
+
 class EasyMediaSummary(Screen):
 	if HardwareInfo().get_device_name() == "dm820":
 		skin = """
@@ -327,6 +340,7 @@ class EasyMediaSummary(Screen):
 	def setText(self, text, line):
 		self["text1"].setText(text)
 
+
 class EasyMedia(Screen):
 	sz_w = getDesktop(0).size().width()
 	if sz_w >= 1920:
@@ -345,6 +359,7 @@ class EasyMedia(Screen):
 		EMiconspath = '/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/icons/'
 	else:
 		EMiconspath = '/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/'
+
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.session = session
@@ -478,6 +493,7 @@ class EasyMedia(Screen):
 	def updateOLED(self):
 		text = str(self["list"].l.getCurrentSelection()[0][0])
 		self.summaries.setText(text, 1)
+
 
 def MPcallbackFunc(answer):
 	if EMsession is None:

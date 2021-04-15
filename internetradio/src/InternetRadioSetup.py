@@ -27,6 +27,7 @@ from Components.config import config, getConfigListEntry, configfile
 from Components.FileList import FileList
 from Components.Sources.StaticText import StaticText
 
+
 class InternetRadioSetup(Screen, ConfigListScreen):
 
 	skin = """

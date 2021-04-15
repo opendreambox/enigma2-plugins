@@ -27,6 +27,7 @@
 	}
 """
 
+
 class Station(object):
 	def __init__(self, data):
 		self._data = data
@@ -102,12 +103,16 @@ class Station(object):
 	@property
 	def clickcount(self):
 		return self._data["clickcount"]
+
+
 """
 	{
 		"name": "Afghanistan",
 		"stationcount": 196
 	},
 """
+
+
 class Country(object):
 	def __init__(self, data):
 		self._data = data

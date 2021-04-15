@@ -65,6 +65,7 @@ else:
 
 sz_w = getDesktop(0).size().width()
 
+
 def importerCallback(ret):
 	if ret:
 		ret, session = ret
@@ -75,6 +76,7 @@ def importerCallback(ret):
 			ret
 		)
 
+
 def editorCallback(ret):
 	if ret:
 		from plugin import autotimer
@@ -83,6 +85,7 @@ def editorCallback(ret):
 		# Save modified xml
 		if config.plugins.autotimer.always_write_config.value:
 			autotimer.writeXml()
+
 
 class ExtendedConfigText(ConfigText):
 	def __init__(self, default="", fixed_size=True, visible_width=False):
@@ -102,6 +105,7 @@ class ExtendedConfigText(ConfigText):
 			if "\\" not in mapping[0]:
 				mapping[0] += "\\"
 
+
 class SimpleBouquetSelection(SimpleChannelSelection):
 	def __init__(self, session, title):
 		SimpleChannelSelection.__init__(self, session, title)
@@ -115,6 +119,7 @@ class SimpleBouquetSelection(SimpleChannelSelection):
 			# We return the currently active path here
 			# Asking the user if this is what he wants might be better though
 			self.close(self.servicePath[-1])
+
 
 class AutoTimerChannelSelection(SimpleChannelSelection):
 	def __init__(self, session, autotimer):
@@ -138,6 +143,7 @@ class AutoTimerChannelSelection(SimpleChannelSelection):
 				ref
 			)
 
+
 class AutoTimerEPGSelection(EPGSelection):
 	def __init__(self, *args):
 		EPGSelection.__init__(self, *args)
@@ -158,6 +164,7 @@ class AutoTimerEPGSelection(EPGSelection):
 
 class AutoTimerEditorBase:
 	""" Base Class for all Editors """
+
 	def __init__(self, timer, editingDefaults=False):
 		# Keep Timer
 		self.timer = timer
@@ -409,6 +416,7 @@ class AutoTimerEditorBase:
 				self.timerentry_tags
 			)
 
+
 class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 	"""Edit AutoTimer"""
 
@@ -444,7 +452,6 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 		<eLabel	position="10,430" size="800,1" backgroundColor="grey"/>
 		<widget source="help" render="Label" position="10,440" size="800,70" font="Regular;20" halign="center" valign="center" />
 	</screen>"""
-
 
 	def __init__(self, session, timer, editingDefaults=False, **kwargs):
 		Screen.__init__(self, session)
@@ -924,6 +931,7 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 		# Close
 		self.close(self.timer)
 
+
 class AutoTimerFilterEditor(Screen, ConfigListScreen):
 	"""Edit AutoTimer Filter"""
 
@@ -955,7 +963,6 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 		<eLabel	position="10,50" size="800,1" backgroundColor="grey"/>
 		<widget name="config" position="10,60" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand"/>
 	</screen>"""
-
 
 	def __init__(self, session, filterset, excludes, includes):
 		Screen.__init__(self, session)
@@ -1004,7 +1011,6 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 
 	def setCustomTitle(self):
 		self.setTitle(_("Edit AutoTimer filters"))
-
 
 	def changed(self):
 		for x in self.onChangedEntry:
@@ -1202,6 +1208,7 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 			self.includes
 		))
 
+
 class AutoTimerServiceEditor(Screen, ConfigListScreen):
 	"""Edit allowed Services of a AutoTimer"""
 
@@ -1233,7 +1240,6 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 		<eLabel	position="10,50" size="800,1" backgroundColor="grey"/>
 		<widget name="config" position="10,60" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand"/>
 	</screen>"""
-
 
 	def __init__(self, session, servicerestriction, servicelist, bouquetlist):
 		Screen.__init__(self, session)
@@ -1435,6 +1441,7 @@ class AutoTimerServiceEditor(Screen, ConfigListScreen):
 			self.services
 		))
 
+
 def addAutotimerFromSearchString(session, match, importer_Callback=importerCallback):
 	from AutoTimerComponent import preferredAutoTimerComponent
 	from AutoTimerImporter import AutoTimerImporter
@@ -1462,6 +1469,7 @@ def addAutotimerFromSearchString(session, match, importer_Callback=importerCallb
 		None,		# Proposed dirname, can we get anything useful here?
 		[]			# Proposed tags
 	)
+
 
 def addAutotimerFromEvent(session, evt=None, service=None, importer_Callback=importerCallback):
 	from AutoTimerComponent import preferredAutoTimerComponent
@@ -1514,6 +1522,7 @@ def addAutotimerFromEvent(session, evt=None, service=None, importer_Callback=imp
 		None,		# Proposed dirname, can we get anything useful here?
 		[]			# Proposed tags
 	)
+
 
 def addAutotimerFromService(session, service=None, importer_Callback=importerCallback):
 	from AutoTimerComponent import preferredAutoTimerComponent

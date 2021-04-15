@@ -19,9 +19,11 @@
 # you have to keep MY license and inform me about the modifications by mail.
 #
 
+
 class InternetRadioFilter:
 	def __init__(self, name=""):
 		self.name = name
+
 
 class InternetRadioStation:
 	def __init__(self, name="", tags="", country="", url="", language="", id="", homepage=""):

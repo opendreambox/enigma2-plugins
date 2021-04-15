@@ -24,8 +24,10 @@ from Components.Pixmap import Pixmap
 from enigma import ePoint
 import time
 
+
 class InternetRadioVisualization(object):
 	BANDS = 16
+
 	def __init__(self):
 		self.pegelvalues = {}
 		self.bars = {}

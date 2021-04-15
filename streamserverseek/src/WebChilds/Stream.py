@@ -17,6 +17,7 @@ import urllib
 
 from Plugins.Extensions.StreamServerSeek.StreamServerSeek import StreamServerSeek
 
+
 class StreamResource(resource.Resource):
 	isLeaf = True
 	validExt = ["ts", "trp", "avi", "divx", "f4v", "flv", "img", "ifo", "iso", "m2ts", "m4v", "mkv", "mov", "mp4", "mpeg", "mpg", "mts", "vob", "wmv", "bdmv", "asf", "stream", "webm"]

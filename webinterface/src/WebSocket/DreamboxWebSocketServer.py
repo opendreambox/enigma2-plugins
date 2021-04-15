@@ -3,6 +3,7 @@ from DreamboxServerProtocol import DreamboxServerProtocol
 from autobahn.twisted.websocket import WebSocketServerFactory
 from autobahn.twisted.resource import WebSocketResource
 
+
 class DreamboxWebSocketServer():
 	def __init__(self):
 		self.session = None
@@ -27,5 +28,6 @@ class DreamboxWebSocketServer():
 		#protocol
 		DreamboxServerProtocol.server = self
 		DreamboxServerProtocol.session = session
+
 
 webSocketServer = DreamboxWebSocketServer()

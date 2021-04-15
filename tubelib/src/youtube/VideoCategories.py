@@ -3,6 +3,7 @@ from Components.config import config
 
 from YoutubeQueryBase import YoutubeQueryBase
 
+
 class VideoCategories(YoutubeQueryBase):
 	def list(self, callback, lang=None, region=None):
 		if not lang:
@@ -27,6 +28,7 @@ class VideoCategories(YoutubeQueryBase):
 			for item in data['items']:
 				categories.append(VideoCategory(item))
 		self._callback(success, categories)
+
 
 class VideoCategory(object):
 	def __init__(self, entry):

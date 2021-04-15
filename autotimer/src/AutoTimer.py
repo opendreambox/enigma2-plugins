@@ -59,12 +59,14 @@ XML_CONFIG = "/etc/enigma2/autotimer.xml"
 
 TAG = "AutoTimer"
 
+
 def getTimeDiff(timerbegin, timerend, begin, end):
 	if begin <= timerbegin <= end:
 		return end - timerbegin
 	elif timerbegin <= begin <= timerend:
 		return timerend - begin
 	return 0
+
 
 def blockingCallFromMainThread(f, *a, **kw):
 	"""
@@ -76,6 +78,7 @@ def blockingCallFromMainThread(f, *a, **kw):
 	  down.
 	"""
 	queue = Queue.Queue()
+
 	def _callFromThread():
 		result = defer.maybeDeferred(f, *a, **kw)
 		result.addBoth(queue.put)
@@ -95,6 +98,7 @@ def blockingCallFromMainThread(f, *a, **kw):
 		result.raiseException()
 	return result
 
+
 typeMap = {
 	"exact": eEPGCache.EXAKT_TITLE_SEARCH,
 	"partial": eEPGCache.PARTIAL_TITLE_SEARCH,
@@ -105,6 +109,7 @@ caseMap = {
 	"sensitive": eEPGCache.CASE_CHECK,
 	"insensitive": eEPGCache.NO_CASE_CHECK
 }
+
 
 class AutoTimer:
 	"""Read and save xml configuration, query EPGCache"""
@@ -363,7 +368,6 @@ class AutoTimer:
 				doLog("Skipping an event because of filter check")
 				skipped.append((name, begin, end, serviceref, timer.name, getLog()))
 				continue
-			
 			
 			if timer.hasOffset():
 				# Apply custom Offset
@@ -635,7 +639,6 @@ class AutoTimer:
 		
 		return (new, modified)
 
-
 	def addToSearchLogfile(self, timerEntry, entryType, simulateOnlyValue=False):
 		
 		if not simulateOnlyValue:
@@ -651,7 +654,6 @@ class AutoTimer:
 			log_txt += ' - "' + str(timerEntry.name) + '"\n'
 			file_search_log.write(log_txt)
 			file_search_log.close()
-
 
 	def prepareSearchLogfile(self):
 		
@@ -679,7 +681,6 @@ class AutoTimer:
 		file_search_log.write(searchlog_txt)
 		file_search_log.close()
 
-
 	def addToFilterfile(self, name, begin, simulateOnlyValue=False, sp_title="xxxxxxxxxxxxxxxx"):
 		
 		#== add to filterList
@@ -702,7 +703,6 @@ class AutoTimer:
 		
 		return True
 		
-
 	def addToFilterList(self, session, services, *args, **kwargs):
 		
 		if services:
@@ -730,7 +730,6 @@ class AutoTimer:
 			except Exception as e:
 				doLog("Error in addToFilterList", e)
 				print("======== Error in addToFilterList ", e)
-
 
 	def parseEPG(self, simulateOnly=False, uniqueId=None, callback=None):
 

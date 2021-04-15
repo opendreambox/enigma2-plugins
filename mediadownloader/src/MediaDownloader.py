@@ -19,6 +19,7 @@ except ImportError as ie:
 
 import time
 
+
 def _parse(url, defaultPort=None):
 	url = url.strip()
 	parsed = urlparse(url)
@@ -54,9 +55,9 @@ def _parse(url, defaultPort=None):
 
 	return scheme, host, port, path, username, password
 
+
 def download(url, file, writeProgress=None, contextFactory=None,
 	*args, **kwargs):
-
 	"""Download a remote file and provide current-/total-length.
 
 	@param file: path to file on filesystem, or file-like object.
@@ -117,6 +118,7 @@ def download(url, file, writeProgress=None, contextFactory=None,
 		reactor.connectTCP(host, port, factory)
 
 	return factory.deferred
+
 
 class MediaDownloader(Screen):
 	"""Simple Plugin which downloads a given file. If not targetfile is specified the user will be asked

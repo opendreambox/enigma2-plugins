@@ -70,6 +70,7 @@ EXTENSIONS = {
 		"service": "service",
 	}
 
+
 class DreamExplorerFileList(TemplatedMultiContentComponent):
 	COMPONENT_ID = "DreamExplorerFileList"
 	LIST_TYPE_FULL = 1
@@ -179,7 +180,6 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 		GUIComponent.applySkin(self, desktop, parent)
 		self.applyTemplate()
 
-	
 	def redrawList(self):
 		self.l.invalidate()
 
@@ -220,7 +220,6 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 
 		res = []
 
-
 		# info
 		if not isDir:
 			if self.showFiles:
@@ -252,7 +251,6 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 			elif isMovie:
 				png = LoadPixmap("%s/movie.png" % (self.iconSet))
 
-		
 		if self.showDetails:
 			res.extend((filename, path, pathFilename, isDir, isMovie, mediaType, png, fileSize, lastModified, fileAttrib, realPath))
 		else:

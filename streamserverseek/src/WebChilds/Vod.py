@@ -16,6 +16,7 @@ from ctypes import *
 
 ### todo: rewrite segment in same conn
 
+
 class M3u8Client(http.HTTPClient):
 	_finished = False
 
@@ -62,6 +63,7 @@ class M3u8Client(http.HTTPClient):
 				self._HTTPClient__buffer = None
 			if self.responseEndCallback is not None:
 				self.responseEndCallback(buffer)
+
 
 class M3u8ClientFactory(ClientFactory):
 	protocol = M3u8Client
@@ -158,6 +160,7 @@ class MyProxyClient(proxy.ProxyClient):
 	def __del__(self):
 		print "[StreamServerSeek] proxyclient %s died" % hex(id(self))
 
+
 class MyProxyClientFactory(proxy.ProxyClientFactory):
 	protocol = MyProxyClient
 
@@ -180,6 +183,7 @@ class MyProxyClientFactory(proxy.ProxyClientFactory):
 
 	def __del__(self):
 		print "[StreamServerSeek] proxyclientfactory %s died" % hex(id(self))
+
 
 def getSegmentNoFromFilename(filename):
 	try:
@@ -396,6 +400,7 @@ class VodRequestHandler(object):
 			self.statusCallback,
 			self.setClientCallback)
 		reactor.connectTCP(self.hostname, self.port, clientFactory)
+
 
 class VodResource(resource.Resource):
 	isLeaf = True

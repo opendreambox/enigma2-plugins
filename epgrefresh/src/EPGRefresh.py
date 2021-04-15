@@ -60,6 +60,7 @@ from enigma import eDVBSatelliteEquipmentControl
 CONFIG = "/etc/enigma2/epgrefresh.xml"
 XML_VERSION = "1"
 
+
 class EPGRefresh:
 	"""Simple Class to refresh EPGData"""
 
@@ -752,5 +753,6 @@ class EPGRefresh:
 			
 	def setMessageBoxState(self):
 		self.showPendingServicesMessageShown = False				
+
 
 epgrefresh = EPGRefresh()

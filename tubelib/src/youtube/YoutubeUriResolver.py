@@ -7,6 +7,7 @@ try:
 	class YoutubeUriResolver(eUriResolver):
 		_schemas = ("youtube", "yt")
 		instance = None
+
 		def __init__(self):
 			eUriResolver.__init__(self, StringList(self._schemas))
 			Log.i(self._schemas)
@@ -24,6 +25,7 @@ try:
 					watch_url = "https://www.youtube.com/watch?v=%s" % (video_id,)
 			except:
 				pass
+
 			def onUrlReady(uri, format, suburi=""):
 				Log.d("%s # %s (%s)" % (uri, suburi, format))
 				try:

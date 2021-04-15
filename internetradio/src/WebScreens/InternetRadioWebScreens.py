@@ -21,6 +21,7 @@
 
 from Plugins.Extensions.WebInterface.WebScreens import WebScreen
 
+
 class InternetRadioWebScreens(WebScreen):
 	def __init__(self, session, request):
 		WebScreen.__init__(self, session, request)
@@ -33,17 +34,20 @@ class InternetRadioWebScreens(WebScreen):
 		self["RenameFavorite"] = InternetRadioWeb(session, func=InternetRadioWeb.RENAME_FAVORITE)
 		self["Play"] = InternetRadioWeb(session, func=InternetRadioWeb.PLAY_STATION)
 
+
 class InternetRadioStopPlaying(WebScreen):
 	def __init__(self, session, request):
 		WebScreen.__init__(self, session, request)
 		from Plugins.Extensions.InternetRadio.WebComponents.Sources.InternetRadioWeb import InternetRadioWeb
 		self["StopPlaying"] = InternetRadioWeb(session, func=InternetRadioWeb.STOP_PLAYING)
 
+
 class InternetRadioStreamingInfos(WebScreen):
 	def __init__(self, session, request):
 		WebScreen.__init__(self, session, request)
 		from Plugins.Extensions.InternetRadio.WebComponents.Sources.InternetRadioWeb import InternetRadioWeb
 		self["StreamingInfos"] = InternetRadioWeb(session, func=InternetRadioWeb.GET_STREAMING_INFOS)
+
 
 class InternetRadioPlayingStatus(WebScreen):
 	def __init__(self, session, request):

@@ -9,6 +9,8 @@ from EPGSearchFilter import searchEventWithFilter, addSearchFilterFromMovieList
 from Plugins.Plugin import PluginDescriptor
 
 # Autostart
+
+
 def autostart(reason, **kwargs):
 	if reason == 0:
 		try:
@@ -19,6 +21,8 @@ def autostart(reason, **kwargs):
 			traceback.print_exc()
 
 # Mainfunction
+
+
 def main(session, *args, **kwargs):
 	s = session.nav.getCurrentService()
 	if s:
@@ -30,11 +34,15 @@ def main(session, *args, **kwargs):
 		session.open(EPGSearch)
 
 # Event Info
+
+
 def eventinfo(session, *args, **kwargs):
 	ref = session.nav.getCurrentlyPlayingServiceReference()
 	session.open(EPGSearchEPGSelection, ref, True)
 
 # Movielist
+
+
 def movielist(session, service, **kwargs):
 	serviceHandler = eServiceCenter.getInstance()
 	info = serviceHandler.info(service)
@@ -42,9 +50,11 @@ def movielist(session, service, **kwargs):
 
 	session.open(EPGSearch, name, config.plugins.epgsearch.add_history_onOpen.value)
 
+
 def openHistory(session, event, service):
 	kwargs = {"startWithHistory": True}
 	session.open(EPGSearch, **kwargs)
+
 
 def Plugins(**kwargs):
 	

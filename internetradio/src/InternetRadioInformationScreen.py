@@ -26,6 +26,7 @@ from Components.ScrollLabel import ScrollLabel
 from Components.Sources.StaticText import StaticText
 from enigma import getDesktop
 
+
 class InternetRadioInformationScreen(Screen):
 
 	sz_w = getDesktop(0).size().width()
