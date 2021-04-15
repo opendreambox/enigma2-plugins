@@ -93,7 +93,7 @@ class MovieTagger(Screen):
 		self["buttonblue"] = Label("blue")
 		self["cTaglist"] = TagMenuList([])
 		self["aTaglist"] = TagMenuList([])
-		self["actions"] = ActionMap(["WizardActions","MenuActions","ShortcutActions"],
+		self["actions"] = ActionMap(["WizardActions", "MenuActions", "ShortcutActions"],
 			{
 			"back": self.close,
 			"red": self.keyRed,
@@ -134,7 +134,7 @@ class MovieTagger(Screen):
 	def updateAllTagList(self):
 		root = eServiceReference("2:0:1:0:0:0:0:0:0:0:" + resolveFilename(SCOPE_HDD))
 		ml = MovieList(root)
-		ml.load(root,None)
+		ml.load(root, None)
 		xtmp = []
 		xtmp.extend(ml.tags)
 		self.usedTags = xtmp
@@ -147,7 +147,7 @@ class MovieTagger(Screen):
 		taglist.sort()
 		self["aTaglist"].setList(taglist)
 
-	def addTag(self,tagname):
+	def addTag(self, tagname):
 		try:
 			self.tags.index(tagname)
 		except ValueError:
@@ -160,7 +160,7 @@ class MovieTagger(Screen):
 		self.updateAllTagList()
 
 
-	def removeTag(self,tagname):
+	def removeTag(self, tagname):
 		newtags = []
 		for i in self.tags:
 			if i is not tagname:
@@ -170,7 +170,7 @@ class MovieTagger(Screen):
 		self.updateAllTagList()
 
 
-	def setTags(self,tagstring,service=False,userNotice=True):
+	def setTags(self, tagstring, service=False, userNotice=True):
 		if service is False:
 			serviceRef = self.service
 		else:
@@ -181,16 +181,16 @@ class MovieTagger(Screen):
 		metadata = self.readMETAData(filename)
 		if metadata is not False:
 			metadata.append(tagstring.strip())
-			return self.writeMETAData(filename,metadata)
+			return self.writeMETAData(filename, metadata)
 		else:
 			if userNotice is True:
-				self.session.open(MessageBox,_("Can't write movietags, because no meta-file found!"), MessageBox.TYPE_ERROR)
+				self.session.open(MessageBox, _("Can't write movietags, because no meta-file found!"), MessageBox.TYPE_ERROR)
 			return False
 
 
-	def readMETAData(self,filename):
+	def readMETAData(self, filename):
 		if pathExists(filename):
-			fp = open(filename,"r")
+			fp = open(filename, "r")
 			data = []
 			data.append(fp.readline())
 			data.append(fp.readline())
@@ -200,9 +200,9 @@ class MovieTagger(Screen):
 			return data
 		else:
 			return False
-	def writeMETAData(self,filename,metadata):
+	def writeMETAData(self, filename, metadata):
 		if pathExists(filename):
-			fp = open(filename,"w")
+			fp = open(filename, "w")
 			fp.write(metadata[0])
 			fp.write(metadata[1])
 			fp.write(metadata[2])
@@ -213,7 +213,7 @@ class MovieTagger(Screen):
 		else:
 			return False
 
-	def clearAllTags(self,yesno):
+	def clearAllTags(self, yesno):
 		if yesno is True:
 			self.serviceHandler = eServiceCenter.getInstance()
 			root = eServiceReference("2:0:1:0:0:0:0:0:0:0:" + resolveFilename(SCOPE_HDD))
@@ -227,7 +227,7 @@ class MovieTagger(Screen):
 						break
 					if serviceref.flags & eServiceReference.mustDescent:
 						continue
-					self.setTags("",service=serviceref,userNotice=False)
+					self.setTags("", service=serviceref, userNotice=False)
 		self.updateCurrentTagList()
 		self.updateAllTagList()
 
@@ -246,16 +246,16 @@ class MovieTagger(Screen):
 			self.removeTag(self["cTaglist"].getCurrent()[0])
 
 		elif self.currList is self["aTaglist"]:
-			print "adding Tag",self["aTaglist"].getCurrent()[0]
+			print "adding Tag", self["aTaglist"].getCurrent()[0]
 			self.addTag(self["aTaglist"].getCurrent()[0])
 
 	def keyGreen(self):
 		if self.currList is self["cTaglist"]:
-			self.session.openWithCallback(self.newTagEntered,InputBox, title=_('Whitepace will be replaced by "_"'),windowTitle=_("Enter the new Tag"))
+			self.session.openWithCallback(self.newTagEntered, InputBox, title=_('Whitepace will be replaced by "_"'), windowTitle=_("Enter the new Tag"))
 
 	def keyYellow(self):
 		if self.currList is self["aTaglist"]:
-			self.session.openWithCallback(self.clearAllTags,MessageBox,_("Clear all Tags?\n\nThis will delete ALL tags in ALL recodings!\nAre you sure?"), MessageBox.TYPE_YESNO)
+			self.session.openWithCallback(self.clearAllTags, MessageBox, _("Clear all Tags?\n\nThis will delete ALL tags in ALL recodings!\nAre you sure?"), MessageBox.TYPE_YESNO)
 
 	def keyBlue(self):
 		self.setTitle(' '.join((_("Movie Tagger"), _("Ver."), VERSION)))
@@ -293,9 +293,9 @@ class MovieTagger(Screen):
 	def right(self):
 		self.currList.pageDown()
 
-	def newTagEntered(self,newTag):
+	def newTagEntered(self, newTag):
 		if newTag >= 0:
-			self.addTag(newTag.strip().replace(" ","_"))
+			self.addTag(newTag.strip().replace(" ", "_"))
 
 class TagMenuList(MenuList):
 	SKIN_COMPONENT_KEY = "MovieTaggerTagMenuList"
@@ -345,11 +345,11 @@ class TagMenuList(MenuList):
 		res.append((eListboxPythonMultiContent.TYPE_TEXT, self.xOffset, 0, self.componentItemWidth, self.componentItemHeight, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, tagName))
 		
 		if isUsedTag:
-			res.append((eListboxPythonMultiContent.TYPE_TEXT, self.xIndicatorOffset, 0, self.xIndicatorWidth, self.componentItemHeight,1, RT_HALIGN_CENTER | RT_VALIGN_CENTER, "X",self.usedTagColor))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, self.xIndicatorOffset, 0, self.xIndicatorWidth, self.componentItemHeight, 1, RT_HALIGN_CENTER | RT_VALIGN_CENTER, "X", self.usedTagColor))
 		if isUserTag:
-			res.append((eListboxPythonMultiContent.TYPE_TEXT,self.xIndicatorOffset + self.xIndicatorWidth,0,self.xIndicatorWidth,self.componentItemHeight,1, RT_HALIGN_CENTER | RT_VALIGN_CENTER, "X",self.userTagColor))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, self.xIndicatorOffset + self.xIndicatorWidth, 0, self.xIndicatorWidth, self.componentItemHeight, 1, RT_HALIGN_CENTER | RT_VALIGN_CENTER, "X", self.userTagColor))
 		if isPreTag:
-			res.append((eListboxPythonMultiContent.TYPE_TEXT,self.xIndicatorOffset + (2 * self.xIndicatorWidth),0,self.xIndicatorWidth,self.componentItemHeight,1,RT_HALIGN_CENTER | RT_VALIGN_CENTER, "X",self.preTagColor))
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, self.xIndicatorOffset + (2 * self.xIndicatorWidth), 0, self.xIndicatorWidth, self.componentItemHeight, 1, RT_HALIGN_CENTER | RT_VALIGN_CENTER, "X", self.preTagColor))
 		
 		return res
 
@@ -359,8 +359,8 @@ class TagMenuList(MenuList):
 def main(session, service, **kwargs):
 	try:
 		session.open(MovieTagger, service)
-	except Exception,e:
+	except Exception, e:
 		raise e
 
-def Plugins(path,**kwargs):
+def Plugins(path, **kwargs):
  	return PluginDescriptor(name="Movie Tagger", description=_("Movie Tagger..."), where=PluginDescriptor.WHERE_MOVIELIST, fnc=main)

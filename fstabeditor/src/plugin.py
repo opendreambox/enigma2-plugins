@@ -42,9 +42,9 @@ from skin import TemplatedListFonts, componentSizes
 
 #global vars
 entryList = []
-lengthList = [0,0,0,0]
+lengthList = [0, 0, 0, 0]
 
-def main(session,**kwargs):
+def main(session, **kwargs):
     session.open(fstabViewerScreen)
     
 def checkForReadOnly(reason, **kwargs):
@@ -72,24 +72,24 @@ class fstabMenuList(MenuList):
 		self.l.setFont(0, gFont(tlf.face(tlf.BIG), tlf.size(tlf.BIG)))
 		self.l.setFont(1, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
 		
-def fstabMenuListEntry(devicename, mountpoint,fstype, options, dumpfreq, passnum):
-	res = [(devicename, mountpoint,fstype, options, dumpfreq, passnum)]
-	res.append(MultiContentEntryText(pos=(270,15),size=(800,30), font=0, text=devicename))
-	res.append(MultiContentEntryText(pos=(270,60),size=(800,30), font=0, text=mountpoint))
-	res.append(MultiContentEntryText(pos=(270,90),size=(800,30), font=0, text=fstype))
-	res.append(MultiContentEntryText(pos=(270,120),size=(800,30), font=0, text=options))
-	res.append(MultiContentEntryText(pos=(270,150),size=(800,30), font=0, text=dumpfreq))
-	res.append(MultiContentEntryText(pos=(270,180),size=(800,30), font=0, text=passnum))
-	res.append(MultiContentEntryText(pos=(0,17),size=(250,30), font=1, flags=RT_HALIGN_RIGHT, text="Device name:"))
-	res.append(MultiContentEntryText(pos=(0,62),size=(250,30), font=1, flags=RT_HALIGN_RIGHT, text="Mount point:"))
-	res.append(MultiContentEntryText(pos=(0,92),size=(250,30), font=1, flags=RT_HALIGN_RIGHT, text="File system type:"))
-	res.append(MultiContentEntryText(pos=(0,122),size=(250,30), font=1, flags=RT_HALIGN_RIGHT, text="Options:"))
-	res.append(MultiContentEntryText(pos=(0,152),size=(250,30), font=1, flags=RT_HALIGN_RIGHT, text="Dump frequency:"))
-	res.append(MultiContentEntryText(pos=(0,182),size=(250,30), font=1, flags=RT_HALIGN_RIGHT, text="Pass number:"))
+def fstabMenuListEntry(devicename, mountpoint, fstype, options, dumpfreq, passnum):
+	res = [(devicename, mountpoint, fstype, options, dumpfreq, passnum)]
+	res.append(MultiContentEntryText(pos=(270, 15), size=(800, 30), font=0, text=devicename))
+	res.append(MultiContentEntryText(pos=(270, 60), size=(800, 30), font=0, text=mountpoint))
+	res.append(MultiContentEntryText(pos=(270, 90), size=(800, 30), font=0, text=fstype))
+	res.append(MultiContentEntryText(pos=(270, 120), size=(800, 30), font=0, text=options))
+	res.append(MultiContentEntryText(pos=(270, 150), size=(800, 30), font=0, text=dumpfreq))
+	res.append(MultiContentEntryText(pos=(270, 180), size=(800, 30), font=0, text=passnum))
+	res.append(MultiContentEntryText(pos=(0, 17), size=(250, 30), font=1, flags=RT_HALIGN_RIGHT, text="Device name:"))
+	res.append(MultiContentEntryText(pos=(0, 62), size=(250, 30), font=1, flags=RT_HALIGN_RIGHT, text="Mount point:"))
+	res.append(MultiContentEntryText(pos=(0, 92), size=(250, 30), font=1, flags=RT_HALIGN_RIGHT, text="File system type:"))
+	res.append(MultiContentEntryText(pos=(0, 122), size=(250, 30), font=1, flags=RT_HALIGN_RIGHT, text="Options:"))
+	res.append(MultiContentEntryText(pos=(0, 152), size=(250, 30), font=1, flags=RT_HALIGN_RIGHT, text="Dump frequency:"))
+	res.append(MultiContentEntryText(pos=(0, 182), size=(250, 30), font=1, flags=RT_HALIGN_RIGHT, text="Pass number:"))
 	return res
 	
 	
-class fstabViewerScreen(Screen,HelpableScreen):
+class fstabViewerScreen(Screen, HelpableScreen):
 	skin = """
 		<screen position="center,center" size="820,340" title="fstab-Editor">
 		<widget name="ButtonRed" pixmap="skin_default/buttons/red.png" position="10,0" size="200,50" alphatest="on" />
@@ -145,7 +145,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 	def buildScreen(self):
 		self.fstabEntryList = []
 		if fileExists("/etc/fstab"):
-			fstabFile = open("/etc/fstab","r")
+			fstabFile = open("/etc/fstab", "r")
 			global entryList
 			entryList = []
 			self.counter = 0
@@ -162,7 +162,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 						lengthList[2] = len(entry[2])					
 					if len(entry[3]) > lengthList[3]:
 						lengthList[3] = len(entry[3])
-					self.fstabEntryList.append(fstabMenuListEntry(entry[0],entry[1],entry[2],entry[3],entry[4],entry[5]))
+					self.fstabEntryList.append(fstabMenuListEntry(entry[0], entry[1], entry[2], entry[3], entry[4], entry[5]))
 					self.counter = self.counter + 1
 			fstabFile.close()
 			
@@ -178,7 +178,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 			os.system("cp /etc/fstab /etc/fstab.backup")
 			configFile = open('/etc/fstab', 'w')
 			for i in range(len(entryList)):
-				line = "%*s %*s %*s %*s %s %s\n" % (int(lengthList[0]) * -1, entryList[i][0], int(lengthList[1]) * -1, entryList[i][1], int(lengthList[2]) * -1, entryList[i][2], int(lengthList[3]) * -1, entryList[i][3],str(entryList[i][4]), str(entryList[i][5]))
+				line = "%*s %*s %*s %*s %s %s\n" % (int(lengthList[0]) * -1, entryList[i][0], int(lengthList[1]) * -1, entryList[i][1], int(lengthList[2]) * -1, entryList[i][2], int(lengthList[3]) * -1, entryList[i][3], str(entryList[i][4]), str(entryList[i][5]))
 				configFile.write(line)
 			configFile.close()
 			self.buildScreen()
@@ -213,7 +213,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 		os.system("cp /etc/fstab.backup /etc/fstab")
 		self.buildScreen()
 		
-class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
+class fstabEditorScreen(Screen, ConfigListScreen, HelpableScreen):
 	skin = """
 		<screen position="center,center" size="820,640" title="fstab-Editor" >
 		<widget name="ButtonRed" pixmap="skin_default/buttons/red.png" position="10,0" size="200,50" alphatest="on" />
@@ -293,20 +293,20 @@ class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
 		if self.addEntry:
 			self.devicename = NoSave(ConfigText(default=""))
 			self.mountpoint = NoSave(ConfigText(default=""))
-			self.fstype = NoSave(ConfigSelection([("auto","auto"),("ext2","ext2"),("ext3","ext3"),("ext4","ext4"),("swap","swap"),("tmpfs","tmpfs"),("proc","proc"),("cifs","cifs"),("nfs","nfs"),("jffs2","jffs2"),("usbfs","usbfs"),("devpts","devpts"),("vfat","vfat"),("fat","fat"),("ntfs","ntfs"),("noauto", "no auto"), ("xfs", "xfs")], default="auto"))
+			self.fstype = NoSave(ConfigSelection([("auto", "auto"), ("ext2", "ext2"), ("ext3", "ext3"), ("ext4", "ext4"), ("swap", "swap"), ("tmpfs", "tmpfs"), ("proc", "proc"), ("cifs", "cifs"), ("nfs", "nfs"), ("jffs2", "jffs2"), ("usbfs", "usbfs"), ("devpts", "devpts"), ("vfat", "vfat"), ("fat", "fat"), ("ntfs", "ntfs"), ("noauto", "no auto"), ("xfs", "xfs")], default="auto"))
 			self.optionList.append(NoSave(ConfigText(default="defaults")))
 			
 			self.dumpfreq = NoSave(ConfigNumber(default=0))
-			self.passnum = NoSave(ConfigSelection([("0","0"),("1","1"),("2","2")], default="0"))			
+			self.passnum = NoSave(ConfigSelection([("0", "0"), ("1", "1"), ("2", "2")], default="0"))			
 		else:
 			self.devicename = NoSave(ConfigText(default=entryList[self.selectedEntry][0]))
 			self.mountpoint = NoSave(ConfigText(default=entryList[self.selectedEntry][1]))
-			self.fstype = NoSave(ConfigSelection([("auto","auto"),("ext2","ext2"),("ext3","ext3"),("ext4","ext4"),("swap","swap"),("tmpfs","tmpfs"),("proc","proc"),("cifs","cifs"),("nfs","nfs"),("jffs2","jffs2"),("usbfs","usbfs"),("devpts","devpts"),("vfat","vfat"),("fat","fat"),("ntfs","ntfs"),("noauto", "no auto"), ("xfs", "xfs"), ("rootfs","rootfs"),("sysfs","sysfs")], default=entryList[self.selectedEntry][2]))
+			self.fstype = NoSave(ConfigSelection([("auto", "auto"), ("ext2", "ext2"), ("ext3", "ext3"), ("ext4", "ext4"), ("swap", "swap"), ("tmpfs", "tmpfs"), ("proc", "proc"), ("cifs", "cifs"), ("nfs", "nfs"), ("jffs2", "jffs2"), ("usbfs", "usbfs"), ("devpts", "devpts"), ("vfat", "vfat"), ("fat", "fat"), ("ntfs", "ntfs"), ("noauto", "no auto"), ("xfs", "xfs"), ("rootfs", "rootfs"), ("sysfs", "sysfs")], default=entryList[self.selectedEntry][2]))
 			splitoptions = entryList[self.selectedEntry][3].split(",")
 			for option in splitoptions:
 				self.optionList.append(NoSave(ConfigText(default=option)))
 			self.dumpfreq = NoSave(ConfigNumber(default=int(entryList[self.selectedEntry][4])))
-			self.passnum = NoSave(ConfigSelection([("0","0"),("1","1"),("2","2")], default=entryList[self.selectedEntry][5]))
+			self.passnum = NoSave(ConfigSelection([("0", "0"), ("1", "1"), ("2", "2")], default=entryList[self.selectedEntry][5]))
 		
 		self.list.append(getConfigListEntry(_("device name: "), self.devicename))
 		self.list.append(getConfigListEntry(_("mount point: "), self.mountpoint))
@@ -411,7 +411,7 @@ class fstabEditorScreen(Screen,ConfigListScreen,HelpableScreen):
 				self.optionList[0].value = "defaults"
 			self["config"].setList(self.list)
 
-class optionSelector(Screen,ConfigListScreen,HelpableScreen):
+class optionSelector(Screen, ConfigListScreen, HelpableScreen):
 	skin = """
 		<screen position="center,center" size="820,280" title="Option Selector" >
 		<ePixmap name ="ButtonRed" pixmap="skin_default/buttons/red.png" position="10,0" size="200,50" alphatest="on" />
@@ -449,66 +449,66 @@ class optionSelector(Screen,ConfigListScreen,HelpableScreen):
 		}, -1)	
 
 		# this list contains all options that required a value
-		self.needsValueList = ["retrans","wsize","rsize","x-systemd.idle-timeout","retry","timeo","x-systemd.device-timeout","mode","nfsvers","vers"]
+		self.needsValueList = ["retrans", "wsize", "rsize", "x-systemd.idle-timeout", "retry", "timeo", "x-systemd.device-timeout", "mode", "nfsvers", "vers"]
 		
 		# this list contains many but not all possible options
-		choices = ["defaults","atime","noatime","sync","async","user","nouser","users","auto","dev","exec","suid","rw","ro","relatime","nosuid","nodev","noexec","udp","tcp","x-systemd.automount","retrans","noauto","wsize","rsize","x-systemd.idle-timeout","retry","lock","nolock","timeo","x-systemd.device-timeout","soft","hard","nofail","mode","nfsvers","vers"]
+		choices = ["defaults", "atime", "noatime", "sync", "async", "user", "nouser", "users", "auto", "dev", "exec", "suid", "rw", "ro", "relatime", "nosuid", "nodev", "noexec", "udp", "tcp", "x-systemd.automount", "retrans", "noauto", "wsize", "rsize", "x-systemd.idle-timeout", "retry", "lock", "nolock", "timeo", "x-systemd.device-timeout", "soft", "hard", "nofail", "mode", "nfsvers", "vers"]
 		
 		# this dictionary contains descriptions for options
 		self.descriptionDict = {
-		"async":_("All I/O to the filesystem should be done asynchronously."),
-		"atime":_("Do not use the noatime feature, so the inode access time is controlled by kernel defaults."),
-		"noatime":_("Do not update inode access times on this filesystem (e.g. for faster access on the news spool to speed up news servers). This works for all inode types (directories too), so it implies nodiratime."),
-		"auto":_("Can be mounted with the -a option."),
-		"noauto":_("Can only be mounted explicitly (i.e., the -a option will not cause the filesystem to be mounted)."),
-		"defaults":_("Use the default options: rw, suid, dev, exec, auto, nouser, and async. Note that the real set of all default mount options depends on kernel and filesystem type."),
-		"dev":_("Interpret character or block special devices on the filesystem."),
-		"nodev":_("Do not interpret character or block special devices on the file system."),
-		"diratime":_("Update directory inode access times on this filesystem. This is the default. (This option is ignored when noatime is set.)"),
-		"nodiratime":_("Do not update directory inode access times on this filesystem. (This option is implied when noatime is set.)"),
-		"dirsync":_("All directory updates within the filesystem should be done synchronously. This affects the following system calls: creat, link, unlink, symlink, mkdir, rmdir, mknod and rename."),
-		"exec":_("Permit execution of binaries."),
-		"noexec":_("Do not permit direct execution of any binaries on the mounted filesystem."),
-		"group":_("Allow an ordinary user to mount the filesystem if one of that user's groups matches the group of the device. This option implies the options nosuid and nodev (unless overridden by subsequent options, as in the option line group,dev,suid)."),
-		"iversion":_("Every time the inode is modified, the i_version field will be incremented."),
-		"noiversion":_("Do not increment the i_version inode field."),
-		"mand":_("Allow mandatory locks on this filesystem."),
-		"nomand":_("Do not allow mandatory locks on this filesystem."),
-		"nofail":_("Do not report errors for this device if it does not exist."),
-		"relatime":_("Update inode access times relative to modify or change time. Access time is only updated if the previous access time was earlier than the current modify or change time. (Similar to noatime, but it doesn't break mutt or other applications that need to know if a file has been read since the last time it was modified.)"),
-		"norelatime":_("Do not use the relatime feature."),
-		"strictatime":_("Allows to explicitly request full atime updates. This makes it possible for the kernel to default to relatime or noatime but still allow userspace to override it."),
-		"nostrictatime":_("Use the kernel's default behavior for inode access time updates."),
-		"lazytime":_("Only update times (atime, mtime, ctime) on the in-memory version of the file inode."),
-		"nolazytime":_("Do not use the lazytime feature."),
-		"suid":_("Allow set-user-ID or set-group-ID bits to take effect."),
-		"nosuid":_("Do not allow set-user-ID or set-group-ID bits to take effect."),
-		"silent":_("Turn on the silent flag."),
-		"loud":_("Turn off the silent flag."),
-		"owner":_("Allow an ordinary user to mount the filesystem if that user is the owner of the device. This option implies the options nosuid and nodev (unless overridden by subsequent options, as in the option line owner,dev,suid)."),
-		"ro":_("Mount the filesystem read-only."),
-		"rw":_("Mount the filesystem read-write."),
-		"sync":_("All I/O to the filesystem should be done synchronously. In the case of media with a limited number of write cycles (e.g. some flash drives), sync may cause life-cycle shortening."),
-		"user":_("Allow an ordinary user to mount the filesystem. The name of the mounting user is written to the mtab file (or to the private libmount file in /run/mount on systems without a regular mtab) so that this same user can unmount the filesystem again. This option implies the options noexec, nosuid, and nodev (unless overridden by subsequent options, as in the option line user,exec,dev,suid)."),
-		"nouser":_("Forbid an ordinary user to mount the filesystem. This is the default; it does not imply any other options."),
-		"users":_("Allow any user to mount and to unmount the filesystem, even when some other ordinary user mounted it. This option implies the options noexec, nosuid, and nodev (unless overridden by subsequent options, as in the option line users,exec,dev,suid)."),
-		"mode":_("Set the mode of all files to value & 0777 disregarding the original permissions. Add search permission to directories that have read permission. The value is given in octal."),
-		"soft":_("Determines the recovery behavior of the NFS client after an NFS request times out. If neither option is specified (or if the hard option is specified), NFS requests are retried indefinitely. If the soft option is specified, then the NFS client fails an NFS request after retrans retransmissions have been sent, causing the NFS client to return an error to the calling application."),
-		"hard":_("Determines the recovery behavior of the NFS client after an NFS request times out. If neither option is specified (or if the hard option is specified), NFS requests are retried indefinitely. If the soft option is specified, then the NFS client fails an NFS request after retrans retransmissions have been sent, causing the NFS client to return an error to the calling application."),
-		"timeo":_("The time in deciseconds (tenths of a second) the NFS client waits for a response before it retries an NFS request."),
-		"retrans":_("The number of times the NFS client retries a request before it attempts further recovery action. If the retrans option is not specified, the NFS client tries each request three times."),
-		"rsize":_("The maximum number of bytes in each network READ request that the NFS client can receive when reading data from a file on an NFS server. The actual data payload size of each NFS READ request is equal to or smaller than the rsize setting. The largest read payload supported by the Linux NFS client is 1,048,576 bytes (one megabyte)."),
-		"wsize":_("The maximum number of bytes per network WRITE request that the NFS client can send when writing data to a file on an NFS server. The actual data payload size of each NFS WRITE request is equal to or smaller than the wsize setting. The largest write payload supported by the Linux NFS client is 1,048,576 bytes (one megabyte)."),
-		"retry":_("The number of minutes that the mount(8) command retries an NFS mount operation in the foreground or background before giving up. If this option is not specified, the default value for foreground mounts is 2 minutes, and the default value for background mounts is 10000 minutes (80 minutes shy of one week). If a value of zero is specified, the mount(8) command exits immediately after the first failure."),
-		"udp":_("The udp option is an alternative to specifying proto=udp. It is included for compatibility with other operating systems."),
-		"tcp":_("The tcp option is an alternative to specifying proto=tcp. It is included for compatibility with other operating systems."),
-		"nfsvers":_("The NFS protocol version number used to contact the server's NFS service. If the server does not support the requested version, the mount request fails. If this option is not specified, the client negotiates a suitable version with the server, trying version 4 first, version 3 second, and version 2 last."),
-		"vers":_("This option is an alternative to the nfsvers option. It is included for compatibility with other operating systems."),
-		"lock":_("Selects whether to use the NLM sideband protocol to lock files on the server. If neither option is specified (or if lock is specified), NLM locking is used for this mount point. When using the nolock option, applications can lock files, but such locks provide exclusion only against other applications running on the same client. Remote applications are not affected by these locks."),
-		"nolock":_("Selects whether to use the NLM sideband protocol to lock files on the server. If neither option is specified (or if lock is specified), NLM locking is used for this mount point. When using the nolock option, applications can lock files, but such locks provide exclusion only against other applications running on the same client. Remote applications are not affected by these locks."),
-		"x-systemd.automount":_("An automount unit will be created for the file system."),
-		"x-systemd.idle-timeout":_("Configures the idle timeout of the automount unit."),
-		"x-systemd.device-timeout":_("Configure how long systemd should wait for a device to show up before giving up on an entry from /etc/fstab. Specify a time in seconds."),
+		"async": _("All I/O to the filesystem should be done asynchronously."),
+		"atime": _("Do not use the noatime feature, so the inode access time is controlled by kernel defaults."),
+		"noatime": _("Do not update inode access times on this filesystem (e.g. for faster access on the news spool to speed up news servers). This works for all inode types (directories too), so it implies nodiratime."),
+		"auto": _("Can be mounted with the -a option."),
+		"noauto": _("Can only be mounted explicitly (i.e., the -a option will not cause the filesystem to be mounted)."),
+		"defaults": _("Use the default options: rw, suid, dev, exec, auto, nouser, and async. Note that the real set of all default mount options depends on kernel and filesystem type."),
+		"dev": _("Interpret character or block special devices on the filesystem."),
+		"nodev": _("Do not interpret character or block special devices on the file system."),
+		"diratime": _("Update directory inode access times on this filesystem. This is the default. (This option is ignored when noatime is set.)"),
+		"nodiratime": _("Do not update directory inode access times on this filesystem. (This option is implied when noatime is set.)"),
+		"dirsync": _("All directory updates within the filesystem should be done synchronously. This affects the following system calls: creat, link, unlink, symlink, mkdir, rmdir, mknod and rename."),
+		"exec": _("Permit execution of binaries."),
+		"noexec": _("Do not permit direct execution of any binaries on the mounted filesystem."),
+		"group": _("Allow an ordinary user to mount the filesystem if one of that user's groups matches the group of the device. This option implies the options nosuid and nodev (unless overridden by subsequent options, as in the option line group,dev,suid)."),
+		"iversion": _("Every time the inode is modified, the i_version field will be incremented."),
+		"noiversion": _("Do not increment the i_version inode field."),
+		"mand": _("Allow mandatory locks on this filesystem."),
+		"nomand": _("Do not allow mandatory locks on this filesystem."),
+		"nofail": _("Do not report errors for this device if it does not exist."),
+		"relatime": _("Update inode access times relative to modify or change time. Access time is only updated if the previous access time was earlier than the current modify or change time. (Similar to noatime, but it doesn't break mutt or other applications that need to know if a file has been read since the last time it was modified.)"),
+		"norelatime": _("Do not use the relatime feature."),
+		"strictatime": _("Allows to explicitly request full atime updates. This makes it possible for the kernel to default to relatime or noatime but still allow userspace to override it."),
+		"nostrictatime": _("Use the kernel's default behavior for inode access time updates."),
+		"lazytime": _("Only update times (atime, mtime, ctime) on the in-memory version of the file inode."),
+		"nolazytime": _("Do not use the lazytime feature."),
+		"suid": _("Allow set-user-ID or set-group-ID bits to take effect."),
+		"nosuid": _("Do not allow set-user-ID or set-group-ID bits to take effect."),
+		"silent": _("Turn on the silent flag."),
+		"loud": _("Turn off the silent flag."),
+		"owner": _("Allow an ordinary user to mount the filesystem if that user is the owner of the device. This option implies the options nosuid and nodev (unless overridden by subsequent options, as in the option line owner,dev,suid)."),
+		"ro": _("Mount the filesystem read-only."),
+		"rw": _("Mount the filesystem read-write."),
+		"sync": _("All I/O to the filesystem should be done synchronously. In the case of media with a limited number of write cycles (e.g. some flash drives), sync may cause life-cycle shortening."),
+		"user": _("Allow an ordinary user to mount the filesystem. The name of the mounting user is written to the mtab file (or to the private libmount file in /run/mount on systems without a regular mtab) so that this same user can unmount the filesystem again. This option implies the options noexec, nosuid, and nodev (unless overridden by subsequent options, as in the option line user,exec,dev,suid)."),
+		"nouser": _("Forbid an ordinary user to mount the filesystem. This is the default; it does not imply any other options."),
+		"users": _("Allow any user to mount and to unmount the filesystem, even when some other ordinary user mounted it. This option implies the options noexec, nosuid, and nodev (unless overridden by subsequent options, as in the option line users,exec,dev,suid)."),
+		"mode": _("Set the mode of all files to value & 0777 disregarding the original permissions. Add search permission to directories that have read permission. The value is given in octal."),
+		"soft": _("Determines the recovery behavior of the NFS client after an NFS request times out. If neither option is specified (or if the hard option is specified), NFS requests are retried indefinitely. If the soft option is specified, then the NFS client fails an NFS request after retrans retransmissions have been sent, causing the NFS client to return an error to the calling application."),
+		"hard": _("Determines the recovery behavior of the NFS client after an NFS request times out. If neither option is specified (or if the hard option is specified), NFS requests are retried indefinitely. If the soft option is specified, then the NFS client fails an NFS request after retrans retransmissions have been sent, causing the NFS client to return an error to the calling application."),
+		"timeo": _("The time in deciseconds (tenths of a second) the NFS client waits for a response before it retries an NFS request."),
+		"retrans": _("The number of times the NFS client retries a request before it attempts further recovery action. If the retrans option is not specified, the NFS client tries each request three times."),
+		"rsize": _("The maximum number of bytes in each network READ request that the NFS client can receive when reading data from a file on an NFS server. The actual data payload size of each NFS READ request is equal to or smaller than the rsize setting. The largest read payload supported by the Linux NFS client is 1,048,576 bytes (one megabyte)."),
+		"wsize": _("The maximum number of bytes per network WRITE request that the NFS client can send when writing data to a file on an NFS server. The actual data payload size of each NFS WRITE request is equal to or smaller than the wsize setting. The largest write payload supported by the Linux NFS client is 1,048,576 bytes (one megabyte)."),
+		"retry": _("The number of minutes that the mount(8) command retries an NFS mount operation in the foreground or background before giving up. If this option is not specified, the default value for foreground mounts is 2 minutes, and the default value for background mounts is 10000 minutes (80 minutes shy of one week). If a value of zero is specified, the mount(8) command exits immediately after the first failure."),
+		"udp": _("The udp option is an alternative to specifying proto=udp. It is included for compatibility with other operating systems."),
+		"tcp": _("The tcp option is an alternative to specifying proto=tcp. It is included for compatibility with other operating systems."),
+		"nfsvers": _("The NFS protocol version number used to contact the server's NFS service. If the server does not support the requested version, the mount request fails. If this option is not specified, the client negotiates a suitable version with the server, trying version 4 first, version 3 second, and version 2 last."),
+		"vers": _("This option is an alternative to the nfsvers option. It is included for compatibility with other operating systems."),
+		"lock": _("Selects whether to use the NLM sideband protocol to lock files on the server. If neither option is specified (or if lock is specified), NLM locking is used for this mount point. When using the nolock option, applications can lock files, but such locks provide exclusion only against other applications running on the same client. Remote applications are not affected by these locks."),
+		"nolock": _("Selects whether to use the NLM sideband protocol to lock files on the server. If neither option is specified (or if lock is specified), NLM locking is used for this mount point. When using the nolock option, applications can lock files, but such locks provide exclusion only against other applications running on the same client. Remote applications are not affected by these locks."),
+		"x-systemd.automount": _("An automount unit will be created for the file system."),
+		"x-systemd.idle-timeout": _("Configures the idle timeout of the automount unit."),
+		"x-systemd.device-timeout": _("Configure how long systemd should wait for a device to show up before giving up on an entry from /etc/fstab. Specify a time in seconds."),
 		
 		}
 		

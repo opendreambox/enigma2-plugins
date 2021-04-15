@@ -46,7 +46,7 @@ class InternetRadioList(List):
 					filtername = _("Genres")
 				else:
 					filtername = _("Countries")
-				display2 = "%s %s" % (_("Filter:"),filtername)
+				display2 = "%s %s" % (_("Filter:"), filtername)
 			else:
 				display2 = item.configItem.tags.value
 			text1 = display

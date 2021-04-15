@@ -44,7 +44,7 @@ class InternetRadioHTTPClientFactory(HTTPClientFactory):
 	agent="Internet-Radio", timeout=0, cookies=None,
 	followRedirect=1, lastModified=None, etag=None):
 		HTTPClientFactory.__init__(self, url, method=method, postdata=postdata,
-		headers=headers, agent=agent, timeout=timeout, cookies=cookies,followRedirect=followRedirect)
+		headers=headers, agent=agent, timeout=timeout, cookies=cookies, followRedirect=followRedirect)
 
 def sendUrlCommand(url, contextFactory=None, timeout=10, *args, **kwargs):
 	scheme, host, port, path = url_parse(url)

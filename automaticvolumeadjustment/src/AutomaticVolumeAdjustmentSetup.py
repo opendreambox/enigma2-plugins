@@ -142,11 +142,11 @@ class AutomaticVolumeAdjustmentEntriesListConfigScreen(Screen):
 		self["key_yellow"] = StaticText(_("Edit"))
 		self["key_blue"] = StaticText(_("Delete"))
 		self["entrylist"] = AutomaticVolumeAdjustmentEntryList([])
-		self["actions"] = ActionMap(["WizardActions","MenuActions","ShortcutActions"],
+		self["actions"] = ActionMap(["WizardActions", "MenuActions", "ShortcutActions"],
 			{
-			 "ok"	: self.keyOK,
-			 "back"	: self.keyClose,
-			 "red"	: self.keyRed,
+			 "ok": self.keyOK,
+			 "back": self.keyClose,
+			 "red": self.keyRed,
 			 "green": self.keyClose,
 			 "yellow": self.keyYellow,
 			 "blue": self.keyDelete,
@@ -162,7 +162,7 @@ class AutomaticVolumeAdjustmentEntriesListConfigScreen(Screen):
 		self.close(-1, None)
 
 	def keyRed(self):
-		self.session.openWithCallback(self.updateList,AutomaticVolumeAdjustmentEntryConfigScreen,None, self["entrylist"].configVA)
+		self.session.openWithCallback(self.updateList, AutomaticVolumeAdjustmentEntryConfigScreen, None, self["entrylist"].configVA)
 
 	def keyOK(self):
 		try:
@@ -178,7 +178,7 @@ class AutomaticVolumeAdjustmentEntriesListConfigScreen(Screen):
 			sel = None
 		if sel is None:
 			return
-		self.session.openWithCallback(self.updateList,AutomaticVolumeAdjustmentEntryConfigScreen,sel, self["entrylist"].configVA)
+		self.session.openWithCallback(self.updateList, AutomaticVolumeAdjustmentEntryConfigScreen, sel, self["entrylist"].configVA)
 
 	def keyDelete(self):
 		try:
@@ -231,7 +231,7 @@ class AutomaticVolumeAdjustmentEntryList(MenuList):
 			res = [
 				c,
 				(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, textWidth - 10, textHeight, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, c.name.value),
-				(eListboxPythonMultiContent.TYPE_TEXT, textWidth, 0,220, textHeight, 0, RT_HALIGN_RIGHT | RT_VALIGN_CENTER, str(c.adjustvalue.value)),
+				(eListboxPythonMultiContent.TYPE_TEXT, textWidth, 0, 220, textHeight, 0, RT_HALIGN_RIGHT | RT_VALIGN_CENTER, str(c.adjustvalue.value)),
 			]
 			list.append(res)
 		self.list = list

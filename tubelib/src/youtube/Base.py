@@ -31,7 +31,7 @@ def saveCredentials(credentials_file, credentials):
 	except:
 		return False
 
-def buildYoutube(credentials=None,scope=YoutubeAuth.AUTH_SCOPE_YT_RO):
+def buildYoutube(credentials=None, scope=YoutubeAuth.AUTH_SCOPE_YT_RO):
 	if credentials:
 		scopedCredentials(scope)
 		return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY, http=credentials.authorize(httplib2.Http()))

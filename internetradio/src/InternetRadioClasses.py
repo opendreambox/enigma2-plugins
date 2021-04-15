@@ -32,7 +32,7 @@ class InternetRadioStation:
 			self.genre = self.tags = ""
 		else:
 			self.genre = tags
-			self.tags = ",".join(tags.split(" ")).lower().replace(",,",",")
+			self.tags = ",".join(tags.split(" ")).lower().replace(",,", ",")
 		self.id = id
 		if country is None:
 			country = ""

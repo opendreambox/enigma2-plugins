@@ -501,22 +501,22 @@ class PictureInPictureZappingWithChannelName(Screen):
 		h_border = h - 6
 		
 		#== Groessen und Positionen der Screen-Elemente anpassen ====
-		self.instance.resize(eSize(*(w,h)))
+		self.instance.resize(eSize(*(w, h)))
 		self.instance.move(ePoint(int(x), int(y)))
 
-		self["border_top"].instance.resize(eSize(*(w,border_width)))
+		self["border_top"].instance.resize(eSize(*(w, border_width)))
 		if show_txt_ontop_of_pip:
-			self["border_top"].instance.move(ePoint(int(0),int(h_border - border_width)))
+			self["border_top"].instance.move(ePoint(int(0), int(h_border - border_width)))
 		else:
-			self["border_top"].instance.move(ePoint(int(0),int(0)))
-		self["border_left"].instance.resize(eSize(*(border_width,h_border)))
-		self["border_right"].instance.resize(eSize(*(border_width,h_border)))
-		self["border_right"].instance.move(ePoint(int(w - border_width),int(0)))
+			self["border_top"].instance.move(ePoint(int(0), int(0)))
+		self["border_left"].instance.resize(eSize(*(border_width, h_border)))
+		self["border_right"].instance.resize(eSize(*(border_width, h_border)))
+		self["border_right"].instance.move(ePoint(int(w - border_width), int(0)))
 
-		self["border_txt"].instance.resize(eSize(*(w,border_txt_height)))
-		self["border_txt"].instance.move(ePoint(int(0),int(h - h_border_txt)))
-		self["channel_txt"].instance.resize(eSize(*(w - (2 * border_width),29)))
-		self["channel_txt"].instance.move(ePoint(int(border_width),int(h - h_border_txt + 2)))
+		self["border_txt"].instance.resize(eSize(*(w, border_txt_height)))
+		self["border_txt"].instance.move(ePoint(int(0), int(h - h_border_txt)))
+		self["channel_txt"].instance.resize(eSize(*(w - (2 * border_width), 29)))
+		self["channel_txt"].instance.move(ePoint(int(border_width), int(h - h_border_txt + 2)))
 
 
 def PictureInPicture__init__(self, session, *args, **kwargs):
@@ -552,7 +552,7 @@ try:
 		reader = XMLHelpReader(resolveFilename(SCOPE_PLUGINS, "Extensions/pipzap/mphelp.xml"))
 		pipzapHelp = registerHelp(*reader)
 except Exception as e:
-	print("[pipzap] Unable to initialize MPHelp:", e,"- Help not available!")
+	print("[pipzap] Unable to initialize MPHelp:", e, "- Help not available!")
 	pipzapHelp = None
 
 #pragma mark -
@@ -661,7 +661,7 @@ def overwriteFunctions():
 
 config.plugins.pipzap = ConfigSubsection()
 config.plugins.pipzap.enable_hotkey = ConfigOnOff(default=True)
-config.plugins.pipzap.enable_exitkey = ConfigSelection(choices=[("False",_("no")), ("True",_("yes")), ("Close",_("only Close")), ("Open",_("only Open"))], default="False")
+config.plugins.pipzap.enable_exitkey = ConfigSelection(choices=[("False", _("no")), ("True", _("yes")), ("Close", _("only Close")), ("Open", _("only Open"))], default="False")
 config.plugins.pipzap.show_in_plugins = ConfigOnOff(default=False)
 config.plugins.pipzap.show_label = ConfigOnOff(default=True)
 config.plugins.pipzap.show_channelname = ConfigOnOff(default=False)

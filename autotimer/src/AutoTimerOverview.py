@@ -159,9 +159,9 @@ class AutoTimerOverview(Screen, HelpableScreen):
 			logpath = os_path.dirname(config.plugins.autotimer.log_file.value)
 		path_search_log = os_path.join(logpath, "autotimer_search.log")
 		if os_path.exists(path_search_log):
-			self.session.open(ShowLogScreen, path_search_log, _("Search Log"), "","")
+			self.session.open(ShowLogScreen, path_search_log, _("Search Log"), "", "")
 		else:
-			self.session.open(MessageBox,_("No search log found!\n\nNo timer added or modified during last autotimer search."), MessageBox.TYPE_INFO)
+			self.session.open(MessageBox, _("No search log found!\n\nNo timer added or modified during last autotimer search."), MessageBox.TYPE_INFO)
 
 	def showFilterTxt(self):
 		
@@ -263,7 +263,7 @@ class AutoTimerOverview(Screen, HelpableScreen):
 
 	def cancel(self):
 		if self.changed:
-			self.session.openWithCallback(self.cancelConfirm, ChoiceBox, title=_('Really close without saving settings?\nWhat do you want to do?'), list=[(_('close without saving'), 'close'), (_('close with saving and start searching'), 'close_save_start'), (_('only close and save (without searching)'), 'close_save'),(_('cancel'), 'exit'), ])
+			self.session.openWithCallback(self.cancelConfirm, ChoiceBox, title=_('Really close without saving settings?\nWhat do you want to do?'), list=[(_('close without saving'), 'close'), (_('close with saving and start searching'), 'close_save_start'), (_('only close and save (without searching)'), 'close_save'), (_('cancel'), 'exit'), ])
 		else:
 			self.close(None)
 

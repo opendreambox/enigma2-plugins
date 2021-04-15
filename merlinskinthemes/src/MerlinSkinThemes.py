@@ -94,13 +94,13 @@ else:
 	ArchString = "MIPSEL"
 ModelString = HardwareInfo().get_device_name().upper()
 IdString = "0" # no display
-if HardwareInfo().get_device_name() in ('dm900', 'dm920', 'dm820','dm7080', 'two'):
+if HardwareInfo().get_device_name() in ('dm900', 'dm920', 'dm820', 'dm7080', 'two'):
 	IdString = "%d" % (getDesktop(1).getStyleID())
 displayDict = {"1": "lcdscreenthemes", "2": "oledscreenthemes", "3": "extlcdscreenthemes", "100": "lcdscreenthemes"}
 displayTag = displayDict.get(IdString, None)
 
 # List of preview pics
-previewPicList = ["InfoBar", "Menu", "PluginBrowser", "ChannelSelection", "MovieSelection", "MoviePlayer", "SecondInfoBar", "GraphMultiEPG", "MessageBox", "InputBox", "ChoiceBox", "Mute", "Volume","MerlinMusicPlayer2Screen_%s" % (ArchString),"InfoBarSummary", "StandbySummary", "InfoBarMoviePlayerSummary", "MerlinMusicPlayer2LCDScreen"]
+previewPicList = ["InfoBar", "Menu", "PluginBrowser", "ChannelSelection", "MovieSelection", "MoviePlayer", "SecondInfoBar", "GraphMultiEPG", "MessageBox", "InputBox", "ChoiceBox", "Mute", "Volume", "MerlinMusicPlayer2Screen_%s" % (ArchString), "InfoBarSummary", "StandbySummary", "InfoBarMoviePlayerSummary", "MerlinMusicPlayer2LCDScreen"]
 
 print("------------------------------------------------")
 print(HardwareInfo().get_device_name())
@@ -159,7 +159,7 @@ class ImageCreator:
 			image = Image.new(mode='RGBA', size=(width, height), color=fromColor)
 			image.save(filename)
 		else:
-			gradient = Image.new(mode='RGBA',size=(width,height),color=0)
+			gradient = Image.new(mode='RGBA', size=(width, height), color=0)
 			draw = ImageDraw.Draw(gradient)
 			
 			if mode == "horizontal":
@@ -318,7 +318,7 @@ def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 		("fonttheme", "fonts", "font"), 
 		("layouttheme", "layouts", "layout", "*"),
 		("globalstheme", "globals", "value"),
-		("bordersettheme","borderset", "pixmap"),
+		("bordersettheme", "borderset", "pixmap"),
 		("windowstylescrollbartheme", "*", ""),
 		("componenttheme", "components", "component", "*"),
 		("skinpaththemes", "theme", ""),
@@ -443,7 +443,7 @@ def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 
 							if png_name is not None and png_width is not None and png_height is not None and png_argb is not None:
 								if acolor2 is not None and gradienttype is not None:
-									imageCreator.createRectangle(png_width, png_height, (acolor[1], acolor[2], acolor[3], acolor2[0]),(acolor2[1], acolor2[2], acolor2[3], acolor2[0]), skinFile[:-8] + png_name, gradienttype) 
+									imageCreator.createRectangle(png_width, png_height, (acolor[1], acolor[2], acolor[3], acolor2[0]), (acolor2[1], acolor2[2], acolor2[3], acolor2[0]), skinFile[:-8] + png_name, gradienttype) 
 								else:
 									imageCreator.createRectangle(png_width, png_height, (acolor[1], acolor[2], acolor[3], acolor[0]), None, skinFile[:-8] + png_name)
 
@@ -549,7 +549,7 @@ def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 	print("[MST] - start applying changes to skin.xml")
 	# let's brand the skin as edited by MST
 	if rootSkin.find("merlinskinthemes") is None:
-		mst = Tree.Element("merlinskinthemes", {"text":"Edited with MerlinSkinThemes3"})
+		mst = Tree.Element("merlinskinthemes", {"text": "Edited with MerlinSkinThemes3"})
 		rootSkin.insert(0, mst)
 								
 	tagDict = {
@@ -704,7 +704,7 @@ def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 				elabel.set("cornerRadius", radiusValue)
 
 	# elementtree does not support pretty print - so we do it
-	XMLindent(rootSkin,0)
+	XMLindent(rootSkin, 0)
 	#newXml = addIndent(rootSkin, 0)
 	# write updates to skin.xml
 	curSkin.write(skinFile)
@@ -832,7 +832,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 
 	def showEntryInfo(self):
 		if self.curList == "config":
-			self.session.open(MessageBox,self.helpDict.get(self["config"].getCurrent()[0], _("No help available")), MessageBox.TYPE_INFO, windowTitle=_("Setting Info"), timeout=0)
+			self.session.open(MessageBox, self.helpDict.get(self["config"].getCurrent()[0], _("No help available")), MessageBox.TYPE_INFO, windowTitle=_("Setting Info"), timeout=0)
 
 	def setListLabelText(self):
 		if self.curList == "config":
@@ -845,7 +845,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			self["ListLabel"].setText("%s - %s" % (typeText, _("ATTENTION: skin_user.xml found")))
 
 	def openContextMenu(self):
-		self.session.openWithCallback(self.openSelection, ChoiceBox, title=_("Please select..."), list=[(_("Settings"), "settings"), (_("Help"), "help"),(_("Delete MerlinSkinThemes screen from selected skin"), "deleteMST")])
+		self.session.openWithCallback(self.openSelection, ChoiceBox, title=_("Please select..."), list=[(_("Settings"), "settings"), (_("Help"), "help"), (_("Delete MerlinSkinThemes screen from selected skin"), "deleteMST")])
 
 	def openSelection(self, selection):
 		if selection:
@@ -904,7 +904,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			config.skin.primary_skin.save()
 			self.restartYesNo()
 		elif self.curList == "config":
-			askBox = self.session.openWithCallback(self.askYN,MessageBox,_("[apply themes] needs time to build new settings\nDo you want to do this now?"), MessageBox.TYPE_YESNO)
+			askBox = self.session.openWithCallback(self.askYN, MessageBox, _("[apply themes] needs time to build new settings\nDo you want to do this now?"), MessageBox.TYPE_YESNO)
 			askBox.setTitle(_("Apply themes now?"))
 
 	def askYN(self, answer):
@@ -946,7 +946,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		setThemes(MerlinSkinThemes.selThemeFile, MerlinSkinThemes.selSkinFile, configDictFile, retFunc)
 
 	def restartYesNo(self):
-		restartbox = self.session.openWithCallback(self.restartGUI,MessageBox,_("GUI needs a restart to apply a new skin\nDo you want to Restart the GUI now?"), MessageBox.TYPE_YESNO)
+		restartbox = self.session.openWithCallback(self.restartGUI, MessageBox, _("GUI needs a restart to apply a new skin\nDo you want to Restart the GUI now?"), MessageBox.TYPE_YESNO)
 		restartbox.setTitle(_("Restart GUI now?"))
 			
 	def showConfirmationMessage(self):
@@ -956,7 +956,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		if fileExists(MerlinSkinThemes.selSkinFile):
 			xml = Tree.parse(MerlinSkinThemes.selSkinFile)
 			if xml.find("screen[@name='MerlinSkinThemes']"):
-				MSTFixbox = self.session.openWithCallback(self.deleteMSTScreen,MessageBox,_("Delete MerlinSkinThemes screen from selected skin?"), MessageBox.TYPE_YESNO)
+				MSTFixbox = self.session.openWithCallback(self.deleteMSTScreen, MessageBox, _("Delete MerlinSkinThemes screen from selected skin?"), MessageBox.TYPE_YESNO)
 				MSTFixbox.setTitle(_("MerlinSkinThemes screen found"))
 			else:
 				self.session.open(MessageBox, _("No MerlinSkinThemes screen found in selected skin!"), MessageBox.TYPE_INFO)
@@ -1089,7 +1089,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 	# delete the selected design from themes.xml				
 	def deleteDesign(self, designName):
 		if designName == "-none-":
-			self.session.open(MessageBox,_("Design not deleted. Please select a design to be deleted."), MessageBox.TYPE_ERROR)
+			self.session.open(MessageBox, _("Design not deleted. Please select a design to be deleted."), MessageBox.TYPE_ERROR)
 		else:
 			curTree = Tree.parse(MerlinSkinThemes.selThemeFile)
 			xmlroot = curTree.getroot()
@@ -1151,7 +1151,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						for childOption in themeOption.findall('theme'):
 							themes.append((childOption.get("name"), childOption.get("value") == "active"))
 					else:
-						themes.append((themeOption.get("name"),themeOption.get("value") == "active"))
+						themes.append((themeOption.get("name"), themeOption.get("value") == "active"))
 				self.themeDict[themeType] = themes
 			
 			# <screenthemes><screens><screentheme><screen></screen></screentheme></screens></screenthemes>
@@ -1162,7 +1162,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					scr = scrt.find('screens[@name="%s"]' % (screen))
 					if scr is not None:
 						for screenOption in scr.findall("screentheme"):
-							themes.append((screenOption.get("name"),screenOption.get("value") == "active"))
+							themes.append((screenOption.get("name"), screenOption.get("value") == "active"))
 					self.themeDict[screen] = themes
 
 			# <lcdscreenthemes><screens><lcdscreentheme><screen></screen></lcdscreentheme></screens></lcdscreenthemes>
@@ -1175,7 +1175,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						if lscr is not None:
 							for screenOption in lscr.findall(displayTag[:-1]):
 								if screenOption.find('screen[@id="%s"]' % (IdString)) is not None:
-									themes.append((screenOption.get("name"),screenOption.get("value") == "active"))
+									themes.append((screenOption.get("name"), screenOption.get("value") == "active"))
 						self.themeDict[screen] = themes
 
 			if self.themeVersion is None:
@@ -1630,7 +1630,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					self["config"].show()
 			else:
 				self.CopyrightInfo()
-				self.session.open(MessageBox,_("No themes.xml or skin.xml found.\nPlease select a valid skin including themes.xml"), MessageBox.TYPE_ERROR, title=_("Error"))
+				self.session.open(MessageBox, _("No themes.xml or skin.xml found.\nPlease select a valid skin including themes.xml"), MessageBox.TYPE_ERROR, title=_("Error"))
 				
 		else:
 			self.curList = "SkinsList"
@@ -1819,26 +1819,26 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 				"fonttheme": "fonts",
 				"pngtheme": "",
 				"globalstheme": "globals",
-				"componenttheme":"components",
+				"componenttheme": "components",
 				"layouttheme": "layouts",
-				"bordersettheme":"windowstyle",
-				"windowstylescrollbartheme":"windowstylescrollbar",
+				"bordersettheme": "windowstyle",
+				"windowstylescrollbartheme": "windowstylescrollbar",
 				"skinpaththeme": "",
 				}
 				
 			exampleDict = {
 				"colortheme": {"name": "samplecolor", "value": "#00339933"},
 				"fonttheme": {"name": "sample", "filename": "/usr/share/enigma2/fonts/samplefont.ttf"},
-				"globalstheme": {"name": "sample", "value":"120,50"},
-				"componenttheme": {"type": "sample", "xOffset":"50", "yOffset": "2"},
+				"globalstheme": {"name": "sample", "value": "120,50"},
+				"componenttheme": {"type": "sample", "xOffset": "50", "yOffset": "2"},
 				"layouttheme": {"name": "sample"},
 				"bordersettheme": {"filename": "folder/sample.png", "pos": "bpTop"},
-				"windowstylescrollbartheme": {"name": "ScrollbarWidth", "value":"10"},
+				"windowstylescrollbartheme": {"name": "ScrollbarWidth", "value": "10"},
 				"pngtheme": {"argb": "#ff664004", "argb2": "#ffcf8106", "gtype": "round", "height": "8", "name": "img/sample.png", "width": "995"},
 				"skinpaththemes": {"name": "sample1", "path": "skinname/folder1/", "value": "active"},
 			}
 			
-			for node in [("colortheme", "colors", "color"), ("fonttheme", "fonts", "font"),("pngtheme", "png"), ("skinpaththemes", "theme"), ("globalstheme", "globals", "value"), ("bordersettheme", "borderset"), ("windowstylescrollbartheme", "*"), ("componenttheme", "components", "component"), ("layouttheme", "layouts", "layout")]:
+			for node in [("colortheme", "colors", "color"), ("fonttheme", "fonts", "font"), ("pngtheme", "png"), ("skinpaththemes", "theme"), ("globalstheme", "globals", "value"), ("bordersettheme", "borderset"), ("windowstylescrollbartheme", "*"), ("componenttheme", "components", "component"), ("layouttheme", "layouts", "layout")]:
 
 				# create the top nodes for the theme - always origina and original - work
 				if node[0] == "windowstylescrollbartheme":
@@ -1850,7 +1850,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 					newNodeOrg = Tree.SubElement(newTheme, node[0])
 					newNodeOrg.append(Tree.Comment("Example only"))
 					childNodeOrg = Tree.SubElement(newNodeOrg, node[1], exampleDict.get(node[0], {}))					
-					childNodeWork = Tree.SubElement(newNodeOrg, node[1], {"name":"sample2", "path":"skinpath/folder2/", "value":"inactive"})
+					childNodeWork = Tree.SubElement(newNodeOrg, node[1], {"name": "sample2", "path": "skinpath/folder2/", "value": "inactive"})
 				else:
 					newNodeOrg = Tree.SubElement(newTheme, node[0], {"name": "original", "value": "active"})
 					newNodeWork = Tree.SubElement(newTheme, node[0], {"name": "original - work", "value": "inactive"})
@@ -1878,9 +1878,9 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 								Tree.SubElement(newChildWork, subelement.tag, subelement.attrib)
 					else:
 						childNodeOrg.append(Tree.Comment("Example only"))
-						newChildOrg = Tree.SubElement(childNodeOrg, "borderset", {"name":"bsWindow"})
+						newChildOrg = Tree.SubElement(childNodeOrg, "borderset", {"name": "bsWindow"})
 						childNodeWork.append(Tree.Comment("Example only"))
-						newChildWork = Tree.SubElement(childNodeWork, "borderset", {"name":"bsWindow"})	
+						newChildWork = Tree.SubElement(childNodeWork, "borderset", {"name": "bsWindow"})	
 						Tree.SubElement(newChildOrg, "pixmap", exampleDict.get(node[0], {}))
 						Tree.SubElement(newChildWork, "pixmap", exampleDict.get(node[0], {}))
 											
@@ -2046,7 +2046,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			Tree.SubElement(cr2, "radius", {"name": "20", "value": "inactive"})
 			Tree.SubElement(cr2, "radius", {"name": "30", "value": "inactive"})	
 			
-			XMLindent(newTheme,0)
+			XMLindent(newTheme, 0)
 			
 			newThemeTree.write(MerlinSkinThemes.selThemeFile)
 			
@@ -2117,7 +2117,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			self.exit(False)
 
 	def save(self):
-		restartbox = self.session.openWithCallback(self.restartGUI,MessageBox,_("Do you want to Restart the GUI now to apply new skin settings?"), MessageBox.TYPE_YESNO)
+		restartbox = self.session.openWithCallback(self.restartGUI, MessageBox, _("Do you want to Restart the GUI now to apply new skin settings?"), MessageBox.TYPE_YESNO)
 		restartbox.setTitle(_("Restart GUI now?"))
 
 	def exit(self, cancel=True):
@@ -2151,7 +2151,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 def main(session, **kwargs):
 	session.open(MerlinSkinThemes)
 
-def Plugins(path,**kwargs):
+def Plugins(path, **kwargs):
 	list = [PluginDescriptor(name="MerlinSkinThemes", description="MerlinSkinThemes", where=PluginDescriptor.WHERE_PLUGINMENU, icon="plugin.png", fnc=main)]
 	return list		
 
@@ -2175,7 +2175,7 @@ class MerlinSkinThemesConfig(Screen, HelpableScreen, ConfigListScreen):
 		self["ColorActions"] = HelpableActionMap(self, "ColorActions",
 		{
 			"red": (self.closePlugin, _("Close plugin")),
-			"green": (self.saveSettings,_("Save settings")),
+			"green": (self.saveSettings, _("Save settings")),
 		}, -1)
 		
 		self["OkCancelActions"] = HelpableActionMap(self, "OkCancelActions",

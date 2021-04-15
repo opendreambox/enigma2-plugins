@@ -104,7 +104,7 @@ try:
 	reader = XMLHelpReader(helpfile)
 	epgrefreshHelp = registerHelp(*reader)
 except Exception as e:
-	print("[EPGRefresh] Unable to initialize MPHelp:", e,"- Help not available!")
+	print("[EPGRefresh] Unable to initialize MPHelp:", e, "- Help not available!")
 	epgrefreshHelp = None
 #pragma mark -
 

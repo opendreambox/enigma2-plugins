@@ -27,7 +27,7 @@ class GoogleSuggestions():
 		if self.hl is not None:
 			self.prepQuerry = self.prepQuerry + "hl=" + self.hl + "&"
 		self.prepQuerry = self.prepQuerry + "jsonp=self.gotSuggestions&q="
-		print "[MyTube - GoogleSuggestions] prepareQuery:",self.prepQuerry
+		print "[MyTube - GoogleSuggestions] prepareQuery:", self.prepQuerry
 
 	def getSuggestions(self, queryString):
 		self.prepareQuery()

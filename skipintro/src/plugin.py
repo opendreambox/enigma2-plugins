@@ -23,7 +23,7 @@ def getServiceName(self):
 			serviceNameRegexResult = serviceNameRegex.search(serviceName)
 
 			if serviceNameRegexResult and serviceNameRegexResult.group(2):
-				if int(serviceNameRegexResult.group(2).replace("S","")) > 0:
+				if int(serviceNameRegexResult.group(2).replace("S", "")) > 0:
 					season = " " + serviceNameRegexResult.group(2)
 			#if config.plugins.skipintro.save_season.value:
 			return (serviceNameRegexResult.group(1), season) if serviceNameRegexResult else (serviceName, season)
@@ -85,14 +85,14 @@ def InfoBarSeek__init__(self, actionmap="InfobarSeekActions"):
 			return
 
 		# read seek time from database
-		self.skipSeekTime, self.seriesName = self.database.getSkipTime(title[0],title[1])
+		self.skipSeekTime, self.seriesName = self.database.getSkipTime(title[0], title[1])
 
 		if self.skipSeekTime == 0:
 			#self.setSkipTimeStart = False
 			setIntroTime()
 		else:
 			if config.plugins.skipintro.show_skipmsg.value:
-				self.session.open(MessageBox, _("SkipIntro found seek time for\n%s:\n%s seconds") % (self.seriesName,str(self.skipSeekTime / 90000)), MessageBox.TYPE_INFO, timeout=3)
+				self.session.open(MessageBox, _("SkipIntro found seek time for\n%s:\n%s seconds") % (self.seriesName, str(self.skipSeekTime / 90000)), MessageBox.TYPE_INFO, timeout=3)
 			self.doSeekRelative(self.skipSeekTime)
 
 	def skipIntro_long():

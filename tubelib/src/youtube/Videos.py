@@ -117,7 +117,7 @@ class Video(object):
 		data = duration_regex.match(duration)
 		if not data or duration[-1] == 'T':
 			raise ValueError("'P%s' does not match ISO8601 format" % duration)
-		data = {k:int(v) for k, v in data.groupdict().items() if v}
+		data = {k: int(v) for k, v in data.groupdict().items() if v}
 		if 'years' in data or 'months' in data:
 			raise ValueError('Year and month values are not supported in python timedelta')
 

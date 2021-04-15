@@ -121,7 +121,7 @@ class EPGSearchList(EPGList):
 		rec1 = beginTime and self.timer.isInTimer(eventId, beginTime, duration, service)
 		# Partnerbox
 		if PartnerBoxIconsEnabled:
-			rec2 = beginTime and isInRemoteTimer(self,beginTime, duration, service)
+			rec2 = beginTime and isInRemoteTimer(self, beginTime, duration, service)
 		else:
 			rec2 = False
 		r1 = self.weekday_rect
@@ -138,7 +138,7 @@ class EPGSearchList(EPGList):
 		res = [
 			None, # no private data needed
 			(eListboxPythonMultiContent.TYPE_TEXT, r1.left(), r1.top(), r1.width(), r1.height(), 0, RT_HALIGN_RIGHT | RT_VALIGN_CENTER, self.days[t[6]]),
-			(eListboxPythonMultiContent.TYPE_TEXT, r2.left(), r2.top(), r2.width(), r1.height(), 0, RT_HALIGN_RIGHT | RT_VALIGN_CENTER, "%02d.%02d, %02d:%02d" % (t[2],t[1],t[3],t[4]))
+			(eListboxPythonMultiContent.TYPE_TEXT, r2.left(), r2.top(), r2.width(), r1.height(), 0, RT_HALIGN_RIGHT | RT_VALIGN_CENTER, "%02d.%02d, %02d:%02d" % (t[2], t[1], t[3], t[4]))
 		]
 
 		#add picon if set this option in setup
@@ -156,9 +156,9 @@ class EPGSearchList(EPGList):
 				clock_pic = self.getClockPixmap(service, beginTime, duration, eventId)
 				# maybe Partnerbox too
 				if rec2:
-					clock_pic_partnerbox = getRemoteClockPixmap(self,service, beginTime, duration, eventId)
+					clock_pic_partnerbox = getRemoteClockPixmap(self, service, beginTime, duration, eventId)
 			else:
-				clock_pic = getRemoteClockPixmap(self,service, beginTime, duration, eventId)
+				clock_pic = getRemoteClockPixmap(self, service, beginTime, duration, eventId)
 			if rec1 and rec2:
 				# Partnerbox and local
 				res.extend((
@@ -337,7 +337,7 @@ class EPGSearch(EPGSelection):
 			EPGSearchFilter_openSearchFilterList(self.session, None, None)
 			self.onShow.append(self.__backFromSearchFilterList)
 		else:
-			self.session.open(MessageBox,_("AutoTimer-plugin must be installed to use the search filter function!"),type=MessageBox.TYPE_INFO)
+			self.session.open(MessageBox, _("AutoTimer-plugin must be installed to use the search filter function!"), type=MessageBox.TYPE_INFO)
 
 	def __backFromSearchFilterList(self):
 		self.onShow.remove(self.__backFromSearchFilterList)
@@ -352,7 +352,7 @@ class EPGSearch(EPGSelection):
 			if event is not None:
 				searchEventWithFilter(self.session, event, service)
 		else:
-			self.session.open(MessageBox,_("AutoTimer-plugin must be installed to use the search filter function!"),type=MessageBox.TYPE_INFO)
+			self.session.open(MessageBox, _("AutoTimer-plugin must be installed to use the search filter function!"), type=MessageBox.TYPE_INFO)
 		
 	def openSimilarList(self, eventid, refstr):
 		self.session.open(EPGSelection, refstr, None, eventid)
@@ -369,7 +369,7 @@ class EPGSearch(EPGSelection):
 			(_("Import from Timer"), self.importFromTimer),
 			(_("Import from EPG"), self.importFromEPG),
 		]
-		keys = ["1","2"]
+		keys = ["1", "2"]
 
 		if autoTimerAvailable:
 			options.extend((
@@ -377,7 +377,7 @@ class EPGSearch(EPGSelection):
 				(_("Save search as AutoTimer"), self.addAutoTimer),
 				(_("Export selected as AutoTimer"), self.exportAutoTimer),
 			))
-			keys.extend(("3","4","5"))
+			keys.extend(("3", "4", "5"))
 		if fileExists(resolveFilename(SCOPE_PLUGINS, "Extensions/SeriesPlugin/plugin.py")):
 			options.append((_("Show series info (SP)"), self.openSPInfoScreen))
 			keys.append("6")
@@ -389,7 +389,7 @@ class EPGSearch(EPGSelection):
 		if fileExists(resolveFilename(SCOPE_PLUGINS, "Extensions/AdvancedMovieSelection/plugin.py")):
 			options.append((_("Open selected in TMDB Info (AMS)"), self.openTMDb))
 			options.append((_("Open selected in TMDB Serie Info (AMS)"), self.openTMDbSerie))
-			keys.extend(("8","9"))
+			keys.extend(("8", "9"))
 
 		options.append((_("Setup"), self.setup))
 		keys.append("0")
@@ -577,7 +577,7 @@ class EPGSearch(EPGSelection):
 				epgsearchAT = EPGSearchAT()
 				epgsearchAT.load()
 				for timer in epgsearchAT.getSortedTupleTimerList():
-					options.append((timer[0].name + _(" (search filter)"),timer[0]))
+					options.append((timer[0].name + _(" (search filter)"), timer[0]))
 
 		if options:
 			self.session.openWithCallback(
@@ -598,7 +598,7 @@ class EPGSearch(EPGSelection):
 			self.was_history_start = False
 			if autoTimerAvailable:
 				from Plugins.Extensions.AutoTimer.AutoTimerComponent import AutoTimerComponent
-				searchWithAT = isinstance(ret[1],AutoTimerComponent)
+				searchWithAT = isinstance(ret[1], AutoTimerComponent)
 			else:
 				searchWithAT = False
 			if searchWithAT:
@@ -856,6 +856,6 @@ class EPGSearchEPGSelection(EPGSelection):
 			return
 
 		if self.openPlugin:
-			self.session.open(EPGSearch,evt.getEventName())
+			self.session.open(EPGSearch, evt.getEventName())
 		else:
 			self.close(evt.getEventName())

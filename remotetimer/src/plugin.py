@@ -313,8 +313,8 @@ def newnigma2KeyGo(self):
 		if end < begin:
 			end += 86400
 
-		rt_name = quote_plus(self.timerentry_name.value.decode('utf8').encode('utf8','ignore'))
-		rt_description = quote_plus(self.timerentry_description.value.decode('utf8').encode('utf8','ignore'))
+		rt_name = quote_plus(self.timerentry_name.value.decode('utf8').encode('utf8', 'ignore'))
+		rt_description = quote_plus(self.timerentry_description.value.decode('utf8').encode('utf8', 'ignore'))
 		rt_disabled = 0 # XXX: do we really want to hardcode this? why do we offer this option then?
 		rt_repeated = 0 # XXX: same here
 
@@ -402,7 +402,7 @@ def main(session, **kwargs):
 
 def Plugins(**kwargs):
  	return [
-		PluginDescriptor(name="Remote Timer",description="Remote Timer Setup", where=[PluginDescriptor.WHERE_PLUGINMENU], icon="remotetimer.png", fnc=main),
+		PluginDescriptor(name="Remote Timer", description="Remote Timer Setup", where=[PluginDescriptor.WHERE_PLUGINMENU], icon="remotetimer.png", fnc=main),
 		PluginDescriptor(name="Remote Timer", where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main),
 		PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=autostart)
 	]

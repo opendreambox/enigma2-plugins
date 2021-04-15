@@ -69,7 +69,7 @@ class ChangePasswordScreen(ChoiceBox):
 		self._wasLocked = True
 		self._container.execute("passwd -l %s" % self._user)
 
-	def _commandFinished(self,retval):
+	def _commandFinished(self, retval):
 		if retval == 0:
 			type = MessageBox.TYPE_INFO
 			windowTitle = _("Password changed")

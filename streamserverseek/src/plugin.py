@@ -26,7 +26,7 @@ class M3u8GzipEncoderFactory(GzipEncoderFactory):
 		if request.postpath[0].startswith("stream.m3u8"):
 			return GzipEncoderFactory.encoderForRequest(self, request)
 
-def autostart(reason,**kwargs):
+def autostart(reason, **kwargs):
 	if "session" in kwargs:
 		sss = StreamServerSeek(session=kwargs["session"])
 		print "session %s" % sss

@@ -147,8 +147,8 @@ class MyTubePlayer(Screen, InfoBarNotifications, InfoBarSeek):
 
 	def playNextFile(self):
 		print "playNextFile"
-		nextservice,error = self.nextCallback()
-		print "nextservice--->",nextservice
+		nextservice, error = self.nextCallback()
+		print "nextservice--->", nextservice
 		if nextservice is None:
 			self.handleLeave(config.plugins.mytube.general.on_movie_stop.value, error)
 		else:
@@ -157,7 +157,7 @@ class MyTubePlayer(Screen, InfoBarNotifications, InfoBarSeek):
 
 	def playPrevFile(self):
 		print "playPrevFile"
-		prevservice,error = self.prevCallback()
+		prevservice, error = self.prevCallback()
 		if prevservice is None:
 			self.handleLeave(config.plugins.mytube.general.on_movie_stop.value, error)
 		else:
@@ -241,9 +241,9 @@ class MyTubePlayer(Screen, InfoBarNotifications, InfoBarSeek):
 	def setSeekState(self, wantstate, onlyGUI=False):
 		print "setSeekState"
 		if wantstate == self.STATE_PAUSED:
-			print "trying to switch to Pause- state:",self.STATE_PAUSED
+			print "trying to switch to Pause- state:", self.STATE_PAUSED
 		elif wantstate == self.STATE_PLAYING:
-			print "trying to switch to playing- state:",self.STATE_PLAYING
+			print "trying to switch to playing- state:", self.STATE_PLAYING
 		service = self.session.nav.getCurrentService()
 		if service is None:
 			print "No Service found"

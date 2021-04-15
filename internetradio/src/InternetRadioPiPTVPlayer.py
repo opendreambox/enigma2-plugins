@@ -241,7 +241,7 @@ class InternetRadioPiPTVPlayer(object):
 
 	def playService(self, service):
 		# PiPServiceRelation support
-		piprelationservice = self.pipServiceRelation.get(service.toString(),None)
+		piprelationservice = self.pipServiceRelation.get(service.toString(), None)
 		if piprelationservice is not None:
 			 service = eServiceReference(piprelationservice)
 		if service and (service.flags & eServiceReference.isGroup):

@@ -457,7 +457,7 @@ class BouquetEditor(Source):
 			name = cur_service.getServiceName()
 			service_ref = ServiceReference(sRef)
 			service_name = service_ref.getServiceName()
-			return (True, "Added %s to alternative service %s." % (service_name,name))
+			return (True, "Added %s to alternative service %s." % (service_name, name))
 		else:
 			return returnValue
 			
@@ -496,7 +496,7 @@ class BouquetEditor(Source):
 		returnValue = self.removeBouquet(new_param)
 		if returnValue[0]:
 			self.setRoot(sBouquetRef)
-			return (True,"All alternative services deleted.")
+			return (True, "All alternative services deleted.")
 		else:
 			return returnValue
 			
@@ -561,7 +561,7 @@ class BouquetEditor(Source):
 		backupFilename = join(self.BACKUP_PATH, tarFilename)
 		if exists(backupFilename):
 			remove(backupFilename)
-		checkfile = join(self.BACKUP_PATH,'.webouquetedit')
+		checkfile = join(self.BACKUP_PATH, '.webouquetedit')
 		f = open(checkfile, 'w')
 		if f:
 			files = []
@@ -683,11 +683,11 @@ class BouquetEditor(Source):
 				if exists(filename):
 					i += 1
 				else:
-					name = "%s_%d" % (name,i)
+					name = "%s_%d" % (name, i)
 					break
 		return name
 
-	def getName(self,ref):
+	def getName(self, ref):
 		serviceHandler = eServiceCenter.getInstance()
 		info = serviceHandler.info(ref)
 		if info:

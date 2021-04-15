@@ -82,7 +82,7 @@ def messageBoxCallback(answer=False):
 
 def Plugins(**kwargs):
 	return [
-		PluginDescriptor(name="MerlinSkinThemes", description="MerlinSkinThemes",where=[PluginDescriptor.WHERE_PLUGINMENU], icon="plugin.png", fnc=merlinskinthemes_start),
+		PluginDescriptor(name="MerlinSkinThemes", description="MerlinSkinThemes", where=[PluginDescriptor.WHERE_PLUGINMENU], icon="plugin.png", fnc=merlinskinthemes_start),
 		PluginDescriptor(name="MerlinSkinThemes", description="MerlinSkinThemes", where=[PluginDescriptor.WHERE_EXTENSIONSMENU], fnc=merlinskinthemes_start),
 		PluginDescriptor(where=[PluginDescriptor.WHERE_INFOBAR], fnc=checkSkin)
 	]

@@ -232,7 +232,7 @@ class SatloaderBouquet(Screen):
 
 		except Exception, e:
 			print "Error:", e
-			self["info"].setText("%s\n%s" % (_("Parsing failed!"),e))
+			self["info"].setText("%s\n%s" % (_("Parsing failed!"), e))
 
 	def restart(self, ret):
 		if ret is True:
@@ -361,7 +361,7 @@ class SatloaderMultiSat(Screen):
 
 		except Exception, e:
 			print "Error:", e
-			self["info"].setText("%s\n%s" % (_("Parsing failed!"),e))
+			self["info"].setText("%s\n%s" % (_("Parsing failed!"), e))
 
 	def restart(self, ret):
 		if ret is True:
@@ -435,7 +435,7 @@ class TransponderSelection(Screen):
 				elif m[5] == "3":
 					pol = "R"
 
-				text = "TP: %s   %s %s %s   %s %s" % (str(idx + 1).zfill(3),_("Frequency:"), str(m[1]).zfill(8)[:5],str(pol),_("Symbol Rate:"),str(m[3]).zfill(8)[:5])
+				text = "TP: %s   %s %s %s   %s %s" % (str(idx + 1).zfill(3), _("Frequency:"), str(m[1]).zfill(8)[:5], str(pol), _("Symbol Rate:"), str(m[3]).zfill(8)[:5])
 				self.list.addSelection(text, line, idx, True)
 				idx += 1
 		f.close()

@@ -16,7 +16,7 @@ class UploadTextResource(resource.Resource):
 		return req.args.get(key, [default])[0]
 
 	def render_POST(self, req):
-		print "[UploadTextResource] req.args ",req.args
+		print "[UploadTextResource] req.args ", req.args
 		path = self.getArg(req, 'path', self.default_uploaddir)
 		filename = self.getArg(req, 'filename')
 		text = self.getArg(req, 'text')
@@ -51,7 +51,7 @@ class UploadTextResource(resource.Resource):
 			req.setHeader('Content-type', 'text/plain')
 			return 'Deleted %s' % filename
 
-		text = text.replace('\r\n','\n')
+		text = text.replace('\r\n', '\n')
 		print "[UploadTextResource] text:", text
 
 		fd, fn = mkstemp(dir=path)

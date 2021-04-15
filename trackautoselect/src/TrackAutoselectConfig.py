@@ -41,16 +41,16 @@ class TrackAutoselectConfig():
 	CATEGORY_SUBTITLE_FORMAT = _("Preference of subtitle format")
 	CATEGORY_HANDLE_SERVICES = _("Selection of handled Services")
 
-	audio_order_choices = [("saved",_("saved")), ("default",_("default")), ("format",_("format")), ("language",_("Language")), ("Description",_("Description"))]
+	audio_order_choices = [("saved", _("saved")), ("default", _("default")), ("format", _("format")), ("language", _("Language")), ("Description", _("Description"))]
 	[AUDIO_ORDER_SAVED, AUDIO_ORDER_DEFAULT, AUDIO_ORDER_FORMAT, AUDIO_ORDER_LANGUAGE, AUDIO_ORDER_DESCRIPTION] = [x[0] for x in audio_order_choices]
 
-	subtitle_order_choices = [("saved",_("saved")), ("default",_("default")), ("forced",_("forced")), ("language",_("Language")), ("format",_("format"))]
+	subtitle_order_choices = [("saved", _("saved")), ("default", _("default")), ("forced", _("forced")), ("language", _("Language")), ("format", _("format"))]
 	[SUBTITLE_ORDER_SAVED, SUBTITLE_ORDER_DEFAULT, SUBTITLE_ORDER_FORCED, SUBTITLE_ORDER_LANGUAGE, SUBTITLE_ORDER_FORMAT] = [x[0] for x in subtitle_order_choices]
 
-	subtitle_enable_choices = [("saved",_("saved")), ("default",_("default")), ("forced",_("forced")), ("nofirstlanguage",_("if audio isn't first language")), ("notanylanguage",_("if no prefered audio language")), ("always",_("always"))]
+	subtitle_enable_choices = [("saved", _("saved")), ("default", _("default")), ("forced", _("forced")), ("nofirstlanguage", _("if audio isn't first language")), ("notanylanguage", _("if no prefered audio language")), ("always", _("always"))]
 	[SUBTITLE_ENABLE_SAVED, SUBTITLE_ENABLE_DEFAULT, SUBTITLE_ENABLE_FORCED, SUBTITLE_ENABLE_NOTFIRSTLANG, SUBTITLE_ENABLE_NOTANYLANG, SUBTITLE_ENABLE_ALWAYS] = [x[0] for x in subtitle_enable_choices]
 
-	handle_services_choices = [("servicegst",_("Media Files")), ("servicedvb",_("TV Services")), ("servicedvd",_("DVD"))]
+	handle_services_choices = [("servicegst", _("Media Files")), ("servicedvb", _("TV Services")), ("servicedvd", _("DVD"))]
 	[SERVICE_GST, SERVICE_DVB, SERVICE_DVD] = [x[0] for x in handle_services_choices]
 
 	services_dict = {eServiceReference.idDVB: SERVICE_DVB, 0x1001: SERVICE_GST, 0x1111: SERVICE_DVD}

@@ -31,7 +31,7 @@ def __(text, front=True):
 
 def normalizePhoneNumber(intNo):
 	
-	found = re.match('^\+' + config.plugins.FritzCall.country.value.replace('00','') + '(.*)', intNo)
+	found = re.match('^\+' + config.plugins.FritzCall.country.value.replace('00', '') + '(.*)', intNo)
 	if found:
 		intNo = '0' + found.group(1)
 	found = re.match('^\+(.*)', intNo)

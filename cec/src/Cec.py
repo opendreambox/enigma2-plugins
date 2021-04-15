@@ -118,7 +118,7 @@ class Cec(object):
 				if not d.logicalAddress in (eCec.ADDR_AUDIO_SYSTEM, eCec.ADDR_TV):
 					return
 			commands = []
-			if allDevices and d.physicalAddress == (0xff,0xff):
+			if allDevices and d.physicalAddress == (0xff, 0xff):
 				Log.i("requesting physical address of %s" % (d.logicalAddress,))
 				commands.append(eCec.MSG_GIVE_PHYS_ADDR)
 			if d.vendor == eCec.VENDOR_UNKNOWN:
@@ -244,7 +244,7 @@ class Cec(object):
 		elif cmd == eCec.MSG_GIVE_OSD_NAME:
 			self.onGiveOsdName(sender)
 		elif cmd == eCec.MSG_SET_MENU_LANG:
-			self.onSetMenuLang(sender,message)
+			self.onSetMenuLang(sender, message)
 		elif cmd == eCec.MSG_SET_OSD_NAME:
 			self.onSetOsdName(sender, message)
 		elif cmd == eCec.MSG_REPORT_POWER_STATUS:
@@ -311,7 +311,7 @@ class Cec(object):
 		Log.i("".join([chr(x) for x in message[1:]]))
 
 	def onSetOsdName(self, sender, message):
-		self.updateDeviceName(sender,"".join([chr(x) for x in message[1:]]))
+		self.updateDeviceName(sender, "".join([chr(x) for x in message[1:]]))
 
 	def onGiveDevicePowerStatus(self, sender):
 		self.reportPowerStatus(sender)
@@ -401,7 +401,7 @@ class Cec(object):
 		if physicalAddress == (0xff, 0xff):
 			return
 		if physicalAddress != self._activeSource:
-			reenforce = self.isActiveSource() and config.cec2.active_source_agression.value and physicalAddress == (0,0)
+			reenforce = self.isActiveSource() and config.cec2.active_source_agression.value and physicalAddress == (0, 0)
 			self._activeSource = physicalAddress
 			if reenforce:
 				Log.w("Reenforcing myself as Active Source!")
@@ -429,16 +429,16 @@ class Cec(object):
 		self.send(to, eCec.MSG_GIVE_DEVICE_POWER_STATUS)
 
 	def reportPowerStatus(self, to):
-		self.send(to, eCec.MSG_REPORT_POWER_STATUS, [self._powerState,])
+		self.send(to, eCec.MSG_REPORT_POWER_STATUS, [self._powerState, ])
 
 	def reportCecVersion(self, to):
 		Log.i(" ")
-		self.send(to, eCec.MSG_VERSION, [self.CEC_VERSION_1_3a,]) # HDMI CEC Version 1.3a
+		self.send(to, eCec.MSG_VERSION, [self.CEC_VERSION_1_3a, ]) # HDMI CEC Version 1.3a
 
 	def reportPhysicalAddress(self):
 		self.send(eCec.ADDR_UNREGISTERED_BROADCAST, eCec.MSG_REPORT_PHYS_ADDR, self._physicalAddress + (eCec.DEVICE_TYPE_TUNER,))
 
-	def deviceVendorId(self,to=eCec.ADDR_UNREGISTERED_BROADCAST):
+	def deviceVendorId(self, to=eCec.ADDR_UNREGISTERED_BROADCAST):
 		vendor = [(self._vendor & 0xFF0000) >> 16]
 		vendor.append((self._vendor & 0xFF00) >> 8)
 		vendor.append((self._vendor & 0xFF))

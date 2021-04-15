@@ -47,7 +47,7 @@ class ServiceList(Source):
 			if item[0].getPath():
 				isStream = "1"
 					
-			list.append((item[0].toString(),item[1],isGroup,isMarker,isProtected, isStream))
+			list.append((item[0].toString(), item[1], isGroup, isMarker, isProtected, isStream))
 		print "list", list
 		return list
 

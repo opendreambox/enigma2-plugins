@@ -234,7 +234,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		Screen.__init__(self, session)
 		InternetRadioVisualization.__init__(self)
 		self.currentService = self.session.nav.getCurrentlyPlayingServiceReference()
-		InternetRadioPiPTVPlayer.__init__(self,session, self.currentService, self.setPiPPlayerEnabled)
+		InternetRadioPiPTVPlayer.__init__(self, session, self.currentService, self.setPiPPlayerEnabled)
 		self.skinName = "InternetRadio"
 		self.session.nav.stopService()
 		self["cover"] = InternetRadioCover(self.coverLoaded)
@@ -299,7 +299,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		self.url_tried = 0
 		
 		self.stationListURL = "http://www.radio-browser.info/xml.php"
-		self.filterSwitch = {_("Countries"):_("Genres"), _("Genres"):_("Countries")}
+		self.filterSwitch = {_("Countries"): _("Genres"), _("Genres"): _("Countries")}
 
 
 		self.visuCleanerTimer = eTimer()
@@ -395,7 +395,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			self.try_url = url
 			if url.endswith(".pls") or url.endswith(".m3u") or url.endswith(".asx"):
 				self.setStatusText(_("Getting streaming data from %s") % url)
-				sendUrlCommand(url, None,10).addCallback(self.callbackPlayList).addErrback(self.callbackStationListError)
+				sendUrlCommand(url, None, 10).addCallback(self.callbackPlayList).addErrback(self.callbackStationListError)
 			else:
 				self.playServiceStream(url)
 
@@ -407,7 +407,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		if self.fullScreen.isVisible() == False:
 			self.visible = False
 			self.fullScreen.setVisibility(True)
-			if config.plugins.internetradio.fullscreenlayout.value in ("0","1"):
+			if config.plugins.internetradio.fullscreenlayout.value in ("0", "1"):
 				self.fullScreen.setStation(self["station"].getText())
 				self.fullScreen.setText(self["title"].getText())
 				if config.plugins.internetradio.googlecover.value:
@@ -436,23 +436,23 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		if self.needCleanup() == True:
 			code = 0
 			v = (-80,) * self.BANDS
-			self.musicPlayerCallBack(code,v,True)
+			self.musicPlayerCallBack(code, v, True)
 
 	def musicPlayerCallBack(self, code=None, v=None, cleanup=False):
 		if self.visuCleanerTimer.isActive():
 			self.visuCleanerTimer.stop()
 		if code == 0 and len(v) > 0:
-			if config.plugins.internetradio.visualization.value in ("0","1"):
+			if config.plugins.internetradio.visualization.value in ("0", "1"):
 				self.summaries.setValues(v)
 			if self.fullScreen.isVisible() and config.plugins.internetradio.fullscreenlayout.value == "0":
 				self.fullScreen.setValues(v)
-			if self.visible and config.plugins.internetradio.visualization.value in ("0","2"):
+			if self.visible and config.plugins.internetradio.visualization.value in ("0", "2"):
 				self.setValues(v)
 		elif code == 1:
 			cleanup = True
 			if (len(v[0]) != 0):
 				if len(v[1]) != 0:
-					sTitle = "%s - %s" % (v[0],v[1])
+					sTitle = "%s - %s" % (v[0], v[1])
 				else:
 					sTitle = v[0]
 				if config.plugins.internetradio.googlecover.value:
@@ -473,7 +473,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				self.url_tried += 1
 				if self.url_tried == 1:
 					self.setStatusText(_("Getting streaming data from\n%s") % self.try_url)
-					sendUrlCommand(self.try_url, None,10).addCallback(self.callbackPlayList).addErrback(self.callbackStationListError)
+					sendUrlCommand(self.try_url, None, 10).addCallback(self.callbackPlayList).addErrback(self.callbackStationListError)
 				else:
 					self.setStatusText("Error: %s" % v[1], 15000)
 					self.currentPlayingStation = None
@@ -505,7 +505,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		self["key_red"].setText(_("Record"))
 
 	def streamripperDataAvail(self, data):
-		sData = data.replace('\n','')
+		sData = data.replace('\n', '')
 		self["console"].setText(sData)
 
 	def InputBoxStartRecordingCallback(self, returnValue=None):
@@ -533,7 +533,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			containerStreamripper.execute(*cmd)
 			self["key_red"].setText(_("Stop record"))
 			
-	def deleteRecordingConfirmed(self,val):
+	def deleteRecordingConfirmed(self, val):
 		if val:
 			containerStreamripper.sendCtrlC()
 
@@ -544,7 +544,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			if self.currentPlayingStation and len(self.currentPlayingStation.url) != 0:
 				self.session.openWithCallback(self.InputBoxStartRecordingCallback, InputBox, windowTitle=_("Recording length"), title=_("Enter in minutes (0 means unlimited)"), text="0", type=Input.NUMBER)
 			else:
-				self.session.open(MessageBox, _("Only running streamings can be recorded!"), type=MessageBox.TYPE_INFO,timeout=20)
+				self.session.open(MessageBox, _("Only running streamings can be recorded!"), type=MessageBox.TYPE_INFO, timeout=20)
 
 	def green_pressed(self):
 		if self.mode != self.FILTERLIST:
@@ -590,7 +590,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		self.setStatusText(_("Getting InternetRadio %s list...") % config.plugins.internetradio.filter.value)
 		self.stationListIndex = 0
 		if len(self.stationList) == 0:
-			sendUrlCommand(self.stationListURL, None,10).addCallback(self.callbackFilterList).addErrback(self.callbackFilterListError)
+			sendUrlCommand(self.stationListURL, None, 10).addCallback(self.callbackFilterList).addErrback(self.callbackFilterListError)
 		else:
 			self.setFilterList()
 
@@ -628,7 +628,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 					genres[genre] = 0 # FIXME 
 					genreList.append(((InternetRadioFilter(name=genre)),))
 		genreList = sorted(genreList, key=lambda genrelist: genrelist[0].name)
-		genreList.insert(0,((InternetRadioFilter(name=_("All Genres"))),))
+		genreList.insert(0, ((InternetRadioFilter(name=_("All Genres"))),))
 		return genreList
 		
 	def fillCountryList(self):
@@ -640,7 +640,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 				countries[country] = 0 # FIXME 
 				countryList.append(((InternetRadioFilter(name=items.country)),))
 		countryList = sorted(countryList, key=lambda countrylist: countrylist[0].name)
-		countryList.insert(0,((InternetRadioFilter(name=_("All Countries"))),))
+		countryList.insert(0, ((InternetRadioFilter(name=_("All Countries"))),))
 		return countryList
 
 	def ok_pressed(self):
@@ -672,7 +672,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 							currentPlayingStation = InternetRadioStation(name=sel.configItem.name.value, tags=sel.configItem.tags.value, country=sel.configItem.country.value, homepage=sel.configItem.homepage.value)
 						else:
 							goOn = False
-							if sel.configItem.type.value in (1,2):
+							if sel.configItem.type.value in (1, 2):
 								self.stationListIndex = 0
 								self.filterList = []
 								if sel.configItem.type.value == 1:
@@ -697,7 +697,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		self.try_url = url
 		if url.endswith(".pls") or url.endswith(".m3u") or url.endswith(".asx"):
 			self.setStatusText(_("Getting streaming data from %s") % url)
-			sendUrlCommand(url, None,10).addCallback(self.callbackPlayList).addErrback(self.callbackStationListError)
+			sendUrlCommand(url, None, 10).addCallback(self.callbackPlayList).addErrback(self.callbackStationListError)
 		else:
 			self.playServiceStream(url)
 			
@@ -712,7 +712,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 
 	def callbackPlayList(self, result):
 		found = False
-		parts = string.split(result.lower(),"\n")
+		parts = string.split(result.lower(), "\n")
 		if parts[0].startswith("http://"):
 					url = parts[0]
 					found = True
@@ -720,7 +720,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		elif parts[0].find("[playlist]") != -1:
 			for lines in parts:
 				if lines.find("file1=") != -1:
-					line = string.split(lines,"file1=")
+					line = string.split(lines, "file1=")
 					found = True
 					self.playServiceStream(line[-1].rstrip().strip())
 					break
@@ -751,14 +751,14 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			self.currentPlayingStation = None
 			self.setStatusText(_("No streaming data found..."), 15000)
 
-	def getStationList(self,filter_string):
+	def getStationList(self, filter_string):
 		self.stationHeaderText = _("InternetRadio station list for filter: %s") % filter_string
 		self["headertext"].setText(self.stationHeaderText)
 		self.setStatusText(_("Getting %s") % self.stationHeaderText)
 
 		if len(self.stationList) == 0:
 			self.stationListIndex = 0
-			sendUrlCommand(self.stationListURL, None,10).addCallback(boundFunction(self.callbackStationList,filter_string)).addErrback(self.callbackStationListError)
+			sendUrlCommand(self.stationListURL, None, 10).addCallback(boundFunction(self.callbackStationList, filter_string)).addErrback(self.callbackStationListError)
 		else:
 			self.stationListFiltered = self.getFilteredStationList(filter_string)
 			self.setStationList()
@@ -790,29 +790,29 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			else:
 				return [(x,) for x in self.stationList]
 
-	def fillStationList(self,xmlstring):
+	def fillStationList(self, xmlstring):
 		stationList = []
 		try:
 			root = xml.etree.cElementTree.fromstring(xmlstring)
 		except:
 			return []
 		for childs in root.findall("station"):
-			stationList.append(InternetRadioStation(name=childs.get("name").encode('utf-8','ignore'), 
-								tags=childs.get("tags").encode('utf-8','ignore'), country=childs.get("country").encode('utf-8','ignore'), url=childs.get("url"),
-								language=childs.get("language").encode('utf-8','ignore'), id=childs.get("id"), homepage=childs.get("homepage").encode('utf-8','ignore')))
+			stationList.append(InternetRadioStation(name=childs.get("name").encode('utf-8', 'ignore'), 
+								tags=childs.get("tags").encode('utf-8', 'ignore'), country=childs.get("country").encode('utf-8', 'ignore'), url=childs.get("url"),
+								language=childs.get("language").encode('utf-8', 'ignore'), id=childs.get("id"), homepage=childs.get("homepage").encode('utf-8', 'ignore')))
 		return sorted(stationList, key=lambda stations: stations.name)
 		
 
 	def menu_pressed(self):
 		self.fullScreenAutoActivationTimer.stop()
-		options = [(_("Config"), self.config),(_("Search"), self.search),]
+		options = [(_("Config"), self.config), (_("Search"), self.search), ]
 		if self.mode == self.FAVORITELIST and self.getSelectedItem() is not None:
 			options.extend(((_("rename current selected favorite"), self.renameFavorite),))
 			options.extend(((_("remove current selected favorite"), self.removeFavorite),))
 			if config.plugins.internetradio.startupname.value != "":
-				options.extend(((_("do not play a service on startup"), boundFunction(self.startUpStation,False)),))
+				options.extend(((_("do not play a service on startup"), boundFunction(self.startUpStation, False)),))
 			if self.getSelectedItem().configItem.type.value == 0:
-				options.extend(((_("play current selected favorite on startup"), boundFunction(self.startUpStation,True)),))
+				options.extend(((_("play current selected favorite on startup"), boundFunction(self.startUpStation, True)),))
 		elif self.mode == self.FILTERLIST and self.getSelectedItem() is not None:
 			options.extend(((_("Add current selected genre to favorite"), self.addFilterToFavorite),))
 		elif self.mode == self.STATIONLIST and self.getSelectedItem() is not None:
@@ -821,8 +821,8 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			options.extend(((_("Add current playing stream to favorite"), self.addCurrentStreamToFavorite),))
 		options.extend(((_("Fullscreen"), self.showFullScreen),))
 		if SystemInfo.get("NumVideoDecoders", 1) > 1:
-			options.extend(((_("Show TV"), boundFunction(self.setPiPPlayerEnabled,True)),))
-		self.session.openWithCallback(self.menuCallback, ChoiceBox,list=options)
+			options.extend(((_("Show TV"), boundFunction(self.setPiPPlayerEnabled, True)),))
+		self.session.openWithCallback(self.menuCallback, ChoiceBox, list=options)
 
 	def menuCallback(self, ret):
 		ret and ret[1]()
@@ -903,7 +903,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			self.stationListIndex = 0
 			if len(self.stationList) == 0:
 				self.stationListIndex = 0
-				sendUrlCommand(self.stationListURL, None,10).addCallback(boundFunction(self.callbackStationList,"")).addErrback(self.callbackStationListError)
+				sendUrlCommand(self.stationListURL, None, 10).addCallback(boundFunction(self.callbackStationList, "")).addErrback(self.callbackStationListError)
 			else:
 				self.stationListFiltered = self.getFilteredStationList("")
 				self.setStationList()
@@ -948,7 +948,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 
 	def GoogleImageCallback(self, result):
 		self.hideCover()
-		urlsraw = re.findall(',"ou":".+?","ow"',result)
+		urlsraw = re.findall(',"ou":".+?","ow"', result)
 		imageurls = [urlraw[7:-6].encode() for urlraw in urlsraw]
 		if imageurls:
 			print "[InternetRadio] downloading cover from %s " % imageurls[0]
@@ -956,23 +956,23 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		else:
 			print 'Google no images found...'
 			
-	def coverDownloadFailed(self,result):
+	def coverDownloadFailed(self, result):
 		print "[InternetRadio] cover download failed: %s " % result
 		self.hideCover()
 		
 	def hideCover(self):
 		self["cover"].hide()
 		self["cover"].setPicloaded(False)
-		if self.fullScreen.isVisible() and config.plugins.internetradio.fullscreenlayout.value in ("0","1"):
+		if self.fullScreen.isVisible() and config.plugins.internetradio.fullscreenlayout.value in ("0", "1"):
 			self.fullScreen.setVisibilityCover(False)
 
-	def coverDownloadFinished(self,result):
+	def coverDownloadFinished(self, result):
 		print "[InternetRadio] cover download finished"
 		self["cover"].updateIcon("/tmp/.cover")
 
 	def coverLoaded(self):
 		self["cover"].show()
-		if self.fullScreen.isVisible() and config.plugins.internetradio.fullscreenlayout.value in ("0","1"):
+		if self.fullScreen.isVisible() and config.plugins.internetradio.fullscreenlayout.value in ("0", "1"):
 			self.fullScreen.updateCover()
 		
 	def playServiceStream(self, url):

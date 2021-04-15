@@ -1094,7 +1094,7 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 					for item in cfgList:
 						print "=== cfgList day item:", item, item[0], item[1], item[1].value
 					self.list.append(getConfigListEntry(type[1]))
-					cfgList = sorted(cfgList, key=lambda x: [x[0],x[1].value], reverse=False)
+					cfgList = sorted(cfgList, key=lambda x: [x[0], x[1].value], reverse=False)
 					self.list.extend(cfgList)
 		
 			else:
@@ -1118,7 +1118,7 @@ class AutoTimerFilterEditor(Screen, ConfigListScreen):
 				])
 				if len(cfgList):
 					self.list.append(getConfigListEntry(type[1]))
-					cfgList = sorted(cfgList, key=lambda x: [x[0],x[1].value], reverse=False)
+					cfgList = sorted(cfgList, key=lambda x: [x[0], x[1].value], reverse=False)
 					self.list.extend(cfgList)
 
 	def remove(self):

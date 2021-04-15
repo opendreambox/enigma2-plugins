@@ -32,7 +32,7 @@ class parseXML(ContentHandler, LexicalHandler):
 		self.data = ""
 		for x in ["text", "title", "value", "caption", "description"]:
 			try:
-				attrlist.add((attrs[x], self.last_comment,self.currentFile))
+				attrlist.add((attrs[x], self.last_comment, self.currentFile))
 				self.last_comment = None
 			except KeyError:
 				pass
@@ -40,7 +40,7 @@ class parseXML(ContentHandler, LexicalHandler):
 	def endElement(self, name):
 		#print("endElement", name)
 		if name in ("shortdescription", "description"):
-			attrlist.add((self.data.strip().decode("utf-8"), self.last_comment,self.currentFile))
+			attrlist.add((self.data.strip().decode("utf-8"), self.last_comment, self.currentFile))
 		self.data = ""
 
 	def characters(self, data):
@@ -57,13 +57,13 @@ for arg in sys.argv[1:]:
 	if os.path.isdir(arg):
 		for file in os.listdir(arg):
 			if (file.endswith(".xml")):
-				contentHandler = parseXML(attrlist,file)
+				contentHandler = parseXML(attrlist, file)
 				parser.setContentHandler(contentHandler)
 				if not no_comments:
 					parser.setProperty(property_lexical_handler, contentHandler)
 				parser.parse(os.path.join(arg, file))
 	else:
-		contentHandler = parseXML(attrlist,arg)
+		contentHandler = parseXML(attrlist, arg)
 		parser.setContentHandler(contentHandler)
 		if not no_comments:
 			parser.setProperty(property_lexical_handler, contentHandler)
@@ -72,7 +72,7 @@ for arg in sys.argv[1:]:
 	attrlist = list(attrlist)
 	attrlist.sort(key=lambda a: a[2])
 
-	for (k,c,f) in attrlist:
+	for (k, c, f) in attrlist:
 		if c:
 			for l in c.split("\n"):
 				print("#. ", l)

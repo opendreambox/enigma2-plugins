@@ -47,7 +47,7 @@ class AutoTimerEditor(Source):
 				# TODO: proper error handling
 				pass
 		
-		checkfile = path.join(self.BACKUP_PATH,'.autotimeredit')
+		checkfile = path.join(self.BACKUP_PATH, '.autotimeredit')
 		f = open(checkfile, 'w')
 		if f:
 			files = []

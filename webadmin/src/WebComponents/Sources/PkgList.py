@@ -32,7 +32,7 @@ class PkgList(Source):
 
 			return sorted(pkglist.values())
 		except Exception, e:
-			print "[PkgList] except: ",str(e)
+			print "[PkgList] except: ", str(e)
 			return []
 
 	list = property(getOpkgfeed)

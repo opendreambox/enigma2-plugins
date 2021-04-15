@@ -69,11 +69,11 @@ class ScreenshotResource(resource.Resource):
 			request.finish()
 			return server.NOT_DONE_YET
 		mimetype = {'jpg': 'jpeg'}.get(format, format)
-		request.setHeader('Content-Type','image/%s' % mimetype)
+		request.setHeader('Content-Type', 'image/%s' % mimetype)
 		pixmap = ePixmap(None)
 		size = desktop.size()
 		if x > 0 and y > 0:
-			size = eSize(x,y)
+			size = eSize(x, y)
 
 		if display:
 			try:

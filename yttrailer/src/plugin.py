@@ -38,14 +38,14 @@ from skin import TemplatedListFonts, componentSizes
 config.plugins.yttrailer = ConfigSubsection()
 config.plugins.yttrailer.show_in_extensionsmenu = ConfigYesNo(default=False)
 config.plugins.yttrailer.ext_descr = ConfigText(default="german", fixed_size=False)
-config.plugins.yttrailer.max_results = ConfigInteger(5,limits=(1, 10))
+config.plugins.yttrailer.max_results = ConfigInteger(5, limits=(1, 10))
 config.plugins.yttrailer.close_player_with_exit = ConfigYesNo(default=False)
 
 from Plugins.SystemPlugins.TubeLib.youtube.Base import buildYoutube
 from Plugins.SystemPlugins.TubeLib.youtube.Search import Search
 from Plugins.SystemPlugins.TubeLib.youtube.Videos import Videos
 
-def setup(session,**kwargs):
+def setup(session, **kwargs):
 	session.open(YTTrailerSetup)
 
 def Plugins(**kwargs):

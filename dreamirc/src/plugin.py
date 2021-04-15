@@ -43,10 +43,10 @@ class dreamIRCMainMenu(Screen):
 
 	from enigma import getDesktop
 	desk = getDesktop(0)
-	global x,y
+	global x, y
 	x = int(desk.size().width())
 	y = int(desk.size().height())
-	print "[dreamIRC] mainscreen: current desktop size: %dx%d" % (x,y)
+	print "[dreamIRC] mainscreen: current desktop size: %dx%d" % (x, y)
 
 	if (y >= 720):
 		skin = """
@@ -87,7 +87,7 @@ class dreamIRCMainMenu(Screen):
 		
 	
 	def __init__(self, session, args=0):
-		global x,y
+		global x, y
 		self.skin = dreamIRCMainMenu.skin
 		Screen.__init__(self, session)
 
@@ -243,7 +243,7 @@ class dreamIRCMainMenu(Screen):
 		
 	def yellowPressed(self):
 		self.checkStatus()
-		self.session.openWithCallback(self.resetKeyboard,dreamIRCSetupScreen)
+		self.session.openWithCallback(self.resetKeyboard, dreamIRCSetupScreen)
 		
 	def resetKeyboard(self):
 		rcinput = eRCInput.getInstance()
@@ -261,7 +261,7 @@ class dreamIRCMainMenu(Screen):
 			
 	def VirtualKeyBoardTextEntry(self, callback=None):
 		if callback is not None and len(callback):
-			print " TEXT = %s   - laenge = %d  !!!!" % (callback,len(callback))
+			print " TEXT = %s   - laenge = %d  !!!!" % (callback, len(callback))
 			self.pipe.addOutText(callback)
 
 def main(session, **kwargs):

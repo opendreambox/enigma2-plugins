@@ -62,7 +62,7 @@ def sessionstart(reason, **kwargs):
 		except ImportError:
 			pass # pah!
 
-def main(session,**kwargs):
+def main(session, **kwargs):
 	session.open(InternetRadioScreen)
 
 def Plugins(**kwargs):

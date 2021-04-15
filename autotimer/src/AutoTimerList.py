@@ -12,7 +12,7 @@ class AutoTimerList(MenuList):
 	def __init__(self, entries):
 		MenuList.__init__(self, entries, False, content=eListboxPythonMultiContent)
 
-		self.l.setFont(0, gFont("Regular",22))
+		self.l.setFont(0, gFont("Regular", 22))
 		self.l.setBuildFunc(self.buildListboxEntry)
 		self.l.setItemHeight(30)
 		self.colorDisabled = 12368828
@@ -24,7 +24,7 @@ class AutoTimerList(MenuList):
 		if self.skinAttributes is not None:
 			for (attrib, value) in self.skinAttributes:
 				if attrib == "font":
-					self.l.setFont(0, parseFont(value, ((1,1),(1,1))))
+					self.l.setFont(0, parseFont(value, ((1, 1), (1, 1))))
 				elif attrib == "itemHeight":
 					self.l.setItemHeight(int(value))
 				elif attrib == "colorDisabled":

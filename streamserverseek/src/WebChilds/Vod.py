@@ -251,7 +251,7 @@ class VodRequestHandler(object):
 		segments = []
 		segmentFollows = False
 
-		m3u8.seek(0,0)
+		m3u8.seek(0, 0)
 		line = m3u8.readline()
 		while line:
 			line = line.rstrip()

@@ -70,7 +70,7 @@ class InternetRadioSetup(Screen, ConfigListScreen):
 	def keySelect(self):
 		cur = self["config"].getCurrent()
 		if cur == self.dirname:
-			self.session.openWithCallback(self.pathSelected,InternetRadioStreamripperRecordingPath,config.plugins.internetradio.dirname.value)
+			self.session.openWithCallback(self.pathSelected, InternetRadioStreamripperRecordingPath, config.plugins.internetradio.dirname.value)
 
 	def pathSelected(self, res):
 		if res is not None:

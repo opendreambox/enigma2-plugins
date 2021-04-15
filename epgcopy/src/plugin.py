@@ -77,7 +77,7 @@ def myFtp():
     f.quit()
     if path.isfile(directory + fileQuelle):
         remove(directory + fileQuelle)
-    move(directory_local + fileZiel,directory + fileQuelle)
+    move(directory_local + fileZiel, directory + fileQuelle)
     myPrint("epg.db was successfully transferred")
 
 class copyEveryDay(Screen):
@@ -192,7 +192,7 @@ class epgCopyScreen(Screen, ConfigListScreen):
             self.session.openWithCallback(self.epgLoadFinishedConfirm, MessageBox, _("Successfully transferred and loaded EPG"), MessageBox.TYPE_INFO, timeout=4)
             myPrint("epg was loaded into memory")
         else:
-            self.session.open(MessageBox,_("An error occurred while transferring the epg. Please check your ftp credentials."), MessageBox.TYPE_INFO, timeout=10)
+            self.session.open(MessageBox, _("An error occurred while transferring the epg. Please check your ftp credentials."), MessageBox.TYPE_INFO, timeout=10)
             myPrint("an error occurred while transferring the epg")
         
     def epgLoadFinishedConfirm(self, result):
@@ -208,12 +208,12 @@ def autoCpy(reason, **kwargs):
 def main(session, **kwargs):
     session.open(epgCopyScreen)
 
-def Plugins(path,**kwargs):
+def Plugins(path, **kwargs):
     global plugin_path
     plugin_path = path
     return [
-             PluginDescriptor(name="epgCopy",description="copy epg.db", where=[PluginDescriptor.WHERE_PLUGINMENU], icon="epg.png", fnc=main),
+             PluginDescriptor(name="epgCopy", description="copy epg.db", where=[PluginDescriptor.WHERE_PLUGINMENU], icon="epg.png", fnc=main),
              PluginDescriptor(name="epgCopy", where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main),
-             PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART,fnc=autoCpy)
+             PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=autoCpy)
              ]
       

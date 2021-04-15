@@ -67,7 +67,7 @@ EXTENSIONS = {
 		"gz": "archive",
 		"bz2": "archive",
 		"sh": "script",
-		"service":"service",
+		"service": "service",
 	}
 
 class DreamExplorerFileList(TemplatedMultiContentComponent):
@@ -226,7 +226,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 			if self.showFiles:
 				fileInfo = os_lstat(pathFilename)
 				fileAttrib = oct(stat_stat.S_IMODE(fileInfo.st_mode))
-				lastModified = strftime("%d.%m.%Y %H:%M:%S",localtime(fileInfo.st_mtime))
+				lastModified = strftime("%d.%m.%Y %H:%M:%S", localtime(fileInfo.st_mtime))
 				fileSize = prettySize(getSize(pathFilename))
 				isLink = stat_stat.S_ISLNK(fileInfo.st_mode)
 				
@@ -366,7 +366,7 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 					mediaType = EXTENSIONS.get(extension)					
 					if nx is None:
 						fileInfo = os_lstat(path)
-						lastModified = strftime("%d.%m.%Y %H:%M:%S",localtime(fileInfo.st_mtime))
+						lastModified = strftime("%d.%m.%Y %H:%M:%S", localtime(fileInfo.st_mtime))
 						self.list.append((name, directory, path, False, False, mediaType))
 					else:
 						extname = name + " [" + self.getTSLength(path) + "]"

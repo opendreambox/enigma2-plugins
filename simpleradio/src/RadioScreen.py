@@ -67,7 +67,7 @@ class RadioScreen(Screen, ServiceStopScreen, InfoBarServiceErrorPopupSupport, In
 		self._browser.stations(self._country.lower(), self._onLoadFinished)
 		self["country"].setText(_(self._country.capitalize()))
 		self._browser.countries(self._onCountriesReady)
-		self._stateInfo = self.session.instantiateDialog(InfoBarStateInfo,zPosition=50)
+		self._stateInfo = self.session.instantiateDialog(InfoBarStateInfo, zPosition=50)
 		self._infoBarStateInfo = InfoBarServiceErrorPopupSupport._stateInfo
 		InfoBarServiceErrorPopupSupport._stateInfo = self._stateInfo
 		self.onClose.append(self.__onClose)

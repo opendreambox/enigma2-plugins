@@ -52,7 +52,7 @@ class CecDeviceList(Screen):
 		self["key_red"] = StaticText(_("Cancel"))
 		self["key_green"] = StaticText(_("Refresh"))
 		self["key_yellow"] = StaticText(_("Scan"))
-		self["deviceActions"] = ActionMap(["OkCancelActions","ColorActions","EPGSelectActions"],
+		self["deviceActions"] = ActionMap(["OkCancelActions", "ColorActions", "EPGSelectActions"],
 		actions={
 			"cancel": self.close,
 			"green": self.updateDeviceInfo,
@@ -78,11 +78,11 @@ class CecDeviceList(Screen):
 		for device in cec.devices:
 			Log.i("requesting latest powerState from %s" % (device.logicalAddress))
 			commands = [eCec.MSG_GIVE_DEVICE_POWER_STATUS]
-			if device.physicalAddress == (255,255):
+			if device.physicalAddress == (255, 255):
 				Log.i("requesting physicalAddress from %s" % (device.logicalAddress))
 				commands.append(eCec.MSG_GIVE_PHYS_ADDR)
 			[cec.send(device.logicalAddress, cmd) for cmd in commands]
-		self._reloadtimer.start(1500,True)
+		self._reloadtimer.start(1500, True)
 
 	def deviceInfo(self):
 		cur = self['list'].getCurrent()
@@ -95,7 +95,7 @@ class CecDeviceList(Screen):
 				txt += _("Logical address: %s\n") % cur[1]
 				txt += _("Physical address: %s\n") % cec.physicalToString(device.physicalAddress)
 				txt += _("Power state: %s\n") % self.DEVICE_POWERSTATE.get(device.powerState, _("Other"))
-				self.session.open(MessageBox,txt,MessageBox.TYPE_INFO,title="HDMI CEC: Device Info")
+				self.session.open(MessageBox, txt, MessageBox.TYPE_INFO, title="HDMI CEC: Device Info")
 
 	def reload(self):
 		devices = []
@@ -103,5 +103,5 @@ class CecDeviceList(Screen):
 			deviceType = self.DEVICE_TYPE.get(device.logicalAddress, _("Other"))
 			text = "{0} - {1} ({2})".format(deviceType, device.name or _("Unknown"), _(device.vendorName))
 			Log.i(text)
-			devices.append((text,device.logicalAddress))
+			devices.append((text, device.logicalAddress))
 		self["list"].setList(devices)

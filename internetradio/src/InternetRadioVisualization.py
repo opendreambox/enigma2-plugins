@@ -35,7 +35,7 @@ class InternetRadioVisualization(object):
 			self["progress_%d" % i] = ProgressBar()
 			self["top_%d" % i] = Pixmap()
 			self["top_%d" % i].hide()
-			self.pegelvalues[i] = (0, time.time(),0, 1)
+			self.pegelvalues[i] = (0, time.time(), 0, 1)
 			i += 1
 			if i == self.BANDS:
 				break
@@ -61,7 +61,7 @@ class InternetRadioVisualization(object):
 		while True:
 			self["progress_%d" % i].setValue(0)
 			self["top_%d" % i].hide()
-			self.pegelvalues[i] = (0, time.time(),0, 1)
+			self.pegelvalues[i] = (0, time.time(), 0, 1)
 			i += 1
 			if i == self.BANDS:
 				break
@@ -69,18 +69,18 @@ class InternetRadioVisualization(object):
 	def setValues(self, v):
 		i = 0
 		while True:
-			barvalues = self.bars.get(i,(0,0,0))
+			barvalues = self.bars.get(i, (0, 0, 0))
 			progressbarHeight = barvalues[0]
 			value = int(1.25 * (v[i] + 80))
 			currentvalue = int(value * progressbarHeight / 100)
-			oldvalue = self.pegelvalues.get(i,None)
+			oldvalue = self.pegelvalues.get(i, None)
 			if currentvalue <= 0:
 				hide = 1
 			else:
 				hide = 0
 			if oldvalue:
 				if oldvalue[0] < currentvalue:
-					self.pegelvalues[i] = (currentvalue, time.time(),0,hide)
+					self.pegelvalues[i] = (currentvalue, time.time(), 0, hide)
 					if hide:
 						self["top_%d" % i].hide()
 					else:
@@ -100,15 +100,15 @@ class InternetRadioVisualization(object):
 							hide = 1
 						else:
 							hide = 0
-						self.pegelvalues[i] = (currentvalue, d,oldvalue[2] + 1,hide)
+						self.pegelvalues[i] = (currentvalue, d, oldvalue[2] + 1, hide)
 						if hide:
 							self["top_%d" % i].hide()
 						else:
 							self["top_%d" % i].instance.move(ePoint(self["top_%d" % i].instance.position().x(), barvalues[1] - currentvalue - barvalues[2]))
 				else:
-					self.pegelvalues[i] = (currentvalue, time.time(),0,hide)
+					self.pegelvalues[i] = (currentvalue, time.time(), 0, hide)
 			else:
-				self.pegelvalues[i] = (currentvalue, time.time(),0, hide)
+				self.pegelvalues[i] = (currentvalue, time.time(), 0, hide)
 				if hide:
 					self["top_%d" % i].hide()
 				else:	
@@ -122,7 +122,7 @@ class InternetRadioVisualization(object):
 		cleanup = False
 		i = 0
 		while True:
-			oldvalue = self.pegelvalues.get(i,None)
+			oldvalue = self.pegelvalues.get(i, None)
 			if oldvalue and oldvalue[3] == 0:
 				cleanup = True
 				break

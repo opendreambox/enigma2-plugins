@@ -28,7 +28,7 @@ class PkgConfList(Source):
 			elif self.func is self.LIST:
 				pass
 			
-	def switch(self,cmd):
+	def switch(self, cmd):
 		if cmd:
 			filename = cmd.get('file')
 			if not filename or filename != basename(filename):

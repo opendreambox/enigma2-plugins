@@ -196,7 +196,7 @@ class EPGSearchATOverview(AutoTimerOverview):
 
 	def cancel(self):
 		if self.changed:
-			self.session.openWithCallback(self.cancelConfirm, ChoiceBox, title=_('Really close without saving settings?\nWhat do you want to do?'), list=[(_('close without saving'), 'close'), (_('close and save'), 'close_save'),(_('cancel'), 'exit'), ])
+			self.session.openWithCallback(self.cancelConfirm, ChoiceBox, title=_('Really close without saving settings?\nWhat do you want to do?'), list=[(_('close without saving'), 'close'), (_('close and save'), 'close_save'), (_('cancel'), 'exit'), ])
 		else:
 			self.close(None)
 

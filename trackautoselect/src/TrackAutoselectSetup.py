@@ -167,7 +167,7 @@ class TrackAutoselectPreferenceListScreen(Screen, SortableListScreen):
 	def keyYellow(self):
 		#print "[TrackAutoselectPreferenceListScreen] keyYellow", self.available_choices
 		if len(self.available_choices):
-			self.session.openWithCallback(self.entryChosen, ChoiceBox, title=self.category, list=self.available_choices, keys=[str(x)[-1] for x in list(range(1,11))] + (len(self.available_choices) - 10) * [False])
+			self.session.openWithCallback(self.entryChosen, ChoiceBox, title=self.category, list=self.available_choices, keys=[str(x)[-1] for x in list(range(1, 11))] + (len(self.available_choices) - 10) * [False])
 
 	def entryChosen(self, entry):
 		#print "[TrackAutoselectPreferenceListScreen] entryChosen", entry, type(entry)

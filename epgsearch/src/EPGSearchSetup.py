@@ -106,14 +106,14 @@ class EPGSearchSetup(Screen, ConfigListScreen):
 
 	def getScopeChoices(self):
 		#set config-values for bouquet-config
-		config_scope_choices = [("all",_("all services")), ("current",_("current bouquet"))]
+		config_scope_choices = [("all", _("all services")), ("current", _("current bouquet"))]
 
 		#get bouquetlist
 		infoBarInstance = InfoBar.instance
 		if infoBarInstance is not None:
 			bouquets = infoBarInstance.servicelist.getBouquetList()
 			for bouquet in bouquets:
-				config_scope_choices.append((bouquet[1].toString(),bouquet[0]))
+				config_scope_choices.append((bouquet[1].toString(), bouquet[0]))
 
 		return config_scope_choices
 

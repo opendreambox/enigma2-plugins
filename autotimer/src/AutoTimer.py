@@ -516,7 +516,7 @@ class AutoTimer:
 					modified_for_searchlog = True if newEntry.begin != begin or newEntry.end != end or newEntry.name != name else False
 					self.modifyTimer(newEntry, name, shortdesc, begin, end, serviceref, eit)
 					if modified_for_searchlog:
-						self.addToSearchLogfile(newEntry,"#", simulateOnly)
+						self.addToSearchLogfile(newEntry, "#", simulateOnly)
 					msg = "[AutoTimer] AutoTimer modified timer: %s ." % (newEntry.name)
 					doLog(msg)
 					newEntry.log(501, msg)
@@ -609,9 +609,9 @@ class AutoTimer:
 					timer.decrementCounter()
 					new += 1
 					if isnewFilterEntry:
-						self.addToSearchLogfile(newEntry,"++", simulateOnly)
+						self.addToSearchLogfile(newEntry, "++", simulateOnly)
 					else:
-						self.addToSearchLogfile(newEntry,"+", simulateOnly)
+						self.addToSearchLogfile(newEntry, "+", simulateOnly)
 					newEntry.extdesc = extdesc
 					timerdict[serviceref].append(newEntry)
 
@@ -623,7 +623,7 @@ class AutoTimer:
 				# Don't care about similar timers
 				elif not similarTimer:
 					conflicting.append((name, begin, end, serviceref, timer.name))
-					self.addToSearchLogfile(newEntry,"x", simulateOnly)
+					self.addToSearchLogfile(newEntry, "x", simulateOnly)
 
 					if config.plugins.autotimer.disabled_on_conflict.value:
 						msg = "[AutoTimer] Timer disabled because of conflicts with %s." % (conflictString)
@@ -725,7 +725,7 @@ class AutoTimer:
 					if ret:
 						add_counter += 1
 					
-				session.open(MessageBox, _("finished adding to filter list with %s event(s):\n\n %s event(s) added \n %s event(s) skipped") % (len(services), add_counter,len(services) - add_counter), type=MessageBox.TYPE_INFO, timeout=config.plugins.autotimer.popup_timeout.value)
+				session.open(MessageBox, _("finished adding to filter list with %s event(s):\n\n %s event(s) added \n %s event(s) skipped") % (len(services), add_counter, len(services) - add_counter), type=MessageBox.TYPE_INFO, timeout=config.plugins.autotimer.popup_timeout.value)
 					
 			except Exception as e:
 				doLog("Error in addToFilterList", e)
@@ -831,7 +831,7 @@ class AutoTimer:
 							if not timer.isRunning():
 								global NavigationInstance
 								doLog("Remove timer because of eit check " + timer.name)
-								self.addToSearchLogfile(timer,"-", simulateOnly)
+								self.addToSearchLogfile(timer, "-", simulateOnly)
 								NavigationInstance.instance.RecordTimer.removeEntry(timer)
 								
 					except:

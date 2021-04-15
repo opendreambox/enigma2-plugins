@@ -69,7 +69,7 @@ CHOICELIST = [("no", _("Disabled")),
 			("sleep", _("Sleep timer")),
 			]
 
-COLORCHOICELIST = [("singleepg", _("Single EPG")),("multiepg", _("Multi EPG")),("easypg", _("Easy-PG")),("graphepg", _("Graphik multi-EPG")),("merlinepg", _("Merlin EPG")),("cooltv", _("Cool-TV")),("imdbinfo", _("IMDB info"))]
+COLORCHOICELIST = [("singleepg", _("Single EPG")), ("multiepg", _("Multi EPG")), ("easypg", _("Easy-PG")), ("graphepg", _("Graphik multi-EPG")), ("merlinepg", _("Merlin EPG")), ("cooltv", _("Cool-TV")), ("imdbinfo", _("IMDB info"))]
 config.plugins.EasyInfo = ConfigSubsection()
 config.plugins.EasyInfo.pos1 = ConfigSelection(default="eventinfo", choices=CHOICELIST)
 config.plugins.EasyInfo.pos2 = ConfigSelection(default="singleepg", choices=CHOICELIST)
@@ -85,8 +85,8 @@ config.plugins.EasyInfo.pos11 = ConfigSelection(default="no", choices=CHOICELIST
 config.plugins.EasyInfo.showEventInfoFirst = ConfigYesNo(default=False)
 config.plugins.EasyInfo.eventViewYellow = ConfigSelection(default="singleepg", choices=COLORCHOICELIST)
 config.plugins.EasyInfo.eventViewBlue = ConfigSelection(default="multiepg", choices=COLORCHOICELIST)
-config.plugins.EasyInfo.piconPath = ConfigSelection(default="/data/picon_50x30/", choices=[("/data/picon_50x30/", "/data/picon_50x30/"), ("/usr/share/enigma2/picon_50x30/", "/usr/share/enigma2/picon_50x30/"),("/data/picon/", "/data/picon/"), ("/usr/share/enigma2/picon/", "/usr/share/enigma2/picon/")])
-config.plugins.EasyInfo.easyPGOK = ConfigSelection(default="info", choices=[("info", _("Event info")), ("zap", _("Just zap")),("exitzap", _("Zap and Exit"))])
+config.plugins.EasyInfo.piconPath = ConfigSelection(default="/data/picon_50x30/", choices=[("/data/picon_50x30/", "/data/picon_50x30/"), ("/usr/share/enigma2/picon_50x30/", "/usr/share/enigma2/picon_50x30/"), ("/data/picon/", "/data/picon/"), ("/usr/share/enigma2/picon/", "/usr/share/enigma2/picon/")])
+config.plugins.EasyInfo.easyPGOK = ConfigSelection(default="info", choices=[("info", _("Event info")), ("zap", _("Just zap")), ("exitzap", _("Zap and Exit"))])
 config.plugins.EasyInfo.primeTime1 = ConfigClock(default=63000)
 config.plugins.EasyInfo.primeTime2 = ConfigClock(default=69300)
 config.plugins.EasyInfo.primeTime3 = ConfigClock(default=75600)
@@ -444,31 +444,31 @@ class EasyInfo(Screen):
 		list = []
 		if config.plugins.EasyInfo.pos1.value != "no":
 			self["key_info"].setText(_(getPluginByName(config.plugins.EasyInfo.pos1.value)))
-			list.append((config.plugins.EasyInfo.pos1.value,"info"))
+			list.append((config.plugins.EasyInfo.pos1.value, "info"))
 		if config.plugins.EasyInfo.pos2.value != "no":
 			self["key_red"].setText(_(getPluginByName(config.plugins.EasyInfo.pos2.value)))
-			list.append((config.plugins.EasyInfo.pos2.value,"red"))
+			list.append((config.plugins.EasyInfo.pos2.value, "red"))
 		if config.plugins.EasyInfo.pos3.value != "no":
 			self["key_green"].setText(_(getPluginByName(config.plugins.EasyInfo.pos3.value)))
-			list.append((config.plugins.EasyInfo.pos3.value,"green"))
+			list.append((config.plugins.EasyInfo.pos3.value, "green"))
 		if config.plugins.EasyInfo.pos4.value != "no":
 			self["key_yellow"].setText(_(getPluginByName(config.plugins.EasyInfo.pos4.value)))
-			list.append((config.plugins.EasyInfo.pos4.value,"yellow"))			
+			list.append((config.plugins.EasyInfo.pos4.value, "yellow"))			
 		if config.plugins.EasyInfo.pos5.value != "no":
 			self["key_blue"].setText(_(getPluginByName(config.plugins.EasyInfo.pos5.value)))
-			list.append((config.plugins.EasyInfo.pos5.value,"blue"))
+			list.append((config.plugins.EasyInfo.pos5.value, "blue"))
 		if config.plugins.EasyInfo.pos6.value != "no":
-			list.append((config.plugins.EasyInfo.pos6.value,"x"))
+			list.append((config.plugins.EasyInfo.pos6.value, "x"))
 		if config.plugins.EasyInfo.pos7.value != "no":
-			list.append((config.plugins.EasyInfo.pos7.value,"x"))
+			list.append((config.plugins.EasyInfo.pos7.value, "x"))
 		if config.plugins.EasyInfo.pos8.value != "no":
-			list.append((config.plugins.EasyInfo.pos8.value,"x"))
+			list.append((config.plugins.EasyInfo.pos8.value, "x"))
 		if config.plugins.EasyInfo.pos9.value != "no":
-			list.append((config.plugins.EasyInfo.pos9.value,"x"))
+			list.append((config.plugins.EasyInfo.pos9.value, "x"))
 		if config.plugins.EasyInfo.pos10.value != "no":
-			list.append((config.plugins.EasyInfo.pos10.value,"x"))
+			list.append((config.plugins.EasyInfo.pos10.value, "x"))
 		if config.plugins.EasyInfo.pos11.value != "no":
-			list.append((config.plugins.EasyInfo.pos11.value,"x"))	
+			list.append((config.plugins.EasyInfo.pos11.value, "x"))	
 			
 		return list
 
@@ -680,7 +680,7 @@ class EasyInfoEventView(Screen, EventViewBase):
 				"pageDown": self.pageDown,
 				"prevEvent": self.prevEvent,
 				"nextEvent": self.nextEvent
-			},-1)
+			}, -1)
 
 	def openSimilarList(self):
 		self.hide()
@@ -840,7 +840,7 @@ class EasyInfoEventList(EPGList):
 				
 				res.extend((
 					(eListboxPythonMultiContent.TYPE_TEXT, channelOffset, self.timeYOffset, self.timeIndicatorWidth, self.componentItemHeight - 2 * self.timeYOffset, 1, RT_HALIGN_RIGHT, '>'),
-					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth + channelOffset, self.timeYOffset, self.timeWidth, self.componentItemHeight - 2 * self.timeYOffset, 1, RT_HALIGN_LEFT, "%02d.%02d\n%02d.%02d" % (begin[3],begin[4],end[3],end[4])),
+					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth + channelOffset, self.timeYOffset, self.timeWidth, self.componentItemHeight - 2 * self.timeYOffset, 1, RT_HALIGN_LEFT, "%02d.%02d\n%02d.%02d" % (begin[3], begin[4], end[3], end[4])),
 					(eListboxPythonMultiContent.TYPE_TEXT, self.timeIndicatorWidth + self.timeWidth + channelOffset + recOffset, self.eventNameYOffset, self.eventNameWidth - recOffset, self.componentItemHeight - 2 * self.eventNameYOffset, 0, flagValue, EventName)
 				))
 			else:
@@ -854,7 +854,7 @@ class EasyInfoEventList(EPGList):
 				))
 		return res
 
-	def moveToService(self,serviceref):
+	def moveToService(self, serviceref):
 		if not serviceref:
 			return
 		index = 0
@@ -993,7 +993,7 @@ class EasyPG(EPGSelection, Screen):
 				"1": self.setPrimeTime1,
 				"2": self.setPrimeTime2,
 				"3": self.setPrimeTime3
-			},-1)
+			}, -1)
 
 	def closeScreen(self):
 		self.close(True)
@@ -1004,7 +1004,7 @@ class EasyPG(EPGSelection, Screen):
 
 	def setNewPrimeTime(self):
 		today = localtime()
-		primetime = (today[0],today[1],today[2],self.primeTimeHour,self.primeTimeMinute,0,today[6],today[7],0)
+		primetime = (today[0], today[1], today[2], self.primeTimeHour, self.primeTimeMinute, 0, today[6], today[7], 0)
 		self.ask_time = int(mktime(primetime))
 		self.initPrimeTime = True
 		if self.ask_time > int(mktime(today)):
@@ -1034,7 +1034,7 @@ class EasyPG(EPGSelection, Screen):
 			return
 		today = localtime()
 		if not self.initPrimeTime:
-			primetime = (today[0],today[1],today[2],self.primeTimeHour,self.primeTimeMinute,0,today[6],today[7],0)
+			primetime = (today[0], today[1], today[2], self.primeTimeHour, self.primeTimeMinute, 0, today[6], today[7], 0)
 			self.ask_time = int(mktime(primetime))
 			self.initPrimeTime = True
 			if self.ask_time < int(mktime(today)):
@@ -1046,7 +1046,7 @@ class EasyPG(EPGSelection, Screen):
 	def goToPrimeTimePreviousDay(self):
 		today = localtime()
 		if not self.initPrimeTime:
-			primetime = (today[0],today[1],today[2],self.primeTimeHour,self.primeTimeMinute,0,today[6],today[7],0)
+			primetime = (today[0], today[1], today[2], self.primeTimeHour, self.primeTimeMinute, 0, today[6], today[7], 0)
 			self.ask_time = int(mktime(primetime))
 			self.initPrimeTime = True
 		else:
@@ -1122,7 +1122,7 @@ class EasySelection(EPGSelection, Screen):
 		self["list"] = EasyInfoEventList(type=EPG_TYPE_MULTI, selChangedCB=self.onSelectionChanged, timer=session.nav.RecordTimer)
 		self["listNext"] = EasyInfoEventList(type=EPG_TYPE_MULTI, selChangedCB=self.onSelectionChanged, timer=session.nav.RecordTimer, hasChannelInfo=False)
 
-		self["myActions"] = ActionMap(["EPGSelectActions", "OkCancelActions", "DirectionActions","MenuActions"],
+		self["myActions"] = ActionMap(["EPGSelectActions", "OkCancelActions", "DirectionActions", "MenuActions"],
 			{
 				"cancel": self.closeScreen,
 				"ok": self.okPressed,
@@ -1140,7 +1140,7 @@ class EasySelection(EPGSelection, Screen):
 				"nextService": self.setModePrimeTime,
 				"prevService": self.setModeNowNext,
 				"menu": self.openConfig,
-			},-1)
+			}, -1)
 		
 		self.onLayoutFinish.append(self.layoutFinished)
 
@@ -1184,11 +1184,11 @@ class EasySelection(EPGSelection, Screen):
 
 	def setModePrimeTime(self):
 		today = localtime()
-		pt = (today[0],today[1],today[2],config.plugins.EasyInfo.primeTime2.value[0],config.plugins.EasyInfo.primeTime2.value[1],0,today[6],today[7],0)
+		pt = (today[0], today[1], today[2], config.plugins.EasyInfo.primeTime2.value[0], config.plugins.EasyInfo.primeTime2.value[1], 0, today[6], today[7], 0)
 		ask_time = int(mktime(pt))
 		if ask_time > int(mktime(today)):
 			self["list"].fillMultiEPG(self.services, ask_time)
-			pt = (today[0],today[1],today[2],config.plugins.EasyInfo.primeTime3.value[0],config.plugins.EasyInfo.primeTime3.value[1],0,today[6],today[7],0)
+			pt = (today[0], today[1], today[2], config.plugins.EasyInfo.primeTime3.value[0], config.plugins.EasyInfo.primeTime3.value[1], 0, today[6], today[7], 0)
 			ask_time = int(mktime(pt))
 			self["listNext"].fillMultiEPG(self.services, ask_time)
 

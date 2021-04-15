@@ -16,7 +16,7 @@ from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS
 
 
 class ShowLogScreen(Screen):
-	def __init__(self, session, logFile, titleText,firstLineText, lastLineText):
+	def __init__(self, session, logFile, titleText, firstLineText, lastLineText):
 		Screen.__init__(self, session)
 		self.skinName = ["TestBox", "Console"]
 		title = ""
@@ -51,7 +51,7 @@ class ShowLogScreen(Screen):
 		Screen.close(self)
 
 	def firstPage(self):
-		self["text"].long_text.move(ePoint(0,0))
+		self["text"].long_text.move(ePoint(0, 0))
 		self["text"].updateScrollbar()
 
 	def readLog(self):

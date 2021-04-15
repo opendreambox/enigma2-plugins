@@ -52,7 +52,7 @@ class C3vocScreen (Screen):
 	def getinput(self):
 		try:
 			req = requests.session()
-			page = req.get("http://streaming.media.ccc.de/streams/v2.json", headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'})
+			page = req.get("http://streaming.media.ccc.de/streams/v2.json", headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'})
 			data = json.loads(page.content)
 
 			with open("/tmp/c3voc", "a") as myfile:
@@ -78,7 +78,7 @@ class C3vocScreen (Screen):
 					myfile.write("#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET \"userbouquet.c3voc__tv_.tv\" ORDER BY bouquet")
 					myfile.close()
 
-			shutil.move("/tmp/c3voc","/etc/enigma2/userbouquet.c3voc__tv_.tv")
+			shutil.move("/tmp/c3voc", "/etc/enigma2/userbouquet.c3voc__tv_.tv")
 			eDVBDB.getInstance().reloadBouquets()
 			self.session.open(MessageBox, text=_("c3voc stream bouquet updated"), type=MessageBox.TYPE_INFO, timeout=4)
 		except:

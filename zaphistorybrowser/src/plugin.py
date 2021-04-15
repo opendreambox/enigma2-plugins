@@ -140,7 +140,7 @@ def ZapHistoryBrowserListEntry(serviceName, eventName):
 	eventNameHeight = sizes.get(ZapHistoryBrowserList.SKIN_COMPONENT_EVENT_NAME_HEIGHT, 20)
 	lineSpacing = sizes.get(ZapHistoryBrowserList.SKIN_COMPONENT_LINE_SPACING, 5)
 	res = [serviceName]
-	res.append(MultiContentEntryText(pos=(5,0), size=(textWidth, serviceNameHeight), font=0, flags=RT_VALIGN_CENTER, text=serviceName))
+	res.append(MultiContentEntryText(pos=(5, 0), size=(textWidth, serviceNameHeight), font=0, flags=RT_VALIGN_CENTER, text=serviceName))
 	res.append(MultiContentEntryText(pos=(5, serviceNameHeight + lineSpacing), size=(textWidth, eventNameHeight), font=1, flags=RT_VALIGN_CENTER, text=eventName))
 	return res
 

@@ -13,7 +13,7 @@ except ImportError:
 	no_comments = True
 
 class parseXML(ContentHandler, LexicalHandler):
-	def __init__(self, attrlist,file):
+	def __init__(self, attrlist, file):
 		self.isPointsElement, self.isReboundsElement = 0, 0
 		self.currentFile = file
 		self.attrlist = attrlist
@@ -38,8 +38,8 @@ class parseXML(ContentHandler, LexicalHandler):
 		self.elements.pop()
 
 		if len(self.attributes) == 2:
-			attrlist.add((self.attributes["shortdescription"], self.last_comment,self.currentFile))
-			attrlist.add((self.attributes["description"], self.last_comment,self.currentFile))
+			attrlist.add((self.attributes["shortdescription"], self.last_comment, self.currentFile))
+			attrlist.add((self.attributes["description"], self.last_comment, self.currentFile))
 			self.attributes = {}
 
 	def characters(self, data):
@@ -61,18 +61,18 @@ for arg in sys.argv[1:]:
 	if os.path.isdir(arg):
 		for file in os.listdir(arg):
 			if (file.endswith(".xml")):
-				contentHandler = parseXML(attrlist,file)
+				contentHandler = parseXML(attrlist, file)
 				parser.setContentHandler(contentHandler)
 				parser.parse(os.path.join(arg, file))
 	elif (arg.endswith(".xml")):
-		contentHandler = parseXML(attrlist,arg)
+		contentHandler = parseXML(attrlist, arg)
 		parser.setContentHandler(contentHandler)
 		parser.parse(arg)
 
 	attrlist = list(attrlist)
 	attrlist.sort(key=lambda a: a[2])
 
-	for (k,c,f) in attrlist:
+	for (k, c, f) in attrlist:
 		print("")
 		print('#: ' + arg + f)
 		string.replace(k, "\\n", "\"\n\"")

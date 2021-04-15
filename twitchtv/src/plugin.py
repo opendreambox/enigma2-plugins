@@ -181,7 +181,7 @@ class TwitchStreamGrid(Screen):
 
 	def _loadPixmapForCache(self, index, url):
 		self._cachingDeferred = self._agent.request('GET', url)
-		self._cachingDeferred.addCallbacks(self._onDownloadPageResponse, self._errorPixmapForCache, callbackArgs=[index,url])
+		self._cachingDeferred.addCallbacks(self._onDownloadPageResponse, self._errorPixmapForCache, callbackArgs=[index, url])
 
 	def _gotPixmapForCache(self, index, url, data):
 		self._cachingDeferred = None

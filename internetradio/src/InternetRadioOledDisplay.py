@@ -66,7 +66,7 @@ class InternetRadioOledDisplay(Screen, InternetRadioVisualization):
 			<widget name="top_13" position="79,5" zPosition="6" size="5,2" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_oled_top-fs8.png" />
 			<widget name="top_14" position="85,5" zPosition="6" size="5,2" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_oled_top-fs8.png" />
 			<widget name="top_15" position="91,5" zPosition="6" size="5,2" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_oled_top-fs8.png" />
-		</screen>""","""
+		</screen>""", """
 		<screen name="InternetRadioOledDisplay" backgroundColor="#00000000" position="0,0" size="400,240" id="3">
 			<widget name="text1" zPosition="1" position="0,5" size="400,40" font="Regular;28" halign="center" valign="center" foregroundColor="#fcc000" backgroundColor="#00000000"/>
 			<widget name="text2" zPosition="1" position="0,45" size="400,195" font="Regular;32" halign="center" valign="center" foregroundColor="#fcc000" backgroundColor="#00000000"/>
@@ -102,7 +102,7 @@ class InternetRadioOledDisplay(Screen, InternetRadioVisualization):
 			<widget name="top_13" position="303,30" zPosition="6" size="20,8" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
 			<widget name="top_14" position="324,30" zPosition="6" size="20,8" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
 			<widget name="top_15" position="345,30" zPosition="6" size="20,8" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/InternetRadio/images/bar_green_top-fs8.png" />
-		</screen>""","""
+		</screen>""", """
 		<screen name="InternetRadioOledDisplay" position="0,0" size="132,64" id="1">
 			<widget name="text1" position="4,0" size="132,14" font="Regular;12" halign="center" valign="center"/>
 			<widget name="text2" position="4,14" size="132,49" font="Regular;10" halign="center" valign="center"/>
@@ -174,7 +174,7 @@ class InternetRadioOledDisplay(Screen, InternetRadioVisualization):
 	def setText(self, text):
 		self["text2"].setText(text)
 
-	def setLabelVisibility(self,value):
+	def setLabelVisibility(self, value):
 		if value:
 			self["text1"].show()
 			self["text2"].show()

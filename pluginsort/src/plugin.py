@@ -117,7 +117,7 @@ try:
 	iteritems = lambda d: d.iteritems()
 except AttributeError:
 	iteritems = lambda d: d.items()
-reverse = lambda map: dict((v,k) for k,v in iteritems(map))
+reverse = lambda map: dict((v, k) for k, v in iteritems(map))
 
 class PluginWeights:
 	def __init__(self):
@@ -573,7 +573,7 @@ try:
 	reader = XMLHelpReader(resolveFilename(SCOPE_PLUGINS, "Extensions/PluginSort/mphelp.xml"), translate=_)
 	pluginSortHelp = registerHelp(*reader)
 except Exception as e:
-	print("[PluginSort] Unable to initialize MPHelp:", e,"- Help not available!")
+	print("[PluginSort] Unable to initialize MPHelp:", e, "- Help not available!")
 	pluginSortHelp = None
 #pragma mark -
 

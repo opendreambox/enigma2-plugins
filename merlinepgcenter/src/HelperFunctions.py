@@ -117,8 +117,8 @@ class ResizeScrollLabel(ScrollLabel):
 		lines = (int)(s.height() / lineheight)
 		self.pageHeight = (int)(lines * lineheight)
 		self.instance.resize(eSize(s.width(), self.pageHeight + (int)(lineheight / 6)))
-		self.scrollbar.move(ePoint(s.width() - 20,0))
-		self.scrollbar.resize(eSize(20,self.pageHeight + (int)(lineheight / 6)))
+		self.scrollbar.move(ePoint(s.width() - 20, 0))
+		self.scrollbar.resize(eSize(20, self.pageHeight + (int)(lineheight / 6)))
 		self.long_text.resize(eSize(s.width() - 30, self.pageHeight * 16))
 		self.setText(self.message)
 
@@ -132,7 +132,7 @@ class PiconLoader():
 		# strip all after last :
 		pos = sRef.rfind(':')
 		if pos != -1:
-			sRef = sRef[:pos].rstrip(':').replace(':','_')
+			sRef = sRef[:pos].rstrip(':').replace(':', '_')
 		pngname = self.nameCache.get(sRef, "")
 		if pngname == "":
 			pngname = self.findPicon(sRef)
@@ -164,7 +164,7 @@ def findDefaultPicon(serviceName):
 	
 	pos = serviceName.rfind(':')
 	if pos != -1:
-		serviceName = serviceName[:pos].rstrip(':').replace(':','_')
+		serviceName = serviceName[:pos].rstrip(':').replace(':', '_')
 	
 	for path in searchPaths:
 		pngname = (path % "picon") + serviceName + ".png"

@@ -287,20 +287,20 @@ class DreamboxServerProtocol(WebSocketServerProtocol):
 			return
 		id = msg['id']
 		result = {
-			"source"			: streamServerControl.config.streamserver.source.value,
-			"audioBitrate"		: streamServerControl.config.streamserver.audioBitrate.value,
-			"videoBitrate"		: streamServerControl.config.streamserver.videoBitrate.value,
-			"resolution"		: streamServerControl.config.streamserver.resolution.value,
-			"framerate"			: streamServerControl.config.streamserver.framerate.value,
-			"gopLength"			: streamServerControl.config.streamserver.gopLength.value,
-			"gopOnSceneChange"	: streamServerControl.config.streamserver.gopOnSceneChange.value,
-			"openGop"			: streamServerControl.config.streamserver.openGop.value,
-			"bFrames"			: streamServerControl.config.streamserver.bFrames.value,
-			"pFrames"			: streamServerControl.config.streamserver.pFrames.value,
-			"slices"			: streamServerControl.config.streamserver.slices.value,
-			"level"				: streamServerControl.config.streamserver.level.value,
-			"profile"			: streamServerControl.config.streamserver.profile.value,
-			"lastService"		: streamServerControl.config.streamserver.lastservice.value,
+			"source": streamServerControl.config.streamserver.source.value,
+			"audioBitrate": streamServerControl.config.streamserver.audioBitrate.value,
+			"videoBitrate": streamServerControl.config.streamserver.videoBitrate.value,
+			"resolution": streamServerControl.config.streamserver.resolution.value,
+			"framerate": streamServerControl.config.streamserver.framerate.value,
+			"gopLength": streamServerControl.config.streamserver.gopLength.value,
+			"gopOnSceneChange": streamServerControl.config.streamserver.gopOnSceneChange.value,
+			"openGop": streamServerControl.config.streamserver.openGop.value,
+			"bFrames": streamServerControl.config.streamserver.bFrames.value,
+			"pFrames": streamServerControl.config.streamserver.pFrames.value,
+			"slices": streamServerControl.config.streamserver.slices.value,
+			"level": streamServerControl.config.streamserver.level.value,
+			"profile": streamServerControl.config.streamserver.profile.value,
+			"lastService": streamServerControl.config.streamserver.lastservice.value,
 		}
 		self.sendResult(id, result)
 

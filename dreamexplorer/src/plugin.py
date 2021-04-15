@@ -183,7 +183,7 @@ class DreamExplorer3(Screen):
 		else:
 			self["filelist"] = DreamExplorerFileList(directory=startDirectory, showDirectories=True, showFiles=True, matchingPattern=self.mediaPattern)
 			
-		self["actions"] = ActionMap(["WizardActions", "DirectionActions", "ColorActions", "MenuActions", "EPGSelectActions", "InfobarActions","InfobarAudioSelectionActions", "InfobarSeekActions"],
+		self["actions"] = ActionMap(["WizardActions", "DirectionActions", "ColorActions", "MenuActions", "EPGSelectActions", "InfobarActions", "InfobarAudioSelectionActions", "InfobarSeekActions"],
 		{
 			"ok": self.executeAction,
 			"back": self.exitPlugin,
@@ -356,7 +356,7 @@ class DreamExplorer3(Screen):
 					target = self["filelist"].getPathForFile()
 				titletext = _("Create %s to %s with name:" % (element, target))
 				
-			self.session.openWithCallback(boundFunction(self.createItem, element), InputBox,title=titletext, text=_("Name"))
+			self.session.openWithCallback(boundFunction(self.createItem, element), InputBox, title=titletext, text=_("Name"))
 
 	def createItem(self, type, elementName):
 		if elementName:
@@ -394,20 +394,20 @@ class DreamExplorer3(Screen):
 					fileRef = eServiceReference("1:0:0:0:0:0:0:0:0:0:" + filenameWithPath)
 					self.session.open(MoviePlayer, fileRef)
 					
-				elif fileExtension in ["mpg","mpeg","mkv","m2ts","vob","mod","avi","mp4","divx","mov","flv","3gp","wmv"]:
+				elif fileExtension in ["mpg", "mpeg", "mkv", "m2ts", "vob", "mod", "avi", "mp4", "divx", "mov", "flv", "3gp", "wmv"]:
 					fileRef = eServiceReference("4097:0:0:0:0:0:0:0:0:0:" + filenameWithPath)
 					self.session.open(MoviePlayer, fileRef)
 
-				elif fileExtension in ["mp3","wav","ogg","m4a","mp2","flac"]:
+				elif fileExtension in ["mp3", "wav", "ogg", "m4a", "mp2", "flac"]:
 					if MMPlayerInstalled:
-						SongList,SongIndex = self.searchMusic()
+						SongList, SongIndex = self.searchMusic()
 						self.session.openWithCallback(self.restartService, MerlinMusicPlayer2Screen, SongList, SongIndex, False, self.currentService, None)
 					else:
 						fileRef = eServiceReference("4097:0:0:0:0:0:0:0:0:0:" + filenameWithPath)
 						m_dir = self["filelist"].getCurrentDirectory()
 						self.session.open(MusicExplorer, fileRef, m_dir, filenameWithPath)
 
-				elif fileExtension in ["jpg","jpeg","jpe","png","bmp"]:
+				elif fileExtension in ["jpg", "jpeg", "jpe", "png", "bmp"]:
 					if self["filelist"].getCurrentIndex() != 0:
 						if PicturePlayerInstalled:
 							pictureList = self["filelist"].getFilteredFileList("picture", True)
@@ -428,30 +428,30 @@ class DreamExplorer3(Screen):
 						self.session.openWithCallback(self.restartService, DVDPlayer, dvd_filelist=[filenameWithPath])
 						
 				elif filename.lower().endswith(".bootlogo.tar.gz"):
-					self.command = ["mount -rw /boot -o remount", "sleep 3","tar -xzvf " + filenameWithPath + " -C /", "mount -ro /boot -o remount"]
-					askList = [(_("Cancel"), "NO"),(_("Install bootlogo"), "YES")]
+					self.command = ["mount -rw /boot -o remount", "sleep 3", "tar -xzvf " + filenameWithPath + " -C /", "mount -ro /boot -o remount"]
+					askList = [(_("Cancel"), "NO"), (_("Install bootlogo"), "YES")]
 					msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" % (filename)), list=askList)
 					msg.setTitle(_("Dream Explorer 3"))
 					
-				elif fileExtension in ["gz","bz2"]:
+				elif fileExtension in ["gz", "bz2"]:
 					if filename.lower()[-6:-3] == "tar":
 						if fileExtension == "gz":
 							self.command = ["tar -xzvf " + filenameWithPath + " -C /"]
 						elif fileExtension == "bz2":
 							self.command = ["tar -xjvf " + filenameWithPath + " -C /"]
 						
-						msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" % (filename)), list=[(_("Cancel"), "NO"),(_("Extract archive"), "YES")])
+						msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" % (filename)), list=[(_("Cancel"), "NO"), (_("Extract archive"), "YES")])
 						msg.setTitle(_("Dream Explorer 3"))
 
 				elif fileExtension == "deb":
 					self.command = ["apt-get update && dpkg -i %s && apt-get -f install" % (filenameWithPath)]
-					askList = [(_("Cancel"), "NO"),(_("Install package"), "YES")]
+					askList = [(_("Cancel"), "NO"), (_("Install package"), "YES")]
 					msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" % (filename)), list=askList)
 					msg.setTitle(_("Dream Explorer 3"))
 					
 				elif fileExtension == "sh":
 					self.command = [filenameWithPath]
-					askList = [(_("Cancel"), "NO"),(_("View script"), "VIEW"),(_("Execute script"), "YES")]
+					askList = [(_("Cancel"), "NO"), (_("View script"), "VIEW"), (_("Execute script"), "YES")]
 					self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" % (filename)), list=askList)
 				else:
 					xfile = stat(filenameWithPath)
@@ -496,7 +496,7 @@ class DreamExplorer3(Screen):
 			if startDir is None:
 				startDir = self["filelist"].getCurrentDirectory()
 				
-			self.session.openWithCallback(self.callbackSetStartDir,MessageBox,_("Do you want to set\n%s\nas start directory?" % (startDir)), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3"))
+			self.session.openWithCallback(self.callbackSetStartDir, MessageBox, _("Do you want to set\n%s\nas start directory?" % (startDir)), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3"))
 		elif answer == "ABOUT":
  			self.session.open(MessageBox, _("Dreambox Explorer II created by Vali (2010)\nDream Explorer 3 by Dre (2021)\n\nSupport: board.dreamboxtools.de"), MessageBox.TYPE_INFO, windowTitle=_("Info"))
 
@@ -538,9 +538,9 @@ class DreamExplorer3(Screen):
 				except:
 					ret = "N/A"			
 			
-				msg = self.session.open(MessageBox, _("Dreambox model: %s\n\n%s" % (HardwareInfo().get_device_name(),ret)), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
+				msg = self.session.open(MessageBox, _("Dreambox model: %s\n\n%s" % (HardwareInfo().get_device_name(), ret)), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 		elif self["filelist"].getFileExtensionType() == "service":
-			self.session.open(SystemdViewer,self["filelist"].getFilename(), self["filelist"].getFilenameWithPath())
+			self.session.open(SystemdViewer, self["filelist"].getFilename(), self["filelist"].getFilenameWithPath())
 		else:
 			evt, serviceref = self["filelist"].getTSEvent()
 			if evt is not None:
@@ -571,7 +571,7 @@ class DreamExplorer3(Screen):
 			
 	def deleteItem(self):
 		if self.useMediaFilter:
-			msg = self.session.open(MessageBox,_('Turn off the media-filter first.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
+			msg = self.session.open(MessageBox, _('Turn off the media-filter first.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 			return
 			
 		if not(self["filelist"].canDescent()):
@@ -586,7 +586,7 @@ class DreamExplorer3(Screen):
 		else:
 			return
 			
-		msg = self.session.openWithCallback(self.callbackDeleteItem,MessageBox,_("Do you really want to delete:\n" + self.item), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3 - Delete %s..." % (self.type)))
+		msg = self.session.openWithCallback(self.callbackDeleteItem, MessageBox, _("Do you really want to delete:\n" + self.item), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3 - Delete %s..." % (self.type)))
 
 	def callbackDeleteItem(self, answer):
 		if answer is True:
@@ -600,7 +600,7 @@ class DreamExplorer3(Screen):
 
 	def renameItem(self):
 		if self.useMediaFilter:
-			msg = self.session.open(MessageBox,_('Turn off the media-filter first.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
+			msg = self.session.open(MessageBox, _('Turn off the media-filter first.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 			return
 			
 		if not(self["filelist"].canDescent()):
@@ -632,7 +632,7 @@ class DreamExplorer3(Screen):
 			
 	def openCopyMoveManager(self, setSymLink=False):
 		if self.useMediaFilter:
-			msg = self.session.open(MessageBox,_('Turn off the media-filter first.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
+			msg = self.session.open(MessageBox, _('Turn off the media-filter first.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 			return
 			
 		if not(self["filelist"].canDescent()):
@@ -718,7 +718,7 @@ class DreamExplorer3(Screen):
 			if self["filelist"].getFilename() == song[0]:
 				foundIndex = index
 			index = index + 1
-		return slist,foundIndex
+		return slist, foundIndex
 
 	def exitPlugin(self):
 		self.close()
@@ -1135,7 +1135,7 @@ class MusicExplorer(MoviePlayer):
 				nextRef = eServiceReference("4097:0:0:0:0:0:0:0:0:0:" + nextfile)
 				self.session.nav.playService(nextRef)
 			else:
-				self.session.open(MessageBox,_('No more playable files.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
+				self.session.open(MessageBox, _('No more playable files.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 
 	def seekBack(self):
 		if len(self.musicList) > 2:
@@ -1145,7 +1145,7 @@ class MusicExplorer(MoviePlayer):
 				nextRef = eServiceReference("4097:0:0:0:0:0:0:0:0:0:" + nextfile)
 				self.session.nav.playService(nextRef)
 			else:
-				self.session.open(MessageBox,_('No more playable files.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
+				self.session.open(MessageBox, _('No more playable files.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
 
 	def doEofInternal(self, playing):
 		if not self.execing:
@@ -1207,7 +1207,7 @@ class FolderSelection(Screen):
 			self["greentext"].setText(_("Move"))
 			self["redtext"].setText(_("Copy"))
 		elif mode == "symlink":
-			self["actions"].actions.update({"green":self.createSymlink, "red":self.setSymlinkName})
+			self["actions"].actions.update({"green": self.createSymlink, "red": self.setSymlinkName})
 			self["greentext"].setText(_("Create symlink"))
 			self["redtext"].setText(_("Change symlink name"))
 		self["TargetDir"].onSelectionChanged.append(self.setInfoText)
@@ -1342,7 +1342,7 @@ class SystemdViewer(Screen):
 	def __init__(self, session, serviceFile=None, serviceFileWithPath=None):
 		Screen.__init__(self, session)
 		
-		self["actions"] = ActionMap(["OkCancelActions", "ColorActions","DirectionActions"],
+		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "DirectionActions"],
 		{
 			"ok": self.editService,
 			"cancel": self.close,
