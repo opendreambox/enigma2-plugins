@@ -44,7 +44,7 @@ class AutoPollerThread(Thread):
 		conflicts = ret[4]
 		if conflicts and config.plugins.autotimer.notifconflict.value:
 			AddPopup(
-				_("%(conflicts)d conflict(s) encountered when trying to add new timers:\n%(timers)s") % \
+				_("%(conflicts)d conflict(s) encountered when trying to add new timers:\n%(timers)s") %
 				{ "conflicts":len(conflicts), "timers":'\n'.join( [ _("%(sname)s - %(tname)s: %(name)s at %(begin)s") % {"sname":ServiceReference(x[3]).getServiceName(), "tname":x[4], "name":x[0], "begin":FuzzyTime(x[2])} for x in conflicts ] ) },
 				MessageBox.TYPE_INFO,
 				config.plugins.autotimer.popup_timeout.value,
@@ -53,7 +53,7 @@ class AutoPollerThread(Thread):
 		similars = ret[5]
 		if similars and config.plugins.autotimer.notifsimilar.value:
 			AddPopup(
-				_("%(similars)d conflict(s) solved with similar timer(s):\n%(timers)s") % \
+				_("%(similars)d conflict(s) solved with similar timer(s):\n%(timers)s") %
 				{ "similars":len(similars), "timers":'\n'.join( [ _("%(tname)s: %(name)s at %(begin)s") % {"tname":x[4], "name":x[0], "begin":FuzzyTime(x[2])} for x in similars ] ) },
 				MessageBox.TYPE_INFO,
 				config.plugins.autotimer.popup_timeout.value,
@@ -62,8 +62,10 @@ class AutoPollerThread(Thread):
 
 	def start(self, initial=True):
 		# NOTE: we wait for several minutes on initial launch to not delay enigma2 startup time
-		if initial: delay = config.plugins.autotimer.delay.value*60
-		else: delay = config.plugins.autotimer.interval.value*3600
+		if initial:
+			delay = config.plugins.autotimer.delay.value*60
+		else:
+			delay = config.plugins.autotimer.interval.value*3600
 
 		self.__timer.startLongTimer(delay)
 		if not self.isAlive():
@@ -89,7 +91,8 @@ class AutoPollerThread(Thread):
 		while 1:
 			sem.acquire()
 			# NOTE: we have to check this here and not using the while to prevent the parser to be started on shutdown
-			if not self.running: break
+			if not self.running:
+				break
 			
 			if config.plugins.autotimer.skip_during_records.value:
 				try:

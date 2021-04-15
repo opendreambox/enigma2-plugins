@@ -119,11 +119,11 @@ class ScreenPage(resource.Resource):
 		elif os_path.isdir(path) and self.addSlash is True:
 			uri = "%s/" % (request.path)
 			request.redirect(uri)
-			return "";
+			return ""
 
 		else:
 
-			return resource.ErrorPage(http.NOT_FOUND, "Page Not Found", "Sorry, but the page you were trying to view does not exist.").render(request);
+			return resource.ErrorPage(http.NOT_FOUND, "Page Not Found", "Sorry, but the page you were trying to view does not exist.").render(request)
 
 		return server.NOT_DONE_YET
 

@@ -55,7 +55,8 @@ class PipAdapter:
 		# Instantiate PiP
 		self.session.pip = self.session.instantiateDialog(PictureInPicture)
 		self.session.pip.show()
-		if self.hide: self.hidePiP()
+		if self.hide:
+			self.hidePiP()
 		self.session.pipshown = True # Always pretends it's shown (since the ressources are present)
 		newservice = self.session.nav.getCurrentlyPlayingServiceReference()
 		if self.session.pip.playService(newservice):

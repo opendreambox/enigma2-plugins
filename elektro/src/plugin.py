@@ -609,7 +609,7 @@ class DoElektro(Screen):
 		return ( (clock.value[0]) * 60 + (int)(clock.value[1]) )  * 60
 
 	def getTime(self):
-		ltime = localtime();
+		ltime = localtime()
 		return ( (int)(ltime.tm_hour) * 60 + (int)(ltime.tm_min) ) * 60
 
 	def getPrintTime(self, secs):

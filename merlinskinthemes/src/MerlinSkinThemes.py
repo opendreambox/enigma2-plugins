@@ -2245,14 +2245,14 @@ class GetSkinsList(MenuList, MerlinSkinThemes):
 				info = ""
 				status = ""
 
-				skinxml = False;
-				themexml = False;
+				skinxml = False
+				themexml = False
 				
 				if fileExists(curSkinFile):
-					skinxml = True;
+					skinxml = True
 
 				if fileExists(curThemeFile):
-					themexml = True;
+					themexml = True
 					
 				if skinxml or themexml:
 					if skinxml is False:

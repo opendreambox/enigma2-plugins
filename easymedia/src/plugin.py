@@ -280,13 +280,15 @@ class AddPlug(Screen):
 				pickle.dump(plugin, outf)
 				outf.close()
 				self.session.open(MessageBox, text = (plugin.name + _(" added to EasyMedia")), type = MessageBox.TYPE_INFO)
-			except: self.session.open(MessageBox, text = "Write Error!", type = MessageBox.TYPE_WARNING)
+			except:
+				self.session.open(MessageBox, text = "Write Error!", type = MessageBox.TYPE_WARNING)
 		else:
 			order = 'rm -f \"' + '/usr/lib/enigma2/python/Plugins/Extensions/EasyMedia/' + plugin.name + '.plug' + '\"'
 			try:
 				os_system(order)
 				self.session.open(MessageBox, text = (plugin.name + _(" removed from EasyMedia")), type = MessageBox.TYPE_INFO)
-			except: self.session.open(MessageBox, text = "Write Error!", type = MessageBox.TYPE_WARNING)
+			except:
+				self.session.open(MessageBox, text = "Write Error!", type = MessageBox.TYPE_WARNING)
 
 class EasyMediaSummary(Screen):
 	if HardwareInfo().get_device_name() == "dm820":
@@ -430,16 +432,22 @@ class EasyMedia(Screen):
 				inputfile.close()	
 				self.__keys.append(binPlug.name)
 				self.menuItemList.append((binPlug.name, ("++++" + binPlug.name)))
-			except: pass
+			except:
+				pass
 		pos = 0
 		for x in self.menuItemList:
 			strpos = str(self.__keys[pos])
 			self.list.append((strpos, x, pos))
-			if pos==0: self["key_pvr"].setText(self.menuItemList[0][0])
-			elif pos==1: self["key_red"].setText(self.menuItemList[1][0])
-			elif pos==2: self["key_green"].setText(self.menuItemList[2][0])
-			elif pos==3: self["key_yellow"].setText(self.menuItemList[3][0])
-			elif pos==4: self["key_blue"].setText(self.menuItemList[4][0])
+			if pos==0:
+				self["key_pvr"].setText(self.menuItemList[0][0])
+			elif pos==1:
+				self["key_red"].setText(self.menuItemList[1][0])
+			elif pos==2:
+				self["key_green"].setText(self.menuItemList[2][0])
+			elif pos==3:
+				self["key_yellow"].setText(self.menuItemList[3][0])
+			elif pos==4:
+				self["key_blue"].setText(self.menuItemList[4][0])
 			pos += 1
 					
 		self["list"].setList(self.list)
@@ -574,4 +582,5 @@ def MPcallbackFunc(answer):
 			runPlugin = pickle.load(inputfile)
 			inputfile.close()	
 			runPlugin(session = EMsession)
-		except: EMsession.open(MessageBox, text = (pluginToRun + " not found!"), type = MessageBox.TYPE_WARNING)
+		except:
+			EMsession.open(MessageBox, text = (pluginToRun + " not found!"), type = MessageBox.TYPE_WARNING)

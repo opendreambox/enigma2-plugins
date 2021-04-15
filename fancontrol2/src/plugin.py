@@ -75,8 +75,10 @@ def Test0(wert):
 	return (1 if wert<=0 else wert)
 
 def skal(x, x1, x2, y1, y2):
-	if x > x2: return y2
-	if x < x1: return y1
+	if x > x2:
+		return y2
+	if x < x1:
+		return y1
 	m = (y2 - y1) / Test0(x2 - x1)
 	y = m * x + y1
 	return y

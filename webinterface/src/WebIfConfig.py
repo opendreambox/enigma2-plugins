@@ -1,4 +1,4 @@
-Version = '$Header$';
+Version = '$Header$'
 
 from enigma import eListboxPythonMultiContent, gFont
 from Screens.Screen import Screen

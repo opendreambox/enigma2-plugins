@@ -203,7 +203,7 @@ def showFinishPopup(ret):
 			if listcount > maxlistcount+1:
 				searchlog_txt += "\n" + "and %d searchlog-entries more ..." % (listcount-maxlistcount)
 
-	AddPopup(_("Found a total of %(matches)d matching Events.\n%(timer)d Timer were added and\n%(modified)d modified,\n%(conflicts)d conflicts encountered,\n%(similars)d similars added.") % \
+	AddPopup(_("Found a total of %(matches)d matching Events.\n%(timer)d Timer were added and\n%(modified)d modified,\n%(conflicts)d conflicts encountered,\n%(similars)d similars added.") %
 		{"matches":ret[0], "timer":ret[1], "modified":ret[2], "conflicts":len(ret[4]), "similars":len(ret[5])} + "\n\n" + str(searchlog_txt),
 		MessageBox.TYPE_INFO, config.plugins.autotimer.popup_timeout.value, domain = NOTIFICATIONDOMAIN, id = 'AT_PopUp_ID_ParseEPGCallback')
 

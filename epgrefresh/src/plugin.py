@@ -18,11 +18,11 @@ from sys import stdout
 from time import time, localtime, mktime
 now = localtime()
 begin = mktime((
-	now.tm_year, now.tm_mon, now.tm_mday, 20, 15, \
+	now.tm_year, now.tm_mon, now.tm_mday, 20, 15,
 	0, now.tm_wday, now.tm_yday, now.tm_isdst)
 )
 end = mktime((
-	now.tm_year, now.tm_mon, now.tm_mday, 06, 30, \
+	now.tm_year, now.tm_mon, now.tm_mday, 06, 30,
 	0, now.tm_wday, now.tm_yday, now.tm_isdst)
 )
 
@@ -212,8 +212,8 @@ def showPendingServices(session, **kwargs):
 
 def doneConfiguring(session, needsRestart):
 	if needsRestart:
-		session.openWithCallback(boundFunction(restartGUICB, session), MessageBox, \
-				_("To apply your Changes the GUI has to be restarted.\nDo you want to restart the GUI now?"), \
+		session.openWithCallback(boundFunction(restartGUICB, session), MessageBox,
+				_("To apply your Changes the GUI has to be restarted.\nDo you want to restart the GUI now?"),
 				MessageBox.TYPE_YESNO, timeout =  30)
 	else:
 		_startAfterConfig(session)

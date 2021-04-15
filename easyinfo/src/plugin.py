@@ -532,11 +532,14 @@ def EasyInfoZapTo(NewService):
 	InfoBar_instance.servicelist.zap()
 
 def EasyInfoCallbackFunc(answer):
-	if answer is None: return
+	if answer is None:
+		return
 	
-	if EasyInfoSession is None: return
+	if EasyInfoSession is None:
+		return
 	
-	if not InfoBar_instance: return
+	if not InfoBar_instance:
+		return
 	
 	if answer == "singleepg":
 		ref=InfoBar_instance.servicelist.getCurrentSelection()

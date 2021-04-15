@@ -44,7 +44,8 @@ def leavePlayerConfirmedMP(self, answer):
 RUNPLUGIN = 1
 
 def autostart(reason, **kwargs):
-	if RUNPLUGIN != 1: return
+	if RUNPLUGIN != 1:
+		return
 	if reason == 0: # start
 		if kwargs.has_key("session"):
 			global gLeavePlayerConfirmed

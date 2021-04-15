@@ -32,7 +32,7 @@ class TwitchVideoUrlResolver(object):
 			maxres = 1080
 		url = ""
 		fmt = ""
-		current = maxres;
+		current = maxres
 		for twitchFmt in twitchInfo.get(self.KEY_FORMATS, []):
 			height = twitchFmt.get(self.KEY_HEIGHT, 0)
 			if height and height <= maxres and height > current:

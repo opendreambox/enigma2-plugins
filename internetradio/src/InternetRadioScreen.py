@@ -615,7 +615,8 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		if error is not None:
 			try:
 				self.setStatusText(_("%s...") % str(error.getErrorMessage()), 15000)
-			except: pass
+			except:
+				pass
 			
 	def fillGenreList(self):
 		genreList = []
@@ -647,7 +648,8 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 			sel = None
 			try:
 				sel = self["list"].getCurrentSelection()
-			except:return
+			except:
+				return
 			if sel is None:
 				return
 			else:
@@ -792,7 +794,8 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		stationList = []
 		try:
 			root = xml.etree.cElementTree.fromstring(xmlstring)
-		except: return []
+		except:
+			return []
 		for childs in root.findall("station"):
 			stationList.append(InternetRadioStation(name = childs.get("name").encode('utf-8','ignore'), 
 								tags = childs.get("tags").encode('utf-8','ignore'), country = childs.get("country").encode('utf-8','ignore'), url = childs.get("url"),
@@ -912,13 +915,15 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		if error is not None:
 			try:
 				self.setStatusText(_("%s ...") % str(error.getErrorMessage()), 15000)
-			except: pass
+			except:
+				pass
 
 	def Error(self, error = None):
 		if error is not None:
 			try:
 				self.setStatusText(str(error.getErrorMessage()), 15000)
-			except: pass
+			except:
+				pass
 	
 	def __onClose(self):
 		global dataAvail_conn
@@ -984,7 +989,8 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		sel = None
 		try:
 			sel = self["list"].getCurrentSelection()
-		except:return None
+		except:
+			return None
 		return sel
 		
 	def closePlayer(self):

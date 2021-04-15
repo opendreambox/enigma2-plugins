@@ -61,7 +61,8 @@ class MovingCallbackLabel(MovingLabel):
 
 	def stopMoving(self):
 		MovingLabel.stopMoving(self)
-		if self.callback: self.callback()
+		if self.callback:
+			self.callback()
 
 #pragma mark RSSTickerView
 
@@ -83,7 +84,8 @@ class RSSTickerView(Screen):
 		self["newsLabel"].setText(text)
 
 	def display(self, feed=None):
-		if feed: self.updateText(feed)
+		if feed:
+			self.updateText(feed)
 		self.show()
 		self["newsLabel"].startMoving()
 

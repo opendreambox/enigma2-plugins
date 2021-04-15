@@ -56,11 +56,11 @@ class ScreenshotResource(resource.Resource):
 		Log.i("display=%s, osd=%s, video=%s, filename=%s" %(display, osd, video, filename))
 		request.setHeader('Content-Disposition', 'inline; filename=%s;' %filename)
 		#no caching!
-		request.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-		request.setHeader('Cache-Directive', 'no-cache');
-		request.setHeader('Pragma-Directive', 'no-cache');
-		request.setHeader('Pragma', 'no-cache');
-		request.setHeader('Expires', '0');
+		request.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate')
+		request.setHeader('Cache-Directive', 'no-cache')
+		request.setHeader('Pragma-Directive', 'no-cache')
+		request.setHeader('Pragma', 'no-cache')
+		request.setHeader('Expires', '0')
 
 		screenid = 1 if display else 0
 		desktop = getDesktop(screenid)

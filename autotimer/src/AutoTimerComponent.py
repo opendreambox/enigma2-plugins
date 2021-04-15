@@ -43,13 +43,13 @@ class AutoTimerComponent(object):
 	"""
 	 Keeps init small and helps setting many values at once
 	"""
-	def setValues(self, name, match, enabled, timespan=None, services=None, \
-			offset=None, afterevent=[], exclude=None, maxduration=None, \
-			destination=None, include=None, matchCount=0, matchLeft=0, \
-			matchLimit='', matchFormatString='', lastBegin=0, justplay=False, \
-			avoidDuplicateDescription=0, searchForDuplicateDescription=2, bouquets=None, \
-			tags=None, searchType="partial", searchCase="insensitive", \
-			overrideAlternatives=False, timeframe=None, vps_enabled=False, \
+	def setValues(self, name, match, enabled, timespan=None, services=None,
+			offset=None, afterevent=[], exclude=None, maxduration=None,
+			destination=None, include=None, matchCount=0, matchLeft=0,
+			matchLimit='', matchFormatString='', lastBegin=0, justplay=False,
+			avoidDuplicateDescription=0, searchForDuplicateDescription=2, bouquets=None,
+			tags=None, searchType="partial", searchCase="insensitive",
+			overrideAlternatives=False, timeframe=None, vps_enabled=False,
 			vps_overwrite=False, setEndtime=False, series_labeling=False, series_save_filter=False):
 		self.name = name
 		self.match = match

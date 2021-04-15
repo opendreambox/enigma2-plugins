@@ -76,22 +76,28 @@ class MyPluginList(PluginList):
 
 	def up(self):
 		instance = self.__instance()
-		if instance: instance.moveSelection(instance.moveUp)
+		if instance:
+			instance.moveSelection(instance.moveUp)
 	def down(self):
 		instance = self.__instance()
-		if instance: instance.moveSelection(instance.moveDown)
+		if instance:
+			instance.moveSelection(instance.moveDown)
 	def pageUp(self):
 		instance = self.__instance()
-		if instance: instance.moveSelection(instance.pageUp)
+		if instance:
+			instance.moveSelection(instance.pageUp)
 	def pageDown(self):
 		instance = self.__instance()
-		if instance: instance.moveSelection(instance.pageDown)
+		if instance:
+			instance.moveSelection(instance.pageDown)
 	def left(self):
 		instance = self.__instance()
-		if instance: instance.moveSelection(instance.moveLeft)
+		if instance:
+			instance.moveSelection(instance.moveLeft)
 	def right(self):
 		instance = self.__instance()
-		if instance: instance.moveSelection(instance.moveRight)
+		if instance:
+			instance.moveSelection(instance.moveRight)
 	
 	def updateList(self, list):
 		PluginList.updateList(self, list)
@@ -197,23 +203,27 @@ def PluginComponent_addPlugin(self, plugin, *args, **kwargs):
 			pd.path = plugin.path
 
 			newWeight = pluginWeights.get(pd)
-			if DEBUG: print("[PluginSort] Setting weight of %s from %d to %d" % (pd.name, pd.weight, newWeight))
+			if DEBUG:
+				print("[PluginSort] Setting weight of %s from %d to %d" % (pd.name, pd.weight, newWeight))
 			pd.weight = newWeight
 			PluginComponent.pluginSort_baseAddPlugin(self, pd, *args, **kwargs)
 
 		# installedPluginList is a list of original descriptors, but we changed it to be a copy, not a reference. so keep it up to date
 		if self.firstRun:
 			self.installedPluginList.append(plugin)
-			if DEBUG: print("[PluginSort] Adding %s to list of installed plugins (%s, %s)." % (plugin.name, plugin.path, repr(plugin.where)))
+			if DEBUG:
+				print("[PluginSort] Adding %s to list of installed plugins (%s, %s)." % (plugin.name, plugin.path, repr(plugin.where)))
 		return
 
 	newWeight = pluginWeights.get(plugin)
-	if DEBUG: print("[PluginSort] Setting weight of %s from %d to %d" % (plugin.name, plugin.weight, newWeight))
+	if DEBUG:
+		print("[PluginSort] Setting weight of %s from %d to %d" % (plugin.name, plugin.weight, newWeight))
 	plugin.weight = newWeight
 	PluginComponent.pluginSort_baseAddPlugin(self, plugin, *args, **kwargs)
 
 	if self.firstRun:
-		if DEBUG: print("[PluginSort] Adding %s to list of installed plugins (%s, %s)." % (plugin.name, plugin.path, repr(plugin.where)))
+		if DEBUG:
+			print("[PluginSort] Adding %s to list of installed plugins (%s, %s)." % (plugin.name, plugin.path, repr(plugin.where)))
 		self.installedPluginList.append(plugin)
 
 if DEBUG:
@@ -374,7 +384,8 @@ class SortingPluginBrowser(OriginalPluginBrowser):
 				diff = abs(self.pluginlist[i].weight - self.pluginlist[newpos].weight) + 1
 				print("[PluginSort] Using weight from %d (%d) and %d (%d) to calculate diff (%d)" % (i, self.pluginlist[i].weight, newpos, self.pluginlist[newpos].weight, diff))
 				while i < Len:
-					if DEBUG: print("[PluginSort] INCREASE WEIGHT OF", self.pluginlist[i].name, "BY", diff)
+					if DEBUG:
+						print("[PluginSort] INCREASE WEIGHT OF", self.pluginlist[i].name, "BY", diff)
 					self.pluginlist[i].weight += diff
 					i += 1
 			# we moved down, decrease weight of plugins before us
@@ -385,14 +396,17 @@ class SortingPluginBrowser(OriginalPluginBrowser):
 				diff = abs(self.pluginlist[newpos].weight - self.pluginlist[i].weight) + 1
 				print("[PluginSort] Using weight from %d (%d) and %d (%d) to calculate diff (%d)" % (newpos, self.pluginlist[newpos].weight, i, self.pluginlist[i].weight, diff))
 				while i > -1:
-					if DEBUG: print("[PluginSort] DECREASE WEIGHT OF", self.pluginlist[i].name, "BY", diff)
+					if DEBUG:
+						print("[PluginSort] DECREASE WEIGHT OF", self.pluginlist[i].name, "BY", diff)
 					self.pluginlist[i].weight -= diff
 					i -= 1
 			else:
-				if DEBUG: print("[PluginSort]", entry.name, "did not move (%d to %d)?" % (selected, newpos))
+				if DEBUG:
+					print("[PluginSort]", entry.name, "did not move (%d to %d)?" % (selected, newpos))
 
 			self.list = [MyPluginEntryComponent(plugin) for plugin in self.pluginlist]
-			if DEBUG: print("[PluginSort] NEW LIST:", [(plugin.name, plugin.weight) for plugin in self.pluginlist])
+			if DEBUG:
+				print("[PluginSort] NEW LIST:", [(plugin.name, plugin.weight) for plugin in self.pluginlist])
 			# XXX: modifyEntry is broken - I'd say a job well done :P
 			#self["pluginlist"].modifyEntry(newpos, self.list[newpos])
 			self["pluginlist"].updateList(self.list)
@@ -484,8 +498,10 @@ def autostart(reason, *args, **kwargs):
 			# we use a copy for installed plugins because we might change the 'where'-lists
 			plugins.installedPluginList = plugins.pluginList[:]
 			def PluginComponent__setattr__(self, key, value):
-				if key == 'installedPluginList': return
-				else: self.__dict__[key] = value
+				if key == 'installedPluginList':
+					return
+				else:
+					self.__dict__[key] = value
 			PluginComponent.__setattr__ = PluginComponent__setattr__
 
 			if hasattr(plugins, 'pluginHider_baseGetPlugins'):
@@ -500,7 +516,8 @@ def autostart(reason, *args, **kwargs):
 				for pl in fixed:
 					if pl.name == plugin.name and (pl.where in plugin.where or pl.where == plugin.where):
 						alreadyfixed = True
-				if alreadyfixed == True: continue # skip double entries
+				if alreadyfixed == True:
+					continue # skip double entries
 
 				# create individual entries for multiple wheres, this is potentially harmful!
 				if len(plugin.where) > 1:

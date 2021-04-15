@@ -357,7 +357,7 @@ class EPGRefresh:
 			message = _("There is still a refresh running. The Operation isn't allowed at this moment.")
 			try:
 				if self.session != None:
-					self.session.open(MessageBox, message, \
+					self.session.open(MessageBox, message,
 						 MessageBox.TYPE_INFO, timeout=10)
 			except:
 				print("[EPGRefresh] Error while opening Messagebox!")
@@ -444,8 +444,8 @@ class EPGRefresh:
 				defaultanswer = True if config.plugins.epgrefresh.parse_autotimer.value == "ask_yes" else False
 				if self.forcedScan:
 					# only if we are interactive
-					Notifications.AddNotificationWithCallback(self._ToDoCallAutotimerCB, MessageBox, \
-						text = _("EPG refresh finished.\nShould AutoTimer be search for new matches?"), \
+					Notifications.AddNotificationWithCallback(self._ToDoCallAutotimerCB, MessageBox,
+						text = _("EPG refresh finished.\nShould AutoTimer be search for new matches?"),
 						type = MessageBox.TYPE_YESNO, default = defaultanswer, timeout = 10, domain = NOTIFICATIONDOMAIN)
 				else:
 					self._ToDoCallAutotimerCB(parseAT=defaultanswer)
@@ -483,7 +483,7 @@ class EPGRefresh:
 	def _autotimerErrback(self, failure):
 		print("[EPGRefresh] Debug: AutoTimer failed:" + str(failure))
 		if config.plugins.epgrefresh.enablemessage.value:
-			Notifications.AddPopup(_("AutoTimer failed with error %s") % (str(failure)), \
+			Notifications.AddPopup(_("AutoTimer failed with error %s") % (str(failure)),
 				MessageBox.TYPE_ERROR, 10, domain = NOTIFICATIONDOMAIN)
 		self._nextTodo()
 
@@ -499,7 +499,7 @@ class EPGRefresh:
 				except:
 					from traceback import format_exc
 					print("[EPGRefresh] Could not start Autotimer showPopup:" + str(format_exc()))
-					Notifications.AddPopup(_("Found a total of %d matching Events.\n%d Timer were added and\n%d modified,\n%d conflicts encountered,\n%d similars added.") \
+					Notifications.AddPopup(_("Found a total of %d matching Events.\n%d Timer were added and\n%d modified,\n%d conflicts encountered,\n%d similars added.")
 					% (ret[0], ret[1], ret[2], len(ret[4]), len(ret[5])),
 					MessageBox.TYPE_INFO, 10, domain = NOTIFICATIONDOMAIN)
 		
@@ -571,7 +571,7 @@ class EPGRefresh:
 			if self.beginOfTimespan < config.plugins.epgrefresh.lastscan.value:
 				return
 			if config.plugins.epgrefresh.force.value \
-				or (Screens.Standby.inStandby and \
+				or (Screens.Standby.inStandby and
 					not self.session.nav.RecordTimer.isRecording()):
 
 				self.nextService()
@@ -709,8 +709,8 @@ class EPGRefresh:
 
 	def resetStateChanged(self, state):
 		if state.state == cachestate.load_finished:
-			self.reset_session.openWithCallback(self.doRestart, MessageBox, \
-				text = _("Reset")+" "+_("EPG.db")+" "+_("successful")+"\n\n"+_("Restart GUI now?"), \
+			self.reset_session.openWithCallback(self.doRestart, MessageBox,
+				text = _("Reset")+" "+_("EPG.db")+" "+_("successful")+"\n\n"+_("Restart GUI now?"),
 				type = MessageBox.TYPE_YESNO, default = True, timeout = 10)
 
 	def doRestart(self, answer):
@@ -738,7 +738,7 @@ class EPGRefresh:
 			
 			# open message box only if not already shown
 			if self.showPendingServicesMessageShown == False:
-				self.msg = session.open(MessageBox, _("Following Services have to be scanned:") \
+				self.msg = session.open(MessageBox, _("Following Services have to be scanned:")
 					+ "\n" + servtxt, MessageBox.TYPE_INFO)
 				# update state for pending services message box on close
 				self.msg.onClose.append(self.setMessageBoxState)

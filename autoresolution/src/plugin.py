@@ -20,13 +20,13 @@ port = None
 videoresolution_dictionary = {}
 resolutionlabel = None
 
-resolutions = (('sd_i_50', (_("SD 25/50HZ Interlace Mode"))), ('sd_i_60', (_("SD 30/60HZ Interlace Mode"))), \
-			('sd_p_50', (_("SD 25/50HZ Progressive Mode"))), ('sd_p_60', (_("SD 30/60HZ Progressive Mode"))), \
-			('hd_i', (_("HD Interlace Mode"))), \
-			('hd_p', (_("HD Progressive Mode"))), ('fhd_p', (_("FHD Progressive Mode"))), \
-			('p720_24', (_("Enable 720p24 Mode"))), ('p1080_24', (_("Enable 1080p24 Mode"))), \
-			('p1080_25', (_("Enable 1080p25 Mode"))), ('p1080_30', (_("Enable 1080p30 Mode"))), \
-			('uhd_p', (_("UHD Progressive Mode"))), ('p2160_24', (_("Enable 2160p24 Mode"))), \
+resolutions = (('sd_i_50', (_("SD 25/50HZ Interlace Mode"))), ('sd_i_60', (_("SD 30/60HZ Interlace Mode"))),
+			('sd_p_50', (_("SD 25/50HZ Progressive Mode"))), ('sd_p_60', (_("SD 30/60HZ Progressive Mode"))),
+			('hd_i', (_("HD Interlace Mode"))),
+			('hd_p', (_("HD Progressive Mode"))), ('fhd_p', (_("FHD Progressive Mode"))),
+			('p720_24', (_("Enable 720p24 Mode"))), ('p1080_24', (_("Enable 1080p24 Mode"))),
+			('p1080_25', (_("Enable 1080p25 Mode"))), ('p1080_30', (_("Enable 1080p30 Mode"))),
+			('uhd_p', (_("UHD Progressive Mode"))), ('p2160_24', (_("Enable 2160p24 Mode"))),
 			('p2160_25', (_("Enable 2160p25 Mode"))), ('p2160_30', (_("Enable 2160p30 Mode"))))
 
 config.plugins.autoresolution = ConfigSubsection()
@@ -49,13 +49,13 @@ def setDeinterlacer(mode):
 	#f.write("%s\n" % mode)
 	#f.close()
 
-frqdic = { 23976: '24', \
-		24000: '24', \
-		25000: '25', \
-		29970: '30', \
-		30000: '30', \
-		50000: '50', \
-		59940: '60', \
+frqdic = { 23976: '24',
+		24000: '24',
+		25000: '25',
+		29970: '30',
+		30000: '30',
+		50000: '50',
+		59940: '60',
 		60000: '60'}
 
 class AutoRes(Screen):
@@ -427,5 +427,5 @@ def autoresSetup(session, **kwargs):
 	session.open(AutoResSetupMenu)
 
 def Plugins(path, **kwargs):
-	return [PluginDescriptor(where = [PluginDescriptor.WHERE_SESSIONSTART], fnc = autostart), \
+	return [PluginDescriptor(where = [PluginDescriptor.WHERE_SESSIONSTART], fnc = autostart),
 		PluginDescriptor(name="Autoresolution", description=_("Autoresolution Switch"), where = PluginDescriptor.WHERE_MENU, fnc=startSetup) ]

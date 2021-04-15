@@ -583,7 +583,8 @@ class IMDB(Screen):
 			genreblock = self.genreblockmask.findall(self.inhtml)
 			if genreblock:
 				s = ''
-				if len(genreblock) > 1: s = 's'
+				if len(genreblock) > 1:
+					s = 's'
 				Detailstext += "Genre%s: " % s
 				for x in genreblock:
 					genres = self.htmltags.sub('', x)
@@ -604,7 +605,8 @@ class IMDB(Screen):
 				ratingval = rating.group("rating")
 				if ratingval != '<span id="voteuser"></span>':
 					count = ''
-					if rating.group("ratingcount"): count = ' (' + rating.group("ratingcount").replace(',','.') + ' ' + _("votes") +')'
+					if rating.group("ratingcount"):
+						count = ' (' + rating.group("ratingcount").replace(',','.') + ' ' + _("votes") +')'
 					Ratingtext = _("User Rating") + ": " + ratingval + "/10" + count
 					self.ratingstars = int(10*round(float(ratingval.replace(',','.')),1))
 					self["stars"].show()

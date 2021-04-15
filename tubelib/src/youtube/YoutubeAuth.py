@@ -102,7 +102,7 @@ class YoutubeAuth(object):
 		)
 		d.addCallbacks(self._onRequestResponse, self._onRequestError)
 		self._requestDeferred = d
-		return d;
+		return d
 
 	def cancelAuthFlow(self):
 		self._canceled = True
@@ -166,7 +166,7 @@ class YoutubeAuth(object):
 		)
 		d.addCallbacks(self._onCredentialsPollResponse, self._onCredentialsPollError)
 		self._responseDeferred = d
-		return d;
+		return d
 
 	def _onCredentialsPollResponse(self, response):
 		self._responseDeferred = None

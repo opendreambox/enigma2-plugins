@@ -1067,7 +1067,8 @@ class MoviePlayer(MP_parent):
 	def leavePlayer(self):
 		try: 
 			self.updateMovieData() # Merlin only feature
-		except: pass
+		except:
+			pass
 		self.is_closing = True
 		self.close()
 
@@ -1077,7 +1078,8 @@ class MoviePlayer(MP_parent):
 	def doEofInternal(self, playing):
 		try: 
 			self.updateMovieData() # Merlin only feature
-		except: pass
+		except:
+			pass
 		if not self.execing:
 			return
 		if not playing :
@@ -1087,7 +1089,8 @@ class MoviePlayer(MP_parent):
 	def showMovies(self):
 		try: 
 			self.updateMovieData() # Merlin only feature
-		except: pass
+		except:
+			pass
 		self.close()
 
 class MusicExplorer(MoviePlayer):

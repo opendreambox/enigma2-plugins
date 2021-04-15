@@ -44,11 +44,11 @@ class StreamResource(resource.Resource):
 	def render(self, request):
 		self._request = request
 
-		request.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-		request.setHeader('Cache-Directive', 'no-cache');
-		request.setHeader('Pragma-Directive', 'no-cache');
-		request.setHeader('Pragma', 'no-cache');
-		request.setHeader('Expires', '0');
+		request.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate')
+		request.setHeader('Cache-Directive', 'no-cache')
+		request.setHeader('Pragma-Directive', 'no-cache')
+		request.setHeader('Pragma', 'no-cache')
+		request.setHeader('Expires', '0')
 		
 		streamUrl = False
 		length = len(request.postpath)

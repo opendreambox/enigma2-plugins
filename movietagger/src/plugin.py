@@ -320,12 +320,18 @@ class TagMenuList(MenuList):
 		self.xOffset = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_XOFFSET, 10 if isFHD else 5)
 		self.xIndicatorWidth = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_XINDICATOR_WIDTH, 40 if isFHD else 20)
 		self.xIndicatorOffset = sizes.get(TagMenuList.SKIN_COMPONENT_KEY_XINDICATOR_OFFSET, 370 if isFHD else 230)
-		try: self.usedTagColor = parseColor("usedTagColor").argb()
-		except: self.usedTagColor = 0x00ffff00
-		try: self.userTagColor = parseColor("userTagColor").argb()
-		except: self.userTagColor = 0x00FF0000
-		try: self.preTagColor = parseColor("preTagColor").argb()
-		except: self.preTagColor = 0x0000FF00
+		try:
+			self.usedTagColor = parseColor("usedTagColor").argb()
+		except:
+			self.usedTagColor = 0x00ffff00
+		try:
+			self.userTagColor = parseColor("userTagColor").argb()
+		except:
+			self.userTagColor = 0x00FF0000
+		try:
+			self.preTagColor = parseColor("preTagColor").argb()
+		except:
+			self.preTagColor = 0x0000FF00
 		
 		
 		tlf = TemplatedListFonts()

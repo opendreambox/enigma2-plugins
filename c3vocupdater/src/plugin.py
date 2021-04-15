@@ -81,7 +81,8 @@ class C3vocScreen (Screen):
 			shutil.move("/tmp/c3voc","/etc/enigma2/userbouquet.c3voc__tv_.tv")
 			eDVBDB.getInstance().reloadBouquets()
 			self.session.open(MessageBox, text = _("c3voc stream bouquet updated"), type = MessageBox.TYPE_INFO, timeout=4)
-		except:	pass
+		except:
+			pass
 
 		self.close()
 
