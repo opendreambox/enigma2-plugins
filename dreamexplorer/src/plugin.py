@@ -430,7 +430,7 @@ class DreamExplorer3(Screen):
 				elif filename.lower().endswith(".bootlogo.tar.gz"):
 					self.command = ["mount -rw /boot -o remount", "sleep 3","tar -xzvf " + filenameWithPath + " -C /", "mount -ro /boot -o remount"]
 					askList = [(_("Cancel"), "NO"),(_("Install bootlogo"), "YES")]
-					msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" %(filename)), list=askList)
+					msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s" %(filename)), list=askList)
 					msg.setTitle(_("Dream Explorer 3"))
 					
 				elif fileExtension in ["gz","bz2"]:
@@ -440,19 +440,19 @@ class DreamExplorer3(Screen):
 						elif fileExtension == "bz2":
 							self.command = [ "tar -xjvf " + filenameWithPath + " -C /" ]
 						
-						msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" %(filename)), list=[(_("Cancel"), "NO"),(_("Extract archive"), "YES")])
+						msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s" %(filename)), list=[(_("Cancel"), "NO"),(_("Extract archive"), "YES")])
 						msg.setTitle(_("Dream Explorer 3"))
 
 				elif fileExtension == "deb":
 					self.command = [ "apt-get update && dpkg -i %s && apt-get -f install" %(filenameWithPath)]
 					askList = [(_("Cancel"), "NO"),(_("Install package"), "YES")]
-					msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" %(filename)), list=askList)
+					msg = self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s" %(filename)), list=askList)
 					msg.setTitle(_("Dream Explorer 3"))
 					
 				elif fileExtension == "sh":
 					self.command = [ filenameWithPath ]
 					askList = [(_("Cancel"), "NO"),(_("View script"), "VIEW"),(_("Execute script"), "YES")]
-					self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s?" %(filename)), list=askList)
+					self.session.openWithCallback(self.executeSelected, ChoiceBox, title=_("Please select action for\n%s" %(filename)), list=askList)
 				else:
 					xfile=stat(filenameWithPath)
 					if (xfile.st_size < 1024000):
@@ -873,7 +873,7 @@ class BookmarkManager(Screen):
 				else:
 					self.session.open(MessageBox, _("Only directories can be bookmarked"), MessageBox.TYPE_INFO, timeout=3)
 			else:
-				self.session.open(MessageBox, _("Diretory is already in bookmarks"), MessageBox.TYPE_INFO, timeout=3)
+				self.session.open(MessageBox, _("Directory is already in bookmarks"), MessageBox.TYPE_INFO, timeout=3)
 		
 	def removeFromBookmarks(self):
 		cur = self["bookmarklist"].getCurrent()
