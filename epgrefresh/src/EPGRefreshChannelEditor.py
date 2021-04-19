@@ -2,13 +2,14 @@
 # GUI (Screens)
 from Screens.Screen import Screen
 from Components.ConfigList import ConfigListScreen
+from Components.Sources.List import List
 from Screens.ChannelSelection import SimpleChannelSelection
 
 # GUI (Summary)
 from Screens.Setup import SetupSummary
 
 # GUI (Components)
-from Components.ActionMap import ActionMap
+from Components.ActionMap import ActionMap, NumberActionMap
 from Components.Sources.StaticText import StaticText
 
 # Configuration
@@ -37,7 +38,7 @@ class SimpleBouquetSelection(SimpleChannelSelection):
 class EPGRefreshServiceEditor(Screen, ConfigListScreen):
 	"""Edit Services to be refreshed by EPGRefresh"""
 
-	skin = """<screen name="EPGRefreshServiceEditor" position="center,120" size="820,520" title="Edit Services to refresh">
+	skin = """<screen name="EPGRefreshServiceEditor" position="center,50" size="820,640" title="Edit Services to refresh">
 		<ePixmap pixmap="skin_default/buttons/red.png" position="10,5" size="200,40" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/green.png" position="210,5" size="200,40" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/yellow.png" position="410,5" size="200,40" alphatest="on" />
@@ -47,7 +48,27 @@ class EPGRefreshServiceEditor(Screen, ConfigListScreen):
 		<widget source="key_yellow" render="Label" position="410,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
 		<widget source="key_blue" render="Label" position="610,5" size="200,40" zPosition="1" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" shadowColor="black" shadowOffset="-2,-2" />
 		<eLabel position="10,50" size="800,1" backgroundColor="grey" />
-		<widget name="config" position="10,60" size="800,450" enableWrapAround="1" scrollbarMode="showOnDemand" />
+		<widget name="config" position="10,60" size="800,300" enableWrapAround="1" scrollbarMode="showOnDemand" />
+		<widget source="currentServices" render="Listbox" position="10,370" size="400,250" zPosition="1000">
+			<convert type="TemplatedMultiContent">
+				{"template": [
+					MultiContentEntryText(pos = (5, 0), size = (400, 25), font=0, text = 0),
+					],
+				"fonts": [gFont("Regular", 20)],
+				"itemHeight": 25
+				}
+			</convert>
+		</widget>
+		<widget source="currentBouquets" render="Listbox" position="410,370" size="400,250" zPosition="1000">
+			<convert type="TemplatedMultiContent">
+				{"template": [
+					MultiContentEntryText(pos = (5, 0), size = (400, 25), font=0, text = 0),
+					],
+				"fonts": [gFont("Regular", 20)],
+				"itemHeight": 25
+				}
+			</convert>
+		</widget>
 	</screen>"""
 
 	def __init__(self, session, services):
@@ -63,7 +84,7 @@ class EPGRefreshServiceEditor(Screen, ConfigListScreen):
 			services[1][:]
 		)
 
-		self.typeSelection = NoSave(ConfigSelection(choices = [
+		self.typeSelection = NoSave(ConfigSelection(default="bouquets", choices = [
 			("channels", _("Channels")),
 			("bouquets", _("Bouquets"))]
 		))
@@ -78,21 +99,90 @@ class EPGRefreshServiceEditor(Screen, ConfigListScreen):
 		self["key_green"] = StaticText(_("OK"))
 		self["key_yellow"] = StaticText(_("delete"))
 		self["key_blue"] = StaticText(_("New"))
+		self["currentServices"] = List()
+		self["currentBouquets"] = List()
+		self["currentServices"].setSelectionEnabled(False)
+		self["currentBouquets"].setSelectionEnabled(False)
 
 		# Define Actions
-		self["actions"] = ActionMap(["SetupActions", "ColorActions"],
+		self["actions"] = ActionMap(["SetupActions", "ColorActions", "DirectionActions"],
 			{
 				"cancel": self.cancel,
 				"save": self.save,
 				"yellow": self.removeService,
-				"blue": self.newService
+				"blue": self.newService,
+				"up":	self.up,
+				"down":	self.down,
+				"left":	self.keyLeft,
+				"right": self.keyRight,
 			}
 		)
+		
+		self["NumberActions"] = NumberActionMap(["NumberActions","InputAsciiActions"],
+		{
+				"1": self.keyNumberGlobal,
+				"2": self.keyNumberGlobal,
+				"3": self.keyNumberGlobal,
+		})
 
 		# Trigger change
 		self.changed()
+		self.currentList = "config"
 
 		self.onLayoutFinish.append(self.setCustomTitle)
+		self.onLayoutFinish.append(self.getBouquetsAndServices)
+
+	def keyNumberGlobal(self, number):
+		if number == 1:
+			self[self.currentList].setSelectionEnabled(False)		
+			self.currentList = "config"
+			self[self.currentList].instance.setSelectionEnable(True)
+		elif number == 2:
+			if self.currentList == "config":
+				self[self.currentList].instance.setSelectionEnable(False)
+			else:
+				self[self.currentList].setSelectionEnabled(False)
+			self.currentList = "currentServices"
+			self[self.currentList].setSelectionEnabled(True)
+		elif number == 3:
+			if self.currentList == "config":
+				self[self.currentList].instance.setSelectionEnable(False)
+			else:
+				self[self.currentList].setSelectionEnabled(False)
+			self.currentList = "currentBouquets"
+			self[self.currentList].setSelectionEnabled(True)
+
+	def up(self):
+		if self.currentList == "config":
+			self[self.currentList].instance.moveSelection(0)
+		else:
+			self[self.currentList].moveSelection("moveUp")
+
+	def down(self):
+		if self.currentList == "config":
+			self[self.currentList].instance.moveSelection(1)
+		else:
+			self[self.currentList].moveSelection("moveDown")
+		
+	def keyLeft(self):
+		if self.currentList == "config":
+			index = self[self.currentList].getCurrentIndex()
+			if index > 0 or self.currentList != "config":
+				self[self.currentList].instance.moveSelection(4)
+			else:
+				ConfigListScreen.keyLeft(self)
+		else:
+			self[self.currentList].moveSelection("pageUp")
+		
+	def keyRight(self):
+		if self.currentList == "config":
+			index = self[self.currentList].getCurrentIndex()
+			if index > 0 or self.currentList != "config":
+				self[self.currentList].instance.moveSelection(5)
+			else:
+				ConfigListScreen.keyRight(self)
+		else:
+			self[self.currentList].moveSelection("pageDown")
 
 	def setCustomTitle(self):
 		self.setTitle(_("Edit Services to refresh"))
@@ -127,6 +217,17 @@ class EPGRefreshServiceEditor(Screen, ConfigListScreen):
 			getConfigListEntry(_("Refreshing"), NoSave(ConfigSelection(choices = [(x, ServiceReference(x.sref).getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', ''))])))
 				for x in self.services[self.idx]
 		])
+		
+	def getBouquetsAndServices(self):
+		self.servicelist = [(_("Services"),)]
+		for x in self.services[0]:
+			self.servicelist.append((ServiceReference(x.sref).getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', ''),))
+		self["currentServices"].setList(self.servicelist)
+
+		self.bouquetlist = [(_("Bouquets"),)]
+		for x in self.services[1]:
+			self.bouquetlist.append((ServiceReference(x.sref).getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', ''),))
+		self["currentBouquets"].setList(self.bouquetlist)
 
 	def changed(self):
 		for x in self.onChangedEntry:
