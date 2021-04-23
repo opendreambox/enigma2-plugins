@@ -198,29 +198,29 @@ class YTDLLogger(object):
 
 class VideoUrlRequest(object):
 	VIDEO_FMT_PRIORITY_MAP_UHD = [
-		'315+172', #DASH-webm 2160p60
-		'315+171', #DASH-webm 2160p60
-		'313+172', #DASH-webm 2160p
-		'313+171', #DASH-webm 2160p
+		'315+141', #DASH-webm 2160p60
+		'315+140', #DASH-webm 2160p60
+		'313+141', #DASH-webm 2160p
+		'313+140', #DASH-webm 2160p
 	]
 	VIDEO_FMT_PRIORITY_MAP_WQHD = [
-		'308+172', #DASH-webm 1440p60
-		'308+171', #DASH-webm 1440p60
-		'271+172', #DASH-webm 1440p
-		'271+171', #DASH-webm 1440p
+		'308+141', #DASH-webm 1440p60
+		'308+140', #DASH-webm 1440p60
+		'271+141', #DASH-webm 1440p
+		'271+140', #DASH-webm 1440p
 	]
 	VIDEO_FMT_PRIORITY_MAP_FHD_WEBM =  [
-		'170+172' ,#DASH-webm 1080p
-		'170+171', #DASH-webm 1080p
-		'248+172', #DASH-webm 1080p
-		'248+171', #DASH-webm 1080p
+		'303+141', #DASH-webm 1080p60
+		'303+140', #DASH-webm 1080p60
+		'248+141', #DASH-webm 1080p
+		'248+140', #DASH-webm 1080p
 	]
 	VIDEO_FMT_PRIORITY_MAP_FHD = [
 		'96', #HLS 1080p
 		'37', #MP4 1080p
 		'46', #MP4 1080p
-		'137+171', #DASH-mp4 1080p
-		'137+172', #DASH-mp4 1080p
+		'137+140', #DASH-mp4 1080p
+		'137+141', #DASH-mp4 1080p
 	]
 	VIDEO_FMT_PRIORITY_MAP_HD = [
 		'95', #HLS 720p
