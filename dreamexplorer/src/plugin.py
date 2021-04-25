@@ -896,6 +896,8 @@ class BookmarkManager(Screen):
 		if fileExists("/etc/enigma2/DreamExplorer/bookmarks"):
 			with open("/etc/enigma2/DreamExplorer/bookmarks", 'r') as file:
 				self.bookmarks = file.read().splitlines()
+		else:
+			self.bookmarks = []
 		
 		self.updateBookmarks()
 		
