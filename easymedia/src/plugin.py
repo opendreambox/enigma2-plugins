@@ -514,8 +514,8 @@ def MPcallbackFunc(answer):
 			EMsession.open(MessageBox, text = _('No Music-Player installed!'), type = MessageBox.TYPE_ERROR)
 	elif answer == "FILES":
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/plugin.pyo") and (config.plugins.easyMedia.files.value == "dreamexplorer"):
-			from Plugins.Extensions.DreamExplorer.plugin import DreamExplorerII
-			EMsession.open(DreamExplorerII)
+			from Plugins.Extensions.DreamExplorer.plugin import DreamExplorer3
+			EMsession.open(DreamExplorer3)
 		elif fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Filebrowser/plugin.pyo") and (config.plugins.easyMedia.files.value == "filebrowser"):
 			from Plugins.Extensions.Filebrowser.plugin import FilebrowserScreen
 			EMsession.open(FilebrowserScreen)
