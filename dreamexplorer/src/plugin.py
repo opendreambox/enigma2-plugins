@@ -403,9 +403,8 @@ class DreamExplorer3(Screen):
 						SongList,SongIndex = self.searchMusic()
 						self.session.openWithCallback(self.restartService, MerlinMusicPlayer2Screen, SongList, SongIndex, False, self.currentService, None)
 					else:
-						fileRef = eServiceReference("4097:0:0:0:0:0:0:0:0:0:" + filenameWithPath)
-						m_dir = self["filelist"].getCurrentDirectory()
-						self.session.open(MusicExplorer, fileRef, m_dir, filenameWithPath)
+						fileList = [ x for x in self["filelist"].getFileList() if x[5] == 'music' ]
+						self.session.open(MusicExplorer, fileList, self["filelist"].getCurrentIndex()-1)
 
 				elif fileExtension in ["jpg","jpeg","jpe","png","bmp"]:
 					if self["filelist"].getCurrentIndex()!=0:
@@ -1102,49 +1101,45 @@ class MusicExplorer(MoviePlayer):
 			<convert type="ServiceName">Name</convert>
 		</widget>
 	</screen>"""
-	def __init__(self, session, service, MusicDir, theFile):
+	def __init__(self, session, fileList, index):
 		self.session = session
+		self.fileList = fileList
+		self.currentIndex = index
+		service = eServiceReference("4097:0:0:0:0:0:0:0:0:0:%s%s" %(fileList[index][1], fileList[index][0]))
 		MoviePlayer.__init__(self, session, service)
-		self.MusicDir = MusicDir
-		self.musicList = []
-		self.Mindex = 0
-		self.curFile = theFile
-		self.searchMusic()
+
 		self.onLayoutFinish.append(self.showMMI)
 
 	def showMMI(self):
 		call(['showiframe', '/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/icons/music.mvi'])
 
-	def searchMusic(self):
-		midx = 0
-		for root, dirs, files in walk(self.MusicDir):
-			for name in files:
-				name = name.lower()
-				if name.endswith(".mp3") or name.endswith(".mp2") or name.endswith(".ogg") or name.endswith(".wav") or name.endswith(".flac") or name.endswith(".m4a"):
-					self.musicList.append(name)
-					if self.curFile in name:
-						self.Mindex = midx
-					midx = midx + 1
 
 	def seekFwd(self):
-		if len(self.musicList)>2:
-			if self.Mindex<(len(self.musicList)-1):
-				self.Mindex = self.Mindex + 1
-				nextfile = self.MusicDir + str(self.musicList[self.Mindex])
-				nextRef = eServiceReference("4097:0:0:0:0:0:0:0:0:0:" + nextfile)
-				self.session.nav.playService(nextRef)
-			else:
-				self.session.open(MessageBox,_('No more playable files.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
+		if self.currentIndex < len(self.fileList)-1:
+			self.currentIndex += 1
+			ref = eServiceReference("4097:0:0:0:0:0:0:0:0:0:%s%s" %(self.fileList[self.currentIndex][1], self.fileList[self.currentIndex][0]))
+			self.session.nav.playService(ref)
+		else:
+			self.session.openWithCallback(boundFunction(self.getAnswer,0), MessageBox,_('This is the last song in the directory. Continue with first song?'), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3"))
 
 	def seekBack(self):
-		if len(self.musicList)>2:
-			if self.Mindex>0:
-				self.Mindex = self.Mindex - 1
-				nextfile = self.MusicDir + str(self.musicList[self.Mindex])
-				nextRef = eServiceReference("4097:0:0:0:0:0:0:0:0:0:" + nextfile)
-				self.session.nav.playService(nextRef)
-			else:
-				self.session.open(MessageBox,_('No more playable files.'), MessageBox.TYPE_INFO, windowTitle=_("Dream Explorer 3"))
+		if self.currentIndex > 0:
+			self.currentIndex -= 1
+			ref = eServiceReference("4097:0:0:0:0:0:0:0:0:0:%s%s" %(self.fileList[self.currentIndex][1], self.fileList[self.currentIndex][0]))
+			self.session.nav.playService(ref)
+		else:
+			self.session.openWithCallback(boundFunction(self.getAnswer,len(self.fileList)-1), MessageBox,_('This is the first song in the directory. Continue with last song?'), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3"))
+			
+	def playSong(self, index):
+		self.currentIndex = index
+		ref = eServiceReference("4097:0:0:0:0:0:0:0:0:0:%s%s" %(self.fileList[self.currentIndex][1], self.fileList[self.currentIndex][0]))
+		self.session.nav.playService(ref)		
+
+	def getAnswer(self, newIndex, answer):
+		if answer:
+			self.playSong(newIndex)
+		else:
+			self.leavePlayer()
 
 	def doEofInternal(self, playing):
 		if not self.execing:
