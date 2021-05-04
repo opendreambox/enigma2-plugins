@@ -1,10 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 '''
-$Id: nrzuname.py 1561 2020-10-12 13:32:07Z michael $
+$Id: nrzuname.py 1587 2021-04-23 10:19:26Z michael $
 $Author: michael $
-$Revision: 1561 $
-$Date: 2020-10-12 15:32:07 +0200 (Mon, 12 Oct 2020) $
+$Revision: 1587 $
+$Date: 2021-04-23 12:19:26 +0200 (Fri, 23 Apr 2021) $
 '''
 
 # C0111 (Missing docstring)
@@ -18,19 +18,20 @@ $Date: 2020-10-12 15:32:07 +0200 (Mon, 12 Oct 2020) $
 # W0110 deprecated-lambda
 # C0302 too-many-lines
 # C0410 multiple-imports
-# pylint: disable=C0111,C0103,C0301,W0603,W0403,C0302
+# pylint: disable=C0111,C0103,C0301,W0603,C0302
 
 from __future__ import print_function
-import re, sys, os
+import re, sys, os, six
 from xml.dom.minidom import parse
 from six import unichr
+from six.moves import html_entities
 
 try:
 	import logging
 	logger = logging.getLogger("FritzCall.nrzuname")
 	debug = logger.debug
 	info = logger.info
-	warn = logger.warn
+	warning = logger.warning
 	error = logger.error
 	exception = logger.exception
 
@@ -46,8 +47,6 @@ except ValueError:
 	def debug(message):
 		if debugVal:
 			print(message)
-
-import htmlentitydefs
 
 from twisted.web.client import getPage  # @UnresolvedImport
 from twisted.internet import reactor  # @UnresolvedImport
@@ -85,9 +84,9 @@ def html2unicode(in_html):
 		entitydict[x.group(1)] = x.group(2)
 	for key, name in entitydict.items():
 		try:
-			entitydict[key] = htmlentitydefs.name2codepoint[str(name)]
+			entitydict[key] = html_entities.name2codepoint[str(name)]
 		except KeyError:
-			warn("KeyError " + key + "/" + name)
+			warning("KeyError " + key + "/" + name)
 
 	htmlentitynumbermask = re.compile(r'(&#(\d{1,5}?);)')
 	entities = htmlentitynumbermask.finditer(in_html)
@@ -100,7 +99,7 @@ def html2unicode(in_html):
 			debug("replace %s with %s in %s", repr(key), repr(uml), repr(in_html[0:20] + '...'))
 			in_html = in_html.replace(key, uml)
 		except ValueError as e:
-			warn("html2utf8: ValueError " + repr(key) + ":" + repr(codepoint) + " (" + str(e) + ")")
+			warning("html2utf8: ValueError %s:%s (%s)", repr(key), repr(codepoint), str(e))
 	return in_html
 
 def normalizePhoneNumber(intNo):
@@ -250,7 +249,7 @@ class ReverseLookupAndNotifier(object):
 			# self.caller = _("UNKNOWN")
 			self.notifyAndReset()
 			return
-		info("Url to query: " + url)
+		info("Url to query: %s", url)
 		url = url.encode("UTF-8", "replace")
 		self.currentWebsite = website
 		getPage(url, agent="Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5").addCallback(self._gotPage).addErrback(self._gotError)
@@ -282,6 +281,7 @@ class ReverseLookupAndNotifier(object):
 				newitem = item.replace("  ", " ")
 			return newitem.strip()
 
+		page = six.ensure_text(page)
 		debug("")
 
 		#=======================================================================
@@ -291,17 +291,17 @@ class ReverseLookupAndNotifier(object):
 		# linkP.close()
 		#=======================================================================
 
-		found = re.match(r'.*http-equiv="Content-Type" content="(?:application/xhtml\+xml|text/html); charset=([^"]+)"', page, re.S)
-		found1 = re.match(r'.*charset="([^"]+)"', page, re.S)
-		if found:
-			debug("Charset: " + found.group(1))
-			page = page.replace("\xa0", " ").decode(found.group(1), "replace")
-		elif found1:
-			debug("Charset: " + found1.group(1))
-			page = page.replace("\xa0", " ").decode(found1.group(1), "replace")
-		else:
-			debug("Default Charset: iso-8859-1")
-			page = page.replace("\xa0", " ").decode("UTF-8", "replace")
+		# found = re.match(r'.*http-equiv="Content-Type" content="(?:application/xhtml\+xml|text/html); charset=([^"]+)"', page, re.S)
+		# found1 = re.match(r'.*charset="([^"]+)"', page, re.S)
+		#if found:
+		#	debug("Charset: %s", found.group(1))
+		#	page = six.ensure_text(page.replace("\xa0", " "), found.group(1), "replace")
+		#elif found1:
+		#	debug("Charset: %s", found1.group(1))
+		#	page = six.ensure_text(page.replace("\xa0", " "), found1.group(1), "replace")
+		#else:
+		#	debug("Default Charset: utf-8")
+		#	page = page.replace("\xa0", " ")
 
 		for entry in self.currentWebsite.getElementsByTagName("entry"):
 			#
@@ -375,7 +375,7 @@ class ReverseLookupAndNotifier(object):
 			if found:
 				debug("found for '''%s''': '''%s'''", "city", found.group(1))
 				item = cleanName(found.group(1))
-				info("city: " + item)
+				info("city: %s", item)
 				city = item.strip()
 
 			if not city:
@@ -387,7 +387,7 @@ class ReverseLookupAndNotifier(object):
 			if found and found.group(1):
 				debug("found for '''%s''': '''%s'''", "zipcode", found.group(1))
 				item = cleanName(found.group(1))
-				info("zipcode: " + item)
+				info("zipcode: %s", item)
 				zipcode = item.strip()
 
 			pat = ".*?" + self.getPattern(entry, "street")
@@ -396,7 +396,7 @@ class ReverseLookupAndNotifier(object):
 			if found and found.group(1):
 				debug("found for '''%s''': '''%s'''", "street", found.group(1))
 				item = cleanName(found.group(1))
-				info("street: " + item)
+				info("street: %s", item)
 				street = item.strip()
 				streetno = ''
 				found = re.match(r"^(.+) ([-\d]+)$", street, re.S)
@@ -411,7 +411,7 @@ class ReverseLookupAndNotifier(object):
 				# 		streetno = found.group(1)
 				#===============================================================
 
-			self.caller = "NA: %s;VN: %s;STR: %s;HNR: %s;PLZ: %s;ORT: %s" % (name, firstname, street, streetno, zipcode, city)
+			self.caller = six.ensure_text("NA: %s;VN: %s;STR: %s;HNR: %s;PLZ: %s;ORT: %s" % (name, firstname, street, streetno, zipcode, city))
 			info("Reverse lookup succeeded:\nName: %s", self.caller)
 
 			self.notifyAndReset()
@@ -438,21 +438,21 @@ class ReverseLookupAndNotifier(object):
 			return ''
 		else:
 			if len(pat1) > 1:
-				warn("Something strange: more than one %s for website %s", which, website.getAttribute("name"))
+				warning("Something strange: more than one %s for website %s", which, website.getAttribute("name"))
 			return pat1[0].childNodes[0].data
 
 	def notifyAndReset(self):
-		info("Number: " + self.number + "; Caller: " + self.caller)
-		# debug("1: " + repr(self.caller))
+		info("Number: %s; Caller: %s", self.number, self.caller)
+		# debug("1: %s", repr(self.caller))
 		if self.caller:
 			try:
-				debug("2: " + repr(self.caller))
+				# debug("2: %s", repr(self.caller))
 				self.caller = self.caller.encode(self.charset, 'replace')
-				debug("3: " + repr(self.caller))
+				# debug("3: %s", repr(self.caller))
 			except UnicodeDecodeError:
 				exception("cannot encode?!?!")
 			# self.caller = unicode(self.caller)
-			# debug("4: " + repr(self.caller))
+			# debug("4: %s", repr(self.caller))
 			self.outputFunction(self.number, self.caller)
 		else:
 			self.outputFunction(self.number, "")

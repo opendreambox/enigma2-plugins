@@ -30,15 +30,16 @@ Source: https://bitbucket.org/kbr/fritzconnection
 Author: Klaus Bremer
 Modified to use async communication, content level authentication and plain xml.etree.ElementTree: DrMichael
 """
-# pylint: disable=C0111,C0103,C0301,W0603,W0403,C0302,W0312
+# pylint: disable=C0111,C0103,C0301,W0603,C0302
 
 __version__ = '0.6'
 
-import logging, re, md5
-
-import xml.etree.ElementTree as ET
-from Components.config import config
+import logging, re, six
+from hashlib import md5
 from twisted.web.client import getPage
+import xml.etree.ElementTree as ET
+
+from Components.config import config
 
 USERAGENT = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
 
@@ -157,7 +158,6 @@ class FritzAction(object):
 		# self.debug("")
 		headers = self.header.copy()
 		headers['soapaction'] = '%s#%s' % (self.service_type, self.name)
-# 		headers['Authorization'] = "Digest " + md5Sid
 # 		self.debug("headers: " + repr(headers))
 		data = self.envelope.strip() % ( self.header_initchallenge_template % config.plugins.FritzCall.username.value,
 										self._body_builder(kwargs))
@@ -167,14 +167,18 @@ class FritzAction(object):
 			url = 'http://%s:%s%s' % (self.address, self.port, self.control_url)
 
 		# self.debug("url: " + url + "\n" + data)
-		getPage(url,
-			method = "POST",
-			agent = USERAGENT,
-			headers = headers,
-			postdata = data).addCallback(self._okExecute, callback, **kwargs).addErrback(self._errorExecute, callback)
+		newheaders = {}
+		for h in six.iterkeys(headers):
+			newheaders[six.ensure_binary(h)] = six.ensure_binary(headers[h])
+		getPage(six.ensure_binary(url),
+			method = six.ensure_binary("POST"),
+			agent = six.ensure_binary(USERAGENT),
+			headers = newheaders,
+			postdata = six.ensure_binary(data)).addCallback(self._okExecute, callback, **kwargs).addErrback(self._errorExecute, callback)
 
 	def _okExecute(self, content, callback, **kwargs):
 		# self.debug("")
+		content = six.ensure_text(content)
 		if self.logger.getEffectiveLevel() == logging.DEBUG:
 			linkP = open("/tmp/FritzCall_okExecute.xml", "w")
 			linkP.write(content)
@@ -183,10 +187,10 @@ class FritzAction(object):
 		if root.find(".//Nonce") != None and root.find(".//Realm") != None:
 			nonce = root.find(".//Nonce").text
 			realm = root.find(".//Realm").text
-			secret = md5.new(config.plugins.FritzCall.username.value + ":" +
+			secret = md5(six.ensure_binary(config.plugins.FritzCall.username.value + ":" +
 						realm + ":" +
-						self.password).hexdigest()
-			response = md5.new(secret + ":" + nonce).hexdigest()
+						self.password)).hexdigest()
+			response = md5(six.ensure_binary(secret + ":" + nonce)).hexdigest()
 			# self.debug("user %s, passwort %s", config.plugins.FritzCall.username.value, self.password)
 			header_clientauth = self.header_clientauth_template % (
 																nonce,
@@ -209,11 +213,14 @@ class FritzAction(object):
 			url = 'http://%s:%s%s' % (self.address, self.port, self.control_url)
 
 		# self.debug("url: " + url + "\n" + data)
-		getPage(url,
-			method = "POST",
-			agent = USERAGENT,
-			headers = headers,
-			postdata = data).addCallback(self.parse_response, callback).addErrback(self._errorExecute, callback)
+		newheaders = {}
+		for h in six.iterkeys(headers):
+			newheaders[six.ensure_binary(h)] = six.ensure_binary(headers[h])
+		getPage(six.ensure_binary(url),
+			method = six.ensure_binary("POST"),
+			agent = six.ensure_binary(USERAGENT),
+			headers = newheaders,
+			postdata = six.ensure_binary(data)).addCallback(self.parse_response, callback).addErrback(self._errorExecute, callback)
 
 	def _errorExecute(self, error, callback):
 		# text = _("FRITZ!Box - Error getting status: %s") % error.getErrorMessage()
@@ -229,6 +236,7 @@ class FritzAction(object):
 		TODO: boolean and signed integers data-types from tr64 responses
 		"""
 		# self.debug("")
+		response = six.ensure_text(response)
 		if self.logger.getEffectiveLevel() == logging.DEBUG:
 			linkP = open("/tmp/FritzCall_parse_response.xml", "w")
 			linkP.write(response)
@@ -239,10 +247,10 @@ class FritzAction(object):
 		errorDescription = root.find(".//{urn:dslforum-org:control-1-0}errorDescription")
 		# self.debug("errorCode: %s, errorDescription; %s", repr(errorCode), repr(errorDescription))
 		if errorCode is not None:
-			if errorDescription:
-				self.error("ErrorCode: %s, errorDescription: %s", repr(errorCode), repr(errorDescription))
+			if errorDescription is not None:
+				self.error("ErrorCode: %s, errorDescription: %s", repr(errorCode.text), repr(errorDescription.text))
 			else:
-				self.error("ErrorCode: %s, no errorDescription", repr(errorCode))
+				self.error("ErrorCode: %s, no errorDescription", repr(errorCode.text))
 		for argument in self.arguments.values():
 			# self.debug("Argument: " + argument.name)
 			try:
@@ -323,8 +331,8 @@ class FritzXmlParser(object):
 			else:
 				source = 'http://{0}:{1}/{2}'.format(address, port, filename)
 			self.debug("source: %s", source)
-			getPage(source,
- 				method = "GET",).addCallback(self._okInit).addErrback(self._errorInit)
+			getPage(six.ensure_binary(source),
+ 				method = six.ensure_binary("GET"),).addCallback(self._okInit).addErrback(self._errorInit)
 
 	def _okInit(self, source):
 		# self.debug("")
@@ -340,7 +348,7 @@ class FritzXmlParser(object):
 		self.info("Switching to http")
 		config.plugins.FritzCall.useHttps.value = False
 		config.plugins.FritzCall.useHttps.save()
-		source = 'http://{0}:{1}/{2}'.format(address, port, filename)
+		source = 'http://{0}:{1}/{2}'.format(address, port, filename)  # @UndefinedVariable
 		self.debug("source: %s", source)
 		getPage(source,
 				method = "GET",).addCallback(self._okInit).addErrback(self._errorInit)
@@ -571,12 +579,12 @@ class FritzConnection(object):
 		# self.debug("")
 		try:
 			service = self.services[service_name]
-		except KeyError:
-			raise ServiceError('Unknown Service: ' + service_name)
+		except KeyError as keyError:
+			six.raise_from(ServiceError('Unknown Service: ' + service_name), keyError)
 		try:
 			action = service.actions[action_name]
-		except KeyError:
-			raise ActionError('Unknown Action: ' + action_name)
+		except KeyError as keyError:
+			six.raise_from(ActionError('Unknown Service: ' + service_name), keyError)
 		return action
 
 	def get_action_arguments(self, service_name, action_name):
