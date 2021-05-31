@@ -5,6 +5,7 @@ from Tools.FuzzyDate import FuzzyTime
 from ServiceReference import ServiceReference
 from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixmapAlphaTest
 from Components.config import config
+from Tools.Directories import fileExists
 from Tools.LoadPixmap import LoadPixmap
 from Components.UsageConfig import preferredPath, defaultMoviePath
 from enigma import eEnv
@@ -374,7 +375,7 @@ class MovieList(GUIComponent):
 				continue
 			txt = info.getName(serviceref)
 			if serviceref.flags & eServiceReference.mustDescent:
-				files = glob(os.path.join(txt, "*"))
+				files = [ f for f in glob(os.path.join(txt, "*")) if fileExists(f) ]
 				# skip empty directories
 				if not files:
 					continue
