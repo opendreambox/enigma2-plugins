@@ -1191,8 +1191,6 @@ class FolderSelection(Screen):
 			"back": self.exit,
 			"green": self.moveFile,
 			"red": self.copyFile,
-			"yellow": self.createSymlink,
-			"blue": self.setSymlinkName,
 		}, -1)
 
 		self["TargetDir"] = DreamExplorerFileList(list_type = DreamExplorerFileList.LIST_TYPE_NODETAILS, directory = item, showDirectories = True, showFiles = showFiles, matchingPattern = "^.*\.*", showDetails=False)
@@ -1255,9 +1253,10 @@ class FolderSelection(Screen):
 	def setSymlinkName(self):
 		self.session.openWithCallback(self.callbackSetSymlinkName, InputBox, title=_("Set symlink name:"), windowTitle=_("Dream Explorer 3"), text=self.linkname)
 		
-	def callbackSetSymlinkName(sefl, answer):
+	def callbackSetSymlinkName(self, answer):
 		if answer:
 			self.linkname = answer
+			self.setInfoText()
 
 class SystemdViewer(Screen):
 	if getDesktop(0).size().width()>=1920:
