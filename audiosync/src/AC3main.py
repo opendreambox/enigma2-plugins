@@ -59,6 +59,7 @@ class AC3LipSync(Screen, HelpableScreen, MovableScreen):
         #Service Information
         self["ServiceInfoLabel"] = Label(_("Channel audio:"))
         self["ServiceInfo"] = Label()
+        
         self.setChannelInfoText()
 
         # Buttons
@@ -226,11 +227,12 @@ class AC3LipSync(Screen, HelpableScreen, MovableScreen):
         self["AudioSlider"].setText(_("%i ms")%iCurDelay)
 
     def setChannelInfoText(self):
-        sActiveAudio = str(self.AC3delay.selectedAudioInfo[0])
-        sBitstreamDelay = _("%i ms") %self.AC3delay.systemDelay[AC3]
-        sPCMDelay = _("%i ms") %self.AC3delay.systemDelay[PCM]
+    	if self.AC3delay.selectedAudioInfo is not None:
+            sActiveAudio = str(self.AC3delay.selectedAudioInfo[0])
+            sBitstreamDelay = _("%i ms") %self.AC3delay.systemDelay[AC3]
+            sPCMDelay = _("%i ms") %self.AC3delay.systemDelay[PCM]
 
-        self["ServiceInfo"].setText(sActiveAudio)
+            self["ServiceInfo"].setText(sActiveAudio)
             
 class AC3SetCustomValue:
     def __init__(self, session, iDelay, keyStep):
