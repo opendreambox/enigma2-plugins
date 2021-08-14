@@ -3,6 +3,7 @@ from Plugins.Plugin import PluginDescriptor
 from Screens.MessageBox import MessageBox
 import AC3main
 import AC3setup
+from AC3delay import AC3delay
 
 config.plugins.AC3LipSync = ConfigSubsection()
 config.plugins.AC3LipSync.outerBounds = ConfigInteger(default = 1000, limits = (-10000,10000))
@@ -27,7 +28,11 @@ def setup(session, **kwargs):
 
 def audioMenu(session, **kwargs):
 #    reload(AC3setup)
-    session.open(AC3main.AC3LipSync, plugin_path)
+    ac3delay = AC3delay()
+    if ac3delay.selectedAudioInfo is not None:
+        session.open(AC3main.AC3LipSync, plugin_path)
+    else:
+        session.open(MessageBox, _("No audio track available (yet). Please try again once an audio track is available."), MessageBox.TYPE_ERROR, timeout=5)
 
 def Plugins(path,**kwargs):
     global plugin_path

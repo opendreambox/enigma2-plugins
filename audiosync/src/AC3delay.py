@@ -17,6 +17,8 @@ class AC3delay:
 
         # Current audio- delay
         self.systemDelay = {}
+        
+        self.selectedAudioInfo = None
 
         self.getAudioInformation()
 
@@ -186,6 +188,7 @@ class AC3delay:
                     self.selectedAudioInfo = (description, x)
             tlist.sort(key=lambda x: x[0])
 
+            
             self.audioTrackList = tlist
         for sAudio in AC3PCM:
             self.systemDelay[sAudio]=self.getSystemDelay(sAudio)
