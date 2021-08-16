@@ -176,7 +176,7 @@ class Cec(object):
 
 	def powerOn(self):
 		Log.i(" ")
-		if not config.cec.sendpower.value:
+		if (self.session and self.session.shutdown) or not config.cec.sendpower.value:
 			return
 		self.setPowerState(eCec.POWER_STATE_ON)
 		self.oneTouchPlay()
