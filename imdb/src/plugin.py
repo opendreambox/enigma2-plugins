@@ -302,7 +302,7 @@ class IMDB(Screen):
 
 		self.genreblockmask = re.compile('<li.*?storyline-genres.*?><span.*?>Genres?</span>.*?<div.*?><ul.*?>(.*?)</ul>', re.S)
 		self.ratingmask = re.compile('<span.*?AggregateRatingButton__RatingScore.*?>(?P<rating>.*?)</span>.*?<span.*?AggregateRatingButton__TotalRatingAmount.*?>(?P<ratingcount>.*?)</div', re.S)
-		self.castmask = re.compile('<a.*?StyledComponents__ActorName.*?>(?P<actor>.*?)</a>.*?<div.*?<ul.*?>(?P<character>.*?)</ul>(?:.*?<span><span.*?>(?P<episodes>.*?)</span></span>)?', re.S)
+		self.castmask = re.compile('<a.*?StyledComponents__ActorName.*?>(?P<actor>.*?)</a>.*?StyledComponents__CharacterNameWithoutAs.*?>(?P<character>.*?)</span>(?:.*?<span><span.*?>(?P<episodes>.*?)</span></span>)?', re.S)
 		self.postermask = re.compile('<div.*?ipc-media--poster.*?<img.*?ipc-image.*?src="(http.*?)"', re.S)
 		self.storylinemask = re.compile('<section.*?<div.*?<div.*?<hgroup.*?<h3.*?>(?P<g_storyline>Storyline)</h3>.*?<div.*?<div.*?<div.*?<div.*?>(?P<storyline>.+?)<span', re.S)
 
