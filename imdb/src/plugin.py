@@ -145,13 +145,13 @@ class IMDB(Screen):
     		</widget>
 		<widget font="Regular;38" name="titlelabel" position="20,90" size="1780,45" foregroundColor="yellow"/>
 		<widget enableWrapAround="1" name="menu" position="20,150" scrollbarMode="showOnDemand" size="1760,720" />
-		<widget font="Regular;28" name="extralabel" position="20,180" size="1760,750" />
+		<widget font="Regular;30" name="extralabel" position="20,150" size="1760,780" />
 		<widget font="Regular;30" halign="left" name="ratinglabel" position="370,150" size="1000,40" foregroundColor="yellow"/>
 		<widget name="starsbg" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_empty.svg" position="30,150" size="300,30" />
 		<widget name="stars" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_filled.svg" position="30,150" size="300,30" transparent="1" />
 		<widget name="poster" position="30,200" size="300,449" />
 		<widget font="Regular;30" name="detailslabel" position="370,210" size="750,400" />
-		<widget font="Regular;30" name="castlabel" position="1180,210" size="600,400" />
+		<widget font="Regular;30" name="castlabel" position="1160,210" size="620,400" />
 		<widget font="Regular;30" name="storylinelabel" position="20,660" size="1760,210" />
 		<widget name="statusbar" halign="right" position="370,885" size="1400,35" font="Regular;30" foregroundColor="#b3b3b9" />
 		</screen>"""
@@ -175,13 +175,13 @@ class IMDB(Screen):
 	    	<eLabel position="10,50" size="1180,1" backgroundColor="grey"/>
 		<widget name="titlelabel" position="10,55" size="1180,30" valign="center" font="Regular;24" foregroundColor="yellow"/>
 		<widget name="menu" position="10,100" size="1180,480" zPosition="3" scrollbarMode="showOnDemand" enableWrapAround="1" />
-		<widget name="extralabel" position="10,100" size="1180,500" font="Regular;22" />
+		<widget name="extralabel" position="10,90" size="1180,510" font="Regular;20" />
 		<widget name="ratinglabel" position="230,92" size="800,23" font="Regular;19" foregroundColor="yellow"/>
 		<widget name="starsbg" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_empty.svg" position="10,90" size="210,21"/>
 		<widget name="stars" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_filled.svg" position="10,90" size="210,21" transparent="1" />
 		<widget name="poster" position="22,120" size="185,278"/>
-		<widget name="detailslabel" position="240,130" size="450,270" font="Regular;20" />
-		<widget name="castlabel" position="720,130" size="470,270" font="Regular;20" />
+		<widget name="detailslabel" position="230,130" size="450,270" font="Regular;20" />
+		<widget name="castlabel" position="710,130" size="470,280" font="Regular;20" />
 		<widget name="storylinelabel" position="20,410" size="1160,170" font="Regular;20" />
 		<widget name="statusbar" position="10,580" size="1180,25" halign="right" font="Regular;19" foregroundColor="#b3b3b9" />
 		</screen>"""
@@ -565,7 +565,7 @@ class IMDB(Screen):
 				pos = self.inhtml.find("<table class=\"findList\">")
 				pos2 = self.inhtml.find("</table>",pos)
 				findlist = self.inhtml[pos:pos2]
-				searchresultmask = re.compile('<tr class=\"findResult (?:odd|even)\">.*?<td class=\"result_text\"> <a href=\"/title/(tt\d{7,7})/.*?\"\s?>(.*?)</a>.*?</td>', re.S)
+				searchresultmask = re.compile('<tr class=\"findResult (?:odd|even)\">.*?<td class=\"result_text\"> <a href=\"/title/(tt\d{7,8})/.*?\"\s?>(.*?)</a>.*?</td>', re.S)
 				searchresults = searchresultmask.finditer(findlist)
 				self.resultlist = [(self.htmltags.sub('',x.group(2)), x.group(1)) for x in searchresults]
 				Len = len(self.resultlist)
@@ -640,7 +640,7 @@ class IMDB(Screen):
 							txt = ', '.join(re.split('\|+', self.htmltags.sub('|', self.generalinfos.group(category).replace('</a><span class="ipc-metadata-list-item__list-content-item--subText">', ' ')).strip('|').replace("\n", ' ')))
 						else:
 							txt = ', '.join(re.split('\|+', self.htmltags.sub('|', self.generalinfos.group(category)).strip('|').replace("\n", ' ')))
-						Detailstext += addnewline + self.generalinfos.group('g_' + category).replace('seasons', 'Seasons') + ": " + txt
+						Detailstext += addnewline + self.generalinfos.group('g_' + category).replace('seasons', _('Seasons:')) + " " + txt
 						addnewline = "\n"
 				except IndexError:
 					pass
@@ -673,20 +673,20 @@ class IMDB(Screen):
 				Casttext = ""
 				i = 0
 				for x in castresult:
-					Casttext += "\n" + ' ' + self.htmltags.sub('', x.group('actor'))
+					Casttext += "\n" + self.htmltags.sub('', x.group('actor'))
 					if x.group('character'):
 						chartext = self.htmltags.sub(' ', x.group('character').replace('/ ...', '')).replace('\n', ' ').replace(self.NBSP, ' ')
 						Casttext += _(" as ") + ' '.join(chartext.split()).replace('…', '')
 						try:
 							if config.plugins.imdb.showepisodeinfo.value and x.group('episodes'):
-								Casttext += '\n     [' + self.htmltags.sub('', re.sub(r"[0-9]+ eps", "", x.group('episodes')).replace(' • ', ', ')).strip() + ']'
+								Casttext += '\n[' + self.htmltags.sub('', re.sub(r"[0-9]+ eps", "", x.group('episodes')).replace(' • ', ', ')).strip() + ']'
 						except IndexError:
 							pass
 					i += 1
 					if i >= 16:
 						break
 				if Casttext:
-					Casttext = _("Cast: ") + Casttext
+					Casttext = _("Cast:") + " " + Casttext
 				else:
 					Casttext = _("No cast list found in the database.")
 				self["castlabel"].setText(Casttext)
@@ -719,13 +719,11 @@ class IMDB(Screen):
 				awardslist = [' '.join(x.group('awards').split()) for x in awardsresult]
 				if awardslist:
 					awards = decodeHtml(self.allhtmltags.sub(' | ', ''.join(awardslist).replace('<b>', '').strip()))
-					Extratext = _("Extra Info") + "\n\n" + awards + "\n"
+					Extratext = awards + "\n"
 
 			extrainfos = self.extrainfomask.search(self.inhtml)
 
 			if extrainfos:
-				if not Extratext:
-					Extratext = _("Extra Info") + "\n"
 				addspace = {"outline", "synopsis", "tagline", "cert", "locations", "company", "trivia", "goofs", "quotes", "connections"}
 				categories = ("outline", "synopsis", "tagline", "keywords", "cert", "runtime", "language", "color", "aspect", "sound", "locations", "company", "trivia", "goofs", "quotes", "connections")
 				for category in categories:
@@ -758,7 +756,7 @@ class IMDB(Screen):
 					pass
 
 			if Extratext:
-				self["extralabel"].setText(Extratext)
+				self["extralabel"].setText(Extratext.strip('\n'))
 				self["extralabel"].hide()
 				self["key_blue"].setText(_("Extra Info"))
 			else:
