@@ -565,9 +565,9 @@ class IMDB(Screen):
 				pos = self.inhtml.find("<table class=\"findList\">")
 				pos2 = self.inhtml.find("</table>",pos)
 				findlist = self.inhtml[pos:pos2]
-				searchresultmask = re.compile('<tr class=\"findResult (?:odd|even)\">.*?<td class=\"result_text\"> <a href=\"/title/(tt\d{7,8})/.*?\"\s?>(.*?)</a>.*?</td>', re.S)
+				searchresultmask = re.compile('<tr class=\"findResult (?:odd|even)\">.*?<td class=\"result_text\"> <a href=\"/title/(tt\d{7,8})/.*?\"\s?>(.*?)</td>', re.S)
 				searchresults = searchresultmask.finditer(findlist)
-				self.resultlist = [(self.htmltags.sub('',x.group(2)), x.group(1)) for x in searchresults]
+				self.resultlist = [(self.htmltags.sub('', x.group(2)), x.group(1)) for x in searchresults]
 				Len = len(self.resultlist)
 				self["menu"].l.setList(self.resultlist)
 				if Len == 1:
