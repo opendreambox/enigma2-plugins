@@ -691,7 +691,7 @@ class IMDB(Screen):
 						Casttext += _(" as ") + ' '.join(chartext.split()).replace('…', '')
 						try:
 							if config.plugins.imdb.showepisodeinfo.value and x.group('episodes'):
-								Casttext += '\n(' + self.htmltags.sub('', re.sub(r"[0-9]+ eps", "", x.group('episodes')).replace(' • ', ', ')).strip() + ')'
+								Casttext += '\n(' + self.htmltags.sub('', re.sub(r"[0-9]+ eps", "", x.group('episodes').replace('episodes', _("episodes"))).replace(' • ', ', ')).strip() + ')'
 						except IndexError:
 							pass
 					i += 1
