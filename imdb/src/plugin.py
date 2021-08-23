@@ -19,11 +19,8 @@ from Components.ProgressBar import ProgressBar
 from Components.Sources.StaticText import StaticText
 from Components.Sources.Boolean import Boolean
 from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN_IMAGE
-import os, re, random, string
-try:
-	from urllib import quote_plus
-except ImportError as ie:
-	from urllib.parse import quote_plus
+import os, re, random, string, six
+from six.moves.urllib.parse import quote_plus
 
 from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigYesNo, ConfigText, ConfigSelection
 from Components.ConfigList import ConfigListScreen
@@ -34,23 +31,11 @@ from HTMLParser import HTMLParser
 
 try:
 	import htmlentitydefs
-	from urllib import quote_plus
-	iteritems = lambda d: d.iteritems()
 except ImportError as ie:
 	from html import entities as htmlentitydefs
-	from urllib.parse import quote_plus
-	iteritems = lambda d: d.items()
 	unichr = chr
 
 sz_w = getDesktop(0).size().width()
-
-def decodeHtml(text):
-	h = HTMLParser()
-	try:
-		text = h.unescape(text).encode('utf-8')
-	except:
-		text = text.decode('latin1').encode('utf-8')
-	return text
 
 config.plugins.imdb = ConfigSubsection()
 config.plugins.imdb.showinplugins = ConfigYesNo(default = True)
@@ -62,9 +47,12 @@ config.plugins.imdb.language = ConfigSelection(default = None, choices = [(None,
 imdb_headers = {}
 agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.167 Safari/537.36'
 
-def quoteEventName(eventName):
-	eventName = eventName.replace(' ','+')
-	return quote_plus(eventName, safe='+')
+def quoteEventName(eventName, safe="/()" + ''.join(map(chr, range(192, 255)))):
+	try:
+		text = eventName.decode('utf8').replace(u'\x86', u'').replace(u'\x87', u'').encode('utf8')
+	except:
+		text = eventName
+	return quote_plus(text, safe="+")
 
 class IMDBChannelSelection(SimpleChannelSelection):
 	def __init__(self, session):
@@ -171,7 +159,7 @@ class IMDB(Screen):
 	    	</widget>
 	    	<eLabel position="10,50" size="1180,1" backgroundColor="grey"/>
 		<widget name="titlelabel" position="20,55" size="1180,30" valign="center" font="Regular;24" foregroundColor="yellow"/>
-		<widget name="menu" position="20,100" size="1180,480" zPosition="3" scrollbarMode="showOnDemand" enableWrapAround="1" />
+		<widget name="menu" position="20,90" size="1160,480" zPosition="3" scrollbarMode="showOnDemand" enableWrapAround="1" />
 		<widget name="extralabel" position="20,90" size="1160,490" font="Regular;20" />
 		<widget name="ratinglabel" position="225,92" size="800,23" font="Regular;20" foregroundColor="yellow"/>
 		<widget name="starsbg" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IMDb/starsbar_empty.svg" position="20,90" size="185,21"/>
@@ -269,6 +257,7 @@ class IMDB(Screen):
 	def dictionary_init(self):
 		self.generalinfomask = re.compile(
 		'<h1.*?class="TitleHeader__TitleText.*?>(?P<title>.*?)</h1>*'
+		'(?:.*?>(?P<g_episodes>Episodes)<span.*?>(?P<episodes>.*?)</span>)?'
 		'(?:.*?class="OriginalTitle__OriginalTitleText.*?>(?P<g_originaltitle>.*?):\s.*?(?P<originaltitle>.*?)</div)?'
 		'(?:.*?<label for="browse-episodes-season".*?>.*?(?P<seasons>\d+)\s(?P<g_seasons>seasons?)</label>)?'
 		'(?:.*?<span.*?>(?P<g_director>Directors?)(?:</span>|</a>).*?<div.*?<ul.*?>(?P<director>.*?)</ul>)?'
@@ -520,45 +509,47 @@ class IMDB(Screen):
 			self["statusbar"].setText(_("Couldn't get Eventname"))
 
 	def html2utf8(self, in_html):
-		in_html = (re.subn(r'<(script).*?</\1>(?s)', '', in_html)[0])
-		in_html = (re.subn(r'<(style).*?</\1>(?s)', '', in_html)[0])
-		entitydict = {}
-		entities = re.finditer('&([:_A-Za-z][:_\-.A-Za-z"0-9]*);', in_html)
-		for x in entities:
-			key = x.group(0)
-			if key not in entitydict:
-				entitydict[key] = htmlentitydefs.name2codepoint[x.group(1)]
-		entities = re.finditer('&#x([0-9A-Fa-f]+);', in_html)
-		for x in entities:
-			key = x.group(0)
-			if key not in entitydict:
-				entitydict[key] = "%d" % int(x.group(1), 16)
-		entities = re.finditer('&#(\d+);', in_html)
-		for x in entities:
-			key = x.group(0)
-			if key not in entitydict:
-				entitydict[key] = x.group(1)
-		if 'charset="utf-8"' in in_html or 'charset=utf-8' in in_html or 'charSet="utf-8"' in in_html or 'charSet=utf-8' in in_html:
-			for key, codepoint in iteritems(entitydict):
-				in_html = in_html.replace(key, unichr(int(codepoint)).encode('utf8'))
-			self.inhtml = in_html
-		else:
-			for key, codepoint in iteritems(entitydict):
-				in_html = in_html.replace(key, unichr(int(codepoint)).encode('latin-1', 'ignore'))
-			self.inhtml = in_html.decode('latin-1').encode('utf8')
-		start = self.inhtml.find('</script><nav id="imdbHeader"')
+		utf8 = ('charSet="utf-8"' in in_html or 'charset="utf-8"' in in_html or 'charSet=utf-8' in in_html or 'charset=utf-8' in in_html)
+		start = in_html.find('<nav id="imdbHeader"')
 		if start == -1:
 			start = 0
-		end = self.inhtml.find('<div id="taboola_wrapper">')
+		end = in_html.find('title-news-header')
 		if end == -1:
-			end = len(self.inhtml)
-		self.inhtml = self.inhtml[start:end]
+			end = len(in_html)
+		in_html = in_html[start:end]
+		in_html = re.sub(r'(?s)<(script|style|svg).*?</\1>', '', in_html)
+		entitydict = {}
+		entities = re.finditer(r'&(?:([A-Za-z0-9]+)|#x([0-9A-Fa-f]+)|#([0-9]+));', in_html)
+		for x in entities:
+			key = x.group(0)
+			if key not in entitydict:
+				if x.group(1):
+					if x.group(1) in htmlentitydefs.name2codepoint:
+						entitydict[key] = htmlentitydefs.name2codepoint[x.group(1)]
+				elif x.group(2):
+					entitydict[key] = str(int(x.group(2), 16))
+				else:
+					entitydict[key] = x.group(3)
+		if utf8:
+			for key, codepoint in six.iteritems(entitydict):
+				cp = six.unichr(int(codepoint))
+				if six.PY2:
+					cp = cp.encode('utf8')
+				in_html = in_html.replace(key, cp)
+			self.inhtml = in_html
+		else:
+			for key, codepoint in six.iteritems(entitydict):
+				cp = six.unichr(int(codepoint))
+				if six.PY2:
+					cp = cp.encode('latin-1', 'ignore')
+				in_html = in_html.replace(key, cp)
+			if six.PY2:
+				self.inhtml = in_html.decode('latin-1').encode('utf8')
 
 	def IMDBquery(self, data):
 		self["statusbar"].setText(_("IMDb Download completed"))
 		self.html2utf8(data)
 		self.generalinfos = self.generalinfomask.search(self.inhtml)
-
 		if self.generalinfos:
 			self.IMDBparse()
 		else:
@@ -617,10 +608,10 @@ class IMDB(Screen):
 		if self.generalinfos:
 			self["key_yellow"].setText(_("Details"))
 			self["statusbar"].setText(_("IMDb Details parsed"))
-			Titeltext = self.generalinfos.group("title").replace(self.NBSP, ' ').strip()
-			if len(Titeltext) > 57:
-				Titeltext = Titeltext[0:54] + "..."
-			self.title_setText(decodeHtml(Titeltext))
+			Titletext = self.generalinfos.group("title").replace(self.NBSP, ' ').strip()
+			if len(Titletext) > 57:
+				Titletext = Titletext[0:54] + "..."
+			self.title_setText(Titletext)
 
 			Detailstext = ""
 			addnewline = ""
@@ -633,8 +624,8 @@ class IMDB(Screen):
 					Detailstext += addnewline + _(genreblock.group('g_genres')+":") + " " + genres.strip(', ').strip(',')
 					addnewline = "\n"
 
-			_("Director:"), _("Directors:"), _("Creator:"), _("Creators:"), _("Writer:"), _("Writers:"), _("Runtime:"), _("Release date:"), _("Country of origin:"), _("Countries of origin:"), _("Original title:"), _("Also known as:") # translate tags
-			for category in ("director", "creator", "writer", "seasons", "runtime", "premiere", "country", "originaltitle", "alternativ"):
+			_("Director:"), _("Directors:"), _("Creator:"), _("Creators:"), _("Writer:"), _("Writers:"), _('Episodes:'), _("Runtime:"), _("Release date:"), _("Country of origin:"), _("Countries of origin:"), _("Original title:"), _("Also known as:") # translate tags
+			for category in ("director", "creator", "writer", "seasons", "episodes", "runtime", "premiere", "country", "originaltitle", "alternativ"):
 				try:
 
 					if self.generalinfos.group(category):
@@ -683,7 +674,6 @@ class IMDB(Screen):
 			castresult = self.castmask.finditer(self.inhtml)
 			if castresult:
 				Casttext = ""
-				i = 0
 				for x in castresult:
 					Casttext += "\n" + self.htmltags.sub('', x.group('actor'))
 					if x.group('character'):
@@ -694,9 +684,6 @@ class IMDB(Screen):
 								Casttext += '\n(' + self.htmltags.sub('', re.sub(r"[0-9]+ eps", "", x.group('episodes').replace('episodes', _("episodes"))).replace(' • ', ', ')).strip() + ')'
 						except IndexError:
 							pass
-					i += 1
-					if i >= 16:
-						break
 				if Casttext:
 					Casttext = _("Cast:") + " " + Casttext
 				else:
@@ -715,7 +702,7 @@ class IMDB(Screen):
 				if Storyline == _(storylineresult.group('g_storyline')+":") + "\n":
 					self["storylinelabel"].hide()
 				else:
-					self["storylinelabel"].setText(decodeHtml(str(Storyline)))
+					self["storylinelabel"].setText(Storyline)
 
 			posterurl = self.postermask.search(self.inhtml)
 			if posterurl and posterurl.group(1).find("jpg") > 0:
@@ -745,7 +732,7 @@ class IMDB(Screen):
 							else:
 								Extratext += "\n" + _(extrainfos.group('g_' + category)+":")
 							txt = ', '.join(re.split('\|+', self.htmltags.sub('|', extrainfos.group(category).replace("\n", ' ').replace("<br>", '\n').replace("<br/>", '\n').replace('<br />', '\n')).strip('|').replace(' |' + self.NBSP, '').replace(self.NBSP, ' ')))
-							Extratext += sep + decodeHtml(txt) + "\n"
+							Extratext += sep + txt + "\n"
 					except IndexError:
 						pass
 
@@ -760,7 +747,7 @@ class IMDB(Screen):
 			if awardsresult:
 				awardslist = [' '.join(x.group('awards').split()) for x in awardsresult]
 				if awardslist:
-					awards = decodeHtml(self.allhtmltags.sub(' | ', ''.join(awardslist).replace('<b>', '').replace('Awards</a>', '').strip()).strip(' | '))
+					awards = self.allhtmltags.sub(', ', ''.join(awardslist).replace('<b>', '').replace('Awards</a>', '').strip()).strip(', ')
 					Extratext += "\n" + _("Awards:") + " " + awards + "\n"
 
 			boxofficeresult = self.boxofficemask.search(self.inhtml)
@@ -783,7 +770,7 @@ class IMDB(Screen):
 								txt = self.htmltags.sub('', txt).strip(', ').strip()
 							else:
 								txt = ', '.join(re.split('\|+', self.htmltags.sub('|', extrainfos.group(category).replace("\n", ' ').replace("<br>", '\n').replace("<br/>", '\n').replace('<br />', '\n')).strip('|').replace(' |' + self.NBSP, '').replace(self.NBSP, ' ')))
-							Extratext += sep + decodeHtml(txt) + "\n"
+							Extratext += sep + txt + "\n"
 					except IndexError:
 						pass
 				try:
