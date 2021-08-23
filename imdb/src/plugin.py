@@ -296,12 +296,12 @@ class IMDB(Screen):
 		'(?:.*?<a.*?>(?P<g_company>Production compan.*?)</a>.*?<div.*?<ul.*?>(?P<company>.*?)</ul>)?'
 		'(?:.*?<span.*?>(?P<g_color>Color)</span>.*?<div.*?<ul.*?>(?P<color>.*?)</ul>)?'
 		'(?:.*?<span.*?>(?P<g_sound>Sound mix)</span>.*?<div.*?<ul.*?>(?P<sound>.*?)</ul>)?'
-		'(?:.*?<span.*?>(?P<g_aspect>Aspect ratio)</span>.*?<div.*?<ul.*?<li.*?<span.*?>(?P<aspect>.*?)</span>)?', re.S)
+		'(?:.*?<span.*?>(?P<g_aspect>Aspect ratio)</span>.*?<div.*?<ul.*?<li.*?<span.*?>(?P<aspect>.*?)</div>)?', re.S)
 
 		self.awardsmask = re.compile('<li.*?data-testid="award_information".*?><a.*?>(?P<awards>.+?)</span></li>', re.S)
 		self.keywordsmask = re.compile('data-testid="storyline-plot-keywords">(?P<keywords>.*?)</div>', re.S)
 		self.boxofficemask = re.compile('<h3.*?>(?P<g_boxoffice>Box office)</h3.*?<div.*?list-item__label">Budget</span>.*?list-content-item">(?P<boxofficebudget>.*?)</span>.*?list-content-item">(?P<boxofficegrossuscanada>.*?)</span>.*?list-content-item">(?P<boxofficeopening>.*?)</span>.*?list-content-item">(?P<boxofficeopeningdate>.*?)</span>.*?list-content-item">(?P<boxofficegrossworld>.*?)</span>', re.S)
-		self.genreblockmask = re.compile('<li.*?storyline-genres.*?><span.*?>Genres?</span>.*?<div.*?><ul.*?>(.*?)</ul>', re.S)
+		self.genreblockmask = re.compile('<li.*?storyline-genres.*?><span.*?>(?P<g_genres>Genres?)</span>.*?<div.*?><ul.*?>(?P<genres>.*?)</ul>', re.S)
 		self.ratingmask = re.compile('<span.*?AggregateRatingButton__RatingScore.*?>(?P<rating>.*?)</span>.*?<span.*?AggregateRatingButton__TotalRatingAmount.*?>(?P<ratingcount>.*?)</div', re.S)
 		self.castmask = re.compile('<a.*?StyledComponents__ActorName.*?>(?P<actor>.*?)</a>.*?StyledComponents__CharacterNameWithoutAs.*?>(?P<character>.*?)</span>(?:.*?<span><span.*?>(?P<episodes>.*?)</span></span>)?', re.S)
 		self.postermask = re.compile('<div.*?ipc-media--poster.*?<img.*?ipc-image.*?src="(http.*?)"', re.S)
@@ -625,19 +625,33 @@ class IMDB(Screen):
 			Detailstext = ""
 			addnewline = ""
 
+			_("Genre:"), _("Genres:") # translate tags
 			genreblock = self.genreblockmask.search(self.inhtml)
 			if genreblock:
-				genres = ', '.join(re.split('\|+', self.htmltags.sub('|', genreblock.group(1))))
+				genres = ', '.join(re.split('\|+', self.htmltags.sub('|', genreblock.group("genres"))))
 				if genres:
-					Detailstext += addnewline + _("Genre:") + " " + genres.strip(', ').strip(',')
+					Detailstext += addnewline + _(genreblock.group('g_genres')+":") + " " + genres.strip(', ').strip(',')
 					addnewline = "\n"
 
-			_("Director:"), _("Directors:"), _("Creator:"), _("Creators:"), _("Writer:"), _("Writers:"), _("Runtime:"), _("Release date:"), _("Country of origin:"), _("Original title:"), _("Also known as:") # translate tags
+			_("Director:"), _("Directors:"), _("Creator:"), _("Creators:"), _("Writer:"), _("Writers:"), _("Runtime:"), _("Release date:"), _("Country of origin:"), _("Countries of origin:"), _("Original title:"), _("Also known as:") # translate tags
 			for category in ("director", "creator", "writer", "seasons", "runtime", "premiere", "country", "originaltitle", "alternativ"):
 				try:
 
 					if self.generalinfos.group(category):
-						if category == 'seasons':
+						if category == 'runtime':
+							runtime = re.findall('(?:(\d+)h|)\s{0,1}(?:(\d+)min|)', self.htmltags.sub('', self.generalinfos.group(category)), re.S)
+							if runtime:
+								if runtime[0][0] and runtime[0][1]:
+									runtime = str(60 * int(runtime[0][0]) + int(runtime[0][1]))
+									txt = runtime + " min"
+								elif runtime[0][0]:
+									runtime = str(60 * int(runtime[0][0]))
+									txt = runtime + " min"
+								elif runtime[0][1]:
+									txt = runtime[0][1] + " min"
+							else:
+								txt = ', '.join(re.split('\|+', self.htmltags.sub('|', self.generalinfos.group(category)).strip('|').replace("\n", ' ')))
+						elif category == 'seasons':
 							txt = ' '.join(self.htmltags.sub(' ', self.generalinfos.group(category)).replace("\n", ' ').replace('See all', '...').split())
 						elif category in ('creator', 'writer'):
 							txt = ', '.join(re.split('\|+', self.htmltags.sub('|', self.generalinfos.group(category).replace('</a><span class="ipc-metadata-list-item__list-content-item--subText">', ' ')).strip('|').replace("\n", ' ')))
@@ -694,7 +708,9 @@ class IMDB(Screen):
 				_("Storyline:") # translate tag
 				Storyline = ""
 				if storylineresult.group("g_storyline"):
-					Storyline = _(storylineresult.group('g_storyline')+":") + "\n" + re.sub('\s{5,30}',', ', self.htmltags.sub('', storylineresult.group('storyline').replace('\n','').replace('<br>', '\n').replace('<br/>', '\n').replace('<br />','\n').replace('&nbsp;','').replace('&quot;','"').replace('<span class="','')).strip())
+					Storyline = _(storylineresult.group('g_storyline')+":") + "\n"
+					if not "Add content advisory" in storylineresult.group('storyline'):
+						Storyline = Storyline + re.sub('\s{5,30}',', ', self.htmltags.sub('', storylineresult.group('storyline').replace('\n','').replace('<br>', '\n').replace('<br/>', '\n').replace('<br />','\n').replace('&nbsp;','').replace('&quot;','"').replace('<span class="','')).strip())
 
 				if Storyline == _(storylineresult.group('g_storyline')+":") + "\n":
 					self["storylinelabel"].hide()
@@ -762,10 +778,11 @@ class IMDB(Screen):
 							if category in ("trivia", "goofs", "quotes", "connections", "crazycredits", "alternateversions", "soundtracks"):
 								txt = extrainfos.group(category).replace("<li>", '• ').replace("</li>", '\n').replace('Read all</a>', '').replace("</a>", '').replace("<br>", '\n').replace("<br/>", '\n').replace('<br />', '\n').replace("</p><p>", '\n')
 								txt = self.htmltags.sub('', txt).strip('\n')
+							elif category in ("aspect", "sound"):
+								txt = extrainfos.group(category).replace(' : ', ':').replace('</a><span class="ipc-metadata-list-item__list-content-item--subText">', ' ').replace('</li>', ', ')
+								txt = self.htmltags.sub('', txt).strip(', ').strip()
 							else:
 								txt = ', '.join(re.split('\|+', self.htmltags.sub('|', extrainfos.group(category).replace("\n", ' ').replace("<br>", '\n').replace("<br/>", '\n').replace('<br />', '\n')).strip('|').replace(' |' + self.NBSP, '').replace(self.NBSP, ' ')))
-							if category == "aspect":
-								txt = txt.replace(' : ', ':')
 							Extratext += sep + decodeHtml(txt) + "\n"
 					except IndexError:
 						pass
