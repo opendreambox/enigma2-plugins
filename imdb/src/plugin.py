@@ -32,7 +32,7 @@ sz_w = getDesktop(0).size().width()
 
 config.plugins.imdb = ConfigSubsection()
 config.plugins.imdb.showinplugins = ConfigYesNo(default = True)
-config.plugins.imdb.showepisodeinfo = ConfigYesNo(default = False)
+config.plugins.imdb.showepisodeinfo = ConfigYesNo(default = True)
 config.plugins.imdb.origskin = ConfigYesNo(default = True)
 config.plugins.imdb.ignore_tags = ConfigText(visible_width = 50, fixed_size = False)
 config.plugins.imdb.language = ConfigSelection(default = None, choices = [(None, _("Default")),("en-us", _("English")),("fr-fr", _("French")),("de-de", _("German")),("it-it", _("Italian")),("es-es", _("Spanish"))])
@@ -126,6 +126,7 @@ class IMDB(Screen):
 		self.callbackNeeded = callbackNeeded
 		self.callbackData = ""
 		self.callbackGenre = ""
+		self.manualsearch = False
 
 		self.dictionary_init()
 
@@ -383,7 +384,11 @@ class IMDB(Screen):
 		self.session.open(YTTrailerList, self.eventName)
 
 	def openVirtualKeyBoard(self):
-		self.session.openWithCallback(self.gotSearchString, VirtualKeyBoard, title = _("Enter text to search for"), text = '')
+		if self.manualsearch:
+			text = self.eventName
+		else:
+			text = ''
+		self.session.openWithCallback(self.gotSearchString, VirtualKeyBoard, title = _("Enter text to search for"), text = text)
 
 	def gotSearchString(self, ret = None):
 		if ret:
@@ -398,6 +403,7 @@ class IMDB(Screen):
 			self["poster"].hide()
 			self["stars"].hide()
 			self["starsbg"].hide()
+			self.manualsearch = True
 			self.getIMDB()
 
 	def getIMDB(self):
