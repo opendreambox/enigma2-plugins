@@ -493,8 +493,9 @@ class IMDB(Screen):
 				if Len == 1:
 					self["key_green"].setText("")
 					self["statusbar"].setText(_("Re-Query IMDb: %s...") % (self.resultlist[0][0],))
-					self.eventName = self.resultlist[0][1]
-					fetchurl = "https://www.imdb.com/find?ref_=nv_sr_fn&q=" + quoteEventName(self.eventName) + "&s=all"
+					self.eventName = self.resultlist[0][0]
+					link = self.resultlist[0][1]
+					fetchurl = "https://www.imdb.com/title/" + link + "/"
 					getPage(fetchurl, agent=agent, headers=imdb_headers).addCallback(self.IMDBquery).addErrback(self.http_failed)
 				elif Len > 1:
 					self.Page = 1
