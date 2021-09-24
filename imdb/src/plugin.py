@@ -216,7 +216,7 @@ class IMDB(Screen):
 		'(?:.*?<a.*?>(?P<g_quotes>Quotes)</a><div.*?<div.*?<div.*?<div.*?>(?P<quotes>.+?)</div>)?'
 		'(?:.*?<a.*?>(?P<g_crazycredits>Crazy credits)</a><div.*?<div.*?<div.*?<div.*?>(?P<crazycredits>.+?)</div>)?'
 		'(?:.*?<a.*?>(?P<g_alternateversions>Alternate versions)</a><div.*?<div.*?<div.*?<div.*?>(?P<alternateversions>.+?)</div>)?'
-		'(?:.*?<a.*?>(?P<g_connections>Bez\S*?ge zu anderen Titeln|Connections)</a><div.*?<div.*?<div.*?<div.*?>(?P<connections>.+?)</div>)?'
+		'(?:.*?<a.*?>(?P<g_connections>Connections)</a><div.*?<div.*?<div.*?<div.*?>(?P<connections>.+?)</div>)?'
 		'(?:.*?<a.*?>(?P<g_soundtracks>Soundtracks)</a><div.*?<div.*?<div.*?<div.*?>(?P<soundtracks>.+?)</div>)?'
 		'(?:.*?<h3.*?>(?P<g_comments>User reviews)<span.*?UserReviewSummary__Summary.*?>(?P<commenttitle>.*?)</span></div.*?<div.*?<div.*?>(?P<comment>.+?)</div>.*?<div.*?UserReviewAuthor__AuthorContainer.*?>.*?<ul.*?<li.*?>(?P<commenter>.+?)</li>)?'
 		'(?:.*?<span.*?>(?P<g_language>Languages?)</span>.*?<div.*?<ul.*?>(?P<language>.*?)</ul>)?'
@@ -320,7 +320,7 @@ class IMDB(Screen):
 			link = self["menu"].getCurrent()[1]
 			title = self["menu"].getCurrent()[0]
 			self["statusbar"].setText(_("Re-Query IMDb: %s...") % (title))
-			fetchurl = "https://www.imdb.com/title/" + link
+			fetchurl = "https://www.imdb.com/title/" + link + "/"
 			print("[IMDB] showDetails() downloading query " + fetchurl)
 			getPage(fetchurl, agent=agent, headers=imdb_headers).addCallback(self.IMDBquery2).addErrback(self.http_failed)
 			self.resetLabels()
