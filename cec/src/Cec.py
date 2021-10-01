@@ -166,10 +166,13 @@ class Cec(object):
 
 	def powerOff(self):
 		Log.i(" ")
-		if not (config.cec.enabled.value and config.cec.sendpower.value and config.cec2.sendpower_boot.value):
+		if not (config.cec.enabled.value and config.cec.sendpower.value):
 			CecBoot.uninstall()
 			return
-		CecBoot.install(self.logicalAddress, self.physicalAddress)
+		if config.cec2.sendpower_boot.value:
+			CecBoot.install(self.logicalAddress, self.physicalAddress)
+		else:
+			CecBoot.uninstall()
 		self.systemStandby()
 		self.inactiveSource()
 		self.setPowerState(eCec.POWER_STATE_STANDBY)
