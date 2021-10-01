@@ -11,6 +11,8 @@ from .CecDeviceList import CecDeviceList
 
 config.cec2 = ConfigSubsection()
 config.cec2.active_source_agression = ConfigOnOff(default=False)
+config.cec2.sendpower_boot = ConfigOnOff(default=False)
+
 class CecConfig(ConfigListScreen, Screen):
 	skin = """
 		<screen name="CecConfig" position="center,120" size="820,520" title="HDMI CEC: Setup">
@@ -82,7 +84,10 @@ class CecConfig(ConfigListScreen, Screen):
 			getConfigListEntry(_("Send HDMI CEC Power Events"), config.cec.sendpower),
 			])
 		if config.cec.sendpower.value:
-			lst.append(getConfigListEntry(_("Power on AV-Receiver"), config.cec.enable_avr))
+			lst.extend([
+				getConfigListEntry(_("Send early CEC PowerUp on boot"), config.cec2.sendpower_boot),
+				getConfigListEntry(_("Power on AV-Receiver"), config.cec.enable_avr),
+			])
 		lst.extend([
 				getConfigListEntry(_("Power on/off based on CEC Events"), config.cec.receivepower),
 			])
@@ -110,11 +115,13 @@ class CecConfig(ConfigListScreen, Screen):
 			elements = [
 				config.cec.enabled,
 				config.cec.sendpower,
+				config.cec2.sendpower_boot,
 				config.cec.enable_avr,
 				config.cec.receivepower,
 				config.cec.receive_remotekeys,
 				config.cec.volume_forward,
 				config.cec.remote_repeat_delay,
+				config.cec2.active_source_agression,
 			]
 			for e in elements:
 				e.value = e.default

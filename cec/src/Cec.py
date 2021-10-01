@@ -166,7 +166,7 @@ class Cec(object):
 
 	def powerOff(self):
 		Log.i(" ")
-		if not (config.cec.enabled.value and config.cec.sendpower.value):
+		if not (config.cec.enabled.value and config.cec.sendpower.value and config.cec2.sendpower_boot.value):
 			CecBoot.uninstall()
 			return
 		CecBoot.install(self.logicalAddress, self.physicalAddress)
