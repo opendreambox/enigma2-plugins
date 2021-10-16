@@ -115,7 +115,7 @@ class MSNWeather:
 		if language == "en-EN": # hack
 			language = "en-US"
 		elif language == "no-NO": # hack
-			language = "nn-NO"
+			language = "nb-NO"
 		self.city = city
 		self.callback = callback
 		self.callbackShowIcon  = callbackShowIcon
