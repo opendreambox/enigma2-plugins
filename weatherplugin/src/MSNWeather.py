@@ -181,7 +181,7 @@ class MSNWeather:
 					currentWeather.skytext = items.attrib.get("skytext").encode("utf-8", 'ignore')
 					currentWeather.humidity = items.attrib.get("humidity").encode("utf-8", 'ignore')
 					currentWeather.winddisplay = items.attrib.get("winddisplay").encode("utf-8", 'ignore')
-					currentWeather.observationtime = items.attrib.get("observationtime").encode("utf-8", 'ignore')
+					currentWeather.observationtime = items.attrib.get("observationtime").encode("utf-8", 'ignore').replace(".",":")
 					currentWeather.observationpoint = items.attrib.get("observationpoint").encode("utf-8", 'ignore')
 					currentWeather.feelslike = items.attrib.get("feelslike").encode("utf-8", 'ignore')
 					currentWeather.skycode = "%s%s" % (items.attrib.get("skycode").encode("utf-8", 'ignore'), self.iconextension)
