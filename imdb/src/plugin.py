@@ -408,10 +408,10 @@ class IMDB(Screen):
 
 	def getIMDB(self):
 		global imdb_headers
-		if config.plugins.imdb.language.value:
-			imdb_headers = {'Accept-Language': config.plugins.imdb.language.value}
-		else:
-			imdb_headers = {}
+		#if config.plugins.imdb.language.value:
+		#	imdb_headers = {'Accept-Language': config.plugins.imdb.language.value}
+		#else:
+		imdb_headers = {}
 		self.resetLabels()
 		if not self.eventName:
 			s = self.session.nav.getCurrentService()
@@ -441,7 +441,7 @@ class IMDB(Screen):
 		start = in_html.find('<nav id="imdbHeader"')
 		if start == -1:
 			start = 0
-		end = in_html.find('title-news-header')
+		end = in_html.find('<section data-testid="contribution"')
 		if end == -1:
 			end = len(in_html)
 		in_html = in_html[start:end]
@@ -786,7 +786,7 @@ class IMDbSetup(Screen, ConfigListScreen):
 
 	def createSetup(self):
 		self.list = []
-		self.list.append(getConfigListEntry(_("IMDb query language"), config.plugins.imdb.language))
+		#self.list.append(getConfigListEntry(_("IMDb query language"), config.plugins.imdb.language))
 		self.list.append(getConfigListEntry(_("Show in plugin browser"), config.plugins.imdb.showinplugins))
 		self.list.append(getConfigListEntry(_("Use original IMDb skin:"), config.plugins.imdb.origskin))
 		self.list.append(getConfigListEntry(_("Show episode and year information in cast list"), config.plugins.imdb.showepisodeinfo))
@@ -823,10 +823,10 @@ class IMDbSetup(Screen, ConfigListScreen):
 	def keySave(self):
 		self.saveAll()
 		global imdb_headers
-		if config.plugins.imdb.language.value:
-			imdb_headers = {'Accept-Language': config.plugins.imdb.language.value}
-		else:
-			imdb_headers = {}
+		#if config.plugins.imdb.language.value:
+		#	imdb_headers = {'Accept-Language': config.plugins.imdb.language.value}
+		#else:
+		imdb_headers = {}
 		if not config.plugins.imdb.showinplugins.value:
 			for plugin in plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU):
 				if plugin.name == _("IMDb Details"):
