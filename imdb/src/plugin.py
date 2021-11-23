@@ -205,7 +205,7 @@ class IMDB(Screen):
 		'(?:.*?<a.*?>(?P<g_premiere>Release date)</a>.*?<div.*?<ul.*?>(?P<premiere>.*?)</ul>)?'
 		'(?:.*?<span.*?>(?P<g_country>Countr.*?of origin)</span>.*?<div.*?<ul.*?>(?P<country>.*?)</ul>)?'
 		'(?:.*?<a.*?>(?P<g_alternativ>Also known as)</a>.*?<div.*?<ul.*?>(?P<alternativ>.*?)</ul>)?'
-		'(?:.*?<span.*?>(?P<g_runtime>Runtime)</span>.*?<div.*?<ul.*?>(?P<runtime>.*?)</ul>)?', re.S)
+		'(?:.*?<span.*?>(?P<g_runtime>Runtime)</span>.*?<div.*?>(?P<runtime>.*?)</div)?', re.S)
 
 		self.extrainfomask = re.compile(
 		'(?:.*?<div.*?class="GenresAndPlot__TextContainerBreakpointXL.*?>(?P<outline>.+?)</div>)?'
@@ -559,7 +559,8 @@ class IMDB(Screen):
 
 					if self.generalinfos.group(category):
 						if category == 'runtime':
-							runtime = re.findall('(?:(\d+)h|)\s{0,1}(?:(\d+)min|)', self.htmltags.sub('', self.generalinfos.group(category)), re.S)
+							runtime = re.findall('(?:(\d+)\shours|)\s{0,1}(?:(\d+)\sminutes|)', self.htmltags.sub('', self.generalinfos.group(category)).replace('<!-- -->',''), re.S)
+							print(runtime)
 							if runtime:
 								if runtime[0][0] and runtime[0][1]:
 									runtime = str(60 * int(runtime[0][0]) + int(runtime[0][1]))
