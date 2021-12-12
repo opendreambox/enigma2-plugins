@@ -30,7 +30,10 @@ class ScreensaverSetup(Screen, ConfigListScreen):
 			getConfigListEntry(_("Automatic Screensaver"), cfg.enabled),
 		]
 		if cfg.enabled.value:
-			lst.append(getConfigListEntry(_("Seconds before activation"), cfg.delay))
+			lst.extend([
+				getConfigListEntry(_("Seconds before activation"), cfg.delay),
+				getConfigListEntry(_("Verify ssl-certificate"), cfg.verifySSL)
+			])
 		lst.extend([
 			getConfigListEntry(_("Seconds between images"), cfg.photo.retention),
 			getConfigListEntry(_("Cross fade duration (seconds)"), cfg.photo.speed)

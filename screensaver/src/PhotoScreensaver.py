@@ -7,7 +7,7 @@ from Screens.Screen import Screen
 from Tools.Directories import fileExists
 from Tools.Log import Log
 
-from twisted.web.client import downloadPage
+import requests
 
 class MyPixmap(Pixmap):
 	def postWidgetCreate(self, instance):
@@ -59,6 +59,9 @@ class PhotoScreensaver(Screen):
 		self.onShow.append(self._onShow)
 		self.onClose.append(self._onClose)
 		config.plugins.screensaver.photo.speed.addNotifier(self._setupAnimation, initial_call = False)
+
+		if not config.plugins.screensaver.verifySSL.value:
+			requests.packages.urllib3.disable_warnings()
 
 	def _onShow(self):#
 		self._immediateShow = self._isInitial
@@ -123,7 +126,15 @@ class PhotoScreensaver(Screen):
 	def _loadNext(self):
 		Log.i("Getting next photo")
 		url = "https://source.unsplash.com/random/1920x1080"
-		self._d = downloadPage(url, self.TEMPFILE).addCallbacks(self._onFileReady, self._failed)
+		try:
+			response = requests.get(url, verify=config.plugins.screensaver.verifySSL.value)
+			if response.status_code == 200:
+				open(self.TEMPFILE, 'wb').write(response.content)
+				self._onFileReady()
+			else:
+				self._failed()
+		except Exception, e:
+			self._failed(e)
 
 	def _onFileReady(self, *args):
 		self._picload.startDecode(self.TEMPFILE)
