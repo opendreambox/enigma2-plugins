@@ -8,6 +8,23 @@ from Tools.Directories import fileExists
 from Tools.Log import Log
 
 from twisted.web.client import downloadPage
+from twisted.internet.ssl import ClientContextFactory
+from twisted.internet._sslverify import ClientTLSOptions
+try:
+	from urllib.parse import urlparse
+except ImportError:
+	from urlparse import urlparse
+
+class downloadPageClientContextFactory(ClientContextFactory):
+	def __init__(self, url=None):
+		domain = urlparse(url).netloc
+		self.hostname = domain
+	
+	def getContext(self, hostname=None, port=None):
+		ctx = ClientContextFactory.getContext(self)
+		if self.hostname and ClientTLSOptions is not None:
+			ClientTLSOptions(self.hostname, ctx)
+		return ctx
 
 class MyPixmap(Pixmap):
 	def postWidgetCreate(self, instance):
@@ -18,7 +35,6 @@ class MyPixmap(Pixmap):
 		if self.instance:
 			self.instance.setShowHideAnimation(PhotoScreensaver.ANIMATION_KEY_FADE)
 			self.instance.setScale(ePixmap.SCALE_TYPE_WIDTH)
-
 
 class PhotoScreensaver(Screen):
 	skin = """<screen name="Screensaver" title="Screensaver" position="center,center" size="fill_parent,fill_parent" backgroundColor="#000000">
@@ -123,7 +139,7 @@ class PhotoScreensaver(Screen):
 	def _loadNext(self):
 		Log.i("Getting next photo")
 		url = "https://source.unsplash.com/random/1920x1080"
-		self._d = downloadPage(url, self.TEMPFILE).addCallbacks(self._onFileReady, self._failed)
+		self._d = downloadPage(url, self.TEMPFILE, contextFactory = downloadPageClientContextFactory(url)).addCallbacks(self._onFileReady, self._failed)
 
 	def _onFileReady(self, *args):
 		self._picload.startDecode(self.TEMPFILE)
