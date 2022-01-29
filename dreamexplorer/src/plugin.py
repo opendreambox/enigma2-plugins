@@ -368,11 +368,11 @@ class DreamExplorer3(Screen):
 				self.openCopyMoveManager(True)
 			else:			
 				if type == "file":
-					self.cmd = 'touch %s' %(newElement)
+					self.cmd = 'touch "%s"' %(newElement)
 					self.actionText = _("Creation of file %s" %(newElement))
 						
 				elif type == "directory":
-					self.cmd = 'mkdir %s' %(newElement)
+					self.cmd = 'mkdir "%s"' %(newElement)
 		
 					self.actionText = _("Creation of directory %s" %(newElement))
 					self.container.execute(self.cmd)		
@@ -624,7 +624,7 @@ class DreamExplorer3(Screen):
 				oldName = self["filelist"].getCurrentDirectory() + self["filelist"].getFilename()
 			newName = path + answer
 
-			self.cmd = 'mv %s %s' %(oldName, newName)
+			self.cmd = 'mv "%s" "%s"' %(oldName, newName)
 			
 			self.actionText = _("Renaming of %s to %s" %(oldName, newName))
 			self.container.execute(self.cmd)
@@ -1228,9 +1228,9 @@ class FolderSelection(Screen):
 			dest = self["TargetDir"].getSelection()[1]
 			self.actionText = _("Copying %s to %s" %(self.item, dest))
 			if self.item[-1:] == '/':
-				self.cmd = "cp -afr %s %s" %(self.item, dest)
+				self.cmd = 'cp -afr "%s" "%s"' %(self.item, dest)
 			else:
-				self.cmd = "cp %s %s" %(self.item, dest)
+				self.cmd = 'cp "%s" "%s"' %(self.item, dest)
 
 			self.close((self.actionText, self.cmd))
 
@@ -1238,7 +1238,7 @@ class FolderSelection(Screen):
 		if self["TargetDir"].getCurrentIndex()!=0:
 			dest = self["TargetDir"].getSelection()[1]
 			self.actionText = _("Moving %s to %s" %(self.item, dest))
-			self.cmd = "mv -f %s %s" %(self.item, dest)
+			self.cmd = "mv -f '%s' '%s'" %(self.item, dest)
 
 			self.close((self.actionText, self.cmd))
 	
@@ -1247,7 +1247,7 @@ class FolderSelection(Screen):
 			symlinkdir = self["TargetDir"].getCurrent()[1]
 			
 			self.actionText = _("Creation of symlink %s in %s to %s" %(self.linkname, symlinkdir, self.item))
-			self.cmd = "ln -s %s %s/%s" %(self.item, symlinkdir, self.linkname)
+			self.cmd = "ln -s '%s' '%s/%s'" %(self.item, symlinkdir, self.linkname)
 			self.close((self.actionText, self.cmd))
 		
 	def setSymlinkName(self):
