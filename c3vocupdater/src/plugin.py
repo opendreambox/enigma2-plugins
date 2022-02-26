@@ -4,11 +4,12 @@ from Components.Label import Label
 from Components.ActionMap import ActionMap
 from Plugins.Plugin import PluginDescriptor
 from Screens.MessageBox import MessageBox
-from enigma import eDVBDB, getDesktop
+from enigma import cachestate, eDVBDB, eEPGCache, getDesktop
 import requests
 import json
 import shutil
 import re
+import c3voc
 
 sz_w = getDesktop(0).size().width()
 
@@ -48,48 +49,25 @@ class C3vocScreen (Screen):
 				"red": self.close,
 				"cancel": self.close,
 			}, -1)
+		self._epg_cache = eEPGCache.getInstance()
 
-	def getinput(self):
-		try:
-			req = requests.session()
-			page = req.get("http://streaming.media.ccc.de/streams/v2.json", headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'})
-			data = json.loads(page.content)
+	def _epg_cache_state_event(self, state):
+		if state.state != cachestate.save_finished:
+			return
 
-			with open("/tmp/c3voc", "a") as myfile:
-				myfile.write("#NAME c3voc (TV)\n")
-				myfile.close()
+		if c3voc.update_streams_v2("https://streaming.media.ccc.de/streams/v2.json"):
+			text = _("c3voc stream bouquet updated")
+			self._epg_cache.load()
+		else:
+			text = _("Nothing changed or no streams available. Please retry later!")
 
-			for conference in data:
-				conference_name = conference["conference"]
-				for group in conference["groups"]:
-					rooms = group["rooms"]
-					if not rooms:
-						continue
-
-					for room in rooms:
-						schedule_name = room["schedulename"]
-						url = self.get_hls_url(room["streams"], "hd-native")
-						with open("/tmp/c3voc", "a") as myfile:
-							myfile.write("#SERVICE 4097:0:1:0:0:0:0:0:0:0:%s\n#DESCRIPTION %s, %s\n" % (url.replace(":", "%3a"), conference_name, schedule_name))
-							myfile.close()
-
-			if 'c3voc' not in open('/etc/enigma2/bouquets.tv').read():
-				with open("/etc/enigma2/bouquets.tv", "a") as myfile:
-					myfile.write("#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET \"userbouquet.c3voc__tv_.tv\" ORDER BY bouquet")
-					myfile.close()
-
-			shutil.move("/tmp/c3voc","/etc/enigma2/userbouquet.c3voc__tv_.tv")
-			eDVBDB.getInstance().reloadBouquets()
-			self.session.open(MessageBox, text = _("c3voc stream bouquet updated"), type = MessageBox.TYPE_INFO, timeout=4)
-		except:	pass
-
+		self.session.open(MessageBox, text=text, type=MessageBox.TYPE_INFO, timeout=4)
 		self.close()
 
-        def get_hls_url(self, streams, slug):
-		for stream in streams:
-			if stream["slug"] != slug:
-				continue
-			return stream["urls"]["hls"]["url"]
+	def getinput(self):
+		self._conn = self._epg_cache.cacheState.connect(self._epg_cache_state_event)
+		self._epg_cache.save()
+
 
 def main(session, **kwargs):
 	session.open(C3vocScreen)
