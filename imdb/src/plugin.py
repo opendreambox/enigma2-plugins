@@ -195,7 +195,7 @@ class IMDB(Screen):
 
 	def dictionary_init(self):
 		self.generalinfomask = re.compile(
-		'<h1.*?class="TitleHeader__TitleText.*?>(?P<title>.*?)</h1>*'
+		'<h1.*?hero-title-block__title" class=.*?>(?P<title>.*?)</h1>*'
 		'(?:.*?>(?P<g_episodes>Episodes)<span.*?>(?P<episodes>.*?)</span>)?'
 		'(?:.*?class="OriginalTitle__OriginalTitleText.*?>(?P<g_originaltitle>.*?):\s.*?(?P<originaltitle>.*?)</div)?'
 		'(?:.*?<label for="browse-episodes-season".*?>.*?(?P<seasons>\d+)\s(?P<g_seasons>seasons?)</label>)?'
@@ -205,7 +205,7 @@ class IMDB(Screen):
 		'(?:.*?<a.*?>(?P<g_premiere>Release date)</a>.*?<div.*?<ul.*?>(?P<premiere>.*?)</ul>)?'
 		'(?:.*?<span.*?>(?P<g_country>Countr.*?of origin)</span>.*?<div.*?<ul.*?>(?P<country>.*?)</ul>)?'
 		'(?:.*?<a.*?>(?P<g_alternativ>Also known as)</a>.*?<div.*?<ul.*?>(?P<alternativ>.*?)</ul>)?'
-		'(?:.*?<span.*?>(?P<g_runtime>Runtime)</span>.*?<div.*?>(?P<runtime>.*?)</div)?', re.S)
+		'(?:.*?techspec_runtime.*?>(?P<g_runtime>Runtime)</span>.*?<div.*?>(?P<runtime>.*?)</div)?', re.S)
 
 		self.extrainfomask = re.compile(
 		'(?:.*?<div.*?class="GenresAndPlot__TextContainerBreakpointXL.*?>(?P<outline>.+?)</div>)?'
@@ -218,7 +218,7 @@ class IMDB(Screen):
 		'(?:.*?<a.*?>(?P<g_alternateversions>Alternate versions)</a><div.*?<div.*?<div.*?<div.*?>(?P<alternateversions>.+?)</div>)?'
 		'(?:.*?<a.*?>(?P<g_connections>Connections)</a><div.*?<div.*?<div.*?<div.*?>(?P<connections>.+?)</div>)?'
 		'(?:.*?<a.*?>(?P<g_soundtracks>Soundtracks)</a><div.*?<div.*?<div.*?<div.*?>(?P<soundtracks>.+?)</div>)?'
-		'(?:.*?<h3.*?>(?P<g_comments>User reviews)<span.*?UserReviewSummary__Summary.*?>(?P<commenttitle>.*?)</span></div.*?<div.*?<div.*?>(?P<comment>.+?)</div>.*?<div.*?UserReviewAuthor__AuthorContainer.*?>.*?<ul.*?<li.*?>(?P<commenter>.+?)</li>)?'
+		'(?:.*?<h3.*?>(?P<g_comments>User review)s.*?</h3>.*?<span.*?review-summary.*?>(?P<commenttitle>.*?)</span></div><div.*?<div.*?<div.*?>(?P<comment>.+?)</div>.*?<div.*?reviews-author.*?>.*?<ul.*?<li.*?>(?P<commenter>.+?)</li>)?'
 		'(?:.*?<span.*?>(?P<g_language>Languages?)</span>.*?<div.*?<ul.*?>(?P<language>.*?)</ul>)?'
 		'(?:.*?<a.*?>(?P<g_locations>Filming locations?)</a>.*?<div.*?<ul.*?>(?P<locations>.*?)</ul>)?'
 		'(?:.*?<a.*?>(?P<g_company>Production compan.*?)</a>.*?<div.*?<ul.*?>(?P<company>.*?)</ul>)?'
@@ -230,8 +230,8 @@ class IMDB(Screen):
 		self.keywordsmask = re.compile('data-testid="storyline-plot-keywords">(?P<keywords>.*?)</div>', re.S)
 		self.boxofficemask = re.compile('<h3.*?>(?P<g_boxoffice>Box office)</h3.*?<div.*?list-item__label">Budget</span>.*?list-content-item">(?P<boxofficebudget>.*?)</span>.*?list-content-item">(?P<boxofficegrossuscanada>.*?)</span>.*?list-content-item">(?P<boxofficeopening>.*?)</span>.*?list-content-item">(?P<boxofficeopeningdate>.*?)</span>.*?list-content-item">(?P<boxofficegrossworld>.*?)</span>', re.S)
 		self.genreblockmask = re.compile('<li.*?storyline-genres.*?><span.*?>(?P<g_genres>Genres?)</span>.*?<div.*?><ul.*?>(?P<genres>.*?)</ul>', re.S)
-		self.ratingmask = re.compile('<span.*?AggregateRatingButton__RatingScore.*?>(?P<rating>.*?)</span>.*?<span.*?AggregateRatingButton__TotalRatingAmount.*?>(?P<ratingcount>.*?)</div', re.S)
-		self.castmask = re.compile('<a.*?StyledComponents__ActorName.*?>(?P<actor>.*?)</a>.*?StyledComponents__CharacterNameWithoutAs.*?>(?P<character>.*?)</span>(?:.*?<span><span.*?>(?P<episodes>.*?)</span></span>)?', re.S)
+		self.ratingmask = re.compile('<span.*?aggregate-rating__score.*?><span.*?>(?P<rating>.*?)</span>.*?<span.*?class=.*?class=.*?>(?P<ratingcount>.*?)</div', re.S)
+		self.castmask = re.compile('title-cast-item__actor.*?>(?P<actor>.*?)</a>(?:<div.*?<ul.*?>(?P<character>.*?)</span.*?</ul></div>)?(?:<a.*?><span><span.*?>(?P<episodes>.*?)</span></span>)?', re.S)
 		self.postermask = re.compile('<div.*?ipc-media--poster.*?<img.*?ipc-image.*?src="(http.*?)"', re.S)
 		self.storylinemask = re.compile('<section.*?<div.*?<div.*?<hgroup.*?<h3.*?>(?P<g_storyline>Storyline)</h3>.*?<div.*?<div.*?<div.*?<div.*?>(?P<storyline>.+?)<span', re.S)
 
@@ -477,10 +477,12 @@ class IMDB(Screen):
 	def IMDBquery(self, data):
 		self["statusbar"].setText(_("IMDb Download completed"))
 		self.html2utf8(data)
+		print('###############1')
 		self.generalinfos = self.generalinfomask.search(self.inhtml)
 		if self.generalinfos:
 			self.IMDBparse()
 		else:
+			print('###############2')
 			if not re.search('class="findHeader">No results found for', self.inhtml):
 				pos = self.inhtml.find("<table class=\"findList\">")
 				pos2 = self.inhtml.find("</table>",pos)
@@ -528,6 +530,7 @@ class IMDB(Screen):
 	def IMDBquery2(self, data):
 		self["statusbar"].setText(_("IMDb Re-Download completed"))
 		self.html2utf8(data)
+		print('###############3')
 		self.generalinfos = self.generalinfomask.search(self.inhtml)
 		self.IMDBparse()
 
@@ -546,6 +549,7 @@ class IMDB(Screen):
 			addnewline = ""
 
 			_("Genre:"), _("Genres:") # translate tags
+			print('###############4')
 			genreblock = self.genreblockmask.search(self.inhtml)
 			if genreblock:
 				genres = ', '.join(re.split('\|+', self.htmltags.sub('|', genreblock.group("genres"))))
@@ -559,7 +563,7 @@ class IMDB(Screen):
 
 					if self.generalinfos.group(category):
 						if category == 'runtime':
-							runtime = re.findall('(?:(\d+)\shours|)\s{0,1}(?:(\d+)\sminutes|)', self.htmltags.sub('', self.generalinfos.group(category)).replace('<!-- -->',''), re.S)
+							runtime = re.findall('(?:(\d+)\shours?|)\s{0,1}(?:(\d+)\sminutes?|)', self.htmltags.sub('', self.generalinfos.group(category)).replace('<!-- -->',''), re.S)
 							print(runtime)
 							if runtime:
 								if runtime[0][0] and runtime[0][1]:
@@ -587,6 +591,7 @@ class IMDB(Screen):
 				except IndexError:
 					pass
 
+			print('###############5')
 			rating = self.ratingmask.search(self.inhtml)
 			Ratingtext = _("no user rating yet")
 			if rating:
@@ -620,6 +625,7 @@ class IMDB(Screen):
 					Casttext = _("No cast list found in the database.")
 				self["castlabel"].setText(Casttext)
 
+			print('###############6')
 			storylineresult = self.storylinemask.search(self.inhtml)
 			if storylineresult:
 				_("Storyline:") # translate tag
@@ -634,6 +640,7 @@ class IMDB(Screen):
 				else:
 					self["storylinelabel"].setText(Storyline)
 
+			print('###############7')
 			posterurl = self.postermask.search(self.inhtml)
 			if posterurl and posterurl.group(1).find("jpg") > 0:
 				posterurl = posterurl.group(1)
@@ -647,6 +654,7 @@ class IMDB(Screen):
 
 			Extratext = ''
 
+			print('###############8')
 			extrainfos = self.extrainfomask.search(self.inhtml)
 
 			if extrainfos:
@@ -666,6 +674,7 @@ class IMDB(Screen):
 					except IndexError:
 						pass
 
+			print('###############9')
 			keywordsresult = self.keywordsmask.search(self.inhtml)
 			if keywordsresult:
 				keywords = keywordsresult.group('keywords').replace(' ', '_')
@@ -680,6 +689,7 @@ class IMDB(Screen):
 					awards = self.allhtmltags.sub(', ', ''.join(awardslist).replace('<b>', '').replace('Awards</a>', '').strip()).strip(', ')
 					Extratext += "\n" + _("Awards:") + " " + awards + "\n"
 
+			print('###############10')
 			boxofficeresult = self.boxofficemask.search(self.inhtml)
 			if boxofficeresult:
 				boxoffice = "Budget " + boxofficeresult.group('boxofficebudget') + "\n" + "Opening weekend US & Canada " + boxofficeresult.group('boxofficeopening') + " (" + boxofficeresult.group('boxofficeopeningdate') + ")" + "\n" + "Gross US & Canada " + boxofficeresult.group('boxofficegrossuscanada') + "\n" "Gross worldwide " + boxofficeresult.group('boxofficegrossworld')
