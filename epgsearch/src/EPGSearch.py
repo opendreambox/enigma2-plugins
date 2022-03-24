@@ -105,9 +105,7 @@ class EPGSearchList(EPGList):
 		self._iconHeight = sizes.get(EPGList.SKIN_COMPONENT_ICON_HEIGHT, 21)
 		self._iconHPos = sizes.get(EPGList.SKIN_COMPONENT_ICON_HPOS, 4)
 		self._itemMargin = sizes.get(EPGList.SKIN_COMPONENT_ITEM_MARGIN, 10)
-
-		servicelist_sizes = componentSizes["ServiceList"]
-		self._picon_width = servicelist_sizes.get(ServiceList.KEY_PICON_WIDTH, 58)
+		self._piconWidth = int(self._iconWidth*2)
 
 		if PartnerBoxIconsEnabled:
 			# Partnerbox Clock Icons
@@ -147,8 +145,8 @@ class EPGSearchList(EPGList):
 			picon = self.piconLoader.getPicon(service)
 		left_pos = r3.left()
 		if picon is not None:
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, left_pos, 2, self._picon_width, r3.height()-3, picon))
-			left_pos = r3.left() + self._picon_width + self._itemMargin
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, left_pos, self._iconHPos, self._piconWidth, self._iconHeight, picon))
+			left_pos = r3.left() + self._piconWidth + self._itemMargin
 			serviceName = "" #if load picon delete servicename
 
 		if rec1 or rec2:
@@ -737,6 +735,10 @@ class EPGSearch(EPGSelection):
 				shortdesc = str(epgEvent.getShortDescription())
 				if len(shortdesc) > 0:
 					event_lst = list(event)
+					#fix line breakes and double event title in short description
+					if shortdesc.startswith(event_lst[4] + "\n") or shortdesc.startswith(event_lst[4] + "\\n"):
+						shortdesc = shortdesc.replace(event_lst[4] + "\\n","").replace(event_lst[4] + "\n","")
+					shortdesc = shortdesc.replace("\\n"," - ").replace("\n"," - ")
 					event_lst[4] = event_lst[4] + "  |  " + shortdesc
 					event = tuple(event_lst)
 			new_events.append(event)
