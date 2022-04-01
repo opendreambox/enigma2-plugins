@@ -114,7 +114,7 @@ def fetch_xml(uri):
 
     try:
         data = ElementTree.fromstring(r.content)
-    except ValueError as exc:
+    except ElementTree.ParseError as exc:
         logging.error(exc)
     else:
         return data
