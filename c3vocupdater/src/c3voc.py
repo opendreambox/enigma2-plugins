@@ -440,7 +440,7 @@ def update_streams_v2(url="https://streaming.media.ccc.de/streams/v2.json"):
 
         bouquets_tv_path = os.path.join(pkgsysconfdir, "bouquets.{}".format(mode_name.lower()))
         try:
-            fp = open(bouquets_tv_path, "a+")
+            fp = open(bouquets_tv_path)
         except OSError as exc:
             logging.error(exc)
             continue
@@ -453,11 +453,25 @@ def update_streams_v2(url="https://streaming.media.ccc.de/streams/v2.json"):
         line = service_line(ref)
 
         with fp:
-            fp.seek(0)
-            if line not in fp:
-                fp.write(line)
-                logging.info("Added bouquet '{}' to '{}'.".format(c3voc_title(), bouquets_tv_path))
-                changed = True
+            lines = fp.read().splitlines()
+
+        if line.rstrip() not in lines:
+            try:
+                fp = open(bouquets_tv_path, "w")
+            except OSError as exc:
+                logging.error(exc)
+                continue
+
+            lines.append(line)
+            with fp:
+                fp.write("\n".join(lines))
+
+            logging.info("Added bouquet '{}' to '{}'.".format(c3voc_title(), bouquets_tv_path))
+            changed = True
+        else:
+            logging.debug(
+                "Bouquet '{}' already present in '{}'.".format(c3voc_title(), bouquets_tv_path)
+            )
 
         if changed:
             eDVBDB.getInstance().reloadBouquets()
