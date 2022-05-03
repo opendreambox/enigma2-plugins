@@ -167,10 +167,6 @@ ftpbrowser/meta/Makefile
 ftpbrowser/src/Makefile
 ftpbrowser/src/images/Makefile
 
-genuinedreambox/Makefile
-genuinedreambox/meta/Makefile
-genuinedreambox/src/Makefile
-
 growlee/Makefile
 growlee/meta/Makefile
 growlee/src/Makefile
