@@ -34,7 +34,6 @@ SUBDIRS = \
 	fritzcall \
 	fstabeditor \
 	ftpbrowser \
-	genuinedreambox \
 	googlemaps \
 	growlee \
 	imdb \
