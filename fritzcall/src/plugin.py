@@ -2,10 +2,11 @@
 '''
 Update rev
 $Author: michael $
-$Revision: 1591 $
-$Date: 2021-04-29 16:52:10 +0200 (Thu, 29 Apr 2021) $
-$Id: plugin.py 1591 2021-04-29 14:52:10Z michael $
+$Revision: 1620 $
+$Date: 2022-05-07 11:12:32 +0200 (Sat, 07 May 2022) $
+$Id: plugin.py 1620 2022-05-07 09:12:32Z michael $
 '''
+
 
 # C0111 (Missing docstring)
 # C0103 (Invalid name)
@@ -71,11 +72,22 @@ except:
 
 if six.PY3:
 	import codecs
-	encode = lambda x : codecs.encode(x, "rot13")
-	decode = lambda x : codecs.decode(x, "rot13")
+
+	def encode(x):
+		if x is not None:
+			return codecs.encode(x, "rot13")
+		else:
+			return ""
+
+	def decode(x):
+		if x is not None:
+			return codecs.decode(x, "rot13")
+		else:
+			return ""
 else:
 	def encode(x):
 		return base64.b64encode(''.join(chr(ord(c) ^ ord(k)) for c, k in zip(x, cycle('secret key')))).strip()
+
 	def decode(x):
 		return ''.join(chr(ord(c) ^ ord(k)) for c, k in zip(base64.b64decode(x), cycle('secret key')))
 
@@ -103,6 +115,7 @@ def scaleV(y2, y1):
 	return scale(y2, y1, 720, 576, DESKTOP_HEIGHT)
 def scale(y2, y1, x2, x1, x):
 	return (y2 - y1) * (x - x1) // (x2 - x1) + y1
+
 
 my_global_session = None
 
@@ -216,7 +229,7 @@ def initAvon():
 			try:
 				line = six.ensure_text(line)
 			except UnicodeDecodeError:
-				line = six.ensure_text(line, "iso-8859-1")  # to deal with old avon.dat		
+				line = six.ensure_text(line, "iso-8859-1")  # to deal with old avon.dat
 			if line[0] == '#':
 				continue
 			parts = line.split(':')
@@ -270,6 +283,7 @@ def handleReverseLookupResult(name):
 			name += city
 	return name
 
+
 cbcInfos = {}
 def initCbC():
 	callbycallFileName = resolveFilename(SCOPE_PLUGINS, "Extensions/FritzCall/callbycall_world.xml")
@@ -297,6 +311,7 @@ def stripCbCPrefix(number, countrycode):
 			if number[:len(prefix)] == prefix:
 				return number[length:]
 	return number
+
 
 from . import FritzCallFBF  # @UnresolvedImport  # wrong-import-position # pylint: disable=
 
@@ -350,8 +365,8 @@ class FritzAbout(Screen):
 		self["text"] = Label(
 							"FritzCall Plugin" + "\n\n" +
 							"$Author: michael $"[1:-2] + "\n" +
-							"$Revision: 1591 $"[1:-2] + "\n" +
-							"$Date: 2021-04-29 16:52:10 +0200 (Thu, 29 Apr 2021) $"[1:23] + "\n"
+							"$Revision: 1620 $"[1:-2] + "\n" +
+							"$Date: 2022-05-07 11:12:32 +0200 (Sat, 07 May 2022) $"[1:23] + "\n"
 							)
 		self["url"] = Label("http://wiki.blue-panel.com/index.php/FritzCall")
 		self.onLayoutFinish.append(self.setWindowTitle)
@@ -362,6 +377,7 @@ class FritzAbout(Screen):
 
 	def exit(self):
 		self.close()
+
 
 from .FritzCallFBF import FBF_dectActive, FBF_faxActive, FBF_rufumlActive, FBF_tamActive, FBF_wlanState  # @UnresolvedImport  # wrong-import-position # pylint: disable=
 class FritzMenu(Screen, HelpableScreen):
@@ -863,7 +879,7 @@ class FritzMenu(Screen, HelpableScreen):
 
 			if ipAddress:
 				if upTime:
-					self["FBFInternet"].setText('Internet ' + _('IP Address:') + ' ' + ipAddress + '\n' + _('Connected since') + ' ' + six.ensure_str(upTime))
+					self["FBFInternet"].setText('Internet ' + _('IP Address:') + ' ' + six.ensure_str(ipAddress) + '\n' + _('Connected since') + ' ' + six.ensure_str(upTime))
 				else:
 					self["FBFInternet"].setText('Internet ' + _('IP Address:') + ' ' + ipAddress)
 				self["internet_inactive"].hide()
@@ -991,12 +1007,14 @@ class FritzMenu(Screen, HelpableScreen):
 				self["gast_inactive"].show()
 				self["FBFGast"].setText(_('Guest access not active'))
 
-			if guestAccess and (guestAccess.find('WLAN') != -1 or guestAccess.find('WIFI') != -1):
-				# TRANSLATORS: keep it short, this is a button
-				self["key_yellow"].setText(_("Deactivate WLAN guest access"))
-			else:
-				# TRANSLATORS: keep it short, this is a button
-				self["key_yellow"].setText(_("Activate WLAN guest access"))
+			if guestAccess is not None:
+				guestAccess = six.ensure_str(guestAccess)
+				if (guestAccess.find('WLAN') != -1 or guestAccess.find('WIFI') != -1):
+					# TRANSLATORS: keep it short, this is a button
+					self["key_yellow"].setText(_("Deactivate WLAN guest access"))
+				else:
+					# TRANSLATORS: keep it short, this is a button
+					self["key_yellow"].setText(_("Activate WLAN guest access"))
 
 		except KeyError:
 			error("[FritzCallFBF] _fillMenu: %s", traceback.format_exc())
@@ -1439,6 +1457,7 @@ class FritzOfferAction(Screen):
 	def _exit(self):
 		self.close()
 
+
 OneHour = 60 * 60 * 1000
 # OneHour = 1000
 class FritzCallPhonebook(object):
@@ -1468,7 +1487,7 @@ class FritzCallPhonebook(object):
 		if not config.plugins.FritzCall.enable.value:
 			return
 
-		phonebookFilenameOld = os.path.join(config.plugins.FritzCall.phonebookLocation.value, "PhoneBook.txt")
+		# phonebookFilenameOld = os.path.join(config.plugins.FritzCall.phonebookLocation.value, "PhoneBook.txt")
 		phonebookFilename = os.path.join(config.plugins.FritzCall.phonebookLocation.value, "PhoneBook.json")
 		if config.plugins.FritzCall.phonebook.value:
 			if os.path.exists(phonebookFilename):
@@ -1973,6 +1992,7 @@ class FritzCallPhonebook(object):
 		def exit(self):
 			self.close()
 
+
 phonebook = FritzCallPhonebook()
 
 class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
@@ -2122,7 +2142,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def setWindowTitle(self):
 		# TRANSLATORS: this is a window title.
-		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1591 $"[1:-1] + "$Date: 2021-04-29 16:52:10 +0200 (Thu, 29 Apr 2021) $"[7:23] + ")")
+		self.setTitle(_("FritzCall Setup") + " (" + "$Revision: 1620 $"[1:-1] + "$Date: 2022-05-07 11:12:32 +0200 (Sat, 07 May 2022) $"[7:23] + ")")
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -2293,6 +2313,7 @@ class FritzCallSetup(Screen, ConfigListScreen, HelpableScreen):
 		else:
 			self.session.open(MessageBox, _("Plugin not enabled"), type = MessageBox.TYPE_INFO)
 
+
 standbyMode = False
 
 class FritzCallList(object):
@@ -2316,7 +2337,7 @@ class FritzCallList(object):
 		# build screen from call list
 		text = "\n"
 
-		if not self.callList: # why is this happening at all?!?!
+		if not self.callList:  # why is this happening at all?!?!
 			text = _("no calls")
 			debug("[FritzCallList] %s", text)
 			return
@@ -2372,6 +2393,7 @@ class FritzCallList(object):
 		# display screen
 		Notifications.AddNotification(MessageBox, text, type = MessageBox.TYPE_INFO)
 		self.callList = []
+
 
 callList = FritzCallList()
 
@@ -2567,6 +2589,7 @@ def runUserActionScript(event, date, number, caller, phone):
 		info("[FritzCall] calling: %s", cmd)
 		eConsoleAppContainer().execute(cmd)
 
+
 userActionList = [runUserActionScript]
 def registerUserAction(fun):
 	#===========================================================================
@@ -2586,8 +2609,9 @@ def registerUserAction(fun):
 	info("[FritzCall] register: %s", fun.__name__)
 	userActionList.append(fun)
 
+
 mutedOnConnID = None
-def notifyCall(event, date, number, caller, phone, connID): # @UnusedVariable # pylint: disable=W0613
+def notifyCall(event, date, number, caller, phone, connID):  # @UnusedVariable # pylint: disable=W0613
 	event = six.ensure_str(event)
 	date = six.ensure_str(date)
 	number = six.ensure_str(number)
@@ -2682,7 +2706,7 @@ class FritzReverseLookupAndNotifier(object):
 
 class FritzProtocol(LineReceiver):  # pylint: disable=W0223
 	def __init__(self):
-		info("[FritzProtocol] %s%s starting", "$Revision: 1591 $"[1:-1], "$Date: 2021-04-29 16:52:10 +0200 (Thu, 29 Apr 2021) $"[7:23])
+		info("[FritzProtocol] %s%s starting", "$Revision: 1620 $"[1:-1], "$Date: 2022-05-07 11:12:32 +0200 (Sat, 07 May 2022) $"[7:23])
 		global mutedOnConnID
 		mutedOnConnID = None
 		self.number = '0'
@@ -2708,10 +2732,10 @@ class FritzProtocol(LineReceiver):  # pylint: disable=W0223
 # 	def pauseEnigma2(self):
 # 		debug("")
 # 		getPage("http://127.0.0.1/web/remotecontrol?command=164").addCallback(self.pauseEnigma2_cb).addErrback(self.pauseEnigma2_eb)
-# 
+#
 # 	def pauseEnigma2_cb(self, result):
 # 		debug(repr(result))
-# 
+#
 # 	def pauseEnigma2_eb(self, result):
 # 		debug(repr(result))
 
@@ -2961,6 +2985,7 @@ def displayFBFStatus(session, servicelist = None):  # @UnusedVariable # pylint: 
 
 def main(session, **kwargs):  # @UnusedVariable  pylint: disable=W0613
 	session.open(FritzCallSetup)
+
 
 fritz_call = None
 
