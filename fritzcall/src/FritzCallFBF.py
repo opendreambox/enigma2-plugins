@@ -3642,7 +3642,7 @@ class FritzCallFBF_upnp():
 
 			if "down" in boxData["internet"] and "up" in boxData["internet"]:
 				connData = boxData["internet"]
-				internetSpeed = connData["down"] + " Mbit/s / " + " / " + connData["up"] + " Mbit/s / "
+				internetSpeed = connData["down"] + " / " + connData["up"]
 				internetSpeed = internetSpeed.replace('\\', '')
 			else:
 				internetSpeed = ""
