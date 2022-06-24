@@ -55,7 +55,7 @@ import xml.etree.cElementTree as Tree
 import shutil
 import os
 # =========================================
-PluginVersion = "v3.0.4"
+PluginVersion = "v3.0.5"
 Title = "MerlinSkinThemes - The Original "
 Author = "by marthom"
 # =========================================
@@ -139,7 +139,10 @@ def initConfigSubDict3():
 # list of display screens (a.k.a. summaries)
 displayScreenList = ["InfoBarSummary", "EventView_summary", "StandbySummary", "InfoBarMoviePlayerSummary", "MerlinMusicPlayer2LCDScreen"]
 # list of screens
-screenList = ["InfoBar", "Menu", "PluginBrowser", "ChannelSelection", "MovieSelection", "MoviePlayer",  "EPGSelection", "GraphMultiEPG", "SecondInfoBar", "EventView", "MessageBox", "InputBox", "ChoiceBox", "Mute", "Volume", "MerlinMusicPlayer2Screen_%s" %(ArchString), "MerlinMusicPlayer2ScreenSaver_%s" %(ArchString)]
+screenList = ["InfoBar", "Menu", "PluginBrowser", "ChannelSelection", "MovieSelection", "MoviePlayer", "EPGSelection", "GraphMultiEPG", "SecondInfoBar", "EventView", "MessageBox", "InputBox", "ChoiceBox", "Mute", "Volume", "MerlinMusicPlayer2Screen_%s" %(ArchString), "MerlinMusicPlayer2ScreenSaver_%s" %(ArchString)]
+# placeholder for skin-defined additional screens
+dependentScreenList = []
+dependentMissingScreenList = []
 # list of themes
 themeList = ["ColorTheme", "SkinPathTheme", "FontTheme",  "BorderSetTheme", "WindowStyleScrollbarTheme", "ComponentTheme", "LayoutTheme", "GlobalsTheme", "PNGTheme" ]
 
@@ -266,7 +269,7 @@ def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 	rootTheme = curTheme.getroot()
 	themeVersion = rootTheme.get('version')
 	if themeVersion is not None:
-		if themeVersion not in ("1.0"):
+		if themeVersion not in ("1.0", "1.1"):
 			return False
 
 	themeDict = {}
@@ -492,14 +495,38 @@ def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 			for currentscreen in currenttheme.findall(theme[1]):
 				screenname = currentscreen.get('name')
 				currentValue = configDict.get("%s" %(screenname))
+				applyFallback = False
 				for screentheme in currentscreen.findall(theme[2]):
-					
 					if screentheme.get('name') == currentValue:
+						# starting with themeVersion 1.1 screenthemes can be dependent
+						if themeVersion == "1.1":
+							# read the attribute depends to get dependency
+							depends = screentheme.get("depends")
+							# dependency requirement found
+							if depends is not None:
+								# but not met
+								if not fileExists(depends):
+									print("[MST] - dependent screen is active but dependency no longer met - set to inactive")
+									applyFallback = True
+									screentheme.set("value", "inactive")
+									continue
 						screentheme.set("value", "active")
 						newscreen = screentheme.find(theme[3])
 						screenDict[screenname]=Tree.tostring(newscreen)
 					else:
 						screentheme.set("value", "inactive")
+						
+				# apply the fallback screen in case the dependent py was removed to avoid greenscreens
+				if themeVersion == "1.1" and applyFallback:
+					for screentheme in currentscreen.findall(theme[2]):
+						if screentheme.get('fallback') is not None:
+							print("[MST] - Found fallback screen. Applying it.")
+							# use the fallback screen
+							screentheme.set("value", "active")
+							newscreen = screentheme.find(theme[3])
+							screenDict[screenname]=Tree.tostring(newscreen)
+							break
+								
 	
 	radiusFound = False	
 
@@ -519,7 +546,7 @@ def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 					radius.set("value", "active")
 				else:
 					radius.set("value", "inactive")
-	elif themeVersion == "1.0":
+	elif themeVersion in ("1.0", "1.1"):
 		designNode = rootTheme.find("designs")
 		if activeDesignName is not None:
 			activeDesign = designNode.find("design[@name='%s']" %(activeDesignName))
@@ -563,21 +590,57 @@ def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 		}
 
 	print("[MST] - applying screens")
+	
+	if themeVersion == "1.1":
+
+		dependentScreens = rootTheme.find('dependentscreens')
+		if dependentScreens is not None:
+			for dependentScreen in dependentScreens.findall('screen[@depends]'):
+				dependency = dependentScreen.get('depends')
+				screenname = dependentScreen.get('name')
+				if fileExists(dependency):
+					if screenname is not None and not screenname in dependentScreenList:
+						dependentScreenList.append(screenname)
+				else:
+					if screenname is not None:
+						dependentMissingScreenList.append(screenname)
+
+	tempScreenNameList = []
 	for screen in rootSkin.findall('screen'):
 		screenname = screen.get('name')
+		tempScreenNameList.append(screenname)
 			
 		screenId = screen.get('id')
 		if screenId is not None and screenId != IdString:
 			continue
 
 		screenData = screenDict.get(screenname)
+
 		if screenData is not None:
 			
 			# delete old screen
 			rootSkin.remove(screen)
 			
-			# insert new screen
-			rootSkin.append(Tree.fromstring(screenData))
+			# insert new screen but only if it is not a dependentScreen that's not installed anymore
+			if not screenname in dependentMissingScreenList:
+				rootSkin.append(Tree.fromstring(screenData))
+		else:
+			if themeVersion == "1.1":
+				for missingScreen in dependentMissingScreenList:
+					if missingScreen in tempScreenNameList:
+						print("[MST] - found screen %s in dependentScreenMissingList and in skin. Removing it." %(missingScreen))
+						rootSkin.remove(screen)				
+			
+	if themeVersion == "1.1":
+
+		for screen in dependentScreenList:
+			if not screen in tempScreenNameList:
+				print("[MST] - found screen %s in dependentScreenList but missing in skin. Adding it." %(screen))
+				screenData = screenDict.get(screenname)
+
+				if screenData is not None:
+					# insert missing screen
+					rootSkin.append(Tree.fromstring(screenData))
 
 	print("[MST] - applying themes")
 	# themes must be applied post screens as skinpaththemes update paths in screens
@@ -1130,12 +1193,26 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		
 		self.continueProcessing = True
 		if self.themeVersion is not None:
-			if self.themeVersion not in ("1.0"):
+			if self.themeVersion not in ("1.0", "1.1"):
 				self.continueProcessing = False
 				self.ok(False)
 
 		if self.continueProcessing:
 			self.themeDict = {}
+			
+			# dependentscreens are only supported in themes with version 1.1 and newer
+			if self.themeVersion == "1.1":
+				dependentScreens = xmlroot.find('dependentscreens')
+				if dependentScreens is not None:
+					for dependentScreen in dependentScreens.findall('screen[@depends]'):
+						dependency = dependentScreen.get('depends')
+						if fileExists(dependency):
+							screenname = dependentScreen.get('name')
+						
+							if screenname is not None:
+								dependentScreenList.append(screenname)
+							
+								print("[MST] - found the following dependent screen %s" %(screenname))
 		
 			# <xyztheme></xyztheme>
 			for themeType in themeList:
@@ -1156,11 +1233,23 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			# <screenthemes><screens><screentheme><screen></screen></screentheme></screens></screenthemes>
 			scrt = xmlroot.find("screenthemes")
 			if scrt is not None:
-				for screen in screenList:
+				# check for dependent screens in theme
+				
+				for screen in screenList + dependentScreenList:
 					themes = []			
 					scr = scrt.find('screens[@name="%s"]' %(screen))
 					if scr is not None:
 						for screenOption in scr.findall("screentheme"):
+							# starting with themeVersion 1.1 screenthemes can be dependent
+							if self.themeVersion == "1.1":
+								# read the attribute depends to get dependency
+								depends = screenOption.get("depends")
+								# dependency requirement found
+								if depends is not None:
+									# but not met
+									if not fileExists(depends):
+										# don't return
+										continue
 							themes.append((screenOption.get("name"),screenOption.get("value") == "active"))
 					self.themeDict[screen] = themes
 
@@ -1174,6 +1263,16 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						if lscr is not None:
 							for screenOption in lscr.findall(displayTag[:-1]):
 								if screenOption.find('screen[@id="%s"]' %(IdString)) is not None:
+									# starting with themeVersion 1.1 screenthemes can be dependent
+									if self.themeVersion == "1.1":
+										# read the attribute depends to get dependency
+										depends = screenOption.get("depends")
+										# dependency requirement found
+										if depends is not None:
+											# but not met
+											if not fileExists(depends):
+												# don't return
+												continue								
 									themes.append((screenOption.get("name"),screenOption.get("value") == "active"))
 						self.themeDict[screen] = themes
 
@@ -1370,7 +1469,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						
 					else:
 						# for each screen in the design set the value to the selected design
-						for screenname in screenList:
+						for screenname in screenList + dependentScreenList:
 							tmp = design.find(screenname)
 							defaultValue = None
 							if tmp is not None:
@@ -1809,7 +1908,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			# first let's parse the selected skin
 			skinTree = Tree.parse(MerlinSkinThemes.selSkinFile)
 			
-			newTheme = Tree.Element("themes", {"version": "1.0"})
+			newTheme = Tree.Element("themes", {"version": "1.1"})
 			newThemeTree = Tree.ElementTree(newTheme)
 			
 			# theme.xml : skin.xml
@@ -1937,25 +2036,27 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			screenthemes = Tree.SubElement(newTheme, "screenthemes")
 			for screenname in screenList:
 				screennode = Tree.SubElement(screenthemes, "screens", {"name": screenname })
-				newNodeOrg = Tree.SubElement(screennode, "screentheme", {"name": "original", "value": "active"})
-				newNodeWork = Tree.SubElement(screennode, "screentheme", {"name": "original - work", "value": "inactive"})
+				newNodeOrg = Tree.SubElement(screennode, "screentheme", {"name": "original", "value": "active", "fallback": "1"})
+				newNodeWork = Tree.SubElement(screennode, "screentheme", {"name": "original - work", "value": "inactive", "depends": "path-to-py" })
 				
 				skinElementList = skinTree.findall("screen[@name='%s']" %(screenname))
 				for element in skinElementList:
 					newNodeOrg.append(Tree.fromstring(Tree.tostring(element)))
 					newNodeWork.append(Tree.fromstring(Tree.tostring(element)))
+					newNodeWork.append(Tree.Comment("Set depends to the path of a py-file that must be present for the screen to work. Ensure that you set fallback='1' for a screen that does not have a dependency to avoid greenscreen in case the dependency is no longer fulfilled."))
 
 			# displayscreenthemes
 			if displayTag is not None:
 				displayscreenthemes = Tree.SubElement(newTheme, displayTag)
 				for displayscreenname in displayScreenList: 
 					displayscreennode = Tree.SubElement(displayscreenthemes, "screens", {"name": displayscreenname, "id": IdString})
-					newNodeOrg = Tree.SubElement(displayscreennode, displayTag[:-1], {"name": "original", "value": "active"})
-					newNodeWork = Tree.SubElement(displayscreennode, displayTag[:-1], {"name": "original - work", "value": "inactive"})
+					newNodeOrg = Tree.SubElement(displayscreennode, displayTag[:-1], {"name": "original", "value": "active", "fallback": "1"})
+					newNodeWork = Tree.SubElement(displayscreennode, displayTag[:-1], {"name": "original - work", "value": "inactive", "depends": "path-to-py"})
 					skinElementList = skinTree.findall("screen[@name='%s'][@id='%s']" %(displayscreenname, IdString))
 					for element in skinElementList:
 						newNodeOrg.append(Tree.fromstring(Tree.tostring(element)))
-						newNodeWork.append(Tree.fromstring(Tree.tostring(element)))				
+						newNodeWork.append(Tree.fromstring(Tree.tostring(element)))
+						newNodeWork.append(Tree.Comment("Set depends to the path of a py-file that must be present for the screen to work. Ensure that you set fallback='1' for a screen that does not have a dependency to avoid greenscreen in case the dependency is no longer fulfilled."))			
 
 			designs = Tree.SubElement(newTheme, "designs")
 			design1 = Tree.SubElement(designs, "design", {"name": "Design 1", "value": "active"})
