@@ -1,4 +1,4 @@
-﻿# -*- coding: UTF-8 -*-
+# -*- coding: UTF-8 -*-
 from Plugins.Plugin import PluginDescriptor
 from Tools.Downloader import downloadWithProgress
 from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS
@@ -233,7 +233,7 @@ class IMDB(Screen):
 		self.ratingmask = re.compile('<span.*?aggregate-rating__score.*?><span.*?>(?P<rating>.*?)</span>.*?<span.*?class=.*?class=.*?>(?P<ratingcount>.*?)</div', re.S)
 		self.castmask = re.compile('title-cast-item__actor.*?>(?P<actor>.*?)</a>(?:<div.*?<ul.*?>(?P<character>.*?)</span.*?</ul></div>)?(?:<a.*?><span><span.*?>(?P<episodes>.*?)</span></span>)?', re.S)
 		self.postermask = re.compile('<div.*?ipc-media--poster.*?<img.*?ipc-image.*?src="(http.*?)"', re.S)
-		self.storylinemask = re.compile('<section.*?<div.*?<div.*?<hgroup.*?<h3.*?>(?P<g_storyline>Storyline)</h3>.*?<div.*?<div.*?<div.*?<div.*?>(?P<storyline>.+?)<span', re.S)
+		self.storylinemask = re.compile('data-testid="storyline.*?<span>(?P<g_storyline>Storyline)</span>.*?ipc-html-content-inner-div.*?>(?P<storyline>.*?)</div', re.S)
 
 		self.htmltags = re.compile('<.*?>', re.S)
 		self.allhtmltags = re.compile('<.*>', re.S)
