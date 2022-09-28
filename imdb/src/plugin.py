@@ -233,7 +233,7 @@ class IMDB(Screen):
 		self.ratingmask = re.compile('<span.*?aggregate-rating__score.*?><span.*?>(?P<rating>.*?)</span>.*?<span.*?class=.*?class=.*?>(?P<ratingcount>.*?)</div', re.S)
 		self.castmask = re.compile('title-cast-item__actor.*?>(?P<actor>.*?)</a>(?:<div.*?<ul.*?>(?P<character>.*?)</span.*?</ul></div>)?(?:<a.*?><span><span.*?>(?P<episodes>.*?)</span></span>)?', re.S)
 		self.postermask = re.compile('<div.*?ipc-media--poster.*?<img.*?ipc-image.*?src="(http.*?)"', re.S)
-		self.storylinemask = re.compile('data-testid="storyline.*?<span>(?P<g_storyline>Storyline)</span>.*?ipc-html-content-inner-div.*?>(?P<storyline>.*?)</div', re.S)
+		self.storylinemask = re.compile('<span.*?role="presentation".*?data-testid="plot-xl".*?>(?P<storyline>.*?)</span>.*?</div>.*?data-testid="storyline.*?<span>(?P<g_storyline>Storyline)</span>', re.S)
 
 		self.htmltags = re.compile('<.*?>', re.S)
 		self.allhtmltags = re.compile('<.*>', re.S)
@@ -337,7 +337,7 @@ class IMDB(Screen):
 			self.Page = 1
 
 	def showExtras(self):
-		if self.Page == 1:
+		if self.Page == 1 and self['key_blue'].getText():
 			self["extralabel"].show()
 			self["detailslabel"].hide()
 			self["castlabel"].hide()
@@ -477,6 +477,9 @@ class IMDB(Screen):
 	def IMDBquery(self, data):
 		self["statusbar"].setText(_("IMDb Download completed"))
 		self.html2utf8(data)
+		# logfile = open("/media/hdd/imdb.html", "w")
+		# logfile.write(self.inhtml)
+		# logfile.close()
 		print('###############1')
 		self.generalinfos = self.generalinfomask.search(self.inhtml)
 		if self.generalinfos:
@@ -530,6 +533,9 @@ class IMDB(Screen):
 	def IMDBquery2(self, data):
 		self["statusbar"].setText(_("IMDb Re-Download completed"))
 		self.html2utf8(data)
+		# logfile = open("/media/hdd/imdb.html", "w")
+		# logfile.write(self.inhtml)
+		# logfile.close()
 		print('###############3')
 		self.generalinfos = self.generalinfomask.search(self.inhtml)
 		self.IMDBparse()
@@ -721,11 +727,11 @@ class IMDB(Screen):
 
 			if Extratext:
 				self["extralabel"].setText(Extratext.strip('\n'))
-				self["extralabel"].hide()
 				self["key_blue"].setText(_("Extra Info"))
 			else:
 				self["key_blue"].setText("")
 
+		self["extralabel"].hide()
 		self["detailslabel"].setText(str(Detailstext))
 
 	def IMDBPoster(self, string):
