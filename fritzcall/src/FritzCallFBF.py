@@ -3642,7 +3642,8 @@ class FritzCallFBF_upnp():
 
 			if "down" in boxData["internet"] and "up" in boxData["internet"]:
 				connData = boxData["internet"]
-				internetSpeed = connData["down"] + " / " + connData["up"]
+				# internetSpeed = connData["down"] + " Mbit/s / " + " / " + connData["up"] + " Mbit/s / "
+				internetSpeed = connData["down"] + " / " + connData["up"]  # already has Mbit/s
 				internetSpeed = internetSpeed.replace('\\', '')
 			else:
 				internetSpeed = ""
@@ -3688,9 +3689,9 @@ class FritzCallFBF_upnp():
 					self.debug("3")
 					if "downstream" in connData and "upstream" in connData:
 						if internetSpeed:
-							internetSpeed = internetSpeed + ", " + str(connData["downstream"] / 1000) + " Mb/s / " + str(connData["upstream"] / 1000) + " Mb/s"
+							internetSpeed = internetSpeed + ", " + str(connData["downstream"] / 1000) + " Mbit/s / " + str(connData["upstream"] / 1000) + " Mbit/s"
 						else:
-							internetSpeed = str(connData["downstream"] / 1000) + " Mb/s / " + str(connData["upstream"] / 1000) + " Mb/s"
+							internetSpeed = str(connData["downstream"] / 1000) + " Mbit/s / " + str(connData["upstream"] / 1000) + " Mbit/s"
 					self.debug("4")
 					if connData["ipv4"]["connected"]:
 						if upTime:
@@ -3825,7 +3826,7 @@ class FritzCallFBF_upnp():
 			elif connData["led"] == "led green":  # form 07.39
 				dslState = ['5', None, None]
 				# dslState[1] = "{:.}".format(connData["down"]) + " / " + "{:.}".format(connData["up"])
-				dslState[1] = str(connData["down"] / 1000) + " Mb/s / " + str(connData["up"] / 1000) + " Mb/s"
+				dslState[1] = str(connData["down"] / 1000) + " Mbit/s / " + str(connData["up"] / 1000) + " Mbit/s"
 				dslState[2] = connData["title"]
 				if internetSpeed and internetSpeed != dslState[1]:
 					dslState[1] = dslState[1] + "; Internet: " + internetSpeed
