@@ -81,9 +81,16 @@ config.plugins.merlinEpgCenter.replaceInfobarEpg = ConfigYesNo(False)
 config.plugins.merlinEpgCenter.replaceInfobarChannelUp = ConfigSelection(default = "-1", choices = TAB_CHOICES)
 config.plugins.merlinEpgCenter.replaceInfobarChannelDown = ConfigSelection(default = "-1", choices = TAB_CHOICES)
 config.plugins.merlinEpgCenter.replaceShowEventView = ConfigSelection(default = "-1", choices = TAB_CHOICES)
-config.plugins.merlinEpgCenter.epgPaths = ConfigSelection(default = eEnv.resolve('${datadir}/enigma2/picon_50x30/'), choices = [
-				(eEnv.resolve('${datadir}/enigma2/picon_50x30/'), eEnv.resolve('${datadir}/enigma2/picon_50x30')),
-				])
+from os import path as os_path
+if os_path.ismount("/data"):
+	config.plugins.merlinEpgCenter.epgPaths = ConfigSelection(default = eEnv.resolve('${datadir}/enigma2/picon_50x30/'), choices = [
+		(eEnv.resolve('${datadir}/enigma2/picon_50x30/'), eEnv.resolve('${datadir}/enigma2/picon_50x30')), (eEnv.resolve('/data/picon_50x30/'), eEnv.resolve('/data/picon_50x30')),
+		])
+else:
+	config.plugins.merlinEpgCenter.epgPaths = ConfigSelection(default = eEnv.resolve('${datadir}/enigma2/picon_50x30/'), choices = [
+		(eEnv.resolve('${datadir}/enigma2/picon_50x30/'), eEnv.resolve('${datadir}/enigma2/picon_50x30')), 
+		])
+
 config.plugins.merlinEpgCenter.showColoredEpgTimes = ConfigYesNo(True)
 config.plugins.merlinEpgCenter.searchString = NoSave(ConfigText(default = ""))
 config.plugins.merlinEpgCenter.searchHistory = ConfigSet(choices = [])

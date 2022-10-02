@@ -16,8 +16,8 @@ class MerlinSkinThemesHelpList(MenuList):
 		
 		sizes = componentSizes[MerlinSkinThemesHelpList.SKIN_COMPONENT_KEY]
 		self.componentItemHeight = sizes.get(MerlinSkinThemesHelpList.SKIN_COMPONENT_ITEM_HEIGHT, 40)
-		self.keyWidth = sizes.get(MerlinSkinThemesHelpList.SKIN_COMPONENT_KEY_WIDTH, 250)
-		self.descrWidth = sizes.get(MerlinSkinThemesHelpList.SKIN_COMPONENT_DESCR_WIDTH, 750)
+		self.keyWidth = sizes.get(MerlinSkinThemesHelpList.SKIN_COMPONENT_KEY_WIDTH, 150)
+		self.descrWidth = sizes.get(MerlinSkinThemesHelpList.SKIN_COMPONENT_DESCR_WIDTH, 1050)
 		
 		tlf = TemplatedListFonts()
 		self.l.setFont(0, gFont(tlf.face(tlf.MEDIUM), tlf.size(tlf.MEDIUM)))
@@ -33,8 +33,8 @@ class MerlinSkinThemesHelpList(MenuList):
 
 class MerlinSkinThemesHelp(Screen):
 	skin = """
-		<screen position="center,center" size="1000,400" title="MerlinSkinThemes - Help" backgroundColor="#00303030" >
-			<widget name="help" position="0,0" size="1000,360" scrollbarMode="showNever" transparent="1" zPosition="2"/>
+		<screen position="center,center" size="1200,400" title="MerlinSkinThemes - Help" backgroundColor="#00303030" >
+			<widget name="help" position="0,0" size="1200,360" scrollbarMode="showNever" transparent="1" zPosition="2"/>
 		</screen>"""
 		
 	def __init__(self, session, helpType="skin"):
