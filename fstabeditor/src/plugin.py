@@ -73,21 +73,29 @@ class fstabMenuList(MenuList):
 		self.l.setFont(1, gFont(tlf.face(tlf.SMALL), tlf.size(tlf.SMALL)))
 		
 def fstabMenuListEntry(devicename, mountpoint,fstype, options, dumpfreq, passnum):
+	sizes = componentSizes[fstabViewerScreen.SKIN_COMPONENT_KEY]
+	textPos = sizes.get(fstabViewerScreen.SKIN_COMPONENT_TEXT_POS, 0)
+	text2Pos = sizes.get(fstabViewerScreen.SKIN_COMPONENT_TEXT2_POS, 270)
+	textWidth = sizes.get(fstabViewerScreen.SKIN_COMPONENT_TEXT_WIDTH, 250)
+	text2Width = sizes.get(fstabViewerScreen.SKIN_COMPONENT_TEXT2_WIDTH, 800)
+	textHeight = sizes.get(fstabViewerScreen.SKIN_COMPONENT_TEXT_HEIGHT, 30)
+	itemMargin = sizes.get(fstabViewerScreen.SKIN_COMPONENT_ITEM_MARGIN, 15)
+	itemMargin2 = sizes.get(fstabViewerScreen.SKIN_COMPONENT_ITEM_MARGIN2, 18)
+
 	res = [ (devicename, mountpoint,fstype, options, dumpfreq, passnum) ]
-	res.append(MultiContentEntryText(pos=(270,15),size=(800,30), font=0, text=devicename))
-	res.append(MultiContentEntryText(pos=(270,60),size=(800,30), font=0, text=mountpoint))
-	res.append(MultiContentEntryText(pos=(270,90),size=(800,30), font=0, text=fstype))
-	res.append(MultiContentEntryText(pos=(270,120),size=(800,30), font=0, text=options))
-	res.append(MultiContentEntryText(pos=(270,150),size=(800,30), font=0, text=dumpfreq))
-	res.append(MultiContentEntryText(pos=(270,180),size=(800,30), font=0, text=passnum))
-	res.append(MultiContentEntryText(pos=(0,17),size=(250,30), font=1, flags=RT_HALIGN_RIGHT, text="Device name:"))
-	res.append(MultiContentEntryText(pos=(0,62),size=(250,30), font=1, flags=RT_HALIGN_RIGHT, text="Mount point:"))
-	res.append(MultiContentEntryText(pos=(0,92),size=(250,30), font=1, flags=RT_HALIGN_RIGHT, text="File system type:"))
-	res.append(MultiContentEntryText(pos=(0,122),size=(250,30), font=1, flags=RT_HALIGN_RIGHT, text="Options:"))
-	res.append(MultiContentEntryText(pos=(0,152),size=(250,30), font=1, flags=RT_HALIGN_RIGHT, text="Dump frequency:"))
-	res.append(MultiContentEntryText(pos=(0,182),size=(250,30), font=1, flags=RT_HALIGN_RIGHT, text="Pass number:"))
+	res.append(MultiContentEntryText(pos=(text2Pos,itemMargin),size=(text2Width,textHeight), font=0, text=devicename))
+	res.append(MultiContentEntryText(pos=(text2Pos,itemMargin+textHeight),size=(text2Width,textHeight), font=0, text=mountpoint))
+	res.append(MultiContentEntryText(pos=(text2Pos,itemMargin+textHeight*2),size=(text2Width,textHeight), font=0, text=fstype))
+	res.append(MultiContentEntryText(pos=(text2Pos,itemMargin+textHeight*3),size=(text2Width,textHeight), font=0, text=options))
+	res.append(MultiContentEntryText(pos=(text2Pos,itemMargin+textHeight*4),size=(text2Width,textHeight), font=0, text=dumpfreq))
+	res.append(MultiContentEntryText(pos=(text2Pos,itemMargin+textHeight*5),size=(text2Width,textHeight), font=0, text=passnum))
+	res.append(MultiContentEntryText(pos=(textPos,itemMargin2),size=(textWidth,textHeight), font=1, flags=RT_HALIGN_RIGHT, text="Device name:"))
+	res.append(MultiContentEntryText(pos=(textPos,itemMargin2+textHeight),size=(textWidth,textHeight), font=1, flags=RT_HALIGN_RIGHT, text="Mount point:"))
+	res.append(MultiContentEntryText(pos=(textPos,itemMargin2+textHeight*2),size=(textWidth,textHeight), font=1, flags=RT_HALIGN_RIGHT, text="File system type:"))
+	res.append(MultiContentEntryText(pos=(textPos,itemMargin2+textHeight*3),size=(textWidth,textHeight), font=1, flags=RT_HALIGN_RIGHT, text="Options:"))
+	res.append(MultiContentEntryText(pos=(textPos,itemMargin2+textHeight*4),size=(textWidth,textHeight), font=1, flags=RT_HALIGN_RIGHT, text="Dump frequency:"))
+	res.append(MultiContentEntryText(pos=(textPos,itemMargin2+textHeight*5),size=(textWidth,textHeight), font=1, flags=RT_HALIGN_RIGHT, text="Pass number:"))
 	return res
-	
 	
 class fstabViewerScreen(Screen,HelpableScreen):
 	skin = """
@@ -106,6 +114,15 @@ class fstabViewerScreen(Screen,HelpableScreen):
 		<widget name="entryinfo" position="10,310" size="800,25" font="Regular;22" halign="center" />
 		</screen>"""
 		
+	SKIN_COMPONENT_KEY = "fstabViewer"
+	SKIN_COMPONENT_TEXT_POS = "textPos"
+	SKIN_COMPONENT_TEXT2_POS = "text2Pos"
+	SKIN_COMPONENT_TEXT_WIDTH = "textWidth"
+	SKIN_COMPONENT_TEXT2_WIDTH = "text2Width"
+	SKIN_COMPONENT_TEXT_HEIGHT = "textHeight"
+	SKIN_COMPONENT_ITEM_MARGIN = "itemMargin"
+	SKIN_COMPONENT_ITEM_MARGIN2 = "itemMargin2"
+
 	def __init__(self, session, args = 0):
 		self.skin = fstabViewerScreen.skin
 		self.session = session
