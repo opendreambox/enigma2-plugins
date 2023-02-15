@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-import os
-from Components.ConfigList import ConfigListScreen
 from Screens.Screen import Screen
 from Components.Label import Label
-from Components.ActionMap import HelpableActionMap, ActionMap, NumberActionMap
+from Components.ActionMap import ActionMap
 
 from Components.Input import Input
 from Screens.InputBox import InputBox

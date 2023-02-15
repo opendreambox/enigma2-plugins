@@ -2,7 +2,7 @@ from Components.Converter.Converter import Converter
 from Components.Element import cached, ElementError
 from enigma import iServiceInformation, eServiceReference
 from ServiceReference import ServiceReference
-from MovieList import MovieList
+from MovieList import SfMovieList
 
 class MovieInfo(Converter, object):
 	MOVIE_SHORT_DESCRIPTION = 0 # meta description when available.. when not .eit short description
@@ -30,7 +30,7 @@ class MovieInfo(Converter, object):
 		if info and service:
 			if self.type == self.MOVIE_SHORT_DESCRIPTION:
 				if service.type == (eServiceReference.idUser | eServiceReference.idDVB):
-					s = MovieList.getVirtDirStatistics(info.getName(service))
+					s = SfMovieList.getVirtDirStatistics(info.getName(service))
 					if s:
 						return s
 				event = self.source.event

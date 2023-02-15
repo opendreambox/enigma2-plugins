@@ -3,12 +3,12 @@ from Screens.Screen import Screen
 from Components.Button import Button
 from Components.ActionMap import HelpableActionMap, ActionMap
 from Components.MenuList import MenuList
-from MovieList import MovieList
+from MovieList import SfMovieList
 from Components.DiskInfo import DiskInfo
 from Components.Pixmap import Pixmap
 from Components.Label import Label
 from Components.PluginComponent import plugins
-from Components.config import config, ConfigSubsection, ConfigText, ConfigInteger, ConfigLocations, ConfigSet
+from Components.config import config, ConfigText, ConfigInteger
 from Components.Sources.ServiceEvent import ServiceEvent
 from Components.UsageConfig import defaultMoviePath
 
@@ -25,9 +25,9 @@ from Tools.BoundFunction import boundFunction
 from enigma import eServiceReference, eServiceCenter, eTimer, eSize, iServiceInformation
 from SerienFilm import EpiSepCfg
 
-config.movielist.sfmoviesort = ConfigInteger(default=MovieList.SORT_RECORDED)
-config.movielist.sflisttype = ConfigInteger(default=MovieList.LISTTYPE_MINIMAL)
-config.movielist.sftimes = ConfigInteger(default=MovieList.SHOW_DURATION | MovieList.SHOW_DIRECTORIES)
+config.movielist.sfmoviesort = ConfigInteger(default=SfMovieList.SORT_RECORDED)
+config.movielist.sflisttype = ConfigInteger(default=SfMovieList.LISTTYPE_MINIMAL)
+config.movielist.sftimes = ConfigInteger(default=SfMovieList.SHOW_DURATION | SfMovieList.SHOW_DIRECTORIES)
 config.movielist.sftitle_episode_separator = ConfigText(default=_(": "))
 
 def setPreferredTagEditor(te):
@@ -65,30 +65,30 @@ class MovieContextMenu(Screen):
 		menu = [(_("delete..."), self.delete)]
 		menu.extend([(p.description, boundFunction(self.execPlugin, p)) for p in plugins.getPlugins(PluginDescriptor.WHERE_MOVIELIST)])
 
-		if config.movielist.sfmoviesort.value == MovieList.SORT_ALPHANUMERIC:
-			menu.append((_("sort by date  (quick toggle by key 0)"), boundFunction(self.sortBy, MovieList.SORT_RECORDED)))
+		if config.movielist.sfmoviesort.value == SfMovieList.SORT_ALPHANUMERIC:
+			menu.append((_("sort by recording date (toggle with [0])"), boundFunction(self.sortBy, SfMovieList.SORT_RECORDED)))
 		else:
-			menu.append((_("alphabetic sort  (quick toggle by key 0)"), boundFunction(self.sortBy, MovieList.SORT_ALPHANUMERIC)))
+			menu.append((_("sort alphabetically (toggle with [0])"), boundFunction(self.sortBy, SfMovieList.SORT_ALPHANUMERIC)))
 
 		menu.extend((
-			(_("list style elaborately"), boundFunction(self.listType, MovieList.LISTTYPE_ORIGINAL)),
-			(_("list style compact with service  (quick toggle by key 8)"), boundFunction(self.listType, MovieList.LISTTYPE_COMPACT_SERVICE)),
-			(_("list style compact with tags  (quick toggle by key 8)"), boundFunction(self.listType, MovieList.LISTTYPE_COMPACT_TAGS)),
-			(_("list style single line  (key = service, 8 = tags)"), boundFunction(self.listType, MovieList.LISTTYPE_MINIMAL))
+			(_("list style 'full'"), boundFunction(self.listType, SfMovieList.LISTTYPE_FULL)),
+			(_("list style 'compact with service'  (toggle with [8])"), boundFunction(self.listType, SfMovieList.LISTTYPE_COMPACT_SERVICE)),
+			(_("list style 'compact with tags'  (toggle with [8])"), boundFunction(self.listType, SfMovieList.LISTTYPE_COMPACT_TAGS)),
+			(_("list style 'single line'"), boundFunction(self.listType, SfMovieList.LISTTYPE_MINIMAL))
 		))
-		if config.movielist.sftimes.value & MovieList.SHOW_RECORDINGTIME:
-			menu.append((_("hide recordingtime"), boundFunction(self.showTimes, MovieList.SHOW_RECORDINGTIME)))
+		if config.movielist.sftimes.value & SfMovieList.SHOW_RECORDINGTIME:
+			menu.append((_("hide recordingtime"), boundFunction(self.showTimes, SfMovieList.SHOW_RECORDINGTIME)))
 		else:
-			menu.append((_("show recordingtime"), boundFunction(self.showTimes, MovieList.SHOW_RECORDINGTIME)))
-		if config.movielist.sftimes.value & MovieList.SHOW_DURATION:
-			menu.append((_("hide duration"), boundFunction(self.showTimes, MovieList.SHOW_DURATION)))
+			menu.append((_("show recordingtime"), boundFunction(self.showTimes, SfMovieList.SHOW_RECORDINGTIME)))
+		if config.movielist.sftimes.value & SfMovieList.SHOW_DURATION:
+			menu.append((_("hide duration"), boundFunction(self.showTimes, SfMovieList.SHOW_DURATION)))
 		else:
-			menu.append((_("show duration"), boundFunction(self.showTimes, MovieList.SHOW_DURATION)))
-		menu.append((_("Configuration of the title:episode separator"), boundFunction(self.sfconfigure, None)))
-		if config.movielist.sftimes.value & MovieList.SHOW_DIRECTORIES:
-			menu.append((_("hide the red real directories"), boundFunction(self.showTimes, MovieList.SHOW_DIRECTORIES)))
+			menu.append((_("show duration"), boundFunction(self.showTimes, SfMovieList.SHOW_DURATION)))
+		menu.append((_("configuration of title:episode separator"), boundFunction(self.sfconfigure, None)))
+		if config.movielist.sftimes.value & SfMovieList.SHOW_DIRECTORIES:
+			menu.append((_("hide the red real directories"), boundFunction(self.showTimes, SfMovieList.SHOW_DIRECTORIES)))
 		else:
-			menu.append((_("show real directories in red"), boundFunction(self.showTimes, MovieList.SHOW_DIRECTORIES)))
+			menu.append((_("show real directories in red"), boundFunction(self.showTimes, SfMovieList.SHOW_DIRECTORIES)))
 
 		self["menu"] = MenuList(menu)
 
@@ -115,7 +115,7 @@ class MovieContextMenu(Screen):
 #		print "[SF-Plugin] MovieContextMenu:showTimes"
 		config.movielist.sftimes.value ^= newType
 		self.csel.setShowTimes(config.movielist.sftimes.value)
-		if newType == MovieList.SHOW_DIRECTORIES:
+		if newType == SfMovieList.SHOW_DIRECTORIES:
 			self.csel.reloadList()
 #		self.csel.updateDescription()
 		self.close()
@@ -236,7 +236,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo):
 #			print "[SF-Plugin] MovieSelection.MovieSelection: save" + config.movielist.last_videodir.value
 		self.current_ref = eServiceReference("2:0:1:0:0:0:0:0:0:0:" + config.movielist.last_videodir.value)
 
-		self["list"] = MovieList(None,
+		self["list"] = SfMovieList(None,
 			config.movielist.sflisttype.value,
 			config.movielist.sfmoviesort.value,
 			config.movielist.sftimes.value,
@@ -288,7 +288,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo):
 				"0": (self.toggleSort, _("Toggle date / alphabetic sort mode")),
 				"deleteBackward": (self.moveToIndexStrt, _("Jump to listbegin")),
 				"deleteForward": (self.moveToIndexEnd, _("Jump to listend")),
-				"5": (self.toggleMinimal, _("Toggle style minimal / compact")),
+				"5": (self.toggleListType, _("Toggle style minimal / compact / full")),
 				"8": (self.toggleTags, _("Toggle description / tags display")),
 			})
 
@@ -298,17 +298,24 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo):
 		self.inited = False
 
 	def toggleSort(self):
+		config.movielist.sfmoviesort.value = SfMovieList.SORT_ALPHANUMERIC if config.movielist.sfmoviesort.value == SfMovieList.SORT_RECORDED else SfMovieList.SORT_RECORDED
 		self["list"].toggleSort()
 
-	def toggleMinimal(self):
-		self.toggleTags(config.movielist.sflisttype.value & MovieList.LISTTYPE_COMPACT_TAGS or MovieList.LISTTYPE_COMPACT_SERVICE)
+	def toggleListType(self):
+		listType = {
+			SfMovieList.LISTTYPE_MINIMAL : SfMovieList.LISTTYPE_COMPACT_SERVICE,
+			SfMovieList.LISTTYPE_COMPACT_SERVICE : SfMovieList.LISTTYPE_COMPACT_TAGS,
+			SfMovieList.LISTTYPE_COMPACT_TAGS : SfMovieList.LISTTYPE_FULL,
+			SfMovieList.LISTTYPE_FULL : SfMovieList.LISTTYPE_MINIMAL
+		}.get(config.movielist.sflisttype.value, SfMovieList.LISTTYPE_FULL)
+		self.toggleTags(listType)
 
-	def toggleTags(self, toggletype = MovieList.LISTTYPE_COMPACT):
-		if self.toggletype == toggletype:
-			self.toggletype = 0
-		else:
-			self.toggletype = toggletype
-		self["list"].setListType(config.movielist.sflisttype.value ^ self.toggletype)
+	def toggleTags(self, listType=None):
+		if not listType:
+			listType =  SfMovieList.LISTTYPE_COMPACT_SERVICE if config.movielist.sflisttype.value == SfMovieList.LISTTYPE_COMPACT_TAGS else SfMovieList.LISTTYPE_COMPACT_TAGS
+		config.movielist.sflisttype.value = listType
+		config.movielist.sflisttype.save()
+		self["list"].setListType(listType)
 
 	def moveToIndexStrt(self):
 		self["list"].moveToIndex(0)

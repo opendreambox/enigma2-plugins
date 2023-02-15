@@ -1,30 +1,75 @@
 # -*- coding: utf-8 -*-
 
-from Components.GUIComponent import GUIComponent
-from Tools.FuzzyDate import FuzzyTime
-from ServiceReference import ServiceReference
-from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixmapAlphaTest
+from enigma import eEnv, eListbox, iServiceInformation, eServiceReference, eServiceCenter, eSize, getDesktop
 from Components.config import config
+from Components.GUIComponent import GUIComponent
+from Components.TemplatedMultiContentComponent import TemplatedMultiContentComponent
+from Components.UsageConfig import defaultMoviePath
+from ServiceReference import ServiceReference
 from Tools.Directories import fileExists
+from Tools.FuzzyDate import FuzzyTime
 from Tools.LoadPixmap import LoadPixmap
-from Components.UsageConfig import preferredPath, defaultMoviePath
-from enigma import eEnv
+
+from skin import loadPixmap as skinLoadPixmap
+
 from glob import glob
-import copy
 import os.path
 
-from enigma import eListboxPythonMultiContent, eListbox, gFont, iServiceInformation, \
-	RT_HALIGN_LEFT, RT_HALIGN_RIGHT, eServiceReference, eServiceCenter
 
-class MovieList(GUIComponent):
+class SfItemIter(object):
+	def __init__(self, sfitem):
+		self._item = sfitem
+		self.index = 0
+
+	def __next__(self):
+		if self.index == 8:
+			raise StopIteration
+		self.index += 1
+		return self._item.list[self.index - 1]
+
+class SfItem(object):
+	def __init__(self, entryType, pixmap, sfindex, title, description, service, duration=-1):
+		self.type = entryType
+		self.pixmap = pixmap
+		self.sfindex = sfindex if sfindex else ""
+		self.title = title
+		self.description = description
+		self.service = service
+		self.duration = duration
+
+	def getList(self):
+		return [self.type, self.pixmap, self.sfindex, self.title, self.description, self.service, self.duration]
+
+	def __iter__(self):
+		return SfItemIter(self)
+
+	# required for eListboxPythonMultiContent which uses PySequence_Fast
+	def __getitem__(self, index):
+		return self.list[index]
+
+	# required for eListboxPythonMultiContent which uses PySequence_Size / PySequence_Length
+	def __len__(self):
+		return len(self.list)
+
+	list = property(getList)
+
+
+class SfMovieList(TemplatedMultiContentComponent):
+	COMPONENT_ID = "SfMovieList"
+
 	SORT_ALPHANUMERIC = 1
 	SORT_RECORDED = 2
 
-	LISTTYPE_ORIGINAL = 0x10
-	LISTTYPE_COMPACT_TAGS = 0x20
-	LISTTYPE_COMPACT_SERVICE = 0x40
-	LISTTYPE_MINIMAL = 0x80
-	LISTTYPE_COMPACT = LISTTYPE_COMPACT_TAGS | LISTTYPE_COMPACT_SERVICE
+	LISTTYPE_FULL = 1 << 0
+	LISTTYPE_COMPACT = 1 << 1
+	LISTTYPE_COMPACT_SERVICE = 1 << 2
+	LISTTYPE_COMPACT_TAGS = 1 << 3
+	LISTTYPE_MINIMAL = 1 << 4
+
+	LIST_TEMPLATES = {
+		LISTTYPE_FULL		: "default",
+		LISTTYPE_MINIMAL	: "minimal",
+	}
 
 	HIDE_DESCRIPTION = 1
 	SHOW_DESCRIPTION = 2
@@ -34,7 +79,7 @@ class MovieList(GUIComponent):
 	SHOW_DURATION = 2
 	SHOW_DIRECTORIES = 4
 
-	# tinfo types:
+	# sfitem types:
 	REAL_DIR = 1
 	REAL_UP = 2
 	VIRT_DIR = 4
@@ -45,16 +90,78 @@ class MovieList(GUIComponent):
 
 	gsflists = []
 
+	default_template_720 = 	"""{ "templates" :
+			{
+				"default": (75, [
+							MultiContentEntryPixmapAlphaTest(pos=(5,5), size=(65,65), png=0),
+							MultiContentEntryText(pos=(5,5), size=(65,65), font=0, flags=RT_HALIGN_LEFT, text=1),
+							MultiContentEntryText(pos=(75,0), size=(width,30), font=0, flags=RT_HALIGN_LEFT, text=2),
+							MultiContentEntryText(pos=(75,30), size=(width,20), font=2, flags=RT_HALIGN_LEFT, text=3,color=0xa0a0a0),
+							MultiContentEntryText(pos=(75,50), size=(150,20), font=1, flags=RT_HALIGN_LEFT, text=4,color=0xa0a0a0),
+							MultiContentEntryText(pos=(250,50), size=(180,20), font=1, flags=RT_HALIGN_RIGHT, text=5,color=0xa0a0a0),
+							MultiContentEntryText(pos=(width-250,50), size=(180,20), font=1, flags=RT_HALIGN_RIGHT, text=6,color=0xa0a0a0),
+							MultiContentEntryText(pos=(width-60,50), size=(60,20), font=1, flags=RT_HALIGN_RIGHT, text=7,color=0xa0a0a0)
+						]),
+				"compact": (40, [
+							MultiContentEntryPixmapAlphaTest(pos=(0,0), size=(40,40), png=0),
+							MultiContentEntryText(pos=(0,0), size=(40,40), font=0, flags=RT_HALIGN_LEFT, text=1),
+							MultiContentEntryText(pos=(45,0), size=(90,20), font=1, flags=RT_HALIGN_LEFT, text=2),
+							MultiContentEntryText(pos=(145,0), size=(width-160,20), font=1, flags=RT_HALIGN_LEFT, text=3),
+							MultiContentEntryText(pos=(45, 20), size=((width-45)/2,20), font=2, flags=RT_HALIGN_LEFT|RT_VALIGN_BOTTOM, text=4,color=0xa0a0a0),
+							MultiContentEntryText(pos=(45+(width-45)/2, 20), size=((width-40)/2,20), font=2, flags=RT_HALIGN_RIGHT|RT_VALIGN_BOTTOM, text=5,color=0xa0a0a0),
+							MultiContentEntryText(pos=(width-60, 0), size=(60,20), font=1, flags=RT_HALIGN_RIGHT, text=6)
+						]),
+				"minimal": (25, [
+							MultiContentEntryPixmapAlphaTest(pos=(0,0), size=(25,25), png=0),
+							MultiContentEntryText(pos=(0, 0), size=(25, 25), font=0, flags=RT_HALIGN_LEFT, text=1),
+							MultiContentEntryText(pos=(25, 0), size=(110, 25), font=0, flags=RT_HALIGN_RIGHT, text=2),
+							MultiContentEntryText(pos=(140, 0), size=(width-185, 25), font=0, flags=RT_HALIGN_LEFT, text=3),
+							MultiContentEntryText(pos=(width-60, 0), size=(60, 25), font=0, flags=RT_HALIGN_RIGHT, text=4)
+						])
+			},
+			"fonts" : [gFont("Regular", 22), gFont("Regular", 18), gFont("Regular", 14)]
+		}"""
+
+	default_template_1080 = """{ "templates" :
+			{
+				"default": (100, [
+					MultiContentEntryPixmapAlphaTest(pos=(5,5), size=(90,90), png=0),
+					MultiContentEntryText(pos=(5,5), size=(90,90), font=0, flags=RT_HALIGN_LEFT, text=1),
+					MultiContentEntryText(pos=(100,0), size=(width,35), font=0, flags=RT_HALIGN_LEFT|RT_VALIGN_TOP, text=2),
+					MultiContentEntryText(pos=(100,35), size=(width,28), font=2, flags=RT_HALIGN_LEFT, text=3,color=0xa0a0a0),
+					MultiContentEntryText(pos=(100,65), size=(200,30), font=2, flags=RT_HALIGN_LEFT, text=4,color=0xa0a0a0),
+					MultiContentEntryText(pos=(300,65), size=(180,30), font=1, flags=RT_HALIGN_RIGHT, text=5,color=0xa0a0a0),
+					MultiContentEntryText(pos=(width-300,65), size=(300,30), font=1, flags=RT_HALIGN_RIGHT, text=6,color=0xa0a0a0),
+					MultiContentEntryText(pos=(width-120,65), size=(120,30), font=1, flags=RT_HALIGN_RIGHT, text=7,color=0xa0a0a0)
+				]),
+				"compact": (80, [
+					MultiContentEntryPixmapAlphaTest(pos=(5,5), size=(70,70), png=0),
+					MultiContentEntryText(pos=(5,5), size=(70,70), font=0, flags=RT_HALIGN_LEFT, text=1),
+					MultiContentEntryText(pos=(80,5), size=(140,35), font=1, flags=RT_HALIGN_LEFT, text=2),
+					MultiContentEntryText(pos=(230,5), size=(width-360,35), font=1, flags=RT_HALIGN_LEFT, text=3),
+					MultiContentEntryText(pos=(80,40), size=((width-80)/2,35), font=1, flags=RT_HALIGN_LEFT|RT_VALIGN_BOTTOM, text=4, color=0xa0a0a0),
+					MultiContentEntryText(pos=(width-(width-80)/2, 40), size=((width-80)/2,35), font=1, flags=RT_HALIGN_RIGHT|RT_VALIGN_BOTTOM, text=5, color=0xa0a0a0),
+					MultiContentEntryText(pos=(width-120, 5), size=(120,35), font=1, flags=RT_HALIGN_RIGHT, text=6)
+				]),
+				"minimal": (40, [
+					MultiContentEntryPixmapAlphaTest(pos=(0,0), size=(40,40), png=0),
+					MultiContentEntryText(pos=(0, 0), size=(40,40), font=1, flags=RT_HALIGN_LEFT, text=1),
+					MultiContentEntryText(pos=(40, 3), size=(150, 34), font=1, flags=RT_HALIGN_RIGHT, text=2),
+					MultiContentEntryText(pos=(210, 3), size=(width-340, 34), font=1, flags=RT_HALIGN_LEFT, text=3),
+					MultiContentEntryText(pos=(width-120, 3), size=(120, 34), font=1, flags=RT_HALIGN_RIGHT, text=4)
+				])
+			},
+			"fonts" : [gFont("Regular", 30), gFont("Regular", 28), gFont("Regular", 26)]
+		}"""
+
+	default_template = default_template_720 if getDesktop(0).size().height() == 720 else default_template_1080
 
 	def __init__(self, root, list_type=None, sort_type=None, show_times=None, sftitle_episode_separator = None, MovieSelectionSelf = None):
-		GUIComponent.__init__(self)
+		TemplatedMultiContentComponent.__init__(self)
 #		print "[SF-Plugin] class SF:MovieList init, lstt=%x, srt=%x, sht=%s, sft=>%s<, root=%s" % ( list_type, sort_type, show_times, str(sftitle_episode_separator), str(root))
-		self.list_type = list_type or self.LISTTYPE_MINIMAL
 		self.show_times = show_times or self.SHOW_DURATION | self.SHOW_DIRECTORIES
 		self.sort_type = sort_type or self.SORT_RECORDED
 		self.sftitle_episode_separator = sftitle_episode_separator
-
-		self.l = eListboxPythonMultiContent()
 
 		self.tags = set()
 		self.list = None
@@ -62,20 +169,39 @@ class MovieList(GUIComponent):
 		self.MovieSelectionSelf = MovieSelectionSelf
 		self.MselTitle = ""
 
+		self.l.setBuildFunc(self.buildMovieListEntry)
+		self.setListType(list_type or self.LISTTYPE_MINIMAL)
 		if root is not None:
 			self.reload(root)
 
-		self.pdirIcon = LoadPixmap(cached=True, path=eEnv.resolve('${libdir}/enigma2/python/Plugins/Extensions/SerienFilm/icons/folder_20.png'))
-		self.rdirIcon = LoadPixmap(cached=True, path=eEnv.resolve('${libdir}/enigma2/python/Plugins/Extensions/SerienFilm/icons/folder_red.png'))
-		self.fupIcon = LoadPixmap(cached=True, path=eEnv.resolve('${libdir}/enigma2/python/Plugins/Extensions/SerienFilm/icons/folderup_20.png'))
-		self.pdirMap = MultiContentEntryPixmapAlphaTest(pos=(0,0), size=(20,20), png=self.pdirIcon)
-		self.rdirMap = MultiContentEntryPixmapAlphaTest(pos=(0,0), size=(20,20), png=self.rdirIcon)
-		self.fupMap = MultiContentEntryPixmapAlphaTest(pos=(0,0), size=(20,20), png=self.fupIcon)
-
-		self.redrawList()
-		self.l.setBuildFunc(self.buildMovieListEntry)
+		self._realFolderPixmap = LoadPixmap(cached=True, path=eEnv.resolve('${libdir}/enigma2/python/Plugins/Extensions/SerienFilm/icons/folder.svg'))
+		self._virtualFolderPixmap = LoadPixmap(cached=True, path=eEnv.resolve('${libdir}/enigma2/python/Plugins/Extensions/SerienFilm/icons/folder_virtual.svg'))
+		self._folderUpPixmap = LoadPixmap(cached=True, path=eEnv.resolve('${libdir}/enigma2/python/Plugins/Extensions/SerienFilm/icons/folder_up.svg'))
 
 		self.onSelectionChanged = [ ]
+
+	def _loadPixmap(self, desktop, skinValue):
+		value = skinValue.split(",")
+		if len(value) == 3:
+			path, width, height = value
+			self._virtualFolderPixmap = skinLoadPixmap(path, desktop, eSize(int(width), int(height)))
+		else:
+			self._virtualFolderPixmap = skinLoadPixmap(path, desktop)
+
+	def applySkin(self, desktop, parent):
+		GUIComponent.applySkin(self, desktop, parent)
+		if self.skinAttributes:
+			for (attrib, value) in self.skinAttributes:
+				if attrib == "sfPixmapFolder":
+					self._realFolderPixmap = self._loadPixmap(value, desktop)
+				elif attrib == "sfPixmapVirtualFolder":
+					self._virtualFolderPixmap = self._loadPixmap(value, desktop)
+				elif attrib == "sfPixmapFolderUp":
+					self._folderUpPixmap = self._loadPixmap(value, desktop)
+		self.applyTemplate(additional_locals={"width" : self.l.getItemSize().width()-30})
+
+	def redrawList(self):
+		self.l.setList(self.list)
 
 	def connectSelChanged(self, fnc):
 		if not fnc in self.onSelectionChanged:
@@ -92,8 +218,8 @@ class MovieList(GUIComponent):
 
 	def setListType(self, type):
 		self.list_type = type
+		self.setTemplate(self.LIST_TEMPLATES.get(type, "compact"))
 		self.redrawList()
-		self.l.setList(self.list)				# redraw
 
 	def setShowTimes(self, val):
 		self.show_times = val
@@ -104,127 +230,42 @@ class MovieList(GUIComponent):
 	def setTitleEpiSep(self, sftitle_episode_separator):
 		self.sftitle_episode_separator = sftitle_episode_separator
 
-
-	def redrawList(self):
-		if self.list_type & MovieList.LISTTYPE_ORIGINAL:
-			self.l.setFont(0, gFont("Regular", 22))
-			self.l.setFont(1, gFont("Regular", 18))
-			self.l.setFont(2, gFont("Regular", 16))
-			self.l.setItemHeight(75)
-			if self.sflists and self.sflists[0] != self.list:
-				self.l.setItemHeight(41)
-		elif self.list_type & MovieList.LISTTYPE_COMPACT:
-			self.l.setFont(0, gFont("Regular", 20))
-			self.l.setFont(1, gFont("Regular", 16))
-			self.l.setItemHeight(39)
-#			self.l.setFont(1, gFont("Regular", 14))
-#			self.l.setItemHeight(37)
-		else:
-			self.l.setFont(0, gFont("Regular", 20))	# MINIMAL
-			self.l.setFont(1, gFont("Regular", 16))
-			self.l.setItemHeight(25)
-
 	#
 	# | name of movie              |
 	#
-	def buildMovieListEntry(self, serviceref, info, begin, tinfo):
-#		print "[SF-Plugin] SF:MovieList.buildMovieListEntry, lst_type=%x, show_tims=%x" % (self.list_type, self.show_times)
-
-		width = self.l.getItemSize().width()
-		len = tinfo[5]			#tinfo = [type, pixmap, txt, description, service, len]
-
-		if len <= 0: #recalc len when not already done
+	def buildMovieListEntry(self, serviceref, info, begin, sfitem):
+		duration = sfitem.duration
+		if sfitem.duration <= 0 and config.usage.load_length_of_movies_in_moviellist.value: #recalc len when not already done
 			cur_idx = self.l.getCurrentSelectionIndex()
 			x = self.list[cur_idx]
-			if config.usage.load_length_of_movies_in_moviellist.value:
-				len = x[1].getLength(x[0]) #recalc the movie length...
-			else:
-				len = 0		#dont recalc movielist to speedup loading the list
-			self.list[cur_idx][3][5] = len	#update entry in list... so next time we don't need to recalc
+			duration = x[1].getLength(x[0]) #recalc the movie length...
+			self.list[cur_idx][3].duration = duration	#update entry in list... so next time we don't need to recalc
 
-		if len > 0:
-			len = "%d:%02d" % (len / 60, len % 60)
+		if duration > 0:
+			duration = "%d:%02d" % (duration / 60, duration % 60)
 		else:
-			len = ""
+			duration = ""
 
-		res = [ None ]
+		res = [sfitem.pixmap, sfitem.sfindex]
 		begin_string = ""
 		date_string = ""
 
-		pixmap = tinfo[1]
-		typ = tinfo[0]
-		service = None
-		if typ & (self.VIRT_UP | self.REAL_UP):
-			txt = tinfo[3]	# [2] == " " for alpha-sort to top
-		else:
-			txt = tinfo[2]
+		if not sfitem.type & (self.VIRT_UP | self.REAL_UP):
 			if begin > 0:
 				t = FuzzyTime(begin)
-				begin_string = t[0] + ", " + t[1]
+				begin_string = ", ".join(t)
 				date_string = t[0]
-		if not typ & (self.REAL_DIR | self.VIRT_ENTRY):
-			service = tinfo[4]
-		description = tinfo[3]
-		tags = self.tags and info.getInfoString(serviceref, iServiceInformation.sTags)
+		tags = info.getInfoString(serviceref, iServiceInformation.sTags)
 
-		if isinstance(pixmap, str):
-			pixmap = MultiContentEntryText(pos=(0, 0), size=(25, 20), font = 0, flags = RT_HALIGN_LEFT, text = pixmap)
-		if pixmap is not None:
-			res.append(pixmap)
-
-		XPOS = 25
-
-		if self.list_type & MovieList.LISTTYPE_ORIGINAL:
-			res.append(MultiContentEntryText(pos=(XPOS, 0), size=(width, 30), font = 0, flags = RT_HALIGN_LEFT, text=txt))
-			line2 = 20
-			if self.list == self.sflists[0]:
-				line2 = 50
-				if not typ & (self.REAL_DIR | self.VIRT_ENTRY):
-					res.append(MultiContentEntryText(pos=(XPOS, 30), size=(width, 20), font=1, flags=RT_HALIGN_LEFT, text=description))
-			res.append(MultiContentEntryText(pos=(XPOS, line2), size=(150, 20), font=1, flags=RT_HALIGN_LEFT, text=begin_string))
-			if service:
-				res.append(MultiContentEntryText(pos=(XPOS+150, line2), size=(180, 20), font = 2, flags = RT_HALIGN_RIGHT, text = service))
-			if tags:
-				res.append(MultiContentEntryText(pos=(width - 250, line2), size=(180, 20), font = 2, flags = RT_HALIGN_RIGHT, text = tags))
-			if not typ & (self.REAL_DIR | self.VIRT_ENTRY):
-				res.append(MultiContentEntryText(pos=(width-60, line2), size=(60, 20), font=2, flags=RT_HALIGN_RIGHT, text=len))
-			return res
-
-		tslen = 80
-		if self.show_times & self.SHOW_RECORDINGTIME:
-			tslen += 50
-			date_string = begin_string
-		dusz = 0
-		if self.show_times & self.SHOW_DURATION and not tinfo[0] & (self.VIRT_ENTRY | self.REAL_UP):
-			dusz = 57
-
-		if self.list_type  & MovieList.LISTTYPE_COMPACT:
-			res.append(MultiContentEntryText(pos=(XPOS, 4), size=(tslen-5, 20), font=1, flags=RT_HALIGN_RIGHT, text=date_string))
-			res.append(MultiContentEntryText(pos=(XPOS + tslen, 0), size=(width-XPOS-tslen, 20), font = 0, flags = RT_HALIGN_LEFT, text = txt))
-			other = None
-			if self.list_type & MovieList.LISTTYPE_COMPACT_TAGS:
-				if tags:
-					res.append(MultiContentEntryText(pos=(width-dusz-185, 20), size=(180, 17), font=1, flags=RT_HALIGN_RIGHT, text=tags))
-				otherend = dusz+185
-				other = service
-			else:
-				if service:
-					res.append(MultiContentEntryText(pos=(width-dusz-155, 20), size=(153, 17), font=1, flags=RT_HALIGN_RIGHT, text=service))
-				otherend = dusz+160
-				other = tags
-			if self.list == self.sflists[0]:
-				if not typ & (self.REAL_DIR | self.VIRT_ENTRY):
-					res.append(MultiContentEntryText(pos=(XPOS, 20), size=(width-(XPOS+otherend), 17), font=1, flags=RT_HALIGN_LEFT, text=description))
-				elif other:
-					res.append(MultiContentEntryText(pos=(XPOS, 20), size=(width-(XPOS+otherend), 17), font=1, flags=RT_HALIGN_LEFT, text=other))
-			if dusz:
-				res.append(MultiContentEntryText(pos=(width-dusz, 20), size=(dusz-2, 20), font=1, flags=RT_HALIGN_RIGHT, text=len))
+		service = "" if sfitem.service.startswith("SFLIDX") else sfitem.service
+		if self.list_type & SfMovieList.LISTTYPE_FULL:
+			res.extend([sfitem.title, sfitem.description, begin_string, service, tags, duration])
+		elif self.list_type == SfMovieList.LISTTYPE_COMPACT_SERVICE:
+			res.extend([date_string, sfitem.title, service, sfitem.description, duration])
+		elif self.list_type == SfMovieList.LISTTYPE_COMPACT_TAGS:
+			res.extend([date_string, sfitem.title, tags, sfitem.description, duration])
 		else:
-#			assert(self.list_type == MovieList.LISTTYPE_MINIMAL)
-			res.append(MultiContentEntryText(pos=(XPOS, 3), size=(tslen-5, 20), font=1, flags=RT_HALIGN_RIGHT, text=date_string))
-			res.append(MultiContentEntryText(pos=(XPOS + tslen, 0), size=(width-XPOS-tslen-dusz, 20), font = 0, flags = RT_HALIGN_LEFT, text = txt))
-			if dusz:
-				res.append(MultiContentEntryText(pos=(width-dusz, 3), size=(dusz, 20), font=1, flags=RT_HALIGN_RIGHT, text=len))
+			res.extend([date_string, sfitem.title, duration])
 
 		return res
 
@@ -263,15 +304,15 @@ class MovieList(GUIComponent):
 
 	def removeService(self, service):
 		for l in self.list[:]:
-			repnr = tinfo = None
+			repnr = sfitem = None
 			if l[0] == service:
-				tinfo = l[3]
-				if not service.flags & eServiceReference.canDescent and isinstance(tinfo[1], str) and tinfo[1][0] == "#":
-					repnr = int(tinfo[1][1:])
+				sfitem = l[3]
+				if not service.flags & eServiceReference.canDescent and sfitem.sfindex and sfitem.sfindex[0] == "#":
+					repnr = int(sfitem.sfindex[1:])
 				self.list.remove(l)
 				break
 		self.l.setList(self.list)
-		if len(self.list) == 1 and self.list[0][3][0] & self.VIRT_UP:	# last movie of a series is gone
+		if len(self.list) == 1 and self.list[0][3].type & self.VIRT_UP:	# last movie of a series is gone
 			service = self.list[0][0]
 			self.moveTo(service, True)
 			assert service.flags == eServiceReference.canDescent
@@ -281,23 +322,23 @@ class MovieList(GUIComponent):
 			return
 		repeats = 0		# update repeatcount "#x" of surviving movies
 		ele0 = 0
-#		print "[SF-Plugin] removeService: searching " + tinfo[2]
+#		print "[SF-Plugin] removeService: searching " + sfitem[2]
 		for i in range(1, len(self.list)):
 			m = self.list[i]
 			t = m[3]
 #			print "[SF-Plugin] removeService try: %x, %s -- %s" % (m[0].flags,  str(t[1]), str(t[2]))
-			if not m[0].flags & eServiceReference.canDescent and t[2] == tinfo[2] and isinstance(t[1], str) and t[1][0] == "#":
+			if not m[0].flags & eServiceReference.canDescent and t.title == sfitem.title and t.sfindex and t.sfindex[0] == "#":
 				repeats += 1
-				rc = int(t[1][1:])
+				rc = int(t.sfindex[1:])
 				if rc > repnr:
 					rc -= 1
-					t[1] = "#" + str(rc)
+					t.sfindex = "#" + str(rc)
 #					print "[SF-Plugin] removeService: %s --> %s" % (t[2], t[1])
 				if rc == 0:
 					ele0 = i
 		if ele0 > 0 and repeats == 1:
-			self.list[ele0][3][1] = None	# remove "#0" from only lonely surviving movie
-#			print "[SF-Plugin] removeService: remove #0 from " + self.list[ele0][3][2]
+			self.list[ele0][3].sfindex = None	# remove "#0" from only lonely surviving movie
+#			print "[SF-Plugin] removeService: remove #0 from " + self.list[ele0][3].title
 
 
 	def __len__(self):
@@ -333,9 +374,9 @@ class MovieList(GUIComponent):
 				description = info.getInfoString(parent, iServiceInformation.sDescription)				# Beschreibung
 #				begin = info.getInfo(root, iServiceInformation.sTimeCreate)
 				begin = self.MAXTIME
-				parent.flags = eServiceReference.flagDirectory | eServiceReference.sort1
-				tinfo = [self.REAL_DIR | self.REAL_UP, self.fupMap, "  0", txt, service, 1]	# "  0" sorts before VIRT_UP
-				return ((parent, info, begin, tinfo))
+				parent.flags=eServiceReference.flagDirectory | eServiceReference.sort1
+				sfitem = SfItem(self.REAL_DIR | self.REAL_UP, self._folderUpPixmap, "", "  0", txt, service, 1)	# "  0" sorts before VIRT_UP
+				return ((parent, info, begin, sfitem))
 
 
 
@@ -364,28 +405,28 @@ class MovieList(GUIComponent):
 			if not serviceref.valid():
 				break
 			pixmap = None
-			type = 0
+			entryType = 0
 			if serviceref.flags & eServiceReference.mustDescent:
 				if not self.show_times & self.SHOW_DIRECTORIES:
 					continue				# hide Directories
-				type = self.REAL_DIR		# show Directories
-				pixmap = self.rdirMap
+				entryType = self.REAL_DIR		# show Directories
+				pixmap = self._realFolderPixmap
 
 			info = self.serviceHandler.info(serviceref)
 			if info is None:
 				continue
-			txt = info.getName(serviceref)
+			title = info.getName(serviceref)
 			if serviceref.flags & eServiceReference.mustDescent:
-				files = [ f for f in glob(os.path.join(txt, "*")) if fileExists(f) ]
+				files = [ f for f in glob(os.path.join(title, "*")) if fileExists(f) ]
 				# skip empty directories
 				if not files:
 					continue
 				# use mtime of latest recording
 				begin = sorted((os.path.getmtime(x) for x in files))[-1]
-				if pwd and txt.startswith(pwd):
-					txt = txt[len(pwd):]
-				if txt.endswith(os.path.sep):
-					txt = txt[:-len(os.path.sep)]
+				if pwd and title.startswith(pwd):
+					title = title[len(pwd):]
+				if title.endswith(os.path.sep):
+					title = title[:-len(os.path.sep)]
 			else:
 				begin = info.getInfo(serviceref, iServiceInformation.sTimeCreate)
 			this_tags = info.getInfoString(serviceref, iServiceInformation.sTags).split(' ')
@@ -404,12 +445,13 @@ class MovieList(GUIComponent):
 
 			service = ServiceReference(info.getInfoString(serviceref, iServiceInformation.sServiceref)).getServiceName()	# Sender
 			description = info.getInfoString(serviceref, iServiceInformation.sDescription)
-			tinfo = [type, pixmap, txt, description, service, -1]
+			sfindex = ""
+			sfItem = SfItem(entryType, pixmap, sfindex, title, description, service, -1)
 
-			self.rootlst.append((serviceref, info, begin, tinfo))
+			self.rootlst.append((serviceref, info, begin, sfItem))
 
 		self.rootlst.sort(key=lambda x: -x[2])						# movies of same name stay sortet by time
-		self.rootlst.sort(key=lambda x: (x[3][2]+x[3][3]).lower())
+		self.rootlst.sort(key=lambda x: (x[3].title+x[3].description).lower())
 		self.list = self.rootlst
 		self.createSublists()
 
@@ -431,17 +473,16 @@ class MovieList(GUIComponent):
 
 				if descend_virtdirs:
 					l = self.list[count]
-					tinfo = l[3]
-					if tinfo[0] & self.VIRT_ENTRY:
-						assert tinfo[4][:6] == "SFLIDX"
-						self.list = self.sflists[int(tinfo[4][6:])]
+					sfitem = l[3]
+					if sfitem.type & self.VIRT_ENTRY:
+						assert sfitem.service[:6] == "SFLIDX"
+						self.list = self.sflists[int(sfitem.service[6:])]
 						self.l.setList(self.list)
 						self.MovieSelectionSelf.setTitle(self.MselTitle)
-						self.redrawList()
-					if tinfo[0] & self.VIRT_DIR:
+					if sfitem.type & self.VIRT_DIR:
 						count = 0							# select VIRT_UP in sublist
-						self.MovieSelectionSelf.setTitle("%s: %s" % (_("Series"), tinfo[2]))
-					elif tinfo[0] & self.VIRT_UP:
+						self.MovieSelectionSelf.setTitle("%s: %s" % (_("Series"), sfitem.title))
+					elif sfitem.type & self.VIRT_UP:
 						rv = self.moveTo(serviceref, False)
 						return rv
 
@@ -461,8 +502,8 @@ class MovieList(GUIComponent):
 			self.list = savelist
 			self.l.setList(self.list)
 
-# enigmas list:		(serviceref, info, begin, len)	# len is replaced by tinfo
-# tinfo:			[type, pixmap, txt, description, service, len]
+# enigmas list:		(serviceref, info, begin, len)	# len is replaced by sfitem
+# sfitem:			[type, pixmap, txt, description, service, len]
 
 # pixmap:			pixmap (DIR_UP...) or String (#0, #1 ... for multiple recordings)
 # SFLIDX0...999		entry# in serlst, 0 == rootlist
@@ -470,9 +511,9 @@ class MovieList(GUIComponent):
 
 	def serflm(self, film, episode):
 		fdate = film[2]
-		tinfo = film[3]
-		dsc = tinfo[3]
-		service = tinfo[4]
+		sfitem = film[3]
+		dsc = sfitem.description
+		service = sfitem.service
 		epi = len(episode) == 2 and episode[1]
 		if epi:
 			txt = ": ".join((epi, dsc))
@@ -480,13 +521,13 @@ class MovieList(GUIComponent):
 			txt = dsc or service
 		if self.serdate < fdate:
 			self.serdate = fdate
-		tinfo[2] = txt
-		tinfo[3] = dsc
+		sfitem.title = txt
+		sfitem.description = dsc
 		return film
 
 	def update_repcnt(self, serlst, repcnt):
 		for i in range(repcnt + 1):
-			serlst[-( i+1 )][3][1] =  "#" + str(i)
+			serlst[-( i+1 )][3].sfindex =  "#" + str(i)
 
 	def createSublists(self):
 		self.serdate = 0
@@ -501,9 +542,9 @@ class MovieList(GUIComponent):
 		else:
 			splitTitle = lambda s: [s]
 #		print "[SF-Plugin] MovieList.createSublists: self.sftitle_episode_separator = %d = >%s<" % (len(self.sftitle_episode_separator), self.sftitle_episode_separator)
-		for tinfo in self.rootlst[:]:
-#			ts = tinfo[3][2].split(": ", 1)
-			ts = splitTitle(tinfo[3][2])
+		for item in self.rootlst[:]:
+			sfitem = item[3]
+			ts = splitTitle(sfitem.title)
 			if txt[0] == ts[0]:
 				if txt[0] != serie:				# neue Serie
 					sflidx += 1
@@ -512,8 +553,9 @@ class MovieList(GUIComponent):
 							eServiceReference.canDescent, "SFLIDX" + str(sflidx))
 					ser_info = self.serviceHandler.info(ser_serviceref)
 					# VIRT_UP should sort first, but after REAL_UP: MAXTIME-1 resp. "  1"
-					serlst = [(ser_serviceref, ser_info, MovieList.MAXTIME-1,
-						[self.VIRT_UP, self.fupMap, "  1", txt[0], "SFLIDX0", 1])]
+					# [type, pixmap, sfindex, txt, description, service, -1]
+					serlst = [(ser_serviceref, ser_info, SfMovieList.MAXTIME-1,
+						SfItem(self.VIRT_UP, self._folderUpPixmap, "", "  1", txt[0], "SFLIDX0", 1))]
 					self.sflists.append(serlst)
 					serlst.append(self.serflm(self.rootlst[rootlidx-1], txt))
 					parent_list_index = rootlidx-1
@@ -522,7 +564,7 @@ class MovieList(GUIComponent):
 				film = self.serflm(film, ts)
 				samefilm = False
 				if serlst:
-					if serlst and film[3][3] != "" and film[3][2] == serlst[-1][3][2]:		# perhaps same Movie?
+					if serlst and film[3].description != "" and film[3].title == serlst[-1][3].title:	# perhaps same Movie?
 						event1 = film[1].getEvent(film[0])
 						event2 = serlst[-1][1].getEvent(serlst[-1][0])
 						if event1 and event2 and event1.getExtendedDescription() == event2.getExtendedDescription():
@@ -535,7 +577,7 @@ class MovieList(GUIComponent):
 					serlst.append(film)
 			elif serlst:
 				self.rootlst[parent_list_index] = (ser_serviceref, ser_info, self.serdate, 
-					[self.VIRT_DIR, self.pdirMap, txt[0], "", "SFLIDX" + str(sflidx), 1])
+					SfItem(self.VIRT_DIR, self._virtualFolderPixmap, "", txt[0], "", "SFLIDX" + str(sflidx), 1))
 				self.serdate = 0
 				if repcnt:
 					self.update_repcnt(serlst, repcnt)
@@ -545,18 +587,15 @@ class MovieList(GUIComponent):
 			txt = ts
 		if serlst:
 			self.rootlst[parent_list_index] = (ser_serviceref, ser_info, self.serdate, 
-				[self.VIRT_DIR, self.pdirMap, txt[0], "", "SFLIDX" + str(sflidx), None, 1])
+				SfItem(self.VIRT_DIR, self._virtualFolderPixmap, "", txt[0], "", "SFLIDX" + str(sflidx), 1))
 			if repcnt:
 				self.update_repcnt(serlst, repcnt)
 #		print "[SF-Plugin] sflist has %d entries" % (len(self.sflists))
 		gsflists = self.sflists
 
-
-
-
 	def sortLists(self):
 		if self.sort_type == self.SORT_ALPHANUMERIC:
-			key = lambda x: (x[3][2]+x[3][3]).lower()
+			key = lambda x: (x[3].title+x[3].description).lower()
 		else: key=lambda x: -x[2]
 		if self.sflists:
 			for list in self.sflists:
@@ -572,14 +611,6 @@ class MovieList(GUIComponent):
 		self.l.setList(self.list)				# redraw
 		self.moveTo(current, False)
 
-#	def toggleTags(self, toggle):
-#		if toggle and self.list_type & (MovieList.LISTTYPE_COMPACT | MovieList.LISTTYPE_MINIMAL):
-#			self.showtags ^= MovieList.LISTTYPE_COMPACT
-#		else:
-#			self.showtags = 0
-#		self.redrawList()
-#		self.l.setList(self.list)				# redraw
-
 	def saveTitle(self, title):
 		self.MselTitle = title
 
@@ -592,11 +623,10 @@ class MovieList(GUIComponent):
 			list = gsflists[int(name[6:])]
 			repcnt = 0
 			for l in list:
-				if isinstance(l[3][1], str) and l[3][1][0] == "#" and l[3][1] != "#0":
+				sfitem = l[3]
+				if sfitem.sfindex and sfitem.sfindex[0:1] != "#0":
 					repcnt += 1
 			s = "%d %s" % (len(list)-1, _("Movies"))
 			if repcnt:
 				s += ", %d %s" % (repcnt, _("duplicated"))
 			return s
-
-
