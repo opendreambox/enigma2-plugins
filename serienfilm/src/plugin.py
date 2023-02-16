@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
 from Plugins.Plugin import PluginDescriptor
-from SerienFilm import SerienFilmVersion, SerienFilmCfg
+from SerienFilm import SerienFilmVersion
 from Screens.InfoBar import MoviePlayer
+from Screens.MessageBox import MessageBox
 from MovieSelection import MovieSelection
 
 def pluginConfig(session, **kwargs):
-	print "[SF-Plugin] Config\n"
-	try:
-		session.open(SerienFilmCfg)
-	except Exception, e:
-		print "[SF-Plugin] pluginConfig Config exception:\n" + str(e)
-
+	message = _("This plugin is configured by the MENU key in the movielist\n\nApplication details provides the HELP key in the movielist")
+	session.open(MessageBox, message, type=MessageBox.TYPE_INFO, windowTitle=_("SerienFilm %s") %(SerienFilmVersion))
 
 gLeavePlayerConfirmed = None
 

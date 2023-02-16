@@ -7,47 +7,23 @@ from Components.Input import Input
 from Screens.InputBox import InputBox
 from Screens.MessageBox import MessageBox
 
-SerienFilmVersion = "v1.1"
-
-
-
-class SerienFilmCfg(Screen):
-	skin = """
-		<screen position="130,150" size="500,200" title="SerienFilm setup" >
-			<widget name="myLabel" position="10,20" size="480,160" font="Regular;20"/>
-		</screen>"""
-
-	def __init__(self, session, args = None):
-		print "[SF-Plugin] SerienFilmCfg init"
-		self.session = session
-		Screen.__init__(self, session)
-		self["myLabel"] = Label(_("This plugin is configured by the MENU key in the movielist\n\nApplication details provides the HELP key in the movielist"))
-		self["myActionMap"] = ActionMap(["SetupActions"],
-		{
-			"ok": self.close,
-			"cancel": self.close
-		}, -1)
-
+SerienFilmVersion = "v1.2"
 
 class EpiSepCfg(Screen):
-
-	def __init__(self, session, separator = None):
-
-		skincontent = """
+	skin = """
+		<screen name="EpiSepCfg" position="130,150" size="610,300">
 			<widget name="sfLabel" position="10,20" size="590,220" font="Regular;20"/>
 			<widget name="sfRedBtn" position="10,250" size="140,40" backgroundColor="red" valign="center" halign="center" zPosition="2"  foregroundColor="white" font="Regular;20"/>
 			<widget name="sfGreenBtn" position="160,250" size="140,40" backgroundColor="green" valign="center" halign="center" zPosition="2"  foregroundColor="white" font="Regular;20"/>
 			<widget name="sfYellowBtn" position="310,250" size="140,40" backgroundColor="yellow" valign="center" halign="center" zPosition="2"  foregroundColor="white" font="Regular;20"/>
 			<widget name="sfBlueBtn" position="460,250" size="140,40" backgroundColor="blue" valign="center" halign="center" zPosition="2"  foregroundColor="white" font="Regular;20"/>
-		</screen>"""
+		</screen>
+	"""
 
-		self.skin = "<screen position=\"130,150\" size=\"610,300\" title=\"" + _("Configuration of the title:episode separator") + "\" >" + skincontent
-
-		self.session = session
+	def __init__(self, session, separator = None):
+		Screen.__init__(self, session, windowTitle=_("Configuration of the title:episode separator"))
 		self.defaultsep = _(": ")
 		self.newsep = self.currentsep = separator
-		Screen.__init__(self, session)
-		self.skinName = "skin"
 
 		intro = _("Usually the episode of a series is tansmitted separate of the title in the description field\nIn a few series however it is appended to the title behind a colon\ne.g. Tatort: Der Fluch der Mumie\n\nA commen part of the title up to this title:episode separator shared by several movies creates a series")
 		self.firstlevel = [intro, _("Exit"), _("Set default"), _("Change"), _("Disable ")]
@@ -139,6 +115,8 @@ class EpiSepCfg(Screen):
 
 
 	def setSeparatorSize(self, length):
+		if not length:
+			return
 		len = int(length)
 		self.setSeparator(self.newsep[:len].ljust(len))
 
