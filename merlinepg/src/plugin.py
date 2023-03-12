@@ -1053,7 +1053,6 @@ if epgSpresent:
 
 		def searchEPG(self, searchString = None, searchSave = True):
 			self.currSearch = ""
-			encoding = config.plugins.epgsearch.encoding.value
 			epgcache = eEPGCache.getInstance()
 			ret = epgcache.search(('RIBDT', 2000, eEPGCache.PARTIAL_TITLE_SEARCH, "", eEPGCache.NO_CASE_CHECK)) or []
 			ret.sort(key = lambda x: x[4])
