@@ -33,8 +33,8 @@ import ftplib
 from os import path, remove
 from shutil import move
 from Components.config import getConfigListEntry, config, \
-    ConfigSubsection, ConfigText, ConfigIP, ConfigYesNo, \
-    ConfigPassword, ConfigNumber, KEY_LEFT, KEY_RIGHT, KEY_0, ConfigClock
+    ConfigSubsection, ConfigText, ConfigIP, ConfigOnOff, \
+    ConfigPassword, KEY_LEFT, KEY_RIGHT, KEY_0, ConfigClock
     
 
 from time import time, strftime, mktime, localtime
@@ -45,6 +45,7 @@ autoCopy = mktime((
 )
 
 config.plugins.epgCopy = ConfigSubsection()
+config.plugins.epgCopy.active = ConfigOnOff(default=True)
 config.plugins.epgCopy.username = ConfigText(default = "root", fixed_size = False)
 config.plugins.epgCopy.password = ConfigPassword(default = "", fixed_size = False)
 config.plugins.epgCopy.ip = ConfigIP(default = [0, 0, 0, 0])
@@ -94,18 +95,20 @@ class copyEveryDay(Screen):
     def configChange(self, configElement = None):   
         if self.timer.isActive(): # stop timer if running
             self.timer.stop()
-        now = localtime()
-        begin = int(mktime(
-            (now.tm_year, now.tm_mon, now.tm_mday,
-            config.plugins.epgCopy.copytime.value[0],
-            config.plugins.epgCopy.copytime.value[1],
-            now.tm_sec, now.tm_wday, now.tm_yday, now.tm_isdst)
-        ))
-        if begin < time():
-            begin += 86400
-        next = int(abs(time() - begin))
-        myPrint("[copyEveryDay] next reset: %s" % strftime("%c", localtime(time()+ next)))
-        self.timer.startLongTimer(next)
+            
+        if config.plugins.epgCopy.active.value:
+			now = localtime()
+			begin = int(mktime(
+				(now.tm_year, now.tm_mon, now.tm_mday,
+				config.plugins.epgCopy.copytime.value[0],
+				config.plugins.epgCopy.copytime.value[1],
+				now.tm_sec, now.tm_wday, now.tm_yday, now.tm_isdst)
+			))
+			if begin < time():
+				begin += 86400
+			next = int(abs(time() - begin))
+			myPrint("[copyEveryDay] next reset: %s" % strftime("%c", localtime(time()+ next)))
+			self.timer.startLongTimer(next)
         
     def __doCopy(self):
         if config.plugins.epgCopy.copytime.value:
@@ -163,6 +166,7 @@ class epgCopyScreen(Screen, ConfigListScreen):
         self["key_red"] = Button(_("cancel"))
         
         ConfigListScreen.__init__(self, [
+        	getConfigListEntry(_("EPG Copy - Active"), config.plugins.epgCopy.active),
             getConfigListEntry(_("EPG Copy - Source Network IP"), config.plugins.epgCopy.ip),
             getConfigListEntry(_("EPG Copy - Username"), config.plugins.epgCopy.username),
             getConfigListEntry(_("EPG Copy - Password"), config.plugins.epgCopy.password),
