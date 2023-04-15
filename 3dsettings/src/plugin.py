@@ -65,9 +65,6 @@ def toggleDisplay(configElement):
 	elif (config.plugins.threed.disableDisplay.value == True) and (getmode() != THREE_D_OFF): # turn display off
 		print "[3D Settings] turning display off"
 		LCD().setBright(0)
-	disp = eDBoxLCD.getInstance()
-	if disp: # display found
-		disp.update()
 
 def leaveStandby():
 	toggleDisplay(config.plugins.threed.toggleState)
