@@ -71,7 +71,7 @@ def infobar(session):
 	screenSaverHandler.start(session)
 
 def main(session, **kwargs):
-	session.open(PhotoScreensaver)
+	session.open(PhotoScreensaver, standalone=True)
 
 def Plugins(**kwargs):
 	return [

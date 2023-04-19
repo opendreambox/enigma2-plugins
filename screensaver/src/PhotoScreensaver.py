@@ -44,14 +44,15 @@ class PhotoScreensaver(Screen):
 	TEMPFILE = "/tmp/wallpaper"
 	ANIMATION_KEY_FADE = "wallpaper_slow_fade"
 
-	def __init__(self, session):
+	def __init__(self, session, standalone=False):
 		Screen.__init__(self, session)
 		self["actions"] = ActionMap(["OkCancelActions"], {
 				"ok": self._onOk,
 				"cancel": self.close},
-			- 2)
+			-2)
 
-		self.highPrioActionSlot = eActionMap.getInstance().bindAction('', -0x7FFFFFFF, self._onKeypress) #highest prio
+		if not standalone:
+			self.highPrioActionSlot = eActionMap.getInstance().bindAction('', -0x7FFFFFFF, self._onKeypress) #highest prio
 
 		self._pixmap = MyPixmap()
 		self["wallpaper"] = self._pixmap
@@ -59,6 +60,7 @@ class PhotoScreensaver(Screen):
 		#picload setup
 		size = getDesktop(0).size()
 		width, height = size.width(), size.height()
+		self._resolution = "%sx%s" %(width, height)
 		self._picload = ePicLoad()
 		self.__picload_conn = self._picload.PictureData.connect(self._onPixmapReady)
 		self._picload.setPara((width, height, width, height, False, 1, '#ff000000'))
@@ -69,7 +71,7 @@ class PhotoScreensaver(Screen):
 		self.__inactivityTimer_conn = self._inactivityTimer.timeout.connect(self._onInactivityTimeout)
 
 		self._immediateShow = True
-		self._isEnabled = False
+		self._isEnabled = standalone
 		self._isInitial = True
 
 		self.onShow.append(self._onShow)
@@ -134,11 +136,12 @@ class PhotoScreensaver(Screen):
 		self.show()
 
 	def _onOk(self):
-		pass
+		self._immediateShow = True
+		self._loadNext()
 
 	def _loadNext(self):
-		Log.i("Getting next photo")
-		url = "https://source.unsplash.com/random/1920x1080"
+		url = "https://source.unsplash.com/%s?random" %(self._resolution)
+		Log.i("Getting next photo from '%s'" %(url))
 		self._d = downloadPage(url, self.TEMPFILE, contextFactory = downloadPageClientContextFactory(url)).addCallbacks(self._onFileReady, self._failed)
 
 	def _onFileReady(self, *args):
