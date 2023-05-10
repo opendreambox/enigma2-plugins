@@ -63,7 +63,7 @@ class PhotoScreensaver(Screen):
 		self._resolution = "%sx%s" %(width, height)
 		self._picload = ePicLoad()
 		self.__picload_conn = self._picload.PictureData.connect(self._onPixmapReady)
-		self._picload.setPara((width, height, width, height, False, 1, '#ff000000'))
+		self._picload.setPara((width, height, 1, 1, False, 1, '#ff000000'))
 		self._nextPixmap = None
 		self._timer = eTimer()
 		self.__timer_conn = self._timer.timeout.connect(self._onTimeout)
