@@ -43,16 +43,18 @@ class PipAdapter:
 		return True
 
 	def hidePiP(self):
-		# set pip size to 1 pixel
 		print("[EPGRefresh.PipAdapter.hidePiP]")
-		x = y = 0
-		w = h = 1
-		self.session.pip.instance.move(ePoint(x, y))
-		self.session.pip.instance.resize(eSize(w, y))
-		self.session.pip["video"].instance.resize(eSize(w, y))
+		# set pip size to 1 pixel
+		# x = y = 0 
+		# w = h = 1
+		# self.session.pip.instance.move(ePoint(x, y))
+		# self.session.pip.instance.resize(eSize(w, y))
+		# self.session.pip["video"].instance.resize(eSize(w, y))
+		self.session.pip["video"].instance.hide()
 
 	def initPiP(self):
 		# Instantiate PiP
+		print("[EPGRefresh.PipAdapter.initPiP] hide: %s" % self.hide)
 		self.session.pip = self.session.instantiateDialog(PictureInPicture)
 		self.session.pip.show()
 		if self.hide: self.hidePiP()
@@ -74,11 +76,11 @@ class PipAdapter:
 			return True
 		return False
 
-	def stop(self):
+	def stop(self, showMessage=True):
 		if not self.pipAvail:
 			return
 
-		if config.plugins.epgrefresh.enablemessage.value:
+		if config.plugins.epgrefresh.enablemessage.value and showMessage:
 			Notifications.AddPopup(_("EPG refresh finished.") + "\n" + _("PiP available now."), MessageBox.TYPE_INFO, 4, ENDNOTIFICATIONID, domain = NOTIFICATIONDOMAIN)
 
 		if self.session.pipshown:

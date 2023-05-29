@@ -87,6 +87,7 @@ class EPGRefresh:
 
 		# Initialise myEpgCacheInstance
 		self.myEpgCacheInstance = None
+		self.EpgCacheStateChanged_conn = None
 
 		# timeout timer for eEPGCache-signal based refresh
 		self.epgTimeoutTimer = eTimer()
@@ -96,12 +97,18 @@ class EPGRefresh:
 		self.showPendingServicesMessageShown = False		
 
 	def epgTimeout(self):
+		print("[EPGRefresh] Debug: epgTimeout")
 		if eDVBSatelliteEquipmentControl.getInstance().isRotorMoving():
 			# rotor is moving, timeout raised too early...check again in 5 seconds
 			self.epgTimeoutTimer.start(5000, True)
 		else:
 			# epgcache-signal is not responding...maybe service/transponder is already running or cache was already updated...? step to next entry
 			print("[EPGRefresh] - finished channel without epg update. Reason: epgTimeout")
+			
+			if self.refreshAdapter and isinstance(self.refreshAdapter, PipAdapter):
+				#don't show pip avaible message on change service
+				self.refreshAdapter.stop(showMessage=False)
+			
 			epgrefreshtimer.add(EPGRefreshTimerEntry(
 					time(),
 					self.refresh,
@@ -138,8 +145,12 @@ class EPGRefresh:
 			print("[EPGRefresh] - EPG update finished for transponder %04x:%04x:%08x" %(tsid, onid, ns))
 
 			if self.refreshAdapter:
-				self.refreshAdapter.stop()
-
+				if isinstance(self.refreshAdapter, PipAdapter):
+					#don't show pip avaible message on change service
+					self.refreshAdapter.stop(showMessage=False)
+				else:
+					self.refreshAdapter.stop()
+			print("[EPGRefresh] Debug: adding epgrefreshtimer")
 			epgrefreshtimer.add(EPGRefreshTimerEntry(
 					time(),
 					self.refresh,
@@ -147,6 +158,7 @@ class EPGRefresh:
 			)
 
 	def _initFinishTodos(self):
+		print("[EPGRefresh] Debug: _initFinishTods")
 		self.finishTodos = [self._ToDoCallAutotimer, self._ToDoAutotimerCalled, self._callFinishNotifiers, self.finish]
 	
 	def addFinishNotifier(self, notifier):
@@ -154,8 +166,10 @@ class EPGRefresh:
 			print("[EPGRefresh] notifier" + str(notifier) + " isn't callable")
 			return
 		self.finishNotifiers[str(notifier)] = notifier
+		print("[EPGRefresh] Debug: addFinishNotifier", self.finishNotifiers)
 
 	def removeFinishNotifier(self, notifier):
+		print("[EPGRefresh] Debug: remove notifier", notifier)
 		notifierKey = str(notifier)
 		if self.finishNotifiers.has_key(notifierKey):
 			self.finishNotifiers.pop(notifierKey)
@@ -243,6 +257,7 @@ class EPGRefresh:
 		file.close()
 
 	def maybeStopAdapter(self):
+		print("[EPGRefresh] maybeStopAdapter")
 		if self.refreshAdapter:
 			self.refreshAdapter.stop()
 			self.refreshAdapter = None
@@ -416,7 +431,9 @@ class EPGRefresh:
 		config.plugins.epgrefresh.lastscan.value = int(time())
 		config.plugins.epgrefresh.lastscan.save()
 		# stop the epgTimeoutTimer - just in case one is running
+		print("[EPGRefresh] - Debug: epgTimeoutTimer active: ", self.epgTimeoutTimer.isActive())
 		self.epgTimeoutTimer.stop()
+		self.EpgCacheStateChanged_conn = None
 		
 		try:
 			from plugin import AdjustExtensionsmenu, housekeepingExtensionsmenu, extStopDescriptor, extPendingServDescriptor
@@ -432,13 +449,14 @@ class EPGRefresh:
 		self._nextTodo()
 
 	def _nextTodo(self, *args, **kwargs):
-		print("[EPGRefresh] Debug: Calling nextTodo")
+		print("[EPGRefresh] Debug: Calling nextTodo", len(self.finishTodos))
 		if len(self.finishTodos) > 0:
 			finishTodo = self.finishTodos.pop(0)
 			print("[EPGRefresh] Debug: Call " + str(finishTodo))
 			finishTodo(*args, **kwargs)
 
 	def _ToDoCallAutotimer(self):
+		print("[EPGRefresh] Debug: _ToDoCallAutotimer")
 		if config.plugins.epgrefresh.parse_autotimer.value != "never":
 			if config.plugins.epgrefresh.parse_autotimer.value in ("ask_yes", "ask_no"):
 				defaultanswer = True if config.plugins.epgrefresh.parse_autotimer.value == "ask_yes" else False
@@ -478,6 +496,7 @@ class EPGRefresh:
 				print("[EPGRefresh] Could not start AutoTimer:" + str(format_exc()))
 				self._nextTodo()
 		else:
+			print("[EPGRefresh] Debug: _ToDoCallAutotimerCB - call nextTodo")
 			self._nextTodo()
 	
 	def _autotimerErrback(self, failure):
@@ -488,6 +507,7 @@ class EPGRefresh:
 		self._nextTodo()
 
 	def _ToDoAutotimerCalled(self, *args, **kwargs):
+		print("[EPGRefresh] Debug: _ToDoAutotimerCalled")
 		if config.plugins.epgrefresh.enablemessage.value:
 			if len(args):
 				# Autotimer has been started
@@ -506,6 +526,7 @@ class EPGRefresh:
 		self._nextTodo()
 	
 	def _callFinishNotifiers(self, *args, **kwargs):
+		print("[EPGRefresh] Debug: _callFinishNotifiers")
 		for notifier in self.finishNotifiers.keys():
 			print("[EPGRefresh] Debug: call " + str(notifier))
 			self.finishNotifiers[notifier]()
@@ -519,12 +540,14 @@ class EPGRefresh:
 			Notifications.AddPopup(_("EPG refresh finished."), MessageBox.TYPE_INFO, 4, ENDNOTIFICATIONID, domain = NOTIFICATIONDOMAIN)
 		epgrefreshtimer.cleanup()
 		self.maybeStopAdapter()
-                if config.plugins.epgrefresh.epgsave.value:
-                        Notifications.AddPopup(_("EPG refresh save."), MessageBox.TYPE_INFO, 4, ENDNOTIFICATIONID, domain = NOTIFICATIONDOMAIN)
-                        from enigma import eEPGCache
-                        myEpg = None
-                        myEpg = eEPGCache.getInstance()
-                        myEpg.save()
+		if config.plugins.epgrefresh.epgsave.value:
+			print("[EPGRefresh] Debug: Saving EPG to DB")
+			if config.plugins.epgrefresh.enablemessage.value:
+				Notifications.AddPopup(_("EPG refresh save."), MessageBox.TYPE_INFO, 4, ENDNOTIFICATIONID, domain = NOTIFICATIONDOMAIN)
+			from enigma import eEPGCache
+			myEpg = None
+			myEpg = eEPGCache.getInstance()
+			myEpg.save()
 		
 		force_auto_shutdown = self.session.nav.wasTimerWakeup() and \
 				config.plugins.epgrefresh.afterevent.value == "auto" and \
@@ -626,11 +649,13 @@ class EPGRefresh:
 			# Clean up
 			self.cleanUp()
 		else:
-			if self.myEpgCacheInstance is None and config.plugins.epgrefresh.usetimebased.value == False:
-				# get eEPGCache instance if None and eEPGCache-signal based is used
-				print("[EPGRefresh] - myEpgCacheInstance is None. Get it")
-				self.myEpgCacheInstance = eEPGCache.getInstance()
-				self.EpgCacheStateChanged_conn = self.myEpgCacheInstance.cacheState.connect(self._onCacheStateChanged)
+			if config.plugins.epgrefresh.usetimebased.value == False:
+				if self.myEpgCacheInstance is None:
+					# get eEPGCache instance if None and eEPGCache-signal based is used
+					print("[EPGRefresh] - myEpgCacheInstance is None. Get it")
+					self.myEpgCacheInstance = eEPGCache.getInstance()
+				if self.EpgCacheStateChanged_conn is None:
+					self.EpgCacheStateChanged_conn = self.myEpgCacheInstance.cacheState.connect(self._onCacheStateChanged)
 
 			if self.isServiceProtected(service):
 				if (not self.forcedScan) or config.plugins.epgrefresh.skipProtectedServices.value == "always":
@@ -656,7 +681,7 @@ class EPGRefresh:
 			ref = ServiceReference(service.sref)
 			channelname = ref.getServiceName().replace('\xc2\x86', '').replace('\xc2\x87', '')
 			print("[EPGRefresh] - Service is: %s" %(str(channelname)))
-					
+			
 			if config.plugins.epgrefresh.usetimebased.value:
 				# Start Timer
 				delay = service.duration or config.plugins.epgrefresh.interval_seconds.value
@@ -700,7 +725,7 @@ class EPGRefresh:
 		cursor.execute("INSERT INTO T_Source (id,source_name,priority) VALUES('2','DVB Schedule (same Transponder)','0')")
 		cursor.execute("INSERT INTO T_Source (id,source_name,priority) VALUES('3','DVB Schedule Other (other Transponder)','0')")
 		cursor.execute("INSERT INTO T_Source (id,source_name,priority) VALUES('4','Viasat','0')")
-                connection.commit()
+		connection.commit()
 		cursor.close()
 		connection.close()
 		self.myEpgCacheInstance = eEPGCache.getInstance()
