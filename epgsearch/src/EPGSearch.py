@@ -668,6 +668,7 @@ class EPGSearch(EPGSelection):
 				searchType = eEPGCache.EXACT_TITLE_SEARCH
 			epgcache = eEPGCache.getInstance() # XXX: the EPGList also keeps an instance of the cache but we better make sure that we get what we want :-)
 			ret = epgcache.search(('RIBDT', 1000, searchType, searchString, eEPGCache.NO_CASE_CHECK)) or []
+			ret = [x for x in ret if x[0] != '-1:0:0:0:0:0:0:0:0:0:']
 			if searchDescription:
 				ret += epgcache.search(('RIBDT', 1000, eEPGCache.PARTIAL_DESCRIPTION_SEARCH, searchString, eEPGCache.NO_CASE_CHECK)) or []
 				#condense by eventids
