@@ -388,7 +388,8 @@ class Cec(object):
 		self.handleActiveSource(self.getDevice(sender).physicalAddress)
 
 	def onFeatureAbort(self, sender, message):
-		Log.w("%s :: %02x %02x" %(sender, message[1], message[2]))
+		if len(message)>=3:
+			Log.w("%s :: %02x %02x" %(sender, message[1], message[2]))
 
 	def onReportAudioStatus(self, sender, message):
 		if not self._volumeDest:
