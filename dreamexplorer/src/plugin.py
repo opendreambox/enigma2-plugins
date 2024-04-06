@@ -720,6 +720,12 @@ class DreamExplorer3(Screen):
 		return slist,foundIndex
 
 	def exitPlugin(self):
+		# Save the current directory as start dir
+		currentDir = self["filelist"].getCurrentDirectory()
+		if currentDir is not None:
+			config.plugins.DreamExplorer.startDir.value = currentDir
+			config.plugins.DreamExplorer.startDir.save()
+
 		self.close()
 
 ######## DREAM-EXPLORER END ####################### 
@@ -924,11 +930,11 @@ class BookmarkManager(Screen):
 class vEditor2(Screen):
 	if getDesktop(0).size().width()>=1920:
 		skin = """
-		<screen name="vEditor2" position="center,50" size="1500,975" title="vEditor2">
-			<widget source="filedata" render="Listbox" position="0,0" size="1500,875" scrollbarMode="showOnDemand">
+		<screen name="vEditor2" position="center,50" size="1880,975" title="vEditor2">
+			<widget source="filedata" render="Listbox" position="0,0" size="1880,875" scrollbarMode="showOnDemand">
 				<convert type="TemplatedMultiContent">
 					{"template":[
-									MultiContentEntryText(pos=(0,0), size=(900,35), text=0),					],
+									MultiContentEntryText(pos=(0,0), size=(1880,35), text=0),					],
 					"fonts": [gFont("Regular",30)],
 					"itemHeight": 35
 					}
@@ -941,6 +947,7 @@ class vEditor2(Screen):
 			<eLabel font="Regular;25" halign="left" position="80,885" size="250,40" text="Delete line" transparent="0" valign="center" zPosition="6"/>
 			<eLabel font="Regular;25" halign="left" position="430,885" size="250,40" text="Add line" transparent="0" valign="center" zPosition="6"/>
 			<eLabel font="Regular;25" halign="left" position="780,885" size="250,40" text="Edit line" transparent="0" valign="center" zPosition="6"/>
+			<eLabel font="Regular;25" halign="left" position="1130,885" size="250,40" text="View End" transparent="0" valign="center" zPosition="6"/>
 			<eLabel font="Regular;20" position="10,925" size="60,30" text="OK" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>
 			<eLabel font="Regular;20" position="360,925" size="60,30" text="EXIT" transparent="0" valign="center" halign="center" foregroundColor="#ffffff" backgroundColor="#787878" zPosition="6"/>	
 			<eLabel font="Regular;25" halign="left" position="80,920" size="250,40" text="Edit line" transparent="0" valign="center" zPosition="6"/>
@@ -952,7 +959,7 @@ class vEditor2(Screen):
 			<widget source="filedata" render="Listbox" position="0,0" size="1200,575" scrollbarMode="showOnDemand">
 				<convert type="TemplatedMultiContent">
 					{"template":[
-									MultiContentEntryText(pos=(0,0), size=(900,30), text=0),					],
+									MultiContentEntryText(pos=(0,0), size=(1200,30), text=0),					],
 					"fonts": [gFont("Regular",18)],
 					"itemHeight": 25
 					}
@@ -984,6 +991,7 @@ class vEditor2(Screen):
 			"red": self.deleteLine,
 			"green": self.addLine,
 			"yellow": self.editLine,
+			"blue": self.viewEnd,
 		}, -1)
 		
 		self.lineIndex = 0
@@ -1009,6 +1017,10 @@ class vEditor2(Screen):
 			self["filedata"].updateList(self.list)
 			self.isChanged = True
 		
+	def viewEnd(self):
+		if len(self.list) > 0:
+			self["filedata"].setCurrentIndex(len(self.list)-1)
+
 	def exitEditor(self):
 		if self.isChanged:
 			msg = self.session.openWithCallback(self.saveFile, MessageBox, _("You have changed %s. Do you want to save your changes?" %(self.filename)), MessageBox.TYPE_YESNO, windowTitle=_("Dream Explorer 3"))
