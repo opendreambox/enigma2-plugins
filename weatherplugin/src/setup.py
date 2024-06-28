@@ -265,6 +265,7 @@ class MSNWeatherPluginEntryConfigScreen(ConfigListScreen, Screen):
 	def xmlCallback(self, xmlstring):
 		if xmlstring:
 			errormessage = ""
+			xmlstring = xmlstring.encode('utf-16-be')
 			root = cet_fromstring(xmlstring)
 			for childs in root:
 				if childs.tag == "weather" and childs.attrib.has_key("errormessage"):
