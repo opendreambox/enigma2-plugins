@@ -51,7 +51,7 @@ class StringBodyProducer(object):
 		pass
 
 class RadioBrowserClient(object):
-	URL_BASE = "https://de1.api.radio-browser.info/json"
+	URL_BASE = "https://de2.api.radio-browser.info/json"
 	URL_COUNTRIES = "/countries"
 	URL_STATIONS = "/stations"
 	URL_STATIONS_BY_NAME = "/stations/byname"
