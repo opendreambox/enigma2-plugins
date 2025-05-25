@@ -49,5 +49,11 @@ class InternetRadioHTTPClientFactory(HTTPClientFactory):
 def sendUrlCommand(url, contextFactory=None, timeout=10, *args, **kwargs):
 	scheme, host, port, path = url_parse(url)
 	factory = InternetRadioHTTPClientFactory(url, *args, **kwargs)
-	reactor.connectTCP(host, port, factory, timeout=timeout)
+	if scheme == 'https':
+		from twisted.internet import ssl
+		if contextFactory is None:
+			contextFactory = ssl.ClientContextFactory()
+		reactor.connectSSL(host, port, factory, contextFactory, timeout=timeout)
+	else:
+		reactor.connectTCP(host, port, factory, timeout=timeout)
 	return factory.deferred

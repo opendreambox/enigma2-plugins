@@ -46,26 +46,63 @@ class InternetRadioSetup(Screen, ConfigListScreen):
 		self["key_red"] = StaticText(_("Cancel"))
 		self["key_green"] = StaticText(_("OK"))
 
-		self.list = [
-			getConfigListEntry(_("Show in extension menu:"), config.plugins.internetradio.showinextensions),
-			getConfigListEntry(_("Visualization"), config.plugins.internetradio.visualization),
-			getConfigListEntry(_("Fullscreen Layout"), config.plugins.internetradio.fullscreenlayout),
-			getConfigListEntry(_("Fullscreen auto activation"), config.plugins.internetradio.fullscreenautoactivation),
-			getConfigListEntry(_("Show cover arts"), config.plugins.internetradio.googlecover),
-			getConfigListEntry(_("Rip to single file, name is timestamped"), config.plugins.internetradio.riptosinglefile),
-			getConfigListEntry(_("Create a directory for each stream"), config.plugins.internetradio.createdirforeachstream),
-			getConfigListEntry(_("Add sequence number to output file"), config.plugins.internetradio.addsequenceoutputfile),
-			]
-		self.dirname = getConfigListEntry(_("Recording location:"), config.plugins.internetradio.dirname)
-		self.list.append(self.dirname)
+		self.list = []
 		
 		ConfigListScreen.__init__(self, self.list, session)
+		
 		self["setupActions"] = ActionMap(["SetupActions", "ColorActions"],
 		{
 			"green": self.keySave,
 			"cancel": self.keyClose,
 			"ok": self.keySelect,
 		}, -2)
+		
+		self.createConfig()
+	
+	def createConfig(self):
+		self.list = []
+
+		self.list.append(getConfigListEntry(_("General Settings"),))
+		self.list.append(getConfigListEntry(_("Show in extension menu:"), config.plugins.internetradio.showinextensions))
+		self.list.append(getConfigListEntry(_("Search Settings"),))
+		self.list.append(getConfigListEntry(_("Use advanced search:"), config.plugins.internetradio.advancedsearch))
+		print "advsearch", config.plugins.internetradio.advancedsearch.value
+		if config.plugins.internetradio.advancedsearch.value:
+			self.list.append(getConfigListEntry(_("Save last search input:"), config.plugins.internetradio.savelastsearch))
+		self.list.append(getConfigListEntry(_("Minimum bitrate:"), config.plugins.internetradio.bitratemin))
+		self.list.append(getConfigListEntry(_("Paging"),))
+		self.list.append(getConfigListEntry(_("Number of results to load"), config.plugins.internetradio.pagingsize))
+		self.list.append(getConfigListEntry(_("Visualization Settings"),))
+		self.list.append(getConfigListEntry(_("Visualization"), config.plugins.internetradio.visualization))
+		self.list.append(getConfigListEntry(_("Fullscreen Layout"), config.plugins.internetradio.fullscreenlayout))
+		self.list.append(getConfigListEntry(_("Fullscreen auto activation"), config.plugins.internetradio.fullscreenautoactivation))
+		self.list.append(getConfigListEntry(_("Show cover arts"), config.plugins.internetradio.googlecover))
+		self.list.append(getConfigListEntry(_("Recording Settings"),))
+		self.list.append(getConfigListEntry(_("Rip to single file, name is timestamped"), config.plugins.internetradio.riptosinglefile))
+		self.list.append(getConfigListEntry(_("Create a directory for each stream"), config.plugins.internetradio.createdirforeachstream))
+		self.list.append(getConfigListEntry(_("Add sequence number to output file"), config.plugins.internetradio.addsequenceoutputfile))
+
+		self.dirname = getConfigListEntry(_("Recording location:"), config.plugins.internetradio.dirname)
+		self.list.append(self.dirname)
+		
+		self["config"].setList(self.list)
+	
+	def keyLeft(self):
+		cur = self["config"].getCurrent()
+		
+		print "cur", cur
+		ConfigListScreen.keyLeft(self)
+		
+		if cur and cur[0] == _("Use advanced search:"):
+			self.createConfig()
+	
+	def keyRight(self):
+		cur = self["config"].getCurrent()
+		ConfigListScreen.keyRight(self)		
+		print "cur", cur
+		if cur and cur[0] == _("Use advanced search:"):
+			self.createConfig()				
+		
 
 	def keySelect(self):
 		cur = self["config"].getCurrent()
@@ -78,13 +115,15 @@ class InternetRadioSetup(Screen, ConfigListScreen):
 
 	def keySave(self):
 		for x in self["config"].list:
-			x[1].save()
+			if len(x)>1:
+				x[1].save()
 		configfile.save()
 		self.close(True)
 
 	def keyClose(self):
 		for x in self["config"].list:
-			x[1].cancel()
+			if len(x)>1:
+				x[1].cancel()
 		self.close(False)
 		
 		
