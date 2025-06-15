@@ -366,7 +366,7 @@ class InternetRadioScreen(Screen, InternetRadioVisualization, InternetRadioPiPTV
 		
 	def __run(self):
 		if isAiO:
-			self._lock = eSystemResourceLock(eSystemResourceLock.ResrouceLockAudio)
+			self._lock = eSystemResourceLock(eSystemResourceLock.ResourceLockAudio)
 		else:
 			if not self.messageShown:
 				self.messageShown = True
