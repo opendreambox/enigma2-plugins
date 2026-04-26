@@ -67,7 +67,6 @@ ThemeFile = resolveFilename(SCOPE_SKIN) + SkinName + "/themes.xml"
 skin_user_xml = "/etc/enigma2/skin_user.xml"
 enigmacontrol = "/var/lib/opkg/info/enigma2.control"
 merlinChk = "/usr/share/enigma2/merlin_setup.xml"
-PIL = "/usr/lib/python2.7/site-packages/PIL/Image.py"
 CONFDIR = "/etc/enigma2/merlinskinthemes/"
 
 # Merlin
@@ -140,9 +139,6 @@ def initConfigSubDict3():
 displayScreenList = ["InfoBarSummary", "EventView_summary", "StandbySummary", "InfoBarMoviePlayerSummary", "MerlinMusicPlayer2LCDScreen"]
 # list of screens
 screenList = ["InfoBar", "Menu", "PluginBrowser", "ChannelSelection", "MovieSelection", "MoviePlayer", "EPGSelection", "GraphMultiEPG", "SecondInfoBar", "EventView", "MessageBox", "InputBox", "ChoiceBox", "Mute", "Volume", "MerlinMusicPlayer2Screen_%s" %(ArchString), "MerlinMusicPlayer2ScreenSaver_%s" %(ArchString)]
-# placeholder for skin-defined additional screens
-dependentScreenList = []
-dependentMissingScreenList = []
 # list of themes
 themeList = ["ColorTheme", "SkinPathTheme", "FontTheme",  "BorderSetTheme", "WindowStyleScrollbarTheme", "ComponentTheme", "LayoutTheme", "GlobalsTheme", "PNGTheme" ]
 
@@ -252,15 +248,18 @@ def XMLindent(elem, level):
 
 def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 	print("[MST] - start applying changes to themes.xml")
+
+	# placeholder for skin-defined additional screens	
+	dependentScreenList = []
+	dependentMissingScreenList = []
 	
 	configDict = {}
 	# read config data
-	f = open(configDictFile, 'r')
-					
-	for line in f:
-		configData = line.split(":::")
-		if len(configData)==2:
-			configDict[configData[0]] = configData[1].strip("\n")
+	with open(configDictFile, 'r') as f:
+		for line in f:
+			configData = line.split(":::")
+			if len(configData)==2:
+				configDict[configData[0]] = configData[1].strip("\n")
 	f.close()
 	
 	# first, we update themes.xml by setting the selected option to active and all others to inactive
@@ -526,14 +525,10 @@ def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 							newscreen = screentheme.find(theme[3])
 							screenDict[screenname]=Tree.tostring(newscreen)
 							break
-								
-	
-	radiusFound = False	
 
 	radiusValue = configDict.get('CornerRadius')
 	if radiusValue is None:
 		radiusValue = configDict.get('cornerradius')
-	radiusFound = True
 
 	excludedCornerRadiusValue = None		
 
@@ -636,7 +631,7 @@ def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 		for screen in dependentScreenList:
 			if not screen in tempScreenNameList:
 				print("[MST] - found screen %s in dependentScreenList but missing in skin. Adding it." %(screen))
-				screenData = screenDict.get(screenname)
+				screenData = screenDict.get(screen)
 
 				if screenData is not None:
 					# insert missing screen
@@ -773,7 +768,7 @@ def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
 	print("[MST] - skin.xml updated")
 	
 	if retFunc is not None:
-		retFunc
+		retFunc()
 
 class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 	skin = """
@@ -920,7 +915,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 
 	def setDescriptionText(self):
 		if isinstance(self["config"].getCurrent()[1].value, bool):
-			textValue = _("Yes") if True else _("No")
+			textValue = _("Yes") if self["config"].getCurrent()[1].value else _("No")
 		else:
 			textValue = self["config"].getCurrent()[1].value
 		self["descriptionText"].setText(textValue)
@@ -1001,9 +996,9 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		f.close()
 
 		if SkinName == MerlinSkinThemes.selSkinName:
-			retFunc = MerlinSkinThemes.restartYesNo(self)
+			retFunc = MerlinSkinThemes.restartYesNo
 		else:
-			retFunc = MerlinSkinThemes.showConfirmationMessage(self)		
+			retFunc = MerlinSkinThemes.showConfirmationMessage		
 			
 		setThemes(MerlinSkinThemes.selThemeFile, MerlinSkinThemes.selSkinFile, configDictFile, retFunc)
 
@@ -1167,6 +1162,8 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 	# read all options available for themes - this is independent of a design
 	def readOptions(self, saveAsDesign=False):
 		print("[MST] - readOptions")
+		# placeholder for skin-defined additional screens
+		dependentScreenList = []
 
 		self.configDict = {}
 		print(config.plugins.MerlinSkinThemes3.Skin.value )
@@ -1893,8 +1890,6 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			self["key_yellow"].setText(_("create themes"))
 			
 		else:
-			self["key_yellow"].show()
-
 			self["key_yellow"].hide()
 
 	# read skins			
@@ -2311,7 +2306,7 @@ class MerlinSkinThemesConfig(Screen, HelpableScreen, ConfigListScreen):
 
 # =================================================================================================
 
-class GetSkinsList(MenuList, MerlinSkinThemes):
+class GetSkinsList(MenuList):
 	SKIN_COMPONENT_KEY = "MerlinSkinThemesList"
 	SKIN_COMPONENT_DIR_WIDTH = "dirWidth"
 	SKIN_COMPONENT_STATUS_WIDTH = "statusWidth"
@@ -2371,7 +2366,8 @@ class GetSkinsList(MenuList, MerlinSkinThemes):
 					list.append(res)
 
 					
-		self.list = list.sort()
+		list.sort()
+		self.list = list
 		for x in range(len(list)):
 			if list[x][2][7] == _("active skin"):
 				self.selectedIndex = x
@@ -2393,6 +2389,4 @@ class MyConfigSelection(ConfigSelection):
 			descr = self._descr
 		else:
 			descr = self._descr = self.description[self.value]
-		if descr:
-			return ("text", descr)
 		return ("text", descr)
