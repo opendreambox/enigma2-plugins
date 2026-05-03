@@ -804,6 +804,8 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 	def __init__(self, session):
 		print("[MST] " + PluginVersion + " running...")
 		self.session = session
+		self.dependentScreenList = []
+		
 		Screen.__init__(self, session)
 		HelpableScreen.__init__(self)
 		
@@ -1163,7 +1165,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 	def readOptions(self, saveAsDesign=False):
 		print("[MST] - readOptions")
 		# placeholder for skin-defined additional screens
-		dependentScreenList = []
+		self.dependentScreenList = []
 
 		self.configDict = {}
 		print(config.plugins.MerlinSkinThemes3.Skin.value )
@@ -1207,7 +1209,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 							screenname = dependentScreen.get('name')
 						
 							if screenname is not None:
-								dependentScreenList.append(screenname)
+								self.dependentScreenList.append(screenname)
 							
 								print("[MST] - found the following dependent screen %s" %(screenname))
 		
@@ -1232,7 +1234,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			if scrt is not None:
 				# check for dependent screens in theme
 				
-				for screen in screenList + dependentScreenList:
+				for screen in screenList + self.dependentScreenList:
 					themes = []			
 					scr = scrt.find('screens[@name="%s"]' %(screen))
 					if scr is not None:
@@ -1466,7 +1468,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						
 					else:
 						# for each screen in the design set the value to the selected design
-						for screenname in screenList + dependentScreenList:
+						for screenname in screenList + self.dependentScreenList:
 							tmp = design.find(screenname)
 							defaultValue = None
 							if tmp is not None:
