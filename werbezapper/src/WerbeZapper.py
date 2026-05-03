@@ -16,7 +16,7 @@ from Plugins.Plugin import PluginDescriptor
 from ServiceReference import ServiceReference
 from time import time
 from math import floor as math_floor
-from . import _
+#from . import _
 
 sz_w = getDesktop(0).size().width()
 plugin_version = "0.1-r1"

@@ -7,7 +7,7 @@ from Components.PluginComponent import plugins
 from Screens.Screen import Screen
 from WerbeZapper import WerbeZapperSetup, plugin_version
 from Tools.BoundFunction import boundFunction
-from . import _
+#from . import _
 
 zapperInstance = None
 
