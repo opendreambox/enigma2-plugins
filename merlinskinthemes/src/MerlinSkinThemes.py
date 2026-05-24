@@ -54,8 +54,9 @@ from MerlinSkinThemesHelp import MerlinSkinThemesHelp
 import xml.etree.cElementTree as Tree
 import shutil
 import os
+import threading
 # =========================================
-PluginVersion = "v3.0.5"
+PluginVersion = "v3.1.0"
 Title = "MerlinSkinThemes - The Original "
 Author = "by marthom"
 # =========================================
@@ -170,7 +171,7 @@ class ImageCreator:
 				fromColorList = list(fromColor)
 				toColorList = list(toColor)
 				for y in range(height):
-  					for x in range(width):
+					for x in range(width):
 						#Find the distance to the closest edge
 						distanceToEdge = min(abs(x - width), x, abs(y - height), y)
 
@@ -188,7 +189,7 @@ class ImageCreator:
 				fromColorList = list(fromColor)
 				toColorList = list(toColor)
 				for y in range(height):
-  					for x in range(width):
+					for x in range(width):
 						#Find the distance to the center
 						distanceToCenter = math.sqrt((x - width/2) ** 2 +(y - height/2) ** 2)
 
@@ -229,546 +230,555 @@ def hex2argb(value):
 	lv = len(value)
 	return tuple(int(value[i:i+lv/4], 16) for i in range(0, lv, lv/4))
 	
-def XMLindent(elem, level):
-	i = "\n" + (level*"    ")
-	#a = "\n%%-%ds" % level
-	#i = a % ' 
-	if len(elem):
-		if not elem.text or not elem.text.strip():
-			elem.text = i + "    "
-		if not elem.tail or not elem.tail.strip():
-			elem.tail = i
-		for elem in elem:
-			XMLindent(elem, level+1)
-		if not elem.tail or not elem.tail.strip():
-			elem.tail = i
-	else:
-		if level and (not elem.tail or not elem.tail.strip()):
-			elem.tail = i
+_indent_cache = {}
+
+def XMLindent(elem, level=0):
+	stack = [(elem, level)]
+	while stack:
+		el, lv = stack.pop()
+		if lv not in _indent_cache:
+			_indent_cache[lv] = "\n" + (lv * "  ")
+		i = _indent_cache[lv]
+		if len(el):
+			if not el.text or not el.text.strip():
+				el.text = i + "	   "
+			if not el.tail or not el.tail.strip():
+				el.tail = i
+			for child in reversed(el):
+				stack.append((child, lv + 1))
+		else:
+			if lv and (not el.tail or not el.tail.strip()):
+				el.tail = i
 
 def setThemes(themeFile=None, skinFile=None, configDictFile=None, retFunc=None):
-	print("[MST] - start applying changes to themes.xml")
-
-	# placeholder for skin-defined additional screens	
-	dependentScreenList = []
-	dependentMissingScreenList = []
+	def worker():	
+		print("[MST] - start applying changes to themes.xml")
 	
-	configDict = {}
-	# read config data
-	with open(configDictFile, 'r') as f:
-		for line in f:
-			configData = line.split(":::")
-			if len(configData)==2:
-				configDict[configData[0]] = configData[1].strip("\n")
-	f.close()
+		# placeholder for skin-defined additional screens	
+		dependentScreenList = []
+		dependentMissingScreenList = []
+		
+		configDict = {}
+		# read config data
+		with open(configDictFile, 'r') as f:
+			for line in f:
+				configData = line.split(":::")
+				if len(configData)==2:
+					configDict[configData[0]] = configData[1].strip("\n")
+		f.close()
+		
+		# first, we update themes.xml by setting the selected option to active and all others to inactive
+		with open(themeFile, 'rb') as theme:
+			curTheme = Tree.parse(theme)
+		rootTheme = curTheme.getroot()
+		themeVersion = rootTheme.get('version')
+		if themeVersion is not None:
+			if themeVersion not in ("1.0", "1.1"):
+				return False
 	
-	# first, we update themes.xml by setting the selected option to active and all others to inactive
-	with open(themeFile, 'rb') as theme:
-		curTheme = Tree.parse(theme)
-	rootTheme = curTheme.getroot()
-	themeVersion = rootTheme.get('version')
-	if themeVersion is not None:
-		if themeVersion not in ("1.0", "1.1"):
-			return False
-
-	themeDict = {}
-	
-	print("[MST] - updating designs")
-	if rootTheme.find("designs") is not None:
-		ds = rootTheme.find("designs")
-		designNameList = [ x.get('name') for x in ds.findall("design") ]
-		currentValue = configDict.get("design", None)
-		currentDscValue = configDict.get("designColor", None)
-		if not currentValue in designNameList:
-			activeDesignList = [ x.get('name') for x in ds.findall("design") if x.get('value') == 'active' ]
-			if len(activeDesignList):
-				print("[MST] - Design stored in config does no longer exist in skin. Using active design")
-				currentValue = activeDesignList[0]
-		activeDesignName = None
-		for design in ds.findall("design"):
-			if design.get('name') == currentValue:
-				design.set("value", "active")
-				activeDesignName = design.get('name')
-			
-				if design.find("designColors") is not None:
-					# don't update designColors if value is -none-
-					if currentDscValue != "-none-":
-						dsc = design.find("designColors")
-						designColorNameList = [ x.get('name') for x in dsc.findall('designColor') ]
-						if not currentDscValue in designColorNameList:
-							activeDesignColorList = [ x.get('name') for x in dsc.findall('designColor')  if x.get('value') == 'active' ]
-							if len(activeDesignColorList):
-								print("[MST] - Design color stored in config does no longer exist in skin. Using active design color")
-								currentDscValue = activeDesignColorList[0]
-						for designColor in dsc.findall("designColor"):
-							if designColor.get('name') == currentDscValue:
-								designColor.set("value", "active")
-							else:
-								designColor.set("value", "inactive")
-			else:
-				if currentValue is None:
-					if design.get('value') == 'active':
-						activeDesignName = design.get('name')
-						print("[MST] - current design is None - use active design from themes ", activeDesignName)
+		themeDict = {}
+		
+		print("[MST] - updating designs")
+		if rootTheme.find("designs") is not None:
+			ds = rootTheme.find("designs")
+			designNameList = [ x.get('name') for x in ds.findall("design") ]
+			currentValue = configDict.get("design", None)
+			currentDscValue = configDict.get("designColor", None)
+			if not currentValue in designNameList:
+				activeDesignList = [ x.get('name') for x in ds.findall("design") if x.get('value') == 'active' ]
+				if len(activeDesignList):
+					print("[MST] - Design stored in config does no longer exist in skin. Using active design")
+					currentValue = activeDesignList[0]
+			activeDesignName = None
+			for design in ds.findall("design"):
+				if design.get('name') == currentValue:
+					design.set("value", "active")
+					activeDesignName = design.get('name')
+				
+					if design.find("designColors") is not None:
+						# don't update designColors if value is -none-
+						if currentDscValue != "-none-":
+							dsc = design.find("designColors")
+							designColorNameList = [ x.get('name') for x in dsc.findall('designColor') ]
+							if not currentDscValue in designColorNameList:
+								activeDesignColorList = [ x.get('name') for x in dsc.findall('designColor')	 if x.get('value') == 'active' ]
+								if len(activeDesignColorList):
+									print("[MST] - Design color stored in config does no longer exist in skin. Using active design color")
+									currentDscValue = activeDesignColorList[0]
+							for designColor in dsc.findall("designColor"):
+								if designColor.get('name') == currentDscValue:
+									designColor.set("value", "active")
+								else:
+									designColor.set("value", "inactive")
 				else:
-					design.set("value", "inactive")
-					
-	print("[MST] - updating themes")
-	for theme in [
-		("colortheme", "colors", "color"),
-		("fonttheme", "fonts", "font"), 
-		("layouttheme", "layouts", "layout", "*"),
-		("globalstheme", "globals", "value"),
-		("bordersettheme","borderset", "pixmap"),
-		("windowstylescrollbartheme", "*", ""),
-		("componenttheme", "components", "component", "*"),
-		("skinpaththemes", "theme", ""),
-		("pngtheme", "png", ""),
-		]:
-		for currenttheme in rootTheme.findall(theme[0]):
-			currentValue = configDict.get("%s" %(theme[0]), None)
-			
-			# skinpaththemes has name on child level!
-			if theme[0] == "skinpaththemes":
-				currentValue = configDict.get("%s" %(theme[0][:-1]), None)
-				oldSkinPath = None
-				newPath = None
-				newSkinPath = None
-				for child in currenttheme.findall(theme[1]):
-					if child.get('value') == 'active':
-						oldSkinPath = child.get('path')
-						child.set("value", "inactive")
-					if child.get("name") == currentValue:
-						child.set("value", "active")
-						newSkinPath = child.get('path')
-						themeDict[theme[0]] = newSkinPath
+					if currentValue is None:
+						if design.get('value') == 'active':
+							activeDesignName = design.get('name')
+							print("[MST] - current design is None - use active design from themes ", activeDesignName)
 					else:
-						child.set("value", "inactive")
-				if newSkinPath is not None and oldSkinPath is not None:
-					print("[MST] - replacing %s by %s in screens" %(oldSkinPath, newSkinPath))
-					for attr in ('pixmap', 'pointer', 'picServiceEventProgressbar'):
-						for pathElement in rootTheme.findall('.//screens/*/screen/*[@%s]' %(attr)):
-							currentPath = pathElement.get('%s' %(attr))
+						design.set("value", "inactive")
+						
+		print("[MST] - updating themes")
+		for theme in [
+			("colortheme", "colors", "color"),
+			("fonttheme", "fonts", "font"), 
+			("layouttheme", "layouts", "layout", "*"),
+			("globalstheme", "globals", "value"),
+			("bordersettheme","borderset", "pixmap"),
+			("windowstylescrollbartheme", "*", ""),
+			("componenttheme", "components", "component", "*"),
+			("skinpaththemes", "theme", ""),
+			("pngtheme", "png", ""),
+			]:
+			for currenttheme in rootTheme.findall(theme[0]):
+				currentValue = configDict.get("%s" %(theme[0]), None)
+				
+				# skinpaththemes has name on child level!
+				if theme[0] == "skinpaththemes":
+					currentValue = configDict.get("%s" %(theme[0][:-1]), None)
+					oldSkinPath = None
+					newPath = None
+					newSkinPath = None
+					for child in currenttheme.findall(theme[1]):
+						if child.get('value') == 'active':
+							oldSkinPath = child.get('path')
+							child.set("value", "inactive")
+						if child.get("name") == currentValue:
+							child.set("value", "active")
+							newSkinPath = child.get('path')
+							themeDict[theme[0]] = newSkinPath
+						else:
+							child.set("value", "inactive")
+					if newSkinPath is not None and oldSkinPath is not None:
+						print("[MST] - replacing %s by %s in screens" %(oldSkinPath, newSkinPath))
+						for attr in ('pixmap', 'pointer', 'picServiceEventProgressbar'):
+							for pathElement in rootTheme.findall('.//screens/*/screen/*[@%s]' %(attr)):
+								currentPath = pathElement.get('%s' %(attr))
+								if currentPath is not None:
+									newPath = currentPath.replace(oldSkinPath, newSkinPath)
+									pathElement.set("%s"%(attr), newPath)
+						for pathElement in rootTheme.findall('.//bordersettheme/borderset/pixmap[@filename]'):
+							currentPath = pathElement.get('filename')
 							if currentPath is not None:
 								newPath = currentPath.replace(oldSkinPath, newSkinPath)
-								pathElement.set("%s"%(attr), newPath)
-					for pathElement in rootTheme.findall('.//bordersettheme/borderset/pixmap[@filename]'):
-						currentPath = pathElement.get('filename')
-						if currentPath is not None:
-							newPath = currentPath.replace(oldSkinPath, newSkinPath)
-							pathElement.set("filename", newPath)
-
-			else:
-				# name matches - set to active and store values
-				if currenttheme.get("name") == currentValue:
-					currenttheme.set("value", "active")
-					themeElement = None
-					if theme[0] in ["bordersettheme", "globalstheme", "windowstylescrollbartheme", "fonttheme", "colortheme", "componenttheme", "layouttheme" ]:
-						subList = []
-						for child in currenttheme.findall(theme[1]):
-							tempList = []
-							if theme[2] == "":
-								if theme[1] == "*":
-									subDict = {}
-									tempDict = child.attrib
-									tempDict['tag'] = child.tag
-									tempList.append(child.attrib)
-									subDict[child.get('name')] = tempList
-									subList.append(subDict)
-									themeDict[theme[0]] = subList
-							
-							else:
-								for grandchild in child.findall(theme[2]):
-									# Value by ref! If grandchild.attrib is directly assigned to attribsDict, grandchild.attrib is modified by assigning l4List to attribsDict
-									attribsDict = dict(grandchild.attrib)
-									
-									if len(theme)==4:
-										if theme[3] == "*":
-											l4List = []
-											for greatgrandchild in grandchild.findall(theme[3]):
-												l4Dict = {}
-												l4ValueDict = {}
-											
-												l5List = []
-												
-												for greatgreatgrandchild in greatgrandchild.findall('*'):
-													l5Dict = {}
-													l5ValueDict = {}
-													l5ValueDict['attrib'] = greatgreatgrandchild.attrib
-													l5ValueDict['text'] = greatgreatgrandchild.text
-													l5Dict[greatgreatgrandchild.tag] = l5ValueDict
-											
-													l5List.append( l5Dict )
-												
-												if len(l5List):
-													l4ValueDict['l5'] = l5List
-												
-
-												l4ValueDict['attrib'] = greatgrandchild.attrib
-												l4ValueDict['text'] = greatgrandchild.text
-												l4Dict[greatgrandchild.tag] = l4ValueDict
-											
-												l4List.append( l4Dict )
-											if len(l4List):
-												attribsDict['l4'] = l4List
-
-									tempList.append(attribsDict)				
-
-								if child.get("name") is not None:
-									subDict = {}
-									print("[MST] - theme[1] has name - use it to build subDict")
-									subDict[child.get("name")] = tempList
-									subList.append(subDict)
-									themeDict[theme[0]] = subList
-								else:
-									print("[MST] - theme[1] has no name - use theme[0]")
-									themeDict[theme[0]] = tempList
-							if theme[2] == "" and theme[1] != "*":
-								print("[MST] - theme[2] is empty - use theme[0]", tempList)
-								themeDict[theme[0]] = tempList
-							
-					# pictures can be generated - no need to store values in dict
-					if theme[0] == "pngtheme":
-						for tp in currenttheme.findall("png"):
-							png_name = tp.get("name")
-							png_width = int(tp.get("width"))
-							png_height = int(tp.get("height"))
-							png_argb = tp.get("argb")
-							acolor = hex2argb(png_argb)
-							png_argb2 = tp.get("argb2", None)
-							if png_argb2 is not None:
-								acolor2 = hex2argb(png_argb2)
-							else:
-								acolor2 = None
-							gradienttype = tp.get("gtype", None)
-
-							if png_name is not None and png_width is not None and png_height is not None and png_argb is not None:
-								if acolor2 is not None and gradienttype is not None:
-									imageCreator.createRectangle(png_width, png_height, (acolor[1], acolor[2], acolor[3], acolor2[0]),(acolor2[1], acolor2[2], acolor2[3], acolor2[0]), skinFile[:-8] + png_name, gradienttype) 
-								else:
-									imageCreator.createRectangle(png_width, png_height, (acolor[1], acolor[2], acolor[3], acolor[0]), None, skinFile[:-8] + png_name)
-
-					# add all elements from themes.xml to skin.xml
-					if themeElement is not None:
-						if theme[2] != "":
-							tempList = []
-							for childElement in themeElement.findall(theme[2]):
-								attributeDict = {}
-								if theme[0] in ["colortheme", "fonttheme" ]:
-									name = childElement.get("name", None)
-									if name is not None:
-										attributeDict["name"] = name
-									value = childElement.get("value", None)
-									if value is not None:
-										attributeDict["value"] = value
-									filename = childElement.get("filename", None)
-									if filename is not None:
-										attributeDict["filename"] = filename
-									scale = childElement.get("scale", None)
-									if scale is None and childElement == "font":
-										scale = "100"
-									if scale is not None:
-										attributeDict["scale"] = scale
-									replacement = childElement.get("replacement", None)
-									if replacement is None and childElement == "font":
-										replacement = "0"
-									if replacement is not None:
-										attributeDict["replacement"] = replacement
-									
-									tempList.append(attributeDict)
-
-							if len(tempList):
-								themeDict[theme[2]] = tempList
-
-				# name does not match - set it to inactive	
-				else:
-					currenttheme.set("value", "inactive")
+								pathElement.set("filename", newPath)
 	
-	print("[MST] - updating screens and displayscreens")
-	screenDict = {}
-	screenThemeData = [("screenthemes", "screens", "screentheme", "screen")]
-	if displayTag is not None:
-		screenThemeData.append((displayTag, "screens", displayTag[:-1], "screen"))
-	for theme in screenThemeData:
-		for currenttheme in rootTheme.findall(theme[0]):
-			for currentscreen in currenttheme.findall(theme[1]):
-				screenname = currentscreen.get('name')
-				currentValue = configDict.get("%s" %(screenname))
-				applyFallback = False
-				for screentheme in currentscreen.findall(theme[2]):
-					if screentheme.get('name') == currentValue:
-						# starting with themeVersion 1.1 screenthemes can be dependent
-						if themeVersion == "1.1":
-							# read the attribute depends to get dependency
-							depends = screentheme.get("depends")
-							# dependency requirement found
-							if depends is not None:
-								# but not met
-								if not fileExists(depends):
-									print("[MST] - dependent screen is active but dependency no longer met - set to inactive")
-									applyFallback = True
-									screentheme.set("value", "inactive")
-									continue
-						screentheme.set("value", "active")
-						newscreen = screentheme.find(theme[3])
-						screenDict[screenname]=Tree.tostring(newscreen)
+				else:
+					# name matches - set to active and store values
+					if currenttheme.get("name") == currentValue:
+						currenttheme.set("value", "active")
+						themeElement = None
+						if theme[0] in ["bordersettheme", "globalstheme", "windowstylescrollbartheme", "fonttheme", "colortheme", "componenttheme", "layouttheme" ]:
+							subList = []
+							for child in currenttheme.findall(theme[1]):
+								tempList = []
+								if theme[2] == "":
+									if theme[1] == "*":
+										subDict = {}
+										tempDict = child.attrib
+										tempDict['tag'] = child.tag
+										tempList.append(child.attrib)
+										subDict[child.get('name')] = tempList
+										subList.append(subDict)
+										themeDict[theme[0]] = subList
+								
+								else:
+									for grandchild in child.findall(theme[2]):
+										# Value by ref! If grandchild.attrib is directly assigned to attribsDict, grandchild.attrib is modified by assigning l4List to attribsDict
+										attribsDict = dict(grandchild.attrib)
+										
+										if len(theme)==4:
+											if theme[3] == "*":
+												l4List = []
+												for greatgrandchild in grandchild.findall(theme[3]):
+													l4Dict = {}
+													l4ValueDict = {}
+												
+													l5List = []
+													
+													for greatgreatgrandchild in greatgrandchild.findall('*'):
+														l5Dict = {}
+														l5ValueDict = {}
+														l5ValueDict['attrib'] = greatgreatgrandchild.attrib
+														l5ValueDict['text'] = greatgreatgrandchild.text
+														l5Dict[greatgreatgrandchild.tag] = l5ValueDict
+												
+														l5List.append( l5Dict )
+													
+													if len(l5List):
+														l4ValueDict['l5'] = l5List
+													
+	
+													l4ValueDict['attrib'] = greatgrandchild.attrib
+													l4ValueDict['text'] = greatgrandchild.text
+													l4Dict[greatgrandchild.tag] = l4ValueDict
+												
+													l4List.append( l4Dict )
+												if len(l4List):
+													attribsDict['l4'] = l4List
+	
+										tempList.append(attribsDict)				
+	
+									if child.get("name") is not None:
+										subDict = {}
+										print("[MST] - theme[1] has name - use it to build subDict")
+										subDict[child.get("name")] = tempList
+										subList.append(subDict)
+										themeDict[theme[0]] = subList
+									else:
+										print("[MST] - theme[1] has no name - use theme[0]")
+										themeDict[theme[0]] = tempList
+								if theme[2] == "" and theme[1] != "*":
+									print("[MST] - theme[2] is empty - use theme[0]", tempList)
+									themeDict[theme[0]] = tempList
+								
+						# pictures can be generated - no need to store values in dict
+						if theme[0] == "pngtheme":
+							for tp in currenttheme.findall("png"):
+								png_name = tp.get("name")
+								png_width = int(tp.get("width"))
+								png_height = int(tp.get("height"))
+								png_argb = tp.get("argb")
+								acolor = hex2argb(png_argb)
+								png_argb2 = tp.get("argb2", None)
+								if png_argb2 is not None:
+									acolor2 = hex2argb(png_argb2)
+								else:
+									acolor2 = None
+								gradienttype = tp.get("gtype", None)
+	
+								if png_name is not None and png_width is not None and png_height is not None and png_argb is not None:
+									if acolor2 is not None and gradienttype is not None:
+										imageCreator.createRectangle(png_width, png_height, (acolor[1], acolor[2], acolor[3], acolor2[0]),(acolor2[1], acolor2[2], acolor2[3], acolor2[0]), skinFile[:-8] + png_name, gradienttype) 
+									else:
+										imageCreator.createRectangle(png_width, png_height, (acolor[1], acolor[2], acolor[3], acolor[0]), None, skinFile[:-8] + png_name)
+	
+						# add all elements from themes.xml to skin.xml
+						if themeElement is not None:
+							if theme[2] != "":
+								tempList = []
+								for childElement in themeElement.findall(theme[2]):
+									attributeDict = {}
+									if theme[0] in ["colortheme", "fonttheme" ]:
+										name = childElement.get("name", None)
+										if name is not None:
+											attributeDict["name"] = name
+										value = childElement.get("value", None)
+										if value is not None:
+											attributeDict["value"] = value
+										filename = childElement.get("filename", None)
+										if filename is not None:
+											attributeDict["filename"] = filename
+										scale = childElement.get("scale", None)
+										if scale is None and childElement == "font":
+											scale = "100"
+										if scale is not None:
+											attributeDict["scale"] = scale
+										replacement = childElement.get("replacement", None)
+										if replacement is None and childElement == "font":
+											replacement = "0"
+										if replacement is not None:
+											attributeDict["replacement"] = replacement
+										
+										tempList.append(attributeDict)
+	
+								if len(tempList):
+									themeDict[theme[2]] = tempList
+	
+					# name does not match - set it to inactive	
 					else:
-						screentheme.set("value", "inactive")
-						
-				# apply the fallback screen in case the dependent py was removed to avoid greenscreens
-				if themeVersion == "1.1" and applyFallback:
+						currenttheme.set("value", "inactive")
+		
+		print("[MST] - updating screens and displayscreens")
+		screenDict = {}
+		screenThemeData = [("screenthemes", "screens", "screentheme", "screen")]
+		if displayTag is not None:
+			screenThemeData.append((displayTag, "screens", displayTag[:-1], "screen"))
+		for theme in screenThemeData:
+			for currenttheme in rootTheme.findall(theme[0]):
+				for currentscreen in currenttheme.findall(theme[1]):
+					screenname = currentscreen.get('name')
+					currentValue = configDict.get("%s" %(screenname))
+					applyFallback = False
 					for screentheme in currentscreen.findall(theme[2]):
-						if screentheme.get('fallback') is not None:
-							print("[MST] - Found fallback screen. Applying it.")
-							# use the fallback screen
+						if screentheme.get('name') == currentValue:
+							# starting with themeVersion 1.1 screenthemes can be dependent
+							if themeVersion == "1.1":
+								# read the attribute depends to get dependency
+								depends = screentheme.get("depends")
+								# dependency requirement found
+								if depends is not None:
+									# but not met
+									if not fileExists(depends):
+										print("[MST] - dependent screen is active but dependency no longer met - set to inactive")
+										applyFallback = True
+										screentheme.set("value", "inactive")
+										continue
 							screentheme.set("value", "active")
 							newscreen = screentheme.find(theme[3])
 							screenDict[screenname]=Tree.tostring(newscreen)
-							break
-
-	radiusValue = configDict.get('CornerRadius')
-	if radiusValue is None:
-		radiusValue = configDict.get('cornerradius')
-
-	excludedCornerRadiusValue = None		
-
-	print("[MST] - updating cornerradius")
-	if themeVersion is None:
-		for cRadius in rootTheme.findall("cornerradius"):
-			excludedCornerRadiusValue = cRadius.get('exclude')
-			for radius in cRadius.findall("radius"):
-				if radius.get("name") == radiusValue:
-					radius.set("value", "active")
-				else:
-					radius.set("value", "inactive")
-	elif themeVersion in ("1.0", "1.1"):
-		designNode = rootTheme.find("designs")
-		if activeDesignName is not None:
-			activeDesign = designNode.find("design[@name='%s']" %(activeDesignName))
-			if activeDesign is not None:
-				cRadius = activeDesign.find("cornerRadius")
-				if cRadius is not None:
-					excludedCornerRadiusValue = cRadius.get('exclude')
-					for radius in cRadius.findall("radius"):
-						if radius.get("name") == radiusValue:
-							radius.set("value", "active")
 						else:
-							radius.set("value", "inactive")
-		else:
-			print("[MST] - cannot update CornerRadius as design does not longer exist")
-
-	# write changes to themes.xml
-	with open(themeFile, 'wb') as theme:
-		curTheme.write(theme)
-	print("[MST] - themes.xml updated")
+							screentheme.set("value", "inactive")
+							
+					# apply the fallback screen in case the dependent py was removed to avoid greenscreens
+					if themeVersion == "1.1" and applyFallback:
+						for screentheme in currentscreen.findall(theme[2]):
+							if screentheme.get('fallback') is not None:
+								print("[MST] - Found fallback screen. Applying it.")
+								# use the fallback screen
+								screentheme.set("value", "active")
+								newscreen = screentheme.find(theme[3])
+								screenDict[screenname]=Tree.tostring(newscreen)
+								break
 	
-	# now, we update skin.xml
-	with open(skinFile, 'rb') as skin:
-		curSkin = Tree.parse(skin)
-	rootSkin = curSkin.getroot()
-
-	print("[MST] - start applying changes to skin.xml")
-	# let's brand the skin as edited by MST
-	if rootSkin.find("merlinskinthemes") is None:
-		mst = Tree.Element("merlinskinthemes", {"text":"Edited with MerlinSkinThemes3"})
-		rootSkin.insert(0, mst)
-								
-	tagDict = {
-		"colortheme": ["colors", "color"],
-		"fonttheme":  ["fonts", "font"],
-		"layouttheme": ["layouts", "layout"],
-		"globalstheme": ["globals", "value"],
-		"bordersettheme": ["borderset", "pixmap"],
-		"windowstylescrollbartheme": ["windowstylescrollbar", "*"],
-		"componenttheme": ["components", "component"],
-		"skinpaththemes": ["theme"],
-		}
-
-	print("[MST] - applying screens")
+		radiusValue = configDict.get('CornerRadius')
+		if radiusValue is None:
+			radiusValue = configDict.get('cornerradius')
 	
-	if themeVersion == "1.1":
-
-		dependentScreens = rootTheme.find('dependentscreens')
-		if dependentScreens is not None:
-			for dependentScreen in dependentScreens.findall('screen[@depends]'):
-				dependency = dependentScreen.get('depends')
-				screenname = dependentScreen.get('name')
-				if fileExists(dependency):
-					if screenname is not None and not screenname in dependentScreenList:
-						dependentScreenList.append(screenname)
-				else:
-					if screenname is not None:
-						dependentMissingScreenList.append(screenname)
-
-	tempScreenNameList = []
-	for screen in rootSkin.findall('screen'):
-		screenname = screen.get('name')
-		tempScreenNameList.append(screenname)
-			
-		screenId = screen.get('id')
-		if screenId is not None and screenId != IdString:
-			continue
-
-		screenData = screenDict.get(screenname)
-
-		if screenData is not None:
-			
-			# delete old screen
-			rootSkin.remove(screen)
-			
-			# insert new screen but only if it is not a dependentScreen that's not installed anymore
-			if not screenname in dependentMissingScreenList:
-				rootSkin.append(Tree.fromstring(screenData))
-		else:
-			if themeVersion == "1.1":
-				for missingScreen in dependentMissingScreenList:
-					if missingScreen in tempScreenNameList:
-						print("[MST] - found screen %s in dependentScreenMissingList and in skin. Removing it." %(missingScreen))
-						rootSkin.remove(screen)				
-			
-	if themeVersion == "1.1":
-
-		for screen in dependentScreenList:
-			if not screen in tempScreenNameList:
-				print("[MST] - found screen %s in dependentScreenList but missing in skin. Adding it." %(screen))
-				screenData = screenDict.get(screen)
-
-				if screenData is not None:
-					# insert missing screen
-					rootSkin.append(Tree.fromstring(screenData))
-
-	print("[MST] - applying themes")
-	# themes must be applied post screens as skinpaththemes update paths in screens
-	# iterate over the dict and update skin.xml	
-	for key, value in themeDict.iteritems():	
-		print("key is", key)	
-		tagList = tagDict.get(key)
-		node = tagList[0]
-		elementIndex = 1
+		excludedCornerRadiusValue = None		
+	
+		print("[MST] - updating cornerradius")
+		if themeVersion is None:
+			for cRadius in rootTheme.findall("cornerradius"):
+				excludedCornerRadiusValue = cRadius.get('exclude')
+				for radius in cRadius.findall("radius"):
+					if radius.get("name") == radiusValue:
+						radius.set("value", "active")
+					else:
+						radius.set("value", "inactive")
+		elif themeVersion in ("1.0", "1.1"):
+			designNode = rootTheme.find("designs")
+			if activeDesignName is not None:
+				activeDesign = designNode.find("design[@name='%s']" %(activeDesignName))
+				if activeDesign is not None:
+					cRadius = activeDesign.find("cornerRadius")
+					if cRadius is not None:
+						excludedCornerRadiusValue = cRadius.get('exclude')
+						for radius in cRadius.findall("radius"):
+							if radius.get("name") == radiusValue:
+								radius.set("value", "active")
+							else:
+								radius.set("value", "inactive")
+			else:
+				print("[MST] - cannot update CornerRadius as design does not longer exist")
+	
+		# write changes to themes.xml
+		with open(themeFile, 'wb') as theme:
+			curTheme.write(theme)
+		print("[MST] - themes.xml updated")
 		
-		# for skinpaththemes we have to update the path in all elements with a path attribute
-		if key == "skinpaththemes" and oldSkinPath is not None:
-			for attr in ['pixmap', 'pointer', 'picServiceEventProgressbar']:
-				for pathelement in rootSkin.findall('.//*[@%s]' %(attr)):
-					currentPath = pathelement.get('%s' %(attr))
-					if currentPath is not None:
-						newPath = currentPath.replace(oldSkinPath, value)
-						pathelement.set("%s"%(attr), newPath)
+		# now, we update skin.xml
+		with open(skinFile, 'rb') as skin:
+			curSkin = Tree.parse(skin)
+		rootSkin = curSkin.getroot()
+	
+		print("[MST] - start applying changes to skin.xml")
+		# let's brand the skin as edited by MST
+		if rootSkin.find("merlinskinthemes") is None:
+			mst = Tree.Element("merlinskinthemes", {"text":"Edited with MerlinSkinThemes3"})
+			rootSkin.insert(0, mst)
+									
+		tagDict = {
+			"colortheme": ["colors", "color"],
+			"fonttheme":  ["fonts", "font"],
+			"layouttheme": ["layouts", "layout"],
+			"globalstheme": ["globals", "value"],
+			"bordersettheme": ["borderset", "pixmap"],
+			"windowstylescrollbartheme": ["windowstylescrollbar", "*"],
+			"componenttheme": ["components", "component"],
+			"skinpaththemes": ["theme"],
+			}
+	
+		print("[MST] - applying screens")
+		
+		if themeVersion == "1.1":
+	
+			dependentScreens = rootTheme.find('dependentscreens')
+			if dependentScreens is not None:
+				for dependentScreen in dependentScreens.findall('screen[@depends]'):
+					dependency = dependentScreen.get('depends')
+					screenname = dependentScreen.get('name')
+					if fileExists(dependency):
+						if screenname is not None and not screenname in dependentScreenList:
+							dependentScreenList.append(screenname)
+					else:
+						if screenname is not None:
+							dependentMissingScreenList.append(screenname)
+	
+		tempScreenNameList = []
+		for screen in rootSkin.findall('screen'):
+			screenname = screen.get('name')
+			tempScreenNameList.append(screenname)
+				
+			screenId = screen.get('id')
+			if screenId is not None and screenId != IdString:
+				continue
+	
+			screenData = screenDict.get(screenname)
+	
+			if screenData is not None:
+				
+				# delete old screen
+				rootSkin.remove(screen)
+				
+				# insert new screen but only if it is not a dependentScreen that's not installed anymore
+				if not screenname in dependentMissingScreenList:
+					rootSkin.append(Tree.fromstring(screenData))
+			else:
+				if themeVersion == "1.1":
+					for missingScreen in dependentMissingScreenList:
+						if missingScreen in tempScreenNameList:
+							print("[MST] - found screen %s in dependentScreenMissingList and in skin. Removing it." %(missingScreen))
+							rootSkin.remove(screen)				
+				
+		if themeVersion == "1.1":
+	
+			for screen in dependentScreenList:
+				if not screen in tempScreenNameList:
+					print("[MST] - found screen %s in dependentScreenList but missing in skin. Adding it." %(screen))
+					screenData = screenDict.get(screen)
+	
+					if screenData is not None:
+						# insert missing screen
+						rootSkin.append(Tree.fromstring(screenData))
+	
+		print("[MST] - applying themes")
+		# themes must be applied post screens as skinpaththemes update paths in screens
+		# iterate over the dict and update skin.xml 
+		for key, value in themeDict.iteritems():	
+			print("key is", key)	
+			tagList = tagDict.get(key)
+			node = tagList[0]
+			elementIndex = 1
 			
-			if themeDict.get('windowstylescrollbartheme') is None:
-				for idValue in ('4', '5'):
-					for pathelement in rootSkin.findall('.//windowstylescrollbar[@id="%s"]/pixmap[@filename]' %(idValue)):
-						currentPath = pathelement.get('filename')
+			# for skinpaththemes we have to update the path in all elements with a path attribute
+			if key == "skinpaththemes" and oldSkinPath is not None:
+				for attr in ['pixmap', 'pointer', 'picServiceEventProgressbar']:
+					for pathelement in rootSkin.findall('.//*[@%s]' %(attr)):
+						currentPath = pathelement.get('%s' %(attr))
 						if currentPath is not None:
 							newPath = currentPath.replace(oldSkinPath, value)
-							pathelement.set("filename", newPath)
+							pathelement.set("%s"%(attr), newPath)
 				
-			for pathelement in rootSkin.findall('.//windowstyle[@id="0"]/borderset/pixmap[@filename]'):
-				currentPath = pathelement.get('filename')
-				if currentPath is not None:
-					newPath = currentPath.replace(oldSkinPath, value)
-					pathelement.set("filename", newPath)
-			continue
-		
-		if key == "bordersettheme":
-			node = "windowstyle"
-			elementIndex = 0
-
-		elementList = rootSkin.findall(node)
-		if not len(elementList):
-			continue
-		# single element lists are: colors, globals, fonts
-		# multi element lists are: windowstyle (but only 1 is relevant)
-		for element in elementList:
-			if element.tag == "windowstyle" and element.get('id') != "0":
+				if themeDict.get('windowstylescrollbartheme') is None:
+					for idValue in ('4', '5'):
+						for pathelement in rootSkin.findall('.//windowstylescrollbar[@id="%s"]/pixmap[@filename]' %(idValue)):
+							currentPath = pathelement.get('filename')
+							if currentPath is not None:
+								newPath = currentPath.replace(oldSkinPath, value)
+								pathelement.set("filename", newPath)
+					
+				for pathelement in rootSkin.findall('.//windowstyle[@id="0"]/borderset/pixmap[@filename]'):
+					currentPath = pathelement.get('filename')
+					if currentPath is not None:
+						newPath = currentPath.replace(oldSkinPath, value)
+						pathelement.set("filename", newPath)
 				continue
-			if element.tag == "windowstylescrollbar" and element.get('id') not in ("4", "5"):
-				print("[MST] - windowstylescrollbar with id != 4/5")
-				continue
-			# list with all matching elements in skin.xml
-			elementList = element.findall(tagList[elementIndex])
-
-			# remove existing elements in skin.xml
-			for elementListItem in elementList:
-				if elementIndex == 1:
-					element.remove(elementListItem)
-				else:
-					subElementList = elementListItem.findall(tagList[elementIndex+1])
-					for subElementListItem in subElementList:
-						elementListItem.remove(subElementListItem)
-		
-		# key: bordersettheme; value: list of dict
-		# key: fonttheme; value: list of dict
-		for item in value:
-			hasSub = False
-			# key: bsWindow; value: list of dict
-			# key: scale; value: 100
 			
-			for subkey, subvalue in item.iteritems():
-				# l4 will be handled later
-				if subkey == "l4":
-					continue
-				if isinstance(subvalue, list):
-					# key: pos; value: bpTopLeft
-					for subitem in subvalue:
-						hasSub = True
-						# this is safe as there's exactly one matching windowstyle element in skin.xml
-						tempElement = rootSkin.find("./%s[@id='0']/%s[@name='%s']" %(node, tagList[0], subkey))
-						if tempElement is not None:
-							Tree.SubElement(tempElement, tagList[elementIndex+1], subitem)
-						else:
-							# this is safe as there's exactly one matching windowstylescrollbar element in skin.xml
-							tempElement = rootSkin.find("./%s[@id='4']" %(node))
-							if tempElement is not None:
-								tag = subitem.get('tag')
-								if subitem.get('tag') is not None:
-									del subitem['tag']
-									Tree.SubElement(tempElement, tag, subitem)
-							
-							tempElement = rootSkin.find("./%s[@id='5']" %(node))
-							if tempElement is not None:
-								tag = subitem.get('tag')
-								if subitem.get('tag') is not None:
-									del subitem['tag']
-									Tree.SubElement(tempElement, tag, subitem)
-
-
-			# add element again with data from dict
-			if not hasSub:
-				# check if we have an additional level
-				if item.get('l4') is not None:
-					l4List = item.get('l4')
-					# attribute l4 must be deleted otherwise it's added to the element - crashes guaranteed
-					del item['l4']
-					newElem = Tree.SubElement(element, tagList[elementIndex], item)
-					for l4Item in l4List:
-						for itemKey, itemValue in l4Item.iteritems():
-							newL4Elem = Tree.SubElement(newElem, itemKey, itemValue.get('attrib', {}))
-							newL4Elem.text = itemValue.get('text', '')
-							# widgets can have an additional level with the converter information
-							for l5Item in itemValue.get('l5', []):
-								for l5ItemKey, l5ItemValue in l5Item.iteritems():
-									Tree.SubElement(newL4Elem, l5ItemKey, l5ItemValue.get('attrib', {})).text = l5ItemValue.get('text', '')
-				else:
-					Tree.SubElement(element, tagList[elementIndex], item)	
-
-	print("[MST] - applying cornerradius")
-	# replace value of cornerRadius attribute in all eLabel elements in skin.xml
-	for elabel in rootSkin.findall('.//eLabel[@cornerRadius]'):
-		# current cornerRadius is not matching excluded value from theme		
-		if elabel.get("cornerRadius") != excludedCornerRadiusValue:
-			if radiusValue is not None:
-				elabel.set("cornerRadius", radiusValue)
-
-	# elementtree does not support pretty print - so we do it
-	XMLindent(rootSkin,0)
-	#newXml = addIndent(rootSkin, 0)
-	# write updates to skin.xml
-	curSkin.write(skinFile)
-	print("[MST] - skin.xml updated")
+			if key == "bordersettheme":
+				node = "windowstyle"
+				elementIndex = 0
 	
-	if retFunc is not None:
-		retFunc()
+			elementList = rootSkin.findall(node)
+			if not len(elementList):
+				continue
+			# single element lists are: colors, globals, fonts
+			# multi element lists are: windowstyle (but only 1 is relevant)
+			for element in elementList:
+				if element.tag == "windowstyle" and element.get('id') != "0":
+					continue
+				if element.tag == "windowstylescrollbar" and element.get('id') not in ("4", "5"):
+					print("[MST] - windowstylescrollbar with id != 4/5")
+					continue
+				# list with all matching elements in skin.xml
+				elementList = element.findall(tagList[elementIndex])
+	
+				# remove existing elements in skin.xml
+				for elementListItem in elementList:
+					if elementIndex == 1:
+						element.remove(elementListItem)
+					else:
+						subElementList = elementListItem.findall(tagList[elementIndex+1])
+						for subElementListItem in subElementList:
+							elementListItem.remove(subElementListItem)
+			
+			# key: bordersettheme; value: list of dict
+			# key: fonttheme; value: list of dict
+			for item in value:
+				hasSub = False
+				# key: bsWindow; value: list of dict
+				# key: scale; value: 100
+				
+				for subkey, subvalue in item.iteritems():
+					# l4 will be handled later
+					if subkey == "l4":
+						continue
+					if isinstance(subvalue, list):
+						# key: pos; value: bpTopLeft
+						for subitem in subvalue:
+							hasSub = True
+							# this is safe as there's exactly one matching windowstyle element in skin.xml
+							tempElement = rootSkin.find("./%s[@id='0']/%s[@name='%s']" %(node, tagList[0], subkey))
+							if tempElement is not None:
+								Tree.SubElement(tempElement, tagList[elementIndex+1], subitem)
+							else:
+								# this is safe as there's exactly one matching windowstylescrollbar element in skin.xml
+								tempElement = rootSkin.find("./%s[@id='4']" %(node))
+								if tempElement is not None:
+									tag = subitem.get('tag')
+									if subitem.get('tag') is not None:
+										del subitem['tag']
+										Tree.SubElement(tempElement, tag, subitem)
+								
+								tempElement = rootSkin.find("./%s[@id='5']" %(node))
+								if tempElement is not None:
+									tag = subitem.get('tag')
+									if subitem.get('tag') is not None:
+										del subitem['tag']
+										Tree.SubElement(tempElement, tag, subitem)
+	
+	
+				# add element again with data from dict
+				if not hasSub:
+					# check if we have an additional level
+					if item.get('l4') is not None:
+						l4List = item.get('l4')
+						# attribute l4 must be deleted otherwise it's added to the element - crashes guaranteed
+						del item['l4']
+						newElem = Tree.SubElement(element, tagList[elementIndex], item)
+						for l4Item in l4List:
+							for itemKey, itemValue in l4Item.iteritems():
+								newL4Elem = Tree.SubElement(newElem, itemKey, itemValue.get('attrib', {}))
+								newL4Elem.text = itemValue.get('text', '')
+								# widgets can have an additional level with the converter information
+								for l5Item in itemValue.get('l5', []):
+									for l5ItemKey, l5ItemValue in l5Item.iteritems():
+										Tree.SubElement(newL4Elem, l5ItemKey, l5ItemValue.get('attrib', {})).text = l5ItemValue.get('text', '')
+					else:
+						Tree.SubElement(element, tagList[elementIndex], item)	
+	
+		print("[MST] - applying cornerradius")
+		# replace value of cornerRadius attribute in all eLabel elements in skin.xml
+		for elabel in rootSkin.findall('.//eLabel[@cornerRadius]'):
+			# current cornerRadius is not matching excluded value from theme		
+			if elabel.get("cornerRadius") != excludedCornerRadiusValue:
+				if radiusValue is not None:
+					elabel.set("cornerRadius", radiusValue)
+	
+		# elementtree does not support pretty print - so we do it
+		XMLindent(rootSkin,0)
+		# write updates to skin.xml
+		curSkin.write(skinFile)
+		print("[MST] - skin.xml updated")
+		
+		from twisted.internet import reactor
+		if retFunc is not None:
+			from twisted.internet import reactor
+			reactor.callFromThread(retFunc, True)
+			
+	t = threading.Thread(target=worker)
+	t.daemon = True
+	t.start()
 
 class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 	skin = """
@@ -832,10 +842,10 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		self["key_blue"] = Button(_("More..."))
 		
 		self.helpDict = {
-			"ColorTheme": 		_("ColorTheme: A ColorTheme defines the set of colors. This allows to give a skin a completely different appearance."),
+			"ColorTheme":		_("ColorTheme: A ColorTheme defines the set of colors. This allows to give a skin a completely different appearance."),
 			"FontTheme":		_("FontTheme: A FontTheme defines the font used in the skin."),
 			"BorderSetTheme":	_("BorderSetTheme: A BorderSetTheme defines graphics used for windows and listboxes."),
-			"SkinPathTheme": 	_("SkinPathTheme: A SkinPathTheme define the path value in all elements of the skin. This allows to change graphics used."),
+			"SkinPathTheme":	_("SkinPathTheme: A SkinPathTheme define the path value in all elements of the skin. This allows to change graphics used."),
 			"ComponentTheme":	_("ComponentTheme: A ComponentTheme defines the look and feel of components used in e.g. Movielist or Channel Selection."),
 			"CornerRadius":		_("CornerRadius: A CornerRadius defines the look and feel of corners."),
 			"LayoutTheme":		_("LayoutTheme: A LayoutTheme defines layouts that are reused in the skin and guarantee e.g. a consistent look and feel of buttons."),
@@ -851,7 +861,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		
 		self["ColorActions"] = HelpableActionMap(self, "ColorActions",
 		{
-			"red":     self.buttonRed,
+			"red":	   self.buttonRed,
 			"green":   self.buttonGreen,
 			"yellow":  self.buttonYellow,
 			"blue":	   self.openContextMenu,
@@ -998,18 +1008,26 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		f.close()
 
 		if SkinName == MerlinSkinThemes.selSkinName:
-			retFunc = MerlinSkinThemes.restartYesNo
+			self.pendingAction = "restart"
 		else:
-			retFunc = MerlinSkinThemes.showConfirmationMessage		
+			self.pendingAction = "confirm"
+		
+		self.busyDialog = self.session.openWithCallback(self.busyDialogClosed, MessageBox, _("Updating theme, please wait..."), MessageBox.TYPE_INFO, enable_input=False)
 			
-		setThemes(MerlinSkinThemes.selThemeFile, MerlinSkinThemes.selSkinFile, configDictFile, retFunc)
-
-	def restartYesNo(self):
-		restartbox = self.session.openWithCallback(self.restartGUI,MessageBox,_("GUI needs a restart to apply a new skin\nDo you want to Restart the GUI now?"), MessageBox.TYPE_YESNO)
-		restartbox.setTitle(_("Restart GUI now?"))
-			
-	def showConfirmationMessage(self):
-		self.session.open(MessageBox, _("Changes to skin " + MerlinSkinThemes.selSkinName + " ready!"), MessageBox.TYPE_INFO)		
+		setThemes(MerlinSkinThemes.selThemeFile, MerlinSkinThemes.selSkinFile, configDictFile, self._checkReturnValue)
+		
+	def _checkReturnValue(self, retValue=None):
+		self.pendingRetValue = retValue
+		self.busyDialog.close()
+		
+	def busyDialogClosed(self, closedRetValue=None):
+		if not self.pendingRetValue:
+			self.session.open(MessageBox, _("Skin could not be rebuilt due to unsupported version of theme"), MessageBox.TYPE_ERROR)	
+		elif self.pendingAction == "restart":
+			restartbox = self.session.openWithCallback(self.restartGUI,MessageBox,_("GUI needs a restart to apply a new skin\nDo you want to Restart the GUI now?"), MessageBox.TYPE_YESNO)
+			restartbox.setTitle(_("Restart GUI now?"))
+		else:
+			self.session.open(MessageBox, _("Changes to skin " + MerlinSkinThemes.selSkinName + " ready!"), MessageBox.TYPE_INFO)
 
 	def check4MSTScreen(self):
 		if fileExists(MerlinSkinThemes.selSkinFile):
@@ -1061,7 +1079,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 		if designname is not None:
 			self.session.openWithCallback(boundFunction(self.saveDesign, designname), InputBox, title=_("Please enter a name for design color"))
 	
-	# write a new design into <designs>	# designcolorname hand over implementation
+	# write a new design into <designs> # designcolorname hand over implementation
 	def saveDesign(self, designname=None, designcolorname=None):
 		if designname is not None and designcolorname is not None:
 		
@@ -1128,22 +1146,33 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			
 			XMLindent(xmlroot, 0)
 			
-			curTree.write(MerlinSkinThemes.selThemeFile)
+			self.busyDialog = self.session.open(MessageBox, _("Saving design, please wait..."), MessageBox.TYPE_INFO, enable_input=False)
 			
-			config.plugins.MerlinSkinThemes3.Designs["design"].choices.choices.append(designname)
-			config.plugins.MerlinSkinThemes3.Designs["design"].value = designname
+			def worker():
+				curTree.write(MerlinSkinThemes.selThemeFile)
+				from twisted.internet import reactor
+				reactor.callFromThread(self._saveDesignDone, designname, designcolorname)
+				
+			t = threading.Thread(target=worker)
+			t.daemon = True
+			t.start()
 			
-			if not "designColor" in config.plugins.MerlinSkinThemes3.DesignColors.keys():		
-				config.plugins.MerlinSkinThemes3.DesignColors["designColor"] = NoSave(MyConfigSelection(default=designcolorname, choices = [designcolorname]))
-				self.clist2.insert(6, getConfigListEntry("Design Color", config.plugins.MerlinSkinThemes3.DesignColors["designColor"]))
-			else:
-				config.plugins.MerlinSkinThemes3.DesignColors["designColor"].choices.choices.append(designcolorname)
-				config.plugins.MerlinSkinThemes3.DesignColors["designColor"].value = designcolorname
+	def _saveDesignDone(self, designname, designcolorname):
+		config.plugins.MerlinSkinThemes3.Designs["design"].choices.choices.append(designname)
+		config.plugins.MerlinSkinThemes3.Designs["design"].value = designname
 			
-			self["config"].invalidate(("Design", config.plugins.MerlinSkinThemes3.Designs["design"]))
-			self["config"].invalidate(("Design Color", config.plugins.MerlinSkinThemes3.DesignColors["designColor"]))
-			self["Preview"].hide()
-			self.readOptions(True)
+		if not "designColor" in config.plugins.MerlinSkinThemes3.DesignColors.keys():		
+			config.plugins.MerlinSkinThemes3.DesignColors["designColor"] = NoSave(MyConfigSelection(default=designcolorname, choices = [designcolorname]))
+			self.clist2.insert(6, getConfigListEntry("Design Color", config.plugins.MerlinSkinThemes3.DesignColors["designColor"]))
+		else:
+			config.plugins.MerlinSkinThemes3.DesignColors["designColor"].choices.choices.append(designcolorname)
+			config.plugins.MerlinSkinThemes3.DesignColors["designColor"].value = designcolorname
+			
+		self["config"].invalidate(("Design", config.plugins.MerlinSkinThemes3.Designs["design"]))
+		self["config"].invalidate(("Design Color", config.plugins.MerlinSkinThemes3.DesignColors["designColor"]))
+		self["Preview"].hide()
+		self.busyDialog.close()
+		self.readOptions(True)
 			
 	# delete the selected design from themes.xml				
 	def deleteDesign(self, designName):
@@ -1285,7 +1314,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						themes.append((radius.get("name"), radius.get("value") == "active"))
 					self.themeDict[themeType] = themes
 
-			if not saveAsDesign:	
+			if not saveAsDesign:
 				self.readDesign("init")
 			else:
 				self.readDesign("save")
@@ -1733,7 +1762,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			self.curList = "SkinsList"
 			
 			self.setListLabelText()
- 			
+			
 			self["SkinCopyright"].setText("")
 			
 			self["key_green"].setText(_("switch to skin"))
@@ -1975,7 +2004,7 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 						childNodeOrg.append(Tree.Comment("Example only"))
 						newChildOrg = Tree.SubElement(childNodeOrg, "borderset", {"name":"bsWindow"})
 						childNodeWork.append(Tree.Comment("Example only"))
-						newChildWork = Tree.SubElement(childNodeWork, "borderset", {"name":"bsWindow"})	
+						newChildWork = Tree.SubElement(childNodeWork, "borderset", {"name":"bsWindow"}) 
 						Tree.SubElement(newChildOrg, "pixmap", exampleDict.get(node[0], {}) )
 						Tree.SubElement(newChildWork, "pixmap", exampleDict.get(node[0], {}) )
 											
@@ -2141,13 +2170,24 @@ class MerlinSkinThemes(Screen, HelpableScreen, ConfigListScreen):
 			Tree.SubElement(cr1, "radius", {"name": "30", "value": "inactive"})			
 			Tree.SubElement(cr2, "radius", {"name": "0", "value": "active"})
 			Tree.SubElement(cr2, "radius", {"name": "20", "value": "inactive"})
-			Tree.SubElement(cr2, "radius", {"name": "30", "value": "inactive"})	
+			Tree.SubElement(cr2, "radius", {"name": "30", "value": "inactive"}) 
 			
 			XMLindent(newTheme,0)
 			
-			newThemeTree.write(MerlinSkinThemes.selThemeFile)
+			self.busyDialog = self.session.open(MessageBox, _("Creating theme, please wait..."), MessageBox.TYPE_INFO, enable_input=False)
 			
-			self.updateSkinList()
+			def worker():
+				newThemeTree.write(MerlinSkinThemes.selThemeFile)
+				from twisted.internet import reactor
+				reactor.callFromThread(self._createThemesDone)
+			
+			t = threading.Thread(target=worker)
+			t.daemon = True
+			t.start()
+
+	def _createThemesDone(self):
+		self.busyDialog.close()
+		self.updateSkinList()
 	
 	def ImageInfo(self):
 		if Arch64:
@@ -2271,7 +2311,7 @@ class MerlinSkinThemesConfig(Screen, HelpableScreen, ConfigListScreen):
 
 		self["ColorActions"] = HelpableActionMap(self, "ColorActions",
 		{
-			"red":     (self.closePlugin, _("Close plugin")),
+			"red":	   (self.closePlugin, _("Close plugin")),
 			"green":   (self.saveSettings,_("Save settings")),
 		}, -1)
 		
