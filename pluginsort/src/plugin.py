@@ -123,7 +123,7 @@ class PluginWeights:
 			return
 
 		try:
-			config = cet_parse(XML_CONFIG).getroot()
+			xmlconfig = cet_parse(XML_CONFIG).getroot()
 		except ParseError as pe:
 			from time import time
 			print("[PluginSort] Parse Error occured in configuration, backing it up and starting from scratch!")
@@ -133,7 +133,7 @@ class PluginWeights:
 				print("[PluginSort] Uh oh, failed to create the backup... I hope you have one anyway :D")
 			return
 
-		for wheresection in config.findall('where'):
+		for wheresection in xmlconfig.findall('where'):
 			where = wheresection.get('type')
 			whereid = WHEREMAP.get(where, None)
 			whereplugins = wheresection.findall('plugin')
@@ -156,8 +156,7 @@ class PluginWeights:
 		extend = lst.extend
 
 		idmap = reverse(WHEREMAP)
-		for key in self.plugins.keys():
-			whereplugins = self.plugins.get(key, None)
+		for key, whereplugins in iteritems(self.plugins):
 			if not whereplugins:
 				continue
 
@@ -313,10 +312,17 @@ class SortingPluginBrowser(OriginalPluginBrowser):
 
 	def keyNumberGlobal(self, number):
 		if not self.movemode:
-			realnumber = (number - 1) % 10
-			if realnumber < len(self.list):
-				self["pluginlist"].index = realnumber
-				self.save()
+			pos = 9 if number == 0 else number - 1
+			
+			# get the current page (0-based index)
+			currentPage = self["pluginlist"].master.master.currentPage
+			# get the number of plugin entries shown per page
+			itemsPerPage = self["pluginlist"].master.master.instance.getVisibleItemCount()
+			targetPlugin = currentPage * itemsPerPage + pos
+
+			if 0 <= targetPlugin < len(self.list):
+				self["pluginlist"].master.master.moveToIndex(targetPlugin)
+				self.run()
 
 	def close(self, *args, **kwargs):
 		if self.movemode:
@@ -499,7 +505,8 @@ def autostart(reason, *args, **kwargs):
 				for pl in fixed:
 					if pl.name == plugin.name and (pl.where in plugin.where or pl.where == plugin.where):
 						alreadyfixed = True
-				if alreadyfixed == True: continue # skip double entries
+				if alreadyfixed:
+					continue # skip double entries
 
 				# create individual entries for multiple wheres, this is potentially harmful!
 				if len(plugin.where) > 1:
