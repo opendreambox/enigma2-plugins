@@ -119,7 +119,7 @@ class PluginHiderSetup(Screen, HelpableScreen):
 				elif instance and instance.servicelist:
 					plugin(session=self.session,servicelist=instance.servicelist)
 				else:
-					session.open(MessageBox, _("Could not start Plugin:") + "\n" + _("Unable to access InfoBar."), type=MessageBox.TYPE_ERROR)
+					self.session.open(MessageBox, _("Could not start Plugin:") + "\n" + _("Unable to access InfoBar."), type=MessageBox.TYPE_ERROR)
 
 	def cancel(self):
 		config.plugins.pluginhider.hideplugins.cancel()
