@@ -362,6 +362,12 @@ class EPGRefresh:
 		self.addServices(additionalServices, scanServices, channelIdList)
 		del additionalServices[:]
 
+		# Sort once, after the list is final: channelID is namespace+tsid+onid
+		# as fixed-width hex, so a string sort groups by namespace (and,
+		# incidentally, by transponder within a namespace).
+		if channelIdList:
+			scanServices = [s for _, s in sorted(zip(channelIdList, scanServices), key=lambda pair: pair[0])]
+
 		return scanServices
 
 	def isRunning(self):
