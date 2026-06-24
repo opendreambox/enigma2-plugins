@@ -224,14 +224,17 @@ class DreamExplorerFileList(TemplatedMultiContentComponent):
 		# info
 		if not isDir:
 			if self.showFiles:
-				fileInfo = os_lstat(pathFilename)
-				fileAttrib =  oct(stat_stat.S_IMODE(fileInfo.st_mode))
-				lastModified = strftime("%d.%m.%Y %H:%M:%S",localtime(fileInfo.st_mtime))
-				fileSize = prettySize(getSize(pathFilename))
-				isLink = stat_stat.S_ISLNK(fileInfo.st_mode)
-				
-				if os_path.islink(pathFilename):
-					realPath = " >> %s" %(os_path.realpath(pathFilename))
+				try:
+					fileInfo = os_lstat(pathFilename)
+					fileAttrib =  oct(stat_stat.S_IMODE(fileInfo.st_mode))
+					lastModified = strftime("%d.%m.%Y %H:%M:%S",localtime(fileInfo.st_mtime))
+					fileSize = prettySize(getSize(pathFilename))
+					isLink = stat_stat.S_ISLNK(fileInfo.st_mode)
+					
+					if os_path.islink(pathFilename):
+						realPath = " >> %s" %(os_path.realpath(pathFilename))
+				except OSError:
+					print("OSError occured")
 		elif path is not None and filename not in ('<%s>' %(_("List of Storage Devices")), '<%s>' %(_("Parent Directory"))):
 			try:
 				fileInfo = os_lstat(path)
